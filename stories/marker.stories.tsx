@@ -84,7 +84,7 @@ export const WithLink: Story = {
   render: (args) => (
     <Marker {...args}>
       <MarkerContent>
-        This chat was archived. <a href="#">Restore it</a>
+        This chat was archived. <a href="#restore">Restore it</a>
       </MarkerContent>
     </Marker>
   ),

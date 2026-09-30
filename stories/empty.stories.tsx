@@ -117,7 +117,7 @@ export const WithSearch: Story = {
           </InputGroupAddon>
         </InputGroup>
         <EmptyDescription>
-          Need help? <a href="#">Contact support</a>
+          Need help? <a href="#support">Contact support</a>
         </EmptyDescription>
       </EmptyContent>
     </Empty>

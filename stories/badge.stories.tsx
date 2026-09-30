@@ -73,7 +73,7 @@ export const WithIcon: Story = {
 
 export const AsLink: Story = {
   args: {
-    render: <a href="#" />,
+    render: <a href="#documentation" />,
     children: "Documentation",
   },
 }

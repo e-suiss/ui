@@ -108,7 +108,7 @@ class SnapshotStore<Snapshot> {
   setSnapshot(nextSnapshot: Snapshot) {
     if (this.isEqual(this.snapshot, nextSnapshot)) return
     this.snapshot = nextSnapshot
-    this.listeners.forEach((listener) => listener())
+    for (const listener of this.listeners) listener()
   }
 
   subscribe = (listener: () => void) => {
@@ -785,7 +785,7 @@ class MessageScrollerController {
     { keepPreviousPeek = false }: { keepPreviousPeek?: boolean } = {}
   ) {
     const layout = this.getLayout()
-    if (!layout || !layout.content.contains(element)) return false
+    if (!layout?.content.contains(element)) return false
 
     const targetScrollTop = measureTargetScrollTop({
       align,

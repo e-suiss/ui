@@ -89,7 +89,7 @@ function AppSidebar(props: SidebarArgs) {
                   <SidebarMenuButton
                     isActive={item.active}
                     tooltip={item.title}
-                    render={<a href="#" />}
+                    render={<a href={`#${item.title.toLowerCase()}`} />}
                   >
                     <item.icon />
                     <span>{item.title}</span>
@@ -132,7 +132,7 @@ function AppSidebar(props: SidebarArgs) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     tooltip={item.title}
-                    render={<a href="#" />}
+                    render={<a href={`#${item.title.toLowerCase()}`} />}
                   >
                     <item.icon />
                     <span>{item.title}</span>

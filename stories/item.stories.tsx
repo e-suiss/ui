@@ -136,7 +136,7 @@ export const Sizes: Story = {
 
 export const AsLink: Story = {
   render: (args) => (
-    <Item {...args} render={<a href="#" />}>
+    <Item {...args} render={<a href="#notifications" />}>
       <ItemMedia variant="icon">
         <BellIcon />
       </ItemMedia>

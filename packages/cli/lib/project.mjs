@@ -25,7 +25,7 @@ function readJsonc(file) {
   const text = readFileSync(file, "utf8")
   const withoutComments = text.replace(
     /("(?:\\.|[^"\\])*")|\/\/[^\n]*|\/\*[\s\S]*?\*\//g,
-    (match, string) => string ?? ""
+    (_match, string) => string ?? ""
   )
   return JSON.parse(withoutComments.replace(/,(\s*[}\]])/g, "$1"))
 }
