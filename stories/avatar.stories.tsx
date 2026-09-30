@@ -1,0 +1,124 @@
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { CheckIcon, PlusIcon } from "@phosphor-icons/react"
+
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/components/ui/avatar"
+
+const people = [
+  {
+    name: "Emma Wilson",
+    initials: "EW",
+    src: "https://i.pravatar.cc/128?img=47",
+  },
+  {
+    name: "Liam Carter",
+    initials: "LC",
+    src: "https://i.pravatar.cc/128?img=12",
+  },
+  {
+    name: "Sofia Martinez",
+    initials: "SM",
+    src: "https://i.pravatar.cc/128?img=32",
+  },
+]
+
+const meta = {
+  title: "Components/Avatar",
+  component: Avatar,
+  args: {
+    size: "default",
+  },
+  argTypes: {
+    size: {
+      control: "select",
+      options: ["default", "sm", "lg"],
+    },
+  },
+} satisfies Meta<typeof Avatar>
+
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  render: (args) => (
+    <Avatar {...args}>
+      <AvatarImage src={people[0].src} alt={people[0].name} />
+      <AvatarFallback>{people[0].initials}</AvatarFallback>
+    </Avatar>
+  ),
+}
+
+export const Fallback: Story = {
+  render: (args) => (
+    <Avatar {...args}>
+      <AvatarFallback>LC</AvatarFallback>
+    </Avatar>
+  ),
+}
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex items-center gap-3">
+      {(["sm", "default", "lg"] as const).map((size) => (
+        <Avatar key={size} {...args} size={size}>
+          <AvatarImage src={people[1].src} alt={people[1].name} />
+          <AvatarFallback>{people[1].initials}</AvatarFallback>
+        </Avatar>
+      ))}
+    </div>
+  ),
+}
+
+export const WithBadge: Story = {
+  render: (args) => (
+    <div className="flex items-center gap-4">
+      {(["sm", "default", "lg"] as const).map((size) => (
+        <Avatar key={size} {...args} size={size}>
+          <AvatarImage src={people[2].src} alt={people[2].name} />
+          <AvatarFallback>{people[2].initials}</AvatarFallback>
+          <AvatarBadge className="bg-green-500">
+            <CheckIcon weight="bold" />
+          </AvatarBadge>
+        </Avatar>
+      ))}
+    </div>
+  ),
+}
+
+export const Group: Story = {
+  render: (args) => (
+    <AvatarGroup>
+      {people.map((person) => (
+        <Avatar key={person.name} {...args}>
+          <AvatarImage src={person.src} alt={person.name} />
+          <AvatarFallback>{person.initials}</AvatarFallback>
+        </Avatar>
+      ))}
+      <AvatarGroupCount>+4</AvatarGroupCount>
+    </AvatarGroup>
+  ),
+}
+
+export const GroupWithIconCount: Story = {
+  args: { size: "lg" },
+  render: (args) => (
+    <AvatarGroup>
+      {people.map((person) => (
+        <Avatar key={person.name} {...args}>
+          <AvatarImage src={person.src} alt={person.name} />
+          <AvatarFallback>{person.initials}</AvatarFallback>
+        </Avatar>
+      ))}
+      <AvatarGroupCount>
+        <PlusIcon />
+      </AvatarGroupCount>
+    </AvatarGroup>
+  ),
+}
