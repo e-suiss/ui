@@ -3,6 +3,12 @@
   "version": "0.2.0",
   "description": "Add esuiss-ui components to Next.js and React projects.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esuiss/esuiss-ui.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/esuiss/esuiss-ui",
   "type": "module",
   "bin": {
     "esuiss": "index.mjs"

@@ -31,4 +31,14 @@ pnpm storybook       # preview every component at http://localhost:6006
 - `components/ui/` and `hooks/`: the files `add` copies into projects.
 - `styles/globals.css`: the theme and Tailwind setup, written to the project stylesheet by `init`.
 - `stories/`: one Storybook file per component. Use the toolbar to switch between light and dark mode.
-- `packages/cli/`: the `@esuiss/ui` command. Publish it with `npm publish` from that folder.
+- `packages/cli/`: the `@esuiss/ui` command.
+
+## Release
+
+Component, hook, and stylesheet changes reach users as soon as they are pushed to `main`. Releasing is only needed when `packages/cli` changes:
+
+```bash
+pnpm release patch   # or minor, major, or an exact version like 1.0.0
+```
+
+This bumps `packages/cli/package.json`, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes the package to npm and creates the GitHub release.
