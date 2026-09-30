@@ -9,6 +9,8 @@ pre-commit:
 pre-push:
   parallel: true
   commands:
+    check:
+      run: pnpm check
     typecheck:
       run: pnpm typecheck
     knip:
