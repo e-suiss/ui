@@ -33,9 +33,7 @@ Options for add:
   -y, --yes          skip confirmation prompt
   -c, --cwd <cwd>    working directory
   -p, --path <path>  install location
-  --dry-run          preview changes without writing files
-
-The registry is private: run \`gh auth login\` once or set GH_TOKEN.`
+  --dry-run          preview changes without writing files`
 
 function exec(command, args, cwd) {
   const result = spawnSync(command, args, {

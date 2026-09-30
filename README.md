@@ -4,8 +4,6 @@ Component source and registry for esuiss-ui.
 
 ## Use in a project
 
-The repository is private, so authenticate once per machine with `gh auth login` (or set `GH_TOKEN`).
-
 ```bash
 npx esuiss@latest init
 npx esuiss@latest add sidebar
