@@ -66,7 +66,7 @@ execFileSync("node", ["scripts/build-registry.mjs", "--check"], {
 manifest.version = version
 writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`)
 git("add", MANIFEST)
-git("commit", "-m", `release: ${tag}`)
+git("commit", "-m", `chore(release): ${tag}`)
 git("tag", "-a", tag, "-m", tag)
 execFileSync("git", ["push", "origin", BRANCH, tag], { stdio: "inherit" })
 

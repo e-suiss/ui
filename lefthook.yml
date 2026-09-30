@@ -15,3 +15,8 @@ pre-push:
       run: pnpm knip
     registry:
       run: pnpm registry:check
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}

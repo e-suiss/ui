@@ -34,6 +34,7 @@ pnpm storybook       # preview every component at http://localhost:6006
 Git hooks are installed by `pnpm install`:
 
 - pre-commit: Biome fixes and checks the staged files, and `registry.json` is regenerated when components or hooks change.
+- commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
 - pre-push: typecheck, Knip, and the registry check.
 
 - `components/ui/` and `hooks/`: the files `add` copies into projects.
