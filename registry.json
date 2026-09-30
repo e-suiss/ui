@@ -1,916 +1,549 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "esuiss-ui",
   "homepage": "https://github.com/esuiss/esuiss-ui",
+  "stylesheet": "styles/globals.css",
   "items": [
     {
-      "name": "theme",
-      "type": "registry:theme",
-      "title": "Theme",
-      "description": "esuiss-ui color palette, radius, dark mode tokens, variants, and utilities.",
-      "cssVars": {
-        "light": {
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "card": "#ffffff",
-          "card-foreground": "#000000",
-          "popover": "#ffffff",
-          "popover-foreground": "#000000",
-          "primary": "#0088ff",
-          "primary-foreground": "#ffffff",
-          "secondary": "rgb(118 118 128 / 0.12)",
-          "secondary-foreground": "#000000",
-          "muted": "#f2f2f7",
-          "muted-foreground": "rgb(60 60 67 / 0.6)",
-          "accent": "rgb(118 118 128 / 0.12)",
-          "accent-foreground": "#000000",
-          "destructive": "#ff383c",
-          "border": "rgb(60 60 67 / 0.12)",
-          "input": "#c6c6c8",
-          "ring": "#0088ff",
-          "chart-1": "#00c0e8",
-          "chart-2": "#0088ff",
-          "chart-3": "#6155f5",
-          "chart-4": "#cb30e0",
-          "chart-5": "#ff2d55",
-          "radius": "0.75rem",
-          "sidebar": "#f2f2f7",
-          "sidebar-foreground": "#000000",
-          "sidebar-primary": "#0088ff",
-          "sidebar-primary-foreground": "#ffffff",
-          "sidebar-accent": "rgb(118 118 128 / 0.12)",
-          "sidebar-accent-foreground": "#000000",
-          "sidebar-border": "rgb(60 60 67 / 0.12)",
-          "sidebar-ring": "#0088ff"
-        },
-        "dark": {
-          "background": "#000000",
-          "foreground": "#ffffff",
-          "card": "#1c1c1e",
-          "card-foreground": "#ffffff",
-          "popover": "#2c2c2e",
-          "popover-foreground": "#ffffff",
-          "primary": "#0091ff",
-          "primary-foreground": "#ffffff",
-          "secondary": "rgb(118 118 128 / 0.24)",
-          "secondary-foreground": "#ffffff",
-          "muted": "#1c1c1e",
-          "muted-foreground": "rgb(235 235 245 / 0.6)",
-          "accent": "rgb(118 118 128 / 0.24)",
-          "accent-foreground": "#ffffff",
-          "destructive": "#ff4245",
-          "border": "rgb(84 84 88 / 0.5)",
-          "input": "#38383a",
-          "ring": "#0091ff",
-          "chart-1": "#3cd3fe",
-          "chart-2": "#0091ff",
-          "chart-3": "#6d7cff",
-          "chart-4": "#db34f2",
-          "chart-5": "#ff375f",
-          "sidebar": "#1c1c1e",
-          "sidebar-foreground": "#ffffff",
-          "sidebar-primary": "#0091ff",
-          "sidebar-primary-foreground": "#ffffff",
-          "sidebar-accent": "rgb(118 118 128 / 0.24)",
-          "sidebar-accent-foreground": "#ffffff",
-          "sidebar-border": "rgb(84 84 88 / 0.5)",
-          "sidebar-ring": "#0091ff"
-        }
-      },
-      "css": {
-        "@keyframes accordion-down": {
-          "from": {
-            "height": "0"
-          },
-          "to": {
-            "height": "var( --radix-accordion-content-height, var(--accordion-panel-height, auto) )"
-          }
-        },
-        "@keyframes accordion-up": {
-          "from": {
-            "height": "var( --radix-accordion-content-height, var(--accordion-panel-height, auto) )"
-          },
-          "to": {
-            "height": "0"
-          }
-        },
-        "@custom-variant data-open": {
-          "&:where([data-state=\"open\"]), &:where([data-open]:not([data-open=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-closed": {
-          "&:where([data-state=\"closed\"]), &:where([data-closed]:not([data-closed=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-checked": {
-          "&:where([data-state=\"checked\"]), &:where([data-checked]:not([data-checked=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-unchecked": {
-          "&:where([data-state=\"unchecked\"]), &:where([data-unchecked]:not([data-unchecked=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-selected": {
-          "&:where([data-selected=\"true\"])": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-disabled": {
-          "&:where([data-disabled=\"true\"]), &:where([data-disabled]:not([data-disabled=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-active": {
-          "&:where([data-state=\"active\"]), &:where([data-active]:not([data-active=\"false\"]))": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-horizontal": {
-          "&:where([data-orientation=\"horizontal\"])": {
-            "@slot": {}
-          }
-        },
-        "@custom-variant data-vertical": {
-          "&:where([data-orientation=\"vertical\"])": {
-            "@slot": {}
-          }
-        },
-        "@utility no-scrollbar": {
-          "-ms-overflow-style": "none",
-          "scrollbar-width": "none",
-          "&::-webkit-scrollbar": {
-            "display": "none"
-          }
-        },
-        "@property --scroll-fade-b": {
-          "syntax": "\"<length-percentage>\"",
-          "inherits": "false",
-          "initial-value": "0px"
-        },
-        "@property --scroll-fade-s": {
-          "syntax": "\"<length-percentage>\"",
-          "inherits": "false",
-          "initial-value": "0px"
-        },
-        "@property --scroll-fade-e": {
-          "syntax": "\"<length-percentage>\"",
-          "inherits": "false",
-          "initial-value": "0px"
-        },
-        "@property --scroll-fade-mask": {
-          "syntax": "\"*\"",
-          "inherits": "false"
-        },
-        "@keyframes scroll-fade-reveal-b": {
-          "from": {
-            "--scroll-fade-b": "var( --_scroll-fade-size-b, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )"
-          },
-          "to": {
-            "--scroll-fade-b": "0px"
-          }
-        },
-        "@keyframes scroll-fade-reveal-s": {
-          "from": {
-            "--scroll-fade-s": "0px"
-          },
-          "to": {
-            "--scroll-fade-s": "var( --_scroll-fade-size-s, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )"
-          }
-        },
-        "@keyframes scroll-fade-reveal-e": {
-          "from": {
-            "--scroll-fade-e": "var( --_scroll-fade-size-e, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )"
-          },
-          "to": {
-            "--scroll-fade-e": "0px"
-          }
-        },
-        "@utility scroll-fade-x": {
-          "--_scroll-fade-size-s": "var( --scroll-fade-s-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )",
-          "--_scroll-fade-size-e": "var( --scroll-fade-e-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )",
-          "--scroll-fade-inline": "linear-gradient( to right, transparent 0, #000 var(--scroll-fade-s, 0px), #000 calc(100% - var(--scroll-fade-e, 0px)), transparent 100% )",
-          "&:where([dir=\"rtl\"], [dir=\"rtl\"] *)": {
-            "--scroll-fade-inline": "linear-gradient( to left, transparent 0, #000 var(--scroll-fade-s, 0px), #000 calc(100% - var(--scroll-fade-e, 0px)), transparent 100% )"
-          },
-          "-webkit-mask-image": "var(--scroll-fade-mask, var(--scroll-fade-inline))",
-          "mask-image": "var(--scroll-fade-mask, var(--scroll-fade-inline))",
-          "-webkit-mask-composite": "source-in",
-          "mask-composite": "intersect",
-          "-webkit-mask-repeat": "no-repeat",
-          "mask-repeat": "no-repeat",
-          "@supports (animation-timeline: scroll())": {
-            "animation": "scroll-fade-reveal-s 1ms ease-in-out, scroll-fade-reveal-e 1ms ease-in-out",
-            "animation-timeline": "scroll(self inline), scroll(self inline)",
-            "animation-range": "0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)), calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%",
-            "animation-fill-mode": "both"
-          },
-          "@supports not (animation-timeline: scroll())": {
-            "--scroll-fade-s": "var(--_scroll-fade-size-s)",
-            "--scroll-fade-e": "var(--_scroll-fade-size-e)"
-          }
-        },
-        "@utility scroll-fade-b": {
-          "--_scroll-fade-size-b": "var( --scroll-fade-b-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))) )",
-          "--scroll-fade-mask": "linear-gradient( to bottom, #000 0, #000 calc(100% - var(--scroll-fade-b, 0px)), transparent 100% )",
-          "-webkit-mask-image": "var(--scroll-fade-mask)",
-          "mask-image": "var(--scroll-fade-mask)",
-          "-webkit-mask-composite": "source-in",
-          "mask-composite": "intersect",
-          "-webkit-mask-repeat": "no-repeat",
-          "mask-repeat": "no-repeat",
-          "@supports (animation-timeline: scroll())": {
-            "animation": "scroll-fade-reveal-b 1ms ease-in-out",
-            "animation-timeline": "scroll(self y)",
-            "animation-range": "calc( 100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24)) ) 100%",
-            "animation-fill-mode": "both"
-          },
-          "@supports not (animation-timeline: scroll())": {
-            "--scroll-fade-b": "var(--_scroll-fade-size-b)"
-          }
-        },
-        "@property --shimmer-angle": {
-          "syntax": "\"<angle>\"",
-          "inherits": "true",
-          "initial-value": "20deg"
-        },
-        "@property --shimmer-image": {
-          "syntax": "\"*\"",
-          "inherits": "false"
-        },
-        "@property --shimmer-text-fill": {
-          "syntax": "\"*\"",
-          "inherits": "false"
-        },
-        "@keyframes tw-shimmer": {
-          "from": {
-            "background-position": "100% 0"
-          },
-          "to": {
-            "background-position": "0 0"
-          }
-        },
-        "@utility shimmer": {
-          "--_spread": "var(--shimmer-spread, calc(3ch + 40px))",
-          "--_base": "currentColor",
-          "--_highlight": "var( --shimmer-color, oklch(from currentColor l c h / calc(alpha* 0.2)) )",
-          "background-image": "var( --shimmer-image, linear-gradient( calc(90deg + var(--shimmer-angle)), var(--_base) calc(50% - var(--_spread)), color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% - var(--_spread) * 0.5), var(--_highlight) 50%, color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% + var(--_spread) * 0.5), var(--_base) calc(50% + var(--_spread)) ) )",
-          "background-repeat": "no-repeat",
-          "background-size": "calc(200% + var(--_spread) * 2) 100%",
-          "background-position": "0 0",
-          "background-clip": "text",
-          "-webkit-background-clip": "text",
-          "-webkit-text-fill-color": "var(--shimmer-text-fill, transparent)",
-          "animation": "tw-shimmer var(--shimmer-duration, 2s) linear infinite",
-          "@variant dark": {
-            "--_highlight": "var( --shimmer-color, oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4)) )"
-          },
-          "&:where([dir=\"rtl\"], [dir=\"rtl\"] *)": {
-            "animation-direction": "reverse"
-          }
-        },
-        "@media (prefers-reduced-motion: reduce)": {
-          ".shimmer": {
-            "animation": "none",
-            "background-image": "none",
-            "-webkit-text-fill-color": "currentColor"
-          }
-        }
-      }
-    },
-    {
       "name": "accordion",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Accordion",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/accordion.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/accordion.tsx"
       ]
     },
     {
       "name": "alert-dialog",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Alert Dialog",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/alert-dialog.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/alert-dialog.tsx"
       ]
     },
     {
       "name": "alert",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Alert",
       "dependencies": [
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/alert.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/alert.tsx"
       ]
     },
     {
       "name": "aspect-ratio",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Aspect Ratio",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/aspect-ratio.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/aspect-ratio.tsx"
       ]
     },
     {
       "name": "attachment",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Attachment",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/attachment.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/attachment.tsx"
       ]
     },
     {
       "name": "avatar",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Avatar",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/avatar.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/avatar.tsx"
       ]
     },
     {
       "name": "badge",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Badge",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/badge.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/badge.tsx"
       ]
     },
     {
       "name": "breadcrumb",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Breadcrumb",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/breadcrumb.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/breadcrumb.tsx"
       ]
     },
     {
       "name": "bubble",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Bubble",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/bubble.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/bubble.tsx"
       ]
     },
     {
       "name": "button-group",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Button Group",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/separator"
+      "requires": [
+        "separator"
       ],
       "files": [
-        {
-          "path": "components/ui/button-group.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/button-group.tsx"
       ]
     },
     {
       "name": "button",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Button",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/button.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/button.tsx"
       ]
     },
     {
       "name": "calendar",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Calendar",
       "dependencies": [
         "@phosphor-icons/react",
         "cn",
         "react-day-picker"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/calendar.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/calendar.tsx"
       ]
     },
     {
       "name": "card",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Card",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/card.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/card.tsx"
       ]
     },
     {
       "name": "carousel",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Carousel",
       "dependencies": [
         "@phosphor-icons/react",
         "cn",
         "embla-carousel-react"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/carousel.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/carousel.tsx"
       ]
     },
     {
       "name": "chart",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Chart",
       "dependencies": [
         "cn",
         "recharts"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/chart.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/chart.tsx"
       ]
     },
     {
       "name": "checkbox",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Checkbox",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/checkbox.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/checkbox.tsx"
       ]
     },
     {
       "name": "collapsible",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Collapsible",
       "dependencies": [
         "@base-ui/react"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/collapsible.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/collapsible.tsx"
       ]
     },
     {
       "name": "combobox",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Combobox",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button",
-        "esuiss/esuiss-ui/input-group"
+      "requires": [
+        "button",
+        "input-group"
       ],
       "files": [
-        {
-          "path": "components/ui/combobox.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/combobox.tsx"
       ]
     },
     {
       "name": "command",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Command",
       "dependencies": [
         "@phosphor-icons/react",
         "cmdk",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/dialog",
-        "esuiss/esuiss-ui/input-group"
+      "requires": [
+        "dialog",
+        "input-group"
       ],
       "files": [
-        {
-          "path": "components/ui/command.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/command.tsx"
       ]
     },
     {
       "name": "context-menu",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Context Menu",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/context-menu.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/context-menu.tsx"
       ]
     },
     {
       "name": "dialog",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Dialog",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/dialog.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/dialog.tsx"
       ]
     },
     {
       "name": "direction",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Direction",
       "dependencies": [
         "@base-ui/react"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/direction.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/direction.tsx"
       ]
     },
     {
       "name": "drawer",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Drawer",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/drawer.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/drawer.tsx"
       ]
     },
     {
       "name": "dropdown-menu",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Dropdown Menu",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/dropdown-menu.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/dropdown-menu.tsx"
       ]
     },
     {
       "name": "empty",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Empty",
       "dependencies": [
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/empty.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/empty.tsx"
       ]
     },
     {
       "name": "field",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Field",
       "dependencies": [
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/label",
-        "esuiss/esuiss-ui/separator"
+      "requires": [
+        "label",
+        "separator"
       ],
       "files": [
-        {
-          "path": "components/ui/field.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/field.tsx"
       ]
     },
     {
       "name": "hover-card",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Hover Card",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/hover-card.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/hover-card.tsx"
       ]
     },
     {
       "name": "input-group",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Input Group",
       "dependencies": [
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button",
-        "esuiss/esuiss-ui/input",
-        "esuiss/esuiss-ui/textarea"
+      "requires": [
+        "button",
+        "input",
+        "textarea"
       ],
       "files": [
-        {
-          "path": "components/ui/input-group.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/input-group.tsx"
       ]
     },
     {
       "name": "input-otp",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Input Otp",
       "dependencies": [
         "@phosphor-icons/react",
         "cn",
         "input-otp"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/input-otp.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/input-otp.tsx"
       ]
     },
     {
       "name": "input",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Input",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/input.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/input.tsx"
       ]
     },
     {
       "name": "item",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Item",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/separator"
+      "requires": [
+        "separator"
       ],
       "files": [
-        {
-          "path": "components/ui/item.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/item.tsx"
       ]
     },
     {
       "name": "kbd",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Kbd",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/kbd.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/kbd.tsx"
       ]
     },
     {
       "name": "label",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Label",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/label.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/label.tsx"
       ]
     },
     {
       "name": "marker",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Marker",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/marker.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/marker.tsx"
       ]
     },
     {
       "name": "menubar",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Menubar",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/dropdown-menu"
+      "requires": [
+        "dropdown-menu"
       ],
       "files": [
-        {
-          "path": "components/ui/menubar.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/menubar.tsx"
       ]
     },
     {
       "name": "message-scroller",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Message Scroller",
       "dependencies": [
         "@phosphor-icons/react",
         "@shadcn/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/message-scroller.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/message-scroller.tsx"
       ]
     },
     {
       "name": "message",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Message",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/message.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/message.tsx"
       ]
     },
     {
       "name": "native-select",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Native Select",
       "dependencies": [
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/native-select.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/native-select.tsx"
       ]
     },
     {
       "name": "navigation-menu",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Navigation Menu",
       "dependencies": [
         "@base-ui/react",
@@ -918,178 +551,153 @@
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/navigation-menu.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/navigation-menu.tsx"
       ]
     },
     {
       "name": "pagination",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Pagination",
       "dependencies": [
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/pagination.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/pagination.tsx"
       ]
     },
     {
       "name": "popover",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Popover",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/popover.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/popover.tsx"
       ]
     },
     {
       "name": "progress",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Progress",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/progress.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/progress.tsx"
       ]
     },
     {
       "name": "questionnaire",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Questionnaire",
       "dependencies": [
         "@phosphor-icons/react",
         "@shadcn/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/questionnaire.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/questionnaire.tsx"
       ]
     },
     {
       "name": "radio-group",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Radio Group",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/radio-group.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/radio-group.tsx"
       ]
     },
     {
       "name": "resizable",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Resizable",
       "dependencies": [
         "cn",
         "react-resizable-panels"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/resizable.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/resizable.tsx"
       ]
     },
     {
       "name": "scroll-area",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Scroll Area",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/scroll-area.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/scroll-area.tsx"
       ]
     },
     {
       "name": "select",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Select",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/select.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/select.tsx"
       ]
     },
     {
       "name": "separator",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Separator",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/separator.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/separator.tsx"
       ]
     },
     {
       "name": "sheet",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Sheet",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/sheet.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/sheet.tsx"
       ]
     },
     {
       "name": "sidebar",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Sidebar",
       "dependencies": [
         "@base-ui/react",
@@ -1097,203 +705,175 @@
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button",
-        "esuiss/esuiss-ui/input",
-        "esuiss/esuiss-ui/separator",
-        "esuiss/esuiss-ui/sheet",
-        "esuiss/esuiss-ui/skeleton",
-        "esuiss/esuiss-ui/tooltip",
-        "esuiss/esuiss-ui/use-mobile"
+      "requires": [
+        "button",
+        "input",
+        "separator",
+        "sheet",
+        "skeleton",
+        "tooltip",
+        "use-mobile"
       ],
       "files": [
-        {
-          "path": "components/ui/sidebar.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/sidebar.tsx"
       ]
     },
     {
       "name": "skeleton",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Skeleton",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/skeleton.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/skeleton.tsx"
       ]
     },
     {
       "name": "slider",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Slider",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/slider.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/slider.tsx"
       ]
     },
     {
       "name": "spinner",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Spinner",
       "dependencies": [
         "@phosphor-icons/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/spinner.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/spinner.tsx"
       ]
     },
     {
       "name": "switch",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Switch",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/switch.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/switch.tsx"
       ]
     },
     {
       "name": "table",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Table",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/table.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/table.tsx"
       ]
     },
     {
       "name": "tabs",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Tabs",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/tabs.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/tabs.tsx"
       ]
     },
     {
       "name": "textarea",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Textarea",
       "dependencies": [
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/textarea.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/textarea.tsx"
       ]
     },
     {
       "name": "toast",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Toast",
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/button"
+      "requires": [
+        "button"
       ],
       "files": [
-        {
-          "path": "components/ui/toast.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/toast.tsx"
       ]
     },
     {
       "name": "toggle-group",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Toggle Group",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [
-        "esuiss/esuiss-ui/toggle"
+      "requires": [
+        "toggle"
       ],
       "files": [
-        {
-          "path": "components/ui/toggle-group.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/toggle-group.tsx"
       ]
     },
     {
       "name": "toggle",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Toggle",
       "dependencies": [
         "@base-ui/react",
         "class-variance-authority",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/toggle.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/toggle.tsx"
       ]
     },
     {
       "name": "tooltip",
-      "type": "registry:ui",
+      "type": "ui",
       "title": "Tooltip",
       "dependencies": [
         "@base-ui/react",
         "cn"
       ],
+      "requires": [],
       "files": [
-        {
-          "path": "components/ui/tooltip.tsx",
-          "type": "registry:ui"
-        }
+        "components/ui/tooltip.tsx"
       ]
     },
     {
       "name": "use-mobile",
-      "type": "registry:hook",
+      "type": "hook",
       "title": "Use Mobile",
+      "dependencies": [],
+      "requires": [],
       "files": [
-        {
-          "path": "hooks/use-mobile.ts",
-          "type": "registry:hook"
-        }
+        "hooks/use-mobile.ts"
       ]
     }
   ]
