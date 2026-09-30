@@ -91,7 +91,7 @@ if (problems.length) {
 
 const registry = {
   name: "esuiss-ui",
-  homepage: "https://github.com/esuiss/esuiss-ui",
+  homepage: "https://github.com/e-suiss/ui",
   stylesheet: STYLESHEET,
   items,
 }

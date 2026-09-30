@@ -5,10 +5,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/esuiss/esuiss-ui.git",
+    "url": "git+https://github.com/e-suiss/ui.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/esuiss/esuiss-ui",
+  "homepage": "https://github.com/e-suiss/ui",
   "type": "module",
   "bin": {
     "esuiss": "index.mjs"
