@@ -9,6 +9,8 @@ import * as RechartsPrimitive from "recharts"
 const THEMES = { light: "", dark: ".dark" } as const
 
 const INITIAL_DIMENSION = { width: 320, height: 200 } as const
+const UNSAFE_IDENTIFIER_CHARACTERS = /[^\w-]/g
+const UNSAFE_VALUE_CHARACTERS = /[;{}<>\\]/
 type TooltipNameType = number | string
 
 export type ChartConfig = Record<
@@ -56,7 +58,7 @@ function ChartContainer({
   }
 }) {
   const uniqueId = React.useId()
-  const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
+  const chartId = `chart-${(id ?? uniqueId).replace(UNSAFE_IDENTIFIER_CHARACTERS, "")}`
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -80,37 +82,45 @@ function ChartContainer({
   )
 }
 
+function isSafeKey(key: string) {
+  return key.replace(UNSAFE_IDENTIFIER_CHARACTERS, "") === key
+}
+
+function isSafeValue(value: string) {
+  return !UNSAFE_VALUE_CHARACTERS.test(value)
+}
+
+function themeDeclarations(
+  colorConfig: [string, ChartConfig[string]][],
+  theme: keyof typeof THEMES
+) {
+  return colorConfig
+    .map(([key, itemConfig]) => {
+      const color = itemConfig.theme?.[theme] ?? itemConfig.color
+      return color && isSafeValue(color) ? `  --color-${key}: ${color};` : null
+    })
+    .filter(Boolean)
+    .join("\n")
+}
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme ?? config.color
+    ([key, itemConfig]) =>
+      isSafeKey(key) && (itemConfig.theme ?? itemConfig.color)
   )
 
   if (!colorConfig.length) {
     return null
   }
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join("\n")}
-}
-`
-          )
-          .join("\n"),
-      }}
-    />
-  )
+  const css = Object.entries(THEMES)
+    .map(
+      ([theme, prefix]) =>
+        `${prefix} [data-chart=${id}] {\n${themeDeclarations(colorConfig, theme as keyof typeof THEMES)}\n}`
+    )
+    .join("\n")
+
+  return <style>{css}</style>
 }
 
 const ChartTooltip = RechartsPrimitive.Tooltip
@@ -205,7 +215,7 @@ function ChartTooltipContent({
 
             return (
               <div
-                key={index}
+                key={key}
                 className={cn(
                   "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                   indicator === "dot" && "items-center"
@@ -221,7 +231,7 @@ function ChartTooltipContent({
                       !hideIndicator && (
                         <div
                           className={cn(
-                            "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
+                            "shrink-0 rounded-xs border-(--color-border) bg-(--color-bg)",
                             {
                               "h-2.5 w-2.5": indicator === "dot",
                               "w-1": indicator === "line",
@@ -297,13 +307,13 @@ function ChartLegendContent({
     >
       {payload
         .filter((item) => item.type !== "none")
-        .map((item, index) => {
+        .map((item) => {
           const key = `${nameKey ?? item.dataKey ?? "value"}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
           return (
             <div
-              key={index}
+              key={key}
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
@@ -312,7 +322,7 @@ function ChartLegendContent({
                 <itemConfig.icon />
               ) : (
                 <div
-                  className="h-2 w-2 shrink-0 rounded-[2px]"
+                  className="h-2 w-2 shrink-0 rounded-xs"
                   style={{
                     backgroundColor: item.color,
                   }}
