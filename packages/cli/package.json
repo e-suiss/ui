@@ -2,6 +2,7 @@
   "name": "esuiss",
   "version": "0.1.0",
   "description": "Add esuiss-ui components to your project.",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "esuiss": "./index.mjs"
