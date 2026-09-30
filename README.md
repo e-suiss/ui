@@ -27,6 +27,9 @@ pnpm install
 pnpm typecheck
 pnpm registry        # regenerate registry.json after changing components, hooks, or styles/theme.css
 pnpm registry:check  # validate the registry
+pnpm storybook       # preview every component at http://localhost:6006
 ```
+
+Stories live in `stories/`, one file per component. Use the toolbar to switch between light and dark mode.
 
 The `esuiss` command lives in `packages/cli`. Publish it with `npm publish` from that folder.

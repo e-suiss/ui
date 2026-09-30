@@ -15,6 +15,13 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["components/**/*.ts", "components/**/*.tsx", "hooks/**/*.ts"],
+  "include": [
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "hooks/**/*.ts",
+    "stories/**/*.tsx",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
