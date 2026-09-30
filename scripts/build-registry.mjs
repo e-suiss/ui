@@ -1,5 +1,6 @@
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
+import postcss from "postcss"
 
 const REGISTRY = "esuiss/esuiss-ui"
 const ROOT = process.cwd()
@@ -30,28 +31,84 @@ function collectImports(code) {
   return [...specifiers]
 }
 
-function parseVars(css, selector) {
-  const block = css.match(new RegExp(`${selector}\\s*\\{([^}]*)\\}`))
-  if (!block) throw new Error(`Missing ${selector} block in ${THEME_FILE}`)
+const VAR_SELECTORS = { ":root": "light", ".dark": "dark" }
+
+function squash(text) {
+  return text.replace(/\s+/g, " ").trim()
+}
+
+function merge(target, key, value) {
+  const existing = target[key]
+  target[key] =
+    existing && typeof existing === "object" && typeof value === "object"
+      ? { ...existing, ...value }
+      : value
+}
+
+function toCssObject(container) {
+  const result = {}
+  for (const node of container.nodes ?? []) {
+    if (node.type === "decl") {
+      merge(
+        result,
+        node.prop,
+        squash(node.important ? `${node.value} !important` : node.value)
+      )
+    } else if (node.type === "rule") {
+      merge(
+        result,
+        squash(node.selector.replace(/\s*,\s*/g, ", ")),
+        toCssObject(node)
+      )
+    } else if (
+      node.type === "atrule" &&
+      node.name === "theme" &&
+      node.params === "inline"
+    ) {
+      for (const [key, value] of Object.entries(toCssObject(node)))
+        merge(result, key, value)
+    } else if (node.type === "atrule") {
+      const key = squash(`@${node.name} ${node.params}`)
+      merge(result, key, node.nodes ? toCssObject(node) : {})
+    }
+  }
+  return result
+}
+
+function toVars(rule) {
   return Object.fromEntries(
-    [...block[1].matchAll(/--([\w-]+):\s*([^;]+);/g)].map(([, key, value]) => [
-      key,
-      value.trim(),
-    ])
+    rule.nodes
+      .filter((node) => node.type === "decl" && node.prop.startsWith("--"))
+      .map((node) => [node.prop.slice(2), squash(node.value)])
   )
 }
 
 async function buildTheme() {
-  const css = await readFile(path.join(ROOT, THEME_FILE), "utf8")
+  const root = postcss.parse(
+    await readFile(path.join(ROOT, THEME_FILE), "utf8")
+  )
+  const cssVars = {}
+  const rest = postcss.root()
+
+  for (const node of root.nodes) {
+    const mode = node.type === "rule" && VAR_SELECTORS[node.selector]
+    if (mode) cssVars[mode] = toVars(node)
+    else if (node.type !== "comment") rest.append(node.clone())
+  }
+
+  for (const [selector, mode] of Object.entries(VAR_SELECTORS)) {
+    if (!cssVars[mode])
+      throw new Error(`Missing ${selector} block in ${THEME_FILE}`)
+  }
+
   return {
     name: "theme",
     type: "registry:theme",
     title: "Theme",
-    description: "esuiss-ui color palette, radius, and dark mode tokens.",
-    cssVars: {
-      light: parseVars(css, ":root"),
-      dark: parseVars(css, "\\.dark"),
-    },
+    description:
+      "esuiss-ui color palette, radius, dark mode tokens, variants, and utilities.",
+    cssVars,
+    css: toCssObject(rest),
   }
 }
 
