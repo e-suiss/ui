@@ -1,0 +1,4 @@
+node_modules/
+.registry-check/
+.DS_Store
+*.tsbuildinfo
