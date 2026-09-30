@@ -1,6 +1,6 @@
 # esuiss-ui
 
-Component source and shadcn registry for esuiss-ui.
+Component source and registry for esuiss-ui.
 
 ## Use in a project
 
@@ -24,5 +24,5 @@ npx shadcn@latest add esuiss/ui/button --overwrite
 pnpm install
 pnpm typecheck
 pnpm registry        # regenerate registry.json after changing components, hooks, or styles/theme.css
-pnpm registry:check  # validate the registry with the shadcn CLI
+pnpm registry:check  # validate the registry
 ```
