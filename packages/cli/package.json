@@ -1,0 +1,15 @@
+{
+  "name": "esuiss",
+  "version": "0.1.0",
+  "description": "Add esuiss-ui components to your project.",
+  "type": "module",
+  "bin": {
+    "esuiss": "./index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
