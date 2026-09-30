@@ -1,21 +1,21 @@
 # esuiss-ui
 
-Component source and registry for esuiss-ui.
+Component source and registry for esuiss-ui, for Next.js and React (Vite) projects with TypeScript.
 
 ## Use in a project
 
 ```bash
-npx esuiss@latest init
-npx esuiss@latest add sidebar
+npx @esuiss/ui@latest init
+npx @esuiss/ui@latest add sidebar
 ```
 
-`init` sets up the project and installs the theme and button. Components pull in the components they depend on.
+`init` sets up Tailwind CSS v4, the `@/*` import alias, the theme stylesheet, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on.
 
 Update a component later:
 
 ```bash
-npx esuiss@latest add button --diff
-npx esuiss@latest add button --overwrite
+npx @esuiss/ui@latest add button --diff
+npx @esuiss/ui@latest add button --overwrite
 ```
 
 ## Develop
@@ -23,11 +23,12 @@ npx esuiss@latest add button --overwrite
 ```bash
 pnpm install
 pnpm typecheck
-pnpm registry        # regenerate registry.json after changing components, hooks, or styles/theme.css
-pnpm registry:check  # validate the registry
+pnpm registry        # regenerate registry.json after changing components or hooks
+pnpm registry:check  # fail if registry.json is out of date
 pnpm storybook       # preview every component at http://localhost:6006
 ```
 
-Stories live in `stories/`, one file per component. Use the toolbar to switch between light and dark mode.
-
-The `esuiss` command lives in `packages/cli`. Publish it with `npm publish` from that folder.
+- `components/ui/` and `hooks/`: the files `add` copies into projects.
+- `styles/globals.css`: the theme and Tailwind setup, written to the project stylesheet by `init`.
+- `stories/`: one Storybook file per component. Use the toolbar to switch between light and dark mode.
+- `packages/cli/`: the `@esuiss/ui` command. Publish it with `npm publish` from that folder.

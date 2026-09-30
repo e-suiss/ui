@@ -1,16 +1,20 @@
 {
-  "name": "esuiss",
-  "version": "0.1.0",
-  "description": "Add esuiss-ui components to your project.",
+  "name": "@esuiss/ui",
+  "version": "0.2.0",
+  "description": "Add esuiss-ui components to Next.js and React projects.",
   "license": "MIT",
   "type": "module",
   "bin": {
     "esuiss": "index.mjs"
   },
   "files": [
-    "index.mjs"
+    "index.mjs",
+    "lib"
   ],
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
