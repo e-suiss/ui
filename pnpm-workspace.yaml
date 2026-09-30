@@ -2,6 +2,7 @@ packages: []
 
 allowBuilds:
   esbuild: true
+  lefthook: false
   msw: false
 
 minimumReleaseAgeExclude:
@@ -13,3 +14,14 @@ minimumReleaseAgeExclude:
   - '@storybook/react-vite@10.6.1'
   - '@storybook/react@10.6.1'
   - storybook@10.6.1
+  - lefthook-darwin-arm64@2.1.15
+  - lefthook-darwin-x64@2.1.15
+  - lefthook-freebsd-arm64@2.1.15
+  - lefthook-freebsd-x64@2.1.15
+  - lefthook-linux-arm64@2.1.15
+  - lefthook-linux-x64@2.1.15
+  - lefthook-openbsd-arm64@2.1.15
+  - lefthook-openbsd-x64@2.1.15
+  - lefthook-windows-arm64@2.1.15
+  - lefthook-windows-x64@2.1.15
+  - lefthook@2.1.15

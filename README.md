@@ -25,10 +25,16 @@ pnpm install
 pnpm typecheck
 pnpm check           # lint and format check with Biome
 pnpm format          # apply Biome fixes and formatting
+pnpm knip            # find unused files, exports, and dependencies
 pnpm registry        # regenerate registry.json after changing components or hooks
 pnpm registry:check  # fail if registry.json is out of date
 pnpm storybook       # preview every component at http://localhost:6006
 ```
+
+Git hooks are installed by `pnpm install`:
+
+- pre-commit: Biome fixes and checks the staged files, and `registry.json` is regenerated when components or hooks change.
+- pre-push: typecheck, Knip, and the registry check.
 
 - `components/ui/` and `hooks/`: the files `add` copies into projects.
 - `styles/globals.css`: the theme and Tailwind setup, written to the project stylesheet by `init`.

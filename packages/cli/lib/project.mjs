@@ -21,7 +21,7 @@ const INSTALL_ARGS = {
 
 const TSCONFIGS = ["tsconfig.json", "tsconfig.app.json"]
 
-export function readJsonc(file) {
+function readJsonc(file) {
   const text = readFileSync(file, "utf8")
   const withoutComments = text.replace(
     /("(?:\\.|[^"\\])*")|\/\/[^\n]*|\/\*[\s\S]*?\*\//g,
