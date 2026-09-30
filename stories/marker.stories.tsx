@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { CalendarBlankIcon, InfoIcon } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
 

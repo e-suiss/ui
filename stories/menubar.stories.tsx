@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   ClipboardTextIcon,
   CopyIcon,
   ScissorsIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   Menubar,

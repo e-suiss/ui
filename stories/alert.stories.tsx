@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { InfoIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   Alert,

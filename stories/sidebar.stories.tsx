@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   CalendarBlankIcon,
   CaretUpDownIcon,
@@ -12,6 +11,7 @@ import {
   TrayIcon,
   UsersIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Separator } from "@/components/ui/separator"
 import {

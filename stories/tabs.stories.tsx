@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 

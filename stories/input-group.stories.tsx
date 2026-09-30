@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   ArrowUpIcon,
   CheckIcon,
@@ -7,6 +6,7 @@ import {
   MagnifyingGlassIcon,
   PaperclipIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   InputGroup,

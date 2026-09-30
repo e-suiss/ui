@@ -1,5 +1,5 @@
-import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import * as React from "react"
 import type { DateRange } from "react-day-picker"
 
 import { Calendar } from "@/components/ui/calendar"

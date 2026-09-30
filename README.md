@@ -23,6 +23,8 @@ npx @esuiss/ui@latest add button --overwrite
 ```bash
 pnpm install
 pnpm typecheck
+pnpm check           # lint and format check with Biome
+pnpm format          # apply Biome fixes and formatting
 pnpm registry        # regenerate registry.json after changing components or hooks
 pnpm registry:check  # fail if registry.json is out of date
 pnpm storybook       # preview every component at http://localhost:6006

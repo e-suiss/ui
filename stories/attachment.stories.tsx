@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   DownloadSimpleIcon,
   FileIcon,
@@ -8,6 +7,7 @@ import {
   WarningCircleIcon,
   XIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   Attachment,

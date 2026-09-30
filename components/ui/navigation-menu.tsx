@@ -1,7 +1,7 @@
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
+import { CaretDownIcon } from "@phosphor-icons/react"
 import { cva } from "class-variance-authority"
 import { cn } from "cn"
-import { CaretDownIcon } from "@phosphor-icons/react"
 
 function NavigationMenu({
   align = "start",
@@ -70,7 +70,10 @@ function NavigationMenuTrigger({
       {...props}
     >
       {children}{" "}
-      <CaretDownIcon className="relative top-px ms-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180" aria-hidden="true" />
+      <CaretDownIcon
+        className="relative top-px ms-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180"
+        aria-hidden="true"
+      />
     </NavigationMenuPrimitive.Trigger>
   )
 }
@@ -161,7 +164,7 @@ export {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuPositioner,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuPositioner,
 }

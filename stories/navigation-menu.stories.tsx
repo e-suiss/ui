@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   BookOpenIcon,
   ChartLineIcon,
@@ -7,6 +6,7 @@ import {
   LightningIcon,
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   NavigationMenu,

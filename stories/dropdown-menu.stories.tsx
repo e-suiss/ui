@@ -1,15 +1,15 @@
-import * as React from "react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
+  ChatCircleIcon,
   CreditCardIcon,
+  EnvelopeIcon,
   GearIcon,
   SignOutIcon,
   TrashIcon,
   UserIcon,
   UserPlusIcon,
-  EnvelopeIcon,
-  ChatCircleIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import {

@@ -1,13 +1,15 @@
 "use client"
 
-import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
+import { ArrowDownIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
-
+import * as React from "react"
 import { Button } from "@/components/ui/button"
 import {
   MessageScrollerContext,
+  type MessageScrollerOptions,
+  type MessageScrollerScrollDirection,
   useChildListObserver,
   useFrameThrottledResizeObserver,
   useMergedRefs,
@@ -18,10 +20,7 @@ import {
   useMessageScrollerPendingScroll,
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
-  type MessageScrollerOptions,
-  type MessageScrollerScrollDirection,
 } from "@/hooks/use-message-scroller"
-import { ArrowDownIcon } from "@phosphor-icons/react"
 
 function MessageScrollerProvider({
   children,
@@ -266,12 +265,12 @@ function MessageScrollerButton({
 }
 
 export {
-  MessageScrollerProvider,
   MessageScroller,
-  MessageScrollerViewport,
+  MessageScrollerButton,
   MessageScrollerContent,
   MessageScrollerItem,
-  MessageScrollerButton,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
   useMessageScroller,
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,

@@ -339,7 +339,8 @@
     animation: scroll-fade-reveal-b 1ms ease-in-out;
     animation-timeline: scroll(self y);
     animation-range: calc(
-        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+        100% -
+        var(--scroll-fade-reveal, calc(var(--spacing) * 24))
       )
       100%;
     animation-fill-mode: both;
@@ -380,7 +381,7 @@
   --_base: currentColor;
   --_highlight: var(
     --shimmer-color,
-    oklch(from currentColor l c h / calc(alpha* 0.2))
+    oklch(from currentColor l c h / calc(alpha * 0.2))
   );
 
   background-image: var(

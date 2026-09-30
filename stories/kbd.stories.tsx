@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   ArrowElbowDownLeftIcon,
   CommandIcon,
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   InputGroup,

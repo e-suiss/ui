@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   BookmarkSimpleIcon,
   TextBIcon,
   TextItalicIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Toggle } from "@/components/ui/toggle"
 

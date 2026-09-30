@@ -1,5 +1,3 @@
-import * as React from "react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   CalculatorIcon,
   CalendarBlankIcon,
@@ -8,6 +6,8 @@ import {
   SmileyIcon,
   UserIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import {

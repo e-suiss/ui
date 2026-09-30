@@ -1,6 +1,6 @@
-import type * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
+import type * as React from "react"
 
 import {
   InputOTP,

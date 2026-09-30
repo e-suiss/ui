@@ -1141,6 +1141,13 @@ function useMergedRefs<Instance>(
 
 export {
   MessageScrollerContext,
+  type MessageScrollerDefaultScrollPosition,
+  type MessageScrollerOptions,
+  type MessageScrollerScrollAlign,
+  type MessageScrollerScrollable,
+  type MessageScrollerScrollDirection,
+  type MessageScrollerScrollOptions,
+  type MessageScrollerVisibilityState,
   useChildListObserver,
   useFrameThrottledResizeObserver,
   useMergedRefs,
@@ -1151,11 +1158,4 @@ export {
   useMessageScrollerPendingScroll,
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
-  type MessageScrollerDefaultScrollPosition,
-  type MessageScrollerOptions,
-  type MessageScrollerScrollAlign,
-  type MessageScrollerScrollDirection,
-  type MessageScrollerScrollOptions,
-  type MessageScrollerScrollable,
-  type MessageScrollerVisibilityState,
 }

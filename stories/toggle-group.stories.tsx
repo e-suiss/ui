@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   TextAlignCenterIcon,
   TextAlignLeftIcon,
@@ -7,6 +6,7 @@ import {
   TextItalicIcon,
   TextUnderlineIcon,
 } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 

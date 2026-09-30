@@ -1,9 +1,9 @@
 "use client"
 
-import * as React from "react"
+import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { Command as CommandPrimitive } from "cmdk"
 import { cn } from "cn"
-
+import type * as React from "react"
 import {
   Dialog,
   DialogContent,
@@ -11,11 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import {
-  InputGroup,
-  InputGroupAddon,
-} from "@/components/ui/input-group"
-import { MagnifyingGlassIcon, CheckIcon } from "@phosphor-icons/react"
+import { InputGroup, InputGroupAddon } from "@/components/ui/input-group"
 
 function Command({
   className,
@@ -186,11 +182,11 @@ function CommandShortcut({
 export {
   Command,
   CommandDialog,
-  CommandInput,
-  CommandList,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
-  CommandShortcut,
+  CommandList,
   CommandSeparator,
+  CommandShortcut,
 }

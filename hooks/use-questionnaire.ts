@@ -1235,8 +1235,16 @@ function useQuestionnaireError(id: string) {
 }
 
 export {
+  type QuestionnaireChoiceDefinition,
+  type QuestionnaireChoiceState,
   QuestionnaireContext,
+  type QuestionnaireInputState,
   QuestionnaireItemContext,
+  type QuestionnaireItemDefinition,
+  type QuestionnaireItemState,
+  type QuestionnaireItemStatus,
+  type QuestionnaireShortcutMode,
+  type QuestionnaireState,
   useQuestionnaire,
   useQuestionnaireChoice,
   useQuestionnaireContext,
@@ -1245,12 +1253,4 @@ export {
   useQuestionnaireInput,
   useQuestionnaireItem,
   useQuestionnaireItemContext,
-  type QuestionnaireChoiceDefinition,
-  type QuestionnaireChoiceState,
-  type QuestionnaireInputState,
-  type QuestionnaireItemDefinition,
-  type QuestionnaireItemState,
-  type QuestionnaireItemStatus,
-  type QuestionnaireShortcutMode,
-  type QuestionnaireState,
 }

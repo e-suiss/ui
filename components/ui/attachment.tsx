@@ -1,8 +1,8 @@
-import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import type * as React from "react"
 
 import { Button } from "@/components/ui/button"
 
@@ -196,12 +196,12 @@ function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
 
 export {
   Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
   AttachmentGroup,
   AttachmentMedia,
-  AttachmentContent,
   AttachmentTitle,
-  AttachmentDescription,
-  AttachmentActions,
-  AttachmentAction,
   AttachmentTrigger,
 }

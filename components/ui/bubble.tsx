@@ -1,8 +1,8 @@
-import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import type * as React from "react"
 
 function BubbleGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -124,4 +124,4 @@ function BubbleReactions({
   )
 }
 
-export { BubbleGroup, Bubble, BubbleContent, BubbleReactions }
+export { Bubble, BubbleContent, BubbleGroup, BubbleReactions }

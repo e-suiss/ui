@@ -1,6 +1,6 @@
-import { Fragment } from "react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { GlobeIcon, MoonIcon, SunIcon } from "@phosphor-icons/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { Fragment } from "react"
 
 import {
   Select,

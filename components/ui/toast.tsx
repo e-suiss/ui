@@ -1,11 +1,17 @@
 "use client"
 
-import * as React from "react"
 import { Toast as ToastPrimitive } from "@base-ui/react/toast"
+import {
+  CheckCircleIcon,
+  InfoIcon,
+  SpinnerIcon,
+  WarningIcon,
+  XCircleIcon,
+  XIcon,
+} from "@phosphor-icons/react"
 import { cn } from "cn"
-
+import type * as React from "react"
 import { Button } from "@/components/ui/button"
-import { XIcon, CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, SpinnerIcon } from "@phosphor-icons/react"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -125,9 +131,7 @@ function ToastClose({
       )}
       {...props}
     >
-      {children ?? (
-        <XIcon aria-hidden="true" />
-      )}
+      {children ?? <XIcon aria-hidden="true" />}
     </ToastPrimitive.Close>
   )
 }
@@ -136,33 +140,23 @@ function ToastIcon({ type }: { type: string | undefined }) {
   let icon: React.ReactNode = null
 
   if (type === "success") {
-    icon = (
-      <CheckCircleIcon aria-hidden="true" />
-    )
+    icon = <CheckCircleIcon aria-hidden="true" />
   }
 
   if (type === "info") {
-    icon = (
-      <InfoIcon aria-hidden="true" />
-    )
+    icon = <InfoIcon aria-hidden="true" />
   }
 
   if (type === "warning") {
-    icon = (
-      <WarningIcon aria-hidden="true" />
-    )
+    icon = <WarningIcon aria-hidden="true" />
   }
 
   if (type === "error") {
-    icon = (
-      <XCircleIcon className="text-destructive" aria-hidden="true" />
-    )
+    icon = <XCircleIcon className="text-destructive" aria-hidden="true" />
   }
 
   if (type === "loading") {
-    icon = (
-      <SpinnerIcon className="animate-spin" aria-hidden="true" />
-    )
+    icon = <SpinnerIcon className="animate-spin" aria-hidden="true" />
   }
 
   if (!icon) {
@@ -218,17 +212,17 @@ const createToastManager = ToastPrimitive.createToastManager
 const useToastManager = ToastPrimitive.useToastManager
 
 export {
-  Toaster,
+  createToastManager,
   Toast,
   ToastAction,
   ToastClose,
   ToastContent,
   ToastDescription,
+  Toaster,
   ToastPortal,
   ToastProvider,
   ToastTitle,
   ToastViewport,
-  createToastManager,
   toast,
   useToastManager,
 }
