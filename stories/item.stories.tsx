@@ -26,7 +26,7 @@ const people = [
   {
     name: "Olivia Martin",
     email: "olivia@example.com",
-    avatar: "https://github.com/shadcn.png",
+    avatar: "https://i.pravatar.cc/96?img=12",
   },
   {
     name: "Liam Chen",
@@ -185,7 +185,7 @@ export const WithAvatar: Story = {
       <ItemMedia>
         <Avatar size="lg">
           <AvatarImage
-            src="https://github.com/shadcn.png"
+            src="https://i.pravatar.cc/96?img=12"
             alt="Olivia Martin"
           />
           <AvatarFallback>OM</AvatarFallback>
