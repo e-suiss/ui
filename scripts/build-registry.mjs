@@ -1,7 +1,7 @@
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
-const REGISTRY = "esuiss/ui"
+const REGISTRY = "esuiss/esuiss-ui"
 const ROOT = process.cwd()
 const THEME_FILE = "styles/theme.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
