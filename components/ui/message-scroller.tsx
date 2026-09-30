@@ -1,77 +1,188 @@
 "use client"
 
 import * as React from "react"
-import {
-  MessageScroller as MessageScrollerPrimitive,
-  useMessageScroller,
-  useMessageScrollerScrollable,
-  useMessageScrollerVisibility,
-} from "@shadcn/react/message-scroller"
+import { mergeProps } from "@base-ui/react/merge-props"
+import { useRender } from "@base-ui/react/use-render"
 import { cn } from "cn"
 
 import { Button } from "@/components/ui/button"
+import {
+  MessageScrollerContext,
+  useChildListObserver,
+  useFrameThrottledResizeObserver,
+  useMergedRefs,
+  useMessageScroller,
+  useMessageScrollerCanScroll,
+  useMessageScrollerContext,
+  useMessageScrollerController,
+  useMessageScrollerPendingScroll,
+  useMessageScrollerScrollable,
+  useMessageScrollerVisibility,
+  type MessageScrollerOptions,
+  type MessageScrollerScrollDirection,
+} from "@/hooks/use-message-scroller"
 import { ArrowDownIcon } from "@phosphor-icons/react"
 
-function MessageScrollerProvider(
-  props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
-) {
-  return <MessageScrollerPrimitive.Provider {...props} />
+function MessageScrollerProvider({
+  children,
+  ...options
+}: MessageScrollerOptions & { children?: React.ReactNode }) {
+  const controller = useMessageScrollerController(options)
+  return (
+    <MessageScrollerContext.Provider value={controller}>
+      {children}
+    </MessageScrollerContext.Provider>
+  )
 }
 
 function MessageScroller({
   className,
+  ref,
   ...props
-}: React.ComponentProps<typeof MessageScrollerPrimitive.Root>) {
+}: React.ComponentProps<"div">) {
+  const { setRootElement } = useMessageScrollerContext()
+  const isPendingScroll = useMessageScrollerPendingScroll()
+  const rootRef = useMergedRefs(setRootElement, ref)
+
   return (
-    <MessageScrollerPrimitive.Root
+    <div
+      ref={rootRef}
       data-slot="message-scroller"
       className={cn(
         "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
         className
       )}
       {...props}
+      data-pending-scroll={isPendingScroll ? "" : undefined}
     />
   )
 }
 
 function MessageScrollerViewport({
   className,
+  preserveScrollOnPrepend = true,
+  ref,
+  role = "region",
+  "aria-label": ariaLabel = "Messages",
+  tabIndex = 0,
+  onKeyDown,
+  onScroll,
+  onTouchMove,
+  onWheel,
   ...props
-}: React.ComponentProps<typeof MessageScrollerPrimitive.Viewport>) {
+}: React.ComponentProps<"div"> & { preserveScrollOnPrepend?: boolean }) {
+  const controller = useMessageScrollerContext()
+  const isPendingScroll = useMessageScrollerPendingScroll()
+  const viewportElementRef = React.useRef<HTMLDivElement>(null)
+  const viewportRef = useMergedRefs(
+    viewportElementRef,
+    controller.setViewportElement,
+    ref
+  )
+  controller.preserveScrollOnPrepend = preserveScrollOnPrepend
+  useFrameThrottledResizeObserver(viewportElementRef, controller.handleResize)
+
   return (
-    <MessageScrollerPrimitive.Viewport
+    <div
+      ref={viewportRef}
       data-slot="message-scroller-viewport"
+      role={role}
+      aria-label={ariaLabel}
+      tabIndex={tabIndex}
       className={cn(
-        "size-full min-h-0 min-w-0 scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent data-pending-scroll:invisible",
+        "scroll-fade-b size-full min-h-0 min-w-0 scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent data-pending-scroll:invisible",
         className
       )}
+      onKeyDown={(event) => {
+        controller.handleKeyboardScrollIntent(event.key)
+        onKeyDown?.(event)
+      }}
+      onScroll={(event) => {
+        controller.syncAfterScroll()
+        onScroll?.(event)
+      }}
+      onTouchMove={(event) => {
+        controller.handleUserScrollIntent()
+        onTouchMove?.(event)
+      }}
+      onWheel={(event) => {
+        controller.handleUserScrollIntent()
+        onWheel?.(event)
+      }}
       {...props}
+      data-pending-scroll={isPendingScroll ? "" : undefined}
     />
   )
 }
 
 function MessageScrollerContent({
   className,
+  children,
+  ref,
+  role = "log",
+  "aria-relevant": ariaRelevant = "additions",
+  spacerClassName,
   ...props
-}: React.ComponentProps<typeof MessageScrollerPrimitive.Content>) {
+}: React.ComponentProps<"div"> & { spacerClassName?: string }) {
+  const controller = useMessageScrollerContext()
+  const contentElementRef = React.useRef<HTMLDivElement>(null)
+  const contentRef = useMergedRefs(
+    contentElementRef,
+    controller.setContentElement,
+    ref
+  )
+  useChildListObserver(contentElementRef, controller.handleContentChange)
+  useFrameThrottledResizeObserver(contentElementRef, controller.handleResize)
+
   return (
-    <MessageScrollerPrimitive.Content
+    <div
+      ref={contentRef}
       data-slot="message-scroller-content"
+      role={role}
+      aria-relevant={ariaRelevant}
       className={cn("flex h-max min-h-full flex-col gap-8", className)}
       {...props}
-    />
+    >
+      {children}
+      <div
+        ref={controller.setSpacerElement}
+        aria-hidden="true"
+        data-message-scroller-spacer=""
+        hidden
+        className={spacerClassName}
+      />
+    </div>
   )
 }
 
 function MessageScrollerItem({
   className,
+  messageId,
   scrollAnchor = false,
+  ref,
   ...props
-}: React.ComponentProps<typeof MessageScrollerPrimitive.Item>) {
+}: React.ComponentProps<"div"> & {
+  messageId?: string
+  scrollAnchor?: boolean
+}) {
+  const { registerMessage } = useMessageScrollerContext()
+  const itemElementRef = React.useRef<HTMLDivElement | null>(null)
+  const registerItemElement = React.useCallback(
+    (element: HTMLDivElement | null) => {
+      const previousElement = itemElementRef.current
+      itemElementRef.current = element
+      if (messageId) registerMessage(messageId, element, previousElement)
+    },
+    [messageId, registerMessage]
+  )
+  const itemRef = useMergedRefs(registerItemElement, ref)
+
   return (
-    <MessageScrollerPrimitive.Item
+    <div
+      ref={itemRef}
       data-slot="message-scroller-item"
-      scrollAnchor={scrollAnchor}
+      data-message-id={messageId}
+      data-scroll-anchor={scrollAnchor ? "true" : "false"}
       className={cn(
         "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
         className
@@ -81,41 +192,77 @@ function MessageScrollerItem({
   )
 }
 
+type MessageScrollerButtonState = {
+  active: boolean
+  direction: MessageScrollerScrollDirection
+}
+
 function MessageScrollerButton({
   direction = "end",
+  behavior = "smooth",
   className,
   children,
   render,
   variant = "secondary",
   size = "icon-sm",
+  type = "button",
+  tabIndex,
+  onClick,
   ...props
-}: React.ComponentProps<typeof MessageScrollerPrimitive.Button> &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
-  return (
-    <MessageScrollerPrimitive.Button
-      data-slot="message-scroller-button"
-      data-direction={direction}
-      data-variant={variant}
-      data-size={size}
-      direction={direction}
-      className={cn(
-        "absolute inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 border-border bg-background text-foreground transition-[translate,scale,opacity] duration-200 hover:bg-muted hover:text-foreground data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
-        className
-      )}
-      render={render ?? <Button variant={variant} size={size} />}
-      {...props}
-    >
-      {children ?? (
-        <>
-          <ArrowDownIcon
-          />
-          <span className="sr-only">
-            {direction === "end" ? "Scroll to end" : "Scroll to start"}
-          </span>
-        </>
-      )}
-    </MessageScrollerPrimitive.Button>
-  )
+}: useRender.ComponentProps<"button", MessageScrollerButtonState> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size"> & {
+    behavior?: ScrollBehavior
+    direction?: MessageScrollerScrollDirection
+  }) {
+  const { scrollToEnd, scrollToStart } = useMessageScroller()
+  const active = useMessageScrollerCanScroll(direction)
+
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+    if (!active) return
+    onClick?.(event)
+    if (event.defaultPrevented) return
+    event.currentTarget.blur()
+    if (direction === "start") scrollToStart({ behavior })
+    else scrollToEnd({ behavior })
+  }
+
+  const dataAttributes = {
+    "data-slot": "message-scroller-button",
+    "data-direction": direction,
+    "data-variant": variant,
+    "data-size": size,
+  }
+
+  return useRender({
+    defaultTagName: "button",
+    render: render ?? <Button variant={variant} size={size} />,
+    state: { active, direction },
+    stateAttributesMapping: {
+      active: (isActive) => ({ "data-active": isActive ? "true" : "false" }),
+    },
+    props: mergeProps<"button">(
+      {
+        ...dataAttributes,
+        type,
+        inert: !active,
+        tabIndex: active ? tabIndex : -1,
+        onClick: handleClick,
+        className: cn(
+          "border-border bg-background text-foreground hover:bg-muted hover:text-foreground absolute inset-s-1/2 -translate-x-1/2 transition-[translate,scale,opacity] duration-200 data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
+          className
+        ),
+        children: children ?? (
+          <>
+            <ArrowDownIcon />
+            <span className="sr-only">
+              {direction === "end" ? "Scroll to end" : "Scroll to start"}
+            </span>
+          </>
+        ),
+      },
+      props
+    ),
+  })
 }
 
 export {

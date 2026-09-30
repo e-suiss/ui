@@ -505,12 +505,13 @@
       "type": "ui",
       "title": "Message Scroller",
       "dependencies": [
+        "@base-ui/react",
         "@phosphor-icons/react",
-        "@shadcn/react",
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-message-scroller"
       ],
       "files": [
         "components/ui/message-scroller.tsx"
@@ -602,12 +603,13 @@
       "type": "ui",
       "title": "Questionnaire",
       "dependencies": [
+        "@base-ui/react",
         "@phosphor-icons/react",
-        "@shadcn/react",
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-questionnaire"
       ],
       "files": [
         "components/ui/questionnaire.tsx"
@@ -867,6 +869,16 @@
       ]
     },
     {
+      "name": "use-message-scroller",
+      "type": "hook",
+      "title": "Use Message Scroller",
+      "dependencies": [],
+      "requires": [],
+      "files": [
+        "hooks/use-message-scroller.ts"
+      ]
+    },
+    {
       "name": "use-mobile",
       "type": "hook",
       "title": "Use Mobile",
@@ -874,6 +886,16 @@
       "requires": [],
       "files": [
         "hooks/use-mobile.ts"
+      ]
+    },
+    {
+      "name": "use-questionnaire",
+      "type": "hook",
+      "title": "Use Questionnaire",
+      "dependencies": [],
+      "requires": [],
+      "files": [
+        "hooks/use-questionnaire.ts"
       ]
     }
   ]

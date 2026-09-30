@@ -1,144 +1,358 @@
 "use client"
 
 import * as React from "react"
-import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionnaire"
+import { mergeProps } from "@base-ui/react/merge-props"
+import { useRender } from "@base-ui/react/use-render"
 import { cn } from "cn"
 
 import { buttonVariants, type Button } from "@/components/ui/button"
+import {
+  QuestionnaireContext,
+  QuestionnaireItemContext,
+  useQuestionnaire,
+  useQuestionnaireChoice,
+  useQuestionnaireContext,
+  useQuestionnaireDescription,
+  useQuestionnaireError,
+  useQuestionnaireInput,
+  useQuestionnaireItem,
+  useQuestionnaireItemContext,
+  type QuestionnaireChoiceState,
+  type QuestionnaireInputState,
+  type QuestionnaireItemDefinition,
+  type QuestionnaireItemStatus,
+  type QuestionnaireShortcutMode,
+  type QuestionnaireState,
+} from "@/hooks/use-questionnaire"
 import { CheckIcon } from "@phosphor-icons/react"
+
+type QuestionnaireInputType =
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "month"
+  | "number"
+  | "password"
+  | "search"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+
+type QuestionnaireNavigationState = {
+  disabled: boolean
+  shortcut: "Enter" | null
+  status: QuestionnaireItemStatus | null
+  visible: boolean
+}
+
+type QuestionnaireNavigationProps = useRender.ComponentProps<
+  "button",
+  QuestionnaireNavigationState
+> &
+  Pick<React.ComponentProps<typeof Button>, "size" | "variant">
+
+function toggleAttributes(on: string, off: string) {
+  return (value: boolean): Record<string, string> =>
+    value ? { [on]: "" } : { [off]: "" }
+}
+
+const checkedAttributes = {
+  checked: toggleAttributes("data-checked", "data-unchecked"),
+}
 
 function Questionnaire({
   className,
+  defaultItem,
+  item,
+  items,
+  noValidate = true,
+  onItemChange,
+  onReset,
+  onSubmit,
+  ref,
+  shortcuts,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Root>) {
+}: Omit<React.ComponentProps<"form">, "defaultValue" | "value"> & {
+  defaultItem?: string
+  item?: string
+  items?: readonly QuestionnaireItemDefinition[]
+  onItemChange?: (item: string) => void
+  shortcuts?: QuestionnaireShortcutMode
+}) {
+  const questionnaire = useQuestionnaire({
+    defaultItem,
+    item,
+    items,
+    noValidate,
+    onItemChange,
+    onReset,
+    onSubmit,
+    ref,
+    shortcuts,
+  })
+  const element = useRender({
+    defaultTagName: "form",
+    ref: questionnaire.ref,
+    state: questionnaire.state,
+    props: {
+      "data-slot": "questionnaire",
+      ...mergeProps<"form">(questionnaire.props, props),
+      className: cn("flex w-full min-w-0 flex-col gap-6", className),
+    },
+  })
+
   return (
-    <QuestionnairePrimitive.Root
-      data-slot="questionnaire"
-      className={cn("flex w-full min-w-0 flex-col gap-6", className)}
-      {...props}
-    />
+    <QuestionnaireContext.Provider value={questionnaire.context}>
+      {element}
+    </QuestionnaireContext.Provider>
   )
 }
 
 function QuestionnaireProgress({
+  children,
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Progress>) {
-  return (
-    <QuestionnairePrimitive.Progress
-      data-slot="questionnaire-progress"
-      className={cn(
+}: useRender.ComponentProps<"div", QuestionnaireState>) {
+  const { current, first, last, total } = useQuestionnaireContext(
+    "QuestionnaireProgress"
+  )
+  const valueText = total ? `Question ${current} of ${total}` : undefined
+
+  return useRender({
+    defaultTagName: "div",
+    render,
+    state: { current, first, last, total },
+    props: {
+      "aria-label": "Questionnaire progress",
+      "aria-live": "polite",
+      "aria-valuemax": total || undefined,
+      "aria-valuemin": total ? 1 : undefined,
+      "aria-valuenow": total ? current : undefined,
+      "aria-valuetext": valueText,
+      children: children ?? valueText,
+      role: "progressbar",
+      "data-slot": "questionnaire-progress",
+      className: cn(
         "min-h-[1lh] w-fit min-w-[14ch] text-xs font-medium text-muted-foreground tabular-nums",
         className
-      )}
-      {...props}
-    />
-  )
+      ),
+      ...props,
+    },
+  })
 }
 
 function QuestionnaireItem({
+  "aria-describedby": ariaDescribedBy,
+  "aria-keyshortcuts": ariaKeyShortcuts,
+  children,
   className,
+  disabled = false,
+  invalid = false,
+  multiple = false,
+  name,
+  onStatusChange,
+  ref,
+  required = false,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Item>) {
-  return (
-    <QuestionnairePrimitive.Item
-      data-slot="questionnaire-item"
-      className={cn(
+}: Omit<React.ComponentProps<"fieldset">, "name" | "value"> & {
+  invalid?: boolean
+  multiple?: boolean
+  name: string
+  onStatusChange?: (status: QuestionnaireItemStatus) => void
+  required?: boolean
+}) {
+  const questionnaireItem = useQuestionnaireItem({
+    "aria-describedby": ariaDescribedBy,
+    "aria-keyshortcuts": ariaKeyShortcuts,
+    disabled,
+    invalid,
+    multiple,
+    name,
+    onStatusChange,
+    ref,
+    required,
+  })
+  const element = useRender({
+    defaultTagName: "fieldset",
+    ref: questionnaireItem.ref,
+    state: questionnaireItem.state,
+    props: {
+      ...questionnaireItem.props,
+      children,
+      "data-slot": "questionnaire-item",
+      className: cn(
         "flex min-w-0 flex-col gap-5 border-0 p-0 outline-none",
         className
-      )}
-      {...props}
-    />
+      ),
+      ...props,
+    },
+  })
+
+  return (
+    <QuestionnaireItemContext.Provider value={questionnaireItem.context}>
+      {element}
+    </QuestionnaireItemContext.Provider>
   )
 }
 
 function QuestionnaireTitle({
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Title>) {
-  return (
-    <QuestionnairePrimitive.Title
-      data-slot="questionnaire-title"
-      className={cn(
+}: useRender.ComponentProps<"legend">) {
+  useQuestionnaireItemContext("QuestionnaireTitle")
+
+  return useRender({
+    defaultTagName: "legend",
+    render,
+    props: {
+      "data-slot": "questionnaire-title",
+      className: cn(
         "font-heading text-base font-semibold text-pretty [&:not(:has(~[data-slot=questionnaire-description]))]:mb-5",
         className
-      )}
-      {...props}
-    />
-  )
+      ),
+      ...props,
+    },
+  })
 }
 
 function QuestionnaireDescription({
   className,
+  id: idProp,
+  render,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Description>) {
-  return (
-    <QuestionnairePrimitive.Description
-      data-slot="questionnaire-description"
-      className={cn("text-sm text-pretty text-muted-foreground", className)}
-      {...props}
-    />
-  )
+}: useRender.ComponentProps<"p">) {
+  const generatedId = React.useId()
+  const id = idProp ?? generatedId
+  useQuestionnaireDescription(id)
+
+  return useRender({
+    defaultTagName: "p",
+    render,
+    props: {
+      id,
+      "data-slot": "questionnaire-description",
+      className: cn("text-sm text-pretty text-muted-foreground", className),
+      ...props,
+    },
+  })
 }
 
 function QuestionnaireChoices({
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Choices>) {
-  return (
-    <QuestionnairePrimitive.Choices
-      data-slot="questionnaire-choices"
-      className={cn(
+}: useRender.ComponentProps<
+  "div",
+  { shortcuts: QuestionnaireShortcutMode | null }
+>) {
+  const { shortcuts } = useQuestionnaireItemContext("QuestionnaireChoices")
+
+  return useRender({
+    defaultTagName: "div",
+    render,
+    state: { shortcuts },
+    props: {
+      "data-slot": "questionnaire-choices",
+      className: cn(
         "group/questionnaire-choices grid min-w-0 gap-3",
         className
-      )}
-      {...props}
-    />
-  )
+      ),
+      ...props,
+    },
+  })
 }
 
 function QuestionnaireChoice({
+  checked,
   children,
   className,
+  defaultChecked = false,
+  disabled = false,
+  onChange,
+  render,
+  value,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Choice>) {
-  return (
-    <QuestionnairePrimitive.Choice
-      data-slot="questionnaire-choice"
-      className={cn(
+}: Omit<
+  useRender.ComponentProps<"label", QuestionnaireChoiceState>,
+  "onChange"
+> & {
+  checked?: boolean
+  defaultChecked?: boolean
+  disabled?: boolean
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
+  value: string
+}) {
+  const { inputProps, state } = useQuestionnaireChoice({
+    checked,
+    defaultChecked,
+    disabled,
+    onChange,
+    value,
+  })
+  const input = useRender({
+    defaultTagName: "input",
+    state,
+    stateAttributesMapping: checkedAttributes,
+    props: {
+      ...inputProps,
+      "data-slot": "questionnaire-choice-input",
+      className: "absolute inset-0 z-10 size-full cursor-pointer opacity-0",
+    },
+  })
+
+  return useRender({
+    defaultTagName: "label",
+    render,
+    state,
+    stateAttributesMapping: checkedAttributes,
+    props: {
+      "data-slot": "questionnaire-choice",
+      className: cn(
         "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-3xl border border-input px-4 py-3 text-start text-sm transition-colors outline-none select-none hover:bg-input/40 has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-checked:border-primary/40 data-checked:bg-primary/10",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
-      )}
-      {...props}
-    >
-      <QuestionnairePrimitive.ChoiceInput
-        data-slot="questionnaire-choice-input"
-        className="absolute inset-0 z-10 size-full cursor-pointer opacity-0"
-      />
-      <span
-        aria-hidden="true"
-        data-slot="questionnaire-choice-indicator"
-        className="pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-[5px] border border-transparent bg-input/90 group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-primary-foreground dark:group-data-checked/questionnaire-choice:bg-primary"
-      >
-        <span
-          data-slot="questionnaire-choice-indicator-dot"
-          className="hidden size-2 rounded-full bg-primary-foreground group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block dark:size-2.5"
-        />
-        <CheckIcon data-slot="questionnaire-choice-indicator-check" className="hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block" />
-      </span>
-      <QuestionnairePrimitive.ChoiceLabel
-        data-slot="questionnaire-choice-label"
-        className="flex min-w-0 flex-1 flex-col gap-1 leading-snug"
-      >
-        {children}
-      </QuestionnairePrimitive.ChoiceLabel>
-      <QuestionnairePrimitive.ChoiceShortcut
-        data-slot="questionnaire-choice-shortcut"
-        className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-[0.625rem] leading-none font-medium text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[shortcut]/questionnaire-choice:inline-flex"
-      />
-    </QuestionnairePrimitive.Choice>
-  )
+      ),
+      ...props,
+      children: (
+        <>
+          {input}
+          <span
+            aria-hidden="true"
+            data-slot="questionnaire-choice-indicator"
+            className="pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-[5px] border border-transparent bg-input/90 group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-primary-foreground dark:group-data-checked/questionnaire-choice:bg-primary"
+          >
+            <span
+              data-slot="questionnaire-choice-indicator-dot"
+              className="hidden size-2 rounded-full bg-primary-foreground group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block dark:size-2.5"
+            />
+            <CheckIcon
+              data-slot="questionnaire-choice-indicator-check"
+              className="hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
+            />
+          </span>
+          <span
+            data-slot="questionnaire-choice-label"
+            className="flex min-w-0 flex-1 flex-col gap-1 leading-snug"
+          >
+            {children}
+          </span>
+          <span
+            aria-hidden="true"
+            hidden={state.shortcut === null}
+            data-shortcut={state.shortcut ?? undefined}
+            data-slot="questionnaire-choice-shortcut"
+            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-[0.625rem] leading-none font-medium text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[shortcut]/questionnaire-choice:inline-flex"
+          >
+            {state.shortcut}
+          </span>
+        </>
+      ),
+    },
+  })
 }
 
 function QuestionnaireChoiceDescription({
@@ -156,37 +370,87 @@ function QuestionnaireChoiceDescription({
 
 function QuestionnaireInput({
   className,
+  defaultValue,
+  disabled = false,
+  onChange,
+  ref,
+  render,
+  type = "text",
+  value,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Input>) {
+}: Omit<
+  useRender.ComponentProps<"input", QuestionnaireInputState>,
+  "form" | "name" | "type"
+> & {
+  type?: QuestionnaireInputType
+}) {
+  const questionnaireInput = useQuestionnaireInput({
+    defaultValue,
+    disabled,
+    onChange,
+    ref,
+    type,
+    value,
+  })
+  const input = useRender({
+    defaultTagName: "input",
+    ref: questionnaireInput.ref,
+    render,
+    state: questionnaireInput.state,
+    stateAttributesMapping: {
+      filled: toggleAttributes("data-filled", "data-empty"),
+    },
+    props: {
+      ...questionnaireInput.inputProps,
+      "data-slot": "questionnaire-input",
+      className: cn(
+        "h-9 min-h-11 w-full min-w-0 rounded-3xl border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 sm:min-h-0 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+        "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
+        className
+      ),
+      ...props,
+    },
+  })
+
   return (
     <div
       data-slot="questionnaire-input-wrapper"
       className="group/questionnaire-input relative w-full min-w-0"
     >
-      <QuestionnairePrimitive.Input
-        data-slot="questionnaire-input"
-        className={cn(
-          "h-9 min-h-11 w-full min-w-0 rounded-3xl border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 sm:min-h-0 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
-          "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
-          className
-        )}
-        {...props}
-      />
+      {input}
     </div>
   )
 }
 
 function QuestionnaireError({
+  children,
   className,
+  id: idProp,
+  render,
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Error>) {
-  return (
-    <QuestionnairePrimitive.Error
-      data-slot="questionnaire-error"
-      className={cn("mt-2 text-sm text-destructive", className)}
-      {...props}
-    />
-  )
+}: useRender.ComponentProps<"p", { invalid: boolean }>) {
+  const generatedId = React.useId()
+  const id = idProp ?? generatedId
+  const { invalid, required } = useQuestionnaireError(id)
+
+  return useRender({
+    defaultTagName: "p",
+    render,
+    state: { invalid },
+    props: {
+      children:
+        children ??
+        (required
+          ? "Choose an answer to continue."
+          : "Choose an answer or skip this question."),
+      hidden: !invalid,
+      id,
+      role: invalid ? "alert" : undefined,
+      "data-slot": "questionnaire-error",
+      className: cn("mt-2 text-sm text-destructive", className),
+      ...props,
+    },
+  })
 }
 
 function QuestionnaireActions({
@@ -205,104 +469,158 @@ function QuestionnaireActions({
   )
 }
 
-function QuestionnairePrevious({
+function useNavigationButton({
+  action,
   children,
   className,
+  disabled = false,
+  label,
+  onClick,
+  placement,
+  render,
+  shortcut = null,
+  size,
+  slot,
+  tabIndex,
+  type = "button",
+  variant,
+  visible,
+  ...props
+}: QuestionnaireNavigationProps & {
+  action?: () => void
+  label: string
+  placement: string
+  shortcut?: "Enter" | null
+  slot: string
+  visible: boolean
+}) {
+  const { activeItemStatus } = useQuestionnaireContext(label)
+  const activeShortcut = visible && !disabled ? shortcut : null
+
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+    onClick?.(event)
+    if (!event.defaultPrevented) action?.()
+  }
+
+  return useRender({
+    defaultTagName: "button",
+    render,
+    state: {
+      disabled,
+      shortcut: activeShortcut,
+      status: activeItemStatus,
+      visible,
+    },
+    stateAttributesMapping: {
+      visible: toggleAttributes("data-visible", "data-hidden"),
+    },
+    props: {
+      "aria-hidden": !visible || undefined,
+      "aria-keyshortcuts": activeShortcut ?? undefined,
+      children,
+      disabled,
+      hidden: !visible,
+      inert: !visible,
+      onClick: action ? handleClick : onClick,
+      tabIndex: visible ? tabIndex : -1,
+      type,
+      "data-slot": slot,
+      "data-size": size,
+      "data-variant": variant,
+      className: cn(buttonVariants({ size, variant }), placement, className),
+      ...props,
+    },
+  })
+}
+
+function QuestionnairePrevious({
+  children,
   size = "default",
   variant = "outline",
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Previous> &
-  Pick<React.ComponentProps<typeof Button>, "size" | "variant">) {
-  return (
-    <QuestionnairePrimitive.Previous
-      data-slot="questionnaire-previous"
-      data-size={size}
-      data-variant={variant}
-      className={cn(
-        buttonVariants({ size, variant }),
-        "col-start-1 row-start-1 min-h-11 justify-self-start sm:min-h-0",
-        className
-      )}
-      {...props}
-    >
-      {children ?? "Previous"}
-    </QuestionnairePrimitive.Previous>
+}: QuestionnaireNavigationProps) {
+  const { first, goPrevious, total } = useQuestionnaireContext(
+    "QuestionnairePrevious"
   )
+
+  return useNavigationButton({
+    ...props,
+    action: goPrevious,
+    children: children ?? "Previous",
+    label: "QuestionnairePrevious",
+    placement: "col-start-1 row-start-1 min-h-11 justify-self-start sm:min-h-0",
+    size,
+    slot: "questionnaire-previous",
+    variant,
+    visible: total > 1 && !first,
+  })
 }
 
 function QuestionnaireSkip({
   children,
-  className,
   size = "default",
   variant = "outline",
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Skip> &
-  Pick<React.ComponentProps<typeof Button>, "size" | "variant">) {
-  return (
-    <QuestionnairePrimitive.Skip
-      data-slot="questionnaire-skip"
-      data-size={size}
-      data-variant={variant}
-      className={cn(
-        buttonVariants({ size, variant }),
-        "col-start-2 row-start-1 min-h-11 justify-self-end sm:min-h-0",
-        className
-      )}
-      {...props}
-    >
-      {children ?? "Skip"}
-    </QuestionnairePrimitive.Skip>
-  )
+}: QuestionnaireNavigationProps) {
+  const { activeItemRequired, skipCurrent } =
+    useQuestionnaireContext("QuestionnaireSkip")
+
+  return useNavigationButton({
+    ...props,
+    action: skipCurrent,
+    children: children ?? "Skip",
+    label: "QuestionnaireSkip",
+    placement: "col-start-2 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    size,
+    slot: "questionnaire-skip",
+    variant,
+    visible: activeItemRequired === false,
+  })
 }
 
 function QuestionnaireNext({
   children,
-  className,
   size = "default",
   variant = "default",
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Next> &
-  Pick<React.ComponentProps<typeof Button>, "size" | "variant">) {
-  return (
-    <QuestionnairePrimitive.Next
-      data-slot="questionnaire-next"
-      data-size={size}
-      data-variant={variant}
-      className={cn(
-        buttonVariants({ size, variant }),
-        "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
-        className
-      )}
-      {...props}
-    >
-      {children ?? "Next"}
-    </QuestionnairePrimitive.Next>
-  )
+}: QuestionnaireNavigationProps) {
+  const { goNext, last, total } = useQuestionnaireContext("QuestionnaireNext")
+
+  return useNavigationButton({
+    ...props,
+    action: goNext,
+    children: children ?? "Next",
+    label: "QuestionnaireNext",
+    placement: "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    shortcut: "Enter",
+    size,
+    slot: "questionnaire-next",
+    variant,
+    visible: total > 1 && !last,
+  })
 }
 
 function QuestionnaireSubmit({
   children,
-  className,
   size = "default",
+  type = "submit",
   variant = "default",
   ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Submit> &
-  Pick<React.ComponentProps<typeof Button>, "size" | "variant">) {
-  return (
-    <QuestionnairePrimitive.Submit
-      data-slot="questionnaire-submit"
-      data-size={size}
-      data-variant={variant}
-      className={cn(
-        buttonVariants({ size, variant }),
-        "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
-        className
-      )}
-      {...props}
-    >
-      {children ?? "Submit"}
-    </QuestionnairePrimitive.Submit>
-  )
+}: QuestionnaireNavigationProps) {
+  const { last, total } = useQuestionnaireContext("QuestionnaireSubmit")
+
+  return useNavigationButton({
+    ...props,
+    children: children ?? "Submit",
+    label: "QuestionnaireSubmit",
+    placement: "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    shortcut: "Enter",
+    size,
+    slot: "questionnaire-submit",
+    type,
+    variant,
+    visible: total > 0 && last,
+  })
 }
 
 export {
