@@ -1,19 +1,24 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": [
-    "components/ui/*.tsx",
-    "hooks/*.ts",
-    "scripts/*.mjs",
-    "packages/cli/index.mjs"
-  ],
-  "project": [
-    "components/**/*.{ts,tsx}",
-    "hooks/**/*.ts",
-    "scripts/**/*.mjs",
-    "packages/cli/**/*.mjs",
-    ".storybook/**/*.{ts,tsx}",
-    "styles/**/*.css",
-    ".storybook/**/*.css",
-    "stories/**/*.{tsx,mdx}"
-  ]
+  "workspaces": {
+    ".": {
+      "entry": [
+        "components/ui/*.tsx",
+        "hooks/*.ts",
+        "scripts/*.mjs",
+        "packages/cli/index.mjs"
+      ],
+      "project": [
+        "components/**/*.{ts,tsx}",
+        "hooks/**/*.ts",
+        "scripts/**/*.mjs",
+        "packages/cli/**/*.mjs",
+        ".storybook/**/*.{ts,tsx}",
+        "styles/**/*.css",
+        ".storybook/**/*.css",
+        "stories/**/*.{tsx,mdx}"
+      ]
+    },
+    "packages/tailwind": {}
+  }
 }

@@ -9,7 +9,7 @@ npx @esuiss/ui@latest init
 npx @esuiss/ui@latest add sidebar
 ```
 
-`init` sets up Tailwind CSS v4, the `@/*` import alias, the theme stylesheet, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on.
+`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet only holds your theme colors; variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
 
 Update a component later:
 
@@ -38,16 +38,17 @@ Git hooks are installed by `pnpm install`:
 - pre-push: Biome on the whole repo, typecheck, Knip, and the registry check.
 
 - `components/ui/` and `hooks/`: the files `add` copies into projects.
-- `styles/globals.css`: the theme and Tailwind setup, written to the project stylesheet by `init`.
+- `styles/globals.css`: the theme colors, written to the project stylesheet by `init`.
 - `stories/`: one Storybook file per component. Use the toolbar to switch between light and dark mode.
 - `packages/cli/`: the `@esuiss/ui` command.
+- `packages/tailwind/`: the `@esuiss/tailwind` stylesheet with variants, animations, and utilities.
 
 ## Release
 
-Component, hook, and stylesheet changes reach users as soon as they are pushed to `main`. Releasing is only needed when `packages/cli` changes:
+Component, hook, and theme color changes reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` or `packages/tailwind` changes; both packages are released together with the same version:
 
 ```bash
 pnpm release patch   # or minor, major, or an exact version like 1.0.0
 ```
 
-This bumps `packages/cli/package.json`, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes the package to npm and creates the GitHub release.
+This bumps both packages, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes them to npm and creates the GitHub release.
