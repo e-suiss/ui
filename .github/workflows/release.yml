@@ -22,28 +22,31 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
 
-      - name: Check version
-        id: version
+      - name: Check versions
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          PACKAGE_VERSION=$(node -p "require('./packages/cli/package.json').version")
-          if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match packages/cli version $PACKAGE_VERSION." >&2
-            exit 1
-          fi
-          if npm view "@esuiss/ui@$VERSION" version > /dev/null 2>&1; then
-            echo "published=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "published=false" >> "$GITHUB_OUTPUT"
-          fi
+          for dir in packages/cli packages/tailwind; do
+            PACKAGE_VERSION=$(node -p "require('./$dir/package.json').version")
+            if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
+              echo "Tag $GITHUB_REF_NAME does not match $dir version $PACKAGE_VERSION." >&2
+              exit 1
+            fi
+          done
 
       - name: Check registry
         run: node scripts/build-registry.mjs --check
 
       - name: Publish to npm
-        if: steps.version.outputs.published == 'false'
-        working-directory: packages/cli
-        run: npm publish
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          for dir in packages/cli packages/tailwind; do
+            NAME=$(node -p "require('./$dir/package.json').name")
+            if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+              echo "$NAME@$VERSION is already published."
+            else
+              (cd "$dir" && npm publish)
+            fi
+          done
 
       - name: Create GitHub release
         env:
