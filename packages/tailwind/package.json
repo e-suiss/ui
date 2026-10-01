@@ -1,7 +1,21 @@
 {
   "name": "@esuiss/tailwind",
   "version": "0.5.0",
-  "description": "Tailwind CSS variants, animations, and utilities for esuiss-ui components.",
+  "description": "Tailwind CSS variants, animations, utilities, and base styles for esuiss-ui components.",
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "tailwind-v4",
+    "css",
+    "variants",
+    "animations",
+    "utilities",
+    "esuiss-ui",
+    "base-ui",
+    "react",
+    "design-system"
+  ],
+  "author": "ademceper",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,6 +23,9 @@
     "directory": "packages/tailwind"
   },
   "homepage": "https://github.com/e-suiss/ui",
+  "bugs": {
+    "url": "https://github.com/e-suiss/ui/issues"
+  },
   "style": "./tailwind.css",
   "exports": {
     ".": {

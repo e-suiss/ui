@@ -1,7 +1,26 @@
 {
   "name": "@esuiss/ui",
   "version": "0.5.0",
-  "description": "Add esuiss-ui components to Next.js and React projects.",
+  "description": "Copy-paste React components with an Apple-inspired design, built on Base UI and Tailwind CSS v4. CLI for Next.js and React (Vite).",
+  "keywords": [
+    "react",
+    "nextjs",
+    "vite",
+    "components",
+    "ui",
+    "design-system",
+    "tailwindcss",
+    "tailwind",
+    "base-ui",
+    "apple",
+    "oklch",
+    "dark-mode",
+    "cli",
+    "copy-paste",
+    "typescript",
+    "phosphor-icons"
+  ],
+  "author": "ademceper",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,6 +28,9 @@
     "directory": "packages/cli"
   },
   "homepage": "https://github.com/e-suiss/ui",
+  "bugs": {
+    "url": "https://github.com/e-suiss/ui/issues"
+  },
   "type": "module",
   "bin": {
     "esuiss": "index.mjs"
