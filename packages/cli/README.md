@@ -1,11 +1,11 @@
 # @esuiss/ui
 
-Copy-paste React components with an Apple-inspired design, built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4.
+Copy-paste React components with a clean, minimal design, built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4.
 
 `@esuiss/ui` is a command-line tool. It does not ship components as a dependency. Instead, it copies their source into your project so you own the code and can change it however you like.
 
 - 61 accessible components and 3 hooks, from buttons and dialogs to sidebars, charts, and chat views
-- Apple system colors for light and dark mode, written in oklch
+- A refined color palette for light and dark mode, written in oklch
 - [Phosphor](https://phosphoricons.com) icons
 - Next.js and React (Vite) with TypeScript
 - No runtime dependency on this CLI: it runs with `npx` and is never installed in your project
@@ -117,7 +117,7 @@ Your stylesheet holds the whole theme:
 
 - **Change a color:** edit its value under `:root` (light) and `.dark` (dark).
 - **Add a color:** define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
-- **Change the font:** set `--font-sans` in `@theme inline`. By default the system font is used, so Apple devices show San Francisco and other platforms show their own system font, with nothing to download.
+- **Change the font:** set `--font-sans` in `@theme inline`. By default each device's own system font is used, so nothing has to be downloaded.
 - **Corner radius:** `--radius` scales every rounded component.
 
 ## Dark mode
