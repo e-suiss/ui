@@ -1,6 +1,6 @@
 {
   "name": "@esuiss/ui",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Copy-paste React components with an Apple-inspired design, built on Base UI and Tailwind CSS v4. CLI for Next.js and React (Vite).",
   "keywords": [
     "react",

@@ -1,6 +1,6 @@
 {
   "name": "@esuiss/tailwind",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Tailwind CSS variants, animations, utilities, and base styles for esuiss-ui components.",
   "keywords": [
     "tailwindcss",
