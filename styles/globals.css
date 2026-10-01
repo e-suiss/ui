@@ -70,39 +70,6 @@
   --sidebar-ring: oklch(0.651471 0.191972 251.4696);
 }
 
-@theme {
-  --text-3xs: 0.6875rem;
-  --text-3xs--line-height: 0.8125rem;
-  --text-3xs--letter-spacing: 0.006em;
-  --text-2xs: 0.75rem;
-  --text-2xs--line-height: 1rem;
-  --text-2xs--letter-spacing: 0em;
-  --text-xs: 0.8125rem;
-  --text-xs--line-height: 1.125rem;
-  --text-xs--letter-spacing: -0.006em;
-  --text-sm: 0.9375rem;
-  --text-sm--line-height: 1.25rem;
-  --text-sm--letter-spacing: -0.016em;
-  --text-md: 1rem;
-  --text-md--line-height: 1.3125rem;
-  --text-md--letter-spacing: -0.02em;
-  --text-base: 1.0625rem;
-  --text-base--line-height: 1.375rem;
-  --text-base--letter-spacing: -0.026em;
-  --text-lg: 1.25rem;
-  --text-lg--line-height: 1.5625rem;
-  --text-lg--letter-spacing: -0.023em;
-  --text-xl: 1.375rem;
-  --text-xl--line-height: 1.75rem;
-  --text-xl--letter-spacing: -0.012em;
-  --text-2xl: 1.75rem;
-  --text-2xl--line-height: 2.125rem;
-  --text-2xl--letter-spacing: 0.014em;
-  --text-3xl: 2.125rem;
-  --text-3xl--line-height: 2.5625rem;
-  --text-3xl--letter-spacing: 0.012em;
-}
-
 @theme inline {
   --font-sans: system-ui, sans-serif;
   --font-heading: var(--font-sans);
