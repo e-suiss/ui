@@ -43,8 +43,19 @@ jobs:
             NAME=$(node -p "require('./$dir/package.json').name")
             if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
               echo "$NAME@$VERSION is already published."
-            else
-              (cd "$dir" && npm publish)
+              continue
+            fi
+            set +e
+            OUTPUT=$(cd "$dir" && npm publish 2>&1)
+            STATUS=$?
+            set -e
+            echo "$OUTPUT"
+            if [ "$STATUS" -ne 0 ]; then
+              if echo "$OUTPUT" | grep -qiE "E409|cannot publish over"; then
+                echo "$NAME@$VERSION is already published."
+              else
+                exit "$STATUS"
+              fi
             fi
           done
 
