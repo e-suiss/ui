@@ -1,6 +1,6 @@
 {
   "name": "@esuiss/tailwind",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Tailwind CSS variants, animations, and utilities for esuiss-ui components.",
   "license": "MIT",
   "repository": {
