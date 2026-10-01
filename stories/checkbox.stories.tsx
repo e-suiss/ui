@@ -33,7 +33,7 @@ export const WithLabel: Story = {
 export const WithDescription: Story = {
   render: (args) => (
     <div className="flex w-80 items-start gap-3">
-      <Checkbox {...args} id="marketing" defaultChecked />
+      <Checkbox {...args} id="marketing" defaultChecked className="mt-0.5" />
       <div className="grid gap-1.5">
         <Label htmlFor="marketing">Product updates</Label>
         <p className="text-muted-foreground text-sm">
