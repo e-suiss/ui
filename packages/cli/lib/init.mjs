@@ -38,7 +38,7 @@ const TOOLING = {
   next: ["tailwindcss", "@tailwindcss/postcss"],
   vite: ["tailwindcss", "@tailwindcss/vite", "@types/node"],
 }
-const RUNTIME = ["tw-animate-css"]
+const MINIMUM_TAILWIND = [4, 2]
 
 function relative(project, file) {
   return path.relative(project.cwd, file)
@@ -59,14 +59,44 @@ function findStylesheet(project) {
   return path.join(appDir, "globals.css")
 }
 
+function installedVersion(project, name) {
+  const manifest = path.join(project.cwd, "node_modules", name, "package.json")
+  if (existsSync(manifest)) {
+    return JSON.parse(readFileSync(manifest, "utf8")).version
+  }
+  return project.packages[name]
+}
+
 function assertTailwindVersion(project) {
-  const version = project.packages.tailwindcss
-  const major = version && Number(version.match(/\d+/)?.[0])
-  if (major && major < 4) {
+  const version = installedVersion(project, "tailwindcss")
+  const match = version?.match(/(\d+)(?:\.(\d+))?/)
+  if (!match) return
+  const major = Number(match[1])
+  const minor = match[2] === undefined ? undefined : Number(match[2])
+  const [requiredMajor, requiredMinor] = MINIMUM_TAILWIND
+  const tooOld =
+    major < requiredMajor ||
+    (major === requiredMajor && minor !== undefined && minor < requiredMinor)
+  if (tooOld) {
     throw new CliError(
-      `Tailwind CSS v4 is required, this project uses ${version}.`
+      `Tailwind CSS ${requiredMajor}.${requiredMinor} or later is required, this project uses ${version}. Upgrade tailwindcss and run init again.`
     )
   }
+}
+
+function stylesheetPackages(css) {
+  return [...css.matchAll(/@import\s+["']([^"']+)["']/g)]
+    .map(([, specifier]) => specifier)
+    .filter(
+      (specifier) =>
+        !specifier.startsWith(".") &&
+        !specifier.startsWith("/") &&
+        specifier !== "tailwindcss"
+    )
+    .map((specifier) => {
+      const parts = specifier.split("/")
+      return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0]
+    })
 }
 
 function addAliasTo(file, target) {
@@ -206,7 +236,7 @@ export async function init(options) {
     step("Added the @/* import alias to tsconfig")
 
   install(project, TOOLING[project.framework], { dev: true })
-  install(project, RUNTIME)
+  install(project, stylesheetPackages(css))
 
   const manual =
     project.framework === "vite"

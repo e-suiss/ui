@@ -9,4 +9,4 @@ npx @esuiss/ui@latest add button --diff
 npx @esuiss/ui@latest add button --overwrite
 ```
 
-`init` sets up Tailwind CSS v4, the `@/*` import alias, the theme stylesheet, and the button. Requires TypeScript.
+`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet with `@esuiss/tailwind`, and the button. Requires TypeScript.
