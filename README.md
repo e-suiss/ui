@@ -9,7 +9,7 @@ npx @esuiss/ui@latest init
 npx @esuiss/ui@latest add sidebar
 ```
 
-`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet only holds your theme colors; variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
+`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-primary`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
 
 Update a component later:
 
@@ -38,7 +38,7 @@ Git hooks are installed by `pnpm install`:
 - pre-push: Biome on the whole repo, typecheck, Knip, and the registry check.
 
 - `components/ui/` and `hooks/`: the files `add` copies into projects.
-- `styles/globals.css`: the theme colors, written to the project stylesheet by `init`.
+- `styles/globals.css`: the theme (oklch colors, radius, font, `@theme inline` names), written to the project stylesheet by `init`.
 - `stories/`: one Storybook file per component. Use the toolbar to switch between light and dark mode.
 - `packages/cli/`: the `@esuiss/ui` command.
 - `packages/tailwind/`: the `@esuiss/tailwind` stylesheet with variants, animations, and utilities.
