@@ -57,7 +57,9 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <Attachment {...args}>
-      <AttachmentMedia variant="document" extension="pdf" />
+      <AttachmentMedia variant="document">
+        <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+      </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
         <AttachmentDescription>2.4 MB</AttachmentDescription>
@@ -112,7 +114,9 @@ export const States: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="uploading" className="w-full">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
           <AttachmentProgress value={64} aria-label="Uploading" />
@@ -124,7 +128,9 @@ export const States: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="processing" className="w-full">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
           <AttachmentDescription>Processing…</AttachmentDescription>
@@ -134,7 +140,9 @@ export const States: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="error" className="w-full">
-        <AttachmentMedia variant="document" extension="key" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-orange-700">key</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Presentation.key</AttachmentTitle>
           <AttachmentDescription>File type not supported</AttachmentDescription>
@@ -146,7 +154,9 @@ export const States: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="done" className="w-full">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
           <AttachmentDescription>1.1 MB</AttachmentDescription>
@@ -206,7 +216,9 @@ export const Clickable: Story = {
   render: (args) => (
     <Attachment {...args}>
       <AttachmentTrigger aria-label="Open Brand guidelines.pdf" />
-      <AttachmentMedia variant="document" extension="pdf" />
+      <AttachmentMedia variant="document">
+        <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+      </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>
         <AttachmentDescription>5.8 MB</AttachmentDescription>
@@ -231,7 +243,9 @@ export const Group: Story = {
   render: (args) => (
     <AttachmentGroup>
       <Attachment {...args} state="uploading">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
           <AttachmentProgress value={64} aria-label="Uploading" />
@@ -243,7 +257,9 @@ export const Group: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="processing">
-        <AttachmentMedia variant="document" extension="docx" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-blue-600">docx</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Contract.docx</AttachmentTitle>
           <AttachmentDescription>Processing…</AttachmentDescription>
@@ -253,7 +269,9 @@ export const Group: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args}>
-        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
           <AttachmentDescription>2.4 MB</AttachmentDescription>
@@ -281,7 +299,9 @@ export const Group: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="error">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
           <AttachmentDescription>Upload failed</AttachmentDescription>
@@ -298,14 +318,38 @@ export const FileTypes: Story = {
   render: (args) => (
     <div className="flex flex-col gap-3">
       {[
-        { name: "Invoice.pdf", meta: "128 KB", extension: "pdf" },
-        { name: "Menu.xlsx", meta: "2.4 MB", extension: "xlsx" },
-        { name: "Contract.docx", meta: "84 KB", extension: "docx" },
-        { name: "Pitch.key", meta: "12 MB", extension: "key" },
-        { name: "Archive.zip", meta: "48 MB", extension: "zip" },
+        {
+          name: "Invoice.pdf",
+          meta: "128 KB",
+          extension: "pdf",
+          tone: "bg-red-600",
+        },
+        {
+          name: "Menu.xlsx",
+          meta: "2.4 MB",
+          extension: "xlsx",
+          tone: "bg-green-700",
+        },
+        {
+          name: "Contract.docx",
+          meta: "84 KB",
+          extension: "docx",
+          tone: "bg-blue-600",
+        },
+        {
+          name: "Pitch.key",
+          meta: "12 MB",
+          extension: "key",
+          tone: "bg-orange-700",
+        },
+        { name: "Archive.zip", meta: "48 MB", extension: "zip", tone: "" },
       ].map((file) => (
         <Attachment key={file.name} {...args}>
-          <AttachmentMedia variant="document" extension={file.extension} />
+          <AttachmentMedia variant="document">
+            <AttachmentLabel className={file.tone}>
+              {file.extension}
+            </AttachmentLabel>
+          </AttachmentMedia>
           <AttachmentContent>
             <AttachmentTitle>{file.name}</AttachmentTitle>
             <AttachmentDescription>{file.meta}</AttachmentDescription>
@@ -314,7 +358,7 @@ export const FileTypes: Story = {
       ))}
       <Attachment {...args}>
         <AttachmentMedia variant="document">
-          <AttachmentLabel tone="blue">MD</AttachmentLabel>
+          <AttachmentLabel className="bg-blue-600">MD</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>README.md</AttachmentTitle>
@@ -329,7 +373,9 @@ export const FileList: Story = {
   render: (args) => (
     <div className="flex w-96 flex-col gap-3">
       <Attachment {...args} className="w-full">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
           <AttachmentDescription>128 KB</AttachmentDescription>
@@ -341,7 +387,9 @@ export const FileList: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} className="w-full">
-        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
           <AttachmentDescription>2.4 MB</AttachmentDescription>
@@ -367,7 +415,9 @@ export const FileList: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="error" className="w-full">
-        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
           <AttachmentDescription>Upload failed</AttachmentDescription>
@@ -384,7 +434,9 @@ export const Uploaded: Story = {
   render: (args) => (
     <div className="flex w-96 flex-col gap-3">
       <Attachment {...args} className="w-full">
-        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
+        </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
           <AttachmentDescription>2.4 MB</AttachmentDescription>
