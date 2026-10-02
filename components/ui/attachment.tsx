@@ -8,14 +8,14 @@ import type * as React from "react"
 import { Button } from "@/components/ui/button"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors focus-within:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)] data-[state=idle]:border data-[state=idle]:border-dashed in-data-[slot=attachment-group]:w-full in-data-[slot=attachment-group]:rounded-none in-data-[slot=attachment-group]:border-0 in-data-[slot=attachment-group]:[--focus-ring-offset:-3px] in-data-[slot=attachment-group]:not-first:before:absolute in-data-[slot=attachment-group]:not-first:before:inset-e-0 in-data-[slot=attachment-group]:not-first:before:top-0 in-data-[slot=attachment-group]:not-first:before:start-4 in-data-[slot=attachment-group]:not-first:before:border-t in-data-[slot=attachment-group]:not-first:before:border-border in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-16",
+  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors has-[[data-slot=attachment-trigger]:focus-visible]:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)] not-in-data-[slot=attachment-group]:data-[state=idle]:border not-in-data-[slot=attachment-group]:data-[state=idle]:border-dashed in-data-[slot=attachment-group]:w-full in-data-[slot=attachment-group]:rounded-none in-data-[slot=attachment-group]:[--focus-ring-offset:-3px] in-data-[slot=attachment-group]:not-first:before:absolute in-data-[slot=attachment-group]:not-first:before:inset-e-0 in-data-[slot=attachment-group]:not-first:before:top-0 in-data-[slot=attachment-group]:not-first:before:start-4 in-data-[slot=attachment-group]:not-first:before:border-t in-data-[slot=attachment-group]:not-first:before:border-border in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-16",
   {
     variants: {
       size: {
         default:
           "gap-3 px-4 py-3 text-sm data-[orientation=vertical]:gap-2 data-[orientation=vertical]:has-data-[slot=attachment-content]:px-2.5 data-[orientation=vertical]:has-data-[slot=attachment-content]:py-2 data-[orientation=vertical]:has-data-[slot=attachment-media]:p-2",
-        sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5",
-        xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1",
+        sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5 in-data-[slot=attachment-group]:not-first:before:start-2 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-12",
+        xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1 in-data-[slot=attachment-group]:not-first:before:start-1.5 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-9.5",
       },
       orientation: {
         horizontal: "min-w-40 items-center",
@@ -48,15 +48,15 @@ function Attachment({
 }
 
 const attachmentMediaVariants = cva(
-  "relative flex aspect-square w-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-foreground group-data-[orientation=vertical]/attachment:w-full group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-sm group-data-[state=error]/attachment:bg-destructive/8 group-data-[state=error]/attachment:text-destructive group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5",
+  "relative flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted group-data-[orientation=vertical]/attachment:w-full group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-sm group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5",
   {
     variants: {
       variant: {
-        icon: "aspect-auto h-11 w-9 rounded-sm border bg-background text-muted-foreground group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
+        icon: "h-11 w-9 rounded-sm border bg-background text-muted-foreground group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
         document:
-          "aspect-auto h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[state=error]/attachment:bg-background group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
+          "h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
         image:
-          "aspect-auto h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5 *:[img]:size-full *:[img]:object-cover",
+          "h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5 *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -66,7 +66,7 @@ const attachmentMediaVariants = cva(
 )
 
 const attachmentLabelVariants = cva(
-  "rounded-xs px-1 py-0.5 text-[0.5625rem] leading-none font-bold text-white uppercase",
+  "rounded-xs px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-white uppercase",
   {
     variants: {
       tone: {
@@ -182,8 +182,7 @@ function AttachmentDescription({
     <span
       data-slot="attachment-description"
       className={cn(
-        "mt-0.5 block min-w-0 truncate text-xs text-muted-foreground group-data-[size=default]/attachment:text-sm group-data-[state=error]/attachment:text-destructive",
-        "max-w-full",
+        "mt-0.5 block max-w-full min-w-0 truncate text-xs text-muted-foreground group-data-[size=default]/attachment:text-sm group-data-[state=error]/attachment:text-destructive",
         className
       )}
       {...props}
@@ -203,7 +202,10 @@ function AttachmentProgress({
     >
       <ProgressPrimitive.Value className="absolute end-0 bottom-full mb-2 text-sm text-muted-foreground tabular-nums" />
       <ProgressPrimitive.Track className="h-1 overflow-hidden rounded-full bg-foreground/10">
-        <ProgressPrimitive.Indicator className="h-full rounded-full bg-primary transition-all" />
+        <ProgressPrimitive.Indicator
+          data-slot="attachment-progress-indicator"
+          className="h-full rounded-full bg-primary transition-[width]"
+        />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>
   )
@@ -241,7 +243,7 @@ function AttachmentAction({
       className={cn(
         isText
           ? "h-auto px-0 text-base"
-          : "size-7 text-muted-foreground group-data-[size=sm]/attachment:size-6 group-data-[size=xs]/attachment:size-5 hover:text-foreground group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
+          : "relative size-7 text-muted-foreground after:absolute after:-inset-2.25 group-data-[size=sm]/attachment:size-6 group-data-[size=sm]/attachment:after:-inset-2.75 group-data-[size=xs]/attachment:size-5 group-data-[size=xs]/attachment:after:-inset-3.25 hover:text-foreground group-data-[orientation=vertical]/attachment:bg-black/50 group-data-[orientation=vertical]/attachment:text-white group-data-[orientation=vertical]/attachment:backdrop-blur-sm group-data-[orientation=vertical]/attachment:hover:bg-black/60 group-data-[orientation=vertical]/attachment:hover:text-white group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
         className
       )}
       {...props}
