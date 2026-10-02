@@ -1,4 +1,5 @@
 import {
+  CheckCircleIcon,
   DownloadSimpleIcon,
   FilePdfIcon,
   FileTextIcon,
@@ -322,6 +323,43 @@ export const FileList: Story = {
           <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
           <AttachmentDescription>Upload failed</AttachmentDescription>
         </AttachmentContent>
+      </Attachment>
+    </div>
+  ),
+}
+
+export const Uploaded: Story = {
+  render: (args) => (
+    <div className="flex w-96 flex-col gap-3">
+      <Attachment {...args} className="w-full">
+        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentContent>
+          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
+          <AttachmentDescription>2.4 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <CheckCircleIcon
+            weight="fill"
+            aria-label="Uploaded"
+            className="size-6 text-success"
+          />
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} className="w-full">
+        <AttachmentMedia variant="image">
+          <img src={imageUrl} alt="Mountain lake" />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
+          <AttachmentDescription>1.8 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <CheckCircleIcon
+            weight="fill"
+            aria-label="Uploaded"
+            className="size-6 text-success"
+          />
+        </AttachmentActions>
       </Attachment>
     </div>
   ),
