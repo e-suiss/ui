@@ -17,6 +17,7 @@ import {
   AttachmentGroup,
   AttachmentLabel,
   AttachmentMedia,
+  AttachmentProgress,
   AttachmentTitle,
   AttachmentTrigger,
 } from "@/components/ui/attachment"
@@ -95,8 +96,8 @@ export const Sizes: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div className="flex flex-col items-start gap-3">
-      <Attachment {...args} state="idle">
+    <div className="flex w-96 flex-col gap-3">
+      <Attachment {...args} state="idle" className="w-full">
         <AttachmentMedia>
           <UploadSimpleIcon />
         </AttachmentMedia>
@@ -106,26 +107,33 @@ export const States: Story = {
             PDF, PNG or JPG up to 10 MB
           </AttachmentDescription>
         </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction variant="link">Choose File</AttachmentAction>
+        </AttachmentActions>
       </Attachment>
-      <Attachment {...args} state="uploading">
-        <AttachmentMedia>
-          <Spinner />
-        </AttachmentMedia>
+      <Attachment {...args} state="uploading" className="w-full">
+        <AttachmentMedia variant="document" extension="pdf" />
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
-          <AttachmentDescription>Uploading, 42%</AttachmentDescription>
+          <AttachmentProgress value={64} aria-label="Uploading" />
         </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Cancel upload">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
       </Attachment>
-      <Attachment {...args} state="processing">
-        <AttachmentMedia>
-          <Spinner />
-        </AttachmentMedia>
+      <Attachment {...args} state="processing" className="w-full">
+        <AttachmentMedia variant="document" extension="pdf" />
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
-          <AttachmentDescription>Processing</AttachmentDescription>
+          <AttachmentDescription>Processing…</AttachmentDescription>
         </AttachmentContent>
+        <AttachmentActions>
+          <Spinner className="size-5 text-muted-foreground" />
+        </AttachmentActions>
       </Attachment>
-      <Attachment {...args} state="error">
+      <Attachment {...args} state="error" className="w-full">
         <AttachmentMedia variant="document" extension="key" />
         <AttachmentContent>
           <AttachmentTitle>Presentation.key</AttachmentTitle>
@@ -137,7 +145,7 @@ export const States: Story = {
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>
-      <Attachment {...args} state="done">
+      <Attachment {...args} state="done" className="w-full">
         <AttachmentMedia variant="document" extension="pdf" />
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
@@ -323,6 +331,9 @@ export const FileList: Story = {
           <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
           <AttachmentDescription>Upload failed</AttachmentDescription>
         </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction variant="link">Try Again</AttachmentAction>
+        </AttachmentActions>
       </Attachment>
     </div>
   ),
