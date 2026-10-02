@@ -41,6 +41,7 @@ export const Default: Story = {
       <AlertSheetContent>
         <AlertSheetGroup>
           <AlertSheetHeader>
+            <AlertSheetTitle className="sr-only">Delete order</AlertSheetTitle>
             <AlertSheetDescription>
               Order #1042 will be permanently deleted. This action cannot be
               undone.

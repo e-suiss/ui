@@ -3,7 +3,7 @@
 import { AlertDialog as AlertSheetPrimitive } from "@base-ui/react/alert-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
-import type * as React from "react"
+import * as React from "react"
 
 function AlertSheet({ ...props }: AlertSheetPrimitive.Root.Props) {
   return <AlertSheetPrimitive.Root data-slot="alert-sheet" {...props} />
@@ -29,7 +29,7 @@ function AlertSheetOverlay({
     <AlertSheetPrimitive.Backdrop
       data-slot="alert-sheet-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/30 transition-opacity duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0",
+        "fixed inset-0 isolate z-50 bg-black/30 transition-opacity duration-300 supports-backdrop-filter:backdrop-blur-sm data-ending-style:opacity-0 data-starting-style:opacity-0",
         className
       )}
       {...props}
@@ -39,13 +39,30 @@ function AlertSheetOverlay({
 
 function AlertSheetContent({
   className,
+  initialFocus,
+  ref,
   ...props
 }: AlertSheetPrimitive.Popup.Props) {
+  const popupRef = React.useRef<HTMLDivElement | null>(null)
+
+  const setRefs = (node: HTMLDivElement | null) => {
+    popupRef.current = node
+    if (typeof ref === "function") ref(node)
+    else if (ref) ref.current = node
+  }
+
+  const focusCancel = () =>
+    popupRef.current?.querySelector<HTMLElement>(
+      '[data-slot="alert-sheet-cancel"]'
+    ) ?? true
+
   return (
     <AlertSheetPortal>
       <AlertSheetOverlay />
       <AlertSheetPrimitive.Popup
         data-slot="alert-sheet-content"
+        ref={setRefs}
+        initialFocus={initialFocus ?? focusCancel}
         className={cn(
           "fixed inset-x-0 bottom-0 z-50 mx-auto flex w-full max-w-md flex-col gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:translate-y-full data-starting-style:translate-y-full",
           className
@@ -76,7 +93,7 @@ function AlertSheetHeader({
   return (
     <div
       data-slot="alert-sheet-header"
-      className={cn("flex flex-col gap-1 px-4 py-4", className)}
+      className={cn("flex flex-col gap-1 p-4", className)}
       {...props}
     />
   )
