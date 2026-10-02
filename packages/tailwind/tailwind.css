@@ -113,6 +113,12 @@
   }
 }
 
+@utility focus-ring {
+  outline: var(--focus-ring-width, 2px) solid
+    var(--focus-ring-color, var(--color-ring));
+  outline-offset: var(--focus-ring-offset, 1px);
+}
+
 @utility no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
