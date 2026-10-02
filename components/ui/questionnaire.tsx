@@ -311,7 +311,7 @@ function QuestionnaireChoice({
     props: {
       "data-slot": "questionnaire-choice",
       className: cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-input px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-input/40 has-[>input:focus-visible]:outline-2 has-[>input:focus-visible]:outline-solid has-[>input:focus-visible]:outline-offset-1 has-[>input:focus-visible]:outline-ring data-invalid:border-destructive data-checked:border-primary data-checked:ring-1 data-checked:ring-primary",
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-input px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-input/40 has-[>input:focus-visible]:outline-2 has-[>input:focus-visible]:outline-solid has-[>input:focus-visible]:outline-offset-1 has-[>input:focus-visible]:outline-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
       ),
@@ -403,7 +403,7 @@ function QuestionnaireInput({
       ...questionnaireInput.inputProps,
       "data-slot": "questionnaire-input",
       className: cn(
-        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10",
         "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
         className
       ),
