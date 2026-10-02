@@ -114,7 +114,7 @@
 }
 
 @utility focus-ring {
-  outline: var(--focus-ring-width, 2px) solid
+  outline: var(--focus-ring-width, 1.3px) solid
     var(--focus-ring-color, var(--color-ring));
   outline-offset: var(--focus-ring-offset, 1px);
 }
