@@ -34,6 +34,20 @@
       ]
     },
     {
+      "name": "alert-sheet",
+      "type": "ui",
+      "title": "Alert Sheet",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/ui/alert-sheet.tsx"
+      ]
+    },
+    {
       "name": "alert",
       "type": "ui",
       "title": "Alert",
