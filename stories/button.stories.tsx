@@ -127,6 +127,9 @@ export const Block: Story = {
       <Button {...args} block size="lg">
         Add to Bag
       </Button>
+      <Button {...args} block size="xl">
+        Add to Bag
+      </Button>
       <Button {...args} block variant="secondary">
         Continue
       </Button>
