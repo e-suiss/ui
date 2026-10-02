@@ -135,7 +135,7 @@ function QuestionnaireProgress({
       role: "progressbar",
       "data-slot": "questionnaire-progress",
       className: cn(
-        "min-h-[1lh] w-fit min-w-[14ch] text-xs font-medium text-muted-foreground tabular-nums",
+        "min-h-[1lh] w-fit min-w-[14ch] text-xs text-muted-foreground tabular-nums",
         className
       ),
       ...props,
@@ -344,7 +344,7 @@ function QuestionnaireChoice({
             hidden={state.shortcut === null}
             data-shortcut={state.shortcut ?? undefined}
             data-slot="questionnaire-choice-shortcut"
-            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-3xs leading-none font-medium text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex"
+            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-3xs leading-none text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex"
           >
             {state.shortcut}
           </span>
