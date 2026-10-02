@@ -88,10 +88,7 @@ export const SelectedRow: Story = {
       </TableHeader>
       <TableBody>
         {invoices.slice(0, 3).map((invoice, index) => (
-          <TableRow
-            key={invoice.id}
-            data-state={index === 1 ? "selected" : undefined}
-          >
+          <TableRow key={invoice.id} data-selected={index === 1}>
             <TableCell className="font-medium">{invoice.id}</TableCell>
             <TableCell>{invoice.status}</TableCell>
             <TableCell className="text-end">
