@@ -33,6 +33,9 @@
   --text-3xl: 2.125rem;
   --text-3xl--line-height: 2.5625rem;
   --text-3xl--letter-spacing: 0.012em;
+
+  --shadow-md: 2px 4px 12px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 4px 24px rgb(0 0 0 / 0.12);
 }
 
 @theme inline {
