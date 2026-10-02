@@ -1,4 +1,5 @@
 import { mergeProps } from "@base-ui/react/merge-props"
+import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
@@ -51,11 +52,11 @@ const attachmentMediaVariants = cva(
   {
     variants: {
       variant: {
-        icon: "",
+        icon: "aspect-auto h-11 w-9 rounded-sm border bg-background text-muted-foreground group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
         document:
-          "aspect-auto h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[state=error]/attachment:bg-background",
+          "aspect-auto h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[state=error]/attachment:bg-background group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
         image:
-          "aspect-auto h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto *:[img]:size-full *:[img]:object-cover",
+          "aspect-auto h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5 *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -149,7 +150,7 @@ function AttachmentContent({
     <div
       data-slot="attachment-content"
       className={cn(
-        "max-w-full min-w-0 flex-1 group-data-[orientation=vertical]/attachment:px-1",
+        "max-w-full min-w-0 flex-1 group-data-[orientation=vertical]/attachment:px-1 has-data-[slot=attachment-progress]:*:data-[slot=attachment-title]:pe-12",
         className
       )}
       {...props}
@@ -165,7 +166,7 @@ function AttachmentTitle({
     <span
       data-slot="attachment-title"
       className={cn(
-        "block max-w-full min-w-0 truncate group-data-[size=default]/attachment:text-base group-data-[size=sm]/attachment:font-semibold group-data-[size=xs]/attachment:font-semibold group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer",
+        "block max-w-full min-w-0 truncate group-data-[size=default]/attachment:text-base group-data-[size=sm]/attachment:font-semibold group-data-[size=xs]/attachment:font-semibold",
         className
       )}
       {...props}
@@ -190,6 +191,24 @@ function AttachmentDescription({
   )
 }
 
+function AttachmentProgress({
+  className,
+  ...props
+}: ProgressPrimitive.Root.Props) {
+  return (
+    <ProgressPrimitive.Root
+      data-slot="attachment-progress"
+      className={cn("relative mt-2", className)}
+      {...props}
+    >
+      <ProgressPrimitive.Value className="absolute end-0 bottom-full mb-2 text-sm text-muted-foreground tabular-nums" />
+      <ProgressPrimitive.Track className="h-1 overflow-hidden rounded-full bg-foreground/10">
+        <ProgressPrimitive.Indicator className="h-full rounded-full bg-primary transition-all" />
+      </ProgressPrimitive.Track>
+    </ProgressPrimitive.Root>
+  )
+}
+
 function AttachmentActions({
   className,
   ...props
@@ -208,17 +227,21 @@ function AttachmentActions({
 
 function AttachmentAction({
   className,
-  variant,
-  size = "icon-xs",
+  variant = "secondary",
+  size,
   ...props
 }: React.ComponentProps<typeof Button>) {
+  const isText = variant === "link"
+
   return (
     <Button
       data-slot="attachment-action"
-      variant={variant ?? "secondary"}
-      size={size}
+      variant={variant}
+      size={size ?? (isText ? "sm" : "icon-xs")}
       className={cn(
-        "size-7 text-muted-foreground group-data-[size=sm]/attachment:size-6 group-data-[size=xs]/attachment:size-5 hover:text-foreground group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
+        isText
+          ? "h-auto px-0 text-base"
+          : "size-7 text-muted-foreground group-data-[size=sm]/attachment:size-6 group-data-[size=xs]/attachment:size-5 hover:text-foreground group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
         className
       )}
       {...props}
@@ -270,6 +293,7 @@ export {
   AttachmentGroup,
   AttachmentLabel,
   AttachmentMedia,
+  AttachmentProgress,
   AttachmentTitle,
   AttachmentTrigger,
 }
