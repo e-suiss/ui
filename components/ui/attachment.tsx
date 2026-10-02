@@ -215,9 +215,12 @@ function AttachmentAction({
   return (
     <Button
       data-slot="attachment-action"
-      variant={variant ?? "ghost"}
+      variant={variant ?? "secondary"}
       size={size}
-      className={cn(className)}
+      className={cn(
+        "size-7 text-muted-foreground group-data-[size=sm]/attachment:size-6 group-data-[size=xs]/attachment:size-5 hover:text-foreground group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
+        className
+      )}
       {...props}
     />
   )
