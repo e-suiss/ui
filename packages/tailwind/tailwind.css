@@ -351,4 +351,13 @@
   html {
     @apply font-sans;
   }
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot]:not([data-slot="spinner"]),
+    [data-slot]:not([data-slot="spinner"])::before,
+    [data-slot]:not([data-slot="spinner"])::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
