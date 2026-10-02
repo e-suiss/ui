@@ -14,6 +14,7 @@ import {
   AttachmentContent,
   AttachmentDescription,
   AttachmentGroup,
+  AttachmentLabel,
   AttachmentMedia,
   AttachmentTitle,
   AttachmentTrigger,
@@ -240,5 +241,88 @@ export const Group: Story = {
         </Attachment>
       ))}
     </AttachmentGroup>
+  ),
+}
+
+export const FileTypes: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-3">
+      {[
+        { name: "Invoice.pdf", meta: "128 KB", extension: "pdf" },
+        { name: "Menu.xlsx", meta: "2.4 MB", extension: "xlsx" },
+        { name: "Contract.docx", meta: "84 KB", extension: "docx" },
+        { name: "Pitch.key", meta: "12 MB", extension: "key" },
+        { name: "Archive.zip", meta: "48 MB", extension: "zip" },
+      ].map((file) => (
+        <Attachment key={file.name} {...args}>
+          <AttachmentMedia variant="document" extension={file.extension} />
+          <AttachmentContent>
+            <AttachmentTitle>{file.name}</AttachmentTitle>
+            <AttachmentDescription>{file.meta}</AttachmentDescription>
+          </AttachmentContent>
+        </Attachment>
+      ))}
+      <Attachment {...args}>
+        <AttachmentMedia variant="document">
+          <AttachmentLabel tone="blue">MD</AttachmentLabel>
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>README.md</AttachmentTitle>
+          <AttachmentDescription>4 KB</AttachmentDescription>
+        </AttachmentContent>
+      </Attachment>
+    </div>
+  ),
+}
+
+export const FileList: Story = {
+  render: (args) => (
+    <div className="flex w-96 flex-col gap-3">
+      <Attachment {...args} className="w-full">
+        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentContent>
+          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
+          <AttachmentDescription>128 KB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} className="w-full">
+        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentContent>
+          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
+          <AttachmentDescription>2.4 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} className="w-full">
+        <AttachmentMedia variant="image">
+          <img src={imageUrl} alt="Mountain lake" />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
+          <AttachmentDescription>1.8 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} state="error" className="w-full">
+        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentContent>
+          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
+          <AttachmentDescription>Upload failed</AttachmentDescription>
+        </AttachmentContent>
+      </Attachment>
+    </div>
   ),
 }

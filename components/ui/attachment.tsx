@@ -54,7 +54,8 @@ const attachmentMediaVariants = cva(
         icon: "",
         document:
           "aspect-auto h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[state=error]/attachment:bg-background",
-        image: "w-11 *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover",
+        image:
+          "aspect-auto h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -164,7 +165,7 @@ function AttachmentTitle({
     <span
       data-slot="attachment-title"
       className={cn(
-        "block max-w-full min-w-0 truncate font-semibold group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer",
+        "block max-w-full min-w-0 truncate group-data-[size=default]/attachment:text-base group-data-[size=sm]/attachment:font-semibold group-data-[size=xs]/attachment:font-semibold group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer",
         className
       )}
       {...props}
@@ -180,7 +181,7 @@ function AttachmentDescription({
     <span
       data-slot="attachment-description"
       className={cn(
-        "mt-0.5 block min-w-0 truncate text-xs text-muted-foreground group-data-[state=error]/attachment:text-destructive/80",
+        "mt-0.5 block min-w-0 truncate text-xs text-muted-foreground group-data-[size=default]/attachment:text-sm group-data-[state=error]/attachment:text-destructive",
         "max-w-full",
         className
       )}
