@@ -65,53 +65,17 @@ const attachmentMediaVariants = cva(
   }
 )
 
-const attachmentLabelVariants = cva(
-  "rounded-xs px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-white uppercase",
-  {
-    variants: {
-      tone: {
-        red: "bg-[oklch(0.5529_0.2255_27.27)]",
-        green: "bg-[oklch(0.5338_0.1429_147.35)]",
-        blue: "bg-[oklch(0.5629_0.1933_256.16)]",
-        orange: "bg-[oklch(0.5516_0.192_35.33)]",
-        gray: "bg-[oklch(0.5399_0.0077_286.14)]",
-      },
-    },
-    defaultVariants: {
-      tone: "gray",
-    },
-  }
-)
-
-const extensionTones: Record<
-  string,
-  VariantProps<typeof attachmentLabelVariants>["tone"]
-> = {
-  pdf: "red",
-  xls: "green",
-  xlsx: "green",
-  csv: "green",
-  numbers: "green",
-  doc: "blue",
-  docx: "blue",
-  pages: "blue",
-  rtf: "blue",
-  txt: "blue",
-  ppt: "orange",
-  pptx: "orange",
-  key: "orange",
-}
-
 function AttachmentLabel({
   className,
-  tone,
   ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof attachmentLabelVariants>) {
+}: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="attachment-label"
-      className={cn(attachmentLabelVariants({ tone }), className)}
+      className={cn(
+        "rounded-xs bg-[oklch(0.5399_0.0077_286.14)] px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-white uppercase",
+        className
+      )}
       {...props}
     />
   )
@@ -120,25 +84,15 @@ function AttachmentLabel({
 function AttachmentMedia({
   className,
   variant = "icon",
-  extension,
-  children,
   ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof attachmentMediaVariants> & { extension?: string }) {
+}: React.ComponentProps<"div"> & VariantProps<typeof attachmentMediaVariants>) {
   return (
     <div
       data-slot="attachment-media"
       data-variant={variant}
       className={cn(attachmentMediaVariants({ variant }), className)}
       {...props}
-    >
-      {children ??
-        (extension && (
-          <AttachmentLabel tone={extensionTones[extension.toLowerCase()]}>
-            {extension}
-          </AttachmentLabel>
-        ))}
-    </div>
+    />
   )
 }
 
@@ -200,7 +154,7 @@ function AttachmentProgress({
       className={cn("relative mt-2", className)}
       {...props}
     >
-      <ProgressPrimitive.Value className="absolute end-0 bottom-full mb-2 text-sm text-muted-foreground tabular-nums" />
+      <ProgressPrimitive.Value className="absolute inset-e-0 bottom-full mb-2 text-sm text-muted-foreground tabular-nums" />
       <ProgressPrimitive.Track className="h-1 overflow-hidden rounded-full bg-foreground/10">
         <ProgressPrimitive.Indicator
           data-slot="attachment-progress-indicator"
