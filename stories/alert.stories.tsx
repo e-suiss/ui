@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <Alert {...args}>
-      <InfoIcon />
+      <InfoIcon weight="fill" />
       <AlertTitle>Update available</AlertTitle>
       <AlertDescription>
         A new version is ready to install. Restart the app to apply it.
@@ -50,7 +50,7 @@ export const Destructive: Story = {
   args: { variant: "destructive" },
   render: (args) => (
     <Alert {...args}>
-      <WarningCircleIcon />
+      <WarningCircleIcon weight="fill" />
       <AlertTitle>Payment failed</AlertTitle>
       <AlertDescription>
         Your card was declined. Update your billing details to continue.
@@ -73,7 +73,7 @@ export const WithoutIcon: Story = {
 export const TitleOnly: Story = {
   render: (args) => (
     <Alert {...args}>
-      <InfoIcon />
+      <InfoIcon weight="fill" />
       <AlertTitle>Your changes have been saved.</AlertTitle>
     </Alert>
   ),
@@ -82,7 +82,7 @@ export const TitleOnly: Story = {
 export const WithAction: Story = {
   render: (args) => (
     <Alert {...args}>
-      <InfoIcon />
+      <InfoIcon weight="fill" />
       <AlertTitle>Storage almost full</AlertTitle>
       <AlertDescription>
         You have used 90% of your storage. Upgrade for more space.
