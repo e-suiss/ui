@@ -1,10 +1,8 @@
 import {
   DownloadSimpleIcon,
-  FileIcon,
   FilePdfIcon,
   FileTextIcon,
   UploadSimpleIcon,
-  WarningCircleIcon,
   XIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
@@ -56,9 +54,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <Attachment {...args}>
-      <AttachmentMedia>
-        <FilePdfIcon />
-      </AttachmentMedia>
+      <AttachmentMedia variant="document" extension="pdf" />
       <AttachmentContent>
         <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
         <AttachmentDescription>2.4 MB</AttachmentDescription>
@@ -128,9 +124,7 @@ export const States: Story = {
         </AttachmentContent>
       </Attachment>
       <Attachment {...args} state="error">
-        <AttachmentMedia>
-          <WarningCircleIcon />
-        </AttachmentMedia>
+        <AttachmentMedia variant="document" extension="key" />
         <AttachmentContent>
           <AttachmentTitle>Presentation.key</AttachmentTitle>
           <AttachmentDescription>File type not supported</AttachmentDescription>
@@ -142,9 +136,7 @@ export const States: Story = {
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="done">
-        <AttachmentMedia>
-          <FilePdfIcon />
-        </AttachmentMedia>
+        <AttachmentMedia variant="document" extension="pdf" />
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
           <AttachmentDescription>1.1 MB</AttachmentDescription>
@@ -204,9 +196,7 @@ export const Clickable: Story = {
   render: (args) => (
     <Attachment {...args}>
       <AttachmentTrigger aria-label="Open Brand guidelines.pdf" />
-      <AttachmentMedia>
-        <FilePdfIcon />
-      </AttachmentMedia>
+      <AttachmentMedia variant="document" extension="pdf" />
       <AttachmentContent>
         <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>
         <AttachmentDescription>5.8 MB</AttachmentDescription>
@@ -231,13 +221,13 @@ export const Group: Story = {
   render: (args) => (
     <AttachmentGroup>
       {[
-        { name: "Roadmap.pdf", meta: "1.2 MB", icon: <FilePdfIcon /> },
-        { name: "Notes.txt", meta: "12 KB", icon: <FileTextIcon /> },
-        { name: "Archive.zip", meta: "48 MB", icon: <FileIcon /> },
-        { name: "Budget.pdf", meta: "640 KB", icon: <FilePdfIcon /> },
+        { name: "Roadmap.pdf", meta: "1.2 MB", extension: "pdf" },
+        { name: "Notes.txt", meta: "12 KB", extension: "txt" },
+        { name: "Archive.zip", meta: "48 MB", extension: "zip" },
+        { name: "Budget.pdf", meta: "640 KB", extension: "pdf" },
       ].map((file) => (
         <Attachment key={file.name} {...args}>
-          <AttachmentMedia>{file.icon}</AttachmentMedia>
+          <AttachmentMedia variant="document" extension={file.extension} />
           <AttachmentContent>
             <AttachmentTitle>{file.name}</AttachmentTitle>
             <AttachmentDescription>{file.meta}</AttachmentDescription>

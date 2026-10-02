@@ -52,8 +52,9 @@ const attachmentMediaVariants = cva(
     variants: {
       variant: {
         icon: "",
-        image:
-          "opacity-60 group-data-[state=done]/attachment:opacity-100 group-data-[state=idle]/attachment:opacity-100 *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover",
+        document:
+          "aspect-auto h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[state=error]/attachment:bg-background",
+        image: "w-11 *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -62,18 +63,80 @@ const attachmentMediaVariants = cva(
   }
 )
 
+const attachmentLabelVariants = cva(
+  "rounded-xs px-1 py-0.5 text-[0.5625rem] leading-none font-bold text-white uppercase",
+  {
+    variants: {
+      tone: {
+        red: "bg-[oklch(0.5529_0.2255_27.27)]",
+        green: "bg-[oklch(0.5338_0.1429_147.35)]",
+        blue: "bg-[oklch(0.5629_0.1933_256.16)]",
+        orange: "bg-[oklch(0.5516_0.192_35.33)]",
+        gray: "bg-[oklch(0.5399_0.0077_286.14)]",
+      },
+    },
+    defaultVariants: {
+      tone: "gray",
+    },
+  }
+)
+
+const extensionTones: Record<
+  string,
+  VariantProps<typeof attachmentLabelVariants>["tone"]
+> = {
+  pdf: "red",
+  xls: "green",
+  xlsx: "green",
+  csv: "green",
+  numbers: "green",
+  doc: "blue",
+  docx: "blue",
+  pages: "blue",
+  rtf: "blue",
+  txt: "blue",
+  ppt: "orange",
+  pptx: "orange",
+  key: "orange",
+}
+
+function AttachmentLabel({
+  className,
+  tone,
+  ...props
+}: React.ComponentProps<"span"> &
+  VariantProps<typeof attachmentLabelVariants>) {
+  return (
+    <span
+      data-slot="attachment-label"
+      className={cn(attachmentLabelVariants({ tone }), className)}
+      {...props}
+    />
+  )
+}
+
 function AttachmentMedia({
   className,
   variant = "icon",
+  extension,
+  children,
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof attachmentMediaVariants>) {
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof attachmentMediaVariants> & { extension?: string }) {
   return (
     <div
       data-slot="attachment-media"
       data-variant={variant}
       className={cn(attachmentMediaVariants({ variant }), className)}
       {...props}
-    />
+    >
+      {children ??
+        (extension && (
+          <AttachmentLabel tone={extensionTones[extension.toLowerCase()]}>
+            {extension}
+          </AttachmentLabel>
+        ))}
+    </div>
   )
 }
 
@@ -201,6 +264,7 @@ export {
   AttachmentContent,
   AttachmentDescription,
   AttachmentGroup,
+  AttachmentLabel,
   AttachmentMedia,
   AttachmentTitle,
   AttachmentTrigger,
