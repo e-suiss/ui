@@ -230,25 +230,66 @@ export const Group: Story = {
   ],
   render: (args) => (
     <AttachmentGroup>
-      {[
-        { name: "Roadmap.pdf", meta: "1.2 MB", extension: "pdf" },
-        { name: "Notes.txt", meta: "12 KB", extension: "txt" },
-        { name: "Archive.zip", meta: "48 MB", extension: "zip" },
-        { name: "Budget.pdf", meta: "640 KB", extension: "pdf" },
-      ].map((file) => (
-        <Attachment key={file.name} {...args}>
-          <AttachmentMedia variant="document" extension={file.extension} />
-          <AttachmentContent>
-            <AttachmentTitle>{file.name}</AttachmentTitle>
-            <AttachmentDescription>{file.meta}</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Remove">
-              <XIcon />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-      ))}
+      <Attachment {...args} state="uploading">
+        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentContent>
+          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
+          <AttachmentProgress value={64} aria-label="Uploading" />
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Cancel upload">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} state="processing">
+        <AttachmentMedia variant="document" extension="docx" />
+        <AttachmentContent>
+          <AttachmentTitle>Contract.docx</AttachmentTitle>
+          <AttachmentDescription>Processing…</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <Spinner className="size-5 text-muted-foreground" />
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args}>
+        <AttachmentMedia variant="document" extension="xlsx" />
+        <AttachmentContent>
+          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
+          <AttachmentDescription>2.4 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <CheckCircleIcon
+            weight="fill"
+            aria-label="Uploaded"
+            className="size-6 text-success"
+          />
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args}>
+        <AttachmentMedia variant="image">
+          <img src={imageUrl} alt="Mountain lake" />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
+          <AttachmentDescription>1.8 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment {...args} state="error">
+        <AttachmentMedia variant="document" extension="pdf" />
+        <AttachmentContent>
+          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
+          <AttachmentDescription>Upload failed</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction variant="link">Try Again</AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
     </AttachmentGroup>
   ),
 }
