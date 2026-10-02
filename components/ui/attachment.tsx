@@ -73,7 +73,7 @@ function AttachmentLabel({
     <span
       data-slot="attachment-label"
       className={cn(
-        "rounded-xs bg-[oklch(0.5399_0.0077_286.14)] px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-white uppercase",
+        "rounded-xs bg-primary px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-white uppercase",
         className
       )}
       {...props}
