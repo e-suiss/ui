@@ -7,7 +7,7 @@ import type * as React from "react"
 import { Button } from "@/components/ui/button"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-xl border bg-card text-card-foreground transition-colors focus-within:focus-ring has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed",
+  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors focus-within:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)] data-[state=idle]:border data-[state=idle]:border-dashed",
   {
     variants: {
       size: {
