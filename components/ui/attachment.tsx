@@ -8,7 +8,7 @@ import type * as React from "react"
 import { Button } from "@/components/ui/button"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors focus-within:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)] data-[state=idle]:border data-[state=idle]:border-dashed",
+  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors focus-within:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)] data-[state=idle]:border data-[state=idle]:border-dashed in-data-[slot=attachment-group]:w-full in-data-[slot=attachment-group]:rounded-none in-data-[slot=attachment-group]:border-0 in-data-[slot=attachment-group]:[--focus-ring-offset:-3px] in-data-[slot=attachment-group]:not-first:before:absolute in-data-[slot=attachment-group]:not-first:before:inset-e-0 in-data-[slot=attachment-group]:not-first:before:top-0 in-data-[slot=attachment-group]:not-first:before:start-4 in-data-[slot=attachment-group]:not-first:before:border-t in-data-[slot=attachment-group]:not-first:before:border-border in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-16",
   {
     variants: {
       size: {
@@ -276,7 +276,7 @@ function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="attachment-group"
       className={cn(
-        "flex min-w-0 scroll-fade-x snap-x snap-mandatory scroll-px-1 scrollbar-none gap-3 overflow-x-auto overscroll-x-contain py-1 *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
+        "flex w-full min-w-0 flex-col overflow-hidden rounded-2xl bg-muted",
         className
       )}
       {...props}
