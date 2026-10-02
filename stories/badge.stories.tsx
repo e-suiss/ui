@@ -77,3 +77,16 @@ export const AsLink: Story = {
     children: "Documentation",
   },
 }
+
+export const CustomColor: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Badge {...args} className="text-orange-700 dark:text-orange-400">
+        New
+      </Badge>
+      <Badge {...args} className="text-success">
+        Available
+      </Badge>
+    </div>
+  ),
+}
