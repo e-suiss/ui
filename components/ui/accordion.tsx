@@ -1,12 +1,29 @@
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
+import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
+const accordionVariants = cva("flex w-full flex-col", {
+  variants: {
+    variant: {
+      default: "",
+      filled: "overflow-hidden rounded-2xl bg-muted",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+function Accordion({
+  className,
+  variant,
+  ...props
+}: AccordionPrimitive.Root.Props & VariantProps<typeof accordionVariants>) {
   return (
     <AccordionPrimitive.Root
       data-slot="accordion"
-      className={cn("flex w-full flex-col", className)}
+      className={cn(accordionVariants({ variant }), className)}
       {...props}
     />
   )

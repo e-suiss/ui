@@ -57,6 +57,20 @@ export const Default: Story = {
   ),
 }
 
+export const Filled: Story = {
+  args: { variant: "filled" },
+  render: (args) => (
+    <Accordion {...args}>
+      {items.map((item) => (
+        <AccordionItem key={item.value} value={item.value}>
+          <AccordionTrigger>{item.title}</AccordionTrigger>
+          <AccordionContent>{item.content}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  ),
+}
+
 export const OpenByDefault: Story = {
   ...Default,
   args: { defaultValue: ["shipping"] },
