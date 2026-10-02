@@ -116,7 +116,7 @@ const alertSheetActionVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-primary",
+        default: "text-link",
         destructive: "text-destructive",
       },
     },
