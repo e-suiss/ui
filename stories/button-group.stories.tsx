@@ -95,7 +95,7 @@ export const WithText: Story = {
       <input
         aria-label="Website"
         placeholder="example.com"
-        className="h-9 min-w-0 rounded-4xl border bg-transparent px-3 text-sm outline-none"
+        className="h-9 min-w-0 rounded-md border bg-transparent px-3 text-sm outline-none"
       />
       <Button variant="outline">Save</Button>
     </ButtonGroup>

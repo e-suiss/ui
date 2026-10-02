@@ -49,7 +49,7 @@ const meta = {
   component: MessageScroller,
   decorators: [
     (Story) => (
-      <div className="h-96 w-96 overflow-hidden rounded-3xl border">
+      <div className="h-96 w-96 overflow-hidden rounded-2xl border">
         <Story />
       </div>
     ),

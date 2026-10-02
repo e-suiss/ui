@@ -111,3 +111,25 @@ export const WithIcon: Story = {
 export const Disabled: Story = {
   args: { disabled: true },
 }
+
+export const Block: Story = {
+  render: (args) => (
+    <div className="flex w-80 flex-col gap-3">
+      <Button {...args} block size="xs">
+        Add to Bag
+      </Button>
+      <Button {...args} block size="sm">
+        Add to Bag
+      </Button>
+      <Button {...args} block>
+        Add to Bag
+      </Button>
+      <Button {...args} block size="lg">
+        Add to Bag
+      </Button>
+      <Button {...args} block variant="secondary">
+        Continue
+      </Button>
+    </div>
+  ),
+}

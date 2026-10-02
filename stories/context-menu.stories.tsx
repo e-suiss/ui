@@ -35,7 +35,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <ContextMenu {...args}>
-      <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-3xl border border-dashed text-sm">
+      <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
         Right click here
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -97,7 +97,7 @@ export const OpenByDefault: Story = {
 export const Inset: Story = {
   render: (args) => (
     <ContextMenu {...args}>
-      <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-3xl border border-dashed text-sm">
+      <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
         Right click a file
       </ContextMenuTrigger>
       <ContextMenuContent>

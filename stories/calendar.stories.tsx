@@ -34,7 +34,7 @@ function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
       mode="single"
       selected={date}
       onSelect={setDate}
-      className="rounded-3xl border"
+      className="rounded-2xl border"
     />
   )
 }
@@ -52,7 +52,7 @@ function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
       selected={range}
       onSelect={setRange}
       numberOfMonths={2}
-      className="rounded-3xl border"
+      className="rounded-2xl border"
     />
   )
 }
