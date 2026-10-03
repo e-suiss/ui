@@ -269,7 +269,7 @@ export const WithInput: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
       <Input aria-label="Search" placeholder="Search..." />
-      <Button variant="outline" size="icon-lg" aria-label="Search">
+      <Button variant="secondary" size="icon-lg" aria-label="Search">
         <MagnifyingGlassIcon />
       </Button>
     </ButtonGroup>
@@ -316,7 +316,7 @@ export const WithText: Story = {
         https://
       </ButtonGroupText>
       <Input aria-label="Website" placeholder="example.com" />
-      <Button variant="outline" size="lg">
+      <Button variant="secondary" size="lg">
         Save
       </Button>
     </ButtonGroup>
