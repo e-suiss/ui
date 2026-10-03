@@ -8,15 +8,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-[color-mix(in_oklch,var(--primary),var(--foreground)_10%)] dark:hover:bg-[color-mix(in_oklch,var(--primary)_80%,var(--background))]",
+          "bg-primary text-primary-foreground hover:bg-[color-mix(in_oklab,var(--primary),var(--foreground)_10%)] dark:hover:bg-[color-mix(in_oklab,var(--primary)_80%,var(--background))]",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
-          "bg-destructive/8 text-destructive hover:bg-destructive/12 hover:text-[color-mix(in_oklch,var(--destructive),var(--foreground)_15%)] [--focus-ring-color:var(--color-destructive)] dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:hover:text-destructive",
+          "bg-destructive/8 text-destructive hover:bg-destructive/12 hover:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] [--focus-ring-color:var(--color-destructive)] dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:hover:text-destructive",
         link: "text-link underline-offset-4 hover:underline",
       },
       size: {

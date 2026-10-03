@@ -20,19 +20,19 @@ const bubbleVariants = cva(
     variants: {
       variant: {
         default:
-          "[--bubble-bg:var(--primary)] *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--primary),var(--foreground)_10%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--primary)_80%,var(--background))]",
+          "[--bubble-bg:var(--primary)] *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary),var(--foreground)_10%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_80%,var(--background))]",
         secondary:
-          "[--bubble-bg:var(--secondary)] *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]",
+          "[--bubble-bg:var(--secondary)] *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]",
         muted:
-          "[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--muted),var(--foreground)_5%)]",
+          "[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--muted),var(--foreground)_5%)]",
         tinted:
-          "[--bubble-bg:color-mix(in_oklch,var(--primary)_12%,transparent)] *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--primary)_20%,transparent)]",
+          "[--bubble-bg:color-mix(in_oklab,var(--primary)_12%,transparent)] *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_20%,transparent)]",
         outline:
-          "[--bubble-bg:var(--background)] *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--input)_30%,transparent)]",
+          "[--bubble-bg:var(--background)] *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--input)_30%,transparent)]",
         ghost:
           "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50",
         destructive:
-          "[--bubble-bg:color-mix(in_oklch,var(--destructive)_8%,transparent)] *:data-[slot=bubble-content]:text-destructive dark:[--bubble-bg:color-mix(in_oklch,var(--destructive)_20%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--destructive)_12%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklch,var(--destructive),var(--foreground)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklch,var(--destructive)_30%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-destructive",
+          "[--bubble-bg:color-mix(in_oklab,var(--destructive)_8%,transparent)] *:data-[slot=bubble-content]:text-destructive dark:[--bubble-bg:color-mix(in_oklab,var(--destructive)_20%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_12%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_30%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-destructive",
       },
     },
     defaultVariants: {
