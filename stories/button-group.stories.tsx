@@ -1,10 +1,26 @@
 import {
+  ArchiveIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CalendarPlusIcon,
   CaretDownIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  ClockIcon,
   CopyIcon,
+  DotsThreeIcon,
   LinkIcon,
+  ListPlusIcon,
+  MagnifyingGlassIcon,
+  MicrophoneIcon,
   MinusIcon,
   PlusIcon,
   ShareIcon,
+  SparkleIcon,
+  TagIcon,
+  TrashIcon,
+  UserCircleMinusIcon,
+  WarningCircleIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
@@ -14,6 +30,43 @@ import {
   ButtonGroupSeparator,
   ButtonGroupText,
 } from "@/components/ui/button-group"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group"
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const meta = {
   title: "Components/Button Group",
@@ -36,23 +89,150 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
-      <Button variant="outline">Archive</Button>
-      <Button variant="outline">Report</Button>
-      <Button variant="outline">Snooze</Button>
+      <ButtonGroup>
+        <Button variant="outline" size="icon" aria-label="Go back">
+          <ArrowLeftIcon />
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button variant="outline">Archive</Button>
+        <Button variant="outline">Report</Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button variant="outline">Snooze</Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button variant="outline" size="icon" aria-label="More options" />
+            }
+          >
+            <DotsThreeIcon />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <ListPlusIcon />
+                Mark as read
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <ArchiveIcon />
+                Archive
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <ClockIcon />
+                Snooze
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CalendarPlusIcon />
+                Add to calendar
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <TagIcon />
+                Label as
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem variant="destructive">
+                <TrashIcon />
+                Trash
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </ButtonGroup>
     </ButtonGroup>
   ),
 }
 
-export const Vertical: Story = {
+export const Orientation: Story = {
   args: { orientation: "vertical" },
   render: (args) => (
-    <ButtonGroup {...args}>
+    <ButtonGroup {...args} aria-label="Media controls">
       <Button variant="outline" size="icon" aria-label="Zoom in">
         <PlusIcon />
       </Button>
       <Button variant="outline" size="icon" aria-label="Zoom out">
         <MinusIcon />
       </Button>
+    </ButtonGroup>
+  ),
+}
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex flex-col items-start gap-6">
+      <ButtonGroup {...args}>
+        <Button variant="outline" size="sm">
+          Small
+        </Button>
+        <Button variant="outline" size="sm">
+          Button
+        </Button>
+        <Button variant="outline" size="sm">
+          Group
+        </Button>
+        <Button variant="outline" size="icon-sm" aria-label="Add">
+          <PlusIcon />
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup {...args}>
+        <Button variant="outline">Default</Button>
+        <Button variant="outline">Button</Button>
+        <Button variant="outline">Group</Button>
+        <Button variant="outline" size="icon" aria-label="Add">
+          <PlusIcon />
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup {...args}>
+        <Button variant="outline" size="lg">
+          Large
+        </Button>
+        <Button variant="outline" size="lg">
+          Button
+        </Button>
+        <Button variant="outline" size="lg">
+          Group
+        </Button>
+        <Button variant="outline" size="icon-lg" aria-label="Add">
+          <PlusIcon />
+        </Button>
+      </ButtonGroup>
+    </div>
+  ),
+}
+
+export const Nested: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <ButtonGroup>
+        <Button variant="outline" size="sm">
+          1
+        </Button>
+        <Button variant="outline" size="sm">
+          2
+        </Button>
+        <Button variant="outline" size="sm">
+          3
+        </Button>
+        <Button variant="outline" size="sm">
+          4
+        </Button>
+        <Button variant="outline" size="sm">
+          5
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button variant="outline" size="icon-sm" aria-label="Previous">
+          <ArrowLeftIcon />
+        </Button>
+        <Button variant="outline" size="icon-sm" aria-label="Next">
+          <ArrowRightIcon />
+        </Button>
+      </ButtonGroup>
     </ButtonGroup>
   ),
 }
@@ -85,6 +265,49 @@ export const SplitButton: Story = {
   ),
 }
 
+export const WithInput: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <Input aria-label="Search" placeholder="Search..." />
+      <Button variant="outline" size="icon-lg" aria-label="Search">
+        <MagnifyingGlassIcon />
+      </Button>
+    </ButtonGroup>
+  ),
+}
+
+export const WithInputGroup: Story = {
+  render: (args) => (
+    <ButtonGroup {...args} className="w-96">
+      <ButtonGroup>
+        <Button variant="outline" size="icon-lg" aria-label="Add">
+          <PlusIcon />
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup className="flex-1">
+        <InputGroup>
+          <InputGroupInput
+            aria-label="Message"
+            placeholder="Send a message..."
+          />
+          <InputGroupAddon align="inline-end">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <InputGroupButton size="icon-xs" aria-label="Voice mode" />
+                }
+              >
+                <MicrophoneIcon />
+              </TooltipTrigger>
+              <TooltipContent>Voice mode</TooltipContent>
+            </Tooltip>
+          </InputGroupAddon>
+        </InputGroup>
+      </ButtonGroup>
+    </ButtonGroup>
+  ),
+}
+
 export const WithText: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
@@ -92,35 +315,137 @@ export const WithText: Story = {
         <LinkIcon />
         https://
       </ButtonGroupText>
-      <input
-        aria-label="Website"
-        placeholder="example.com"
-        className="h-9 min-w-0 rounded-md border bg-transparent px-3 text-sm outline-none"
-      />
-      <Button variant="outline">Save</Button>
+      <Input aria-label="Website" placeholder="example.com" />
+      <Button variant="outline" size="lg">
+        Save
+      </Button>
     </ButtonGroup>
   ),
 }
 
-export const Nested: Story = {
+export const WithDropdownMenu: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <Button variant="outline">Follow</Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button variant="outline" size="icon" aria-label="More options" />
+          }
+        >
+          <CaretDownIcon />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <WarningCircleIcon />
+              Mute conversation
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <CopyIcon />
+              Copy link
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <ShareIcon />
+              Share conversation
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem variant="destructive">
+              <UserCircleMinusIcon />
+              Unfollow
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </ButtonGroup>
+  ),
+}
+
+const currencies = [
+  { value: "usd", label: "$" },
+  { value: "eur", label: "€" },
+  { value: "gbp", label: "£" },
+  { value: "try", label: "₺" },
+]
+
+export const WithSelect: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
       <ButtonGroup>
-        <Button variant="outline" size="sm">
-          1
-        </Button>
-        <Button variant="outline" size="sm">
-          2
-        </Button>
-        <Button variant="outline" size="sm">
-          3
-        </Button>
+        <Select defaultValue="usd" items={currencies}>
+          <SelectTrigger aria-label="Currency" className="font-mono">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {currencies.map((currency) => (
+                <SelectItem key={currency.value} value={currency.value}>
+                  {currency.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Input aria-label="Amount" placeholder="10.00" inputMode="decimal" />
       </ButtonGroup>
       <ButtonGroup>
-        <Button variant="outline" size="sm">
-          Next
+        <Button variant="outline" size="icon-lg" aria-label="Send">
+          <ArrowRightIcon />
         </Button>
       </ButtonGroup>
+    </ButtonGroup>
+  ),
+}
+
+export const WithPopover: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <Button variant="outline">
+        <SparkleIcon data-icon="inline-start" />
+        Assistant
+      </Button>
+      <Popover>
+        <PopoverTrigger
+          render={
+            <Button variant="outline" size="icon" aria-label="Open popover" />
+          }
+        >
+          <CaretDownIcon />
+        </PopoverTrigger>
+        <PopoverContent align="end" className="w-80">
+          <PopoverHeader>
+            <PopoverTitle>Start a new task</PopoverTitle>
+            <PopoverDescription>
+              Describe your task in natural language.
+            </PopoverDescription>
+          </PopoverHeader>
+          <Textarea
+            aria-label="Task description"
+            placeholder="I need to..."
+            className="resize-none"
+          />
+        </PopoverContent>
+      </Popover>
+    </ButtonGroup>
+  ),
+}
+
+export const Pagination: Story = {
+  render: (args) => (
+    <ButtonGroup {...args} aria-label="Pagination">
+      <Button variant="outline" size="icon" aria-label="Previous page">
+        <CaretLeftIcon />
+      </Button>
+      <Button variant="outline">1</Button>
+      <Button variant="outline" aria-current="page">
+        2
+      </Button>
+      <Button variant="outline">3</Button>
+      <Button variant="outline" size="icon" aria-label="Next page">
+        <CaretRightIcon />
+      </Button>
     </ButtonGroup>
   ),
 }
