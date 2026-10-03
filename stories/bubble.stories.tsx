@@ -98,7 +98,7 @@ export const Conversation: Story = {
 
 export const WithReactions: Story = {
   render: (args) => (
-    <BubbleGroup className="gap-6">
+    <BubbleGroup>
       <Bubble {...args} variant="muted">
         <BubbleContent>We just hit 10,000 users!</BubbleContent>
         <BubbleReactions>🎉 3</BubbleReactions>
@@ -107,7 +107,7 @@ export const WithReactions: Story = {
         <BubbleContent>That is amazing news.</BubbleContent>
         <BubbleReactions align="start">❤️</BubbleReactions>
       </Bubble>
-      <Bubble {...args} variant="secondary" className="mt-4">
+      <Bubble {...args} variant="secondary">
         <BubbleContent>Reactions can sit on top as well.</BubbleContent>
         <BubbleReactions side="top">👍 2</BubbleReactions>
       </Bubble>
