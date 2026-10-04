@@ -72,3 +72,64 @@ export const OpenByDefault: Story = {
   ...Default,
   args: { defaultOpen: true },
 }
+
+export const WithCloseButton: Story = {
+  render: (args) => (
+    <AdaptiveDialog {...args}>
+      <AdaptiveDialogTrigger render={<Button variant="outline" />}>
+        Share project
+      </AdaptiveDialogTrigger>
+      <AdaptiveDialogContent>
+        <AdaptiveDialogHeader>
+          <AdaptiveDialogTitle>Share project</AdaptiveDialogTitle>
+          <AdaptiveDialogDescription>
+            Anyone with the link can view this project.
+          </AdaptiveDialogDescription>
+        </AdaptiveDialogHeader>
+        <AdaptiveDialogBody>
+          <Input
+            readOnly
+            aria-label="Project link"
+            defaultValue="https://esuiss.dev/p/1042"
+          />
+        </AdaptiveDialogBody>
+        <AdaptiveDialogFooter>
+          <Button>Copy link</Button>
+        </AdaptiveDialogFooter>
+      </AdaptiveDialogContent>
+    </AdaptiveDialog>
+  ),
+}
+
+export const WithCloseLabel: Story = {
+  render: (args) => (
+    <AdaptiveDialog {...args}>
+      <AdaptiveDialogTrigger render={<Button variant="outline" />}>
+        Share project
+      </AdaptiveDialogTrigger>
+      <AdaptiveDialogContent closeLabel="Close">
+        <AdaptiveDialogHeader>
+          <AdaptiveDialogTitle>Share project</AdaptiveDialogTitle>
+          <AdaptiveDialogDescription>
+            Anyone with the link can view this project.
+          </AdaptiveDialogDescription>
+        </AdaptiveDialogHeader>
+        <AdaptiveDialogBody>
+          <Input
+            readOnly
+            aria-label="Project link"
+            defaultValue="https://esuiss.dev/p/1042"
+          />
+        </AdaptiveDialogBody>
+        <AdaptiveDialogFooter>
+          <Button>Copy link</Button>
+        </AdaptiveDialogFooter>
+      </AdaptiveDialogContent>
+    </AdaptiveDialog>
+  ),
+}
+
+export const Floating: Story = {
+  ...Default,
+  args: { floating: true },
+}

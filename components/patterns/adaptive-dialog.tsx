@@ -48,12 +48,14 @@ function AdaptiveDialog({
   open,
   defaultOpen,
   onOpenChange,
+  floating,
   children,
 }: Pick<
   React.ComponentProps<typeof Dialog>,
   "open" | "defaultOpen" | "children"
 > & {
   onOpenChange?: (open: boolean) => void
+  floating?: boolean
 }) {
   const isMobile = useIsMobile()
   const rootProps = {
@@ -66,7 +68,12 @@ function AdaptiveDialog({
   return (
     <AdaptiveDialogContext.Provider value={{ isMobile }}>
       {isMobile ? (
-        <Drawer data-slot="adaptive-dialog" showSwipeHandle {...rootProps} />
+        <Drawer
+          data-slot="adaptive-dialog"
+          floating={floating}
+          showSwipeHandle
+          {...rootProps}
+        />
       ) : (
         <Dialog data-slot="adaptive-dialog" {...rootProps} />
       )}
@@ -89,7 +96,7 @@ function AdaptiveDialogTrigger(
 }
 
 function AdaptiveDialogContent({
-  showCloseButton,
+  showCloseButton = true,
   ...props
 }: Omit<
   React.ComponentProps<typeof DialogContent>,
@@ -101,7 +108,13 @@ function AdaptiveDialogContent({
   const { isMobile } = useAdaptiveDialog()
 
   if (isMobile) {
-    return <DrawerContent data-slot="adaptive-dialog-content" {...props} />
+    return (
+      <DrawerContent
+        data-slot="adaptive-dialog-content"
+        showCloseButton={showCloseButton}
+        {...props}
+      />
+    )
   }
 
   return (
