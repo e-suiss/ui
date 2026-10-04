@@ -45,17 +45,17 @@ function CommandItems() {
         <CommandItem>
           <UserIcon />
           Profile
-          <CommandShortcut>⌘P</CommandShortcut>
+          <CommandShortcut mod>P</CommandShortcut>
         </CommandItem>
         <CommandItem>
           <CreditCardIcon />
           Billing
-          <CommandShortcut>⌘B</CommandShortcut>
+          <CommandShortcut mod>B</CommandShortcut>
         </CommandItem>
         <CommandItem>
           <GearIcon />
           Settings
-          <CommandShortcut>⌘S</CommandShortcut>
+          <CommandShortcut mod>S</CommandShortcut>
         </CommandItem>
       </CommandGroup>
     </>

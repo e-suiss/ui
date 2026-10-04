@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group"
+import { useModifierKey } from "@/hooks/use-platform"
 
 function Command({
   className,
@@ -165,17 +166,24 @@ function CommandItem({
 
 function CommandShortcut({
   className,
+  mod,
+  children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span"> & { mod?: boolean }) {
+  const modifier = useModifierKey(children != null)
+
   return (
     <span
       data-slot="command-shortcut"
       className={cn(
-        "ms-auto text-xs text-label-secondary group-data-selected/command-item:text-label",
+        "max-md:hidden ms-auto text-xs text-label-secondary group-data-selected/command-item:text-label",
         className
       )}
       {...props}
-    />
+    >
+      {mod && modifier}
+      {children}
+    </span>
   )
 }
 

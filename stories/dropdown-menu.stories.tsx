@@ -43,17 +43,17 @@ const meta = {
           <DropdownMenuItem>
             <UserIcon />
             Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCardIcon />
             Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <GearIcon />
             Settings
-            <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>,</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -82,7 +82,7 @@ const meta = {
         <DropdownMenuItem>
           <SignOutIcon />
           Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -178,15 +178,15 @@ export const Inset: Story = {
           <DropdownMenuLabel inset>Clipboard</DropdownMenuLabel>
           <DropdownMenuItem inset>
             Cut
-            <DropdownMenuShortcut>⌘X</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>X</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem inset>
             Copy
-            <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>C</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem inset>
             Paste
-            <DropdownMenuShortcut>⌘V</DropdownMenuShortcut>
+            <DropdownMenuShortcut mod>V</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

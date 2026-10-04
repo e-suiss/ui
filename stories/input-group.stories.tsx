@@ -163,7 +163,7 @@ export const WithKbd: Story = {
         <MagnifyingGlassIcon />
       </InputGroupAddon>
       <InputGroupAddon align="inline-end">
-        <Kbd>⌘K</Kbd>
+        <Kbd mod>K</Kbd>
       </InputGroupAddon>
     </InputGroup>
   ),

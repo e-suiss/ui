@@ -4,6 +4,7 @@ import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu
 import { CaretRightIcon, CheckIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"
+import { useModifierKey } from "@/hooks/use-platform"
 
 function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />
@@ -238,17 +239,24 @@ function ContextMenuSeparator({
 
 function ContextMenuShortcut({
   className,
+  mod,
+  children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span"> & { mod?: boolean }) {
+  const modifier = useModifierKey(children != null)
+
   return (
     <span
       data-slot="context-menu-shortcut"
       className={cn(
-        "ms-auto text-xs text-label-secondary group-focus/context-menu-item:text-label",
+        "max-md:hidden ms-auto text-xs text-label-secondary group-focus/context-menu-item:text-label",
         className
       )}
       {...props}
-    />
+    >
+      {mod && modifier}
+      {children}
+    </span>
   )
 }
 

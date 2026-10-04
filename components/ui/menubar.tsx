@@ -210,7 +210,7 @@ function MenubarShortcut({
     <DropdownMenuShortcut
       data-slot="menubar-shortcut"
       className={cn(
-        "ms-auto text-xs text-label-secondary group-focus/menubar-item:text-label",
+        "max-md:hidden ms-auto text-xs text-label-secondary group-focus/menubar-item:text-label",
         className
       )}
       {...props}

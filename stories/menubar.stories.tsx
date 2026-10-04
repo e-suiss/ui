@@ -52,11 +52,11 @@ function MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {
           <MenubarGroup>
             <MenubarItem>
               New tab
-              <MenubarShortcut>⌘T</MenubarShortcut>
+              <MenubarShortcut mod>T</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
               New window
-              <MenubarShortcut>⌘N</MenubarShortcut>
+              <MenubarShortcut mod>N</MenubarShortcut>
             </MenubarItem>
             <MenubarItem disabled>New private window</MenubarItem>
           </MenubarGroup>
@@ -72,7 +72,7 @@ function MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {
           <MenubarSeparator />
           <MenubarItem>
             Print
-            <MenubarShortcut>⌘P</MenubarShortcut>
+            <MenubarShortcut mod>P</MenubarShortcut>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
@@ -83,17 +83,17 @@ function MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {
             <MenubarItem>
               <ScissorsIcon />
               Cut
-              <MenubarShortcut>⌘X</MenubarShortcut>
+              <MenubarShortcut mod>X</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
               <CopyIcon />
               Copy
-              <MenubarShortcut>⌘C</MenubarShortcut>
+              <MenubarShortcut mod>C</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
               <ClipboardTextIcon />
               Paste
-              <MenubarShortcut>⌘V</MenubarShortcut>
+              <MenubarShortcut mod>V</MenubarShortcut>
             </MenubarItem>
           </MenubarGroup>
           <MenubarSeparator />

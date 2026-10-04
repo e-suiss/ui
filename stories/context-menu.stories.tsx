@@ -43,17 +43,17 @@ export const Default: Story = {
           <ContextMenuItem>
             <ArrowLeftIcon />
             Back
-            <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+            <ContextMenuShortcut mod>[</ContextMenuShortcut>
           </ContextMenuItem>
           <ContextMenuItem disabled>
             <ArrowRightIcon />
             Forward
-            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+            <ContextMenuShortcut mod>]</ContextMenuShortcut>
           </ContextMenuItem>
           <ContextMenuItem>
             <ArrowClockwiseIcon />
             Reload
-            <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+            <ContextMenuShortcut mod>R</ContextMenuShortcut>
           </ContextMenuItem>
         </ContextMenuGroup>
         <ContextMenuSeparator />
@@ -82,7 +82,7 @@ export const Default: Story = {
         <ContextMenuItem variant="destructive">
           <TrashIcon />
           Delete
-          <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
+          <ContextMenuShortcut mod>⌫</ContextMenuShortcut>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>

@@ -341,7 +341,7 @@ function QuestionnaireChoice({
             hidden={state.shortcut === null}
             data-shortcut={state.shortcut ?? undefined}
             data-slot="questionnaire-choice-shortcut"
-            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-accent/10 bg-surface/80 font-mono text-3xs leading-none text-label-secondary group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex"
+            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-accent/10 bg-surface/80 font-mono text-3xs leading-none text-label-secondary group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex max-md:hidden!"
           >
             {state.shortcut}
           </span>

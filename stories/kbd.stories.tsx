@@ -15,21 +15,20 @@ import { Kbd, KbdGroup } from "@/components/ui/kbd"
 const meta = {
   title: "Components/Kbd",
   component: Kbd,
-  args: {
-    children: "⌘K",
-  },
 } satisfies Meta<typeof Kbd>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: { mod: true, children: "K" },
+}
 
 export const Modifiers: Story = {
   render: (args) => (
     <div className="flex flex-wrap items-center gap-2">
-      <Kbd {...args}>⌘</Kbd>
+      <Kbd {...args} mod />
       <Kbd {...args}>⇧</Kbd>
       <Kbd {...args}>⌥</Kbd>
       <Kbd {...args}>⌃</Kbd>
@@ -45,14 +44,14 @@ export const Group: Story = {
       <p>
         Use{" "}
         <KbdGroup>
-          <Kbd {...args}>Ctrl</Kbd>
+          <Kbd {...args} mod />
           <span>+</span>
           <Kbd {...args}>B</Kbd>
         </KbdGroup>{" "}
         to toggle the sidebar.
       </p>
       <KbdGroup>
-        <Kbd {...args}>⌘</Kbd>
+        <Kbd {...args} mod />
         <Kbd {...args}>⇧</Kbd>
         <Kbd {...args}>P</Kbd>
       </KbdGroup>
@@ -82,7 +81,9 @@ export const InInputGroup: Story = {
           <MagnifyingGlassIcon />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          <Kbd {...args}>⌘K</Kbd>
+          <Kbd {...args} mod>
+            K
+          </Kbd>
         </InputGroupAddon>
       </InputGroup>
     </div>

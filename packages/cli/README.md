@@ -161,7 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 accordion, alert, alert-dialog, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, table, tabs, textarea, toast, toggle, toggle-group, tooltip, wheel-picker
 
-Hooks: use-message-scroller, use-mobile, use-questionnaire
+Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire
 
 ## Patterns
 

@@ -81,7 +81,7 @@ export const WithShortcut: Story = {
       </TooltipTrigger>
       <TooltipContent side={side}>
         New file
-        <Kbd>⌘N</Kbd>
+        <Kbd mod>N</Kbd>
       </TooltipContent>
     </Tooltip>
   ),

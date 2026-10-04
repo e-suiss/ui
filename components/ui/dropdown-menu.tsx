@@ -4,6 +4,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { CaretRightIcon, CheckIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"
+import { useModifierKey } from "@/hooks/use-platform"
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
@@ -238,17 +239,24 @@ function DropdownMenuSeparator({
 
 function DropdownMenuShortcut({
   className,
+  mod,
+  children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span"> & { mod?: boolean }) {
+  const modifier = useModifierKey(children != null)
+
   return (
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ms-auto text-xs text-label-secondary group-focus/dropdown-menu-item:text-label",
+        "max-md:hidden ms-auto text-xs text-label-secondary group-focus/dropdown-menu-item:text-label",
         className
       )}
       {...props}
-    />
+    >
+      {mod && modifier}
+      {children}
+    </span>
   )
 }
 

@@ -284,7 +284,8 @@
       ],
       "requires": [
         "dialog",
-        "input-group"
+        "input-group",
+        "use-platform"
       ],
       "files": [
         "components/ui/command.tsx"
@@ -299,7 +300,9 @@
         "@phosphor-icons/react",
         "cn"
       ],
-      "requires": [],
+      "requires": [
+        "use-platform"
+      ],
       "files": [
         "components/ui/context-menu.tsx"
       ]
@@ -357,7 +360,9 @@
         "@phosphor-icons/react",
         "cn"
       ],
-      "requires": [],
+      "requires": [
+        "use-platform"
+      ],
       "files": [
         "components/ui/dropdown-menu.tsx"
       ]
@@ -469,7 +474,9 @@
       "dependencies": [
         "cn"
       ],
-      "requires": [],
+      "requires": [
+        "use-platform"
+      ],
       "files": [
         "components/ui/kbd.tsx"
       ]
@@ -730,7 +737,8 @@
         "sheet",
         "skeleton",
         "tooltip",
-        "use-mobile"
+        "use-mobile",
+        "use-platform"
       ],
       "files": [
         "components/ui/sidebar.tsx"
@@ -1023,6 +1031,16 @@
       "requires": [],
       "files": [
         "hooks/use-mobile.ts"
+      ]
+    },
+    {
+      "name": "use-platform",
+      "type": "hook",
+      "title": "Use Platform",
+      "dependencies": [],
+      "requires": [],
+      "files": [
+        "hooks/use-platform.ts"
       ]
     },
     {
