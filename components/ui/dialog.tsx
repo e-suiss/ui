@@ -42,9 +42,11 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  closeLabel,
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
+  closeLabel?: string
 }) {
   return (
     <DialogPortal>
@@ -61,16 +63,25 @@ function DialogContent({
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
+            data-label={closeLabel ? "" : undefined}
             render={
               <Button
-                variant="ghost"
-                className="absolute top-4 inset-e-4 bg-control"
-                size="icon-sm"
+                variant={closeLabel ? "plain" : "ghost"}
+                className={cn(
+                  "absolute top-4 inset-e-4",
+                  !closeLabel &&
+                    "bg-surface-tertiary hover:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_5%)] active:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_10%)]"
+                )}
+                size={closeLabel ? "sm" : "icon-sm"}
               />
             }
           >
-            <XIcon />
-            <span className="sr-only">Close</span>
+            {closeLabel ?? (
+              <>
+                <XIcon />
+                <span className="sr-only">Close</span>
+              </>
+            )}
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Popup>
