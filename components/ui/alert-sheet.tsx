@@ -129,7 +129,7 @@ function AlertSheetDescription({
 }
 
 const alertSheetActionVariants = cva(
-  "flex min-h-14 w-full cursor-pointer items-center justify-center px-4 text-lg outline-none hover:bg-[color-mix(in_oklch,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklch,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:opacity-50 [--focus-ring-offset:-3px]",
+  "flex min-h-14 w-full cursor-pointer items-center justify-center px-4 text-lg outline-none hover:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:text-label-quaternary [--focus-ring-offset:-3px]",
   {
     variants: {
       variant: {

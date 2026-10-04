@@ -22,17 +22,17 @@ const bubbleVariants = cva(
         default:
           "[--bubble-bg:var(--accent)] *:data-[slot=bubble-content]:text-on-accent [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--accent-hover)]",
         secondary:
-          "[--bubble-bg:var(--fill-secondary)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--fill)]",
+          "[--bubble-bg:var(--control)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--control-hover)]",
         muted:
           "[--bubble-bg:var(--surface-secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--surface-secondary),var(--label)_5%)]",
         tinted:
           "[--bubble-bg:color-mix(in_oklab,var(--accent)_12%,transparent)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--accent)_20%,transparent)]",
         outline:
-          "[--bubble-bg:var(--surface)] *:data-[slot=bubble-content]:border-separator [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--surface-secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-label dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--fill)_30%,transparent)]",
+          "[--bubble-bg:var(--surface)] *:data-[slot=bubble-content]:border-separator [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--control)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-label",
         ghost:
-          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-surface-secondary [&>[data-slot=bubble-content]:is(button,a):hover]:text-label dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-surface-secondary/50",
+          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-item-hover [&>[data-slot=bubble-content]:is(button,a):hover]:text-label",
         destructive:
-          "[--bubble-bg:color-mix(in_oklab,var(--danger)_8%,transparent)] *:data-[slot=bubble-content]:text-danger dark:[--bubble-bg:color-mix(in_oklab,var(--danger)_20%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--danger)_12%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--danger)_30%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-danger",
+          "[--bubble-bg:var(--danger-surface)] *:data-[slot=bubble-content]:text-danger [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--danger-surface-hover)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-danger",
       },
     },
     defaultVariants: {

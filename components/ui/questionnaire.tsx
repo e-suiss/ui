@@ -311,8 +311,8 @@ function QuestionnaireChoice({
     props: {
       "data-slot": "questionnaire-choice",
       className: cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-separator px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-fill-secondary has-[>input:focus-visible]:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10 data-checked:border-accent data-checked:ring-1 data-checked:ring-accent",
-        "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-separator px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-item-hover has-[>input:focus-visible]:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10 data-checked:border-accent data-checked:ring-1 data-checked:ring-accent",
+        "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-label-quaternary",
         className
       ),
       ...props,
@@ -403,7 +403,7 @@ function QuestionnaireInput({
       ...questionnaireInput.inputProps,
       "data-slot": "questionnaire-input",
       className: cn(
-        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-fill px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10",
+        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-control px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10",
         "selection:bg-accent selection:text-on-accent placeholder:text-label-secondary",
         className
       ),

@@ -97,7 +97,7 @@ function themeDeclarations(
   return colorConfig
     .map(([key, itemConfig]) => {
       const color = itemConfig.theme?.[theme] ?? itemConfig.color
-      return color && isSafeValue(color) ? `  --color-${key}: ${color};` : null
+      return color && isSafeValue(color) ? ` --color-${key}: ${color};` : null
     })
     .filter(Boolean)
     .join("\n")

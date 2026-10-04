@@ -13,9 +13,9 @@ const badgeVariants = cva(
         destructive:
           "text-danger [--focus-ring-color:var(--color-danger)] [a]:hover:underline",
         outline:
-          "border-separator px-2 text-label has-data-[icon=inline-end]:pe-1.5 has-data-[icon=inline-start]:ps-1.5 [a]:hover:bg-surface-secondary",
+          "border-separator px-2 text-label has-data-[icon=inline-end]:pe-1.5 has-data-[icon=inline-start]:ps-1.5 [a]:hover:bg-item-hover",
         ghost:
-          "px-2 has-data-[icon=inline-end]:pe-1.5 has-data-[icon=inline-start]:ps-1.5 [a]:hover:bg-surface-secondary [a]:hover:text-label-secondary dark:[a]:hover:bg-surface-secondary/50",
+          "px-2 has-data-[icon=inline-end]:pe-1.5 has-data-[icon=inline-start]:ps-1.5 [a]:hover:bg-item-hover [a]:hover:text-label-secondary ",
         link: "text-link hover:underline",
       },
     },

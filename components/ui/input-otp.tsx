@@ -16,7 +16,7 @@ function InputOTP({
     <OTPInput
       data-slot="input-otp"
       containerClassName={cn(
-        "cn-input-otp flex items-center has-disabled:opacity-50",
+        "cn-input-otp flex items-center has-disabled:bg-control-disabled has-disabled:text-label-quaternary",
         containerClassName
       )}
       spellCheck={false}
@@ -54,7 +54,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex size-11 items-center justify-center border-y border-e border-separator bg-fill text-base transition-all outline-none first:rounded-s-lg first:border-s last:rounded-e-lg aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[active=true]:z-10 data-[active=true]:border-focus data-[active=true]:ring-3 data-[active=true]:ring-focus/30",
+        "relative flex size-11 items-center justify-center border-y border-e border-separator bg-control text-base transition-all outline-none first:rounded-s-lg first:border-s last:rounded-e-lg aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[active=true]:z-10 data-[active=true]:border-focus data-[active=true]:ring-3 data-[active=true]:ring-focus/30",
         className
       )}
       {...props}

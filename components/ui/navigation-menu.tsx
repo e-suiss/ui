@@ -55,7 +55,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-md px-4.5 py-2.5 text-sm transition-all outline-none hover:bg-surface-secondary focus:bg-surface-secondary focus-visible:focus-ring disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-surface-secondary/50 data-popup-open:hover:bg-surface-secondary data-open:bg-surface-secondary/50 data-open:hover:bg-surface-secondary data-open:focus:bg-surface-secondary"
+  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-md px-4.5 py-2.5 text-sm transition-all outline-none hover:bg-item-hover focus:bg-item-hover focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary data-popup-open:bg-item-selected data-popup-open:hover:bg-item-selected data-open:bg-item-selected data-open:hover:bg-item-selected data-open:focus:bg-item-selected"
 )
 
 function NavigationMenuTrigger({
@@ -131,7 +131,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex items-center gap-1.5 rounded-md p-3 text-sm transition-all outline-none hover:bg-surface-secondary focus:bg-surface-secondary focus-visible:focus-ring in-data-[slot=navigation-menu-content]:rounded-md data-[active=true]:bg-surface-secondary/50 data-[active=true]:hover:bg-surface-secondary data-[active=true]:focus:bg-surface-secondary [&_svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-1.5 rounded-md p-3 text-sm transition-all outline-none hover:bg-item-hover focus:bg-item-hover focus-visible:focus-ring in-data-[slot=navigation-menu-content]:rounded-md data-[active=true]:bg-item-selected data-[active=true]:hover:bg-item-selected data-[active=true]:focus:bg-item-selected [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
