@@ -974,6 +974,22 @@
       ]
     },
     {
+      "name": "panel",
+      "type": "pattern",
+      "title": "Panel",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "drawer",
+        "sheet",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/panel.tsx"
+      ]
+    },
+    {
       "name": "preview",
       "type": "pattern",
       "title": "Preview",
