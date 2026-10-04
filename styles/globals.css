@@ -96,7 +96,7 @@
   --on-accent: oklch(1 0 0);
 
   --link: oklch(0.669 0.1808 251.84);
-  --focus: oklch(0.669 0.1808 251.84);
+  --focus: oklch(0.5629 0.1933 256.16);
 
   --danger: oklch(0.6633 0.2236 28.29);
   --danger-surface: oklch(0.6633 0.2236 28.29 / 20%);
