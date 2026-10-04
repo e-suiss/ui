@@ -43,7 +43,7 @@ function ProfileSheet({
       </div>
       <SheetFooter>
         <Button type="submit">Save changes</Button>
-        <SheetClose render={<Button variant="outline" />}>Cancel</SheetClose>
+        <SheetClose render={<Button variant="secondary" />}>Cancel</SheetClose>
       </SheetFooter>
     </SheetContent>
   )
