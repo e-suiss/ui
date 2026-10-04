@@ -897,9 +897,23 @@
       ]
     },
     {
-      "name": "adaptive-alert",
+      "name": "action-menu",
       "type": "pattern",
-      "title": "Adaptive Alert",
+      "title": "Action Menu",
+      "dependencies": [],
+      "requires": [
+        "alert-sheet",
+        "dropdown-menu",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/action-menu.tsx"
+      ]
+    },
+    {
+      "name": "confirm",
+      "type": "pattern",
+      "title": "Confirm",
       "dependencies": [],
       "requires": [
         "alert-dialog",
@@ -907,13 +921,13 @@
         "use-mobile"
       ],
       "files": [
-        "components/patterns/adaptive-alert.tsx"
+        "components/patterns/confirm.tsx"
       ]
     },
     {
-      "name": "adaptive-dialog",
+      "name": "modal",
       "type": "pattern",
-      "title": "Adaptive Dialog",
+      "title": "Modal",
       "dependencies": [
         "cn"
       ],
@@ -923,7 +937,7 @@
         "use-mobile"
       ],
       "files": [
-        "components/patterns/adaptive-dialog.tsx"
+        "components/patterns/modal.tsx"
       ]
     },
     {

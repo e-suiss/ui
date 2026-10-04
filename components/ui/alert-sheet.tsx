@@ -85,7 +85,7 @@ function AlertSheetGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-sheet-group"
       className={cn(
-        "flex flex-col overflow-hidden rounded-2xl bg-surface-raised text-label *:not-first:border-t",
+        "flex flex-col overflow-hidden rounded-2xl bg-surface-raised text-label *:col-span-full *:not-first:border-t has-[>button>svg]:grid has-[>button>svg]:grid-cols-[1fr_auto_auto_1fr]",
         className
       )}
       {...props}
@@ -136,7 +136,7 @@ function AlertSheetDescription({
 }
 
 const alertSheetActionVariants = cva(
-  "flex min-h-14 w-full cursor-pointer items-center justify-center px-4 text-lg outline-none hover:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:text-label-quaternary [--focus-ring-offset:-3px]",
+  "flex min-h-14 w-full cursor-pointer items-center justify-center gap-2 px-4 text-lg has-[>svg]:grid has-[>svg]:grid-cols-subgrid has-[>svg]:gap-x-3 has-[>svg]:text-start [&>svg]:col-start-2 [&_svg:not([class*='size-'])]:size-5 outline-none hover:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:text-label-quaternary [--focus-ring-offset:-3px]",
   {
     variants: {
       variant: {
