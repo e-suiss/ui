@@ -1,8 +1,8 @@
 import { cn } from "cn"
 
-const spokes = Array.from({ length: 12 }, (_, index) => ({
-  angle: index * 30,
-  opacity: Number((0.15 + (0.85 * index) / 11).toFixed(2)),
+const spokes = Array.from({ length: 8 }, (_, index) => ({
+  angle: index * 45,
+  opacity: Number((0.2 + (0.8 * index) / 7).toFixed(2)),
 }))
 
 function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
@@ -14,7 +14,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
       viewBox="0 0 24 24"
       fill="currentColor"
       className={cn(
-        "size-4 shrink-0 animate-[spin_1s_steps(12)_infinite]",
+        "size-4 shrink-0 animate-[spin_0.8s_steps(8)_infinite]",
         className
       )}
       {...props}
@@ -22,11 +22,11 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
       {spokes.map(({ angle, opacity }) => (
         <rect
           key={angle}
-          x="10.8"
-          y="1"
-          width="2.4"
-          height="6.8"
-          rx="1.2"
+          x="10.44"
+          y="0.5"
+          width="3.12"
+          height="7.2"
+          rx="1.56"
           opacity={opacity}
           transform={`rotate(${angle} 12 12)`}
         />
