@@ -8,7 +8,7 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: "bg-surface-secondary text-label *:[svg]:text-accent",
-        destructive: "bg-surface-secondary text-danger *:[svg]:text-danger",
+        destructive: "bg-surface-secondary text-label *:[svg]:text-danger",
       },
     },
     defaultVariants: {
