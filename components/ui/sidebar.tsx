@@ -402,7 +402,7 @@ function SidebarGroupLabel({
     props: mergeProps<"div">(
       {
         className: cn(
-          "flex h-8 shrink-0 items-center rounded-md px-3 text-xs text-label/70 ring-focus outline-hidden transition-[margin,opacity] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
+          "flex h-8 shrink-0 items-center rounded-md px-3 text-xs font-semibold text-label-secondary ring-focus outline-hidden transition-[margin,opacity] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
           className
         ),
       },
@@ -477,7 +477,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-3 py-2 text-start text-base ring-focus outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pe-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-item-hover hover:text-label focus-visible:focus-ring active:bg-item-pressed active:text-label disabled:pointer-events-none disabled:text-label-quaternary aria-disabled:pointer-events-none aria-disabled:text-label-quaternary data-open:hover:bg-item-selected data-open:hover:text-label data-active:bg-item-selected data-active:text-label [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-3 py-2 text-start text-base ring-focus outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pe-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-item-hover hover:text-label focus-visible:focus-ring active:bg-item-pressed active:text-label disabled:pointer-events-none disabled:text-label-quaternary aria-disabled:pointer-events-none aria-disabled:text-label-quaternary data-open:hover:bg-item-selected data-open:hover:text-label data-active:bg-item-selected data-active:[&_svg]:text-link data-active:text-label [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
   {
     variants: {
       variant: {
