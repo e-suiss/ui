@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 const meta = {
@@ -9,8 +10,13 @@ const meta = {
     type: "text",
     placeholder: "Enter your name",
     disabled: false,
+    size: "default",
   },
   argTypes: {
+    size: {
+      control: "select",
+      options: ["sm", "md", "default"],
+    },
     type: {
       control: "select",
       options: ["text", "email", "password", "number", "search", "tel", "url"],
@@ -30,6 +36,25 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <Input {...args} size="sm" placeholder="Small" />
+        <Button size="sm">Save</Button>
+      </div>
+      <div className="flex items-center gap-2">
+        <Input {...args} size="md" placeholder="Medium" />
+        <Button>Save</Button>
+      </div>
+      <div className="flex items-center gap-2">
+        <Input {...args} size="default" placeholder="Default" />
+        <Button size="lg">Save</Button>
+      </div>
+    </div>
+  ),
+}
 
 export const Types: Story = {
   render: (args) => (
