@@ -23,7 +23,7 @@ function NativeSelect({
       <select
         data-slot="native-select"
         data-size={size}
-        className="h-11 w-full min-w-0 appearance-none rounded-lg border border-transparent bg-control py-1 pe-8 ps-3 text-base transition-[color,box-shadow,background-color] outline-none select-none selection:bg-accent selection:text-on-accent placeholder:text-label-secondary focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[size=sm]:h-9 data-[size=sm]:rounded-md"
+        className="h-11 w-full min-w-0 appearance-none rounded-lg border border-transparent bg-control py-1 pe-8 ps-3 text-base transition-[color,box-shadow,background-color] outline-none select-none selection:bg-accent selection:text-on-accent placeholder:text-label-secondary has-[option[value='']:checked]:text-label-secondary focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[size=sm]:h-9 data-[size=sm]:rounded-md"
         {...props}
       />
       <CaretUpDownIcon
