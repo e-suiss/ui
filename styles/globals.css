@@ -13,9 +13,16 @@
   --label-tertiary: oklch(0.6217 0.0074 286.17);
   --label-quaternary: oklch(0.8652 0.0068 286.24);
 
-  --fill: oklch(0 0 0 / 10%);
-  --fill-secondary: oklch(0 0 0 / 6%);
-  --fill-tertiary: oklch(0 0 0 / 4%);
+  --control: oklch(0 0 0 / 4%);
+  --control-hover: oklch(0 0 0 / 8%);
+  --control-pressed: oklch(0 0 0 / 12%);
+  --control-selected: oklch(0.2316 0.0038 286.09);
+  --control-disabled: oklch(0 0 0 / 3%);
+  --on-control-selected: oklch(1 0 0);
+
+  --item-hover: oklch(0 0 0 / 5%);
+  --item-pressed: oklch(0 0 0 / 8%);
+  --item-selected: oklch(0 0 0 / 6%);
 
   --separator: oklch(0.8652 0.0068 286.24);
   --separator-strong: oklch(0.6217 0.0074 286.17);
@@ -23,13 +30,17 @@
   --accent: oklch(0.5629 0.1933 256.16);
   --accent-hover: oklch(0.5301 0.1811 256.02);
   --accent-pressed: oklch(0.4825 0.1644 255.94);
+  --accent-selected: oklch(0.5629 0.1933 256.16);
+  --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
 
   --link: oklch(0.522 0.1771 255.83);
   --focus: oklch(0.5629 0.1933 256.16);
 
   --danger: oklch(0.5529 0.2255 27.27);
-  --danger-surface: oklch(0.9719 0.0142 6.7);
+  --danger-surface: oklch(0.5529 0.2255 27.27 / 8%);
+  --danger-surface-hover: oklch(0.5529 0.2255 27.27 / 12%);
+  --danger-surface-pressed: oklch(0.5529 0.2255 27.27 / 16%);
   --success: oklch(0.5201 0.1743 142.96);
   --success-surface: oklch(0.9744 0.0166 151.11);
   --warning: oklch(0.5368 0.1606 42.44);
@@ -63,9 +74,16 @@
   --label-tertiary: oklch(0.6217 0.0074 286.17);
   --label-quaternary: oklch(0.3802 0.005 286.15);
 
-  --fill: oklch(1 0 0 / 16%);
-  --fill-secondary: oklch(1 0 0 / 10%);
-  --fill-tertiary: oklch(1 0 0 / 6%);
+  --control: oklch(1 0 0 / 10%);
+  --control-hover: oklch(1 0 0 / 16%);
+  --control-pressed: oklch(1 0 0 / 22%);
+  --control-selected: oklch(0.9707 0.0026 286.29);
+  --control-disabled: oklch(1 0 0 / 5%);
+  --on-control-selected: oklch(0 0 0);
+
+  --item-hover: oklch(1 0 0 / 8%);
+  --item-pressed: oklch(1 0 0 / 12%);
+  --item-selected: oklch(1 0 0 / 10%);
 
   --separator: oklch(0.3802 0.005 286.15);
   --separator-strong: oklch(0.5399 0.0077 286.13);
@@ -73,13 +91,17 @@
   --accent: oklch(0.5629 0.1933 256.16);
   --accent-hover: oklch(0.5301 0.1811 256.02);
   --accent-pressed: oklch(0.4825 0.1644 255.94);
+  --accent-selected: oklch(0.5629 0.1933 256.16);
+  --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
 
   --link: oklch(0.669 0.1808 251.84);
   --focus: oklch(0.669 0.1808 251.84);
 
   --danger: oklch(0.6633 0.2236 28.29);
-  --danger-surface: oklch(0.6633 0.2236 28.29 / 16%);
+  --danger-surface: oklch(0.6633 0.2236 28.29 / 20%);
+  --danger-surface-hover: oklch(0.6633 0.2236 28.29 / 30%);
+  --danger-surface-pressed: oklch(0.6633 0.2236 28.29 / 36%);
   --success: oklch(0.7556 0.2082 146.98);
   --success-surface: oklch(0.7556 0.2082 146.98 / 16%);
   --warning: oklch(0.7824 0.1711 67.22);
@@ -114,9 +136,16 @@
   --color-label-tertiary: var(--label-tertiary);
   --color-label-quaternary: var(--label-quaternary);
 
-  --color-fill: var(--fill);
-  --color-fill-secondary: var(--fill-secondary);
-  --color-fill-tertiary: var(--fill-tertiary);
+  --color-control: var(--control);
+  --color-control-hover: var(--control-hover);
+  --color-control-pressed: var(--control-pressed);
+  --color-control-selected: var(--control-selected);
+  --color-control-disabled: var(--control-disabled);
+  --color-on-control-selected: var(--on-control-selected);
+
+  --color-item-hover: var(--item-hover);
+  --color-item-pressed: var(--item-pressed);
+  --color-item-selected: var(--item-selected);
 
   --color-separator: var(--separator);
   --color-separator-strong: var(--separator-strong);
@@ -124,6 +153,8 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-pressed: var(--accent-pressed);
+  --color-accent-selected: var(--accent-selected);
+  --color-accent-disabled: var(--accent-disabled);
   --color-on-accent: var(--on-accent);
 
   --color-link: var(--link);
@@ -131,6 +162,8 @@
 
   --color-danger: var(--danger);
   --color-danger-surface: var(--danger-surface);
+  --color-danger-surface-hover: var(--danger-surface-hover);
+  --color-danger-surface-pressed: var(--danger-surface-pressed);
   --color-success: var(--success);
   --color-success-surface: var(--success-surface);
   --color-warning: var(--warning);
