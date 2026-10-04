@@ -5,8 +5,10 @@ import {
   InfoIcon,
   MagnifyingGlassIcon,
   PaperclipIcon,
+  XCircleIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import * as React from "react"
 
 import {
   InputGroup,
@@ -44,6 +46,39 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+function SearchField() {
+  const [query, setQuery] = React.useState("MacBook")
+  return (
+    <InputGroup>
+      <InputGroupInput
+        aria-label="Search"
+        placeholder="Search"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
+      <InputGroupAddon>
+        <MagnifyingGlassIcon />
+      </InputGroupAddon>
+      {query && (
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton
+            size="icon-xs"
+            aria-label="Clear search"
+            className="text-label-secondary"
+            onClick={() => setQuery("")}
+          >
+            <XCircleIcon weight="fill" />
+          </InputGroupButton>
+        </InputGroupAddon>
+      )}
+    </InputGroup>
+  )
+}
+
+export const Search: Story = {
+  render: () => <SearchField />,
+}
 
 export const WithText: Story = {
   render: (args) => (
