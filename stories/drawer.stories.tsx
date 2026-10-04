@@ -92,6 +92,34 @@ export const Directions: Story = {
   ),
 }
 
+export const Attached: Story = {
+  render: (args) => (
+    <Drawer {...args}>
+      <DrawerTrigger render={<Button variant="outline" />}>
+        Open drawer
+      </DrawerTrigger>
+      <DrawerContent className="rounded-b-none [--drawer-inset:0px]">
+        <DrawerHeader>
+          <DrawerTitle>Move goal</DrawerTitle>
+          <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+        </DrawerHeader>
+        <div className="flex flex-col items-center gap-1 p-4">
+          <span className="text-5xl font-semibold tracking-tight">350</span>
+          <span className="text-label-secondary text-xs uppercase">
+            Calories per day
+          </span>
+        </div>
+        <DrawerFooter>
+          <Button>Save goal</Button>
+          <DrawerClose render={<Button variant="outline" />}>
+            Cancel
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+}
+
 export const WithSnapPoints: Story = {
   args: { snapPoints: [0.5, 1] },
 }
