@@ -147,13 +147,13 @@ function DatePicker({
         open={open}
         onOpenChange={setOpen}
         floating={floating}
-        showSwipeHandle
       >
         <DrawerTrigger render={trigger}>{triggerContent}</DrawerTrigger>
         <DrawerContent
           data-slot="date-picker-content"
           showCloseButton={showCloseButton}
           closeLabel={closeLabel}
+          className={cn(!floating && "rounded-t-none")}
         >
           <DrawerHeader className={cn(!title && "sr-only")}>
             <DrawerTitle>{title ?? ariaLabel ?? placeholder}</DrawerTitle>
