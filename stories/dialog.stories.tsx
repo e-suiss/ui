@@ -47,7 +47,7 @@ export const Default: Story = {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>
+          <DialogClose render={<Button variant="secondary" />}>
             Cancel
           </DialogClose>
           <Button>Save changes</Button>
@@ -100,7 +100,7 @@ export const Destructive: Story = {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>
+          <DialogClose render={<Button variant="secondary" />}>
             Cancel
           </DialogClose>
           <Button variant="destructive">Delete</Button>
