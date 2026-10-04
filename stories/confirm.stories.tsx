@@ -59,3 +59,8 @@ export const OpenByDefault: Story = {
   ...Default,
   args: { defaultOpen: true },
 }
+
+export const Dismissible: Story = {
+  ...Default,
+  args: { dismissible: true },
+}

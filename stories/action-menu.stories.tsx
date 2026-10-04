@@ -86,3 +86,8 @@ export const NotDismissible: Story = {
   ...Default,
   args: { dismissible: false },
 }
+
+export const OpenByDefault: Story = {
+  ...Default,
+  args: { defaultOpen: true },
+}
