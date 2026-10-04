@@ -68,7 +68,8 @@ function DialogContent({
               <Button
                 variant={closeLabel ? "plain" : "ghost"}
                 className={cn(
-                  "absolute top-4 inset-e-4",
+                  "absolute top-4.75 inset-e-4",
+                  closeLabel && "text-base",
                   !closeLabel &&
                     "bg-surface-tertiary hover:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_5%)] active:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_10%)]"
                 )}

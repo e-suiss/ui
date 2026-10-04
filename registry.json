@@ -925,6 +925,39 @@
       ]
     },
     {
+      "name": "context-actions",
+      "type": "pattern",
+      "title": "Context Actions",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "alert-sheet",
+        "context-menu",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/context-actions.tsx"
+      ]
+    },
+    {
+      "name": "flyout",
+      "type": "pattern",
+      "title": "Flyout",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "requires": [
+        "drawer",
+        "popover",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/flyout.tsx"
+      ]
+    },
+    {
       "name": "modal",
       "type": "pattern",
       "title": "Modal",
@@ -938,6 +971,22 @@
       ],
       "files": [
         "components/patterns/modal.tsx"
+      ]
+    },
+    {
+      "name": "preview",
+      "type": "pattern",
+      "title": "Preview",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "drawer",
+        "hover-card",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/preview.tsx"
       ]
     },
     {

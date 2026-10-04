@@ -166,7 +166,8 @@ function DrawerContent({
                 <Button
                   variant={closeLabel ? "plain" : "ghost"}
                   className={cn(
-                    "absolute top-4 inset-e-4",
+                    "absolute inset-e-4 top-2.75 group-has-data-[slot=drawer-swipe-handle]/drawer-popup:top-5.75",
+                    closeLabel && "text-base",
                     !closeLabel &&
                       "bg-surface-tertiary hover:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_5%)] active:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_10%)]"
                   )}
