@@ -30,6 +30,10 @@ function useWheelPickerColumn() {
   return context
 }
 
+const ROW_ANGLE = Math.PI / 10.5
+const MAX_ANGLE = 0.95
+const FADE_ANGLE = 0.3
+
 function WheelPicker({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -114,9 +118,25 @@ function WheelPickerColumn({
     if (!column) return
     const center = column.scrollTop + column.clientHeight / 2
     for (const item of getItems()) {
-      const distance =
-        (item.offsetTop + item.offsetHeight / 2 - center) / item.offsetHeight
-      item.style.setProperty("--wheel-picker-distance", distance.toFixed(3))
+      const height = item.offsetHeight
+      const radius = height / ROW_ANGLE
+      const distance = (item.offsetTop + height / 2 - center) / height
+      const angle = distance * ROW_ANGLE
+      const visible = Math.abs(angle) < MAX_ANGLE
+      item.style.visibility = visible ? "" : "hidden"
+      if (!visible) continue
+      item.style.setProperty(
+        "--wheel-picker-y",
+        `${(radius * Math.sin(angle) - distance * height).toFixed(2)}px`
+      )
+      item.style.setProperty(
+        "--wheel-picker-z",
+        `${(radius * Math.cos(angle) - radius).toFixed(2)}px`
+      )
+      item.style.setProperty(
+        "--wheel-picker-fade",
+        Math.min(1, (MAX_ANGLE - Math.abs(angle)) / FADE_ANGLE).toFixed(3)
+      )
       item.style.setProperty(
         "--wheel-picker-distance-abs",
         Math.abs(distance).toFixed(3)
@@ -210,7 +230,7 @@ function WheelPickerColumn({
         onClickCapture={handleClick}
         onKeyDownCapture={handleKeyDown}
         className={cn(
-          "no-scrollbar relative h-[calc(var(--wheel-picker-item-height)*5)] snap-y snap-mandatory overflow-y-auto overscroll-contain rounded-lg py-[calc(var(--wheel-picker-item-height)*2)] outline-none perspective-distant focus-visible:focus-ring",
+          "no-scrollbar relative h-[calc(var(--wheel-picker-item-height)*6.75)] snap-y snap-mandatory overflow-y-auto overscroll-contain rounded-lg py-[calc(var(--wheel-picker-item-height)*2.875)] outline-none perspective-distant focus-visible:focus-ring",
           className
         )}
         {...props}
@@ -239,7 +259,7 @@ function WheelPickerItem({
       data-value={value}
       data-selected={selected}
       className={cn(
-        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-lg whitespace-nowrap text-label tabular-nums opacity-[max(0.25,calc(1-var(--wheel-picker-distance-abs,0)*0.5))] select-none backface-hidden transform-[rotateX(calc(var(--wheel-picker-distance,0)*-20deg))]",
+        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-lg whitespace-nowrap text-label tabular-nums opacity-[calc(max(0.25,calc(1-var(--wheel-picker-distance-abs,0)*0.5))*var(--wheel-picker-fade,1))] select-none backface-hidden transform-[translateY(var(--wheel-picker-y,0px))_translateZ(var(--wheel-picker-z,0px))]",
         className
       )}
       {...props}
