@@ -89,6 +89,23 @@ export const Sizes: Story = {
   ),
 }
 
+export const Segmented: Story = {
+  args: {
+    multiple: false,
+    variant: "default",
+    spacing: 0,
+    defaultValue: ["week"],
+  },
+  render: (args) => (
+    <ToggleGroup {...args} aria-label="Calendar view">
+      <ToggleGroupItem value="day">Day</ToggleGroupItem>
+      <ToggleGroupItem value="week">Week</ToggleGroupItem>
+      <ToggleGroupItem value="month">Month</ToggleGroupItem>
+      <ToggleGroupItem value="year">Year</ToggleGroupItem>
+    </ToggleGroup>
+  ),
+}
+
 export const SingleSelection: Story = {
   args: { multiple: false, variant: "outline", defaultValue: ["left"] },
   render: (args) => (
