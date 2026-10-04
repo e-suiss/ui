@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@esuiss/tailwind";
+@import "@fontsource-variable/inter";
 
 :root {
   --background: oklch(1 0 0);
@@ -75,7 +76,7 @@
 }
 
 @theme inline {
-  --font-sans: system-ui, sans-serif;
+  --font-sans: "Inter Variable", sans-serif;
   --font-heading: var(--font-sans);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
