@@ -48,7 +48,7 @@ function MessageScroller({
       ref={rootRef}
       data-slot="message-scroller"
       className={cn(
-        "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
+        "relative flex size-full min-h-0 flex-col overflow-hidden",
         className
       )}
       {...props}

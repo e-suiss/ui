@@ -256,10 +256,7 @@ function QuestionnaireChoices({
     state: { shortcuts },
     props: {
       "data-slot": "questionnaire-choices",
-      className: cn(
-        "group/questionnaire-choices grid min-w-0 gap-3",
-        className
-      ),
+      className: cn("grid min-w-0 gap-3", className),
       ...props,
     },
   })
@@ -414,7 +411,7 @@ function QuestionnaireInput({
   return (
     <div
       data-slot="questionnaire-input-wrapper"
-      className="group/questionnaire-input relative w-full min-w-0"
+      className="relative w-full min-w-0"
     >
       {input}
     </div>

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none aria-invalid:border-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none aria-invalid:border-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const buttonVariants = cva(
         tinted:
           "bg-accent-surface text-link hover:bg-accent-surface-hover active:bg-accent-surface-pressed disabled:bg-accent-surface disabled:text-link/40",
         ghost:
-          "hover:bg-item-hover hover:text-label aria-expanded:bg-item-selected aria-expanded:text-label  disabled:text-label-quaternary",
+          "hover:bg-item-hover hover:text-label aria-expanded:bg-item-selected aria-expanded:text-label disabled:text-label-quaternary",
         plain:
           "text-link hover:bg-item-hover active:bg-item-pressed aria-expanded:bg-item-selected disabled:text-link/40",
         destructive:
@@ -55,8 +55,8 @@ const buttonVariants = cva(
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant,
+  size,
   block,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {

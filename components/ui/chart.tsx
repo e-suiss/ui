@@ -5,7 +5,6 @@ import * as React from "react"
 import type { TooltipValueType } from "recharts"
 import * as RechartsPrimitive from "recharts"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
 const INITIAL_DIMENSION = { width: 320, height: 200 } as const

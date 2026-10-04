@@ -14,7 +14,7 @@ function NativeSelect({
   return (
     <div
       className={cn(
-        "group/native-select relative w-fit has-[select:disabled]:bg-control-disabled has-[select:disabled]:text-label-quaternary",
+        "relative w-fit has-[select:disabled]:bg-control-disabled has-[select:disabled]:text-label-quaternary",
         className
       )}
       data-slot="native-select-wrapper"

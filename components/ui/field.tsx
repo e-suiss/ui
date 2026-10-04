@@ -12,7 +12,7 @@ function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
     <fieldset
       data-slot="field-set"
       className={cn(
-        "flex flex-col gap-6 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3 has-[>[data-variant=inset]]:gap-2 has-[>[data-variant=inset]]:*:data-[slot=field-description]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-description]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:mb-0 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:font-normal has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-label-secondary has-[>[data-variant=inset]]:*:data-[slot=field-legend]:uppercase",
+        "flex flex-col gap-6 has-[>[data-slot=radio-group]]:gap-3 has-[>[data-variant=inset]]:gap-2 has-[>[data-variant=inset]]:*:data-[slot=field-description]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-description]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:mb-0 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:font-normal has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-label-secondary has-[>[data-variant=inset]]:*:data-[slot=field-legend]:uppercase",
         className
       )}
       {...props}
@@ -48,7 +48,7 @@ function FieldGroup({
       data-slot="field-group"
       data-variant={variant}
       className={cn(
-        "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
+        "group/field-group @container/field-group flex w-full flex-col gap-7 *:data-[slot=field-group]:gap-4",
         "data-[variant=inset]:gap-0 data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-surface-secondary data-[variant=inset]:*:data-[slot=field]:relative data-[variant=inset]:*:data-[slot=field]:min-h-11 data-[variant=inset]:*:data-[slot=field]:px-4 data-[variant=inset]:*:data-[slot=field]:py-1.5 data-[variant=inset]:*:data-[slot=field]:not-first:before:absolute data-[variant=inset]:*:data-[slot=field]:not-first:before:inset-e-0 data-[variant=inset]:*:data-[slot=field]:not-first:before:inset-s-4 data-[variant=inset]:*:data-[slot=field]:not-first:before:top-0 data-[variant=inset]:*:data-[slot=field]:not-first:before:h-px data-[variant=inset]:*:data-[slot=field]:not-first:before:bg-separator",
         "data-[variant=inset]:**:data-[slot=field-label]:font-normal data-[variant=inset]:**:data-[slot=input]:h-8 data-[variant=inset]:**:data-[slot=input]:bg-transparent data-[variant=inset]:**:data-[slot=input]:px-0 data-[variant=inset]:**:data-[slot=input]:text-end data-[variant=inset]:**:data-[slot=input]:outline-none!",
         className
@@ -93,10 +93,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="field-content"
-      className={cn(
-        "group/field-content flex flex-1 flex-col gap-1",
-        className
-      )}
+      className={cn("flex flex-1 flex-col gap-1", className)}
       {...props}
     />
   )
@@ -110,7 +107,7 @@ function FieldLabel({
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:text-label-quaternary has-[>[data-slot=field]]:has-data-checked:border-accent has-[>[data-slot=field]]:has-data-checked:ring-1 has-[>[data-slot=field]]:has-data-checked:ring-accent has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-item-hover has-[>[data-slot=field]]:has-focus-visible:focus-ring *:data-[slot=field]:p-4",
+        "group/field-label flex w-fit gap-2 group-data-[disabled=true]/field:text-label-quaternary has-[>[data-slot=field]]:has-data-checked:border-accent has-[>[data-slot=field]]:has-data-checked:ring-1 has-[>[data-slot=field]]:has-data-checked:ring-accent has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-item-hover has-[>[data-slot=field]]:has-focus-visible:focus-ring *:data-[slot=field]:p-4",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
         className
       )}
