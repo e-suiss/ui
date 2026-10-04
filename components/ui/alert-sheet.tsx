@@ -29,7 +29,7 @@ function AlertSheetOverlay({
     <AlertSheetPrimitive.Backdrop
       data-slot="alert-sheet-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/30 transition-opacity duration-300 supports-backdrop-filter:backdrop-blur-sm data-ending-style:opacity-0 data-starting-style:opacity-0",
+        "fixed inset-0 isolate z-50 bg-scrim transition-opacity duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0",
         className
       )}
       {...props}

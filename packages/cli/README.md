@@ -126,6 +126,7 @@ Colors are named by role, not by component:
 - **Text:** `label`, `label-secondary`, `label-tertiary`, `label-quaternary`.
 - **Control fills:** `fill`, `fill-secondary`, `fill-tertiary`.
 - **Lines:** `separator`, `separator-strong`.
+- **Scrim:** `scrim`, the dimmed layer behind dialogs, sheets and drawers.
 - **Accent:** `accent`, `accent-hover`, `accent-pressed`, `on-accent` (text on the accent).
 - **Links, focus and states:** `link`, `focus`, `danger`, `success`, `warning` and their `-surface` tints.
 - **Palette:** `blue`, `green`, `orange`, `red`, `yellow`, `purple`, `pink`, `indigo`, `teal`, `mint`, `cyan`, `brown`, `gray`, used by charts.
