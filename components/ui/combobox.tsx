@@ -153,7 +153,7 @@ function ComboboxItem({
           <span className="pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <CheckIcon className="pointer-events-none text-link! **:text-link!" />
       </ComboboxPrimitive.ItemIndicator>
     </ComboboxPrimitive.Item>
   )
@@ -176,7 +176,10 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn("px-3 py-2.5 text-xs text-label-secondary", className)}
+      className={cn(
+        "px-3 py-2.5 text-xs font-semibold text-label-secondary",
+        className
+      )}
       {...props}
     />
   )
@@ -243,7 +246,7 @@ function ComboboxChip({
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
       className={cn(
-        "flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-sm bg-control px-2 text-xs whitespace-nowrap text-label has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-control-disabled has-disabled:text-label-quaternary has-data-[slot=combobox-chip-remove]:pe-0 ",
+        "flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-full bg-accent-surface px-2.5 text-xs whitespace-nowrap text-link has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-control-disabled has-disabled:text-label-quaternary has-data-[slot=combobox-chip-remove]:pe-0.5",
         className
       )}
       {...props}
