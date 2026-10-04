@@ -33,6 +33,9 @@
   --accent-selected: oklch(0.5629 0.1933 256.16);
   --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
+  --accent-surface: oklch(0.5629 0.1933 256.16 / 10%);
+  --accent-surface-hover: oklch(0.5629 0.1933 256.16 / 14%);
+  --accent-surface-pressed: oklch(0.5629 0.1933 256.16 / 18%);
 
   --link: oklch(0.522 0.1771 255.83);
   --focus: oklch(0.5629 0.1933 256.16);
@@ -94,6 +97,9 @@
   --accent-selected: oklch(0.5629 0.1933 256.16);
   --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
+  --accent-surface: oklch(0.5629 0.1933 256.16 / 18%);
+  --accent-surface-hover: oklch(0.5629 0.1933 256.16 / 24%);
+  --accent-surface-pressed: oklch(0.5629 0.1933 256.16 / 30%);
 
   --link: oklch(0.669 0.1808 251.84);
   --focus: oklch(0.5629 0.1933 256.16);
@@ -156,6 +162,9 @@
   --color-accent-selected: var(--accent-selected);
   --color-accent-disabled: var(--accent-disabled);
   --color-on-accent: var(--on-accent);
+  --color-accent-surface: var(--accent-surface);
+  --color-accent-surface-hover: var(--accent-surface-hover);
+  --color-accent-surface-pressed: var(--accent-surface-pressed);
 
   --color-link: var(--link);
   --color-focus: var(--focus);

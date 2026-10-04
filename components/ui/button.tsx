@@ -13,8 +13,12 @@ const buttonVariants = cva(
           "border-separator bg-surface hover:bg-item-hover hover:text-label active:bg-item-pressed aria-expanded:bg-item-selected aria-expanded:text-label dark:bg-transparent dark:hover:bg-item-hover dark:active:bg-item-pressed dark:aria-expanded:bg-item-selected disabled:text-label-quaternary",
         secondary:
           "bg-control text-label hover:bg-control-hover active:bg-control-pressed disabled:bg-control-disabled disabled:text-label-quaternary",
+        tinted:
+          "bg-accent-surface text-link hover:bg-accent-surface-hover active:bg-accent-surface-pressed disabled:bg-accent-surface disabled:text-link/40",
         ghost:
           "hover:bg-item-hover hover:text-label aria-expanded:bg-item-selected aria-expanded:text-label  disabled:text-label-quaternary",
+        plain:
+          "text-link hover:bg-item-hover active:bg-item-pressed aria-expanded:bg-item-selected disabled:text-link/40",
         destructive:
           "bg-danger-surface text-danger hover:bg-danger-surface-hover hover:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] active:bg-danger-surface-pressed [--focus-ring-color:var(--color-danger)] dark:hover:text-danger disabled:bg-danger-surface disabled:text-danger/40",
         link: "text-link hover:underline disabled:text-label-quaternary",
