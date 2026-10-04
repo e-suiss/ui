@@ -55,6 +55,19 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
+export const WithHelpLink: Story = {
+  render: (args) => (
+    <Field {...args}>
+      <FieldLabel htmlFor="field-serial">Serial number</FieldLabel>
+      <Input id="field-serial" placeholder="C02XL0GTJGH5" />
+      <FieldDescription>
+        Printed on the back of the device.{" "}
+        <a href="#serial-help">Find your serial number</a>
+      </FieldDescription>
+    </Field>
+  ),
+}
+
 export const WithTextarea: Story = {
   render: (args) => (
     <Field {...args}>
