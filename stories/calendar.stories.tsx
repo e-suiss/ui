@@ -8,12 +8,17 @@ const meta = {
   title: "Components/Calendar",
   component: Calendar,
   args: {
-    buttonVariant: "ghost",
+    buttonVariant: "plain",
+    size: "default",
   },
   argTypes: {
     buttonVariant: {
       control: "select",
-      options: ["default", "outline", "secondary", "ghost"],
+      options: ["plain", "ghost", "secondary", "tinted"],
+    },
+    size: {
+      control: "select",
+      options: ["sm", "default", "lg"],
     },
     captionLayout: {
       control: "select",
@@ -27,7 +32,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const today = new Date()
+  const [date, setDate] = React.useState<Date | undefined>(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
+  )
   return (
     <Calendar
       {...props}
@@ -59,6 +67,16 @@ function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
 
 export const Default: Story = {
   render: (args) => <SingleCalendar {...args} />,
+}
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap items-start gap-6">
+      <SingleCalendar {...args} size="sm" />
+      <SingleCalendar {...args} size="default" />
+      <SingleCalendar {...args} size="lg" />
+    </div>
+  ),
 }
 
 export const Range: Story = {
