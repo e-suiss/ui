@@ -90,6 +90,74 @@ export const Default: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
       <ButtonGroup>
+        <Button variant="secondary" size="icon" aria-label="Go back">
+          <ArrowLeftIcon />
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button variant="secondary">Archive</Button>
+        <ButtonGroupSeparator />
+        <Button variant="secondary">Report</Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button variant="secondary">Snooze</Button>
+        <ButtonGroupSeparator />
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                variant="secondary"
+                size="icon"
+                aria-label="More options"
+              />
+            }
+          >
+            <DotsThreeIcon />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <ListPlusIcon />
+                Mark as read
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <ArchiveIcon />
+                Archive
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <ClockIcon />
+                Snooze
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CalendarPlusIcon />
+                Add to calendar
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <TagIcon />
+                Label as
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem variant="destructive">
+                <TrashIcon />
+                Trash
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </ButtonGroup>
+    </ButtonGroup>
+  ),
+}
+
+export const Outline: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <ButtonGroup>
         <Button variant="outline" size="icon" aria-label="Go back">
           <ArrowLeftIcon />
         </Button>
@@ -152,10 +220,11 @@ export const Orientation: Story = {
   args: { orientation: "vertical" },
   render: (args) => (
     <ButtonGroup {...args} aria-label="Media controls">
-      <Button variant="outline" size="icon" aria-label="Zoom in">
+      <Button variant="secondary" size="icon" aria-label="Zoom in">
         <PlusIcon />
       </Button>
-      <Button variant="outline" size="icon" aria-label="Zoom out">
+      <ButtonGroupSeparator orientation="horizontal" />
+      <Button variant="secondary" size="icon" aria-label="Zoom out">
         <MinusIcon />
       </Button>
     </ButtonGroup>
@@ -246,6 +315,25 @@ export const WithSeparator: Story = {
       </Button>
       <ButtonGroupSeparator />
       <Button variant="secondary">
+        <ShareIcon data-icon="inline-start" />
+        Share
+      </Button>
+    </ButtonGroup>
+  ),
+}
+
+export const Plain: Story = {
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <Button variant="plain">
+        <ArrowLeftIcon data-icon="inline-start" />
+        Back
+      </Button>
+      <Button variant="plain">
+        Forward
+        <ArrowRightIcon data-icon="inline-end" />
+      </Button>
+      <Button variant="plain">
         <ShareIcon data-icon="inline-start" />
         Share
       </Button>
