@@ -1,0 +1,115 @@
+{
+  "projectId": "fb035166-b75e-4508-9516-c86d840953d2",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "pkg": "esuiss-ui",
+  "globalName": "EsuissUI",
+  "entry": ".design-sync/.cache/pkg/dist/index.js",
+  "buildCmd": "node .design-sync/build-dist.mjs",
+  "titleMap": {
+    "Chart": "ChartContainer",
+    "Resizable": "ResizablePanelGroup",
+    "Direction": null
+  },
+  "overrides": {
+    "Accordion": {
+      "cardMode": "column"
+    },
+    "Carousel": {
+      "cardMode": "column"
+    },
+    "InputGroup": {
+      "cardMode": "column"
+    },
+    "Message": {
+      "cardMode": "column"
+    },
+    "Questionnaire": {
+      "cardMode": "column"
+    },
+    "Table": {
+      "cardMode": "column"
+    },
+    "Calendar": {
+      "cardMode": "column"
+    },
+    "MessageScroller": {
+      "cardMode": "column"
+    },
+    "ChartContainer": {
+      "cardMode": "column"
+    },
+    "ResizablePanelGroup": {
+      "cardMode": "column"
+    },
+    "Dialog": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "AlertDialog": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "AlertSheet": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "Sheet": {
+      "cardMode": "single",
+      "primaryStory": "Open"
+    },
+    "Drawer": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "Popover": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "DropdownMenu": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "ContextMenu": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "Menubar": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "HoverCard": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "Tooltip": {
+      "cardMode": "single",
+      "primaryStory": "Open"
+    },
+    "Select": {
+      "cardMode": "single",
+      "primaryStory": "Open"
+    },
+    "Combobox": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "NavigationMenu": {
+      "cardMode": "single",
+      "primaryStory": "OpenByDefault"
+    },
+    "Command": {
+      "cardMode": "single",
+      "primaryStory": "Default"
+    },
+    "Sidebar": {
+      "cardMode": "single",
+      "primaryStory": "Default"
+    },
+    "Toast": {
+      "cardMode": "single",
+      "primaryStory": "Default"
+    }
+  }
+}
