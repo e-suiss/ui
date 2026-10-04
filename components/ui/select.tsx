@@ -1,7 +1,12 @@
 "use client"
 
 import { Select as SelectPrimitive } from "@base-ui/react/select"
-import { CaretDownIcon, CaretUpIcon, CheckIcon } from "@phosphor-icons/react"
+import {
+  CaretDownIcon,
+  CaretUpDownIcon,
+  CaretUpIcon,
+  CheckIcon,
+} from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"
 
@@ -48,7 +53,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <CaretDownIcon className="pointer-events-none size-4 text-label-secondary" />
+          <CaretUpDownIcon className="pointer-events-none size-4 text-label-secondary" />
         }
       />
     </SelectPrimitive.Trigger>
@@ -104,7 +109,10 @@ function SelectLabel({
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
-      className={cn("px-3 py-2.5 text-xs text-label-secondary", className)}
+      className={cn(
+        "px-3 py-2.5 text-xs font-semibold text-label-secondary",
+        className
+      )}
       {...props}
     />
   )
@@ -132,7 +140,7 @@ function SelectItem({
           <span className="pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <CheckIcon className="pointer-events-none text-link! **:text-link!" />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
