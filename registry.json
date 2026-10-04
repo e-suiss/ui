@@ -967,6 +967,25 @@
       ]
     },
     {
+      "name": "date-picker",
+      "type": "pattern",
+      "title": "Date Picker",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "calendar",
+        "drawer",
+        "popover",
+        "use-mobile",
+        "wheel-picker"
+      ],
+      "files": [
+        "components/patterns/date-picker.tsx"
+      ]
+    },
+    {
       "name": "flyout",
       "type": "pattern",
       "title": "Flyout",
