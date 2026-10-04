@@ -1046,6 +1046,24 @@
       ]
     },
     {
+      "name": "search-picker",
+      "type": "pattern",
+      "title": "Search Picker",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "combobox",
+        "command",
+        "drawer",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/search-picker.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
