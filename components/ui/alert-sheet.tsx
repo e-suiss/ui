@@ -1,11 +1,18 @@
 "use client"
 
 import { AlertDialog as AlertSheetPrimitive } from "@base-ui/react/alert-dialog"
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 
-function AlertSheet({ ...props }: AlertSheetPrimitive.Root.Props) {
+function AlertSheet({
+  dismissible = true,
+  ...props
+}: AlertSheetPrimitive.Root.Props & { dismissible?: boolean }) {
+  if (dismissible) {
+    return <DialogPrimitive.Root data-slot="alert-sheet" {...props} />
+  }
   return <AlertSheetPrimitive.Root data-slot="alert-sheet" {...props} />
 }
 
