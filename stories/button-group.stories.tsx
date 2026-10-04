@@ -257,7 +257,7 @@ export const SplitButton: Story = {
   render: (args) => (
     <ButtonGroup {...args}>
       <Button>Publish</Button>
-      <ButtonGroupSeparator className="bg-primary-foreground/30" />
+      <ButtonGroupSeparator className="bg-on-accent/30" />
       <Button size="icon" aria-label="More options">
         <CaretDownIcon />
       </Button>

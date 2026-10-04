@@ -41,7 +41,7 @@ export const Modifiers: Story = {
 
 export const Group: Story = {
   render: (args) => (
-    <div className="text-muted-foreground flex flex-col items-start gap-3 text-sm">
+    <div className="text-label-secondary flex flex-col items-start gap-3 text-sm">
       <p>
         Use{" "}
         <KbdGroup>

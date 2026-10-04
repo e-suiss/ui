@@ -7,7 +7,7 @@ const meta = {
   component: AspectRatio,
   args: {
     ratio: 16 / 9,
-    className: "overflow-hidden rounded-2xl bg-muted",
+    className: "overflow-hidden rounded-2xl bg-surface-secondary",
   },
   argTypes: {
     ratio: {
@@ -54,7 +54,7 @@ export const Placeholder: Story = {
   args: { ratio: 4 / 3 },
   render: (args) => (
     <AspectRatio {...args}>
-      <div className="text-muted-foreground flex size-full items-center justify-center text-sm">
+      <div className="text-label-secondary flex size-full items-center justify-center text-sm">
         4:3
       </div>
     </AspectRatio>

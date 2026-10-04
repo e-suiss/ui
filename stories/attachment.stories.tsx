@@ -136,7 +136,7 @@ export const States: Story = {
           <AttachmentDescription>Processing…</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <Spinner className="size-5 text-muted-foreground" />
+          <Spinner className="size-5 text-label-secondary" />
         </AttachmentActions>
       </Attachment>
       <Attachment {...args} state="error" className="w-full">
@@ -265,7 +265,7 @@ export const Group: Story = {
           <AttachmentDescription>Processing…</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <Spinner className="size-5 text-muted-foreground" />
+          <Spinner className="size-5 text-label-secondary" />
         </AttachmentActions>
       </Attachment>
       <Attachment {...args}>

@@ -62,7 +62,7 @@ export const WithDescriptions: Story = {
           <RadioGroupItem value={option.value} />
           <span className="flex flex-col gap-1">
             {option.label}
-            <span className="text-muted-foreground font-normal">
+            <span className="text-label-secondary font-normal">
               {option.description}
             </span>
           </span>

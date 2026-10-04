@@ -66,7 +66,7 @@ const meta = {
         <TabsContent
           key={tab.value}
           value={tab.value}
-          className="text-muted-foreground"
+          className="text-label-secondary"
         >
           {tab.content}
         </TabsContent>
@@ -104,7 +104,7 @@ export const WithIcons: Story = {
         <TabsContent
           key={tab.value}
           value={tab.value}
-          className="text-muted-foreground"
+          className="text-label-secondary"
         >
           {tab.content}
         </TabsContent>
@@ -123,10 +123,10 @@ export const DisabledTab: Story = {
           Billing
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="account" className="text-muted-foreground">
+      <TabsContent value="account" className="text-label-secondary">
         {tabs[0].content}
       </TabsContent>
-      <TabsContent value="notifications" className="text-muted-foreground">
+      <TabsContent value="notifications" className="text-label-secondary">
         {tabs[1].content}
       </TabsContent>
     </Tabs>

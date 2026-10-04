@@ -46,9 +46,9 @@ export const Horizontal: Story = {
       <div className="flex w-max gap-4 p-4">
         {albums.map((album) => (
           <figure key={album.title} className="w-32 shrink-0">
-            <div className="bg-muted aspect-square rounded-xl" />
-            <figcaption className="text-muted-foreground pt-2 text-xs">
-              <span className="text-foreground font-medium">{album.title}</span>
+            <div className="bg-surface-secondary aspect-square rounded-xl" />
+            <figcaption className="text-label-secondary pt-2 text-xs">
+              <span className="text-label font-medium">{album.title}</span>
               <br />
               {album.artist}
             </figcaption>

@@ -28,9 +28,9 @@ export const Sizes: Story = {
 export const Colors: Story = {
   render: (args) => (
     <div className="flex items-center gap-4">
-      <Spinner {...args} className="text-primary size-6" />
-      <Spinner {...args} className="text-muted-foreground size-6" />
-      <Spinner {...args} className="text-destructive size-6" />
+      <Spinner {...args} className="text-accent size-6" />
+      <Spinner {...args} className="text-label-secondary size-6" />
+      <Spinner {...args} className="text-danger size-6" />
     </div>
   ),
 }

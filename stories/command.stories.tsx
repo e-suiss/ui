@@ -80,7 +80,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: (args) => (
-    <Command {...args} className="ring-foreground/5 shadow-md ring-1">
+    <Command {...args} className="ring-label/5 shadow-md ring-1">
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandItems />
@@ -91,7 +91,7 @@ export const Default: Story = {
 
 export const Empty: Story = {
   render: (args) => (
-    <Command {...args} className="ring-foreground/5 shadow-md ring-1">
+    <Command {...args} className="ring-label/5 shadow-md ring-1">
       <CommandInput placeholder="Search projects..." />
       <CommandList>
         <CommandEmpty>No projects found.</CommandEmpty>

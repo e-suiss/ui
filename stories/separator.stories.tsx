@@ -25,7 +25,7 @@ export const Default: Story = {
     <div className="w-72">
       <div className="flex flex-col gap-1">
         <h4 className="text-sm font-medium">Account settings</h4>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-label-secondary text-sm">
           Manage your profile and preferences.
         </p>
       </div>

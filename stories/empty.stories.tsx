@@ -48,7 +48,7 @@ const meta = {
           <Button>Create project</Button>
           <Button variant="outline">Import project</Button>
         </div>
-        <Button variant="link" size="sm" className="text-muted-foreground">
+        <Button variant="link" size="sm" className="text-label-secondary">
           Learn more
           <ArrowUpRightIcon data-icon="inline-end" />
         </Button>
@@ -90,7 +90,7 @@ export const DefaultMedia: Story = {
     <Empty {...args}>
       <EmptyHeader>
         <EmptyMedia>
-          <FolderSimpleIcon className="text-muted-foreground size-12" />
+          <FolderSimpleIcon className="text-label-secondary size-12" />
         </EmptyMedia>
         <EmptyTitle>This folder is empty</EmptyTitle>
         <EmptyDescription>Drag files here to add them.</EmptyDescription>

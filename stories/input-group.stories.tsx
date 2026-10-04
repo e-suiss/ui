@@ -180,7 +180,7 @@ export const Invalid: Story = {
     <InputGroup {...args}>
       <InputGroupInput defaultValue="jane@" aria-invalid />
       <InputGroupAddon align="inline-end">
-        <InfoIcon className="text-destructive" />
+        <InfoIcon className="text-danger" />
       </InputGroupAddon>
     </InputGroup>
   ),

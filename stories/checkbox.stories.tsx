@@ -36,7 +36,7 @@ export const WithDescription: Story = {
       <Checkbox {...args} id="marketing" defaultChecked className="mt-0.75" />
       <div className="grid gap-1.5">
         <Label htmlFor="marketing">Product updates</Label>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-label-secondary text-sm">
           Get an email when we release new features.
         </p>
       </div>

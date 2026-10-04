@@ -83,7 +83,7 @@ export const WithMedia: Story = {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogMedia className="bg-destructive/10 text-destructive">
+          <AlertDialogMedia className="bg-danger/10 text-danger">
             <TrashIcon />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete this project?</AlertDialogTitle>

@@ -45,11 +45,7 @@ export const WithHomeIcon: Story = {
     <Breadcrumb {...args}>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink
-            href="#"
-            aria-label="Home"
-            className="text-foreground"
-          >
+          <BreadcrumbLink href="#" aria-label="Home" className="text-label">
             <HouseIcon weight="fill" />
           </BreadcrumbLink>
         </BreadcrumbItem>

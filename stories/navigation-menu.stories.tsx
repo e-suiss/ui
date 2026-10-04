@@ -84,7 +84,7 @@ export const Default: Story = {
                     <product.icon className="mt-0.5" />
                     <div className="flex flex-col gap-1">
                       <span className="font-medium">{product.title}</span>
-                      <span className="text-muted-foreground">
+                      <span className="text-label-secondary">
                         {product.description}
                       </span>
                     </div>

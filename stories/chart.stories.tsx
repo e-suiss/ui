@@ -31,8 +31,8 @@ const visitors = [
 ]
 
 const visitorsConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", color: "var(--chart-2)" },
+  desktop: { label: "Desktop", color: "var(--blue)" },
+  mobile: { label: "Mobile", color: "var(--green)" },
 } satisfies ChartConfig
 
 const browsers = [
@@ -45,11 +45,11 @@ const browsers = [
 
 const browsersConfig = {
   visitors: { label: "Visitors" },
-  safari: { label: "Safari", color: "var(--chart-1)" },
-  chrome: { label: "Chrome", color: "var(--chart-2)" },
-  firefox: { label: "Firefox", color: "var(--chart-3)" },
-  edge: { label: "Edge", color: "var(--chart-4)" },
-  other: { label: "Other", color: "var(--chart-5)" },
+  safari: { label: "Safari", color: "var(--blue)" },
+  chrome: { label: "Chrome", color: "var(--green)" },
+  firefox: { label: "Firefox", color: "var(--orange)" },
+  edge: { label: "Edge", color: "var(--purple)" },
+  other: { label: "Other", color: "var(--red)" },
 } satisfies ChartConfig
 
 const shortMonth = (value: string) => value.slice(0, 3)
