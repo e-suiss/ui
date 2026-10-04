@@ -123,7 +123,7 @@
 }
 
 @theme inline {
-  --font-sans: "Inter Variable", sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
   --font-heading: var(--font-sans);
 
   --color-surface: var(--surface);

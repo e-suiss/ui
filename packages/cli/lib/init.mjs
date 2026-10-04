@@ -40,8 +40,10 @@ const TOOLING = {
 }
 const MINIMUM_TAILWIND = [4, 2]
 const FONT_IMPORT = '@import "@fontsource-variable/inter";\n'
-const FONT_FAMILY = '--font-sans: "Inter Variable", sans-serif;'
-const NEXT_FONT_FAMILY = "--font-sans: var(--font-sans);"
+const FONT_FAMILY =
+  '--font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;'
+const NEXT_FONT_FAMILY =
+  "--font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;"
 const NEXT_LAYOUTS = [
   "src/app/layout.tsx",
   "app/layout.tsx",
@@ -49,7 +51,7 @@ const NEXT_LAYOUTS = [
   "app/layout.jsx",
 ]
 const NEXT_FONT_NOTE =
-  'Load Inter in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-sans" }), and add its .variable to the <html> className.'
+  'Load Inter in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }), and add its .variable to the <html> className.'
 
 function relative(project, file) {
   return path.relative(project.cwd, file)
@@ -207,7 +209,7 @@ function configureNextFont(project) {
   if (!file) return [NEXT_FONT_NOTE]
 
   let text = readFileSync(file, "utf8")
-  if (/variable:\s*["']--font-sans["']/.test(text)) return []
+  if (/variable:\s*["']--font-inter["']/.test(text)) return []
 
   const html = text.match(/<html\b[^>]*>/)
   if (!html) return [NEXT_FONT_NOTE]
@@ -216,10 +218,10 @@ function configureNextFont(project) {
   if (literal) {
     tag = tag.replace(
       literal[0],
-      `className={\`\${fontSans.variable} ${literal[1]}\`}`
+      `className={\`\${fontInter.variable} ${literal[1]}\`}`
     )
   } else if (!/className=/.test(tag)) {
-    tag = tag.replace(/<html\b/, "<html className={fontSans.variable}")
+    tag = tag.replace(/<html\b/, "<html className={fontInter.variable}")
   } else {
     return [NEXT_FONT_NOTE]
   }
@@ -243,7 +245,7 @@ function configureNextFont(project) {
   ]
   const last = imports.at(-1)
   const at = last ? last.index + last[0].length : 0
-  const declaration = `\nconst fontSans = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-sans",\n})${semi}\n`
+  const declaration = `\nconst fontInter = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-inter",\n})${semi}\n`
   text = text.slice(0, at) + declaration + text.slice(at)
 
   writeFileSync(file, text)
