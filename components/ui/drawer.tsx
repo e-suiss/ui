@@ -1,10 +1,13 @@
 "use client"
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
+import { XIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import * as React from "react"
+import { Button } from "@/components/ui/button"
 
 type DrawerContextProps = {
+  floating: boolean
   hasSnapPoints: boolean
   modal: DrawerPrimitive.Root.Props["modal"]
   showSwipeHandle: boolean
@@ -24,18 +27,20 @@ function useDrawer() {
 }
 
 function Drawer({
+  floating = false,
   modal = true,
   showSwipeHandle = false,
   snapPoints,
   swipeDirection = "down",
   ...props
 }: DrawerPrimitive.Root.Props & {
+  floating?: boolean
   showSwipeHandle?: boolean
 }) {
   const hasSnapPoints = snapPoints != null && snapPoints.length > 0
   const contextValue = React.useMemo(
-    () => ({ hasSnapPoints, modal, showSwipeHandle, swipeDirection }),
-    [hasSnapPoints, modal, showSwipeHandle, swipeDirection]
+    () => ({ floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection }),
+    [floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection]
   )
 
   return (
@@ -99,9 +104,15 @@ function DrawerSwipeHandle({
 function DrawerContent({
   className,
   children,
+  showCloseButton = false,
+  closeLabel,
   ...props
-}: DrawerPrimitive.Popup.Props) {
-  const { hasSnapPoints, modal, showSwipeHandle, swipeDirection } = useDrawer()
+}: DrawerPrimitive.Popup.Props & {
+  showCloseButton?: boolean
+  closeLabel?: string
+}) {
+  const { floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection } =
+    useDrawer()
   const swipeAxis =
     swipeDirection === "down" || swipeDirection === "up" ? "y" : "x"
 
@@ -118,10 +129,12 @@ function DrawerContent({
         <DrawerPrimitive.Popup
           data-slot="drawer-popup"
           data-swipe-axis={swipeAxis}
+          data-floating={floating ? "" : undefined}
           data-snap-points={hasSnapPoints ? "" : undefined}
           className={cn(
-            "group/drawer-popup pointer-events-auto fixed z-50 m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col rounded-2xl border border-surface-raised bg-surface-raised text-base text-label shadow-xl transition-[transform,height,opacity,filter] duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform outline-none select-none [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] [--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)] [interpolate-size:allow-keywords] data-[swipe-direction=down]:data-nested-drawer-open:shadow-(--drawer-stacked-shadow) dark:border-separator",
+            "group/drawer-popup pointer-events-auto fixed z-50 m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col rounded-3xl bg-surface-raised text-base text-label shadow-xl transition-[transform,height,opacity,filter] duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform outline-none select-none [--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)] [--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)] [interpolate-size:allow-keywords] data-[swipe-direction=down]:data-nested-drawer-open:shadow-(--drawer-stacked-shadow)",
             "data-nested-drawer-open:overflow-hidden data-nested-drawer-open:brightness-95",
+            "not-data-floating:data-[swipe-direction=down]:rounded-b-none not-data-floating:data-[swipe-direction=down]:pb-[env(safe-area-inset-bottom)] not-data-floating:data-[swipe-direction=left]:rounded-s-none not-data-floating:data-[swipe-direction=right]:rounded-e-none not-data-floating:data-[swipe-direction=up]:rounded-t-none",
             "after:pointer-events-none after:absolute after:bg-(--drawer-bleed-background,var(--color-surface-raised)) data-[swipe-axis=x]:after:inset-y-0 data-[swipe-axis=x]:after:w-(--bleed) data-[swipe-axis=y]:after:inset-x-0 data-[swipe-axis=y]:after:h-(--bleed) data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:inset-e-full data-[swipe-direction=right]:after:inset-s-full data-[swipe-direction=up]:after:bottom-full",
             "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:calc(100dvh-6rem)] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem]",
             "[--bleed:3rem] [--peek:1rem] [--stack-height:var(--drawer-frontmost-height,var(--drawer-height,0px))] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0.05]",
@@ -145,6 +158,30 @@ function DrawerContent({
           >
             {children}
           </DrawerPrimitive.Content>
+          {showCloseButton && (
+            <DrawerPrimitive.Close
+              data-slot="drawer-close-button"
+              data-label={closeLabel ? "" : undefined}
+              render={
+                <Button
+                  variant={closeLabel ? "plain" : "ghost"}
+                  className={cn(
+                    "absolute top-4 inset-e-4",
+                    !closeLabel &&
+                      "bg-surface-tertiary hover:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_5%)] active:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_10%)]"
+                  )}
+                  size={closeLabel ? "sm" : "icon-sm"}
+                />
+              }
+            >
+              {closeLabel ?? (
+                <>
+                  <XIcon />
+                  <span className="sr-only">Close</span>
+                </>
+              )}
+            </DrawerPrimitive.Close>
+          )}
         </DrawerPrimitive.Popup>
       </DrawerPrimitive.Viewport>
     </DrawerPortal>
@@ -156,7 +193,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="drawer-header"
       className={cn(
-        "flex shrink-0 flex-col gap-0.5 p-4 pb-0 group-data-[swipe-axis=y]/drawer-popup:text-center md:gap-1.5 md:text-start",
+        "flex shrink-0 flex-col gap-0.5 p-4 pb-0 group-has-data-[slot=drawer-close-button]/drawer-popup:px-14 group-has-[[data-slot=drawer-close-button][data-label]]/drawer-popup:px-24 group-data-[swipe-axis=y]/drawer-popup:text-center",
         className
       )}
       {...props}

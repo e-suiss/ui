@@ -17,6 +17,7 @@ const meta = {
   component: Drawer,
   args: {
     swipeDirection: "down",
+    floating: false,
     showSwipeHandle: true,
     modal: true,
   },
@@ -25,6 +26,7 @@ const meta = {
       control: "select",
       options: ["down", "up", "left", "right"],
     },
+    floating: { control: "boolean" },
     showSwipeHandle: { control: "boolean" },
     modal: { control: "boolean" },
   },
@@ -92,13 +94,13 @@ export const Directions: Story = {
   ),
 }
 
-export const Attached: Story = {
+export const WithCloseButton: Story = {
   render: (args) => (
     <Drawer {...args}>
       <DrawerTrigger render={<Button variant="outline" />}>
         Open drawer
       </DrawerTrigger>
-      <DrawerContent className="rounded-b-none [--drawer-inset:0px]">
+      <DrawerContent showCloseButton>
         <DrawerHeader>
           <DrawerTitle>Move goal</DrawerTitle>
           <DrawerDescription>Set your daily activity goal.</DrawerDescription>
@@ -111,13 +113,39 @@ export const Attached: Story = {
         </div>
         <DrawerFooter>
           <Button>Save goal</Button>
-          <DrawerClose render={<Button variant="outline" />}>
-            Cancel
-          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   ),
+}
+
+export const WithCloseLabel: Story = {
+  render: (args) => (
+    <Drawer {...args}>
+      <DrawerTrigger render={<Button variant="outline" />}>
+        Open drawer
+      </DrawerTrigger>
+      <DrawerContent showCloseButton closeLabel="Close">
+        <DrawerHeader>
+          <DrawerTitle>Move goal</DrawerTitle>
+          <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+        </DrawerHeader>
+        <div className="flex flex-col items-center gap-1 p-4">
+          <span className="text-5xl font-semibold tracking-tight">350</span>
+          <span className="text-label-secondary text-xs uppercase">
+            Calories per day
+          </span>
+        </div>
+        <DrawerFooter>
+          <Button>Save goal</Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+}
+
+export const Floating: Story = {
+  args: { floating: true },
 }
 
 export const WithSnapPoints: Story = {

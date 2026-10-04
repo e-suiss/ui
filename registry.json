@@ -338,9 +338,12 @@
       "title": "Drawer",
       "dependencies": [
         "@base-ui/react",
+        "@phosphor-icons/react",
         "cn"
       ],
-      "requires": [],
+      "requires": [
+        "button"
+      ],
       "files": [
         "components/ui/drawer.tsx"
       ]
