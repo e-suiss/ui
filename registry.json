@@ -882,6 +882,18 @@
       ]
     },
     {
+      "name": "wheel-picker",
+      "type": "ui",
+      "title": "Wheel Picker",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/ui/wheel-picker.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
