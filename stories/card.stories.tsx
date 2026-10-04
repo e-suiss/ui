@@ -65,6 +65,11 @@ export const Small: Story = {
   args: { size: "sm" },
 }
 
+export const Filled: Story = {
+  ...Default,
+  args: { variant: "filled" },
+}
+
 export const WithAction: Story = {
   render: (args) => (
     <Card {...args}>
