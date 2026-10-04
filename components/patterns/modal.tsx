@@ -25,26 +25,23 @@ import {
 } from "@/components/ui/drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
 
-type AdaptiveDialogContextProps = {
+type ModalContextProps = {
   isMobile: boolean
 }
 
-const AdaptiveDialogContext =
-  React.createContext<AdaptiveDialogContextProps | null>(null)
+const ModalContext = React.createContext<ModalContextProps | null>(null)
 
-function useAdaptiveDialog() {
-  const context = React.useContext(AdaptiveDialogContext)
+function useModal() {
+  const context = React.useContext(ModalContext)
 
   if (!context) {
-    throw new Error(
-      "useAdaptiveDialog must be used within a <AdaptiveDialog />"
-    )
+    throw new Error("useModal must be used within a <Modal />")
   }
 
   return context
 }
 
-function AdaptiveDialog({
+function Modal({
   open,
   defaultOpen,
   onOpenChange,
@@ -66,22 +63,22 @@ function AdaptiveDialog({
   }
 
   return (
-    <AdaptiveDialogContext.Provider value={{ isMobile }}>
+    <ModalContext.Provider value={{ isMobile }}>
       {isMobile ? (
         <Drawer
-          data-slot="adaptive-dialog"
+          data-slot="modal"
           floating={floating}
           showSwipeHandle
           {...rootProps}
         />
       ) : (
-        <Dialog data-slot="adaptive-dialog" {...rootProps} />
+        <Dialog data-slot="modal" {...rootProps} />
       )}
-    </AdaptiveDialogContext.Provider>
+    </ModalContext.Provider>
   )
 }
 
-function AdaptiveDialogTrigger(
+function ModalTrigger(
   props: Omit<
     React.ComponentProps<typeof DialogTrigger>,
     "handle" | "className"
@@ -89,13 +86,13 @@ function AdaptiveDialogTrigger(
     className?: string
   }
 ) {
-  const { isMobile } = useAdaptiveDialog()
+  const { isMobile } = useModal()
   const Trigger = isMobile ? DrawerTrigger : DialogTrigger
 
-  return <Trigger data-slot="adaptive-dialog-trigger" {...props} />
+  return <Trigger data-slot="modal-trigger" {...props} />
 }
 
-function AdaptiveDialogContent({
+function ModalContent({
   showCloseButton = true,
   ...props
 }: Omit<
@@ -105,12 +102,12 @@ function AdaptiveDialogContent({
   className?: string
   style?: React.CSSProperties
 }) {
-  const { isMobile } = useAdaptiveDialog()
+  const { isMobile } = useModal()
 
   if (isMobile) {
     return (
       <DrawerContent
-        data-slot="adaptive-dialog-content"
+        data-slot="modal-content"
         showCloseButton={showCloseButton}
         {...props}
       />
@@ -119,45 +116,39 @@ function AdaptiveDialogContent({
 
   return (
     <DialogContent
-      data-slot="adaptive-dialog-content"
+      data-slot="modal-content"
       showCloseButton={showCloseButton}
       {...props}
     />
   )
 }
 
-function AdaptiveDialogHeader(props: React.ComponentProps<"div">) {
-  const { isMobile } = useAdaptiveDialog()
+function ModalHeader(props: React.ComponentProps<"div">) {
+  const { isMobile } = useModal()
   const Header = isMobile ? DrawerHeader : DialogHeader
 
-  return <Header data-slot="adaptive-dialog-header" {...props} />
+  return <Header data-slot="modal-header" {...props} />
 }
 
-function AdaptiveDialogBody({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const { isMobile } = useAdaptiveDialog()
+function ModalBody({ className, ...props }: React.ComponentProps<"div">) {
+  const { isMobile } = useModal()
 
   return (
     <div
-      data-slot="adaptive-dialog-body"
+      data-slot="modal-body"
       className={cn(isMobile && "p-4", className)}
       {...props}
     />
   )
 }
 
-function AdaptiveDialogFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const { isMobile } = useAdaptiveDialog()
+function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
+  const { isMobile } = useModal()
 
   if (isMobile) {
     return (
       <DrawerFooter
-        data-slot="adaptive-dialog-footer"
+        data-slot="modal-footer"
         className={cn("flex-col-reverse", className)}
         {...props}
       />
@@ -165,45 +156,41 @@ function AdaptiveDialogFooter({
   }
 
   return (
-    <DialogFooter
-      data-slot="adaptive-dialog-footer"
-      className={className}
-      {...props}
-    />
+    <DialogFooter data-slot="modal-footer" className={className} {...props} />
   )
 }
 
-function AdaptiveDialogTitle(props: React.ComponentProps<typeof DialogTitle>) {
-  const { isMobile } = useAdaptiveDialog()
+function ModalTitle(props: React.ComponentProps<typeof DialogTitle>) {
+  const { isMobile } = useModal()
   const Title = isMobile ? DrawerTitle : DialogTitle
 
-  return <Title data-slot="adaptive-dialog-title" {...props} />
+  return <Title data-slot="modal-title" {...props} />
 }
 
-function AdaptiveDialogDescription(
+function ModalDescription(
   props: React.ComponentProps<typeof DialogDescription>
 ) {
-  const { isMobile } = useAdaptiveDialog()
+  const { isMobile } = useModal()
   const Description = isMobile ? DrawerDescription : DialogDescription
 
-  return <Description data-slot="adaptive-dialog-description" {...props} />
+  return <Description data-slot="modal-description" {...props} />
 }
 
-function AdaptiveDialogClose(props: React.ComponentProps<typeof DialogClose>) {
-  const { isMobile } = useAdaptiveDialog()
+function ModalClose(props: React.ComponentProps<typeof DialogClose>) {
+  const { isMobile } = useModal()
   const Close = isMobile ? DrawerClose : DialogClose
 
-  return <Close data-slot="adaptive-dialog-close" {...props} />
+  return <Close data-slot="modal-close" {...props} />
 }
 
 export {
-  AdaptiveDialog,
-  AdaptiveDialogBody,
-  AdaptiveDialogClose,
-  AdaptiveDialogContent,
-  AdaptiveDialogDescription,
-  AdaptiveDialogFooter,
-  AdaptiveDialogHeader,
-  AdaptiveDialogTitle,
-  AdaptiveDialogTrigger,
+  Modal,
+  ModalBody,
+  ModalClose,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+  ModalTrigger,
 }

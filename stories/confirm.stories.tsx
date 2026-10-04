@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
-  AdaptiveAlert,
-  AdaptiveAlertAction,
-  AdaptiveAlertCancel,
-  AdaptiveAlertContent,
-  AdaptiveAlertDescription,
-  AdaptiveAlertFooter,
-  AdaptiveAlertHeader,
-  AdaptiveAlertTitle,
-  AdaptiveAlertTrigger,
-} from "@/components/patterns/adaptive-alert"
+  Confirm,
+  ConfirmAction,
+  ConfirmCancel,
+  ConfirmContent,
+  ConfirmDescription,
+  ConfirmFooter,
+  ConfirmHeader,
+  ConfirmTitle,
+  ConfirmTrigger,
+} from "@/components/patterns/confirm"
 import { Button } from "@/components/ui/button"
 
 const meta = {
-  title: "Patterns/Adaptive Alert",
-  component: AdaptiveAlert,
+  title: "Patterns/Confirm",
+  component: Confirm,
   parameters: {
     layout: "fullscreen",
   },
@@ -26,7 +26,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof AdaptiveAlert>
+} satisfies Meta<typeof Confirm>
 
 export default meta
 
@@ -34,26 +34,24 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: (args) => (
-    <AdaptiveAlert {...args}>
-      <AdaptiveAlertTrigger render={<Button variant="outline" />}>
+    <Confirm {...args}>
+      <ConfirmTrigger render={<Button variant="outline" />}>
         Delete order
-      </AdaptiveAlertTrigger>
-      <AdaptiveAlertContent>
-        <AdaptiveAlertHeader>
-          <AdaptiveAlertTitle>Delete order?</AdaptiveAlertTitle>
-          <AdaptiveAlertDescription>
+      </ConfirmTrigger>
+      <ConfirmContent>
+        <ConfirmHeader>
+          <ConfirmTitle>Delete order?</ConfirmTitle>
+          <ConfirmDescription>
             Order #1042 will be permanently deleted. This action cannot be
             undone.
-          </AdaptiveAlertDescription>
-        </AdaptiveAlertHeader>
-        <AdaptiveAlertFooter>
-          <AdaptiveAlertCancel>Cancel</AdaptiveAlertCancel>
-          <AdaptiveAlertAction variant="destructive">
-            Delete
-          </AdaptiveAlertAction>
-        </AdaptiveAlertFooter>
-      </AdaptiveAlertContent>
-    </AdaptiveAlert>
+          </ConfirmDescription>
+        </ConfirmHeader>
+        <ConfirmFooter>
+          <ConfirmCancel>Cancel</ConfirmCancel>
+          <ConfirmAction variant="destructive">Delete</ConfirmAction>
+        </ConfirmFooter>
+      </ConfirmContent>
+    </Confirm>
   ),
 }
 

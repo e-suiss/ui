@@ -26,67 +26,58 @@ import {
 } from "@/components/ui/alert-sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
 
-type AdaptiveAlertContextProps = {
+type ConfirmContextProps = {
   isMobile: boolean
 }
 
-const AdaptiveAlertContext =
-  React.createContext<AdaptiveAlertContextProps | null>(null)
+const ConfirmContext = React.createContext<ConfirmContextProps | null>(null)
 
-function useAdaptiveAlert() {
-  const context = React.useContext(AdaptiveAlertContext)
+function useConfirm() {
+  const context = React.useContext(ConfirmContext)
 
   if (!context) {
-    throw new Error("useAdaptiveAlert must be used within a <AdaptiveAlert />")
+    throw new Error("useConfirm must be used within a <Confirm />")
   }
 
   return context
 }
 
-function AdaptiveAlert({
+function Confirm({
   dismissible = false,
   ...props
 }: React.ComponentProps<typeof AlertSheet>) {
   const isMobile = useIsMobile()
 
   return (
-    <AdaptiveAlertContext.Provider value={{ isMobile }}>
+    <ConfirmContext.Provider value={{ isMobile }}>
       {isMobile ? (
-        <AlertSheet
-          data-slot="adaptive-alert"
-          dismissible={dismissible}
-          {...props}
-        />
+        <AlertSheet data-slot="confirm" dismissible={dismissible} {...props} />
       ) : (
-        <AlertDialog data-slot="adaptive-alert" {...props} />
+        <AlertDialog data-slot="confirm" {...props} />
       )}
-    </AdaptiveAlertContext.Provider>
+    </ConfirmContext.Provider>
   )
 }
 
-function AdaptiveAlertTrigger(
+function ConfirmTrigger(
   props: React.ComponentProps<typeof AlertDialogTrigger>
 ) {
-  const { isMobile } = useAdaptiveAlert()
+  const { isMobile } = useConfirm()
   const Trigger = isMobile ? AlertSheetTrigger : AlertDialogTrigger
 
-  return <Trigger data-slot="adaptive-alert-trigger" {...props} />
+  return <Trigger data-slot="confirm-trigger" {...props} />
 }
 
-function AdaptiveAlertContent({
+function ConfirmContent({
   size,
   children,
   ...props
 }: React.ComponentProps<typeof AlertDialogContent>) {
-  const { isMobile } = useAdaptiveAlert()
+  const { isMobile } = useConfirm()
 
   if (!isMobile) {
     return (
-      <AlertDialogContent
-        data-slot="adaptive-alert-content"
-        size={size}
-        {...props}
-      >
+      <AlertDialogContent data-slot="confirm-content" size={size} {...props}>
         {children}
       </AlertDialogContent>
     )
@@ -95,14 +86,14 @@ function AdaptiveAlertContent({
   const nodes = React.Children.toArray(children)
   const footer = nodes.find(
     (node): node is React.ReactElement<{ children?: React.ReactNode }> =>
-      React.isValidElement(node) && node.type === AdaptiveAlertFooter
+      React.isValidElement(node) && node.type === ConfirmFooter
   )
   const buttons = React.Children.toArray(footer?.props.children)
   const isCancel = (node: React.ReactNode) =>
-    React.isValidElement(node) && node.type === AdaptiveAlertCancel
+    React.isValidElement(node) && node.type === ConfirmCancel
 
   return (
-    <AlertSheetContent data-slot="adaptive-alert-content" {...props}>
+    <AlertSheetContent data-slot="confirm-content" {...props}>
       <AlertSheetGroup>
         {nodes.filter((node) => node !== footer)}
         {buttons.filter((node) => !isCancel(node))}
@@ -112,61 +103,55 @@ function AdaptiveAlertContent({
   )
 }
 
-function AdaptiveAlertHeader(props: React.ComponentProps<"div">) {
-  const { isMobile } = useAdaptiveAlert()
+function ConfirmHeader(props: React.ComponentProps<"div">) {
+  const { isMobile } = useConfirm()
   const Header = isMobile ? AlertSheetHeader : AlertDialogHeader
 
-  return <Header data-slot="adaptive-alert-header" {...props} />
+  return <Header data-slot="confirm-header" {...props} />
 }
 
-function AdaptiveAlertFooter(props: React.ComponentProps<"div">) {
-  return <AlertDialogFooter data-slot="adaptive-alert-footer" {...props} />
+function ConfirmFooter(props: React.ComponentProps<"div">) {
+  return <AlertDialogFooter data-slot="confirm-footer" {...props} />
 }
 
-function AdaptiveAlertTitle(
-  props: React.ComponentProps<typeof AlertDialogTitle>
-) {
-  const { isMobile } = useAdaptiveAlert()
+function ConfirmTitle(props: React.ComponentProps<typeof AlertDialogTitle>) {
+  const { isMobile } = useConfirm()
   const Title = isMobile ? AlertSheetTitle : AlertDialogTitle
 
-  return <Title data-slot="adaptive-alert-title" {...props} />
+  return <Title data-slot="confirm-title" {...props} />
 }
 
-function AdaptiveAlertDescription(
+function ConfirmDescription(
   props: React.ComponentProps<typeof AlertDialogDescription>
 ) {
-  const { isMobile } = useAdaptiveAlert()
+  const { isMobile } = useConfirm()
   const Description = isMobile ? AlertSheetDescription : AlertDialogDescription
 
-  return <Description data-slot="adaptive-alert-description" {...props} />
+  return <Description data-slot="confirm-description" {...props} />
 }
 
-function AdaptiveAlertAction(
-  props: React.ComponentProps<typeof AlertSheetAction>
-) {
-  const { isMobile } = useAdaptiveAlert()
+function ConfirmAction(props: React.ComponentProps<typeof AlertSheetAction>) {
+  const { isMobile } = useConfirm()
   const Action = isMobile ? AlertSheetAction : AlertDialogAction
 
-  return <Action data-slot="adaptive-alert-action" {...props} />
+  return <Action data-slot="confirm-action" {...props} />
 }
 
-function AdaptiveAlertCancel(
-  props: React.ComponentProps<typeof AlertSheetCancel>
-) {
-  const { isMobile } = useAdaptiveAlert()
+function ConfirmCancel(props: React.ComponentProps<typeof AlertSheetCancel>) {
+  const { isMobile } = useConfirm()
   const Cancel = isMobile ? AlertSheetCancel : AlertDialogCancel
 
-  return <Cancel data-slot="adaptive-alert-cancel" {...props} />
+  return <Cancel data-slot="confirm-cancel" {...props} />
 }
 
 export {
-  AdaptiveAlert,
-  AdaptiveAlertAction,
-  AdaptiveAlertCancel,
-  AdaptiveAlertContent,
-  AdaptiveAlertDescription,
-  AdaptiveAlertFooter,
-  AdaptiveAlertHeader,
-  AdaptiveAlertTitle,
-  AdaptiveAlertTrigger,
+  Confirm,
+  ConfirmAction,
+  ConfirmCancel,
+  ConfirmContent,
+  ConfirmDescription,
+  ConfirmFooter,
+  ConfirmHeader,
+  ConfirmTitle,
+  ConfirmTrigger,
 }

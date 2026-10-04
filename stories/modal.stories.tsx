@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
-  AdaptiveDialog,
-  AdaptiveDialogBody,
-  AdaptiveDialogClose,
-  AdaptiveDialogContent,
-  AdaptiveDialogDescription,
-  AdaptiveDialogFooter,
-  AdaptiveDialogHeader,
-  AdaptiveDialogTitle,
-  AdaptiveDialogTrigger,
-} from "@/components/patterns/adaptive-dialog"
+  Modal,
+  ModalBody,
+  ModalClose,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+  ModalTrigger,
+} from "@/components/patterns/modal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 const meta = {
-  title: "Patterns/Adaptive Dialog",
-  component: AdaptiveDialog,
+  title: "Patterns/Modal",
+  component: Modal,
   parameters: {
     layout: "fullscreen",
   },
@@ -28,7 +28,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof AdaptiveDialog>
+} satisfies Meta<typeof Modal>
 
 export default meta
 
@@ -36,35 +36,35 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: (args) => (
-    <AdaptiveDialog {...args}>
-      <AdaptiveDialogTrigger render={<Button variant="outline" />}>
+    <Modal {...args}>
+      <ModalTrigger render={<Button variant="outline" />}>
         Edit profile
-      </AdaptiveDialogTrigger>
-      <AdaptiveDialogContent>
-        <AdaptiveDialogHeader>
-          <AdaptiveDialogTitle>Edit profile</AdaptiveDialogTitle>
-          <AdaptiveDialogDescription>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>Edit profile</ModalTitle>
+          <ModalDescription>
             Update your name and username. Click save when you are done.
-          </AdaptiveDialogDescription>
-        </AdaptiveDialogHeader>
-        <AdaptiveDialogBody className="grid gap-4">
+          </ModalDescription>
+        </ModalHeader>
+        <ModalBody className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="adaptive-name">Name</Label>
-            <Input id="adaptive-name" defaultValue="Ada Lovelace" />
+            <Label htmlFor="modal-name">Name</Label>
+            <Input id="modal-name" defaultValue="Ada Lovelace" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="adaptive-username">Username</Label>
-            <Input id="adaptive-username" defaultValue="@ada" />
+            <Label htmlFor="modal-username">Username</Label>
+            <Input id="modal-username" defaultValue="@ada" />
           </div>
-        </AdaptiveDialogBody>
-        <AdaptiveDialogFooter>
-          <AdaptiveDialogClose render={<Button variant="secondary" />}>
+        </ModalBody>
+        <ModalFooter>
+          <ModalClose render={<Button variant="secondary" />}>
             Cancel
-          </AdaptiveDialogClose>
+          </ModalClose>
           <Button>Save changes</Button>
-        </AdaptiveDialogFooter>
-      </AdaptiveDialogContent>
-    </AdaptiveDialog>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   ),
 }
 
@@ -75,57 +75,57 @@ export const OpenByDefault: Story = {
 
 export const WithCloseButton: Story = {
   render: (args) => (
-    <AdaptiveDialog {...args}>
-      <AdaptiveDialogTrigger render={<Button variant="outline" />}>
+    <Modal {...args}>
+      <ModalTrigger render={<Button variant="outline" />}>
         Share project
-      </AdaptiveDialogTrigger>
-      <AdaptiveDialogContent>
-        <AdaptiveDialogHeader>
-          <AdaptiveDialogTitle>Share project</AdaptiveDialogTitle>
-          <AdaptiveDialogDescription>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>Share project</ModalTitle>
+          <ModalDescription>
             Anyone with the link can view this project.
-          </AdaptiveDialogDescription>
-        </AdaptiveDialogHeader>
-        <AdaptiveDialogBody>
+          </ModalDescription>
+        </ModalHeader>
+        <ModalBody>
           <Input
             readOnly
             aria-label="Project link"
             defaultValue="https://esuiss.dev/p/1042"
           />
-        </AdaptiveDialogBody>
-        <AdaptiveDialogFooter>
+        </ModalBody>
+        <ModalFooter>
           <Button>Copy link</Button>
-        </AdaptiveDialogFooter>
-      </AdaptiveDialogContent>
-    </AdaptiveDialog>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   ),
 }
 
 export const WithCloseLabel: Story = {
   render: (args) => (
-    <AdaptiveDialog {...args}>
-      <AdaptiveDialogTrigger render={<Button variant="outline" />}>
+    <Modal {...args}>
+      <ModalTrigger render={<Button variant="outline" />}>
         Share project
-      </AdaptiveDialogTrigger>
-      <AdaptiveDialogContent closeLabel="Close">
-        <AdaptiveDialogHeader>
-          <AdaptiveDialogTitle>Share project</AdaptiveDialogTitle>
-          <AdaptiveDialogDescription>
+      </ModalTrigger>
+      <ModalContent closeLabel="Close">
+        <ModalHeader>
+          <ModalTitle>Share project</ModalTitle>
+          <ModalDescription>
             Anyone with the link can view this project.
-          </AdaptiveDialogDescription>
-        </AdaptiveDialogHeader>
-        <AdaptiveDialogBody>
+          </ModalDescription>
+        </ModalHeader>
+        <ModalBody>
           <Input
             readOnly
             aria-label="Project link"
             defaultValue="https://esuiss.dev/p/1042"
           />
-        </AdaptiveDialogBody>
-        <AdaptiveDialogFooter>
+        </ModalBody>
+        <ModalFooter>
           <Button>Copy link</Button>
-        </AdaptiveDialogFooter>
-      </AdaptiveDialogContent>
-    </AdaptiveDialog>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   ),
 }
 
