@@ -19,12 +19,18 @@ type Side = "top" | "right" | "bottom" | "left"
 function ProfileSheet({
   side = "right",
   showCloseButton = true,
+  closeLabel,
 }: {
   side?: Side
   showCloseButton?: boolean
+  closeLabel?: string
 }) {
   return (
-    <SheetContent side={side} showCloseButton={showCloseButton}>
+    <SheetContent
+      side={side}
+      showCloseButton={showCloseButton}
+      closeLabel={closeLabel}
+    >
       <SheetHeader>
         <SheetTitle>Edit profile</SheetTitle>
         <SheetDescription>
@@ -121,6 +127,18 @@ export const WithoutCloseButton: Story = {
         Open sheet
       </SheetTrigger>
       <ProfileSheet showCloseButton={false} />
+    </Sheet>
+  ),
+}
+
+export const WithCloseLabel: Story = {
+  args: { defaultOpen: true },
+  render: (args) => (
+    <Sheet {...args}>
+      <SheetTrigger render={<Button variant="outline" />}>
+        Open sheet
+      </SheetTrigger>
+      <ProfileSheet closeLabel="Done" />
     </Sheet>
   ),
 }
