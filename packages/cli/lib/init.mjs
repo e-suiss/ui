@@ -39,6 +39,17 @@ const TOOLING = {
   vite: ["tailwindcss", "@tailwindcss/vite", "@types/node"],
 }
 const MINIMUM_TAILWIND = [4, 2]
+const FONT_IMPORT = '@import "@fontsource-variable/inter";\n'
+const FONT_FAMILY = '--font-sans: "Inter Variable", sans-serif;'
+const NEXT_FONT_FAMILY = "--font-sans: var(--font-sans);"
+const NEXT_LAYOUTS = [
+  "src/app/layout.tsx",
+  "app/layout.tsx",
+  "src/app/layout.jsx",
+  "app/layout.jsx",
+]
+const NEXT_FONT_NOTE =
+  'Load Inter in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-sans" }), and add its .variable to the <html> className.'
 
 function relative(project, file) {
   return path.relative(project.cwd, file)
@@ -184,6 +195,62 @@ function configureVite(project) {
   return manual
 }
 
+function stylesheetFor(project, css) {
+  if (project.framework !== "next") return css
+  return css.replace(FONT_IMPORT, "").replace(FONT_FAMILY, NEXT_FONT_FAMILY)
+}
+
+function configureNextFont(project) {
+  const file = NEXT_LAYOUTS.map((name) => path.join(project.cwd, name)).find(
+    existsSync
+  )
+  if (!file) return [NEXT_FONT_NOTE]
+
+  let text = readFileSync(file, "utf8")
+  if (/variable:\s*["']--font-sans["']/.test(text)) return []
+
+  const html = text.match(/<html\b[^>]*>/)
+  if (!html) return [NEXT_FONT_NOTE]
+  let tag = html[0]
+  const literal = tag.match(/className="([^"]*)"/)
+  if (literal) {
+    tag = tag.replace(
+      literal[0],
+      `className={\`\${fontSans.variable} ${literal[1]}\`}`
+    )
+  } else if (!/className=/.test(tag)) {
+    tag = tag.replace(/<html\b/, "<html className={fontSans.variable}")
+  } else {
+    return [NEXT_FONT_NOTE]
+  }
+  text = text.replace(html[0], tag)
+
+  const semi = /from\s+["'][^"']+["'];/.test(text) ? ";" : ""
+  const fontImport = text.match(
+    /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
+  )
+  if (fontImport) {
+    text = text.replace(
+      fontImport[0],
+      fontImport[0].replace(fontImport[1], `${fontImport[1].trimEnd()}, Inter `)
+    )
+  } else {
+    text = `import { Inter } from "next/font/google"${semi}\n${text}`
+  }
+
+  const imports = [
+    ...text.matchAll(/^import\s[\s\S]*?["'][^"']+["'];?[ \t]*\n/gm),
+  ]
+  const last = imports.at(-1)
+  const at = last ? last.index + last[0].length : 0
+  const declaration = `\nconst fontSans = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-sans",\n})${semi}\n`
+  text = text.slice(0, at) + declaration + text.slice(at)
+
+  writeFileSync(file, text)
+  step(`Loaded Inter in ${relative(project, file)}`)
+  return []
+}
+
 function configureNext(project) {
   const existing = POSTCSS_CONFIGS.map((name) =>
     path.join(project.cwd, name)
@@ -230,7 +297,7 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
-  const css = await fetchStylesheet(registry)
+  const css = stylesheetFor(project, await fetchStylesheet(registry))
 
   if (ensureAlias(project, sourceRoot))
     step("Added the @/* import alias to tsconfig")
@@ -241,7 +308,7 @@ export async function init(options) {
   const manual =
     project.framework === "vite"
       ? configureVite(project)
-      : configureNext(project)
+      : [...configureNext(project), ...configureNextFont(project)]
 
   writeFileSync(stylesheet, css)
   step(`Wrote ${relative(project, stylesheet)}`)

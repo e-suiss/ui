@@ -47,8 +47,9 @@ export function Example() {
 2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
 3. Installs and wires up Tailwind CSS if needed (`postcss.config.mjs` for Next.js, `vite.config.ts` for Vite).
 4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
-5. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations, and utilities the components rely on.
-6. Adds the `button` component.
+5. Sets up the Inter font: with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
+6. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations, and utilities the components rely on.
+7. Adds the `button` component.
 
 ## Commands
 
