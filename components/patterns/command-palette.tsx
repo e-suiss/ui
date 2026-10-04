@@ -150,7 +150,7 @@ function CommandPaletteContent({
         </DrawerHeader>
         <Command
           className={cn(
-            "rounded-none bg-transparent px-3 pt-1 pb-[max(--spacing(3),env(safe-area-inset-bottom))] **:data-[slot=command-list]:max-h-[60dvh]",
+            "rounded-none bg-transparent px-3 pt-1.25 pb-[max(--spacing(3),env(safe-area-inset-bottom))] **:data-[slot=command-list]:max-h-[60dvh]",
             showCloseButton && "**:data-[slot=command-input-wrapper]:pe-11",
             showCloseButton &&
               closeLabel &&
