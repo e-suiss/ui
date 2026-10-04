@@ -7,7 +7,7 @@ const accordionVariants = cva("flex w-full flex-col", {
   variants: {
     variant: {
       default: "",
-      filled: "overflow-hidden rounded-2xl bg-muted",
+      filled: "overflow-hidden rounded-2xl bg-surface-secondary",
     },
   },
   defaultVariants: {
@@ -49,7 +49,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group/accordion-trigger relative flex min-h-11 cursor-pointer flex-1 items-center justify-between gap-6 py-2.75 ps-0 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:focus-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
+          "group/accordion-trigger relative flex min-h-11 cursor-pointer flex-1 items-center justify-between gap-6 py-2.75 ps-0 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:focus-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-label-secondary",
           className
         )}
         {...props}
@@ -76,12 +76,12 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className="overflow-hidden text-sm text-muted-foreground data-open:animate-accordion-down data-closed:animate-accordion-up"
+      className="overflow-hidden text-sm text-label-secondary data-open:animate-accordion-down data-closed:animate-accordion-up"
       {...props}
     >
       <div
         className={cn(
-          "pe-10 pb-3 [&_a]:underline [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+          "pe-10 pb-3 [&_a]:underline [&_a]:hover:text-label [&_p:not(:last-child)]:mb-4",
           className
         )}
       >

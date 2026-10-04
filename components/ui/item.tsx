@@ -35,13 +35,13 @@ function ItemSeparator({
 }
 
 const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-xl border text-base transition-colors duration-100 outline-none focus-visible:focus-ring [a]:transition-colors [a]:hover:bg-muted",
+  "group/item flex w-full flex-wrap items-center rounded-xl border text-base transition-colors duration-100 outline-none focus-visible:focus-ring [a]:transition-colors [a]:hover:bg-surface-secondary",
   {
     variants: {
       variant: {
         default: "border-transparent",
-        outline: "border-border",
-        muted: "border-transparent bg-muted/50",
+        outline: "border-separator",
+        muted: "border-transparent bg-surface-secondary/50",
       },
       size: {
         default: "gap-3.5 px-4 py-3.5",
@@ -143,7 +143,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="item-description"
       className={cn(
-        "line-clamp-2 text-start text-sm font-normal text-muted-foreground [&>a]:underline [&>a:hover]:text-link",
+        "line-clamp-2 text-start text-sm font-normal text-label-secondary [&>a]:underline [&>a:hover]:text-link",
         className
       )}
       {...props}

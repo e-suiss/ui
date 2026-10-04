@@ -20,19 +20,19 @@ const bubbleVariants = cva(
     variants: {
       variant: {
         default:
-          "[--bubble-bg:var(--primary)] *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary),var(--foreground)_10%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_80%,var(--background))]",
+          "[--bubble-bg:var(--accent)] *:data-[slot=bubble-content]:text-on-accent [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--accent-hover)]",
         secondary:
-          "[--bubble-bg:var(--secondary)] *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]",
+          "[--bubble-bg:var(--fill-secondary)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--fill)]",
         muted:
-          "[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--muted),var(--foreground)_5%)]",
+          "[--bubble-bg:var(--surface-secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--surface-secondary),var(--label)_5%)]",
         tinted:
-          "[--bubble-bg:color-mix(in_oklab,var(--primary)_12%,transparent)] *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_20%,transparent)]",
+          "[--bubble-bg:color-mix(in_oklab,var(--accent)_12%,transparent)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--accent)_20%,transparent)]",
         outline:
-          "[--bubble-bg:var(--background)] *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--input)_30%,transparent)]",
+          "[--bubble-bg:var(--surface)] *:data-[slot=bubble-content]:border-separator [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--surface-secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-label dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--fill)_30%,transparent)]",
         ghost:
-          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50",
+          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-surface-secondary [&>[data-slot=bubble-content]:is(button,a):hover]:text-label dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-surface-secondary/50",
         destructive:
-          "[--bubble-bg:color-mix(in_oklab,var(--destructive)_8%,transparent)] *:data-[slot=bubble-content]:text-destructive dark:[--bubble-bg:color-mix(in_oklab,var(--destructive)_20%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_12%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_30%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-destructive",
+          "[--bubble-bg:color-mix(in_oklab,var(--danger)_8%,transparent)] *:data-[slot=bubble-content]:text-danger dark:[--bubble-bg:color-mix(in_oklab,var(--danger)_20%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--danger)_12%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--danger)_30%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-danger",
       },
     },
     defaultVariants: {
@@ -71,7 +71,7 @@ function BubbleContent({
     props: mergeProps<"div">(
       {
         className: cn(
-          "w-fit max-w-full min-w-0 relative rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--background))] border-transparent px-3.5 py-1.5 text-base wrap-break-word group-data-[align=end]/bubble:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:rounded-ee-[16px] before:[background:inherit] after:absolute after:-start-[10.9px] after:-bottom-px after:hidden after:h-5 after:w-2.5 after:rounded-ee-[10px] after:bg-[var(--bubble-surface,var(--background))] group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/bubble:before:rounded-ee-none group-data-[align=end]/bubble:before:rounded-es-[16px] group-data-[align=end]/bubble:after:start-auto group-data-[align=end]/bubble:after:-end-[10.9px] group-data-[align=end]/bubble:after:rounded-ee-none group-data-[align=end]/bubble:after:rounded-es-[10px] [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:after:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:before:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:after:block [button]:text-start [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:focus-ring",
+          "w-fit max-w-full min-w-0 relative rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--surface))] border-transparent px-3.5 py-1.5 text-base wrap-break-word group-data-[align=end]/bubble:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:rounded-ee-[16px] before:[background:inherit] after:absolute after:-start-[10.9px] after:-bottom-px after:hidden after:h-5 after:w-2.5 after:rounded-ee-[10px] after:bg-[var(--bubble-surface,var(--surface))] group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/bubble:before:rounded-ee-none group-data-[align=end]/bubble:before:rounded-es-[16px] group-data-[align=end]/bubble:after:start-auto group-data-[align=end]/bubble:after:-end-[10.9px] group-data-[align=end]/bubble:after:rounded-ee-none group-data-[align=end]/bubble:after:rounded-es-[10px] [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:after:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:before:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:after:block [button]:text-start [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:focus-ring",
           className
         ),
       },
@@ -85,7 +85,7 @@ function BubbleContent({
 }
 
 const bubbleReactionsVariants = cva(
-  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 text-sm ring-3 ring-[var(--bubble-surface,var(--background))] has-[button]:p-0",
+  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-sm ring-3 ring-[var(--bubble-surface,var(--surface))] has-[button]:p-0",
   {
     variants: {
       side: {

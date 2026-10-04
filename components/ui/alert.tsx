@@ -7,8 +7,8 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-muted text-foreground *:[svg]:text-primary",
-        destructive: "bg-muted text-destructive *:[svg]:text-destructive",
+        default: "bg-surface-secondary text-label *:[svg]:text-accent",
+        destructive: "bg-surface-secondary text-danger *:[svg]:text-danger",
       },
     },
     defaultVariants: {
@@ -37,7 +37,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-title"
       className={cn(
-        "font-semibold group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:hover:text-foreground",
+        "font-semibold group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:hover:text-label",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+        "text-balance text-label-secondary md:text-pretty [&_a]:underline [&_a]:hover:text-label [&_p:not(:last-child)]:mb-4",
         className
       )}
       {...props}

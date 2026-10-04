@@ -31,7 +31,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="input-otp-group"
       className={cn(
-        "flex items-center rounded-lg has-aria-invalid:border-destructive has-aria-invalid:bg-destructive/5 dark:has-aria-invalid:bg-destructive/10",
+        "flex items-center rounded-lg has-aria-invalid:border-danger has-aria-invalid:bg-danger/5 dark:has-aria-invalid:bg-danger/10",
         className
       )}
       {...props}
@@ -54,7 +54,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex size-11 items-center justify-center border-y border-e border-input bg-input/50 text-base transition-all outline-none first:rounded-s-lg first:border-s last:rounded-e-lg aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-3 data-[active=true]:ring-ring/30",
+        "relative flex size-11 items-center justify-center border-y border-e border-separator bg-fill text-base transition-all outline-none first:rounded-s-lg first:border-s last:rounded-e-lg aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[active=true]:z-10 data-[active=true]:border-focus data-[active=true]:ring-3 data-[active=true]:ring-focus/30",
         className
       )}
       {...props}
@@ -62,7 +62,7 @@ function InputOTPSlot({
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+          <div className="h-4 w-px animate-caret-blink bg-label duration-1000" />
         </div>
       )}
     </div>

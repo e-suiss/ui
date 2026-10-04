@@ -78,7 +78,7 @@ function AlertSheetGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-sheet-group"
       className={cn(
-        "flex flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground *:not-first:border-t",
+        "flex flex-col overflow-hidden rounded-2xl bg-surface-raised text-label *:not-first:border-t",
         className
       )}
       {...props}
@@ -107,7 +107,7 @@ function AlertSheetTitle({
     <AlertSheetPrimitive.Title
       data-slot="alert-sheet-title"
       className={cn(
-        "text-sm font-semibold text-muted-foreground text-balance",
+        "text-sm font-semibold text-label-secondary text-balance",
         className
       )}
       {...props}
@@ -122,19 +122,19 @@ function AlertSheetDescription({
   return (
     <AlertSheetPrimitive.Description
       data-slot="alert-sheet-description"
-      className={cn("text-sm text-muted-foreground text-balance", className)}
+      className={cn("text-sm text-label-secondary text-balance", className)}
       {...props}
     />
   )
 }
 
 const alertSheetActionVariants = cva(
-  "flex min-h-14 w-full cursor-pointer items-center justify-center px-4 text-lg outline-none hover:bg-[color-mix(in_oklch,var(--popover),var(--foreground)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklch,var(--popover),var(--foreground)_10%)] disabled:pointer-events-none disabled:opacity-50 [--focus-ring-offset:-3px]",
+  "flex min-h-14 w-full cursor-pointer items-center justify-center px-4 text-lg outline-none hover:bg-[color-mix(in_oklch,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklch,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:opacity-50 [--focus-ring-offset:-3px]",
   {
     variants: {
       variant: {
         default: "text-link",
-        destructive: "text-destructive",
+        destructive: "text-danger",
       },
     },
     defaultVariants: {
@@ -167,7 +167,7 @@ function AlertSheetCancel({
       data-slot="alert-sheet-cancel"
       className={cn(
         alertSheetActionVariants(),
-        "rounded-2xl bg-popover font-semibold",
+        "rounded-2xl bg-surface-raised font-semibold",
         className
       )}
       {...props}

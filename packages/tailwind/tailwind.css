@@ -115,7 +115,7 @@
 
 @utility focus-ring {
   outline: var(--focus-ring-width, 1.3px) solid
-    var(--focus-ring-color, var(--color-ring));
+    var(--focus-ring-color, var(--color-focus));
   outline-offset: var(--focus-ring-offset, 1px);
 }
 
@@ -343,10 +343,10 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-separator outline-focus/50;
   }
   body {
-    @apply bg-background text-base text-foreground antialiased;
+    @apply bg-surface text-base text-label antialiased;
   }
   html {
     @apply font-sans;

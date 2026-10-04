@@ -135,7 +135,7 @@ function QuestionnaireProgress({
       role: "progressbar",
       "data-slot": "questionnaire-progress",
       className: cn(
-        "min-h-[1lh] w-fit min-w-[14ch] text-xs text-muted-foreground tabular-nums",
+        "min-h-[1lh] w-fit min-w-[14ch] text-xs text-label-secondary tabular-nums",
         className
       ),
       ...props,
@@ -234,7 +234,7 @@ function QuestionnaireDescription({
     props: {
       id,
       "data-slot": "questionnaire-description",
-      className: cn("text-sm text-pretty text-muted-foreground", className),
+      className: cn("text-sm text-pretty text-label-secondary", className),
       ...props,
     },
   })
@@ -311,7 +311,7 @@ function QuestionnaireChoice({
     props: {
       "data-slot": "questionnaire-choice",
       className: cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-input px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-input/40 has-[>input:focus-visible]:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary",
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-separator px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-fill-secondary has-[>input:focus-visible]:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10 data-checked:border-accent data-checked:ring-1 data-checked:ring-accent",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
       ),
@@ -322,11 +322,11 @@ function QuestionnaireChoice({
           <span
             aria-hidden="true"
             data-slot="questionnaire-choice-indicator"
-            className="pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-transparent bg-input/90 group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-primary-foreground dark:group-data-checked/questionnaire-choice:bg-primary"
+            className="pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-transparent bg-label-quaternary group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-accent group-data-checked/questionnaire-choice:bg-accent group-data-checked/questionnaire-choice:text-on-accent dark:group-data-checked/questionnaire-choice:bg-accent"
           >
             <span
               data-slot="questionnaire-choice-indicator-dot"
-              className="hidden size-2 rounded-full bg-primary-foreground group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block dark:size-2.5"
+              className="hidden size-2 rounded-full bg-on-accent group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block dark:size-2.5"
             />
             <CheckIcon
               data-slot="questionnaire-choice-indicator-check"
@@ -344,7 +344,7 @@ function QuestionnaireChoice({
             hidden={state.shortcut === null}
             data-shortcut={state.shortcut ?? undefined}
             data-slot="questionnaire-choice-shortcut"
-            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-3xs leading-none text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex"
+            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-accent/10 bg-surface/80 font-mono text-3xs leading-none text-label-secondary group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex"
           >
             {state.shortcut}
           </span>
@@ -361,7 +361,7 @@ function QuestionnaireChoiceDescription({
   return (
     <span
       data-slot="questionnaire-choice-description"
-      className={cn("text-muted-foreground", className)}
+      className={cn("text-label-secondary", className)}
       {...props}
     />
   )
@@ -403,8 +403,8 @@ function QuestionnaireInput({
       ...questionnaireInput.inputProps,
       "data-slot": "questionnaire-input",
       className: cn(
-        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10",
-        "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
+        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-fill px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10",
+        "selection:bg-accent selection:text-on-accent placeholder:text-label-secondary",
         className
       ),
       ...props,
@@ -446,7 +446,7 @@ function QuestionnaireError({
       id,
       role: invalid ? "alert" : undefined,
       "data-slot": "questionnaire-error",
-      className: cn("mt-2 text-sm text-destructive", className),
+      className: cn("mt-2 text-sm text-danger", className),
       ...props,
     },
   })

@@ -23,11 +23,11 @@ function NativeSelect({
       <select
         data-slot="native-select"
         data-size={size}
-        className="h-11 w-full min-w-0 appearance-none rounded-lg border border-transparent bg-input/50 py-1 pe-8 ps-3 text-base transition-[color,box-shadow,background-color] outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 data-[size=sm]:h-9 data-[size=sm]:rounded-md"
+        className="h-11 w-full min-w-0 appearance-none rounded-lg border border-transparent bg-fill py-1 pe-8 ps-3 text-base transition-[color,box-shadow,background-color] outline-none select-none selection:bg-accent selection:text-on-accent placeholder:text-label-secondary focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[size=sm]:h-9 data-[size=sm]:rounded-md"
         {...props}
       />
       <CaretDownIcon
-        className="pointer-events-none absolute top-1/2 inset-e-2.5 size-4 -translate-y-1/2 text-muted-foreground select-none"
+        className="pointer-events-none absolute top-1/2 inset-e-2.5 size-4 -translate-y-1/2 text-label-secondary select-none"
         aria-hidden="true"
         data-slot="native-select-icon"
       />

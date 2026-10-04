@@ -3,20 +3,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-[color-mix(in_oklab,var(--primary),var(--foreground)_10%)] dark:hover:bg-[color-mix(in_oklab,var(--primary)_80%,var(--background))]",
+          "bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-pressed",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]",
+          "border-separator bg-surface hover:bg-surface-secondary hover:text-label aria-expanded:bg-surface-secondary aria-expanded:text-label dark:bg-transparent ",
+        secondary: "bg-fill-secondary text-label hover:bg-fill",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "hover:bg-surface-secondary hover:text-label aria-expanded:bg-surface-secondary aria-expanded:text-label dark:hover:bg-surface-secondary/50",
         destructive:
-          "bg-destructive/8 text-destructive hover:bg-destructive/12 hover:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] [--focus-ring-color:var(--color-destructive)] dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:hover:text-destructive",
+          "bg-danger/8 text-danger hover:bg-danger/12 hover:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] [--focus-ring-color:var(--color-danger)] dark:bg-danger/20 dark:hover:bg-danger/30 dark:hover:text-danger",
         link: "text-link hover:underline",
       },
       size: {

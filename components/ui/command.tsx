@@ -21,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "flex size-full flex-col overflow-hidden rounded-xl bg-popover p-1 text-popover-foreground",
+        "flex size-full flex-col overflow-hidden rounded-xl bg-surface-raised p-1 text-label",
         className
       )}
       {...props}
@@ -68,7 +68,7 @@ function CommandInput({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div data-slot="command-input-wrapper" className="p-1 pb-0">
-      <InputGroup className="h-9 bg-input/50">
+      <InputGroup className="h-9 bg-fill">
         <CommandPrimitive.Input
           data-slot="command-input"
           className={cn(
@@ -122,7 +122,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "overflow-hidden p-1.5 text-foreground **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:text-muted-foreground",
+        "overflow-hidden p-1.5 text-label **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:text-label-secondary",
         className
       )}
       {...props}
@@ -137,7 +137,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn("my-1.5 h-px bg-border/50", className)}
+      className={cn("my-1.5 h-px bg-separator/50", className)}
       {...props}
     />
   )
@@ -152,7 +152,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "group/command-item relative flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none in-data-[slot=dialog-content]:rounded-md data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-selected:bg-muted data-selected:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-selected:*:[svg]:text-foreground",
+        "group/command-item relative flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none in-data-[slot=dialog-content]:rounded-md data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-selected:bg-surface-secondary data-selected:text-label [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-selected:*:[svg]:text-label",
         className
       )}
       {...props}
@@ -171,7 +171,7 @@ function CommandShortcut({
     <span
       data-slot="command-shortcut"
       className={cn(
-        "ms-auto text-xs text-muted-foreground group-data-selected/command-item:text-foreground",
+        "ms-auto text-xs text-label-secondary group-data-selected/command-item:text-label",
         className
       )}
       {...props}
