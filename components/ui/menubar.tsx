@@ -236,7 +236,7 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset}
       className={cn(
-        "gap-2 rounded-md px-3 py-2 text-base focus:bg-item-hover focus:text-label data-inset:ps-9.5 data-open:bg-item-selected data-open:text-label [&_svg:not([class*='size-'])]:size-4",
+        "gap-2 rounded-md px-3 py-2 text-base focus:bg-item-hover focus:text-label data-inset:ps-9.5 data-popup-open:bg-item-selected data-popup-open:text-label [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
