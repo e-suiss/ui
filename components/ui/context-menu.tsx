@@ -80,7 +80,7 @@ function ContextMenuLabel({
       data-slot="context-menu-label"
       data-inset={inset}
       className={cn(
-        "px-3 py-2.5 text-xs text-label-secondary data-inset:ps-9.5",
+        "px-3 py-2.5 text-xs font-semibold text-label-secondary data-inset:ps-9.5",
         className
       )}
       {...props}
