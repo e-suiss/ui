@@ -4,7 +4,12 @@ import path from "node:path"
 import { formatDiff } from "./diff.mjs"
 import { CliError, color, list, note, step } from "./output.mjs"
 import { detectProject, findAliasRoot, install } from "./project.mjs"
-import { fetchRegistry, fetchText, resolveItems } from "./registry.mjs"
+import {
+  fetchRegistry,
+  fetchText,
+  isPattern,
+  resolveItems,
+} from "./registry.mjs"
 
 async function fetchFiles(items) {
   return Promise.all(
@@ -93,6 +98,40 @@ async function showDiff(project, root, registry, names) {
   if (!changes) step("No differences from the registry.")
 }
 
+function selectNames(registry, names, { all, patterns }) {
+  const inScope = (item) => isPattern(item) === patterns
+  const scoped = registry.items.filter(inScope)
+  const kind = patterns ? "pattern" : "component"
+  const command = patterns ? "add patterns" : "add"
+
+  if (all) {
+    if (!scoped.length) throw new CliError(`No ${kind}s are available yet.`)
+    return scoped.map((item) => item.name)
+  }
+
+  if (!names.length) {
+    throw new CliError(
+      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${patterns ? "<name>" : "button"}`
+    )
+  }
+
+  const byName = new Map(registry.items.map((item) => [item.name, item]))
+  for (const name of names) {
+    const item = byName.get(name)
+    if (item && inScope(item)) continue
+    if (item) {
+      const other = patterns ? "add" : "add patterns"
+      throw new CliError(
+        `"${name}" is ${patterns ? "a component" : "a pattern"}. Run npx @esuiss/ui ${other} ${name}`
+      )
+    }
+    throw new CliError(
+      `Unknown ${kind}: ${name}.\nAvailable: ${scoped.map((entry) => entry.name).join(", ") || "none yet"}`
+    )
+  }
+  return names
+}
+
 export async function add(names, options) {
   const project = detectProject(options.cwd)
   const root = findAliasRoot(project.cwd)
@@ -103,12 +142,7 @@ export async function add(names, options) {
   }
 
   const registry = await fetchRegistry()
-  const selected = options.all ? registry.items.map((item) => item.name) : names
-  if (!selected.length) {
-    throw new CliError(
-      "Name at least one component, e.g. npx @esuiss/ui add button"
-    )
-  }
+  const selected = selectNames(registry, names, options)
 
   if (options.diff) await showDiff(project, root, registry, selected)
   else await installItems(project, root, registry, selected, options)

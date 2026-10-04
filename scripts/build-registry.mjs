@@ -6,10 +6,12 @@ const ROOT = process.cwd()
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
-const LOCAL_IMPORT = /^@\/(components\/ui|hooks)\/([\w-]+)$/
+const LOCAL_IMPORT =
+  /^@\/(components\/ui|components\/patterns|hooks)\/([\w-]+)$/
 
 const sources = [
   { dir: "components/ui", type: "ui" },
+  { dir: "components/patterns", type: "pattern" },
   { dir: "hooks", type: "hook" },
 ]
 
@@ -64,11 +66,17 @@ async function buildItem(dir, type, file) {
 
 function validate(items) {
   const names = new Set(items.map((item) => item.name))
-  const problems = items.flatMap((item) =>
-    item.requires
-      .filter((required) => !names.has(required))
-      .map((required) => `${item.name} requires missing item "${required}"`)
-  )
+  const duplicates = items
+    .map((item) => item.name)
+    .filter((name, index, all) => all.indexOf(name) !== index)
+  const problems = [
+    ...duplicates.map((name) => `"${name}" is defined more than once`),
+    ...items.flatMap((item) =>
+      item.requires
+        .filter((required) => !names.has(required))
+        .map((required) => `${item.name} requires missing item "${required}"`)
+    ),
+  ]
   if (!existsSync(path.join(ROOT, STYLESHEET))) {
     problems.push(`missing ${STYLESHEET}`)
   }
@@ -77,6 +85,7 @@ function validate(items) {
 
 const items = []
 for (const { dir, type } of sources) {
+  if (!existsSync(path.join(ROOT, dir))) continue
   const files = (await readdir(path.join(ROOT, dir)))
     .filter((file) => /\.(tsx?|jsx?)$/.test(file))
     .sort()

@@ -63,9 +63,10 @@ npx @esuiss/ui@latest init [options]
 
 ```bash
 npx @esuiss/ui@latest add <component...> [options]
+npx @esuiss/ui@latest add patterns <pattern...> [options]
 ```
 
-Components are written to `components/ui/` (and hooks to `hooks/`) under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
+Components are written to `components/ui/`, patterns to `components/patterns/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
 
 ### Options
 
@@ -73,7 +74,7 @@ Components are written to `components/ui/` (and hooks to `hooks/`) under your `@
 | --- | --- |
 | `-o, --overwrite` | Replace local files that differ from the registry |
 | `--diff` | Show how your local files differ from the registry |
-| `-a, --all` | Add every component |
+| `-a, --all` | Add every component, or every pattern with `add patterns` |
 | `-y, --yes` | Skip confirmation prompts |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
@@ -161,6 +162,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 accordion, alert, alert-dialog, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, table, tabs, textarea, toast, toggle, toggle-group, tooltip, wheel-picker
 
 Hooks: use-message-scroller, use-mobile, use-questionnaire
+
+## Patterns
+
+Patterns combine several components into one ready-made piece, such as a date and time picker. They are not added by `init` or `add --all`; add them by name, or all at once:
+
+```bash
+npx @esuiss/ui add patterns date-time-picker
+npx @esuiss/ui add patterns --all
+```
+
+The components a pattern uses are added with it.
 
 ## Troubleshooting
 

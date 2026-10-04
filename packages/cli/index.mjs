@@ -15,11 +15,12 @@ const usage = `${name} ${version}
 Usage:
   npx ${name} init [options]              set up Tailwind, the theme, and the button
   npx ${name} add <component...> [options] add components, e.g. add button sidebar
+  npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-time-picker
 
 Options:
   -o, --overwrite  replace local files that differ from the registry
   --diff           show how local files differ from the registry
-  -a, --all        add every component
+  -a, --all        add every component, or every pattern after "patterns"
   -y, --yes        skip confirmation prompts
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
@@ -79,8 +80,9 @@ async function main() {
       await init(parseArgs(args).options)
       break
     case "add": {
-      const { options, names } = parseArgs(args)
-      await add(names, options)
+      const patterns = args[0] === "patterns"
+      const { options, names } = parseArgs(patterns ? args.slice(1) : args)
+      await add(names, { ...options, patterns })
       break
     }
     case "-v":

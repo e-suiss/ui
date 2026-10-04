@@ -4,6 +4,7 @@
     ".": {
       "entry": [
         "components/ui/*.tsx",
+        "components/patterns/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
         "packages/cli/index.mjs"

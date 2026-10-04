@@ -20,14 +20,12 @@ export async function fetchRegistry() {
   return JSON.parse(await fetchText("registry.json"))
 }
 
+export function isPattern(item) {
+  return item.type === "pattern"
+}
+
 export function resolveItems(registry, names) {
   const byName = new Map(registry.items.map((item) => [item.name, item]))
-  const unknown = names.filter((name) => !byName.has(name))
-  if (unknown.length) {
-    throw new CliError(
-      `Unknown component: ${unknown.join(", ")}.\nAvailable: ${[...byName.keys()].join(", ")}`
-    )
-  }
 
   const ordered = []
   const seen = new Set()
