@@ -765,7 +765,6 @@
       "type": "ui",
       "title": "Spinner",
       "dependencies": [
-        "@phosphor-icons/react",
         "cn"
       ],
       "requires": [],
