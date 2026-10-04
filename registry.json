@@ -894,6 +894,36 @@
       ]
     },
     {
+      "name": "adaptive-alert",
+      "type": "pattern",
+      "title": "Adaptive Alert",
+      "dependencies": [],
+      "requires": [
+        "alert-dialog",
+        "alert-sheet",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/adaptive-alert.tsx"
+      ]
+    },
+    {
+      "name": "adaptive-dialog",
+      "type": "pattern",
+      "title": "Adaptive Dialog",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "dialog",
+        "drawer",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/adaptive-dialog.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
