@@ -97,28 +97,42 @@ Your stylesheet holds the whole theme:
 ```css
 @import "tailwindcss";
 @import "@esuiss/tailwind";
+@import "@fontsource-variable/inter";
 
 :root {
-  --background: oklch(1 0 0);
-  --primary: oklch(0.6321 0.2018 254.09);
-  --radius: 0.75rem;
+  --surface: oklch(1 0 0);
+  --label: oklch(0.2316 0.0038 286.09);
+  --accent: oklch(0.5629 0.1933 256.16);
+  --radius: 0.625rem;
 }
 
 .dark {
-  --background: oklch(0 0 0);
-  --primary: oklch(0.651471 0.191972 251.4696);
+  --surface: oklch(0 0 0);
+  --label: oklch(0.9707 0.0026 286.29);
+  --accent: oklch(0.5629 0.1933 256.16);
 }
 
 @theme inline {
-  --font-sans: system-ui, sans-serif;
-  --color-background: var(--background);
-  --color-primary: var(--primary);
+  --font-sans: "Inter Variable", sans-serif;
+  --color-surface: var(--surface);
+  --color-label: var(--label);
+  --color-accent: var(--accent);
 }
 ```
 
+Colors are named by role, not by component:
+
+- **Surfaces:** `surface`, `surface-secondary`, `surface-tertiary`, `surface-raised` (menus, dialogs, cards).
+- **Text:** `label`, `label-secondary`, `label-tertiary`, `label-quaternary`.
+- **Control fills:** `fill`, `fill-secondary`, `fill-tertiary`.
+- **Lines:** `separator`, `separator-strong`.
+- **Accent:** `accent`, `accent-hover`, `accent-pressed`, `on-accent` (text on the accent).
+- **Links, focus and states:** `link`, `focus`, `danger`, `success`, `warning` and their `-surface` tints.
+- **Palette:** `blue`, `green`, `orange`, `red`, `yellow`, `purple`, `pink`, `indigo`, `teal`, `mint`, `cyan`, `brown`, `gray`, used by charts.
+
 - **Change a color:** edit its value under `:root` (light) and `.dark` (dark).
 - **Add a color:** define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
-- **Change the font:** set `--font-sans` in `@theme inline`. By default each device's own system font is used, so nothing has to be downloaded.
+- **Change the font:** set `--font-sans` in `@theme inline`. Inter is loaded by default.
 - **Corner radius:** `--radius` scales every rounded component.
 
 ## Dark mode

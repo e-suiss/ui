@@ -9,7 +9,7 @@ npx @esuiss/ui@latest init
 npx @esuiss/ui@latest add sidebar
 ```
 
-`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-primary`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
+`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-surface`, `text-label` and `bg-accent`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
 
 Update a component later:
 
