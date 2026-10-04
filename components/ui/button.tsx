@@ -10,7 +10,7 @@ const buttonVariants = cva(
         default:
           "bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-pressed disabled:bg-accent-disabled",
         outline:
-          "border-separator bg-surface hover:bg-item-hover hover:text-label aria-expanded:bg-item-selected aria-expanded:text-label dark:bg-transparent  disabled:text-label-quaternary",
+          "border-separator bg-surface hover:bg-item-hover hover:text-label active:bg-item-pressed aria-expanded:bg-item-selected aria-expanded:text-label dark:bg-transparent dark:hover:bg-item-hover dark:active:bg-item-pressed dark:aria-expanded:bg-item-selected disabled:text-label-quaternary",
         secondary:
           "bg-control text-label hover:bg-control-hover active:bg-control-pressed disabled:bg-control-disabled disabled:text-label-quaternary",
         ghost:
