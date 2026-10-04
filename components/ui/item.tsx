@@ -6,13 +6,19 @@ import type * as React from "react"
 
 import { Separator } from "@/components/ui/separator"
 
-function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
+function ItemGroup({
+  className,
+  variant = "default",
+  ...props
+}: React.ComponentProps<"div"> & { variant?: "default" | "inset" }) {
   return (
     <div
       role="list"
       data-slot="item-group"
+      data-variant={variant}
       className={cn(
         "group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
+        "data-[variant=inset]:gap-0 data-[variant=inset]:overflow-hidden data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-surface-secondary data-[variant=inset]:**:data-[slot=item]:rounded-none data-[variant=inset]:**:data-[slot=item-separator]:my-0 data-[variant=inset]:**:data-[slot=item-separator]:ms-4 data-[variant=inset]:**:data-[slot=item-separator]:w-auto",
         className
       )}
       {...props}

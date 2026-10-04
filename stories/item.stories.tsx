@@ -179,6 +179,32 @@ export const WithImage: Story = {
   ),
 }
 
+export const Inset: Story = {
+  render: (args) => (
+    <ItemGroup variant="inset">
+      {people.map((person, index) => (
+        <div key={person.email} className="contents">
+          {index > 0 && <ItemSeparator />}
+          <Item {...args} variant="default" size="sm" role="listitem">
+            <ItemMedia variant="image">
+              <img src={person.avatar} alt={person.name} />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{person.name}</ItemTitle>
+              <ItemDescription>{person.email}</ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button variant="ghost" size="icon-sm" aria-label="Invite">
+                <PlusIcon />
+              </Button>
+            </ItemActions>
+          </Item>
+        </div>
+      ))}
+    </ItemGroup>
+  ),
+}
+
 export const WithAvatar: Story = {
   render: (args) => (
     <Item {...args}>
