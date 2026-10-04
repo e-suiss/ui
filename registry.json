@@ -919,6 +919,24 @@
       ]
     },
     {
+      "name": "command-palette",
+      "type": "pattern",
+      "title": "Command Palette",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "command",
+        "dialog",
+        "drawer",
+        "use-mobile",
+        "use-platform"
+      ],
+      "files": [
+        "components/patterns/command-palette.tsx"
+      ]
+    },
+    {
       "name": "confirm",
       "type": "pattern",
       "title": "Confirm",
