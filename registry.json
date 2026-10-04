@@ -454,9 +454,7 @@
         "class-variance-authority",
         "cn"
       ],
-      "requires": [
-        "separator"
-      ],
+      "requires": [],
       "files": [
         "components/ui/item.tsx"
       ]

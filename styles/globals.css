@@ -33,7 +33,7 @@
   --accent-selected: oklch(0.5629 0.1933 256.16);
   --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
-  --accent-surface: oklch(0.5629 0.1933 256.16 / 10%);
+  --accent-surface: oklch(0.5629 0.1933 256.16 / 9%);
   --accent-surface-hover: oklch(0.5629 0.1933 256.16 / 14%);
   --accent-surface-pressed: oklch(0.5629 0.1933 256.16 / 18%);
 

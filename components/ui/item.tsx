@@ -4,8 +4,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import type * as React from "react"
 
-import { Separator } from "@/components/ui/separator"
-
 function ItemGroup({
   className,
   variant = "default",
@@ -26,15 +24,12 @@ function ItemGroup({
   )
 }
 
-function ItemSeparator({
-  className,
-  ...props
-}: React.ComponentProps<typeof Separator>) {
+function ItemSeparator({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <Separator
+    <div
       data-slot="item-separator"
-      orientation="horizontal"
-      className={cn("my-2", className)}
+      role="none"
+      className={cn("my-2 h-px shrink-0 bg-separator", className)}
       {...props}
     />
   )
