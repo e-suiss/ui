@@ -4,7 +4,6 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 import {
   CheckCircleIcon,
   InfoIcon,
-  SpinnerIcon,
   WarningIcon,
   XCircleIcon,
   XIcon,
@@ -12,6 +11,7 @@ import {
 import { cn } from "cn"
 import type * as React from "react"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -156,7 +156,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   }
 
   if (type === "loading") {
-    icon = <SpinnerIcon className="animate-spin" aria-hidden="true" />
+    icon = <Spinner aria-hidden="true" />
   }
 
   if (!icon) {

@@ -833,7 +833,8 @@
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "spinner"
       ],
       "files": [
         "components/ui/toast.tsx"
