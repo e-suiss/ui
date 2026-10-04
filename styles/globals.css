@@ -89,8 +89,8 @@
   --separator-strong: oklch(0.5399 0.0077 286.13);
 
   --accent: oklch(0.5629 0.1933 256.16);
-  --accent-hover: oklch(0.5301 0.1811 256.02);
-  --accent-pressed: oklch(0.4825 0.1644 255.94);
+  --accent-hover: oklch(0.4925 0.1691 256);
+  --accent-pressed: oklch(0.43 0.1477 256);
   --accent-selected: oklch(0.5629 0.1933 256.16);
   --accent-disabled: oklch(0.5629 0.1933 256.16 / 40%);
   --on-accent: oklch(1 0 0);
