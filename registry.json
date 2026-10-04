@@ -1016,6 +1016,20 @@
       ]
     },
     {
+      "name": "picker",
+      "type": "pattern",
+      "title": "Picker",
+      "dependencies": [],
+      "requires": [
+        "native-select",
+        "select",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/picker.tsx"
+      ]
+    },
+    {
       "name": "preview",
       "type": "pattern",
       "title": "Preview",
