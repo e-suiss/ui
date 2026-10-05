@@ -362,7 +362,7 @@ function WheelPickerItem({
       aria-selected={selected}
       data-slot="wheel-picker-item"
       data-value={value}
-      data-selected={selected}
+      data-selected={selected ? "" : undefined}
       className={cn(
         "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-label tabular-nums select-none",
         className
