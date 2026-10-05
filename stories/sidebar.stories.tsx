@@ -201,7 +201,22 @@ function AppShell({
 const meta = {
   title: "Components/Sidebar",
   component: Sidebar,
-  parameters: { layout: "fullscreen" },
+  parameters: {
+    layout: "fullscreen",
+  },
+  decorators: [
+    (Story, { viewMode }) => (
+      <div
+        className={
+          viewMode === "docs"
+            ? "h-[32rem] transform-gpu overflow-hidden"
+            : "min-h-svh"
+        }
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     side: "left",
     variant: "sidebar",
