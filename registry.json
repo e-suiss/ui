@@ -1083,6 +1083,20 @@
       ]
     },
     {
+      "name": "segment-picker",
+      "type": "pattern",
+      "title": "Segment Picker",
+      "dependencies": [],
+      "requires": [
+        "native-select",
+        "toggle-group",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/segment-picker.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
