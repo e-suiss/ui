@@ -795,6 +795,22 @@
       ]
     },
     {
+      "name": "tab-bar",
+      "type": "ui",
+      "title": "Tab Bar",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/ui/tab-bar.tsx"
+      ]
+    },
+    {
       "name": "table",
       "type": "ui",
       "title": "Table",
