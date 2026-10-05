@@ -25,14 +25,9 @@ import {
   TabBar,
   TabBarContent,
   TabBarItem,
-  TabBarLink,
   TabBarList,
-  TabBarSection,
-  TabBarSectionTitle,
   TabBarTrigger,
 } from "@/components/ui/tab-bar"
-
-const MAX_TABS = 5
 
 type AppShellItem = {
   value: string
@@ -207,14 +202,10 @@ function AppShellTabBar({
   moreLabel: string
   render: React.ReactElement
 }) {
-  const overflow = items.length > MAX_TABS
-  const tabs = overflow ? items.slice(0, MAX_TABS - 1) : items
-  const groups = groupItems(overflow ? items.slice(MAX_TABS - 1) : [])
-
   return (
     <TabBar aria-label={moreLabel}>
       <TabBarList>
-        {tabs.map((item) => (
+        {items.map((item) => (
           <TabBarItem
             key={item.value}
             isActive={item.value === value}
@@ -227,38 +218,8 @@ function AppShellTabBar({
           </TabBarItem>
         ))}
       </TabBarList>
-      {overflow && (
-        <>
-          <TabBarContent>
-            {groups.map((group) => (
-              <TabBarSection key={group.value}>
-                <TabBarSectionTitle>
-                  {group.value || moreLabel}
-                </TabBarSectionTitle>
-                {group.items.map((item) => (
-                  <TabBarLink
-                    key={item.value}
-                    isActive={item.value === value}
-                    aria-disabled={item.disabled || undefined}
-                    render={item.href ? render : <button type="button" />}
-                    {...(item.href && { href: item.href })}
-                    onClick={(event) => {
-                      if (item.disabled) {
-                        event.preventDefault()
-                        return
-                      }
-                      onSelect(item.value)
-                    }}
-                  >
-                    {item.label}
-                  </TabBarLink>
-                ))}
-              </TabBarSection>
-            ))}
-          </TabBarContent>
-          <TabBarTrigger>{moreLabel}</TabBarTrigger>
-        </>
-      )}
+      <TabBarContent />
+      <TabBarTrigger>{moreLabel}</TabBarTrigger>
     </TabBar>
   )
 }
