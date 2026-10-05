@@ -935,6 +935,21 @@
       ]
     },
     {
+      "name": "app-shell",
+      "type": "pattern",
+      "title": "App Shell",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "sidebar",
+        "tab-bar"
+      ],
+      "files": [
+        "components/patterns/app-shell.tsx"
+      ]
+    },
+    {
       "name": "command-palette",
       "type": "pattern",
       "title": "Command Palette",
