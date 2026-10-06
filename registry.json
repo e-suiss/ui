@@ -2296,6 +2296,159 @@
       ]
     },
     {
+      "name": "tooltip-chart-custom",
+      "type": "chart",
+      "title": "Tooltip Chart Custom",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-custom.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-dashed",
+      "type": "chart",
+      "title": "Tooltip Chart Dashed",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-dashed.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-dot",
+      "type": "chart",
+      "title": "Tooltip Chart Dot",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-dot.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-formatter",
+      "type": "chart",
+      "title": "Tooltip Chart Formatter",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-formatter.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-icons",
+      "type": "chart",
+      "title": "Tooltip Chart Icons",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-icons.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-interactive",
+      "type": "chart",
+      "title": "Tooltip Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "switch",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-label-formatter",
+      "type": "chart",
+      "title": "Tooltip Chart Label Formatter",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-label-formatter.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-line",
+      "type": "chart",
+      "title": "Tooltip Chart Line",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-line.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-no-indicator",
+      "type": "chart",
+      "title": "Tooltip Chart No Indicator",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-no-indicator.tsx"
+      ]
+    },
+    {
+      "name": "tooltip-chart-no-label",
+      "type": "chart",
+      "title": "Tooltip Chart No Label",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/tooltip-chart-no-label.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
