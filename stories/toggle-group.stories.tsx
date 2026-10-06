@@ -106,6 +106,47 @@ export const Segmented: Story = {
   ),
 }
 
+export const SegmentedVertical: Story = {
+  args: {
+    multiple: false,
+    variant: "default",
+    spacing: 0,
+    orientation: "vertical",
+    defaultValue: ["week"],
+  },
+  render: Segmented.render,
+}
+
+export const SegmentedMultiple: Story = {
+  args: {
+    multiple: true,
+    variant: "default",
+    spacing: 0,
+    defaultValue: ["bold", "underline"],
+  },
+}
+
+export const SegmentedSizes: Story = {
+  args: { multiple: false, variant: "default", spacing: 0 },
+  render: (args) => (
+    <div className="flex flex-col items-start gap-3">
+      {(["sm", "default", "lg"] as const).map((size) => (
+        <ToggleGroup
+          key={size}
+          {...args}
+          size={size}
+          defaultValue={["week"]}
+          aria-label={`Calendar view, ${size}`}
+        >
+          <ToggleGroupItem value="day">Day</ToggleGroupItem>
+          <ToggleGroupItem value="week">Week</ToggleGroupItem>
+          <ToggleGroupItem value="month">Month</ToggleGroupItem>
+        </ToggleGroup>
+      ))}
+    </div>
+  ),
+}
+
 export const SingleSelection: Story = {
   args: { multiple: false, variant: "outline", defaultValue: ["left"] },
   render: (args) => (
