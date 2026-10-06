@@ -2699,6 +2699,54 @@
       ]
     },
     {
+      "name": "signup-form",
+      "type": "block",
+      "title": "Signup Form",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "input",
+        "native-select"
+      ],
+      "files": [
+        "components/blocks/signup-form.tsx"
+      ]
+    },
+    {
+      "name": "signup-steps",
+      "type": "block",
+      "title": "Signup Steps",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "input"
+      ],
+      "files": [
+        "components/blocks/signup-steps.tsx"
+      ]
+    },
+    {
+      "name": "signup-trial",
+      "type": "block",
+      "title": "Signup Trial",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "checkbox",
+        "input",
+        "label"
+      ],
+      "files": [
+        "components/blocks/signup-trial.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
