@@ -1066,6 +1066,22 @@
       ]
     },
     {
+      "name": "navbar",
+      "type": "pattern",
+      "title": "Navbar",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "fullscreen-menu",
+        "navigation-menu",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/navbar.tsx"
+      ]
+    },
+    {
       "name": "panel",
       "type": "pattern",
       "title": "Panel",
