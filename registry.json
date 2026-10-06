@@ -1102,6 +1102,22 @@
       ]
     },
     {
+      "name": "paged-list",
+      "type": "pattern",
+      "title": "Paged List",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "button",
+        "pagination",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/paged-list.tsx"
+      ]
+    },
+    {
       "name": "panel",
       "type": "pattern",
       "title": "Panel",
