@@ -2449,6 +2449,44 @@
       ]
     },
     {
+      "name": "bento-closer-look",
+      "type": "block",
+      "title": "Bento Closer Look",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "accordion"
+      ],
+      "files": [
+        "components/blocks/bento-closer-look.tsx"
+      ]
+    },
+    {
+      "name": "bento-features",
+      "type": "block",
+      "title": "Bento Features",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [],
+      "files": [
+        "components/blocks/bento-features.tsx"
+      ]
+    },
+    {
+      "name": "bento-stats",
+      "type": "block",
+      "title": "Bento Stats",
+      "dependencies": [],
+      "requires": [
+        "progress"
+      ],
+      "files": [
+        "components/blocks/bento-stats.tsx"
+      ]
+    },
+    {
       "name": "grid-accessories",
       "type": "block",
       "title": "Grid Accessories",
