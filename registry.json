@@ -2449,6 +2449,46 @@
       ]
     },
     {
+      "name": "grid-accessories",
+      "type": "block",
+      "title": "Grid Accessories",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/grid-accessories.tsx"
+      ]
+    },
+    {
+      "name": "grid-carousel",
+      "type": "block",
+      "title": "Grid Carousel",
+      "dependencies": [],
+      "requires": [
+        "carousel"
+      ],
+      "files": [
+        "components/blocks/grid-carousel.tsx"
+      ]
+    },
+    {
+      "name": "grid-lineup",
+      "type": "block",
+      "title": "Grid Lineup",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/grid-lineup.tsx"
+      ]
+    },
+    {
       "name": "hero-cinematic",
       "type": "block",
       "title": "Hero Cinematic",
