@@ -402,7 +402,7 @@ function TabBarSectionTitle({
     <div
       data-slot="tab-bar-section-title"
       className={cn(
-        "relative flex h-7 items-center ps-4 text-sm text-label-secondary before:absolute before:start-0 before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-label-tertiary",
+        "relative flex h-7 items-center ps-4 text-sm text-label-secondary before:absolute before:inset-s-0 before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-label-tertiary",
         className
       )}
       {...props}
