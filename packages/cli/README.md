@@ -47,7 +47,7 @@ export function Example() {
 2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
 3. Installs and wires up Tailwind CSS if needed (`postcss.config.mjs` for Next.js, `vite.config.ts` for Vite).
 4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
-5. Sets up the font: the system font on macOS and iOS, Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
+5. Sets up the fonts: body text uses the system font on macOS and iOS and Inter everywhere else; headings use Questrial. Both are loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` and `@fontsource/questrial` imported from the stylesheet (Vite).
 6. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations, and utilities the components rely on.
 7. Adds the `button` component.
 
@@ -102,6 +102,7 @@ Your stylesheet holds the whole theme:
 @import "tailwindcss";
 @import "@esuiss/tailwind";
 @import "@fontsource-variable/inter";
+@import "@fontsource/questrial";
 
 :root {
   --surface: oklch(1 0 0);
@@ -118,6 +119,7 @@ Your stylesheet holds the whole theme:
 
 @theme inline {
   --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
+  --font-heading: "Questrial", -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
   --color-surface: var(--surface);
   --color-label: var(--label);
   --color-accent: var(--accent);
@@ -137,7 +139,7 @@ Colors are named by role, not by component:
 
 - **Change a color:** edit its value under `:root` (light) and `.dark` (dark).
 - **Add a color:** define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
-- **Change the font:** set `--font-sans` in `@theme inline`. By default it uses the system font on macOS and iOS and Inter elsewhere.
+- **Change the font:** set `--font-sans` for body text and `--font-heading` for headings in `@theme inline`. Headings (`h1`–`h6` and the `font-heading` class) use Questrial by default, and body text uses the system font on macOS and iOS and Inter elsewhere. Questrial has one weight, so headings render at that weight instead of a synthesized bold.
 - **Corner radius:** `--radius` scales every rounded component.
 
 ## Dark mode

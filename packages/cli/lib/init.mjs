@@ -39,11 +39,16 @@ const TOOLING = {
   vite: ["tailwindcss", "@tailwindcss/vite", "@types/node"],
 }
 const MINIMUM_TAILWIND = [4, 2]
-const FONT_IMPORT = '@import "@fontsource-variable/inter";\n'
+const FONT_IMPORT =
+  '@import "@fontsource-variable/inter";\n@import "@fontsource/questrial";\n'
 const FONT_FAMILY =
   '--font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;'
 const NEXT_FONT_FAMILY =
   "--font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;"
+const HEADING_FAMILY =
+  '--font-heading:\n    "Questrial", -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;'
+const NEXT_HEADING_FAMILY =
+  "--font-heading:\n    var(--font-questrial), -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;"
 const NEXT_LAYOUTS = [
   "src/app/layout.tsx",
   "app/layout.tsx",
@@ -51,7 +56,7 @@ const NEXT_LAYOUTS = [
   "app/layout.jsx",
 ]
 const NEXT_FONT_NOTE =
-  'Load Inter in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }), and add its .variable to the <html> className.'
+  'Load the fonts in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }) and Questrial({ weight: "400", subsets: ["latin", "latin-ext"], variable: "--font-questrial" }), and add both .variable values to the <html> className.'
 
 function relative(project, file) {
   return path.relative(project.cwd, file)
@@ -199,7 +204,10 @@ function configureVite(project) {
 
 function stylesheetFor(project, css) {
   if (project.framework !== "next") return css
-  return css.replace(FONT_IMPORT, "").replace(FONT_FAMILY, NEXT_FONT_FAMILY)
+  return css
+    .replace(FONT_IMPORT, "")
+    .replace(FONT_FAMILY, NEXT_FONT_FAMILY)
+    .replace(HEADING_FAMILY, NEXT_HEADING_FAMILY)
 }
 
 function configureNextFont(project) {
@@ -218,10 +226,13 @@ function configureNextFont(project) {
   if (literal) {
     tag = tag.replace(
       literal[0],
-      `className={\`\${fontInter.variable} ${literal[1]}\`}`
+      `className={\`\${fontInter.variable} \${fontQuestrial.variable} ${literal[1]}\`}`
     )
   } else if (!/className=/.test(tag)) {
-    tag = tag.replace(/<html\b/, "<html className={fontInter.variable}")
+    tag = tag.replace(
+      /<html\b/,
+      `<html className={\`\${fontInter.variable} \${fontQuestrial.variable}\`}`
+    )
   } else {
     return [NEXT_FONT_NOTE]
   }
@@ -234,10 +245,13 @@ function configureNextFont(project) {
   if (fontImport) {
     text = text.replace(
       fontImport[0],
-      fontImport[0].replace(fontImport[1], `${fontImport[1].trimEnd()}, Inter `)
+      fontImport[0].replace(
+        fontImport[1],
+        `${fontImport[1].trimEnd()}, Inter, Questrial `
+      )
     )
   } else {
-    text = `import { Inter } from "next/font/google"${semi}\n${text}`
+    text = `import { Inter, Questrial } from "next/font/google"${semi}\n${text}`
   }
 
   const imports = [
@@ -245,11 +259,11 @@ function configureNextFont(project) {
   ]
   const last = imports.at(-1)
   const at = last ? last.index + last[0].length : 0
-  const declaration = `\nconst fontInter = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-inter",\n})${semi}\n`
+  const declaration = `\nconst fontInter = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-inter",\n})${semi}\n\nconst fontQuestrial = Questrial({\n  weight: "400",\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-questrial",\n})${semi}\n`
   text = text.slice(0, at) + declaration + text.slice(at)
 
   writeFileSync(file, text)
-  step(`Loaded Inter in ${relative(project, file)}`)
+  step(`Loaded Inter and Questrial in ${relative(project, file)}`)
   return []
 }
 
