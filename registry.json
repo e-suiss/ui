@@ -2641,6 +2641,52 @@
       ]
     },
     {
+      "name": "empty-bag",
+      "type": "block",
+      "title": "Empty Bag",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "empty"
+      ],
+      "files": [
+        "components/blocks/empty-bag.tsx"
+      ]
+    },
+    {
+      "name": "empty-offline",
+      "type": "block",
+      "title": "Empty Offline",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "empty",
+        "spinner"
+      ],
+      "files": [
+        "components/blocks/empty-offline.tsx"
+      ]
+    },
+    {
+      "name": "empty-search",
+      "type": "block",
+      "title": "Empty Search",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "empty"
+      ],
+      "files": [
+        "components/blocks/empty-search.tsx"
+      ]
+    },
+    {
       "name": "footer-compact",
       "type": "block",
       "title": "Footer Compact",
