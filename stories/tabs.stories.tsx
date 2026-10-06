@@ -1,5 +1,6 @@
 import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { cn } from "cn"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -47,8 +48,8 @@ const meta = {
     },
   },
   decorators: [
-    (Story) => (
-      <div className="w-96">
+    (Story, { parameters }) => (
+      <div className={cn("w-full", !parameters.wide && "max-w-96")}>
         <Story />
       </div>
     ),
@@ -131,4 +132,39 @@ export const DisabledTab: Story = {
       </TabsContent>
     </Tabs>
   ),
+}
+
+const settings = [
+  { value: "general", label: "General" },
+  { value: "account", label: "Account" },
+  { value: "notifications", label: "Notifications" },
+  { value: "privacy", label: "Privacy" },
+  { value: "appearance", label: "Appearance" },
+  { value: "language", label: "Language" },
+  { value: "billing", label: "Billing" },
+]
+
+export const ManyTabs: Story = {
+  parameters: { layout: "padded", wide: true },
+  render: ({ variant, ...args }) => (
+    <Tabs {...args} defaultValue="general" className="w-full max-w-3xl">
+      <TabsList variant={variant}>
+        {settings.map((tab) => (
+          <TabsTrigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {settings.map((tab) => (
+        <TabsContent key={tab.value} value={tab.value}>
+          <p className="text-label-secondary">{tab.label} settings</p>
+        </TabsContent>
+      ))}
+    </Tabs>
+  ),
+}
+
+export const ManyTabsLine: Story = {
+  ...ManyTabs,
+  args: { variant: "line" },
 }
