@@ -3,7 +3,7 @@ pre-commit:
     lint-staged:
       run: pnpm exec lint-staged
     registry:
-      glob: "{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,hooks/*.ts}"
+      glob: "{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,hooks/*.ts}"
       run: node scripts/build-registry.mjs && git add registry.json
 
 pre-push:

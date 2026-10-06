@@ -28,6 +28,7 @@ export const SCOPES = {
     command: "add interactions",
     example: "<name>",
   },
+  chart: { kind: "chart", command: "add charts", example: "<name>" },
 }
 
 export function scopeOf(item) {

@@ -17,12 +17,13 @@ Usage:
   npx ${name} add <component...> [options] add components, e.g. add button sidebar
   npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-picker
   npx ${name} add interactions <name...>   add interactions, e.g. add interactions swipe-actions
+  npx ${name} add charts <chart...>        add charts, e.g. add charts <name>
 
 Options:
   -o, --overwrite  replace local files that differ from the registry
   --diff           show how local files differ from the registry
-  -a, --all        add every component, or every pattern or interaction
-                   after "patterns" or "interactions"
+  -a, --all        add every component, or every pattern, interaction or
+                   chart after "patterns", "interactions" or "charts"
   -y, --yes        skip confirmation prompts
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
@@ -33,6 +34,7 @@ Supports Next.js and React (Vite) projects with TypeScript and Tailwind CSS v4.`
 const SUBCOMMANDS = {
   patterns: "pattern",
   interactions: "interaction",
+  charts: "chart",
 }
 
 function parseArgs(args) {

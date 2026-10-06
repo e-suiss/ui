@@ -6,6 +6,7 @@
         "components/ui/*.tsx",
         "components/patterns/*.tsx",
         "components/interactions/*.tsx",
+        "components/charts/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
         "packages/cli/index.mjs"

@@ -65,9 +65,10 @@ npx @esuiss/ui@latest init [options]
 npx @esuiss/ui@latest add <component...> [options]
 npx @esuiss/ui@latest add patterns <pattern...> [options]
 npx @esuiss/ui@latest add interactions <interaction...> [options]
+npx @esuiss/ui@latest add charts <chart...> [options]
 ```
 
-Components are written to `components/ui/`, patterns to `components/patterns/`, interactions to `components/interactions/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
+Components are written to `components/ui/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
 
 ### Options
 
@@ -75,7 +76,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | --- | --- |
 | `-o, --overwrite` | Replace local files that differ from the registry |
 | `--diff` | Show how your local files differ from the registry |
-| `-a, --all` | Add every component, or every pattern or interaction with `add patterns` / `add interactions` |
+| `-a, --all` | Add every component, or every pattern, interaction or chart with `add patterns` / `add interactions` / `add charts` |
 | `-y, --yes` | Skip confirmation prompts |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
@@ -185,6 +186,17 @@ npx @esuiss/ui add interactions --all
 ```
 
 The components an interaction uses are added with it.
+
+## Charts
+
+Charts are ready-made charts built on the `chart` component. They are optional extras, so they are not added by `init` or `add --all`; add them by name, or all at once:
+
+```bash
+npx @esuiss/ui add charts <name>
+npx @esuiss/ui add charts --all
+```
+
+The `chart` component and anything else a chart uses are added with it.
 
 ## Troubleshooting
 
