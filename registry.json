@@ -2747,6 +2747,49 @@
       ]
     },
     {
+      "name": "verify-code",
+      "type": "block",
+      "title": "Verify Code",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "input-otp"
+      ],
+      "files": [
+        "components/blocks/verify-code.tsx"
+      ]
+    },
+    {
+      "name": "verify-device",
+      "type": "block",
+      "title": "Verify Device",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "input-otp",
+        "spinner"
+      ],
+      "files": [
+        "components/blocks/verify-device.tsx"
+      ]
+    },
+    {
+      "name": "verify-email",
+      "type": "block",
+      "title": "Verify Email",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/blocks/verify-email.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
