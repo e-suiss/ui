@@ -1245,6 +1245,22 @@
       ]
     },
     {
+      "name": "otp-autofill",
+      "type": "interaction",
+      "title": "Otp Autofill",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "input-otp",
+        "use-mobile"
+      ],
+      "files": [
+        "components/interactions/otp-autofill.tsx"
+      ]
+    },
+    {
       "name": "preview-menu",
       "type": "interaction",
       "title": "Preview Menu",
