@@ -7,6 +7,7 @@
         "components/patterns/*.tsx",
         "components/interactions/*.tsx",
         "components/charts/*.tsx",
+        "components/blocks/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
         "packages/cli/index.mjs"

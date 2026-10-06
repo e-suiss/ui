@@ -18,12 +18,14 @@ Usage:
   npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-picker
   npx ${name} add interactions <name...>   add interactions, e.g. add interactions swipe-actions
   npx ${name} add charts <chart...>        add charts, e.g. add charts <name>
+  npx ${name} add blocks <block...>        add blocks, e.g. add blocks <name>
 
 Options:
   -o, --overwrite  replace local files that differ from the registry
   --diff           show how local files differ from the registry
-  -a, --all        add every component, or every pattern, interaction or
-                   chart after "patterns", "interactions" or "charts"
+  -a, --all        add every component, or every pattern, interaction,
+                   chart or block after "patterns", "interactions",
+                   "charts" or "blocks"
   -y, --yes        skip confirmation prompts
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
@@ -35,6 +37,7 @@ const SUBCOMMANDS = {
   patterns: "pattern",
   interactions: "interaction",
   charts: "chart",
+  blocks: "block",
 }
 
 function parseArgs(args) {

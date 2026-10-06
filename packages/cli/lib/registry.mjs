@@ -29,6 +29,7 @@ export const SCOPES = {
     example: "<name>",
   },
   chart: { kind: "chart", command: "add charts", example: "<name>" },
+  block: { kind: "block", command: "add blocks", example: "<name>" },
 }
 
 export function scopeOf(item) {
