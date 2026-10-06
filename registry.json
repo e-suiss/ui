@@ -2699,6 +2699,59 @@
       ]
     },
     {
+      "name": "settings-account",
+      "type": "block",
+      "title": "Settings Account",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button",
+        "input",
+        "switch"
+      ],
+      "files": [
+        "components/blocks/settings-account.tsx"
+      ]
+    },
+    {
+      "name": "settings-device",
+      "type": "block",
+      "title": "Settings Device",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "input-group",
+        "item",
+        "switch"
+      ],
+      "files": [
+        "components/blocks/settings-device.tsx"
+      ]
+    },
+    {
+      "name": "settings-notifications",
+      "type": "block",
+      "title": "Settings Notifications",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "item",
+        "select",
+        "switch",
+        "toggle",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/settings-notifications.tsx"
+      ]
+    },
+    {
       "name": "signup-form",
       "type": "block",
       "title": "Signup Form",
