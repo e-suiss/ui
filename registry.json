@@ -2151,6 +2151,151 @@
       ]
     },
     {
+      "name": "radial-chart-batteries",
+      "type": "chart",
+      "title": "Radial Chart Batteries",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-batteries.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-default",
+      "type": "chart",
+      "title": "Radial Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-gauge",
+      "type": "chart",
+      "title": "Radial Chart Gauge",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-gauge.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-interactive",
+      "type": "chart",
+      "title": "Radial Chart Interactive",
+      "dependencies": [],
+      "requires": [
+        "card",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/radial-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-label",
+      "type": "chart",
+      "title": "Radial Chart Label",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-label.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-progress",
+      "type": "chart",
+      "title": "Radial Chart Progress",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-progress.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-rings",
+      "type": "chart",
+      "title": "Radial Chart Rings",
+      "dependencies": [],
+      "requires": [
+        "card"
+      ],
+      "files": [
+        "components/charts/radial-chart-rings.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-stacked",
+      "type": "chart",
+      "title": "Radial Chart Stacked",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-stacked.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-text",
+      "type": "chart",
+      "title": "Radial Chart Text",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-text.tsx"
+      ]
+    },
+    {
+      "name": "radial-chart-tinted",
+      "type": "chart",
+      "title": "Radial Chart Tinted",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-tinted.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
