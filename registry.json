@@ -1299,6 +1299,20 @@
       ]
     },
     {
+      "name": "stepper",
+      "type": "interaction",
+      "title": "Stepper",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/stepper.tsx"
+      ]
+    },
+    {
       "name": "swipe-actions",
       "type": "interaction",
       "title": "Swipe Actions",
