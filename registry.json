@@ -2659,6 +2659,60 @@
       ]
     },
     {
+      "name": "inbox-categories",
+      "type": "block",
+      "title": "Inbox Categories",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "button",
+        "split-view",
+        "textarea",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/inbox-categories.tsx"
+      ]
+    },
+    {
+      "name": "inbox-mail",
+      "type": "block",
+      "title": "Inbox Mail",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "button",
+        "input-group",
+        "split-view",
+        "textarea"
+      ],
+      "files": [
+        "components/blocks/inbox-mail.tsx"
+      ]
+    },
+    {
+      "name": "inbox-support",
+      "type": "block",
+      "title": "Inbox Support",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "button",
+        "split-view",
+        "textarea",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/inbox-support.tsx"
+      ]
+    },
+    {
       "name": "login-account",
       "type": "block",
       "title": "Login Account",
