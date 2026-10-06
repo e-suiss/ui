@@ -1245,6 +1245,19 @@
       ]
     },
     {
+      "name": "swipe-actions",
+      "type": "interaction",
+      "title": "Swipe Actions",
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/swipe-actions.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
