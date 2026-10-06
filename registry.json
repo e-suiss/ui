@@ -1367,6 +1367,20 @@
       ]
     },
     {
+      "name": "tip",
+      "type": "interaction",
+      "title": "Tip",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/tip.tsx"
+      ]
+    },
+    {
       "name": "undo-bar",
       "type": "interaction",
       "title": "Undo Bar",
