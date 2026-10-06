@@ -20,8 +20,18 @@ export async function fetchRegistry() {
   return JSON.parse(await fetchText("registry.json"))
 }
 
-export function isPattern(item) {
-  return item.type === "pattern"
+export const SCOPES = {
+  ui: { kind: "component", command: "add", example: "button" },
+  pattern: { kind: "pattern", command: "add patterns", example: "<name>" },
+  interaction: {
+    kind: "interaction",
+    command: "add interactions",
+    example: "<name>",
+  },
+}
+
+export function scopeOf(item) {
+  return item.type in SCOPES ? item.type : "ui"
 }
 
 export function resolveItems(registry, names) {

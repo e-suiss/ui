@@ -7,8 +7,9 @@ import { detectProject, findAliasRoot, install } from "./project.mjs"
 import {
   fetchRegistry,
   fetchText,
-  isPattern,
   resolveItems,
+  SCOPES,
+  scopeOf,
 } from "./registry.mjs"
 
 async function fetchFiles(items) {
@@ -98,11 +99,10 @@ async function showDiff(project, root, registry, names) {
   if (!changes) step("No differences from the registry.")
 }
 
-function selectNames(registry, names, { all, patterns }) {
-  const inScope = (item) => isPattern(item) === patterns
+function selectNames(registry, names, { all, scope = "ui" }) {
+  const inScope = (item) => scopeOf(item) === scope
   const scoped = registry.items.filter(inScope)
-  const kind = patterns ? "pattern" : "component"
-  const command = patterns ? "add patterns" : "add"
+  const { kind, command, example } = SCOPES[scope]
 
   if (all) {
     if (!scoped.length) throw new CliError(`No ${kind}s are available yet.`)
@@ -111,7 +111,7 @@ function selectNames(registry, names, { all, patterns }) {
 
   if (!names.length) {
     throw new CliError(
-      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${patterns ? "<name>" : "button"}`
+      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${example}`
     )
   }
 
@@ -120,9 +120,9 @@ function selectNames(registry, names, { all, patterns }) {
     const item = byName.get(name)
     if (item && inScope(item)) continue
     if (item) {
-      const other = patterns ? "add" : "add patterns"
+      const other = SCOPES[scopeOf(item)]
       throw new CliError(
-        `"${name}" is ${patterns ? "a component" : "a pattern"}. Run npx @esuiss/ui ${other} ${name}`
+        `"${name}" is ${other.kind === "interaction" ? "an" : "a"} ${other.kind}. Run npx @esuiss/ui ${other.command} ${name}`
       )
     }
     throw new CliError(

@@ -7,11 +7,12 @@ const OUTPUT = path.join(ROOT, "registry.json")
 const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
 const LOCAL_IMPORT =
-  /^@\/(components\/ui|components\/patterns|hooks)\/([\w-]+)$/
+  /^@\/(components\/ui|components\/patterns|components\/interactions|hooks)\/([\w-]+)$/
 
 const sources = [
   { dir: "components/ui", type: "ui" },
   { dir: "components/patterns", type: "pattern" },
+  { dir: "components/interactions", type: "interaction" },
   { dir: "hooks", type: "hook" },
 ]
 

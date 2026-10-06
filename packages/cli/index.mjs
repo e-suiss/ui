@@ -15,18 +15,25 @@ const usage = `${name} ${version}
 Usage:
   npx ${name} init [options]              set up Tailwind, the theme, and the button
   npx ${name} add <component...> [options] add components, e.g. add button sidebar
-  npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-time-picker
+  npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-picker
+  npx ${name} add interactions <name...>   add interactions, e.g. add interactions swipe-actions
 
 Options:
   -o, --overwrite  replace local files that differ from the registry
   --diff           show how local files differ from the registry
-  -a, --all        add every component, or every pattern after "patterns"
+  -a, --all        add every component, or every pattern or interaction
+                   after "patterns" or "interactions"
   -y, --yes        skip confirmation prompts
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
   -v, --version    show the version
 
 Supports Next.js and React (Vite) projects with TypeScript and Tailwind CSS v4.`
+
+const SUBCOMMANDS = {
+  patterns: "pattern",
+  interactions: "interaction",
+}
 
 function parseArgs(args) {
   const options = {
@@ -80,9 +87,11 @@ async function main() {
       await init(parseArgs(args).options)
       break
     case "add": {
-      const patterns = args[0] === "patterns"
-      const { options, names } = parseArgs(patterns ? args.slice(1) : args)
-      await add(names, { ...options, patterns })
+      const scope = SUBCOMMANDS[args[0]] ?? "ui"
+      const { options, names } = parseArgs(
+        scope === "ui" ? args : args.slice(1)
+      )
+      await add(names, { ...options, scope })
       break
     }
     case "-v":
