@@ -47,12 +47,12 @@ function Panel({
   onOpenChange,
   floating,
   children,
-}: {
-  open?: boolean
-  defaultOpen?: boolean
+}: Pick<
+  React.ComponentProps<typeof Sheet>,
+  "open" | "defaultOpen" | "children"
+> & {
   onOpenChange?: (open: boolean) => void
   floating?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const rootProps = {
@@ -78,12 +78,11 @@ function Panel({
   )
 }
 
-function PanelTrigger(props: {
-  render?: React.ReactElement
-  className?: string
-  disabled?: boolean
-  children?: React.ReactNode
-}) {
+function PanelTrigger(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = usePanel()
   const Trigger = isMobile ? DrawerTrigger : SheetTrigger
 
@@ -94,14 +93,11 @@ function PanelContent({
   side = "right",
   showCloseButton = true,
   closeLabel,
-  className,
-  children,
-}: {
+  ...props
+}: React.HTMLAttributes<HTMLElement> & {
   side?: "top" | "right" | "bottom" | "left"
   showCloseButton?: boolean
   closeLabel?: string
-  className?: string
-  children?: React.ReactNode
 }) {
   const { isMobile } = usePanel()
 
@@ -111,10 +107,8 @@ function PanelContent({
         data-slot="panel-content"
         showCloseButton={showCloseButton}
         closeLabel={closeLabel}
-        className={className}
-      >
-        {children}
-      </DrawerContent>
+        {...props}
+      />
     )
   }
 
@@ -124,10 +118,8 @@ function PanelContent({
       side={side}
       showCloseButton={showCloseButton}
       closeLabel={closeLabel}
-      className={className}
-    >
-      {children}
-    </SheetContent>
+      {...props}
+    />
   )
 }
 
@@ -138,38 +130,18 @@ function PanelHeader(props: React.ComponentProps<"div">) {
   return <Header data-slot="panel-header" {...props} />
 }
 
-function PanelTitle({
-  className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+function PanelTitle(props: React.HTMLAttributes<HTMLHeadingElement>) {
   const { isMobile } = usePanel()
   const Title = isMobile ? DrawerTitle : SheetTitle
 
-  return (
-    <Title data-slot="panel-title" className={className}>
-      {children}
-    </Title>
-  )
+  return <Title data-slot="panel-title" {...props} />
 }
 
-function PanelDescription({
-  className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+function PanelDescription(props: React.HTMLAttributes<HTMLParagraphElement>) {
   const { isMobile } = usePanel()
   const Description = isMobile ? DrawerDescription : SheetDescription
 
-  return (
-    <Description data-slot="panel-description" className={className}>
-      {children}
-    </Description>
-  )
+  return <Description data-slot="panel-description" {...props} />
 }
 
 function PanelBody({ className, ...props }: React.ComponentProps<"div">) {
@@ -191,11 +163,11 @@ function PanelFooter(props: React.ComponentProps<"div">) {
   return <Footer data-slot="panel-footer" {...props} />
 }
 
-function PanelClose(props: {
-  render?: React.ReactElement
-  className?: string
-  children?: React.ReactNode
-}) {
+function PanelClose(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = usePanel()
   const Close = isMobile ? DrawerClose : SheetClose
 

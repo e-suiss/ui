@@ -45,12 +45,12 @@ function Flyout({
   onOpenChange,
   floating,
   children,
-}: {
-  open?: boolean
-  defaultOpen?: boolean
+}: Pick<
+  React.ComponentProps<typeof Popover>,
+  "open" | "defaultOpen" | "children"
+> & {
   onOpenChange?: (open: boolean) => void
   floating?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const rootProps = {
@@ -76,12 +76,11 @@ function Flyout({
   )
 }
 
-function FlyoutTrigger(props: {
-  render?: React.ReactElement
-  className?: string
-  disabled?: boolean
-  children?: React.ReactNode
-}) {
+function FlyoutTrigger(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = useFlyout()
   const Trigger = isMobile ? DrawerTrigger : PopoverTrigger
 
@@ -90,17 +89,20 @@ function FlyoutTrigger(props: {
 
 function FlyoutContent({
   align,
+  alignOffset,
   side,
+  sideOffset,
   showCloseButton,
   closeLabel,
-  className,
-  children,
-}: Pick<React.ComponentProps<typeof PopoverContent>, "align" | "side"> & {
-  showCloseButton?: boolean
-  closeLabel?: string
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement> &
+  Pick<
+    React.ComponentProps<typeof PopoverContent>,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  > & {
+    showCloseButton?: boolean
+    closeLabel?: string
+  }) {
   const { isMobile } = useFlyout()
 
   if (isMobile) {
@@ -109,10 +111,8 @@ function FlyoutContent({
         data-slot="flyout-content"
         showCloseButton={showCloseButton}
         closeLabel={closeLabel}
-        className={className}
-      >
-        {children}
-      </DrawerContent>
+        {...props}
+      />
     )
   }
 
@@ -120,11 +120,11 @@ function FlyoutContent({
     <PopoverContent
       data-slot="flyout-content"
       align={align}
+      alignOffset={alignOffset}
       side={side}
-      className={className}
-    >
-      {children}
-    </PopoverContent>
+      sideOffset={sideOffset}
+      {...props}
+    />
   )
 }
 
@@ -135,38 +135,18 @@ function FlyoutHeader(props: React.ComponentProps<"div">) {
   return <Header data-slot="flyout-header" {...props} />
 }
 
-function FlyoutTitle({
-  className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+function FlyoutTitle(props: React.HTMLAttributes<HTMLHeadingElement>) {
   const { isMobile } = useFlyout()
   const Title = isMobile ? DrawerTitle : PopoverTitle
 
-  return (
-    <Title data-slot="flyout-title" className={className}>
-      {children}
-    </Title>
-  )
+  return <Title data-slot="flyout-title" {...props} />
 }
 
-function FlyoutDescription({
-  className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+function FlyoutDescription(props: React.HTMLAttributes<HTMLParagraphElement>) {
   const { isMobile } = useFlyout()
   const Description = isMobile ? DrawerDescription : PopoverDescription
 
-  return (
-    <Description data-slot="flyout-description" className={className}>
-      {children}
-    </Description>
-  )
+  return <Description data-slot="flyout-description" {...props} />
 }
 
 function FlyoutBody({ className, ...props }: React.ComponentProps<"div">) {
@@ -181,11 +161,11 @@ function FlyoutBody({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function FlyoutClose(props: {
-  render?: React.ReactElement
-  className?: string
-  children?: React.ReactNode
-}) {
+function FlyoutClose(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = useFlyout()
   const Close = isMobile ? DrawerClose : PopoverPrimitive.Close
 

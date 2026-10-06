@@ -68,9 +68,11 @@ function DatePicker({
   floating,
   showCloseButton = false,
   closeLabel,
+  id,
   className,
   "aria-invalid": ariaInvalid,
   "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
 }: {
   value?: Date | null
   defaultValue?: Date | null
@@ -84,9 +86,11 @@ function DatePicker({
   floating?: boolean
   showCloseButton?: boolean
   closeLabel?: string
+  id?: string
   className?: string
   "aria-invalid"?: boolean
   "aria-label"?: string
+  "aria-describedby"?: string
 }) {
   const isMobile = useIsMobile()
   const [uncontrolledValue, setUncontrolledValue] = React.useState(
@@ -125,7 +129,9 @@ function DatePicker({
       data-slot="date-picker-trigger"
       disabled={disabled}
       aria-invalid={ariaInvalid}
+      id={id}
       aria-label={ariaLabel}
+      aria-describedby={ariaDescribedBy}
       data-placeholder={value ? undefined : ""}
       className={cn(
         "flex h-11 w-full items-center gap-2 rounded-lg border border-transparent bg-control px-3 text-start text-base outline-none focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 data-placeholder:text-label-secondary dark:aria-invalid:bg-danger/10",

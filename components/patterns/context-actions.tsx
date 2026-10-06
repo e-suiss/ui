@@ -1,5 +1,6 @@
 "use client"
 
+import { mergeProps } from "@base-ui/react/merge-props"
 import { cn } from "cn"
 import * as React from "react"
 
@@ -50,10 +51,9 @@ function ContextActions({
   onOpenChange,
   dismissible = true,
   children,
-}: {
+}: Pick<React.ComponentProps<typeof ContextMenu>, "children"> & {
   onOpenChange?: (open: boolean) => void
   dismissible?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const [open, setOpenState] = React.useState(false)
@@ -91,11 +91,8 @@ function ContextActions({
 
 function ContextActionsTrigger({
   className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement>) {
   const { isMobile, setOpen } = useContextActions()
   const timerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const startRef = React.useRef<{ x: number; y: number } | null>(null)
@@ -107,9 +104,8 @@ function ContextActionsTrigger({
       <ContextMenuTrigger
         data-slot="context-actions-trigger"
         className={className}
-      >
-        {children}
-      </ContextMenuTrigger>
+        {...props}
+      />
     )
   }
 
@@ -120,6 +116,43 @@ function ContextActionsTrigger({
 
   return (
     <div
+      {...mergeProps<"div">(props, {
+        onKeyDown: (event) => {
+          if (
+            event.key === "ContextMenu" ||
+            (event.shiftKey && event.key === "F10")
+          ) {
+            event.preventDefault()
+            setOpen(true)
+          }
+        },
+        onContextMenu: (event) => {
+          event.preventDefault()
+          cancel()
+          setOpen(true)
+        },
+        onPointerDown: (event) => {
+          if (event.pointerType === "mouse") return
+          startRef.current = { x: event.clientX, y: event.clientY }
+          clearTimeout(timerRef.current)
+          timerRef.current = setTimeout(() => {
+            startRef.current = null
+            setOpen(true)
+          }, LONG_PRESS_DELAY)
+        },
+        onPointerMove: (event) => {
+          const start = startRef.current
+          if (!start) return
+          const moved = Math.hypot(
+            event.clientX - start.x,
+            event.clientY - start.y
+          )
+          if (moved > LONG_PRESS_TOLERANCE) cancel()
+        },
+        onPointerUp: cancel,
+        onPointerCancel: cancel,
+        onPointerLeave: cancel,
+      })}
       data-slot="context-actions-trigger"
       role="button"
       tabIndex={0}
@@ -128,44 +161,7 @@ function ContextActionsTrigger({
         "touch-manipulation outline-none select-none [-webkit-touch-callout:none] focus-visible:focus-ring",
         className
       )}
-      onKeyDown={(event) => {
-        if (
-          event.key === "ContextMenu" ||
-          (event.shiftKey && event.key === "F10")
-        ) {
-          event.preventDefault()
-          setOpen(true)
-        }
-      }}
-      onContextMenu={(event) => {
-        event.preventDefault()
-        cancel()
-        setOpen(true)
-      }}
-      onPointerDown={(event) => {
-        if (event.pointerType === "mouse") return
-        startRef.current = { x: event.clientX, y: event.clientY }
-        clearTimeout(timerRef.current)
-        timerRef.current = setTimeout(() => {
-          startRef.current = null
-          setOpen(true)
-        }, LONG_PRESS_DELAY)
-      }}
-      onPointerMove={(event) => {
-        const start = startRef.current
-        if (!start) return
-        const moved = Math.hypot(
-          event.clientX - start.x,
-          event.clientY - start.y
-        )
-        if (moved > LONG_PRESS_TOLERANCE) cancel()
-      }}
-      onPointerUp={cancel}
-      onPointerCancel={cancel}
-      onPointerLeave={cancel}
-    >
-      {children}
-    </div>
+    />
   )
 }
 
@@ -173,10 +169,9 @@ function ContextActionsContent({
   cancelLabel = "Cancel",
   className,
   children,
-}: {
+  ...props
+}: React.HTMLAttributes<HTMLElement> & {
   cancelLabel?: string
-  className?: string
-  children?: React.ReactNode
 }) {
   const { isMobile } = useContextActions()
 
@@ -185,6 +180,7 @@ function ContextActionsContent({
       <AlertSheetContent
         data-slot="context-actions-content"
         className={className}
+        {...props}
       >
         <AlertSheetGroup>{children}</AlertSheetGroup>
         <AlertSheetCancel>{cancelLabel}</AlertSheetCancel>
@@ -196,6 +192,7 @@ function ContextActionsContent({
     <ContextMenuContent
       data-slot="context-actions-content"
       className={className}
+      {...props}
     >
       {children}
     </ContextMenuContent>
@@ -205,23 +202,27 @@ function ContextActionsContent({
 function ContextActionsLabel({
   className,
   children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement>) {
   const { isMobile } = useContextActions()
 
   if (isMobile) {
     return (
       <AlertSheetHeader data-slot="context-actions-label">
-        <AlertSheetTitle className={className}>{children}</AlertSheetTitle>
+        <AlertSheetTitle className={className} {...props}>
+          {children}
+        </AlertSheetTitle>
       </AlertSheetHeader>
     )
   }
 
   return (
     <ContextMenuGroup>
-      <ContextMenuLabel data-slot="context-actions-label" className={className}>
+      <ContextMenuLabel
+        data-slot="context-actions-label"
+        className={className}
+        {...props}
+      >
         {children}
       </ContextMenuLabel>
     </ContextMenuGroup>
@@ -230,16 +231,11 @@ function ContextActionsLabel({
 
 function ContextActionsItem({
   variant,
-  className,
   disabled,
-  onClick,
-  children,
-}: {
+  ...props
+}: React.HTMLAttributes<HTMLElement> & {
   variant?: "default" | "destructive"
-  className?: string
   disabled?: boolean
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void
-  children?: React.ReactNode
 }) {
   const { isMobile } = useContextActions()
   const Item = isMobile ? AlertSheetAction : ContextMenuItem
@@ -248,25 +244,19 @@ function ContextActionsItem({
     <Item
       data-slot="context-actions-item"
       variant={variant}
-      className={className}
       disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </Item>
+      {...props}
+    />
   )
 }
 
-function ContextActionsSeparator({ className }: { className?: string }) {
+function ContextActionsSeparator(props: React.HTMLAttributes<HTMLElement>) {
   const { isMobile } = useContextActions()
 
   if (isMobile) return null
 
   return (
-    <ContextMenuSeparator
-      data-slot="context-actions-separator"
-      className={className}
-    />
+    <ContextMenuSeparator data-slot="context-actions-separator" {...props} />
   )
 }
 

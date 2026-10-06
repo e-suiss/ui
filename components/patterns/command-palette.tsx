@@ -49,13 +49,13 @@ function CommandPalette({
   hotkey = "k",
   floating,
   children,
-}: {
-  open?: boolean
-  defaultOpen?: boolean
+}: Pick<
+  React.ComponentProps<typeof Dialog>,
+  "open" | "defaultOpen" | "children"
+> & {
   onOpenChange?: (open: boolean) => void
   hotkey?: string | false
   floating?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
@@ -108,12 +108,11 @@ function CommandPalette({
   )
 }
 
-function CommandPaletteTrigger(props: {
-  render?: React.ReactElement
-  className?: string
-  disabled?: boolean
-  children?: React.ReactNode
-}) {
+function CommandPaletteTrigger(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = useCommandPalette()
   const Trigger = isMobile ? DrawerTrigger : DialogTrigger
 
@@ -127,13 +126,12 @@ function CommandPaletteContent({
   closeLabel,
   className,
   children,
-}: {
+  ...props
+}: React.ComponentProps<typeof Command> & {
   title?: string
   description?: string
   showCloseButton?: boolean
   closeLabel?: string
-  className?: string
-  children?: React.ReactNode
 }) {
   const { isMobile } = useCommandPalette()
 
@@ -157,6 +155,7 @@ function CommandPaletteContent({
               "**:data-[slot=command-input-wrapper]:pe-21",
             className
           )}
+          {...props}
         >
           {children}
         </Command>
@@ -165,20 +164,20 @@ function CommandPaletteContent({
   }
 
   return (
-    <>
+    <DialogContent
+      data-slot="command-palette-content"
+      showCloseButton={showCloseButton}
+      closeLabel={closeLabel}
+      className="top-1/3 translate-y-0 overflow-hidden rounded-2xl! p-0"
+    >
       <DialogHeader className="sr-only">
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
-      <DialogContent
-        data-slot="command-palette-content"
-        showCloseButton={showCloseButton}
-        closeLabel={closeLabel}
-        className="top-1/3 translate-y-0 overflow-hidden rounded-2xl! p-0"
-      >
-        <Command className={className}>{children}</Command>
-      </DialogContent>
-    </>
+      <Command className={className} {...props}>
+        {children}
+      </Command>
+    </DialogContent>
   )
 }
 

@@ -36,6 +36,7 @@ function SegmentPicker({
   className,
   children,
   "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
 }: {
   value?: string
   defaultValue?: string
@@ -49,6 +50,7 @@ function SegmentPicker({
   className?: string
   children?: React.ReactNode
   "aria-label"?: string
+  "aria-describedby"?: string
 }) {
   const isMobile = useIsMobile()
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
@@ -71,6 +73,7 @@ function SegmentPicker({
           disabled={disabled}
           className={className}
           aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
           value={value ?? ""}
           onChange={(event) => select(event.target.value)}
         >
@@ -89,6 +92,7 @@ function SegmentPicker({
             disabled={disabled}
             className={className}
             aria-label={ariaLabel}
+            aria-describedby={ariaDescribedBy}
             value={value === undefined ? [] : [value]}
             onValueChange={(next) => {
               const [selected] = next

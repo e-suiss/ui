@@ -986,6 +986,7 @@
       "type": "pattern",
       "title": "Context Actions",
       "dependencies": [
+        "@base-ui/react",
         "cn"
       ],
       "requires": [

@@ -33,12 +33,12 @@ function Preview({
   onOpenChange,
   floating = true,
   children,
-}: {
-  open?: boolean
-  defaultOpen?: boolean
+}: Pick<
+  React.ComponentProps<typeof HoverCard>,
+  "open" | "defaultOpen" | "children"
+> & {
   onOpenChange?: (open: boolean) => void
   floating?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const rootProps = {
@@ -67,11 +67,9 @@ function Preview({
 function PreviewTrigger({
   href,
   className,
-  children,
-}: {
+  ...props
+}: React.HTMLAttributes<HTMLElement> & {
   href?: string
-  className?: string
-  children?: React.ReactNode
 }) {
   const { isMobile } = usePreview()
 
@@ -83,9 +81,8 @@ function PreviewTrigger({
           "cursor-pointer text-link underline-offset-4 outline-none focus-visible:focus-ring",
           className
         )}
-      >
-        {children}
-      </DrawerTrigger>
+        {...props}
+      />
     )
   }
 
@@ -97,25 +94,29 @@ function PreviewTrigger({
         "text-link underline-offset-4 outline-none hover:underline focus-visible:focus-ring",
         className
       )}
-    >
-      {children}
-    </HoverCardTrigger>
+      {...props}
+    />
   )
 }
 
 function PreviewContent({
   align,
+  alignOffset,
   side,
+  sideOffset,
   showCloseButton,
   closeLabel,
   className,
   children,
-}: Pick<React.ComponentProps<typeof HoverCardContent>, "align" | "side"> & {
-  showCloseButton?: boolean
-  closeLabel?: string
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement> &
+  Pick<
+    React.ComponentProps<typeof HoverCardContent>,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  > & {
+    showCloseButton?: boolean
+    closeLabel?: string
+  }) {
   const { isMobile } = usePreview()
 
   if (isMobile) {
@@ -124,6 +125,7 @@ function PreviewContent({
         data-slot="preview-content"
         showCloseButton={showCloseButton}
         closeLabel={closeLabel}
+        {...props}
       >
         <div
           className={cn(
@@ -143,8 +145,11 @@ function PreviewContent({
     <HoverCardContent
       data-slot="preview-content"
       align={align}
+      alignOffset={alignOffset}
       side={side}
+      sideOffset={sideOffset}
       className={className}
+      {...props}
     >
       {children}
     </HoverCardContent>

@@ -76,6 +76,7 @@ function Picker({
   children,
   "aria-invalid": ariaInvalid,
   "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
 }: {
   value?: string
   defaultValue?: string
@@ -91,6 +92,7 @@ function Picker({
   children?: React.ReactNode
   "aria-invalid"?: boolean
   "aria-label"?: string
+  "aria-describedby"?: string
 }) {
   const isMobile = useIsMobile()
   const items = React.useMemo(
@@ -111,6 +113,7 @@ function Picker({
           className={className}
           aria-invalid={ariaInvalid}
           aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
           value={value}
           defaultValue={value === undefined ? (defaultValue ?? "") : undefined}
           onChange={(event) => onValueChange?.(event.target.value)}
@@ -141,6 +144,7 @@ function Picker({
             className={className}
             aria-invalid={ariaInvalid}
             aria-label={ariaLabel}
+            aria-describedby={ariaDescribedBy}
           >
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>

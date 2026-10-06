@@ -47,12 +47,12 @@ function ActionMenu({
   onOpenChange,
   dismissible = true,
   children,
-}: {
-  open?: boolean
-  defaultOpen?: boolean
+}: Pick<
+  React.ComponentProps<typeof DropdownMenu>,
+  "open" | "defaultOpen" | "children"
+> & {
   onOpenChange?: (open: boolean) => void
   dismissible?: boolean
-  children?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const rootProps = {
@@ -77,12 +77,11 @@ function ActionMenu({
   )
 }
 
-function ActionMenuTrigger(props: {
-  render?: React.ReactElement
-  className?: string
-  disabled?: boolean
-  children?: React.ReactNode
-}) {
+function ActionMenuTrigger(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    render?: React.ReactElement
+  }
+) {
   const { isMobile } = useActionMenu()
   const Trigger = isMobile ? AlertSheetTrigger : DropdownMenuTrigger
 
@@ -92,19 +91,28 @@ function ActionMenuTrigger(props: {
 function ActionMenuContent({
   cancelLabel = "Cancel",
   align,
+  alignOffset,
   side,
+  sideOffset,
   className,
   children,
-}: Pick<React.ComponentProps<typeof DropdownMenuContent>, "align" | "side"> & {
-  cancelLabel?: string
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement> &
+  Pick<
+    React.ComponentProps<typeof DropdownMenuContent>,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  > & {
+    cancelLabel?: string
+  }) {
   const { isMobile } = useActionMenu()
 
   if (isMobile) {
     return (
-      <AlertSheetContent data-slot="action-menu-content" className={className}>
+      <AlertSheetContent
+        data-slot="action-menu-content"
+        className={className}
+        {...props}
+      >
         <AlertSheetGroup>{children}</AlertSheetGroup>
         <AlertSheetCancel>{cancelLabel}</AlertSheetCancel>
       </AlertSheetContent>
@@ -115,8 +123,11 @@ function ActionMenuContent({
     <DropdownMenuContent
       data-slot="action-menu-content"
       align={align}
+      alignOffset={alignOffset}
       side={side}
+      sideOffset={sideOffset}
       className={className}
+      {...props}
     >
       {children}
     </DropdownMenuContent>
@@ -126,23 +137,27 @@ function ActionMenuContent({
 function ActionMenuLabel({
   className,
   children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLElement>) {
   const { isMobile } = useActionMenu()
 
   if (isMobile) {
     return (
       <AlertSheetHeader data-slot="action-menu-label">
-        <AlertSheetTitle className={className}>{children}</AlertSheetTitle>
+        <AlertSheetTitle className={className} {...props}>
+          {children}
+        </AlertSheetTitle>
       </AlertSheetHeader>
     )
   }
 
   return (
     <DropdownMenuGroup>
-      <DropdownMenuLabel data-slot="action-menu-label" className={className}>
+      <DropdownMenuLabel
+        data-slot="action-menu-label"
+        className={className}
+        {...props}
+      >
         {children}
       </DropdownMenuLabel>
     </DropdownMenuGroup>
@@ -151,16 +166,11 @@ function ActionMenuLabel({
 
 function ActionMenuItem({
   variant,
-  className,
   disabled,
-  onClick,
-  children,
-}: {
+  ...props
+}: React.HTMLAttributes<HTMLElement> & {
   variant?: "default" | "destructive"
-  className?: string
   disabled?: boolean
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void
-  children?: React.ReactNode
 }) {
   const { isMobile } = useActionMenu()
   const Item = isMobile ? AlertSheetAction : DropdownMenuItem
@@ -169,26 +179,18 @@ function ActionMenuItem({
     <Item
       data-slot="action-menu-item"
       variant={variant}
-      className={className}
       disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </Item>
+      {...props}
+    />
   )
 }
 
-function ActionMenuSeparator({ className }: { className?: string }) {
+function ActionMenuSeparator(props: React.HTMLAttributes<HTMLElement>) {
   const { isMobile } = useActionMenu()
 
   if (isMobile) return null
 
-  return (
-    <DropdownMenuSeparator
-      data-slot="action-menu-separator"
-      className={className}
-    />
-  )
+  return <DropdownMenuSeparator data-slot="action-menu-separator" {...props} />
 }
 
 export {
