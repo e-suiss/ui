@@ -2487,6 +2487,46 @@
       ]
     },
     {
+      "name": "footer-compact",
+      "type": "block",
+      "title": "Footer Compact",
+      "dependencies": [],
+      "requires": [
+        "accordion",
+        "breadcrumb"
+      ],
+      "files": [
+        "components/blocks/footer-compact.tsx"
+      ]
+    },
+    {
+      "name": "footer-directory",
+      "type": "block",
+      "title": "Footer Directory",
+      "dependencies": [],
+      "requires": [
+        "accordion",
+        "breadcrumb"
+      ],
+      "files": [
+        "components/blocks/footer-directory.tsx"
+      ]
+    },
+    {
+      "name": "footer-services",
+      "type": "block",
+      "title": "Footer Services",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "input-group"
+      ],
+      "files": [
+        "components/blocks/footer-services.tsx"
+      ]
+    },
+    {
       "name": "grid-accessories",
       "type": "block",
       "title": "Grid Accessories",
