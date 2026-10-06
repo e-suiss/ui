@@ -45,12 +45,12 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-col gap-3">
-      <div className="grid grid-cols-3 gap-0.5 overflow-hidden rounded-2xl">
+      <div className="grid grid-cols-3 gap-2">
         {photos.map((tone, index) => {
           const label = `Photo ${index + 1}`
           return (
             <PreviewMenu key={tone}>
-              <PreviewMenuTrigger className="aspect-square">
+              <PreviewMenuTrigger className="aspect-square overflow-hidden rounded-2xl">
                 <Photo tone={tone} label={label} />
               </PreviewMenuTrigger>
               <PreviewMenuContent>

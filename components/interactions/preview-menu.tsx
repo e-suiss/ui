@@ -10,10 +10,13 @@ type PreviewMenuFrame = {
   width: number
   height: number
   from: string
+  clip: string
+  source: { width: number; height: number; scale: number }
 }
 
 type PreviewMenuContextProps = {
   open: boolean
+  lifted: boolean
   frame: PreviewMenuFrame | null
   triggerRef: React.RefObject<HTMLElement | null>
   contentRef: React.RefObject<React.ReactNode>
@@ -36,6 +39,17 @@ function usePreviewMenu() {
 const EDGE = 16
 const MENU_SPACE = 260
 const MAX_WIDTH = 360
+
+function cornerRadius(trigger: HTMLElement) {
+  for (const element of [trigger, trigger.firstElementChild]) {
+    if (!element) continue
+    const radius = Number.parseFloat(
+      getComputedStyle(element).borderTopLeftRadius
+    )
+    if (radius > 0) return radius
+  }
+  return 0
+}
 
 function measureFrame(
   trigger: HTMLElement,
@@ -60,16 +74,20 @@ function measureFrame(
     Math.max(centered, EDGE),
     Math.max(EDGE, viewportHeight - MENU_SPACE - height)
   )
-  const scaleX = rect.width / width
-  const scaleY = rect.height / height
-  const dx = rect.left - left
-  const dy = rect.top - top
+  const scale = Math.max(rect.width / width, rect.height / height)
+  const dx = rect.left + rect.width / 2 - (left + (width * scale) / 2)
+  const dy = rect.top + rect.height / 2 - (top + (height * scale) / 2)
+  const insetX = (width - rect.width / scale) / 2
+  const insetY = (height - rect.height / scale) / 2
+  const radius = cornerRadius(trigger) / scale
   return {
     top,
     left,
     width,
     height,
-    from: `translate(${dx}px, ${dy}px) scale(${scaleX}, ${scaleY})`,
+    from: `translate(${dx}px, ${dy}px) scale(${scale})`,
+    clip: `inset(${insetY}px ${insetX}px round ${radius}px)`,
+    source: { width: rect.width, height: rect.height, scale: 1 / scale },
   }
 }
 
@@ -92,7 +110,10 @@ function PreviewMenu({
   const triggerRef = React.useRef<HTMLElement | null>(null)
   const contentRef = React.useRef<React.ReactNode>(null)
 
+  const [lifted, setLifted] = React.useState(open)
+
   const setOpen = (next: boolean) => {
+    if (next) setLifted(true)
     if (next && triggerRef.current)
       setFrame(measureFrame(triggerRef.current, aspectRatio))
     if (openProp === undefined) setUncontrolledOpen(next)
@@ -107,11 +128,12 @@ function PreviewMenu({
 
   return (
     <PreviewMenuContext.Provider
-      value={{ open, frame, triggerRef, contentRef }}
+      value={{ open, lifted, frame, triggerRef, contentRef }}
     >
       <ContextMenuPrimitive.Root
         open={open}
         onOpenChange={(next) => setOpen(next)}
+        onOpenChangeComplete={(next) => setLifted(next)}
       >
         {children}
       </ContextMenuPrimitive.Root>
@@ -124,7 +146,7 @@ function PreviewMenuTrigger({
   children,
   ...props
 }: ContextMenuPrimitive.Trigger.Props) {
-  const { open, triggerRef, contentRef } = usePreviewMenu()
+  const { open, lifted, triggerRef, contentRef } = usePreviewMenu()
   contentRef.current = children as React.ReactNode
 
   return (
@@ -132,10 +154,11 @@ function PreviewMenuTrigger({
       ref={triggerRef as React.Ref<HTMLDivElement>}
       data-slot="preview-menu-trigger"
       className={cn(
-        "touch-manipulation select-none [-webkit-touch-callout:none] data-popup-open:invisible",
+        "touch-manipulation select-none [-webkit-touch-callout:none] data-lifted:invisible",
         className
       )}
       data-previewing={open ? "" : undefined}
+      data-lifted={open || lifted ? "" : undefined}
       {...props}
     >
       {children}
@@ -153,8 +176,31 @@ function PreviewMenuContent({
   preview?: React.ReactNode
   previewClassName?: string
 }) {
-  const { open, frame, contentRef } = usePreviewMenu()
+  const { open, frame, contentRef, triggerRef } = usePreviewMenu()
   const previewRef = React.useRef<HTMLDivElement>(null)
+  const custom = preview !== undefined
+
+  const attachSnapshot = React.useCallback(
+    (holder: HTMLDivElement | null) => {
+      const trigger = triggerRef.current
+      if (!holder || !trigger) return
+      const snapshot = trigger.cloneNode(true) as HTMLElement
+      for (const name of [
+        "data-lifted",
+        "data-previewing",
+        "data-popup-open",
+        "data-pressed",
+        "data-slot",
+        "id",
+      ])
+        snapshot.removeAttribute(name)
+      snapshot.style.margin = "0"
+      snapshot.style.width = "100%"
+      snapshot.style.height = "100%"
+      holder.replaceChildren(snapshot)
+    },
+    [triggerRef]
+  )
 
   return (
     <ContextMenuPrimitive.Portal>
@@ -175,14 +221,31 @@ function PreviewMenuContent({
               width: frame.width,
               height: frame.height,
               "--preview-menu-from": frame.from,
+              "--preview-menu-clip": frame.clip,
             } as React.CSSProperties
           }
-          className={cn(
-            "pointer-events-none fixed z-50 origin-top-left overflow-hidden rounded-2xl shadow-2xl transition-[transform,border-radius] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] starting:transform-(--preview-menu-from) starting:rounded-lg data-closed:transform-(--preview-menu-from) data-closed:rounded-lg data-closed:shadow-none data-closed:duration-300 motion-reduce:transition-none [&>*]:size-full",
-            previewClassName
-          )}
+          className="pointer-events-none fixed z-50 origin-top-left drop-shadow-2xl transition-[transform,filter] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] starting:transform-(--preview-menu-from) starting:drop-shadow-none data-closed:transform-(--preview-menu-from) data-closed:drop-shadow-none data-closed:duration-300 motion-reduce:transition-none"
         >
-          {preview ?? contentRef.current}
+          <div
+            className={cn(
+              "relative size-full overflow-hidden transition-[clip-path] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] [clip-path:inset(0_round_var(--radius-2xl))] starting:[clip-path:var(--preview-menu-clip)] in-data-closed:duration-300 in-data-closed:[clip-path:var(--preview-menu-clip)] motion-reduce:transition-none *:size-full",
+              previewClassName
+            )}
+          >
+            {preview ?? contentRef.current}
+          </div>
+          {custom && (
+            <div
+              ref={attachSnapshot}
+              inert
+              style={{
+                width: frame.source.width,
+                height: frame.source.height,
+                transform: `translate(-50%, -50%) scale(${frame.source.scale})`,
+              }}
+              className="absolute top-1/2 left-1/2 opacity-0 transition-opacity duration-150 ease-out starting:opacity-100 in-data-closed:opacity-100 in-data-closed:delay-100 in-data-closed:duration-200 motion-reduce:transition-none"
+            />
+          )}
         </div>
       )}
       <ContextMenuPrimitive.Positioner
