@@ -25,7 +25,7 @@ Options:
   --diff           show how local files differ from the registry
   -a, --all        add every component, or every pattern, interaction,
                    chart or block after "patterns", "interactions",
-                   "charts" or "blocks"
+                   "charts" or "blocks"; theme is only added by name
   -y, --yes        skip confirmation prompts
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help

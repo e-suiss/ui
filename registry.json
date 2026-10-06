@@ -864,6 +864,21 @@
       ]
     },
     {
+      "name": "theme",
+      "type": "ui",
+      "title": "Theme",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/ui/theme.tsx"
+      ],
+      "optIn": true
+    },
+    {
       "name": "toast",
       "type": "ui",
       "title": "Toast",

@@ -6,6 +6,7 @@ const ROOT = process.cwd()
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
+const OPT_IN = new Set(["theme"])
 const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks)\/([\w-]+)$/
 
@@ -64,6 +65,7 @@ async function buildItem(dir, type, file) {
     dependencies: [...dependencies].sort(),
     requires: [...requires].sort(),
     files: [filePath],
+    ...(OPT_IN.has(name) && { optIn: true }),
   }
 }
 

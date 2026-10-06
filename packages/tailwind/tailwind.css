@@ -341,6 +341,78 @@
   }
 }
 
+@keyframes theme-reveal {
+  from {
+    clip-path: var(--theme-transition-from);
+  }
+  to {
+    clip-path: var(--theme-transition-to);
+  }
+}
+
+@keyframes theme-reveal-blur {
+  from {
+    clip-path: var(--theme-transition-from);
+    filter: blur(8px);
+  }
+  50% {
+    filter: blur(4px);
+  }
+  to {
+    clip-path: var(--theme-transition-to);
+    filter: blur(0);
+  }
+}
+
+@keyframes theme-mask {
+  to {
+    mask-size: 350vmax;
+  }
+}
+
+@keyframes theme-mask-blur {
+  from {
+    filter: blur(8px);
+  }
+  50% {
+    filter: blur(4px);
+  }
+  to {
+    mask-size: 350vmax;
+    filter: blur(0);
+  }
+}
+
+html[data-theme-transition]::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+html[data-theme-transition]::view-transition-new(root) {
+  animation: theme-reveal var(--theme-transition-duration, 0.7s)
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-theme-transition][data-theme-transition-blur]::view-transition-new(
+  root
+) {
+  animation-name: theme-reveal-blur;
+}
+
+html[data-theme-transition="circle-blur"]::view-transition-new(root) {
+  mask:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="b"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="20" cy="20" r="18" fill="white" filter="url(%23b)"/></svg>')
+    var(--theme-transition-at, center) / 0 no-repeat;
+  animation: theme-mask var(--theme-transition-duration, 1s)
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-theme-transition="circle-blur"][data-theme-transition-blur]::view-transition-new(
+  root
+) {
+  animation-name: theme-mask-blur;
+}
+
 @layer base {
   * {
     @apply border-separator outline-focus/50;

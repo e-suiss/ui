@@ -77,7 +77,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | --- | --- |
 | `-o, --overwrite` | Replace local files that differ from the registry |
 | `--diff` | Show how your local files differ from the registry |
-| `-a, --all` | Add every component, or every pattern, interaction, chart or block with `add patterns` / `add interactions` / `add charts` / `add blocks` |
+| `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns` / `add interactions` / `add charts` / `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
@@ -142,27 +142,58 @@ Colors are named by role, not by component:
 
 ## Dark mode
 
-Dark mode is enabled by the `dark` class on `<html>`. With Next.js, [next-themes](https://github.com/pacocoursey/next-themes) works out of the box:
+Dark mode is enabled by the `dark` class on `<html>`; every token above switches with it. If you want a theme switch, add the theme component. It is not added by `add --all`, so projects that stay in one appearance never get it:
+
+```bash
+npx @esuiss/ui add theme
+```
+
+It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
+
+With Next.js:
 
 ```tsx
-import { ThemeProvider } from "next-themes"
+import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )
 }
 ```
 
+With Vite, wrap your app in `ThemeProvider` and put the same script in `index.html`, before your app script:
+
+```html
+<script>
+  (()=>{try{var t=localStorage.getItem("theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()
+</script>
+```
+
+`ThemeToggle` switches with an animated reveal built on the View Transitions API. Choose the `effect` (`circle`, `rectangle`, `polygon` or `circle-blur`), where it starts with `origin`, and add `blur` for a softer edge:
+
+```tsx
+<ThemeToggle effect="circle" origin="top-right" />
+<ThemeToggle effect="rectangle" origin="bottom-up" blur />
+```
+
+Use `setTheme` from `useTheme` to build your own control. Pass a transition as the second argument to animate it, or leave it out to switch instantly. Browsers without View Transitions, and visitors who prefer reduced motion, switch instantly either way.
+
+```tsx
+const { theme, setTheme } = useTheme()
+setTheme("system", { effect: "circle", origin: "top-center" })
+```
+
 ## Components
 
-accordion, alert, alert-dialog, alert-sheet, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, fullscreen-menu, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, tab-bar, table, tabs, textarea, toast, toggle, toggle-group, tooltip, wheel-picker
+accordion, alert, alert-dialog, alert-sheet, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, fullscreen-menu, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, tab-bar, table, tabs, textarea, theme, toast, toggle, toggle-group, tooltip, wheel-picker
 
 Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire
 

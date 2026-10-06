@@ -127,6 +127,16 @@
           }
         }
       }
+    },
+    {
+      "includes": ["components/ui/theme.tsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
     }
   ]
 }

@@ -106,7 +106,7 @@ function selectNames(registry, names, { all, scope = "ui" }) {
 
   if (all) {
     if (!scoped.length) throw new CliError(`No ${kind}s are available yet.`)
-    return scoped.map((item) => item.name)
+    return scoped.filter((item) => !item.optIn).map((item) => item.name)
   }
 
   if (!names.length) {
