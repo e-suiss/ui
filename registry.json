@@ -1196,6 +1196,23 @@
       ]
     },
     {
+      "name": "trail",
+      "type": "pattern",
+      "title": "Trail",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "breadcrumb",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/trail.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
