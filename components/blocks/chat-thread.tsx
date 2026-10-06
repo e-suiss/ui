@@ -72,7 +72,7 @@ export function ChatThread() {
 
   return (
     <section className="flex min-h-170 flex-col items-center justify-center gap-12 bg-surface-secondary sm:p-5 md:flex-row">
-      <div className="relative flex h-170 w-full flex-col overflow-hidden bg-surface sm:h-160 sm:w-82.5 sm:shrink-0 sm:rounded-[3rem] sm:border-[10px] sm:border-black sm:shadow-[0_0_0_1.5px_var(--color-label-tertiary),0_30px_60px_-20px_rgb(0_0_0/0.45)]">
+      <div className="relative flex h-170 w-full flex-col overflow-hidden bg-surface sm:h-160 sm:w-82.5 sm:shrink-0 sm:rounded-[3rem] sm:border-10 sm:border-black sm:shadow-[0_0_0_1.5px_var(--color-label-tertiary),0_30px_60px_-20px_rgb(0_0_0/0.45)]">
         <span
           aria-hidden
           className="absolute top-2.5 left-1/2 z-10 hidden h-7 w-24 -translate-x-1/2 rounded-full bg-black sm:block"

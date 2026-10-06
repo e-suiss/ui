@@ -356,7 +356,7 @@ function SwipeAction({
       data-full-swipe={fullSwipe ? "" : undefined}
       className={cn(
         swipeActionVariants({ variant }),
-        "group-data-full/swipe-actions:not-data-full-swipe:min-w-0 group-data-full/swipe-actions:not-data-full-swipe:grow-0 group-data-full/swipe-actions:not-data-full-swipe:px-0 group-data-full/swipe-actions:not-data-full-swipe:opacity-0 group-data-full/swipe-actions:data-full-swipe:grow-[100]",
+        "group-data-full/swipe-actions:not-data-full-swipe:min-w-0 group-data-full/swipe-actions:not-data-full-swipe:grow-0 group-data-full/swipe-actions:not-data-full-swipe:px-0 group-data-full/swipe-actions:not-data-full-swipe:opacity-0 group-data-full/swipe-actions:data-full-swipe:grow-100",
         className
       )}
       onClick={(event) => {
