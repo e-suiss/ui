@@ -2863,6 +2863,56 @@
       ]
     },
     {
+      "name": "price-bundle",
+      "type": "block",
+      "title": "Price Bundle",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "button",
+        "label",
+        "radio-group"
+      ],
+      "files": [
+        "components/blocks/price-bundle.tsx"
+      ]
+    },
+    {
+      "name": "price-care",
+      "type": "block",
+      "title": "Price Care",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "label",
+        "radio-group",
+        "switch",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/price-care.tsx"
+      ]
+    },
+    {
+      "name": "price-storage",
+      "type": "block",
+      "title": "Price Storage",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "label",
+        "radio-group",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/price-storage.tsx"
+      ]
+    },
+    {
       "name": "settings-account",
       "type": "block",
       "title": "Settings Account",
