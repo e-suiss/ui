@@ -1395,6 +1395,157 @@
       ]
     },
     {
+      "name": "area-chart-axes",
+      "type": "chart",
+      "title": "Area Chart Axes",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-axes.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-default",
+      "type": "chart",
+      "title": "Area Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-gradient",
+      "type": "chart",
+      "title": "Area Chart Gradient",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-gradient.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-interactive",
+      "type": "chart",
+      "title": "Area Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/area-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-linear",
+      "type": "chart",
+      "title": "Area Chart Linear",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-linear.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-range",
+      "type": "chart",
+      "title": "Area Chart Range",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-range.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-sparkline",
+      "type": "chart",
+      "title": "Area Chart Sparkline",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-sparkline.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-stacked-expand",
+      "type": "chart",
+      "title": "Area Chart Stacked Expand",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-stacked-expand.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-stacked",
+      "type": "chart",
+      "title": "Area Chart Stacked",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-stacked.tsx"
+      ]
+    },
+    {
+      "name": "area-chart-step",
+      "type": "chart",
+      "title": "Area Chart Step",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-step.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
