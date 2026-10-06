@@ -2606,6 +2606,58 @@
       ]
     },
     {
+      "name": "login-account",
+      "type": "block",
+      "title": "Login Account",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "button",
+        "checkbox",
+        "input",
+        "label",
+        "spinner"
+      ],
+      "files": [
+        "components/blocks/login-account.tsx"
+      ]
+    },
+    {
+      "name": "login-passkey",
+      "type": "block",
+      "title": "Login Passkey",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "button",
+        "dialog"
+      ],
+      "files": [
+        "components/blocks/login-passkey.tsx"
+      ]
+    },
+    {
+      "name": "login-sheet",
+      "type": "block",
+      "title": "Login Sheet",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "label",
+        "radio-group",
+        "spinner"
+      ],
+      "files": [
+        "components/blocks/login-sheet.tsx"
+      ]
+    },
+    {
       "name": "nav-categories",
       "type": "block",
       "title": "Nav Categories",
