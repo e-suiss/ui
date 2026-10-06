@@ -2449,6 +2449,45 @@
       ]
     },
     {
+      "name": "hero-cinematic",
+      "type": "block",
+      "title": "Hero Cinematic",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/hero-cinematic.tsx"
+      ]
+    },
+    {
+      "name": "hero-product",
+      "type": "block",
+      "title": "Hero Product",
+      "dependencies": [],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/blocks/hero-product.tsx"
+      ]
+    },
+    {
+      "name": "hero-tiles",
+      "type": "block",
+      "title": "Hero Tiles",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/blocks/hero-tiles.tsx"
+      ]
+    },
+    {
       "name": "nav-categories",
       "type": "block",
       "title": "Nav Categories",
