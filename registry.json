@@ -1196,6 +1196,21 @@
       ]
     },
     {
+      "name": "table-list",
+      "type": "pattern",
+      "title": "Table List",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "table",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/table-list.tsx"
+      ]
+    },
+    {
       "name": "trail",
       "type": "pattern",
       "title": "Trail",
