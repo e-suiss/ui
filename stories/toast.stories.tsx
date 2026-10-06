@@ -1,18 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Button } from "@/components/ui/button"
-import { Toaster, toast } from "@/components/ui/toast"
+import {
+  createToastManager,
+  Toaster,
+  useToastManager,
+} from "@/components/ui/toast"
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+const managers = new Map<string, ReturnType<typeof createToastManager>>()
+
+function managerFor(id: string) {
+  const existing = managers.get(id)
+  if (existing) return existing
+  const manager = createToastManager()
+  managers.set(id, manager)
+  return manager
 }
 
 const meta = {
   title: "Components/Toast",
   component: Toaster,
   decorators: [
-    (Story) => (
-      <Toaster>
+    (Story, context) => (
+      <Toaster toastManager={managerFor(context.id)}>
         <Story />
       </Toaster>
     ),
@@ -23,8 +37,10 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  render: () => (
+function DefaultExample() {
+  const toast = useToastManager()
+
+  return (
     <Button
       variant="outline"
       onClick={() =>
@@ -36,11 +52,17 @@ export const Default: Story = {
     >
       Show toast
     </Button>
-  ),
+  )
 }
 
-export const Types: Story = {
-  render: () => (
+export const Default: Story = {
+  render: () => <DefaultExample />,
+}
+
+function TypesExample() {
+  const toast = useToastManager()
+
+  return (
     <div className="flex flex-wrap items-center gap-3">
       <Button
         variant="outline"
@@ -103,11 +125,34 @@ export const Types: Story = {
         Loading
       </Button>
     </div>
-  ),
+  )
 }
 
-export const WithAction: Story = {
-  render: () => (
+export const Types: Story = {
+  render: () => <TypesExample />,
+}
+
+function TitleOnlyExample() {
+  const toast = useToastManager()
+
+  return (
+    <Button
+      variant="outline"
+      onClick={() => toast.add({ type: "success", title: "8 photos uploaded" })}
+    >
+      Upload photos
+    </Button>
+  )
+}
+
+export const TitleOnly: Story = {
+  render: () => <TitleOnlyExample />,
+}
+
+function WithActionExample() {
+  const toast = useToastManager()
+
+  return (
     <Button
       variant="outline"
       onClick={() => {
@@ -123,31 +168,90 @@ export const WithAction: Story = {
     >
       Archive message
     </Button>
-  ),
+  )
 }
 
-export const PromiseToast: Story = {
-  render: () => (
+export const WithAction: Story = {
+  render: () => <WithActionExample />,
+}
+
+function TimeoutExample() {
+  const toast = useToastManager()
+
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button
+        variant="outline"
+        onClick={() => toast.add({ title: "Link copied", timeout: 1500 })}
+      >
+        Short
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast.add({
+            type: "warning",
+            title: "Connection lost",
+            description: "Stays until you close it.",
+            timeout: 0,
+          })
+        }
+      >
+        Persistent
+      </Button>
+      <Button variant="outline" onClick={() => toast.close()}>
+        Close all
+      </Button>
+    </div>
+  )
+}
+
+export const Timeout: Story = {
+  render: () => <TimeoutExample />,
+}
+
+function PromiseExample({ fail = false }: { fail?: boolean }) {
+  const toast = useToastManager()
+
+  return (
     <Button
       variant="outline"
       onClick={() =>
-        toast.promise(wait(2000), {
-          loading: {
-            title: "Publishing post",
-            description: "Hang tight, this only takes a moment.",
-          },
-          success: {
-            title: "Post published",
-            description: "Your post is now live.",
-          },
-          error: {
-            title: "Publishing failed",
-            description: "Please try again.",
-          },
-        })
+        toast
+          .promise(
+            fail
+              ? wait(2000).then(() =>
+                  Promise.reject(new Error("Network error"))
+                )
+              : wait(2000),
+            {
+              loading: {
+                title: "Publishing post",
+                description: "Hang tight, this only takes a moment.",
+              },
+              success: {
+                title: "Post published",
+                description: "Your post is now live.",
+              },
+              error: (error) => ({
+                title: "Publishing failed",
+                description:
+                  error instanceof Error ? error.message : "Please try again.",
+              }),
+            }
+          )
+          .catch(() => {})
       }
     >
       Publish post
     </Button>
-  ),
+  )
+}
+
+export const PromiseToast: Story = {
+  render: () => <PromiseExample />,
+}
+
+export const PromiseRejected: Story = {
+  render: () => <PromiseExample fail />,
 }

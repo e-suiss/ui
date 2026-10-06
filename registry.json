@@ -888,8 +888,7 @@
         "cn"
       ],
       "requires": [
-        "button",
-        "spinner"
+        "button"
       ],
       "files": [
         "components/ui/toast.tsx"
