@@ -1245,6 +1245,19 @@
       ]
     },
     {
+      "name": "preview-menu",
+      "type": "interaction",
+      "title": "Preview Menu",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/preview-menu.tsx"
+      ]
+    },
+    {
       "name": "swipe-actions",
       "type": "interaction",
       "title": "Swipe Actions",
