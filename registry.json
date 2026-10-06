@@ -3003,6 +3003,58 @@
       ]
     },
     {
+      "name": "roles-editor",
+      "type": "block",
+      "title": "Roles Editor",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "button",
+        "item",
+        "split-view",
+        "switch"
+      ],
+      "files": [
+        "components/blocks/roles-editor.tsx"
+      ]
+    },
+    {
+      "name": "roles-matrix",
+      "type": "block",
+      "title": "Roles Matrix",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "button",
+        "checkbox"
+      ],
+      "files": [
+        "components/blocks/roles-matrix.tsx"
+      ]
+    },
+    {
+      "name": "roles-requests",
+      "type": "block",
+      "title": "Roles Requests",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button",
+        "empty",
+        "select"
+      ],
+      "files": [
+        "components/blocks/roles-requests.tsx"
+      ]
+    },
+    {
       "name": "settings-account",
       "type": "block",
       "title": "Settings Account",
