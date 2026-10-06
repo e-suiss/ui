@@ -3104,6 +3104,66 @@
       ]
     },
     {
+      "name": "users-detail",
+      "type": "block",
+      "title": "Users Detail",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button",
+        "item",
+        "select",
+        "split-view",
+        "switch",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/users-detail.tsx"
+      ]
+    },
+    {
+      "name": "users-invite",
+      "type": "block",
+      "title": "Users Invite",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "button",
+        "item",
+        "select",
+        "switch",
+        "toast"
+      ],
+      "files": [
+        "components/blocks/users-invite.tsx"
+      ]
+    },
+    {
+      "name": "users-table",
+      "type": "block",
+      "title": "Users Table",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button",
+        "checkbox",
+        "input-group",
+        "table",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/users-table.tsx"
+      ]
+    },
+    {
       "name": "verify-code",
       "type": "block",
       "title": "Verify Code",
