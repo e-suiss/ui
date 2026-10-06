@@ -936,6 +936,26 @@
       ]
     },
     {
+      "name": "action-bar",
+      "type": "pattern",
+      "title": "Action Bar",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "alert-sheet",
+        "button",
+        "drawer",
+        "menubar",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/action-bar.tsx"
+      ]
+    },
+    {
       "name": "action-menu",
       "type": "pattern",
       "title": "Action Menu",
