@@ -1271,6 +1271,20 @@
       ]
     },
     {
+      "name": "undo-bar",
+      "type": "interaction",
+      "title": "Undo Bar",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [
+        "button"
+      ],
+      "files": [
+        "components/interactions/undo-bar.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
