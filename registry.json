@@ -2000,6 +2000,157 @@
       ]
     },
     {
+      "name": "radar-chart-default",
+      "type": "chart",
+      "title": "Radar Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-dots",
+      "type": "chart",
+      "title": "Radar Chart Dots",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-dots.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-circle",
+      "type": "chart",
+      "title": "Radar Chart Grid Circle",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-circle.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-filled",
+      "type": "chart",
+      "title": "Radar Chart Grid Filled",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-filled.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-none",
+      "type": "chart",
+      "title": "Radar Chart Grid None",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-none.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-interactive",
+      "type": "chart",
+      "title": "Radar Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "toggle"
+      ],
+      "files": [
+        "components/charts/radar-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-legend",
+      "type": "chart",
+      "title": "Radar Chart Legend",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-legend.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-lines-only",
+      "type": "chart",
+      "title": "Radar Chart Lines Only",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-lines-only.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-multiple",
+      "type": "chart",
+      "title": "Radar Chart Multiple",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-multiple.tsx"
+      ]
+    },
+    {
+      "name": "radar-chart-radius-axis",
+      "type": "chart",
+      "title": "Radar Chart Radius Axis",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-radius-axis.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
