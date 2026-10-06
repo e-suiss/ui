@@ -2449,6 +2449,47 @@
       ]
     },
     {
+      "name": "nav-categories",
+      "type": "block",
+      "title": "Nav Categories",
+      "dependencies": [],
+      "requires": [
+        "carousel",
+        "toggle"
+      ],
+      "files": [
+        "components/blocks/nav-categories.tsx"
+      ]
+    },
+    {
+      "name": "nav-global",
+      "type": "block",
+      "title": "Nav Global",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "navbar"
+      ],
+      "files": [
+        "components/blocks/nav-global.tsx"
+      ]
+    },
+    {
+      "name": "nav-local",
+      "type": "block",
+      "title": "Nav Local",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "navbar"
+      ],
+      "files": [
+        "components/blocks/nav-local.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
