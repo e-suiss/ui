@@ -2860,6 +2860,55 @@
       ]
     },
     {
+      "name": "log-activity",
+      "type": "block",
+      "title": "Log Activity",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "button",
+        "collapsible",
+        "select"
+      ],
+      "files": [
+        "components/blocks/log-activity.tsx"
+      ]
+    },
+    {
+      "name": "log-live",
+      "type": "block",
+      "title": "Log Live",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button"
+      ],
+      "files": [
+        "components/blocks/log-live.tsx"
+      ]
+    },
+    {
+      "name": "log-security",
+      "type": "block",
+      "title": "Log Security",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/log-security.tsx"
+      ]
+    },
+    {
       "name": "login-account",
       "type": "block",
       "title": "Login Account",
