@@ -26,7 +26,7 @@ function Slider({
       thumbAlignment="edge"
       {...props}
     >
-      <SliderPrimitive.Control className="relative flex w-full touch-none items-center select-none data-disabled:**:data-[slot=slider-range]:bg-accent-disabled data-disabled:**:data-[slot=slider-track]:bg-control-disabled data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col">
+      <SliderPrimitive.Control className="relative flex w-full cursor-pointer touch-none items-center select-none data-disabled:cursor-not-allowed data-disabled:**:data-[slot=slider-range]:bg-accent-disabled data-disabled:**:data-[slot=slider-track]:bg-control-disabled data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col">
         <SliderPrimitive.Track
           data-slot="slider-track"
           className="relative grow overflow-hidden rounded-full bg-label-quaternary select-none data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1"
@@ -40,7 +40,7 @@ function Slider({
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
             key={index}
-            className="block size-5.5 shrink-0 rounded-full bg-surface shadow-md ring-1 ring-label/10 dark:bg-label transition-[color,box-shadow,background-color] select-none not-dark:bg-clip-padding focus-visible:focus-ring focus-visible:outline-hidden data-disabled:pointer-events-none data-disabled:shadow-none"
+            className="block shrink-0 rounded-full bg-surface shadow-md ring-1 ring-label/10 transition-[width,height,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] select-none not-dark:bg-clip-padding focus-visible:focus-ring focus-visible:outline-hidden data-horizontal:h-5 data-horizontal:w-8 data-horizontal:active:w-9 data-horizontal:data-dragging:w-9 data-vertical:h-8 data-vertical:w-5 data-vertical:active:h-9 data-vertical:data-dragging:h-9 data-disabled:pointer-events-none data-disabled:shadow-none dark:bg-label"
           />
         ))}
       </SliderPrimitive.Control>
