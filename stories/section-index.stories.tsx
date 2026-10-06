@@ -7,6 +7,7 @@ import {
   SectionIndexHeader,
   SectionIndexSection,
 } from "@/components/interactions/section-index"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const names = [
   "Aaron Price",
@@ -73,7 +74,7 @@ function ContactsExample({ className }: { className: string }) {
   return (
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3">
       <SectionIndex className={className}>
-        <div className="h-full overflow-y-auto rounded-2xl border">
+        <ScrollArea className="h-full rounded-2xl border">
           {groupByLetter().map(([letter, group]) => (
             <SectionIndexSection key={letter} value={letter}>
               <SectionIndexHeader>{letter}</SectionIndexHeader>
@@ -81,7 +82,7 @@ function ContactsExample({ className }: { className: string }) {
                 {group.map((name) => (
                   <li
                     key={name}
-                    className="ms-4 me-8 border-separator not-first:border-t"
+                    className="ms-4 me-10 border-separator not-first:border-t"
                   >
                     <button
                       type="button"
@@ -95,7 +96,7 @@ function ContactsExample({ className }: { className: string }) {
               </ul>
             </SectionIndexSection>
           ))}
-        </div>
+        </ScrollArea>
         <SectionIndexBar
           onValueChange={(letter) => setLog(`Jumped to ${letter}`)}
         />

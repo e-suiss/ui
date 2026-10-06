@@ -65,7 +65,7 @@ function SectionIndexHeader({
     <h3
       data-slot="section-index-header"
       className={cn(
-        "sticky top-0 z-10 bg-surface/85 px-4 py-1.5 text-sm font-semibold text-label-secondary backdrop-blur-xl",
+        "sticky top-0 bg-surface/85 px-4 py-1.5 text-sm font-semibold text-label-secondary backdrop-blur-xl",
         className
       )}
       {...props}
@@ -188,7 +188,7 @@ function SectionIndexBar({
       onPointerCancel={() => setDrag(null)}
       onKeyDown={onKeyDown}
       className={cn(
-        "absolute end-0.5 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-2xs leading-4 font-semibold text-link outline-none select-none before:absolute before:-inset-x-2 before:inset-y-0 before:content-[''] focus-visible:focus-ring",
+        "absolute end-3 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-2xs leading-4 font-semibold text-link outline-none select-none before:absolute before:inset-y-0 before:-inset-s-3 before:inset-e-0 before:content-[''] focus-visible:focus-ring",
         className
       )}
       {...props}
