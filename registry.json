@@ -1849,6 +1849,157 @@
       ]
     },
     {
+      "name": "pie-chart-active",
+      "type": "chart",
+      "title": "Pie Chart Active",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-active.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-default",
+      "type": "chart",
+      "title": "Pie Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-donut-text",
+      "type": "chart",
+      "title": "Pie Chart Donut Text",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-donut-text.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-donut",
+      "type": "chart",
+      "title": "Pie Chart Donut",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-donut.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-half",
+      "type": "chart",
+      "title": "Pie Chart Half",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-half.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-interactive",
+      "type": "chart",
+      "title": "Pie Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/pie-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-label",
+      "type": "chart",
+      "title": "Pie Chart Label",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-label.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-legend",
+      "type": "chart",
+      "title": "Pie Chart Legend",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-legend.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-nested",
+      "type": "chart",
+      "title": "Pie Chart Nested",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-nested.tsx"
+      ]
+    },
+    {
+      "name": "pie-chart-separated",
+      "type": "chart",
+      "title": "Pie Chart Separated",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-separated.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
