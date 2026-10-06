@@ -65,7 +65,7 @@ function ChartContainer({
         data-slot="chart"
         data-chart={chartId}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-label-secondary [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-separator/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-separator [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-separator [&_.recharts-radial-bar-background-sector]:fill-surface-secondary [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-surface-secondary [&_.recharts-reference-line_[stroke='#ccc']]:stroke-separator [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
+          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-label-secondary [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-separator/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-separator [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-separator [&_.recharts-radial-bar-background-sector]:fill-surface-secondary [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-surface-secondary [&_.recharts-reference-line_[stroke='#ccc']]:stroke-separator [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden [&_.recharts-surface]:select-none [&_[tabindex='-1']]:outline-hidden",
           className
         )}
         {...props}

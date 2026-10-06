@@ -1546,6 +1546,157 @@
       ]
     },
     {
+      "name": "bar-chart-active",
+      "type": "chart",
+      "title": "Bar Chart Active",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-active.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-default",
+      "type": "chart",
+      "title": "Bar Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-horizontal",
+      "type": "chart",
+      "title": "Bar Chart Horizontal",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-horizontal.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-hourly",
+      "type": "chart",
+      "title": "Bar Chart Hourly",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-hourly.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-interactive",
+      "type": "chart",
+      "title": "Bar Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/bar-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-labeled",
+      "type": "chart",
+      "title": "Bar Chart Labeled",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-labeled.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-multiple",
+      "type": "chart",
+      "title": "Bar Chart Multiple",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-multiple.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-negative",
+      "type": "chart",
+      "title": "Bar Chart Negative",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-negative.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-range",
+      "type": "chart",
+      "title": "Bar Chart Range",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-range.tsx"
+      ]
+    },
+    {
+      "name": "bar-chart-stacked",
+      "type": "chart",
+      "title": "Bar Chart Stacked",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-stacked.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
