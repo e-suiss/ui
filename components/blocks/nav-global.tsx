@@ -6,7 +6,7 @@ import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
 
 const image =
-  "https://images.unsplash.com/photo-1504198070170-4ca53bb1c1fa?w=1600&q=80&auto=format&fit=crop"
+  "https://images.unsplash.com/photo-1644792863360-40fa85ea52e7?w=1600&q=80&auto=format&fit=crop"
 
 const items: NavbarItem[] = [
   { label: "Store", href: "#store" },
@@ -144,7 +144,7 @@ export function NavGlobal() {
         <p className="mt-1.5 text-2xl text-balance">So thin. So capable.</p>
         <img
           src={image}
-          alt="Book Air on a desk"
+          alt="A laptop on a wooden desk"
           className="mt-7 aspect-[1.7] w-full max-w-160 rounded-[1.125rem] bg-control object-cover md:w-[70%]"
         />
       </section>

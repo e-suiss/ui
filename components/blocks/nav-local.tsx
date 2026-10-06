@@ -6,9 +6,9 @@ import { Navbar } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
 
 const images = {
-  hero: "https://images.unsplash.com/photo-1758327059164-396c3602b8f5?w=1600&q=80&auto=format&fit=crop",
+  hero: "https://images.unsplash.com/photo-1714972384975-fbd4f19b1bb3?w=1600&q=80&auto=format&fit=crop",
   detail:
-    "https://images.unsplash.com/photo-1759588071814-f960ed8f7ee8?w=1600&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1695083691065-4f77dfd0f0d5?w=1600&q=80&auto=format&fit=crop",
 }
 
 const sections = [
@@ -86,7 +86,7 @@ export function NavLocal() {
       </section>
       <img
         src={images.hero}
-        alt="Phone Pro in orange"
+        alt="An orange phone on a gradient background"
         className="mx-auto h-90 w-[calc(100%-2.5rem)] max-w-5xl rounded-[1.375rem] bg-control object-cover md:w-[calc(100%-5rem)]"
       />
       <section
@@ -106,7 +106,7 @@ export function NavLocal() {
       <section id="specs" className="px-5 pb-10 md:px-10">
         <img
           src={images.detail}
-          alt="Phone Pro camera detail"
+          alt="A close look at a camera lens"
           className="mx-auto h-80 w-full max-w-5xl rounded-[1.375rem] bg-control object-cover"
         />
       </section>

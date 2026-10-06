@@ -15,16 +15,16 @@ const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=400&q=80&auto=format&fit=crop`
 
 const categories = [
-  { label: "Laptop", image: photo("1504198070170-4ca53bb1c1fa") },
-  { label: "Phone", image: photo("1726587912121-ea21fcc57ff8") },
-  { label: "Pad", image: photo("1759588073186-1d4ac7e33623") },
-  { label: "Watch", image: photo("1644653005289-78b8312f9cc5") },
-  { label: "Pods", image: photo("1609692814858-f7cd2f0afa4f") },
-  { label: "Cases", image: photo("1736173155811-e8142fd553ee") },
-  { label: "Camera", image: photo("1759588071838-d560be56b2a2") },
-  { label: "Colors", image: photo("1616410011236-7a42121dd981") },
-  { label: "Pro", image: photo("1592750475338-74b7b21085ab") },
-  { label: "Accessories", image: photo("1757709608566-4b9fd41a7af5") },
+  { label: "Laptop", image: photo("1785245560368-f6d715956e5d") },
+  { label: "Phone", image: photo("1714578187196-29775454aa39") },
+  { label: "Pad", image: photo("1607452263110-39a87c399c50") },
+  { label: "Watch", image: photo("1660844817855-3ecc7ef21f12") },
+  { label: "Pods", image: photo("1599669454699-248893623440") },
+  { label: "Cases", image: photo("1703676311066-34caf2cbee33") },
+  { label: "Camera", image: photo("1604677209244-6569d050557a") },
+  { label: "Colors", image: photo("1633596683562-4a47eb4983c5") },
+  { label: "Pro", image: photo("1760978631841-f3754859ca59") },
+  { label: "Accessories", image: photo("1645323927877-3de25b4f819c") },
 ]
 
 export function NavCategories() {
