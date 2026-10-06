@@ -1288,6 +1288,19 @@
       ]
     },
     {
+      "name": "search-reveal",
+      "type": "interaction",
+      "title": "Search Reveal",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/search-reveal.tsx"
+      ]
+    },
+    {
       "name": "section-index",
       "type": "interaction",
       "title": "Section Index",
