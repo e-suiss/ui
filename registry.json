@@ -2487,6 +2487,63 @@
       ]
     },
     {
+      "name": "chat-conversations",
+      "type": "block",
+      "title": "Chat Conversations",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "bubble",
+        "button",
+        "input",
+        "message",
+        "message-scroller",
+        "split-view"
+      ],
+      "files": [
+        "components/blocks/chat-conversations.tsx"
+      ]
+    },
+    {
+      "name": "chat-support",
+      "type": "block",
+      "title": "Chat Support",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "bubble",
+        "button",
+        "input",
+        "message",
+        "message-scroller"
+      ],
+      "files": [
+        "components/blocks/chat-support.tsx"
+      ]
+    },
+    {
+      "name": "chat-thread",
+      "type": "block",
+      "title": "Chat Thread",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "avatar",
+        "bubble",
+        "button",
+        "input",
+        "message",
+        "message-scroller"
+      ],
+      "files": [
+        "components/blocks/chat-thread.tsx"
+      ]
+    },
+    {
       "name": "dash-analytics",
       "type": "block",
       "title": "Dash Analytics",
