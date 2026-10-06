@@ -1245,6 +1245,18 @@
       ]
     },
     {
+      "name": "island",
+      "type": "interaction",
+      "title": "Island",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/interactions/island.tsx"
+      ]
+    },
+    {
       "name": "otp-autofill",
       "type": "interaction",
       "title": "Otp Autofill",
