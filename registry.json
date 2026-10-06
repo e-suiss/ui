@@ -2487,6 +2487,59 @@
       ]
     },
     {
+      "name": "dash-analytics",
+      "type": "block",
+      "title": "Dash Analytics",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "recharts"
+      ],
+      "requires": [
+        "app-shell",
+        "chart",
+        "item",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/dash-analytics.tsx"
+      ]
+    },
+    {
+      "name": "dash-health",
+      "type": "block",
+      "title": "Dash Health",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "button"
+      ],
+      "files": [
+        "components/blocks/dash-health.tsx"
+      ]
+    },
+    {
+      "name": "dash-store",
+      "type": "block",
+      "title": "Dash Store",
+      "dependencies": [
+        "@phosphor-icons/react",
+        "recharts"
+      ],
+      "requires": [
+        "app-shell",
+        "avatar",
+        "chart",
+        "item",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/dash-store.tsx"
+      ]
+    },
+    {
       "name": "footer-compact",
       "type": "block",
       "title": "Footer Compact",
