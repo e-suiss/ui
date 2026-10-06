@@ -2449,6 +2449,50 @@
       ]
     },
     {
+      "name": "bag-checkout",
+      "type": "block",
+      "title": "Bag Checkout",
+      "dependencies": [
+        "@phosphor-icons/react"
+      ],
+      "requires": [
+        "button",
+        "label",
+        "radio-group"
+      ],
+      "files": [
+        "components/blocks/bag-checkout.tsx"
+      ]
+    },
+    {
+      "name": "bag-configure",
+      "type": "block",
+      "title": "Bag Configure",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "label",
+        "radio-group",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/bag-configure.tsx"
+      ]
+    },
+    {
+      "name": "bag-review",
+      "type": "block",
+      "title": "Bag Review",
+      "dependencies": [],
+      "requires": [
+        "button",
+        "stepper"
+      ],
+      "files": [
+        "components/blocks/bag-review.tsx"
+      ]
+    },
+    {
       "name": "bento-closer-look",
       "type": "block",
       "title": "Bento Closer Look",

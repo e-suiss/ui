@@ -84,7 +84,7 @@ export function PriceBundle() {
               <RadioGroupItem
                 value={item.name}
                 aria-label={item.name}
-                className="sr-only"
+                className="absolute sr-only"
               />
             </span>
             <span>
