@@ -16,6 +16,14 @@ type DrawerContextProps = {
 
 const DrawerContext = React.createContext<DrawerContextProps | null>(null)
 
+type DrawerIndentContextProps = {
+  raised: boolean
+  setRaised: (raised: boolean) => void
+}
+
+const DrawerIndentContext =
+  React.createContext<DrawerIndentContextProps | null>(null)
+
 function useDrawer() {
   const context = React.useContext(DrawerContext)
 
@@ -26,18 +34,85 @@ function useDrawer() {
   return context
 }
 
+function DrawerProvider({ children }: DrawerPrimitive.Provider.Props) {
+  const [raised, setRaised] = React.useState(false)
+  const contextValue = React.useMemo(() => ({ raised, setRaised }), [raised])
+
+  return (
+    <DrawerIndentContext.Provider value={contextValue}>
+      <DrawerPrimitive.Provider>{children}</DrawerPrimitive.Provider>
+    </DrawerIndentContext.Provider>
+  )
+}
+
+function DrawerIndentBackground({
+  className,
+  ...props
+}: DrawerPrimitive.IndentBackground.Props) {
+  return (
+    <DrawerPrimitive.IndentBackground
+      data-slot="drawer-indent-background"
+      className={cn("fixed inset-0 -z-10 bg-label dark:bg-surface", className)}
+      {...props}
+    />
+  )
+}
+
+function DrawerIndent({ className, ...props }: DrawerPrimitive.Indent.Props) {
+  const indent = React.useContext(DrawerIndentContext)
+
+  return (
+    <DrawerPrimitive.Indent
+      data-slot="drawer-indent"
+      data-raised={indent?.raised ? "" : undefined}
+      className={cn(
+        "relative min-h-dvh origin-top bg-surface transition-[scale,translate,border-radius] duration-450 ease-[cubic-bezier(0.32,0.72,0,1)] data-raised:translate-y-[max(env(safe-area-inset-top),--spacing(3))] data-raised:scale-[0.94] data-raised:overflow-hidden data-raised:rounded-2xl motion-reduce:transition-none",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 function Drawer({
   floating = false,
   modal = true,
   showSwipeHandle = false,
   snapPoints,
   swipeDirection = "down",
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
+  snapPoint: snapPointProp,
+  defaultSnapPoint,
+  onSnapPointChange,
   ...props
 }: DrawerPrimitive.Root.Props & {
   floating?: boolean
   showSwipeHandle?: boolean
 }) {
   const hasSnapPoints = snapPoints != null && snapPoints.length > 0
+  const indent = React.useContext(DrawerIndentContext)
+  const setRaised = indent?.setRaised
+  const initialSnapPoint = defaultSnapPoint ?? snapPoints?.[0] ?? null
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
+  const [uncontrolledSnapPoint, setUncontrolledSnapPoint] =
+    React.useState(initialSnapPoint)
+  const open = openProp ?? uncontrolledOpen
+  const snapPoint =
+    snapPointProp !== undefined ? snapPointProp : uncontrolledSnapPoint
+  const raised =
+    open &&
+    !floating &&
+    swipeDirection === "down" &&
+    (!hasSnapPoints || snapPoint === snapPoints.at(-1))
+
+  React.useEffect(() => {
+    if (!setRaised) return
+    setRaised(raised)
+    return () => setRaised(false)
+  }, [setRaised, raised])
+
   const contextValue = React.useMemo(
     () => ({ floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection }),
     [floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection]
@@ -50,6 +125,19 @@ function Drawer({
         modal={modal}
         snapPoints={snapPoints}
         swipeDirection={swipeDirection}
+        open={openProp}
+        defaultOpen={defaultOpen}
+        onOpenChange={(next, eventDetails) => {
+          setUncontrolledOpen(next)
+          if (next) setUncontrolledSnapPoint(initialSnapPoint)
+          onOpenChange?.(next, eventDetails)
+        }}
+        snapPoint={snapPointProp}
+        defaultSnapPoint={defaultSnapPoint}
+        onSnapPointChange={(next, eventDetails) => {
+          setUncontrolledSnapPoint(next)
+          onSnapPointChange?.(next, eventDetails)
+        }}
         {...props}
       />
     </DrawerContext.Provider>
@@ -245,8 +333,11 @@ export {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerIndent,
+  DrawerIndentBackground,
   DrawerOverlay,
   DrawerPortal,
+  DrawerProvider,
   DrawerSwipeHandle,
   DrawerTitle,
   DrawerTrigger,
