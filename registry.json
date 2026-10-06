@@ -1697,6 +1697,158 @@
       ]
     },
     {
+      "name": "line-chart-default",
+      "type": "chart",
+      "title": "Line Chart Default",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-default.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-dots",
+      "type": "chart",
+      "title": "Line Chart Dots",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-dots.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-forecast",
+      "type": "chart",
+      "title": "Line Chart Forecast",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-forecast.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-goal-dots",
+      "type": "chart",
+      "title": "Line Chart Goal Dots",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-goal-dots.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-goal",
+      "type": "chart",
+      "title": "Line Chart Goal",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-goal.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-interactive",
+      "type": "chart",
+      "title": "Line Chart Interactive",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart",
+        "toggle",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/line-chart-interactive.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-labeled",
+      "type": "chart",
+      "title": "Line Chart Labeled",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-labeled.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-linear",
+      "type": "chart",
+      "title": "Line Chart Linear",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-linear.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-multiple",
+      "type": "chart",
+      "title": "Line Chart Multiple",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-multiple.tsx"
+      ]
+    },
+    {
+      "name": "line-chart-step",
+      "type": "chart",
+      "title": "Line Chart Step",
+      "dependencies": [
+        "recharts"
+      ],
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-step.tsx"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
