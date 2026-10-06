@@ -67,6 +67,8 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const MORPH_DURATION = 700
+const LIFT_DURATION = 260
+const LIFT = 7
 
 const sizeFormat = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 1,
@@ -81,7 +83,7 @@ function sizes(device: Device) {
   )
 }
 
-function useMorph(target: number[]) {
+function useMorph(target: number[], duration: number) {
   const [values, setValues] = React.useState(target)
   const valuesRef = React.useRef(values)
   valuesRef.current = values
@@ -95,7 +97,7 @@ function useMorph(target: number[]) {
     const start = performance.now()
     let frame = 0
     const step = () => {
-      const progress = Math.min(1, (performance.now() - start) / MORPH_DURATION)
+      const progress = Math.min(1, (performance.now() - start) / duration)
       const eased =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
       setValues(
@@ -107,7 +109,7 @@ function useMorph(target: number[]) {
     }
     frame = requestAnimationFrame(step)
     return () => cancelAnimationFrame(frame)
-  }, [target])
+  }, [target, duration])
 
   return values
 }
@@ -126,7 +128,12 @@ export function PieChartInteractive() {
     setActive(null)
   }
   const target = React.useMemo(() => sizes(device), [device])
-  const values = useMorph(target)
+  const values = useMorph(target, MORPH_DURATION)
+  const liftTarget = React.useMemo(
+    () => KINDS.map((kind) => (kind === active ? 1 : 0)),
+    [active]
+  )
+  const lift = useMorph(liftTarget, LIFT_DURATION)
   const total = values.reduce((sum, value) => sum + value, 0)
   const used = total - values[KINDS.indexOf("free")]
   const activeValue = active ? values[KINDS.indexOf(active)] : used
@@ -220,8 +227,7 @@ export function PieChartInteractive() {
                     <Sector
                       {...props}
                       outerRadius={
-                        (props.outerRadius ?? 0) +
-                        (KINDS[index] === active ? 7 : 0)
+                        (props.outerRadius ?? 0) + lift[index] * LIFT
                       }
                     />
                   )}
