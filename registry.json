@@ -1196,6 +1196,23 @@
       ]
     },
     {
+      "name": "split-view",
+      "type": "pattern",
+      "title": "Split View",
+      "dependencies": [
+        "@base-ui/react",
+        "@phosphor-icons/react",
+        "cn"
+      ],
+      "requires": [
+        "resizable",
+        "use-mobile"
+      ],
+      "files": [
+        "components/patterns/split-view.tsx"
+      ]
+    },
+    {
       "name": "table-list",
       "type": "pattern",
       "title": "Table List",
