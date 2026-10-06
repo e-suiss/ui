@@ -5,14 +5,19 @@ import { cn } from "cn"
 
 function NavigationMenu({
   align = "start",
+  layout = "popover",
+  anchor,
   className,
   children,
   ...props
 }: NavigationMenuPrimitive.Root.Props &
-  Pick<NavigationMenuPrimitive.Positioner.Props, "align">) {
+  Pick<NavigationMenuPrimitive.Positioner.Props, "align" | "anchor"> & {
+    layout?: "popover" | "panel"
+  }) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
+      data-layout={layout}
       className={cn(
         "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
         className
@@ -20,7 +25,11 @@ function NavigationMenu({
       {...props}
     >
       {children}
-      <NavigationMenuPositioner align={align} />
+      {layout === "panel" ? (
+        <NavigationMenuPanel anchor={anchor} />
+      ) : (
+        <NavigationMenuPositioner align={align} anchor={anchor} />
+      )}
     </NavigationMenuPrimitive.Root>
   )
 }
@@ -123,6 +132,40 @@ function NavigationMenuPositioner({
   )
 }
 
+function NavigationMenuPanel({
+  className,
+  anchor,
+  ...props
+}: NavigationMenuPrimitive.Positioner.Props) {
+  return (
+    <NavigationMenuPrimitive.Portal>
+      <NavigationMenuPrimitive.Backdrop
+        data-slot="navigation-menu-backdrop"
+        className="fixed inset-0 z-40 bg-scrim/20 backdrop-blur-md transition-opacity duration-350 ease-[cubic-bezier(0.45,0,0.2,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none"
+      />
+      <NavigationMenuPrimitive.Positioner
+        anchor={anchor}
+        side="bottom"
+        align="start"
+        sideOffset={0}
+        collisionPadding={0}
+        className={cn(
+          "isolate z-50 h-(--positioner-height) w-(--anchor-width)",
+          className
+        )}
+        {...props}
+      >
+        <NavigationMenuPrimitive.Popup
+          data-slot="navigation-menu-panel"
+          className="relative h-(--popup-height) w-full overflow-hidden bg-surface text-label transition-[height] duration-450 ease-[cubic-bezier(0.45,0,0.2,1)] outline-none data-ending-style:h-0 data-ending-style:duration-300 data-starting-style:h-0 motion-reduce:transition-none"
+        >
+          <NavigationMenuPrimitive.Viewport className="relative size-full" />
+        </NavigationMenuPrimitive.Popup>
+      </NavigationMenuPrimitive.Positioner>
+    </NavigationMenuPrimitive.Portal>
+  )
+}
+
 function NavigationMenuLink({
   className,
   ...props
@@ -164,6 +207,7 @@ export {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuPanel,
   NavigationMenuPositioner,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,

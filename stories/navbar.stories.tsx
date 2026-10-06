@@ -93,3 +93,41 @@ export const LinksOnly: Story = {
 export const WithCloseLabel: Story = {
   args: { closeLabel: "Done" },
 }
+
+export const MegaPanel: Story = {
+  args: {
+    layout: "panel",
+    items: [
+      {
+        label: "Products",
+        columns: [
+          {
+            label: "Explore",
+            featured: true,
+            links: [
+              { label: "Analytics", href: "#analytics" },
+              { label: "Automations", href: "#automations" },
+              { label: "Security", href: "#security" },
+            ],
+          },
+          {
+            label: "Get started",
+            links: [
+              { label: "Pricing", href: "#pricing" },
+              { label: "Customers", href: "#customers" },
+            ],
+          },
+          {
+            label: "Learn",
+            links: [
+              { label: "Documentation", href: "#docs" },
+              { label: "Help center", href: "#help" },
+            ],
+          },
+        ],
+      },
+      { label: "Pricing", href: "#pricing" },
+      { label: "Blog", href: "#blog" },
+    ],
+  },
+}

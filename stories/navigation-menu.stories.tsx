@@ -7,6 +7,7 @@ import {
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import * as React from "react"
 
 import {
   NavigationMenu,
@@ -142,4 +143,52 @@ export const LinksOnly: Story = {
       </NavigationMenuList>
     </NavigationMenu>
   ),
+}
+
+function PanelExample() {
+  const ref = React.useRef<HTMLDivElement>(null)
+
+  return (
+    <div
+      ref={ref}
+      className="relative z-50 flex w-[min(48rem,calc(100vw-2rem))] justify-center border-b border-separator bg-surface"
+    >
+      <NavigationMenu layout="panel" anchor={ref}>
+        <NavigationMenuList>
+          <NavigationMenuItem value="products">
+            <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+            <NavigationMenuContent className="w-full">
+              <ul className="mx-auto grid max-w-2xl grid-cols-2 gap-1 py-4">
+                {products.map((product) => (
+                  <li key={product.title}>
+                    <NavigationMenuLink href="#" className="items-start gap-3">
+                      <product.icon className="mt-0.5" />
+                      <div className="flex flex-col gap-1">
+                        <span className="font-medium">{product.title}</span>
+                        <span className="text-label-secondary">
+                          {product.description}
+                        </span>
+                      </div>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="#"
+              className={navigationMenuTriggerStyle()}
+            >
+              Pricing
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
+  )
+}
+
+export const Panel: Story = {
+  render: () => <PanelExample />,
 }

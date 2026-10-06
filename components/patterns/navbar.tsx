@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "cn"
-import type * as React from "react"
+import * as React from "react"
 
 import {
   FullscreenMenu,
@@ -31,12 +31,24 @@ type NavbarLink = {
   active?: boolean
 }
 
-type NavbarItem = NavbarLink | { label: string; items: NavbarLink[] }
+type NavbarColumn = {
+  label: string
+  links: NavbarLink[]
+  featured?: boolean
+}
 
-function isGroup(
-  item: NavbarItem
-): item is { label: string; items: NavbarLink[] } {
+type NavbarGroup = { label: string; items: NavbarLink[] }
+
+type NavbarMega = { label: string; columns: NavbarColumn[] }
+
+type NavbarItem = NavbarLink | NavbarGroup | NavbarMega
+
+function isGroup(item: NavbarItem): item is NavbarGroup {
   return "items" in item
+}
+
+function isMega(item: NavbarItem): item is NavbarMega {
+  return "columns" in item
 }
 
 function NavbarAnchor(props: React.ComponentProps<"a">) {
@@ -49,6 +61,7 @@ function Navbar({
   actions,
   menuLabel = "Menu",
   closeLabel,
+  layout = "popover",
   render = <NavbarAnchor />,
   className,
   ...props
@@ -58,17 +71,32 @@ function Navbar({
   actions?: React.ReactNode
   menuLabel?: string
   closeLabel?: string
+  layout?: "popover" | "panel"
   render?: React.ReactElement
 }) {
   const isMobile = useIsMobile()
-  const links = items.filter((item): item is NavbarLink => !isGroup(item))
-  const groups = items.filter(isGroup)
+  const headerRef = React.useRef<HTMLElement>(null)
+  const links = items.filter(
+    (item): item is NavbarLink => !isGroup(item) && !isMega(item)
+  )
+  const groups = items.flatMap((item) =>
+    isGroup(item)
+      ? [item]
+      : isMega(item)
+        ? item.columns.map((column) => ({
+            label: column.label,
+            items: column.links,
+          }))
+        : []
+  )
 
   return (
     <header
+      ref={headerRef}
       data-slot="navbar"
+      data-layout={layout}
       className={cn(
-        "flex h-14 w-full items-center gap-4 px-4 md:px-6",
+        "flex h-14 w-full items-center gap-4 px-4 data-[layout=panel]:relative data-[layout=panel]:z-50 md:px-6",
         className
       )}
       {...props}
@@ -119,10 +147,49 @@ function Navbar({
         </div>
       ) : (
         <>
-          <NavigationMenu className="mx-auto">
+          <NavigationMenu
+            className="mx-auto"
+            layout={layout}
+            anchor={layout === "panel" ? headerRef : undefined}
+          >
             <NavigationMenuList>
               {items.map((item) =>
-                isGroup(item) ? (
+                isMega(item) ? (
+                  <NavigationMenuItem key={item.label} value={item.label}>
+                    <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+                    <NavigationMenuContent className="w-full p-0">
+                      <div
+                        data-slot="navbar-columns"
+                        className="mx-auto flex max-w-5xl gap-16 px-6 pt-7 pb-14"
+                      >
+                        {item.columns.map((column, index) => (
+                          <div
+                            key={column.label}
+                            data-slot="navbar-column"
+                            data-featured={column.featured ? "" : undefined}
+                            style={{ transitionDelay: `${60 + index * 40}ms` }}
+                            className="group/navbar-column flex flex-col gap-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] starting:-translate-y-1.5 starting:opacity-0 motion-reduce:transition-none data-featured:gap-2.5"
+                          >
+                            <span className="text-xs text-label-secondary">
+                              {column.label}
+                            </span>
+                            {column.links.map((link) => (
+                              <NavigationMenuLink
+                                key={link.label}
+                                href={link.href}
+                                active={link.active}
+                                render={render}
+                                className="w-fit rounded-sm p-0 text-xs leading-tight font-semibold hover:bg-transparent hover:underline focus:bg-transparent group-data-featured/navbar-column:text-2xl group-data-featured/navbar-column:tracking-tight"
+                              >
+                                {link.label}
+                              </NavigationMenuLink>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                ) : isGroup(item) ? (
                   <NavigationMenuItem key={item.label} value={item.label}>
                     <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -185,4 +252,4 @@ function Navbar({
   )
 }
 
-export { Navbar, type NavbarItem, type NavbarLink }
+export { Navbar, type NavbarColumn, type NavbarItem, type NavbarLink }
