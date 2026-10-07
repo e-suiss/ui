@@ -439,6 +439,13 @@ export const Centered: Story = {
   ),
 }
 
+const gridSpans = {
+  small: "1 × 1",
+  medium: "2 × 1",
+  large: "2 × 2",
+  "extra-large": "4 × 2",
+}
+
 export const Sizes: Story = {
   parameters: { layout: "padded" },
   render: () => (
@@ -450,15 +457,7 @@ export const Sizes: Story = {
               {size.replace("-", " ")}
             </WidgetTitle>
           </WidgetHeader>
-          <WidgetFooter>
-            {size === "small"
-              ? "1 × 1"
-              : size === "medium"
-                ? "2 × 1"
-                : size === "large"
-                  ? "2 × 2"
-                  : "4 × 2"}
-          </WidgetFooter>
+          <WidgetFooter>{gridSpans[size]}</WidgetFooter>
         </Widget>
       ))}
     </div>

@@ -55,6 +55,100 @@ function NavbarAnchor(props: React.ComponentProps<"a">) {
   return <a {...props} />
 }
 
+function NavbarMenuItem({
+  item,
+  render,
+}: {
+  item: NavbarItem
+  render: React.ReactElement
+}) {
+  if (isMega(item)) {
+    return (
+      <NavigationMenuItem value={item.label}>
+        <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+        <NavigationMenuContent className="w-full p-0">
+          <div
+            data-slot="navbar-columns"
+            className="mx-auto flex max-w-5xl gap-16 px-6 pt-7 pb-14"
+          >
+            {item.columns.map((column, index) => (
+              <div
+                key={column.label}
+                data-slot="navbar-column"
+                data-featured={column.featured ? "" : undefined}
+                style={{ transitionDelay: `${60 + index * 40}ms` }}
+                className="group/navbar-column flex flex-col gap-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] starting:-translate-y-1.5 starting:opacity-0 motion-reduce:transition-none data-featured:gap-2.5"
+              >
+                <span className="text-xs text-label-secondary">
+                  {column.label}
+                </span>
+                {column.links.map((link) => (
+                  <NavigationMenuLink
+                    key={link.label}
+                    href={link.href}
+                    active={link.active}
+                    render={render}
+                    className="w-fit rounded-sm p-0 text-xs leading-tight font-semibold hover:bg-transparent hover:underline focus:bg-transparent group-data-featured/navbar-column:text-2xl group-data-featured/navbar-column:tracking-tight"
+                  >
+                    {link.label}
+                  </NavigationMenuLink>
+                ))}
+              </div>
+            ))}
+          </div>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    )
+  }
+
+  if (isGroup(item)) {
+    return (
+      <NavigationMenuItem value={item.label}>
+        <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="grid w-80 gap-1">
+            {item.items.map((link) => (
+              <li key={link.label}>
+                <NavigationMenuLink
+                  href={link.href}
+                  active={link.active}
+                  render={render}
+                  className={cn(link.description && "items-start gap-3")}
+                >
+                  {link.icon}
+                  {link.description ? (
+                    <div className="flex flex-col gap-1">
+                      <span className="font-medium">{link.label}</span>
+                      <span className="text-label-secondary">
+                        {link.description}
+                      </span>
+                    </div>
+                  ) : (
+                    link.label
+                  )}
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    )
+  }
+
+  return (
+    <NavigationMenuItem>
+      <NavigationMenuLink
+        href={item.href}
+        active={item.active}
+        render={render}
+        className={navigationMenuTriggerStyle()}
+      >
+        {item.label}
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+  )
+}
+
 function Navbar({
   items,
   brand,
@@ -79,16 +173,16 @@ function Navbar({
   const links = items.filter(
     (item): item is NavbarLink => !isGroup(item) && !isMega(item)
   )
-  const groups = items.flatMap((item) =>
-    isGroup(item)
-      ? [item]
-      : isMega(item)
-        ? item.columns.map((column) => ({
-            label: column.label,
-            items: column.links,
-          }))
-        : []
-  )
+  const groups = items.flatMap((item) => {
+    if (isGroup(item)) return [item]
+    if (isMega(item)) {
+      return item.columns.map((column) => ({
+        label: column.label,
+        items: column.links,
+      }))
+    }
+    return []
+  })
 
   return (
     <header
@@ -153,89 +247,9 @@ function Navbar({
             anchor={layout === "panel" ? headerRef : undefined}
           >
             <NavigationMenuList>
-              {items.map((item) =>
-                isMega(item) ? (
-                  <NavigationMenuItem key={item.label} value={item.label}>
-                    <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-                    <NavigationMenuContent className="w-full p-0">
-                      <div
-                        data-slot="navbar-columns"
-                        className="mx-auto flex max-w-5xl gap-16 px-6 pt-7 pb-14"
-                      >
-                        {item.columns.map((column, index) => (
-                          <div
-                            key={column.label}
-                            data-slot="navbar-column"
-                            data-featured={column.featured ? "" : undefined}
-                            style={{ transitionDelay: `${60 + index * 40}ms` }}
-                            className="group/navbar-column flex flex-col gap-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] starting:-translate-y-1.5 starting:opacity-0 motion-reduce:transition-none data-featured:gap-2.5"
-                          >
-                            <span className="text-xs text-label-secondary">
-                              {column.label}
-                            </span>
-                            {column.links.map((link) => (
-                              <NavigationMenuLink
-                                key={link.label}
-                                href={link.href}
-                                active={link.active}
-                                render={render}
-                                className="w-fit rounded-sm p-0 text-xs leading-tight font-semibold hover:bg-transparent hover:underline focus:bg-transparent group-data-featured/navbar-column:text-2xl group-data-featured/navbar-column:tracking-tight"
-                              >
-                                {link.label}
-                              </NavigationMenuLink>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ) : isGroup(item) ? (
-                  <NavigationMenuItem key={item.label} value={item.label}>
-                    <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-80 gap-1">
-                        {item.items.map((link) => (
-                          <li key={link.label}>
-                            <NavigationMenuLink
-                              href={link.href}
-                              active={link.active}
-                              render={render}
-                              className={cn(
-                                link.description && "items-start gap-3"
-                              )}
-                            >
-                              {link.icon}
-                              {link.description ? (
-                                <div className="flex flex-col gap-1">
-                                  <span className="font-medium">
-                                    {link.label}
-                                  </span>
-                                  <span className="text-label-secondary">
-                                    {link.description}
-                                  </span>
-                                </div>
-                              ) : (
-                                link.label
-                              )}
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ) : (
-                  <NavigationMenuItem key={item.label}>
-                    <NavigationMenuLink
-                      href={item.href}
-                      active={item.active}
-                      render={render}
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      {item.label}
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                )
-              )}
+              {items.map((item) => (
+                <NavbarMenuItem key={item.label} item={item} render={render} />
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
           {actions && (

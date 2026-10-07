@@ -29,5 +29,7 @@ export function useIsMac() {
 }
 
 export function useModifierKey(withKey = false) {
-  return useIsMac() ? "⌘" : withKey ? "Ctrl+" : "Ctrl"
+  const isMac = useIsMac()
+  if (isMac) return "⌘"
+  return withKey ? "Ctrl+" : "Ctrl"
 }

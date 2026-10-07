@@ -40,6 +40,12 @@ function detectPackageManager(cwd) {
   }
 }
 
+function frameworkOf(packages) {
+  if (packages.next) return "next"
+  if (packages.vite && packages.react) return "vite"
+  return null
+}
+
 export function detectProject(cwd) {
   const manifestPath = path.join(cwd, "package.json")
   if (!existsSync(manifestPath)) {
@@ -49,11 +55,7 @@ export function detectProject(cwd) {
   }
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8"))
   const packages = { ...manifest.dependencies, ...manifest.devDependencies }
-  const framework = packages.next
-    ? "next"
-    : packages.vite && packages.react
-      ? "vite"
-      : null
+  const framework = frameworkOf(packages)
   if (!framework) {
     throw new CliError("Only Next.js and React (Vite) projects are supported.")
   }

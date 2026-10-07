@@ -242,6 +242,7 @@ export function InboxMail() {
   const [query, setQuery] = React.useState("")
   const unread = mail.filter((item) => item.unread).length
   const starred = mail.filter((item) => item.starred).length
+  const counts: Record<string, number> = { Inbox: unread, Starred: starred }
   const list = mail.filter(
     (item) =>
       (mailbox !== "Starred" || item.starred) &&
@@ -282,11 +283,7 @@ export function InboxMail() {
               <box.icon className="size-4.5 text-accent" />
               <span className="flex-1">{box.value}</span>
               <span className="text-xs text-label-secondary tabular-nums">
-                {box.value === "Inbox"
-                  ? unread || ""
-                  : box.value === "Starred"
-                    ? starred || ""
-                    : ""}
+                {counts[box.value] || ""}
               </span>
             </span>
           </SplitViewItem>

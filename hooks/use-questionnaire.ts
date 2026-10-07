@@ -198,6 +198,22 @@ function isRadio(target: EventTarget) {
   return target instanceof HTMLInputElement && target.type === "radio"
 }
 
+function isItemRequired(
+  definition: QuestionnaireItemDefinition | undefined,
+  record: ItemRecord | null
+) {
+  if (definition) return !!definition.required
+  return record?.required ?? false
+}
+
+function itemStatus(
+  skipped: boolean,
+  hasAnswer: boolean
+): QuestionnaireItemStatus {
+  if (skipped) return "skipped"
+  return hasAnswer ? "answered" : "unanswered"
+}
+
 function compareDocumentOrder(a: { element: Node }, b: { element: Node }) {
   if (a.element === b.element) return 0
   const position = a.element.compareDocumentPosition(b.element)
@@ -335,11 +351,7 @@ function useQuestionnaire({
     ? definitions?.itemByName.get(activeItemName)
     : undefined
   const activeItemRequired =
-    index < 0
-      ? null
-      : activeDefinition
-        ? !!activeDefinition.required
-        : (activeItem?.required ?? false)
+    index < 0 ? null : isItemRequired(activeDefinition, activeItem)
   const activeItemStatus =
     index < 0
       ? null
@@ -639,11 +651,7 @@ function useQuestionnaireItem({
   const hasAnswer = enabledControls.some((control) =>
     selectedAnswerIds.includes(control.id)
   )
-  const status: QuestionnaireItemStatus = skipped
-    ? "skipped"
-    : hasAnswer
-      ? "answered"
-      : "unanswered"
+  const status = itemStatus(skipped, hasAnswer)
   const skippedOptional = status === "skipped" && !required
   const satisfied =
     disabled || skippedOptional || (!invalidProp && status === "answered")

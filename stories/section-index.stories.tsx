@@ -65,9 +65,11 @@ function groupByLetter() {
     const letter = UPPERCASE.test(first) ? first : "#"
     groups.set(letter, [...(groups.get(letter) ?? []), name])
   }
-  return [...groups.entries()].sort(([a], [b]) =>
-    a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)
-  )
+  return [...groups.entries()].sort(([a], [b]) => {
+    if (a === "#") return 1
+    if (b === "#") return -1
+    return a.localeCompare(b)
+  })
 }
 
 function ContactsExample({ className }: { className: string }) {

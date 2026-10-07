@@ -48,7 +48,8 @@
         "useFragmentSyntax": "error",
         "useShorthandAssign": "error",
         "useNumberNamespace": "error",
-        "useDefaultSwitchClause": "error"
+        "useDefaultSwitchClause": "error",
+        "noNestedTernary": "error"
       },
       "suspicious": {
         "noEmptyBlockStatements": "error",

@@ -37,6 +37,12 @@ const money = (value: number) =>
 const choiceClass =
   "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-separator-strong)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring"
 
+function stepState(index: number, current: number) {
+  if (current > index) return "done"
+  if (current === index) return "open"
+  return "idle"
+}
+
 function Step({
   index,
   current,
@@ -62,7 +68,7 @@ function Step({
     >
       <div className="flex items-center gap-2.5">
         <span
-          data-state={done ? "done" : open ? "open" : "idle"}
+          data-state={stepState(index, current)}
           className="flex size-6.5 items-center justify-center rounded-full bg-control text-sm font-semibold text-label-secondary data-[state=done]:bg-[color-mix(in_oklab,var(--green),var(--label)_35%)] data-[state=done]:text-white data-[state=open]:bg-label data-[state=open]:text-surface dark:data-[state=done]:bg-[color-mix(in_oklab,var(--green),black_35%)]"
         >
           {done ? <CheckIcon weight="bold" className="size-3.25" /> : index + 1}

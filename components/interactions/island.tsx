@@ -39,19 +39,23 @@ const HIDDEN_SIZE = { width: 126, height: 36 }
 const PART =
   "shrink-0 transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-active:delay-100 data-active:duration-450 not-data-active:pointer-events-none not-data-active:invisible not-data-active:absolute not-data-active:top-0 not-data-active:left-1/2 not-data-active:-translate-x-1/2 not-data-active:scale-90 not-data-active:opacity-0 not-data-active:blur-sm not-data-active:duration-150 motion-reduce:transition-none"
 
+function islandView(
+  notice: IslandNotice | null,
+  expanded: boolean,
+  compactCount: number
+): IslandView {
+  if (notice) return "notice"
+  if (compactCount <= 0) return "hidden"
+  return expanded ? "expanded" : "compact"
+}
+
 function IslandProvider({ children }: { children?: React.ReactNode }) {
   const [expanded, setExpanded] = React.useState(false)
   const [notice, setNotice] = React.useState<IslandNotice | null>(null)
   const [compactCount, setCompactCount] = React.useState(0)
   const timerRef = React.useRef(0)
 
-  const view: IslandView = notice
-    ? "notice"
-    : expanded && compactCount > 0
-      ? "expanded"
-      : compactCount > 0
-        ? "compact"
-        : "hidden"
+  const view = islandView(notice, expanded, compactCount)
 
   const dismiss = React.useCallback(() => {
     window.clearTimeout(timerRef.current)

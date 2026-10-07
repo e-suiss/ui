@@ -68,8 +68,8 @@ function applyOffset(
   }
   if (full) root.dataset.full = full
   else delete root.dataset.full
-  const open = offset > 0 ? "leading" : offset < 0 ? "trailing" : null
-  if (open) root.dataset.open = open
+  if (offset > 0) root.dataset.open = "leading"
+  else if (offset < 0) root.dataset.open = "trailing"
   else delete root.dataset.open
 }
 

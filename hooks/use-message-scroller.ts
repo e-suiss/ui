@@ -739,15 +739,15 @@ class MessageScrollerController {
     const position = this.options.defaultScrollPosition
     if (this.defaultScrollPositionApplied || this.itemCount === 0) return false
 
-    const applied =
-      position === "start"
-        ? this.scrollToStart()
-        : position === "last-anchor"
-          ? this.scrollToLastAnchor()
-          : this.scrollToEnd()
-
+    const applied = this.scrollToPosition(position)
     if (applied) this.markDefaultScrollPositionApplied()
     return applied
+  }
+
+  private scrollToPosition(position: MessageScrollerDefaultScrollPosition) {
+    if (position === "start") return this.scrollToStart()
+    if (position === "last-anchor") return this.scrollToLastAnchor()
+    return this.scrollToEnd()
   }
 
   private scrollToLastAnchor() {

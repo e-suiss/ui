@@ -36,9 +36,22 @@ const alerts: { value: Alert; label: string }[] = [
 const previewOptions = ["Always", "When Unlocked", "Never"]
 const groupingOptions = ["Automatic", "By App", "Off"]
 
+const miniScreenBars: Record<Alert, number[]> = {
+  lock: [58, 74],
+  center: [12, 29, 46, 63],
+  banner: [8],
+}
+
+function bannerFootnote(allow: boolean, banner: boolean, style: string) {
+  if (!allow) return "Notifications are off"
+  if (!banner) return "No banners"
+  return style === "persistent"
+    ? "Banner stays until dismissed"
+    : "Banner shows briefly"
+}
+
 function MiniScreen({ kind }: { kind: Alert }) {
-  const bars =
-    kind === "lock" ? [58, 74] : kind === "center" ? [12, 29, 46, 63] : [8]
+  const bars = miniScreenBars[kind]
   return (
     <span
       aria-hidden
@@ -112,13 +125,7 @@ export function SettingsNotifications() {
     previews === "Never"
       ? "Notification"
       : "Is the weekend trip to the coast still on?"
-  const footnote = !allow
-    ? "Notifications are off"
-    : enabled.banner
-      ? bannerStyle === "persistent"
-        ? "Banner stays until dismissed"
-        : "Banner shows briefly"
-      : "No banners"
+  const footnote = bannerFootnote(allow, enabled.banner, bannerStyle)
 
   return (
     <section className="grid min-h-140 bg-surface md:grid-cols-[minmax(0,1fr)_18.75rem]">

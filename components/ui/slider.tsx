@@ -1,6 +1,15 @@
 import { Slider as SliderPrimitive } from "@base-ui/react/slider"
 import { cn } from "cn"
 
+function thumbCount(
+  value: SliderPrimitive.Root.Props["value"],
+  defaultValue: SliderPrimitive.Root.Props["defaultValue"]
+) {
+  if (Array.isArray(value)) return value.length
+  if (Array.isArray(defaultValue)) return defaultValue.length
+  return 2
+}
+
 function Slider({
   className,
   defaultValue,
@@ -9,12 +18,6 @@ function Slider({
   max = 100,
   ...props
 }: SliderPrimitive.Root.Props) {
-  const _values = Array.isArray(value)
-    ? value
-    : Array.isArray(defaultValue)
-      ? defaultValue
-      : [min, max]
-
   return (
     <SliderPrimitive.Root
       className={cn("data-horizontal:w-full data-vertical:h-full", className)}
@@ -36,7 +39,7 @@ function Slider({
             className="bg-accent select-none data-horizontal:h-full data-vertical:w-full"
           />
         </SliderPrimitive.Track>
-        {Array.from({ length: _values.length }, (_, index) => (
+        {Array.from({ length: thumbCount(value, defaultValue) }, (_, index) => (
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
             key={index}

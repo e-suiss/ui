@@ -110,7 +110,7 @@ export function VerifyDevice() {
           {copy[phase].body}
         </p>
         <div className="mt-2.5 min-h-16" aria-live="polite">
-          {phase === "code" ? (
+          {phase === "code" && (
             <div className="transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none">
               <InputOTP
                 autoFocus
@@ -144,12 +144,14 @@ export function VerifyDevice() {
                 <p className="mt-2.5 text-sm text-danger">Incorrect code.</p>
               )}
             </div>
-          ) : phase === "ask" ? (
+          )}
+          {phase === "ask" && (
             <p className="flex items-center gap-2.5 text-sm text-label-secondary">
               <Spinner />
               Waiting for approval…
             </p>
-          ) : (
+          )}
+          {phase === "deny" && (
             <button
               type="button"
               onClick={() => setPhase("ask")}
@@ -173,7 +175,7 @@ export function VerifyDevice() {
           aria-label="Trusted device"
           className="relative w-67.5 overflow-hidden rounded-[0.875rem] bg-surface-raised/86 text-center text-label shadow-[0_20px_60px_rgb(0_0_0/0.3)] backdrop-blur-2xl backdrop-saturate-180 transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
         >
-          {phase === "code" ? (
+          {phase === "code" && (
             <>
               <div className="px-4 pt-5 pb-4.5">
                 <p className="text-lg font-semibold">
@@ -188,7 +190,8 @@ export function VerifyDevice() {
               </div>
               <AlertAction primary>OK</AlertAction>
             </>
-          ) : phase === "deny" ? (
+          )}
+          {phase === "deny" && (
             <>
               <div className="px-4 pt-5 pb-4.5">
                 <p className="text-lg font-semibold">Sign-in blocked</p>
@@ -200,7 +203,8 @@ export function VerifyDevice() {
                 Show request again
               </AlertAction>
             </>
-          ) : (
+          )}
+          {phase === "ask" && (
             <>
               <div className="px-4 pt-5 pb-4">
                 <p className="text-lg font-semibold">

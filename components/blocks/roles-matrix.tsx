@@ -69,7 +69,7 @@ export function RolesMatrix() {
       current.map((rows, g) =>
         rows.map((grants, p) =>
           g === group && p === permission
-            ? grants.map((value, r) => (r === role ? (value ? 0 : 1) : value))
+            ? grants.map((value, r) => (r === role ? Number(!value) : value))
             : grants
         )
       )

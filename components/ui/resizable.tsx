@@ -44,13 +44,8 @@ function markCollapsed(
   )) {
     const before = handle.previousElementSibling?.id ?? ""
     const after = handle.nextElementSibling?.id ?? ""
-    const collapsed =
-      (layout[before] ?? 1) < 0.5
-        ? "start"
-        : (layout[after] ?? 1) < 0.5
-          ? "end"
-          : undefined
-    if (collapsed) handle.dataset.collapsed = collapsed
+    if ((layout[before] ?? 1) < 0.5) handle.dataset.collapsed = "start"
+    else if ((layout[after] ?? 1) < 0.5) handle.dataset.collapsed = "end"
     else delete handle.dataset.collapsed
   }
 }

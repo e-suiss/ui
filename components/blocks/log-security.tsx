@@ -82,6 +82,12 @@ const initialAlerts: {
   },
 ]
 
+function scoreTone(score: number) {
+  if (score > 85) return "text-green"
+  if (score > 65) return "text-orange"
+  return "text-red"
+}
+
 export function LogSecurity() {
   const [alerts, setAlerts] = React.useState(() =>
     initialAlerts.map((alert) => ({ ...alert, resolved: false }))
@@ -96,15 +102,11 @@ export function LogSecurity() {
       (sum, level) => sum + count(level) * severity[level].weight,
       0
     )
-  const tone =
-    score > 85 ? "text-green" : score > 65 ? "text-orange" : "text-red"
-  const list = alerts.filter((alert) =>
+  const tone = scoreTone(score)
+  const list =
     filter === "All"
-      ? true
-      : filter === "Open"
-        ? !alert.resolved
-        : alert.resolved
-  )
+      ? alerts
+      : alerts.filter((alert) => alert.resolved === (filter === "Resolved"))
 
   const setResolved = (title: string, resolved: boolean) =>
     setAlerts((current) =>
