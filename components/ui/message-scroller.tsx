@@ -1,11 +1,13 @@
 "use client"
 
 import { mergeProps } from "@base-ui/react/merge-props"
+import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 import { useRender } from "@base-ui/react/use-render"
 import { ArrowDownIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
+import { ScrollBar } from "@/components/ui/scroll-area"
 import {
   MessageScrollerContext,
   type MessageScrollerOptions,
@@ -44,11 +46,11 @@ function MessageScroller({
   const rootRef = useMergedRefs(setRootElement, ref)
 
   return (
-    <div
+    <ScrollAreaPrimitive.Root
       ref={rootRef}
       data-slot="message-scroller"
       className={cn(
-        "relative flex size-full min-h-0 flex-col overflow-hidden",
+        "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
         className
       )}
       {...props}
@@ -82,35 +84,38 @@ function MessageScrollerViewport({
   useFrameThrottledResizeObserver(viewportElementRef, controller.handleResize)
 
   return (
-    <div
-      ref={viewportRef}
-      data-slot="message-scroller-viewport"
-      role={role}
-      aria-label={ariaLabel}
-      tabIndex={tabIndex}
-      className={cn(
-        "size-full min-h-0 min-w-0 data-scrollable:scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent data-pending-scroll:invisible",
-        className
-      )}
-      onKeyDown={(event) => {
-        controller.handleKeyboardScrollIntent(event.key)
-        onKeyDown?.(event)
-      }}
-      onScroll={(event) => {
-        controller.syncAfterScroll()
-        onScroll?.(event)
-      }}
-      onTouchMove={(event) => {
-        controller.handleUserScrollIntent()
-        onTouchMove?.(event)
-      }}
-      onWheel={(event) => {
-        controller.handleUserScrollIntent()
-        onWheel?.(event)
-      }}
-      {...props}
-      data-pending-scroll={isPendingScroll ? "" : undefined}
-    />
+    <>
+      <ScrollAreaPrimitive.Viewport
+        ref={viewportRef}
+        data-slot="message-scroller-viewport"
+        role={role}
+        aria-label={ariaLabel}
+        tabIndex={tabIndex}
+        className={cn(
+          "size-full min-h-0 min-w-0 overscroll-contain contain-content outline-none focus-visible:focus-ring data-scrollable:scroll-fade-b data-pending-scroll:invisible",
+          className
+        )}
+        onKeyDown={(event) => {
+          controller.handleKeyboardScrollIntent(event.key)
+          onKeyDown?.(event)
+        }}
+        onScroll={(event) => {
+          controller.syncAfterScroll()
+          onScroll?.(event)
+        }}
+        onTouchMove={(event) => {
+          controller.handleUserScrollIntent()
+          onTouchMove?.(event)
+        }}
+        onWheel={(event) => {
+          controller.handleUserScrollIntent()
+          onWheel?.(event)
+        }}
+        {...props}
+        data-pending-scroll={isPendingScroll ? "" : undefined}
+      />
+      <ScrollBar className="transition-opacity duration-200 group-has-data-autoscrolling/message-scroller:opacity-0 data-vertical:my-2 data-vertical:me-1 data-vertical:h-auto" />
+    </>
   )
 }
 
@@ -247,7 +252,7 @@ function MessageScrollerButton({
         tabIndex: active ? tabIndex : -1,
         onClick: handleClick,
         className: cn(
-          "border-separator bg-surface text-label hover:bg-item-hover hover:text-label absolute inset-s-1/2 -translate-x-1/2 transition-[translate,scale,opacity] duration-200 data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
+          "border-separator bg-surface text-label hover:bg-[color-mix(in_oklab,var(--surface),var(--label)_6%)] hover:text-label active:bg-[color-mix(in_oklab,var(--surface),var(--label)_10%)] absolute inset-s-1/2 -translate-x-1/2 transition-[translate,scale,opacity] duration-200 data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180",
           className
         ),
         children: children ?? (

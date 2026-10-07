@@ -549,6 +549,7 @@
       ],
       "requires": [
         "button",
+        "scroll-area",
         "use-message-scroller"
       ],
       "files": [
