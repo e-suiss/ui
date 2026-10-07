@@ -6,6 +6,11 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+const EMAIL = /.+@.+\..+/
+const UPPERCASE = /[A-Z]/
+const LOWERCASE = /[a-z]/
+const DIGIT = /\d/
+
 const rules = [
   {
     label: "At least 8 characters",
@@ -13,9 +18,9 @@ const rules = [
   },
   {
     label: "Upper and lowercase letters",
-    test: (value: string) => /[A-Z]/.test(value) && /[a-z]/.test(value),
+    test: (value: string) => UPPERCASE.test(value) && LOWERCASE.test(value),
   },
-  { label: "At least one number", test: (value: string) => /\d/.test(value) },
+  { label: "At least one number", test: (value: string) => DIGIT.test(value) },
 ]
 
 const steps = [
@@ -35,7 +40,7 @@ const steps = [
     placeholder: "name@example.com",
     type: "email",
     autoComplete: "email",
-    valid: (value: string) => /.+@.+\..+/.test(value),
+    valid: (value: string) => EMAIL.test(value),
   },
   {
     key: "password",

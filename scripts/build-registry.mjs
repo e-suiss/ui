@@ -19,6 +19,8 @@ const sources = [
   { dir: "hooks", type: "hook" },
 ]
 
+const SOURCE_FILE = /\.(tsx?|jsx?)$/
+
 function toTitle(name) {
   return name
     .split("-")
@@ -92,7 +94,7 @@ const items = []
 for (const { dir, type } of sources) {
   if (!existsSync(path.join(ROOT, dir))) continue
   const files = (await readdir(path.join(ROOT, dir)))
-    .filter((file) => /\.(tsx?|jsx?)$/.test(file))
+    .filter((file) => SOURCE_FILE.test(file))
     .sort()
   for (const file of files) items.push(await buildItem(dir, type, file))
 }

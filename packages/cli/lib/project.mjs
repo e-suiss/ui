@@ -21,6 +21,8 @@ const INSTALL_ARGS = {
 
 const TSCONFIGS = ["tsconfig.json", "tsconfig.app.json"]
 
+const TRAILING_WILDCARD = /\/?\*$/
+
 function readJsonc(file) {
   const text = readFileSync(file, "utf8")
   const withoutComments = text.replace(
@@ -78,7 +80,7 @@ export function findAliasRoot(cwd) {
       return path.resolve(
         cwd,
         options.baseUrl ?? ".",
-        target.replace(/\/?\*$/, "")
+        target.replace(TRAILING_WILDCARD, "")
       )
     }
   }

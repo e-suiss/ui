@@ -1,5 +1,7 @@
 import * as React from "react"
 
+const MAC_PLATFORM = /mac|iphone|ipad|ipod/i
+
 type NavigatorWithUserAgentData = Navigator & {
   userAgentData?: { platform?: string }
 }
@@ -9,7 +11,7 @@ let isMac: boolean | undefined
 export function isMacPlatform() {
   if (isMac === undefined) {
     const { userAgentData, platform } = navigator as NavigatorWithUserAgentData
-    isMac = /mac|iphone|ipad|ipod/i.test(userAgentData?.platform || platform)
+    isMac = MAC_PLATFORM.test(userAgentData?.platform || platform)
   }
   return isMac
 }

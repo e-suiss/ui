@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Spinner } from "@/components/ui/spinner"
 
+const EMAIL = /.+@.+\..+/
+
 const SHAKE = [0, -10, 9, -6, 4, 0].map((x) => ({
   transform: `translateX(${x}px)`,
 }))
@@ -52,7 +54,7 @@ export function LoginAccount() {
   const submit = (event: React.FormEvent) => {
     event.preventDefault()
     if (step === "email") {
-      if (!/.+@.+\..+/.test(email)) return fail("Enter a valid suiss Account.")
+      if (!EMAIL.test(email)) return fail("Enter a valid suiss Account.")
       setError("")
       setStep("password")
       window.setTimeout(() => passwordRef.current?.focus(), 380)

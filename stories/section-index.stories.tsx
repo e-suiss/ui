@@ -9,6 +9,8 @@ import {
 } from "@/components/interactions/section-index"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
+const UPPERCASE = /[A-Z]/
+
 const names = [
   "Aaron Price",
   "Abby Chen",
@@ -60,7 +62,7 @@ function groupByLetter() {
   const groups = new Map<string, string[]>()
   for (const name of names) {
     const first = name[0].toUpperCase()
-    const letter = /[A-Z]/.test(first) ? first : "#"
+    const letter = UPPERCASE.test(first) ? first : "#"
     groups.set(letter, [...(groups.get(letter) ?? []), name])
   }
   return [...groups.entries()].sort(([a], [b]) =>

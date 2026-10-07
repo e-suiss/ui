@@ -17,6 +17,8 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 
+const EMAIL = /.+@.+\..+/
+
 const services = [
   {
     icon: TruckIcon,
@@ -140,7 +142,7 @@ export function FooterServices() {
               noValidate
               onSubmit={(event) => {
                 event.preventDefault()
-                const valid = /.+@.+\..+/.test(email)
+                const valid = EMAIL.test(email)
                 setInvalid(!valid)
                 if (valid) setSubscribed(true)
               }}

@@ -7,6 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 
+const EMAIL = /.+@.+\..+/
+const UPPERCASE = /[A-Z]/
+const LOWERCASE = /[a-z]/
+const DIGIT = /\d/
+const SYMBOL = /[^A-Za-z0-9]/
+
 const stackClass =
   "overflow-hidden rounded-xl border border-separator-strong bg-surface transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10 *:not-first:border-t *:not-first:border-t-separator-strong"
 
@@ -20,14 +26,13 @@ const rules = [
   },
   {
     label: "Upper and lowercase letters",
-    test: (value: string) => /[A-Z]/.test(value) && /[a-z]/.test(value),
+    test: (value: string) => UPPERCASE.test(value) && LOWERCASE.test(value),
   },
-  { label: "At least one number", test: (value: string) => /\d/.test(value) },
+  { label: "At least one number", test: (value: string) => DIGIT.test(value) },
 ]
 
 const strength = (value: string) =>
-  rules.filter((rule) => rule.test(value)).length +
-  (/[^A-Za-z0-9]/.test(value) ? 1 : 0)
+  rules.filter((rule) => rule.test(value)).length + (SYMBOL.test(value) ? 1 : 0)
 
 function PasswordRules({ password }: { password: string }) {
   return (
@@ -78,7 +83,7 @@ export function SignupForm() {
     !!form.first &&
     !!form.last &&
     !!form.birthday &&
-    /.+@.+\..+/.test(form.email) &&
+    EMAIL.test(form.email) &&
     strength(form.password) >= 3 &&
     form.password === form.confirm
 

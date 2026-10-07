@@ -2,6 +2,8 @@ import { createInterface } from "node:readline/promises"
 
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR
 
+const YES_ANSWER = /^y(es)?$/i
+
 function paint(code, text) {
   return useColor ? `\x1b[${code}m${text}\x1b[0m` : text
 }
@@ -38,5 +40,5 @@ export async function confirm(question) {
     `${color.yellow("?")} ${question} ${color.dim("(y/N)")} `
   )
   prompt.close()
-  return /^y(es)?$/i.test(answer.trim())
+  return YES_ANSWER.test(answer.trim())
 }

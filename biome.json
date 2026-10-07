@@ -69,7 +69,8 @@
       },
       "performance": {
         "noDelete": "error",
-        "noReExportAll": "error"
+        "noReExportAll": "error",
+        "useTopLevelRegex": "error"
       }
     }
   },

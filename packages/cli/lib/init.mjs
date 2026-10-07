@@ -58,6 +58,22 @@ const NEXT_LAYOUTS = [
 const NEXT_FONT_NOTE =
   'Load the fonts in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }) and Questrial({ weight: "400", subsets: ["latin", "latin-ext"], variable: "--font-questrial" }), and add both .variable values to the <html> className.'
 
+const VERSION_NUMBER = /(\d+)(?:\.(\d+))?/
+const TSCONFIG_PATHS = /"paths"\s*:\s*\{/
+const TSCONFIG_COMPILER_OPTIONS = /"compilerOptions"\s*:\s*\{/
+const VITE_PLUGINS = /plugins\s*:\s*\[/
+const VITE_ALIAS = /["']@["']\s*:/
+const VITE_DEFINE_CONFIG = /defineConfig\(\{/
+const VITE_RESOLVE = /\bresolve\s*:/
+const INTER_VARIABLE = /variable:\s*["']--font-inter["']/
+const HTML_TAG = /<html\b[^>]*>/
+const CLASSNAME_LITERAL = /className="([^"]*)"/
+const CLASSNAME_ATTRIBUTE = /className=/
+const HTML_TAG_START = /<html\b/
+const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
+const NEXT_FONT_IMPORT =
+  /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
+
 function relative(project, file) {
   return path.relative(project.cwd, file)
 }
@@ -87,7 +103,7 @@ function installedVersion(project, name) {
 
 function assertTailwindVersion(project) {
   const version = installedVersion(project, "tailwindcss")
-  const match = version?.match(/(\d+)(?:\.(\d+))?/)
+  const match = version?.match(VERSION_NUMBER)
   if (!match) return
   const major = Number(match[1])
   const minor = match[2] === undefined ? undefined : Number(match[2])
@@ -120,8 +136,8 @@ function stylesheetPackages(css) {
 function addAliasTo(file, target) {
   let text = readFileSync(file, "utf8")
   const alias = `"@/*": ["${target}"]`
-  const paths = text.match(/"paths"\s*:\s*\{/)
-  const options = text.match(/"compilerOptions"\s*:\s*\{/)
+  const paths = text.match(TSCONFIG_PATHS)
+  const options = text.match(TSCONFIG_COMPILER_OPTIONS)
   if (paths) {
     text = text.replace(paths[0], `${paths[0]}\n      ${alias},`)
   } else if (options) {
@@ -167,11 +183,8 @@ function configureVite(project) {
   const manual = []
 
   if (!text.includes("@tailwindcss/vite")) {
-    if (/plugins\s*:\s*\[/.test(text)) {
-      text = text.replace(
-        /plugins\s*:\s*\[/,
-        (match) => `${match}tailwindcss(), `
-      )
+    if (VITE_PLUGINS.test(text)) {
+      text = text.replace(VITE_PLUGINS, (match) => `${match}tailwindcss(), `)
       text = `import tailwindcss from "@tailwindcss/vite"\n${text}`
     } else {
       manual.push(
@@ -180,10 +193,10 @@ function configureVite(project) {
     }
   }
 
-  if (!/["']@["']\s*:/.test(text)) {
-    if (/defineConfig\(\{/.test(text) && !/\bresolve\s*:/.test(text)) {
+  if (!VITE_ALIAS.test(text)) {
+    if (VITE_DEFINE_CONFIG.test(text) && !VITE_RESOLVE.test(text)) {
       text = text.replace(
-        /defineConfig\(\{/,
+        VITE_DEFINE_CONFIG,
         (match) =>
           `${match}\n  resolve: {\n    alias: {\n      "@": fileURLToPath(new URL("./src", import.meta.url)),\n    },\n  },`
       )
@@ -221,25 +234,23 @@ function configureNextFont(project) {
   if (!file) return [NEXT_FONT_NOTE]
 
   let text = readFileSync(file, "utf8")
-  if (/variable:\s*["']--font-inter["']/.test(text)) return []
+  if (INTER_VARIABLE.test(text)) return []
 
-  const html = text.match(/<html\b[^>]*>/)
+  const html = text.match(HTML_TAG)
   if (!html) return [NEXT_FONT_NOTE]
   let tag = html[0]
-  const literal = tag.match(/className="([^"]*)"/)
+  const literal = tag.match(CLASSNAME_LITERAL)
   if (literal) {
     tag = tag.replace(literal[0], fontClassName(` ${literal[1]}`))
-  } else if (!/className=/.test(tag)) {
-    tag = tag.replace(/<html\b/, `<html ${fontClassName("")}`)
+  } else if (!CLASSNAME_ATTRIBUTE.test(tag)) {
+    tag = tag.replace(HTML_TAG_START, `<html ${fontClassName("")}`)
   } else {
     return [NEXT_FONT_NOTE]
   }
   text = text.replace(html[0], tag)
 
-  const semi = /from\s+["'][^"']+["'];/.test(text) ? ";" : ""
-  const fontImport = text.match(
-    /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
-  )
+  const semi = SEMICOLON_IMPORT.test(text) ? ";" : ""
+  const fontImport = text.match(NEXT_FONT_IMPORT)
   if (fontImport) {
     text = text.replace(
       fontImport[0],

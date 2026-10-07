@@ -8,6 +8,12 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+const EMAIL = /.+@.+\..+/
+const UPPERCASE = /[A-Z]/
+const LOWERCASE = /[a-z]/
+const DIGIT = /\d/
+const SYMBOL = /[^A-Za-z0-9]/
+
 const image =
   "https://images.unsplash.com/photo-1599669454699-248893623440?w=1200&q=80&auto=format&fit=crop"
 
@@ -22,9 +28,9 @@ const levels = [
 const strength = (value: string) =>
   [
     value.length >= 8,
-    /[A-Z]/.test(value) && /[a-z]/.test(value),
-    /\d/.test(value),
-    /[^A-Za-z0-9]/.test(value),
+    UPPERCASE.test(value) && LOWERCASE.test(value),
+    DIGIT.test(value),
+    SYMBOL.test(value),
   ].filter(Boolean).length
 
 const strengthLabel = ["Weak", "Weak", "Fair", "Good", "Strong"]
@@ -35,7 +41,7 @@ export function SignupTrial() {
   const [terms, setTerms] = React.useState(false)
   const [done, setDone] = React.useState(false)
   const score = strength(password)
-  const valid = /.+@.+\..+/.test(email) && score >= 3 && terms
+  const valid = EMAIL.test(email) && score >= 3 && terms
 
   if (done) {
     return (

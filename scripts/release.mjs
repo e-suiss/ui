@@ -8,6 +8,8 @@ const MANIFESTS = [
 const BRANCH = "main"
 const USAGE = "Usage: pnpm release <patch|minor|major|x.y.z>"
 
+const EXACT_VERSION = /^\d+\.\d+\.\d+$/
+
 function git(...args) {
   return execFileSync("git", args, { encoding: "utf8" }).trim()
 }
@@ -35,7 +37,7 @@ function nextVersion(current, input) {
   if (input === "major") return `${major + 1}.0.0`
   if (input === "minor") return `${major}.${minor + 1}.0`
   if (input === "patch") return `${major}.${minor}.${patch + 1}`
-  if (/^\d+\.\d+\.\d+$/.test(input)) return input
+  if (EXACT_VERSION.test(input)) return input
   fail(USAGE)
 }
 

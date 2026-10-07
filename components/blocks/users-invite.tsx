@@ -36,6 +36,10 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { createToastManager, Toaster } from "@/components/ui/toast"
 
+const EMAIL = /.+@.+\..+/
+const TRAILING_SEPARATOR = /[, ]$/
+const TRAILING_COMMA = /,$/
+
 const nav: AppShellItem[] = [
   { value: "users", label: "Users", icon: <UsersIcon /> },
   { value: "roles", label: "Roles", icon: <ShieldIcon /> },
@@ -58,8 +62,8 @@ export function UsersInvite() {
   ])
 
   const commit = (value: string) => {
-    const email = value.trim().replace(/,$/, "")
-    if (/.+@.+\..+/.test(email) && !emails.includes(email))
+    const email = value.trim().replace(TRAILING_COMMA, "")
+    if (EMAIL.test(email) && !emails.includes(email))
       setEmails((current) => [...current, email])
     setDraft("")
   }
@@ -122,7 +126,7 @@ export function UsersInvite() {
                   value={draft}
                   onChange={(event) => {
                     const value = event.target.value
-                    if (/[, ]$/.test(value)) commit(value)
+                    if (TRAILING_SEPARATOR.test(value)) commit(value)
                     else setDraft(value)
                   }}
                   onKeyDown={(event) => {

@@ -86,13 +86,18 @@ try {
   const output = String(error.stdout ?? "")
   const blocking = output
     .split("\n")
-    .filter((line) => /error TS/.test(line) && !/TS4058/.test(line))
+    .filter(
+      (line) => TYPE_ERROR.test(line) && !UNNAMED_EXPORT_TYPE_ERROR.test(line)
+    )
   if (blocking.length) {
     console.error(blocking.join("\n"))
     process.exit(1)
   }
 }
 rmSync(tsconfig)
+
+const TYPE_ERROR = /error TS/
+const UNNAMED_EXPORT_TYPE_ERROR = /TS4058/
 
 function rewriteAliases(dir) {
   for (const item of readdirSync(dir, { withFileTypes: true })) {
