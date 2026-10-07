@@ -361,7 +361,7 @@ function SwipeAction({
       )}
       onClick={(event) => {
         onClick?.(event)
-        if (!fullSwipe) close()
+        if (!event.currentTarget.closest("[data-removing]")) close()
       }}
       {...props}
     />

@@ -122,6 +122,16 @@ describe("Tip card", () => {
     await expect.poll(() => frames().length, { timeout: 2000 }).toBe(0)
   })
 
+  it("unmounts at once when motion is reduced", async () => {
+    await cdp().send("Emulation.setEmulatedMedia", {
+      features: [{ name: "prefers-reduced-motion", value: "reduce" }],
+    })
+    await render(<CardTip id="pin" title="Pin" />)
+    await expect.element(note("Pin")).toBeVisible()
+    await page.getByRole("button", { name: "Dismiss tip" }).click()
+    await expect.poll(() => frames().length, { timeout: 200 }).toBe(0)
+  })
+
   it("stays hidden after a dismissal on the next mount", async () => {
     localStorage.setItem("tip:pin", "dismissed")
     await render(<CardTip id="pin" title="Pin" />)

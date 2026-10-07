@@ -146,6 +146,9 @@ function TipCard({
 
   React.useEffect(() => {
     if (visible) setMounted(true)
+    else if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setMounted(false)
+    }
   }, [visible])
 
   if (!mounted) return null

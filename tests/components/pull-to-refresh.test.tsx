@@ -208,6 +208,21 @@ describe("PullToRefresh", () => {
     pullBy(150)
     await expect.poll(phase, { timeout: 2000 }).toBe("settling")
     await expect.poll(phase, { timeout: 2000 }).toBe("idle")
+    expect(unhandled).toEqual([])
+  })
+
+  it("settles when the refresh throws synchronously", async () => {
+    window.addEventListener("unhandledrejection", onUnhandled)
+    await render(
+      <Inbox
+        onRefresh={() => {
+          throw new Error("offline")
+        }}
+      />
+    )
+    pullBy(150)
+    await expect.poll(phase, { timeout: 2000 }).toBe("idle")
+    expect(unhandled).toEqual([])
   })
 
   it("does not pull when the list is scrolled down", async () => {

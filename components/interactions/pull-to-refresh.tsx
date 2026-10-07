@@ -81,17 +81,16 @@ function PullToRefresh({
       enter("refreshing")
       setPull(HOLD)
       const started = performance.now()
-      try {
-        await onRefreshRef.current()
-      } finally {
-        const elapsed = performance.now() - started
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.max(0, MIN_REFRESH - elapsed))
-        )
-        enter("settling")
-        setPull(0)
-        settleTimer = window.setTimeout(() => enter("idle"), SETTLE)
-      }
+      await Promise.allSettled([
+        new Promise((resolve) => resolve(onRefreshRef.current())),
+      ])
+      const elapsed = performance.now() - started
+      await new Promise((resolve) =>
+        setTimeout(resolve, Math.max(0, MIN_REFRESH - elapsed))
+      )
+      enter("settling")
+      setPull(0)
+      settleTimer = window.setTimeout(() => enter("idle"), SETTLE)
     }
 
     const pullTo = (distance: number) => {

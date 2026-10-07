@@ -342,6 +342,17 @@ describe("SwipeActions", () => {
     expect(open()).toBeUndefined()
   })
 
+  it("closes the row when a full swipe action is tapped", async () => {
+    const onDelete = vi.fn()
+    await render(<List onDelete={onDelete} />)
+    drag(-100)
+    await expect.poll(() => translateX(), { timeout: 2000 }).toBe(-144)
+    await page.getByRole("button", { name: "Delete" }).first().click()
+    expect(onDelete).toHaveBeenCalledOnce()
+    expect(offset()).toBe(0)
+    expect(open()).toBeUndefined()
+  })
+
   it("closes when another row opens", async () => {
     await render(<List />)
     drag(-100)
