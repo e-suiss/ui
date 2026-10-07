@@ -28,7 +28,8 @@
     "hooks/**/*.ts",
     "stories/**/*.tsx",
     ".storybook/**/*.ts",
-    ".storybook/**/*.tsx"
+    ".storybook/**/*.tsx",
+    "vitest.config.ts"
   ],
   "exclude": ["node_modules"]
 }

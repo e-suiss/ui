@@ -17,6 +17,8 @@ pre-push:
       run: pnpm knip
     registry:
       run: pnpm registry:check
+    test:
+      run: pnpm test
 
 commit-msg:
   commands:
