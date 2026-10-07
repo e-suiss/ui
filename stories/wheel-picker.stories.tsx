@@ -50,6 +50,27 @@ export const Default: Story = {
   ),
 }
 
+const slots = Array.from({ length: 11 }, (_, index) => {
+  const minutes = 18 * 60 + index * 30
+  return `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")}`
+})
+
+const booked = new Set(["19:30", "20:00", "20:30"])
+
+export const DisabledItems: Story = {
+  render: (args) => (
+    <WheelPicker {...args}>
+      <WheelPickerColumn aria-label="Reservation time" defaultValue="19:00">
+        {slots.map((slot) => (
+          <WheelPickerItem key={slot} value={slot} disabled={booked.has(slot)}>
+            {slot}
+          </WheelPickerItem>
+        ))}
+      </WheelPickerColumn>
+    </WheelPicker>
+  ),
+}
+
 function toDayValue(date: Date) {
   return [
     date.getFullYear(),

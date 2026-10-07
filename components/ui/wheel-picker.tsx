@@ -70,6 +70,31 @@ function curveKeyframes(height: number) {
   )
 }
 
+function isEnabled(item: HTMLElement | undefined) {
+  return item !== undefined && !item.hasAttribute("data-disabled")
+}
+
+function enabledIndex(items: HTMLElement[], from: number, step: 1 | -1) {
+  for (let index = from; index >= 0 && index < items.length; index += step) {
+    if (isEnabled(items[index])) return index
+  }
+  return -1
+}
+
+function nearestEnabledIndex(items: HTMLElement[], from: number) {
+  for (let distance = 0; distance < items.length; distance++) {
+    if (isEnabled(items[from - distance])) return from - distance
+    if (isEnabled(items[from + distance])) return from + distance
+  }
+  return -1
+}
+
+function scrollBehavior(): ScrollBehavior {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth"
+}
+
 function WheelPicker({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -182,9 +207,14 @@ function WheelPickerColumn({
   }, [getItems])
 
   const settle = React.useCallback(() => {
-    const next = getItems()[getCenteredIndex()]?.dataset.value
-    if (next !== undefined) select(next)
-  }, [getItems, getCenteredIndex, select])
+    const items = getItems()
+    const centered = getCenteredIndex()
+    const index = nearestEnabledIndex(items, centered)
+    const next = items[index]?.dataset.value
+    if (next === undefined) return
+    if (index !== centered) scrollTo(index, scrollBehavior())
+    select(next)
+  }, [getItems, getCenteredIndex, scrollTo, select])
 
   const handleScroll = React.useCallback(() => {
     cancelAnimationFrame(frameRef.current)
@@ -199,7 +229,8 @@ function WheelPickerColumn({
       const item = (event.target as HTMLElement).closest<HTMLElement>(
         "[data-slot=wheel-picker-item]"
       )
-      if (item?.dataset.value !== undefined) select(item.dataset.value)
+      if (item?.dataset.value === undefined || !isEnabled(item)) return
+      select(item.dataset.value)
     },
     [select]
   )
@@ -208,27 +239,27 @@ function WheelPickerColumn({
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       const items = getItems()
       const current = Math.max(getIndex(valueRef.current), 0)
+      const last = items.length - 1
       let target: number
 
       if (event.key === "ArrowDown") {
-        target = current + 1
+        target = enabledIndex(items, current + 1, 1)
       } else if (event.key === "ArrowUp") {
-        target = current - 1
+        target = enabledIndex(items, current - 1, -1)
       } else if (event.key === "PageDown") {
-        target = current + 5
+        target = nearestEnabledIndex(items, Math.min(current + 5, last))
       } else if (event.key === "PageUp") {
-        target = current - 5
+        target = nearestEnabledIndex(items, Math.max(current - 5, 0))
       } else if (event.key === "Home") {
-        target = 0
+        target = enabledIndex(items, 0, 1)
       } else if (event.key === "End") {
-        target = items.length - 1
+        target = enabledIndex(items, last, -1)
       } else {
         return
       }
 
       event.preventDefault()
-      const next =
-        items[Math.min(Math.max(target, 0), items.length - 1)]?.dataset.value
+      const next = items[target]?.dataset.value
       if (next !== undefined) select(next)
     },
     [getItems, getIndex, select]
@@ -310,10 +341,7 @@ function WheelPickerColumn({
   React.useEffect(() => {
     const index = getIndex(value)
     if (index === -1 || index === getCenteredIndex()) return
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
-    scrollTo(index, reducedMotion ? "auto" : "smooth")
+    scrollTo(index, scrollBehavior())
   }, [value, getIndex, getCenteredIndex, scrollTo])
 
   React.useEffect(
@@ -352,10 +380,11 @@ function WheelPickerColumn({
 
 function WheelPickerItem({
   value,
+  disabled = false,
   className,
   children,
   ...props
-}: React.ComponentProps<"div"> & { value: string }) {
+}: React.ComponentProps<"div"> & { value: string; disabled?: boolean }) {
   const { value: selectedValue, getItemId } = useWheelPickerColumn()
   const selected = selectedValue === value
 
@@ -365,11 +394,13 @@ function WheelPickerItem({
       role="option"
       tabIndex={-1}
       aria-selected={selected}
+      aria-disabled={disabled || undefined}
       data-slot="wheel-picker-item"
       data-value={value}
       data-selected={selected ? "" : undefined}
+      data-disabled={disabled ? "" : undefined}
       className={cn(
-        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-label tabular-nums select-none",
+        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-label tabular-nums select-none data-disabled:text-label-tertiary",
         className
       )}
       {...props}
