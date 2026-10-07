@@ -284,7 +284,6 @@
       ],
       "requires": [
         "dialog",
-        "input-group",
         "use-platform"
       ],
       "files": [
