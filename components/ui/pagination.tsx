@@ -5,9 +5,10 @@ import {
   CaretRightIcon,
   DotsThreeIcon,
 } from "@phosphor-icons/react"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import type * as React from "react"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -42,7 +43,7 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean
-} & Pick<React.ComponentProps<typeof Button>, "size"> &
+} & Pick<VariantProps<typeof buttonVariants>, "size"> &
   React.ComponentProps<"a">
 
 function PaginationLink({
@@ -52,22 +53,16 @@ function PaginationLink({
   ...props
 }: PaginationLinkProps) {
   return (
-    <Button
-      variant={isActive ? "secondary" : "ghost"}
-      size={size}
+    <a
+      aria-current={isActive ? "page" : undefined}
+      data-slot="pagination-link"
+      data-active={isActive}
       className={cn(
+        buttonVariants({ variant: isActive ? "secondary" : "ghost", size }),
         "text-sm tabular-nums aria-disabled:pointer-events-none aria-disabled:text-label-quaternary data-active:font-semibold",
         className
       )}
-      nativeButton={false}
-      render={
-        <a
-          aria-current={isActive ? "page" : undefined}
-          data-slot="pagination-link"
-          data-active={isActive}
-          {...props}
-        />
-      }
+      {...props}
     />
   )
 }

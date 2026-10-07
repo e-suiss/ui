@@ -17,8 +17,7 @@ import {
   PaginationSummary,
 } from "@/components/ui/pagination"
 
-const control = (name: string) =>
-  page.getByRole("button", { name, exact: true })
+const control = (name: string) => page.getByRole("link", { name, exact: true })
 
 function Basic({ current = 2 }: { current?: number }) {
   return (
@@ -49,6 +48,17 @@ function Basic({ current = 2 }: { current?: number }) {
 }
 
 describe("Pagination", () => {
+  it("announces page controls as links, not buttons", async () => {
+    await render(<Basic />)
+    const links = document.querySelectorAll("[data-slot=pagination-link]")
+    expect(links.length).toBeGreaterThan(0)
+    for (const link of links) {
+      expect(link.tagName).toBe("A")
+      expect(link.hasAttribute("role")).toBe(false)
+    }
+    expect(page.getByRole("button").elements()).toHaveLength(0)
+  })
+
   it("is a navigation landmark labelled pagination", async () => {
     await render(<Basic />)
     await expect
@@ -156,12 +166,12 @@ describe("Pagination", () => {
     const group = page.getByRole("group", { name: "Page navigation" })
     await expect.element(group).toBeVisible()
     await expect
-      .element(group.getByRole("button", { name: "Go to first page" }))
+      .element(group.getByRole("link", { name: "Go to first page" }))
       .toBeVisible()
     await expect
-      .element(group.getByRole("button", { name: "Go to last page" }))
+      .element(group.getByRole("link", { name: "Go to last page" }))
       .toBeVisible()
-    expect(group.getByRole("button").elements()).toHaveLength(4)
+    expect(group.getByRole("link").elements()).toHaveLength(4)
     await expect.element(page.getByText("21–30 / 62")).toBeVisible()
 
     const input = page.getByRole("textbox", { name: "Page" })

@@ -50,8 +50,7 @@ function rows() {
   )
 }
 
-const control = (name: string) =>
-  page.getByRole("button", { name, exact: true })
+const control = (name: string) => page.getByRole("link", { name, exact: true })
 const previous = () => control("Go to previous page")
 const next = () => control("Go to next page")
 
