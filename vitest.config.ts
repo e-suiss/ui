@@ -13,18 +13,18 @@ export default defineConfig({
         test: {
           name: "cli",
           environment: "node",
-          include: ["tests/cli/**/*.test.mjs"],
+          include: ["tests/{cli,scripts}/**/*.test.mjs"],
         },
       },
       {
         extends: true,
         plugins: [tailwindcss()],
         optimizeDeps: {
-          entries: ["tests/{hooks,components}/**/*.test.tsx"],
+          entries: ["tests/{hooks,components,blocks}/**/*.test.tsx"],
         },
         test: {
           name: "browser",
-          include: ["tests/{hooks,components}/**/*.test.tsx"],
+          include: ["tests/{hooks,components,blocks}/**/*.test.tsx"],
           setupFiles: ["tests/setup.ts"],
           browser: {
             enabled: true,
