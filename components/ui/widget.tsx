@@ -122,9 +122,10 @@ function Widget({
     const move = (moveEvent: PointerEvent) => {
       const width = startWidth + (moveEvent.clientX - startX) * direction
       const height = startHeight + moveEvent.clientY - startY
+      const stretch = free ? 0 : 48
       setFreeSize([
-        Math.max(minWidth, free ? width : Math.min(maxWidth + 48, width)),
-        Math.max(minHeight, free ? height : Math.min(maxHeight + 48, height)),
+        Math.max(minWidth, Math.min(maxWidth + stretch, width)),
+        Math.max(minHeight, Math.min(maxHeight + stretch, height)),
       ])
       if (free) return
       const next = nearestSize(width, height, sizes)

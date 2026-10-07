@@ -280,6 +280,28 @@ describe("Widget", () => {
     expect(box(widget())).toEqual([168, 168])
   })
 
+  it("does not grow past the extra-large size in free mode", async () => {
+    await render(
+      <Widget resizable="free" defaultSize="large">
+        Content
+      </Widget>
+    )
+    await expect.poll(() => box(widget())).toEqual([352, 352])
+    await dragBy(2000, 2000)
+    expect(box(widget())).toEqual([720, 352])
+  })
+
+  it("does not grow past the largest of its sizes in free mode", async () => {
+    await render(
+      <Widget resizable="free" sizes={["small", "medium"]}>
+        Content
+      </Widget>
+    )
+    await expect.poll(() => box(widget())).toEqual([168, 168])
+    await dragBy(500, 500)
+    expect(box(widget())).toEqual([352, 168])
+  })
+
   it("returns to the default size on double-click in free mode", async () => {
     await render(
       <Widget resizable="free" defaultSize="medium">
