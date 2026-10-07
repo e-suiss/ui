@@ -8,13 +8,25 @@ import * as React from "react"
 function InputOTP({
   className,
   containerClassName,
+  value,
+  defaultValue,
+  onChange,
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
 }) {
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultValue === undefined ? "" : String(defaultValue)
+  )
+
   return (
     <OTPInput
       data-slot="input-otp"
+      value={value ?? uncontrolledValue}
+      onChange={(next: string) => {
+        if (value === undefined) setUncontrolledValue(next)
+        onChange?.(next)
+      }}
       containerClassName={cn(
         "cn-input-otp flex items-center has-disabled:bg-control-disabled has-disabled:text-label-quaternary",
         containerClassName

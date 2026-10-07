@@ -1,8 +1,9 @@
 import { CalendarBlankIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   HoverCard,
   HoverCardContent,
@@ -16,7 +17,7 @@ const meta = {
     <HoverCard {...args}>
       <HoverCardTrigger
         href="#"
-        render={<Button variant="link" nativeButton={false} />}
+        className={buttonVariants({ variant: "link" })}
       >
         @nextjs
       </HoverCardTrigger>
@@ -46,10 +47,52 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("link", { name: "@nextjs" })
+
+    await step(
+      "opens on hover and closes when the pointer leaves",
+      async () => {
+        await userEvent.hover(trigger)
+        await waitFor(
+          () =>
+            expect(
+              screen.getByText(
+                "The React framework, created and maintained by @vercel."
+              )
+            ).toBeVisible(),
+          { timeout: 3000 }
+        )
+        await userEvent.unhover(trigger)
+        await waitFor(
+          () => expect(screen.queryByText("Joined December 2021")).toBeNull(),
+          { timeout: 3000 }
+        )
+      }
+    )
+
+    await step("opens on keyboard focus", async () => {
+      await userEvent.tab()
+      await expect(trigger).toHaveFocus()
+      await waitFor(
+        () => expect(screen.getByText("Joined December 2021")).toBeVisible(),
+        { timeout: 3000 }
+      )
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async ({ step }) => {
+    await step("renders the card open on mount", async () => {
+      await waitFor(
+        () => expect(screen.getByText("Joined December 2021")).toBeVisible(),
+        { timeout: 3000 }
+      )
+    })
+  },
 }
 
 export const Sides: Story = {
@@ -59,7 +102,7 @@ export const Sides: Story = {
         <HoverCard key={side} {...args}>
           <HoverCardTrigger
             href="#"
-            render={<Button variant="outline" nativeButton={false} />}
+            className={buttonVariants({ variant: "outline" })}
           >
             {side.charAt(0).toUpperCase() + side.slice(1)}
           </HoverCardTrigger>
