@@ -178,6 +178,20 @@ describe("WheelPicker", () => {
     )
   })
 
+  it("keeps quick key presses made while a scroll is finishing", async () => {
+    const onValueChange = vi.fn()
+    await render(<Fruits onValueChange={onValueChange} />)
+    await settled()
+    column().focus()
+    await userEvent.keyboard("{ArrowDown}")
+    await expect.poll(centered).toBe("Mango")
+    await userEvent.keyboard("{ArrowUp}{ArrowUp}")
+    await settled()
+    await centeredOn("Grape")
+    expect(onValueChange).toHaveBeenLastCalledWith("Grape")
+    expect(selected()).toEqual(["Grape"])
+  })
+
   it("jumps with Home, End, PageDown and PageUp and clamps at the ends", async () => {
     const onValueChange = vi.fn()
     await render(<Fruits onValueChange={onValueChange} />)

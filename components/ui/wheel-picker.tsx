@@ -166,14 +166,26 @@ function WheelPickerColumn({
     [valueProp, onValueChange]
   )
 
+  const targetRef = React.useRef<number | null>(null)
+
   const scrollTo = React.useCallback(
     (index: number, behavior: ScrollBehavior) => {
+      const column = columnRef.current
       const item = getItems()[index]
-      if (!item) return
-      columnRef.current?.scrollTo({ top: index * item.offsetHeight, behavior })
+      if (!column || !item) return
+      const top = index * item.offsetHeight
+      targetRef.current =
+        behavior === "smooth" && Math.abs(column.scrollTop - top) >= 1
+          ? index
+          : null
+      column.scrollTo({ top, behavior })
     },
     [getItems]
   )
+
+  const releaseTarget = React.useCallback(() => {
+    targetRef.current = null
+  }, [])
 
   const paintedRef = React.useRef<HTMLElement[]>([])
   const updateRef = React.useRef<() => void>(() => undefined)
@@ -209,6 +221,10 @@ function WheelPickerColumn({
   const settle = React.useCallback(() => {
     const items = getItems()
     const centered = getCenteredIndex()
+    if (targetRef.current !== null) {
+      if (centered !== targetRef.current) return
+      targetRef.current = null
+    }
     const index = nearestEnabledIndex(items, centered)
     const next = items[index]?.dataset.value
     if (next === undefined) return
@@ -364,6 +380,9 @@ function WheelPickerColumn({
         }
         onScroll={handleScroll}
         onScrollEnd={settle}
+        onWheel={releaseTarget}
+        onTouchStart={releaseTarget}
+        onPointerDown={releaseTarget}
         onClickCapture={handleClick}
         onKeyDownCapture={handleKeyDown}
         className={cn(
