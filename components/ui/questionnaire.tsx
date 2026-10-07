@@ -61,6 +61,10 @@ const checkedAttributes = {
   checked: toggleAttributes("data-checked", "data-unchecked"),
 }
 
+const QuestionnaireTitleIdContext = React.createContext<string | undefined>(
+  undefined
+)
+
 function Questionnaire({
   className,
   defaultItem,
@@ -174,6 +178,7 @@ function QuestionnaireItem({
     ref,
     required,
   })
+  const titleId = React.useId()
   const element = useRender({
     defaultTagName: "fieldset",
     ref: questionnaireItem.ref,
@@ -192,7 +197,9 @@ function QuestionnaireItem({
 
   return (
     <QuestionnaireItemContext.Provider value={questionnaireItem.context}>
-      {element}
+      <QuestionnaireTitleIdContext.Provider value={titleId}>
+        {element}
+      </QuestionnaireTitleIdContext.Provider>
     </QuestionnaireItemContext.Provider>
   )
 }
@@ -201,13 +208,15 @@ function QuestionnaireTitle({
   className,
   render,
   ...props
-}: useRender.ComponentProps<"legend">) {
+}: Omit<useRender.ComponentProps<"legend">, "id">) {
   useQuestionnaireItemContext("QuestionnaireTitle")
+  const titleId = React.useContext(QuestionnaireTitleIdContext)
 
   return useRender({
     defaultTagName: "legend",
     render,
     props: {
+      id: titleId,
       "data-slot": "questionnaire-title",
       className: cn(
         "font-heading text-base font-semibold text-pretty [&:not(:has(~[data-slot=questionnaire-description]))]:mb-5",
@@ -388,6 +397,7 @@ function QuestionnaireInput({
     type,
     value,
   })
+  const titleId = React.useContext(QuestionnaireTitleIdContext)
   const input = useRender({
     defaultTagName: "input",
     ref: questionnaireInput.ref,
@@ -397,6 +407,9 @@ function QuestionnaireInput({
       filled: toggleAttributes("data-filled", "data-empty"),
     },
     props: {
+      ...(props["aria-label"] === undefined && {
+        "aria-labelledby": titleId,
+      }),
       ...questionnaireInput.inputProps,
       "data-slot": "questionnaire-input",
       className: cn(
