@@ -67,7 +67,7 @@ const meta = {
   component: Command,
   decorators: [
     (Story) => (
-      <div className="w-96">
+      <div className="w-140">
         <Story />
       </div>
     ),
