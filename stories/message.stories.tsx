@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
@@ -51,6 +52,14 @@ export const Default: Story = {
       </MessageContent>
     </Message>
   ),
+  play: async ({ canvas, step }) => {
+    await step("shows the avatar and the message text", async () => {
+      await expect(canvas.getByText("MK")).toBeVisible()
+      await expect(
+        canvas.getByText("Are we still on for lunch tomorrow?")
+      ).toBeVisible()
+    })
+  },
 }
 
 export const AlignEnd: Story = {
@@ -64,6 +73,13 @@ export const AlignEnd: Story = {
       </MessageContent>
     </Message>
   ),
+  play: async ({ canvasElement, step }) => {
+    await step("aligns the message to the end", async () => {
+      await expect(
+        canvasElement.querySelector('[data-slot="message"]')
+      ).toHaveAttribute("data-align", "end")
+    })
+  },
 }
 
 export const WithHeaderAndFooter: Story = {
@@ -85,6 +101,12 @@ export const WithHeaderAndFooter: Story = {
       </MessageContent>
     </Message>
   ),
+  play: async ({ canvas, step }) => {
+    await step("shows the sender and timestamp", async () => {
+      await expect(canvas.getByText("Jordan Lee")).toBeVisible()
+      await expect(canvas.getByText("9:41 AM")).toBeVisible()
+    })
+  },
 }
 
 export const Conversation: Story = {

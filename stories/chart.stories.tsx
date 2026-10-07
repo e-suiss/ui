@@ -11,6 +11,7 @@ import {
   PieChart,
   XAxis,
 } from "recharts"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   type ChartConfig,
@@ -88,7 +89,29 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("draws a bar for every month", async () => {
+      await expect(await canvas.findByText("Jan")).toBeVisible()
+      await expect(canvas.getByText("Jun")).toBeVisible()
+      await waitFor(() =>
+        expect(
+          canvasElement.querySelectorAll(".recharts-bar-rectangle")
+        ).toHaveLength(visitors.length)
+      )
+    })
+
+    await step("shows the tooltip from the keyboard", async () => {
+      await userEvent.tab()
+      await userEvent.keyboard("{ArrowRight}")
+      await waitFor(() =>
+        expect(screen.getByText("February")).toBeInTheDocument()
+      )
+      await expect(screen.getByText("Desktop")).toBeInTheDocument()
+      await expect(screen.getByText("305")).toBeInTheDocument()
+    })
+  },
+}
 
 export const MultipleSeries: Story = {
   args: {
@@ -108,6 +131,10 @@ export const MultipleSeries: Story = {
         <Bar dataKey="mobile" fill="var(--color-mobile)" radius={6} />
       </BarChart>
     ),
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText("Desktop")).toBeVisible()
+    await expect(canvas.getByText("Mobile")).toBeVisible()
   },
 }
 
@@ -233,5 +260,10 @@ export const Donut: Story = {
         <ChartLegend content={<ChartLegendContent nameKey="browser" />} />
       </PieChart>
     ),
+  },
+  play: async ({ canvas }) => {
+    for (const label of ["Safari", "Chrome", "Firefox", "Edge", "Other"]) {
+      await expect(await canvas.findByText(label)).toBeVisible()
+    }
   },
 }

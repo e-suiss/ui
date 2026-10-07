@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -12,7 +13,15 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    await step("announces itself as a loading status", async () => {
+      await expect(
+        canvas.getByRole("status", { name: "Loading" })
+      ).toBeVisible()
+    })
+  },
+}
 
 export const Sizes: Story = {
   render: (args) => (
@@ -48,4 +57,12 @@ export const InButton: Story = {
       </Button>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("keeps the busy buttons disabled with a status", async () => {
+      for (const button of canvas.getAllByRole("button")) {
+        await expect(button).toBeDisabled()
+      }
+      await expect(canvas.getAllByRole("status")).toHaveLength(2)
+    })
+  },
 }

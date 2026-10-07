@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -35,7 +36,17 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByPlaceholderText("Enter your name")
+
+    await step("accepts typed text", async () => {
+      await userEvent.type(input, "Ada")
+      await expect(input).toHaveValue("Ada")
+      await expect(input).toHaveFocus()
+    })
+  },
+}
 
 export const Sizes: Story = {
   render: (args) => (
@@ -69,6 +80,16 @@ export const Types: Story = {
 
 export const WithValue: Story = {
   args: { defaultValue: "Jane Doe" },
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox")
+
+    await step("replaces the default value", async () => {
+      await expect(input).toHaveValue("Jane Doe")
+      await userEvent.clear(input)
+      await userEvent.type(input, "Ada")
+      await expect(input).toHaveValue("Ada")
+    })
+  },
 }
 
 export const File: Story = {
@@ -81,8 +102,22 @@ export const Invalid: Story = {
     defaultValue: "jane@",
     "aria-invalid": true,
   },
+  play: async ({ canvas, step }) => {
+    await step("flags the input as invalid", async () => {
+      await expect(canvas.getByRole("textbox")).toBeInvalid()
+    })
+  },
 }
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox")
+
+    await step("ignores typing while disabled", async () => {
+      await expect(input).toBeDisabled()
+      await userEvent.type(input, "Ada")
+      await expect(input).toHaveValue("")
+    })
+  },
 }

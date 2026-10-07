@@ -12,6 +12,7 @@ import {
   UsersIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Separator } from "@/components/ui/separator"
 import {
@@ -242,32 +243,102 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+function bySlot(canvasElement: HTMLElement, slot: string) {
+  const element = canvasElement.querySelector<HTMLElement>(
+    `[data-slot="${slot}"]`
+  )
+  if (!element) throw new Error(`${slot} not rendered`)
+  return element
+}
+
+function sidebarElement(canvasElement: HTMLElement) {
+  return bySlot(canvasElement, "sidebar")
+}
+
 export const Default: Story = {
   render: (args) => <AppShell {...args} />,
+  play: async ({ canvas, canvasElement, step }) => {
+    const sidebar = sidebarElement(canvasElement)
+    const trigger = bySlot(canvasElement, "sidebar-trigger")
+
+    await step("renders the navigation expanded", async () => {
+      await expect(sidebar).toHaveAttribute("data-state", "expanded")
+      await expect(canvas.getByRole("link", { name: "Home" })).toHaveAttribute(
+        "data-active"
+      )
+      await expect(canvas.getByText("12")).toBeVisible()
+    })
+
+    await step("collapses to icons from the trigger", async () => {
+      await userEvent.click(trigger)
+      await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+      await expect(sidebar).toHaveAttribute("data-collapsible", "icon")
+    })
+
+    await step("shows a tooltip for an icon while collapsed", async () => {
+      await userEvent.hover(canvas.getByRole("link", { name: "Inbox" }))
+      await waitFor(() =>
+        expect(
+          document.querySelector('[data-slot="tooltip-content"]')
+        ).toHaveTextContent("Inbox")
+      )
+      await userEvent.unhover(canvas.getByRole("link", { name: "Inbox" }))
+    })
+
+    await step("expands again with the keyboard shortcut", async () => {
+      await userEvent.keyboard("{Control>}b{/Control}{Meta>}b{/Meta}")
+      await expect(sidebar).toHaveAttribute("data-state", "expanded")
+    })
+  },
 }
 
 export const Floating: Story = {
-  ...Default,
   args: { variant: "floating" },
+  render: Default.render,
 }
 
 export const Inset: Story = {
-  ...Default,
   args: { variant: "inset" },
+  render: Default.render,
 }
 
 export const Collapsed: Story = {
   render: (args) => <AppShell {...args} defaultOpen={false} />,
+  play: async ({ canvasElement, step }) => {
+    const sidebar = sidebarElement(canvasElement)
+
+    await step("starts collapsed and expands from the rail", async () => {
+      await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+      await userEvent.click(bySlot(canvasElement, "sidebar-rail"))
+      await expect(sidebar).toHaveAttribute("data-state", "expanded")
+    })
+  },
 }
 
 export const Offcanvas: Story = {
-  ...Default,
   args: { collapsible: "offcanvas" },
+  render: Default.render,
+  play: async ({ canvasElement, step }) => {
+    const sidebar = sidebarElement(canvasElement)
+
+    await step("slides fully off canvas when collapsed", async () => {
+      await userEvent.click(bySlot(canvasElement, "sidebar-trigger"))
+      await expect(sidebar).toHaveAttribute("data-collapsible", "offcanvas")
+    })
+  },
 }
 
 export const RightSide: Story = {
-  ...Default,
   args: { side: "right" },
+  render: Default.render,
+  play: async ({ canvasElement, step }) => {
+    await step("places the sidebar on the right", async () => {
+      await expect(sidebarElement(canvasElement)).toHaveAttribute(
+        "data-side",
+        "right"
+      )
+    })
+  },
 }
 
 export const Loading: Story = {
@@ -300,4 +371,12 @@ export const Loading: Story = {
       }
     />
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("renders placeholders instead of links", async () => {
+      await expect(
+        canvasElement.querySelectorAll('[data-slot="sidebar-menu-skeleton"]')
+      ).toHaveLength(7)
+      await expect(canvas.queryAllByRole("link")).toHaveLength(0)
+    })
+  },
 }

@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   NavigationMenu,
@@ -19,6 +20,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+
+const ANALYTICS = /^Analytics/
 
 const products = [
   {
@@ -119,11 +122,68 @@ export const Default: Story = {
       </NavigationMenuList>
     </NavigationMenu>
   ),
+  play: async ({ canvas, step }) => {
+    const products = canvas.getByRole("button", { name: "Products" })
+    const resources = canvas.getByRole("button", { name: "Resources" })
+
+    await step("opens a panel from its trigger", async () => {
+      await userEvent.click(products)
+      await expect(
+        await screen.findByRole("link", { name: ANALYTICS })
+      ).toBeInTheDocument()
+      await expect(products).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("switches to another panel on hover", async () => {
+      await userEvent.hover(resources)
+      await expect(
+        await screen.findByRole("link", { name: "API reference" })
+      ).toBeInTheDocument()
+      await expect(resources).toHaveAttribute("aria-expanded", "true")
+      await expect(products).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(screen.queryByRole("link", { name: "API reference" })).toBeNull()
+      )
+      await expect(resources).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("opens from the keyboard and tabs into the panel", async () => {
+      resources.focus()
+      await userEvent.keyboard("{Enter}")
+      await screen.findByRole("link", { name: "Documentation" })
+      await userEvent.tab()
+      await expect(
+        screen.getByRole("link", { name: "Documentation" })
+      ).toHaveFocus()
+    })
+
+    await step("returns focus to the trigger on Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(screen.queryByRole("link", { name: "Documentation" })).toBeNull()
+      )
+      await expect(resources).toHaveFocus()
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultValue: "products" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("opens the products panel on mount", async () => {
+      await expect(
+        await screen.findByRole("link", { name: ANALYTICS })
+      ).toBeInTheDocument()
+      await expect(
+        canvas.getByRole("button", { name: "Products" })
+      ).toHaveAttribute("aria-expanded", "true")
+    })
+  },
 }
 
 export const LinksOnly: Story = {
@@ -144,6 +204,16 @@ export const LinksOnly: Story = {
       </NavigationMenuList>
     </NavigationMenu>
   ),
+  play: async ({ canvas, step }) => {
+    await step("marks the active link as the current page", async () => {
+      await expect(
+        canvas.getByRole("link", { name: "Overview" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(
+        canvas.getByRole("link", { name: "Blog" })
+      ).not.toHaveAttribute("aria-current")
+    })
+  },
 }
 
 const panelMenus = [
@@ -272,4 +342,30 @@ function PanelExample() {
 export const Panel: Story = {
   parameters: { layout: "fullscreen" },
   render: () => <PanelExample />,
+  play: async ({ canvas, step }) => {
+    const pos = canvas.getByRole("button", { name: "POS" })
+
+    await step("opens the full-width panel", async () => {
+      await userEvent.click(pos)
+      await expect(
+        await screen.findByRole("link", { name: "Terminals" })
+      ).toBeInTheDocument()
+      await expect(screen.getByText("Explore POS")).toBeInTheDocument()
+    })
+
+    await step("swaps content when another menu is hovered", async () => {
+      await userEvent.hover(canvas.getByRole("button", { name: "Kitchen" }))
+      await expect(
+        await screen.findByRole("link", { name: "Displays" })
+      ).toBeInTheDocument()
+      await expect(pos).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(screen.queryByRole("link", { name: "Displays" })).toBeNull()
+      )
+    })
+  },
 }

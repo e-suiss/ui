@@ -1,6 +1,7 @@
 import { ListIcon, SquaresFourIcon, TableIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent } from "storybook/test"
 
 import {
   SegmentPicker,
@@ -35,10 +36,44 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const week = canvas.getByRole("button", { name: "Week" })
+    const month = canvas.getByRole("button", { name: "Month" })
+
+    await step("starts with the default segment pressed", async () => {
+      await expect(canvas.getByRole("group", { name: "Period" })).toBeVisible()
+      await expect(week).toHaveAttribute("aria-pressed", "true")
+    })
+
+    await step("moves the selection to a clicked segment", async () => {
+      await userEvent.click(month)
+      await expect(month).toHaveAttribute("aria-pressed", "true")
+      await expect(week).toHaveAttribute("aria-pressed", "false")
+    })
+
+    await step(
+      "keeps the selection when the pressed segment is clicked",
+      async () => {
+        await userEvent.click(month)
+        await expect(month).toHaveAttribute("aria-pressed", "true")
+      }
+    )
+  },
+}
 
 export const WithoutValue: Story = {
   args: { defaultValue: undefined },
+  play: async ({ canvas, step }) => {
+    await step("starts with nothing pressed and selects on click", async () => {
+      for (const button of canvas.getAllByRole("button")) {
+        await expect(button).toHaveAttribute("aria-pressed", "false")
+      }
+      const day = canvas.getByRole("button", { name: "Day" })
+      await userEvent.click(day)
+      await expect(day).toHaveAttribute("aria-pressed", "true")
+    })
+  },
 }
 
 export const Outline: Story = {
@@ -76,6 +111,16 @@ export const WithIcons: Story = {
       </SegmentPickerItem>
     </SegmentPicker>
   ),
+  play: async ({ canvas, step }) => {
+    await step("selects icon-only segments by their labels", async () => {
+      await expect(
+        canvas.getByRole("button", { name: "Grid" })
+      ).toHaveAttribute("aria-pressed", "true")
+      const table = canvas.getByRole("button", { name: "Table" })
+      await userEvent.click(table)
+      await expect(table).toHaveAttribute("aria-pressed", "true")
+    })
+  },
 }
 
 export const WithIconsAndText: Story = {
@@ -109,10 +154,28 @@ export const DisabledItem: Story = {
       </SegmentPickerItem>
     </SegmentPicker>
   ),
+  play: async ({ canvas, step }) => {
+    await step("ignores the disabled segment", async () => {
+      const year = canvas.getByRole("button", { name: "Year" })
+      await expect(year).toBeDisabled()
+      await userEvent.click(year, { pointerEventsCheck: 0 })
+      await expect(year).toHaveAttribute("aria-pressed", "false")
+      await expect(
+        canvas.getByRole("button", { name: "Week" })
+      ).toHaveAttribute("aria-pressed", "true")
+    })
+  },
 }
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvas, step }) => {
+    await step("disables every segment", async () => {
+      for (const button of canvas.getAllByRole("button")) {
+        await expect(button).toBeDisabled()
+      }
+    })
+  },
 }
 
 function ControlledExample(args: React.ComponentProps<typeof SegmentPicker>) {
@@ -130,4 +193,19 @@ function ControlledExample(args: React.ComponentProps<typeof SegmentPicker>) {
 
 export const Controlled: Story = {
   render: (args) => <ControlledExample {...args} />,
+  play: async ({ canvas, step }) => {
+    await step("starts with the controlled value", async () => {
+      await expect(
+        canvas.getByRole("button", { name: "Month" })
+      ).toHaveAttribute("aria-pressed", "true")
+      await expect(canvas.getByText("Selected: month")).toBeVisible()
+    })
+
+    await step("reports a new choice to the owner", async () => {
+      const year = canvas.getByRole("button", { name: "Year" })
+      await userEvent.click(year)
+      await expect(canvas.getByText("Selected: year")).toBeVisible()
+      await expect(year).toHaveAttribute("aria-pressed", "true")
+    })
+  },
 }

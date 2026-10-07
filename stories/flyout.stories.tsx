@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Flyout,
@@ -67,6 +68,40 @@ export const Default: Story = {
       </FlyoutContent>
     </Flyout>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Dimensions" })
+
+    await step("opens a named flyout and moves focus in", async () => {
+      await userEvent.click(trigger)
+      const flyout = await screen.findByRole("dialog", { name: "Dimensions" })
+      await expect(flyout).toHaveAccessibleDescription(
+        "Set the dimensions for the layer."
+      )
+      await waitFor(() =>
+        expect(flyout).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step("edits a field inside the flyout", async () => {
+      const width = screen.getByLabelText("Width")
+      await userEvent.clear(width)
+      await userEvent.type(width, "320px")
+      await expect(width).toHaveValue("320px")
+    })
+
+    await step("Escape closes and returns focus to the trigger", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("clicking outside closes it", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("dialog")
+      await userEvent.click(document.body)
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithCloseButton: Story = {
@@ -131,11 +166,28 @@ export const WithClose: Story = {
       </FlyoutContent>
     </Flyout>
   ),
+  play: async ({ canvas, step }) => {
+    await step("a close action inside the flyout closes it", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Share" }))
+      await screen.findByRole("dialog", { name: "Share link" })
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Copy link" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("renders open and closes with Escape", async () => {
+      await screen.findByRole("dialog", { name: "Dimensions" })
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Floating: Story = {

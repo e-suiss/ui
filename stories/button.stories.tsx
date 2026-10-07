@@ -1,5 +1,6 @@
 import { ArrowRightIcon, PlusIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 
@@ -46,7 +47,14 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    const button = canvas.getByRole("button", { name: "Button" })
+    await expect(button).toBeEnabled()
+    await userEvent.tab()
+    await expect(button).toHaveFocus()
+  },
+}
 
 export const Variants: Story = {
   render: (args) => (
@@ -114,10 +122,22 @@ export const WithIcon: Story = {
       </Button>
     </div>
   ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("button", { name: "New project" })
+    ).toBeVisible()
+    await expect(canvas.getByRole("button", { name: "Add" })).toBeVisible()
+  },
 }
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvas }) => {
+    const button = canvas.getByRole("button", { name: "Button" })
+    await expect(button).toBeDisabled()
+    await userEvent.tab()
+    await expect(button).not.toHaveFocus()
+  },
 }
 
 export const Block: Story = {

@@ -1,6 +1,7 @@
 import { PlusIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -68,10 +69,43 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Open drawer" })
+
+    await step("opens a named drawer and moves focus in", async () => {
+      await userEvent.click(trigger)
+      const drawer = await screen.findByRole("dialog", { name: "Move goal" })
+      await expect(drawer).toHaveAccessibleDescription(
+        "Set your daily activity goal."
+      )
+      await waitFor(() =>
+        expect(drawer).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async () => {
+    const drawer = await screen.findByRole("dialog", { name: "Move goal" })
+    await waitFor(() => expect(drawer).toBeVisible())
+  },
 }
 
 export const Directions: Story = {
@@ -102,6 +136,11 @@ export const Directions: Story = {
 }
 
 export const WithCloseButton: Story = {
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Open drawer" }))
+    await userEvent.click(await screen.findByRole("button", { name: "Close" }))
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+  },
   render: (args) => (
     <Drawer {...args}>
       <DrawerTrigger render={<Button variant="outline" />}>
@@ -127,6 +166,13 @@ export const WithCloseButton: Story = {
 }
 
 export const WithCloseLabel: Story = {
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Open drawer" }))
+    const close = await screen.findByRole("button", { name: "Close" })
+    await expect(close).toHaveTextContent("Close")
+    await userEvent.click(close)
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+  },
   render: (args) => (
     <Drawer {...args}>
       <DrawerTrigger render={<Button variant="outline" />}>
@@ -161,6 +207,14 @@ export const WithSnapPoints: Story = {
 
 export const NonModal: Story = {
   args: { modal: false },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole("button", { name: "Open drawer" })
+    await userEvent.click(trigger)
+    const drawer = await screen.findByRole("dialog", { name: "Move goal" })
+    await expect(drawer).not.toHaveAttribute("aria-modal", "true")
+    await userEvent.keyboard("{Escape}")
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+  },
 }
 
 const days = Array.from({ length: 35 }, (_, index) => index - 2)
@@ -306,4 +360,27 @@ function CalendarExample() {
 export const SheetWithDetents: Story = {
   parameters: { layout: "fullscreen" },
   render: () => <CalendarExample />,
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "New event" })
+
+    await step("opens the sheet from the plus button", async () => {
+      await userEvent.click(trigger)
+      await expect(
+        await screen.findByRole("dialog", { name: "New Event" })
+      ).toBeInTheDocument()
+    })
+
+    await step("toggles the all-day switch", async () => {
+      const allDay = screen.getByRole("switch", { name: "All-day" })
+      await userEvent.click(allDay)
+      await expect(allDay).toBeChecked()
+      await expect(screen.getAllByText("Oct 14")).toHaveLength(2)
+    })
+
+    await step("closes from the add button", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Add" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
 }

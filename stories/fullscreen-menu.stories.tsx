@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   FullscreenMenu,
@@ -80,16 +81,69 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => <MenuExample />,
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Menu" })
+
+    await step("opens a named full-screen dialog", async () => {
+      await userEvent.click(trigger)
+      const menu = await screen.findByRole("dialog", { name: "Menu" })
+      await expect(
+        within(menu).getByRole("link", { name: "Store" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(trigger).toHaveAttribute("aria-expanded", "true")
+      await waitFor(() =>
+        expect(menu).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step(
+      "closes with Escape and returns focus to the trigger",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+
+    await step("closes from the close button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Close" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Open: Story = {
   render: () => <MenuExample defaultOpen />,
+  play: async ({ step }) => {
+    await step("renders the primary links and sections", async () => {
+      const menu = await screen.findByRole("dialog", { name: "Menu" })
+      await expect(within(menu).getAllByRole("link")).toHaveLength(11)
+      await expect(within(menu).getByText("Explore")).toBeVisible()
+    })
+  },
 }
 
 export const LinksOnly: Story = {
   render: () => <MenuExample withSections={false} />,
+  play: async ({ canvas, step }) => {
+    await step("lists only the primary links", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Menu" }))
+      const menu = await screen.findByRole("dialog", { name: "Menu" })
+      await expect(within(menu).getAllByRole("link")).toHaveLength(5)
+    })
+  },
 }
 
 export const WithCloseLabel: Story = {
   render: () => <MenuExample closeLabel="Done" />,
+  play: async ({ canvas, step }) => {
+    await step("closes from the text close button", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Menu" }))
+      await userEvent.click(await screen.findByRole("button", { name: "Done" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }

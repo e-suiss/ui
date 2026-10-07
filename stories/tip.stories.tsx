@@ -5,6 +5,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   resetTips,
@@ -144,4 +145,40 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: { id: "notes-pin" },
   render: () => <TipsExample />,
+  play: async ({ canvas, step }) => {
+    const showAgain = canvas.getByRole("button", { name: "Show tips again" })
+
+    await step("starts the tour with the compose tip", async () => {
+      await userEvent.click(showAgain)
+      const popover = await screen.findByRole("dialog", {
+        name: "Start a note fast",
+      })
+      await expect(popover).toHaveAccessibleDescription(
+        "Tap here any time to begin a new note."
+      )
+      await expect(canvas.queryByRole("note")).toBeNull()
+    })
+
+    await step("using the anchored control dismisses its tip", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "New note" }))
+      await expect(canvas.getByRole("status")).toHaveTextContent(
+        "Started a new note"
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+
+    await step("the next tip in the group follows", async () => {
+      const card = await canvas.findByRole("note")
+      await expect(card).toHaveTextContent("Pin your favorites")
+      await userEvent.click(canvas.getByRole("button", { name: "Dismiss tip" }))
+      await waitFor(() => expect(canvas.queryByRole("note")).toBeNull())
+    })
+
+    await step("dismissed tips stay away until they are reset", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "New note" }))
+      await expect(screen.queryByRole("dialog")).toBeNull()
+      await userEvent.click(showAgain)
+      await screen.findByRole("dialog", { name: "Start a note fast" })
+    })
+  },
 }

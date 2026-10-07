@@ -7,6 +7,7 @@ import {
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
@@ -47,6 +48,8 @@ const items: NavbarItem[] = [
   { label: "Blog", href: "#blog" },
 ]
 
+const analyticsLink = /Analytics/
+
 const brand = <span className="text-base font-semibold">Acme</span>
 
 const meta = {
@@ -67,7 +70,33 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const products = canvas.getByRole("button", { name: "Products" })
+
+    await step("opens a group and shows its links", async () => {
+      await userEvent.click(products)
+      await expect(
+        await screen.findByRole("link", { name: analyticsLink })
+      ).toHaveAttribute("href", "#analytics")
+      await expect(products).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("closes the group with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(screen.queryByRole("link", { name: analyticsLink })).toBeNull()
+      )
+      await expect(products).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("keeps plain items as direct links", async () => {
+      await expect(
+        canvas.getByRole("link", { name: "Pricing" })
+      ).toHaveAttribute("href", "#pricing")
+    })
+  },
+}
 
 export const WithActions: Story = {
   args: {
@@ -76,6 +105,16 @@ export const WithActions: Story = {
         Sign in
       </Button>
     ),
+  },
+  play: async ({ canvas, step }) => {
+    await step("shows the actions next to the menu", async () => {
+      await expect(
+        canvas.getByRole("button", { name: "Sign in" })
+      ).toBeVisible()
+      await expect(
+        canvas.getByRole("button", { name: "Products" })
+      ).toBeVisible()
+    })
   },
 }
 
@@ -87,6 +126,17 @@ export const LinksOnly: Story = {
       { label: "Changelog", href: "#changelog" },
       { label: "Blog", href: "#blog" },
     ],
+  },
+  play: async ({ canvas, step }) => {
+    await step("renders links only and marks the active one", async () => {
+      await expect(canvas.queryByRole("button")).toBeNull()
+      await expect(
+        canvas.getByRole("link", { name: "Overview" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(
+        canvas.getByRole("link", { name: "Customers" })
+      ).not.toHaveAttribute("aria-current")
+    })
   },
 }
 
@@ -129,5 +179,27 @@ export const MegaPanel: Story = {
       { label: "Pricing", href: "#pricing" },
       { label: "Blog", href: "#blog" },
     ],
+  },
+  play: async ({ canvas, step }) => {
+    const products = canvas.getByRole("button", { name: "Products" })
+
+    await step("opens the full-width panel with its columns", async () => {
+      await userEvent.click(products)
+      await expect(
+        await screen.findByRole("link", { name: "Analytics" })
+      ).toHaveAttribute("href", "#analytics")
+      await waitFor(() =>
+        expect(
+          screen.getByRole("link", { name: "Documentation" })
+        ).toBeVisible()
+      )
+    })
+
+    await step("closes the panel with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(screen.queryByRole("link", { name: "Analytics" })).toBeNull()
+      )
+    })
   },
 }

@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ContextMenu,
@@ -22,6 +23,8 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
+
+const FORWARD = /^Forward/
 
 const meta = {
   title: "Components/Context Menu",
@@ -87,11 +90,56 @@ export const Default: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
+  play: async ({ canvas, step }) => {
+    const area = canvas.getByText("Right click here")
+
+    await step("opens on right click", async () => {
+      await userEvent.pointer({ keys: "[MouseRight]", target: area })
+      const menu = await screen.findByRole("menu")
+      await waitFor(() => expect(menu).toBeVisible())
+      await expect(
+        screen.getByRole("menuitem", { name: FORWARD })
+      ).toHaveAttribute("aria-disabled", "true")
+    })
+
+    await step("reflects checkbox and radio state", async () => {
+      await expect(
+        screen.getByRole("menuitemcheckbox", { name: "Show bookmarks bar" })
+      ).toHaveAttribute("aria-checked", "true")
+      await expect(
+        screen.getByRole("menuitemradio", { name: "Ada Lovelace" })
+      ).toHaveAttribute("aria-checked", "true")
+      await userEvent.click(
+        screen.getByRole("menuitemcheckbox", { name: "Show full URLs" })
+      )
+      await expect(
+        screen.getByRole("menuitemcheckbox", { name: "Show full URLs" })
+      ).toHaveAttribute("aria-checked", "true")
+    })
+
+    await step("opens the submenu from the keyboard", async () => {
+      const more = screen.getByRole("menuitem", { name: "More tools" })
+      more.focus()
+      await userEvent.keyboard("{ArrowRight}")
+      await waitFor(() =>
+        expect(
+          screen.getByRole("menuitem", { name: "Save page as..." })
+        ).toHaveFocus()
+      )
+      await userEvent.keyboard("{ArrowLeft}")
+      await waitFor(() => expect(more).toHaveFocus())
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
 }
 
 export const Inset: Story = {
@@ -114,4 +162,14 @@ export const Inset: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
+  play: async ({ canvas }) => {
+    await userEvent.pointer({
+      keys: "[MouseRight]",
+      target: canvas.getByText("Right click a file"),
+    })
+    await userEvent.click(
+      await screen.findByRole("menuitem", { name: "Rename" })
+    )
+    await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+  },
 }

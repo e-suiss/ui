@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 
@@ -38,16 +39,28 @@ export const Default: Story = {
       />
     </AspectRatio>
   ),
+  play: async ({ canvas }) => {
+    const image = canvas.getByRole("img", { name: "Mountain lake at sunrise" })
+    const frame = image.parentElement as HTMLElement
+    const { width, height } = frame.getBoundingClientRect()
+    await expect(width / height).toBeCloseTo(16 / 9, 1)
+  },
 }
 
 export const Square: Story = {
-  ...Default,
   args: { ratio: 1 },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    const image = canvas.getByRole("img", { name: "Mountain lake at sunrise" })
+    const frame = image.parentElement as HTMLElement
+    const { width, height } = frame.getBoundingClientRect()
+    await expect(width / height).toBeCloseTo(1, 1)
+  },
 }
 
 export const Portrait: Story = {
-  ...Default,
   args: { ratio: 3 / 4 },
+  render: Default.render,
 }
 
 export const Placeholder: Story = {

@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -64,9 +65,22 @@ export const Default: Story = {
       <DirectionPreview />
     </DirectionProvider>
   ),
+  play: async ({ canvas }) => {
+    const description = canvas.getByText("Current direction is LTR.")
+    await expect(description.closest("[dir]")).toHaveAttribute("dir", "ltr")
+  },
 }
 
 export const RightToLeft: Story = {
-  ...Default,
   args: { direction: "rtl" },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    const description = canvas.getByText("Current direction is RTL.")
+    await expect(description.closest("[dir]")).toHaveAttribute("dir", "rtl")
+    const cancel = canvas.getByRole("button", { name: "Cancel" })
+    const next = canvas.getByRole("button", { name: "Continue" })
+    await expect(cancel.getBoundingClientRect().left).toBeGreaterThan(
+      next.getBoundingClientRect().left
+    )
+  },
 }

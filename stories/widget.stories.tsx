@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, waitFor } from "storybook/test"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -100,6 +101,40 @@ const menu = [
   { name: "Baklava", price: "₺180", icon: <IceCreamIcon /> },
 ]
 
+function bySlot(canvasElement: HTMLElement, slot: string) {
+  const element = canvasElement.querySelector<HTMLElement>(
+    `[data-slot="${slot}"]`
+  )
+  if (!element) throw new Error(`${slot} not rendered`)
+  return element
+}
+
+function pointer(target: HTMLElement, type: string, x: number, y: number) {
+  target.dispatchEvent(
+    new PointerEvent(type, {
+      pointerId: 1,
+      pointerType: "mouse",
+      button: 0,
+      buttons: type === "pointerup" ? 0 : 1,
+      clientX: x,
+      clientY: y,
+      bubbles: true,
+      cancelable: true,
+    })
+  )
+}
+
+function dragHandle(canvasElement: HTMLElement, dx: number, dy: number) {
+  const handle = bySlot(canvasElement, "widget-handle")
+  const rect = handle.getBoundingClientRect()
+  const x = rect.left + rect.width / 2
+  const y = rect.top + rect.height / 2
+  pointer(handle, "pointerdown", x, y)
+  pointer(handle, "pointermove", x + dx / 2, y + dy / 2)
+  pointer(handle, "pointermove", x + dx, y + dy)
+  pointer(handle, "pointerup", x + dx, y + dy)
+}
+
 function Hint({ children }: { children: React.ReactNode }) {
   return <p className="mt-6 text-xs text-label-secondary">{children}</p>
 }
@@ -120,6 +155,23 @@ export const Default: Story = {
       <WidgetFooter>H 27° · L 18°</WidgetFooter>
     </Widget>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("renders the title, value and footer", async () => {
+      await expect(canvas.getByText("Istanbul")).toBeVisible()
+      await expect(canvas.getByText("24°")).toBeVisible()
+      await expect(canvas.getByText("H 27° · L 18°")).toBeVisible()
+    })
+
+    await step("is not resizable without the prop", async () => {
+      await expect(
+        canvasElement.querySelector('[data-slot="widget-handle"]')
+      ).toBeNull()
+      await expect(bySlot(canvasElement, "widget")).toHaveAttribute(
+        "data-size",
+        "small"
+      )
+    })
+  },
 }
 
 export const Sales: Story = {
@@ -172,6 +224,22 @@ export const Sales: Story = {
       </Hint>
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+
+    await step("snaps to the nearest size after a drag", async () => {
+      await expect(widget).toHaveAttribute("data-size", "large")
+      dragHandle(canvasElement, -184, -184)
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "small"))
+    })
+
+    await step("resets to the default size on double-click", async () => {
+      bySlot(canvasElement, "widget-handle").dispatchEvent(
+        new MouseEvent("dblclick", { bubbles: true })
+      )
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "large"))
+    })
+  },
 }
 
 export const Kitchen: Story = {
@@ -257,6 +325,16 @@ export const Reservations: Story = {
       <Hint>Snaps between small and medium only.</Hint>
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+
+    await step("never grows past the allowed sizes", async () => {
+      dragHandle(canvasElement, 0, 184)
+      await expect(widget).toHaveAttribute("data-size", "medium")
+      dragHandle(canvasElement, -184, 0)
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "small"))
+    })
+  },
 }
 
 export const WeeklyReport: Story = {
@@ -422,6 +500,23 @@ function FreeResizeExample() {
 export const FreeResize: Story = {
   parameters: { layout: "padded" },
   render: () => <FreeResizeExample />,
+  play: async ({ canvas, canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+
+    await step("follows the pointer without snapping", async () => {
+      await expect(canvas.getByText("Free resize · 352 × 352")).toBeVisible()
+      dragHandle(canvasElement, 100, -50)
+      await waitFor(() =>
+        expect(canvas.getByText("Free resize · 452 × 302")).toBeVisible()
+      )
+      await expect(widget).toHaveAttribute("data-size", "large")
+    })
+
+    await step("caps the width at the largest size", async () => {
+      dragHandle(canvasElement, 2000, 0)
+      await waitFor(() => expect(widget.offsetWidth).toBe(720))
+    })
+  },
 }
 
 export const AutoResize: Story = {
@@ -441,6 +536,25 @@ export const AutoResize: Story = {
       </Widget>
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+
+    await step(
+      "fills its parent, then returns to auto on double-click",
+      async () => {
+        await expect(widget).toHaveAttribute("data-size", "auto")
+        await expect(widget.offsetWidth).toBe(400)
+        dragHandle(canvasElement, -232, -72)
+        await waitFor(() =>
+          expect(widget).toHaveAttribute("data-size", "small")
+        )
+        bySlot(canvasElement, "widget-handle").dispatchEvent(
+          new MouseEvent("dblclick", { bubbles: true })
+        )
+        await waitFor(() => expect(widget).toHaveAttribute("data-size", "auto"))
+      }
+    )
+  },
 }
 
 export const Centered: Story = {
@@ -481,6 +595,24 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    await step("renders each fixed size at its dimensions", async () => {
+      const widgets = canvasElement.querySelectorAll<HTMLElement>(
+        '[data-slot="widget"]'
+      )
+      const boxes = [...widgets].map((widget) => [
+        widget.dataset.size,
+        widget.offsetWidth,
+        widget.offsetHeight,
+      ])
+      await expect(boxes).toEqual([
+        ["small", 168, 168],
+        ["medium", 352, 168],
+        ["large", 352, 352],
+        ["extra-large", 720, 352],
+      ])
+    })
+  },
 }
 
 export const Dashboard: Story = {

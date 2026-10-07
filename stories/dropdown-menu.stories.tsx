@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -28,6 +29,9 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+const PROFILE = /^Profile/
+const BILLING = /^Billing/
 
 const meta = {
   title: "Components/Dropdown Menu",
@@ -93,7 +97,60 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Open menu" })
+
+    await step(
+      "opens from the keyboard with the first item focused",
+      async () => {
+        trigger.focus()
+        await userEvent.keyboard("{Enter}")
+        const menu = await screen.findByRole("menu")
+        await expect(trigger).toHaveAttribute("aria-expanded", "true")
+        await waitFor(() =>
+          expect(screen.getByRole("menuitem", { name: PROFILE })).toHaveFocus()
+        )
+        await expect(menu).toBeInTheDocument()
+      }
+    )
+
+    await step("moves through items with the arrow keys", async () => {
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(
+        screen.getByRole("menuitem", { name: BILLING })
+      ).toHaveFocus()
+      await expect(
+        screen.getByRole("menuitem", { name: "API access" })
+      ).toHaveAttribute("aria-disabled", "true")
+    })
+
+    await step("opens the submenu with ArrowRight", async () => {
+      const invite = screen.getByRole("menuitem", { name: "Invite users" })
+      invite.focus()
+      await userEvent.keyboard("{ArrowRight}")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Email" })).toHaveFocus()
+      )
+      await userEvent.keyboard("{ArrowLeft}")
+      await waitFor(() => expect(invite).toHaveFocus())
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await expect(trigger).toHaveFocus()
+    })
+
+    await step("closes after choosing an item", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("menuitem", { name: "Delete account" })
+      )
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
@@ -139,6 +196,20 @@ function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
 
 export const Checkboxes: Story = {
   render: (args) => <CheckboxesExample {...args} />,
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "View" }))
+    const activity = await screen.findByRole("menuitemcheckbox", {
+      name: "Activity bar",
+    })
+    await expect(
+      screen.getByRole("menuitemcheckbox", { name: "Status bar" })
+    ).toHaveAttribute("aria-checked", "true")
+    await expect(activity).toHaveAttribute("aria-checked", "false")
+    await userEvent.click(activity)
+    await expect(activity).toHaveAttribute("aria-checked", "true")
+    const panel = screen.getByRole("menuitemcheckbox", { name: "Panel" })
+    await expect(panel).toHaveAttribute("aria-disabled", "true")
+  },
 }
 
 function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
@@ -165,6 +236,20 @@ function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
 
 export const RadioGroup: Story = {
   render: (args) => <RadioGroupExample {...args} />,
+  play: async ({ canvas }) => {
+    await userEvent.click(
+      canvas.getByRole("button", { name: "Panel position" })
+    )
+    const top = await screen.findByRole("menuitemradio", { name: "Top" })
+    await expect(
+      screen.getByRole("menuitemradio", { name: "Bottom" })
+    ).toHaveAttribute("aria-checked", "true")
+    await userEvent.click(top)
+    await expect(top).toHaveAttribute("aria-checked", "true")
+    await expect(
+      screen.getByRole("menuitemradio", { name: "Bottom" })
+    ).toHaveAttribute("aria-checked", "false")
+  },
 }
 
 export const Inset: Story = {

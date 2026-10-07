@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import type * as React from "react"
+import { expect, userEvent } from "storybook/test"
 
 import {
   InputOTP,
@@ -41,10 +42,45 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, canvasElement, step }) => {
+    const input = canvas.getByRole<HTMLInputElement>("textbox")
+    const slots = canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')
+
+    await step("fills one slot per typed digit", async () => {
+      await userEvent.click(input)
+      await userEvent.keyboard("4829")
+      await expect(input).toHaveValue("4829")
+      await expect(slots[0]).toHaveTextContent("4")
+      await expect(slots[3]).toHaveTextContent("9")
+      await expect(slots[4]).toHaveAttribute("data-active", "true")
+    })
+
+    await step("stops at the maximum length", async () => {
+      await userEvent.keyboard("13")
+      await expect(input).toHaveValue("482913")
+      await userEvent.keyboard("579")
+      await expect(input.value).toHaveLength(6)
+    })
+
+    await step("removes the last digit with Backspace", async () => {
+      await userEvent.keyboard("{Backspace}")
+      await expect(input.value).toHaveLength(5)
+      await expect(slots[5]).toHaveTextContent("")
+    })
+  },
+}
 
 export const Filled: Story = {
   args: { defaultValue: "482913" },
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("shows the default value across the slots", async () => {
+      await expect(canvas.getByRole("textbox")).toHaveValue("482913")
+      await expect(
+        canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')[5]
+      ).toHaveTextContent("3")
+    })
+  },
 }
 
 export const SingleGroup: Story = {
@@ -71,10 +107,30 @@ export const FourDigits: Story = {
       </InputOTPGroup>
     </InputOTP>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole<HTMLInputElement>("textbox")
+
+    await step("caps the code at four digits", async () => {
+      await userEvent.click(input)
+      await userEvent.keyboard("1234")
+      await expect(input).toHaveValue("1234")
+      await userEvent.keyboard("56")
+      await expect(input.value).toHaveLength(4)
+    })
+  },
 }
 
 export const Alphanumeric: Story = {
   args: { pattern: REGEXP_ONLY_DIGITS_AND_CHARS },
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox")
+
+    await step("accepts letters and digits", async () => {
+      await userEvent.click(input)
+      await userEvent.keyboard("AB12")
+      await expect(input).toHaveValue("AB12")
+    })
+  },
 }
 
 export const Invalid: Story = {
@@ -92,4 +148,11 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, defaultValue: "123456" },
+  play: async ({ canvas, step }) => {
+    await step("disables the input and keeps its value", async () => {
+      const input = canvas.getByRole("textbox")
+      await expect(input).toBeDisabled()
+      await expect(input).toHaveValue("123456")
+    })
+  },
 }

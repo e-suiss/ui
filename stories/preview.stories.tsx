@@ -1,5 +1,6 @@
 import { CalendarBlankIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Preview,
@@ -29,6 +30,8 @@ function ProfileCard() {
   )
 }
 
+const cardText = "The React framework, created and maintained by @vercel."
+
 const meta = {
   title: "Patterns/Preview",
   component: Preview,
@@ -56,10 +59,41 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("link", { name: "@nextjs" })
+
+    await step("opens the preview card on hover", async () => {
+      await userEvent.hover(trigger)
+      const card = await screen.findByText(cardText, {}, { timeout: 3000 })
+      await waitFor(() => expect(card).toBeVisible())
+    })
+
+    await step("closes the card when the pointer leaves", async () => {
+      await userEvent.unhover(trigger)
+      await waitFor(() => expect(screen.queryByText(cardText)).toBeNull(), {
+        timeout: 3000,
+      })
+    })
+
+    await step("opens the card on keyboard focus", async () => {
+      await userEvent.tab()
+      await expect(trigger).toHaveFocus()
+      const card = await screen.findByText(cardText, {}, { timeout: 3000 })
+      await waitFor(() => expect(card).toBeVisible())
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async ({ step }) => {
+    await step("starts with the card shown", async () => {
+      const card = await screen.findByText(cardText)
+      await waitFor(() => expect(card).toBeVisible())
+      await expect(screen.getByText("Joined December 2021")).toBeVisible()
+    })
+  },
 }
 
 export const WithCloseButton: Story = {

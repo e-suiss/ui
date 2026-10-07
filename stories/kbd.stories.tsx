@@ -4,6 +4,7 @@ import {
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import {
   InputGroup,
@@ -23,6 +24,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: { mod: true, children: "K" },
+  play: async ({ canvasElement, step }) => {
+    await step("renders the shortcut inside a kbd element", async () => {
+      const kbd = canvasElement.querySelector("kbd")
+      await expect(kbd).not.toBeNull()
+      await expect(kbd).toHaveTextContent("K")
+      await expect(kbd?.textContent?.length).toBeGreaterThan(1)
+    })
+  },
 }
 
 export const Modifiers: Story = {
@@ -57,6 +66,18 @@ export const Group: Story = {
       </KbdGroup>
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    await step("nests each key inside its group", async () => {
+      const groups = canvasElement.querySelectorAll('[data-slot="kbd-group"]')
+      await expect(groups).toHaveLength(2)
+      await expect(
+        groups[0]?.querySelectorAll('[data-slot="kbd"]')
+      ).toHaveLength(2)
+      await expect(
+        groups[1]?.querySelectorAll('[data-slot="kbd"]')
+      ).toHaveLength(3)
+    })
+  },
 }
 
 export const WithIcon: Story = {

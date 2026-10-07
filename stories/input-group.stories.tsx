@@ -9,6 +9,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent } from "storybook/test"
 
 import {
   InputGroup,
@@ -45,7 +46,21 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByPlaceholderText("Search...")
+
+    await step("focuses the input from an addon click", async () => {
+      await userEvent.click(canvas.getByText("12 results"))
+      await expect(input).toHaveFocus()
+    })
+
+    await step("accepts typed text", async () => {
+      await userEvent.keyboard("button")
+      await expect(input).toHaveValue("button")
+    })
+  },
+}
 
 function SearchField() {
   const [query, setQuery] = React.useState("MacBook")
@@ -78,6 +93,27 @@ function SearchField() {
 
 export const Search: Story = {
   render: () => <SearchField />,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Search" })
+
+    await step("clears the query from the clear button", async () => {
+      await expect(input).toHaveValue("MacBook")
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Clear search" })
+      )
+      await expect(input).toHaveValue("")
+      await expect(
+        canvas.queryByRole("button", { name: "Clear search" })
+      ).toBeNull()
+    })
+
+    await step("brings the clear button back after typing", async () => {
+      await userEvent.type(input, "iPad")
+      await expect(
+        canvas.getByRole("button", { name: "Clear search" })
+      ).toBeVisible()
+    })
+  },
 }
 
 export const WithText: Story = {
@@ -136,6 +172,26 @@ export const WithButtons: Story = {
       </InputGroup>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step(
+      "names the icon buttons and keeps the link read-only",
+      async () => {
+        await expect(canvas.getByRole("button", { name: "Copy" })).toBeVisible()
+        await expect(canvas.getByRole("button", { name: "Info" })).toBeVisible()
+        await expect(
+          canvas.getByDisplayValue("https://esuiss.dev/invite/x7k2")
+        ).toHaveAttribute("readonly")
+      }
+    )
+
+    await step("moves focus from the input to its button", async () => {
+      await userEvent.click(canvas.getByPlaceholderText("Enter your email"))
+      await userEvent.tab()
+      await expect(
+        canvas.getByRole("button", { name: "Subscribe" })
+      ).toHaveFocus()
+    })
+  },
 }
 
 export const ButtonSizes: Story = {
@@ -208,6 +264,21 @@ export const WithTextarea: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByPlaceholderText("Ask, search, or chat...")
+
+    await step("accepts multi-line text", async () => {
+      await userEvent.type(textarea, "Hi{Shift>}{Enter}{/Shift}there")
+      await expect(textarea).toHaveValue("Hi\nthere")
+    })
+
+    await step("names the action buttons", async () => {
+      await expect(
+        canvas.getByRole("button", { name: "Attach file" })
+      ).toBeVisible()
+      await expect(canvas.getByRole("button", { name: "Send" })).toBeVisible()
+    })
+  },
 }
 
 export const Invalid: Story = {
@@ -219,6 +290,11 @@ export const Invalid: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
+  play: async ({ canvas, step }) => {
+    await step("flags the input as invalid", async () => {
+      await expect(canvas.getByRole("textbox")).toBeInvalid()
+    })
+  },
 }
 
 export const Disabled: Story = {
@@ -230,4 +306,13 @@ export const Disabled: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByPlaceholderText("Search...")
+
+    await step("ignores typing while disabled", async () => {
+      await expect(input).toBeDisabled()
+      await userEvent.type(input, "abc")
+      await expect(input).toHaveValue("")
+    })
+  },
 }

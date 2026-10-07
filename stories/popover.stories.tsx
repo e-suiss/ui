@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -55,11 +56,55 @@ export const Default: Story = {
       </PopoverContent>
     </Popover>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Open popover" })
+
+    await step("opens a named popover from the trigger", async () => {
+      await userEvent.click(trigger)
+      const popover = await screen.findByRole("dialog", { name: "Dimensions" })
+      await expect(popover).toHaveAccessibleDescription(
+        "Set the dimensions for the layer."
+      )
+      await expect(trigger).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("lets the user edit a field inside", async () => {
+      const width = screen.getByRole("textbox", { name: "Width" })
+      await userEvent.clear(width)
+      await userEvent.type(width, "50%")
+      await expect(width).toHaveValue("50%")
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await expect(trigger).toHaveFocus()
+      await expect(trigger).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("closes on an outside click", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("dialog", { name: "Dimensions" })
+      await userEvent.click(document.body)
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("renders the popover open on mount", async () => {
+      await waitFor(
+        () =>
+          expect(
+            screen.getByRole("dialog", { name: "Dimensions" })
+          ).toBeVisible(),
+        { timeout: 3000 }
+      )
+    })
+  },
 }
 
 export const Sides: Story = {
@@ -82,6 +127,17 @@ export const Sides: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("opens each side's popover on its own", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Left" }))
+      const popover = await screen.findByRole("dialog", { name: "Heads up" })
+      await expect(popover).toHaveTextContent(
+        "This popover opens on the left side."
+      )
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Simple: Story = {

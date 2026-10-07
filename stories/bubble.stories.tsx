@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import {
   Bubble,
@@ -51,6 +52,12 @@ export const Default: Story = {
       <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>
     </Bubble>
   ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByText("Are we still on for lunch tomorrow?")
+    ).toBeVisible()
+    await expect(canvas.queryByRole("button")).toBeNull()
+  },
 }
 
 export const Variants: Story = {
@@ -124,4 +131,11 @@ export const Interactive: Story = {
       </BubbleContent>
     </Bubble>
   ),
+  play: async ({ canvas }) => {
+    const bubble = canvas.getByRole("button", {
+      name: "Show me the latest release notes",
+    })
+    await userEvent.tab()
+    await expect(bubble).toHaveFocus()
+  },
 }

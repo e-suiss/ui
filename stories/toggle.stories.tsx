@@ -4,6 +4,7 @@ import {
   TextItalicIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Toggle } from "@/components/ui/toggle"
 
@@ -33,10 +34,35 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const toggle = canvas.getByRole("button", { name: "Toggle bold" })
+
+    await step("presses on click", async () => {
+      await expect(toggle).toHaveAttribute("aria-pressed", "false")
+      await userEvent.click(toggle)
+      await expect(toggle).toHaveAttribute("aria-pressed", "true")
+    })
+
+    await step("releases with Enter", async () => {
+      await userEvent.keyboard("{Enter}")
+      await expect(toggle).toHaveAttribute("aria-pressed", "false")
+    })
+  },
+}
 
 export const Pressed: Story = {
   args: { defaultPressed: true },
+  play: async ({ canvas, step }) => {
+    const toggle = canvas.getByRole("button", { name: "Toggle bold" })
+
+    await step("starts pressed and releases with Space", async () => {
+      await expect(toggle).toHaveAttribute("aria-pressed", "true")
+      await userEvent.tab()
+      await userEvent.keyboard(" ")
+      await expect(toggle).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }
 
 export const Variants: Story = {
@@ -75,4 +101,13 @@ export const WithText: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvas, step }) => {
+    const toggle = canvas.getByRole("button", { name: "Toggle bold" })
+
+    await step("ignores clicks while disabled", async () => {
+      await expect(toggle).toBeDisabled()
+      await userEvent.click(toggle, { pointerEventsCheck: 0 })
+      await expect(toggle).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }

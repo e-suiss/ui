@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent, waitFor, within } from "storybook/test"
 
 import {
   TabBar,
@@ -117,20 +118,77 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => <TabBarExample />,
+  play: async ({ canvas, step }) => {
+    const nav = canvas.getByRole("navigation", { name: "Main" })
+    const more = within(nav).getByRole("button", { name: "More" })
+
+    await step("marks the tapped item as active", async () => {
+      const nominees = within(nav).getByRole("button", { name: "Nominees" })
+      await userEvent.click(nominees)
+      await expect(nominees).toHaveAttribute("aria-current", "page")
+      await expect(
+        within(nav).getByRole("button", { name: "Home" })
+      ).not.toHaveAttribute("aria-current")
+    })
+
+    await step("opens the sections from More", async () => {
+      await userEvent.click(more)
+      await expect(more).toHaveAttribute("aria-expanded", "true")
+      await expect(
+        await within(nav).findByRole("link", { name: "Site of the Day" })
+      ).toBeInTheDocument()
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await expect(more).toHaveAttribute("aria-expanded", "false")
+      await expect(more).toHaveFocus()
+      await waitFor(() =>
+        expect(
+          within(nav).queryByRole("link", { name: "Site of the Day" })
+        ).toBeNull()
+      )
+    })
+  },
 }
 
 export const Open: Story = {
   render: () => <TabBarExample defaultOpen />,
+  play: async ({ canvas, step }) => {
+    await step("opens on mount and closes on an outside click", async () => {
+      const more = canvas.getByRole("button", { name: "More" })
+      await expect(more).toHaveAttribute("aria-expanded", "true")
+      await expect(
+        canvas.getByRole("link", { name: "Professionals" })
+      ).toBeInTheDocument()
+      await userEvent.click(canvas.getByText("Card 1"))
+      await expect(more).toHaveAttribute("aria-expanded", "false")
+    })
+  },
 }
 
 export const FitsWithoutMore: Story = {
   render: () => (
     <TabBarExample items={defaultItems.slice(0, 3)} withSections={false} />
   ),
+  play: async ({ canvas, step }) => {
+    await step("hides More when every item fits", async () => {
+      await expect(canvas.getAllByRole("button")).toHaveLength(3)
+      await expect(canvas.queryByRole("button", { name: "More" })).toBeNull()
+    })
+  },
 }
 
 export const OverflowIntoMore: Story = {
   render: () => <TabBarExample items={manyItems} withSections={false} />,
+  play: async ({ canvas, step }) => {
+    await step("keeps every item reachable at desktop width", async () => {
+      const nav = canvas.getByRole("navigation", { name: "Main" })
+      for (const name of manyItems) {
+        await expect(within(nav).getByRole("button", { name })).toBeVisible()
+      }
+    })
+  },
 }
 
 export const Links: Story = {
@@ -171,4 +229,14 @@ export const DisabledItem: Story = {
       </TabBar>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("disables the item", async () => {
+      await expect(
+        canvas.getByRole("button", { name: "Directory" })
+      ).toBeDisabled()
+      await expect(
+        canvas.getByRole("button", { name: "Home" })
+      ).toHaveAttribute("aria-current", "page")
+    })
+  },
 }

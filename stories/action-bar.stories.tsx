@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ActionBar,
@@ -102,6 +103,10 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+const NEW_TAB = /New tab/
+const COPY = /Copy/
+const PRINT = /Print/
+
 export const Default: Story = {
   render: (args) => (
     <ActionBar {...args}>
@@ -110,6 +115,49 @@ export const Default: Story = {
       <ViewMenu />
     </ActionBar>
   ),
+  play: async ({ canvas, step }) => {
+    const file = canvas.getByRole("menuitem", { name: "File" })
+    const edit = canvas.getByRole("menuitem", { name: "Edit" })
+
+    await step("lays the menus out in a menubar", async () => {
+      await expect(canvas.getByRole("menubar")).toBeVisible()
+      await expect(canvas.getByRole("menuitem", { name: "View" })).toBeVisible()
+    })
+
+    await step("opens a menu with its disabled entry", async () => {
+      await userEvent.click(file)
+      await screen.findByRole("menu")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: NEW_TAB })).toBeVisible()
+      )
+      await expect(
+        screen.getByRole("menuitem", { name: "New incognito window" })
+      ).toHaveAttribute("aria-disabled", "true")
+    })
+
+    await step("hovering another trigger switches menus", async () => {
+      await userEvent.hover(edit)
+      await expect(
+        await screen.findByRole("menuitem", { name: COPY })
+      ).toBeInTheDocument()
+      await waitFor(() =>
+        expect(screen.queryByRole("menuitem", { name: NEW_TAB })).toBeNull()
+      )
+    })
+
+    await step("running an action closes the menu", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: COPY }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+
+    await step("Escape closes and returns focus to the trigger", async () => {
+      await userEvent.click(file)
+      await screen.findByRole("menu")
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(file).toHaveFocus())
+    })
+  },
 }
 
 export const WithIcons: Story = {
@@ -130,6 +178,14 @@ export const OpenByDefault: Story = {
       <ViewMenu />
     </ActionBar>
   ),
+  play: async ({ step }) => {
+    await step("renders the first menu open and runs an action", async () => {
+      await userEvent.click(
+        await screen.findByRole("menuitem", { name: PRINT })
+      )
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const NotDismissible: Story = {

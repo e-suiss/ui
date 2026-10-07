@@ -6,6 +6,7 @@ import {
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, within } from "storybook/test"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -21,6 +22,8 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item"
+
+const NOTIFICATION_SETTINGS = /^Notification settings/
 
 const people = [
   {
@@ -88,7 +91,18 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    await step("shows the title, description and action", async () => {
+      await expect(canvas.getByText("Two-factor authentication")).toBeVisible()
+      await expect(
+        canvas.getByText("Add an extra layer of security to your account.")
+      ).toBeVisible()
+      await userEvent.tab()
+      await expect(canvas.getByRole("button", { name: "Enable" })).toHaveFocus()
+    })
+  },
+}
 
 export const Variants: Story = {
   render: (args) => (
@@ -151,6 +165,14 @@ export const AsLink: Story = {
       </ItemActions>
     </Item>
   ),
+  play: async ({ canvas, step }) => {
+    await step("renders the whole item as one focusable link", async () => {
+      const link = canvas.getByRole("link", { name: NOTIFICATION_SETTINGS })
+      await expect(link).toHaveAttribute("href", "#notifications")
+      await userEvent.tab()
+      await expect(link).toHaveFocus()
+    })
+  },
 }
 
 export const WithImage: Story = {
@@ -177,6 +199,15 @@ export const WithImage: Story = {
       ))}
     </ItemGroup>
   ),
+  play: async ({ canvas, step }) => {
+    await step("exposes the people as a list", async () => {
+      const list = canvas.getByRole("list")
+      await expect(within(list).getAllByRole("listitem")).toHaveLength(3)
+      await expect(
+        canvas.getAllByRole("button", { name: "Invite" })
+      ).toHaveLength(3)
+    })
+  },
 }
 
 export const Inset: Story = {

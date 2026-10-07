@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   AlertSheet,
@@ -55,16 +56,58 @@ export const Default: Story = {
       </AlertSheetContent>
     </AlertSheet>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Delete order" })
+
+    await step("opens a named sheet with focus on cancel", async () => {
+      await userEvent.click(trigger)
+      const sheet = await screen.findByRole("dialog", { name: "Delete order" })
+      await expect(sheet).toHaveAccessibleDescription(
+        "Order #1042 will be permanently deleted. This action cannot be undone."
+      )
+      await waitFor(() =>
+        expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus()
+      )
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("closes from the action", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Delete Order" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
 }
 
 export const NotDismissible: Story = {
-  ...Default,
   args: { dismissible: false },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Delete order" }))
+
+    await step("opens as an alert dialog", async () => {
+      await expect(
+        await screen.findByRole("alertdialog", { name: "Delete order" })
+      ).toBeVisible()
+    })
+
+    await step("closes from cancel", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Cancel" }))
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    })
+  },
 }
 
 export const WithTitle: Story = {
@@ -111,4 +154,18 @@ export const MultipleActions: Story = {
       </AlertSheetContent>
     </AlertSheet>
   ),
+  play: async () => {
+    const sheet = await screen.findByRole("dialog", {
+      name: "Save changes to this draft?",
+    })
+    await expect(sheet).toContainElement(
+      screen.getByRole("button", { name: "Save Draft" })
+    )
+    await expect(sheet).toContainElement(
+      screen.getByRole("button", { name: "Delete Draft" })
+    )
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus()
+    )
+  },
 }

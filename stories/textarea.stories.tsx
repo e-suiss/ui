@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent } from "storybook/test"
 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -24,7 +25,16 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByRole("textbox")
+
+    await step("accepts multi-line text", async () => {
+      await userEvent.type(textarea, "Hello{Enter}World")
+      await expect(textarea).toHaveValue("Hello\nWorld")
+    })
+  },
+}
 
 export const WithValue: Story = {
   args: {
@@ -40,6 +50,14 @@ export const WithLabel: Story = {
       <Textarea {...args} id="feedback" placeholder="Tell us what you think." />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("focuses the named textarea from its label", async () => {
+      await userEvent.click(canvas.getByText("Feedback"))
+      await expect(
+        canvas.getByRole("textbox", { name: "Feedback" })
+      ).toHaveFocus()
+    })
+  },
 }
 
 function ResizableExample({
@@ -103,6 +121,15 @@ export const Resizable: Story = {
       defaultValue={campaign}
     />
   ),
+  play: async ({ canvas, step }) => {
+    await step("names and describes the textarea", async () => {
+      const textarea = canvas.getByRole("textbox", { name: "Campaign copy" })
+      await expect(textarea).toHaveAccessibleDescription(
+        "Drag the bottom corner to resize. Double-click it to reset."
+      )
+      await expect(textarea).toHaveValue(campaign)
+    })
+  },
 }
 
 export const ResizableOutside: Story = {
@@ -118,6 +145,15 @@ export const ResizableOutside: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByRole("textbox")
+
+    await step("ignores typing while disabled", async () => {
+      await expect(textarea).toBeDisabled()
+      await userEvent.type(textarea, "Hello")
+      await expect(textarea).toHaveValue("")
+    })
+  },
 }
 
 export const Invalid: Story = {

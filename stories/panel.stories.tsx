@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   Panel,
@@ -83,10 +84,49 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Edit profile" })
+
+    await step("opens a named panel with its form", async () => {
+      await userEvent.click(trigger)
+      const panel = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(panel).toHaveAccessibleDescription(
+        "Update your details and save when you are done."
+      )
+      await expect(screen.getByLabelText("Name")).toHaveValue("Jordan Lee")
+    })
+
+    await step(
+      "closes with Escape and returns focus to the trigger",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async ({ step }) => {
+    await step("starts open and closes from the close button", async () => {
+      const panel = await screen.findByRole("dialog", { name: "Edit profile" })
+      await userEvent.click(
+        within(panel).getByRole("button", { name: "Close" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Sides: Story = {
@@ -102,6 +142,22 @@ export const Sides: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    for (const side of ["Top", "Right", "Bottom", "Left"]) {
+      await step(
+        `opens and closes the ${side.toLowerCase()} panel`,
+        async () => {
+          await userEvent.click(canvas.getByRole("button", { name: side }))
+          const panel = await screen.findByRole("dialog", {
+            name: "Edit profile",
+          })
+          await waitFor(() => expect(panel).toBeVisible())
+          await userEvent.keyboard("{Escape}")
+          await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        }
+      )
+    }
+  },
 }
 
 export const WithCloseLabel: Story = {
@@ -113,6 +169,16 @@ export const WithCloseLabel: Story = {
       <ProfilePanel closeLabel="Done" />
     </Panel>
   ),
+  play: async ({ canvas, step }) => {
+    await step("closes from the labelled close button", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Edit profile" })
+      )
+      const panel = await screen.findByRole("dialog", { name: "Edit profile" })
+      await userEvent.click(within(panel).getByRole("button", { name: "Done" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithoutCloseButton: Story = {
@@ -124,6 +190,21 @@ export const WithoutCloseButton: Story = {
       <ProfilePanel showCloseButton={false} />
     </Panel>
   ),
+  play: async ({ canvas, step }) => {
+    await step("omits the close button and closes from cancel", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Edit profile" })
+      )
+      const panel = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(
+        within(panel).queryByRole("button", { name: "Close" })
+      ).toBeNull()
+      await userEvent.click(
+        within(panel).getByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Floating: Story = {

@@ -1,6 +1,7 @@
 import { CashRegisterIcon, CookingPotIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   ResizableHandle,
@@ -60,6 +61,26 @@ export const Default: Story = {
       </ResizablePanel>
     </ResizablePanelGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const handle = canvas.getByRole("separator")
+
+    await step("starts split evenly", async () => {
+      await expect(handle).toHaveAttribute("aria-valuenow", "50")
+    })
+
+    await step("resizes with the arrow keys", async () => {
+      await userEvent.tab()
+      await expect(handle).toHaveFocus()
+      await userEvent.keyboard("{ArrowRight}")
+      await expect(
+        Number(handle.getAttribute("aria-valuenow"))
+      ).toBeGreaterThan(50)
+      await userEvent.keyboard("{ArrowLeft}{ArrowLeft}")
+      await expect(Number(handle.getAttribute("aria-valuenow"))).toBeLessThan(
+        50
+      )
+    })
+  },
 }
 
 export const WithHandle: Story = {
@@ -74,11 +95,33 @@ export const WithHandle: Story = {
       </ResizablePanel>
     </ResizablePanelGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const handle = canvas.getByRole("separator")
+
+    await step("stops at the sidebar's minimum size", async () => {
+      await expect(handle).toHaveAttribute("aria-valuenow", "30")
+      handle.focus()
+      await userEvent.keyboard("{Home}")
+      await expect(handle).toHaveAttribute("aria-valuenow", "20")
+    })
+  },
 }
 
 export const Vertical: Story = {
-  ...WithHandle,
   args: { orientation: "vertical" },
+  render: WithHandle.render,
+  play: async ({ canvas, step }) => {
+    const handle = canvas.getByRole("separator")
+
+    await step("resizes with the up and down keys", async () => {
+      await expect(handle).toHaveAttribute("aria-orientation", "horizontal")
+      handle.focus()
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(
+        Number(handle.getAttribute("aria-valuenow"))
+      ).toBeGreaterThan(30)
+    })
+  },
 }
 
 export const Nested: Story = {
@@ -172,9 +215,24 @@ function CardsExample(args: React.ComponentProps<typeof ResizablePanelGroup>) {
 export const Cards: Story = {
   parameters: { bare: true },
   render: (args) => <CardsExample {...args} />,
+  play: async ({ canvas, step }) => {
+    const handle = canvas.getByRole("separator")
+
+    await step("reports each card's share", async () => {
+      await waitFor(() => expect(canvas.getAllByText("50%")).toHaveLength(2))
+    })
+
+    await step("collapses the first card past its minimum", async () => {
+      handle.focus()
+      await userEvent.keyboard("{Home}")
+      await waitFor(() => expect(canvas.getByText("100%")).toBeVisible())
+      await expect(handle).toHaveAttribute("data-collapsed", "start")
+    })
+  },
 }
 
 export const CardsVertical: Story = {
-  ...Cards,
   args: { orientation: "vertical" },
+  parameters: { bare: true },
+  render: Cards.render,
 }

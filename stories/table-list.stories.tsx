@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { cn } from "cn"
+import { expect, within } from "storybook/test"
 
 import {
   TableList,
@@ -44,6 +45,8 @@ const orders: Order[] = [
     total: 39,
   },
 ]
+
+const EARBUDS = /Wireless earbuds/
 
 const statusLabel: Record<Order["status"], string> = {
   shipped: "Shipped",
@@ -119,12 +122,58 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const table = canvas.getByRole("table")
+
+    await step("names the section after its title", async () => {
+      await expect(
+        canvas.getByRole("region", { name: "Orders" })
+      ).toContainElement(table)
+    })
+
+    await step("renders a header and one row per order", async () => {
+      const headers = within(table).getAllByRole("columnheader")
+      await expect(headers.map((header) => header.textContent)).toEqual([
+        "Order",
+        "Product",
+        "Status",
+        "Date",
+        "Total",
+      ])
+      await expect(within(table).getAllByRole("row")).toHaveLength(
+        orders.length + 1
+      )
+    })
+
+    await step("formats each cell from its column", async () => {
+      const first = within(table).getByRole("row", { name: EARBUDS })
+      const cells = within(first).getAllByRole("cell")
+      await expect(cells.map((cell) => cell.textContent)).toEqual([
+        "#1042",
+        "Wireless earbuds",
+        "Shipped",
+        "Oct 3",
+        "$249.00",
+      ])
+    })
+  },
+}
 
 export const WithoutTitle: Story = {
   args: { title: undefined },
+  play: async ({ canvas }) => {
+    await expect(canvas.queryByRole("heading")).toBeNull()
+    await expect(canvas.queryByRole("region")).toBeNull()
+    await expect(canvas.getAllByRole("row")).toHaveLength(orders.length + 1)
+  },
 }
 
 export const Empty: Story = {
   args: { rows: [], emptyText: "No orders yet." },
+  play: async ({ canvas }) => {
+    const rows = canvas.getAllByRole("row")
+    await expect(rows).toHaveLength(2)
+    await expect(canvas.getByRole("cell")).toHaveTextContent("No orders yet.")
+  },
 }

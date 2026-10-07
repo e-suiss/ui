@@ -1,5 +1,6 @@
 import { DotsThreeIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -58,16 +59,23 @@ export const Default: Story = {
       </CardFooter>
     </Card>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("Team plan")).toBeVisible()
+    await expect(
+      canvas.getByText("Everything your team needs to ship faster.")
+    ).toBeVisible()
+    await expect(canvas.getAllByRole("button")).toHaveLength(2)
+  },
 }
 
 export const Small: Story = {
-  ...Default,
   args: { size: "sm" },
+  render: Default.render,
 }
 
 export const Filled: Story = {
-  ...Default,
   args: { variant: "filled" },
+  render: Default.render,
 }
 
 export const WithAction: Story = {
@@ -87,6 +95,11 @@ export const WithAction: Story = {
       </CardContent>
     </Card>
   ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("button", { name: "More options" })
+    ).toBeVisible()
+  },
 }
 
 export const WithBorders: Story = {

@@ -7,6 +7,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import {
   Attachment,
@@ -71,6 +72,12 @@ export const Default: Story = {
       </AttachmentActions>
     </Attachment>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("Quarterly report.pdf")).toBeVisible()
+    const remove = canvas.getByRole("button", { name: "Remove" })
+    await userEvent.tab()
+    await expect(remove).toHaveFocus()
+  },
 }
 
 export const Sizes: Story = {
@@ -164,6 +171,16 @@ export const States: Story = {
       </Attachment>
     </div>
   ),
+  play: async ({ canvas }) => {
+    const progress = canvas.getByRole("progressbar", { name: "Uploading" })
+    await expect(progress).toHaveAttribute("aria-valuenow", "64")
+    await expect(
+      canvas.getByRole("button", { name: "Cancel upload" })
+    ).toBeEnabled()
+    await expect(
+      canvas.getByRole("button", { name: "Choose File" })
+    ).toBeVisible()
+  },
 }
 
 export const Image: Story = {
@@ -230,6 +247,21 @@ export const Clickable: Story = {
       </AttachmentActions>
     </Attachment>
   ),
+  play: async ({ canvas, step }) => {
+    await step(
+      "exposes the card and its action as separate buttons",
+      async () => {
+        await userEvent.tab()
+        await expect(
+          canvas.getByRole("button", { name: "Open Brand guidelines.pdf" })
+        ).toHaveFocus()
+        await userEvent.tab()
+        await expect(
+          canvas.getByRole("button", { name: "Download" })
+        ).toHaveFocus()
+      }
+    )
+  },
 }
 
 export const Group: Story = {

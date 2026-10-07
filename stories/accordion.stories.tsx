@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   Accordion,
@@ -55,6 +56,49 @@ export const Default: Story = {
       ))}
     </Accordion>
   ),
+  play: async ({ canvas, step }) => {
+    const shipping = canvas.getByRole("button", {
+      name: "How long does shipping take?",
+    })
+    const returns = canvas.getByRole("button", {
+      name: "Can I return an item?",
+    })
+
+    await step("starts with every panel collapsed", async () => {
+      await expect(shipping).toHaveAttribute("aria-expanded", "false")
+      await expect(returns).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step("expands a panel on click", async () => {
+      await userEvent.click(shipping)
+      await expect(shipping).toHaveAttribute("aria-expanded", "true")
+      await expect(
+        await canvas.findByText(
+          "Orders ship within two business days and arrive in three to five days."
+        )
+      ).toBeVisible()
+    })
+
+    await step("collapses the open panel when another opens", async () => {
+      await userEvent.click(returns)
+      await expect(returns).toHaveAttribute("aria-expanded", "true")
+      await waitFor(() =>
+        expect(shipping).toHaveAttribute("aria-expanded", "false")
+      )
+    })
+
+    await step("toggles from the keyboard", async () => {
+      const support = canvas.getByRole("button", {
+        name: "How do I contact support?",
+      })
+      await userEvent.tab()
+      await expect(support).toHaveFocus()
+      await userEvent.keyboard("{Enter}")
+      await expect(support).toHaveAttribute("aria-expanded", "true")
+      await userEvent.keyboard(" ")
+      await expect(support).toHaveAttribute("aria-expanded", "false")
+    })
+  },
 }
 
 export const Filled: Story = {
@@ -72,11 +116,41 @@ export const Filled: Story = {
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultValue: ["shipping"] },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("button", { name: "How long does shipping take?" })
+    ).toHaveAttribute("aria-expanded", "true")
+    await expect(
+      canvas.getByText(
+        "Orders ship within two business days and arrive in three to five days."
+      )
+    ).toBeVisible()
+  },
 }
 
 export const Multiple: Story = {
-  ...Default,
   args: { multiple: true, defaultValue: ["shipping", "returns"] },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    const shipping = canvas.getByRole("button", {
+      name: "How long does shipping take?",
+    })
+    const support = canvas.getByRole("button", {
+      name: "How do I contact support?",
+    })
+
+    await step("keeps several panels open at once", async () => {
+      await userEvent.click(support)
+      await expect(support).toHaveAttribute("aria-expanded", "true")
+      await expect(shipping).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("closes only the panel that was clicked", async () => {
+      await userEvent.click(shipping)
+      await expect(shipping).toHaveAttribute("aria-expanded", "false")
+      await expect(support).toHaveAttribute("aria-expanded", "true")
+    })
+  },
 }

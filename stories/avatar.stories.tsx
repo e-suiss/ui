@@ -1,5 +1,6 @@
 import { CheckIcon, PlusIcon, UserIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import {
   Avatar,
@@ -61,6 +62,9 @@ export const Fallback: Story = {
       <AvatarFallback>LC</AvatarFallback>
     </Avatar>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("LC")).toBeVisible()
+  },
 }
 
 export const FallbackSizes: Story = {
@@ -130,6 +134,15 @@ export const Group: Story = {
       <AvatarGroupCount>+4</AvatarGroupCount>
     </AvatarGroup>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("+4")).toBeVisible()
+    for (const person of people) {
+      await expect(
+        canvas.queryByRole("img", { name: person.name }) ??
+          canvas.queryByText(person.initials)
+      ).toBeInTheDocument()
+    }
+  },
 }
 
 export const GroupWithIconCount: Story = {

@@ -1,5 +1,6 @@
 import { CaretRightIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -63,6 +64,31 @@ export const Default: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  play: async ({ canvas, step }) => {
+    const previous = canvas.getByRole("button", { name: "Previous slide" })
+    const next = canvas.getByRole("button", { name: "Next slide" })
+
+    await step("starts on the first of five slides", async () => {
+      await expect(canvas.getByRole("region")).toHaveAttribute(
+        "aria-roledescription",
+        "carousel"
+      )
+      await expect(canvas.getAllByRole("group")).toHaveLength(5)
+      await waitFor(() => expect(next).toBeEnabled())
+      await expect(previous).toBeDisabled()
+    })
+
+    await step("advances with the next button", async () => {
+      await userEvent.click(next)
+      await waitFor(() => expect(previous).toBeEnabled())
+    })
+
+    await step("reaches the end with the arrow keys", async () => {
+      await userEvent.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}")
+      await waitFor(() => expect(next).toBeDisabled())
+      await expect(previous).toHaveFocus()
+    })
+  },
 }
 
 export const MultipleItems: Story = {
@@ -87,8 +113,18 @@ export const MultipleItems: Story = {
 }
 
 export const Loop: Story = {
-  ...Default,
   args: { opts: { loop: true } },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    await waitFor(() =>
+      expect(
+        canvas.getByRole("button", { name: "Previous slide" })
+      ).toBeEnabled()
+    )
+    await expect(
+      canvas.getByRole("button", { name: "Next slide" })
+    ).toBeEnabled()
+  },
 }
 
 export const Vertical: Story = {
@@ -311,6 +347,28 @@ export const Testimonials: Story = {
       </Carousel>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const first = await canvas.findByRole("button", { name: "Go to slide 1" })
+
+    await step("marks the current slide dot", async () => {
+      await expect(first).toHaveAttribute("aria-current", "true")
+      await expect(
+        canvas.queryByRole("button", { name: "Pause slideshow" })
+      ).toBeNull()
+    })
+
+    await step("jumps to a slide from its dot", async () => {
+      const third = canvas.getByRole("button", { name: "Go to slide 3" })
+      await userEvent.click(third)
+      await waitFor(() => expect(third).toHaveAttribute("aria-current", "true"))
+      await expect(first).not.toHaveAttribute("aria-current")
+      await waitFor(() =>
+        expect(
+          canvas.getByRole("button", { name: "Next slide" })
+        ).toBeDisabled()
+      )
+    })
+  },
 }
 
 export const Gallery: Story = {
@@ -341,7 +399,8 @@ export const Gallery: Story = {
 }
 
 export const FeaturedAutoplay: Story = {
-  ...Featured,
+  parameters: Featured.parameters,
+  render: Featured.render,
   args: {
     ...Featured.args,
     autoplay: 4000,
@@ -352,6 +411,24 @@ export const FeaturedAutoplay: Story = {
 export const SpotlightAutoplay: Story = {
   ...Spotlight,
   args: { ...Spotlight.args, autoplay: true },
+  play: async ({ canvas, step }) => {
+    const toggle = await canvas.findByRole("button", {
+      name: "Pause slideshow",
+    })
+
+    await step("hides the next button while autoplaying", async () => {
+      await expect(
+        canvas.queryByRole("button", { name: "Next slide" })
+      ).toBeNull()
+    })
+
+    await step("pauses and resumes from the play button", async () => {
+      await userEvent.click(toggle)
+      await expect(toggle).toHaveAccessibleName("Play slideshow")
+      await userEvent.click(toggle)
+      await expect(toggle).toHaveAccessibleName("Pause slideshow")
+    })
+  },
 }
 
 export const ShelfAutoplay: Story = {
@@ -360,6 +437,7 @@ export const ShelfAutoplay: Story = {
 }
 
 export const TestimonialsAutoplay: Story = {
-  ...Testimonials,
+  parameters: Testimonials.parameters,
+  render: Testimonials.render,
   args: { autoplay: 6000, opts: { loop: true } },
 }

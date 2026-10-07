@@ -1,5 +1,6 @@
 import { HouseIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import {
   Breadcrumb,
@@ -38,6 +39,24 @@ export const Default: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  play: async ({ canvas, step }) => {
+    await step("labels the trail and marks the current page", async () => {
+      const nav = canvas.getByRole("navigation", { name: "breadcrumb" })
+      await expect(nav).toBeVisible()
+      await expect(canvas.getAllByRole("listitem")).toHaveLength(3)
+      await expect(canvas.getByText("Website redesign")).toHaveAttribute(
+        "aria-current",
+        "page"
+      )
+    })
+
+    await step("tabs through the links only", async () => {
+      await userEvent.tab()
+      await expect(canvas.getByRole("link", { name: "Home" })).toHaveFocus()
+      await userEvent.tab()
+      await expect(canvas.getByRole("link", { name: "Projects" })).toHaveFocus()
+    })
+  },
 }
 
 export const WithHomeIcon: Story = {
@@ -64,6 +83,9 @@ export const WithHomeIcon: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeVisible()
+  },
 }
 
 export const WithEllipsis: Story = {

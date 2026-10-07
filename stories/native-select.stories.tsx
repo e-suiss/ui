@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import {
   NativeSelect,
@@ -38,6 +39,25 @@ export const Default: Story = {
       <NativeSelectOption value="grape">Grape</NativeSelectOption>
     </NativeSelect>
   ),
+  play: async ({ canvas, step }) => {
+    const select = canvas.getByRole("combobox")
+
+    await step("starts on the disabled placeholder", async () => {
+      await expect(select).toHaveValue("")
+      await expect(
+        canvas.getByRole("option", { name: "Select a fruit" })
+      ).toBeDisabled()
+    })
+
+    await step("selects an option", async () => {
+      await userEvent.selectOptions(select, "banana")
+      await expect(select).toHaveValue("banana")
+      await expect(
+        canvas.getByRole<HTMLOptionElement>("option", { name: "Banana" })
+          .selected
+      ).toBe(true)
+    })
+  },
 }
 
 export const Sizes: Story = {
@@ -74,14 +94,32 @@ export const WithGroups: Story = {
       </NativeSelectOptGroup>
     </NativeSelect>
   ),
+  play: async ({ canvas, step }) => {
+    await step("groups options and selects across groups", async () => {
+      await expect(canvas.getByRole("group", { name: "Asia" })).toBeTruthy()
+      const select = canvas.getByRole("combobox")
+      await userEvent.selectOptions(select, "seoul")
+      await expect(select).toHaveValue("seoul")
+    })
+  },
 }
 
 export const Disabled: Story = {
-  ...Default,
   args: { disabled: true },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("disables the select", async () => {
+      await expect(canvas.getByRole("combobox")).toBeDisabled()
+    })
+  },
 }
 
 export const Invalid: Story = {
-  ...Default,
   args: { "aria-invalid": true },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("flags the select as invalid", async () => {
+      await expect(canvas.getByRole("combobox")).toBeInvalid()
+    })
+  },
 }

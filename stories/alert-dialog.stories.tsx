@@ -1,5 +1,6 @@
 import { TrashIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   AlertDialog,
@@ -44,11 +45,52 @@ export const Default: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Sign out" })
+
+    await step("opens a named alert dialog and moves focus in", async () => {
+      await userEvent.click(trigger)
+      const dialog = await screen.findByRole("alertdialog", {
+        name: "Sign out of your account?",
+      })
+      await expect(dialog).toHaveAccessibleDescription(
+        "You will need to sign in again to access your projects and settings."
+      )
+      await waitFor(() =>
+        expect(dialog).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step("closes from cancel and returns focus", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Cancel" }))
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("alertdialog")
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("renders open and closes from the action", async () => {
+      const dialog = await screen.findByRole("alertdialog", {
+        name: "Sign out of your account?",
+      })
+      await waitFor(() => expect(dialog).toBeVisible())
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Sign out" })
+      )
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    })
+  },
 }
 
 export const Small: Story = {

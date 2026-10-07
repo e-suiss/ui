@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, within } from "storybook/test"
 
 import {
   Pagination,
@@ -172,6 +173,34 @@ function NumberedExample() {
 
 export const Default: Story = {
   render: () => <NumberedExample />,
+  play: async ({ canvas, step }) => {
+    const nav = canvas.getByRole("navigation", { name: "pagination" })
+
+    await step("marks the current page", async () => {
+      await expect(
+        within(nav).getByRole("link", { name: "2" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(canvas.getByText("#1095")).toBeVisible()
+    })
+
+    await step("moves forward with the next link", async () => {
+      await userEvent.click(
+        within(nav).getByRole("link", { name: "Go to next page" })
+      )
+      await expect(
+        within(nav).getByRole("link", { name: "3" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(canvas.getByText("#1090")).toBeVisible()
+    })
+
+    await step("disables previous on the first page", async () => {
+      await userEvent.click(within(nav).getByRole("link", { name: "1" }))
+      await expect(
+        within(nav).getByRole("link", { name: "Go to previous page" })
+      ).toHaveAttribute("aria-disabled", "true")
+      await expect(canvas.getByText("#1100")).toBeVisible()
+    })
+  },
 }
 
 function CompactExample() {
@@ -216,6 +245,31 @@ function CompactExample() {
 
 export const Compact: Story = {
   render: () => <CompactExample />,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Page" })
+
+    await step("jumps to a typed page on Enter", async () => {
+      await userEvent.clear(input)
+      await userEvent.type(input, "5{Enter}")
+      await expect(canvas.getByText("#1080")).toBeVisible()
+    })
+
+    await step("clamps an out-of-range page", async () => {
+      await userEvent.clear(input)
+      await userEvent.type(input, "99{Enter}")
+      await expect(input).toHaveValue("13")
+      await expect(
+        canvas.getByRole("link", { name: "Go to next page" })
+      ).toHaveAttribute("aria-disabled", "true")
+    })
+
+    await step("syncs the input with the arrows", async () => {
+      await userEvent.click(
+        canvas.getByRole("link", { name: "Go to previous page" })
+      )
+      await expect(input).toHaveValue("12")
+    })
+  },
 }
 
 function RowsPerPageExample() {
@@ -265,6 +319,31 @@ function RowsPerPageExample() {
 
 export const RowsPerPage: Story = {
   render: () => <RowsPerPageExample />,
+  play: async ({ canvas, step }) => {
+    await step("changes the page size from the select", async () => {
+      await userEvent.click(
+        canvas.getByRole("combobox", { name: "Rows per page" })
+      )
+      await userEvent.click(
+        await screen.findByRole("option", { name: "10 rows" })
+      )
+      await expect(canvas.getAllByRole("row")).toHaveLength(11)
+    })
+
+    await step("jumps to the last and first pages", async () => {
+      await userEvent.click(
+        canvas.getByRole("link", { name: "Go to last page" })
+      )
+      await expect(canvas.getAllByRole("row")).toHaveLength(3)
+      await expect(
+        canvas.getByRole("link", { name: "Go to next page" })
+      ).toHaveAttribute("aria-disabled", "true")
+      await userEvent.click(
+        canvas.getByRole("link", { name: "Go to first page" })
+      )
+      await expect(canvas.getByText("#1100")).toBeVisible()
+    })
+  },
 }
 
 export const WithEllipsis: Story = {
@@ -303,6 +382,15 @@ export const WithEllipsis: Story = {
       </PaginationContent>
     </Pagination>
   ),
+  play: async ({ canvas, step }) => {
+    await step("hides the ellipses and marks page 10", async () => {
+      await expect(canvas.getByRole("link", { name: "10" })).toHaveAttribute(
+        "aria-current",
+        "page"
+      )
+      await expect(canvas.getAllByRole("link")).toHaveLength(7)
+    })
+  },
 }
 
 export const CustomLabels: Story = {
@@ -318,6 +406,16 @@ export const CustomLabels: Story = {
       </PaginationContent>
     </Pagination>
   ),
+  play: async ({ canvas, step }) => {
+    await step("names the links after their custom text", async () => {
+      await expect(
+        canvas.getByRole("link", { name: "Newer" })
+      ).toHaveTextContent("Newer")
+      await expect(
+        canvas.getByRole("link", { name: "Older" })
+      ).toHaveTextContent("Older")
+    })
+  },
 }
 
 export const LargeLinks: Story = {

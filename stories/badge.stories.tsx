@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Badge } from "@/components/ui/badge"
 
@@ -29,7 +30,11 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("Badge")).toBeVisible()
+  },
+}
 
 export const Variants: Story = {
   render: (args) => (
@@ -75,6 +80,11 @@ export const AsLink: Story = {
   args: {
     render: <a href="#documentation" />,
     children: "Documentation",
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("link", { name: "Documentation" })
+    ).toHaveAttribute("href", "#documentation")
   },
 }
 

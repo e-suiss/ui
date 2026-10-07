@@ -1,6 +1,7 @@
 import { GlobeIcon, MoonIcon, SunIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Fragment } from "react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   Select,
@@ -51,16 +52,66 @@ export const Default: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("combobox")
+
+    await step("opens the list and picks an option", async () => {
+      await expect(trigger).toHaveTextContent("Select a fruit")
+      await userEvent.click(trigger)
+      await screen.findByRole("listbox")
+      await userEvent.click(
+        await screen.findByRole("option", { name: "Banana" })
+      )
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(trigger).toHaveTextContent("Banana")
+      await expect(trigger).toHaveFocus()
+    })
+
+    await step("marks the chosen option as selected", async () => {
+      await userEvent.click(trigger)
+      await expect(
+        await screen.findByRole("option", { name: "Banana" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("closes with Escape and keeps the value", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(trigger).toHaveFocus()
+      await expect(trigger).toHaveTextContent("Banana")
+    })
+  },
 }
 
 export const Open: Story = {
-  ...Default,
   args: { defaultOpen: true, defaultValue: "banana" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("opens on mount with the value selected", async () => {
+      await expect(
+        await screen.findByRole("option", { name: "Banana" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("picks another option from the keyboard", async () => {
+      await waitFor(() =>
+        expect(screen.getByRole("option", { name: "Banana" })).toHaveFocus()
+      )
+      await userEvent.keyboard("{ArrowDown}{Enter}")
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(canvas.getByRole("combobox")).toHaveTextContent("Blueberry")
+    })
+  },
 }
 
 export const WithValue: Story = {
-  ...Default,
   args: { defaultValue: "blueberry" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("shows the default value's label", async () => {
+      await expect(canvas.getByRole("combobox")).toHaveTextContent("Blueberry")
+    })
+  },
 }
 
 export const Small: Story = {
@@ -126,6 +177,21 @@ export const Grouped: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvas, step }) => {
+    await step("labels each group of options", async () => {
+      await expect(canvas.getByRole("combobox")).toHaveTextContent(
+        "Central European Time"
+      )
+      await userEvent.click(canvas.getByRole("combobox"))
+      const europe = await screen.findByRole("group", { name: "Europe" })
+      await expect(within(europe).getAllByRole("option")).toHaveLength(3)
+      await expect(
+        screen.getByRole("group", { name: "North America" })
+      ).toBeInTheDocument()
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+    })
+  },
 }
 
 const themes = [
@@ -157,8 +223,17 @@ export const WithIcons: Story = {
 }
 
 export const Disabled: Story = {
-  ...Default,
   args: { disabled: true },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("combobox")
+
+    await step("does not open while disabled", async () => {
+      await expect(trigger).toHaveAttribute("data-disabled")
+      await userEvent.click(trigger, { pointerEventsCheck: 0 })
+      await expect(screen.queryByRole("listbox")).toBeNull()
+    })
+  },
 }
 
 export const Invalid: Story = {
@@ -176,4 +251,12 @@ export const Invalid: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvas, step }) => {
+    await step("flags the trigger as invalid", async () => {
+      await expect(canvas.getByRole("combobox")).toHaveAttribute(
+        "aria-invalid",
+        "true"
+      )
+    })
+  },
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -55,11 +56,42 @@ export const Default: Story = {
       </DialogContent>
     </Dialog>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Edit profile" })
+
+    await step("opens a named dialog and moves focus into it", async () => {
+      await userEvent.click(trigger)
+      const dialog = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(dialog).toHaveAccessibleDescription(
+        "Update your name and username. Click save when you are done."
+      )
+      await waitFor(() =>
+        expect(dialog).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step(
+      "closes with Escape and returns focus to the trigger",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
 }
 
 export const WithoutCloseButton: Story = {
@@ -83,6 +115,15 @@ export const WithoutCloseButton: Story = {
       </DialogContent>
     </Dialog>
   ),
+  play: async () => {
+    const dialog = await screen.findByRole("dialog", { name: "Terms updated" })
+    await expect(within(dialog).getAllByRole("button")).toHaveLength(2)
+    await expect(
+      within(dialog).getByRole("button", { name: "Accept" })
+    ).toBeEnabled()
+    await userEvent.click(within(dialog).getByRole("button", { name: "Close" }))
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+  },
 }
 
 export const Destructive: Story = {
@@ -108,4 +149,19 @@ export const Destructive: Story = {
       </DialogContent>
     </Dialog>
   ),
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole("button", { name: "Delete project" })
+    await userEvent.click(trigger)
+    const dialog = await screen.findByRole("dialog", {
+      name: "Delete this project?",
+    })
+    await expect(
+      within(dialog).getByRole("button", { name: "Delete" })
+    ).toBeEnabled()
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: "Cancel" })
+    )
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 }

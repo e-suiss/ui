@@ -23,6 +23,7 @@ import {
   WarningCircleIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -152,6 +153,30 @@ export const Default: Story = {
       </ButtonGroup>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    await step("groups the buttons", async () => {
+      await expect(canvas.getAllByRole("group")).toHaveLength(4)
+      await expect(
+        canvas.getByRole("button", { name: "Go back" })
+      ).toBeVisible()
+    })
+
+    await step(
+      "opens the overflow menu and closes it with Escape",
+      async () => {
+        const trigger = canvas.getByRole("button", { name: "More options" })
+        await userEvent.click(trigger)
+        const item = await screen.findByRole("menuitem", {
+          name: "Mark as read",
+        })
+        await waitFor(() => expect(item).toBeVisible())
+        await expect(trigger).toHaveAttribute("aria-expanded", "true")
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+  },
 }
 
 export const Outline: Story = {
@@ -229,6 +254,15 @@ export const Orientation: Story = {
       </Button>
     </ButtonGroup>
   ),
+  play: async ({ canvas }) => {
+    const group = canvas.getByRole("group", { name: "Media controls" })
+    await expect(group).toHaveAttribute("data-orientation", "vertical")
+    const zoomIn = canvas.getByRole("button", { name: "Zoom in" })
+    const zoomOut = canvas.getByRole("button", { name: "Zoom out" })
+    await expect(zoomIn.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+      zoomOut.getBoundingClientRect().top + 1
+    )
+  },
 }
 
 export const Sizes: Story = {
@@ -518,6 +552,17 @@ export const WithPopover: Story = {
       </Popover>
     </ButtonGroup>
   ),
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole("button", { name: "Open popover" })
+    await userEvent.click(trigger)
+    const popover = await screen.findByRole("dialog", {
+      name: "Start a new task",
+    })
+    await waitFor(() => expect(popover).toBeVisible())
+    await userEvent.keyboard("{Escape}")
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    await expect(trigger).toHaveFocus()
+  },
 }
 
 export const Pagination: Story = {
@@ -536,4 +581,13 @@ export const Pagination: Story = {
       </Button>
     </ButtonGroup>
   ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("group", { name: "Pagination" })
+    ).toBeVisible()
+    await expect(canvas.getByRole("button", { name: "2" })).toHaveAttribute(
+      "aria-current",
+      "page"
+    )
+  },
 }

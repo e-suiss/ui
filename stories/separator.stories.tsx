@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Separator } from "@/components/ui/separator"
 
@@ -39,6 +40,20 @@ export const Default: Story = {
       </div>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("exposes each separator with its orientation", async () => {
+      const separators = canvas.getAllByRole("separator")
+      await expect(separators).toHaveLength(3)
+      await expect(separators[0]).toHaveAttribute(
+        "aria-orientation",
+        "horizontal"
+      )
+      await expect(separators[1]).toHaveAttribute(
+        "aria-orientation",
+        "vertical"
+      )
+    })
+  },
 }
 
 export const Horizontal: Story = {
@@ -62,4 +77,11 @@ export const Vertical: Story = {
       <span>Changelog</span>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("marks both separators as vertical", async () => {
+      for (const separator of canvas.getAllByRole("separator")) {
+        await expect(separator).toHaveAttribute("aria-orientation", "vertical")
+      }
+    })
+  },
 }

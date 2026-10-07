@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -14,7 +15,15 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvasElement, step }) => {
+    await step("renders a pulsing placeholder with no text", async () => {
+      const skeleton = canvasElement.querySelector('[data-slot="skeleton"]')
+      await expect(skeleton).toHaveClass("animate-pulse")
+      await expect(skeleton).toBeEmptyDOMElement()
+    })
+  },
+}
 
 export const Profile: Story = {
   render: () => (
@@ -52,4 +61,11 @@ export const List: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    await step("renders three placeholders per row", async () => {
+      await expect(
+        canvasElement.querySelectorAll('[data-slot="skeleton"]')
+      ).toHaveLength(12)
+    })
+  },
 }

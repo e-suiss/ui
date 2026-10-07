@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -40,6 +41,31 @@ export const Default: Story = {
       ))}
     </RadioGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const email = canvas.getByRole("radio", { name: "Email" })
+    const sms = canvas.getByRole("radio", { name: "Text message" })
+
+    await step("names the group and checks the default", async () => {
+      await expect(
+        canvas.getByRole("radiogroup", { name: "Notification method" })
+      ).toBeVisible()
+      await expect(email).toHaveAttribute("aria-checked", "true")
+    })
+
+    await step("selects with a click on the label", async () => {
+      await userEvent.click(canvas.getByText("Text message"))
+      await expect(sms).toHaveAttribute("aria-checked", "true")
+      await expect(email).toHaveAttribute("aria-checked", "false")
+    })
+
+    await step("moves the selection with arrow keys", async () => {
+      await userEvent.click(sms)
+      await userEvent.keyboard("{ArrowDown}")
+      const push = canvas.getByRole("radio", { name: "Push notification" })
+      await expect(push).toHaveFocus()
+      await expect(push).toHaveAttribute("aria-checked", "true")
+    })
+  },
 }
 
 export const WithDescriptions: Story = {
@@ -86,11 +112,34 @@ export const DisabledItem: Story = {
       ))}
     </RadioGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const push = canvas.getByRole("radio", { name: "Push notification" })
+
+    await step("skips the disabled item", async () => {
+      await userEvent.click(canvas.getByRole("radio", { name: "Text message" }))
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(push).not.toHaveFocus()
+      await expect(push).toHaveAttribute("aria-checked", "false")
+    })
+  },
 }
 
 export const Disabled: Story = {
-  ...Default,
   args: { disabled: true },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("ignores clicks while disabled", async () => {
+      await userEvent.click(canvas.getByText("Text message"), {
+        pointerEventsCheck: 0,
+      })
+      await expect(
+        canvas.getByRole("radio", { name: "Text message" })
+      ).toHaveAttribute("aria-checked", "false")
+      await expect(
+        canvas.getByRole("radio", { name: "Email" })
+      ).toHaveAttribute("aria-checked", "true")
+    })
+  },
 }
 
 export const Invalid: Story = {

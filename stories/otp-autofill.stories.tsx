@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   OtpAutofill,
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/input-otp"
 
 const CODE = "482913"
+const SUGGESTION = /From Messages/
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -101,9 +103,69 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: { maxLength: 6, onVerify: () => true },
   render: () => <VerificationExample incoming={CODE} />,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Verification code" })
+
+    await step(
+      "offers the incoming code while the field is focused",
+      async () => {
+        await waitFor(() => expect(input).toHaveFocus())
+        const suggestion = await canvas.findByRole(
+          "button",
+          { name: SUGGESTION },
+          { timeout: 4000 }
+        )
+        await expect(suggestion).toHaveTextContent(CODE)
+      }
+    )
+
+    await step("fills and verifies the code in one tap", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: SUGGESTION }))
+      await waitFor(() => expect(input).toHaveValue(CODE))
+      await waitFor(
+        () => expect(canvas.getByRole("status")).toHaveTextContent("Verified"),
+        { timeout: 3000 }
+      )
+      await expect(input).toHaveAttribute("readonly")
+      await expect(
+        canvas.queryByRole("button", { name: SUGGESTION })
+      ).toBeNull()
+    })
+  },
 }
 
 export const WrongCode: Story = {
   args: { maxLength: 6, onVerify: () => true },
   render: () => <VerificationExample incoming="113355" />,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Verification code" })
+
+    await step("rejects the suggested code and clears the field", async () => {
+      await userEvent.click(
+        await canvas.findByRole(
+          "button",
+          { name: SUGGESTION },
+          { timeout: 4000 }
+        )
+      )
+      await waitFor(
+        () =>
+          expect(canvas.getByRole("status")).toHaveTextContent(
+            "That code didn't work. Try again."
+          ),
+        { timeout: 3000 }
+      )
+      await expect(input).toHaveAttribute("aria-invalid", "true")
+      await waitFor(() => expect(input).toHaveValue(""))
+      await waitFor(() => expect(input).toHaveFocus())
+    })
+
+    await step("verifies a code typed by hand", async () => {
+      await userEvent.type(input, CODE)
+      await waitFor(
+        () => expect(canvas.getByRole("status")).toHaveTextContent("Verified"),
+        { timeout: 3000 }
+      )
+    })
+  },
 }

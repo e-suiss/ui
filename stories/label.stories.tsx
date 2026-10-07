@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -16,7 +17,13 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    await step("renders the label text", async () => {
+      await expect(canvas.getByText("Email address").tagName).toBe("LABEL")
+    })
+  },
+}
 
 export const WithInput: Story = {
   render: (args) => (
@@ -25,6 +32,14 @@ export const WithInput: Story = {
       <Input id="label-email" type="email" placeholder="you@example.com" />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Email address" })
+
+    await step("names the input and focuses it on click", async () => {
+      await userEvent.click(canvas.getByText("Email address"))
+      await expect(input).toHaveFocus()
+    })
+  },
 }
 
 export const WithCheckbox: Story = {
@@ -35,6 +50,17 @@ export const WithCheckbox: Story = {
       <Label {...args} htmlFor="label-terms" />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const checkbox = canvas.getByRole("checkbox", {
+      name: "Accept terms and conditions",
+    })
+
+    await step("toggles the checkbox from its label", async () => {
+      await expect(checkbox).not.toBeChecked()
+      await userEvent.click(canvas.getByText("Accept terms and conditions"))
+      await expect(checkbox).toBeChecked()
+    })
+  },
 }
 
 export const Disabled: Story = {
@@ -49,4 +75,11 @@ export const Disabled: Story = {
       />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("keeps the named input disabled", async () => {
+      await expect(
+        canvas.getByRole("textbox", { name: "Email address" })
+      ).toBeDisabled()
+    })
+  },
 }

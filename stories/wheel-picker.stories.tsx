@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent } from "storybook/test"
 
 import {
   WheelPicker,
@@ -48,6 +49,35 @@ export const Default: Story = {
       </WheelPickerColumn>
     </WheelPicker>
   ),
+  play: async ({ canvas, step }) => {
+    const column = canvas.getByRole("listbox", { name: "Fruit" })
+
+    await step("selects the default value", async () => {
+      await expect(
+        canvas.getByRole("option", { name: "Lemon" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("steps through the options with arrow keys", async () => {
+      await userEvent.tab()
+      await expect(column).toHaveFocus()
+      await userEvent.keyboard("{ArrowDown}")
+      const mango = canvas.getByRole("option", { name: "Mango" })
+      await expect(mango).toHaveAttribute("aria-selected", "true")
+      await expect(column).toHaveAttribute("aria-activedescendant", mango.id)
+    })
+
+    await step("jumps to the ends with Home and End", async () => {
+      await userEvent.keyboard("{End}")
+      await expect(
+        canvas.getByRole("option", { name: "Plum" })
+      ).toHaveAttribute("aria-selected", "true")
+      await userEvent.keyboard("{Home}")
+      await expect(
+        canvas.getByRole("option", { name: "Apple" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+  },
 }
 
 const slots = Array.from({ length: 11 }, (_, index) => {
@@ -69,6 +99,25 @@ export const DisabledItems: Story = {
       </WheelPickerColumn>
     </WheelPicker>
   ),
+  play: async ({ canvas, step }) => {
+    await step("skips the booked slots", async () => {
+      await expect(
+        canvas.getByRole("option", { name: "19:30" })
+      ).toHaveAttribute("aria-disabled", "true")
+      canvas.getByRole("listbox", { name: "Reservation time" }).focus()
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(
+        canvas.getByRole("option", { name: "21:00" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("ignores clicks on a booked slot", async () => {
+      await userEvent.click(canvas.getByRole("option", { name: "20:00" }))
+      await expect(
+        canvas.getByRole("option", { name: "20:00" })
+      ).toHaveAttribute("aria-selected", "false")
+    })
+  },
 }
 
 function toDayValue(date: Date) {
@@ -159,4 +208,24 @@ function DateTimeExample(args: React.ComponentProps<typeof WheelPicker>) {
 
 export const DateTime: Story = {
   render: (args) => <DateTimeExample {...args} />,
+  play: async ({ canvas, step }) => {
+    await step("names each column", async () => {
+      await expect(canvas.getByRole("listbox", { name: "Day" })).toBeVisible()
+      await expect(canvas.getByRole("listbox", { name: "Hour" })).toBeVisible()
+      await expect(
+        canvas.getByRole("listbox", { name: "Minute" })
+      ).toBeVisible()
+    })
+
+    await step("updates the summary as columns change", async () => {
+      await expect(canvas.getByText("2026-10-04 19:30")).toBeVisible()
+      canvas.getByRole("listbox", { name: "Hour" }).focus()
+      await userEvent.keyboard("{ArrowDown}")
+      canvas.getByRole("listbox", { name: "Minute" }).focus()
+      await userEvent.keyboard("{ArrowUp}")
+      canvas.getByRole("listbox", { name: "Day" }).focus()
+      await userEvent.keyboard("{ArrowUp}")
+      await expect(canvas.getByText("2026-10-03 20:25")).toBeVisible()
+    })
+  },
 }

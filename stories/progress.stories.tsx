@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import {
   Progress,
@@ -30,7 +31,16 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    await step("exposes the current value", async () => {
+      await expect(canvas.getByRole("progressbar")).toHaveAttribute(
+        "aria-valuenow",
+        "60"
+      )
+    })
+  },
+}
 
 export const WithLabel: Story = {
   args: { value: 42 },
@@ -40,11 +50,25 @@ export const WithLabel: Story = {
       <ProgressValue />
     </Progress>
   ),
+  play: async ({ canvas, step }) => {
+    await step("names the bar and shows the value", async () => {
+      const bar = canvas.getByRole("progressbar", { name: "Uploading files" })
+      await expect(bar).toHaveAttribute("aria-valuenow", "42")
+      await expect(bar).toHaveTextContent("42")
+    })
+  },
 }
 
 export const Complete: Story = {
-  ...WithLabel,
   args: { value: 100 },
+  render: WithLabel.render,
+  play: async ({ canvas, step }) => {
+    await step("reports a full bar", async () => {
+      const bar = canvas.getByRole("progressbar", { name: "Uploading files" })
+      await expect(bar).toHaveAttribute("aria-valuenow", "100")
+      await expect(bar).toHaveTextContent("100")
+    })
+  },
 }
 
 export const Indeterminate: Story = {
@@ -54,4 +78,11 @@ export const Indeterminate: Story = {
       <ProgressLabel>Preparing export</ProgressLabel>
     </Progress>
   ),
+  play: async ({ canvas, step }) => {
+    await step("omits the value while indeterminate", async () => {
+      await expect(
+        canvas.getByRole("progressbar", { name: "Preparing export" })
+      ).not.toHaveAttribute("aria-valuenow")
+    })
+  },
 }

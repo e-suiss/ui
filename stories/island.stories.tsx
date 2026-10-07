@@ -7,6 +7,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, type screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Island,
@@ -19,6 +20,27 @@ import {
 import { Button } from "@/components/ui/button"
 
 const SIZE = 120
+const JORDAN = /Jordan Lee/
+const REVIEW = /Design review/
+const DOWNLOADING = /Downloading Design-Kit\.zip/
+
+function islandOf(canvasElement: HTMLElement) {
+  const island = canvasElement.querySelector<HTMLElement>("[data-slot=island]")
+  if (!island) throw new Error("Island is not rendered")
+  return island
+}
+
+async function startDownload(canvas: {
+  getByRole: typeof screen.getByRole
+  findByRole: typeof screen.findByRole
+}) {
+  const start = canvas.getByRole("button", { name: "Download Design-Kit.zip" })
+  await userEvent.click(start)
+  await expect(
+    canvas.getByRole("button", { name: "Downloading…" })
+  ).toBeDisabled()
+  return canvas.findByRole("button", { name: DOWNLOADING })
+}
 
 function NotifyButtons() {
   const { notify } = useIsland()
@@ -202,12 +224,124 @@ export const Notification: Story = {
       <NotifyButtons />
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const island = islandOf(canvasElement)
+
+    await step("stays hidden until something happens", async () => {
+      await expect(island).toHaveAttribute("data-view", "hidden")
+      await expect(canvas.queryByRole("button", { name: JORDAN })).toBeNull()
+    })
+
+    await step("grows to show a notification", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "New message" }))
+      const notice = await canvas.findByRole("button", { name: JORDAN })
+      await expect(notice).toHaveTextContent("Are we still on for Saturday?")
+      await expect(island).toHaveAttribute("data-view", "notice")
+    })
+
+    await step("swaps in a newer notification", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Reminder" }))
+      await expect(
+        await canvas.findByRole("button", { name: REVIEW })
+      ).toHaveTextContent("Starts in 10 minutes")
+      await expect(canvas.queryByRole("button", { name: JORDAN })).toBeNull()
+    })
+
+    await step("shrinks back when the notification is tapped", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: REVIEW }))
+      await waitFor(() => expect(island).toHaveAttribute("data-view", "hidden"))
+      await expect(canvas.queryByRole("button", { name: REVIEW })).toBeNull()
+    })
+  },
 }
 
 export const LiveActivity: Story = {
   render: () => <DownloadsExample />,
+  play: async ({ canvas, canvasElement, step }) => {
+    const island = islandOf(canvasElement)
+    let compact = canvas.getByRole("button", {
+      name: "Download Design-Kit.zip",
+    })
+
+    await step("shows the activity in the compact pill", async () => {
+      compact = await startDownload(canvas)
+      await expect(island).toHaveAttribute("data-view", "compact")
+      await expect(compact).toHaveAttribute("aria-expanded", "false")
+    })
+
+    await step(
+      "expands to the details and focuses the first control",
+      async () => {
+        await userEvent.click(compact)
+        await waitFor(() =>
+          expect(island).toHaveAttribute("data-view", "expanded")
+        )
+        await expect(compact).toHaveAttribute("aria-expanded", "true")
+        await expect(
+          canvas.getByRole("progressbar", { name: "Download progress" })
+        ).toBeInTheDocument()
+        await waitFor(() =>
+          expect(
+            canvas.getByRole("button", { name: "Cancel download" })
+          ).toHaveFocus()
+        )
+      }
+    )
+
+    await step(
+      "collapses with Escape and returns focus to the pill",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() =>
+          expect(island).toHaveAttribute("data-view", "compact")
+        )
+        await waitFor(() => expect(compact).toHaveFocus())
+      }
+    )
+
+    await step("cancels the download from the expanded view", async () => {
+      await userEvent.click(compact)
+      await userEvent.click(
+        await canvas.findByRole("button", { name: "Cancel download" })
+      )
+      await waitFor(() => expect(island).toHaveAttribute("data-view", "hidden"))
+      await expect(
+        canvas.getByRole("button", { name: "Download Design-Kit.zip" })
+      ).toBeEnabled()
+    })
+  },
 }
 
 export const ActivityWithNotifications: Story = {
   render: () => <DownloadsExample withNotifications />,
+  play: async ({ canvas, canvasElement, step }) => {
+    const island = islandOf(canvasElement)
+
+    await step("starts a live activity", async () => {
+      await startDownload(canvas)
+      await expect(island).toHaveAttribute("data-view", "compact")
+    })
+
+    await step("lets a notification take over the pill", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "New message" }))
+      await canvas.findByRole("button", { name: JORDAN })
+      await expect(island).toHaveAttribute("data-view", "notice")
+      await waitFor(() =>
+        expect(canvas.queryByRole("button", { name: DOWNLOADING })).toBeNull()
+      )
+    })
+
+    await step(
+      "returns to the activity once the notification is gone",
+      async () => {
+        await userEvent.click(canvas.getByRole("button", { name: JORDAN }))
+        await waitFor(() =>
+          expect(island).toHaveAttribute("data-view", "compact")
+        )
+        await expect(
+          canvas.getByRole("button", { name: DOWNLOADING })
+        ).toBeInTheDocument()
+      }
+    )
+  },
 }

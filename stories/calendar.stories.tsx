@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
 import type { DateRange } from "react-day-picker"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Calendar } from "@/components/ui/calendar"
+
+const TODAY = /^Today/
+const NEXT_MONTH = /next month/i
+const PREVIOUS_MONTH = /previous month/i
 
 const meta = {
   title: "Components/Calendar",
@@ -67,6 +72,51 @@ function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
 
 export const Default: Story = {
   render: (args) => <SingleCalendar {...args} />,
+  play: async ({ canvas, step }) => {
+    const today = canvas.getByRole("button", { name: TODAY })
+
+    await step("selects a day on click", async () => {
+      await userEvent.click(today)
+      await waitFor(() =>
+        expect(today.closest("td")).toHaveAttribute("aria-selected", "true")
+      )
+      await expect(
+        canvas
+          .getAllByRole("gridcell")
+          .filter((cell) => cell.getAttribute("aria-selected") === "true")
+      ).toHaveLength(1)
+    })
+
+    await step("moves focus between days with the arrow keys", async () => {
+      await expect(today).toHaveFocus()
+      await userEvent.keyboard("{ArrowRight}")
+      await waitFor(() => expect(today).not.toHaveFocus())
+      await userEvent.keyboard("{ArrowLeft}")
+      await waitFor(() =>
+        expect(canvas.getByRole("button", { name: TODAY })).toHaveFocus()
+      )
+    })
+
+    await step("pages between months", async () => {
+      const month = canvas.getByRole("grid").getAttribute("aria-label")
+      await userEvent.click(canvas.getByRole("button", { name: NEXT_MONTH }))
+      await waitFor(() =>
+        expect(canvas.getByRole("grid")).not.toHaveAttribute(
+          "aria-label",
+          month ?? ""
+        )
+      )
+      await userEvent.click(
+        canvas.getByRole("button", { name: PREVIOUS_MONTH })
+      )
+      await waitFor(() =>
+        expect(canvas.getByRole("grid")).toHaveAttribute(
+          "aria-label",
+          month ?? ""
+        )
+      )
+    })
+  },
 }
 
 export const Sizes: Story = {
@@ -81,6 +131,14 @@ export const Sizes: Story = {
 
 export const Range: Story = {
   render: (args) => <RangeCalendar {...args} />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getAllByRole("grid")).toHaveLength(2)
+    await expect(
+      canvas
+        .getAllByRole("gridcell")
+        .filter((cell) => cell.getAttribute("aria-selected") === "true")
+    ).toHaveLength(7)
+  },
 }
 
 export const DropdownCaption: Story = {
@@ -96,4 +154,13 @@ export const WeekNumbers: Story = {
 export const DisabledDays: Story = {
   args: { disabled: { dayOfWeek: [0, 6] } },
   render: (args) => <SingleCalendar {...args} />,
+  play: async ({ canvas }) => {
+    const weekend = canvas
+      .getAllByRole("gridcell")
+      .filter((cell) => cell.hasAttribute("data-disabled"))
+    await expect(weekend.length).toBeGreaterThan(0)
+    for (const cell of weekend) {
+      await expect(cell.querySelector("button")).toBeDisabled()
+    }
+  },
 }

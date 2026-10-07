@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ActionMenu,
@@ -51,6 +52,45 @@ export const Default: Story = {
       </ActionMenuContent>
     </ActionMenu>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Order actions" })
+
+    await step("opens a menu of actions from the trigger", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("menu")
+      await waitFor(() => expect(screen.getByText("Order #1042")).toBeVisible())
+      await expect(screen.getAllByRole("menuitem")).toHaveLength(4)
+    })
+
+    await step("Escape closes and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("arrow to an action and run it with Enter", async () => {
+      await userEvent.keyboard("{ArrowDown}")
+      await screen.findByRole("menu")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Edit" })).toHaveFocus()
+      )
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(
+        screen.getByRole("menuitem", { name: "Duplicate" })
+      ).toHaveFocus()
+      await userEvent.keyboard("{Enter}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+
+    await step("clicking an action closes the menu", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("menuitem", { name: "Delete" })
+      )
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const WithIcons: Story = {
@@ -88,6 +128,14 @@ export const NotDismissible: Story = {
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("renders open and closes when an action runs", async () => {
+      await userEvent.click(
+        await screen.findByRole("menuitem", { name: "Share" })
+      )
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }

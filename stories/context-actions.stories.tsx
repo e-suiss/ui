@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ContextActions,
@@ -50,6 +51,41 @@ export const Default: Story = {
       </ContextActionsContent>
     </ContextActions>
   ),
+  play: async ({ canvas, step }) => {
+    const target = canvas.getByText("Right click or long press")
+
+    await step("right click opens the actions", async () => {
+      await userEvent.pointer({ keys: "[MouseRight]", target })
+      await screen.findByRole("menu")
+      await waitFor(() => expect(screen.getByText("Photo.jpg")).toBeVisible())
+      await expect(screen.getAllByRole("menuitem")).toHaveLength(4)
+    })
+
+    await step("Escape closes the actions", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+
+    await step("arrow to an action and run it with Enter", async () => {
+      await userEvent.pointer({ keys: "[MouseRight]", target })
+      const menu = await screen.findByRole("menu")
+      await waitFor(() => expect(menu).toHaveFocus())
+      await userEvent.keyboard("{ArrowDown}")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Edit" })).toHaveFocus()
+      )
+      await userEvent.keyboard("{Enter}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+
+    await step("clicking an action closes the menu", async () => {
+      await userEvent.pointer({ keys: "[MouseRight]", target })
+      await userEvent.click(
+        await screen.findByRole("menuitem", { name: "Share" })
+      )
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const WithIcons: Story = {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   Modal,
@@ -66,11 +67,48 @@ export const Default: Story = {
       </ModalContent>
     </Modal>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Edit profile" })
+
+    await step("opens a named modal with its form", async () => {
+      await userEvent.click(trigger)
+      const modal = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(modal).toHaveAccessibleDescription(
+        "Update your name and username. Click save when you are done."
+      )
+      await expect(screen.getByLabelText("Name")).toHaveValue("Ada Lovelace")
+    })
+
+    await step(
+      "closes with Escape and returns focus to the trigger",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("starts open and closes from the close button", async () => {
+      const modal = await screen.findByRole("dialog", { name: "Edit profile" })
+      await waitFor(() => expect(modal).toBeVisible())
+      await userEvent.click(screen.getByRole("button", { name: "Close" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithCloseButton: Story = {
@@ -99,6 +137,21 @@ export const WithCloseButton: Story = {
       </ModalContent>
     </Modal>
   ),
+  play: async ({ canvas, step }) => {
+    await step("opens and closes from the close button", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Share project" })
+      )
+      const modal = await screen.findByRole("dialog", { name: "Share project" })
+      await expect(
+        screen.getByRole("textbox", { name: "Project link" })
+      ).toHaveValue("https://esuiss.dev/p/1042")
+      await userEvent.click(
+        within(modal).getByRole("button", { name: "Close" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithCloseLabel: Story = {
@@ -127,6 +180,21 @@ export const WithCloseLabel: Story = {
       </ModalContent>
     </Modal>
   ),
+  play: async ({ canvas, step }) => {
+    await step("closes from the labelled close button", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Share project" })
+      )
+      const modal = await screen.findByRole("dialog", { name: "Share project" })
+      await expect(
+        screen.getByRole("textbox", { name: "Project link" })
+      ).toHaveValue("https://esuiss.dev/p/1042")
+      await userEvent.click(
+        within(modal).getByRole("button", { name: "Close" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Floating: Story = {

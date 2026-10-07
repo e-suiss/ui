@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
@@ -38,6 +39,24 @@ export const Default: Story = {
       </div>
     </ScrollArea>
   ),
+  play: async ({ canvasElement, step }) => {
+    const viewport = canvasElement.querySelector<HTMLElement>(
+      '[data-slot="scroll-area-viewport"]'
+    )
+
+    await step("scrolls the overflowing list vertically", async () => {
+      await expect(viewport).not.toBeNull()
+      if (!viewport) return
+      await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight)
+      viewport.scrollTop = viewport.scrollHeight
+      await waitFor(() => expect(viewport.scrollTop).toBeGreaterThan(0))
+    })
+
+    await step("keeps the viewport reachable by keyboard", async () => {
+      await userEvent.tab()
+      await expect(viewport).toHaveFocus()
+    })
+  },
 }
 
 export const Horizontal: Story = {
@@ -58,4 +77,15 @@ export const Horizontal: Story = {
       <ScrollBar orientation="horizontal" />
     </ScrollArea>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("overflows horizontally with every album", async () => {
+      const viewport = canvasElement.querySelector<HTMLElement>(
+        '[data-slot="scroll-area-viewport"]'
+      )
+      await expect(viewport?.scrollWidth).toBeGreaterThan(
+        viewport?.clientWidth ?? 0
+      )
+      await expect(canvas.getAllByRole("figure")).toHaveLength(7)
+    })
+  },
 }

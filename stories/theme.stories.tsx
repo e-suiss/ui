@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import type * as React from "react"
+import { expect, userEvent, waitFor } from "storybook/test"
 import { Button } from "@/components/ui/button"
 import {
   type Theme,
@@ -88,7 +89,38 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Circle: Story = { args: { effect: "circle", origin: "center" } }
+const root = () => document.documentElement
+
+async function transitionSettled() {
+  await waitFor(
+    () => expect(root()).not.toHaveAttribute("data-theme-transition"),
+    { timeout: 3000 }
+  )
+}
+
+export const Circle: Story = {
+  args: { effect: "circle", origin: "center" },
+  play: async ({ canvas, step }) => {
+    await step("switches to dark and renames the toggle", async () => {
+      await userEvent.click(
+        await canvas.findByRole("button", { name: "Switch to dark theme" })
+      )
+      await waitFor(() => expect(root()).toHaveClass("dark"))
+      await expect(
+        await canvas.findByRole("button", { name: "Switch to light theme" })
+      ).toHaveAttribute("data-dark")
+    })
+
+    await step("switches back to light", async () => {
+      await transitionSettled()
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Switch to light theme" })
+      )
+      await waitFor(() => expect(root()).not.toHaveClass("dark"))
+      await transitionSettled()
+    })
+  },
+}
 
 export const CircleFromCorner: Story = {
   args: { effect: "circle", origin: "top-right" },
@@ -149,6 +181,25 @@ function ThemePicker() {
 
 export const LightDarkSystem: Story = {
   render: () => <ThemePicker />,
+  play: async ({ canvas, step }) => {
+    const light = canvas.getByRole("button", { name: "light" })
+    const dark = canvas.getByRole("button", { name: "dark" })
+
+    await step("picks dark from the segmented control", async () => {
+      await waitFor(() => expect(light).toHaveAttribute("aria-pressed", "true"))
+      await userEvent.click(dark)
+      await waitFor(() => expect(root()).toHaveClass("dark"))
+      await expect(dark).toHaveAttribute("aria-pressed", "true")
+    })
+
+    await step("returns to light", async () => {
+      await transitionSettled()
+      await userEvent.click(light)
+      await waitFor(() => expect(root()).not.toHaveClass("dark"))
+      await expect(light).toHaveAttribute("aria-pressed", "true")
+      await transitionSettled()
+    })
+  },
 }
 
 function InstantSwitch() {
@@ -166,6 +217,19 @@ function InstantSwitch() {
 
 export const WithoutTransition: Story = {
   render: () => <InstantSwitch />,
+  play: async ({ canvas, step }) => {
+    const button = canvas.getByRole("button", {
+      name: "Switch theme instantly",
+    })
+
+    await step("flips the theme without a view transition", async () => {
+      await userEvent.click(button)
+      await expect(root()).toHaveClass("dark")
+      await expect(root()).not.toHaveAttribute("data-theme-transition")
+      await userEvent.click(button)
+      await expect(root()).not.toHaveClass("dark")
+    })
+  },
 }
 
 export const Sizes: Story = {
@@ -193,4 +257,23 @@ function ThemeStatus() {
 
 export const Status: Story = {
   render: () => <ThemeStatus />,
+  play: async ({ canvas, step }) => {
+    await step("reports the chosen and resolved theme", async () => {
+      await expect(
+        await canvas.findByText("Theme: light · Showing: light")
+      ).toBeVisible()
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Switch to dark theme" })
+      )
+      await expect(
+        await canvas.findByText("Theme: dark · Showing: dark")
+      ).toBeVisible()
+      await transitionSettled()
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Switch to light theme" })
+      )
+      await waitFor(() => expect(root()).not.toHaveClass("dark"))
+      await transitionSettled()
+    })
+  },
 }

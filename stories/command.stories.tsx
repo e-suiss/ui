@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -62,6 +63,8 @@ function CommandItems() {
   )
 }
 
+const PROFILE = /^Profile/
+
 const meta = {
   title: "Components/Command",
   component: Command,
@@ -87,6 +90,38 @@ export const Default: Story = {
       </CommandList>
     </Command>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("combobox")
+
+    await step(
+      "highlights the first item and skips disabled ones",
+      async () => {
+        await expect(
+          canvas.getByRole("option", { name: "Calendar" })
+        ).toHaveAttribute("aria-selected", "true")
+        await expect(
+          canvas.getByRole("option", { name: "Calculator" })
+        ).toHaveAttribute("aria-disabled", "true")
+        await userEvent.click(input)
+        await userEvent.keyboard("{ArrowDown}{ArrowDown}")
+        await expect(
+          canvas.getByRole("option", { name: PROFILE })
+        ).toHaveAttribute("aria-selected", "true")
+      }
+    )
+
+    await step("filters items while typing", async () => {
+      await userEvent.type(input, "bill")
+      await waitFor(() => expect(canvas.getAllByRole("option")).toHaveLength(1))
+      await expect(canvas.getByRole("option")).toHaveTextContent("Billing")
+    })
+
+    await step("shows the empty state for no matches", async () => {
+      await userEvent.clear(input)
+      await userEvent.type(input, "zzz")
+      await expect(await canvas.findByText("No results found.")).toBeVisible()
+    })
+  },
 }
 
 export const Empty: Story = {
@@ -126,6 +161,27 @@ function CommandDialogExample({
 
 export const Dialog: Story = {
   render: () => <CommandDialogExample />,
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", {
+      name: "Open command palette",
+    })
+
+    await step("opens a named palette with focus in the search", async () => {
+      await userEvent.click(trigger)
+      const dialog = await screen.findByRole("dialog", {
+        name: "Command Palette",
+      })
+      await waitFor(() =>
+        expect(dialog).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
 }
 
 export const DialogOpen: Story = {

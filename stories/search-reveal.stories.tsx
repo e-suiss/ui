@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   SearchReveal,
@@ -83,10 +84,74 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+function revealRoot(field: HTMLElement) {
+  const root = field.closest<HTMLElement>("[data-slot=search-reveal]")
+  if (!root) throw new Error("search reveal root not found")
+  return root
+}
+
 export const Default: Story = {
   render: () => <NotesExample count={12} />,
+  play: async ({ canvas, step }) => {
+    const field = canvas.getByRole("searchbox", { name: "Search" })
+    const root = revealRoot(field)
+
+    await step("starts with the field tucked above the list", async () => {
+      await expect(root.scrollTop).toBeGreaterThan(0)
+      await expect(canvas.getByText("12 notes")).toBeVisible()
+    })
+
+    await step("reveals the field when it is focused", async () => {
+      await userEvent.click(field)
+      await expect(field).toHaveFocus()
+      await waitFor(() => expect(root.scrollTop).toBe(0))
+    })
+
+    await step("filters the notes as the user types", async () => {
+      await userEvent.type(field, "porto")
+      await expect(canvas.getByText("1 note")).toBeVisible()
+      await expect(canvas.getByText("Trip ideas")).toBeVisible()
+      await expect(canvas.queryByText("Groceries")).toBeNull()
+    })
+
+    await step(
+      "shows the empty state for a query without matches",
+      async () => {
+        await userEvent.type(field, "xyz")
+        await expect(
+          canvas.getByText("No results for “portoxyz”")
+        ).toBeVisible()
+        await expect(canvas.getByText("0 notes")).toBeVisible()
+      }
+    )
+
+    await step("clears the query and keeps focus in the field", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Clear search" })
+      )
+      await expect(field).toHaveValue("")
+      await expect(field).toHaveFocus()
+      await expect(canvas.getByText("12 notes")).toBeVisible()
+    })
+  },
 }
 
 export const ShortList: Story = {
   render: () => <NotesExample count={3} />,
+  play: async ({ canvas, step }) => {
+    const field = canvas.getByRole("searchbox", { name: "Search" })
+    const root = revealRoot(field)
+
+    await step("hides the field even when the list is short", async () => {
+      await expect(root.scrollTop).toBeGreaterThan(0)
+    })
+
+    await step("reveals the field and filters the short list", async () => {
+      await userEvent.click(field)
+      await waitFor(() => expect(root.scrollTop).toBe(0))
+      await userEvent.type(field, "book")
+      await expect(canvas.getByText("1 note")).toBeVisible()
+      await expect(canvas.getByText("Book list")).toBeVisible()
+    })
+  },
 }

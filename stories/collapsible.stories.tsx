@@ -1,5 +1,6 @@
 import { CaretUpDownIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -59,14 +60,46 @@ export const Default: Story = {
       </CollapsibleContent>
     </Collapsible>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Toggle list" })
+
+    await step("starts collapsed", async () => {
+      await expect(trigger).toHaveAttribute("aria-expanded", "false")
+      await expect(canvas.queryByText("esuiss/docs")).toBeNull()
+    })
+
+    await step("expands on click", async () => {
+      await userEvent.click(trigger)
+      await expect(trigger).toHaveAttribute("aria-expanded", "true")
+      await expect(await canvas.findByText("esuiss/docs")).toBeVisible()
+    })
+
+    await step("collapses with Enter", async () => {
+      await userEvent.keyboard("{Enter}")
+      await expect(trigger).toHaveAttribute("aria-expanded", "false")
+      await waitFor(() => expect(canvas.queryByText("esuiss/docs")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("button", { name: "Toggle list" })
+    ).toHaveAttribute("aria-expanded", "true")
+    await expect(canvas.getByText("esuiss/cli")).toBeVisible()
+  },
 }
 
 export const Disabled: Story = {
-  ...Default,
   args: { disabled: true },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole("button", { name: "Toggle list" })
+    await userEvent.click(trigger)
+    await expect(trigger).toHaveAttribute("aria-expanded", "false")
+    await expect(canvas.queryByText("esuiss/docs")).toBeNull()
+  },
 }

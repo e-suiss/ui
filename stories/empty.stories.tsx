@@ -5,6 +5,7 @@ import {
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -61,7 +62,17 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("No projects yet")).toBeVisible()
+    await expect(
+      canvas.getByRole("button", { name: "Create project" })
+    ).toBeVisible()
+    await expect(
+      canvas.getByRole("button", { name: "Import project" })
+    ).toBeVisible()
+  },
+}
 
 export const Outline: Story = {
   args: { className: "border" },
@@ -122,4 +133,11 @@ export const WithSearch: Story = {
       </EmptyContent>
     </Empty>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("404 - Not found")).toBeVisible()
+    await expect(canvas.getByPlaceholderText("Search pages...")).toBeEnabled()
+    await expect(
+      canvas.getByRole("link", { name: "Contact support" })
+    ).toHaveAttribute("href", "#support")
+  },
 }

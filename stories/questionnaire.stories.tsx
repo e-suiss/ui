@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   Questionnaire,
@@ -101,16 +102,74 @@ export const Default: Story = {
       <Actions />
     </Questionnaire>
   ),
+  play: async ({ canvas, step }) => {
+    const progress = canvas.getByRole("progressbar", {
+      name: "Questionnaire progress",
+    })
+
+    await step("blocks a required question until it is answered", async () => {
+      await expect(progress).toHaveAttribute(
+        "aria-valuetext",
+        "Question 1 of 3"
+      )
+      await expect(canvas.queryByRole("button", { name: "Skip" })).toBeNull()
+      await userEvent.click(canvas.getByRole("button", { name: "Next" }))
+      await expect(await canvas.findByRole("alert")).toHaveTextContent(
+        "Choose an answer to continue."
+      )
+      await expect(progress).toHaveAttribute("aria-valuenow", "1")
+    })
+
+    await step("advances once a choice is picked", async () => {
+      await userEvent.click(canvas.getByRole("radio", { name: "Design" }))
+      await userEvent.click(canvas.getByRole("button", { name: "Next" }))
+      await waitFor(() =>
+        expect(progress).toHaveAttribute("aria-valuetext", "Question 2 of 3")
+      )
+      await expect(
+        canvas.getByRole("group", { name: "How large is your team?" })
+      ).toBeVisible()
+    })
+
+    await step("skips the optional question", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Skip" }))
+      await waitFor(() =>
+        expect(progress).toHaveAttribute("aria-valuetext", "Question 3 of 3")
+      )
+      await expect(canvas.getByRole("button", { name: "Submit" })).toBeVisible()
+    })
+
+    await step("goes back to the previous question", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Previous" }))
+      await waitFor(() =>
+        expect(progress).toHaveAttribute("aria-valuetext", "Question 2 of 3")
+      )
+    })
+  },
 }
 
 export const WithShortcuts: Story = {
-  ...Default,
   args: { shortcuts: "letters" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("picks a choice with its letter key", async () => {
+      canvas.getByRole("radio", { name: "Engineering" }).focus()
+      await userEvent.keyboard("c")
+      await expect(canvas.getByRole("radio", { name: "Product" })).toBeChecked()
+    })
+  },
 }
 
 export const NumberShortcuts: Story = {
-  ...Default,
   args: { shortcuts: "numbers" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("picks a choice with its number key", async () => {
+      canvas.getByRole("radio", { name: "Engineering" }).focus()
+      await userEvent.keyboard("2")
+      await expect(canvas.getByRole("radio", { name: "Design" })).toBeChecked()
+    })
+  },
 }
 
 export const MultipleChoice: Story = {
@@ -141,6 +200,32 @@ export const MultipleChoice: Story = {
       <Actions />
     </Questionnaire>
   ),
+  play: async ({ canvas, step }) => {
+    await step("checks several features at once", async () => {
+      await expect(
+        canvas.getByRole("checkbox", { name: "Analytics" })
+      ).toBeChecked()
+      await userEvent.click(canvas.getByRole("checkbox", { name: "Billing" }))
+      await expect(
+        canvas.getByRole("checkbox", { name: "Billing" })
+      ).toBeChecked()
+      await expect(
+        canvas.getByRole("checkbox", { name: "Analytics" })
+      ).toBeChecked()
+      await expect(
+        canvas.getByRole("checkbox", { name: "Integrations" })
+      ).toBeDisabled()
+    })
+
+    await step("asks for an answer when everything is cleared", async () => {
+      await userEvent.click(canvas.getByRole("checkbox", { name: "Analytics" }))
+      await userEvent.click(canvas.getByRole("checkbox", { name: "Billing" }))
+      await userEvent.click(canvas.getByRole("button", { name: "Submit" }))
+      await expect(await canvas.findByRole("alert")).toHaveTextContent(
+        "Choose at least one feature."
+      )
+    })
+  },
 }
 
 export const WithChoiceDescriptions: Story = {
@@ -195,9 +280,37 @@ export const TextInput: Story = {
       <Actions />
     </Questionnaire>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", {
+      name: "Where should we send your results?",
+    })
+
+    await step("shows the error when submitted empty", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Submit" }))
+      await expect(await canvas.findByRole("alert")).toHaveTextContent(
+        "Enter an email address to continue."
+      )
+      await expect(input).toBeInvalid()
+    })
+
+    await step("clears the error once the field is filled", async () => {
+      await userEvent.type(input, "ada@example.com")
+      await waitFor(() => expect(canvas.queryByRole("alert")).toBeNull())
+    })
+  },
 }
 
 export const StartOnLaterQuestion: Story = {
-  ...Default,
   args: { defaultItem: "team-size" },
+  render: Default.render,
+  play: async ({ canvas, step }) => {
+    await step("opens on the second question", async () => {
+      await expect(
+        canvas.getByRole("progressbar", { name: "Questionnaire progress" })
+      ).toHaveAttribute("aria-valuetext", "Question 2 of 3")
+      await expect(
+        canvas.getByRole("button", { name: "Previous" })
+      ).toBeVisible()
+    })
+  },
 }

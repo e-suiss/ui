@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -15,10 +16,32 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const checkbox = canvas.getByRole("checkbox")
+
+    await step("toggles on click", async () => {
+      await expect(checkbox).not.toBeChecked()
+      await userEvent.click(checkbox)
+      await expect(checkbox).toBeChecked()
+    })
+
+    await step("toggles with Space", async () => {
+      await expect(checkbox).toHaveFocus()
+      await userEvent.keyboard(" ")
+      await expect(checkbox).not.toBeChecked()
+    })
+  },
+}
 
 export const Checked: Story = {
   args: { defaultChecked: true },
+  play: async ({ canvas }) => {
+    const checkbox = canvas.getByRole("checkbox")
+    await expect(checkbox).toBeChecked()
+    await userEvent.click(checkbox)
+    await expect(checkbox).not.toBeChecked()
+  },
 }
 
 export const WithLabel: Story = {
@@ -28,6 +51,13 @@ export const WithLabel: Story = {
       Accept terms and conditions
     </Label>
   ),
+  play: async ({ canvas }) => {
+    const checkbox = canvas.getByRole("checkbox", {
+      name: "Accept terms and conditions",
+    })
+    await userEvent.click(canvas.getByText("Accept terms and conditions"))
+    await expect(checkbox).toBeChecked()
+  },
 }
 
 export const WithDescription: Story = {
@@ -57,6 +87,19 @@ export const Disabled: Story = {
       </Label>
     </div>
   ),
+  play: async ({ canvas }) => {
+    const unavailable = canvas.getByRole("checkbox", {
+      name: "Unavailable option",
+    })
+    const included = canvas.getByRole("checkbox", { name: "Always included" })
+    await expect(unavailable).toHaveAttribute("aria-disabled", "true")
+    await expect(included).toBeChecked()
+    await userEvent.click(unavailable)
+    await expect(unavailable).not.toBeChecked()
+    await userEvent.tab()
+    await expect(unavailable).not.toHaveFocus()
+    await expect(included).not.toHaveFocus()
+  },
 }
 
 export const Invalid: Story = {
@@ -66,4 +109,9 @@ export const Invalid: Story = {
       You must accept the terms
     </Label>
   ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("checkbox", { name: "You must accept the terms" })
+    ).toBeInvalid()
+  },
 }

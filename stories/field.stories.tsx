@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, within } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -53,7 +54,18 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Username" })
+
+    await step("names the input and focuses it from the label", async () => {
+      await userEvent.click(canvas.getByText("Username"))
+      await expect(input).toHaveFocus()
+      await userEvent.keyboard("ada")
+      await expect(input).toHaveValue("ada")
+    })
+  },
+}
 
 export const WithHelpLink: Story = {
   render: (args) => (
@@ -115,6 +127,14 @@ export const Invalid: Story = {
       <FieldError>Enter a valid email address.</FieldError>
     </Field>
   ),
+  play: async ({ canvas, step }) => {
+    await step("flags the input and announces the error", async () => {
+      await expect(canvas.getByRole("textbox", { name: "Email" })).toBeInvalid()
+      await expect(canvas.getByRole("alert")).toHaveTextContent(
+        "Enter a valid email address."
+      )
+    })
+  },
 }
 
 export const MultipleErrors: Story = {
@@ -135,6 +155,12 @@ export const MultipleErrors: Story = {
       />
     </Field>
   ),
+  play: async ({ canvas, step }) => {
+    await step("lists every error in one alert", async () => {
+      const alert = canvas.getByRole("alert")
+      await expect(within(alert).getAllByRole("listitem")).toHaveLength(2)
+    })
+  },
 }
 
 export const Disabled: Story = {
@@ -145,6 +171,13 @@ export const Disabled: Story = {
       <FieldDescription>Contact an admin to change this.</FieldDescription>
     </Field>
   ),
+  play: async ({ canvas, step }) => {
+    await step("disables the named input", async () => {
+      await expect(
+        canvas.getByRole("textbox", { name: "Workspace URL" })
+      ).toBeDisabled()
+    })
+  },
 }
 
 export const Horizontal: Story = {
@@ -168,6 +201,20 @@ export const Horizontal: Story = {
       </Field>
     </FieldGroup>
   ),
+  play: async ({ canvas, step }) => {
+    await step("toggles each control from its label", async () => {
+      const terms = canvas.getByRole("checkbox", {
+        name: "Accept terms and conditions",
+      })
+      await expect(terms).toBeChecked()
+      await userEvent.click(canvas.getByText("Accept terms and conditions"))
+      await expect(terms).not.toBeChecked()
+
+      const marketing = canvas.getByRole("switch", { name: "Marketing emails" })
+      await userEvent.click(canvas.getByText("Marketing emails"))
+      await expect(marketing).toHaveAttribute("aria-checked", "true")
+    })
+  },
 }
 
 export const ChoiceCards: Story = {
@@ -201,6 +248,16 @@ export const ChoiceCards: Story = {
       </RadioGroup>
     </FieldSet>
   ),
+  play: async ({ canvas, step }) => {
+    const [starter, pro] = canvas.getAllByRole("radio")
+
+    await step("selects a plan by clicking its card", async () => {
+      await expect(pro).toHaveAttribute("aria-checked", "true")
+      await userEvent.click(canvas.getByText("Starter"))
+      await expect(starter).toHaveAttribute("aria-checked", "true")
+      await expect(pro).toHaveAttribute("aria-checked", "false")
+    })
+  },
 }
 
 export const Form: Story = {
@@ -270,6 +327,28 @@ export const Form: Story = {
       </FieldGroup>
     </form>
   ),
+  play: async ({ canvas, step }) => {
+    await step("groups the fields under their legends", async () => {
+      await expect(
+        canvas.getByRole("group", { name: "Payment method" })
+      ).toBeVisible()
+      await expect(
+        canvas.getByRole("group", { name: "Billing address" })
+      ).toBeVisible()
+    })
+
+    await step("marks the required fields", async () => {
+      await expect(
+        canvas.getByRole("textbox", { name: "Name on card" })
+      ).toBeRequired()
+      await expect(
+        canvas.getByRole("textbox", { name: "Card number" })
+      ).toBeRequired()
+      await expect(
+        canvas.getByRole("textbox", { name: "CVV" })
+      ).not.toBeRequired()
+    })
+  },
 }
 
 export const SeparatorWithText: Story = {

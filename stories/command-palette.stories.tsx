@@ -7,6 +7,7 @@ import {
   UserIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   CommandPalette,
@@ -24,6 +25,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
+import { isMacPlatform } from "@/hooks/use-platform"
 
 function PaletteItems() {
   return (
@@ -107,10 +109,86 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+const PROFILE = /Profile/
+const BILLING = /Billing/
+const SEARCH = /^Search/
+
+function pressHotkey() {
+  return userEvent.keyboard(
+    isMacPlatform() ? "{Meta>}k{/Meta}" : "{Control>}k{/Control}"
+  )
+}
+
+function findPalette() {
+  return screen.findByRole("dialog", { name: "Command Palette" })
+}
+
+async function closeWith(action: () => Promise<unknown>) {
+  await findPalette()
+  await action()
+  await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+}
+
+export const Default: Story = {
+  play: async ({ canvas, step }) => {
+    await step(
+      "the shortcut opens the palette with the search focused",
+      async () => {
+        await pressHotkey()
+        const palette = await findPalette()
+        await waitFor(() =>
+          expect(
+            within(palette).getByPlaceholderText("Type a command or search...")
+          ).toHaveFocus()
+        )
+        await expect(
+          within(palette).getByRole("option", { name: "Calendar" })
+        ).toHaveAttribute("aria-selected", "true")
+      }
+    )
+
+    await step("arrow keys skip the disabled item", async () => {
+      await userEvent.keyboard("{ArrowDown}{ArrowDown}")
+      await expect(
+        screen.getByRole("option", { name: PROFILE })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("typing filters the commands", async () => {
+      await userEvent.keyboard("bill")
+      await waitFor(() =>
+        expect(screen.queryByRole("option", { name: "Calendar" })).toBeNull()
+      )
+      await expect(
+        screen.getByRole("option", { name: BILLING })
+      ).toHaveAttribute("aria-selected", "true")
+      await userEvent.keyboard("zzz")
+      await waitFor(() =>
+        expect(screen.getByText("No results found.")).toBeVisible()
+      )
+    })
+
+    await step("the shortcut closes it again", async () => {
+      await pressHotkey()
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+
+    await step("the trigger opens it and Escape returns focus", async () => {
+      const trigger = canvas.getByRole("button", { name: SEARCH })
+      await userEvent.click(trigger)
+      await closeWith(() => userEvent.keyboard("{Escape}"))
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
+}
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async ({ step }) => {
+    await step("renders open and closes with Escape", async () => {
+      await closeWith(() => userEvent.keyboard("{Escape}"))
+    })
+  },
 }
 
 export const WithCloseButton: Story = {
@@ -122,6 +200,14 @@ export const WithCloseButton: Story = {
       </CommandPaletteContent>
     </CommandPalette>
   ),
+  play: async ({ canvas, step }) => {
+    await step("closes from the close button", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: SEARCH }))
+      await closeWith(async () =>
+        userEvent.click(await screen.findByRole("button", { name: "Close" }))
+      )
+    })
+  },
 }
 
 export const WithCloseLabel: Story = {
@@ -133,6 +219,14 @@ export const WithCloseLabel: Story = {
       </CommandPaletteContent>
     </CommandPalette>
   ),
+  play: async ({ canvas, step }) => {
+    await step("closes from the labelled close button", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: SEARCH }))
+      await closeWith(async () =>
+        userEvent.click(await screen.findByRole("button", { name: "Cancel" }))
+      )
+    })
+  },
 }
 
 export const Floating: Story = {

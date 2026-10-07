@@ -1,5 +1,6 @@
 import { CalendarBlankIcon, InfoIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
 
@@ -34,6 +35,11 @@ export const Default: Story = {
       <MarkerContent>Conversation started</MarkerContent>
     </Marker>
   ),
+  play: async ({ canvas, step }) => {
+    await step("renders the marker text", async () => {
+      await expect(canvas.getByText("Conversation started")).toBeVisible()
+    })
+  },
 }
 
 export const Variants: Story = {
@@ -78,6 +84,15 @@ export const WithIcon: Story = {
       </Marker>
     </div>
   ),
+  play: async ({ canvasElement, step }) => {
+    await step("hides the decorative icons from assistive tech", async () => {
+      const icons = canvasElement.querySelectorAll('[data-slot="marker-icon"]')
+      await expect(icons).toHaveLength(2)
+      for (const icon of icons) {
+        await expect(icon).toHaveAttribute("aria-hidden", "true")
+      }
+    })
+  },
 }
 
 export const WithLink: Story = {
@@ -88,4 +103,11 @@ export const WithLink: Story = {
       </MarkerContent>
     </Marker>
   ),
+  play: async ({ canvas, step }) => {
+    await step("keeps the inline link reachable by keyboard", async () => {
+      const link = canvas.getByRole("link", { name: "Restore it" })
+      await userEvent.tab()
+      await expect(link).toHaveFocus()
+    })
+  },
 }

@@ -7,6 +7,7 @@ import {
   TextUnderlineIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent } from "storybook/test"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -59,6 +60,35 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: { defaultValue: ["bold"] },
+  play: async ({ canvas, step }) => {
+    const bold = canvas.getByRole("button", { name: "Toggle bold" })
+    const italic = canvas.getByRole("button", { name: "Toggle italic" })
+
+    await step("presses several items at once", async () => {
+      await expect(bold).toHaveAttribute("aria-pressed", "true")
+      await userEvent.click(italic)
+      await expect(italic).toHaveAttribute("aria-pressed", "true")
+      await expect(bold).toHaveAttribute("aria-pressed", "true")
+    })
+
+    await step(
+      "moves focus with arrow keys and toggles with Space",
+      async () => {
+        await userEvent.keyboard("{ArrowRight}")
+        const underline = canvas.getByRole("button", {
+          name: "Toggle underline",
+        })
+        await expect(underline).toHaveFocus()
+        await userEvent.keyboard(" ")
+        await expect(underline).toHaveAttribute("aria-pressed", "true")
+      }
+    )
+
+    await step("releases an item on a second click", async () => {
+      await userEvent.click(bold)
+      await expect(bold).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }
 
 export const Outline: Story = {
@@ -104,6 +134,20 @@ export const Segmented: Story = {
       <ToggleGroupItem value="year">Year</ToggleGroupItem>
     </ToggleGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const week = canvas.getByRole("button", { name: "Week" })
+    const month = canvas.getByRole("button", { name: "Month" })
+
+    await step("names the group and keeps one item pressed", async () => {
+      await expect(
+        canvas.getByRole("group", { name: "Calendar view" })
+      ).toBeVisible()
+      await expect(week).toHaveAttribute("aria-pressed", "true")
+      await userEvent.click(month)
+      await expect(month).toHaveAttribute("aria-pressed", "true")
+      await expect(week).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }
 
 export const SegmentedVertical: Story = {
@@ -115,6 +159,15 @@ export const SegmentedVertical: Story = {
     defaultValue: ["week"],
   },
   render: Segmented.render,
+  play: async ({ canvas, step }) => {
+    await step("moves focus with up and down keys", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Week" }))
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(canvas.getByRole("button", { name: "Month" })).toHaveFocus()
+      await userEvent.keyboard("{ArrowUp}{ArrowUp}")
+      await expect(canvas.getByRole("button", { name: "Day" })).toHaveFocus()
+    })
+  },
 }
 
 export const SegmentedMultiple: Story = {
@@ -162,6 +215,15 @@ export const SingleSelection: Story = {
       </ToggleGroupItem>
     </ToggleGroup>
   ),
+  play: async ({ canvas, step }) => {
+    await step("switches the single pressed item", async () => {
+      const left = canvas.getByRole("button", { name: "Align left" })
+      const right = canvas.getByRole("button", { name: "Align right" })
+      await userEvent.click(right)
+      await expect(right).toHaveAttribute("aria-pressed", "true")
+      await expect(left).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }
 
 export const Vertical: Story = {
@@ -175,4 +237,14 @@ export const Vertical: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, defaultValue: ["bold"] },
+  play: async ({ canvas, step }) => {
+    await step("disables every item and ignores clicks", async () => {
+      for (const item of canvas.getAllByRole("button")) {
+        await expect(item).toBeDisabled()
+      }
+      const italic = canvas.getByRole("button", { name: "Toggle italic" })
+      await userEvent.click(italic, { pointerEventsCheck: 0 })
+      await expect(italic).toHaveAttribute("aria-pressed", "false")
+    })
+  },
 }

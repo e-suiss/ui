@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -57,6 +58,28 @@ function DefaultExample() {
 
 export const Default: Story = {
   render: () => <DefaultExample />,
+  play: async ({ canvas, step }) => {
+    await step("shows a titled toast with its description", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Show toast" }))
+      const toast = await screen.findByRole("dialog", { name: "Event created" })
+      await expect(toast).toHaveAccessibleDescription(
+        "Friday, October 3 at 9:00 AM"
+      )
+      await expect(
+        screen.getByRole("region", { name: "Notifications" })
+      ).toContainElement(toast)
+    })
+
+    await step("reveals and uses the close button on hover", async () => {
+      await userEvent.hover(await screen.findByText("Event created"))
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Close toast" })
+      )
+      await waitFor(() =>
+        expect(screen.queryByText("Event created")).toBeNull()
+      )
+    })
+  },
 }
 
 function TypesExample() {
@@ -130,6 +153,14 @@ function TypesExample() {
 
 export const Types: Story = {
   render: () => <TypesExample />,
+  play: async ({ canvas, step }) => {
+    await step("stacks one toast per type", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Success" }))
+      await userEvent.click(canvas.getByRole("button", { name: "Error" }))
+      await expect(await screen.findByText("Changes saved")).toBeInTheDocument()
+      await expect(await screen.findByText("Upload failed")).toBeInTheDocument()
+    })
+  },
 }
 
 function TitleOnlyExample() {
@@ -173,6 +204,17 @@ function WithActionExample() {
 
 export const WithAction: Story = {
   render: () => <WithActionExample />,
+  play: async ({ canvas, step }) => {
+    await step("closes the toast from its action", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Archive message" })
+      )
+      await userEvent.click(await screen.findByRole("button", { name: "Undo" }))
+      await waitFor(() =>
+        expect(screen.queryByText("Message archived")).toBeNull()
+      )
+    })
+  },
 }
 
 function TimeoutExample() {
@@ -208,6 +250,27 @@ function TimeoutExample() {
 
 export const Timeout: Story = {
   render: () => <TimeoutExample />,
+  play: async ({ canvas, step }) => {
+    await step("dismisses the short toast on its own", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Short" }))
+      await expect(await screen.findByText("Link copied")).toBeInTheDocument()
+      await waitFor(
+        () => expect(screen.queryByText("Link copied")).toBeNull(),
+        { timeout: 4000 }
+      )
+    })
+
+    await step("keeps the persistent toast until closed", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Persistent" }))
+      await expect(
+        await screen.findByText("Connection lost")
+      ).toBeInTheDocument()
+      await userEvent.click(canvas.getByRole("button", { name: "Close all" }))
+      await waitFor(() =>
+        expect(screen.queryByText("Connection lost")).toBeNull()
+      )
+    })
+  },
 }
 
 function PromiseExample({ fail = false }: { fail?: boolean }) {
@@ -250,8 +313,32 @@ function PromiseExample({ fail = false }: { fail?: boolean }) {
 
 export const PromiseToast: Story = {
   render: () => <PromiseExample />,
+  play: async ({ canvas, step }) => {
+    await step("moves from loading to success", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Publish post" })
+      )
+      await expect(
+        await screen.findByText("Publishing post")
+      ).toBeInTheDocument()
+      await expect(
+        await screen.findByText("Post published", {}, { timeout: 4000 })
+      ).toBeInTheDocument()
+    })
+  },
 }
 
 export const PromiseRejected: Story = {
   render: () => <PromiseExample fail />,
+  play: async ({ canvas, step }) => {
+    await step("moves from loading to the error", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Publish post" })
+      )
+      await expect(
+        await screen.findByText("Publishing failed", {}, { timeout: 4000 })
+      ).toBeInTheDocument()
+      await expect(screen.getByText("Network error")).toBeInTheDocument()
+    })
+  },
 }

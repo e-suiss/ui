@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   Combobox,
@@ -74,11 +75,42 @@ export const Default: Story = {
       </ComboboxContent>
     </Combobox>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("combobox")
+
+    await step("filters the options while typing", async () => {
+      await userEvent.click(input)
+      await userEvent.type(input, "re")
+      await waitFor(() => expect(screen.getAllByRole("option")).toHaveLength(1))
+      await expect(input).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("selects the highlighted option with Enter", async () => {
+      await userEvent.keyboard("{ArrowDown}{Enter}")
+      await waitFor(() => expect(input).toHaveValue("Remix"))
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+    })
+
+    await step("shows the empty state for no matches", async () => {
+      await userEvent.clear(input)
+      await userEvent.type(input, "zzz")
+      await expect(
+        await screen.findByText("No framework found.")
+      ).toBeInTheDocument()
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() =>
+        expect(input).toHaveAttribute("aria-expanded", "false")
+      )
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
 }
 
 export const WithClearButton: Story = {
@@ -97,14 +129,37 @@ export const WithClearButton: Story = {
       </ComboboxContent>
     </Combobox>
   ),
+  play: async ({ canvas }) => {
+    const input = canvas.getByRole("combobox")
+    await expect(input).toHaveValue("Astro")
+    await userEvent.click(canvas.getByRole("button", { name: "Clear" }))
+    await waitFor(() => expect(input).toHaveValue(""))
+  },
 }
 
 export const Disabled: Story = {
-  ...Default,
   args: { disabled: true },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole("combobox")).toBeDisabled()
+    await expect(
+      canvas.getByRole("button", { name: "Show options" })
+    ).toBeDisabled()
+    await userEvent.tab()
+    await expect(canvas.getByRole("combobox")).not.toHaveFocus()
+  },
 }
 
 export const Grouped: Story = {
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Show options" }))
+    const europe = await screen.findByRole("group", { name: "Europe" })
+    await waitFor(() => expect(europe).toBeVisible())
+    await expect(
+      within(screen.getByRole("listbox")).getAllByRole("group")
+    ).toHaveLength(3)
+    await expect(screen.getByRole("option", { name: "Istanbul" })).toBeVisible()
+  },
   render: (args) => (
     <Combobox {...args} items={timezones}>
       <ComboboxInput placeholder="Select a city" />
@@ -169,6 +224,13 @@ function HighlightMatchCombobox() {
 
 export const HighlightMatch: Story = {
   render: () => <HighlightMatchCombobox />,
+  play: async ({ canvas }) => {
+    await userEvent.type(canvas.getByRole("combobox"), "kit")
+    const option = await screen.findByRole("option", { name: "SvelteKit" })
+    await expect(option.querySelector(".font-semibold")).toHaveTextContent(
+      "Kit"
+    )
+  },
 }
 
 function MultipleCombobox({ disabled }: { disabled?: boolean }) {
@@ -209,4 +271,24 @@ function MultipleCombobox({ disabled }: { disabled?: boolean }) {
 
 export const Multiple: Story = {
   render: (args) => <MultipleCombobox disabled={args.disabled} />,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("combobox")
+
+    await step("adds a chip when an option is chosen", async () => {
+      await userEvent.click(input)
+      await userEvent.click(await screen.findByRole("option", { name: "Nuxt" }))
+      await expect(await canvas.findByText("Nuxt")).toBeVisible()
+      await expect(
+        screen.getByRole("option", { name: "Nuxt" })
+      ).toHaveAttribute("aria-selected", "true")
+    })
+
+    await step("removes the last chip with Backspace", async () => {
+      await userEvent.keyboard("{Escape}")
+      await userEvent.click(input)
+      await userEvent.keyboard("{Backspace}")
+      await waitFor(() => expect(canvas.queryByText("Nuxt")).toBeNull())
+      await expect(canvas.getByText("Astro")).toBeVisible()
+    })
+  },
 }

@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   AppShell,
@@ -21,6 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { isMacPlatform } from "@/hooks/use-platform"
 
 const items: AppShellItem[] = [
   {
@@ -197,7 +199,66 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+function sidebarOf(canvasElement: HTMLElement) {
+  return canvasElement.querySelector("[data-slot=sidebar]")
+}
+
+function headerTrigger(canvasElement: HTMLElement) {
+  return canvasElement.querySelector<HTMLElement>("[data-slot=sidebar-trigger]")
+}
+
+function pressSidebarHotkey() {
+  return userEvent.keyboard(
+    isMacPlatform() ? "{Meta>}b{/Meta}" : "{Control>}b{/Control}"
+  )
+}
+
+export const Default: Story = {
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("starts on the first item", async () => {
+      await expect(
+        canvas.getByRole("heading", { level: 1, name: "Home" })
+      ).toBeVisible()
+      await expect(
+        canvas.getByRole("button", { name: "Home" })
+      ).toHaveAttribute("aria-current", "page")
+    })
+
+    await step("selecting an item switches the page", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Inbox" }))
+      await expect(
+        canvas.getByRole("heading", { level: 1, name: "Inbox" })
+      ).toBeVisible()
+      await expect(
+        canvas.getByRole("button", { name: "Inbox" })
+      ).toHaveAttribute("aria-current", "page")
+      await expect(
+        canvas.getByRole("button", { name: "Home" })
+      ).not.toHaveAttribute("aria-current")
+    })
+
+    await step(
+      "the header trigger collapses the sidebar to icons",
+      async () => {
+        const sidebar = sidebarOf(canvasElement)
+        await expect(sidebar).toHaveAttribute("data-state", "expanded")
+        const trigger = headerTrigger(canvasElement)
+        await expect(trigger).toHaveAccessibleName("Toggle Sidebar")
+        if (trigger) await userEvent.click(trigger)
+        await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+        await expect(sidebar).toHaveAttribute("data-collapsible", "icon")
+      }
+    )
+
+    await step("the keyboard shortcut expands it again", async () => {
+      await pressSidebarHotkey()
+      await expect(sidebarOf(canvasElement)).toHaveAttribute(
+        "data-state",
+        "expanded"
+      )
+    })
+  },
+}
 
 export const WithHeaderAndFooter: Story = {
   args: { header: brand, footer: account },
@@ -205,15 +266,54 @@ export const WithHeaderAndFooter: Story = {
 
 export const Grouped: Story = {
   args: { items: manyItems, header: brand, footer: account },
+  play: async ({ canvas, step }) => {
+    await step("shows the group labels and a disabled item", async () => {
+      await expect(canvas.getByText("Platform")).toBeVisible()
+      await expect(canvas.getByText("Workspace")).toBeVisible()
+      await expect(
+        canvas.getByRole("button", { name: "Support" })
+      ).toBeDisabled()
+    })
+
+    await step("selects an item from the second group", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Team" }))
+      await expect(
+        canvas.getByRole("heading", { level: 1, name: "Team" })
+      ).toBeVisible()
+    })
+  },
 }
 
 export const MoreTab: Story = {
   args: { items: manyItems, defaultValue: "team" },
+  play: async ({ canvas, step }) => {
+    await step("opens on the default item", async () => {
+      await expect(
+        canvas.getByRole("heading", { level: 1, name: "Team" })
+      ).toBeVisible()
+      await expect(
+        canvas.getByRole("button", { name: "Team" })
+      ).toHaveAttribute("aria-current", "page")
+    })
+  },
 }
 
 export const Links: Story = {
   args: {
     items: items.map((item) => ({ ...item, href: `#${item.value}` })),
+  },
+  play: async ({ canvas, step }) => {
+    await step("renders every item as a link to its route", async () => {
+      await expect(canvas.getAllByRole("link")).toHaveLength(items.length)
+      await expect(canvas.getByRole("link", { name: "Inbox" })).toHaveAttribute(
+        "href",
+        "#inbox"
+      )
+      await expect(canvas.getByRole("link", { name: "Home" })).toHaveAttribute(
+        "aria-current",
+        "page"
+      )
+    })
   },
 }
 
@@ -227,10 +327,50 @@ export const Inset: Story = {
 
 export const Collapsed: Story = {
   args: { defaultOpen: false, header: brand, footer: account },
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("starts collapsed and names icons with a tooltip", async () => {
+      await expect(sidebarOf(canvasElement)).toHaveAttribute(
+        "data-state",
+        "collapsed"
+      )
+      await userEvent.hover(canvas.getByRole("button", { name: "Calendar" }))
+      await waitFor(
+        () =>
+          expect(
+            document.querySelector("[data-slot=tooltip-content]")
+          ).toHaveTextContent("Calendar"),
+        { timeout: 2000 }
+      )
+      await userEvent.unhover(canvas.getByRole("button", { name: "Calendar" }))
+    })
+
+    await step("the header trigger expands it", async () => {
+      const trigger = headerTrigger(canvasElement)
+      if (trigger) await userEvent.click(trigger)
+      await expect(sidebarOf(canvasElement)).toHaveAttribute(
+        "data-state",
+        "expanded"
+      )
+    })
+  },
 }
 
 export const Offcanvas: Story = {
   args: { collapsible: "offcanvas", header: brand },
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("collapsing slides the whole sidebar away", async () => {
+      const home = canvas.getByRole("button", { name: "Home" })
+      await expect(home).toBeVisible()
+      await pressSidebarHotkey()
+      await expect(sidebarOf(canvasElement)).toHaveAttribute(
+        "data-collapsible",
+        "offcanvas"
+      )
+      await waitFor(() =>
+        expect(home.getBoundingClientRect().right).toBeLessThanOrEqual(0)
+      )
+    })
+  },
 }
 
 export const RightSide: Story = {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -73,11 +74,50 @@ export const Default: Story = {
       <ProfileSheet />
     </Sheet>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Open sheet" })
+
+    await step("opens a named sheet and moves focus into it", async () => {
+      await userEvent.click(trigger)
+      const sheet = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(sheet).toHaveAccessibleDescription(
+        "Update your details and save when you are done."
+      )
+      await waitFor(() =>
+        expect(sheet).toContainElement(document.activeElement as HTMLElement)
+      )
+    })
+
+    await step(
+      "closes with Escape and returns focus to the trigger",
+      async () => {
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await expect(trigger).toHaveFocus()
+      }
+    )
+
+    await step("closes from the close button", async () => {
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Close" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Open: Story = {
-  ...Default,
   args: { defaultOpen: true },
+  render: Default.render,
+  play: async ({ step }) => {
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Cancel" })
+      )
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const Sides: Story = {
@@ -129,6 +169,12 @@ export const WithoutCloseButton: Story = {
       <ProfileSheet showCloseButton={false} />
     </Sheet>
   ),
+  play: async ({ step }) => {
+    await step("leaves out the icon close button", async () => {
+      await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(screen.queryByRole("button", { name: "Close" })).toBeNull()
+    })
+  },
 }
 
 export const WithCloseLabel: Story = {
@@ -141,4 +187,10 @@ export const WithCloseLabel: Story = {
       <ProfileSheet closeLabel="Done" />
     </Sheet>
   ),
+  play: async ({ step }) => {
+    await step("closes from the text close button", async () => {
+      await userEvent.click(await screen.findByRole("button", { name: "Done" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
