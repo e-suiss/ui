@@ -294,12 +294,19 @@ describe("Tabs indicator", () => {
     await indicatorOn("Account")
     const from = indicator().getBoundingClientRect().left
     const to = tab("Settings").element().getBoundingClientRect().left
+    const positions: number[] = []
+    let watching = true
+    const record = () => {
+      positions.push(indicator().getBoundingClientRect().left)
+      if (watching) requestAnimationFrame(record)
+    }
+    requestAnimationFrame(record)
     await tab("Settings").click()
-    await frame()
-    await frame()
-    const midway = indicator().getBoundingClientRect().left
-    expect(midway).toBeGreaterThan(from)
-    expect(midway).toBeLessThan(to)
+    await indicatorOn("Settings")
+    watching = false
+    expect(positions.some((left) => left > from + 1 && left < to - 1)).toBe(
+      true
+    )
   })
 
   it("draws a thin line under the active tab in the line variant", async () => {

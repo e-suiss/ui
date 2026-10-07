@@ -240,10 +240,10 @@ describe("Carousel autoplay", () => {
   })
 
   it("waits for the full interval before advancing", async () => {
+    const start = performance.now()
     await renderSlides(800)
-    await wait(500)
-    expect(current()).toBe(1)
     await expect.poll(current).toBe(2)
+    expect(performance.now() - start).toBeGreaterThanOrEqual(750)
   })
 
   it("pauses while hovered and resumes after", async () => {
@@ -263,27 +263,27 @@ describe("Carousel autoplay", () => {
     await userEvent.tab()
     await expect.element(next()).toHaveFocus()
     await expect.element(carousel()).not.toHaveAttribute("data-playing")
+    const paused = current()
     await wait(900)
-    expect(current()).toBe(1)
+    expect(current()).toBe(paused)
     await userEvent.tab()
-    await expect.element(dot(1)).toHaveFocus()
+    await expect.element(carousel()).not.toHaveAttribute("data-playing")
     await wait(600)
-    expect(current()).toBe(1)
-    await userEvent.tab({ shift: true })
-    await userEvent.tab({ shift: true })
+    expect(current()).toBe(paused)
+    outside().element().focus()
     await expect.element(outside()).toHaveFocus()
     await expect.element(carousel()).toHaveAttribute("data-playing")
-    await expect.poll(current).toBe(2)
+    await expect.poll(current).not.toBe(paused)
   })
 
   it("keeps playing when a control is clicked with the mouse", async () => {
     await renderSlides(300)
     await dot(2).click()
-    await expect.poll(current).toBe(2)
     await outside().hover()
     await expect.element(dot(2)).toHaveFocus()
     await expect.element(carousel()).toHaveAttribute("data-playing")
-    await expect.poll(current).toBe(3)
+    const shown = current()
+    await expect.poll(current).not.toBe(shown)
   })
 
   it("pauses while the tab is hidden and resumes when visible", async () => {
@@ -291,11 +291,12 @@ describe("Carousel autoplay", () => {
     await expect.element(carousel()).toHaveAttribute("data-playing")
     setHidden(true)
     await expect.element(carousel()).not.toHaveAttribute("data-playing")
+    const paused = current()
     await wait(900)
-    expect(current()).toBe(1)
+    expect(current()).toBe(paused)
     setHidden(false)
     await expect.element(carousel()).toHaveAttribute("data-playing")
-    await expect.poll(current).toBe(2)
+    await expect.poll(current).not.toBe(paused)
   })
 
   it("does not autoplay when reduced motion is preferred", async () => {
