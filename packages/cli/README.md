@@ -195,7 +195,7 @@ setTheme("system", { effect: "circle", origin: "top-center" })
 
 ## Components
 
-accordion, alert, alert-dialog, alert-sheet, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, fullscreen-menu, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, tab-bar, table, tabs, textarea, theme, toast, toggle, toggle-group, tooltip, wheel-picker
+accordion, alert, alert-dialog, alert-sheet, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, fullscreen-menu, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, tab-bar, table, tabs, textarea, theme, toast, toggle, toggle-group, tooltip, wheel-picker, widget
 
 Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire
 

@@ -950,6 +950,18 @@
       ]
     },
     {
+      "name": "widget",
+      "type": "ui",
+      "title": "Widget",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "components/ui/widget.tsx"
+      ]
+    },
+    {
       "name": "action-bar",
       "type": "pattern",
       "title": "Action Bar",
