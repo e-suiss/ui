@@ -12,6 +12,40 @@ import type * as React from "react"
 
 const Select = SelectPrimitive.Root
 
+function trackHighlight(list: HTMLDivElement | null) {
+  const indicator = list?.querySelector<HTMLElement>(
+    "[data-slot=select-highlight]"
+  )
+  if (!list || !indicator) return
+  const update = () => {
+    const item = list.querySelector<HTMLElement>(
+      "[data-slot=select-item][data-highlighted]"
+    )
+    if (!item) {
+      delete indicator.dataset.visible
+      return
+    }
+    const instant = !("visible" in indicator.dataset)
+    if (instant) indicator.dataset.instant = ""
+    indicator.style.top = `${item.offsetTop}px`
+    indicator.style.left = `${item.offsetLeft}px`
+    indicator.style.width = `${item.offsetWidth}px`
+    indicator.style.height = `${item.offsetHeight}px`
+    indicator.dataset.visible = ""
+    if (instant) {
+      void indicator.offsetHeight
+      delete indicator.dataset.instant
+    }
+  }
+  update()
+  const observer = new MutationObserver(update)
+  observer.observe(list, {
+    subtree: true,
+    attributeFilter: ["data-highlighted"],
+  })
+  return () => observer.disconnect()
+}
+
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
     <SelectPrimitive.Group
@@ -67,7 +101,7 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = true,
+  alignItemWithTrigger = false,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
@@ -94,7 +128,14 @@ function SelectContent({
           {...props}
         >
           <SelectScrollUpButton />
-          <SelectPrimitive.List>{children}</SelectPrimitive.List>
+          <SelectPrimitive.List ref={trackHighlight} className="relative">
+            <span
+              aria-hidden="true"
+              data-slot="select-highlight"
+              className="pointer-events-none absolute rounded-md bg-item-hover opacity-0 transition-[top,left,width,height,opacity] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] data-instant:transition-none data-visible:opacity-100 motion-reduce:transition-none"
+            />
+            {children}
+          </SelectPrimitive.List>
           <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
@@ -127,7 +168,7 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-item-hover focus:text-label not-data-[variant=destructive]:focus:**:text-label data-disabled:pointer-events-none data-disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:text-label not-data-[variant=destructive]:focus:**:text-label data-disabled:pointer-events-none data-disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
