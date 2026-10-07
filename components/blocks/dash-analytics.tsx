@@ -141,6 +141,7 @@ export function DashAnalytics() {
     value: Number((value * (1 - appIndex * 0.28)).toFixed(2)),
   }))
   const current = active ?? data.length - 1
+  const latest = data.at(-1)?.value ?? 0
   const format = (value: number) => `${value.toFixed(1)} ${metric.unit}`
   const title = items.find((item) => item.value === section)?.label
 
@@ -251,7 +252,7 @@ export function DashAnalytics() {
                     />
                   </span>
                   <span className="w-18 text-end tabular-nums">
-                    {format(data[data.length - 1].value * region.share)}
+                    {format(latest * region.share)}
                   </span>
                 </ItemActions>
               </Item>

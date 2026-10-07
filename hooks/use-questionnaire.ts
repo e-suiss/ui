@@ -859,7 +859,7 @@ function useQuestionnaireItem({
           ? (enabledControls.find(isAnswered) ??
             (direction === "next"
               ? enabledControls[0]
-              : enabledControls[enabledControls.length - 1]))
+              : enabledControls.at(-1)))
           : enabledControls[
               (index + step + enabledControls.length) % enabledControls.length
             ]
