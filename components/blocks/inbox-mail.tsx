@@ -332,7 +332,7 @@ export function InboxMail() {
                 className="group/mail relative py-2.5 ps-6 md:data-active:bg-accent md:data-active:text-on-accent"
               >
                 {item.unread && (
-                  <span className="absolute start-2.5 top-4.25 size-2 rounded-full bg-accent md:group-data-active/mail:bg-on-accent">
+                  <span className="absolute inset-s-2.5 top-4.25 size-2 rounded-full bg-accent md:group-data-active/mail:bg-on-accent">
                     <span className="sr-only">Unread</span>
                   </span>
                 )}

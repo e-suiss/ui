@@ -173,7 +173,7 @@ export function LogLive() {
           {entries.map(({ id, time, event }) => (
             <li
               key={id}
-              className="relative flex min-h-11 items-center gap-3 px-4 py-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator starting:-translate-y-2.5 starting:opacity-0 motion-reduce:transition-none"
+              className="relative flex min-h-11 items-center gap-3 px-4 py-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator starting:-translate-y-2.5 starting:opacity-0 motion-reduce:transition-none"
             >
               {event.hue ? (
                 <Avatar className="size-7">

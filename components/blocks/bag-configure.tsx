@@ -70,7 +70,7 @@ export function BagConfigure() {
 
   return (
     <section className="grid min-h-160 bg-surface md:grid-cols-[minmax(0,1.3fr)_minmax(18.75rem,1fr)]">
-      <div className="relative m-5 aspect-[4/3] overflow-hidden rounded-[1.375rem] bg-surface-secondary md:aspect-auto">
+      <div className="relative m-5 aspect-4/3 overflow-hidden rounded-[1.375rem] bg-surface-secondary md:aspect-auto">
         {finishes.map((item) => (
           <img
             key={item.name}

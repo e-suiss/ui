@@ -51,7 +51,7 @@ export function HeroCinematic() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-[30%] left-1/2 h-[80%] w-[120%] -translate-x-1/2 bg-[radial-gradient(closest-side,var(--finish),transparent)] opacity-45 transition-[background-image] duration-1000"
+        className="pointer-events-none absolute bottom-[-30%] left-1/2 h-[80%] w-[120%] -translate-x-1/2 bg-[radial-gradient(closest-side,var(--finish),transparent)] opacity-45 transition-[background-image] duration-1000"
       />
       <div className="relative flex flex-col items-center gap-2.5 px-6 pt-13 transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.45,0,0.2,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
         <h1 className="bg-linear-to-r from-label from-20% to-(--finish) bg-clip-text text-6xl font-semibold tracking-tight text-transparent md:text-7xl">

@@ -96,7 +96,7 @@ export function BentoCloserLook() {
             </AccordionItem>
           ))}
         </Accordion>
-        <div className="relative order-1 m-4 aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-control md:order-2 md:aspect-auto">
+        <div className="relative order-1 m-4 aspect-4/3 overflow-hidden rounded-[1.25rem] bg-control md:order-2 md:aspect-auto">
           {features.map((feature) => (
             <img
               key={feature.title}
