@@ -74,7 +74,7 @@ function PaginationPrevious({
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label={text && text !== "Previous" ? text : "Go to previous page"}
       size={text ? "sm" : "icon-sm"}
       className={cn(text && "ps-2!", className)}
       {...props}
@@ -92,7 +92,7 @@ function PaginationNext({
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label={text && text !== "Next" ? text : "Go to next page"}
       size={text ? "sm" : "icon-sm"}
       className={cn(text && "pe-2!", className)}
       {...props}

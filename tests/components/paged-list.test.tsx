@@ -179,9 +179,9 @@ describe("PagedList", () => {
       />
     )
     await expect.element(control("2")).toHaveAttribute("href", "#page-2")
-    await expect.element(next()).toHaveAttribute("href", "#page-2")
-    await expect.element(next()).toHaveTextContent("Older")
-    await expect.element(previous()).toHaveTextContent("Newer")
+    await expect.element(control("Older")).toHaveAttribute("href", "#page-2")
+    await expect.element(control("Older")).toHaveTextContent("Older")
+    await expect.element(control("Newer")).toHaveTextContent("Newer")
   })
 
   it("loads more items instead of paginating on mobile", async () => {
