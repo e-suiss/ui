@@ -611,9 +611,9 @@ class MessageScrollerController {
       return
     }
     this.visibilityObserver ??= this.createVisibilityObserver(viewport)
-    this.messageElements.forEach((element) => {
+    for (const element of this.messageElements.values()) {
       this.visibilityObserver?.observe(element)
-    })
+    }
     this.scheduleVisibilitySync()
   }
 

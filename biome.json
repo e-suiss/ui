@@ -40,6 +40,9 @@
         "noUselessElse": "error",
         "useCollapsedElseIf": "error",
         "useTemplate": "error",
+        "useAtIndex": "error",
+        "useForOf": "error",
+        "noUnusedTemplateLiteral": "error",
         "useConsistentArrayType": "error",
         "noInferrableTypes": "error",
         "useFragmentSyntax": "error",
@@ -61,6 +64,7 @@
       },
       "complexity": {
         "noUselessStringConcat": "error",
+        "noForEach": "error",
         "noUselessUndefinedInitialization": "error"
       },
       "performance": {

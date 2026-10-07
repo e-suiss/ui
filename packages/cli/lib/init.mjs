@@ -210,6 +210,10 @@ function stylesheetFor(project, css) {
     .replace(HEADING_FAMILY, NEXT_HEADING_FAMILY)
 }
 
+function fontClassName(extra) {
+  return `className={\`\${fontInter.variable} \${fontQuestrial.variable}${extra}\`}`
+}
+
 function configureNextFont(project) {
   const file = NEXT_LAYOUTS.map((name) => path.join(project.cwd, name)).find(
     existsSync
@@ -224,15 +228,9 @@ function configureNextFont(project) {
   let tag = html[0]
   const literal = tag.match(/className="([^"]*)"/)
   if (literal) {
-    tag = tag.replace(
-      literal[0],
-      `className={\`\${fontInter.variable} \${fontQuestrial.variable} ${literal[1]}\`}`
-    )
+    tag = tag.replace(literal[0], fontClassName(` ${literal[1]}`))
   } else if (!/className=/.test(tag)) {
-    tag = tag.replace(
-      /<html\b/,
-      `<html className={\`\${fontInter.variable} \${fontQuestrial.variable}\`}`
-    )
+    tag = tag.replace(/<html\b/, `<html ${fontClassName("")}`)
   } else {
     return [NEXT_FONT_NOTE]
   }

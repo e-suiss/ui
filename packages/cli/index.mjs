@@ -50,8 +50,8 @@ function parseArgs(args) {
   }
   const names = []
 
-  for (let index = 0; index < args.length; index++) {
-    const arg = args[index]
+  const queue = args[Symbol.iterator]()
+  for (const arg of queue) {
     switch (arg) {
       case "-y":
       case "--yes":
@@ -70,7 +70,7 @@ function parseArgs(args) {
         break
       case "-c":
       case "--cwd": {
-        const dir = args[++index]
+        const dir = queue.next().value
         if (!dir) throw new CliError(`${arg} needs a directory.`)
         options.cwd = path.resolve(dir)
         break
