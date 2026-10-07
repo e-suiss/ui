@@ -156,7 +156,10 @@ describe("theme transitions", () => {
           to: root.style.getPropertyValue("--theme-transition-to"),
         })
         if (typeof update === "function") update()
-        return { finished: Promise.resolve() } as unknown as ViewTransition
+        return {
+          ready: Promise.resolve(),
+          finished: Promise.resolve(),
+        } as unknown as ViewTransition
       }
     )
     vi.spyOn(document, "startViewTransition").mockImplementation(transition)
@@ -180,6 +183,28 @@ describe("theme transitions", () => {
     await expect.poll(() => root.dataset.themeTransition).toBeUndefined()
     expect(root.style.getPropertyValue("--theme-transition-from")).toBe("")
     expect(root.classList.contains("dark")).toBe(true)
+  })
+
+  it("handles a second change while a transition is still running", async () => {
+    emulate()
+    const rejections: unknown[] = []
+    const onRejection = (event: PromiseRejectionEvent) => {
+      event.preventDefault()
+      rejections.push(event.reason)
+    }
+    window.addEventListener("unhandledrejection", onRejection)
+    const { result, act } = await renderTheme({ defaultTheme: "light" })
+    await expect.poll(() => result.current.resolvedTheme).toBe("light")
+    await act(() => {
+      result.current.setTheme("dark", { effect: "circle" })
+      result.current.setTheme("light", { effect: "polygon" })
+    })
+    await expect.poll(() => root.dataset.themeTransition).toBeUndefined()
+    await new Promise((resolve) => setTimeout(resolve, 100))
+    window.removeEventListener("unhandledrejection", onRejection)
+    expect(rejections).toEqual([])
+    expect(root.classList.contains("dark")).toBe(false)
+    expect(root.style.getPropertyValue("--theme-transition-from")).toBe("")
   })
 
   it("skips the animation for users who prefer reduced motion", async () => {
