@@ -1,4 +1,6 @@
 import {
+  CaretDoubleLeftIcon,
+  CaretDoubleRightIcon,
   CaretLeftIcon,
   CaretRightIcon,
   DotsThreeIcon,
@@ -12,7 +14,10 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
     <nav
       aria-label="pagination"
       data-slot="pagination"
-      className={cn("mx-auto flex w-full justify-center", className)}
+      className={cn(
+        "mx-auto flex w-full items-center justify-center gap-3",
+        className
+      )}
       {...props}
     />
   )
@@ -43,14 +48,17 @@ type PaginationLinkProps = {
 function PaginationLink({
   className,
   isActive,
-  size = "icon",
+  size = "icon-sm",
   ...props
 }: PaginationLinkProps) {
   return (
     <Button
       variant={isActive ? "secondary" : "ghost"}
       size={size}
-      className={cn("data-active:font-semibold", className)}
+      className={cn(
+        "text-sm tabular-nums aria-disabled:pointer-events-none aria-disabled:text-label-quaternary data-active:font-semibold",
+        className
+      )}
       nativeButton={false}
       render={
         <a
@@ -72,12 +80,12 @@ function PaginationPrevious({
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      size="default"
-      className={cn("ps-2!", className)}
+      size={text ? "sm" : "icon-sm"}
+      className={cn(text && "ps-2!", className)}
       {...props}
     >
       <CaretLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
-      <span className="hidden sm:block">{text}</span>
+      {text && <span className="hidden sm:block">{text}</span>}
     </PaginationLink>
   )
 }
@@ -90,12 +98,32 @@ function PaginationNext({
   return (
     <PaginationLink
       aria-label="Go to next page"
-      size="default"
-      className={cn("pe-2!", className)}
+      size={text ? "sm" : "icon-sm"}
+      className={cn(text && "pe-2!", className)}
       {...props}
     >
-      <span className="hidden sm:block">{text}</span>
+      {text && <span className="hidden sm:block">{text}</span>}
       <CaretRightIcon data-icon="inline-end" className="rtl:rotate-180" />
+    </PaginationLink>
+  )
+}
+
+function PaginationFirst({
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink aria-label="Go to first page" {...props}>
+      <CaretDoubleLeftIcon className="rtl:rotate-180" />
+    </PaginationLink>
+  )
+}
+
+function PaginationLast({
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink aria-label="Go to last page" {...props}>
+      <CaretDoubleRightIcon className="rtl:rotate-180" />
     </PaginationLink>
   )
 }
@@ -109,7 +137,7 @@ function PaginationEllipsis({
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        "flex size-9 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
+        "flex size-8 items-center justify-center text-label-secondary [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -120,12 +148,62 @@ function PaginationEllipsis({
   )
 }
 
+function PaginationSummary({ className, ...props }: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="pagination-summary"
+      className={cn(
+        "text-sm whitespace-nowrap text-label-secondary tabular-nums",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function PaginationGroup({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      role="group"
+      data-slot="pagination-group"
+      className={cn(
+        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-control *:hover:bg-control-hover *:active:bg-control-pressed *:[--focus-ring-offset:-3px] *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function PaginationInput({
+  className,
+  ...props
+}: React.ComponentProps<"input">) {
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      data-slot="pagination-input"
+      className={cn(
+        "h-8 w-12 rounded-md bg-control text-center text-sm font-semibold text-label tabular-nums caret-accent outline-none focus-visible:focus-ring",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
+  PaginationFirst,
+  PaginationGroup,
+  PaginationInput,
   PaginationItem,
+  PaginationLast,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationSummary,
 }

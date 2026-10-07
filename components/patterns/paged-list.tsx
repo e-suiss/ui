@@ -135,7 +135,6 @@ function PagedList<T>({
                   <PaginationPrevious
                     text={previousLabel}
                     aria-disabled={page === 1 || undefined}
-                    className="aria-disabled:pointer-events-none aria-disabled:text-label-quaternary"
                     {...link(page - 1)}
                   />
                 </PaginationItem>
@@ -159,7 +158,6 @@ function PagedList<T>({
                   <PaginationNext
                     text={nextLabel}
                     aria-disabled={page === pageCount || undefined}
-                    className="aria-disabled:pointer-events-none aria-disabled:text-label-quaternary"
                     {...link(page + 1)}
                   />
                 </PaginationItem>
