@@ -47,6 +47,7 @@ type ActionBarContextProps = {
 type ActionBarMenuContextProps = {
   index: number
   part: "row" | "sheet"
+  onOpen?: () => void
 }
 
 const ActionBarMenuContext =
@@ -176,21 +177,33 @@ function ActionBarMenu({
   onOpenChange?: (open: boolean) => void
   children?: React.ReactNode
 }) {
-  const { isMobile, dismissible, active, hideMenu } = useActionBar()
+  const { isMobile, dismissible, active, showMenu, hideMenu } = useActionBar()
   const menu = React.useContext(ActionBarMenuContext)
+  const sheet = isMobile && menu?.part === "sheet"
+  const openedByDefault = React.useRef(false)
+
+  React.useEffect(() => {
+    if (!sheet || !menu || !defaultOpen || openedByDefault.current) return
+    openedByDefault.current = true
+    showMenu(menu.index)
+  }, [sheet, menu, defaultOpen, showMenu])
 
   if (isMobile && menu?.part === "row") {
     return (
-      <div data-slot="action-bar-menu" className="ms-4 not-first:border-t">
-        {children}
-      </div>
+      <ActionBarMenuContext.Provider
+        value={{ ...menu, onOpen: () => onOpenChange?.(true) }}
+      >
+        <div data-slot="action-bar-menu" className="ms-4 not-first:border-t">
+          {children}
+        </div>
+      </ActionBarMenuContext.Provider>
     )
   }
 
   if (isMobile && menu) {
     return (
       <AlertSheet
-        open={active === menu.index}
+        open={open ?? active === menu.index}
         onOpenChange={(next) => {
           if (!next) hideMenu()
           onOpenChange?.(next)
@@ -235,7 +248,10 @@ function ActionBarTrigger({
           className
         )}
         {...mergeProps<"button">(props, {
-          onClick: () => showMenu(menu.index),
+          onClick: () => {
+            showMenu(menu.index)
+            menu.onOpen?.()
+          },
         })}
       >
         {children}

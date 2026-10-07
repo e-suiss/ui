@@ -166,6 +166,26 @@ describe("ActionBar on mobile", () => {
     await expect.element(row("File")).not.toBeInTheDocument()
   })
 
+  it("opens a menu sheet that starts open with defaultOpen", async () => {
+    await page.viewport(390, 844)
+    await render(<Bar fileOpen />)
+    await expect.element(dialog()).toBeVisible()
+    await expect.element(action("Print")).toBeVisible()
+  })
+
+  it("reports a menu sheet opening and closing", async () => {
+    const onMenuOpenChange = vi.fn()
+    await page.viewport(390, 844)
+    await render(<Bar onMenuOpenChange={onMenuOpenChange} />)
+    await more().click()
+    await row("File").click()
+    await expect.element(dialog()).toBeVisible()
+    expect(onMenuOpenChange).toHaveBeenLastCalledWith(true)
+    await action("Cancel").click()
+    await expect.element(dialog()).not.toBeInTheDocument()
+    expect(onMenuOpenChange).toHaveBeenLastCalledWith(false)
+  })
+
   it("lists every menu as a row in the drawer", async () => {
     const onOpenChange = vi.fn()
     await page.viewport(390, 844)
