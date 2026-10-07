@@ -169,6 +169,24 @@ describe("AppShell on desktop", () => {
     expect(onValueChange).toHaveBeenCalledTimes(1)
   })
 
+  it("disables items that are marked disabled", async () => {
+    const onValueChange = vi.fn()
+    await render(<Shell items={manyItems} onValueChange={onValueChange} />)
+    await expect.element(navItem("Support")).toBeDisabled()
+    navItem("Support")
+      .element()
+      .dispatchEvent(new MouseEvent("click", { bubbles: true }))
+    expect(onValueChange).not.toHaveBeenCalled()
+    expect(current()).not.toContain("Support")
+  })
+
+  it("keeps disabled items disabled while collapsed to icons", async () => {
+    await render(<Shell items={manyItems} collapsible="icon" />)
+    await toggle().click()
+    await expect.poll(sidebarState).toBe("collapsed")
+    await expect.element(navItem("Support")).toBeDisabled()
+  })
+
   it("starts from the default value and keeps a fixed controlled one", async () => {
     const onValueChange = vi.fn()
     const { rerender } = await render(<Shell defaultValue="inbox" />)

@@ -28,7 +28,6 @@ import { isMacPlatform } from "@/hooks/use-platform"
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
-const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
@@ -179,12 +178,7 @@ function Sidebar({
           dir={dir}
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) bg-surface-secondary p-0 text-label [&>button]:hidden"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
+          className="bg-surface-secondary p-0 text-label [&>button]:hidden"
           side={side}
         >
           <SheetHeader className="sr-only">
@@ -499,7 +493,13 @@ function SidebarMenuButton({
       },
       props
     ),
-    render: !tooltip ? render : <TooltipTrigger render={render} />,
+    render: !tooltip ? (
+      render
+    ) : (
+      <TooltipTrigger
+        render={render ?? <button type="button" disabled={props.disabled} />}
+      />
+    ),
     state: {
       slot: "sidebar-menu-button",
       sidebar: "menu-button",
