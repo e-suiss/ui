@@ -35,7 +35,7 @@ const DAYS = [
   "Sunday",
 ]
 
-const WEEK: Record<Category, number>[] = [
+const USAGE: [social: number, productivity: number, entertainment: number][] = [
   [48, 95, 62],
   [55, 120, 40],
   [70, 88, 95],
@@ -43,11 +43,15 @@ const WEEK: Record<Category, number>[] = [
   [65, 100, 80],
   [110, 30, 140],
   [95, 25, 120],
-].map(([social, productivity, entertainment]) => ({
-  social,
-  productivity,
-  entertainment,
-}))
+]
+
+const WEEK: Record<Category, number>[] = USAGE.map(
+  ([social, productivity, entertainment]) => ({
+    social,
+    productivity,
+    entertainment,
+  })
+)
 
 const PROFILE = [
   1, 0, 0, 0, 0, 0, 1, 4, 6, 5, 4, 5, 7, 6, 5, 4, 5, 6, 7, 9, 10, 11, 8, 4,
@@ -76,6 +80,13 @@ const TAP_SLOP = 10
 
 const AVERAGE = WEEK.reduce((sum, day) => sum + total(day), 0) / WEEK.length
 
+const DAILY_AVERAGE = Object.fromEntries(
+  CATEGORIES.map((category) => [
+    category,
+    WEEK.reduce((sum, day) => sum + day[category], 0) / WEEK.length,
+  ])
+) as Record<Category, number>
+
 function formatMinutes(minutes: number) {
   const rounded = Math.round(minutes)
   const hours = Math.floor(rounded / 60)
@@ -90,6 +101,7 @@ function noise(seed: number) {
 function hourly(day: number) {
   const profileTotal = PROFILE.reduce((sum, value) => sum + value, 0)
   const categories = WEEK[day]
+  if (!categories) return []
   return PROFILE.map((weight, hour) => {
     const share =
       (weight / profileTotal) * (0.75 + noise(hour + 7 * (day + 1)) * 0.5)
@@ -128,20 +140,13 @@ export function BarChartInteractive() {
   const touchRef = React.useRef<{ x: number; y: number } | null>(null)
 
   const isWeek = view === "week"
-  const categories =
-    selected === null
-      ? (Object.fromEntries(
-          CATEGORIES.map((category) => [
-            category,
-            WEEK.reduce((sum, day) => sum + day[category], 0) / WEEK.length,
-          ])
-        ) as Record<Category, number>)
-      : WEEK[selected]
-  const headline = selected === null ? AVERAGE : total(WEEK[selected])
+  const selectedDay = selected === null ? undefined : WEEK[selected]
+  const categories = selectedDay ?? DAILY_AVERAGE
+  const headline = selectedDay ? total(selectedDay) : AVERAGE
   const data = isWeek
     ? WEEK.map((day, index) => ({
         ...day,
-        label: DAYS[index].slice(0, 3),
+        label: DAYS[index]?.slice(0, 3) ?? "",
         index,
       }))
     : hourly(selected ?? 6)
@@ -151,7 +156,7 @@ export function BarChartInteractive() {
   }))
     .sort((a, b) => b.minutes - a.minutes)
     .slice(0, 5)
-  const longest = apps[0].minutes
+  const longest = Math.max(...apps.map((app) => app.minutes))
   const comparison =
     selected === null
       ? "8% less than last week"
@@ -290,6 +295,7 @@ export function BarChartInteractive() {
                 onClick={(_, index) => select(index)}
                 onTouchStart={(_, __, event) => {
                   const touch = event.touches[0]
+                  if (!touch) return
                   touchRef.current = { x: touch.clientX, y: touch.clientY }
                 }}
                 onTouchEnd={(_, index, event) => {
@@ -298,6 +304,7 @@ export function BarChartInteractive() {
                   touchRef.current = null
                   if (
                     !start ||
+                    !touch ||
                     Math.hypot(
                       touch.clientX - start.x,
                       touch.clientY - start.y

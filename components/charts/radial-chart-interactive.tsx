@@ -37,6 +37,8 @@ const WEEK = [
 
 const FILL_DURATION = 750
 
+const NO_ACTIVITY = RINGS.map(() => 0)
+
 function useMorph(target: number[]) {
   const [values, setValues] = React.useState(() => target.map(() => 0))
   const valuesRef = React.useRef(values)
@@ -55,9 +57,10 @@ function useMorph(target: number[]) {
       const eased =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
       setValues(
-        target.map(
-          (value, index) => from[index] + (value - from[index]) * eased
-        )
+        target.map((value, index) => {
+          const origin = from[index] ?? value
+          return origin + (value - origin) * eased
+        })
       )
       if (progress < 1) frame = requestAnimationFrame(step)
     }
@@ -90,7 +93,10 @@ function Rings({
         const radius =
           size / 2 - bar / 2 - index * (bar + Math.max(1, bar * 0.12))
         const circumference = 2 * Math.PI * radius
-        const progress = Math.max(0, Math.min(1, values[index] / ring.goal))
+        const progress = Math.max(
+          0,
+          Math.min(1, (values[index] ?? 0) / ring.goal)
+        )
         return (
           <g key={ring.key}>
             <circle
@@ -122,7 +128,7 @@ function Rings({
 
 export function RadialChartInteractive() {
   const [selected, setSelected] = React.useState(6)
-  const target = WEEK[selected].values
+  const target = WEEK[selected]?.values ?? NO_ACTIVITY
   const values = useMorph(target)
 
   return (
@@ -167,7 +173,9 @@ export function RadialChartInteractive() {
           />
           <dl className="flex min-w-44 flex-col gap-4" aria-live="polite">
             {RINGS.map((ring, index) => {
-              const percent = Math.round((target[index] / ring.goal) * 100)
+              const percent = Math.round(
+                ((target[index] ?? 0) / ring.goal) * 100
+              )
               return (
                 <div key={ring.key} className="flex flex-col gap-0.5">
                   <dt className="text-base font-semibold">{ring.label}</dt>
@@ -176,7 +184,7 @@ export function RadialChartInteractive() {
                     style={{ "--ring": ring.color } as React.CSSProperties}
                   >
                     <span className="text-3xl font-semibold tracking-tight tabular-nums">
-                      {Math.round(values[index])}/{ring.goal}
+                      {Math.round(values[index] ?? 0)}/{ring.goal}
                     </span>
                     <span className="text-base font-semibold uppercase">
                       {ring.unit}

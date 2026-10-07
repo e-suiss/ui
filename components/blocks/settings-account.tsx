@@ -230,7 +230,7 @@ export function SettingsAccount() {
         <div className="flex items-center gap-2">
           <AppShellTrigger className="-ms-2" />
           <h1 className="text-4xl font-semibold tracking-tight">
-            {current.label}
+            {current?.label}
           </h1>
         </div>
         <div

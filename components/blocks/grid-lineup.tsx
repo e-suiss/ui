@@ -17,7 +17,7 @@ const models: {
   kicker?: string
   image: string
   alt: string
-  finishes: Finish[]
+  finishes: [Finish, ...Finish[]]
 }[] = [
   {
     name: "Phone Pro",

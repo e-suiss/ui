@@ -85,14 +85,14 @@ export function LogLive() {
     if (!running) return
     const push = () => {
       const id = next.current++
+      const event = feed[id % feed.length]
+      if (!event) return
       const time = new Date().toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
       })
       setCount((current) => current + 1)
-      setEntries((current) =>
-        [{ id, time, event: feed[id % feed.length] }, ...current].slice(0, 7)
-      )
+      setEntries((current) => [{ id, time, event }, ...current].slice(0, 7))
     }
     if (next.current === 0) push()
     const timer = window.setInterval(push, 2200)

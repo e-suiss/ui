@@ -120,8 +120,9 @@ function WheelPickerColumn({
   const getCenteredIndex = React.useCallback(() => {
     const column = columnRef.current
     const items = getItems()
-    if (!column || items.length === 0) return -1
-    const index = Math.round(column.scrollTop / items[0].offsetHeight)
+    const first = items[0]
+    if (!column || !first) return -1
+    const index = Math.round(column.scrollTop / first.offsetHeight)
     return Math.min(Math.max(index, 0), items.length - 1)
   }, [getItems])
 
@@ -155,14 +156,17 @@ function WheelPickerColumn({
   const paint = React.useCallback(() => {
     const column = columnRef.current
     const items = getItems()
-    if (!column || items.length === 0) return
-    const height = items[0].offsetHeight
+    const firstItem = items[0]
+    if (!column || !firstItem) return
+    const height = firstItem.offsetHeight
     const position = column.scrollTop / height
     const first = Math.max(Math.ceil(position - VISIBLE_ROWS), 0)
     const last = Math.min(Math.floor(position + VISIBLE_ROWS), items.length - 1)
     const painted: HTMLElement[] = []
     for (let index = first; index <= last; index++) {
-      const content = items[index].firstElementChild as HTMLElement | null
+      const item = items[index]
+      if (!item) continue
+      const content = item.firstElementChild as HTMLElement | null
       if (!content) continue
       const { transform, opacity } = curve(index - position, height)
       content.style.transform = transform
@@ -270,6 +274,7 @@ function WheelPickerColumn({
         index++
       ) {
         const item = items[index]
+        if (!item) continue
         const content = item.firstElementChild as HTMLElement | null
         if (!content || animations.has(content)) continue
         animations.set(

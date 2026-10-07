@@ -11,19 +11,18 @@ function animateJumps(
 ) {
   if (!group || !previous) return
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-  const jumped = Object.keys(next).some(
-    (id) => Math.abs(next[id] - (previous[id] ?? next[id])) > 8
+  const jumped = Object.entries(next).some(
+    ([id, size]) => Math.abs(size - (previous[id] ?? size)) > 8
   )
   if (!jumped) return
-  for (const id of Object.keys(next)) {
+  for (const [id, to] of Object.entries(next)) {
     const panel = Array.from(group.children).find(
       (child): child is HTMLElement =>
         child instanceof HTMLElement && child.id === id
     )
-    if (!panel || previous[id] === undefined) continue
-    for (const animation of panel.getAnimations()) animation.cancel()
     const from = previous[id]
-    const to = next[id]
+    if (!panel || from === undefined) continue
+    for (const animation of panel.getAnimations()) animation.cancel()
     panel.animate(
       [
         { flexGrow: String(from), opacity: from < 1 ? 0 : 1 },

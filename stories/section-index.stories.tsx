@@ -61,7 +61,7 @@ const names = [
 function groupByLetter() {
   const groups = new Map<string, string[]>()
   for (const name of names) {
-    const first = name[0].toUpperCase()
+    const first = name.charAt(0).toUpperCase()
     const letter = UPPERCASE.test(first) ? first : "#"
     groups.set(letter, [...(groups.get(letter) ?? []), name])
   }

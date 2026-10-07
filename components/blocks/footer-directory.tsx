@@ -138,6 +138,7 @@ export function FooterDirectory() {
             <div key={group[0]} className="flex flex-col gap-6">
               {group.map((index) => {
                 const section = sections[index]
+                if (!section) return null
                 return (
                   <div key={section.title} className="flex flex-col gap-2">
                     <h3 className="font-semibold text-label">

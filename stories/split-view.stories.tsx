@@ -33,7 +33,7 @@ const messages = [
     subject: "Your storage is almost full",
     body: "Your cloud storage is 90% full. Upgrade your plan to get more space.",
   },
-]
+] as const
 
 function MailExample({
   withSidebar = true,

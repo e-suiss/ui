@@ -30,10 +30,13 @@ function TrailAnchor(props: React.ComponentProps<"a">) {
 }
 
 function collapse(items: TrailItem[], maxItems: number | undefined) {
-  if (!maxItems || items.length <= maxItems) return { items, hidden: 0 }
+  const [first] = items
+  if (!first || !maxItems || items.length <= maxItems) {
+    return { items, hidden: 0 }
+  }
   const tail = Math.max(maxItems - 1, 1)
   return {
-    items: [items[0], ...items.slice(items.length - tail)],
+    items: [first, ...items.slice(items.length - tail)],
     hidden: items.length - tail - 1,
   }
 }

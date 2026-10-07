@@ -8,7 +8,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1800&q=80&auto=format&fit=crop`
 
-const finishes = [
+type Finish = {
+  id: string
+  label: string
+  color: string
+  image: string
+  alt: string
+}
+
+const finishes: [Finish, ...Finish[]] = [
   {
     id: "orange",
     label: "Cosmic Orange",

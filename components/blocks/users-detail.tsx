@@ -173,6 +173,7 @@ export function UsersDetail() {
   const [overrides, setOverrides] = React.useState<Record<number, string>>({})
   const [sessions, setSessions] = React.useState(initialSessions)
   const user = users[selected]
+  if (!user) return null
   const role = overrides[selected] ?? user.role
 
   return (

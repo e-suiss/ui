@@ -252,8 +252,9 @@ function getDefinedShortcuts(
   const choices = (definition.choices ?? []).filter(
     (choice) => !choice.disabled
   )
-  choices.slice(0, keys.length).forEach((choice, index) => {
-    shortcuts.set(choice.value, keys[index])
+  choices.forEach((choice, index) => {
+    const key = keys[index]
+    if (key) shortcuts.set(choice.value, key)
   })
   return shortcuts
 }
@@ -382,13 +383,14 @@ function useQuestionnaire({
   )
 
   React.useLayoutEffect(() => {
-    if (total === 0) return
+    const initial = sequence[0]
+    if (!initial) return
     if (index < 0) {
       if (!controlled && activeItemName === null) {
-        setUncontrolledItem(sequence[0].name)
+        setUncontrolledItem(initial.name)
         return
       }
-      navigate(sequence[0].name)
+      navigate(initial.name)
       return
     }
     const pendingFocus = pendingFocusRef.current
@@ -407,7 +409,7 @@ function useQuestionnaire({
       activeItem?.focus()
     }
     pendingFocusRef.current = null
-  }, [activeItem, activeItemName, controlled, index, sequence, navigate, total])
+  }, [activeItem, activeItemName, controlled, index, sequence, navigate])
 
   const registerItem = React.useCallback((record: ItemRecord) => {
     setRecords((current) => [
@@ -423,18 +425,20 @@ function useQuestionnaire({
   }, [])
 
   const goPrevious = React.useCallback(() => {
-    if (index <= 0) return
-    navigate(sequence[index - 1].name)
+    const previous = sequence[index - 1]
+    if (!previous) return
+    navigate(previous.name)
   }, [index, sequence, navigate])
 
   const goNext = React.useCallback(() => {
-    if (!activeItem || index >= total - 1) return
+    const next = sequence[index + 1]
+    if (!activeItem || !next) return
     if (!activeItem.validate()) {
       activeItem.focusInvalid()
       return
     }
-    navigate(sequence[index + 1].name)
-  }, [activeItem, index, sequence, navigate, total])
+    navigate(next.name)
+  }, [activeItem, index, sequence, navigate])
 
   const advance = React.useCallback(() => {
     if (!activeItem) return
@@ -446,14 +450,16 @@ function useQuestionnaire({
       form?.requestSubmit()
       return
     }
-    navigate(sequence[index + 1].name)
+    const next = sequence[index + 1]
+    if (next) navigate(next.name)
   }, [activeItem, index, last, sequence, form, navigate])
 
   const skipCurrent = React.useCallback(() => {
     if (!activeItem || activeItem.required) return
     activeItem.skip()
     if (!last) {
-      navigate(sequence[index + 1].name)
+      const next = sequence[index + 1]
+      if (next) navigate(next.name)
       return
     }
     queueMicrotask(() => {
@@ -675,11 +681,12 @@ function useQuestionnaireItem({
     const choices = enabledControls.filter(
       (control) => control.type === "choice"
     )
-    return new Map(
-      choices
-        .slice(0, keys.length)
-        .map((control, index) => [control.id, keys[index]])
-    )
+    const shortcuts = new Map<string, string>()
+    choices.forEach((control, index) => {
+      const key = keys[index]
+      if (key) shortcuts.set(control.id, key)
+    })
+    return shortcuts
   }, [enabledControls, shortcutByChoiceValue, root.shortcuts])
 
   React.useLayoutEffect(() => {
@@ -853,7 +860,7 @@ function useQuestionnaireItem({
       const index = enabledControls.findIndex(
         (control) => control.element === target
       )
-      const current = index < 0 ? null : enabledControls[index]
+      const current = enabledControls[index] ?? null
       if (
         !enabledControls.length ||
         (isTextEntry(target) && !isEmptyTextInput(current)) ||

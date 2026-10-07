@@ -22,12 +22,14 @@ import { Button } from "@/components/ui/button"
 
 type Category = "Activity" | "Heart" | "Sleep" | "Mobility"
 
-const categories: {
+type CategoryStyle = {
   value: Category
   icon: React.ElementType
   tint: string
   text: string
-}[] = [
+}
+
+const categories: [CategoryStyle, ...CategoryStyle[]] = [
   {
     value: "Activity",
     icon: FlameIcon,

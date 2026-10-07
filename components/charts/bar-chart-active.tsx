@@ -46,6 +46,7 @@ export function BarChartActive() {
   const [selected, setSelected] = React.useState(5)
   const [highlighted, setHighlighted] = React.useState<number | null>(null)
   const day = chartData[selected]
+  if (!day) return null
 
   return (
     <Card variant="filled" size="sm">

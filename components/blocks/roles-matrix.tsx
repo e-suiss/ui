@@ -136,7 +136,7 @@ export function RolesMatrix() {
                       {roles.map((role, r) => (
                         <span key={role} className="flex justify-center">
                           <Checkbox
-                            checked={!!matrix[g][p][r]}
+                            checked={!!matrix[g]?.[p]?.[r]}
                             disabled={r === 0}
                             onCheckedChange={() => toggle(g, p, r)}
                             aria-label={`${group.name} ${permission.name} for ${role}`}

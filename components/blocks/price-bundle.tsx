@@ -49,7 +49,7 @@ const plans = [
     included: 6,
     saving: 29,
   },
-]
+] as const
 
 export function PriceBundle() {
   const [selected, setSelected] = React.useState("Family")

@@ -44,11 +44,11 @@ function ToggleGroup({
       const pressed = group.querySelectorAll<HTMLElement>(
         "[data-slot=toggle-group-item][aria-pressed=true]"
       )
-      if (pressed.length !== 1) {
+      const item = pressed[0]
+      if (pressed.length !== 1 || !item) {
         delete group.dataset.indicator
         return
       }
-      const item = pressed[0]
       group.style.setProperty("--active-toggle-left", `${item.offsetLeft}px`)
       group.style.setProperty("--active-toggle-top", `${item.offsetTop}px`)
       group.style.setProperty("--active-toggle-width", `${item.offsetWidth}px`)

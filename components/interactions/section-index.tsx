@@ -118,7 +118,8 @@ function SectionIndexBar({
         ? 0
         : parent.getBoundingClientRect().top + parent.clientTop
     parent.scrollTop += target.getBoundingClientRect().top - offset
-    onValueChange?.(letters[index])
+    const letter = letters[index]
+    if (letter !== undefined) onValueChange?.(letter)
   }
 
   const indexAt = (clientY: number) => {

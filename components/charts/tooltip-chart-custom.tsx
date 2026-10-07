@@ -58,7 +58,8 @@ export function TooltipChartCustom() {
               defaultIndex={5}
               cursor={false}
               content={({ active, payload, label }) => {
-                if (!active || !payload?.length) return null
+                const entry = payload?.[0]
+                if (!active || !entry) return null
                 return (
                   <div className="min-w-28 rounded-xl bg-surface-raised px-3 py-2 shadow-lg ring-1 ring-label/5 dark:ring-label/10">
                     <p className="text-2xs font-semibold tracking-wide text-label-secondary uppercase">
@@ -66,7 +67,7 @@ export function TooltipChartCustom() {
                     </p>
                     <p className="flex items-baseline gap-1">
                       <span className="text-2xl font-semibold tabular-nums">
-                        {Number(payload[0].value).toLocaleString("en-US")}
+                        {Number(entry.value).toLocaleString("en-US")}
                       </span>
                       <span className="text-xs font-semibold text-label-secondary">
                         steps

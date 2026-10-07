@@ -69,7 +69,7 @@ const threads = [
   },
 ]
 
-const replies = [
+const replies: [string, ...string[]] = [
   "Sounds good",
   "Great, see you then!",
   "Ha, absolutely",
@@ -194,6 +194,7 @@ export function ChatConversations() {
   const replyCount = React.useRef(0)
   const thread = threads[selected]
   const lines = conversations[selected]
+  if (!thread || !lines) return null
 
   const send = (text: string) => {
     const target = selected
@@ -206,6 +207,7 @@ export function ChatConversations() {
     )
     window.setTimeout(() => setTyping(true), 500)
     window.setTimeout(() => {
+      const reply = replies[replyCount.current++ % replies.length] ?? replies[0]
       setTyping(false)
       setConversations((current) =>
         current.map((items, index) =>
@@ -215,7 +217,7 @@ export function ChatConversations() {
                 {
                   id: `${target}-${items.length}`,
                   from: "them",
-                  text: replies[replyCount.current++ % replies.length],
+                  text: reply,
                 },
               ]
             : items
@@ -244,7 +246,7 @@ export function ChatConversations() {
           </Button>
         </div>
         {threads.map((item, index) => {
-          const last = conversations[index].at(-1)
+          const last = conversations[index]?.at(-1)
           return (
             <SplitViewItem
               key={item.name}

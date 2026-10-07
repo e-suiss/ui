@@ -11,7 +11,9 @@ const images = {
     "https://images.unsplash.com/photo-1695083691065-4f77dfd0f0d5?w=1600&q=80&auto=format&fit=crop",
 }
 
-const sections = [
+type Section = { id: string; label: string }
+
+const sections: [Section, ...Section[]] = [
   { id: "overview", label: "Overview" },
   { id: "why", label: "Why suiss" },
   { id: "specs", label: "Tech Specs" },

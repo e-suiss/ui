@@ -65,7 +65,7 @@ export function SignupSteps() {
     password: "",
   })
   const [done, setDone] = React.useState(false)
-  const step = steps[index]
+  const step = steps[index] ?? steps[0]
   const value = values[step.key]
   const ready = step.valid(value)
 

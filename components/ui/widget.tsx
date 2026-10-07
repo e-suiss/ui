@@ -13,7 +13,7 @@ const WIDGET_DIMENSIONS: Record<WidgetSize, [number, number]> = {
 }
 
 function nearestSize(width: number, height: number, sizes: WidgetSize[]) {
-  let best = sizes[0]
+  let best: WidgetSize | null = null
   let bestDistance = Number.POSITIVE_INFINITY
   for (const size of sizes) {
     const [w, h] = WIDGET_DIMENSIONS[size]

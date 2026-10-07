@@ -13,7 +13,14 @@ import {
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1000&q=80&auto=format&fit=crop`
 
-const features = [
+type Feature = {
+  title: string
+  description: string
+  image: string
+  alt: string
+}
+
+const features: [Feature, ...Feature[]] = [
   {
     title: "Camera Control",
     description:
@@ -51,7 +58,7 @@ export function BentoCloserLook() {
     const timer = window.setInterval(() => {
       setActive((current) => {
         const index = features.findIndex((item) => item.title === current)
-        return features[(index + 1) % features.length].title
+        return features[(index + 1) % features.length]?.title ?? current
       })
     }, 4000)
     return () => window.clearInterval(timer)

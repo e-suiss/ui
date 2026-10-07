@@ -3,7 +3,7 @@ import * as React from "react"
 
 import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
 
-const senders = [
+const senders: [from: string, subject: string][] = [
   ["Acme Store", "Your order has shipped"],
   ["Jordan Lee", "Tomorrow's meeting"],
   ["Cloud Drive", "Your storage is almost full"],
@@ -14,7 +14,7 @@ const senders = [
   ["Riley Park", "Photos from the trip"],
 ]
 
-const incoming = [
+const incoming: [from: string, subject: string][] = [
   ["Morgan Diaz", "Quick question about the brief"],
   ["Travel Desk", "Your flight is confirmed"],
   ["Alex Chen", "Re: Project timeline"],
@@ -44,7 +44,9 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
   const refresh = async () => {
     setLog("Refreshing…")
     await wait(1200)
-    const [from, subject] = incoming[count.current % incoming.length]
+    const next = incoming[count.current % incoming.length]
+    if (!next) return
+    const [from, subject] = next
     count.current += 1
     setMessages((current) => [
       { id: 100 + count.current, from, subject, fresh: true },

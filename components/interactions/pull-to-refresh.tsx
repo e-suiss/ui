@@ -100,15 +100,20 @@ function PullToRefresh({
     }
 
     const onTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0]
       touchStart =
-        current === "idle" && root.scrollTop <= 0 && event.touches.length === 1
-          ? event.touches[0].clientY
+        touch &&
+        current === "idle" &&
+        root.scrollTop <= 0 &&
+        event.touches.length === 1
+          ? touch.clientY
           : null
     }
 
     const onTouchMove = (event: TouchEvent) => {
-      if (touchStart === null) return
-      const distance = event.touches[0].clientY - touchStart
+      const touch = event.touches[0]
+      if (touchStart === null || !touch) return
+      const distance = touch.clientY - touchStart
       if (distance <= 0 && current !== "pulling") {
         touchStart = null
         return

@@ -75,10 +75,12 @@ const TRANSITION = 650
 
 function temperature(city: City, month: number, mode: Mode) {
   const { average, spread } = CITIES[city]
-  if (mode === "average") return average[month]
+  const mean = average[month]
+  if (mean === undefined) return Number.NaN
+  if (mode === "average") return mean
   const season = Math.sin(((month - 0.5) / 12) * Math.PI)
   const range = spread[0] + spread[1] * 6 * season * season
-  return average[month] + (mode === "high" ? range / 2 : -range / 2)
+  return mean + (mode === "high" ? range / 2 : -range / 2)
 }
 
 function ActiveMonth({
@@ -256,6 +258,7 @@ export function LineChartInteractive() {
         <dl className="grid grid-cols-[repeat(auto-fit,minmax(8.5rem,1fr))] gap-3">
           {shown.map((city) => {
             const temperatures = data.map((item) => item[city])
+            const highlighted = month === null ? undefined : temperatures[month]
             return (
               <div key={city} className="flex flex-col gap-0.5">
                 <dt className="flex items-center gap-1.5 text-sm text-label-secondary">
@@ -270,9 +273,9 @@ export function LineChartInteractive() {
                   {chartConfig[city].label}
                 </dt>
                 <dd className="text-base font-semibold tabular-nums">
-                  {month === null
+                  {month === null || highlighted === undefined
                     ? `${Math.round(Math.min(...temperatures))}° / ${Math.round(Math.max(...temperatures))}°`
-                    : `${Math.round(temperatures[month])}° · ${longMonth.format(MONTHS[month])}`}
+                    : `${Math.round(highlighted)}° · ${longMonth.format(MONTHS[month])}`}
                 </dd>
               </div>
             )

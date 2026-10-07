@@ -16,14 +16,16 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [{ desktop: 1260, mobile: 570 }]
+const visitors = { desktop: 1260, mobile: 570 }
+
+const chartData = [visitors]
 
 const chartConfig = {
   desktop: { label: "Desktop", color: "var(--blue)" },
   mobile: { label: "Mobile", color: "var(--teal)" },
 } satisfies ChartConfig
 
-const total = chartData[0].desktop + chartData[0].mobile
+const total = visitors.desktop + visitors.mobile
 
 export function RadialChartStacked() {
   return (

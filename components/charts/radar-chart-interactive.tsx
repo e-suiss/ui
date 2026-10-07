@@ -63,9 +63,10 @@ function useMorph(target: number[]) {
       const eased =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
       setValues(
-        target.map(
-          (value, index) => from[index] + (value - from[index]) * eased
-        )
+        target.map((value, index) => {
+          const origin = from[index] ?? value
+          return origin + (value - origin) * eased
+        })
       )
       if (progress < 1) frame = requestAnimationFrame(step)
     }
@@ -99,7 +100,7 @@ export function RadarChartInteractive() {
     ...Object.fromEntries(
       MODELS.map((model, position) => [
         model,
-        SCORES[model][index] * scale[position],
+        (SCORES[model][index] ?? 0) * (scale[position] ?? 0),
       ])
     ),
     ...Object.fromEntries(
@@ -210,25 +211,27 @@ export function RadarChartInteractive() {
                   />
                 )}
               />
-              {MODELS.map((model, position) =>
-                scale[position] < 0.005 ? null : (
+              {MODELS.map((model, position) => {
+                const visibility = scale[position]
+                if (visibility === undefined || visibility < 0.005) return null
+                return (
                   <Radar
                     key={model}
                     dataKey={model}
                     stroke={`var(--color-${model})`}
                     strokeWidth={2}
-                    strokeOpacity={Math.min(1, scale[position] * 1.5)}
+                    strokeOpacity={Math.min(1, visibility * 1.5)}
                     fill={`var(--color-${model})`}
-                    fillOpacity={0.14 * scale[position]}
+                    fillOpacity={0.14 * visibility}
                     dot={{
-                      r: 3 * Math.min(1, scale[position] * 1.3),
+                      r: 3 * Math.min(1, visibility * 1.3),
                       fillOpacity: 1,
                       fill: `var(--color-${model})`,
                     }}
                     isAnimationActive={false}
                   />
                 )
-              )}
+              })}
               <ActiveAxis onChange={setAxis} />
             </RadarChart>
           </ChartContainer>

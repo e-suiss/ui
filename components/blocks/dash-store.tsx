@@ -147,6 +147,7 @@ export function DashStore() {
   const [active, setActive] = React.useState<number | null>(null)
   const scale = ranges.find((item) => item.value === range)?.scale ?? 1
   const data = week.map((day, index) => ({ ...day, index }))
+  const activeDay = active === null ? undefined : week[active]
   const title = items.find((item) => item.value === section)?.label
 
   const stats = [
@@ -235,12 +236,12 @@ export function DashStore() {
           <div className="flex items-start gap-2">
             <div className="flex flex-1 flex-col" aria-live="polite">
               <span className="text-sm text-label-secondary">
-                {active === null ? "Weekly sales" : week[active].day}
+                {activeDay ? activeDay.day : "Weekly sales"}
               </span>
               <span className="text-2xl font-semibold tabular-nums">
-                {active === null
-                  ? money(1284500 * scale)
-                  : money((week[active].online + week[active].store) * 1000)}
+                {activeDay
+                  ? money((activeDay.online + activeDay.store) * 1000)
+                  : money(1284500 * scale)}
               </span>
             </div>
             <div className="flex gap-3 text-xs text-label-secondary">

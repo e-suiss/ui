@@ -88,7 +88,7 @@ const bestSellers = [
   { name: "Künefe", count: 131 },
   { name: "Ayran", count: 120 },
   { name: "Lentil soup", count: 96 },
-]
+] as const
 const menu = [
   { name: "Meatballs", price: "₺280", icon: <HamburgerIcon /> },
   { name: "Pide", price: "₺220", icon: <PizzaIcon /> },

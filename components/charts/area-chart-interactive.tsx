@@ -121,7 +121,9 @@ function generate(range: Range): Point[] {
     value *= 1 + ((state - 1) / 2147483646 - drift) * volatility
     return value
   })
-  const scale = LAST_PRICE / values[points - 1]
+  const last = values.at(-1)
+  if (last === undefined) return []
+  const scale = LAST_PRICE / last
   const days = businessDays(points)
   const week = businessDays(5)
 
@@ -178,24 +180,27 @@ function generate(range: Range): Point[] {
 }
 
 function resample(source: Point[]) {
+  const samples: Point[] = []
   let previous = -1
-  return Array.from({ length: SAMPLES }, (_, index) => {
+  for (let index = 0; index < SAMPLES; index++) {
     const position = (index * (source.length - 1)) / (SAMPLES - 1)
     const from = Math.floor(position)
     const to = Math.min(source.length - 1, from + 1)
     const nearest = Math.round(position)
-    const price =
-      source[from].price +
-      (source[to].price - source[from].price) * (position - from)
-    const point = {
+    const start = source[from]
+    const end = source[to]
+    const closest = source[nearest]
+    if (!start || !end || !closest) return samples
+    const price = start.price + (end.price - start.price) * (position - from)
+    samples.push({
       index,
       price: Number(price.toFixed(2)),
-      label: source[nearest].label,
-      tick: nearest !== previous ? source[nearest].tick : "",
-    }
+      label: closest.label,
+      tick: nearest !== previous ? closest.tick : "",
+    })
     previous = nearest
-    return point
-  })
+  }
+  return samples
 }
 
 function tickIndexes(points: Point[], max: number) {
@@ -226,9 +231,10 @@ function useMorph(target: number[]) {
       const progress = Math.min(1, (performance.now() - start) / MORPH_DURATION)
       const eased = 1 - (1 - progress) ** 3
       setValues(
-        target.map(
-          (value, index) => from[index] + (value - from[index]) * eased
-        )
+        target.map((value, index) => {
+          const origin = from[index] ?? value
+          return origin + (value - origin) * eased
+        })
       )
       if (progress < 1) frame = requestAnimationFrame(step)
     }
@@ -269,8 +275,12 @@ export function AreaChartInteractive() {
     price: animated[index],
   }))
 
-  const first = points[0].price
+  const opening = points[0]
   const current = points[active ?? points.length - 1]
+  const baseline = data[0]
+  if (!opening || !current || !baseline) return null
+
+  const first = opening.price
   const change = current.price - first
   const rising = change >= 0
   const prices = points.map((point) => point.price)
@@ -387,7 +397,7 @@ export function AreaChartInteractive() {
               width={40}
             />
             <ReferenceLine
-              y={data[0].price}
+              y={baseline.price}
               stroke="var(--label-tertiary)"
               strokeDasharray="2 3"
             />

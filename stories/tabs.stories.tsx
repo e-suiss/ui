@@ -23,7 +23,7 @@ const tabs = [
     icon: GearIcon,
     content: "Manage language, time zone, and privacy preferences.",
   },
-]
+] as const
 
 type TabsStoryArgs = React.ComponentProps<typeof Tabs> & {
   variant?: "default" | "line"

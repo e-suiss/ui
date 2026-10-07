@@ -101,9 +101,10 @@ function useMorph(target: number[], duration: number) {
       const eased =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
       setValues(
-        target.map(
-          (value, index) => from[index] + (value - from[index]) * eased
-        )
+        target.map((value, index) => {
+          const origin = from[index] ?? value
+          return origin + (value - origin) * eased
+        })
       )
       if (progress < 1) frame = requestAnimationFrame(step)
     }
@@ -134,12 +135,13 @@ export function PieChartInteractive() {
     [active]
   )
   const lift = useMorph(liftTarget, LIFT_DURATION)
+  const sizeOf = (kind: Kind) => values[KINDS.indexOf(kind)] ?? 0
   const total = values.reduce((sum, value) => sum + value, 0)
-  const used = total - values[KINDS.indexOf("free")]
-  const activeValue = active ? values[KINDS.indexOf(active)] : used
-  const data = KINDS.map((kind, index) => ({
+  const used = total - sizeOf("free")
+  const activeValue = active ? sizeOf(active) : used
+  const data = KINDS.map((kind) => ({
     kind,
-    size: Math.max(0, values[index]),
+    size: Math.max(0, sizeOf(kind)),
     fill: `var(--color-${kind})`,
   }))
 
@@ -177,8 +179,7 @@ export function PieChartInteractive() {
           className="flex h-2.5 overflow-hidden rounded-full bg-control"
         >
           {KINDS.filter((kind) => kind !== "free").map((kind) => {
-            const share =
-              (Math.max(0, values[KINDS.indexOf(kind)]) / total) * 100
+            const share = (Math.max(0, sizeOf(kind)) / total) * 100
             return (
               <span
                 key={kind}
@@ -217,8 +218,10 @@ export function PieChartInteractive() {
                   cornerRadius={4}
                   isAnimationActive={false}
                   onMouseEnter={(_, index) => {
+                    const kind = KINDS[index]
+                    if (!kind) return
                     sourceRef.current = "pie"
-                    setActive(KINDS[index])
+                    setActive(kind)
                   }}
                   onMouseLeave={() => {
                     if (sourceRef.current === "pie") release()
@@ -227,7 +230,7 @@ export function PieChartInteractive() {
                     <Sector
                       {...props}
                       outerRadius={
-                        (props.outerRadius ?? 0) + lift[index] * LIFT
+                        (props.outerRadius ?? 0) + (lift[index] ?? 0) * LIFT
                       }
                     />
                   )}
@@ -251,7 +254,7 @@ export function PieChartInteractive() {
           </div>
           <ul className="flex min-w-0 flex-[1_1_15rem] flex-col">
             {KINDS.map((kind) => {
-              const present = target[KINDS.indexOf(kind)] > 0
+              const present = (target[KINDS.indexOf(kind)] ?? 0) > 0
               return (
                 <li
                   key={kind}
@@ -279,10 +282,7 @@ export function PieChartInteractive() {
                         {chartConfig[kind].label}
                       </span>
                       <span className="text-base text-label-secondary tabular-nums">
-                        {sizeFormat.format(
-                          Math.max(0, values[KINDS.indexOf(kind)])
-                        )}{" "}
-                        GB
+                        {sizeFormat.format(Math.max(0, sizeOf(kind)))} GB
                       </span>
                     </div>
                   </div>

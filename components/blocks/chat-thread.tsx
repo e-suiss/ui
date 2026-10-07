@@ -59,14 +59,11 @@ export function ChatThread() {
     window.setTimeout(() => setTyping(true), 500)
     window.setTimeout(() => {
       setTyping(false)
-      setLines((current) => [
-        ...current,
-        {
-          id: String(current.length),
-          from: "them",
-          text: replies[replyCount.current++ % replies.length],
-        },
-      ])
+      setLines((current) => {
+        const text = replies[replyCount.current++ % replies.length]
+        if (text === undefined) return current
+        return [...current, { id: String(current.length), from: "them", text }]
+      })
     }, 1800)
   }
 

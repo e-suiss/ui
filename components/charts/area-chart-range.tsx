@@ -17,7 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
+const readings: [low: number, high: number, average: number][] = [
   [48, 62, 54],
   [46, 60, 52],
   [47, 64, 54],
@@ -42,9 +42,11 @@ const chartData = [
   [66, 90, 74],
   [60, 82, 68],
   [52, 70, 58],
-].map(([low, high, average], hour) => ({
+]
+
+const chartData = readings.map(([low, high, average], hour) => ({
   hour: `${hour}:00`,
-  range: [low, high],
+  range: [low, high] as const,
   average,
 }))
 

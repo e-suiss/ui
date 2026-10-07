@@ -114,7 +114,7 @@ export function SettingsDevice() {
     !query || label.toLowerCase().includes(query.toLowerCase())
   const visible = groups
     .map((rows) => rows.filter((row) => matches(row.label)))
-    .filter((rows) => rows.length > 0)
+    .filter((rows): rows is [Row, ...Row[]] => rows.length > 0)
 
   return (
     <section className="flex min-h-170 items-center justify-center bg-surface-secondary sm:p-5">

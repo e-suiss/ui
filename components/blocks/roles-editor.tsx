@@ -60,21 +60,22 @@ const groups = [
   },
 ]
 
-const members: Record<string, number> = { Editor: 2, Support: 2, Viewer: 1 }
+const roles = ["Editor", "Support", "Viewer"] as const
 
-const defaults: Record<string, boolean[]> = {
+type Role = (typeof roles)[number]
+
+const members: Record<Role, number> = { Editor: 2, Support: 2, Viewer: 1 }
+
+const defaults: Record<Role, boolean[]> = {
   Editor: [true, true, false, true, false],
   Support: [false, false, false, true, false],
   Viewer: [false, false, false, false, false],
 }
 
-const clone = (value: Record<string, boolean[]>) =>
-  Object.fromEntries(
-    Object.entries(value).map(([key, list]) => [key, [...list]])
-  )
+const clone = (value: Record<Role, boolean[]>) => structuredClone(value)
 
 export function RolesEditor() {
-  const [role, setRole] = React.useState("Editor")
+  const [role, setRole] = React.useState<Role>("Editor")
   const [state, setState] = React.useState(() => clone(defaults))
   const [base, setBase] = React.useState(() => clone(defaults))
   const dirty = JSON.stringify(state) !== JSON.stringify(base)
@@ -101,7 +102,7 @@ export function RolesEditor() {
           title="Roles"
           className="gap-0.5 md:px-4 md:pt-5 [&>h2]:md:not-sr-only [&>h2]:md:px-1 [&>h2]:md:pb-2 [&>h2]:md:text-sm [&>h2]:md:font-semibold [&>h2]:md:text-label-secondary"
         >
-          {Object.keys(defaults).map((name) => (
+          {roles.map((name) => (
             <SplitViewItem
               key={name}
               isActive={name === role}
@@ -173,7 +174,7 @@ export function RolesEditor() {
                           <ItemActions>
                             <Switch
                               id={id}
-                              checked={state[role][slot]}
+                              checked={state[role][slot] ?? false}
                               onCheckedChange={(value) =>
                                 setState((current) => ({
                                   ...current,

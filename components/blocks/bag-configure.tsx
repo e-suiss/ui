@@ -10,12 +10,18 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1000&q=80&auto=format&fit=crop`
 
-const models = [
+type Model = { name: string; price: number }
+
+type Finish = { name: string; color: string; image: string; alt: string }
+
+type StorageOption = { size: string; extra: number }
+
+const models: [Model, ...Model[]] = [
   { name: "Phone Pro", price: 1099 },
   { name: "Phone Pro Max", price: 1199 },
 ]
 
-const finishes = [
+const finishes: [Finish, ...Finish[]] = [
   {
     name: "Cosmic Orange",
     color: "oklch(0.68 0.16 50)",
@@ -36,7 +42,7 @@ const finishes = [
   },
 ]
 
-const storage = [
+const storage: [StorageOption, ...StorageOption[]] = [
   { size: "256 GB", extra: 0 },
   { size: "512 GB", extra: 200 },
   { size: "1 TB", extra: 400 },

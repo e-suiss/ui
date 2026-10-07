@@ -135,12 +135,15 @@ export function DashAnalytics() {
   )
   const metric =
     metrics.find((item) => item.value === metricValue) ?? metrics[1]
+  if (!metric) return null
   const data = metric.data.map((value, index) => ({
     week: `Week ${index + 1}`,
     index,
     value: Number((value * (1 - appIndex * 0.28)).toFixed(2)),
   }))
   const current = active ?? data.length - 1
+  const point = data[current]
+  if (!point) return null
   const latest = data.at(-1)?.value ?? 0
   const format = (value: number) => `${value.toFixed(1)} ${metric.unit}`
   const title = items.find((item) => item.value === section)?.label
@@ -176,11 +179,11 @@ export function DashAnalytics() {
           <div className="flex items-end gap-2.5">
             <div className="flex flex-1 flex-col" aria-live="polite">
               <span className="text-sm text-label-secondary">
-                {current === data.length - 1 ? "This week" : data[current].week}{" "}
-                · {metric.label}
+                {current === data.length - 1 ? "This week" : point.week} ·{" "}
+                {metric.label}
               </span>
               <span className="text-3xl font-bold tracking-tight tabular-nums">
-                {format(data[current].value)}
+                {format(point.value)}
               </span>
             </div>
             <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">

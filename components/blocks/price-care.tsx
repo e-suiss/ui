@@ -11,12 +11,16 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=900&q=80&auto=format&fit=crop`
 
-const devices: {
+type CareOption = { label: string; price: number; theft?: number }
+
+type Device = {
   name: string
   image: string
   alt: string
-  options: { label: string; price: number; theft?: number }[]
-}[] = [
+  options: [CareOption, ...CareOption[]]
+}
+
+const devices: [Device, ...Device[]] = [
   {
     name: "Phone Pro",
     image: photo("1714972384975-fbd4f19b1bb3"),

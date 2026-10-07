@@ -26,7 +26,7 @@ const people = [
     initials: "SM",
     src: "https://i.pravatar.cc/128?img=32",
   },
-]
+] as const
 
 const meta = {
   title: "Components/Avatar",
