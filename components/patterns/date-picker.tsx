@@ -110,11 +110,24 @@ function DatePicker({
       year: "numeric",
     })
     const weekday = new Intl.DateTimeFormat(locale, { weekday: "short" })
+    const weekdayName = new Intl.DateTimeFormat(locale, { weekday: "long" })
+    const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "full" })
+    const today = new Intl.RelativeTimeFormat(locale, {
+      numeric: "auto",
+    }).format(0, "day")
     return {
       weekStartsOn: weekStart(locale),
       formatters: {
         formatCaption: (date: Date) => caption.format(date),
         formatWeekdayName: (date: Date) => weekday.format(date),
+      },
+      labels: {
+        labelGrid: (date: Date) => caption.format(date),
+        labelWeekday: (date: Date) => weekdayName.format(date),
+        labelDayButton: (date: Date, modifiers: { today?: boolean }) =>
+          modifiers.today
+            ? `${today}, ${fullDate.format(date)}`
+            : fullDate.format(date),
       },
     }
   }, [locale])
@@ -191,6 +204,8 @@ function DatePicker({
           defaultMonth={value ?? undefined}
           weekStartsOn={calendarLocale.weekStartsOn}
           formatters={calendarLocale.formatters}
+          labels={calendarLocale.labels}
+          className="bg-transparent"
           startMonth={new Date(fromYear, 0)}
           endMonth={new Date(toYear, 11)}
           onSelect={(next) => {

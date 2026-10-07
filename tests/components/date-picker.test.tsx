@@ -72,6 +72,21 @@ describe("DatePicker on desktop", () => {
     await expect.element(trigger()).toHaveAttribute("data-placeholder", "")
   })
 
+  it("lets the popover's rounded surface show behind the calendar", async () => {
+    await render(<DatePicker aria-label="Date" locale="en-US" />)
+    await trigger().click()
+    await expect.element(dialog()).toBeVisible()
+    const calendar = dialog()
+      .element()
+      .querySelector<HTMLElement>("[data-slot=calendar]")
+    expect(calendar && getComputedStyle(calendar).backgroundColor).toBe(
+      "rgba(0, 0, 0, 0)"
+    )
+    expect(getComputedStyle(dialog().element()).borderTopLeftRadius).not.toBe(
+      "0px"
+    )
+  })
+
   it("selects a day from the calendar popover and formats it", async () => {
     const onValueChange = vi.fn()
     await render(
