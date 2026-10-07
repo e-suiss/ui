@@ -17,10 +17,18 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
+function dayKey(date: Date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-")
+}
+
 const chartData = [
   512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558,
 ].map((energy, index) => ({
-  date: new Date(2026, 8, 23 + index).toISOString().slice(0, 10),
+  date: dayKey(new Date(2026, 8, 23 + index)),
   energy,
 }))
 
