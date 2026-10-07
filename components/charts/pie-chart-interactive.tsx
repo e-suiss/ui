@@ -90,6 +90,7 @@ function useMorph(target: number[], duration: number) {
 
   React.useEffect(() => {
     const from = valuesRef.current
+    if (target.every((value, index) => value === from[index])) return
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setValues(target)
       return
@@ -139,11 +140,15 @@ export function PieChartInteractive() {
   const total = values.reduce((sum, value) => sum + value, 0)
   const used = total - sizeOf("free")
   const activeValue = active ? sizeOf(active) : used
-  const data = KINDS.map((kind) => ({
-    kind,
-    size: Math.max(0, sizeOf(kind)),
-    fill: `var(--color-${kind})`,
-  }))
+  const data = React.useMemo(
+    () =>
+      KINDS.map((kind, index) => ({
+        kind,
+        size: Math.max(0, values[index] ?? 0),
+        fill: `var(--color-${kind})`,
+      })),
+    [values]
+  )
 
   return (
     <Card variant="filled" size="sm" className="[--card-spacing:--spacing(5)]">

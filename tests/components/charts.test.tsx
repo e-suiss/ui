@@ -195,6 +195,32 @@ describe("AreaChartInteractive", () => {
 })
 
 describe("PieChartInteractive", () => {
+  it("keeps its slices in place once it has rendered", async () => {
+    let removed = 0
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.removedNodes) {
+          if (
+            node instanceof Element &&
+            (node.matches(".recharts-pie-sector") ||
+              node.querySelector(".recharts-pie-sector"))
+          ) {
+            removed++
+          }
+        }
+      }
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+    await render(<PieChartInteractive />)
+    await expect
+      .poll(() => document.querySelectorAll(".recharts-pie-sector").length)
+      .toBeGreaterThan(0)
+    removed = 0
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    observer.disconnect()
+    expect(removed).toBe(0)
+  })
+
   const center = () => page.getByText(SIZE).first()
 
   it("totals the used space of the phone", async () => {
