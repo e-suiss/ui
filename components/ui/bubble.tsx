@@ -71,7 +71,7 @@ function BubbleContent({
     props: mergeProps<"div">(
       {
         className: cn(
-          "w-fit max-w-full min-w-0 relative rounded-2xl border bg-(--bubble-bg) border-transparent px-3.5 py-1.5 text-base wrap-break-word group-data-[align=end]/bubble:self-end before:absolute before:-start-[8px] before:-bottom-px before:hidden before:h-2.5 before:w-[7px] before:bg-(--bubble-bg) before:[clip-path:path('M7_0A10_10_0_0_1_0_9.54V10H7Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/bubble:before:-end-[8px] group-data-[align=end]/bubble:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:rounded-es-none [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:before:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:rounded-ee-none [button]:text-start [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:focus-ring",
+          "w-fit max-w-full min-w-0 relative rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--surface))] border-transparent px-3.5 py-1.5 text-base wrap-break-word group-data-[align=end]/bubble:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:[background:inherit] before:[clip-path:path('M7_0H20V4A16_16_0_0_1_4_20H0V19.54A10_10_0_0_0_7_10Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] [[data-slot=bubble][data-align=start]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble][data-align=end]:not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=end]))>&]:before:block [button]:text-start [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:focus-ring",
           className
         ),
       },
@@ -85,7 +85,7 @@ function BubbleContent({
 }
 
 const bubbleReactionsVariants = cva(
-  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-surface-raised px-1.5 py-0.5 text-sm shadow-md dark:bg-surface-tertiary has-[button]:p-0",
+  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-sm ring-3 ring-[var(--bubble-surface,var(--surface))] has-[button]:p-0",
   {
     variants: {
       side: {
