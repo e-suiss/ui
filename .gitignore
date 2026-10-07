@@ -10,3 +10,4 @@ storybook-static/
 .design-sync/sb-build.log
 .ds-sync/
 ds-bundle/
+.vitest

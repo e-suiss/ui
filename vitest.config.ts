@@ -1,6 +1,12 @@
+import { fileURLToPath } from "node:url"
+import tailwindcss from "@tailwindcss/vite"
+import { playwright } from "@vitest/browser-playwright"
 import { defineConfig } from "vitest/config"
 
+const root = fileURLToPath(new URL(".", import.meta.url))
+
 export default defineConfig({
+  resolve: { alias: { "@": root } },
   test: {
     projects: [
       {
@@ -8,6 +14,26 @@ export default defineConfig({
           name: "cli",
           environment: "node",
           include: ["tests/cli/**/*.test.mjs"],
+        },
+      },
+      {
+        extends: true,
+        plugins: [tailwindcss()],
+        optimizeDeps: {
+          entries: ["tests/{hooks,components}/**/*.test.tsx"],
+        },
+        test: {
+          name: "browser",
+          include: ["tests/{hooks,components}/**/*.test.tsx"],
+          setupFiles: ["tests/setup.ts"],
+          browser: {
+            enabled: true,
+            headless: true,
+            screenshotFailures: false,
+            provider: playwright({ launchOptions: { channel: "chrome" } }),
+            instances: [{ browser: "chromium" }],
+            viewport: { width: 1280, height: 800 },
+          },
         },
       },
     ],

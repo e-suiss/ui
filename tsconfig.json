@@ -29,7 +29,9 @@
     "stories/**/*.tsx",
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }
