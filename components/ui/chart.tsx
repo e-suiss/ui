@@ -296,6 +296,12 @@ function ChartLegendContent({
     return null
   }
 
+  const keys = Object.keys(config)
+  const configOrder = (key: string | undefined) => {
+    const index = key === undefined ? -1 : keys.indexOf(key)
+    return index === -1 ? keys.length : index
+  }
+
   return (
     <div
       className={cn(
@@ -306,9 +312,18 @@ function ChartLegendContent({
     >
       {payload
         .filter((item) => item.type !== "none")
-        .map((item) => {
-          const key = `${nameKey ?? item.dataKey ?? "value"}`
-          const itemConfig = getPayloadConfigFromPayload(config, item, key)
+        .map((item) => ({
+          item,
+          configKey: getPayloadConfigKey(
+            config,
+            item,
+            `${nameKey ?? item.dataKey ?? "value"}`
+          ),
+        }))
+        .sort((a, b) => configOrder(a.configKey) - configOrder(b.configKey))
+        .map(({ item, configKey }) => {
+          const itemConfig =
+            configKey === undefined ? undefined : config[configKey]
 
           return (
             <div
@@ -336,6 +351,15 @@ function ChartLegendContent({
 }
 
 function getPayloadConfigFromPayload(
+  config: ChartConfig,
+  payload: unknown,
+  key: string
+) {
+  const configKey = getPayloadConfigKey(config, payload, key)
+  return configKey === undefined ? undefined : config[configKey]
+}
+
+function getPayloadConfigKey(
   config: ChartConfig,
   payload: unknown,
   key: string
@@ -368,7 +392,7 @@ function getPayloadConfigFromPayload(
     ] as string
   }
 
-  return configLabelKey in config ? config[configLabelKey] : config[key]
+  return configLabelKey in config ? configLabelKey : key
 }
 
 export {

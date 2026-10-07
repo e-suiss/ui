@@ -290,6 +290,13 @@ describe("ChartLegendContent", () => {
     expect(swatches[0]?.style.backgroundColor).toBe("var(--color-desktop)")
   })
 
+  it("lists series in the order of the chart config", async () => {
+    await render(<Chart legend={{}} keys={["mobile", "desktop"]} />)
+    await expect
+      .poll(() => legend()?.innerText.replace(/\s+/g, " ").trim())
+      .toBe("Desktop Mobile")
+  })
+
   it("prefers a configured icon unless hideIcon is set", async () => {
     const withIcon = {
       desktop: { label: "Desktop", color: "red", icon: HouseIcon },
