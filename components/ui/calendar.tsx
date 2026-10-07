@@ -8,10 +8,13 @@ import {
 import { cn } from "cn"
 import * as React from "react"
 import {
-  type DayButton,
+  type ChevronProps,
+  type DayButtonProps,
   DayPicker,
   getDefaultClassNames,
-  type Locale,
+  type RootProps,
+  useDayPicker,
+  type WeekNumberProps,
 } from "react-day-picker"
 import { Button, buttonVariants } from "@/components/ui/button"
 
@@ -134,51 +137,10 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Root: ({ className, rootRef, ...props }) => {
-          return (
-            <div
-              data-slot="calendar"
-              ref={rootRef}
-              className={cn(className)}
-              {...props}
-            />
-          )
-        },
-        Chevron: ({ className, orientation, ...props }) => {
-          if (orientation === "left") {
-            return (
-              <CaretLeftIcon
-                className={cn("rtl:rotate-180 size-4", className)}
-                {...props}
-              />
-            )
-          }
-
-          if (orientation === "right") {
-            return (
-              <CaretRightIcon
-                className={cn("rtl:rotate-180 size-4", className)}
-                {...props}
-              />
-            )
-          }
-
-          return (
-            <CaretDownIcon className={cn("size-4", className)} {...props} />
-          )
-        },
-        DayButton: ({ ...props }) => (
-          <CalendarDayButton locale={locale} {...props} />
-        ),
-        WeekNumber: ({ children, ...props }) => {
-          return (
-            <td {...props}>
-              <div className="flex size-(--cell-size) items-center justify-center text-center">
-                {children}
-              </div>
-            </td>
-          )
-        },
+        Root: CalendarRoot,
+        Chevron: CalendarChevron,
+        DayButton: CalendarDayButton,
+        WeekNumber: CalendarWeekNumber,
         ...components,
       }}
       {...props}
@@ -186,14 +148,57 @@ function Calendar({
   )
 }
 
+function CalendarRoot({ className, rootRef, ...props }: RootProps) {
+  return (
+    <div
+      data-slot="calendar"
+      ref={rootRef}
+      className={cn(className)}
+      {...props}
+    />
+  )
+}
+
+function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
+  if (orientation === "left") {
+    return (
+      <CaretLeftIcon
+        className={cn("rtl:rotate-180 size-4", className)}
+        {...props}
+      />
+    )
+  }
+
+  if (orientation === "right") {
+    return (
+      <CaretRightIcon
+        className={cn("rtl:rotate-180 size-4", className)}
+        {...props}
+      />
+    )
+  }
+
+  return <CaretDownIcon className={cn("size-4", className)} {...props} />
+}
+
+function CalendarWeekNumber({ children, ...props }: WeekNumberProps) {
+  return (
+    <td {...props}>
+      <div className="flex size-(--cell-size) items-center justify-center text-center">
+        {children}
+      </div>
+    </td>
+  )
+}
+
 function CalendarDayButton({
   className,
   day,
   modifiers,
-  locale,
   ...props
-}: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
+}: DayButtonProps) {
   const defaultClassNames = getDefaultClassNames()
+  const { locale } = useDayPicker().dayPickerProps
 
   const ref = React.useRef<HTMLButtonElement>(null)
   React.useEffect(() => {

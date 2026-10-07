@@ -54,7 +54,8 @@
         "noUnusedFunctionParameters": "error",
         "noUndeclaredVariables": "error",
         "useJsxKeyInIterable": "error",
-        "noRenderReturnValue": "error"
+        "noRenderReturnValue": "error",
+        "noNestedComponentDefinitions": "error"
       },
       "complexity": {
         "noUselessStringConcat": "error",
