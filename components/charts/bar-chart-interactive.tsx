@@ -127,7 +127,9 @@ function KeyboardPoint({
   const points = useActiveTooltipDataPoints<{ index?: number }>()
   const index = points?.[0]?.index ?? null
 
-  React.useEffect(() => onChange(index), [index, onChange])
+  React.useEffect(() => {
+    if (index !== null) onChange(index)
+  }, [index, onChange])
 
   return null
 }
@@ -213,6 +215,11 @@ export function BarChartInteractive() {
             ) {
               event.preventDefault()
               select(highlighted)
+            }
+          }}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setHighlighted(null)
             }
           }}
         >

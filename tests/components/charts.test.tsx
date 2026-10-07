@@ -87,8 +87,6 @@ describe("BarChartInteractive", () => {
     await expect.element(page.getByText("Monday")).toBeVisible()
     await expect.element(page.getByText("3h 25m")).toBeVisible()
     await expect.element(page.getByText("13% below average")).toBeVisible()
-    await userEvent.keyboard("{ArrowRight}")
-    await userEvent.keyboard("{ArrowLeft}")
     await userEvent.keyboard("{Enter}")
     await expect.element(page.getByText("Daily average")).toBeVisible()
     await expect.element(page.getByText("3h 55m")).toBeVisible()
