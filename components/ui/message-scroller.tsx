@@ -188,7 +188,7 @@ function MessageScrollerItem({
       data-message-id={messageId}
       data-scroll-anchor={scrollAnchor ? "true" : "false"}
       className={cn(
-        "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
+        "min-w-0 shrink-0 px-2.5 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
         className
       )}
       {...props}
