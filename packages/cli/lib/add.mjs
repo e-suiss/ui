@@ -12,7 +12,7 @@ import {
   scopeOf,
 } from "./registry.mjs"
 
-async function fetchFiles(items) {
+function fetchFiles(items) {
   return Promise.all(
     items.flatMap((item) =>
       item.files.map(async (file) => ({ file, content: await fetchText(file) }))

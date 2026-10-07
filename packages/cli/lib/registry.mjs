@@ -52,6 +52,6 @@ export function resolveItems(registry, names) {
   return ordered
 }
 
-export async function fetchStylesheet(registry) {
+export function fetchStylesheet(registry) {
   return fetchText(registry.stylesheet)
 }

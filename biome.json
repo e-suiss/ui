@@ -49,6 +49,7 @@
       },
       "suspicious": {
         "noEmptyBlockStatements": "error",
+        "useAwait": "error",
         "noEvolvingTypes": "error"
       },
       "correctness": {
