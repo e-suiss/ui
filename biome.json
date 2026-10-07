@@ -33,6 +33,36 @@
       "preset": "recommended",
       "a11y": {
         "useSemanticElements": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "error",
+        "noParameterAssign": "error",
+        "noUselessElse": "error",
+        "useCollapsedElseIf": "error",
+        "useTemplate": "error",
+        "useConsistentArrayType": "error",
+        "noInferrableTypes": "error",
+        "useFragmentSyntax": "error",
+        "useShorthandAssign": "error",
+        "useNumberNamespace": "error",
+        "useDefaultSwitchClause": "error"
+      },
+      "suspicious": {
+        "noEvolvingTypes": "error"
+      },
+      "correctness": {
+        "noUnusedFunctionParameters": "error",
+        "noUndeclaredVariables": "error",
+        "useJsxKeyInIterable": "error",
+        "noRenderReturnValue": "error"
+      },
+      "complexity": {
+        "noUselessStringConcat": "error",
+        "noUselessUndefinedInitialization": "error"
+      },
+      "performance": {
+        "noDelete": "error",
+        "noReExportAll": "error"
       }
     }
   },

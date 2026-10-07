@@ -13,7 +13,13 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useUnknownInCatchVariables": true
   },
   "include": [
     "components/**/*.ts",
