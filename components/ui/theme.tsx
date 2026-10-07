@@ -152,6 +152,15 @@ function readStoredTheme(storageKey: string, fallback: Theme): Theme {
   }
 }
 
+function writeStoredTheme(storageKey: string, theme: Theme) {
+  try {
+    localStorage.setItem(storageKey, theme)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function ThemeProvider({
   defaultTheme = "system",
   storageKey = "theme",
@@ -196,9 +205,7 @@ function ThemeProvider({
   const setTheme = React.useCallback(
     (next: Theme, transition?: ThemeTransition) => {
       const resolved = next === "system" ? systemTheme() : next
-      try {
-        localStorage.setItem(storageKey, next)
-      } catch {}
+      writeStoredTheme(storageKey, next)
 
       const commit = () => {
         applyTheme(resolved)

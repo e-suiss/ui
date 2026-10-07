@@ -48,6 +48,7 @@
         "useDefaultSwitchClause": "error"
       },
       "suspicious": {
+        "noEmptyBlockStatements": "error",
         "noEvolvingTypes": "error"
       },
       "correctness": {

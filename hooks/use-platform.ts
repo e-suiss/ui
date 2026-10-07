@@ -15,7 +15,7 @@ export function isMacPlatform() {
 }
 
 function subscribe() {
-  return () => {}
+  return () => undefined
 }
 
 function getServerSnapshot() {

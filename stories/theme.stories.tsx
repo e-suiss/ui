@@ -11,6 +11,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const STORY_KEY = "esuiss-theme-story"
 
+function clearStoredTheme() {
+  try {
+    localStorage.removeItem(STORY_KEY)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function StoryTheme({
   toolbar,
   children,
@@ -19,9 +28,7 @@ function StoryTheme({
   children?: React.ReactNode
 }) {
   const theme = toolbar === "dark" ? "dark" : "light"
-  try {
-    localStorage.removeItem(STORY_KEY)
-  } catch {}
+  clearStoredTheme()
 
   return (
     <ThemeProvider key={theme} defaultTheme={theme} storageKey={STORY_KEY}>

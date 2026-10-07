@@ -150,7 +150,7 @@ function WheelPickerColumn({
   )
 
   const paintedRef = React.useRef<HTMLElement[]>([])
-  const updateRef = React.useRef(() => {})
+  const updateRef = React.useRef<() => void>(() => undefined)
 
   const paint = React.useCallback(() => {
     const column = columnRef.current

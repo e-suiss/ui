@@ -240,7 +240,7 @@ function PromiseExample({ fail = false }: { fail?: boolean }) {
               }),
             }
           )
-          .catch(() => {})
+          .catch(() => undefined)
       }
     >
       Publish post
