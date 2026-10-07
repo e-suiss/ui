@@ -424,6 +424,25 @@ export const FreeResize: Story = {
   render: () => <FreeResizeExample />,
 }
 
+export const AutoResize: Story = {
+  parameters: { layout: "padded" },
+  render: () => (
+    <div className="h-60 w-100">
+      <Widget resizable defaultSize="auto">
+        <WidgetHeader>
+          <WidgetIcon>
+            <CashRegisterIcon />
+          </WidgetIcon>
+          <WidgetTitle>Point of sale</WidgetTitle>
+        </WidgetHeader>
+        <WidgetDescription>
+          Fills its parent. Drag to snap to a size, double-click to fill again.
+        </WidgetDescription>
+      </Widget>
+    </div>
+  ),
+}
+
 export const Centered: Story = {
   args: { align: "center" },
   render: (args) => (

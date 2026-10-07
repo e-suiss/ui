@@ -79,7 +79,7 @@ function Widget({
 }: React.ComponentProps<"div"> & {
   size?: WidgetSize | "auto"
   defaultSize?: WidgetSize | "auto"
-  onSizeChange?: (size: WidgetSize) => void
+  onSizeChange?: (size: WidgetSize | "auto") => void
   sizes?: WidgetSize[]
   resizable?: boolean | "free"
   handle?: "inside" | "outside"
@@ -92,7 +92,7 @@ function Widget({
   const widgetRef = React.useRef<HTMLDivElement>(null)
   const current = size ?? uncontrolledSize
 
-  const select = (next: WidgetSize) => {
+  const select = (next: WidgetSize | "auto") => {
     if (size === undefined) setUncontrolledSize(next)
     onSizeChange?.(next)
   }
@@ -151,7 +151,7 @@ function Widget({
 
   const resetSize = () => {
     setFreeSize(null)
-    if (initialSize !== "auto") select(initialSize)
+    select(initialSize)
   }
 
   const widget = (
@@ -178,7 +178,11 @@ function Widget({
   if (!resizable) return widget
 
   return (
-    <div data-slot="widget-container" className="relative w-fit">
+    <div
+      data-slot="widget-container"
+      data-size={current}
+      className="relative w-fit data-[size=auto]:size-full"
+    >
       {preview && (
         <span
           aria-hidden="true"
