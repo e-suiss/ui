@@ -100,6 +100,7 @@ function Carousel({
 
     return () => {
       api?.off("select", onSelect)
+      api?.off("reInit", onSelect)
     }
   }, [api, onSelect])
 
@@ -172,8 +173,8 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 
 function CarouselPrevious({
   className,
-  variant = "outline",
-  size = "icon-sm",
+  variant = "secondary",
+  size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
@@ -184,7 +185,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
+        "absolute touch-manipulation rounded-full in-data-[slot=carousel-controls]:static in-data-[slot=carousel-controls]:m-0 in-data-[slot=carousel-controls]:translate-x-0 in-data-[slot=carousel-controls]:rotate-0",
         orientation === "horizontal"
           ? "inset-y-0 -inset-s-12 my-auto"
           : "-top-12 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 rotate-90",
@@ -202,8 +203,8 @@ function CarouselPrevious({
 
 function CarouselNext({
   className,
-  variant = "outline",
-  size = "icon-sm",
+  variant = "secondary",
+  size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
@@ -214,7 +215,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
+        "absolute touch-manipulation rounded-full in-data-[slot=carousel-controls]:static in-data-[slot=carousel-controls]:m-0 in-data-[slot=carousel-controls]:translate-x-0 in-data-[slot=carousel-controls]:rotate-0",
         orientation === "horizontal"
           ? "inset-y-0 -inset-e-12 my-auto"
           : "-bottom-12 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 rotate-90",
@@ -230,10 +231,69 @@ function CarouselNext({
   )
 }
 
+function CarouselControls({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="carousel-controls"
+      className={cn("mt-6 flex items-center gap-3", className)}
+      {...props}
+    />
+  )
+}
+
+function CarouselDots({ className, ...props }: React.ComponentProps<"div">) {
+  const { api } = useCarousel()
+  const [count, setCount] = React.useState(0)
+  const [selected, setSelected] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) return
+    const update = () => {
+      setCount(api.scrollSnapList().length)
+      setSelected(api.selectedScrollSnap())
+    }
+    update()
+    api.on("select", update)
+    api.on("reInit", update)
+    return () => {
+      api.off("select", update)
+      api.off("reInit", update)
+    }
+  }, [api])
+
+  return (
+    <div
+      data-slot="carousel-dots"
+      className={cn(
+        "flex h-9 items-center gap-2.5 rounded-full bg-control px-4 backdrop-blur-xl",
+        className
+      )}
+      {...props}
+    >
+      {Array.from({ length: count }, (_, position) => position).map((index) => (
+        <button
+          key={index}
+          type="button"
+          aria-label={`Go to slide ${index + 1}`}
+          aria-current={index === selected ? "true" : undefined}
+          data-active={index === selected ? "" : undefined}
+          onClick={() => api?.scrollTo(index)}
+          className="relative h-2 w-2 shrink-0 cursor-pointer rounded-full bg-label-tertiary transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-label-secondary focus-visible:focus-ring data-active:w-6 data-active:bg-label motion-reduce:transition-none"
+        />
+      ))}
+    </div>
+  )
+}
+
 export {
   Carousel,
   type CarouselApi,
   CarouselContent,
+  CarouselControls,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
