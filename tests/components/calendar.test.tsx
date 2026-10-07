@@ -7,6 +7,12 @@ import { render } from "vitest-browser-react"
 
 import { Calendar } from "@/components/ui/calendar"
 
+const OCTOBER_7TH = /October 7th, 2026/
+const OCTOBER_8TH = /October 8th, 2026/
+const OCTOBER_12TH = /October 12th, 2026/
+const OCTOBER_13TH = /October 13th, 2026/
+const OCTOBER_15TH = /October 15th, 2026/
+const NOVEMBER_1ST = /November 1st, 2026/
 const OCTOBER = new Date(2026, 9, 1)
 const TODAY = new Date(2026, 9, 7)
 
@@ -244,14 +250,12 @@ describe("Calendar days", () => {
     await expect.element(day("Sunday, September 27th, 2026")).toBeVisible()
   })
 
-  it("labels each day with its date for the locale", async () => {
+  it("labels each day in English when no locale is given", async () => {
     await render(
       <Calendar mode="single" defaultMonth={OCTOBER} today={TODAY} />
     )
     await expect.element(grid()).toBeVisible()
-    expect(buttonOf("2026-10-15")?.dataset.day).toBe(
-      new Date(2026, 9, 15).toLocaleDateString()
-    )
+    expect(buttonOf("2026-10-15")?.dataset.day).toBe("10/15/2026")
   })
 
   it.each([
@@ -380,6 +384,55 @@ describe("Calendar navigation", () => {
     await userEvent.keyboard("{Enter}")
     await expect.poll(selectedDays).toEqual(["2026-10-07"])
     expect(onChange.mock.lastCall?.[0]?.getDate()).toBe(7)
+  })
+
+  it("moves focus between days with the arrow keys", async () => {
+    await render(<SingleCalendar />)
+    buttonOf("2026-10-07")?.focus()
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(day(OCTOBER_8TH)).toHaveFocus()
+    await userEvent.keyboard("{ArrowDown}")
+    await expect.element(day(OCTOBER_15TH)).toHaveFocus()
+    await userEvent.keyboard("{ArrowLeft}{ArrowUp}")
+    await expect.element(day(OCTOBER_7TH)).toHaveFocus()
+    await userEvent.keyboard("{Enter}")
+    await expect.poll(selectedDays).toEqual(["2026-10-07"])
+  })
+
+  it("follows the focus into the next month", async () => {
+    await render(<SingleCalendar />)
+    buttonOf("2026-10-31")?.focus()
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(day(NOVEMBER_1ST)).toHaveFocus()
+    await expect.element(grid()).toHaveAttribute("aria-label", "November 2026")
+  })
+
+  it("shows the focus ring for the keyboard but not for a click", async () => {
+    await render(<SingleCalendar />)
+    await day(OCTOBER_12TH).click()
+    expect(buttonOf("2026-10-12")?.matches(":focus-visible")).toBe(false)
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(day(OCTOBER_13TH)).toHaveFocus()
+    expect(buttonOf("2026-10-13")?.matches(":focus-visible")).toBe(true)
+  })
+
+  it("names the dropdown months in English when no locale is given", async () => {
+    await render(
+      <Calendar
+        mode="single"
+        captionLayout="dropdown"
+        defaultMonth={OCTOBER}
+        today={TODAY}
+      />
+    )
+    const months = page.getByRole("combobox", { name: "Choose the Month" })
+    await expect.element(months).toHaveValue("9")
+    expect(
+      Array.from(
+        months.element().querySelectorAll("option"),
+        (option) => option.textContent
+      ).slice(0, 3)
+    ).toEqual(["Jan", "Feb", "Mar"])
   })
 
   it("makes the selected day the tab stop", async () => {

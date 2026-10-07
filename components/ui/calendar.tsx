@@ -16,6 +16,7 @@ import {
   useDayPicker,
   type WeekNumberProps,
 } from "react-day-picker"
+import { enUS } from "react-day-picker/locale"
 import { Button, buttonVariants } from "@/components/ui/button"
 
 function Calendar({
@@ -25,7 +26,7 @@ function Calendar({
   captionLayout = "label",
   buttonVariant = "plain",
   size = "default",
-  locale,
+  locale = enUS,
   formatters,
   components,
   ...props
@@ -49,7 +50,7 @@ function Calendar({
       locale={locale}
       formatters={{
         formatMonthDropdown: (date) =>
-          date.toLocaleString(locale?.code, { month: "short" }),
+          date.toLocaleString(locale.code, { month: "short" }),
         ...formatters,
       }}
       classNames={{
@@ -181,7 +182,7 @@ function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
   return <CaretDownIcon className={cn("size-4", className)} {...props} />
 }
 
-function CalendarWeekNumber({ children, ...props }: WeekNumberProps) {
+function CalendarWeekNumber({ children, week, ...props }: WeekNumberProps) {
   return (
     <td {...props}>
       <div className="flex size-(--cell-size) items-center justify-center text-center">
@@ -207,6 +208,7 @@ function CalendarDayButton({
 
   return (
     <Button
+      ref={ref}
       variant="ghost"
       size="icon"
       data-day={day.date.toLocaleDateString(locale?.code)}

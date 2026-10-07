@@ -601,6 +601,7 @@
       "title": "Pagination",
       "dependencies": [
         "@phosphor-icons/react",
+        "class-variance-authority",
         "cn"
       ],
       "requires": [
