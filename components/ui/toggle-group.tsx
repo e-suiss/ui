@@ -42,7 +42,7 @@ function ToggleGroup({
     let frame = 0
     const measure = () => {
       const pressed = group.querySelectorAll<HTMLElement>(
-        "[data-slot=toggle-group-item][aria-pressed=true]"
+        ":scope > [aria-pressed=true]"
       )
       const item = pressed[0]
       if (pressed.length !== 1 || !item) {
@@ -86,6 +86,7 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       data-spacing={spacing}
+      orientation={orientation}
       data-orientation={orientation}
       style={{ "--gap": spacing } as React.CSSProperties}
       className={cn(

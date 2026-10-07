@@ -176,6 +176,20 @@ describe("Tabs selection", () => {
     expect(page.getByRole("tabpanel").elements()).toHaveLength(1)
   })
 
+  it("moves focus with the up and down arrows when vertical", async () => {
+    await render(<Example orientation="vertical" />)
+    await expect
+      .element(page.getByRole("tablist"))
+      .toHaveAttribute("aria-orientation", "vertical")
+    await tab("Account").click()
+    await userEvent.keyboard("{ArrowDown}")
+    await expect.element(tab("Notifications")).toHaveFocus()
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(tab("Notifications")).toHaveFocus()
+    await userEvent.keyboard("{ArrowUp}")
+    await expect.element(tab("Account")).toHaveFocus()
+  })
+
   it("moves focus with the arrow keys and selects with Enter", async () => {
     await render(<Example />)
     await tab("Account").click()

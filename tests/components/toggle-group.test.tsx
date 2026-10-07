@@ -197,6 +197,17 @@ describe("ToggleGroup selection", () => {
 })
 
 describe("ToggleGroup keyboard", () => {
+  it("moves focus with the up and down arrows when vertical", async () => {
+    await render(<Views multiple orientation="vertical" />)
+    await item("Day").click()
+    await userEvent.keyboard("{ArrowDown}")
+    await expect.element(item("Week")).toHaveFocus()
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(item("Week")).toHaveFocus()
+    await userEvent.keyboard("{ArrowUp}")
+    await expect.element(item("Day")).toHaveFocus()
+  })
+
   it("moves focus with the arrow keys and toggles with Space and Enter", async () => {
     await render(<Views multiple />)
     await item("Day").click()

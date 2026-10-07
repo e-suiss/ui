@@ -94,8 +94,18 @@ function selectOptions() {
   )
 }
 
-const background = (name: string) =>
-  getComputedStyle(segment(name).element()).backgroundColor
+function indicatorOffset(name: string) {
+  const indicator = document.querySelector("[data-slot=toggle-group-indicator]")
+  if (!indicator) return null
+  const target = segment(name).element().getBoundingClientRect()
+  const rect = indicator.getBoundingClientRect()
+  return [
+    rect.left - target.left,
+    rect.top - target.top,
+    rect.width - target.width,
+    rect.height - target.height,
+  ].map(Math.round)
+}
 
 const wait = (ms: number) =>
   new Promise((resolve) => window.setTimeout(resolve, ms))
@@ -188,16 +198,17 @@ describe("SegmentPicker on desktop", () => {
     await expect.element(page.getByText("Sent month")).toBeVisible()
   })
 
-  it("raises the pressed segment above the others", async () => {
+  it("slides the raised indicator to the pressed segment", async () => {
     await render(<Periods defaultValue="day" />)
-    await segment("Week").hover()
-    const resting = background("Week")
-    await expect.poll(() => background("Day")).not.toBe(resting)
-    const raised = background("Day")
+    await expect.poll(() => indicatorOffset("Day")).toEqual([0, 0, 0, 0])
+    const indicator = document.querySelector<HTMLElement>(
+      "[data-slot=toggle-group-indicator]"
+    )
+    expect(
+      indicator ? getComputedStyle(indicator).backgroundColor : ""
+    ).not.toBe("rgba(0, 0, 0, 0)")
     await segment("Month").click()
-    await page.getByRole("group", { name: "Period" }).hover()
-    await expect.poll(() => background("Month")).toBe(raised)
-    await expect.poll(() => background("Day")).toBe(resting)
+    await expect.poll(() => indicatorOffset("Month")).toEqual([0, 0, 0, 0])
   })
 
   it("names icon segments by their label", async () => {
