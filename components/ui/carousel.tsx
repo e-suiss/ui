@@ -57,6 +57,28 @@ function useCarousel() {
   return context
 }
 
+function keepControlFocus(
+  root: HTMLDivElement | null,
+  api: NonNullable<CarouselApi>
+) {
+  const active = document.activeElement
+  if (!root || !(active instanceof HTMLElement) || !root.contains(active)) {
+    return
+  }
+  const slot = active.dataset.slot
+  const stranded =
+    (slot === "carousel-previous" && !api.canScrollPrev()) ||
+    (slot === "carousel-next" && !api.canScrollNext())
+  if (!stranded) return
+  const other = root.querySelector<HTMLButtonElement>(
+    slot === "carousel-next"
+      ? "[data-slot=carousel-previous]"
+      : "[data-slot=carousel-next]"
+  )
+  if (other && !other.disabled) other.focus()
+  else root.focus()
+}
+
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -69,8 +91,10 @@ function Carousel({
   onPointerLeave,
   onFocus,
   onBlur,
+  ref,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
+  const rootRef = React.useRef<HTMLDivElement | null>(null)
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -91,6 +115,7 @@ function Carousel({
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return
+    keepControlFocus(rootRef.current, api)
     setCanScrollPrev(api.canScrollPrev())
     setCanScrollNext(api.canScrollNext())
     setSelectedIndex(api.selectedScrollSnap())
@@ -194,8 +219,14 @@ function Carousel({
       }}
     >
       <div
+        ref={(node) => {
+          rootRef.current = node
+          if (typeof ref === "function") return ref(node)
+          if (ref) ref.current = node
+        }}
+        tabIndex={-1}
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative", className)}
+        className={cn("relative outline-none", className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"

@@ -109,6 +109,51 @@ afterEach(() => {
 })
 
 describe("Carousel navigation", () => {
+  it("keeps keyboard focus when next disables on the last slide", async () => {
+    await renderSlides()
+    next().element().focus()
+    await userEvent.keyboard("{Enter}")
+    await expect.poll(current).toBe(2)
+    await userEvent.keyboard("{Enter}")
+    await expect.poll(current).toBe(3)
+    await expect.element(next()).toBeDisabled()
+    await expect.element(previous()).toHaveFocus()
+    await userEvent.keyboard("{ArrowLeft}")
+    await expect.poll(current).toBe(2)
+  })
+
+  it("keeps keyboard focus when previous disables on the first slide", async () => {
+    await renderSlides()
+    await dot(2).click()
+    await expect.poll(current).toBe(2)
+    previous().element().focus()
+    await userEvent.keyboard("{Enter}")
+    await expect.poll(current).toBe(1)
+    await expect.element(next()).toHaveFocus()
+  })
+
+  it("falls back to the carousel when the other control is missing", async () => {
+    await render(
+      <Carousel aria-label="Menu">
+        <CarouselContent>
+          {SLIDES.map((slide) => (
+            <CarouselItem key={slide} aria-label={slide}>
+              <div className="aspect-square w-72">{slide}</div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselControls>
+          <CarouselNext />
+        </CarouselControls>
+      </Carousel>
+    )
+    next().element().focus()
+    await userEvent.keyboard("{Enter}")
+    await userEvent.keyboard("{Enter}")
+    await expect.element(next()).toBeDisabled()
+    await expect.element(carousel()).toHaveFocus()
+  })
+
   it("starts on the first slide with only next enabled", async () => {
     await renderSlides()
     await expect
