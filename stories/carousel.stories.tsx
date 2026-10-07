@@ -1,5 +1,7 @@
+import { CaretRightIcon } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
@@ -8,6 +10,7 @@ import {
   CarouselDots,
   CarouselItem,
   CarouselNext,
+  CarouselPlayButton,
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
@@ -144,29 +147,169 @@ const features = [
   },
 ]
 
-export const Hero: Story = {
+const picks = [
+  {
+    eyebrow: "Today's pick",
+    title: "Weekend breakfast",
+    tint: "from-orange to-red",
+  },
+  { eyebrow: "New", title: "Grilled meatballs", tint: "from-red to-pink" },
+  {
+    eyebrow: "Chef's special",
+    title: "Lentil soup",
+    tint: "from-green to-teal",
+  },
+  { eyebrow: "Dessert", title: "Künefe", tint: "from-purple to-indigo" },
+]
+
+const popular = [
+  { name: "Breakfast platter", price: "₺620", tint: "from-orange to-red" },
+  { name: "Grilled meatballs", price: "₺280", tint: "from-red to-pink" },
+  { name: "Menemen", price: "₺160", tint: "from-yellow to-orange" },
+  { name: "Lentil soup", price: "₺90", tint: "from-green to-teal" },
+  { name: "Künefe", price: "₺160", tint: "from-purple to-indigo" },
+]
+
+const quotes = [
+  { quote: "The checkout line is half as long.", author: "Ayşe Y. · Kadıköy" },
+  {
+    quote: "The kitchen finally keeps up on Fridays.",
+    author: "Mert K. · Beşiktaş",
+  },
+  { quote: "Splitting the bill takes seconds now.", author: "Deniz A. · Moda" },
+]
+
+export const Featured: Story = {
+  parameters: { wide: true },
+  args: { opts: { align: "start" } },
+  render: (args) => (
+    <div className="max-w-sm">
+      <Carousel {...args}>
+        <CarouselContent>
+          {picks.map((pick) => (
+            <CarouselItem key={pick.title} className="basis-[88%]">
+              <div
+                className={`relative isolate flex aspect-4/5 flex-col gap-1 overflow-hidden rounded-3xl bg-linear-to-br p-5 text-white before:absolute before:inset-0 before:-z-10 before:bg-linear-to-b before:from-black/45 before:to-black/10 ${pick.tint}`}
+              >
+                <p className="text-xs font-semibold uppercase">
+                  {pick.eyebrow}
+                </p>
+                <p className="text-2xl font-bold tracking-tight">
+                  {pick.title}
+                </p>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselControls className="mt-4 justify-center">
+          <CarouselDots variant="plain" />
+          <CarouselPlayButton variant="ghost" />
+        </CarouselControls>
+      </Carousel>
+    </div>
+  ),
+}
+
+export const Spotlight: Story = {
   parameters: { wide: true },
   args: { opts: { loop: true } },
   render: (args) => (
-    <Carousel {...args}>
-      <CarouselContent>
-        {features.map((feature) => (
-          <CarouselItem key={feature.title}>
-            <div
-              className={`relative isolate flex aspect-video flex-col items-center justify-center gap-2 overflow-hidden rounded-3xl bg-linear-to-br p-8 text-center text-white before:absolute before:inset-0 before:-z-10 before:bg-black/35 ${feature.tint}`}
-            >
-              <p className="text-sm font-semibold">{feature.eyebrow}</p>
-              <p className="font-heading text-4xl font-semibold">
-                {feature.title}
+    <div className="max-w-md">
+      <Carousel {...args}>
+        <CarouselContent>
+          {features.slice(0, 3).map((feature) => (
+            <CarouselItem key={feature.title}>
+              <div className="flex aspect-10/7 flex-col items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8 text-center">
+                <p className="text-3xl font-bold tracking-tight">Hestia POS</p>
+                <p className="text-label-secondary">{feature.title}</p>
+                <Button
+                  size="sm"
+                  className="mt-2 bg-label text-surface hover:bg-label/85"
+                >
+                  Learn more
+                </Button>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselControls className="justify-center">
+          <CarouselDots />
+          <CarouselPlayButton />
+          {!args.autoplay && <CarouselNext size="icon-sm" />}
+        </CarouselControls>
+      </Carousel>
+    </div>
+  ),
+}
+
+export const Shelf: Story = {
+  parameters: { wide: true },
+  args: { opts: { align: "start", dragFree: true } },
+  render: (args) => (
+    <div className="max-w-md">
+      <Carousel {...args}>
+        <div className="mb-3 flex items-center justify-between">
+          <a
+            href="#popular"
+            className="flex items-center gap-1 text-xl font-bold tracking-tight"
+          >
+            Popular
+            <CaretRightIcon weight="bold" className="size-4" />
+          </a>
+          <div className="flex items-center gap-3">
+            <CarouselPlayButton variant="ghost" />
+            <a href="#popular-all" className="text-link">
+              See all
+            </a>
+          </div>
+        </div>
+        <CarouselContent className="-ms-3">
+          {popular.map((item) => (
+            <CarouselItem key={item.name} className="basis-2/5 ps-3">
+              <div
+                className={`aspect-square rounded-2xl bg-linear-to-br ${item.tint}`}
+              />
+              <p className="mt-2 truncate text-sm font-semibold">{item.name}</p>
+              <p className="text-xs text-label-secondary tabular-nums">
+                {item.price}
               </p>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselControls className="justify-center">
-        <CarouselDots />
-      </CarouselControls>
-    </Carousel>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+    </div>
+  ),
+}
+
+export const Testimonials: Story = {
+  parameters: { wide: true },
+  render: (args) => (
+    <div className="max-w-md rounded-3xl bg-surface-secondary p-8">
+      <Carousel {...args}>
+        <CarouselContent>
+          {quotes.map((item) => (
+            <CarouselItem key={item.quote}>
+              <blockquote className="flex min-h-28 flex-col gap-3">
+                <p className="text-2xl font-bold tracking-tight">
+                  “{item.quote}”
+                </p>
+                <footer className="text-label-secondary">{item.author}</footer>
+              </blockquote>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselControls className="justify-between">
+          <div className="flex items-center gap-2">
+            <CarouselPlayButton variant="ghost" />
+            <CarouselDots variant="plain" />
+          </div>
+          <div className="flex gap-3">
+            <CarouselPrevious size="icon-lg" />
+            <CarouselNext size="icon-lg" />
+          </div>
+        </CarouselControls>
+      </Carousel>
+    </div>
   ),
 }
 
@@ -195,4 +338,28 @@ export const Gallery: Story = {
       </CarouselControls>
     </Carousel>
   ),
+}
+
+export const FeaturedAutoplay: Story = {
+  ...Featured,
+  args: {
+    ...Featured.args,
+    autoplay: 4000,
+    opts: { align: "start", loop: true },
+  },
+}
+
+export const SpotlightAutoplay: Story = {
+  ...Spotlight,
+  args: { ...Spotlight.args, autoplay: true },
+}
+
+export const ShelfAutoplay: Story = {
+  ...Shelf,
+  args: { autoplay: 3000, opts: { align: "start", loop: true } },
+}
+
+export const TestimonialsAutoplay: Story = {
+  ...Testimonials,
+  args: { autoplay: 6000, opts: { loop: true } },
 }
