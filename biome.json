@@ -54,7 +54,8 @@
       "suspicious": {
         "noEmptyBlockStatements": "error",
         "useAwait": "error",
-        "noEvolvingTypes": "error"
+        "noEvolvingTypes": "error",
+        "noConsole": "error"
       },
       "correctness": {
         "noUnusedFunctionParameters": "error",
@@ -83,6 +84,16 @@
     }
   },
   "overrides": [
+    {
+      "includes": ["packages/cli/**", "scripts/**", ".design-sync/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
     {
       "includes": [
         "hooks/use-message-scroller.ts",
