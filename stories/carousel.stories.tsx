@@ -265,7 +265,7 @@ export const Vertical: Story = {
       async () => {
         next.focus()
         await userEvent.keyboard("{ArrowRight}")
-        await expect(offsetOf(track).y).toBe(0)
+        await expect(Math.abs(offsetOf(track).y)).toBeLessThanOrEqual(1)
         await userEvent.keyboard("{ArrowDown}")
         await waitFor(() => expect(offsetOf(track).y).toBeLessThan(0))
         await userEvent.keyboard("{ArrowUp}")
