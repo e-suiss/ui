@@ -164,6 +164,12 @@ export const Directions: Story = {
   },
 }
 
+export const DirectionsRightToLeft: Story = {
+  globals: { direction: "rtl" },
+  render: Directions.render,
+  play: Directions.play,
+}
+
 export const WithCloseButton: Story = {
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole("button", { name: "Open drawer" }))
