@@ -98,37 +98,43 @@ export const Open: Story = {
 
 export const Sides: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-x-24 gap-y-16">
-      {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <Tooltip key={side} defaultOpen>
-          <TooltipTrigger render={<Button variant="outline" />}>
-            {side}
-          </TooltipTrigger>
-          <TooltipContent side={side}>Shown on the {side}</TooltipContent>
-        </Tooltip>
+    <div className="grid grid-cols-2 place-items-center gap-x-24 gap-y-16">
+      {(["top", "right", "left", "bottom"] as const).map((side) => (
+        <TooltipProvider key={side}>
+          <Tooltip defaultOpen>
+            <TooltipTrigger render={<Button variant="outline" />}>
+              {side}
+            </TooltipTrigger>
+            <TooltipContent side={side}>Shown on the {side}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       ))}
     </div>
   ),
   play: async ({ canvas, step }) => {
-    const axes = { top: "y", bottom: "y", left: "x", right: "x" }
+    const sides = ["top", "right", "bottom", "left"] as const
 
-    for (const side of ["top", "right", "bottom", "left"] as const) {
-      await step(`opens the ${side} tooltip on its axis`, async () => {
-        const trigger = canvas.getByRole("button", { name: side })
-        await userEvent.hover(trigger)
-        const text = `Shown on the ${side}`
-        await waitFor(
-          () =>
-            expect(
-              screen.getByText(text).closest('[data-slot="tooltip-content"]')
-            ).toHaveAttribute("data-open"),
-          { timeout: 3000 }
+    await step("shows all four tooltips at once", async () => {
+      for (const side of sides) {
+        await waitFor(() =>
+          expect(
+            screen
+              .getByText(`Shown on the ${side}`)
+              .closest('[data-slot="tooltip-content"]')
+          ).toHaveAttribute("data-open")
         )
-        const content = screen.getByText(text)
-        const placed = content
-          .closest('[data-slot="tooltip-content"]')
-          ?.getAttribute("data-side")
-        await expect(axes[placed as Side]).toBe(axes[side])
+      }
+    })
+
+    for (const side of sides) {
+      await step(`places the ${side} tooltip on its side`, async () => {
+        const trigger = canvas.getByRole("button", { name: side })
+        const content = screen.getByText(`Shown on the ${side}`)
+        await expect(
+          content
+            .closest('[data-slot="tooltip-content"]')
+            ?.getAttribute("data-side")
+        ).toBe(side)
         await waitFor(() => {
           const tip = content.getBoundingClientRect()
           const anchor = trigger.getBoundingClientRect()
@@ -138,9 +144,8 @@ export const Sides: Story = {
             bottom: tip.top >= anchor.bottom,
             left: tip.right <= anchor.left,
           }
-          expect(placements[placed as Side]).toBe(true)
+          expect(placements[side]).toBe(true)
         })
-        await userEvent.unhover(trigger)
       })
     }
   },
