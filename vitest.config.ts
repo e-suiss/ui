@@ -70,6 +70,7 @@ export default defineConfig({
         plugins: [storybookTest({ configDir: ".storybook" })],
         test: {
           name: "stories",
+          provide: { responsiveWidth: Number(process.env.WIDTH ?? 0) },
           maxWorkers: 4,
           sequence: { groupOrder: 2 },
           setupFiles: [
@@ -80,6 +81,7 @@ export default defineConfig({
             ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),
             ...(process.env.TEXT ? ["tests/text-setup.ts"] : []),
             ...(process.env.MOBILE ? ["tests/mobile-setup.ts"] : []),
+            ...(process.env.WIDTH ? ["tests/responsive-setup.ts"] : []),
           ],
           browser: {
             ...browser("stories"),
