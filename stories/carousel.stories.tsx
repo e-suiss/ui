@@ -259,6 +259,19 @@ export const Vertical: Story = {
       await waitFor(() => expect(previous).toBeDisabled())
       await waitFor(() => expect(offsetOf(track).y).toBe(0))
     })
+
+    await step(
+      "moves with the up and down arrows, not left and right",
+      async () => {
+        next.focus()
+        await userEvent.keyboard("{ArrowRight}")
+        await expect(offsetOf(track).y).toBe(0)
+        await userEvent.keyboard("{ArrowDown}")
+        await waitFor(() => expect(offsetOf(track).y).toBeLessThan(0))
+        await userEvent.keyboard("{ArrowUp}")
+        await waitFor(() => expect(offsetOf(track).y).toBe(0))
+      }
+    )
   },
 }
 
