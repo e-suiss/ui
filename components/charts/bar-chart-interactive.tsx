@@ -377,7 +377,7 @@ export function BarChartInteractive() {
                         ? ""
                         : undefined
                     }
-                    className="block h-full origin-left rounded-full bg-(--swatch) transition-[scale,opacity] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-dimmed:opacity-40"
+                    className="block h-full origin-left rounded-full rtl:origin-right bg-(--swatch) transition-[scale,opacity] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-dimmed:opacity-40"
                     style={
                       {
                         "--swatch": chartConfig[app.category].color,

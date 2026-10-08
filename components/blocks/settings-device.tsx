@@ -176,7 +176,7 @@ export function SettingsDevice() {
                   </ItemContent>
                   <CaretRightIcon
                     weight="bold"
-                    className="size-3.5 text-label-tertiary"
+                    className="size-3.5 text-label-tertiary rtl:rotate-180"
                   />
                 </Item>
               </div>
@@ -234,7 +234,7 @@ export function SettingsDevice() {
                             {detail}
                             <CaretRightIcon
                               weight="bold"
-                              className="size-3.5 text-label-tertiary"
+                              className="size-3.5 text-label-tertiary rtl:rotate-180"
                             />
                           </>
                         )}

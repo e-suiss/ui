@@ -148,7 +148,7 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
         {body}
         <CaretRightIcon
           weight="bold"
-          className="size-3 text-label-tertiary transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-panel-open/event:rotate-90"
+          className="size-3 text-label-tertiary transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-panel-open/event:rotate-90"
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">

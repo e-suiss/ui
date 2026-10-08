@@ -85,7 +85,7 @@ export function ChatThread() {
           </Avatar>
           <span className="flex items-center gap-0.5 text-xs font-semibold">
             Riley
-            <CaretRightIcon weight="bold" className="size-2.5" />
+            <CaretRightIcon weight="bold" className="size-2.5 rtl:rotate-180" />
           </span>
         </a>
         <MessageScrollerProvider>

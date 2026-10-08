@@ -169,7 +169,10 @@ export function FooterServices() {
                     aria-label="Subscribe"
                     className="size-7.5 border-[1.5px] border-label-secondary bg-transparent text-label-secondary"
                   >
-                    <ArrowRightIcon weight="bold" className="size-3.5" />
+                    <ArrowRightIcon
+                      weight="bold"
+                      className="size-3.5 rtl:rotate-180"
+                    />
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>

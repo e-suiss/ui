@@ -308,7 +308,7 @@ export function DashHealth() {
                       </span>
                       <CaretRightIcon
                         weight="bold"
-                        className="size-3 text-label-tertiary"
+                        className="size-3 text-label-tertiary rtl:rotate-180"
                       />
                     </span>
                     <span className="flex items-end gap-4">
