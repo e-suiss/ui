@@ -76,7 +76,7 @@ export function AreaChartAxes() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={34}
+              width="auto"
               tickCount={4}
             />
             <ChartTooltip content={<ChartTooltipContent />} />

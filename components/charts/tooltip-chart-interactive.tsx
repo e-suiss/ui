@@ -172,7 +172,7 @@ export function TooltipChartInteractive() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={40}
+              width="auto"
               tickFormatter={(value: number) => `${value}B`}
             />
             <ChartTooltip

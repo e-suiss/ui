@@ -96,7 +96,7 @@ export function AreaChartRange() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={34}
+              width="auto"
               domain={[40, 170]}
               ticks={[50, 100, 150]}
             />

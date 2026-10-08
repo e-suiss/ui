@@ -195,7 +195,7 @@ export function LineChartInteractive() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={38}
+              width="auto"
               domain={[-20, 40]}
               ticks={[-20, -10, 0, 10, 20, 30, 40]}
               allowDataOverflow

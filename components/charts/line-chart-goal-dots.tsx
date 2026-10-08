@@ -77,7 +77,7 @@ export function LineChartGoalDots() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={28}
+              width="auto"
               domain={[5, 9]}
               ticks={[5, 7, 9]}
               tickFormatter={(value: number) => `${value}h`}

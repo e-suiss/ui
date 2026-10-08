@@ -65,7 +65,7 @@ export function LineChartDots() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={28}
+              width="auto"
               domain={[76, 84]}
               ticks={[76, 80, 84]}
             />

@@ -64,7 +64,7 @@ export function BarChartHourly() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={44}
+              width="auto"
               tickCount={3}
               tickFormatter={(value: number) => `${value} min`}
             />

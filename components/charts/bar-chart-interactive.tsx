@@ -245,7 +245,7 @@ export function BarChartInteractive() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={44}
+              width="auto"
               ticks={isWeek ? [0, 120, 240, 360] : undefined}
               tickCount={isWeek ? undefined : 4}
               tickFormatter={(value: number) =>

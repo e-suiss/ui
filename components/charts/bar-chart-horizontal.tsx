@@ -56,7 +56,7 @@ export function BarChartHorizontal() {
               type="category"
               tickLine={false}
               axisLine={false}
-              width={56}
+              width="auto"
               tickFormatter={(value: keyof typeof chartConfig) =>
                 String(chartConfig[value]?.label)
               }

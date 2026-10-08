@@ -71,7 +71,7 @@ export function LineChartGoal() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={30}
+              width="auto"
               tickFormatter={(value: number) => `${value / 1000}k`}
             />
             <ReferenceLine

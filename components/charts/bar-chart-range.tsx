@@ -65,7 +65,7 @@ export function BarChartRange() {
               type="category"
               tickLine={false}
               axisLine={false}
-              width={46}
+              width="auto"
               tick={{ className: "fill-label font-semibold" }}
             />
             <YAxis
@@ -75,7 +75,7 @@ export function BarChartRange() {
               orientation="right"
               tickLine={false}
               axisLine={false}
-              width={34}
+              width="auto"
               tick={{ className: "fill-label font-semibold" }}
               tickFormatter={(value: number) => `${value}°`}
             />

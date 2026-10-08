@@ -62,7 +62,7 @@ export function AreaChartStackedExpand() {
               tickLine={false}
               axisLine={false}
               tickMargin={6}
-              width={40}
+              width="auto"
               ticks={[0, 0.5, 1]}
               tickFormatter={(value: number) => `${Math.round(value * 100)}%`}
             />
