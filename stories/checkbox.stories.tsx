@@ -17,8 +17,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: { "aria-label": "Accept terms" },
   play: async ({ canvas, step }) => {
-    const checkbox = canvas.getByRole("checkbox")
+    const checkbox = canvas.getByRole("checkbox", { name: "Accept terms" })
 
     await step("toggles on click", async () => {
       await expect(checkbox).not.toBeChecked()
@@ -35,9 +36,9 @@ export const Default: Story = {
 }
 
 export const Checked: Story = {
-  args: { defaultChecked: true },
+  args: { defaultChecked: true, "aria-label": "Accept terms" },
   play: async ({ canvas }) => {
-    const checkbox = canvas.getByRole("checkbox")
+    const checkbox = canvas.getByRole("checkbox", { name: "Accept terms" })
     await expect(checkbox).toBeChecked()
     await userEvent.click(checkbox)
     await expect(checkbox).not.toBeChecked()

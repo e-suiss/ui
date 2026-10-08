@@ -162,6 +162,7 @@ export const WithButtons: Story = {
       <InputGroup {...args}>
         <InputGroupInput
           defaultValue="https://esuiss.dev/invite/x7k2"
+          aria-label="Invite link"
           readOnly
         />
         <InputGroupAddon align="inline-end">
@@ -361,7 +362,7 @@ export const WithTextarea: Story = {
 export const Invalid: Story = {
   render: (args) => (
     <InputGroup {...args}>
-      <InputGroupInput defaultValue="jane@" aria-invalid />
+      <InputGroupInput defaultValue="jane@" aria-label="Email" aria-invalid />
       <InputGroupAddon align="inline-end">
         <InfoIcon className="text-danger" />
       </InputGroupAddon>
@@ -369,7 +370,7 @@ export const Invalid: Story = {
   ),
   play: async ({ canvas, step }) => {
     await step("flags the input as invalid", async () => {
-      await expect(canvas.getByRole("textbox")).toBeInvalid()
+      await expect(canvas.getByRole("textbox", { name: "Email" })).toBeInvalid()
     })
   },
 }

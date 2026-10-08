@@ -38,7 +38,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => (
     <Select {...args}>
-      <SelectTrigger className="w-48">
+      <SelectTrigger aria-label="Fruit" className="w-48">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
@@ -53,7 +53,7 @@ export const Default: Story = {
     </Select>
   ),
   play: async ({ canvas, step }) => {
-    const trigger = canvas.getByRole("combobox")
+    const trigger = canvas.getByRole("combobox", { name: "Fruit" })
 
     await step("opens the list and picks an option", async () => {
       await expect(trigger).toHaveTextContent("Select a fruit")
@@ -99,7 +99,9 @@ export const Open: Story = {
       )
       await userEvent.keyboard("{ArrowDown}{Enter}")
       await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
-      await expect(canvas.getByRole("combobox")).toHaveTextContent("Blueberry")
+      await expect(
+        canvas.getByRole("combobox", { name: "Fruit" })
+      ).toHaveTextContent("Blueberry")
     })
   },
 }
@@ -109,7 +111,9 @@ export const WithValue: Story = {
   render: Default.render,
   play: async ({ canvas, step }) => {
     await step("shows the default value's label", async () => {
-      await expect(canvas.getByRole("combobox")).toHaveTextContent("Blueberry")
+      await expect(
+        canvas.getByRole("combobox", { name: "Fruit" })
+      ).toHaveTextContent("Blueberry")
     })
   },
 }
@@ -117,7 +121,7 @@ export const WithValue: Story = {
 export const Small: Story = {
   render: (args) => (
     <Select {...args}>
-      <SelectTrigger size="sm" className="w-40">
+      <SelectTrigger aria-label="Fruit" size="sm" className="w-40">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
@@ -130,7 +134,7 @@ export const Small: Story = {
     </Select>
   ),
   play: async ({ canvas, step }) => {
-    const trigger = canvas.getByRole("combobox")
+    const trigger = canvas.getByRole("combobox", { name: "Fruit" })
 
     await step("opens the list and picks an option", async () => {
       await expect(trigger).toHaveAttribute("data-size", "sm")
@@ -170,7 +174,7 @@ export const Grouped: Story = {
   },
   render: (args) => (
     <Select {...args}>
-      <SelectTrigger className="w-60">
+      <SelectTrigger aria-label="Timezone" className="w-60">
         <SelectValue placeholder="Select a timezone" />
       </SelectTrigger>
       <SelectContent>
@@ -192,10 +196,10 @@ export const Grouped: Story = {
   ),
   play: async ({ canvas, step }) => {
     await step("labels each group of options", async () => {
-      await expect(canvas.getByRole("combobox")).toHaveTextContent(
-        "Central European Time"
-      )
-      await userEvent.click(canvas.getByRole("combobox"))
+      await expect(
+        canvas.getByRole("combobox", { name: "Timezone" })
+      ).toHaveTextContent("Central European Time")
+      await userEvent.click(canvas.getByRole("combobox", { name: "Timezone" }))
       const europe = await screen.findByRole("group", { name: "Europe" })
       await expect(within(europe).getAllByRole("option")).toHaveLength(3)
       await expect(
@@ -220,7 +224,7 @@ export const WithIcons: Story = {
   },
   render: (args) => (
     <Select {...args}>
-      <SelectTrigger className="w-40">
+      <SelectTrigger aria-label="Theme" className="w-40">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>
@@ -234,7 +238,7 @@ export const WithIcons: Story = {
     </Select>
   ),
   play: async ({ canvas, step }) => {
-    const trigger = canvas.getByRole("combobox")
+    const trigger = canvas.getByRole("combobox", { name: "Theme" })
 
     await step("shows the default value", async () => {
       await expect(trigger).toHaveTextContent("System")
@@ -255,7 +259,7 @@ export const Disabled: Story = {
   args: { disabled: true },
   render: Default.render,
   play: async ({ canvas, step }) => {
-    const trigger = canvas.getByRole("combobox")
+    const trigger = canvas.getByRole("combobox", { name: "Fruit" })
 
     await step("does not open while disabled", async () => {
       await expect(trigger).toHaveAttribute("data-disabled")
@@ -268,7 +272,7 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   render: (args) => (
     <Select {...args}>
-      <SelectTrigger className="w-48" aria-invalid>
+      <SelectTrigger aria-label="Fruit" className="w-48" aria-invalid>
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
@@ -282,10 +286,9 @@ export const Invalid: Story = {
   ),
   play: async ({ canvas, step }) => {
     await step("flags the trigger as invalid", async () => {
-      await expect(canvas.getByRole("combobox")).toHaveAttribute(
-        "aria-invalid",
-        "true"
-      )
+      await expect(
+        canvas.getByRole("combobox", { name: "Fruit" })
+      ).toHaveAttribute("aria-invalid", "true")
     })
   },
 }

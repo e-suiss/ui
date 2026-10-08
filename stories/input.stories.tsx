@@ -118,7 +118,7 @@ export const WithValue: Story = {
 }
 
 export const File: Story = {
-  args: { type: "file", placeholder: undefined },
+  args: { type: "file", placeholder: undefined, "aria-label": "Menu" },
   play: async ({ canvasElement, step }) => {
     const input =
       canvasElement.querySelector<HTMLInputElement>('input[type="file"]')
@@ -128,6 +128,7 @@ export const File: Story = {
     })
 
     await step("is reachable with Tab", async () => {
+      await expect(input).toHaveAccessibleName("Menu")
       await userEvent.tab()
       await expect(input).toHaveFocus()
     })

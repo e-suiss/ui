@@ -32,12 +32,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: { "aria-label": "Upload progress" },
   play: async ({ canvas, step }) => {
     await step("exposes the current value", async () => {
-      await expect(canvas.getByRole("progressbar")).toHaveAttribute(
-        "aria-valuenow",
-        "60"
-      )
+      await expect(
+        canvas.getByRole("progressbar", { name: "Upload progress" })
+      ).toHaveAttribute("aria-valuenow", "60")
     })
   },
 }

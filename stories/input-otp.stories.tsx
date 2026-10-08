@@ -12,7 +12,7 @@ import {
 
 type InputOTPArgs = Pick<
   React.ComponentProps<typeof InputOTP>,
-  "maxLength" | "disabled" | "defaultValue" | "pattern"
+  "maxLength" | "disabled" | "defaultValue" | "pattern" | "aria-label"
 >
 
 const meta = {
@@ -20,6 +20,7 @@ const meta = {
   args: {
     maxLength: 6,
     disabled: false,
+    "aria-label": "Verification code",
   },
   render: (args) => (
     <InputOTP {...args}>
@@ -44,7 +45,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   play: async ({ canvas, canvasElement, step }) => {
-    const input = canvas.getByRole<HTMLInputElement>("textbox")
+    const input = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: "Verification code",
+    })
     const slots = canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')
 
     await step("fills one slot per typed digit", async () => {
@@ -75,7 +78,9 @@ export const Filled: Story = {
   args: { defaultValue: "482913" },
   play: async ({ canvas, canvasElement, step }) => {
     await step("shows the default value across the slots", async () => {
-      await expect(canvas.getByRole("textbox")).toHaveValue("482913")
+      await expect(
+        canvas.getByRole("textbox", { name: "Verification code" })
+      ).toHaveValue("482913")
       await expect(
         canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')[5]
       ).toHaveTextContent("3")
@@ -94,7 +99,7 @@ export const SingleGroup: Story = {
     </InputOTP>
   ),
   play: async ({ canvas, canvasElement, step }) => {
-    const input = canvas.getByRole("textbox")
+    const input = canvas.getByRole("textbox", { name: "Verification code" })
     const slots = canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')
 
     await step("fills the slots in order as digits are typed", async () => {
@@ -128,7 +133,9 @@ export const FourDigits: Story = {
     </InputOTP>
   ),
   play: async ({ canvas, step }) => {
-    const input = canvas.getByRole<HTMLInputElement>("textbox")
+    const input = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: "Verification code",
+    })
 
     await step("caps the code at four digits", async () => {
       await userEvent.click(input)
@@ -143,7 +150,7 @@ export const FourDigits: Story = {
 export const Alphanumeric: Story = {
   args: { pattern: REGEXP_ONLY_DIGITS_AND_CHARS },
   play: async ({ canvas, step }) => {
-    const input = canvas.getByRole("textbox")
+    const input = canvas.getByRole("textbox", { name: "Verification code" })
 
     await step("accepts letters and digits", async () => {
       await userEvent.click(input)
@@ -166,7 +173,9 @@ export const Invalid: Story = {
   ),
   play: async ({ canvas, canvasElement, step }) => {
     await step("marks the input invalid and every slot with it", async () => {
-      await expect(canvas.getByRole("textbox")).toBeInvalid()
+      await expect(
+        canvas.getByRole("textbox", { name: "Verification code" })
+      ).toBeInvalid()
       const slots = canvasElement.querySelectorAll<HTMLElement>(
         '[data-slot="input-otp-slot"]'
       )
@@ -176,7 +185,9 @@ export const Invalid: Story = {
           "rgba(0, 0, 0, 0)"
         )
       }
-      await expect(canvas.getByRole("textbox")).toHaveValue("123456")
+      await expect(
+        canvas.getByRole("textbox", { name: "Verification code" })
+      ).toHaveValue("123456")
     })
   },
 }
@@ -185,7 +196,7 @@ export const Disabled: Story = {
   args: { disabled: true, defaultValue: "123456" },
   play: async ({ canvas, canvasElement, step }) => {
     await step("disables the input and keeps its value", async () => {
-      const input = canvas.getByRole("textbox")
+      const input = canvas.getByRole("textbox", { name: "Verification code" })
       await expect(input).toBeDisabled()
       await expect(input).toHaveValue("123456")
     })

@@ -24,8 +24,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: { "aria-label": "Wi-Fi" },
   play: async ({ canvas, step }) => {
-    const control = canvas.getByRole("switch")
+    const control = canvas.getByRole("switch", { name: "Wi-Fi" })
 
     await step("toggles on click", async () => {
       await expect(control).toHaveAttribute("aria-checked", "false")
@@ -42,9 +43,9 @@ export const Default: Story = {
 }
 
 export const Checked: Story = {
-  args: { defaultChecked: true },
+  args: { defaultChecked: true, "aria-label": "Wi-Fi" },
   play: async ({ canvas, step }) => {
-    const control = canvas.getByRole("switch")
+    const control = canvas.getByRole("switch", { name: "Wi-Fi" })
 
     await step("starts on and turns off on click", async () => {
       await expect(control).toHaveAttribute("aria-checked", "true")
@@ -57,8 +58,8 @@ export const Checked: Story = {
 export const Sizes: Story = {
   render: (args) => (
     <div className="flex items-center gap-4">
-      <Switch {...args} size="sm" defaultChecked />
-      <Switch {...args} size="default" defaultChecked />
+      <Switch {...args} size="sm" defaultChecked aria-label="Wi-Fi" />
+      <Switch {...args} size="default" defaultChecked aria-label="Bluetooth" />
     </div>
   ),
 }
@@ -83,8 +84,8 @@ export const WithLabel: Story = {
 export const Disabled: Story = {
   render: (args) => (
     <div className="flex items-center gap-4">
-      <Switch {...args} disabled />
-      <Switch {...args} disabled defaultChecked />
+      <Switch {...args} disabled aria-label="Wi-Fi" />
+      <Switch {...args} disabled defaultChecked aria-label="Bluetooth" />
     </div>
   ),
   play: async ({ canvas, step }) => {
@@ -103,9 +104,9 @@ export const Disabled: Story = {
 }
 
 export const Invalid: Story = {
-  args: { "aria-invalid": true },
+  args: { "aria-invalid": true, "aria-label": "Accept terms" },
   play: async ({ canvas, step }) => {
-    const control = canvas.getByRole("switch")
+    const control = canvas.getByRole("switch", { name: "Accept terms" })
 
     await step("flags the switch as invalid", async () => {
       await expect(control).toBeInvalid()

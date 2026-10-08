@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: (args) => (
-    <NativeSelect {...args}>
+    <NativeSelect {...args} aria-label="Fruit">
       <NativeSelectOption value="" disabled>
         Select a fruit
       </NativeSelectOption>
@@ -40,7 +40,7 @@ export const Default: Story = {
     </NativeSelect>
   ),
   play: async ({ canvas, step }) => {
-    const select = canvas.getByRole("combobox")
+    const select = canvas.getByRole("combobox", { name: "Fruit" })
 
     await step("starts on the disabled placeholder", async () => {
       await expect(select).toHaveValue("")
@@ -64,12 +64,12 @@ export const Sizes: Story = {
   args: { defaultValue: "weekly" },
   render: (args) => (
     <div className="flex items-center gap-3">
-      <NativeSelect {...args} size="sm">
+      <NativeSelect {...args} size="sm" aria-label="Frequency">
         <NativeSelectOption value="daily">Daily</NativeSelectOption>
         <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
         <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
       </NativeSelect>
-      <NativeSelect {...args} size="default">
+      <NativeSelect {...args} size="default" aria-label="Frequency">
         <NativeSelectOption value="daily">Daily</NativeSelectOption>
         <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
         <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
@@ -81,7 +81,7 @@ export const Sizes: Story = {
 export const WithGroups: Story = {
   args: { defaultValue: "berlin" },
   render: (args) => (
-    <NativeSelect {...args}>
+    <NativeSelect {...args} aria-label="City">
       <NativeSelectOptGroup label="Europe">
         <NativeSelectOption value="berlin">Berlin</NativeSelectOption>
         <NativeSelectOption value="lisbon">Lisbon</NativeSelectOption>
@@ -97,7 +97,7 @@ export const WithGroups: Story = {
   play: async ({ canvas, step }) => {
     await step("groups options and selects across groups", async () => {
       await expect(canvas.getByRole("group", { name: "Asia" })).toBeTruthy()
-      const select = canvas.getByRole("combobox")
+      const select = canvas.getByRole("combobox", { name: "City" })
       await userEvent.selectOptions(select, "seoul")
       await expect(select).toHaveValue("seoul")
     })
@@ -109,7 +109,9 @@ export const Disabled: Story = {
   render: Default.render,
   play: async ({ canvas, step }) => {
     await step("disables the select", async () => {
-      await expect(canvas.getByRole("combobox")).toBeDisabled()
+      await expect(
+        canvas.getByRole("combobox", { name: "Fruit" })
+      ).toBeDisabled()
     })
   },
 }
@@ -119,7 +121,9 @@ export const Invalid: Story = {
   render: Default.render,
   play: async ({ canvas, step }) => {
     await step("flags the select as invalid", async () => {
-      await expect(canvas.getByRole("combobox")).toBeInvalid()
+      await expect(
+        canvas.getByRole("combobox", { name: "Fruit" })
+      ).toBeInvalid()
     })
   },
 }
