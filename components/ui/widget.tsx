@@ -225,7 +225,7 @@ function WidgetHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="widget-header"
       className={cn(
-        "flex min-w-0 items-center gap-2 group-data-[align=center]/widget:flex-col group-data-[align=center]/widget:gap-3",
+        "flex max-w-full min-w-0 items-center gap-2 group-data-[align=center]/widget:flex-col group-data-[align=center]/widget:gap-3",
         className
       )}
       {...props}
@@ -258,7 +258,10 @@ function WidgetTitle({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="widget-title"
-      className={cn("min-w-0 truncate text-sm font-semibold", className)}
+      className={cn(
+        "max-w-full min-w-0 truncate text-sm font-semibold",
+        className
+      )}
       {...props}
     />
   )
