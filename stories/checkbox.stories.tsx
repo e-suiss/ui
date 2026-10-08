@@ -63,10 +63,16 @@ export const WithLabel: Story = {
 export const WithDescription: Story = {
   render: (args) => (
     <div className="flex w-80 items-start gap-3">
-      <Checkbox {...args} id="marketing" defaultChecked className="mt-0.75" />
+      <Checkbox
+        {...args}
+        id="marketing"
+        aria-describedby="marketing-description"
+        defaultChecked
+        className="mt-0.75"
+      />
       <div className="grid gap-1.5">
         <Label htmlFor="marketing">Product updates</Label>
-        <p className="text-label-secondary text-sm">
+        <p id="marketing-description" className="text-label-secondary text-sm">
           Get an email when we release new features.
         </p>
       </div>
@@ -74,6 +80,12 @@ export const WithDescription: Story = {
   ),
   play: async ({ canvas, step }) => {
     const checkbox = canvas.getByRole("checkbox", { name: "Product updates" })
+
+    await step("describes the checkbox with its text", async () => {
+      await expect(checkbox).toHaveAccessibleDescription(
+        "Get an email when we release new features."
+      )
+    })
 
     await step("shows the description under the label", async () => {
       const description = canvas.getByText(

@@ -2,7 +2,7 @@
 
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
-import { useMemo } from "react"
+import { useId, useLayoutEffect, useMemo, useRef } from "react"
 
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -73,13 +73,59 @@ const fieldVariants = cva("group/field flex w-full gap-3", {
   },
 })
 
+const FIELD_CONTROL =
+  "input:not([type=hidden]):not([aria-hidden=true]), textarea, select, [role=checkbox], [role=switch], [role=radiogroup], [role=radio], [role=slider], [role=combobox], [role=spinbutton]"
+const FIELD_NOTE = "[data-slot=field-description], [data-slot=field-error]"
+const WHITESPACE = /\s+/
+
 function Field({
   className,
   orientation = "vertical",
+  ref,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+  const fieldRef = useRef<HTMLDivElement | null>(null)
+  const linkedRef = useRef<string[]>([])
+  const noteId = useId()
+
+  useLayoutEffect(() => {
+    const field = fieldRef.current
+    if (!field) return
+    const own = (element: Element) =>
+      element.closest("[data-slot=field]") === field
+    const link = () => {
+      const control = Array.from(field.querySelectorAll(FIELD_CONTROL)).find(
+        own
+      )
+      const notes = Array.from(
+        field.querySelectorAll<HTMLElement>(FIELD_NOTE)
+      ).filter(own)
+      const ids = notes.map((note, index) => {
+        if (!note.id) note.id = `${noteId}-${index}`
+        return note.id
+      })
+      if (!control) return
+      const kept = (control.getAttribute("aria-describedby") ?? "")
+        .split(WHITESPACE)
+        .filter((id) => id && !linkedRef.current.includes(id))
+      const next = [...kept, ...ids.filter((id) => !kept.includes(id))]
+      linkedRef.current = ids
+      if (next.length) control.setAttribute("aria-describedby", next.join(" "))
+      else control.removeAttribute("aria-describedby")
+    }
+    link()
+    const observer = new MutationObserver(link)
+    observer.observe(field, { childList: true, subtree: true })
+    return () => observer.disconnect()
+  }, [noteId])
+
   return (
     <div
+      ref={(node) => {
+        fieldRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       role="group"
       data-slot="field"
       data-orientation={orientation}

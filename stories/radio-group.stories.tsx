@@ -88,10 +88,17 @@ export const WithDescriptions: Story = {
         },
       ].map((option) => (
         <Label key={option.value} className="items-start">
-          <RadioGroupItem value={option.value} />
+          <RadioGroupItem
+            value={option.value}
+            aria-labelledby={`${option.value}-label`}
+            aria-describedby={`${option.value}-description`}
+          />
           <span className="flex flex-col gap-1">
-            {option.label}
-            <span className="text-label-secondary font-normal">
+            <span id={`${option.value}-label`}>{option.label}</span>
+            <span
+              id={`${option.value}-description`}
+              className="text-label-secondary font-normal"
+            >
               {option.description}
             </span>
           </span>
@@ -102,6 +109,16 @@ export const WithDescriptions: Story = {
   play: async ({ canvas, step }) => {
     const standard = canvas.getByRole("radio", { name: STANDARD })
     const express = canvas.getByRole("radio", { name: EXPRESS })
+
+    await step("names each option by its title and describes it", async () => {
+      await expect(standard).toHaveAccessibleName("Standard")
+      await expect(standard).toHaveAccessibleDescription(
+        "Arrives in 4 to 6 business days."
+      )
+      await expect(express).toHaveAccessibleDescription(
+        "Arrives in 1 to 2 business days."
+      )
+    })
 
     await step("shows each description inside its option", async () => {
       await expect(

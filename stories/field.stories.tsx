@@ -59,6 +59,9 @@ export const Default: Story = {
     const input = canvas.getByRole("textbox", { name: "Username" })
 
     await step("names the input and focuses it from the label", async () => {
+      await expect(input).toHaveAccessibleDescription(
+        "Choose a unique name for your account."
+      )
       await userEvent.click(canvas.getByText("Username"))
       await expect(input).toHaveFocus()
       await userEvent.keyboard("ada")
@@ -139,6 +142,9 @@ export const WithTextarea: Story = {
 
     await step("names the textarea and focuses it from the label", async () => {
       await expect(textarea).toHaveAttribute("rows", "4")
+      await expect(textarea).toHaveAccessibleDescription(
+        "Your feedback helps us improve."
+      )
       await userEvent.click(canvas.getByText("Feedback"))
       await expect(textarea).toHaveFocus()
     })
