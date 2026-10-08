@@ -73,6 +73,23 @@ export default defineConfig({
           browser: browser("browser"),
         },
       },
+      ...(process.env.PERF
+        ? [
+            {
+              extends: true,
+              plugins: [tailwindcss()],
+              optimizeDeps: { entries: ["tests/perf/**/*.test.tsx"] },
+              test: {
+                name: "perf",
+                include: ["tests/perf/**/*.test.tsx"],
+                setupFiles: ["tests/setup.ts"],
+                fileParallelism: false,
+                testTimeout: 120_000,
+                browser: browser("perf"),
+              },
+            },
+          ]
+        : []),
       {
         extends: true,
         plugins: [storybookTest({ configDir: ".storybook" })],
