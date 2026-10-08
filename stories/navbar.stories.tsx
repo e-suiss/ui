@@ -140,6 +140,57 @@ export const LinksOnly: Story = {
   },
 }
 
+export const Crowded: Story = {
+  args: {
+    items: [
+      "Store",
+      "Laptop",
+      "Tablet",
+      "Phone",
+      "Watch",
+      "Headphones",
+      "Speakers",
+      "Accessories",
+      "Support",
+    ].map((label) => ({ label, href: `#${label.toLowerCase()}` })),
+    actions: (
+      <Button size="sm" variant="secondary">
+        Sign in
+      </Button>
+    ),
+  },
+  render: (args) => (
+    <div data-testid="frame" className="w-160 max-w-full">
+      <Navbar {...args} />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const frame = canvas.getByTestId("frame")
+    const navbar = canvasElement.querySelector("[data-slot=navbar]")
+
+    await step(
+      "moves the items into the menu when they do not fit",
+      async () => {
+        await waitFor(() => expect(navbar).toHaveAttribute("data-compact"))
+        await expect(canvas.getByRole("button", { name: "Menu" })).toBeVisible()
+        await expect(canvas.queryByRole("link", { name: "Store" })).toBeNull()
+      }
+    )
+
+    await step("shows the items again once there is room", async () => {
+      frame.style.width = "90rem"
+      await waitFor(() => expect(navbar).not.toHaveAttribute("data-compact"))
+      await expect(canvas.getByRole("link", { name: "Store" })).toBeVisible()
+      await expect(canvas.queryByRole("button", { name: "Menu" })).toBeNull()
+    })
+
+    await step("folds them away again when it narrows", async () => {
+      frame.style.width = ""
+      await waitFor(() => expect(navbar).toHaveAttribute("data-compact"))
+    })
+  },
+}
+
 export const WithCloseLabel: Story = {
   args: { closeLabel: "Done" },
 }

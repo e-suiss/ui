@@ -170,6 +170,27 @@ function Navbar({
 }) {
   const isMobile = useIsMobile()
   const headerRef = React.useRef<HTMLElement>(null)
+  const [crowdedBelow, setCrowdedBelow] = React.useState<number | null>(null)
+  const compact = isMobile || crowdedBelow !== null
+
+  React.useLayoutEffect(() => {
+    const header = headerRef.current
+    if (!header || isMobile) return
+    const measure = () => {
+      if (crowdedBelow === null) {
+        if (header.scrollWidth > header.clientWidth + 1) {
+          setCrowdedBelow(header.scrollWidth)
+        }
+      } else if (header.clientWidth >= crowdedBelow) {
+        setCrowdedBelow(null)
+      }
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(header)
+    for (const child of header.children) observer.observe(child)
+    return () => observer.disconnect()
+  }, [crowdedBelow, isMobile])
   const links = items.filter(
     (item): item is NavbarLink => !isGroup(item) && !isMega(item)
   )
@@ -189,6 +210,7 @@ function Navbar({
       ref={headerRef}
       data-slot="navbar"
       data-layout={layout}
+      data-compact={compact ? "" : undefined}
       className={cn(
         "flex h-14 w-full items-center gap-4 px-4 data-[layout=panel]:relative data-[layout=panel]:z-50 md:px-6",
         className
@@ -200,7 +222,7 @@ function Navbar({
           {brand}
         </div>
       )}
-      {isMobile ? (
+      {compact ? (
         <div className="ms-auto flex items-center gap-2">
           {actions}
           <FullscreenMenu>
