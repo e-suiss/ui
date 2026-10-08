@@ -63,6 +63,9 @@ const VITE_RESOLVE = /\bresolve\s*:/
 const INTER_VARIABLE = /variable:\s*["']--font-inter["']/
 const HTML_TAG = /<html\b[^>]*>/
 const CLASSNAME_LITERAL = /className="([^"]*)"/
+const CLASSNAME_TEMPLATE = /className=\{`([^`]*)`\}/
+const TURBOPACK_TAILWIND = /@tailwindcss\/turbopack/
+const NEXT_CONFIGS = ["next.config.ts", "next.config.mjs", "next.config.js"]
 const CLASSNAME_ATTRIBUTE = /className=/
 const HTML_TAG_START = /<html\b/
 const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
@@ -232,8 +235,11 @@ function configureNextFont(project) {
   if (!html) return [NEXT_FONT_NOTE]
   let tag = html[0]
   const literal = tag.match(CLASSNAME_LITERAL)
+  const template = tag.match(CLASSNAME_TEMPLATE)
   if (literal) {
     tag = tag.replace(literal[0], fontClassName(` ${literal[1]}`))
+  } else if (template) {
+    tag = tag.replace(template[0], fontClassName(` ${template[1]}`))
   } else if (!CLASSNAME_ATTRIBUTE.test(tag)) {
     tag = tag.replace(HTML_TAG_START, `<html ${fontClassName("")}`)
   } else {
@@ -265,7 +271,15 @@ function configureNextFont(project) {
   return []
 }
 
+function usesTurbopackTailwind(project) {
+  return NEXT_CONFIGS.map((name) => path.join(project.cwd, name)).some(
+    (file) =>
+      existsSync(file) && TURBOPACK_TAILWIND.test(readFileSync(file, "utf8"))
+  )
+}
+
 function configureNext(project) {
+  if (usesTurbopackTailwind(project)) return []
   const existing = POSTCSS_CONFIGS.map((name) =>
     path.join(project.cwd, name)
   ).find(existsSync)

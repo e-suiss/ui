@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process"
+import { existsSync } from "node:fs"
+import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { init } from "../../packages/cli/lib/init.mjs"
@@ -78,6 +80,9 @@ const FONT_ON_HTML =
   /<html className=\{`\$\{fontInter\.variable\}`\} lang="en">/
 const FONT_BESIDE_CLASS =
   /className=\{`\$\{fontInter\.variable\} antialiased`\}/
+
+const FONT_BEFORE_TEMPLATE =
+  /className=\{`\$\{fontInter\.variable\} \$\{geist\.variable\} h-full`\}/
 
 let output
 
@@ -214,6 +219,28 @@ describe("init in a Next.js project", () => {
     })
     await init({ cwd, yes: true })
     expect(read(cwd, "app/layout.tsx")).toMatch(FONT_BESIDE_CLASS)
+  })
+
+  it("adds the font to a template literal className on <html>", async () => {
+    const cwd = nextProject({
+      "app/layout.tsx": `export default function RootLayout({ children }) {
+  return <html className={\`\${geist.variable} h-full\`}>{children}</html>
+}
+`,
+    })
+    await init({ cwd, yes: true })
+    expect(read(cwd, "app/layout.tsx")).toMatch(FONT_BEFORE_TEMPLATE)
+  })
+
+  it("relies on the Turbopack Tailwind loader when next.config uses it", async () => {
+    const cwd = nextProject({
+      "next.config.ts": `export default {
+  turbopack: { rules: { "*.css": { loaders: ["@tailwindcss/turbopack"] } } },
+}
+`,
+    })
+    await init({ cwd, yes: true })
+    expect(existsSync(path.join(cwd, "postcss.config.mjs"))).toBe(false)
   })
 
   it("leaves a layout that already loads Inter alone", async () => {
