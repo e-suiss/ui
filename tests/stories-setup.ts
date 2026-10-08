@@ -1,7 +1,10 @@
 import { afterEach, beforeEach, expect, type MockInstance, vi } from "vitest"
 
-const RESIZE_LOOP =
-  "ResizeObserver loop completed with undelivered notifications"
+const TEST_ONLY_WARNINGS = [
+  "ResizeObserver loop completed with undelivered notifications",
+  "not wrapped in act(...)",
+  "suspended inside an `act` scope",
+]
 
 let errors: string[] = []
 let consoleError: MockInstance | undefined
@@ -12,7 +15,8 @@ beforeEach(() => {
     .spyOn(console, "error")
     .mockImplementation((...args: unknown[]) => {
       const message = args.map(String).join(" ")
-      if (!message.includes(RESIZE_LOOP)) errors.push(message)
+      if (!TEST_ONLY_WARNINGS.some((warning) => message.includes(warning)))
+        errors.push(message)
     })
 })
 

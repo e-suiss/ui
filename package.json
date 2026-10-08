@@ -13,6 +13,8 @@
     "test:a11y": "rm -rf .vitest/a11y .vitest/a11y-focus && A11Y=1 vitest run --project stories; node scripts/a11y-report.mjs",
     "test:motion": "rm -rf .vitest/motion && MOTION=1 vitest run --project stories; node scripts/a11y-report.mjs",
     "test:text": "rm -rf .vitest/text && TEXT=1 vitest run --project stories; node scripts/a11y-report.mjs",
+    "test:browsers": "BROWSERS=1 vitest run --project 'stories*'",
+    "test:mobile": "MOBILE=1 vitest run --project 'stories*'",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build -o storybook-static",
     "release": "node scripts/release.mjs",
