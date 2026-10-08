@@ -111,6 +111,24 @@ export const Default: Story = {
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
   render: Default.render,
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("combobox")
+
+    await step("renders the full list open on mount", async () => {
+      const listbox = await screen.findByRole("listbox")
+      await waitFor(() => expect(listbox).toBeVisible())
+      await expect(within(listbox).getAllByRole("option")).toHaveLength(
+        frameworks.length
+      )
+      await expect(input).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("chooses an option and closes", async () => {
+      await userEvent.click(screen.getByRole("option", { name: "Astro" }))
+      await waitFor(() => expect(input).toHaveValue("Astro"))
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+    })
+  },
 }
 
 export const WithClearButton: Story = {

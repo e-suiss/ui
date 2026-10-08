@@ -133,6 +133,35 @@ export const Directions: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const edges = {
+      down: (rect: DOMRect) => rect.bottom - window.innerHeight,
+      up: (rect: DOMRect) => rect.top,
+      left: (rect: DOMRect) => rect.left,
+      right: (rect: DOMRect) => rect.right - window.innerWidth,
+    }
+
+    for (const [direction, edgeGap] of Object.entries(edges)) {
+      const label = direction.charAt(0).toUpperCase() + direction.slice(1)
+
+      await step(`opens the ${direction} drawer from its edge`, async () => {
+        const trigger = canvas.getByRole("button", { name: label })
+        await userEvent.click(trigger)
+        const drawer = await screen.findByRole("dialog", {
+          name: "Notifications",
+        })
+        await expect(drawer).toHaveAttribute("data-swipe-direction", direction)
+        await waitFor(() =>
+          expect(
+            Math.abs(edgeGap(drawer.getBoundingClientRect()))
+          ).toBeLessThan(1)
+        )
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await waitFor(() => expect(trigger).toHaveFocus())
+      })
+    }
+  },
 }
 
 export const WithCloseButton: Story = {
@@ -199,10 +228,62 @@ export const WithCloseLabel: Story = {
 
 export const Floating: Story = {
   args: { floating: true },
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Open drawer" })
+
+    await step("opens inset from the screen edges", async () => {
+      await userEvent.click(trigger)
+      const drawer = await screen.findByRole("dialog", { name: "Move goal" })
+      await expect(drawer).toHaveAttribute("data-floating")
+      await waitFor(() => {
+        const rect = drawer.getBoundingClientRect()
+        expect(rect.left).toBeGreaterThan(0)
+        expect(window.innerHeight - rect.bottom).toBeGreaterThan(0)
+      })
+    })
+
+    await step("closes from the cancel button", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Cancel" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
 }
 
 export const WithSnapPoints: Story = {
   args: { snapPoints: [0.5, 1] },
+  play: async ({ canvas, step }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Open drawer" }))
+    const drawer = await screen.findByRole("dialog", { name: "Move goal" })
+
+    await step("opens at the first snap point", async () => {
+      await expect(drawer).toHaveAttribute("data-snap-points")
+      await expect(drawer).not.toHaveAttribute("data-expanded")
+      await waitFor(() =>
+        expect(drawer.getBoundingClientRect().top).toBeCloseTo(
+          window.innerHeight / 2,
+          -1
+        )
+      )
+    })
+
+    await step("expands to the next snap point when dragged up", async () => {
+      const handle = drawer.querySelector(
+        '[data-slot="drawer-swipe-handle"]'
+      ) as HTMLElement
+      const rect = handle.getBoundingClientRect()
+      const x = rect.left + rect.width / 2
+      const y = rect.top + rect.height / 2
+      await userEvent.pointer([
+        { keys: "[MouseLeft>]", target: handle, coords: { x, y } },
+        { target: handle, coords: { x, y: y - 100 } },
+        { target: handle, coords: { x, y: y - 300 } },
+        { target: handle, coords: { x, y: y - 400 } },
+        { keys: "[/MouseLeft]", target: handle, coords: { x, y: y - 400 } },
+      ])
+      await waitFor(() => expect(drawer).toHaveAttribute("data-expanded"))
+    })
+  },
 }
 
 export const NonModal: Story = {

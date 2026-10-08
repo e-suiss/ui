@@ -257,6 +257,22 @@ export const WithAvatar: Story = {
       </ItemActions>
     </Item>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("shows the avatar beside the name and status", async () => {
+      await expect(
+        canvasElement.querySelector('[data-slot="avatar"]')
+      ).toBeInTheDocument()
+      await expect(canvas.getByText("Olivia Martin")).toBeVisible()
+      await expect(canvas.getByText("Last seen 5 minutes ago")).toBeVisible()
+    })
+
+    await step("reaches the action from the keyboard", async () => {
+      await userEvent.tab()
+      await expect(
+        canvas.getByRole("button", { name: "Message" })
+      ).toHaveFocus()
+    })
+  },
 }
 
 export const WithHeaderAndFooter: Story = {
@@ -279,4 +295,20 @@ export const WithHeaderAndFooter: Story = {
       </ItemFooter>
     </Item>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("splits the content into header and footer", async () => {
+      await expect(
+        canvasElement.querySelector('[data-slot="item-header"]')
+      ).toHaveTextContent("Pro plan$24/mo")
+      await expect(
+        canvasElement.querySelector('[data-slot="item-footer"]')
+      ).toContainElement(canvas.getByRole("button", { name: "Manage" }))
+      await expect(canvas.getByText("Renews on May 1")).toBeVisible()
+    })
+
+    await step("reaches the footer action from the keyboard", async () => {
+      await userEvent.tab()
+      await expect(canvas.getByRole("button", { name: "Manage" })).toHaveFocus()
+    })
+  },
 }

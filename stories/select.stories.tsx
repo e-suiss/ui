@@ -129,6 +129,19 @@ export const Small: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("combobox")
+
+    await step("opens the list and picks an option", async () => {
+      await expect(trigger).toHaveAttribute("data-size", "sm")
+      await userEvent.click(trigger)
+      await userEvent.click(
+        await screen.findByRole("option", { name: "Grapes" })
+      )
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(trigger).toHaveTextContent("Grapes")
+    })
+  },
 }
 
 const timezones = [
@@ -220,6 +233,22 @@ export const WithIcons: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("combobox")
+
+    await step("shows the default value", async () => {
+      await expect(trigger).toHaveTextContent("System")
+    })
+
+    await step("opens the list and picks an option", async () => {
+      await userEvent.click(trigger)
+      const dark = await screen.findByRole("option", { name: "Dark" })
+      await expect(dark.querySelector("svg")).toBeInTheDocument()
+      await userEvent.click(dark)
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(trigger).toHaveTextContent("Dark")
+    })
+  },
 }
 
 export const Disabled: Story = {

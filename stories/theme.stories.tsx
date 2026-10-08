@@ -98,6 +98,37 @@ async function transitionSettled() {
   )
 }
 
+function playTransition(
+  effect: string,
+  variable: string,
+  value: string,
+  blur = false
+): Story["play"] {
+  return async ({ canvas, step }) => {
+    await step(`switches to dark with the ${effect} transition`, async () => {
+      await transitionSettled()
+      await userEvent.click(
+        await canvas.findByRole("button", { name: "Switch to dark theme" })
+      )
+      await expect(root()).toHaveAttribute("data-theme-transition", effect)
+      await expect(root().hasAttribute("data-theme-transition-blur")).toBe(blur)
+      await expect(root().style.getPropertyValue(variable)).toBe(value)
+      await waitFor(() => expect(root()).toHaveClass("dark"))
+      await transitionSettled()
+      await expect(root().style.getPropertyValue(variable)).toBe("")
+    })
+
+    await step("switches back to light", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Switch to light theme" })
+      )
+      await expect(root()).toHaveAttribute("data-theme-transition", effect)
+      await waitFor(() => expect(root()).not.toHaveClass("dark"))
+      await transitionSettled()
+    })
+  }
+}
+
 export const Circle: Story = {
   args: { effect: "circle", origin: "center" },
   play: async ({ canvas, step }) => {
@@ -124,34 +155,67 @@ export const Circle: Story = {
 
 export const CircleFromCorner: Story = {
   args: { effect: "circle", origin: "top-right" },
+  play: playTransition(
+    "circle",
+    "--theme-transition-from",
+    "circle(0% at 100% 0%)"
+  ),
 }
 
 export const CircleFromEdge: Story = {
   args: { effect: "circle", origin: "bottom-center" },
+  play: playTransition(
+    "circle",
+    "--theme-transition-from",
+    "circle(0% at 50% 100%)"
+  ),
 }
 
 export const Rectangle: Story = {
   args: { effect: "rectangle", origin: "bottom-up" },
+  play: playTransition(
+    "rectangle",
+    "--theme-transition-from",
+    "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)"
+  ),
 }
 
 export const RectangleSideways: Story = {
   args: { effect: "rectangle", origin: "left-right" },
+  play: playTransition(
+    "rectangle",
+    "--theme-transition-from",
+    "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)"
+  ),
 }
 
 export const Polygon: Story = {
   args: { effect: "polygon", origin: "top-left" },
+  play: playTransition(
+    "polygon",
+    "--theme-transition-from",
+    "polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%)"
+  ),
 }
 
 export const CircleBlur: Story = {
   args: { effect: "circle-blur", origin: "center" },
+  play: playTransition("circle-blur", "--theme-transition-at", "50% 50%"),
 }
 
 export const CircleBlurFromCorner: Story = {
   args: { effect: "circle-blur", origin: "bottom-right" },
+  play: playTransition("circle-blur", "--theme-transition-at", "100% 100%"),
 }
 
 export const Blurred: Story = {
   args: { effect: "circle", origin: "center", blur: true },
+  play: playTransition(
+    "circle",
+    "--theme-transition-from",
+    "circle(0% at 50% 50%)",
+    true
+  ),
 }
 
 function ThemePicker() {
@@ -240,6 +304,31 @@ export const Sizes: Story = {
       <ThemeToggle {...args} size="icon-xl" />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    await step("every size toggles the shared theme", async () => {
+      await transitionSettled()
+      const toggles = await canvas.findAllByRole("button", {
+        name: "Switch to dark theme",
+      })
+      await expect(toggles).toHaveLength(3)
+      const [smallest] = toggles
+      if (smallest) await userEvent.click(smallest)
+      await waitFor(() => expect(root()).toHaveClass("dark"))
+      await expect(
+        await canvas.findAllByRole("button", { name: "Switch to light theme" })
+      ).toHaveLength(3)
+      await transitionSettled()
+    })
+
+    await step("the largest size switches back", async () => {
+      const [, , largest] = canvas.getAllByRole("button", {
+        name: "Switch to light theme",
+      })
+      if (largest) await userEvent.click(largest)
+      await waitFor(() => expect(root()).not.toHaveClass("dark"))
+      await transitionSettled()
+    })
+  },
 }
 
 function ThemeStatus() {

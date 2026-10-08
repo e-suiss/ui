@@ -4,7 +4,7 @@ import {
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
+import { expect, userEvent } from "storybook/test"
 
 import {
   InputGroup,
@@ -109,4 +109,21 @@ export const InInputGroup: Story = {
       </InputGroup>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const input = canvas.getByPlaceholderText("Search...")
+    const kbd = canvasElement.querySelector<HTMLElement>('[data-slot="kbd"]')
+    const addon = kbd?.closest<HTMLElement>('[data-slot="input-group-addon"]')
+
+    await step("shows the shortcut in the trailing addon", async () => {
+      await expect(kbd).toHaveTextContent("K")
+      await expect(addon).toHaveAttribute("data-align", "inline-end")
+    })
+
+    await step("focuses the input from the hint and accepts text", async () => {
+      if (addon) await userEvent.click(addon)
+      await expect(input).toHaveFocus()
+      await userEvent.keyboard("dialog")
+      await expect(input).toHaveValue("dialog")
+    })
+  },
 }

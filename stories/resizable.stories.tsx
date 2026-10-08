@@ -144,6 +144,33 @@ export const Nested: Story = {
       </ResizablePanel>
     </ResizablePanelGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const [outer, inner] = canvas.getAllByRole("separator")
+    if (!outer || !inner) throw new Error("separators not rendered")
+
+    await step("starts each group at its default split", async () => {
+      await expect(outer).toHaveAttribute("aria-valuenow", "30")
+      await expect(outer).toHaveAttribute("aria-orientation", "vertical")
+      await expect(inner).toHaveAttribute("aria-valuenow", "65")
+      await expect(inner).toHaveAttribute("aria-orientation", "horizontal")
+    })
+
+    await step("resizes the side panel with left and right", async () => {
+      outer.focus()
+      await userEvent.keyboard("{ArrowRight}")
+      await expect(Number(outer.getAttribute("aria-valuenow"))).toBeGreaterThan(
+        30
+      )
+      await expect(inner).toHaveAttribute("aria-valuenow", "65")
+    })
+
+    await step("resizes the nested panels with up and down", async () => {
+      await userEvent.tab()
+      await expect(inner).toHaveFocus()
+      await userEvent.keyboard("{ArrowUp}")
+      await expect(Number(inner.getAttribute("aria-valuenow"))).toBeLessThan(65)
+    })
+  },
 }
 
 function CardPane({
@@ -235,4 +262,26 @@ export const CardsVertical: Story = {
   args: { orientation: "vertical" },
   parameters: { bare: true },
   render: Cards.render,
+  play: async ({ canvas, step }) => {
+    const handle = canvas.getByRole("separator")
+
+    await step("splits the cards evenly", async () => {
+      await expect(handle).toHaveAttribute("aria-orientation", "horizontal")
+      await expect(handle).toHaveAttribute("aria-valuenow", "50")
+      await waitFor(() => expect(canvas.getAllByText("50%")).toHaveLength(2))
+    })
+
+    await step("resizes with the up and down keys", async () => {
+      handle.focus()
+      await userEvent.keyboard("{ArrowDown}")
+      await waitFor(() =>
+        expect(Number(handle.getAttribute("aria-valuenow"))).toBeGreaterThan(50)
+      )
+      await waitFor(() => expect(canvas.queryAllByText("50%")).toHaveLength(0))
+      await userEvent.keyboard("{ArrowUp}{ArrowUp}")
+      await expect(Number(handle.getAttribute("aria-valuenow"))).toBeLessThan(
+        50
+      )
+    })
+  },
 }

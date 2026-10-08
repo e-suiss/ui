@@ -10,7 +10,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -32,6 +32,7 @@ import {
 
 const PROFILE = /^Profile/
 const BILLING = /^Billing/
+const COPY = /^Copy/
 
 const meta = {
   title: "Components/Dropdown Menu",
@@ -154,6 +155,20 @@ export const Default: Story = {
 
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
+  play: async ({ canvas, step }) => {
+    await step("renders the menu open on mount", async () => {
+      const menu = await screen.findByRole("menu")
+      await waitFor(() => expect(menu).toBeVisible())
+      await expect(
+        canvas.getByRole("button", { name: "Open menu" })
+      ).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("closes after choosing an item", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: BILLING }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
@@ -277,4 +292,26 @@ export const Inset: Story = {
       </DropdownMenuContent>
     </DropdownMenu>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Edit" })
+
+    await step("opens with a labelled group of inset items", async () => {
+      await userEvent.click(trigger)
+      const group = await screen.findByRole("group", { name: "Clipboard" })
+      await expect(within(group).getAllByRole("menuitem")).toHaveLength(3)
+    })
+
+    await step("closes after choosing an item", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: COPY }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("menu")
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
 }

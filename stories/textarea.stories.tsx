@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent } from "storybook/test"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -40,6 +40,25 @@ export const WithValue: Story = {
   args: {
     defaultValue:
       "Thanks for the quick turnaround. The new layout looks great on mobile.",
+  },
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByRole("textbox")
+
+    await step("shows the default value", async () => {
+      await expect(textarea).toHaveValue(
+        "Thanks for the quick turnaround. The new layout looks great on mobile."
+      )
+    })
+
+    await step("appends and replaces text", async () => {
+      await userEvent.type(textarea, " Ship it.")
+      await expect(textarea).toHaveValue(
+        "Thanks for the quick turnaround. The new layout looks great on mobile. Ship it."
+      )
+      await userEvent.clear(textarea)
+      await userEvent.type(textarea, "Looks good.")
+      await expect(textarea).toHaveValue("Looks good.")
+    })
   },
 }
 
@@ -109,6 +128,23 @@ function ResizableExample({
   )
 }
 
+const ROWS = /rows$/
+
+function pointer(target: HTMLElement, type: string, x: number, y: number) {
+  target.dispatchEvent(
+    new PointerEvent(type, {
+      pointerId: 1,
+      pointerType: "mouse",
+      button: 0,
+      buttons: type === "pointerup" ? 0 : 1,
+      clientX: x,
+      clientY: y,
+      bubbles: true,
+      cancelable: true,
+    })
+  )
+}
+
 const campaign =
   "Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders."
 
@@ -141,6 +177,42 @@ export const ResizableOutside: Story = {
       defaultValue={campaign}
     />
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const textarea = canvas.getByRole("textbox", { name: "Campaign copy" })
+    const handle = canvasElement.querySelector<HTMLElement>(
+      '[data-slot="textarea-handle"]'
+    )
+    if (!handle) throw new Error("textarea handle not rendered")
+    const startHeight = textarea.offsetHeight
+    const rowCount = canvas.getByText(ROWS)
+    const startRows = rowCount.textContent
+
+    await step("places the handle outside the field", async () => {
+      await expect(handle).toHaveAttribute("data-placement", "outside")
+      await expect(handle.getBoundingClientRect().bottom).toBeGreaterThan(
+        textarea.getBoundingClientRect().bottom
+      )
+    })
+
+    await step("grows taller when the handle is dragged down", async () => {
+      const rect = handle.getBoundingClientRect()
+      const x = rect.left + rect.width / 2
+      const y = rect.top + rect.height / 2
+      pointer(handle, "pointerdown", x, y)
+      pointer(handle, "pointermove", x, y + 40)
+      pointer(handle, "pointermove", x, y + 80)
+      pointer(handle, "pointerup", x, y + 80)
+      await expect(textarea.offsetHeight).toBe(startHeight + 80)
+      await waitFor(() => expect(rowCount.textContent).not.toBe(startRows))
+    })
+
+    await step("resets the height on double-click", async () => {
+      await userEvent.dblClick(handle)
+      await expect(textarea.style.height).toBe("")
+      await expect(textarea.offsetHeight).toBe(startHeight)
+      await waitFor(() => expect(rowCount.textContent).toBe(startRows))
+    })
+  },
 }
 
 export const Disabled: Story = {
@@ -160,5 +232,18 @@ export const Invalid: Story = {
   args: {
     "aria-invalid": true,
     defaultValue: "Too short",
+  },
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByRole("textbox")
+
+    await step("flags the textarea as invalid", async () => {
+      await expect(textarea).toBeInvalid()
+      await expect(textarea).toHaveValue("Too short")
+    })
+
+    await step("stays editable while invalid", async () => {
+      await userEvent.type(textarea, " but fixed")
+      await expect(textarea).toHaveValue("Too short but fixed")
+    })
   },
 }

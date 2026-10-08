@@ -178,4 +178,36 @@ export const TwoColumns: Story = {
 
 export const StartOnSidebar: Story = {
   render: () => <MailExample defaultColumn="sidebar" />,
+  play: async ({ canvas, step }) => {
+    await step("shows every column on desktop", async () => {
+      await expect(
+        canvas.getByRole("region", { name: "Mailboxes" })
+      ).toBeVisible()
+      await expect(canvas.getByRole("region", { name: "Inbox" })).toBeVisible()
+      await expect(
+        canvas.getByRole("region", { name: "Your order has shipped" })
+      ).toBeVisible()
+    })
+
+    await step("switches the mailbox from the sidebar", async () => {
+      const archive = canvas.getByRole("button", { name: "Archive" })
+      await userEvent.click(archive)
+      await expect(archive).toHaveAttribute("aria-current", "true")
+      await expect(
+        canvas.getByRole("region", { name: "Archive" })
+      ).toBeInTheDocument()
+    })
+
+    await step("opens a message in the detail column", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: CLOUD }))
+      await waitFor(() =>
+        expect(
+          canvas.getByRole("region", { name: "Your storage is almost full" })
+        ).toHaveTextContent("Your cloud storage is 90% full.")
+      )
+      await expect(
+        canvas.getByRole("button", { name: ACME })
+      ).not.toHaveAttribute("aria-current")
+    })
+  },
 }

@@ -19,6 +19,10 @@ import {
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire"
 
+const STARTER = /^Starter/
+const TEAM = /^Team/
+const ENTERPRISE = /^Enterprise/
+
 const meta = {
   title: "Components/Questionnaire",
   component: Questionnaire,
@@ -259,6 +263,38 @@ export const WithChoiceDescriptions: Story = {
       <Actions />
     </Questionnaire>
   ),
+  play: async ({ canvas, step }) => {
+    const starter = canvas.getByRole("radio", { name: STARTER })
+    const team = canvas.getByRole("radio", { name: TEAM })
+    const enterprise = canvas.getByRole("radio", { name: ENTERPRISE })
+
+    await step("shows each description with its choice", async () => {
+      await expect(
+        canvas.getByText("For individuals trying things out.").closest("label")
+      ).toContainElement(starter)
+      await expect(
+        canvas
+          .getByText("Shared workspaces and roles for growing teams.")
+          .closest("label")
+      ).toContainElement(team)
+      await expect(
+        canvas
+          .getByText("Single sign-on, audit logs, and priority support.")
+          .closest("label")
+      ).toContainElement(enterprise)
+    })
+
+    await step("switches the chosen plan", async () => {
+      await expect(team).toBeChecked()
+      await userEvent.click(
+        canvas.getByText("Single sign-on, audit logs, and priority support.")
+      )
+      await expect(enterprise).toBeChecked()
+      await expect(team).not.toBeChecked()
+      await userEvent.click(starter)
+      await expect(starter).toBeChecked()
+    })
+  },
 }
 
 export const TextInput: Story = {

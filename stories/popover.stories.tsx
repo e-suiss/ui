@@ -13,6 +13,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+const SHARED_LINKS = /^Shared links stay active for 30 days/
+
 const meta = {
   title: "Components/Popover",
   component: Popover,
@@ -154,4 +156,28 @@ export const Simple: Story = {
       </PopoverContent>
     </Popover>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "What is this?" })
+
+    await step("opens from the trigger", async () => {
+      await userEvent.click(trigger)
+      const popover = await screen.findByRole("dialog")
+      await waitFor(() => expect(popover).toBeVisible())
+      await expect(popover).toHaveTextContent(SHARED_LINKS)
+      await expect(trigger).toHaveAttribute("aria-expanded", "true")
+    })
+
+    await step("closes with Escape and returns focus", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      await expect(trigger).toHaveFocus()
+    })
+
+    await step("closes from the trigger", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("dialog")
+      await userEvent.click(trigger)
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }

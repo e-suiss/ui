@@ -115,4 +115,25 @@ export const Sides: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    for (const side of ["top", "right", "bottom", "left"]) {
+      const label = side.charAt(0).toUpperCase() + side.slice(1)
+
+      await step(`opens the ${side} card on its side`, async () => {
+        const trigger = canvas.getByRole("link", { name: label })
+        await userEvent.hover(trigger)
+        const text = `This card opens on the ${side} side of its trigger.`
+        await waitFor(() => expect(screen.getByText(text)).toBeVisible(), {
+          timeout: 3000,
+        })
+        await expect(
+          screen.getByText(text).closest('[data-slot="hover-card-content"]')
+        ).toHaveAttribute("data-side", side)
+        await userEvent.unhover(trigger)
+        await waitFor(() => expect(screen.queryByText(text)).toBeNull(), {
+          timeout: 3000,
+        })
+      })
+    }
+  },
 }

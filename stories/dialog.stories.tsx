@@ -92,6 +92,20 @@ export const Default: Story = {
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
   render: Default.render,
+  play: async ({ step }) => {
+    await step("renders a named dialog open on mount", async () => {
+      const dialog = await screen.findByRole("dialog", { name: "Edit profile" })
+      await waitFor(() => expect(dialog).toBeVisible())
+      await expect(dialog).toHaveAccessibleDescription(
+        "Update your name and username. Click save when you are done."
+      )
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithoutCloseButton: Story = {

@@ -133,6 +133,14 @@ export const Empty: Story = {
       </CommandList>
     </Command>
   ),
+  play: async ({ canvas, step }) => {
+    await step("shows the empty state with no items", async () => {
+      await expect(canvas.getByText("No projects found.")).toBeVisible()
+      await expect(canvas.queryAllByRole("option")).toHaveLength(0)
+      await userEvent.type(canvas.getByRole("combobox"), "web")
+      await expect(canvas.getByText("No projects found.")).toBeVisible()
+    })
+  },
 }
 
 function CommandDialogExample({
@@ -186,4 +194,22 @@ export const Dialog: Story = {
 
 export const DialogOpen: Story = {
   render: () => <CommandDialogExample defaultOpen />,
+  play: async ({ step }) => {
+    await step("renders the palette open on mount", async () => {
+      const dialog = await screen.findByRole("dialog", {
+        name: "Command Palette",
+      })
+      await waitFor(() => expect(dialog).toBeVisible())
+    })
+
+    await step("filters items while typing", async () => {
+      await userEvent.type(screen.getByRole("combobox"), "cal")
+      await waitFor(() => expect(screen.getAllByRole("option")).toHaveLength(2))
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }

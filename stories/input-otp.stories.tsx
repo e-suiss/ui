@@ -93,6 +93,26 @@ export const SingleGroup: Story = {
       </InputOTPGroup>
     </InputOTP>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const input = canvas.getByRole("textbox")
+    const slots = canvasElement.querySelectorAll('[data-slot="input-otp-slot"]')
+
+    await step("fills the slots in order as digits are typed", async () => {
+      await expect(slots).toHaveLength(6)
+      await userEvent.click(input)
+      await userEvent.keyboard("731")
+      await expect(input).toHaveValue("731")
+      await expect(slots[0]).toHaveTextContent("7")
+      await expect(slots[2]).toHaveTextContent("1")
+      await expect(slots[3]).toHaveAttribute("data-active", "true")
+    })
+
+    await step("completes the code in the last slot", async () => {
+      await userEvent.keyboard("905")
+      await expect(input).toHaveValue("731905")
+      await expect(slots[5]).toHaveTextContent("5")
+    })
+  },
 }
 
 export const FourDigits: Story = {
@@ -144,6 +164,18 @@ export const Invalid: Story = {
       </InputOTPGroup>
     </InputOTP>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("marks every slot as invalid", async () => {
+      const slots = canvasElement.querySelectorAll(
+        '[data-slot="input-otp-slot"]'
+      )
+      await expect(slots).toHaveLength(6)
+      for (const slot of slots) {
+        await expect(slot).toHaveAttribute("aria-invalid", "true")
+      }
+      await expect(canvas.getByRole("textbox")).toHaveValue("123456")
+    })
+  },
 }
 
 export const Disabled: Story = {

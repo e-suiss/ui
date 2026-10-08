@@ -291,6 +291,35 @@ export const Kitchen: Story = {
       <Hint>Handle inside the corner. Hover the corner to reveal it.</Hint>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+    const firstTicket = canvas.getByText("#1042 · Table 4")
+
+    await step("shows the ticket list with the handle inside", async () => {
+      await expect(widget).toHaveAttribute("data-size", "large")
+      await expect(bySlot(canvasElement, "widget-handle")).toHaveAttribute(
+        "data-placement",
+        "inside"
+      )
+      await expect(canvas.getByText("2 running late")).toBeVisible()
+      await expect(firstTicket).toBeVisible()
+    })
+
+    await step("hides the tickets when dragged to small", async () => {
+      dragHandle(canvasElement, -184, -184)
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "small"))
+      await expect(firstTicket).not.toBeVisible()
+      await expect(canvas.getByText("pending orders")).toBeVisible()
+    })
+
+    await step("resets to large on double-click", async () => {
+      bySlot(canvasElement, "widget-handle").dispatchEvent(
+        new MouseEvent("dblclick", { bubbles: true })
+      )
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "large"))
+      await expect(firstTicket).toBeVisible()
+    })
+  },
 }
 
 export const Reservations: Story = {
@@ -423,6 +452,34 @@ export const WeeklyReport: Story = {
       <Hint>Extra large shows best sellers, large hides them.</Hint>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const widget = bySlot(canvasElement, "widget")
+    const bestSellersTitle = canvas.getByText("Best sellers")
+
+    await step("shows the best sellers at extra large", async () => {
+      await expect(widget).toHaveAttribute("data-size", "extra-large")
+      await expect(canvas.getByText("₺121,900")).toBeVisible()
+      await expect(bestSellersTitle).toBeVisible()
+      await expect(canvas.getByText("Dine-in")).toBeVisible()
+    })
+
+    await step("hides them when dragged down to large", async () => {
+      dragHandle(canvasElement, -368, 0)
+      await waitFor(() => expect(widget).toHaveAttribute("data-size", "large"))
+      await expect(bestSellersTitle).not.toBeVisible()
+      await expect(canvas.getByText("Dine-in")).toBeVisible()
+    })
+
+    await step("resets to extra large on double-click", async () => {
+      bySlot(canvasElement, "widget-handle").dispatchEvent(
+        new MouseEvent("dblclick", { bubbles: true })
+      )
+      await waitFor(() =>
+        expect(widget).toHaveAttribute("data-size", "extra-large")
+      )
+      await expect(bestSellersTitle).toBeVisible()
+    })
+  },
 }
 
 function FreeResizeExample() {
@@ -570,6 +627,19 @@ export const Centered: Story = {
       <WidgetDescription>3 open orders</WidgetDescription>
     </Widget>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("centers the icon, title and description", async () => {
+      await expect(bySlot(canvasElement, "widget")).toHaveAttribute(
+        "data-align",
+        "center"
+      )
+      await expect(canvas.getByText("Point of sale")).toBeVisible()
+      await expect(canvas.getByText("3 open orders")).toBeVisible()
+      await expect(
+        canvasElement.querySelector('[data-slot="widget-handle"]')
+      ).toBeNull()
+    })
+  },
 }
 
 const gridSpans = {
@@ -677,4 +747,34 @@ export const Dashboard: Story = {
       </Widget>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("lays out every widget with its content", async () => {
+      const widgets = canvasElement.querySelectorAll<HTMLElement>(
+        '[data-slot="widget"]'
+      )
+      await expect(widgets).toHaveLength(5)
+      for (const title of [
+        "Istanbul",
+        "Kitchen display",
+        "Hestia",
+        "Reservations",
+        "Point of sale",
+      ]) {
+        await expect(canvas.getByText(title)).toBeVisible()
+      }
+      await expect(canvas.getByText("₺18,240")).toBeVisible()
+      await expect(canvas.getByText("18:00")).toBeVisible()
+    })
+
+    await step("keeps the grid cells fixed", async () => {
+      await expect(
+        canvasElement.querySelector('[data-slot="widget-handle"]')
+      ).toBeNull()
+      await expect(
+        [...canvasElement.querySelectorAll<HTMLElement>('[data-slot="widget"]')]
+          .map((widget) => widget.dataset.align)
+          .filter((align) => align === "center")
+      ).toHaveLength(2)
+    })
+  },
 }

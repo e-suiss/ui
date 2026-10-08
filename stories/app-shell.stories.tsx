@@ -213,6 +213,35 @@ function pressSidebarHotkey() {
   )
 }
 
+async function navigatesAndCollapses({
+  canvas,
+  canvasElement,
+  step,
+}: Parameters<NonNullable<Story["play"]>>[0]) {
+  await step("selecting an item switches the page", async () => {
+    await userEvent.click(canvas.getByRole("button", { name: "Calendar" }))
+    await expect(
+      canvas.getByRole("heading", { level: 1, name: "Calendar" })
+    ).toBeVisible()
+    await expect(
+      canvas.getByRole("button", { name: "Calendar" })
+    ).toHaveAttribute("aria-current", "page")
+    await expect(
+      canvas.getByRole("button", { name: "Home" })
+    ).not.toHaveAttribute("aria-current")
+  })
+
+  await step("the header trigger collapses and expands it", async () => {
+    const sidebar = sidebarOf(canvasElement)
+    const trigger = headerTrigger(canvasElement)
+    await expect(sidebar).toHaveAttribute("data-state", "expanded")
+    if (trigger) await userEvent.click(trigger)
+    await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+    if (trigger) await userEvent.click(trigger)
+    await expect(sidebar).toHaveAttribute("data-state", "expanded")
+  })
+}
+
 export const Default: Story = {
   play: async ({ canvas, canvasElement, step }) => {
     await step("starts on the first item", async () => {
@@ -262,6 +291,19 @@ export const Default: Story = {
 
 export const WithHeaderAndFooter: Story = {
   args: { header: brand, footer: account },
+  play: async (context) => {
+    const { canvas, canvasElement, step } = context
+    await step("renders the header and footer around the items", async () => {
+      const sidebar = sidebarOf(canvasElement)
+      const header = sidebar?.querySelector("[data-slot=sidebar-header]")
+      const footer = sidebar?.querySelector("[data-slot=sidebar-footer]")
+      await expect(header).toHaveTextContent("Acme Inc.")
+      await expect(footer).toHaveTextContent("jordan@acme.com")
+      await expect(canvas.getByText("Jordan Lee")).toBeVisible()
+    })
+
+    await navigatesAndCollapses(context)
+  },
 }
 
 export const Grouped: Story = {
@@ -319,10 +361,30 @@ export const Links: Story = {
 
 export const Floating: Story = {
   args: { variant: "floating", header: brand },
+  play: async (context) => {
+    await context.step("renders the floating variant", async () => {
+      await expect(sidebarOf(context.canvasElement)).toHaveAttribute(
+        "data-variant",
+        "floating"
+      )
+    })
+
+    await navigatesAndCollapses(context)
+  },
 }
 
 export const Inset: Story = {
   args: { variant: "inset", header: brand },
+  play: async (context) => {
+    await context.step("renders the inset variant", async () => {
+      await expect(sidebarOf(context.canvasElement)).toHaveAttribute(
+        "data-variant",
+        "inset"
+      )
+    })
+
+    await navigatesAndCollapses(context)
+  },
 }
 
 export const Collapsed: Story = {
@@ -375,4 +437,16 @@ export const Offcanvas: Story = {
 
 export const RightSide: Story = {
   args: { side: "right", header: brand },
+  play: async (context) => {
+    await context.step("places the sidebar on the right", async () => {
+      const sidebar = sidebarOf(context.canvasElement)
+      await expect(sidebar).toHaveAttribute("data-side", "right")
+      const home = context.canvas.getByRole("button", { name: "Home" })
+      await expect(home.getBoundingClientRect().left).toBeGreaterThan(
+        window.innerWidth / 2
+      )
+    })
+
+    await navigatesAndCollapses(context)
+  },
 }

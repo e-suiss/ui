@@ -76,6 +76,31 @@ export const Types: Story = {
       <Input {...args} type="search" placeholder="Search..." />
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const email = canvas.getByPlaceholderText("jane@example.com")
+    const password = canvas.getByPlaceholderText("Password")
+    const quantity = canvas.getByPlaceholderText("Quantity")
+    const search = canvas.getByPlaceholderText("Search...")
+
+    await step("renders each input with its type", async () => {
+      await expect(email).toHaveAttribute("type", "email")
+      await expect(password).toHaveAttribute("type", "password")
+      await expect(quantity).toHaveRole("spinbutton")
+      await expect(search).toHaveRole("searchbox")
+    })
+
+    await step("accepts typing suited to each type", async () => {
+      await userEvent.type(email, "jane@example.com")
+      await expect(email).toHaveValue("jane@example.com")
+      await expect(email).toBeValid()
+      await userEvent.type(password, "secret")
+      await expect(password).toHaveValue("secret")
+      await userEvent.type(quantity, "12")
+      await expect(quantity).toHaveValue(12)
+      await userEvent.type(search, "grill")
+      await expect(search).toHaveValue("grill")
+    })
+  },
 }
 
 export const WithValue: Story = {
@@ -94,6 +119,25 @@ export const WithValue: Story = {
 
 export const File: Story = {
   args: { type: "file", placeholder: undefined },
+  play: async ({ canvasElement, step }) => {
+    const input =
+      canvasElement.querySelector<HTMLInputElement>('input[type="file"]')
+    if (!input) throw new Error("file input not rendered")
+    const upload = new window.File(["menu"], "menu.pdf", {
+      type: "application/pdf",
+    })
+
+    await step("is reachable with Tab", async () => {
+      await userEvent.tab()
+      await expect(input).toHaveFocus()
+    })
+
+    await step("accepts a chosen file", async () => {
+      await userEvent.upload(input, upload)
+      await expect(input.files?.[0]).toBe(upload)
+      await expect(input.files).toHaveLength(1)
+    })
+  },
 }
 
 export const Invalid: Story = {

@@ -17,6 +17,33 @@ import {
 
 const slides = [1, 2, 3, 4, 5]
 
+function trackOf(canvasElement: HTMLElement) {
+  const track = canvasElement.querySelector<HTMLElement>(
+    '[data-slot="carousel-content"] > div'
+  )
+  if (!track) throw new Error("carousel track not rendered")
+  return track
+}
+
+function settledAtEnd(canvasElement: HTMLElement) {
+  const viewport = canvasElement.querySelector('[data-slot="carousel-content"]')
+  const last = canvasElement.querySelector(
+    '[data-slot="carousel-item"]:last-child'
+  )
+  if (!viewport || !last) throw new Error("carousel slides not rendered")
+  const edge = last.getBoundingClientRect()
+  const frame = viewport.getBoundingClientRect()
+  return Math.max(
+    Math.abs(edge.right - frame.right),
+    Math.abs(edge.bottom - frame.bottom)
+  )
+}
+
+function offsetOf(track: HTMLElement) {
+  const matrix = new DOMMatrix(getComputedStyle(track).transform)
+  return { x: Math.round(matrix.m41) + 0, y: Math.round(matrix.m42) + 0 }
+}
+
 const meta = {
   title: "Components/Carousel",
   component: Carousel,
@@ -110,6 +137,41 @@ export const MultipleItems: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const previous = canvas.getByRole("button", { name: "Previous slide" })
+    const next = canvas.getByRole("button", { name: "Next slide" })
+    const track = trackOf(canvasElement)
+
+    await step("shows two slides at a time from the start", async () => {
+      await expect(canvas.getAllByRole("group")).toHaveLength(5)
+      await waitFor(() => expect(next).toBeEnabled())
+      await expect(previous).toBeDisabled()
+      await expect(offsetOf(track).x).toBe(0)
+    })
+
+    await step("moves the track with the next button", async () => {
+      await userEvent.click(next)
+      await waitFor(() => expect(offsetOf(track).x).toBeLessThan(0))
+      await expect(previous).toBeEnabled()
+    })
+
+    await step("disables next at the last slide", async () => {
+      await userEvent.click(next)
+      await userEvent.click(next)
+      await waitFor(() => expect(next).toBeDisabled())
+      await expect(previous).toHaveFocus()
+      await waitFor(() =>
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+      )
+    })
+
+    await step("moves back with the previous button", async () => {
+      const end = offsetOf(track).x
+      await userEvent.click(previous)
+      await waitFor(() => expect(offsetOf(track).x).toBeGreaterThan(end))
+      await expect(next).toBeEnabled()
+    })
+  },
 }
 
 export const Loop: Story = {
@@ -153,6 +215,51 @@ export const Vertical: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const previous = canvas.getByRole("button", { name: "Previous slide" })
+    const next = canvas.getByRole("button", { name: "Next slide" })
+    const track = trackOf(canvasElement)
+
+    await step("places the controls above and below the track", async () => {
+      await waitFor(() => expect(next).toBeEnabled())
+      await expect(previous).toBeDisabled()
+      const content = canvasElement
+        .querySelector('[data-slot="carousel-content"]')
+        ?.getBoundingClientRect()
+      if (!content) throw new Error("carousel content not rendered")
+      await expect(previous.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+        content.top
+      )
+      await expect(next.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+        content.bottom
+      )
+    })
+
+    await step("moves the track up with the next button", async () => {
+      await userEvent.click(next)
+      await waitFor(() => expect(offsetOf(track).y).toBeLessThan(0))
+      await expect(offsetOf(track).x).toBe(0)
+      await expect(previous).toBeEnabled()
+    })
+
+    await step("disables next at the last slide", async () => {
+      await userEvent.click(next)
+      await userEvent.click(next)
+      await waitFor(() => expect(next).toBeDisabled())
+      await expect(previous).toHaveFocus()
+      await waitFor(() =>
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+      )
+    })
+
+    await step("returns to the start with the previous button", async () => {
+      await userEvent.click(previous)
+      await userEvent.click(previous)
+      await userEvent.click(previous)
+      await waitFor(() => expect(previous).toBeDisabled())
+      await waitFor(() => expect(offsetOf(track).y).toBe(0))
+    })
+  },
 }
 
 const features = [
@@ -244,6 +351,33 @@ export const Featured: Story = {
       </Carousel>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const track = trackOf(canvasElement)
+    const first = await canvas.findByRole("button", { name: "Go to slide 1" })
+
+    await step("shows a dot per slide without a play button", async () => {
+      await expect(first).toHaveAttribute("aria-current", "true")
+      await expect(
+        canvas.queryByRole("button", { name: "Play slideshow" })
+      ).toBeNull()
+    })
+
+    await step("moves the track to the chosen dot", async () => {
+      const second = canvas.getByRole("button", { name: "Go to slide 2" })
+      await userEvent.click(second)
+      await waitFor(() =>
+        expect(second).toHaveAttribute("aria-current", "true")
+      )
+      await expect(first).not.toHaveAttribute("aria-current")
+      await waitFor(() => expect(offsetOf(track).x).toBeLessThan(0))
+    })
+
+    await step("returns to the start from the first dot", async () => {
+      await userEvent.click(first)
+      await waitFor(() => expect(first).toHaveAttribute("aria-current", "true"))
+      await waitFor(() => expect(offsetOf(track).x).toBe(0))
+    })
+  },
 }
 
 export const Spotlight: Story = {
@@ -276,6 +410,31 @@ export const Spotlight: Story = {
       </Carousel>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const next = canvas.getByRole("button", { name: "Next slide" })
+    const first = await canvas.findByRole("button", { name: "Go to slide 1" })
+    const second = canvas.getByRole("button", { name: "Go to slide 2" })
+    const third = canvas.getByRole("button", { name: "Go to slide 3" })
+
+    await step("advances with the next button", async () => {
+      await expect(first).toHaveAttribute("aria-current", "true")
+      await userEvent.click(next)
+      await waitFor(() =>
+        expect(second).toHaveAttribute("aria-current", "true")
+      )
+    })
+
+    await step("jumps to a slide from its dot", async () => {
+      await userEvent.click(third)
+      await waitFor(() => expect(third).toHaveAttribute("aria-current", "true"))
+    })
+
+    await step("loops back to the first slide", async () => {
+      await expect(next).toBeEnabled()
+      await userEvent.click(next)
+      await waitFor(() => expect(first).toHaveAttribute("aria-current", "true"))
+    })
+  },
 }
 
 export const Shelf: Story = {
@@ -315,6 +474,25 @@ export const Shelf: Story = {
       </Carousel>
     </div>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const track = trackOf(canvasElement)
+
+    await step("shows the shelf without controls", async () => {
+      await expect(canvas.getAllByRole("group")).toHaveLength(5)
+      await expect(
+        canvas.queryByRole("button", { name: "Next slide" })
+      ).toBeNull()
+      await expect(offsetOf(track).x).toBe(0)
+    })
+
+    await step("scrolls the shelf with the arrow keys", async () => {
+      canvas.getByRole("region").focus()
+      await userEvent.keyboard("{ArrowRight}")
+      await waitFor(() => expect(offsetOf(track).x).toBeLessThan(0))
+      await userEvent.keyboard("{ArrowLeft}")
+      await waitFor(() => expect(offsetOf(track).x).toBe(0))
+    })
+  },
 }
 
 export const Testimonials: Story = {
@@ -396,6 +574,34 @@ export const Gallery: Story = {
       </CarouselControls>
     </Carousel>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const previous = canvas.getByRole("button", { name: "Previous slide" })
+    const next = canvas.getByRole("button", { name: "Next slide" })
+    const track = trackOf(canvasElement)
+
+    await step("starts at the first card", async () => {
+      await waitFor(() => expect(next).toBeEnabled())
+      await expect(previous).toBeDisabled()
+      await expect(offsetOf(track).x).toBe(0)
+    })
+
+    await step("moves the track with the next button", async () => {
+      await userEvent.click(next)
+      await waitFor(() => expect(offsetOf(track).x).toBeLessThan(0))
+      await expect(previous).toBeEnabled()
+    })
+
+    await step("disables next at the last card", async () => {
+      await userEvent.keyboard(
+        "{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}"
+      )
+      await waitFor(() => expect(next).toBeDisabled())
+      await expect(previous).toHaveFocus()
+      await waitFor(() =>
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+      )
+    })
+  },
 }
 
 export const FeaturedAutoplay: Story = {

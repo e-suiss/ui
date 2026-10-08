@@ -178,6 +178,29 @@ function TitleOnlyExample() {
 
 export const TitleOnly: Story = {
   render: () => <TitleOnlyExample />,
+  play: async ({ canvas, step }) => {
+    await step("shows a toast named by its title alone", async () => {
+      await userEvent.click(
+        canvas.getByRole("button", { name: "Upload photos" })
+      )
+      const toast = await screen.findByRole("dialog", {
+        name: "8 photos uploaded",
+      })
+      await expect(
+        screen.getByRole("region", { name: "Notifications" })
+      ).toContainElement(toast)
+    })
+
+    await step("closes from the close button", async () => {
+      await userEvent.hover(await screen.findByText("8 photos uploaded"))
+      await userEvent.click(
+        await screen.findByRole("button", { name: "Close toast" })
+      )
+      await waitFor(() =>
+        expect(screen.queryByText("8 photos uploaded")).toBeNull()
+      )
+    })
+  },
 }
 
 function WithActionExample() {

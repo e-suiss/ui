@@ -292,14 +292,40 @@ export const Default: Story = {
   },
 }
 
+async function collapsesAndExpands(
+  { canvas, canvasElement, step }: Parameters<NonNullable<Story["play"]>>[0],
+  variant: string
+) {
+  const sidebar = sidebarElement(canvasElement)
+
+  await step(`renders the ${variant} variant expanded`, async () => {
+    await expect(sidebar).toHaveAttribute("data-variant", variant)
+    await expect(sidebar).toHaveAttribute("data-state", "expanded")
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeVisible()
+  })
+
+  await step("collapses to icons from the trigger", async () => {
+    await userEvent.click(bySlot(canvasElement, "sidebar-trigger"))
+    await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+    await expect(sidebar).toHaveAttribute("data-collapsible", "icon")
+  })
+
+  await step("expands again from the rail", async () => {
+    await userEvent.click(bySlot(canvasElement, "sidebar-rail"))
+    await expect(sidebar).toHaveAttribute("data-state", "expanded")
+  })
+}
+
 export const Floating: Story = {
   args: { variant: "floating" },
   render: Default.render,
+  play: (context) => collapsesAndExpands(context, "floating"),
 }
 
 export const Inset: Story = {
   args: { variant: "inset" },
   render: Default.render,
+  play: (context) => collapsesAndExpands(context, "inset"),
 }
 
 export const Collapsed: Story = {

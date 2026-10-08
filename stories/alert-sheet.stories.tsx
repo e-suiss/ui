@@ -89,6 +89,20 @@ export const Default: Story = {
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
   render: Default.render,
+  play: async ({ step }) => {
+    await step("renders a named sheet open on mount", async () => {
+      const sheet = await screen.findByRole("dialog", { name: "Delete order" })
+      await waitFor(() => expect(sheet).toBeVisible())
+      await waitFor(() =>
+        expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus()
+      )
+    })
+
+    await step("closes from cancel", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Cancel" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const NotDismissible: Story = {
@@ -131,6 +145,22 @@ export const WithTitle: Story = {
       </AlertSheetContent>
     </AlertSheet>
   ),
+  play: async ({ step }) => {
+    await step("names the sheet from its visible title", async () => {
+      const sheet = await screen.findByRole("dialog", {
+        name: "Sign out of your account?",
+      })
+      await expect(sheet).toHaveAccessibleDescription(
+        "You will need to sign in again to access your projects."
+      )
+      await expect(screen.getByText("Sign out of your account?")).toBeVisible()
+    })
+
+    await step("closes from the action", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Sign Out" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const MultipleActions: Story = {

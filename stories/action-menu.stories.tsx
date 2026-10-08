@@ -120,6 +120,36 @@ export const WithIcons: Story = {
       </ActionMenuContent>
     </ActionMenu>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "Order actions" })
+
+    await step("shows an icon beside every action", async () => {
+      await userEvent.click(trigger)
+      await screen.findByRole("menu")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Edit" })).toBeVisible()
+      )
+      const actions = screen.getAllByRole("menuitem")
+      await expect(actions).toHaveLength(4)
+      for (const action of actions) {
+        await expect(action.querySelector("svg")).not.toBeNull()
+      }
+    })
+
+    await step("arrow to an action and run it with Enter", async () => {
+      await userEvent.keyboard("{ArrowDown}")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Edit" })).toHaveFocus()
+      )
+      await userEvent.keyboard("{ArrowDown}")
+      await expect(
+        screen.getByRole("menuitem", { name: "Duplicate" })
+      ).toHaveFocus()
+      await userEvent.keyboard("{Enter}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(trigger).toHaveFocus())
+    })
+  },
 }
 
 export const NotDismissible: Story = {

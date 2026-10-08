@@ -212,6 +212,42 @@ export const Links: Story = {
       </TabBar>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const nav = canvas.getByRole("navigation", { name: "Main" })
+
+    await step("renders every item as a link to its route", async () => {
+      await expect(within(nav).getAllByRole("link")).toHaveLength(
+        defaultItems.length
+      )
+      for (const item of defaultItems) {
+        await expect(
+          within(nav).getByRole("link", { name: item })
+        ).toHaveAttribute("href", `#${item.toLowerCase()}`)
+      }
+    })
+
+    await step("marks only the active link as the current page", async () => {
+      await expect(
+        within(nav).getByRole("link", { name: "Home" })
+      ).toHaveAttribute("aria-current", "page")
+      for (const item of defaultItems.slice(1)) {
+        await expect(
+          within(nav).getByRole("link", { name: item })
+        ).not.toHaveAttribute("aria-current")
+      }
+    })
+
+    await step("reaches the links from the keyboard", async () => {
+      await userEvent.tab()
+      await expect(
+        within(nav).getByRole("link", { name: "Home" })
+      ).toHaveFocus()
+      await userEvent.tab()
+      await expect(
+        within(nav).getByRole("link", { name: "Nominees" })
+      ).toHaveFocus()
+    })
+  },
 }
 
 export const DisabledItem: Story = {

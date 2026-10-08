@@ -93,6 +93,23 @@ export const Vertical: Story = {
       </div>
     ),
   ],
+  play: async ({ canvas, step }) => {
+    const slider = canvas.getByRole("slider")
+
+    await step("runs vertically", async () => {
+      await expect(slider).toHaveAttribute("aria-orientation", "vertical")
+      await expect(slider).toHaveAttribute("aria-valuenow", "50")
+    })
+
+    await step("moves with the up and down keys", async () => {
+      await userEvent.tab()
+      await expect(slider).toHaveFocus()
+      await userEvent.keyboard("{ArrowUp}")
+      await expect(slider).toHaveAttribute("aria-valuenow", "51")
+      await userEvent.keyboard("{ArrowDown}{ArrowDown}")
+      await expect(slider).toHaveAttribute("aria-valuenow", "49")
+    })
+  },
 }
 
 export const Disabled: Story = {

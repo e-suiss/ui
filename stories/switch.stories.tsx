@@ -104,4 +104,18 @@ export const Disabled: Story = {
 
 export const Invalid: Story = {
   args: { "aria-invalid": true },
+  play: async ({ canvas, step }) => {
+    const control = canvas.getByRole("switch")
+
+    await step("flags the switch as invalid", async () => {
+      await expect(control).toBeInvalid()
+      await expect(control).toHaveAttribute("aria-checked", "false")
+    })
+
+    await step("still toggles on click", async () => {
+      await userEvent.click(control)
+      await expect(control).toHaveAttribute("aria-checked", "true")
+      await expect(control).toBeInvalid()
+    })
+  },
 }

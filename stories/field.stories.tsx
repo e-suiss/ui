@@ -78,6 +78,23 @@ export const WithHelpLink: Story = {
       </FieldDescription>
     </Field>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Serial number" })
+
+    await step("focuses the input from its label", async () => {
+      await userEvent.click(canvas.getByText("Serial number"))
+      await expect(input).toHaveFocus()
+      await userEvent.keyboard("C02XL0GTJGH5")
+      await expect(input).toHaveValue("C02XL0GTJGH5")
+    })
+
+    await step("reaches the help link after the input", async () => {
+      const link = canvas.getByRole("link", { name: "Find your serial number" })
+      await expect(link).toHaveAttribute("href", "#serial-help")
+      await userEvent.tab()
+      await expect(link).toHaveFocus()
+    })
+  },
 }
 
 export const Inset: Story = {
@@ -117,6 +134,20 @@ export const WithTextarea: Story = {
       <FieldDescription>Your feedback helps us improve.</FieldDescription>
     </Field>
   ),
+  play: async ({ canvas, step }) => {
+    const textarea = canvas.getByRole("textbox", { name: "Feedback" })
+
+    await step("names the textarea and focuses it from the label", async () => {
+      await expect(textarea).toHaveAttribute("rows", "4")
+      await userEvent.click(canvas.getByText("Feedback"))
+      await expect(textarea).toHaveFocus()
+    })
+
+    await step("accepts multi-line text", async () => {
+      await userEvent.keyboard("Great{Enter}work")
+      await expect(textarea).toHaveValue("Great\nwork")
+    })
+  },
 }
 
 export const Invalid: Story = {

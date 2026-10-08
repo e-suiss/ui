@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/context-menu"
 
 const FORWARD = /^Forward/
+const RELOAD = /^Reload/
 
 const meta = {
   title: "Components/Context Menu",
@@ -140,6 +141,20 @@ export const Default: Story = {
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
   render: Default.render,
+  play: async ({ step }) => {
+    await step("renders the menu open on mount", async () => {
+      const menu = await screen.findByRole("menu")
+      await waitFor(() => expect(menu).toBeVisible())
+      await expect(
+        screen.getByRole("menuitem", { name: FORWARD })
+      ).toHaveAttribute("aria-disabled", "true")
+    })
+
+    await step("closes after choosing an item", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: RELOAD }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const Inset: Story = {

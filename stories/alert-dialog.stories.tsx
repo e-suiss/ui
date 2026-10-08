@@ -114,6 +114,22 @@ export const Small: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
+  play: async ({ step }) => {
+    await step("renders a named alert dialog open on mount", async () => {
+      const dialog = await screen.findByRole("alertdialog", {
+        name: "Discard draft?",
+      })
+      await waitFor(() => expect(dialog).toBeVisible())
+      await expect(dialog).toHaveAccessibleDescription(
+        "Your unsaved message will be lost."
+      )
+    })
+
+    await step("closes from cancel", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Keep" }))
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    })
+  },
 }
 
 export const WithMedia: Story = {
@@ -141,4 +157,20 @@ export const WithMedia: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
+  play: async ({ step }) => {
+    await step("renders a named alert dialog with its media", async () => {
+      const dialog = await screen.findByRole("alertdialog", {
+        name: "Delete this project?",
+      })
+      await waitFor(() => expect(dialog).toBeVisible())
+      await expect(
+        dialog.querySelector('[data-slot="alert-dialog-media"] svg')
+      ).toBeInTheDocument()
+    })
+
+    await step("closes from cancel", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Cancel" }))
+      await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    })
+  },
 }

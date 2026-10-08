@@ -169,6 +169,34 @@ export const WithIcons: Story = {
       ))}
     </Tabs>
   ),
+  play: async ({ canvas, step }) => {
+    const account = canvas.getByRole("tab", { name: "Account" })
+    const notifications = canvas.getByRole("tab", { name: "Notifications" })
+    const settingsTab = canvas.getByRole("tab", { name: "Settings" })
+
+    await step("names each tab by its text beside the icon", async () => {
+      await expect(account).toHaveAttribute("aria-selected", "true")
+      await expect(account.querySelector("svg")).toBeInTheDocument()
+    })
+
+    await step("switches panels on click", async () => {
+      await userEvent.click(settingsTab)
+      await expect(settingsTab).toHaveAttribute("aria-selected", "true")
+      await waitFor(() =>
+        expect(canvas.getByRole("tabpanel")).toHaveTextContent(tabs[2].content)
+      )
+    })
+
+    await step("selects with the arrow keys", async () => {
+      await userEvent.keyboard("{ArrowLeft}")
+      await expect(notifications).toHaveFocus()
+      await userEvent.keyboard("{Enter}")
+      await expect(notifications).toHaveAttribute("aria-selected", "true")
+      await waitFor(() =>
+        expect(canvas.getByRole("tabpanel")).toHaveTextContent(tabs[1].content)
+      )
+    })
+  },
 }
 
 export const DisabledTab: Story = {
@@ -260,4 +288,34 @@ export const ManyTabsLine: Story = {
   args: { variant: "line" },
   parameters: { layout: "padded", wide: true },
   render: ManyTabs.render,
+  play: async ({ canvas, step }) => {
+    const privacy = canvas.getByRole("tab", { name: "Privacy" })
+    const appearance = canvas.getByRole("tab", { name: "Appearance" })
+
+    await step("switches panels on click", async () => {
+      await expect(
+        canvas.getByRole("tab", { name: "General" })
+      ).toHaveAttribute("aria-selected", "true")
+      await userEvent.click(privacy)
+      await expect(privacy).toHaveAttribute("aria-selected", "true")
+      await waitFor(() =>
+        expect(canvas.getByRole("tabpanel")).toHaveTextContent(
+          "Privacy settings"
+        )
+      )
+    })
+
+    await step("selects with the arrow keys", async () => {
+      await userEvent.keyboard("{ArrowRight}")
+      await expect(appearance).toHaveFocus()
+      await userEvent.keyboard("{Enter}")
+      await expect(appearance).toHaveAttribute("aria-selected", "true")
+      await expect(privacy).toHaveAttribute("aria-selected", "false")
+      await waitFor(() =>
+        expect(canvas.getByRole("tabpanel")).toHaveTextContent(
+          "Appearance settings"
+        )
+      )
+    })
+  },
 }

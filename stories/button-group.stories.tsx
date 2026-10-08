@@ -385,6 +385,29 @@ export const SplitButton: Story = {
       </Button>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const publish = canvas.getByRole("button", { name: "Publish" })
+    const more = canvas.getByRole("button", { name: "More options" })
+
+    await step("joins both halves in one group", async () => {
+      const group = canvas.getByRole("group")
+      await expect(group).toContainElement(publish)
+      await expect(group).toContainElement(more)
+      await expect(
+        Math.abs(
+          more.getBoundingClientRect().left -
+            publish.getBoundingClientRect().right
+        )
+      ).toBeLessThanOrEqual(2)
+    })
+
+    await step("moves between the halves with Tab", async () => {
+      await userEvent.tab()
+      await expect(publish).toHaveFocus()
+      await userEvent.tab()
+      await expect(more).toHaveFocus()
+    })
+  },
 }
 
 export const WithInput: Story = {
@@ -396,6 +419,26 @@ export const WithInput: Story = {
       </Button>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Search" })
+    const button = canvas.getByRole("button", { name: "Search" })
+
+    await step("types into the input inside the group", async () => {
+      await userEvent.type(input, "grill")
+      await expect(input).toHaveValue("grill")
+    })
+
+    await step("moves from the input to its button with Tab", async () => {
+      await userEvent.tab()
+      await expect(button).toHaveFocus()
+      await expect(
+        Math.abs(
+          button.getBoundingClientRect().left -
+            input.getBoundingClientRect().right
+        )
+      ).toBeLessThanOrEqual(2)
+    })
+  },
 }
 
 export const WithInputGroup: Story = {
@@ -428,6 +471,26 @@ export const WithInputGroup: Story = {
       </ButtonGroup>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByRole("textbox", { name: "Message" })
+    const voice = canvas.getByRole("button", { name: "Voice mode" })
+
+    await step("types into the input group", async () => {
+      await userEvent.type(input, "Table 4 is ready")
+      await expect(input).toHaveValue("Table 4 is ready")
+    })
+
+    await step("reaches the voice button and shows its tooltip", async () => {
+      await userEvent.tab()
+      await expect(voice).toHaveFocus()
+      await waitFor(
+        () => expect(screen.getByText("Voice mode")).toBeVisible(),
+        { timeout: 3000 }
+      )
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByText("Voice mode")).toBeNull())
+    })
+  },
 }
 
 export const WithText: Story = {
@@ -483,6 +546,23 @@ export const WithDropdownMenu: Story = {
       </DropdownMenu>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("button", { name: "More options" })
+
+    await step("opens the menu from the group", async () => {
+      await userEvent.click(trigger)
+      const item = await screen.findByRole("menuitem", { name: "Copy link" })
+      await waitFor(() => expect(item).toBeVisible())
+      await expect(trigger).toHaveAttribute("aria-expanded", "true")
+      await expect(screen.getAllByRole("menuitem")).toHaveLength(4)
+    })
+
+    await step("closes after choosing an item", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: "Copy link" }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await expect(trigger).toHaveAttribute("aria-expanded", "false")
+    })
+  },
 }
 
 const currencies = [
@@ -519,6 +599,25 @@ export const WithSelect: Story = {
       </ButtonGroup>
     </ButtonGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const trigger = canvas.getByRole("combobox", { name: "Currency" })
+    const amount = canvas.getByRole("textbox", { name: "Amount" })
+
+    await step("picks a currency from the select", async () => {
+      await expect(trigger).toHaveTextContent("$")
+      await userEvent.click(trigger)
+      await userEvent.click(await screen.findByRole("option", { name: "€" }))
+      await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+      await expect(trigger).toHaveTextContent("€")
+    })
+
+    await step("types an amount next to it", async () => {
+      await userEvent.type(amount, "12.50")
+      await expect(amount).toHaveValue("12.50")
+      await userEvent.tab()
+      await expect(canvas.getByRole("button", { name: "Send" })).toHaveFocus()
+    })
+  },
 }
 
 export const WithPopover: Story = {

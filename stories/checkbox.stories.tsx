@@ -72,6 +72,29 @@ export const WithDescription: Story = {
       </div>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const checkbox = canvas.getByRole("checkbox", { name: "Product updates" })
+
+    await step("shows the description under the label", async () => {
+      const description = canvas.getByText(
+        "Get an email when we release new features."
+      )
+      await expect(description).toBeVisible()
+      await expect(
+        description.getBoundingClientRect().top
+      ).toBeGreaterThanOrEqual(
+        canvas.getByText("Product updates").getBoundingClientRect().bottom
+      )
+    })
+
+    await step("toggles from its label", async () => {
+      await expect(checkbox).toBeChecked()
+      await userEvent.click(canvas.getByText("Product updates"))
+      await expect(checkbox).not.toBeChecked()
+      await userEvent.click(checkbox)
+      await expect(checkbox).toBeChecked()
+    })
+  },
 }
 
 export const Disabled: Story = {

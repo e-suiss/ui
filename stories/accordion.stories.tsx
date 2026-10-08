@@ -113,6 +113,41 @@ export const Filled: Story = {
       ))}
     </Accordion>
   ),
+  play: async ({ canvas, step }) => {
+    const returns = canvas.getByRole("button", {
+      name: "Can I return an item?",
+    })
+
+    await step("starts with every panel collapsed", async () => {
+      for (const item of items) {
+        await expect(
+          canvas.getByRole("button", { name: item.title })
+        ).toHaveAttribute("aria-expanded", "false")
+      }
+    })
+
+    await step("expands a panel on click", async () => {
+      await userEvent.click(returns)
+      await expect(returns).toHaveAttribute("aria-expanded", "true")
+      await expect(
+        await canvas.findByText(
+          "Items can be returned within 14 days of delivery for a full refund."
+        )
+      ).toBeVisible()
+    })
+
+    await step("collapses it on a second click", async () => {
+      await userEvent.click(returns)
+      await expect(returns).toHaveAttribute("aria-expanded", "false")
+      await waitFor(() =>
+        expect(
+          canvas.queryByText(
+            "Items can be returned within 14 days of delivery for a full refund."
+          )
+        ).toBeNull()
+      )
+    })
+  },
 }
 
 export const OpenByDefault: Story = {

@@ -4,6 +4,9 @@ import { expect, userEvent } from "storybook/test"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
+const STANDARD = /^Standard/
+const EXPRESS = /^Express/
+
 const options = [
   { value: "email", label: "Email" },
   { value: "sms", label: "Text message" },
@@ -96,6 +99,28 @@ export const WithDescriptions: Story = {
       ))}
     </RadioGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const standard = canvas.getByRole("radio", { name: STANDARD })
+    const express = canvas.getByRole("radio", { name: EXPRESS })
+
+    await step("shows each description inside its option", async () => {
+      await expect(
+        canvas.getByText("Arrives in 4 to 6 business days.").closest("label")
+      ).toContainElement(standard)
+      await expect(
+        canvas.getByText("Arrives in 1 to 2 business days.").closest("label")
+      ).toContainElement(express)
+    })
+
+    await step("selects an option from its description", async () => {
+      await expect(standard).toHaveAttribute("aria-checked", "true")
+      await userEvent.click(
+        canvas.getByText("Arrives in 1 to 2 business days.")
+      )
+      await expect(express).toHaveAttribute("aria-checked", "true")
+      await expect(standard).toHaveAttribute("aria-checked", "false")
+    })
+  },
 }
 
 export const DisabledItem: Story = {
@@ -154,4 +179,22 @@ export const Invalid: Story = {
       ))}
     </RadioGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const radios = canvas.getAllByRole("radio")
+
+    await step("marks every option as invalid with none chosen", async () => {
+      await expect(radios).toHaveLength(3)
+      for (const radio of radios) {
+        await expect(radio).toBeInvalid()
+        await expect(radio).toHaveAttribute("aria-checked", "false")
+      }
+    })
+
+    await step("still accepts a choice", async () => {
+      await userEvent.click(canvas.getByText("Text message"))
+      await expect(
+        canvas.getByRole("radio", { name: "Text message" })
+      ).toHaveAttribute("aria-checked", "true")
+    })
+  },
 }

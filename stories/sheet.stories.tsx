@@ -133,6 +133,24 @@ export const Sides: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    for (const side of ["top", "right", "bottom", "left"]) {
+      const label = side.charAt(0).toUpperCase() + side.slice(1)
+
+      await step(`opens and closes the ${side} sheet`, async () => {
+        const trigger = canvas.getByRole("button", { name: label })
+        await userEvent.click(trigger)
+        const sheet = await screen.findByRole("dialog", {
+          name: "Edit profile",
+        })
+        await expect(sheet).toHaveAttribute("data-side", side)
+        await waitFor(() => expect(sheet).toBeVisible())
+        await userEvent.keyboard("{Escape}")
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+        await waitFor(() => expect(trigger).toHaveFocus())
+      })
+    }
+  },
 }
 
 export const OpenLeft: Story = {
@@ -145,6 +163,22 @@ export const OpenLeft: Story = {
       <ProfileSheet side="left" />
     </Sheet>
   ),
+  play: async ({ step }) => {
+    await step("renders open on the left side", async () => {
+      const sheet = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(sheet).toHaveAttribute("data-side", "left")
+      await waitFor(() =>
+        expect(sheet.getBoundingClientRect().left).toBeLessThan(
+          window.innerWidth / 2
+        )
+      )
+    })
+
+    await step("closes from the close button", async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Close" }))
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const OpenBottom: Story = {
@@ -157,6 +191,22 @@ export const OpenBottom: Story = {
       <ProfileSheet side="bottom" />
     </Sheet>
   ),
+  play: async ({ step }) => {
+    await step("renders open on the bottom side", async () => {
+      const sheet = await screen.findByRole("dialog", { name: "Edit profile" })
+      await expect(sheet).toHaveAttribute("data-side", "bottom")
+      await waitFor(() =>
+        expect(sheet.getBoundingClientRect().top).toBeGreaterThan(
+          window.innerHeight / 2
+        )
+      )
+    })
+
+    await step("closes with Escape", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+    })
+  },
 }
 
 export const WithoutCloseButton: Story = {

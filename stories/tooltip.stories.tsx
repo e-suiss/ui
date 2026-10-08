@@ -11,8 +11,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+type Side = "top" | "right" | "bottom" | "left"
+
 type TooltipStoryArgs = React.ComponentProps<typeof Tooltip> & {
-  side?: "top" | "right" | "bottom" | "left"
+  side?: Side
 }
 
 const meta = {
@@ -107,6 +109,41 @@ export const Sides: Story = {
       ))}
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const axes = { top: "y", bottom: "y", left: "x", right: "x" }
+
+    for (const side of ["top", "right", "bottom", "left"] as const) {
+      await step(`opens the ${side} tooltip on its axis`, async () => {
+        const trigger = canvas.getByRole("button", { name: side })
+        await userEvent.hover(trigger)
+        const text = `Shown on the ${side}`
+        await waitFor(
+          () =>
+            expect(
+              screen.getByText(text).closest('[data-slot="tooltip-content"]')
+            ).toHaveAttribute("data-open"),
+          { timeout: 3000 }
+        )
+        const content = screen.getByText(text)
+        const placed = content
+          .closest('[data-slot="tooltip-content"]')
+          ?.getAttribute("data-side")
+        await expect(axes[placed as Side]).toBe(axes[side])
+        await waitFor(() => {
+          const tip = content.getBoundingClientRect()
+          const anchor = trigger.getBoundingClientRect()
+          const placements = {
+            top: tip.bottom <= anchor.top,
+            right: tip.left >= anchor.right,
+            bottom: tip.top >= anchor.bottom,
+            left: tip.right <= anchor.left,
+          }
+          expect(placements[placed as Side]).toBe(true)
+        })
+        await userEvent.unhover(trigger)
+      })
+    }
+  },
 }
 
 export const WithShortcut: Story = {

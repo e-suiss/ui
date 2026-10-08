@@ -115,6 +115,27 @@ export const WithIcons: Story = {
       </ContextActionsContent>
     </ContextActions>
   ),
+  play: async ({ canvas, step }) => {
+    const target = canvas.getByText("Right click or long press")
+
+    await step("right click opens actions with icons", async () => {
+      await userEvent.pointer({ keys: "[MouseRight]", target })
+      await screen.findByRole("menu")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: "Edit" })).toBeVisible()
+      )
+      const actions = screen.getAllByRole("menuitem")
+      await expect(actions).toHaveLength(4)
+      for (const action of actions) {
+        await expect(action.querySelector("svg")).not.toBeNull()
+      }
+    })
+
+    await step("clicking an action closes the menu", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: "Delete" }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const NotDismissible: Story = {

@@ -106,6 +106,8 @@ type Story = StoryObj<typeof meta>
 const NEW_TAB = /New tab/
 const COPY = /Copy/
 const PRINT = /Print/
+const CUT = /Cut/
+const DELETE = /Delete/
 
 export const Default: Story = {
   render: (args) => (
@@ -168,6 +170,26 @@ export const WithIcons: Story = {
       <ViewMenu />
     </ActionBar>
   ),
+  play: async ({ canvas, step }) => {
+    const edit = canvas.getByRole("menuitem", { name: "Edit" })
+
+    await step("shows an icon beside each edit action", async () => {
+      await userEvent.click(edit)
+      await screen.findByRole("menu")
+      const cut = await screen.findByRole("menuitem", { name: CUT })
+      await waitFor(() => expect(cut).toBeVisible())
+      for (const name of [CUT, COPY, DELETE]) {
+        await expect(
+          screen.getByRole("menuitem", { name }).querySelector("svg")
+        ).not.toBeNull()
+      }
+    })
+
+    await step("running an action closes the menu", async () => {
+      await userEvent.click(screen.getByRole("menuitem", { name: DELETE }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const OpenByDefault: Story = {
@@ -195,6 +217,30 @@ export const NotDismissible: Story = {
       <EditMenu />
     </ActionBar>
   ),
+  play: async ({ canvas, step }) => {
+    const file = canvas.getByRole("menuitem", { name: "File" })
+
+    await step("opens a menu from the menubar", async () => {
+      await expect(canvas.getByRole("menubar")).toBeVisible()
+      await userEvent.click(file)
+      await screen.findByRole("menu")
+      await waitFor(() =>
+        expect(screen.getByRole("menuitem", { name: NEW_TAB })).toBeVisible()
+      )
+    })
+
+    await step("Escape closes and returns focus to the trigger", async () => {
+      await userEvent.keyboard("{Escape}")
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+      await waitFor(() => expect(file).toHaveFocus())
+    })
+
+    await step("running an action closes the menu", async () => {
+      await userEvent.click(canvas.getByRole("menuitem", { name: "Edit" }))
+      await userEvent.click(await screen.findByRole("menuitem", { name: COPY }))
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+  },
 }
 
 export const CustomLabels: Story = {

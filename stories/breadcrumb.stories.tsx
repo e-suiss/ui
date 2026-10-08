@@ -110,6 +110,25 @@ export const WithEllipsis: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  play: async ({ canvas, step }) => {
+    await step(
+      "names the collapsed items and marks the current page",
+      async () => {
+        await expect(canvas.getByText("More")).toBeInTheDocument()
+        await expect(canvas.getByText("Notifications")).toHaveAttribute(
+          "aria-current",
+          "page"
+        )
+      }
+    )
+
+    await step("skips the static ellipsis when tabbing", async () => {
+      await userEvent.tab()
+      await expect(canvas.getByRole("link", { name: "Home" })).toHaveFocus()
+      await userEvent.tab()
+      await expect(canvas.getByRole("link", { name: "Settings" })).toHaveFocus()
+    })
+  },
 }
 
 export const CustomSeparator: Story = {
@@ -134,4 +153,30 @@ export const CustomSeparator: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    await step("hides the custom separators from assistive tech", async () => {
+      const separators = canvasElement.querySelectorAll(
+        '[data-slot="breadcrumb-separator"]'
+      )
+      await expect(separators).toHaveLength(2)
+      for (const separator of separators) {
+        await expect(separator).toHaveAttribute("aria-hidden", "true")
+        await expect(separator).toHaveTextContent("/")
+      }
+      await expect(canvas.getAllByRole("listitem")).toHaveLength(3)
+    })
+
+    await step("tabs through the links", async () => {
+      await userEvent.tab()
+      await expect(canvas.getByRole("link", { name: "Docs" })).toHaveFocus()
+      await userEvent.tab()
+      await expect(
+        canvas.getByRole("link", { name: "Components" })
+      ).toHaveFocus()
+      await expect(canvas.getByText("Breadcrumb")).toHaveAttribute(
+        "aria-current",
+        "page"
+      )
+    })
+  },
 }

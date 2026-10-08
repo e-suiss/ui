@@ -139,6 +139,21 @@ export const WithText: Story = {
       </InputGroup>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const amount = canvas.getByPlaceholderText("0.00")
+    const domain = canvas.getByPlaceholderText("example.com")
+
+    await step("focuses each input from its text addons", async () => {
+      await userEvent.click(canvas.getByText("USD"))
+      await expect(amount).toHaveFocus()
+      await userEvent.keyboard("12.50")
+      await expect(amount).toHaveValue("12.50")
+      await userEvent.click(canvas.getByText("https://"))
+      await expect(domain).toHaveFocus()
+      await userEvent.keyboard("esuiss")
+      await expect(domain).toHaveValue("esuiss")
+    })
+  },
 }
 
 export const WithButtons: Story = {
@@ -209,6 +224,22 @@ export const ButtonSizes: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
+  play: async ({ canvas, step }) => {
+    const input = canvas.getByPlaceholderText("Type a command...")
+
+    await step("accepts typed text", async () => {
+      await userEvent.click(input)
+      await userEvent.keyboard("deploy")
+      await expect(input).toHaveValue("deploy")
+    })
+
+    await step("tabs through every button size", async () => {
+      for (const name of ["Extra small", "Copy", "Attach"]) {
+        await userEvent.tab()
+        await expect(canvas.getByRole("button", { name })).toHaveFocus()
+      }
+    })
+  },
 }
 
 export const WithKbd: Story = {
@@ -223,6 +254,20 @@ export const WithKbd: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
+  play: async ({ canvas, canvasElement, step }) => {
+    const input = canvas.getByPlaceholderText("Search documentation...")
+    const kbd = canvasElement.querySelector<HTMLElement>('[data-slot="kbd"]')
+    const addon = kbd?.closest<HTMLElement>('[data-slot="input-group-addon"]')
+
+    await step("focuses the input from the shortcut hint", async () => {
+      await expect(kbd).toHaveTextContent("K")
+      await expect(addon).toHaveAttribute("data-align", "inline-end")
+      if (addon) await userEvent.click(addon)
+      await expect(input).toHaveFocus()
+      await userEvent.keyboard("tabs")
+      await expect(input).toHaveValue("tabs")
+    })
+  },
 }
 
 export const BlockAddons: Story = {
@@ -242,6 +287,38 @@ export const BlockAddons: Story = {
       </InputGroup>
     </div>
   ),
+  play: async ({ canvas, step }) => {
+    const title = canvas.getByPlaceholderText("Enter a title")
+    const amount = canvas.getByPlaceholderText("Enter an amount")
+
+    await step("places the addons above and below the inputs", async () => {
+      const titleAddon = canvas
+        .getByText("Title")
+        .closest('[data-slot="input-group-addon"]')
+      const amountAddon = canvas
+        .getByText("Minimum payment is $5.00")
+        .closest('[data-slot="input-group-addon"]')
+      await expect(titleAddon).toHaveAttribute("data-align", "block-start")
+      await expect(amountAddon).toHaveAttribute("data-align", "block-end")
+      await expect(
+        titleAddon?.getBoundingClientRect().bottom ?? 0
+      ).toBeLessThanOrEqual(title.getBoundingClientRect().top + 1)
+      await expect(
+        amountAddon?.getBoundingClientRect().top ?? 0
+      ).toBeGreaterThanOrEqual(amount.getBoundingClientRect().bottom - 1)
+    })
+
+    await step("focuses each input from its block addon", async () => {
+      await userEvent.click(canvas.getByText("Title"))
+      await expect(title).toHaveFocus()
+      await userEvent.keyboard("Invoice")
+      await expect(title).toHaveValue("Invoice")
+      await userEvent.click(canvas.getByText("Minimum payment is $5.00"))
+      await expect(amount).toHaveFocus()
+      await userEvent.keyboard("25")
+      await expect(amount).toHaveValue("25")
+    })
+  },
 }
 
 export const WithTextarea: Story = {
