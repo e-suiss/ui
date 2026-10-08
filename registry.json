@@ -211,7 +211,8 @@
         "embla-carousel-react"
       ],
       "requires": [
-        "button"
+        "button",
+        "direction"
       ],
       "files": [
         "components/ui/carousel.tsx"
@@ -748,6 +749,7 @@
       ],
       "requires": [
         "button",
+        "direction",
         "input",
         "separator",
         "sheet",

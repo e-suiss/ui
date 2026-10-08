@@ -118,6 +118,27 @@ export const Default: Story = {
   },
 }
 
+export const RightToLeft: Story = {
+  globals: { direction: "rtl" },
+  render: Default.render,
+  play: async ({ canvas, canvasElement, step }) => {
+    const next = canvas.getByRole("button", { name: "Next slide" })
+    const track = trackOf(canvasElement)
+
+    await step("moves the track to the right for the next slide", async () => {
+      await userEvent.click(next)
+      await waitFor(() => expect(offsetOf(track).x).toBeGreaterThan(0))
+    })
+
+    await step("steps forward with the left arrow", async () => {
+      const after = offsetOf(track).x
+      canvas.getByRole("region").focus()
+      await userEvent.keyboard("{ArrowLeft}")
+      await waitFor(() => expect(offsetOf(track).x).toBeGreaterThan(after))
+    })
+  },
+}
+
 export const MultipleItems: Story = {
   args: { opts: { align: "start" } },
   render: (args) => (

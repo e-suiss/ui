@@ -12,8 +12,15 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
+import { useDirection } from "@/components/ui/direction"
 
 type CarouselApi = UseEmblaCarouselType[1]
+
+const STEP_KEYS = {
+  vertical: ["ArrowUp", "ArrowDown"],
+  ltr: ["ArrowLeft", "ArrowRight"],
+  rtl: ["ArrowRight", "ArrowLeft"],
+} as const
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
@@ -95,8 +102,10 @@ function Carousel({
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const rootRef = React.useRef<HTMLDivElement | null>(null)
+  const direction = useDirection()
   const [carouselRef, api] = useEmblaCarousel(
     {
+      direction,
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
     },
@@ -131,16 +140,17 @@ function Carousel({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const vertical = orientation === "vertical"
-      if (event.key === (vertical ? "ArrowUp" : "ArrowLeft")) {
+      const [back, forward] =
+        STEP_KEYS[orientation === "vertical" ? "vertical" : direction]
+      if (event.key === back) {
         event.preventDefault()
         scrollPrev()
-      } else if (event.key === (vertical ? "ArrowDown" : "ArrowRight")) {
+      } else if (event.key === forward) {
         event.preventDefault()
         scrollNext()
       }
     },
-    [orientation, scrollPrev, scrollNext]
+    [direction, orientation, scrollPrev, scrollNext]
   )
 
   React.useEffect(() => {
