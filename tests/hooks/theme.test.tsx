@@ -272,4 +272,13 @@ describe("themeScript", () => {
     expect(root.classList.contains("dark")).toBe(false)
     expect(root.style.colorScheme).toBe("light")
   })
+
+  it("cannot close its script tag through the storage key", () => {
+    const key = "</script><script>alert(1)</script>"
+    const script = themeScript(key, "light")
+    expect(script).not.toContain("</script>")
+    localStorage.setItem(key, "dark")
+    run(script)
+    expect(root.classList.contains("dark")).toBe(true)
+  })
 })

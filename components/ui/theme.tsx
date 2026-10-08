@@ -272,8 +272,14 @@ function ThemeProvider({
   )
 }
 
+const SCRIPT_UNSAFE = /</g
+
+function scriptString(value: string) {
+  return JSON.stringify(value).replace(SCRIPT_UNSAFE, "\\u003c")
+}
+
 function themeScript(storageKey = "theme", defaultTheme: Theme = "system") {
-  return `(()=>{try{var t=localStorage.getItem(${JSON.stringify(storageKey)})||${JSON.stringify(defaultTheme)};var d=t==="dark"||(t==="system"&&matchMedia(${JSON.stringify(DARK_QUERY)}).matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()`
+  return `(()=>{try{var t=localStorage.getItem(${scriptString(storageKey)})||${scriptString(defaultTheme)};var d=t==="dark"||(t==="system"&&matchMedia(${scriptString(DARK_QUERY)}).matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()`
 }
 
 function ThemeScript({
