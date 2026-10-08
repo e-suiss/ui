@@ -316,6 +316,30 @@ async function collapsesAndExpands(
   })
 }
 
+export const RightToLeft: Story = {
+  globals: { direction: "rtl" },
+  render: (args) => <AppShell {...args} />,
+  play: async ({ canvasElement, step }) => {
+    const container = bySlot(canvasElement, "sidebar-container")
+    const inset = bySlot(canvasElement, "sidebar-inset")
+
+    await step(
+      "puts the sidebar on the right next to the content",
+      async () => {
+        await waitFor(() =>
+          expect(container.getBoundingClientRect().right).toBeCloseTo(
+            document.documentElement.clientWidth,
+            0
+          )
+        )
+        await expect(inset.getBoundingClientRect().right).toBeLessThanOrEqual(
+          container.getBoundingClientRect().left + 1
+        )
+      }
+    )
+  },
+}
+
 export const Floating: Story = {
   args: { variant: "floating" },
   render: Default.render,
