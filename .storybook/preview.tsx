@@ -3,11 +3,13 @@ import {
   type DocsContainerProps,
 } from "@storybook/addon-docs/blocks"
 import { withThemeByClassName } from "@storybook/addon-themes"
-import type { Preview } from "@storybook/react-vite"
+import type { Decorator, Preview } from "@storybook/react-vite"
 import { useEffect, useState } from "react"
 import { GLOBALS_UPDATED } from "storybook/internal/core-events"
 import { addons } from "storybook/preview-api"
 import { create } from "storybook/theming/create"
+
+import { DirectionProvider } from "@/components/ui/direction"
 
 import "./preview.css"
 
@@ -68,8 +70,38 @@ function ThemedDocsContainer({ context, ...props }: DocsContainerProps) {
   )
 }
 
+type Direction = "ltr" | "rtl"
+
+const withDirection: Decorator = (Story, context) => {
+  const direction: Direction =
+    context.globals.direction ??
+    (globalThis as { storybookDirection?: Direction }).storybookDirection ??
+    "ltr"
+  document.documentElement.dir = direction
+  return (
+    <DirectionProvider direction={direction}>
+      <Story />
+    </DirectionProvider>
+  )
+}
+
 const preview: Preview = {
+  globalTypes: {
+    direction: {
+      description: "Text direction",
+      toolbar: {
+        title: "Direction",
+        icon: "transfer",
+        items: [
+          { value: "ltr", title: "Left to right" },
+          { value: "rtl", title: "Right to left" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
   decorators: [
+    withDirection,
     withThemeByClassName({
       themes: { light: "", dark: "dark" },
       defaultTheme: "light",

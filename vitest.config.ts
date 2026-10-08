@@ -41,6 +41,14 @@ function browser(name: string) {
 export default defineConfig({
   resolve: { alias: { "@": root } },
   test: {
+    forceRerunTriggers: [
+      "**/package.json/**",
+      "**/{vitest,vite}.config.*/**",
+      "**/styles/**",
+      "**/packages/tailwind/**",
+      "**/.storybook/**",
+      "**/tests/*.ts",
+    ],
     projects: [
       {
         test: {
@@ -76,6 +84,8 @@ export default defineConfig({
           setupFiles: [
             "tests/setup.ts",
             "tests/stories-setup.ts",
+            ...(process.env.RTL ? ["tests/rtl-setup.ts"] : []),
+            ...(process.env.LONG_TEXT ? ["tests/long-text-setup.ts"] : []),
             ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
             ...(process.env.A11Y ? ["tests/a11y-setup.ts"] : []),
             ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),

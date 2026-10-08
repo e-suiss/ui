@@ -6,6 +6,8 @@ const dirs = [
   ".vitest/motion",
   ".vitest/text",
   ".vitest/responsive",
+  ".vitest/rtl",
+  ".vitest/long-text",
 ].filter(existsSync)
 let total = 0
 
