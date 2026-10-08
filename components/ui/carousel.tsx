@@ -53,6 +53,9 @@ type CarouselContextProps = {
 } & Omit<CarouselProps, "autoplay">
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+const CarouselOrientationContext = React.createContext<
+  "horizontal" | "vertical"
+>("horizontal")
 
 function useCarousel() {
   const context = React.useContext(CarouselContext)
@@ -262,7 +265,11 @@ function Carousel({
         }}
         {...props}
       >
-        {children}
+        <CarouselOrientationContext.Provider
+          value={orientation === "vertical" ? "vertical" : "horizontal"}
+        >
+          {children}
+        </CarouselOrientationContext.Provider>
       </div>
     </CarouselContext.Provider>
   )
@@ -290,7 +297,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
-  const { orientation } = useCarousel()
+  const orientation = React.useContext(CarouselOrientationContext)
 
   return (
     <div
