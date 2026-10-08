@@ -16,13 +16,10 @@ vi.mock("node:child_process", () => ({
 
 const stylesheet = `@import "tailwindcss";
 @import "@fontsource-variable/inter";
-@import "@fontsource/questrial";
 @import "./theme.css";
 
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
-  --font-heading:
-    "Questrial", -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
 }
 `
 
@@ -77,9 +74,10 @@ export default function RootLayout({ children }) {
   })
 }
 
-const fontVariables = ["fontInter", "fontQuestrial"]
-  .map((font) => `\${${font}.variable}`)
-  .join(" ")
+const FONT_ON_HTML =
+  /<html className=\{`\$\{fontInter\.variable\}`\} lang="en">/
+const FONT_BESIDE_CLASS =
+  /className=\{`\$\{fontInter\.variable\} antialiased`\}/
 
 let output
 
@@ -125,7 +123,7 @@ describe("init in a Vite project", () => {
       .mock.calls.map(([, args]) => args.join(" "))
     expect(commands).toEqual([
       "install --save-dev @tailwindcss/vite @types/node",
-      "install @fontsource-variable/inter @fontsource/questrial",
+      "install @fontsource-variable/inter",
       "install @base-ui/react",
     ])
   })
@@ -199,16 +197,12 @@ describe("init in a Next.js project", () => {
     const css = read(cwd, "app/globals.css")
     expect(css).not.toContain("@fontsource")
     expect(css).toContain("var(--font-inter)")
-    expect(css).toContain("var(--font-questrial)")
+    expect(css).not.toContain("questrial")
 
     const layout = read(cwd, "app/layout.tsx")
-    expect(layout).toContain(
-      'import { Inter, Questrial } from "next/font/google";'
-    )
+    expect(layout).toContain('import { Inter } from "next/font/google";')
     expect(layout).toContain('variable: "--font-inter",')
-    expect(layout).toContain(
-      `<html className={\`${fontVariables}\`} lang="en">`
-    )
+    expect(layout).toMatch(FONT_ON_HTML)
   })
 
   it("keeps an existing className on <html>", async () => {
@@ -219,9 +213,7 @@ describe("init in a Next.js project", () => {
 `,
     })
     await init({ cwd, yes: true })
-    expect(read(cwd, "app/layout.tsx")).toContain(
-      `className={\`${fontVariables} antialiased\`}`
-    )
+    expect(read(cwd, "app/layout.tsx")).toMatch(FONT_BESIDE_CLASS)
   })
 
   it("leaves a layout that already loads Inter alone", async () => {
