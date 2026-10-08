@@ -182,7 +182,7 @@ function Island({
           onClick={dismiss}
           className={cn(
             PART,
-            "flex w-[min(calc(100vw-(--spacing(6))),24rem)] items-center gap-3 p-3.5 text-start outline-none focus-visible:focus-ring rounded-[inherit] [[data-slot=island]_&]:focus-visible:outline-offset-[-3px] [&_svg:not([class*='size-'])]:size-6"
+            "flex w-[min(calc(100vw-(--spacing(6))),24rem)] items-center gap-3 p-3.5 text-start outline-none focus-visible:focus-ring rounded-[inherit] in-data-[slot=island]:focus-visible:outline-offset-[-3px] [&_svg:not([class*='size-'])]:size-6"
           )}
         >
           {notice?.icon && (
@@ -243,7 +243,7 @@ function IslandCompact({
       }}
       className={cn(
         PART,
-        "flex h-9 min-w-36 items-center justify-between gap-6 px-2.5 outline-none focus-visible:focus-ring rounded-[inherit] [[data-slot=island]_&]:focus-visible:outline-offset-[-3px] [&_svg:not([class*='size-'])]:size-5",
+        "flex h-9 min-w-36 items-center justify-between gap-6 px-2.5 outline-none focus-visible:focus-ring rounded-[inherit] in-data-[slot=island]:focus-visible:outline-offset-[-3px] [&_svg:not([class*='size-'])]:size-5",
         className
       )}
       {...props}

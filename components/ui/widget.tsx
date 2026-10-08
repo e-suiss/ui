@@ -169,7 +169,7 @@ function Widget({
         freeSize ? { ...style, width: freeSize[0], height: freeSize[1] } : style
       }
       className={cn(
-        "group/widget @container/widget flex max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-surface-secondary p-4 text-base text-label transition-[width,height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] data-[align=center]:items-center data-[align=center]:justify-center data-[align=center]:text-center data-resizing:transition-none data-[resizing=snap]:*:shrink-0 data-[size=auto]:size-full data-[size=extra-large]:h-88 data-[size=extra-large]:w-180 data-[size=large]:size-88 data-[size=medium]:h-42 data-[size=medium]:w-88 data-[size=small]:size-42 motion-reduce:transition-none",
+        "group/widget @container/widget flex max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-surface-secondary p-4 text-base text-label transition-[width,height] duration-500 ease-in-out data-[align=center]:items-center data-[align=center]:justify-center data-[align=center]:text-center data-resizing:transition-none data-[resizing=snap]:*:shrink-0 data-[size=auto]:size-full data-[size=extra-large]:h-88 data-[size=extra-large]:w-180 data-[size=large]:size-88 data-[size=medium]:h-42 data-[size=medium]:w-88 data-[size=small]:size-42 motion-reduce:transition-none",
         className
       )}
       {...props}
@@ -188,7 +188,7 @@ function Widget({
         <span
           aria-hidden="true"
           data-slot="widget-preview"
-          className="pointer-events-none absolute start-0 top-0 z-10 animate-in transition-[width,height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] fade-in-0 motion-reduce:transition-none"
+          className="pointer-events-none absolute inset-s-0 top-0 z-10 animate-in transition-[width,height] duration-500 ease-in-out fade-in-0 motion-reduce:transition-none"
           style={{
             width: WIDGET_DIMENSIONS[preview][0],
             height: WIDGET_DIMENSIONS[preview][1],
