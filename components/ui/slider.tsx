@@ -16,6 +16,8 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
   ...props
 }: SliderPrimitive.Root.Props) {
   return (
@@ -43,7 +45,9 @@ function Slider({
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
             key={index}
-            className="block shrink-0 rounded-full bg-surface shadow-md ring-1 ring-label/10 transition-[width,height,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] select-none not-dark:bg-clip-padding focus-visible:focus-ring focus-visible:outline-hidden data-horizontal:h-5 data-horizontal:w-8 data-horizontal:active:w-9 data-horizontal:data-dragging:w-9 data-vertical:h-8 data-vertical:w-5 data-vertical:active:h-9 data-vertical:data-dragging:h-9 data-disabled:pointer-events-none data-disabled:shadow-none dark:bg-label"
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            className="block shrink-0 rounded-full bg-surface shadow-md ring-1 ring-label/10 transition-[width,height,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] select-none not-dark:bg-clip-padding has-focus-visible:focus-ring data-horizontal:h-5 data-horizontal:w-8 data-horizontal:active:w-9 data-horizontal:data-dragging:w-9 data-vertical:h-8 data-vertical:w-5 data-vertical:active:h-9 data-vertical:data-dragging:h-9 data-disabled:pointer-events-none data-disabled:shadow-none dark:bg-label"
           />
         ))}
       </SliderPrimitive.Control>

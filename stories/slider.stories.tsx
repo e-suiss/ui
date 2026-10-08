@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: { "aria-label": "Volume" },
   play: async ({ canvas, step }) => {
-    const slider = canvas.getByRole("slider")
+    const slider = canvas.getByRole("slider", { name: "Volume" })
 
     await step("starts at the default value", async () => {
       await expect(slider).toHaveAttribute("aria-valuenow", "50")
@@ -53,7 +53,7 @@ export const Default: Story = {
 export const Range: Story = {
   args: { defaultValue: [25, 75], "aria-label": "Price range" },
   play: async ({ canvas, step }) => {
-    const [start, end] = canvas.getAllByRole("slider")
+    const [start, end] = canvas.getAllByRole("slider", { name: "Price range" })
 
     await step("renders a thumb per value", async () => {
       await expect(start).toHaveAttribute("aria-valuenow", "25")
@@ -74,7 +74,7 @@ export const Range: Story = {
 export const Steps: Story = {
   args: { defaultValue: [40], step: 10, "aria-label": "Brightness" },
   play: async ({ canvas, step }) => {
-    const slider = canvas.getByRole("slider")
+    const slider = canvas.getByRole("slider", { name: "Brightness" })
 
     await step("moves by the step size", async () => {
       await userEvent.tab()
@@ -94,7 +94,7 @@ export const Vertical: Story = {
     ),
   ],
   play: async ({ canvas, step }) => {
-    const slider = canvas.getByRole("slider")
+    const slider = canvas.getByRole("slider", { name: "Volume" })
 
     await step("runs vertically", async () => {
       await expect(slider).toHaveAttribute("aria-orientation", "vertical")
@@ -115,7 +115,7 @@ export const Vertical: Story = {
 export const Disabled: Story = {
   args: { disabled: true, "aria-label": "Volume" },
   play: async ({ canvas, step }) => {
-    const slider = canvas.getByRole("slider")
+    const slider = canvas.getByRole("slider", { name: "Volume" })
 
     await step("stays out of the tab order and keeps its value", async () => {
       await expect(slider).toBeDisabled()
