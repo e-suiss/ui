@@ -401,7 +401,7 @@ html[data-theme-transition][data-theme-transition-blur]::view-transition-new(
 
 html[data-theme-transition="circle-blur"]::view-transition-new(root) {
   mask:
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="b"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="20" cy="20" r="18" fill="white" filter="url(%23b)"/></svg>')
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="b"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="20" cy="20" r="18" fill="white" filter="url%28%23b%29"/></svg>')
     var(--theme-transition-at, center) / 0 no-repeat;
   animation: theme-mask var(--theme-transition-duration, 1s)
     cubic-bezier(0.16, 1, 0.3, 1);
