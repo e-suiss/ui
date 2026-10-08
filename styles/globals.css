@@ -42,7 +42,7 @@
   --focus: oklch(0.5629 0.1933 256.16);
   --scrim: oklch(0 0 0 / 48%);
 
-  --danger: oklch(0.5529 0.2255 27.27);
+  --danger: oklch(0.5329 0.2255 27.27);
   --danger-surface: oklch(0.5529 0.2255 27.27 / 8%);
   --danger-surface-hover: oklch(0.5529 0.2255 27.27 / 12%);
   --danger-surface-pressed: oklch(0.5529 0.2255 27.27 / 16%);
@@ -107,7 +107,7 @@
   --focus: oklch(0.5629 0.1933 256.16);
   --scrim: oklch(0 0 0 / 48%);
 
-  --danger: oklch(0.6633 0.2236 28.29);
+  --danger: oklch(0.7033 0.2236 28.29);
   --danger-surface: oklch(0.6633 0.2236 28.29 / 20%);
   --danger-surface-hover: oklch(0.6633 0.2236 28.29 / 30%);
   --danger-surface-pressed: oklch(0.6633 0.2236 28.29 / 36%);
