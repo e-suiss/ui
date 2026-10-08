@@ -167,4 +167,14 @@ describe("install", () => {
       "npm install cmdk failed."
     )
   })
+
+  it.each(["cmdk & calc", "--registry=http://evil", "../local"])(
+    "refuses the invalid package name %s",
+    (name) => {
+      expect(() => install(project("npm"), [name])).toThrow(
+        `Refusing to install an invalid package name: ${name}`
+      )
+      expect(spawnSync).not.toHaveBeenCalled()
+    }
+  )
 })

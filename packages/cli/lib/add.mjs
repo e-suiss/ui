@@ -12,11 +12,28 @@ import {
   scopeOf,
 } from "./registry.mjs"
 
-function fetchFiles(items) {
+function targetFor(root, file) {
+  const target = path.resolve(root, file)
+  const relative = path.relative(root, target)
+  if (
+    relative === ".." ||
+    relative.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relative)
+  ) {
+    throw new CliError(`Refusing to write ${file} outside the project.`)
+  }
+  return target
+}
+
+function fetchFiles(root, items) {
+  const files = items.flatMap((item) =>
+    item.files.map((file) => ({ file, target: targetFor(root, file) }))
+  )
   return Promise.all(
-    items.flatMap((item) =>
-      item.files.map(async (file) => ({ file, content: await fetchText(file) }))
-    )
+    files.map(async (entry) => ({
+      ...entry,
+      content: await fetchText(entry.file),
+    }))
   )
 }
 
@@ -28,14 +45,13 @@ export async function installItems(
   { overwrite = false } = {}
 ) {
   const items = resolveItems(registry, names)
-  const files = await fetchFiles(items)
+  const files = await fetchFiles(root, items)
 
   const created = []
   const updated = []
   const skipped = []
 
-  for (const { file, content } of files) {
-    const target = path.join(root, file)
+  for (const { target, content } of files) {
     const relative = path.relative(project.cwd, target)
     if (!existsSync(target)) {
       mkdirSync(path.dirname(target), { recursive: true })
@@ -83,8 +99,7 @@ async function showDiff(project, root, registry, names) {
   )
   let changes = 0
 
-  for (const { file, content } of await fetchFiles(items)) {
-    const target = path.join(root, file)
+  for (const { target, content } of await fetchFiles(root, items)) {
     const relative = path.relative(project.cwd, target)
     if (!existsSync(target)) {
       note(`${relative} is not installed.`)

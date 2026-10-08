@@ -4,6 +4,8 @@ import path from "node:path"
 
 import { CliError } from "./output.mjs"
 
+const PACKAGE_NAME = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/
+
 const LOCKFILES = [
   ["pnpm-lock.yaml", "pnpm"],
   ["bun.lock", "bun"],
@@ -94,6 +96,12 @@ export function install(project, packages, { dev = false } = {}) {
     (name) => !project.packages[name]
   )
   if (!missing.length) return []
+  const invalid = missing.find((name) => !PACKAGE_NAME.test(name))
+  if (invalid) {
+    throw new CliError(
+      `Refusing to install an invalid package name: ${invalid}`
+    )
+  }
   const { command, dev: devFlag } = INSTALL_ARGS[project.packageManager]
   const args = [command, ...(dev ? [devFlag] : []), ...missing]
   const result = spawnSync(project.packageManager, args, {

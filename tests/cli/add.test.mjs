@@ -172,4 +172,27 @@ describe("add", () => {
     writeFileSync(path.join(cwd, "tsconfig.json"), "{}")
     await expect(add(["button"], { cwd })).rejects.toThrow(CliError)
   })
+
+  it("refuses registry files that point outside the project", async () => {
+    const cwd = viteProject()
+    serveRegistry({
+      "registry.json": {
+        ...registry,
+        items: [
+          {
+            name: "escape",
+            type: "ui",
+            requires: [],
+            dependencies: [],
+            files: ["../../escape.tsx"],
+          },
+        ],
+      },
+      "../../escape.tsx": "export {}\n",
+    })
+    await expect(add(["escape"], { cwd })).rejects.toThrow(
+      "Refusing to write ../../escape.tsx outside the project."
+    )
+    expect(existsSync(path.join(cwd, "escape.tsx"))).toBe(false)
+  })
 })
