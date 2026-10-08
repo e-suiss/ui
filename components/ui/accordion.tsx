@@ -1,3 +1,5 @@
+"use client"
+
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
 import { cva, type VariantProps } from "class-variance-authority"

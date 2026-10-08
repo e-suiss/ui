@@ -1,3 +1,5 @@
+"use client"
+
 import { CaretUpDownIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"

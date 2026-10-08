@@ -1,3 +1,5 @@
+"use client"
+
 import { BatteryFullIcon, CpuIcon } from "@phosphor-icons/react"
 
 const photo = (id: string, width: number) =>
