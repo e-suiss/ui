@@ -515,7 +515,7 @@ function FreeResizeExample() {
         className="gap-0 p-0"
       >
         <div className="flex items-baseline justify-between px-4 pt-4 pb-3">
-          <WidgetTitle className="font-heading text-xl">Hestia POS</WidgetTitle>
+          <WidgetTitle className="text-xl">Hestia POS</WidgetTitle>
           <span className="text-sm text-label-secondary tabular-nums">
             {box.columns} columns
           </span>

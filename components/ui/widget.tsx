@@ -292,7 +292,7 @@ function WidgetValue({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="widget-value"
       className={cn(
-        "font-heading text-3xl font-semibold tracking-tight tabular-nums",
+        "text-3xl font-semibold tracking-tight tabular-nums",
         className
       )}
       {...props}

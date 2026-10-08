@@ -325,7 +325,7 @@ function PanelExample() {
         </NavigationMenu>
       </div>
       <div className="mx-auto flex max-w-245 flex-col items-center gap-3 px-6 py-24 text-center">
-        <h2 className="font-heading text-5xl font-semibold">Hestia POS</h2>
+        <h2 className="text-5xl font-semibold">Hestia POS</h2>
         <p className="text-xl text-label-secondary">
           Orders, kitchen and tables in one place.
         </p>
