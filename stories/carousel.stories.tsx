@@ -375,6 +375,15 @@ export const Featured: Story = {
       ).toBeNull()
     })
 
+    await step("takes taps around each small dot", async () => {
+      const dot = canvas.getByRole("button", { name: "Go to slide 3" })
+      const box = dot.getBoundingClientRect()
+      const x = box.left + box.width / 2
+      const y = box.top + box.height / 2
+      await expect(document.elementFromPoint(x, y - 7)).toBe(dot)
+      await expect(document.elementFromPoint(x, y + 7)).toBe(dot)
+    })
+
     await step("moves the track to the chosen dot", async () => {
       const second = canvas.getByRole("button", { name: "Go to slide 2" })
       await userEvent.click(second)

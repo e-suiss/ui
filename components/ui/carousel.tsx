@@ -422,7 +422,7 @@ function CarouselDots({
       data-variant={variant}
       data-autoplay={autoplay.enabled ? "" : undefined}
       className={cn(
-        "group/carousel-dots flex h-9 items-center gap-2.5 rounded-full bg-control px-4 backdrop-blur-xl data-[variant=plain]:bg-transparent data-[variant=plain]:px-0 data-[variant=plain]:backdrop-blur-none",
+        "group/carousel-dots flex h-9 items-center gap-4 rounded-full bg-control px-4 backdrop-blur-xl data-[variant=plain]:bg-transparent data-[variant=plain]:px-0 data-[variant=plain]:backdrop-blur-none",
         className
       )}
       {...props}
@@ -435,14 +435,18 @@ function CarouselDots({
           aria-current={index === selectedIndex ? "true" : undefined}
           data-active={index === selectedIndex ? "" : undefined}
           onClick={() => api?.scrollTo(index)}
-          className="relative h-2 w-2 shrink-0 cursor-pointer overflow-hidden rounded-full bg-label-tertiary transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-label-secondary focus-visible:focus-ring data-active:w-6 data-active:bg-label group-data-autoplay/carousel-dots:data-active:bg-label-tertiary motion-reduce:transition-none"
+          className="relative h-2 w-2 shrink-0 cursor-pointer rounded-full bg-label-tertiary transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-label-secondary focus-visible:focus-ring data-active:w-6 data-active:bg-label group-data-autoplay/carousel-dots:data-active:bg-label-tertiary motion-reduce:transition-none"
         >
           {index === selectedIndex && autoplay.enabled && (
             <span
-              ref={setFill}
               aria-hidden="true"
-              className="absolute inset-0 origin-left rounded-full bg-label rtl:origin-right"
-            />
+              className="absolute inset-0 overflow-hidden rounded-full"
+            >
+              <span
+                ref={setFill}
+                className="absolute inset-0 origin-left rounded-full bg-label rtl:origin-right"
+              />
+            </span>
           )}
         </button>
       ))}
