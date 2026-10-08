@@ -80,6 +80,9 @@ export const Requests: Story = {
       await expect(
         await canvas.findByText("3 pending requests")
       ).toBeInTheDocument()
+      await waitFor(() => expect(canvas.queryByText("Morgan Lee")).toBeNull(), {
+        timeout: 3000,
+      })
     })
   },
 }
