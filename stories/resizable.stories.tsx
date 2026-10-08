@@ -242,7 +242,7 @@ function CardsExample(args: React.ComponentProps<typeof ResizablePanelGroup>) {
 export const Cards: Story = {
   parameters: { bare: true },
   render: (args) => <CardsExample {...args} />,
-  play: async ({ canvas, step }) => {
+  play: async ({ canvas, canvasElement, step }) => {
     const handle = canvas.getByRole("separator")
 
     await step("reports each card's share", async () => {
@@ -254,6 +254,15 @@ export const Cards: Story = {
       await userEvent.keyboard("{Home}")
       await waitFor(() => expect(canvas.getByText("100%")).toBeVisible())
       await expect(handle).toHaveAttribute("data-collapsed", "start")
+    })
+
+    await step("keeps the collapsed card out of the tab order", async () => {
+      const collapsed = canvasElement.querySelector("#pos")
+      await waitFor(() => expect(collapsed).toHaveAttribute("inert"))
+      await userEvent.keyboard("{End}")
+      await waitFor(() => expect(collapsed).not.toHaveAttribute("inert"))
+      await userEvent.keyboard("{Home}")
+      await waitFor(() => expect(collapsed).toHaveAttribute("inert"))
     })
   },
 }

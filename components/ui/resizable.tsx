@@ -87,12 +87,21 @@ function ResizablePanelGroup({
 
 function ResizablePanel({
   className,
+  onResize,
   ...props
 }: ResizablePrimitive.PanelProps) {
+  const [empty, setEmpty] = React.useState(false)
+
   return (
     <ResizablePrimitive.Panel
       data-slot="resizable-panel"
+      data-empty={empty ? "" : undefined}
+      inert={empty}
       className={cn("overflow-hidden!", className)}
+      onResize={(size, id, previous) => {
+        setEmpty(size.inPixels < 1)
+        onResize?.(size, id, previous)
+      }}
       {...props}
     />
   )
