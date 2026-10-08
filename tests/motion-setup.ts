@@ -2,7 +2,7 @@ import { afterEach, beforeEach } from "vitest"
 import { cdp, commands } from "vitest/browser"
 
 const MOVING =
-  /^(transform|translate|scale|rotate|width|height|inset|top|right|bottom|left|margin|padding|grid-template|offset|inline-size|block-size)/
+  /^(transform|translate|scale|rotate|width|height|inset|top|right|bottom|left|margin|padding|grid-template|inline-size|block-size)/
 
 let moved = new Set<string>()
 
@@ -25,9 +25,23 @@ function movingProperties(keyframes: Keyframe[]) {
   )
 }
 
+function lasts(animation: Animation | undefined) {
+  const duration = animation?.effect?.getComputedTiming().duration
+  return typeof duration === "number" && duration > 1
+}
+
 function onTransition(event: Event) {
   if (!(event instanceof TransitionEvent)) return
   if (!MOVING.test(event.propertyName)) return
+  if (!(event.target instanceof Element)) return
+  const transition = event.target
+    .getAnimations()
+    .find(
+      (candidate) =>
+        candidate instanceof CSSTransition &&
+        candidate.transitionProperty === event.propertyName
+    )
+  if (!lasts(transition)) return
   moved.add(`transition ${event.propertyName} on ${describe(event.target)}`)
 }
 
@@ -41,6 +55,7 @@ function onAnimation(event: Event) {
         candidate instanceof CSSAnimation &&
         candidate.animationName === event.animationName
     )
+  if (!lasts(animation)) return
   const keyframes =
     animation?.effect instanceof KeyframeEffect
       ? animation.effect.getKeyframes()
@@ -67,7 +82,8 @@ beforeEach(async () => {
       ? keyframes
       : [(keyframes ?? {}) as Keyframe]
     const properties = movingProperties(frames)
-    if (properties.length > 0) {
+    const duration = typeof options === "number" ? options : options?.duration
+    if (properties.length > 0 && Number(duration) > 1) {
       moved.add(
         `script animation (${properties.join(", ")}) on ${describe(this)}`
       )

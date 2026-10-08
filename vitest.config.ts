@@ -58,6 +58,7 @@ export default defineConfig({
             ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
             ...(process.env.A11Y ? ["tests/a11y-setup.ts"] : []),
             ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),
+            ...(process.env.TEXT ? ["tests/text-setup.ts"] : []),
           ],
           browser: {
             ...browser("stories"),

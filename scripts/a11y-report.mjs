@@ -1,7 +1,9 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
-const dirs = [".vitest/a11y", ".vitest/motion"].filter(existsSync)
+const dirs = [".vitest/a11y", ".vitest/motion", ".vitest/text"].filter(
+  existsSync
+)
 let total = 0
 
 for (const dir of dirs) {
