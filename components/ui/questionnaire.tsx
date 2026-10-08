@@ -61,6 +61,11 @@ const checkedAttributes = {
   checked: toggleAttributes("data-checked", "data-unchecked"),
 }
 
+const QuestionnaireChoiceContext = React.createContext<{
+  descriptionId: string
+  setDescribed: (described: boolean) => void
+} | null>(null)
+
 const QuestionnaireTitleIdContext = React.createContext<string | undefined>(
   undefined
 )
@@ -298,12 +303,19 @@ function QuestionnaireChoice({
     onChange,
     value,
   })
+  const descriptionId = React.useId()
+  const [described, setDescribed] = React.useState(false)
+  const choice = React.useMemo(
+    () => ({ descriptionId, setDescribed }),
+    [descriptionId]
+  )
   const input = useRender({
     defaultTagName: "input",
     state,
     stateAttributesMapping: checkedAttributes,
     props: {
       ...inputProps,
+      "aria-describedby": described ? descriptionId : undefined,
       "data-slot": "questionnaire-choice-input",
       className: "absolute inset-0 z-10 size-full cursor-pointer opacity-0",
     },
@@ -343,7 +355,9 @@ function QuestionnaireChoice({
             data-slot="questionnaire-choice-label"
             className="flex min-w-0 flex-1 flex-col gap-1"
           >
-            {children}
+            <QuestionnaireChoiceContext.Provider value={choice}>
+              {children}
+            </QuestionnaireChoiceContext.Provider>
           </span>
           <span
             aria-hidden="true"
@@ -364,8 +378,18 @@ function QuestionnaireChoiceDescription({
   className,
   ...props
 }: React.ComponentProps<"span">) {
+  const choice = React.useContext(QuestionnaireChoiceContext)
+
+  React.useLayoutEffect(() => {
+    if (!choice) return
+    choice.setDescribed(true)
+    return () => choice.setDescribed(false)
+  }, [choice])
+
   return (
     <span
+      id={choice?.descriptionId}
+      aria-hidden={choice ? true : undefined}
       data-slot="questionnaire-choice-description"
       className={cn("text-label-secondary", className)}
       {...props}

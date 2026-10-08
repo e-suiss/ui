@@ -268,6 +268,15 @@ export const WithChoiceDescriptions: Story = {
     const team = canvas.getByRole("radio", { name: TEAM })
     const enterprise = canvas.getByRole("radio", { name: ENTERPRISE })
 
+    await step("names each choice by its title and describes it", async () => {
+      await expect(starter).toHaveAccessibleName("Starter")
+      await expect(starter).toHaveAccessibleDescription(
+        "For individuals trying things out."
+      )
+      await expect(team).toHaveAccessibleName("Team")
+      await expect(enterprise).toHaveAccessibleName("Enterprise")
+    })
+
     await step("shows each description with its choice", async () => {
       await expect(
         canvas.getByText("For individuals trying things out.").closest("label")
