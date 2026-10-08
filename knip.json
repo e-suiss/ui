@@ -10,7 +10,8 @@
         "components/blocks/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
-        "packages/cli/index.mjs"
+        "packages/cli/index.mjs",
+        "tests/*-setup.ts"
       ],
       "project": [
         "components/**/*.{ts,tsx}",

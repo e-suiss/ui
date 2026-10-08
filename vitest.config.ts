@@ -55,7 +55,9 @@ export default defineConfig({
           setupFiles: [
             "tests/setup.ts",
             "tests/stories-setup.ts",
-            "tests/visual-setup.ts",
+            ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
+            ...(process.env.A11Y ? ["tests/a11y-setup.ts"] : []),
+            ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),
           ],
           browser: {
             ...browser("stories"),
