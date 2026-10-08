@@ -235,7 +235,9 @@ export function PieChartInteractive() {
                     <Sector
                       {...props}
                       outerRadius={
-                        (props.outerRadius ?? 0) + (lift[index] ?? 0) * LIFT
+                        (props.outerRadius ?? 0) +
+                        (typeof index === "number" ? (lift[index] ?? 0) : 0) *
+                          LIFT
                       }
                     />
                   )}
