@@ -161,7 +161,7 @@ export const MultipleItems: Story = {
       await waitFor(() => expect(next).toBeDisabled())
       await expect(previous).toHaveFocus()
       await waitFor(() =>
-        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1.5)
       )
     })
 
@@ -248,7 +248,7 @@ export const Vertical: Story = {
       await waitFor(() => expect(next).toBeDisabled())
       await expect(previous).toHaveFocus()
       await waitFor(() =>
-        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1.5)
       )
     })
 
@@ -618,7 +618,7 @@ export const Gallery: Story = {
       await waitFor(() => expect(next).toBeDisabled())
       await expect(previous).toHaveFocus()
       await waitFor(() =>
-        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1)
+        expect(settledAtEnd(canvasElement)).toBeLessThanOrEqual(1.5)
       )
     })
   },

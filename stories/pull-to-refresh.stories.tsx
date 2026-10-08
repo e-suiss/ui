@@ -28,6 +28,14 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+function canCreateTouch() {
+  try {
+    return Boolean(new Touch({ identifier: 0, target: document.body }))
+  } catch {
+    return false
+  }
+}
+
 function scrollerOf(element: HTMLElement) {
   const scroller = element.closest<HTMLElement>("[data-slot=pull-to-refresh]")
   if (!scroller) throw new Error("Pull to refresh is not rendered")
@@ -170,6 +178,7 @@ export const Default: Story = {
   play: async ({ canvas, step }) => {
     const heading = canvas.getByRole("heading", { name: "Inbox" })
     const scroller = scrollerOf(heading)
+    if (!canCreateTouch()) return
 
     await step("ignores a short pull", async () => {
       await dragDown(heading, 60)

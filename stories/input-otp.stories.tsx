@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import type * as React from "react"
-import { expect, userEvent } from "storybook/test"
+import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   InputOTP,
@@ -56,7 +56,9 @@ export const Default: Story = {
       await expect(input).toHaveValue("4829")
       await expect(slots[0]).toHaveTextContent("4")
       await expect(slots[3]).toHaveTextContent("9")
-      await expect(slots[4]).toHaveAttribute("data-active", "true")
+      await waitFor(() =>
+        expect(slots[4]).toHaveAttribute("data-active", "true")
+      )
     })
 
     await step("stops at the maximum length", async () => {

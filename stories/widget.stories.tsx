@@ -28,6 +28,7 @@ import {
   WidgetTitle,
   WidgetValue,
 } from "@/components/ui/widget"
+import { MOUSE_POINTER_ID } from "./pointer"
 
 const meta = {
   title: "Components/Widget",
@@ -112,7 +113,7 @@ function bySlot(canvasElement: HTMLElement, slot: string) {
 function pointer(target: HTMLElement, type: string, x: number, y: number) {
   target.dispatchEvent(
     new PointerEvent(type, {
-      pointerId: 1,
+      pointerId: MOUSE_POINTER_ID,
       pointerType: "mouse",
       button: 0,
       buttons: type === "pointerup" ? 0 : 1,

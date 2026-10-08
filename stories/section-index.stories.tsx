@@ -9,6 +9,7 @@ import {
   SectionIndexSection,
 } from "@/components/interactions/section-index"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { MOUSE_POINTER_ID } from "./pointer"
 
 const UPPERCASE = /[A-Z]/
 
@@ -138,7 +139,7 @@ function sectionTop(canvasElement: HTMLElement, letter: string) {
 function tapLetter(bar: HTMLElement, fraction: number) {
   const rect = bar.getBoundingClientRect()
   const init = {
-    pointerId: 1,
+    pointerId: MOUSE_POINTER_ID,
     pointerType: "mouse",
     isPrimary: true,
     button: 0,

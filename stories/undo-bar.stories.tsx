@@ -11,6 +11,7 @@ import {
 } from "@/components/interactions/swipe-actions"
 import { UndoBarProvider, useUndoBar } from "@/components/interactions/undo-bar"
 import { Button } from "@/components/ui/button"
+import { MOUSE_POINTER_ID } from "./pointer"
 
 const initialNotes = [
   { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },
@@ -221,7 +222,7 @@ export const LongerTimeout: Story = {
 function pointer(target: EventTarget, type: string, x: number, y: number) {
   target.dispatchEvent(
     new PointerEvent(type, {
-      pointerId: 1,
+      pointerId: MOUSE_POINTER_ID,
       pointerType: "touch",
       isPrimary: true,
       button: 0,

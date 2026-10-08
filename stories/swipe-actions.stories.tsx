@@ -16,6 +16,7 @@ import {
   SwipeActionsContent,
 } from "@/components/interactions/swipe-actions"
 import { Button } from "@/components/ui/button"
+import { MOUSE_POINTER_ID } from "./pointer"
 
 const initialMessages = [
   {
@@ -143,7 +144,7 @@ type Story = StoryObj<typeof meta>
 function pointer(target: EventTarget, type: string, x: number, y: number) {
   target.dispatchEvent(
     new PointerEvent(type, {
-      pointerId: 1,
+      pointerId: MOUSE_POINTER_ID,
       pointerType: "touch",
       isPrimary: true,
       button: 0,
