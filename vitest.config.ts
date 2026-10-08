@@ -5,6 +5,7 @@ import { playwright } from "@vitest/browser-playwright"
 import { defineConfig } from "vitest/config"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
+const STORY_FILE = /\.stories\.tsx$/
 
 function browser(name: string) {
   return {
@@ -51,8 +52,22 @@ export default defineConfig({
           name: "stories",
           maxWorkers: 4,
           sequence: { groupOrder: 2 },
-          setupFiles: ["tests/setup.ts", "tests/stories-setup.ts"],
-          browser: browser("stories"),
+          setupFiles: [
+            "tests/setup.ts",
+            "tests/stories-setup.ts",
+            "tests/visual-setup.ts",
+          ],
+          browser: {
+            ...browser("stories"),
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: "pixelmatch",
+                comparatorOptions: { allowedMismatchedPixels: 10 },
+                resolveScreenshotPath: ({ arg, ext, testFileName }) =>
+                  `${root}tests/screenshots/${testFileName.replace(STORY_FILE, "")}/${arg}${ext}`,
+              },
+            },
+          },
         },
       },
     ],

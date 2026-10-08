@@ -11,3 +11,5 @@ storybook-static/
 .ds-sync/
 ds-bundle/
 .vitest
+
+tests/screenshots

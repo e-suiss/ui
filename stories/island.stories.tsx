@@ -125,7 +125,7 @@ function DownloadActivity({
         {done ? (
           <CheckCircleIcon weight="fill" className="text-green" />
         ) : (
-          <IslandRing value={progress} />
+          <IslandRing value={progress} data-visual-mask />
         )}
       </IslandCompact>
       <IslandExpanded aria-label="Download">
