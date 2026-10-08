@@ -156,22 +156,25 @@ export const Alphanumeric: Story = {
 export const Invalid: Story = {
   args: { defaultValue: "123456" },
   render: (args) => (
-    <InputOTP {...args}>
+    <InputOTP {...args} aria-invalid>
       <InputOTPGroup>
         {Array.from({ length: 6 }, (_, index) => (
-          <InputOTPSlot key={index} index={index} aria-invalid />
+          <InputOTPSlot key={index} index={index} />
         ))}
       </InputOTPGroup>
     </InputOTP>
   ),
   play: async ({ canvas, canvasElement, step }) => {
-    await step("marks every slot as invalid", async () => {
-      const slots = canvasElement.querySelectorAll(
+    await step("marks the input invalid and every slot with it", async () => {
+      await expect(canvas.getByRole("textbox")).toBeInvalid()
+      const slots = canvasElement.querySelectorAll<HTMLElement>(
         '[data-slot="input-otp-slot"]'
       )
       await expect(slots).toHaveLength(6)
       for (const slot of slots) {
-        await expect(slot).toHaveAttribute("aria-invalid", "true")
+        await expect(getComputedStyle(slot).borderTopColor).not.toBe(
+          "rgba(0, 0, 0, 0)"
+        )
       }
       await expect(canvas.getByRole("textbox")).toHaveValue("123456")
     })
@@ -180,11 +183,33 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, defaultValue: "123456" },
-  play: async ({ canvas, step }) => {
+  play: async ({ canvas, canvasElement, step }) => {
     await step("disables the input and keeps its value", async () => {
       const input = canvas.getByRole("textbox")
       await expect(input).toBeDisabled()
       await expect(input).toHaveValue("123456")
+    })
+
+    await step("greys out the slots without filling the row", async () => {
+      await expect(canvasElement.querySelector(".cn-input-otp")).toHaveStyle({
+        backgroundColor: "rgba(0, 0, 0, 0)",
+      })
+      const separator = canvasElement.querySelector<HTMLElement>(
+        '[data-slot="input-otp-separator"]'
+      )
+      await expect(separator).not.toBeNull()
+      const slots = canvasElement.querySelectorAll<HTMLElement>(
+        '[data-slot="input-otp-slot"]'
+      )
+      await expect(slots).toHaveLength(6)
+      for (const slot of slots) {
+        await expect(getComputedStyle(slot).backgroundColor).not.toBe(
+          "rgba(0, 0, 0, 0)"
+        )
+        await expect(separator).toHaveStyle({
+          color: getComputedStyle(slot).color,
+        })
+      }
     })
   },
 }

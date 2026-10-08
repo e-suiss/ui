@@ -28,7 +28,7 @@ function InputOTP({
         onChange?.(next)
       }}
       containerClassName={cn(
-        "cn-input-otp flex items-center has-disabled:bg-control-disabled has-disabled:text-label-quaternary",
+        "cn-input-otp flex items-center",
         containerClassName
       )}
       spellCheck={false}
@@ -63,7 +63,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[active=true]:z-10 data-[active=true]:border-accent",
+        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-danger in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/10 in-[.cn-input-otp:has(input:disabled)]:bg-control-disabled in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary data-[active=true]:z-10 data-[active=true]:border-accent",
         className
       )}
       {...props}
@@ -82,7 +82,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-otp-separator"
-      className="flex items-center [&_svg:not([class*='size-'])]:size-4"
+      className="flex items-center in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary [&_svg:not([class*='size-'])]:size-4"
       role="separator"
       {...props}
     >
