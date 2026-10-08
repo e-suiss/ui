@@ -420,8 +420,9 @@ export const Collapsed: Story = {
 export const Offcanvas: Story = {
   args: { collapsible: "offcanvas", header: brand },
   play: async ({ canvas, canvasElement, step }) => {
+    const home = canvas.getByRole("button", { name: "Home" })
+
     await step("collapsing slides the whole sidebar away", async () => {
-      const home = canvas.getByRole("button", { name: "Home" })
       await expect(home).toBeVisible()
       await pressSidebarHotkey()
       await expect(sidebarOf(canvasElement)).toHaveAttribute(
@@ -431,6 +432,12 @@ export const Offcanvas: Story = {
       await waitFor(() =>
         expect(home.getBoundingClientRect().right).toBeLessThanOrEqual(0)
       )
+    })
+
+    await step("keeps the hidden sidebar out of the tab order", async () => {
+      await waitFor(() => expect(home).not.toBeVisible())
+      await pressSidebarHotkey()
+      await waitFor(() => expect(home).toBeVisible())
     })
   },
 }
