@@ -52,7 +52,12 @@ function fieldsOf(root: HTMLElement | null) {
   return root?.querySelector<HTMLElement>("[data-input-otp-container]") ?? null
 }
 
+function reducesMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
 function pop(container: HTMLElement | null, index: number) {
+  if (reducesMotion()) return
   const slot = container?.querySelectorAll<HTMLElement>(
     "[data-slot=input-otp-slot]"
   )[index]
@@ -63,6 +68,7 @@ function pop(container: HTMLElement | null, index: number) {
 }
 
 function shake(container: HTMLElement | null) {
+  if (reducesMotion()) return
   container?.animate(
     [
       { translate: "0" },

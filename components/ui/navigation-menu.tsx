@@ -114,6 +114,7 @@ function NavigationMenuPositioner({
   return (
     <NavigationMenuPrimitive.Portal>
       <NavigationMenuPrimitive.Positioner
+        data-slot="navigation-menu-positioner"
         side={side}
         sideOffset={sideOffset}
         align={align}
@@ -124,7 +125,10 @@ function NavigationMenuPositioner({
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-2xl bg-surface-raised text-label shadow-lg ring-1 ring-label/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-label/10">
+        <NavigationMenuPrimitive.Popup
+          data-slot="navigation-menu-popup"
+          className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-2xl bg-surface-raised text-label shadow-lg ring-1 ring-label/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-label/10"
+        >
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>
       </NavigationMenuPrimitive.Positioner>

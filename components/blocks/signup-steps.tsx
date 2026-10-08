@@ -111,7 +111,7 @@ export function SignupSteps() {
             key={item.key}
             aria-current={position === index ? "step" : undefined}
             data-reached={position <= index ? "" : undefined}
-            className="h-1.5 w-1.5 rounded-full bg-control transition-[width,background-color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-reached:bg-accent aria-[current=step]:w-7"
+            className="h-1.5 w-1.5 rounded-full bg-control transition-[width,background-color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-reached:bg-accent aria-[current=step]:w-7 motion-reduce:transition-none"
           >
             <span className="sr-only">
               Step {position + 1}
@@ -168,7 +168,7 @@ export function SignupSteps() {
                     <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-label-quaternary text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--green),black_35%)]">
                       <CheckIcon
                         weight="bold"
-                        className="size-2.5 scale-0 transition-[scale] duration-250 group-data-met/rule:scale-100"
+                        className="size-2.5 scale-0 transition-[scale] duration-250 group-data-met/rule:scale-100 motion-reduce:transition-none"
                       />
                     </span>
                     {rule.label}

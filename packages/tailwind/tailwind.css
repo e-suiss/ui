@@ -424,12 +424,28 @@ html[data-theme-transition="circle-blur"][data-theme-transition-blur]::view-tran
     @apply font-sans;
   }
   @media (prefers-reduced-motion: reduce) {
-    [data-slot]:not([data-slot="spinner"]),
-    [data-slot]:not([data-slot="spinner"])::before,
-    [data-slot]:not([data-slot="spinner"])::after {
+    [data-slot],
+    [data-slot]::before,
+    [data-slot]::after,
+    [data-slot] [class*="transition"],
+    [data-slot] [class*="transition"]::before,
+    [data-slot] [class*="transition"]::after {
+      transition-duration: 0.01ms !important;
+    }
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      ),
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      )::before,
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      )::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
     }
   }
 }
