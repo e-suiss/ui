@@ -165,7 +165,10 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-content"
-      className={cn("flex-1 text-base outline-none", className)}
+      className={cn(
+        "flex-1 rounded-lg text-base outline-none focus-visible:focus-ring [--focus-ring-offset:3px]",
+        className
+      )}
       {...props}
     />
   )

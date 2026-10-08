@@ -200,7 +200,6 @@ function SearchPicker({
       disabled={disabled}
     >
       <ComboboxInput
-        data-slot="search-picker-trigger"
         placeholder={placeholder}
         disabled={disabled}
         aria-invalid={ariaInvalid}
