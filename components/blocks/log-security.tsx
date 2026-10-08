@@ -198,7 +198,7 @@ export function LogSecurity() {
               {list.map((alert) => (
                 <li
                   key={alert.title}
-                  className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
+                  className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
                 >
                   <span
                     className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--green),var(--label)_20%)] dark:bg-green" : severity[alert.severity].tint}`}
