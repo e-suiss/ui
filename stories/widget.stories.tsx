@@ -580,7 +580,7 @@ export const FreeResize: Story = {
 export const AutoResize: Story = {
   parameters: { layout: "padded" },
   render: () => (
-    <div className="h-60 w-100">
+    <div className="h-60 w-full max-w-180">
       <Widget resizable defaultSize="auto">
         <WidgetHeader>
           <WidgetIcon>
@@ -601,8 +601,14 @@ export const AutoResize: Story = {
       "fills its parent, then returns to auto on double-click",
       async () => {
         await expect(widget).toHaveAttribute("data-size", "auto")
-        await expect(widget.offsetWidth).toBe(400)
-        dragHandle(canvasElement, -232, -72)
+        await expect(widget.offsetWidth).toBe(
+          bySlot(canvasElement, "widget-container").parentElement?.clientWidth
+        )
+        dragHandle(
+          canvasElement,
+          168 - widget.offsetWidth,
+          168 - widget.offsetHeight
+        )
         await waitFor(() =>
           expect(widget).toHaveAttribute("data-size", "small")
         )
