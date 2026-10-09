@@ -302,6 +302,51 @@ describe("Widget", () => {
     expect(box(widget())).toEqual([352, 168])
   })
 
+  it("only previews and snaps to sizes that fit the available width", async () => {
+    await render(
+      <div style={{ width: 400, height: 240 }}>
+        <Widget resizable defaultSize="auto">
+          Content
+        </Widget>
+      </div>
+    )
+    await expect.poll(() => box(widget())).toEqual([400, 240])
+    await dragBy(600, 112, false)
+    expect(preview()?.style.width).toBe("352px")
+    expect(preview()?.style.height).toBe("352px")
+    expect(box(widget())[0]).toBeLessThanOrEqual(400)
+    const rect = handle().getBoundingClientRect()
+    pointer("pointerup", rect.left, rect.top)
+    await frames()
+    expect(widget().dataset.size).toBe("large")
+    await expect.poll(() => box(widget())).toEqual([352, 352])
+  })
+
+  it("keeps the narrowest size when nothing fits the available width", async () => {
+    await render(
+      <div style={{ width: 120 }}>
+        <Widget resizable>Content</Widget>
+      </div>
+    )
+    await dragBy(600, 200, false)
+    expect(preview()?.style.width).toBe("168px")
+    const rect = handle().getBoundingClientRect()
+    pointer("pointerup", rect.left, rect.top)
+    await frames()
+    expect(widget().dataset.size).toBe("small")
+  })
+
+  it("does not grow past the available width in free mode", async () => {
+    await render(
+      <div style={{ width: 400 }}>
+        <Widget resizable="free">Content</Widget>
+      </div>
+    )
+    await expect.poll(() => box(widget())).toEqual([168, 168])
+    await dragBy(2000, 100)
+    expect(box(widget())).toEqual([400, 268])
+  })
+
   it("returns to the default size on double-click in free mode", async () => {
     await render(
       <Widget resizable="free" defaultSize="medium">

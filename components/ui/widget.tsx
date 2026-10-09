@@ -26,6 +26,26 @@ function nearestSize(width: number, height: number, sizes: WidgetSize[]) {
   return best
 }
 
+function availableWidth(container: HTMLElement | null) {
+  const parent = container?.parentElement
+  if (!parent?.clientWidth) return Number.POSITIVE_INFINITY
+  const { paddingInlineStart, paddingInlineEnd } = getComputedStyle(parent)
+  return (
+    parent.clientWidth -
+    Number.parseFloat(paddingInlineStart) -
+    Number.parseFloat(paddingInlineEnd)
+  )
+}
+
+function sizesThatFit(sizes: WidgetSize[], room: number) {
+  const fitting = sizes.filter((size) => WIDGET_DIMENSIONS[size][0] <= room)
+  if (fitting.length > 0) return fitting
+  const narrowest = sizes.reduce((best, size) =>
+    WIDGET_DIMENSIONS[size][0] < WIDGET_DIMENSIONS[best][0] ? size : best
+  )
+  return [narrowest]
+}
+
 function WidgetHandle({
   placement,
   onPointerDown,
@@ -111,24 +131,27 @@ function Widget({
     const startWidth = widget.offsetWidth
     const startHeight = widget.offsetHeight
     const [minWidth, minHeight] = WIDGET_DIMENSIONS.small
+    const free = resizable === "free"
+    const room = availableWidth(widget.parentElement)
+    const reachable = sizesThatFit(sizes, room)
+    const bounds = free ? sizes : reachable
     const maxWidth = Math.max(
-      ...sizes.map((item) => WIDGET_DIMENSIONS[item][0])
+      ...bounds.map((item) => WIDGET_DIMENSIONS[item][0])
     )
     const maxHeight = Math.max(
-      ...sizes.map((item) => WIDGET_DIMENSIONS[item][1])
+      ...bounds.map((item) => WIDGET_DIMENSIONS[item][1])
     )
-    const free = resizable === "free"
     let last: WidgetSize | null = null
     const move = (moveEvent: PointerEvent) => {
       const width = startWidth + (moveEvent.clientX - startX) * direction
       const height = startHeight + moveEvent.clientY - startY
       const stretch = free ? 0 : 48
       setFreeSize([
-        Math.max(minWidth, Math.min(maxWidth + stretch, width)),
+        Math.max(minWidth, Math.min(maxWidth + stretch, room, width)),
         Math.max(minHeight, Math.min(maxHeight + stretch, height)),
       ])
       if (free) return
-      const next = nearestSize(width, height, sizes)
+      const next = nearestSize(width, height, reachable)
       if (next !== last) {
         last = next
         setPreview(next)
