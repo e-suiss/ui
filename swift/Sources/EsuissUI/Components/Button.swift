@@ -72,6 +72,7 @@ public struct VariantButtonStyle: ButtonStyle {
   let variant: Variant
   let size: Size
   let block: Bool
+  var metrics: ButtonMetrics?
 
   public init(_ variant: Variant = .default, size: Size = .default, block: Bool = false) {
     self.variant = variant
@@ -79,9 +80,23 @@ public struct VariantButtonStyle: ButtonStyle {
     self.block = block
   }
 
-  public func makeBody(configuration: Configuration) -> some View {
-    StyledButton(configuration: configuration, variant: variant, size: size, block: block)
+  init(_ variant: Variant, size: Size, metrics: ButtonMetrics) {
+    self.variant = variant
+    self.size = size
+    self.block = false
+    self.metrics = metrics
   }
+
+  public func makeBody(configuration: Configuration) -> some View {
+    StyledButton(configuration: configuration, variant: variant, size: size, block: block, metrics: metrics)
+  }
+}
+
+struct ButtonMetrics: Sendable {
+  var horizontalPadding: CGFloat
+  var spacing: CGFloat
+  var iconSize: CGFloat
+  var textStyle: TextStyle
 }
 
 private struct StyledButton: View {
@@ -89,6 +104,7 @@ private struct StyledButton: View {
   let variant: VariantButtonStyle.Variant
   let size: VariantButtonStyle.Size
   let block: Bool
+  let metrics: ButtonMetrics?
 
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.isEnabled) private var isEnabled
@@ -99,13 +115,13 @@ private struct StyledButton: View {
       style: .continuous
     )
     configuration.label
-      .labelStyle(ButtonLabelStyle(spacing: size.spacing, iconSize: size.iconSize))
-    .font(size.textStyle.font())
-    .tracking(size.textStyle.letterSpacing)
+      .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
+    .font((metrics?.textStyle ?? size.textStyle).font())
+    .tracking((metrics?.textStyle ?? size.textStyle).letterSpacing)
     .underline(variant == .link && pressed && isEnabled)
     .lineLimit(1)
     .foregroundStyle(foreground)
-    .padding(.horizontal, size.horizontalPadding)
+    .padding(.horizontal, metrics?.horizontalPadding ?? size.horizontalPadding)
     .frame(width: size.isIcon && !block ? size.height : nil, height: size.height)
     .frame(maxWidth: block ? .infinity : nil)
     .background(background, in: shape)
