@@ -33,7 +33,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.adamglin.PhosphorIcons
 import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.Copy
-import com.adamglin.phosphoricons.regular.Plus
 import com.adamglin.phosphoricons.regular.Trash
 import com.esuiss.ui.components.Accordion
 import com.esuiss.ui.components.AccordionItem
@@ -72,12 +71,9 @@ import com.esuiss.ui.components.DropdownMenuRadioGroup
 import com.esuiss.ui.components.DropdownMenuRadioItem
 import com.esuiss.ui.components.DropdownMenuSeparator
 import com.esuiss.ui.components.DropdownMenuSub
-import com.esuiss.ui.components.HoverCard
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentStyle
-import com.esuiss.ui.components.Menubar
 import com.esuiss.ui.components.MenuItemVariant
-import com.esuiss.ui.components.MenubarMenu
 import com.esuiss.ui.components.MultiCombobox
 import com.esuiss.ui.components.Popover
 import com.esuiss.ui.components.PopoverDescription
@@ -102,7 +98,6 @@ import com.esuiss.ui.components.TabsListVariant
 import com.esuiss.ui.components.TabsTrigger
 import com.esuiss.ui.components.ToastAction
 import com.esuiss.ui.components.Toaster
-import com.esuiss.ui.components.Tooltip
 import com.esuiss.ui.components.rememberToastState
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Typography
@@ -118,15 +113,12 @@ private enum class Scene {
     Sheet,
     Drawer,
     Popover,
-    Tooltip,
-    HoverCard,
     Toast,
     DropdownMenu,
     ContextMenu,
     Select,
     Combobox,
     MultiCombobox,
-    Menubar,
 }
 
 private const val Overlay = "overlay"
@@ -250,28 +242,6 @@ private fun Scene(scene: Scene) {
                 PopoverDescription("Set the dimensions for the layer.")
             }
         }
-        Scene.Tooltip -> Box(modifier = Modifier.padding(top = 80.dp)) {
-            Tooltip(
-                open = true,
-                onOpenChange = {},
-                trigger = { Button("Long press", onClick = {}, variant = ButtonVariant.Outline) },
-                modifier = Modifier.testTag(Overlay),
-                hideDelayMillis = 0,
-            ) {
-                BasicText("Add to library", style = LocalContentStyle.current)
-            }
-        }
-        Scene.HoverCard -> HoverCard(
-            open = true,
-            onOpenChange = {},
-            trigger = { Button("@esuiss", onClick = {}, variant = ButtonVariant.Link) },
-            modifier = Modifier.testTag(Overlay),
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                BasicText("@esuiss", style = Typography.sm.copy(color = EsuissTheme.colors.label))
-                BasicText("Components for every platform.", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
-            }
-        }
         Scene.Toast -> Toaster(toasts, modifier = Modifier.fillMaxSize()) {
             LaunchedEffect(Unit) {
                 toasts.info("Update available")
@@ -344,24 +314,6 @@ private fun Scene(scene: Scene) {
             var values by remember { mutableStateOf(listOf("Banana", "Grapes")) }
             MultiCombobox(Fruits, values, { values = it }, placeholder = "Add fruits")
         }
-        Scene.Menubar -> Menubar {
-            MenubarMenu("File", modifier = Modifier.testTag(Overlay)) {
-                DropdownMenuItem("New Tab", onClick = {}, icon = PhosphorIcons.Regular.Plus, shortcut = "⌘T")
-                DropdownMenuSeparator()
-                DropdownMenuCheckboxItem("Always show bookmarks", checked = true, onCheckedChange = {})
-                DropdownMenuLabel("People")
-                DropdownMenuRadioGroup("andy", {}) {
-                    DropdownMenuRadioItem("andy", "Andy")
-                    DropdownMenuRadioItem("benoit", "Benoit")
-                }
-            }
-            MenubarMenu("Edit") {
-                DropdownMenuItem("Undo", onClick = {})
-            }
-            MenubarMenu("View") {
-                DropdownMenuItem("Reload", onClick = {})
-            }
-        }
     }
 }
 
@@ -398,7 +350,6 @@ class OverlaysGalleryTest {
                 when (current) {
                     Scene.Select -> compose.onNodeWithText("Banana").performClick()
                     Scene.Combobox, Scene.MultiCombobox -> compose.onNode(hasSetTextAction()).performClick()
-                    Scene.Menubar -> compose.onNodeWithText("File").performClick()
                     else -> Unit
                 }
                 settle()

@@ -48,7 +48,6 @@ fun ContextMenu(
             sideOffset = 0.dp,
             alignOffset = 0.dp,
             minWidth = 192.dp,
-            menubar = false,
             point = point,
             content = content,
         )

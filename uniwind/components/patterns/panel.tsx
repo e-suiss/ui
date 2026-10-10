@@ -43,12 +43,9 @@ function PanelTrigger(props: React.ComponentProps<typeof DrawerTrigger>) {
 }
 
 function PanelContent({
-  side: _side,
   showCloseButton = true,
   ...props
-}: React.ComponentProps<typeof DrawerContent> & {
-  side?: "top" | "right" | "bottom" | "left"
-}) {
+}: React.ComponentProps<typeof DrawerContent>) {
   return <DrawerContent showCloseButton={showCloseButton} {...props} />
 }
 

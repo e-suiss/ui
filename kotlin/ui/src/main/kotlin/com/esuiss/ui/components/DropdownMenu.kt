@@ -61,9 +61,9 @@ import com.esuiss.ui.theme.Typography
 enum class MenuItemVariant { Default, Destructive }
 
 @Immutable
-internal data class MenuContext(val dismiss: () -> Unit, val menubar: Boolean)
+internal data class MenuContext(val dismiss: () -> Unit)
 
-internal val LocalMenu = staticCompositionLocalOf { MenuContext({}, false) }
+internal val LocalMenu = staticCompositionLocalOf { MenuContext {} }
 
 @Immutable
 private data class MenuRadioContext(val value: String?, val onValueChange: (String) -> Unit)
@@ -108,7 +108,6 @@ internal fun MenuPopup(
     sideOffset: Dp,
     alignOffset: Dp,
     minWidth: Dp,
-    menubar: Boolean = LocalMenu.current.menubar,
     point: IntOffset? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -123,7 +122,7 @@ internal fun MenuPopup(
         point = point,
     ) {
         CompositionLocalProvider(
-            LocalMenu provides MenuContext(onDismissRequest, menubar),
+            LocalMenu provides MenuContext(onDismissRequest),
             LocalContentStyle provides Typography.base.copy(color = colors.label),
             LocalContentColor provides colors.label,
             LocalIconSize provides 16.dp,
@@ -152,7 +151,6 @@ private fun MenuRow(
     startPadding: Dp,
     endPadding: Dp,
     indicator: (@Composable () -> Unit)?,
-    indicatorAtStart: Boolean,
     content: @Composable RowScope.() -> Unit,
 ) {
     val pressed by interaction.collectIsPressedAsState()
@@ -164,7 +162,7 @@ private fun MenuRow(
             .clip(shape)
             .background(if (pressed && enabled) pressedBackground else restingBackground, shape)
             .then(modifier),
-        contentAlignment = if (indicatorAtStart) Alignment.CenterStart else Alignment.CenterEnd,
+        contentAlignment = Alignment.CenterEnd,
     ) {
         CompositionLocalProvider(
             LocalContentStyle provides Typography.base.copy(color = foreground),
@@ -235,7 +233,6 @@ fun DropdownMenuItem(
         startPadding = if (inset) 38.dp else 12.dp,
         endPadding = 12.dp,
         indicator = null,
-        indicatorAtStart = false,
         content = content,
     )
 }
@@ -296,10 +293,9 @@ fun DropdownMenuCheckboxItem(
         pressedBackground = colors.itemPressed,
         restingBackground = Color.Transparent,
         interaction = interaction,
-        startPadding = if (menu.menubar || inset) 38.dp else 12.dp,
-        endPadding = if (menu.menubar) 12.dp else 32.dp,
+        startPadding = if (inset) 38.dp else 12.dp,
+        endPadding = 32.dp,
         indicator = { CheckIndicator(checked) },
-        indicatorAtStart = menu.menubar,
         content = content,
     )
 }
@@ -361,10 +357,9 @@ fun DropdownMenuRadioItem(
         pressedBackground = colors.itemPressed,
         restingBackground = Color.Transparent,
         interaction = interaction,
-        startPadding = if (menu.menubar || inset) 38.dp else 12.dp,
-        endPadding = if (menu.menubar) 12.dp else 32.dp,
+        startPadding = if (inset) 38.dp else 12.dp,
+        endPadding = 32.dp,
         indicator = { CheckIndicator(selected) },
-        indicatorAtStart = menu.menubar,
         content = content,
     )
 }
@@ -388,22 +383,19 @@ fun DropdownMenuLabel(
     modifier: Modifier = Modifier,
     inset: Boolean = false,
 ) {
-    val menubar = LocalMenu.current.menubar
-    val horizontal = if (menubar) 14.dp else 12.dp
     BasicText(
         text,
         modifier = modifier
             .fillMaxWidth()
             .semantics { heading() }
-            .padding(start = if (inset) 38.dp else horizontal, end = horizontal, top = 10.dp, bottom = 10.dp),
+            .padding(start = if (inset) 38.dp else 12.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
         style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.SemiBold),
     )
 }
 
 @Composable
 fun DropdownMenuSeparator(modifier: Modifier = Modifier) {
-    val menubar = LocalMenu.current.menubar
-    MenuSeparatorLine(modifier, bleed = if (menubar) 4.dp else 6.dp, color = EsuissTheme.colors.separator.copy(alpha = 0.5f))
+    MenuSeparatorLine(modifier, bleed = 6.dp, color = EsuissTheme.colors.separator.copy(alpha = 0.5f))
 }
 
 @Composable
@@ -496,7 +488,6 @@ fun DropdownMenuSub(
             startPadding = if (inset) 38.dp else 12.dp,
             endPadding = 12.dp,
             indicator = null,
-            indicatorAtStart = false,
         ) {
             Row(
                 modifier = Modifier.weight(1f),
@@ -514,8 +505,7 @@ fun DropdownMenuSub(
             align = PopupAlign.Start,
             sideOffset = 0.dp,
             alignOffset = (-6).dp,
-            minWidth = if (menu.menubar) 128.dp else 144.dp,
-            menubar = menu.menubar,
+            minWidth = 144.dp,
         ) {
             CompositionLocalProvider(
                 LocalMenu provides MenuContext(
@@ -523,7 +513,6 @@ fun DropdownMenuSub(
                         open = false
                         menu.dismiss()
                     },
-                    menubar = menu.menubar,
                 ),
             ) {
                 content()

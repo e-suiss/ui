@@ -25,12 +25,9 @@ function ConfirmTrigger(props: React.ComponentProps<typeof AlertSheetTrigger>) {
 }
 
 function ConfirmContent({
-  size: _size,
   children,
   ...props
-}: React.ComponentProps<typeof AlertSheetContent> & {
-  size?: "default" | "sm"
-}) {
+}: React.ComponentProps<typeof AlertSheetContent>) {
   const nodes = React.Children.toArray(children)
   const footer = nodes.find(
     (node): node is React.ReactElement<{ children?: React.ReactNode }> =>

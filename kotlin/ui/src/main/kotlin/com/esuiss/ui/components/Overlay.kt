@@ -88,9 +88,7 @@ internal val PopupInset = 16.dp
 internal val PopupMargin = 8.dp
 
 @Stable
-internal class PopupPlacement(side: PopupSide) {
-    var side by mutableStateOf(side)
-    var anchorCenter by mutableIntStateOf(0)
+internal class PopupPlacement {
     var anchorWidth by mutableIntStateOf(0)
 }
 
@@ -162,8 +160,6 @@ internal class AnchoredPositionProvider(
         }
         x = x.coerceIn(left, max(left, right - width))
         y = y.coerceIn(top, max(top, bottom - height))
-        placement.side = resolved
-        placement.anchorCenter = if (vertical) anchor.center.x - x else anchor.center.y - y
         placement.anchorWidth = anchorBounds.width
         return IntOffset(x - inset, y - inset)
     }
@@ -185,8 +181,6 @@ internal fun AnchoredPopup(
     sideOffset: Dp = 4.dp,
     alignOffset: Dp = 0.dp,
     focusable: Boolean = true,
-    touchable: Boolean = true,
-    dismissOnClickOutside: Boolean = true,
     point: IntOffset? = null,
     enterMillis: Int = 150,
     exitMillis: Int = 100,
@@ -200,7 +194,7 @@ internal fun AnchoredPopup(
     val imeBottom = WindowInsets.ime.getBottom(density)
     val containerHeight = LocalWindowInfo.current.containerSize.height
     val bottomLimit = if (containerHeight > 0) containerHeight - imeBottom else Int.MAX_VALUE
-    val placement = remember { PopupPlacement(side) }
+    val placement = remember { PopupPlacement() }
     val provider = remember(side, align, sideOffset, alignOffset, point, bottomLimit, density) {
         with(density) {
             AnchoredPositionProvider(
@@ -218,19 +212,11 @@ internal fun AnchoredPopup(
     }
     val currentExpanded by rememberUpdatedState(expanded)
     val dismiss by rememberUpdatedState(onDismissRequest)
-    val properties = if (touchable) {
-        PopupProperties(
-            focusable = focusable,
-            dismissOnBackPress = true,
-            dismissOnClickOutside = dismissOnClickOutside,
-        )
-    } else {
-        PopupProperties(
-            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false,
-        )
-    }
+    val properties = PopupProperties(
+        focusable = focusable,
+        dismissOnBackPress = true,
+        dismissOnClickOutside = true,
+    )
     val slide = with(density) { 8.dp.roundToPx() }
     val origin = transformOrigin(side)
     Popup(

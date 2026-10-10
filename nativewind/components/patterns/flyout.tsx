@@ -11,10 +11,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-type Side = "top" | "right" | "bottom" | "left"
-
-type Align = "start" | "center" | "end"
-
 function Flyout({
   open,
   defaultOpen,
@@ -45,18 +41,7 @@ function FlyoutTrigger(props: React.ComponentProps<typeof DrawerTrigger>) {
   return <DrawerTrigger {...props} />
 }
 
-function FlyoutContent({
-  align: _align,
-  alignOffset: _alignOffset,
-  side: _side,
-  sideOffset: _sideOffset,
-  ...props
-}: React.ComponentProps<typeof DrawerContent> & {
-  align?: Align
-  alignOffset?: number
-  side?: Side
-  sideOffset?: number
-}) {
+function FlyoutContent(props: React.ComponentProps<typeof DrawerContent>) {
   return <DrawerContent {...props} />
 }
 

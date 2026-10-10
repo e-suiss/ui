@@ -45,28 +45,11 @@ import type {
 import { useControllableState } from "./use-controllable-state"
 import { useRender } from "./use-render"
 
-const SIBLING_OPEN = "sibling-open"
-
-type MenuChangeEventReason = BaseUIEventReason | typeof SIBLING_OPEN
+type MenuChangeEventReason = BaseUIEventReason
 
 type MenuChangeEventDetails = BaseUIChangeEventDetails<MenuChangeEventReason>
 
-type MenuParentType = "menu" | "context-menu" | "menubar" | undefined
-
-interface MenubarContextValue {
-  activeMenu: string | null
-  setActiveMenu: (id: string) => void
-  clearActiveMenu: (id: string) => void
-  modal: boolean
-  disabled: boolean
-  orientation: Orientation
-}
-
-const MenubarContext = React.createContext<MenubarContextValue | null>(null)
-
-function useOptionalMenubarContext() {
-  return React.useContext(MenubarContext)
-}
+type MenuParentType = "menu" | "context-menu" | undefined
 
 interface MenuRootContextValue {
   floating: FloatingRootValue
@@ -83,31 +66,6 @@ function useMenuRootContext(componentName = "Menu part") {
     throw new Error(`${componentName} must be rendered inside Menu.Root`)
   }
   return context
-}
-
-function useMenubarSync(
-  menubar: MenubarContextValue | null,
-  floating: FloatingRootValue
-) {
-  const { open, id, setOpen } = floating
-  const setActiveMenu = menubar?.setActiveMenu
-  const clearActiveMenu = menubar?.clearActiveMenu
-  const activeMenu = menubar?.activeMenu ?? null
-
-  React.useEffect(() => {
-    if (open) setActiveMenu?.(id)
-    else clearActiveMenu?.(id)
-  }, [open, id, setActiveMenu, clearActiveMenu])
-
-  React.useEffect(() => {
-    if (!open || activeMenu === null || activeMenu === id) return
-    setOpen(false, SIBLING_OPEN)
-  }, [open, activeMenu, id, setOpen])
-
-  React.useEffect(() => {
-    if (!clearActiveMenu) return
-    return () => clearActiveMenu(id)
-  }, [clearActiveMenu, id])
 }
 
 class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
@@ -143,13 +101,11 @@ function MenuRootImpl<Payload = unknown>({
   parent: parentType,
   ...parameters
 }: InternalRootProps<Payload>) {
-  const menubar = useOptionalMenubarContext()
   const floating = useFloatingRoot<MenuChangeEventReason>({
     ...parameters,
-    modal: modal ?? menubar?.modal ?? true,
-    disabled: disabled ?? menubar?.disabled ?? false,
+    modal: modal ?? true,
+    disabled: disabled ?? false,
   })
-  useMenubarSync(menubar, floating)
 
   const { setOpen } = floating
   const closeTree = React.useCallback(
@@ -159,7 +115,7 @@ function MenuRootImpl<Payload = unknown>({
     [setOpen]
   )
 
-  const parent: MenuParentType = parentType ?? (menubar ? "menubar" : "menu")
+  const parent: MenuParentType = parentType ?? "menu"
 
   const value = React.useMemo<MenuRootContextValue>(
     () => ({ floating, nested: false, parent, closeTree }),
@@ -263,7 +219,6 @@ function Trigger<Payload = unknown>({
   if (!menu && !handle) {
     throw new Error("Menu.Trigger must be rendered inside Menu.Root")
   }
-  const menubar = useOptionalMenubarContext()
   const trigger = useFloatingTrigger({
     root: menu?.floating,
     handle,
@@ -271,7 +226,7 @@ function Trigger<Payload = unknown>({
     payload,
     ref,
     disabled: disabled ?? undefined,
-    role: menubar ? "menuitem" : "button",
+    role: "button",
   })
 
   return useRender({
@@ -1073,7 +1028,6 @@ export type {
   InternalRootProps,
   ItemProps,
   ItemState,
-  MenubarContextValue,
   MenuChangeEventDetails,
   MenuChangeEventReason,
   MenuParentType,
@@ -1107,7 +1061,6 @@ export {
   GroupLabel,
   Handle,
   Item,
-  MenubarContext,
   MenuRootContext,
   MenuRootImpl,
   Popup,
@@ -1122,6 +1075,5 @@ export {
   SubmenuTrigger,
   Trigger,
   useMenuRootContext,
-  useOptionalMenubarContext,
   Viewport,
 }

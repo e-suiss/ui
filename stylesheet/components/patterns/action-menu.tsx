@@ -11,10 +11,6 @@ import {
   AlertSheetTrigger,
 } from "@/components/ui/alert-sheet"
 
-type Side = "top" | "right" | "bottom" | "left"
-
-type Align = "start" | "center" | "end"
-
 function ActionMenu({
   open,
   defaultOpen,
@@ -48,18 +44,10 @@ function ActionMenuTrigger(
 
 function ActionMenuContent({
   cancelLabel = "Cancel",
-  align: _align,
-  alignOffset: _alignOffset,
-  side: _side,
-  sideOffset: _sideOffset,
   children,
   ...props
 }: React.ComponentProps<typeof AlertSheetContent> & {
   cancelLabel?: string
-  align?: Align
-  alignOffset?: number
-  side?: Side
-  sideOffset?: number
 }) {
   return (
     <AlertSheetContent {...props}>

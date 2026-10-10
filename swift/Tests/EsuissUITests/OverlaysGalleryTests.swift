@@ -233,19 +233,6 @@ private struct PopoverGallery: View {
         Text("Width 100%").font(TextStyle.sm.font())
       }
       .popupSurface(radius: 13)
-      TooltipContent { Text("Add to library") }
-        .background(Color.label, in: RoundedRectangle(cornerRadius: 13))
-      HoverCardContent {
-        HStack(alignment: .top, spacing: 16) {
-          Circle().fill(Color.surfaceTertiary).frame(width: 40, height: 40)
-          VStack(alignment: .leading, spacing: 4) {
-            Text("@nextjs").font(TextStyle.sm.font(weight: .semibold))
-            Text("The React Framework – created and maintained by @vercel.").font(TextStyle.sm.font())
-            Text("Joined December 2021").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
-          }
-        }
-      }
-      .popupSurface(radius: 13)
     }
     .padding(24)
     .frame(width: 402, alignment: .leading)
@@ -326,11 +313,6 @@ private struct MenusGallery: View {
           }
         }
         .frame(width: 160)
-      }
-      Menubar {
-        MenubarMenu("File") { MenubarItem("New Tab") {} }
-        MenubarMenu("Edit") { MenubarItem("Undo") {} }
-        MenubarMenu("View") { MenubarItem("Reload") {} }
       }
       HStack(alignment: .top, spacing: 12) {
         VStack(alignment: .leading, spacing: 4) {

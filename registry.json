@@ -685,45 +685,6 @@
       ]
     },
     {
-      "name": "hover-card",
-      "type": "ui",
-      "title": "Hover Card",
-      "dependencies": {
-        "uniwind": [
-          "cn",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ],
-        "nativewind": [
-          "cn",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ],
-        "stylesheet": [
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ]
-      },
-      "requires": [
-        "animated-view",
-        "primitives/hover-card",
-        "primitives/types",
-        "primitives/use-render",
-        "text"
-      ],
-      "files": [
-        "components/ui/hover-card.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ]
-    },
-    {
       "name": "icon",
       "type": "ui",
       "title": "Icon",
@@ -937,52 +898,6 @@
       ],
       "files": [
         "components/ui/marker.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ]
-    },
-    {
-      "name": "menubar",
-      "type": "ui",
-      "title": "Menubar",
-      "dependencies": {
-        "uniwind": [
-          "cn",
-          "phosphor-react-native",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-svg",
-          "react-native-worklets"
-        ],
-        "nativewind": [
-          "cn",
-          "phosphor-react-native",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-svg",
-          "react-native-worklets"
-        ],
-        "stylesheet": [
-          "phosphor-react-native",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-svg",
-          "react-native-worklets"
-        ]
-      },
-      "requires": [
-        "animated-view",
-        "icon",
-        "primitives/menu",
-        "primitives/menubar",
-        "primitives/use-render",
-        "text"
-      ],
-      "files": [
-        "components/ui/menubar.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1529,45 +1444,6 @@
       ]
     },
     {
-      "name": "tooltip",
-      "type": "ui",
-      "title": "Tooltip",
-      "dependencies": {
-        "uniwind": [
-          "cn",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ],
-        "nativewind": [
-          "cn",
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ],
-        "stylesheet": [
-          "react-native-reanimated",
-          "react-native-screens",
-          "react-native-worklets"
-        ]
-      },
-      "requires": [
-        "animated-view",
-        "primitives/tooltip",
-        "primitives/types",
-        "primitives/use-render",
-        "text"
-      ],
-      "files": [
-        "components/ui/tooltip.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ]
-    },
-    {
       "name": "action-menu",
       "type": "pattern",
       "title": "Action Menu",
@@ -1874,23 +1750,6 @@
       ]
     },
     {
-      "name": "primitives/autocomplete",
-      "type": "primitive",
-      "title": "Autocomplete",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/combobox",
-        "primitives/floating-root"
-      ],
-      "files": [
-        "components/primitives/autocomplete.tsx"
-      ]
-    },
-    {
       "name": "primitives/avatar",
       "type": "primitive",
       "title": "Avatar",
@@ -2167,27 +2026,6 @@
       ]
     },
     {
-      "name": "primitives/hover-card",
-      "type": "primitive",
-      "title": "Hover Card",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/event-details",
-        "primitives/floating-root",
-        "primitives/popover",
-        "primitives/positioner",
-        "primitives/types",
-        "primitives/use-render"
-      ],
-      "files": [
-        "components/primitives/hover-card.tsx"
-      ]
-    },
-    {
       "name": "primitives/input",
       "type": "primitive",
       "title": "Input",
@@ -2242,24 +2080,6 @@
       ]
     },
     {
-      "name": "primitives/menubar",
-      "type": "primitive",
-      "title": "Menubar",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/menu",
-        "primitives/types",
-        "primitives/use-render"
-      ],
-      "files": [
-        "components/primitives/menubar.tsx"
-      ]
-    },
-    {
       "name": "primitives/merge-props",
       "type": "primitive",
       "title": "Merge Props",
@@ -2271,23 +2091,6 @@
       "requires": [],
       "files": [
         "components/primitives/merge-props.ts"
-      ]
-    },
-    {
-      "name": "primitives/meter",
-      "type": "primitive",
-      "title": "Meter",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/types",
-        "primitives/use-render"
-      ],
-      "files": [
-        "components/primitives/meter.tsx"
       ]
     },
     {
@@ -2599,44 +2402,6 @@
       ],
       "files": [
         "components/primitives/toggle.tsx"
-      ]
-    },
-    {
-      "name": "primitives/toolbar",
-      "type": "primitive",
-      "title": "Toolbar",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/types",
-        "primitives/use-render"
-      ],
-      "files": [
-        "components/primitives/toolbar.tsx"
-      ]
-    },
-    {
-      "name": "primitives/tooltip",
-      "type": "primitive",
-      "title": "Tooltip",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/event-details",
-        "primitives/floating-root",
-        "primitives/popover",
-        "primitives/positioner",
-        "primitives/types",
-        "primitives/use-render"
-      ],
-      "files": [
-        "components/primitives/tooltip.tsx"
       ]
     },
     {
