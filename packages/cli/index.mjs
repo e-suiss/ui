@@ -13,7 +13,7 @@ const { name, version } = JSON.parse(
 const usage = `${name} ${version}
 
 Usage:
-  npx ${name} init [options]              set up Uniwind or NativeWind, the theme, and the button
+  npx ${name} init [options]              set up the styling, the theme, and the button
   npx ${name} add <component...> [options] add components, e.g. add button dialog
 
 Options:
@@ -21,8 +21,8 @@ Options:
   --diff           show how local files differ from the registry
   -a, --all        add every component
   -y, --yes        skip confirmation prompts
-  -s, --styling <uniwind|nativewind>
-                   styling library (detected from the project when omitted)
+  -s, --styling <uniwind|nativewind|stylesheet>
+                   styling to use (detected from the project when omitted)
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
   -v, --version    show the version

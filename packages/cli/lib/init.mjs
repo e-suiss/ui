@@ -37,7 +37,7 @@ const STYLING_SETUP = {
     metroMarker: "",
   },
   nativewind: {
-    runtime: ["nativewind@^4.2.7"],
+    runtime: ["nativewind@^4.2.7", "react-native-css-interop@^0.2.7"],
     tooling: ["tailwindcss@^3.4.17"],
     tailwindMajor: 3,
     metroImport: 'const { withNativeWind } = require("nativewind/metro")',
@@ -393,7 +393,7 @@ export async function init(options) {
     writeNativewindTypes(project)
   }
 
-  if (css && project.framework === "react-native") {
+  if (css) {
     const cssTypes = path.join(sourceRoot, "css.d.ts")
     if (!existsSync(cssTypes)) {
       writeFileSync(cssTypes, 'declare module "*.css"\n')
