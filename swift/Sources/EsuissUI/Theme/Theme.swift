@@ -1,6 +1,34 @@
 import SwiftUI
 import UIKit
 
+struct RGBA: Sendable {
+  let red: CGFloat
+  let green: CGFloat
+  let blue: CGFloat
+  let alpha: CGFloat
+
+  init(_ hex: UInt32, _ alpha: CGFloat = 1) {
+    red = CGFloat((hex >> 16) & 0xFF) / 255
+    green = CGFloat((hex >> 8) & 0xFF) / 255
+    blue = CGFloat(hex & 0xFF) / 255
+    self.alpha = alpha
+  }
+
+  var uiColor: UIColor {
+    UIColor(red: red, green: green, blue: blue, alpha: alpha)
+  }
+}
+
+extension Color {
+  static func adaptive(light: RGBA, dark: RGBA) -> Color {
+    let lightColor = light.uiColor
+    let darkColor = dark.uiColor
+    return Color(uiColor: UIColor { traits in
+      traits.userInterfaceStyle == .dark ? darkColor : lightColor
+    })
+  }
+}
+
 public struct TextStyle: Sendable, Hashable {
   public let size: CGFloat
   public let lineHeight: CGFloat
@@ -11,19 +39,6 @@ public struct TextStyle: Sendable, Hashable {
     self.lineHeight = lineHeight
     self.letterSpacing = letterSpacing
   }
-
-  public static let xs3 = TextStyle(size: 11, lineHeight: 13, letterSpacing: 0.066)
-  public static let xs2 = TextStyle(size: 12, lineHeight: 16, letterSpacing: 0)
-  public static let xs = TextStyle(size: 13, lineHeight: 18, letterSpacing: -0.078)
-  public static let sm = TextStyle(size: 15, lineHeight: 20, letterSpacing: -0.24)
-  public static let md = TextStyle(size: 16, lineHeight: 21, letterSpacing: -0.32)
-  public static let base = TextStyle(size: 17, lineHeight: 22, letterSpacing: -0.442)
-  public static let lg = TextStyle(size: 20, lineHeight: 25, letterSpacing: -0.46)
-  public static let xl = TextStyle(size: 22, lineHeight: 28, letterSpacing: -0.264)
-  public static let xl2 = TextStyle(size: 28, lineHeight: 34, letterSpacing: 0.392)
-  public static let xl3 = TextStyle(size: 34, lineHeight: 41, letterSpacing: 0.408)
-
-  public static let allCases: [TextStyle] = [.xs3, .xs2, .xs, .sm, .md, .base, .lg, .xl, .xl2, .xl3]
 
   public func font(weight: Font.Weight = .regular) -> Font {
     .system(size: size, weight: weight)
@@ -56,5 +71,25 @@ private struct TextStyleModifier: ViewModifier {
 extension View {
   public func textStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {
     modifier(TextStyleModifier(style: style, weight: weight))
+  }
+}
+
+public struct Shadow: Sendable, Hashable {
+  public let color: Color
+  public let radius: CGFloat
+  public let x: CGFloat
+  public let y: CGFloat
+
+  public init(color: Color, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) {
+    self.color = color
+    self.radius = radius
+    self.x = x
+    self.y = y
+  }
+}
+
+extension View {
+  public func shadow(_ shadow: Shadow) -> some View {
+    self.shadow(color: shadow.color, radius: shadow.radius, x: shadow.x, y: shadow.y)
   }
 }

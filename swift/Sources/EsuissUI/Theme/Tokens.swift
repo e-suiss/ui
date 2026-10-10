@@ -1,33 +1,6 @@
 import SwiftUI
-import UIKit
-
-struct RGBA: Sendable {
-  let red: CGFloat
-  let green: CGFloat
-  let blue: CGFloat
-  let alpha: CGFloat
-
-  init(_ hex: UInt32, _ alpha: CGFloat = 1) {
-    red = CGFloat((hex >> 16) & 0xFF) / 255
-    green = CGFloat((hex >> 8) & 0xFF) / 255
-    blue = CGFloat(hex & 0xFF) / 255
-    self.alpha = alpha
-  }
-
-  var uiColor: UIColor {
-    UIColor(red: red, green: green, blue: blue, alpha: alpha)
-  }
-}
 
 extension Color {
-  static func adaptive(light: RGBA, dark: RGBA) -> Color {
-    let lightColor = light.uiColor
-    let darkColor = dark.uiColor
-    return Color(uiColor: UIColor { traits in
-      traits.userInterfaceStyle == .dark ? darkColor : lightColor
-    })
-  }
-
   public static let surface = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0x000000))
   public static let surfaceSecondary = Color.adaptive(light: .init(0xF5F5F7), dark: .init(0x161617))
   public static let surfaceTertiary = Color.adaptive(light: .init(0xE8E8ED), dark: .init(0x2C2C2E))
@@ -67,4 +40,35 @@ extension Color {
   public static let successSurface = Color.adaptive(light: .init(0xEFFAF1), dark: .init(0x30D158, 0.16))
   public static let warning = Color.adaptive(light: .init(0xB64400), dark: .init(0xFF9F0A))
   public static let warningSurface = Color.adaptive(light: .init(0xFFF5EA), dark: .init(0xFF9F0A, 0.16))
+}
+
+public enum Radius {
+  public static let xs: CGFloat = 3
+  public static let sm: CGFloat = 5
+  public static let md: CGFloat = 8
+  public static let lg: CGFloat = 10
+  public static let xl: CGFloat = 12
+  public static let xl2: CGFloat = 18
+  public static let xl3: CGFloat = 28
+  public static let full: CGFloat = 9999
+}
+
+extension TextStyle {
+  public static let xs3 = TextStyle(size: 11, lineHeight: 13, letterSpacing: 0.066)
+  public static let xs2 = TextStyle(size: 12, lineHeight: 16, letterSpacing: 0)
+  public static let xs = TextStyle(size: 13, lineHeight: 18, letterSpacing: -0.078)
+  public static let sm = TextStyle(size: 15, lineHeight: 20, letterSpacing: -0.24)
+  public static let md = TextStyle(size: 16, lineHeight: 21, letterSpacing: -0.32)
+  public static let base = TextStyle(size: 17, lineHeight: 22, letterSpacing: -0.442)
+  public static let lg = TextStyle(size: 20, lineHeight: 25, letterSpacing: -0.46)
+  public static let xl = TextStyle(size: 22, lineHeight: 28, letterSpacing: -0.264)
+  public static let xl2 = TextStyle(size: 28, lineHeight: 34, letterSpacing: 0.392)
+  public static let xl3 = TextStyle(size: 34, lineHeight: 41, letterSpacing: 0.408)
+
+  public static let allCases: [TextStyle] = [.xs3, .xs2, .xs, .sm, .md, .base, .lg, .xl, .xl2, .xl3]
+}
+
+extension Shadow {
+  public static let md = Shadow(color: .black.opacity(0.08), radius: 6, x: 2, y: 4)
+  public static let lg = Shadow(color: .black.opacity(0.12), radius: 12, y: 4)
 }

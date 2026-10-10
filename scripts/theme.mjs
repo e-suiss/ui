@@ -1,3 +1,7 @@
+import { readFileSync } from "node:fs"
+import path from "node:path"
+
+const TOKENS = path.join(process.cwd(), "packages/tokens/tokens.json")
 const ROOT_FONT_SIZE = 16
 
 function parseAlpha(value) {
@@ -78,61 +82,39 @@ function toPixels(value) {
   return round(Number.parseFloat(value))
 }
 
-function variantBlock(css, name) {
-  const start = css.indexOf(`@variant ${name}`)
-  const end = css.indexOf("}", start)
-  return Object.fromEntries(
-    [...css.slice(start, end).matchAll(/--color-([\w-]+):\s*([^;]+);/g)].map(
-      (match) => [match[1], match[2].trim()]
-    )
+function loadTokens() {
+  const tokens = JSON.parse(readFileSync(TOKENS, "utf8"))
+  const colors = Object.entries(tokens.color)
+  const text = Object.fromEntries(
+    Object.entries(tokens.text).map(([name, size]) => {
+      const fontSize = toPixels(size.fontSize)
+      const tracking = Number.parseFloat(size.letterSpacing)
+      return [
+        name,
+        {
+          fontSize,
+          lineHeight: toPixels(size.lineHeight),
+          letterSpacing: round(tracking * fontSize),
+          tracking,
+        },
+      ]
+    })
   )
-}
-
-function themeBlock(css) {
-  const body = css.match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? ""
-  return Object.fromEntries(
-    [...body.matchAll(/--([\w-]+):\s*([^;]+);/g)].map((match) => [
-      match[1],
-      match[2].trim(),
+  const radius = Object.fromEntries(
+    Object.entries(tokens.radius).map(([name, value]) => [
+      name,
+      toPixels(value),
     ])
   )
-}
-
-function readTheme(css) {
-  const values = themeBlock(css)
-  const text = {}
-  const radius = {}
-  const shadow = {}
-  for (const [name, value] of Object.entries(values)) {
-    const textMatch = name.match(
-      /^text-([\w]+)(?:--(line-height|letter-spacing))?$/
-    )
-    if (textMatch) {
-      const [, size, property] = textMatch
-      text[size] ??= {}
-      if (!property) text[size].fontSize = toPixels(value)
-      else if (property === "line-height")
-        text[size].lineHeight = toPixels(value)
-      else text[size].letterSpacing = Number.parseFloat(value)
-      continue
-    }
-    const radiusMatch = name.match(/^radius-([\w]+)$/)
-    if (radiusMatch) {
-      radius[radiusMatch[1]] = toPixels(value)
-      continue
-    }
-    const shadowMatch = name.match(/^shadow-([\w]+)$/)
-    if (shadowMatch) shadow[shadowMatch[1]] = value
-  }
-  for (const size of Object.values(text)) {
-    size.letterSpacing = round((size.letterSpacing ?? 0) * size.fontSize)
-  }
   return {
-    light: variantBlock(css, "light"),
-    dark: variantBlock(css, "dark"),
+    light: Object.fromEntries(
+      colors.map(([name, value]) => [name, value.light])
+    ),
+    dark: Object.fromEntries(colors.map(([name, value]) => [name, value.dark])),
     text,
     radius,
-    shadow,
+    shadow: { ...tokens.shadow },
+    source: tokens,
   }
 }
 
@@ -142,4 +124,9 @@ function convertColors(value) {
   )
 }
 
-export { convertColors, readTheme, toRgb }
+function toRgba(value) {
+  const { channels, alpha } = parseColor(value)
+  return { channels, alpha: round(alpha) }
+}
+
+export { convertColors, loadTokens, toRgb, toRgba }

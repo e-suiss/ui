@@ -4,12 +4,11 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 
-import { readTheme, toRgb } from "./theme.mjs"
+import { loadTokens, toRgb } from "./theme.mjs"
 
 const ROOT = process.cwd()
 const SOURCE_DIR = "uniwind/components/ui"
 const OUTPUT_DIR = "nativewind/components/ui"
-const SOURCE_STYLESHEET = "styles/uniwind.css"
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
 const OUTPUT_CONFIG = "styles/nativewind.config.js"
 const V3_SPACING = new Set([
@@ -299,9 +298,7 @@ ${boxShadow}
 }
 
 async function generate(target) {
-  const theme = readTheme(
-    await readFile(path.join(ROOT, SOURCE_STYLESHEET), "utf8")
-  )
+  const theme = loadTokens()
   const colors = new Set(Object.keys(theme.light))
   const pattern = opacityPattern(colors)
 
