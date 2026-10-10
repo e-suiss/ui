@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
 
 @Composable
@@ -17,8 +16,8 @@ fun Icon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    size: Dp = 20.dp,
-    tint: Color = LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground },
+    size: Dp = LocalIconSize.current,
+    tint: Color = LocalContentColor.current.takeOrElse { EsuissTheme.colors.label },
 ) {
     Image(
         imageVector = imageVector,

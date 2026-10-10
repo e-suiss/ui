@@ -18,7 +18,7 @@ let package = Package(
     ),
     .testTarget(
       name: "EsuissUITests",
-      dependencies: ["EsuissUI"],
+      dependencies: ["EsuissUI", .product(name: "PhosphorSwift", package: "swift")],
       path: "swift/Tests/EsuissUITests"
     ),
   ]
