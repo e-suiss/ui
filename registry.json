@@ -314,6 +314,43 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "ui",
+      "title": "Calendar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "button",
+        "icon",
+        "primitives/calendar",
+        "primitives/use-render",
+        "select",
+        "text"
+      ],
+      "files": [
+        "components/ui/calendar.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "card",
       "type": "ui",
       "title": "Card",
@@ -1444,6 +1481,33 @@
       ]
     },
     {
+      "name": "wheel-picker",
+      "type": "ui",
+      "title": "Wheel Picker",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/use-render",
+        "primitives/wheel-picker",
+        "text"
+      ],
+      "files": [
+        "components/ui/wheel-picker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "action-menu",
       "type": "pattern",
       "title": "Action Menu",
@@ -1503,6 +1567,41 @@
       ],
       "files": [
         "components/patterns/context-actions.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "pattern",
+      "title": "Date Picker",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "drawer",
+        "icon",
+        "text",
+        "wheel-picker"
+      ],
+      "files": [
+        "components/patterns/date-picker.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1607,6 +1706,62 @@
       ]
     },
     {
+      "name": "search-picker",
+      "type": "pattern",
+      "title": "Search Picker",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "drawer",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/patterns/search-picker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "segment-picker",
+      "type": "pattern",
+      "title": "Segment Picker",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "select"
+      ],
+      "files": [
+        "components/patterns/segment-picker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "table-list",
       "type": "pattern",
       "title": "Table List",
@@ -1650,6 +1805,41 @@
       "requires": [],
       "files": [
         "components/interactions/pull-to-refresh.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "interaction",
+      "title": "Stepper",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/number-field",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/interactions/stepper.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1765,6 +1955,25 @@
       ],
       "files": [
         "components/primitives/avatar.tsx"
+      ]
+    },
+    {
+      "name": "primitives/calendar",
+      "type": "primitive",
+      "title": "Calendar",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/calendar.tsx"
       ]
     },
     {
@@ -2451,6 +2660,26 @@
       ],
       "files": [
         "components/primitives/use-render.tsx"
+      ]
+    },
+    {
+      "name": "primitives/wheel-picker",
+      "type": "primitive",
+      "title": "Wheel Picker",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/wheel-picker.tsx"
       ]
     }
   ]
