@@ -5,13 +5,18 @@ import path from "node:path"
 const ROOT = process.cwd()
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLES = {
-  uniwind: { stylesheet: "styles/uniwind.css" },
+  uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
   nativewind: {
     stylesheet: "styles/nativewind.css",
     config: "styles/nativewind.config.js",
     directory: "nativewind",
   },
+  stylesheet: {
+    theme: "stylesheet/components/ui/theme.ts",
+    directory: "stylesheet",
+  },
 }
+const PROVIDED_BY_INIT = new Set(["theme"])
 const IGNORED_PACKAGES = new Set(["react", "react-native"])
 const COMPANIONS = {
   "phosphor-react-native": ["react-native-svg"],
@@ -19,10 +24,7 @@ const COMPANIONS = {
 }
 const LOCAL_IMPORT = /^@\/(components\/ui|hooks)\/([\w-]+)$/
 
-const sources = [
-  { dir: "components/ui", type: "ui" },
-  { dir: "hooks", type: "hook" },
-]
+const sources = [{ dir: "components/ui", type: "ui" }]
 
 function toTitle(name) {
   return name
@@ -72,13 +74,16 @@ async function buildItem(dir, type, file) {
   const overrides = []
 
   for (const [style, { directory }] of Object.entries(STYLES)) {
-    const override = directory && path.posix.join(directory, filePath)
-    const source =
-      override && existsSync(path.join(ROOT, override)) ? override : filePath
-    if (source !== filePath) overrides.push(style)
+    const source = path.posix.join(directory, filePath)
+    if (!existsSync(path.join(ROOT, source))) {
+      throw new Error(`missing ${source}`)
+    }
+    overrides.push(style)
     const analysis = await analyze(source, name)
     dependencies[style] = [...analysis.dependencies].sort()
-    for (const required of analysis.requires) requires.add(required)
+    for (const required of analysis.requires) {
+      if (!PROVIDED_BY_INIT.has(required)) requires.add(required)
+    }
   }
 
   return {
@@ -88,7 +93,7 @@ async function buildItem(dir, type, file) {
     dependencies,
     requires: [...requires].sort(),
     files: [filePath],
-    ...(overrides.length ? { overrides } : {}),
+    overrides,
   }
 }
 
@@ -99,8 +104,8 @@ function validate(items) {
       .filter((required) => !names.has(required))
       .map((required) => `${item.name} requires missing item "${required}"`)
   )
-  for (const { stylesheet, config } of Object.values(STYLES)) {
-    for (const file of [stylesheet, config].filter(Boolean)) {
+  for (const { stylesheet, config, theme } of Object.values(STYLES)) {
+    for (const file of [stylesheet, config, theme].filter(Boolean)) {
       if (!existsSync(path.join(ROOT, file))) problems.push(`missing ${file}`)
     }
   }
@@ -109,8 +114,7 @@ function validate(items) {
 
 const items = []
 for (const { dir, type } of sources) {
-  if (!existsSync(path.join(ROOT, dir))) continue
-  const files = (await readdir(path.join(ROOT, dir)))
+  const files = (await readdir(path.join(ROOT, STYLES.uniwind.directory, dir)))
     .filter((file) => /\.(tsx?|jsx?)$/.test(file))
     .sort()
   for (const file of files) items.push(await buildItem(dir, type, file))

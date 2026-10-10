@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
 import { installItems } from "./add.mjs"
@@ -29,6 +29,13 @@ const STYLING_SETUP = {
     tailwindMajor: 4,
     metroImport: 'const { withUniwindConfig } = require("uniwind/metro")',
     metroMarker: "withUniwindConfig",
+  },
+  stylesheet: {
+    runtime: [],
+    tooling: [],
+    tailwindMajor: null,
+    metroImport: "",
+    metroMarker: "withPrimitivesResolver",
   },
   nativewind: {
     runtime: ["nativewind@^4.2.7"],
@@ -64,6 +71,7 @@ function majorOf(version) {
 
 function assertVersions(project) {
   const { tailwindMajor } = STYLING_SETUP[project.styling]
+  if (!tailwindMajor) return
   const tailwind = project.packages.tailwindcss
   if (tailwind && majorOf(tailwind) !== tailwindMajor) {
     throw new CliError(
@@ -139,7 +147,8 @@ const PRIMITIVES_RESOLVER = `function withPrimitivesResolver(config) {
 `
 
 function metroHeader(project) {
-  const header = `${STYLING_SETUP[project.styling].metroImport}\n`
+  const { metroImport } = STYLING_SETUP[project.styling]
+  const header = metroImport ? `${metroImport}\n` : ""
   return project.framework === "react-native"
     ? `${header}\n${PRIMITIVES_RESOLVER}\n`
     : header
@@ -150,10 +159,14 @@ function wrapConfig(project, expression, options) {
     project.framework === "react-native"
       ? `withPrimitivesResolver(${expression})`
       : expression
+  if (project.styling === "stylesheet") return `module.exports = ${inner}\n`
   return `module.exports = ${STYLING_SETUP[project.styling].metroMarker}(${inner}, ${options})\n`
 }
 
 function configureMetro(project, stylesheet, typesFile) {
+  if (project.styling === "stylesheet" && project.framework === "expo") {
+    return []
+  }
   const options = metroOptions(project, stylesheet, typesFile)
   const file = METRO_CONFIGS.map((name) => path.join(project.cwd, name)).find(
     existsSync
@@ -206,19 +219,24 @@ function lastImportEnd(text) {
 
 function configureRoot(project, stylesheet) {
   const file = findRootComponent(project)
-  const cssImport = `import "${importPath(file ?? stylesheet, stylesheet)}"`
+  const cssImport = stylesheet
+    ? `import "${importPath(file ?? stylesheet, stylesheet)}"`
+    : null
   if (!file) {
     return [
-      `Add ${cssImport} and render <PortalHost /> from "@rn-primitives/portal" in your root component.`,
+      `${cssImport ? `Add ${cssImport} and render` : "Render"} <PortalHost /> from "@rn-primitives/portal" in your root component.`,
     ]
   }
 
   let text = readFileSync(file, "utf8")
   const original = text
   const manual = []
-  const cssName = path.basename(stylesheet)
+  const cssName = stylesheet ? path.basename(stylesheet) : null
 
-  if (!new RegExp(`import\\s+["'][^"']*${cssName}["']`).test(text)) {
+  if (
+    cssImport &&
+    !new RegExp(`import\\s+["'][^"']*${cssName}["']`).test(text)
+  ) {
     const firstImport = text.search(/^import\s/m)
     const at = firstImport === -1 ? 0 : firstImport
     text = `${text.slice(0, at)}${cssImport}\n${text.slice(at)}`
@@ -283,15 +301,37 @@ async function writeTailwindConfig(project, registry, options) {
   step(`Wrote ${relative(project, file)}`)
 }
 
+const STYLING_CHOICES = {
+  Uniwind: "uniwind",
+  "NativeWind v4": "nativewind",
+  "React Native StyleSheet": "stylesheet",
+}
+
 async function pickStyling(project, options) {
   const detected = detectStyling(project, options.styling)
   if (detected) return detected
   if (options.yes) return STYLINGS[0]
-  const answer = await choose("Which styling library should components use?", [
-    "Uniwind",
-    "NativeWind v4",
-  ])
-  return answer === "Uniwind" ? "uniwind" : "nativewind"
+  const answer = await choose(
+    "How should components be styled?",
+    Object.keys(STYLING_CHOICES)
+  )
+  return STYLING_CHOICES[answer]
+}
+
+async function writeTheme(project, registry, root) {
+  const file = path.join(root, "components", "ui", "theme.ts")
+  const theme = await fetchText(registry.styles.stylesheet.theme)
+  if (existsSync(file)) {
+    if (readFileSync(file, "utf8") !== theme) {
+      note(
+        `Kept ${relative(project, file)}. Compare it with the registry theme if components look off.`
+      )
+    }
+    return
+  }
+  mkdirSync(path.dirname(file), { recursive: true })
+  writeFileSync(file, theme)
+  step(`Wrote ${relative(project, file)}`)
 }
 
 export async function init(options) {
@@ -306,8 +346,10 @@ export async function init(options) {
   const stylesheet = path.join(sourceRoot, "global.css")
   const typesFile = path.join(sourceRoot, "uniwind-types.d.ts")
 
+  const usesCss = project.styling !== "stylesheet"
   const stylesheetExists = existsSync(stylesheet)
   if (
+    usesCss &&
     stylesheetExists &&
     readFileSync(stylesheet, "utf8").trim() &&
     !options.yes
@@ -323,7 +365,7 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
-  const css = await fetchStylesheet(registry, project.styling)
+  const css = usesCss ? await fetchStylesheet(registry, project.styling) : null
 
   if (ensureAlias(project, sourceRoot))
     step("Added the @/* import alias to tsconfig.json")
@@ -337,12 +379,20 @@ export async function init(options) {
     await writeTailwindConfig(project, registry, options)
   }
 
-  writeFileSync(stylesheet, css)
-  step(`Wrote ${relative(project, stylesheet)}`)
+  if (css) {
+    writeFileSync(stylesheet, css)
+    step(`Wrote ${relative(project, stylesheet)}`)
+  } else {
+    await writeTheme(
+      project,
+      registry,
+      findAliasRoot(project.cwd) ?? sourceRoot
+    )
+  }
 
   const manual = [
     ...configureMetro(project, stylesheet, typesFile),
-    ...configureRoot(project, stylesheet),
+    ...configureRoot(project, css ? stylesheet : null),
     ...configureAliasResolver(project, sourceRoot),
     ...(project.styling === "nativewind"
       ? configureNativewindBabel(project)
@@ -367,11 +417,11 @@ export async function init(options) {
       `./${posix(relative(project, typesFile))}`,
     ])
     step(`Generated ${relative(project, typesFile)}`)
-  } else {
+  } else if (project.styling === "nativewind") {
     writeNativewindTypes(project)
   }
 
-  if (project.framework === "react-native") {
+  if (css && project.framework === "react-native") {
     const cssTypes = path.join(sourceRoot, "css.d.ts")
     if (!existsSync(cssTypes)) {
       writeFileSync(cssTypes, 'declare module "*.css"\n')

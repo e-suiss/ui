@@ -1,21 +1,26 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
-    "components/ui/*.tsx",
+    "uniwind/components/ui/*.tsx",
     "scripts/*.mjs",
     "packages/cli/index.mjs",
     "stories/**/*.stories.tsx",
     ".rnstorybook/*.{ts,tsx}",
-    "nativewind/components/ui/*.tsx"
+    "nativewind/components/ui/*.tsx",
+    "stylesheet/components/ui/*.{ts,tsx}"
   ],
   "project": [
-    "components/**/*.{ts,tsx}",
+    "uniwind/**/*.{ts,tsx}",
     "scripts/**/*.mjs",
     "packages/cli/**/*.mjs",
     ".rnstorybook/**/*.{ts,tsx}",
     "stories/**/*.tsx",
     "*.{ts,tsx}",
-    "nativewind/**/*.tsx"
+    "nativewind/**/*.tsx",
+    "stylesheet/**/*.{ts,tsx}"
   ],
-  "ignoreDependencies": ["expo-updates"]
+  "ignoreDependencies": ["expo-updates"],
+  "paths": {
+    "@/components/*": ["./uniwind/components/*", "./stylesheet/components/*"]
+  }
 }

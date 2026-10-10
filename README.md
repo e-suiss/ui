@@ -9,9 +9,9 @@ npx @esuiss/uim@latest init
 npx @esuiss/uim@latest add dialog
 ```
 
-`init` sets up Uniwind (Tailwind CSS v4) or NativeWind v4 (Tailwind CSS v3), the `@/*` import alias, the theme stylesheet, the Metro config, the portal host in the root layout, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. In React Native projects without Expo, `init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `cd ios && pod install` after adding components there.
+`init` sets up Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain React Native StyleSheet, the `@/*` import alias, the theme stylesheet, the Metro config, the portal host in the root layout, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. In React Native projects without Expo, `init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `cd ios && pod install` after adding components there.
 
-The styling library is detected from the project. When neither is installed, `init` asks; pass `--styling uniwind` or `--styling nativewind` to choose up front. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
+The styling library is detected from the project. When neither is installed, `init` asks; pass `--styling uniwind`, `--styling nativewind` or `--styling stylesheet` to choose up front. StyleSheet needs no Tailwind; `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
 
 Update a component later:
 
@@ -41,9 +41,12 @@ Git hooks are installed by `pnpm install`:
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
 - pre-push: Biome on the whole repo, typecheck, Knip, the registry check, and the NativeWind check.
 
-- `components/ui/`: the files `add` copies into projects.
+- `uniwind/components/ui/`: the Uniwind components, the source the other versions are generated from. `add` copies them into `components/ui/` in projects.
 - `styles/uniwind.css`: the theme and Uniwind setup, written to the project stylesheet by `init`. Colors are the Apple system colors, the same values as the web library.
-- `nativewind/`, `styles/nativewind.css` and `styles/nativewind.config.js`: the NativeWind v4 versions, generated from the Uniwind sources by `pnpm nativewind`. They use precomputed color tokens such as `bg-destructive-10` instead of opacity modifiers on theme colors, and Tailwind CSS v3 class names. Don't edit them by hand.
+- `nativewind/components/ui/`, `styles/nativewind.css` and `styles/nativewind.config.js`: the NativeWind v4 versions, generated from the Uniwind sources by `pnpm nativewind`. They use precomputed color tokens such as `bg-destructive-10` instead of opacity modifiers on theme colors, and Tailwind CSS v3 class names. Don't edit them by hand.
+- `stylesheet/components/ui/`: the StyleSheet versions, written by hand with `theme.ts`. Keep them in step with the Uniwind components when you change one.
+- `swift/` and `Package.swift`: the SwiftUI package `EsuissUI`.
+- `kotlin/`: the Jetpack Compose library.
 - `stories/`: one Storybook file per component, rendered on the device. Light and dark mode follow the system appearance.
 - `packages/cli/`: the `@esuiss/uim` command.
 

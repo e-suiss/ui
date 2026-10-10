@@ -133,10 +133,14 @@ export async function add(names, options) {
     )
   }
 
-  const styling = detectStyling(project, options.styling)
+  const styling =
+    detectStyling(project, options.styling) ??
+    (existsSync(path.join(root, "components", "ui", "theme.ts"))
+      ? "stylesheet"
+      : null)
   if (!styling) {
     throw new CliError(
-      "Neither Uniwind nor NativeWind is installed. Run `npx @esuiss/uim init` first."
+      "No styling setup found. Run `npx @esuiss/uim init` first."
     )
   }
 

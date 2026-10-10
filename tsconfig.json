@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "@/components/*": ["./uniwind/components/*"],
       "@/*": ["./*"]
     }
   },
@@ -13,5 +14,5 @@
     ".rnstorybook/**/*.tsx",
     "uniwind-types.d.ts"
   ],
-  "exclude": ["node_modules", "packages", "nativewind"]
+  "exclude": ["node_modules", "packages", "nativewind", "stylesheet"]
 }

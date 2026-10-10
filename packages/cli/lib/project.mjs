@@ -19,7 +19,9 @@ const INSTALL_ARGS = {
   bun: { command: "add", dev: "--dev" },
 }
 
-export const STYLINGS = ["uniwind", "nativewind"]
+export const STYLINGS = ["uniwind", "nativewind", "stylesheet"]
+
+const STYLING_PACKAGES = ["uniwind", "nativewind"]
 
 const RUNNERS = {
   npm: ["npx"],
@@ -108,12 +110,12 @@ export function detectStyling(project, requested) {
   if (requested) {
     if (!STYLINGS.includes(requested)) {
       throw new CliError(
-        `Unknown styling "${requested}". Use ${STYLINGS.join(" or ")}.`
+        `Unknown styling "${requested}". Use ${STYLINGS.join(", ")}.`
       )
     }
     return requested
   }
-  const installed = STYLINGS.filter((name) => project.packages[name])
+  const installed = STYLING_PACKAGES.filter((name) => project.packages[name])
   if (installed.length > 1) {
     throw new CliError(
       "Both Uniwind and NativeWind are installed. Pick one with --styling uniwind or --styling nativewind."
