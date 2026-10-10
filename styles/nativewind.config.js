@@ -72,6 +72,7 @@ module.exports = {
         "link-40": "var(--link-40)",
         "separator-30": "var(--separator-30)",
         "separator-50": "var(--separator-50)",
+        "surface-secondary-50": "var(--surface-secondary-50)",
       },
       borderRadius: {
         xs: "3px",

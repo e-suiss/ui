@@ -66,6 +66,7 @@
     --link-40: rgba(0, 102, 204, 0.4);
     --separator-30: rgba(210, 210, 215, 0.3);
     --separator-50: rgba(210, 210, 215, 0.5);
+    --surface-secondary-50: rgba(245, 245, 247, 0.5);
   }
 
   .dark:root {
@@ -131,5 +132,6 @@
     --link-40: rgba(41, 151, 255, 0.4);
     --separator-30: rgba(66, 66, 69, 0.3);
     --separator-50: rgba(66, 66, 69, 0.5);
+    --surface-secondary-50: rgba(22, 22, 23, 0.5);
   }
 }

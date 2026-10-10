@@ -101,6 +101,51 @@
       ]
     },
     {
+      "name": "alert-sheet",
+      "type": "ui",
+      "title": "Alert Sheet",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/alert-dialog",
+        "primitives/dialog",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/alert-sheet.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "alert",
       "type": "ui",
       "title": "Alert",
@@ -584,6 +629,34 @@
       ]
     },
     {
+      "name": "empty",
+      "type": "ui",
+      "title": "Empty",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/empty.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "field",
       "type": "ui",
       "title": "Field",
@@ -685,6 +758,39 @@
       ]
     },
     {
+      "name": "input-group",
+      "type": "ui",
+      "title": "Input Group",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "button",
+        "icon",
+        "input",
+        "primitives/field",
+        "primitives/use-render",
+        "text",
+        "textarea"
+      ],
+      "files": [
+        "components/ui/input-group.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "input-otp",
       "type": "ui",
       "title": "Input Otp",
@@ -753,6 +859,36 @@
       ]
     },
     {
+      "name": "item",
+      "type": "ui",
+      "title": "Item",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "icon",
+        "primitives/types",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/item.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "label",
       "type": "ui",
       "title": "Label",
@@ -771,6 +907,36 @@
       ],
       "files": [
         "components/ui/label.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "marker",
+      "type": "ui",
+      "title": "Marker",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "icon",
+        "primitives/types",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/marker.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1102,6 +1268,30 @@
       ]
     },
     {
+      "name": "spinner",
+      "type": "ui",
+      "title": "Spinner",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind"
+        ],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/ui/spinner.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "switch",
       "type": "ui",
       "title": "Switch",
@@ -1370,6 +1560,259 @@
       ],
       "files": [
         "components/ui/tooltip.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "action-menu",
+      "type": "pattern",
+      "title": "Action Menu",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "alert-sheet"
+      ],
+      "files": [
+        "components/patterns/action-menu.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "confirm",
+      "type": "pattern",
+      "title": "Confirm",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "alert-sheet"
+      ],
+      "files": [
+        "components/patterns/confirm.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "context-actions",
+      "type": "pattern",
+      "title": "Context Actions",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "alert-sheet"
+      ],
+      "files": [
+        "components/patterns/context-actions.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "flyout",
+      "type": "pattern",
+      "title": "Flyout",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "drawer"
+      ],
+      "files": [
+        "components/patterns/flyout.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "pattern",
+      "title": "Modal",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "drawer"
+      ],
+      "files": [
+        "components/patterns/modal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "panel",
+      "type": "pattern",
+      "title": "Panel",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "drawer"
+      ],
+      "files": [
+        "components/patterns/panel.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "picker",
+      "type": "pattern",
+      "title": "Picker",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "select"
+      ],
+      "files": [
+        "components/patterns/picker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "table-list",
+      "type": "pattern",
+      "title": "Table List",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "item",
+        "text"
+      ],
+      "files": [
+        "components/patterns/table-list.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pull-to-refresh",
+      "type": "interaction",
+      "title": "Pull To Refresh",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "uniwind"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind"
+        ],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/interactions/pull-to-refresh.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "swipe-actions",
+      "type": "interaction",
+      "title": "Swipe Actions",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/interactions/swipe-actions.tsx"
       ],
       "overrides": [
         "uniwind",
