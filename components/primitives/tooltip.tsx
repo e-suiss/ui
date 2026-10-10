@@ -2,19 +2,22 @@ import * as React from "react"
 import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
-  type HostInstance,
   Pressable,
   View,
 } from "react-native"
 import { REASONS } from "./event-details"
 import {
+  FloatingHandle,
   FloatingPortal,
   type FloatingRootActions,
   type FloatingRootValue,
+  type FloatingViewportState,
+  resolvePayloadChildren,
   useFloatingPopup,
   useFloatingRoot,
+  useFloatingTriggerRegistration,
+  useFloatingViewportState,
 } from "./floating-root"
-import { useComposedRefs } from "./hooks"
 import { Arrow, type ArrowProps, type ArrowState } from "./popover"
 import {
   Positioner as BasePositioner,
@@ -26,6 +29,7 @@ import type {
   Align,
   BaseUIChangeEventDetails,
   BaseUIComponentProps,
+  PayloadChildRenderFunction,
   PortalParameters,
   Side,
 } from "./types"
@@ -44,7 +48,13 @@ type ChangeEventDetails = BaseUIChangeEventDetails<OpenChangeReason>
 
 type RootActions = FloatingRootActions
 
-interface RootProps {
+class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
+
+function createHandle<Payload = unknown>(): Handle<Payload> {
+  return new Handle<Payload>()
+}
+
+interface RootProps<Payload = unknown> {
   open?: boolean | undefined
   defaultOpen?: boolean | undefined
   onOpenChange?:
@@ -53,7 +63,10 @@ interface RootProps {
   onOpenChangeComplete?: ((open: boolean) => void) | undefined
   actionsRef?: React.RefObject<RootActions | null> | undefined
   disabled?: boolean | undefined
-  children?: React.ReactNode
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: Handle<Payload> | undefined
+  children?: React.ReactNode | PayloadChildRenderFunction<Payload>
 }
 
 const TooltipRootContext = React.createContext<FloatingRootValue | null>(null)
@@ -66,11 +79,14 @@ function useTooltipRootContext(componentName = "Tooltip part") {
   return context
 }
 
-function Root({ children, ...parameters }: RootProps) {
+function Root<Payload = unknown>({
+  children,
+  ...parameters
+}: RootProps<Payload>) {
   const root = useFloatingRoot<OpenChangeReason>(parameters)
   return (
     <TooltipRootContext.Provider value={root}>
-      {children}
+      {resolvePayloadChildren(children, root.payload)}
     </TooltipRootContext.Provider>
   )
 }
@@ -81,49 +97,95 @@ interface TriggerState {
   open: boolean
 }
 
-type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState> & {
+type TriggerProps<Payload = unknown> = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "id"
+> & {
   delay?: number | undefined
+  closeDelay?: number | undefined
   closeOnClick?: boolean | undefined
+  handle?: Handle<Payload> | undefined
+  payload?: Payload | undefined
+  id?: string | undefined
 }
 
 const LONG_PRESS_ACTIONS = [{ name: "longpress" }]
 
-function Trigger({
+function Trigger<Payload = unknown>({
   delay,
+  closeDelay = 1500,
   closeOnClick = true,
   disabled: disabledProp,
+  handle,
+  payload,
+  id: idProp,
   render,
   className,
   style,
   ref,
   ...elementProps
-}: TriggerProps) {
-  const root = useTooltipRootContext("TooltipTrigger")
-  const { open, setOpen, triggerRef } = root
-  const disabled = disabledProp ?? root.disabled
-  const composedRef = useComposedRefs<HostInstance>(ref, triggerRef)
+}: TriggerProps<Payload>) {
+  const context = React.useContext(TooltipRootContext)
+  if (!context && !handle) {
+    throw new Error("TooltipTrigger must be rendered inside Tooltip.Root")
+  }
+  const registration = useFloatingTriggerRegistration({
+    root: context,
+    handle,
+    id: idProp,
+    payload,
+    ref,
+  })
+  const { root, open, id } = registration
+  const disabled = disabledProp ?? root?.disabled ?? false
+  const setOpen = root?.setOpen
+  const openWithTrigger = root?.openWithTrigger
+
+  const closeTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+  const openedByPressRef = React.useRef(false)
+
+  const clearCloseTimer = React.useCallback(() => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
+    closeTimerRef.current = null
+  }, [])
+
+  React.useEffect(() => clearCloseTimer, [clearCloseTimer])
 
   const onLongPress = React.useCallback(
     (event: GestureResponderEvent) => {
       if (disabled) return
-      setOpen(true, REASONS.triggerLongPress, event)
+      clearCloseTimer()
+      openedByPressRef.current = true
+      openWithTrigger?.(id, REASONS.triggerLongPress, event)
     },
-    [disabled, setOpen]
+    [disabled, openWithTrigger, id, clearCloseTimer]
   )
+
+  const onPressOut = React.useCallback(() => {
+    if (!openedByPressRef.current) return
+    openedByPressRef.current = false
+    clearCloseTimer()
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null
+      setOpen?.(false, REASONS.none)
+    }, closeDelay)
+  }, [clearCloseTimer, closeDelay, setOpen])
 
   const onPress = React.useCallback(
     (event: GestureResponderEvent) => {
-      if (open && closeOnClick) setOpen(false, REASONS.triggerPress, event)
+      if (!open || !closeOnClick) return
+      clearCloseTimer()
+      setOpen?.(false, REASONS.triggerPress, event)
     },
-    [open, closeOnClick, setOpen]
+    [open, closeOnClick, setOpen, clearCloseTimer]
   )
 
   const onAccessibilityAction = React.useCallback(
     (event: AccessibilityActionEvent) => {
       if (event.nativeEvent.actionName !== "longpress" || disabled) return
-      setOpen(true, REASONS.triggerLongPress, event)
+      openWithTrigger?.(id, REASONS.triggerLongPress, event)
     },
-    [disabled, setOpen]
+    [disabled, openWithTrigger, id]
   )
 
   const state = React.useMemo<TriggerState>(() => ({ open }), [open])
@@ -134,7 +196,7 @@ function Trigger({
     className,
     style,
     state,
-    ref: composedRef,
+    ref: registration.ref,
     props: [
       {
         role: "button",
@@ -142,6 +204,7 @@ function Trigger({
         accessibilityActions: LONG_PRESS_ACTIONS,
         onAccessibilityAction,
         onLongPress,
+        onPressOut,
         onPress,
       },
       elementProps,
@@ -176,7 +239,14 @@ type PositionerProps = Omit<
 
 function Positioner({ side = "top", ...props }: PositionerProps) {
   const root = useTooltipRootContext("TooltipPositioner")
-  return <BasePositioner root={root} side={side} {...props} />
+  return (
+    <BasePositioner
+      root={root}
+      side={side}
+      dismissOnOutsidePress={false}
+      {...props}
+    />
+  )
 }
 
 Positioner.displayName = "TooltipPositioner"
@@ -219,6 +289,32 @@ function Popup({ render, className, style, ref, ...elementProps }: PopupProps) {
 
 Popup.displayName = "TooltipPopup"
 
+type ViewportState = FloatingViewportState
+
+type ViewportProps = BaseUIComponentProps<typeof View, ViewportState>
+
+function Viewport({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ViewportProps) {
+  const root = useTooltipRootContext("TooltipViewport")
+  const state = useFloatingViewportState(root)
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+}
+
+Viewport.displayName = "TooltipViewport"
+
 export type {
   ArrowProps,
   ArrowState,
@@ -233,9 +329,13 @@ export type {
   RootProps,
   TriggerProps,
   TriggerState,
+  ViewportProps,
+  ViewportState,
 }
 export {
   Arrow,
+  createHandle,
+  Handle,
   Popup,
   Portal,
   Positioner,
@@ -243,4 +343,5 @@ export {
   TooltipRootContext,
   Trigger,
   useTooltipRootContext,
+  Viewport,
 }

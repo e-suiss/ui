@@ -1,5 +1,6 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
+import { useCheckboxGroupItem } from "./checkbox-group"
 import { createChangeEventDetails, REASONS } from "./event-details"
 import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
 import { useControllableState } from "./use-controllable-state"
@@ -33,6 +34,8 @@ type RootProps = Omit<
   readOnly?: boolean | undefined
   required?: boolean | undefined
   indeterminate?: boolean | undefined
+  value?: string | undefined
+  parent?: boolean | undefined
 }
 
 type IndicatorProps = BaseUIComponentProps<typeof View, IndicatorState> & {
@@ -57,23 +60,37 @@ function Root({
   checked: checkedProp,
   defaultChecked = false,
   onCheckedChange,
-  disabled = false,
+  disabled: disabledProp = false,
   readOnly = false,
   required = false,
-  indeterminate = false,
+  indeterminate: indeterminateProp = false,
+  value,
+  parent = false,
   render,
   className,
   style,
   ref,
   ...elementProps
 }: RootProps) {
+  const groupItem = useCheckboxGroupItem({
+    value,
+    parent,
+    disabled: disabledProp,
+  })
+  const disabled = groupItem?.disabled ?? disabledProp
+  const indeterminate = groupItem?.indeterminate ?? indeterminateProp
   const [checked, setChecked] = useControllableState<
     boolean,
     ChangeEventDetails
   >({
-    value: checkedProp,
+    value: groupItem ? groupItem.checked : checkedProp,
     defaultValue: defaultChecked,
-    onChange: onCheckedChange,
+    onChange: (next, eventDetails) => {
+      onCheckedChange?.(next, eventDetails)
+      if (!eventDetails.isCanceled) {
+        groupItem?.onCheckedChange(next, eventDetails)
+      }
+    },
   })
   const rootRef = React.useRef<View>(null)
 

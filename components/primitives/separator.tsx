@@ -3,23 +3,26 @@ import { View } from "react-native"
 import type { BaseUIComponentProps, Orientation } from "./types"
 import { useRender } from "./use-render"
 
-interface RootState {
+interface SeparatorState {
   orientation: Orientation
 }
 
-type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+type SeparatorProps = BaseUIComponentProps<typeof View, SeparatorState> & {
   orientation?: Orientation | undefined
 }
 
-function Root({
+function Separator({
   orientation = "horizontal",
   render,
   className,
   style,
   ref,
   ...elementProps
-}: RootProps) {
-  const state = React.useMemo<RootState>(() => ({ orientation }), [orientation])
+}: SeparatorProps) {
+  const state = React.useMemo<SeparatorState>(
+    () => ({ orientation }),
+    [orientation]
+  )
   return useRender({
     defaultComponent: View,
     render,
@@ -37,7 +40,7 @@ function Root({
   })
 }
 
-Root.displayName = "Separator"
+Separator.displayName = "Separator"
 
-export type { RootProps, RootState }
-export { Root }
+export type { SeparatorProps, SeparatorState }
+export { Separator }

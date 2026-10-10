@@ -3,16 +3,19 @@ import {
   type GestureResponderEvent,
   type HostInstance,
   Pressable,
+  StyleSheet,
   Text,
   View,
   type ViewStyle,
 } from "react-native"
 import { REASONS } from "./event-details"
 import {
+  FloatingHandle,
   FloatingPortal,
   type FloatingRootActions,
   type FloatingRootValue,
   type FocusTarget,
+  resolvePayloadChildren,
   useFloatingPopup,
   useFloatingRoot,
   useFloatingTrigger,
@@ -20,6 +23,7 @@ import {
 import type {
   BaseUIChangeEventDetails,
   BaseUIComponentProps,
+  PayloadChildRenderFunction,
   PortalParameters,
 } from "./types"
 import { useRender } from "./use-render"
@@ -37,7 +41,13 @@ type ChangeEventDetails = BaseUIChangeEventDetails<OpenChangeReason>
 
 type RootActions = FloatingRootActions
 
-interface RootProps {
+class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
+
+function createHandle<Payload = unknown>(): Handle<Payload> {
+  return new Handle<Payload>()
+}
+
+interface RootProps<Payload = unknown> {
   open?: boolean | undefined
   defaultOpen?: boolean | undefined
   onOpenChange?:
@@ -47,7 +57,10 @@ interface RootProps {
   actionsRef?: React.RefObject<RootActions | null> | undefined
   modal?: boolean | undefined
   disablePointerDismissal?: boolean | undefined
-  children?: React.ReactNode
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: Handle<Payload> | undefined
+  children?: React.ReactNode | PayloadChildRenderFunction<Payload>
 }
 
 interface DialogRootContextValue {
@@ -60,6 +73,8 @@ interface DialogRootContextValue {
   titleRef: React.RefObject<HostInstance | null>
   hasTitle: boolean
   registerTitle: () => () => void
+  nestedDialogOpen: boolean
+  registerNestedOpen: () => () => void
 }
 
 const DialogRootContext = React.createContext<DialogRootContextValue | null>(
@@ -74,11 +89,12 @@ function useDialogRootContext(componentName = "Dialog part") {
   return context
 }
 
-interface UseDialogRootParameters extends Omit<RootProps, "children"> {
+interface UseDialogRootParameters<Payload = unknown>
+  extends Omit<RootProps<Payload>, "children"> {
   role: "dialog" | "alertdialog"
 }
 
-function useDialogRoot({
+function useDialogRoot<Payload = unknown>({
   role,
   modal = true,
   disablePointerDismissal = false,
@@ -87,7 +103,10 @@ function useDialogRoot({
   onOpenChange,
   onOpenChangeComplete,
   actionsRef,
-}: UseDialogRootParameters): DialogRootContextValue {
+  triggerId,
+  defaultTriggerId,
+  handle,
+}: UseDialogRootParameters<Payload>): DialogRootContextValue {
   const parent = React.useContext(DialogRootContext)
   const root = useFloatingRoot<OpenChangeReason>({
     open,
@@ -96,6 +115,9 @@ function useDialogRoot({
     onOpenChangeComplete,
     actionsRef,
     modal,
+    triggerId,
+    defaultTriggerId,
+    handle,
   })
   const titleRef = React.useRef<HostInstance>(null)
   const [titleCount, setTitleCount] = React.useState(0)
@@ -105,8 +127,24 @@ function useDialogRoot({
     return () => setTitleCount((count) => count - 1)
   }, [])
 
+  const [nestedOpenCount, setNestedOpenCount] = React.useState(0)
+
+  const registerNestedOpen = React.useCallback(() => {
+    setNestedOpenCount((count) => count + 1)
+    return () => setNestedOpenCount((count) => count - 1)
+  }, [])
+
+  const parentRegisterNestedOpen = parent?.registerNestedOpen
+  const { open: isOpen } = root
+
+  React.useEffect(() => {
+    if (!isOpen || !parentRegisterNestedOpen) return
+    return parentRegisterNestedOpen()
+  }, [isOpen, parentRegisterNestedOpen])
+
   const nested = parent !== null
   const hasTitle = titleCount > 0
+  const nestedDialogOpen = nestedOpenCount > 0
 
   return React.useMemo<DialogRootContextValue>(
     () => ({
@@ -119,16 +157,30 @@ function useDialogRoot({
       titleRef,
       hasTitle,
       registerTitle,
+      nestedDialogOpen,
+      registerNestedOpen,
     }),
-    [root, role, disablePointerDismissal, nested, hasTitle, registerTitle]
+    [
+      root,
+      role,
+      disablePointerDismissal,
+      nested,
+      hasTitle,
+      registerTitle,
+      nestedDialogOpen,
+      registerNestedOpen,
+    ]
   )
 }
 
-function Root({ children, ...parameters }: RootProps) {
-  const context = useDialogRoot({ ...parameters, role: "dialog" })
+function Root<Payload = unknown>({
+  children,
+  ...parameters
+}: RootProps<Payload>) {
+  const context = useDialogRoot<Payload>({ ...parameters, role: "dialog" })
   return (
     <DialogRootContext.Provider value={context}>
-      {children}
+      {resolvePayloadChildren(children, context.root.payload)}
     </DialogRootContext.Provider>
   )
 }
@@ -140,19 +192,35 @@ interface TriggerState {
   disabled: boolean
 }
 
-type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+type TriggerProps<Payload = unknown> = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "id"
+> & {
+  handle?: Handle<Payload> | undefined
+  payload?: Payload | undefined
+  id?: string | undefined
+}
 
-function Trigger({
+function Trigger<Payload = unknown>({
+  handle,
+  payload,
+  id,
   render,
   className,
   style,
   ref,
   disabled,
   ...elementProps
-}: TriggerProps) {
-  const { root } = useDialogRootContext("DialogTrigger")
+}: TriggerProps<Payload>) {
+  const context = React.useContext(DialogRootContext)
+  if (!context && !handle) {
+    throw new Error("DialogTrigger must be rendered inside Dialog.Root")
+  }
   const trigger = useFloatingTrigger({
-    root,
+    root: context?.root,
+    handle,
+    id,
+    payload,
     ref,
     disabled: disabled ?? undefined,
   })
@@ -234,17 +302,59 @@ function Backdrop({
 
 Backdrop.displayName = "DialogBackdrop"
 
+const HIDDEN_STYLE: ViewStyle = { display: "none" }
+
+interface ViewportState {
+  open: boolean
+  nested: boolean
+  nestedDialogOpen: boolean
+}
+
+type ViewportProps = BaseUIComponentProps<typeof View, ViewportState>
+
+function Viewport({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ViewportProps) {
+  const { root, nested, nestedDialogOpen } =
+    useDialogRootContext("DialogViewport")
+  const { open } = root
+
+  const state = React.useMemo<ViewportState>(
+    () => ({ open, nested, nestedDialogOpen }),
+    [open, nested, nestedDialogOpen]
+  )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      { style: StyleSheet.absoluteFill, pointerEvents: "box-none" },
+      elementProps,
+      open ? undefined : { style: HIDDEN_STYLE },
+    ],
+  })
+}
+
+Viewport.displayName = "DialogViewport"
+
 interface PopupState {
   open: boolean
   nested: boolean
+  nestedDialogOpen: boolean
 }
 
 type PopupProps = BaseUIComponentProps<typeof View, PopupState> & {
   initialFocus?: FocusTarget | undefined
   finalFocus?: FocusTarget | undefined
 }
-
-const HIDDEN_STYLE: ViewStyle = { display: "none" }
 
 function claimResponder() {
   return true
@@ -259,7 +369,7 @@ function Popup({
   ref,
   ...elementProps
 }: PopupProps) {
-  const { root, role, nested, titleId, titleRef, hasTitle } =
+  const { root, role, nested, nestedDialogOpen, titleId, titleRef, hasTitle } =
     useDialogRootContext("DialogPopup")
   const { open } = root
   const popup = useFloatingPopup({
@@ -271,8 +381,8 @@ function Popup({
   })
 
   const state = React.useMemo<PopupState>(
-    () => ({ open, nested }),
-    [open, nested]
+    () => ({ open, nested, nestedDialogOpen }),
+    [open, nested, nestedDialogOpen]
   )
 
   return useRender({
@@ -415,12 +525,16 @@ export type {
   TriggerProps,
   TriggerState,
   UseDialogRootParameters,
+  ViewportProps,
+  ViewportState,
 }
 export {
   Backdrop,
   Close,
+  createHandle,
   Description,
   DialogRootContext,
+  Handle,
   Popup,
   Portal,
   Root,
@@ -428,4 +542,5 @@ export {
   Trigger,
   useDialogRoot,
   useDialogRootContext,
+  Viewport,
 }

@@ -6,11 +6,13 @@ import {
   Close,
   type CloseProps,
   type CloseState,
+  createHandle,
   Description,
   type DescriptionProps,
   type DescriptionState,
   DialogRootContext,
   type RootProps as DialogRootProps,
+  Handle,
   type OpenChangeReason,
   Popup,
   type PopupProps,
@@ -25,12 +27,22 @@ import {
   type TriggerProps,
   type TriggerState,
   useDialogRoot,
+  Viewport,
+  type ViewportProps,
+  type ViewportState,
 } from "./dialog"
+import { resolvePayloadChildren } from "./floating-root"
 
-type RootProps = Omit<DialogRootProps, "modal" | "disablePointerDismissal">
+type RootProps<Payload = unknown> = Omit<
+  DialogRootProps<Payload>,
+  "modal" | "disablePointerDismissal"
+>
 
-function Root({ children, ...parameters }: RootProps) {
-  const context = useDialogRoot({
+function Root<Payload = unknown>({
+  children,
+  ...parameters
+}: RootProps<Payload>) {
+  const context = useDialogRoot<Payload>({
     ...parameters,
     role: "alertdialog",
     modal: true,
@@ -38,7 +50,7 @@ function Root({ children, ...parameters }: RootProps) {
   })
   return (
     <DialogRootContext.Provider value={context}>
-      {children}
+      {resolvePayloadChildren(children, context.root.payload)}
     </DialogRootContext.Provider>
   )
 }
@@ -63,5 +75,19 @@ export type {
   TitleState,
   TriggerProps,
   TriggerState,
+  ViewportProps,
+  ViewportState,
 }
-export { Backdrop, Close, Description, Popup, Portal, Root, Title, Trigger }
+export {
+  Backdrop,
+  Close,
+  createHandle,
+  Description,
+  Handle,
+  Popup,
+  Portal,
+  Root,
+  Title,
+  Trigger,
+  Viewport,
+}

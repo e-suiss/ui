@@ -14,6 +14,7 @@ import type {
   BaseUIChangeEventDetails,
   ChangeEvent,
   MeasurableAnchor,
+  PayloadChildRenderFunction,
 } from "./types"
 import { useControllableState } from "./use-controllable-state"
 
@@ -22,6 +23,91 @@ type FocusTarget = boolean | React.RefObject<HostInstance | null>
 interface FloatingRootActions {
   close: () => void
   unmount: () => void
+}
+
+interface FloatingTriggerEntry {
+  node: HostInstance | null
+  payload: unknown
+}
+
+interface FloatingHandleSlot {
+  current: FloatingRootValue
+}
+
+class FloatingHandle<Payload = unknown> {
+  private slots: FloatingHandleSlot[] = []
+  private listeners = new Set<() => void>()
+
+  subscribe = (listener: () => void) => {
+    this.listeners.add(listener)
+    return () => {
+      this.listeners.delete(listener)
+    }
+  }
+
+  getRoot = (): FloatingRootValue | null =>
+    this.slots[this.slots.length - 1]?.current ?? null
+
+  attach(slot: FloatingHandleSlot) {
+    this.slots = [...this.slots, slot]
+    this.notify()
+    return () => {
+      this.slots = this.slots.filter((entry) => entry !== slot)
+      this.notify()
+    }
+  }
+
+  notify() {
+    for (const listener of this.listeners) listener()
+  }
+
+  open(triggerId: string | null = null) {
+    this.getRoot()?.openWithTrigger(triggerId, REASONS.imperativeAction)
+  }
+
+  openWithPayload(payload: Payload) {
+    this.getRoot()?.openWithPayload(payload, REASONS.imperativeAction)
+  }
+
+  close() {
+    this.getRoot()?.close(REASONS.imperativeAction)
+  }
+
+  get isOpen() {
+    return this.getRoot()?.open ?? false
+  }
+}
+
+function createFloatingHandle<Payload = unknown>() {
+  return new FloatingHandle<Payload>()
+}
+
+function subscribeNothing() {
+  return () => {}
+}
+
+function getNoRoot() {
+  return null
+}
+
+function useFloatingHandleRoot(
+  handle: FloatingHandle<unknown> | undefined
+): FloatingRootValue | null {
+  return React.useSyncExternalStore(
+    handle ? handle.subscribe : subscribeNothing,
+    handle ? handle.getRoot : getNoRoot,
+    handle ? handle.getRoot : getNoRoot
+  )
+}
+
+function resolvePayloadChildren<Payload>(
+  children: React.ReactNode | PayloadChildRenderFunction<Payload>,
+  payload: unknown
+): React.ReactNode {
+  if (typeof children === "function") {
+    return children({ payload: payload as Payload | undefined })
+  }
+  return children
 }
 
 interface FloatingRootParameters<Reason extends string = string> {
@@ -34,6 +120,9 @@ interface FloatingRootParameters<Reason extends string = string> {
   actionsRef?: React.RefObject<FloatingRootActions | null> | undefined
   modal?: boolean | undefined
   disabled?: boolean | undefined
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: FloatingHandle<unknown> | undefined
 }
 
 interface FloatingRootValue {
@@ -54,6 +143,25 @@ interface FloatingRootValue {
   openAt: (anchor: AnchorRect, reason?: string, event?: ChangeEvent) => boolean
   close: (reason?: string, event?: ChangeEvent) => boolean
   measureAnchor: () => void
+  activeTriggerId: string | null
+  payload: unknown
+  registerTrigger: (id: string, entry: FloatingTriggerEntry) => () => void
+  openWithTrigger: (
+    triggerId: string | null,
+    reason?: string,
+    event?: ChangeEvent
+  ) => boolean
+  openWithPayload: (
+    payload: unknown,
+    reason?: string,
+    event?: ChangeEvent
+  ) => boolean
+  pressTrigger: (
+    triggerId: string,
+    reason: string,
+    event?: ChangeEvent,
+    toggle?: boolean
+  ) => boolean
 }
 
 function isSameRect(previous: AnchorRect | null, next: AnchorRect | null) {
@@ -100,6 +208,9 @@ function useFloatingRoot<Reason extends string = string>({
   actionsRef,
   modal = false,
   disabled = false,
+  triggerId: triggerIdProp,
+  defaultTriggerId = null,
+  handle,
 }: FloatingRootParameters<Reason>): FloatingRootValue {
   const id = React.useId()
   const popupId = `${id}-popup`
@@ -109,6 +220,15 @@ function useFloatingRoot<Reason extends string = string>({
   const virtualAnchorRef = React.useRef<AnchorRect | null>(null)
   const { width, height } = useWindowDimensions()
   const [anchor, setAnchorState] = React.useState<AnchorRect | null>(null)
+  const triggersRef = React.useRef(new Map<string, FloatingTriggerEntry>())
+  const [uncontrolledTriggerId, setUncontrolledTriggerId] = React.useState<
+    string | null
+  >(defaultTriggerId)
+  const activeTriggerId =
+    triggerIdProp !== undefined ? triggerIdProp : uncontrolledTriggerId
+  const activeTriggerIdRef = React.useRef(activeTriggerId)
+  activeTriggerIdRef.current = activeTriggerId
+  const [payload, setPayload] = React.useState<unknown>(undefined)
 
   const [open, setOpenState] = useControllableState<
     boolean,
@@ -170,6 +290,88 @@ function useFloatingRoot<Reason extends string = string>({
     [setOpen]
   )
 
+  const registerTrigger = React.useCallback(
+    (triggerId: string, entry: FloatingTriggerEntry) => {
+      const triggers = triggersRef.current
+      triggers.set(triggerId, entry)
+      if (activeTriggerIdRef.current === triggerId) {
+        if (entry.node) triggerRef.current = entry.node
+        setPayload(entry.payload)
+      }
+      return () => {
+        if (triggers.get(triggerId) === entry) triggers.delete(triggerId)
+        if (triggerRef.current === null || triggerRef.current === entry.node) {
+          let fallback: HostInstance | null = null
+          for (const remaining of triggers.values()) {
+            if (remaining.node) {
+              fallback = remaining.node
+              break
+            }
+          }
+          triggerRef.current = fallback
+        }
+      }
+    },
+    []
+  )
+
+  const openWithTrigger = React.useCallback(
+    (
+      triggerId: string | null,
+      reason: string = REASONS.imperativeAction,
+      event?: ChangeEvent
+    ) => {
+      const entry =
+        triggerId === null ? undefined : triggersRef.current.get(triggerId)
+      const previousNode = triggerRef.current
+      if (entry?.node) triggerRef.current = entry.node
+      const applied = open ? true : setOpen(true, reason, event)
+      if (!applied) {
+        triggerRef.current = previousNode
+        return false
+      }
+      setUncontrolledTriggerId(triggerId)
+      setPayload(entry?.payload)
+      return true
+    },
+    [open, setOpen]
+  )
+
+  const openWithPayload = React.useCallback(
+    (
+      nextPayload: unknown,
+      reason: string = REASONS.imperativeAction,
+      event?: ChangeEvent
+    ) => {
+      const applied = open ? true : setOpen(true, reason, event)
+      if (!applied) return false
+      setUncontrolledTriggerId(null)
+      setPayload(nextPayload)
+      return true
+    },
+    [open, setOpen]
+  )
+
+  const pressTrigger = React.useCallback(
+    (triggerId: string, reason: string, event?: ChangeEvent, toggle = true) => {
+      const current = activeTriggerIdRef.current
+      if (open && current !== null && current !== triggerId) {
+        return openWithTrigger(triggerId, reason, event)
+      }
+      if (open) return toggle ? setOpen(false, reason, event) : false
+      return openWithTrigger(triggerId, reason, event)
+    },
+    [open, setOpen, openWithTrigger]
+  )
+
+  React.useLayoutEffect(() => {
+    if (activeTriggerId === null) return
+    const entry = triggersRef.current.get(activeTriggerId)
+    if (!entry) return
+    if (entry.node) triggerRef.current = entry.node
+    setPayload(entry.payload)
+  }, [activeTriggerId])
+
   const measureAnchor = React.useCallback(() => {
     const virtualAnchor = virtualAnchorRef.current
     if (virtualAnchor) {
@@ -187,6 +389,11 @@ function useFloatingRoot<Reason extends string = string>({
     if (width <= 0 || height <= 0) return
     measureAnchor()
   }, [open, width, height, measureAnchor, setAnchor])
+
+  React.useEffect(() => {
+    if (!open || activeTriggerId === null) return
+    measureAnchor()
+  }, [open, activeTriggerId, measureAnchor])
 
   React.useImperativeHandle(
     actionsRef,
@@ -216,7 +423,7 @@ function useFloatingRoot<Reason extends string = string>({
     return focusNode(resolveFocusTarget(finalFocusRef.current, triggerRef))
   }, [open, handleOpenChangeComplete])
 
-  return React.useMemo<FloatingRootValue>(
+  const value = React.useMemo<FloatingRootValue>(
     () => ({
       id,
       popupId,
@@ -232,6 +439,12 @@ function useFloatingRoot<Reason extends string = string>({
       openAt,
       close,
       measureAnchor,
+      activeTriggerId,
+      payload,
+      registerTrigger,
+      openWithTrigger,
+      openWithPayload,
+      pressTrigger,
     }),
     [
       id,
@@ -245,8 +458,26 @@ function useFloatingRoot<Reason extends string = string>({
       openAt,
       close,
       measureAnchor,
+      activeTriggerId,
+      payload,
+      registerTrigger,
+      openWithTrigger,
+      openWithPayload,
+      pressTrigger,
     ]
   )
+
+  const slot = React.useRef<FloatingHandleSlot>({ current: value }).current
+
+  React.useLayoutEffect(() => {
+    if (slot.current === value) return
+    slot.current = value
+    handle?.notify()
+  }, [slot, value, handle])
+
+  React.useLayoutEffect(() => handle?.attach(slot), [handle, slot])
+
+  return value
 }
 
 const FloatingRootContext = React.createContext<FloatingRootValue | null>(null)
@@ -270,13 +501,86 @@ interface FloatingTriggerState {
   disabled: boolean
 }
 
+interface UseFloatingTriggerRegistrationParameters {
+  root?: FloatingRootValue | null | undefined
+  handle?: FloatingHandle<unknown> | undefined
+  id?: string | undefined
+  payload?: unknown
+  ref?: React.Ref<HostInstance> | undefined
+}
+
+interface UseFloatingTriggerRegistrationReturnValue {
+  root: FloatingRootValue | null
+  id: string
+  open: boolean
+  ref: React.RefCallback<HostInstance>
+}
+
+function useFloatingTriggerRegistration({
+  root: rootParameter,
+  handle,
+  id: idParameter,
+  payload,
+  ref,
+}: UseFloatingTriggerRegistrationParameters): UseFloatingTriggerRegistrationReturnValue {
+  const context = useOptionalFloatingRootContext()
+  const handleRoot = useFloatingHandleRoot(handle)
+  const root = handle ? handleRoot : (rootParameter ?? context)
+  if (!root && !handle) {
+    throw new Error("Trigger must be rendered inside its Root component")
+  }
+  const generatedId = React.useId()
+  const id = idParameter ?? generatedId
+  const entry = React.useRef<FloatingTriggerEntry>({
+    node: null,
+    payload,
+  }).current
+  const rootTriggerRef = root?.triggerRef
+
+  const setNode = React.useCallback(
+    (node: HostInstance | null) => {
+      const previous = entry.node
+      entry.node = node
+      if (!rootTriggerRef) return
+      if (
+        rootTriggerRef.current === null ||
+        rootTriggerRef.current === previous
+      ) {
+        rootTriggerRef.current = node
+      }
+    },
+    [entry, rootTriggerRef]
+  )
+
+  React.useLayoutEffect(() => {
+    entry.payload = payload
+  }, [entry, payload])
+
+  const registerTrigger = root?.registerTrigger
+
+  React.useLayoutEffect(
+    () => registerTrigger?.(id, entry),
+    [registerTrigger, id, entry]
+  )
+
+  const composedRef = useComposedRefs<HostInstance>(ref, setNode)
+  const activeTriggerId = root?.activeTriggerId ?? null
+  const open =
+    !!root?.open && (activeTriggerId === null || activeTriggerId === id)
+
+  return { root, id, open, ref: composedRef }
+}
+
 interface UseFloatingTriggerParameters {
-  root?: FloatingRootValue | undefined
+  root?: FloatingRootValue | null | undefined
   ref?: React.Ref<HostInstance> | undefined
   disabled?: boolean | undefined
   reason?: string | undefined
   toggle?: boolean | undefined
   role?: Role | undefined
+  handle?: FloatingHandle<unknown> | undefined
+  id?: string | undefined
+  payload?: unknown
 }
 
 interface FloatingTriggerProps {
@@ -299,26 +603,31 @@ function useFloatingTrigger({
   reason = REASONS.triggerPress,
   toggle = true,
   role = "button",
+  handle,
+  id: idParameter,
+  payload,
 }: UseFloatingTriggerParameters = {}): UseFloatingTriggerReturnValue {
-  const context = useOptionalFloatingRootContext()
-  const root = rootParameter ?? context
-  if (!root) {
-    throw new Error("Trigger must be rendered inside its Root component")
-  }
-  const composedRef = useComposedRefs<HostInstance>(ref, root.triggerRef)
-  const disabled = disabledParameter ?? root.disabled
-  const { open, setOpen } = root
+  const registration = useFloatingTriggerRegistration({
+    root: rootParameter,
+    handle,
+    id: idParameter,
+    payload,
+    ref,
+  })
+  const { root, id, open } = registration
+  const disabled = disabledParameter ?? root?.disabled ?? false
+  const pressTrigger = root?.pressTrigger
 
   const onPress = React.useCallback(
     (event: GestureResponderEvent) => {
-      if (disabled) return
-      setOpen(toggle ? !open : true, reason, event)
+      if (disabled || !pressTrigger) return
+      pressTrigger(id, reason, event, toggle)
     },
-    [disabled, setOpen, toggle, open, reason]
+    [disabled, pressTrigger, id, reason, toggle]
   )
 
   return {
-    ref: composedRef,
+    ref: registration.ref,
     state: { open, disabled },
     props: {
       role,
@@ -404,6 +713,72 @@ function useFloatingPopup({
   }
 }
 
+interface FloatingViewportState {
+  activationDirection: string | undefined
+  transitioning: boolean
+}
+
+const INITIAL_VIEWPORT_STATE: FloatingViewportState = {
+  activationDirection: undefined,
+  transitioning: false,
+}
+
+function getActivationDirection(
+  previous: AnchorRect,
+  next: AnchorRect
+): string | undefined {
+  const deltaX =
+    next.pageX + next.width / 2 - (previous.pageX + previous.width / 2)
+  const deltaY =
+    next.pageY + next.height / 2 - (previous.pageY + previous.height / 2)
+  const parts: string[] = []
+  if (deltaX > 0) parts.push("right")
+  else if (deltaX < 0) parts.push("left")
+  if (deltaY > 0) parts.push("down")
+  else if (deltaY < 0) parts.push("up")
+  return parts.length > 0 ? parts.join(" ") : undefined
+}
+
+interface ViewportSnapshot {
+  triggerId: string | null
+  anchor: AnchorRect
+}
+
+function useFloatingViewportState(
+  root: FloatingRootValue
+): FloatingViewportState {
+  const { open, anchor, activeTriggerId } = root
+  const [state, setState] = React.useState(INITIAL_VIEWPORT_STATE)
+  const previousRef = React.useRef<ViewportSnapshot | null>(null)
+  const activeTriggerIdRef = React.useRef(activeTriggerId)
+  activeTriggerIdRef.current = activeTriggerId
+
+  React.useEffect(() => {
+    if (!open) {
+      previousRef.current = null
+      setState(INITIAL_VIEWPORT_STATE)
+      return
+    }
+    if (!anchor) return
+    const triggerId = activeTriggerIdRef.current
+    const previous = previousRef.current
+    previousRef.current = { triggerId, anchor }
+    if (!previous || previous.triggerId === triggerId) return
+    setState({
+      activationDirection: getActivationDirection(previous.anchor, anchor),
+      transitioning: true,
+    })
+    const frame = requestAnimationFrame(() => {
+      setState((current) =>
+        current.transitioning ? { ...current, transitioning: false } : current
+      )
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [open, anchor])
+
+  return state
+}
+
 interface FloatingPortalProps {
   children?: React.ReactNode
   keepMounted?: boolean | undefined
@@ -435,26 +810,38 @@ function FloatingPortal({
 FloatingPortal.displayName = "FloatingPortal"
 
 export type {
+  FloatingHandleSlot,
   FloatingPopupProps,
   FloatingPortalProps,
   FloatingRootActions,
   FloatingRootParameters,
   FloatingRootValue,
+  FloatingTriggerEntry,
   FloatingTriggerProps,
   FloatingTriggerState,
+  FloatingViewportState,
   FocusTarget,
   UseFloatingPopupParameters,
   UseFloatingPopupReturnValue,
   UseFloatingTriggerParameters,
+  UseFloatingTriggerRegistrationParameters,
+  UseFloatingTriggerRegistrationReturnValue,
   UseFloatingTriggerReturnValue,
 }
 export {
+  createFloatingHandle,
+  FloatingHandle,
   FloatingPortal,
   FloatingRootContext,
+  getActivationDirection,
   measureAnchorRect,
+  resolvePayloadChildren,
+  useFloatingHandleRoot,
   useFloatingPopup,
   useFloatingRoot,
   useFloatingRootContext,
   useFloatingTrigger,
+  useFloatingTriggerRegistration,
+  useFloatingViewportState,
   useOptionalFloatingRootContext,
 }

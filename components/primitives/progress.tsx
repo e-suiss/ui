@@ -238,6 +238,7 @@ export type {
   LabelProps,
   LabelState,
   ProgressStatus,
+  ProgressStatus as Status,
   RootContextValue,
   RootProps,
   RootState,

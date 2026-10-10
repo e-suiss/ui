@@ -136,6 +136,8 @@ export type {
   SubmenuRootProps,
   SubmenuTriggerProps,
   SubmenuTriggerState,
+  ViewportProps,
+  ViewportState,
 } from "./menu"
 export {
   Arrow,
@@ -154,6 +156,7 @@ export {
   SubmenuRoot,
   SubmenuTrigger,
   useMenuRootContext,
+  Viewport,
 } from "./menu"
 export type { TriggerProps, TriggerState }
 export { Positioner, Root, Trigger }

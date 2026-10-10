@@ -9,21 +9,27 @@ import type {
 import { useControllableState } from "./use-controllable-state"
 import { useRender } from "./use-render"
 
-type ChangeEventReason = typeof REASONS.itemPress | typeof REASONS.none
+type ToggleGroupChangeEventReason =
+  | typeof REASONS.itemPress
+  | typeof REASONS.none
 
-type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
+type ToggleGroupChangeEventDetails =
+  BaseUIChangeEventDetails<ToggleGroupChangeEventReason>
 
-interface RootState {
+interface ToggleGroupState {
   disabled: boolean
   multiple: boolean
   orientation: Orientation
 }
 
-type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+type ToggleGroupProps = BaseUIComponentProps<typeof View, ToggleGroupState> & {
   value?: readonly string[] | undefined
   defaultValue?: readonly string[] | undefined
   onValueChange?:
-    | ((groupValue: string[], eventDetails: ChangeEventDetails) => void)
+    | ((
+        groupValue: string[],
+        eventDetails: ToggleGroupChangeEventDetails
+      ) => void)
     | undefined
   disabled?: boolean | undefined
   multiple?: boolean | undefined
@@ -38,7 +44,7 @@ interface ToggleGroupContextValue {
   setItemPressed: (
     itemValue: string,
     pressed: boolean,
-    eventDetails: ChangeEventDetails
+    eventDetails: ToggleGroupChangeEventDetails
   ) => boolean
 }
 
@@ -52,7 +58,7 @@ function useToggleGroupContext() {
   return React.useContext(ToggleGroupContext)
 }
 
-function Root({
+function ToggleGroup({
   value: valueProp,
   defaultValue = EMPTY_VALUE,
   onValueChange,
@@ -64,20 +70,27 @@ function Root({
   style,
   ref,
   ...elementProps
-}: RootProps) {
+}: ToggleGroupProps) {
   const [value, setValue] = useControllableState<
     readonly string[],
-    ChangeEventDetails
+    ToggleGroupChangeEventDetails
   >({
     value: valueProp,
     defaultValue,
     onChange: onValueChange as
-      | ((value: readonly string[], eventDetails: ChangeEventDetails) => void)
+      | ((
+          value: readonly string[],
+          eventDetails: ToggleGroupChangeEventDetails
+        ) => void)
       | undefined,
   })
 
   const setItemPressed = React.useCallback(
-    (itemValue: string, pressed: boolean, eventDetails: ChangeEventDetails) =>
+    (
+      itemValue: string,
+      pressed: boolean,
+      eventDetails: ToggleGroupChangeEventDetails
+    ) =>
       setValue((current) => {
         if (pressed) {
           if (current.includes(itemValue)) return current
@@ -89,7 +102,7 @@ function Root({
     [multiple, setValue]
   )
 
-  const state = React.useMemo<RootState>(
+  const state = React.useMemo<ToggleGroupState>(
     () => ({ disabled, multiple, orientation }),
     [disabled, multiple, orientation]
   )
@@ -122,13 +135,13 @@ function Root({
   )
 }
 
-Root.displayName = "ToggleGroup"
+ToggleGroup.displayName = "ToggleGroup"
 
 export type {
-  ChangeEventDetails,
-  ChangeEventReason,
-  RootProps,
-  RootState,
+  ToggleGroupChangeEventDetails,
+  ToggleGroupChangeEventReason,
   ToggleGroupContextValue,
+  ToggleGroupProps,
+  ToggleGroupState,
 }
-export { Root, useToggleGroupContext }
+export { ToggleGroup, useToggleGroupContext }

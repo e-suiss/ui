@@ -2,20 +2,24 @@ import * as React from "react"
 import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
-  type HostInstance,
   Pressable,
+  StyleSheet,
   View,
 } from "react-native"
 import { REASONS } from "./event-details"
 import {
+  FloatingHandle,
   FloatingPortal,
   type FloatingRootActions,
   type FloatingRootValue,
+  type FloatingViewportState,
   type FocusTarget,
+  resolvePayloadChildren,
   useFloatingPopup,
   useFloatingRoot,
+  useFloatingTriggerRegistration,
+  useFloatingViewportState,
 } from "./floating-root"
-import { useComposedRefs } from "./hooks"
 import { Arrow, type ArrowProps, type ArrowState } from "./popover"
 import {
   Positioner as BasePositioner,
@@ -27,6 +31,7 @@ import type {
   Align,
   BaseUIChangeEventDetails,
   BaseUIComponentProps,
+  PayloadChildRenderFunction,
   PortalParameters,
   Side,
 } from "./types"
@@ -44,7 +49,13 @@ type ChangeEventDetails = BaseUIChangeEventDetails<OpenChangeReason>
 
 type RootActions = FloatingRootActions
 
-interface RootProps {
+class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
+
+function createHandle<Payload = unknown>(): Handle<Payload> {
+  return new Handle<Payload>()
+}
+
+interface RootProps<Payload = unknown> {
   open?: boolean | undefined
   defaultOpen?: boolean | undefined
   onOpenChange?:
@@ -52,7 +63,10 @@ interface RootProps {
     | undefined
   onOpenChangeComplete?: ((open: boolean) => void) | undefined
   actionsRef?: React.RefObject<RootActions | null> | undefined
-  children?: React.ReactNode
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: Handle<Payload> | undefined
+  children?: React.ReactNode | PayloadChildRenderFunction<Payload>
 }
 
 const HoverCardRootContext = React.createContext<FloatingRootValue | null>(null)
@@ -65,11 +79,14 @@ function useHoverCardRootContext(componentName = "HoverCard part") {
   return context
 }
 
-function Root({ children, ...parameters }: RootProps) {
+function Root<Payload = unknown>({
+  children,
+  ...parameters
+}: RootProps<Payload>) {
   const root = useFloatingRoot<OpenChangeReason>(parameters)
   return (
     <HoverCardRootContext.Provider value={root}>
-      {children}
+      {resolvePayloadChildren(children, root.payload)}
     </HoverCardRootContext.Provider>
   )
 }
@@ -80,37 +97,56 @@ interface TriggerState {
   open: boolean
 }
 
-type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState> & {
+type TriggerProps<Payload = unknown> = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "id"
+> & {
   delay?: number | undefined
+  handle?: Handle<Payload> | undefined
+  payload?: Payload | undefined
+  id?: string | undefined
 }
 
 const LONG_PRESS_ACTIONS = [{ name: "longpress" }]
 
-function Trigger({
+function Trigger<Payload = unknown>({
   delay,
+  handle,
+  payload,
+  id: idProp,
   render,
   className,
   style,
   ref,
   ...elementProps
-}: TriggerProps) {
-  const { open, setOpen, triggerRef } =
-    useHoverCardRootContext("HoverCardTrigger")
-  const composedRef = useComposedRefs<HostInstance>(ref, triggerRef)
+}: TriggerProps<Payload>) {
+  const context = React.useContext(HoverCardRootContext)
+  if (!context && !handle) {
+    throw new Error("HoverCardTrigger must be rendered inside HoverCard.Root")
+  }
+  const registration = useFloatingTriggerRegistration({
+    root: context,
+    handle,
+    id: idProp,
+    payload,
+    ref,
+  })
+  const { open, id } = registration
+  const openWithTrigger = registration.root?.openWithTrigger
 
   const onLongPress = React.useCallback(
     (event: GestureResponderEvent) => {
-      setOpen(true, REASONS.triggerLongPress, event)
+      openWithTrigger?.(id, REASONS.triggerLongPress, event)
     },
-    [setOpen]
+    [openWithTrigger, id]
   )
 
   const onAccessibilityAction = React.useCallback(
     (event: AccessibilityActionEvent) => {
       if (event.nativeEvent.actionName !== "longpress") return
-      setOpen(true, REASONS.triggerLongPress, event)
+      openWithTrigger?.(id, REASONS.triggerLongPress, event)
     },
-    [setOpen]
+    [openWithTrigger, id]
   )
 
   const state = React.useMemo<TriggerState>(() => ({ open }), [open])
@@ -121,7 +157,7 @@ function Trigger({
     className,
     style,
     state,
-    ref: composedRef,
+    ref: registration.ref,
     props: [
       {
         role: "link",
@@ -165,6 +201,70 @@ function Positioner(props: PositionerProps) {
 }
 
 Positioner.displayName = "HoverCardPositioner"
+
+interface BackdropState {
+  open: boolean
+}
+
+type BackdropProps = BaseUIComponentProps<typeof View, BackdropState>
+
+function Backdrop({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: BackdropProps) {
+  const { open } = useHoverCardRootContext("HoverCardBackdrop")
+  const state = React.useMemo<BackdropState>(() => ({ open }), [open])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: open,
+    props: [
+      {
+        style: StyleSheet.absoluteFill,
+        pointerEvents: "none",
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
+}
+
+Backdrop.displayName = "HoverCardBackdrop"
+
+type ViewportState = FloatingViewportState
+
+type ViewportProps = BaseUIComponentProps<typeof View, ViewportState>
+
+function Viewport({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ViewportProps) {
+  const root = useHoverCardRootContext("HoverCardViewport")
+  const state = useFloatingViewportState(root)
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+}
+
+Viewport.displayName = "HoverCardViewport"
 
 interface PopupState {
   open: boolean
@@ -227,6 +327,8 @@ Popup.displayName = "HoverCardPopup"
 export type {
   ArrowProps,
   ArrowState,
+  BackdropProps,
+  BackdropState,
   ChangeEventDetails,
   OpenChangeReason,
   PopupProps,
@@ -238,9 +340,14 @@ export type {
   RootProps,
   TriggerProps,
   TriggerState,
+  ViewportProps,
+  ViewportState,
 }
 export {
   Arrow,
+  Backdrop,
+  createHandle,
+  Handle,
   HoverCardRootContext,
   Popup,
   Portal,
@@ -248,4 +355,5 @@ export {
   Root,
   Trigger,
   useHoverCardRootContext,
+  Viewport,
 }

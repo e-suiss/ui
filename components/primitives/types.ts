@@ -146,6 +146,10 @@ interface PositionerParameters {
   arrowPadding?: number | undefined
 }
 
+type PayloadChildRenderFunction<Payload> = (arg: {
+  payload: Payload | undefined
+}) => React.ReactNode
+
 interface PortalParameters {
   keepMounted?: boolean | undefined
   hostName?: string | undefined
@@ -167,6 +171,7 @@ export type {
   OffsetFunctionData,
   Orientation,
   Padding,
+  PayloadChildRenderFunction,
   PortalParameters,
   PositionerAnchor,
   PositionerParameters,

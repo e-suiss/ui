@@ -6,33 +6,34 @@ import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
 import { useControllableState } from "./use-controllable-state"
 import { useRender } from "./use-render"
 
-type ChangeEventReason =
+type ToggleChangeEventReason =
   | typeof REASONS.triggerPress
   | typeof REASONS.itemPress
   | typeof REASONS.none
 
-type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
+type ToggleChangeEventDetails =
+  BaseUIChangeEventDetails<ToggleChangeEventReason>
 
-interface RootState {
+interface ToggleState {
   pressed: boolean
   disabled: boolean
 }
 
-type RootProps = Omit<
-  BaseUIComponentProps<typeof Pressable, RootState>,
+type ToggleProps = Omit<
+  BaseUIComponentProps<typeof Pressable, ToggleState>,
   "children"
 > & {
   children?: React.ReactNode
   pressed?: boolean | undefined
   defaultPressed?: boolean | undefined
   onPressedChange?:
-    | ((pressed: boolean, eventDetails: ChangeEventDetails) => void)
+    | ((pressed: boolean, eventDetails: ToggleChangeEventDetails) => void)
     | undefined
   disabled?: boolean | undefined
   value?: string | undefined
 }
 
-function Root({
+function Toggle({
   pressed: pressedProp,
   defaultPressed = false,
   onPressedChange,
@@ -43,14 +44,14 @@ function Root({
   style,
   ref,
   ...elementProps
-}: RootProps) {
+}: ToggleProps) {
   const group = useToggleGroupContext()
   const generatedValue = React.useId()
   const itemValue = value ?? generatedValue
 
   const [localPressed, setLocalPressed] = useControllableState<
     boolean,
-    ChangeEventDetails
+    ToggleChangeEventDetails
   >({
     value: pressedProp,
     defaultValue: defaultPressed,
@@ -61,7 +62,7 @@ function Root({
   const disabled = disabledProp || (group?.disabled ?? false)
   const rootRef = React.useRef<View>(null)
 
-  const state = React.useMemo<RootState>(
+  const state = React.useMemo<ToggleState>(
     () => ({ pressed, disabled }),
     [pressed, disabled]
   )
@@ -107,7 +108,12 @@ function Root({
   })
 }
 
-Root.displayName = "Toggle"
+Toggle.displayName = "Toggle"
 
-export type { ChangeEventDetails, ChangeEventReason, RootProps, RootState }
-export { Root }
+export type {
+  ToggleChangeEventDetails,
+  ToggleChangeEventReason,
+  ToggleProps,
+  ToggleState,
+}
+export { Toggle }

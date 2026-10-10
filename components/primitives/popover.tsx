@@ -4,18 +4,23 @@ import {
   type HostInstance,
   type LayoutChangeEvent,
   Pressable,
+  StyleSheet,
   Text,
   View,
 } from "react-native"
 import { REASONS } from "./event-details"
 import {
+  FloatingHandle,
   FloatingPortal,
   type FloatingRootActions,
   type FloatingRootValue,
+  type FloatingViewportState,
   type FocusTarget,
+  resolvePayloadChildren,
   useFloatingPopup,
   useFloatingRoot,
   useFloatingTrigger,
+  useFloatingViewportState,
 } from "./floating-root"
 import {
   Positioner as BasePositioner,
@@ -27,6 +32,7 @@ import type {
   Align,
   BaseUIChangeEventDetails,
   BaseUIComponentProps,
+  PayloadChildRenderFunction,
   PortalParameters,
   Side,
 } from "./types"
@@ -45,7 +51,13 @@ type ChangeEventDetails = BaseUIChangeEventDetails<OpenChangeReason>
 
 type RootActions = FloatingRootActions
 
-interface RootProps {
+class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
+
+function createHandle<Payload = unknown>(): Handle<Payload> {
+  return new Handle<Payload>()
+}
+
+interface RootProps<Payload = unknown> {
   open?: boolean | undefined
   defaultOpen?: boolean | undefined
   onOpenChange?:
@@ -54,7 +66,10 @@ interface RootProps {
   onOpenChangeComplete?: ((open: boolean) => void) | undefined
   actionsRef?: React.RefObject<RootActions | null> | undefined
   modal?: boolean | undefined
-  children?: React.ReactNode
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: Handle<Payload> | undefined
+  children?: React.ReactNode | PayloadChildRenderFunction<Payload>
 }
 
 interface PopoverRootContextValue {
@@ -78,7 +93,7 @@ function usePopoverRootContext(componentName = "Popover part") {
   return context
 }
 
-function Root({
+function Root<Payload = unknown>({
   children,
   open,
   defaultOpen,
@@ -86,7 +101,10 @@ function Root({
   onOpenChangeComplete,
   actionsRef,
   modal = false,
-}: RootProps) {
+  triggerId,
+  defaultTriggerId,
+  handle,
+}: RootProps<Payload>) {
   const root = useFloatingRoot<OpenChangeReason>({
     open,
     defaultOpen,
@@ -94,6 +112,9 @@ function Root({
     onOpenChangeComplete,
     actionsRef,
     modal,
+    triggerId,
+    defaultTriggerId,
+    handle,
   })
   const titleRef = React.useRef<HostInstance>(null)
   const [titleCount, setTitleCount] = React.useState(0)
@@ -119,7 +140,7 @@ function Root({
 
   return (
     <PopoverRootContext.Provider value={context}>
-      {children}
+      {resolvePayloadChildren(children, root.payload)}
     </PopoverRootContext.Provider>
   )
 }
@@ -131,19 +152,35 @@ interface TriggerState {
   disabled: boolean
 }
 
-type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+type TriggerProps<Payload = unknown> = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "id"
+> & {
+  handle?: Handle<Payload> | undefined
+  payload?: Payload | undefined
+  id?: string | undefined
+}
 
-function Trigger({
+function Trigger<Payload = unknown>({
+  handle,
+  payload,
+  id,
   render,
   className,
   style,
   ref,
   disabled,
   ...elementProps
-}: TriggerProps) {
-  const { root } = usePopoverRootContext("PopoverTrigger")
+}: TriggerProps<Payload>) {
+  const context = React.useContext(PopoverRootContext)
+  if (!context && !handle) {
+    throw new Error("PopoverTrigger must be rendered inside Popover.Root")
+  }
   const trigger = useFloatingTrigger({
-    root,
+    root: context?.root,
+    handle,
+    id,
+    payload,
     ref,
     disabled: disabled ?? undefined,
   })
@@ -192,6 +229,45 @@ function Positioner(props: PositionerProps) {
 }
 
 Positioner.displayName = "PopoverPositioner"
+
+interface BackdropState {
+  open: boolean
+}
+
+type BackdropProps = BaseUIComponentProps<typeof View, BackdropState>
+
+function Backdrop({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: BackdropProps) {
+  const { root } = usePopoverRootContext("PopoverBackdrop")
+  const { open } = root
+  const state = React.useMemo<BackdropState>(() => ({ open }), [open])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: open,
+    props: [
+      {
+        style: StyleSheet.absoluteFill,
+        pointerEvents: "none",
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
+}
+
+Backdrop.displayName = "PopoverBackdrop"
 
 interface PopupState {
   open: boolean
@@ -304,6 +380,32 @@ function Arrow({ render, className, style, ref, ...elementProps }: ArrowProps) {
 
 Arrow.displayName = "PopoverArrow"
 
+type ViewportState = FloatingViewportState
+
+type ViewportProps = BaseUIComponentProps<typeof View, ViewportState>
+
+function Viewport({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ViewportProps) {
+  const { root } = usePopoverRootContext("PopoverViewport")
+  const state = useFloatingViewportState(root)
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+}
+
+Viewport.displayName = "PopoverViewport"
+
 type TitleState = Record<never, never>
 
 type TitleProps = BaseUIComponentProps<typeof Text, TitleState>
@@ -406,6 +508,8 @@ Close.displayName = "PopoverClose"
 export type {
   ArrowProps,
   ArrowState,
+  BackdropProps,
+  BackdropState,
   ChangeEventDetails,
   CloseProps,
   CloseState,
@@ -424,11 +528,16 @@ export type {
   TitleState,
   TriggerProps,
   TriggerState,
+  ViewportProps,
+  ViewportState,
 }
 export {
   Arrow,
+  Backdrop,
   Close,
+  createHandle,
   Description,
+  Handle,
   PopoverRootContext,
   Popup,
   Portal,
@@ -437,4 +546,5 @@ export {
   Title,
   Trigger,
   usePopoverRootContext,
+  Viewport,
 }

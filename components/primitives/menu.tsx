@@ -13,14 +13,18 @@ import {
   REASONS,
 } from "./event-details"
 import {
+  FloatingHandle,
   FloatingPortal,
   type FloatingRootActions,
   FloatingRootContext,
   type FloatingRootValue,
+  type FloatingViewportState,
   type FocusTarget,
+  resolvePayloadChildren,
   useFloatingPopup,
   useFloatingRoot,
   useFloatingTrigger,
+  useFloatingViewportState,
 } from "./floating-root"
 import {
   PositionerContext,
@@ -35,6 +39,7 @@ import type {
   BaseUIComponentProps,
   ChangeEvent,
   Orientation,
+  PayloadChildRenderFunction,
   Side,
 } from "./types"
 import { useControllableState } from "./use-controllable-state"
@@ -105,8 +110,14 @@ function useMenubarSync(
   }, [clearActiveMenu, id])
 }
 
-interface RootProps {
-  children?: React.ReactNode
+class Handle<Payload = unknown> extends FloatingHandle<Payload> {}
+
+function createHandle<Payload = unknown>(): Handle<Payload> {
+  return new Handle<Payload>()
+}
+
+interface RootProps<Payload = unknown> {
+  children?: React.ReactNode | PayloadChildRenderFunction<Payload>
   open?: boolean | undefined
   defaultOpen?: boolean | undefined
   onOpenChange?:
@@ -116,19 +127,22 @@ interface RootProps {
   actionsRef?: React.RefObject<FloatingRootActions | null> | undefined
   modal?: boolean | undefined
   disabled?: boolean | undefined
+  triggerId?: string | null | undefined
+  defaultTriggerId?: string | null | undefined
+  handle?: Handle<Payload> | undefined
 }
 
-interface InternalRootProps extends RootProps {
+interface InternalRootProps<Payload = unknown> extends RootProps<Payload> {
   parent?: MenuParentType
 }
 
-function MenuRootImpl({
+function MenuRootImpl<Payload = unknown>({
   children,
   modal,
   disabled,
   parent: parentType,
   ...parameters
-}: InternalRootProps) {
+}: InternalRootProps<Payload>) {
   const menubar = useOptionalMenubarContext()
   const floating = useFloatingRoot<MenuChangeEventReason>({
     ...parameters,
@@ -155,19 +169,25 @@ function MenuRootImpl({
   return (
     <MenuRootContext.Provider value={value}>
       <FloatingRootContext.Provider value={floating}>
-        {children}
+        {resolvePayloadChildren(children, floating.payload)}
       </FloatingRootContext.Provider>
     </MenuRootContext.Provider>
   )
 }
 
-function Root(props: RootProps) {
-  return <MenuRootImpl {...props} />
+function Root<Payload = unknown>(props: RootProps<Payload>) {
+  return <MenuRootImpl<Payload> {...props} />
 }
 
 Root.displayName = "MenuRoot"
 
-interface SubmenuRootProps extends Omit<RootProps, "modal"> {}
+interface SubmenuRootProps
+  extends Omit<
+    RootProps,
+    "modal" | "children" | "handle" | "triggerId" | "defaultTriggerId"
+  > {
+  children?: React.ReactNode
+}
 
 function SubmenuRoot({ children, disabled, ...parameters }: SubmenuRootProps) {
   const parentMenu = useMenuRootContext("Menu.SubmenuRoot")
@@ -219,20 +239,36 @@ interface TriggerState {
   disabled: boolean
 }
 
-type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+type TriggerProps<Payload = unknown> = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "id"
+> & {
+  handle?: Handle<Payload> | undefined
+  payload?: Payload | undefined
+  id?: string | undefined
+}
 
-function Trigger({
+function Trigger<Payload = unknown>({
+  handle,
+  payload,
+  id,
   disabled,
   render,
   className,
   style,
   ref,
   ...elementProps
-}: TriggerProps) {
-  const menu = useMenuRootContext("Menu.Trigger")
+}: TriggerProps<Payload>) {
+  const menu = React.useContext(MenuRootContext)
+  if (!menu && !handle) {
+    throw new Error("Menu.Trigger must be rendered inside Menu.Root")
+  }
   const menubar = useOptionalMenubarContext()
   const trigger = useFloatingTrigger({
-    root: menu.floating,
+    root: menu?.floating,
+    handle,
+    id,
+    payload,
     ref,
     disabled: disabled ?? undefined,
     role: menubar ? "menuitem" : "button",
@@ -347,6 +383,32 @@ function Popup({
 }
 
 Popup.displayName = "MenuPopup"
+
+type ViewportState = FloatingViewportState
+
+type ViewportProps = BaseUIComponentProps<typeof View, ViewportState>
+
+function Viewport({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ViewportProps) {
+  const menu = useMenuRootContext("Menu.Viewport")
+  const state = useFloatingViewportState(menu.floating)
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+}
+
+Viewport.displayName = "MenuViewport"
 
 interface ArrowState {
   open: boolean
@@ -1032,14 +1094,18 @@ export type {
   SubmenuTriggerState,
   TriggerProps,
   TriggerState,
+  ViewportProps,
+  ViewportState,
 }
 export {
   Arrow,
   Backdrop,
   CheckboxItem,
   CheckboxItemIndicator,
+  createHandle,
   Group,
   GroupLabel,
+  Handle,
   Item,
   MenubarContext,
   MenuRootContext,
@@ -1057,4 +1123,5 @@ export {
   Trigger,
   useMenuRootContext,
   useOptionalMenubarContext,
+  Viewport,
 }

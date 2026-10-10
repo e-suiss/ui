@@ -2,7 +2,10 @@ import * as React from "react"
 import {
   type GestureResponderEvent,
   I18nManager,
+  Keyboard,
+  type KeyboardEvent,
   type LayoutChangeEvent,
+  Platform,
   Pressable,
   StyleSheet,
   useWindowDimensions,
@@ -372,6 +375,31 @@ function useResolvedAnchor(
   return fallback
 }
 
+function useKeyboardTop() {
+  const [top, setTop] = React.useState<number | null>(null)
+
+  React.useEffect(() => {
+    const show = Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow"
+    const hide = Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide"
+    const onShow = (event: KeyboardEvent) => {
+      setTop(event.endCoordinates.screenY)
+    }
+    const onHide = () => {
+      setTop(null)
+    }
+    const subscriptions = [
+      Keyboard.addListener(show, onShow),
+      Keyboard.addListener("keyboardDidChangeFrame", onShow),
+      Keyboard.addListener(hide, onHide),
+    ]
+    return () => {
+      for (const subscription of subscriptions) subscription.remove()
+    }
+  }, [])
+
+  return top
+}
+
 interface UsePositionerParameters extends PositionerParameters {
   open: boolean
   anchor?: PositionerAnchor
@@ -395,6 +423,7 @@ interface PositionerContextValue {
 }
 
 interface UsePositionerReturnValue extends PositionerContextValue {
+  anchor: AnchorRect | null
   style: ViewStyle
   onLayout: (event: LayoutChangeEvent) => void
 }
@@ -412,6 +441,11 @@ function usePositioner({
   arrowPadding = 5,
 }: UsePositionerParameters): UsePositionerReturnValue {
   const window = useWindowDimensions()
+  const keyboardTop = useKeyboardTop()
+  const boundaryHeight =
+    keyboardTop !== null && keyboardTop < window.height
+      ? keyboardTop
+      : window.height
   const rtl = I18nManager.isRTL
   const anchor = useResolvedAnchor(open, anchorParameter, fallbackAnchor)
   const [popupSize, setPopupSize] = React.useState<Size | null>(null)
@@ -439,7 +473,7 @@ function usePositioner({
       ? computePosition({
           anchor,
           popup: popupSize,
-          boundary: { width: window.width, height: window.height },
+          boundary: { width: window.width, height: boundaryHeight },
           side,
           align,
           sideOffset,
@@ -494,7 +528,8 @@ function usePositioner({
     availableWidth: position?.availableWidth ?? maxWidth,
     availableHeight:
       position?.availableHeight ??
-      Math.max(0, window.height - padding.top - padding.bottom),
+      Math.max(0, boundaryHeight - padding.top - padding.bottom),
+    anchor,
     anchorWidth: anchor?.width ?? 0,
     anchorHeight: anchor?.height ?? 0,
     transformOrigin: position?.transformOrigin ?? { x: 0, y: 0 },
@@ -535,6 +570,44 @@ type PositionerProps = BaseUIComponentProps<typeof View, PositionerState> &
 
 function claimResponder() {
   return true
+}
+
+interface OutsidePressLayerProps {
+  anchor: AnchorRect | null
+  onPress: (event: GestureResponderEvent) => void
+}
+
+function OutsidePressLayer({ anchor, onPress }: OutsidePressLayerProps) {
+  const window = useWindowDimensions()
+  if (!anchor || anchor.width <= 0 || anchor.height <= 0) {
+    return (
+      <Pressable
+        accessible={false}
+        importantForAccessibility="no"
+        style={StyleSheet.absoluteFill}
+        onPress={onPress}
+      />
+    )
+  }
+  const left = Math.max(0, anchor.pageX)
+  const top = Math.max(0, anchor.pageY)
+  const right = Math.min(window.width, anchor.pageX + anchor.width)
+  const bottom = Math.min(window.height, anchor.pageY + anchor.height)
+  const regions: Record<string, ViewStyle> = {
+    above: { top: 0, left: 0, right: 0, height: top },
+    below: { top: bottom, left: 0, right: 0, bottom: 0 },
+    before: { top, left: 0, width: left, height: bottom - top },
+    after: { top, left: right, right: 0, height: bottom - top },
+  }
+  return Object.entries(regions).map(([key, region]) => (
+    <Pressable
+      key={key}
+      accessible={false}
+      importantForAccessibility="no"
+      style={[styles.region, region]}
+      onPress={onPress}
+    />
+  ))
 }
 
 function Positioner({
@@ -585,6 +658,7 @@ function Positioner({
   )
 
   const {
+    anchor: anchorRect,
     style: positionStyle,
     onLayout,
     side: resolvedSide,
@@ -661,12 +735,7 @@ function Positioner({
   return (
     <PositionerContext.Provider value={contextValue}>
       {open && dismissOnOutsidePress ? (
-        <Pressable
-          accessible={false}
-          importantForAccessibility="no"
-          style={StyleSheet.absoluteFill}
-          onPress={onOutsidePress}
-        />
+        <OutsidePressLayer anchor={anchorRect} onPress={onOutsidePress} />
       ) : null}
       {element}
     </PositionerContext.Provider>
@@ -674,6 +743,10 @@ function Positioner({
 }
 
 Positioner.displayName = "Positioner"
+
+const styles = StyleSheet.create({
+  region: { position: "absolute" },
+})
 
 export type {
   ArrowPosition,

@@ -74,6 +74,8 @@ interface SelectRootContextValue {
   selectValue: (itemValue: unknown, event?: ChangeEvent) => void
   getLabel: (itemValue: unknown) => React.ReactNode
   registerLabel: (itemValue: unknown, label: React.ReactNode) => void
+  labelId: string | undefined
+  setLabelId: (id: string | undefined) => void
 }
 
 const SelectRootContext = React.createContext<SelectRootContextValue | null>(
@@ -247,6 +249,8 @@ function Root<Value, Multiple extends boolean | undefined = false>({
     []
   )
 
+  const [labelId, setLabelId] = React.useState<string | undefined>(undefined)
+
   const hasValue = multiple
     ? Array.isArray(value) && value.length > 0
     : value !== null && value !== undefined
@@ -262,6 +266,8 @@ function Root<Value, Multiple extends boolean | undefined = false>({
       selectValue,
       getLabel,
       registerLabel,
+      labelId,
+      setLabelId,
     }),
     [
       floating,
@@ -273,6 +279,7 @@ function Root<Value, Multiple extends boolean | undefined = false>({
       selectValue,
       getLabel,
       registerLabel,
+      labelId,
     ]
   )
 
@@ -335,13 +342,61 @@ function Trigger({
     ref: trigger.ref,
     props: [
       trigger.props,
-      { accessibilityState: { expanded: open, disabled } },
+      {
+        accessibilityState: { expanded: open, disabled },
+        accessibilityLabelledBy: select.labelId,
+      },
       elementProps,
     ],
   })
 }
 
 Trigger.displayName = "SelectTrigger"
+
+interface LabelState {
+  disabled: boolean
+  readOnly: boolean
+  open: boolean
+}
+
+type LabelProps = BaseUIComponentProps<typeof Text, LabelState>
+
+function Label({
+  nativeID: nativeIDProp,
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: LabelProps) {
+  const select = useSelectRootContext("Select.Label")
+  const { setLabelId, readOnly } = select
+  const { disabled, open } = select.floating
+  const generatedId = React.useId()
+  const nativeID = nativeIDProp ?? generatedId
+
+  React.useEffect(() => {
+    setLabelId(nativeID)
+    return () => setLabelId(undefined)
+  }, [setLabelId, nativeID])
+
+  const state = React.useMemo<LabelState>(
+    () => ({ disabled, readOnly, open }),
+    [disabled, readOnly, open]
+  )
+
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ nativeID }, elementProps],
+  })
+}
+
+Label.displayName = "SelectLabel"
 
 interface ValueState {
   value: unknown
@@ -906,6 +961,8 @@ export type {
   ItemProps,
   ItemState,
   ItemTextProps,
+  LabelProps,
+  LabelState,
   ListProps,
   ListState,
   PopupProps,
@@ -936,6 +993,7 @@ export {
   Item,
   ItemIndicator,
   ItemText,
+  Label,
   List,
   Popup,
   Portal,
