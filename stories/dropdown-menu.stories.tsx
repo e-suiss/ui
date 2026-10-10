@@ -199,3 +199,58 @@ export const Inset: Story = {
     </View>
   ),
 }
+
+export const OpenByDefault: Story = {
+  render: () => (
+    <View className="items-start">
+      <DropdownMenu defaultOpen>
+        <OpenButton />
+        <DropdownMenuContent className="w-56" align="start">
+          <DropdownMenuLabel>My account</DropdownMenuLabel>
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <Icon as={UserIcon} className="size-4" />
+              <Text>Profile</Text>
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Icon as={CreditCardIcon} className="size-4" />
+              <Text>Billing</Text>
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Icon as={GearIcon} className="size-4" />
+              <Text>Settings</Text>
+              <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <View className="flex-row items-center gap-2">
+                <Icon as={UserPlusIcon} className="size-4" />
+                <Text>Invite users</Text>
+              </View>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>
+                <Icon as={EnvelopeIcon} className="size-4" />
+                <Text>Email</Text>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon as={ChatCircleIcon} className="size-4" />
+                <Text>Message</Text>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">
+            <Icon as={SignOutIcon} className="text-destructive size-4" />
+            <Text>Log out</Text>
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </View>
+  ),
+}

@@ -1,5 +1,5 @@
-import * as RadioGroupPrimitive from "@rn-primitives/radio-group"
 import { type PressableStateCallbackType, StyleSheet, View } from "react-native"
+import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
 import { useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({

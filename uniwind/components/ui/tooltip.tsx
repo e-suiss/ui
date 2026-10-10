@@ -1,4 +1,3 @@
-import * as TooltipPrimitive from "@rn-primitives/tooltip"
 import { cn } from "cn"
 import * as React from "react"
 import { Platform, StyleSheet } from "react-native"
@@ -9,6 +8,7 @@ import {
   ReduceMotion,
 } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as TooltipPrimitive from "@/components/primitives/tooltip"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextClassContext } from "@/components/ui/text"
 

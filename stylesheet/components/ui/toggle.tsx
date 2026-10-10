@@ -1,4 +1,3 @@
-import * as TogglePrimitive from "@rn-primitives/toggle"
 import type * as React from "react"
 import {
   type PressableStateCallbackType,
@@ -7,6 +6,7 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native"
+import * as TogglePrimitive from "@/components/primitives/toggle"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"

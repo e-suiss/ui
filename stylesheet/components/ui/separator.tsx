@@ -1,5 +1,5 @@
-import * as SeparatorPrimitive from "@rn-primitives/separator"
 import { StyleSheet } from "react-native"
+import * as SeparatorPrimitive from "@/components/primitives/separator"
 import { useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({

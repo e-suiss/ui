@@ -3,9 +3,15 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "@/components/primitives/*": ["./components/primitives/*"],
       "@/components/*": ["./stylesheet/components/*"],
       "@/*": ["./*"]
     }
   },
-  "include": ["stylesheet/**/*.ts", "stylesheet/**/*.tsx"]
+  "include": [
+    "stylesheet/**/*.ts",
+    "stylesheet/**/*.tsx",
+    "components/primitives/**/*.ts",
+    "components/primitives/**/*.tsx"
+  ]
 }

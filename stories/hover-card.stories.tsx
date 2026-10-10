@@ -80,3 +80,20 @@ export const Sides: Story = {
     </View>
   ),
 }
+
+export const OpenByDefault: Story = {
+  render: () => (
+    <View className="items-start">
+      <HoverCard defaultOpen>
+        <HoverCardTrigger asChild>
+          <Button variant="link">
+            <Text>@expo</Text>
+          </Button>
+        </HoverCardTrigger>
+        <HoverCardContent className="w-80" align="start">
+          <ProfileCard />
+        </HoverCardContent>
+      </HoverCard>
+    </View>
+  ),
+}

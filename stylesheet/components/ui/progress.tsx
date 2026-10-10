@@ -1,4 +1,3 @@
-import * as ProgressPrimitive from "@rn-primitives/progress"
 import { type StyleProp, StyleSheet, type ViewStyle } from "react-native"
 import Animated, {
   Extrapolation,
@@ -7,6 +6,7 @@ import Animated, {
   useDerivedValue,
   withSpring,
 } from "react-native-reanimated"
+import * as ProgressPrimitive from "@/components/primitives/progress"
 import { useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({

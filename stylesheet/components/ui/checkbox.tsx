@@ -1,4 +1,3 @@
-import * as CheckboxPrimitive from "@rn-primitives/checkbox"
 import { CheckIcon } from "phosphor-react-native"
 import {
   type StyleProp,
@@ -6,6 +5,7 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native"
+import * as CheckboxPrimitive from "@/components/primitives/checkbox"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { useTheme } from "@/components/ui/theme"

@@ -23,7 +23,6 @@
       "title": "Accordion",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/accordion",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -31,7 +30,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/accordion",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -39,7 +37,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/accordion",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-svg",
@@ -48,6 +45,7 @@
       },
       "requires": [
         "icon",
+        "primitives/accordion",
         "text"
       ],
       "files": [
@@ -65,21 +63,18 @@
       "title": "Alert Dialog",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/alert-dialog",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/alert-dialog",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/alert-dialog",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
@@ -88,6 +83,7 @@
       "requires": [
         "animated-view",
         "button",
+        "primitives/alert-dialog",
         "text"
       ],
       "files": [
@@ -165,17 +161,13 @@
       "type": "ui",
       "title": "Aspect Ratio",
       "dependencies": {
-        "uniwind": [
-          "@rn-primitives/aspect-ratio"
-        ],
-        "nativewind": [
-          "@rn-primitives/aspect-ratio"
-        ],
-        "stylesheet": [
-          "@rn-primitives/aspect-ratio"
-        ]
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/aspect-ratio"
+      ],
       "files": [
         "components/ui/aspect-ratio.tsx"
       ],
@@ -191,18 +183,15 @@
       "title": "Avatar",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/avatar",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/avatar",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/avatar"
-        ]
+        "stylesheet": []
       },
       "requires": [
+        "primitives/avatar",
         "text"
       ],
       "files": [
@@ -220,20 +209,17 @@
       "title": "Badge",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/slot"
-        ]
+        "stylesheet": []
       },
       "requires": [
+        "primitives/slot",
         "text"
       ],
       "files": [
@@ -303,25 +289,23 @@
       "title": "Checkbox",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/checkbox",
           "cn",
           "phosphor-react-native",
           "react-native-svg"
         ],
         "nativewind": [
-          "@rn-primitives/checkbox",
           "cn",
           "phosphor-react-native",
           "react-native-svg"
         ],
         "stylesheet": [
-          "@rn-primitives/checkbox",
           "phosphor-react-native",
           "react-native-svg"
         ]
       },
       "requires": [
         "icon",
+        "primitives/checkbox",
         "text"
       ],
       "files": [
@@ -338,17 +322,13 @@
       "type": "ui",
       "title": "Collapsible",
       "dependencies": {
-        "uniwind": [
-          "@rn-primitives/collapsible"
-        ],
-        "nativewind": [
-          "@rn-primitives/collapsible"
-        ],
-        "stylesheet": [
-          "@rn-primitives/collapsible"
-        ]
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/collapsible"
+      ],
       "files": [
         "components/ui/collapsible.tsx"
       ],
@@ -364,7 +344,6 @@
       "title": "Context Menu",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/context-menu",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -373,7 +352,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/context-menu",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -382,7 +360,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/context-menu",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-screens",
@@ -393,6 +370,7 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/context-menu",
         "text"
       ],
       "files": [
@@ -410,7 +388,6 @@
       "title": "Dialog",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/dialog",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -419,7 +396,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/dialog",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -428,7 +404,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/dialog",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-screens",
@@ -438,7 +413,8 @@
       },
       "requires": [
         "animated-view",
-        "icon"
+        "icon",
+        "primitives/dialog"
       ],
       "files": [
         "components/ui/dialog.tsx"
@@ -455,7 +431,6 @@
       "title": "Dropdown Menu",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/dropdown-menu",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -464,7 +439,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/dropdown-menu",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -473,7 +447,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/dropdown-menu",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-screens",
@@ -484,6 +457,7 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/dropdown-menu",
         "text"
       ],
       "files": [
@@ -501,21 +475,18 @@
       "title": "Hover Card",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/hover-card",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/hover-card",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/hover-card",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
@@ -523,6 +494,7 @@
       },
       "requires": [
         "animated-view",
+        "primitives/hover-card",
         "text"
       ],
       "files": [
@@ -598,18 +570,16 @@
       "title": "Label",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/label",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/label",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/label"
-        ]
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/label"
+      ],
       "files": [
         "components/ui/label.tsx"
       ],
@@ -625,8 +595,6 @@
       "title": "Menubar",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/menubar",
-          "@rn-primitives/portal",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -635,8 +603,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/menubar",
-          "@rn-primitives/portal",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -645,8 +611,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/menubar",
-          "@rn-primitives/portal",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-screens",
@@ -657,6 +621,8 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/menubar",
+        "primitives/portal",
         "text"
       ],
       "files": [
@@ -674,21 +640,18 @@
       "title": "Popover",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/popover",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/popover",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/popover",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
@@ -696,6 +659,7 @@
       },
       "requires": [
         "animated-view",
+        "primitives/popover",
         "text"
       ],
       "files": [
@@ -713,24 +677,23 @@
       "title": "Progress",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/progress",
           "cn",
           "react-native-reanimated",
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/progress",
           "cn",
           "react-native-reanimated",
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/progress",
           "react-native-reanimated",
           "react-native-worklets"
         ]
       },
-      "requires": [],
+      "requires": [
+        "primitives/progress"
+      ],
       "files": [
         "components/ui/progress.tsx"
       ],
@@ -746,18 +709,16 @@
       "title": "Radio Group",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/radio-group",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/radio-group",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/radio-group"
-        ]
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/radio-group"
+      ],
       "files": [
         "components/ui/radio-group.tsx"
       ],
@@ -773,7 +734,6 @@
       "title": "Select",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/select",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -782,7 +742,6 @@
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/select",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -791,7 +750,6 @@
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/select",
           "phosphor-react-native",
           "react-native-reanimated",
           "react-native-screens",
@@ -802,6 +760,7 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/select",
         "text"
       ],
       "files": [
@@ -819,18 +778,16 @@
       "title": "Separator",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/separator",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/separator",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/separator"
-        ]
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/separator"
+      ],
       "files": [
         "components/ui/separator.tsx"
       ],
@@ -876,18 +833,16 @@
       "title": "Switch",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/switch",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/switch",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/switch"
-        ]
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/switch"
+      ],
       "files": [
         "components/ui/switch.tsx"
       ],
@@ -903,18 +858,15 @@
       "title": "Tabs",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/tabs",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/tabs",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/tabs"
-        ]
+        "stylesheet": []
       },
       "requires": [
+        "primitives/tabs",
         "text"
       ],
       "files": [
@@ -932,20 +884,18 @@
       "title": "Text",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/slot"
-        ]
+        "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/slot"
+      ],
       "files": [
         "components/ui/text.tsx"
       ],
@@ -985,21 +935,18 @@
       "title": "Toggle Group",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/toggle-group",
           "class-variance-authority",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/toggle-group",
           "class-variance-authority",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/toggle-group"
-        ]
+        "stylesheet": []
       },
       "requires": [
         "icon",
+        "primitives/toggle-group",
         "text",
         "toggle"
       ],
@@ -1018,21 +965,18 @@
       "title": "Toggle",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/toggle",
           "class-variance-authority",
           "cn"
         ],
         "nativewind": [
-          "@rn-primitives/toggle",
           "class-variance-authority",
           "cn"
         ],
-        "stylesheet": [
-          "@rn-primitives/toggle"
-        ]
+        "stylesheet": []
       },
       "requires": [
         "icon",
+        "primitives/toggle",
         "text"
       ],
       "files": [
@@ -1050,21 +994,18 @@
       "title": "Tooltip",
       "dependencies": {
         "uniwind": [
-          "@rn-primitives/tooltip",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "nativewind": [
-          "@rn-primitives/tooltip",
           "cn",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
         ],
         "stylesheet": [
-          "@rn-primitives/tooltip",
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
@@ -1072,6 +1013,7 @@
       },
       "requires": [
         "animated-view",
+        "primitives/tooltip",
         "text"
       ],
       "files": [
@@ -1081,6 +1023,496 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ]
+    },
+    {
+      "name": "primitives/accordion",
+      "type": "primitive",
+      "title": "Accordion",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/accordion.tsx"
+      ]
+    },
+    {
+      "name": "primitives/alert-dialog",
+      "type": "primitive",
+      "title": "Alert Dialog",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/dialog",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/alert-dialog.tsx"
+      ]
+    },
+    {
+      "name": "primitives/aspect-ratio",
+      "type": "primitive",
+      "title": "Aspect Ratio",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/aspect-ratio.tsx"
+      ]
+    },
+    {
+      "name": "primitives/avatar",
+      "type": "primitive",
+      "title": "Avatar",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/avatar.tsx"
+      ]
+    },
+    {
+      "name": "primitives/checkbox",
+      "type": "primitive",
+      "title": "Checkbox",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/checkbox.tsx"
+      ]
+    },
+    {
+      "name": "primitives/collapsible",
+      "type": "primitive",
+      "title": "Collapsible",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/collapsible.tsx"
+      ]
+    },
+    {
+      "name": "primitives/context-menu",
+      "type": "primitive",
+      "title": "Context Menu",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/menu-core",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/context-menu.tsx"
+      ]
+    },
+    {
+      "name": "primitives/dialog",
+      "type": "primitive",
+      "title": "Dialog",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/dialog.tsx"
+      ]
+    },
+    {
+      "name": "primitives/dropdown-menu",
+      "type": "primitive",
+      "title": "Dropdown Menu",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/menu-core",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/dropdown-menu.tsx"
+      ]
+    },
+    {
+      "name": "primitives/floating",
+      "type": "primitive",
+      "title": "Floating",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/floating.tsx"
+      ]
+    },
+    {
+      "name": "primitives/hooks",
+      "type": "primitive",
+      "title": "Hooks",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/hooks.ts"
+      ]
+    },
+    {
+      "name": "primitives/hover-card",
+      "type": "primitive",
+      "title": "Hover Card",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/floating"
+      ],
+      "files": [
+        "components/primitives/hover-card.tsx"
+      ]
+    },
+    {
+      "name": "primitives/label",
+      "type": "primitive",
+      "title": "Label",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/label.tsx"
+      ]
+    },
+    {
+      "name": "primitives/menu-core",
+      "type": "primitive",
+      "title": "Menu Core",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/menu-core.tsx"
+      ]
+    },
+    {
+      "name": "primitives/menubar",
+      "type": "primitive",
+      "title": "Menubar",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/menu-core",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/menubar.tsx"
+      ]
+    },
+    {
+      "name": "primitives/popover",
+      "type": "primitive",
+      "title": "Popover",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/floating"
+      ],
+      "files": [
+        "components/primitives/popover.tsx"
+      ]
+    },
+    {
+      "name": "primitives/portal",
+      "type": "primitive",
+      "title": "Portal",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/portal.tsx"
+      ]
+    },
+    {
+      "name": "primitives/progress",
+      "type": "primitive",
+      "title": "Progress",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/progress.tsx"
+      ]
+    },
+    {
+      "name": "primitives/radio-group",
+      "type": "primitive",
+      "title": "Radio Group",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/radio-group.tsx"
+      ]
+    },
+    {
+      "name": "primitives/select",
+      "type": "primitive",
+      "title": "Select",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/menu-core",
+        "primitives/portal",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/select.tsx"
+      ]
+    },
+    {
+      "name": "primitives/separator",
+      "type": "primitive",
+      "title": "Separator",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/separator.tsx"
+      ]
+    },
+    {
+      "name": "primitives/slot",
+      "type": "primitive",
+      "title": "Slot",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/slot.tsx"
+      ]
+    },
+    {
+      "name": "primitives/switch",
+      "type": "primitive",
+      "title": "Switch",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/switch.tsx"
+      ]
+    },
+    {
+      "name": "primitives/tabs",
+      "type": "primitive",
+      "title": "Tabs",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/tabs.tsx"
+      ]
+    },
+    {
+      "name": "primitives/toggle-group",
+      "type": "primitive",
+      "title": "Toggle Group",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/toggle-group.tsx"
+      ]
+    },
+    {
+      "name": "primitives/toggle",
+      "type": "primitive",
+      "title": "Toggle",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/slot",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/toggle.tsx"
+      ]
+    },
+    {
+      "name": "primitives/tooltip",
+      "type": "primitive",
+      "title": "Tooltip",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/floating"
+      ],
+      "files": [
+        "components/primitives/tooltip.tsx"
+      ]
+    },
+    {
+      "name": "primitives/types",
+      "type": "primitive",
+      "title": "Types",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/types.ts"
       ]
     }
   ]

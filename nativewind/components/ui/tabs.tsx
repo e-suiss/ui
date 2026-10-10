@@ -1,5 +1,5 @@
-import * as TabsPrimitive from "@rn-primitives/tabs"
 import { cn } from "cn"
+import * as TabsPrimitive from "@/components/primitives/tabs"
 import { TextClassContext } from "@/components/ui/text"
 
 function Tabs({

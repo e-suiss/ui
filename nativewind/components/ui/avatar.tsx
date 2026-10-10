@@ -1,5 +1,5 @@
-import * as AvatarPrimitive from "@rn-primitives/avatar"
 import { cn } from "cn"
+import * as AvatarPrimitive from "@/components/primitives/avatar"
 import { TextClassContext } from "@/components/ui/text"
 
 function Avatar({

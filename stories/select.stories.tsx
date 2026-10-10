@@ -35,16 +35,23 @@ function SelectDemo({
   disabled = false,
   invalid = false,
   labelledBy,
+  defaultOpen,
 }: {
   initial?: Option
   size?: "default" | "sm"
   disabled?: boolean
   invalid?: boolean
   labelledBy?: string
+  defaultOpen?: boolean
 }) {
   const [value, setValue] = React.useState<Option>(initial)
   return (
-    <Select value={value} onValueChange={setValue} disabled={disabled}>
+    <Select
+      value={value}
+      onValueChange={setValue}
+      disabled={disabled}
+      defaultOpen={defaultOpen}
+    >
       <SelectTrigger
         size={size}
         disabled={disabled}
@@ -150,4 +157,8 @@ export const Invalid: Story = {
       <Text className="text-destructive text-sm">Please select a fruit.</Text>
     </View>
   ),
+}
+
+export const OpenByDefault: Story = {
+  render: () => <SelectDemo initial={fruits[2]} defaultOpen />,
 }

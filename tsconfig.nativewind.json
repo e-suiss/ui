@@ -4,9 +4,14 @@
     "strict": true,
     "types": ["nativewind/types"],
     "paths": {
+      "@/components/primitives/*": ["./components/primitives/*"],
       "@/components/*": ["./nativewind/components/*", "./uniwind/components/*"],
       "@/*": ["./*"]
     }
   },
-  "include": ["nativewind/**/*.tsx"]
+  "include": [
+    "nativewind/**/*.tsx",
+    "components/primitives/**/*.ts",
+    "components/primitives/**/*.tsx"
+  ]
 }

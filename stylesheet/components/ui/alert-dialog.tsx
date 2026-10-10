@@ -1,4 +1,3 @@
-import * as AlertDialogPrimitive from "@rn-primitives/alert-dialog"
 import * as React from "react"
 import {
   Platform,
@@ -9,6 +8,7 @@ import {
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as AlertDialogPrimitive from "@/components/primitives/alert-dialog"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { TextStyleContext } from "@/components/ui/text"

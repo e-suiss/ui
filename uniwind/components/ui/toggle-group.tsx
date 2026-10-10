@@ -1,7 +1,7 @@
-import * as ToggleGroupPrimitive from "@rn-primitives/toggle-group"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
+import * as ToggleGroupPrimitive from "@/components/primitives/toggle-group"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 import { toggleVariants } from "@/components/ui/toggle"

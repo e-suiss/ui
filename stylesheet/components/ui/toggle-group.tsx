@@ -1,6 +1,6 @@
-import * as ToggleGroupPrimitive from "@rn-primitives/toggle-group"
 import * as React from "react"
 import { type PressableStateCallbackType, StyleSheet } from "react-native"
+import * as ToggleGroupPrimitive from "@/components/primitives/toggle-group"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { useTheme } from "@/components/ui/theme"

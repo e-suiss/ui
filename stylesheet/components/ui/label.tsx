@@ -1,5 +1,5 @@
-import * as LabelPrimitive from "@rn-primitives/label"
 import { StyleSheet } from "react-native"
+import * as LabelPrimitive from "@/components/primitives/label"
 import { fontSize, useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({

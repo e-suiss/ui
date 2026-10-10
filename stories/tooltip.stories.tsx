@@ -71,3 +71,20 @@ export const WithIcon: Story = {
     </View>
   ),
 }
+
+export const OpenByDefault: Story = {
+  render: () => (
+    <View className="items-center py-12">
+      <Tooltip defaultOpen>
+        <TooltipTrigger asChild>
+          <Button variant="outline">
+            <Text>Hover or press</Text>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <Text>Add to library</Text>
+        </TooltipContent>
+      </Tooltip>
+    </View>
+  ),
+}

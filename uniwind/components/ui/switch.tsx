@@ -1,5 +1,5 @@
-import * as SwitchPrimitives from "@rn-primitives/switch"
 import { cn } from "cn"
+import * as SwitchPrimitives from "@/components/primitives/switch"
 
 function Switch({
   className,

@@ -1,5 +1,5 @@
-import * as TabsPrimitive from "@rn-primitives/tabs"
 import { type PressableStateCallbackType, StyleSheet } from "react-native"
+import * as TabsPrimitive from "@/components/primitives/tabs"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, useTheme } from "@/components/ui/theme"
 

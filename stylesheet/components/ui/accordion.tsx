@@ -1,4 +1,3 @@
-import * as AccordionPrimitive from "@rn-primitives/accordion"
 import { CaretDownIcon } from "phosphor-react-native"
 import {
   Pressable,
@@ -14,6 +13,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated"
+import * as AccordionPrimitive from "@/components/primitives/accordion"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, useTheme } from "@/components/ui/theme"

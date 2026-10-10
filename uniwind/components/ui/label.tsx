@@ -1,5 +1,5 @@
-import * as LabelPrimitive from "@rn-primitives/label"
 import { cn } from "cn"
+import * as LabelPrimitive from "@/components/primitives/label"
 
 function Label({
   className,

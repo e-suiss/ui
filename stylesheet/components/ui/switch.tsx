@@ -1,5 +1,5 @@
-import * as SwitchPrimitives from "@rn-primitives/switch"
 import { StyleSheet } from "react-native"
+import * as SwitchPrimitives from "@/components/primitives/switch"
 import { shadow, useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({

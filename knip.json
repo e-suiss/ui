@@ -7,7 +7,8 @@
     "stories/**/*.stories.tsx",
     ".rnstorybook/*.{ts,tsx}",
     "nativewind/components/ui/*.tsx",
-    "stylesheet/components/ui/*.{ts,tsx}"
+    "stylesheet/components/ui/*.{ts,tsx}",
+    "components/primitives/*.{ts,tsx}"
   ],
   "project": [
     "uniwind/**/*.{ts,tsx}",
@@ -17,10 +18,12 @@
     "stories/**/*.tsx",
     "*.{ts,tsx}",
     "nativewind/**/*.tsx",
-    "stylesheet/**/*.{ts,tsx}"
+    "stylesheet/**/*.{ts,tsx}",
+    "components/primitives/*.{ts,tsx}"
   ],
   "ignoreDependencies": ["expo-updates"],
   "paths": {
+    "@/components/primitives/*": ["./components/primitives/*"],
     "@/components/*": ["./uniwind/components/*", "./stylesheet/components/*"]
   }
 }

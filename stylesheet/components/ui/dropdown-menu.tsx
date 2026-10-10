@@ -1,4 +1,3 @@
-import * as DropdownMenuPrimitive from "@rn-primitives/dropdown-menu"
 import type { IconProps as PhosphorIconProps } from "phosphor-react-native"
 import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
@@ -12,6 +11,7 @@ import {
 } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as DropdownMenuPrimitive from "@/components/primitives/dropdown-menu"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"

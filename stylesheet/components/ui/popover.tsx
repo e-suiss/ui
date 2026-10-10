@@ -1,4 +1,3 @@
-import * as PopoverPrimitive from "@rn-primitives/popover"
 import * as React from "react"
 import {
   Platform,
@@ -8,6 +7,7 @@ import {
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as PopoverPrimitive from "@/components/primitives/popover"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"

@@ -1,5 +1,5 @@
-import * as AvatarPrimitive from "@rn-primitives/avatar"
 import { StyleSheet } from "react-native"
+import * as AvatarPrimitive from "@/components/primitives/avatar"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, useTheme } from "@/components/ui/theme"
 

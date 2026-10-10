@@ -21,7 +21,6 @@ const ROOT_COMPONENTS = [
   "src/App.tsx",
   "App.tsx",
 ]
-const PORTAL = "@rn-primitives/portal"
 const STYLING_SETUP = {
   uniwind: {
     runtime: ["uniwind", "tailwindcss"],
@@ -35,7 +34,7 @@ const STYLING_SETUP = {
     tooling: [],
     tailwindMajor: null,
     metroImport: "",
-    metroMarker: "withPrimitivesResolver",
+    metroMarker: "",
   },
   nativewind: {
     runtime: ["nativewind@^4.2.7"],
@@ -55,7 +54,8 @@ const METRO_DEFAULTS = {
   "react-native":
     'const { getDefaultConfig } = require("@react-native/metro-config")',
 }
-const PORTAL_IMPORT = 'import { PortalHost } from "@rn-primitives/portal"'
+const PORTAL_IMPORT =
+  'import { PortalHost } from "@/components/primitives/portal"'
 
 function relative(project, file) {
   return path.relative(project.cwd, file)
@@ -128,45 +128,17 @@ function metroOptions(project, stylesheet, typesFile) {
     : `{\n  input: "${css}",\n  inlineRem: 16,\n}`
 }
 
-const PRIMITIVES_RESOLVER = `function withPrimitivesResolver(config) {
-  const resolveRequest = config.resolver?.resolveRequest
-  return {
-    ...config,
-    resolver: {
-      ...config.resolver,
-      resolveRequest(context, moduleName, platform) {
-        const next = resolveRequest ?? context.resolveRequest
-        const target = moduleName.startsWith("@rn-primitives/")
-          ? { ...context, isESMImport: false }
-          : context
-        return next(target, moduleName, platform)
-      },
-    },
-  }
-}
-`
-
 function metroHeader(project) {
   const { metroImport } = STYLING_SETUP[project.styling]
-  const header = metroImport ? `${metroImport}\n` : ""
-  return project.framework === "react-native"
-    ? `${header}\n${PRIMITIVES_RESOLVER}\n`
-    : header
+  return metroImport ? `${metroImport}\n` : ""
 }
 
 function wrapConfig(project, expression, options) {
-  const inner =
-    project.framework === "react-native"
-      ? `withPrimitivesResolver(${expression})`
-      : expression
-  if (project.styling === "stylesheet") return `module.exports = ${inner}\n`
-  return `module.exports = ${STYLING_SETUP[project.styling].metroMarker}(${inner}, ${options})\n`
+  return `module.exports = ${STYLING_SETUP[project.styling].metroMarker}(${expression}, ${options})\n`
 }
 
 function configureMetro(project, stylesheet, typesFile) {
-  if (project.styling === "stylesheet" && project.framework === "expo") {
-    return []
-  }
+  if (project.styling === "stylesheet") return []
   const options = metroOptions(project, stylesheet, typesFile)
   const file = METRO_CONFIGS.map((name) => path.join(project.cwd, name)).find(
     existsSync
@@ -224,7 +196,7 @@ function configureRoot(project, stylesheet) {
     : null
   if (!file) {
     return [
-      `${cssImport ? `Add ${cssImport} and render` : "Render"} <PortalHost /> from "@rn-primitives/portal" in your root component.`,
+      `${cssImport ? `Add ${cssImport} and render` : "Render"} <PortalHost /> from "@/components/primitives/portal" in your root component.`,
     ]
   }
 
@@ -251,7 +223,7 @@ function configureRoot(project, stylesheet) {
       text = `${text.slice(0, end)}${PORTAL_IMPORT}\n${text.slice(end)}`
     } else {
       manual.push(
-        `Render <PortalHost /> from "@rn-primitives/portal" as the last child of your root component in ${relative(project, file)}.`
+        `Render <PortalHost /> from "@/components/primitives/portal" as the last child of your root component in ${relative(project, file)}.`
       )
     }
   }
@@ -370,7 +342,7 @@ export async function init(options) {
   if (ensureAlias(project, sourceRoot))
     step("Added the @/* import alias to tsconfig.json")
 
-  install(project, [...setup.runtime, PORTAL])
+  install(project, setup.runtime)
   install(project, setup.tooling, { dev: true })
   if (project.styling === "nativewind") {
     if (project.framework === "expo") {
@@ -403,7 +375,7 @@ export async function init(options) {
     project,
     findAliasRoot(project.cwd) ?? sourceRoot,
     registry,
-    ["button"],
+    ["button", "primitives/portal"],
     { styling: project.styling }
   )
 

@@ -1,4 +1,3 @@
-import * as DialogPrimitive from "@rn-primitives/dialog"
 import { XIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
@@ -10,6 +9,7 @@ import {
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as DialogPrimitive from "@/components/primitives/dialog"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"

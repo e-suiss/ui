@@ -1,5 +1,5 @@
-import { Slot } from "@rn-primitives/slot"
 import { StyleSheet, type TextStyle, View, type ViewStyle } from "react-native"
+import { Slot } from "@/components/primitives/slot"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,

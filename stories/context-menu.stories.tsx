@@ -26,12 +26,12 @@ function TriggerArea() {
   )
 }
 
-function ContextMenuDemo() {
+function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
   const [showBookmarks, setShowBookmarks] = React.useState(true)
   const [showUrls, setShowUrls] = React.useState(false)
   const [person, setPerson] = React.useState("pedro")
   return (
-    <ContextMenu relativeTo="trigger">
+    <ContextMenu relativeTo="trigger" defaultOpen={defaultOpen}>
       <TriggerArea />
       <ContextMenuContent className="w-64">
         <ContextMenuItem inset>
@@ -128,4 +128,8 @@ export const Simple: Story = {
       </ContextMenu>
     </View>
   ),
+}
+
+export const OpenByDefault: Story = {
+  render: () => <ContextMenuDemo defaultOpen />,
 }

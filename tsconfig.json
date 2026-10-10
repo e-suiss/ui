@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "@/components/primitives/*": ["./components/primitives/*"],
       "@/components/*": ["./uniwind/components/*"],
       "@/*": ["./*"]
     }

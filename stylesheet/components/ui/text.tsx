@@ -1,4 +1,3 @@
-import { Slot } from "@rn-primitives/slot"
 import * as React from "react"
 import {
   Text as RNText,
@@ -6,6 +5,7 @@ import {
   StyleSheet,
   type TextStyle,
 } from "react-native"
+import { Slot } from "@/components/primitives/slot"
 import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
 
 type TextVariant =

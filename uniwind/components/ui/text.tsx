@@ -1,8 +1,8 @@
-import { Slot } from "@rn-primitives/slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 import { Text as RNText, type Role } from "react-native"
+import { Slot } from "@/components/primitives/slot"
 
 const textVariants = cva("text-foreground text-base", {
   variants: {

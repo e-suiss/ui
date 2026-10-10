@@ -1,6 +1,6 @@
-import * as CheckboxPrimitive from "@rn-primitives/checkbox"
 import { cn } from "cn"
 import { CheckIcon } from "phosphor-react-native"
+import * as CheckboxPrimitive from "@/components/primitives/checkbox"
 import { Icon } from "@/components/ui/icon"
 
 const DEFAULT_HIT_SLOP = 24

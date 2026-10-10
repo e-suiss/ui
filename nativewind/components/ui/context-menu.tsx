@@ -1,4 +1,3 @@
-import * as ContextMenuPrimitive from "@rn-primitives/context-menu"
 import { cn } from "cn"
 import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
@@ -12,6 +11,7 @@ import {
 } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as ContextMenuPrimitive from "@/components/primitives/context-menu"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"

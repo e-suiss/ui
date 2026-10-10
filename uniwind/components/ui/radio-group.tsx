@@ -1,6 +1,6 @@
-import * as RadioGroupPrimitive from "@rn-primitives/radio-group"
 import { cn } from "cn"
 import { View } from "react-native"
+import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
 
 function RadioGroup({
   className,

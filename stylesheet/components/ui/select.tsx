@@ -1,4 +1,3 @@
-import * as SelectPrimitive from "@rn-primitives/select"
 import { CaretDownIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
@@ -10,6 +9,7 @@ import {
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import * as SelectPrimitive from "@/components/primitives/select"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"

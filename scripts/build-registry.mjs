@@ -22,7 +22,9 @@ const COMPANIONS = {
   "phosphor-react-native": ["react-native-svg"],
   "react-native-reanimated": ["react-native-worklets"],
 }
-const LOCAL_IMPORT = /^@\/(components\/ui|hooks)\/([\w-]+)$/
+const LOCAL_IMPORT =
+  /^@\/(components\/ui|components\/primitives|hooks)\/([\w-]+)$/
+const PRIMITIVES_DIR = "components/primitives"
 
 const sources = [{ dir: "components/ui", type: "ui" }]
 
@@ -53,7 +55,14 @@ async function analyze(filePath, name) {
   for (const specifier of collectImports(code)) {
     const local = specifier.match(LOCAL_IMPORT)
     if (local) {
-      if (local[2] !== name) requires.add(local[2])
+      const required =
+        local[1] === PRIMITIVES_DIR ? `primitives/${local[2]}` : local[2]
+      if (required !== name) requires.add(required)
+    } else if (
+      specifier.startsWith("./") &&
+      filePath.startsWith(PRIMITIVES_DIR)
+    ) {
+      requires.add(`primitives/${path.posix.basename(specifier)}`)
     } else if (specifier.startsWith("@/")) {
       throw new Error(`${filePath}: unsupported local import "${specifier}"`)
     } else if (!specifier.startsWith(".")) {
@@ -97,6 +106,23 @@ async function buildItem(dir, type, file) {
   }
 }
 
+async function buildPrimitive(file) {
+  const filePath = path.posix.join(PRIMITIVES_DIR, file)
+  const name = `primitives/${path.basename(file, path.extname(file))}`
+  const analysis = await analyze(filePath, name)
+  const dependencies = [...analysis.dependencies].sort()
+  return {
+    name,
+    type: "primitive",
+    title: toTitle(path.basename(file, path.extname(file))),
+    dependencies: Object.fromEntries(
+      Object.keys(STYLES).map((style) => [style, dependencies])
+    ),
+    requires: [...analysis.requires].sort(),
+    files: [filePath],
+  }
+}
+
 function validate(items) {
   const names = new Set(items.map((item) => item.name))
   const problems = items.flatMap((item) =>
@@ -118,6 +144,11 @@ for (const { dir, type } of sources) {
     .filter((file) => /\.(tsx?|jsx?)$/.test(file))
     .sort()
   for (const file of files) items.push(await buildItem(dir, type, file))
+}
+for (const file of (await readdir(path.join(ROOT, PRIMITIVES_DIR)))
+  .filter((entry) => /\.(tsx?|jsx?)$/.test(entry))
+  .sort()) {
+  items.push(await buildPrimitive(file))
 }
 
 const problems = validate(items)
