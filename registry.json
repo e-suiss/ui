@@ -23,6 +23,7 @@
       "title": "Accordion",
       "dependencies": {
         "uniwind": [
+          "class-variance-authority",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -30,6 +31,7 @@
           "react-native-worklets"
         ],
         "nativewind": [
+          "class-variance-authority",
           "cn",
           "phosphor-react-native",
           "react-native-reanimated",
@@ -84,6 +86,7 @@
       "requires": [
         "animated-view",
         "button",
+        "icon",
         "primitives/alert-dialog",
         "primitives/use-render",
         "text"
@@ -193,6 +196,7 @@
         "stylesheet": []
       },
       "requires": [
+        "icon",
         "primitives/avatar",
         "primitives/use-render",
         "text"
@@ -222,6 +226,7 @@
         "stylesheet": []
       },
       "requires": [
+        "icon",
         "primitives/types",
         "primitives/use-render",
         "text"
@@ -251,6 +256,7 @@
         "stylesheet": []
       },
       "requires": [
+        "icon",
         "text"
       ],
       "files": [
@@ -344,6 +350,55 @@
       ]
     },
     {
+      "name": "combobox",
+      "type": "ui",
+      "title": "Combobox",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/combobox",
+        "primitives/field",
+        "primitives/positioner",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/combobox.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "context-menu",
       "type": "ui",
       "title": "Context Menu",
@@ -419,12 +474,63 @@
       },
       "requires": [
         "animated-view",
+        "button",
         "icon",
         "primitives/dialog",
-        "primitives/use-render"
+        "primitives/use-render",
+        "text"
       ],
       "files": [
         "components/ui/dialog.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "ui",
+      "title": "Drawer",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/drawer",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/drawer.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -478,6 +584,34 @@
       ]
     },
     {
+      "name": "field",
+      "type": "ui",
+      "title": "Field",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/field",
+        "primitives/fieldset",
+        "primitives/use-render",
+        "separator"
+      ],
+      "files": [
+        "components/ui/field.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "hover-card",
       "type": "ui",
       "title": "Hover Card",
@@ -503,6 +637,7 @@
       "requires": [
         "animated-view",
         "primitives/hover-card",
+        "primitives/types",
         "primitives/use-render",
         "text"
       ],
@@ -550,6 +685,47 @@
       ]
     },
     {
+      "name": "input-otp",
+      "type": "ui",
+      "title": "Input Otp",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/otp-field",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/input-otp.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "input",
       "type": "ui",
       "title": "Input",
@@ -563,7 +739,10 @@
         ],
         "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/input",
+        "primitives/use-render"
+      ],
       "files": [
         "components/ui/input.tsx"
       ],
@@ -671,6 +850,7 @@
       "requires": [
         "animated-view",
         "primitives/popover",
+        "primitives/types",
         "primitives/use-render",
         "text"
       ],
@@ -730,6 +910,7 @@
         "stylesheet": []
       },
       "requires": [
+        "primitives/radio",
         "primitives/radio-group",
         "primitives/use-render"
       ],
@@ -774,6 +955,8 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/field",
+        "primitives/positioner",
         "primitives/select",
         "primitives/use-render",
         "text"
@@ -814,6 +997,55 @@
       ]
     },
     {
+      "name": "sheet",
+      "type": "ui",
+      "title": "Sheet",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/drawer",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/sheet.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "skeleton",
       "type": "ui",
       "title": "Skeleton",
@@ -844,9 +1076,9 @@
       ]
     },
     {
-      "name": "switch",
+      "name": "slider",
       "type": "ui",
-      "title": "Switch",
+      "title": "Slider",
       "dependencies": {
         "uniwind": [
           "cn"
@@ -855,6 +1087,39 @@
           "cn"
         ],
         "stylesheet": []
+      },
+      "requires": [
+        "primitives/slider",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/ui/slider.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "ui",
+      "title": "Switch",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
       },
       "requires": [
         "primitives/switch",
@@ -875,12 +1140,21 @@
       "title": "Tabs",
       "dependencies": {
         "uniwind": [
-          "cn"
+          "class-variance-authority",
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
         ],
         "nativewind": [
-          "cn"
+          "class-variance-authority",
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
         ],
-        "stylesheet": []
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
       },
       "requires": [
         "primitives/tabs",
@@ -938,9 +1212,62 @@
         ],
         "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/input",
+        "primitives/use-render"
+      ],
       "files": [
         "components/ui/textarea.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "ui",
+      "title": "Toast",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/toast",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/toast.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -967,6 +1294,7 @@
         "icon",
         "primitives/toggle",
         "primitives/toggle-group",
+        "primitives/types",
         "primitives/use-render",
         "text",
         "toggle"
@@ -1036,6 +1364,7 @@
       "requires": [
         "animated-view",
         "primitives/tooltip",
+        "primitives/types",
         "primitives/use-render",
         "text"
       ],
@@ -1077,7 +1406,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/dialog"
+        "primitives/dialog",
+        "primitives/floating-root"
       ],
       "files": [
         "components/primitives/alert-dialog.tsx"
@@ -1101,6 +1431,23 @@
       ]
     },
     {
+      "name": "primitives/autocomplete",
+      "type": "primitive",
+      "title": "Autocomplete",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/combobox",
+        "primitives/floating-root"
+      ],
+      "files": [
+        "components/primitives/autocomplete.tsx"
+      ]
+    },
+    {
       "name": "primitives/avatar",
       "type": "primitive",
       "title": "Avatar",
@@ -1119,6 +1466,25 @@
       ]
     },
     {
+      "name": "primitives/checkbox-group",
+      "type": "primitive",
+      "title": "Checkbox Group",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/checkbox-group.tsx"
+      ]
+    },
+    {
       "name": "primitives/checkbox",
       "type": "primitive",
       "title": "Checkbox",
@@ -1128,6 +1494,7 @@
         "stylesheet": []
       },
       "requires": [
+        "primitives/checkbox-group",
         "primitives/event-details",
         "primitives/types",
         "primitives/use-controllable-state",
@@ -1154,6 +1521,27 @@
       ],
       "files": [
         "components/primitives/collapsible.tsx"
+      ]
+    },
+    {
+      "name": "primitives/combobox",
+      "type": "primitive",
+      "title": "Combobox",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/combobox.tsx"
       ]
     },
     {
@@ -1196,6 +1584,38 @@
       ]
     },
     {
+      "name": "primitives/drawer",
+      "type": "primitive",
+      "title": "Drawer",
+      "dependencies": {
+        "uniwind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "primitives/dialog",
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/drawer.tsx"
+      ]
+    },
+    {
       "name": "primitives/event-details",
       "type": "primitive",
       "title": "Event Details",
@@ -1209,6 +1629,45 @@
       ],
       "files": [
         "components/primitives/event-details.ts"
+      ]
+    },
+    {
+      "name": "primitives/field",
+      "type": "primitive",
+      "title": "Field",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/fieldset",
+        "primitives/form",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/field.tsx"
+      ]
+    },
+    {
+      "name": "primitives/fieldset",
+      "type": "primitive",
+      "title": "Fieldset",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/fieldset.tsx"
       ]
     },
     {
@@ -1229,6 +1688,25 @@
       ],
       "files": [
         "components/primitives/floating-root.tsx"
+      ]
+    },
+    {
+      "name": "primitives/form",
+      "type": "primitive",
+      "title": "Form",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/form.tsx"
       ]
     },
     {
@@ -1257,7 +1735,6 @@
       "requires": [
         "primitives/event-details",
         "primitives/floating-root",
-        "primitives/hooks",
         "primitives/popover",
         "primitives/positioner",
         "primitives/types",
@@ -1265,6 +1742,22 @@
       ],
       "files": [
         "components/primitives/hover-card.tsx"
+      ]
+    },
+    {
+      "name": "primitives/input",
+      "type": "primitive",
+      "title": "Input",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/field"
+      ],
+      "files": [
+        "components/primitives/input.tsx"
       ]
     },
     {
@@ -1335,6 +1828,61 @@
       "requires": [],
       "files": [
         "components/primitives/merge-props.ts"
+      ]
+    },
+    {
+      "name": "primitives/meter",
+      "type": "primitive",
+      "title": "Meter",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/meter.tsx"
+      ]
+    },
+    {
+      "name": "primitives/number-field",
+      "type": "primitive",
+      "title": "Number Field",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/number-field.tsx"
+      ]
+    },
+    {
+      "name": "primitives/otp-field",
+      "type": "primitive",
+      "title": "Otp Field",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/otp-field.tsx"
       ]
     },
     {
@@ -1427,6 +1975,25 @@
       ]
     },
     {
+      "name": "primitives/radio",
+      "type": "primitive",
+      "title": "Radio",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/radio-group",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/radio.tsx"
+      ]
+    },
+    {
       "name": "primitives/select",
       "type": "primitive",
       "title": "Select",
@@ -1465,6 +2032,26 @@
       ]
     },
     {
+      "name": "primitives/slider",
+      "type": "primitive",
+      "title": "Slider",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/slider.tsx"
+      ]
+    },
+    {
       "name": "primitives/switch",
       "type": "primitive",
       "title": "Switch",
@@ -1500,6 +2087,36 @@
       ],
       "files": [
         "components/primitives/tabs.tsx"
+      ]
+    },
+    {
+      "name": "primitives/toast",
+      "type": "primitive",
+      "title": "Toast",
+      "dependencies": {
+        "uniwind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "primitives/portal",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/toast.tsx"
       ]
     },
     {
@@ -1542,6 +2159,23 @@
       ]
     },
     {
+      "name": "primitives/toolbar",
+      "type": "primitive",
+      "title": "Toolbar",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/toolbar.tsx"
+      ]
+    },
+    {
       "name": "primitives/tooltip",
       "type": "primitive",
       "title": "Tooltip",
@@ -1553,7 +2187,6 @@
       "requires": [
         "primitives/event-details",
         "primitives/floating-root",
-        "primitives/hooks",
         "primitives/popover",
         "primitives/positioner",
         "primitives/types",

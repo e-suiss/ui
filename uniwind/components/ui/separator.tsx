@@ -1,16 +1,16 @@
 import { cn } from "cn"
-import * as SeparatorPrimitive from "@/components/primitives/separator"
+import { Separator as SeparatorPrimitive } from "@/components/primitives/separator"
 import { resolveClassName } from "@/components/primitives/use-render"
 
 function Separator({
   className,
   ...props
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
+}: React.ComponentProps<typeof SeparatorPrimitive>) {
   return (
-    <SeparatorPrimitive.Root
+    <SeparatorPrimitive
       className={(state) =>
         cn(
-          "shrink-0 bg-border",
+          "shrink-0 bg-separator",
           state.orientation === "horizontal"
             ? "h-px w-full"
             : "w-px self-stretch",

@@ -7,44 +7,45 @@ import { Text, TextClassContext } from "@/components/ui/text"
 
 function Alert({
   className,
-  variant,
+  variant = "default",
   children,
   icon,
   iconClassName,
   ...props
 }: React.ComponentProps<typeof View> &
   React.RefAttributes<View> & {
-    icon: PhosphorIcon
+    icon?: PhosphorIcon
     variant?: "default" | "destructive"
     iconClassName?: string
   }) {
+  const nodes = React.Children.toArray(children)
+  const actions = nodes.filter(
+    (node) => React.isValidElement(node) && node.type === AlertAction
+  )
+  const content = nodes.filter((node) => !actions.includes(node))
   return (
-    <TextClassContext.Provider
-      value={cn(
-        "text-sm text-card-foreground",
-        variant === "destructive" && "text-destructive",
-        className
-      )}
-    >
+    <TextClassContext.Provider value="text-base text-label">
       <View
         role="alert"
         className={cn(
-          "relative w-full gap-0.5 rounded-2xl border border-border bg-card px-4 py-3",
+          "relative w-full flex-row gap-3 rounded-2xl bg-surface-secondary p-5",
+          actions.length > 0 && "pe-24",
           className
         )}
         {...props}
       >
-        <View className="absolute top-3.5 left-4">
+        {icon ? (
           <Icon
             as={icon}
             className={cn(
-              "size-4",
-              variant === "destructive" && "text-destructive",
+              "mt-px size-5",
+              variant === "destructive" ? "text-danger" : "text-accent",
               iconClassName
             )}
           />
-        </View>
-        {children}
+        ) : null}
+        <View className="flex-1 gap-0.5">{content}</View>
+        {actions}
       </View>
     </TextClassContext.Provider>
   )
@@ -54,26 +55,21 @@ function AlertTitle({
   className,
   ...props
 }: React.ComponentProps<typeof Text>) {
-  return (
-    <Text className={cn("ml-0.5 pl-6 font-medium", className)} {...props} />
-  )
+  return <Text className={cn("font-semibold", className)} {...props} />
 }
 
 function AlertDescription({
   className,
   ...props
 }: React.ComponentProps<typeof Text>) {
-  const textClass = React.useContext(TextClassContext)
-  return (
-    <Text
-      className={cn(
-        "ml-0.5 pl-6 text-sm text-muted-foreground",
-        textClass?.includes("text-destructive") && "text-destructive-90",
-        className
-      )}
-      {...props}
-    />
-  )
+  return <Text className={cn("text-label-secondary", className)} {...props} />
 }
 
-export { Alert, AlertDescription, AlertTitle }
+function AlertAction({
+  className,
+  ...props
+}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  return <View className={cn("absolute end-4 top-4", className)} {...props} />
+}
+
+export { Alert, AlertAction, AlertDescription, AlertTitle }

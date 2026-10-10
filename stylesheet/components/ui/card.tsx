@@ -1,63 +1,103 @@
+import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import { Text, TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
+type CardSize = "default" | "sm"
+
+type CardVariant = "default" | "filled"
+
+const CardSizeContext = React.createContext<CardSize>("default")
+
+const SPACING: Record<CardSize, number> = { default: 24, sm: 16 }
+
 const styles = StyleSheet.create({
   card: {
-    display: "flex",
     flexDirection: "column",
-    gap: 24,
     overflow: "hidden",
-    borderRadius: radius["4xl"],
-    borderWidth: 1,
-    paddingVertical: 24,
-    ...shadow.md,
+    borderRadius: radius["2xl"],
   },
-  header: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 6,
-    paddingHorizontal: 24,
-  },
-  title: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: "500",
-  },
-  description: { ...fontSize.sm },
-  content: { paddingHorizontal: 24 },
-  footer: {
-    display: "flex",
+  raised: { borderWidth: 1, ...shadow.md },
+  header: { flexDirection: "column", gap: 6 },
+  headerWithAction: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 24,
+    alignItems: "flex-start",
+    gap: 6,
   },
+  headerText: { flex: 1, flexDirection: "column", gap: 6 },
+  title: { ...fontSize.base, fontWeight: "600" },
+  description: { ...fontSize.sm },
+  action: { alignSelf: "flex-start" },
+  footer: { flexDirection: "row", alignItems: "center" },
 })
 
 function Card({
   style,
+  size = "default",
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
-  const { colors } = useTheme()
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<View> & {
+    size?: CardSize
+    variant?: CardVariant
+  }) {
+  const { colors, isDark } = useTheme()
+  const spacing = SPACING[size]
   return (
-    <TextStyleContext.Provider value={{ color: colors.cardForeground }}>
-      <View
-        style={[
-          styles.card,
-          { borderColor: colors.outline, backgroundColor: colors.card },
-          style,
-        ]}
-        {...props}
-      />
-    </TextStyleContext.Provider>
+    <CardSizeContext.Provider value={size}>
+      <TextStyleContext.Provider
+        value={{ ...fontSize.base, color: colors.label }}
+      >
+        <View
+          style={[
+            styles.card,
+            { gap: spacing, paddingVertical: spacing },
+            variant === "filled"
+              ? { backgroundColor: colors.surfaceSecondary }
+              : [
+                  styles.raised,
+                  {
+                    backgroundColor: colors.surfaceRaised,
+                    borderColor: isDark
+                      ? "rgba(245, 245, 247, 0.1)"
+                      : "rgba(29, 29, 31, 0.05)",
+                  },
+                ],
+            style,
+          ]}
+          {...props}
+        />
+      </TextStyleContext.Provider>
+    </CardSizeContext.Provider>
   )
 }
 
 function CardHeader({
   style,
+  children,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
-  return <View style={[styles.header, style]} {...props} />
+  const size = React.useContext(CardSizeContext)
+  const nodes = React.Children.toArray(children)
+  const action = nodes.find(
+    (node) => React.isValidElement(node) && node.type === CardAction
+  )
+  const padding = { paddingHorizontal: SPACING[size] }
+  if (!action) {
+    return (
+      <View style={[styles.header, padding, style]} {...props}>
+        {children}
+      </View>
+    )
+  }
+  return (
+    <View style={[styles.headerWithAction, padding, style]} {...props}>
+      <View style={styles.headerText}>
+        {nodes.filter((node) => node !== action)}
+      </View>
+      {action}
+    </View>
+  )
 }
 
 function CardTitle({
@@ -77,24 +117,48 @@ function CardDescription({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.description, { color: colors.mutedForeground }, style]}
+      style={[styles.description, { color: colors.labelSecondary }, style]}
       {...props}
     />
   )
+}
+
+function CardAction({
+  style,
+  ...props
+}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  return <View style={[styles.action, style]} {...props} />
 }
 
 function CardContent({
   style,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
-  return <View style={[styles.content, style]} {...props} />
+  const size = React.useContext(CardSizeContext)
+  return (
+    <View style={[{ paddingHorizontal: SPACING[size] }, style]} {...props} />
+  )
 }
 
 function CardFooter({
   style,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
-  return <View style={[styles.footer, style]} {...props} />
+  const size = React.useContext(CardSizeContext)
+  return (
+    <View
+      style={[styles.footer, { paddingHorizontal: SPACING[size] }, style]}
+      {...props}
+    />
+  )
 }
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
+export {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+}

@@ -19,7 +19,9 @@
     "knip": "knip",
     "prepare": "lefthook install",
     "nativewind": "node scripts/build-nativewind.mjs",
-    "nativewind:check": "node scripts/build-nativewind.mjs --check"
+    "nativewind:check": "node scripts/build-nativewind.mjs --check",
+    "theme": "node scripts/build-theme.mjs",
+    "theme:check": "node scripts/build-theme.mjs --check"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

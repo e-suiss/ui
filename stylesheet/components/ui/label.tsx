@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  disabled: { opacity: 0.5 },
-  text: { ...fontSize.sm, fontWeight: "500", userSelect: "none" },
+  text: { ...fontSize.base, fontWeight: "600" },
 })
 
 function Label({
@@ -25,7 +24,7 @@ function Label({
   const { colors } = useTheme()
   return (
     <LabelPrimitive.Root
-      style={(state) => [styles.root, state.disabled && styles.disabled]}
+      style={styles.root}
       onPress={onPress}
       onLongPress={onLongPress}
       onPressIn={onPressIn}
@@ -35,7 +34,7 @@ function Label({
       <LabelPrimitive.Text
         style={(state) => [
           styles.text,
-          { color: colors.foreground },
+          { color: state.disabled ? colors.labelQuaternary : colors.label },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}

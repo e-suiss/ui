@@ -38,11 +38,17 @@ export const Variants: Story = {
       <Button variant="secondary">
         <Text>Secondary</Text>
       </Button>
+      <Button variant="tinted">
+        <Text>Tinted</Text>
+      </Button>
       <Button variant="outline">
         <Text>Outline</Text>
       </Button>
       <Button variant="ghost">
         <Text>Ghost</Text>
+      </Button>
+      <Button variant="plain">
+        <Text>Plain</Text>
       </Button>
       <Button variant="destructive">
         <Text>Destructive</Text>
@@ -59,19 +65,41 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <View className="flex-row flex-wrap items-center gap-3">
-      <Button size="sm">
-        <Text>Small</Text>
-      </Button>
-      <Button>
-        <Text>Default</Text>
-      </Button>
-      <Button size="lg">
-        <Text>Large</Text>
-      </Button>
-      <Button size="icon" variant="outline">
-        <Icon as={PlusIcon} />
-      </Button>
+    <View className="gap-3">
+      <View className="flex-row flex-wrap items-center gap-3">
+        <Button size="xs">
+          <Text>Extra small</Text>
+        </Button>
+        <Button size="sm">
+          <Text>Small</Text>
+        </Button>
+        <Button>
+          <Text>Default</Text>
+        </Button>
+        <Button size="lg">
+          <Text>Large</Text>
+        </Button>
+        <Button size="xl">
+          <Text>Extra large</Text>
+        </Button>
+      </View>
+      <View className="flex-row flex-wrap items-center gap-3">
+        <Button size="icon-xs" variant="secondary">
+          <Icon as={PlusIcon} />
+        </Button>
+        <Button size="icon-sm" variant="secondary">
+          <Icon as={PlusIcon} />
+        </Button>
+        <Button size="icon" variant="secondary">
+          <Icon as={PlusIcon} />
+        </Button>
+        <Button size="icon-lg" variant="secondary">
+          <Icon as={PlusIcon} />
+        </Button>
+        <Button size="icon-xl" variant="secondary">
+          <Icon as={PlusIcon} />
+        </Button>
+      </View>
     </View>
   ),
 }
@@ -104,8 +132,30 @@ export const Disabled: Story = {
       <Button disabled variant="secondary">
         <Text>Secondary</Text>
       </Button>
+      <Button disabled variant="tinted">
+        <Text>Tinted</Text>
+      </Button>
       <Button disabled variant="outline">
         <Text>Outline</Text>
+      </Button>
+      <Button disabled variant="destructive">
+        <Text>Destructive</Text>
+      </Button>
+    </View>
+  ),
+}
+
+export const Block: Story = {
+  render: () => (
+    <View className="gap-3">
+      <Button block size="lg">
+        <Text>Continue</Text>
+      </Button>
+      <Button block size="lg" variant="secondary">
+        <Text>Not now</Text>
+      </Button>
+      <Button block variant="tinted">
+        <Text>Learn more</Text>
       </Button>
     </View>
   ),

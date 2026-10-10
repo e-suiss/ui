@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
 import { CheckCircleIcon, InfoIcon, WarningIcon } from "phosphor-react-native"
-import { View } from "react-native"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 
@@ -55,11 +59,22 @@ export const WithAction: Story = {
       <AlertDescription>
         Update now to get the latest features and fixes.
       </AlertDescription>
-      <View className="flex-row pb-2 pl-6">
-        <Button size="sm" variant="outline">
+      <AlertAction>
+        <Button size="sm" variant="tinted">
           <Text>Update</Text>
         </Button>
-      </View>
+      </AlertAction>
+    </Alert>
+  ),
+}
+
+export const WithoutIcon: Story = {
+  render: () => (
+    <Alert>
+      <AlertTitle>Heads up</AlertTitle>
+      <AlertDescription>
+        You can add components to your app using the registry.
+      </AlertDescription>
     </Alert>
   ),
 }

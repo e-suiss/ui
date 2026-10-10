@@ -4,6 +4,8 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 
+import { readTheme, toRgb } from "./theme.mjs"
+
 const ROOT = process.cwd()
 const SOURCE_DIR = "uniwind/components/ui"
 const OUTPUT_DIR = "nativewind/components/ui"
@@ -46,14 +48,46 @@ const V3_SPACING = new Set([
   "80",
   "96",
 ])
+const V3_SCALE = new Set([
+  "0",
+  "50",
+  "75",
+  "90",
+  "95",
+  "100",
+  "105",
+  "110",
+  "125",
+  "150",
+])
 const SPACING_PREFIXES =
   "-?(?:p|px|py|pt|pr|pb|pl|ps|pe|m|mx|my|mt|mr|mb|ml|ms|me|gap|gap-x|gap-y|w|h|size|min-w|min-h|top|right|bottom|left|start|end|inset|inset-x|inset-y|translate-x|translate-y|space-x|space-y)"
-const TEXT_INPUT_INTEROP = `cssInterop(TextInput, {
+const TEXT_INPUT_INTEROP = `declare module "react-native" {
+  interface TextInputProps {
+    cursorColorClassName?: string
+    selectionColorClassName?: string
+  }
+}
+
+cssInterop(TextInput, {
   className: { target: "style", nativeStyleToProp: { textAlign: true } },
   placeholderClassName: {
     target: false,
     nativeStyleToProp: { color: "placeholderTextColor" },
   },
+  cursorColorClassName: {
+    target: false,
+    nativeStyleToProp: { color: "cursorColor" },
+  },
+  selectionColorClassName: {
+    target: false,
+    nativeStyleToProp: { color: "selectionColor" },
+  },
+})
+
+`
+const ACTIVITY_INDICATOR_INTEROP = `cssInterop(ActivityIndicator, {
+  className: { target: "style", nativeStyleToProp: { color: true } },
 })
 
 `
@@ -80,21 +114,62 @@ const FILE_TRANSFORMS = {
 })
 `
       ),
-  "input.tsx": usePlaceholderClass,
-  "textarea.tsx": usePlaceholderClass,
 }
 
-function usePlaceholderClass(code) {
-  const firstFunction = code.indexOf("\nfunction ")
-  return `${code.slice(0, firstFunction + 1)}${TEXT_INPUT_INTEROP}${code.slice(firstFunction + 1)}`
-    .replace(
-      'placeholderTextColorClassName="accent-muted-foreground"',
-      'placeholderClassName="text-muted-foreground"'
+function addReactNativeImport(code, name) {
+  const block = code.match(/^import \{([^}]*)\} from "react-native"\n/m)
+  if (!block) {
+    return code.replace(
+      /^(import \* as React from "react"\n|import \{ cn \} from "cn"\n)/m,
+      `$1import { ${name} } from "react-native"\n`
     )
-    .replace(
-      /^import \{ cn \} from "cn"\n/m,
-      'import { cn } from "cn"\nimport { cssInterop } from "nativewind"\n'
+  }
+  const specifiers = block[1]
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+  if (specifiers.some((part) => part.replace(/^type /, "") === name)) {
+    return code
+  }
+  specifiers.push(name)
+  specifiers.sort((a, b) =>
+    a.replace(/^type /, "").localeCompare(b.replace(/^type /, ""), "en")
+  )
+  const single = `import { ${specifiers.join(", ")} } from "react-native"\n`
+  const replacement =
+    single.length > 81
+      ? `import {\n${specifiers.map((part) => `  ${part},\n`).join("")}} from "react-native"\n`
+      : single
+  return code.replace(block[0], replacement)
+}
+
+function insertBeforeFirstDeclaration(code, block) {
+  const index = code.search(/\n(?:function |const [A-Za-z]|type |interface )/)
+  return `${code.slice(0, index + 1)}${block}${code.slice(index + 1)}`
+}
+
+function applyColorClassProps(code) {
+  const textInput =
+    /(?:placeholderTextColor|cursorColor|selectionColor)ClassName=/.test(code)
+  const activityIndicator = /<ActivityIndicator[^>]*colorClassName=/.test(code)
+  if (!textInput && !activityIndicator) return code
+  let output = code
+    .replace(/"accent-([\w-]+)"/g, '"text-$1"')
+    .replace(/placeholderTextColorClassName=/g, "placeholderClassName=")
+    .replace(/(<ActivityIndicator[^>]*?)colorClassName=/g, "$1className=")
+  if (activityIndicator) {
+    output = insertBeforeFirstDeclaration(output, ACTIVITY_INDICATOR_INTEROP)
+  }
+  if (textInput) {
+    output = addReactNativeImport(
+      insertBeforeFirstDeclaration(output, TEXT_INPUT_INTEROP),
+      "TextInput"
     )
+  }
+  return output.replace(
+    /^import \{ cn \} from "cn"\n/m,
+    'import { cn } from "cn"\nimport { cssInterop } from "nativewind"\n'
+  )
 }
 
 function toTailwindV3(code) {
@@ -109,48 +184,13 @@ function toTailwindV3(code) {
           ? match
           : `${utility}-[${Number(value) * 0.25}rem]`
     )
+    .replace(
+      /(?<![\w-])((?:[\w-]+:)*-?scale(?:-[xy])?)-(\d+)(?![\w./\]])/g,
+      (match, utility, value) =>
+        V3_SCALE.has(value) ? match : `${utility}-[${Number(value) / 100}]`
+    )
     .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-sm(?![\w-])/g, "$1shadow")
     .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-xs(?![\w-])/g, "$1shadow-sm")
-}
-
-function parseTheme(css) {
-  const block = (name) => {
-    const start = css.indexOf(`@variant ${name}`)
-    const end = css.indexOf("}", start)
-    return Object.fromEntries(
-      [...css.slice(start, end).matchAll(/--color-([\w-]+):\s*([^;]+);/g)].map(
-        (match) => [match[1], match[2].trim()]
-      )
-    )
-  }
-  const radius = css.match(/@theme\s*\{([\s\S]*?)\}/)?.[1].trim() ?? ""
-  return { light: block("light"), dark: block("dark"), radius }
-}
-
-function parseColor(value) {
-  const hex = value.match(/^#([\da-f]{6})$/i)
-  if (hex) {
-    const channels = hex[1]
-      .match(/../g)
-      .map((part) => Number.parseInt(part, 16))
-    return { channels, alpha: 1 }
-  }
-  const rgb = value.match(
-    /^rgb\(\s*(\d+)\s+(\d+)\s+(\d+)\s*(?:\/\s*([\d.]+))?\s*\)$/
-  )
-  if (rgb) {
-    return {
-      channels: rgb.slice(1, 4).map(Number),
-      alpha: rgb[4] === undefined ? 1 : Number(rgb[4]),
-    }
-  }
-  throw new Error(`Unsupported color value "${value}"`)
-}
-
-function withOpacity(value, percent) {
-  const { channels, alpha } = parseColor(value)
-  const combined = Math.round(alpha * percent * 10) / 1000
-  return `rgb(${channels.join(" ")} / ${combined})`
 }
 
 function opacityPattern(colors) {
@@ -176,12 +216,18 @@ function collectTokens(sources, pattern) {
   )
 }
 
+function solid(colors) {
+  return Object.fromEntries(
+    Object.entries(colors).map(([name, value]) => [name, toRgb(value)])
+  )
+}
+
 function buildStylesheet(theme, tokens) {
   const tokenValues = (mode) =>
     Object.fromEntries(
       tokens.map(([name, { color, percent }]) => [
         name,
-        withOpacity(theme[mode][color], percent),
+        toRgb(theme[mode][color], percent / 100),
       ])
     )
   const lines = (values) =>
@@ -195,11 +241,11 @@ function buildStylesheet(theme, tokens) {
 
 @layer base {
   :root {
-${lines({ ...theme.light, ...tokenValues("light") })}
+${lines({ ...solid(theme.light), ...tokenValues("light") })}
   }
 
   .dark:root {
-${lines({ ...theme.dark, ...tokenValues("dark") })}
+${lines({ ...solid(theme.dark), ...tokenValues("dark") })}
   }
 }
 `
@@ -209,8 +255,17 @@ function buildConfig(theme, tokens) {
   const colors = [...Object.keys(theme.light), ...tokens.map(([name]) => name)]
     .map((name) => `        "${name}": "var(--${name})",`)
     .join("\n")
-  const radius = [...theme.radius.matchAll(/--radius-([\w]+):\s*([^;]+);/g)]
-    .map((match) => `        "${match[1]}": "${match[2]}",`)
+  const radius = Object.entries(theme.radius)
+    .map(([name, value]) => `        "${name}": "${value}px",`)
+    .join("\n")
+  const fontSize = Object.entries(theme.text)
+    .map(
+      ([name, size]) =>
+        `        "${name}": ["${size.fontSize}px", { lineHeight: "${size.lineHeight}px", letterSpacing: "${size.letterSpacing}px" }],`
+    )
+    .join("\n")
+  const boxShadow = Object.entries(theme.shadow)
+    .map(([name, value]) => `        "${name}": "${value}",`)
     .join("\n")
 
   return `module.exports = {
@@ -230,6 +285,12 @@ ${colors}
       borderRadius: {
 ${radius}
       },
+      fontSize: {
+${fontSize}
+      },
+      boxShadow: {
+${boxShadow}
+      },
     },
   },
   plugins: [],
@@ -238,7 +299,7 @@ ${radius}
 }
 
 async function generate(target) {
-  const theme = parseTheme(
+  const theme = readTheme(
     await readFile(path.join(ROOT, SOURCE_STYLESHEET), "utf8")
   )
   const colors = new Set(Object.keys(theme.light))
@@ -255,11 +316,13 @@ async function generate(target) {
   const tokens = collectTokens(sources.values(), pattern)
   const outputs = new Map()
   for (const [file, code] of sources) {
-    const transformed = (FILE_TRANSFORMS[file] ?? ((value) => value))(
-      toTailwindV3(
-        code.replace(
-          pattern,
-          (_match, utility, _color, percent) => `${utility}-${percent}`
+    const transformed = applyColorClassProps(
+      (FILE_TRANSFORMS[file] ?? ((value) => value))(
+        toTailwindV3(
+          code.replace(
+            pattern,
+            (_match, utility, _color, percent) => `${utility}-${percent}`
+          )
         )
       )
     )

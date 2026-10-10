@@ -1,6 +1,7 @@
 import { StyleSheet, type TextStyle, View, type ViewStyle } from "react-native"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
+import { IconSizeContext } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
@@ -9,7 +10,13 @@ import {
   useTheme,
 } from "@/components/ui/theme"
 
-type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
+type BadgeVariant =
+  | "default"
+  | "secondary"
+  | "destructive"
+  | "outline"
+  | "ghost"
+  | "link"
 
 const styles = StyleSheet.create({
   root: {
@@ -21,37 +28,34 @@ const styles = StyleSheet.create({
     gap: 4,
     alignSelf: "flex-start",
     overflow: "hidden",
-    borderRadius: radius["3xl"],
+    borderRadius: radius.full,
     borderWidth: 1,
     borderColor: "transparent",
-    paddingHorizontal: 8,
-    paddingVertical: 2,
   },
+  padded: { paddingHorizontal: 8 },
 })
 
 function badgeStyle(variant: BadgeVariant, colors: ThemeColors): ViewStyle {
   switch (variant) {
-    case "default":
-      return { backgroundColor: colors.primary }
-    case "secondary":
-      return { backgroundColor: colors.secondary }
-    case "destructive":
-      return { backgroundColor: colors.destructiveSubtle }
     case "outline":
-      return { borderColor: colors.border }
+      return { ...styles.padded, borderColor: colors.separator }
+    case "ghost":
+      return styles.padded
+    default:
+      return {}
   }
 }
 
 function badgeTextStyle(variant: BadgeVariant, colors: ThemeColors): TextStyle {
   const color =
-    variant === "default"
-      ? colors.primaryForeground
-      : variant === "secondary"
-        ? colors.secondaryForeground
-        : variant === "destructive"
-          ? colors.destructive
-          : colors.foreground
-  return { ...fontSize.xs, fontWeight: "500", color }
+    variant === "secondary"
+      ? colors.labelSecondary
+      : variant === "destructive"
+        ? colors.danger
+        : variant === "outline" || variant === "ghost"
+          ? colors.label
+          : colors.link
+  return { ...fontSize.xs, fontWeight: "600", color }
 }
 
 type BadgeProps = React.ComponentProps<typeof View> &
@@ -72,7 +76,7 @@ function Badge({ style, variant = "default", render, ...props }: BadgeProps) {
   })
   return (
     <TextStyleContext.Provider value={badgeTextStyle(variant, colors)}>
-      {element}
+      <IconSizeContext.Provider value={12}>{element}</IconSizeContext.Provider>
     </TextStyleContext.Provider>
   )
 }

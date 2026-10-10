@@ -1,11 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
 import { View } from "react-native"
+import { createHandle } from "@/components/primitives/popover"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Text } from "@/components/ui/text"
@@ -15,6 +19,14 @@ const dimensions = [
   { id: "max-width", label: "Max. width", value: "300px" },
   { id: "height", label: "Height", value: "25px" },
 ]
+
+const members = [
+  { id: "ada", name: "Ada", role: "Design lead" },
+  { id: "linus", name: "Linus", role: "Platform engineer" },
+  { id: "grace", name: "Grace", role: "Product manager" },
+]
+
+const memberPopover = createHandle<(typeof members)[number]>()
 
 const meta = {
   title: "Components/Popover",
@@ -34,10 +46,12 @@ export const Default: Story = {
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <View className="gap-4">
-            <View className="gap-2">
-              <Text className="font-medium leading-none">Dimensions</Text>
-              <Text variant="muted">Set the dimensions for the layer.</Text>
-            </View>
+            <PopoverHeader>
+              <PopoverTitle>Dimensions</PopoverTitle>
+              <PopoverDescription>
+                Set the dimensions for the layer.
+              </PopoverDescription>
+            </PopoverHeader>
             <View className="gap-2">
               {dimensions.map((dimension) => (
                 <View
@@ -65,7 +79,7 @@ export const Default: Story = {
 export const Sides: Story = {
   render: () => (
     <View className="items-center gap-4 py-24">
-      {(["top", "bottom"] as const).map((side) => (
+      {(["top", "right", "bottom", "left"] as const).map((side) => (
         <Popover key={side}>
           <PopoverTrigger render={<Button variant="outline" />}>
             <Text className="capitalize">{side}</Text>
@@ -105,10 +119,12 @@ export const OpenByDefault: Story = {
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <View className="gap-4">
-            <View className="gap-2">
-              <Text className="font-medium leading-none">Dimensions</Text>
-              <Text variant="muted">Set the dimensions for the layer.</Text>
-            </View>
+            <PopoverHeader>
+              <PopoverTitle>Dimensions</PopoverTitle>
+              <PopoverDescription>
+                Set the dimensions for the layer.
+              </PopoverDescription>
+            </PopoverHeader>
             <View className="gap-2">
               {dimensions.map((dimension) => (
                 <View
@@ -128,6 +144,34 @@ export const OpenByDefault: Story = {
             </View>
           </View>
         </PopoverContent>
+      </Popover>
+    </View>
+  ),
+}
+
+export const DetachedTriggers: Story = {
+  render: () => (
+    <View className="flex-row items-start gap-2">
+      {members.map((member) => (
+        <PopoverTrigger
+          key={member.id}
+          id={member.id}
+          handle={memberPopover}
+          payload={member}
+          render={<Button variant="outline" />}
+        >
+          <Text>{member.name}</Text>
+        </PopoverTrigger>
+      ))}
+      <Popover handle={memberPopover}>
+        {({ payload }) => (
+          <PopoverContent align="start">
+            <PopoverHeader>
+              <PopoverTitle>{payload?.name}</PopoverTitle>
+              <PopoverDescription>{payload?.role}</PopoverDescription>
+            </PopoverHeader>
+          </PopoverContent>
+        )}
       </Popover>
     </View>
   ),

@@ -1,5 +1,5 @@
 import type { IconProps as PhosphorIconProps } from "phosphor-react-native"
-import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
+import { CaretRightIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
   Platform,
@@ -35,26 +35,27 @@ const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
-  itemText: { ...fontSize.sm, fontWeight: "500", userSelect: "none" },
+  itemText: { ...fontSize.base, userSelect: "none" },
   subTrigger: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    borderRadius: radius["2xl"],
+    borderRadius: radius.md,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
   subTriggerIcon: { marginLeft: "auto", flexShrink: 0 },
+  subTriggerIconOpen: { transform: [{ rotate: "90deg" }] },
   subContent: {
     minWidth: 144,
-    borderRadius: radius["3xl"],
+    borderRadius: radius.xl,
     borderWidth: 1,
     padding: 6,
     ...shadow.lg,
   },
   content: {
     minWidth: 192,
-    borderRadius: radius["3xl"],
+    borderRadius: radius.xl,
     borderWidth: 1,
     padding: 6,
     ...shadow.lg,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius["2xl"],
+    borderRadius: radius.md,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius["2xl"],
+    borderRadius: radius.md,
     paddingVertical: 8,
     paddingRight: 32,
     paddingLeft: 12,
@@ -86,12 +87,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  label: { paddingHorizontal: 12, paddingVertical: 10, ...fontSize.xs },
+  label: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    ...fontSize.xs,
+    fontWeight: "600",
+  },
   inset: { paddingLeft: 38 },
-  disabled: { opacity: 0.5 },
-  separator: { marginHorizontal: -6, marginVertical: 6, height: 1 },
-  shortcut: { marginLeft: "auto", ...fontSize.xs, letterSpacing: 1.2 },
+  separator: {
+    marginHorizontal: -6,
+    marginVertical: 6,
+    height: 1,
+    opacity: 0.5,
+  },
+  shortcut: { marginLeft: "auto", ...fontSize.xs },
 })
+
+function usePopupColors() {
+  const { colors, isDark } = useTheme()
+  return {
+    borderColor: `${colors.label}${isDark ? "1a" : "0d"}`,
+    backgroundColor: colors.surfaceRaised,
+  }
+}
 
 type PositionerProps = React.ComponentProps<typeof MenuPrimitive.Positioner>
 
@@ -108,6 +126,7 @@ function DropdownMenuContent({
     portalHost?: string
   }) {
   const { colors } = useTheme()
+  const popupColors = usePopupColors()
   return (
     <MenuPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
@@ -119,15 +138,12 @@ function DropdownMenuContent({
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
             <TextStyleContext.Provider
-              value={{ ...fontSize.sm, color: colors.popoverForeground }}
+              value={{ ...fontSize.base, color: colors.label }}
             >
               <MenuPrimitive.Popup
                 style={(state) => [
                   styles.content,
-                  {
-                    borderColor: colors.outline,
-                    backgroundColor: colors.popover,
-                  },
+                  popupColors,
                   resolveStyle(style, state) as StyleProp<ViewStyle>,
                 ]}
                 {...props}
@@ -157,28 +173,25 @@ function DropdownMenuSubTrigger({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: open ? colors.accentForeground : colors.popoverForeground,
+        color: props.disabled ? colors.labelQuaternary : colors.label,
       }}
     >
       <MenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          (state.highlighted || state.open) && {
-            backgroundColor: colors.accent,
-          },
-          state.disabled && styles.disabled,
+          state.open && { backgroundColor: colors.itemSelected },
+          state.highlighted && { backgroundColor: colors.itemPressed },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         {children}
-        <Icon
-          as={open ? CaretUpIcon : CaretDownIcon}
-          size={16}
-          color={colors.foreground}
-          style={[styles.subTriggerIcon, iconStyle]}
-        />
+        <View
+          style={[styles.subTriggerIcon, open && styles.subTriggerIconOpen]}
+        >
+          <Icon as={CaretRightIcon} size={16} style={iconStyle} />
+        </View>
       </MenuPrimitive.SubmenuTrigger>
     </TextStyleContext.Provider>
   )
@@ -188,13 +201,13 @@ function DropdownMenuSubContent({
   style,
   ...props
 }: React.ComponentProps<typeof MenuPrimitive.Popup>) {
-  const { colors } = useTheme()
+  const popupColors = usePopupColors()
   return (
     <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
       <MenuPrimitive.Popup
         style={(state) => [
           styles.subContent,
-          { borderColor: colors.outline, backgroundColor: colors.popover },
+          popupColors,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
@@ -218,7 +231,11 @@ function DropdownMenuItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: destructive ? colors.destructive : colors.popoverForeground,
+        color: props.disabled
+          ? colors.labelQuaternary
+          : destructive
+            ? colors.danger
+            : colors.label,
       }}
     >
       <MenuPrimitive.Item
@@ -226,10 +243,9 @@ function DropdownMenuItem({
           styles.item,
           state.highlighted && {
             backgroundColor: destructive
-              ? colors.destructiveSubtle
-              : colors.accent,
+              ? colors.dangerSurfacePressed
+              : colors.itemPressed,
           },
-          state.disabled && styles.disabled,
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -251,13 +267,15 @@ function DropdownMenuCheckboxItem({
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...styles.itemText, color: colors.popoverForeground }}
+      value={{
+        ...styles.itemText,
+        color: props.disabled ? colors.labelQuaternary : colors.label,
+      }}
     >
       <MenuPrimitive.CheckboxItem
         style={(state) => [
           styles.checkItem,
-          state.highlighted && { backgroundColor: colors.accent },
-          state.disabled && styles.disabled,
+          state.highlighted && { backgroundColor: colors.itemPressed },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -265,7 +283,7 @@ function DropdownMenuCheckboxItem({
       >
         <View style={styles.indicator}>
           <MenuPrimitive.CheckboxItemIndicator>
-            <Icon as={CheckIcon} size={16} color={colors.foreground} />
+            <Icon as={CheckIcon} size={16} />
           </MenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
@@ -286,13 +304,15 @@ function DropdownMenuRadioItem({
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...styles.itemText, color: colors.popoverForeground }}
+      value={{
+        ...styles.itemText,
+        color: props.disabled ? colors.labelQuaternary : colors.label,
+      }}
     >
       <MenuPrimitive.RadioItem
         style={(state) => [
           styles.checkItem,
-          state.highlighted && { backgroundColor: colors.accent },
-          state.disabled && styles.disabled,
+          state.highlighted && { backgroundColor: colors.itemPressed },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -300,7 +320,7 @@ function DropdownMenuRadioItem({
       >
         <View style={styles.indicator}>
           <MenuPrimitive.RadioItemIndicator>
-            <Icon as={CheckIcon} size={16} color={colors.foreground} />
+            <Icon as={CheckIcon} size={16} />
           </MenuPrimitive.RadioItemIndicator>
         </View>
         {children}
@@ -321,7 +341,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.labelSecondary },
         inset && styles.inset,
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
@@ -339,7 +359,7 @@ function DropdownMenuSeparator({
     <MenuPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.borderSubtle },
+        { backgroundColor: colors.separator },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
@@ -354,7 +374,7 @@ function DropdownMenuShortcut({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.shortcut, { color: colors.mutedForeground }, style]}
+      style={[styles.shortcut, { color: colors.labelSecondary }, style]}
       {...props}
     />
   )

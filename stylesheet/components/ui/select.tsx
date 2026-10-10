@@ -1,4 +1,4 @@
-import { CaretDownIcon, CheckIcon } from "phosphor-react-native"
+import { CaretUpDownIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
   Platform,
@@ -9,6 +9,8 @@ import {
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import { useFieldRootContext } from "@/components/primitives/field"
+import { useOptionalPositionerContext } from "@/components/primitives/positioner"
 import * as SelectPrimitive from "@/components/primitives/select"
 import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
@@ -23,49 +25,50 @@ interface Option {
 
 const Select = SelectPrimitive.Root
 
-const SelectGroup = SelectPrimitive.Group
+const SelectTriggerContext = React.createContext({ disabled: false })
 
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
-  value: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    ...fontSize.sm,
-  },
+  group: { padding: 6 },
+  value: { flex: 1, textAlign: "left", ...fontSize.base },
   trigger: {
-    height: 36,
+    height: 44,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    alignSelf: "flex-start",
     gap: 6,
-    borderRadius: radius["3xl"],
+    borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: "transparent",
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  triggerSm: { height: 32 },
-  disabled: { opacity: 0.5 },
+  triggerSm: { height: 36, borderRadius: radius.md },
   content: {
     position: "relative",
     minWidth: 144,
-    borderRadius: radius["3xl"],
+    overflow: "hidden",
+    borderRadius: radius.xl,
     borderWidth: 1,
     ...shadow.lg,
   },
-  list: { width: "100%", padding: 6 },
-  label: { paddingHorizontal: 12, paddingVertical: 10, ...fontSize.xs },
+  list: { position: "relative", width: "100%" },
+  label: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    ...fontSize.xs,
+    fontWeight: "600",
+  },
   item: {
     position: "relative",
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius["2xl"],
+    borderRadius: radius.md,
     paddingVertical: 8,
     paddingRight: 32,
     paddingLeft: 12,
@@ -79,22 +82,42 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   indicatorIcon: { flexShrink: 0 },
-  itemText: { ...fontSize.sm, fontWeight: "500", userSelect: "none" },
-  separator: { marginHorizontal: -6, marginVertical: 6, height: 1 },
+  itemText: { flex: 1, ...fontSize.base, userSelect: "none" },
+  separator: { marginVertical: 6, height: 1 },
 })
+
+function SelectGroup({
+  style,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
+  return (
+    <SelectPrimitive.Group
+      style={(state) => [
+        styles.group,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
+      ]}
+      {...props}
+    />
+  )
+}
 
 function SelectValue({
   style,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   const { colors } = useTheme()
+  const { disabled } = React.useContext(SelectTriggerContext)
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
       style={(state) => [
         styles.value,
         {
-          color: state.placeholder ? colors.mutedForeground : colors.foreground,
+          color: disabled
+            ? colors.labelQuaternary
+            : state.placeholder
+              ? colors.labelSecondary
+              : colors.label,
         },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
@@ -107,26 +130,39 @@ function SelectTrigger({
   style,
   children,
   size = "default",
+  invalid,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   children?: React.ReactNode
   size?: "default" | "sm"
+  invalid?: boolean
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
+  const field = useFieldRootContext()
+  const select = SelectPrimitive.useSelectRootContext("SelectTrigger")
+  const isInvalid = invalid ?? field.state.invalid
+  const disabled = !!props.disabled || select.floating.disabled
+  const context = React.useMemo(() => ({ disabled }), [disabled])
   return (
     <SelectPrimitive.Trigger
       style={(state) => [
         styles.trigger,
-        { backgroundColor: colors.inputSoft },
-        state.disabled && styles.disabled,
+        { backgroundColor: colors.control },
         size === "sm" && styles.triggerSm,
+        isInvalid && {
+          borderColor: colors.danger,
+          backgroundColor: `${colors.danger}${isDark ? "1a" : "0d"}`,
+        },
+        state.disabled && { backgroundColor: colors.controlDisabled },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     >
-      {children}
+      <SelectTriggerContext.Provider value={context}>
+        {children}
+      </SelectTriggerContext.Provider>
       <SelectPrimitive.Icon>
-        <Icon as={CaretDownIcon} size={16} color={colors.mutedForeground} />
+        <Icon as={CaretUpDownIcon} size={16} color={colors.labelSecondary} />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -134,9 +170,35 @@ function SelectTrigger({
 
 type PositionerProps = React.ComponentProps<typeof SelectPrimitive.Positioner>
 
-function SelectContent({
+function ContentPopup({
   style,
   children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Popup>) {
+  const { colors, isDark } = useTheme()
+  const positioner = useOptionalPositionerContext()
+  const width = positioner?.anchorWidth || undefined
+  return (
+    <SelectPrimitive.Popup
+      style={(state) => [
+        styles.content,
+        {
+          width,
+          borderColor: `${colors.label}${isDark ? "1a" : "0d"}`,
+          backgroundColor: colors.surfaceRaised,
+        },
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
+      ]}
+      {...props}
+    >
+      <SelectPrimitive.List style={styles.list}>
+        {children}
+      </SelectPrimitive.List>
+    </SelectPrimitive.Popup>
+  )
+}
+
+function SelectContent({
   side = "bottom",
   sideOffset = 4,
   align = "center",
@@ -162,23 +224,9 @@ function SelectContent({
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
             <TextStyleContext.Provider
-              value={{ ...fontSize.sm, color: colors.popoverForeground }}
+              value={{ ...fontSize.base, color: colors.label }}
             >
-              <SelectPrimitive.Popup
-                style={(state) => [
-                  styles.content,
-                  {
-                    borderColor: colors.outline,
-                    backgroundColor: colors.popover,
-                  },
-                  resolveStyle(style, state) as StyleProp<ViewStyle>,
-                ]}
-                {...props}
-              >
-                <SelectPrimitive.List style={styles.list}>
-                  {children}
-                </SelectPrimitive.List>
-              </SelectPrimitive.Popup>
+              <ContentPopup {...props} />
             </TextStyleContext.Provider>
           </AnimatedView>
         </SelectPrimitive.Positioner>
@@ -196,7 +244,7 @@ function SelectLabel({
     <SelectPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.labelSecondary },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
@@ -216,25 +264,27 @@ function SelectItem({
     <SelectPrimitive.Item
       style={(state) => [
         styles.item,
-        state.highlighted && { backgroundColor: colors.accent },
-        state.disabled && styles.disabled,
+        state.highlighted && { backgroundColor: colors.itemPressed },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     >
+      <SelectPrimitive.ItemText
+        style={(state) => [
+          styles.itemText,
+          { color: state.disabled ? colors.labelQuaternary : colors.label },
+        ]}
+      >
+        {children}
+      </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator style={styles.indicator}>
         <Icon
           as={CheckIcon}
           size={16}
-          color={colors.foreground}
+          color={colors.link}
           style={styles.indicatorIcon}
         />
       </SelectPrimitive.ItemIndicator>
-      <SelectPrimitive.ItemText
-        style={[styles.itemText, { color: colors.foreground }]}
-      >
-        {children}
-      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 }
@@ -248,7 +298,7 @@ function SelectSeparator({
     <SelectPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.separator },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

@@ -4,7 +4,7 @@ import { View } from "react-native"
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <View className="flex-1 bg-background p-4">
+      <View className="flex-1 bg-surface p-4">
         <Story />
       </View>
     ),

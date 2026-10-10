@@ -1,9 +1,22 @@
-import { StyleSheet, View } from "react-native"
-import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
-import { useTheme } from "@/components/ui/theme"
+import {
+  Pressable,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from "react-native"
+import * as RadioPrimitive from "@/components/primitives/radio"
+import {
+  RadioGroup as RadioGroupPrimitive,
+  type RadioGroupProps,
+} from "@/components/primitives/radio-group"
+import { resolveStyle } from "@/components/primitives/use-render"
+import { shadow, type ThemeColors, useTheme } from "@/components/ui/theme"
+
+const HIT_SLOP = { top: 8, bottom: 8, left: 12, right: 12 }
 
 const styles = StyleSheet.create({
-  root: { gap: 12 },
+  root: { width: "100%", gap: 12 },
   item: {
     aspectRatio: 1,
     width: 16,
@@ -13,26 +26,56 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 9999,
     borderWidth: 1,
-    borderColor: "transparent",
   },
-  disabled: { opacity: 0.5 },
-  indicator: {
-    width: 16,
-    height: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 9999,
-  },
+  indicator: { alignItems: "center", justifyContent: "center" },
   dot: { width: 8, height: 8, borderRadius: 9999 },
   dotDark: { width: 10, height: 10 },
 })
 
-function RadioGroup({
+function radioStyle(
+  colors: ThemeColors,
+  isDark: boolean,
+  state: RadioPrimitive.RootState,
+  pressed: boolean,
+  invalid: boolean | undefined
+): ViewStyle {
+  if (state.checked) {
+    if (state.disabled) {
+      return {
+        borderColor: "transparent",
+        backgroundColor: colors.accentDisabled,
+      }
+    }
+    const color = pressed ? colors.accentPressed : colors.accent
+    return { borderColor: color, backgroundColor: color }
+  }
+  if (state.disabled) {
+    return {
+      borderColor: isDark ? "transparent" : `${colors.label}1a`,
+      backgroundColor: colors.controlDisabled,
+    }
+  }
+  return {
+    borderColor: invalid
+      ? colors.danger
+      : isDark
+        ? "transparent"
+        : `${colors.label}40`,
+    backgroundColor: isDark
+      ? colors.labelQuaternary
+      : pressed
+        ? colors.control
+        : colors.surface,
+    ...(isDark ? null : shadow.xs),
+  }
+}
+
+function RadioGroup<Value = string>({
   style,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+}: RadioGroupProps<Value>) {
   return (
-    <RadioGroupPrimitive.Root
+    <RadioGroupPrimitive<Value>
       style={(state) => [
         styles.root,
         typeof style === "function" ? style(state) : style,
@@ -42,33 +85,37 @@ function RadioGroup({
   )
 }
 
-function RadioGroupItem({
+function RadioGroupItem<Value = string>({
   style,
+  invalid,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+}: RadioPrimitive.RootProps<Value> & { invalid?: boolean }) {
   const { colors, isDark } = useTheme()
   return (
-    <RadioGroupPrimitive.Item
-      style={(state) => [
-        styles.item,
-        { backgroundColor: colors.inputStrong },
-        state.disabled && styles.disabled,
-        typeof style === "function" ? style(state) : style,
-      ]}
+    <RadioPrimitive.Root<Value>
+      hitSlop={HIT_SLOP}
       {...props}
+      render={(renderProps, state) => (
+        <Pressable
+          {...renderProps}
+          style={({ pressed }) => [
+            styles.item,
+            radioStyle(colors, isDark, state, pressed, invalid),
+            resolveStyle(style, state) as StyleProp<ViewStyle>,
+          ]}
+        />
+      )}
     >
-      <RadioGroupPrimitive.Indicator
-        style={[styles.indicator, { backgroundColor: colors.primary }]}
-      >
+      <RadioPrimitive.Indicator style={styles.indicator}>
         <View
           style={[
             styles.dot,
             isDark && styles.dotDark,
-            { backgroundColor: colors.primaryForeground },
+            { backgroundColor: colors.onAccent },
           ]}
         />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
+      </RadioPrimitive.Indicator>
+    </RadioPrimitive.Root>
   )
 }
 

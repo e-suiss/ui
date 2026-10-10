@@ -47,6 +47,15 @@ function WithLabelDemo() {
   )
 }
 
+export const Sizes: Story = {
+  render: () => (
+    <View className="flex-row items-center gap-4">
+      <Switch size="sm" defaultChecked accessibilityLabel="Wi-Fi" />
+      <Switch defaultChecked accessibilityLabel="Bluetooth" />
+    </View>
+  ),
+}
+
 export const WithLabel: Story = {
   render: () => <WithLabelDemo />,
 }
@@ -54,12 +63,14 @@ export const WithLabel: Story = {
 function WithDescriptionDemo() {
   const [checked, setChecked] = React.useState(true)
   return (
-    <View className="border-border flex-row items-center justify-between gap-4 rounded-lg border p-4">
+    <View className="flex-row items-center justify-between gap-4 rounded-2xl bg-surface-secondary p-4">
       <View className="flex-1 gap-1">
         <Label nativeID="marketing" onPress={() => setChecked((v) => !v)}>
           Marketing emails
         </Label>
-        <Text variant="muted">Receive emails about new products.</Text>
+        <Text className="text-sm text-label-secondary">
+          Receive emails about new products.
+        </Text>
       </View>
       <Switch
         accessibilityLabelledBy="marketing"
@@ -79,6 +90,15 @@ export const Disabled: Story = {
     <View className="gap-4">
       <Switch disabled checked={false} onCheckedChange={() => {}} />
       <Switch disabled checked onCheckedChange={() => {}} />
+    </View>
+  ),
+}
+
+export const Invalid: Story = {
+  render: () => (
+    <View className="flex-row items-center gap-2">
+      <Switch invalid accessibilityLabelledBy="terms-switch" />
+      <Label nativeID="terms-switch">Accept terms</Label>
     </View>
   ),
 }

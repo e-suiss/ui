@@ -1,14 +1,10 @@
 import { cn } from "cn"
 import * as React from "react"
 import { Platform } from "react-native"
-import {
-  FadeInDown,
-  FadeInUp,
-  FadeOut,
-  ReduceMotion,
-} from "react-native-reanimated"
+import { Keyframe, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as TooltipPrimitive from "@/components/primitives/tooltip"
+import type { Side } from "@/components/primitives/types"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextClassContext } from "@/components/ui/text"
@@ -20,12 +16,52 @@ const TooltipTrigger = TooltipPrimitive.Trigger
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
-const ARROW_SIDE_CLASS = {
-  top: "-bottom-1",
-  bottom: "-top-1",
-  left: "-right-1",
-  right: "-left-1",
-} as const
+const ENTER_FROM: Record<Side, { translateX: number; translateY: number }> = {
+  top: { translateX: 0, translateY: 8 },
+  bottom: { translateX: 0, translateY: -8 },
+  left: { translateX: 8, translateY: 0 },
+  right: { translateX: -8, translateY: 0 },
+}
+
+function createEntering(side: Side) {
+  const from = ENTER_FROM[side]
+  return new Keyframe({
+    0: {
+      opacity: 0,
+      transform: [
+        { translateX: from.translateX },
+        { translateY: from.translateY },
+        { scale: 0.95 },
+      ],
+    },
+    100: {
+      opacity: 1,
+      transform: [{ translateX: 0 }, { translateY: 0 }, { scale: 1 }],
+    },
+  })
+    .duration(150)
+    .reduceMotion(ReduceMotion.System)
+}
+
+const ENTERING: Record<Side, ReturnType<typeof createEntering>> = {
+  top: createEntering("top"),
+  bottom: createEntering("bottom"),
+  left: createEntering("left"),
+  right: createEntering("right"),
+}
+
+const EXITING = new Keyframe({
+  0: { opacity: 1, transform: [{ scale: 1 }] },
+  100: { opacity: 0, transform: [{ scale: 0.95 }] },
+})
+  .duration(100)
+  .reduceMotion(ReduceMotion.System)
+const ARROW_SIDE_CLASS: Record<Side, string> = {
+  top: "-bottom-[3px]",
+  bottom: "-top-[3px]",
+  left: "-right-[3px]",
+  right: "-left-[3px]",
+}
 
 function TooltipContent({
   className,
@@ -53,27 +89,14 @@ function TooltipContent({
           sideOffset={sideOffset}
           className="z-50"
         >
-          <TextClassContext.Provider value="text-xs text-background">
+          <TextClassContext.Provider value="text-xs text-surface">
             <TooltipPrimitive.Popup
               render={
-                <AnimatedView
-                  entering={
-                    side === "top"
-                      ? FadeInDown.withInitialValues({
-                          transform: [{ translateY: 3 }],
-                        })
-                          .duration(150)
-                          .reduceMotion(ReduceMotion.System)
-                      : FadeInUp.withInitialValues({
-                          transform: [{ translateY: -5 }],
-                        }).reduceMotion(ReduceMotion.System)
-                  }
-                  exiting={FadeOut.reduceMotion(ReduceMotion.System)}
-                />
+                <AnimatedView entering={ENTERING[side]} exiting={EXITING} />
               }
               className={(state) =>
                 cn(
-                  "z-50 max-w-xs flex-row items-center gap-1.5 rounded-xl bg-foreground px-3 py-1.5",
+                  "z-50 max-w-xs flex-row items-center gap-1.5 rounded-xl bg-label px-3 py-1.5",
                   resolveClassName(className, state)
                 )
               }
@@ -83,7 +106,7 @@ function TooltipContent({
               <TooltipPrimitive.Arrow
                 className={(state) =>
                   cn(
-                    "size-2.5 rounded-[2px] bg-foreground",
+                    "size-2.5 rounded-xs bg-label",
                     ARROW_SIDE_CLASS[state.side]
                   )
                 }

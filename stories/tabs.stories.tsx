@@ -90,11 +90,13 @@ function TabsDemo() {
   )
 }
 
-function WithIconsDemo() {
+type ListVariant = "default" | "line"
+
+function WithIconsDemo({ variant }: { variant?: ListVariant }) {
   const [value, setValue] = React.useState("profile")
   return (
     <Tabs value={value} onValueChange={setValue}>
-      <TabsList>
+      <TabsList variant={variant}>
         <TabsTrigger value="profile">
           <Icon as={UserIcon} className="size-4" />
           <Text>Profile</Text>
@@ -105,20 +107,24 @@ function WithIconsDemo() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="profile">
-        <Text variant="muted">Your public profile information.</Text>
+        <Text className="text-sm text-label-secondary">
+          Your public profile information.
+        </Text>
       </TabsContent>
       <TabsContent value="settings">
-        <Text variant="muted">Manage your preferences.</Text>
+        <Text className="text-sm text-label-secondary">
+          Manage your preferences.
+        </Text>
       </TabsContent>
     </Tabs>
   )
 }
 
-function DisabledTabDemo() {
+function DisabledTabDemo({ variant }: { variant?: ListVariant }) {
   const [value, setValue] = React.useState("overview")
   return (
     <Tabs value={value} onValueChange={setValue}>
-      <TabsList>
+      <TabsList variant={variant}>
         <TabsTrigger value="overview">
           <Text>Overview</Text>
         </TabsTrigger>
@@ -130,10 +136,54 @@ function DisabledTabDemo() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
-        <Text variant="muted">A summary of your activity.</Text>
+        <Text className="text-sm text-label-secondary">
+          A summary of your activity.
+        </Text>
       </TabsContent>
       <TabsContent value="analytics">
-        <Text variant="muted">Detailed metrics and trends.</Text>
+        <Text className="text-sm text-label-secondary">
+          Detailed metrics and trends.
+        </Text>
+      </TabsContent>
+    </Tabs>
+  )
+}
+
+function SectionsDemo({
+  variant,
+  orientation,
+}: {
+  variant?: ListVariant
+  orientation?: "horizontal" | "vertical"
+}) {
+  const [value, setValue] = React.useState("overview")
+  return (
+    <Tabs value={value} onValueChange={setValue} orientation={orientation}>
+      <TabsList variant={variant}>
+        <TabsTrigger value="overview">
+          <Text>Overview</Text>
+        </TabsTrigger>
+        <TabsTrigger value="analytics">
+          <Text>Analytics</Text>
+        </TabsTrigger>
+        <TabsTrigger value="reports">
+          <Text>Reports</Text>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <Text className="text-sm text-label-secondary">
+          A summary of your activity.
+        </Text>
+      </TabsContent>
+      <TabsContent value="analytics">
+        <Text className="text-sm text-label-secondary">
+          Detailed metrics and trends.
+        </Text>
+      </TabsContent>
+      <TabsContent value="reports">
+        <Text className="text-sm text-label-secondary">
+          Exported reports and schedules.
+        </Text>
       </TabsContent>
     </Tabs>
   )
@@ -162,4 +212,24 @@ export const WithIcons: Story = {
 
 export const DisabledTab: Story = {
   render: () => <DisabledTabDemo />,
+}
+
+export const Line: Story = {
+  render: () => <SectionsDemo variant="line" />,
+}
+
+export const Vertical: Story = {
+  render: () => <SectionsDemo orientation="vertical" />,
+}
+
+export const VerticalLine: Story = {
+  render: () => <SectionsDemo variant="line" orientation="vertical" />,
+}
+
+export const WithIconsLine: Story = {
+  render: () => <WithIconsDemo variant="line" />,
+}
+
+export const DisabledTabLine: Story = {
+  render: () => <DisabledTabDemo variant="line" />,
 }

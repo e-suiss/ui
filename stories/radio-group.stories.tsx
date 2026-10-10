@@ -96,7 +96,9 @@ function WithDescriptionsDemo() {
             >
               {plan.label}
             </Label>
-            <Text variant="muted">{plan.description}</Text>
+            <Text className="text-sm text-label-secondary">
+              {plan.description}
+            </Text>
           </View>
         </View>
       ))}
@@ -114,4 +116,23 @@ export const DisabledItem: Story = {
 
 export const Disabled: Story = {
   render: () => <RadioGroupDemo disabled />,
+}
+
+export const Invalid: Story = {
+  render: () => (
+    <RadioGroup className="gap-3">
+      {options.map((option) => (
+        <View key={option.value} className="flex-row items-center gap-3">
+          <RadioGroupItem
+            invalid
+            value={option.value}
+            accessibilityLabelledBy={`radio-invalid-${option.value}`}
+          />
+          <Label nativeID={`radio-invalid-${option.value}`}>
+            {option.label}
+          </Label>
+        </View>
+      ))}
+    </RadioGroup>
+  ),
 }

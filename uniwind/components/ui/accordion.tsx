@@ -1,5 +1,8 @@
+import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import { CaretDownIcon } from "phosphor-react-native"
+import * as React from "react"
+import type { GestureResponderEvent } from "react-native"
 import Animated, {
   FadeOutUp,
   LayoutAnimationConfig,
@@ -14,18 +17,29 @@ import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
+const accordionVariants = cva("w-full flex-col", {
+  variants: {
+    variant: {
+      default: "",
+      filled: "overflow-hidden rounded-2xl bg-surface-secondary",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
 function Accordion({
   className,
+  variant,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Root> &
+  VariantProps<typeof accordionVariants>) {
   return (
     <LayoutAnimationConfig skipEntering>
       <AccordionPrimitive.Root
         className={(state) =>
-          cn(
-            "w-full flex-col overflow-hidden rounded-2xl border border-border",
-            resolveClassName(className, state)
-          )
+          cn(accordionVariants({ variant }), resolveClassName(className, state))
         }
         render={<Animated.View layout={LinearTransition.duration(200)} />}
         {...props}
@@ -42,8 +56,8 @@ function AccordionItem({
     <AccordionPrimitive.Item
       className={(state) =>
         cn(
-          "native:overflow-hidden border-b border-border",
-          state.open && "bg-muted/50",
+          "ms-4 overflow-hidden",
+          state.index > 0 && "border-t border-separator",
           resolveClassName(className, state)
         )
       }
@@ -56,36 +70,51 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
+  onPressIn,
+  onPressOut,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
-  const { open } = AccordionPrimitive.useItemContext()
+  const { open, disabled } = AccordionPrimitive.useItemContext()
+  const [pressed, setPressed] = React.useState(false)
 
   const progress = useDerivedValue(() =>
     open ? withTiming(1, { duration: 250 }) : withTiming(0, { duration: 200 })
   )
-  const chevronStyle = useAnimatedStyle(() => ({
+  const caretStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${progress.value * 180}deg` }],
   }))
 
   return (
-    <TextClassContext.Provider value="text-left text-sm font-medium text-foreground">
-      <AccordionPrimitive.Header>
+    <TextClassContext.Provider
+      value={cn(
+        "shrink text-left text-base",
+        disabled ? "text-label-quaternary" : "text-label",
+        pressed && !disabled && "underline"
+      )}
+    >
+      <AccordionPrimitive.Header className="flex-row">
         <AccordionPrimitive.Trigger
           className={(state) =>
             cn(
-              "flex-row items-start justify-between gap-6 border border-transparent p-4",
-              state.disabled && "opacity-50",
+              "min-h-11 flex-1 flex-row items-center justify-between gap-6 py-2.75 pe-4",
               resolveClassName(className, state)
             )
           }
+          onPressIn={(event: GestureResponderEvent) => {
+            setPressed(true)
+            onPressIn?.(event)
+          }}
+          onPressOut={(event: GestureResponderEvent) => {
+            setPressed(false)
+            onPressOut?.(event)
+          }}
           {...props}
         >
           {children}
-          <Animated.View style={chevronStyle}>
+          <Animated.View style={caretStyle}>
             <Icon
               as={CaretDownIcon}
-              size={16}
-              className="shrink-0 text-muted-foreground"
+              className="size-4 shrink-0 text-label-secondary"
             />
           </Animated.View>
         </AccordionPrimitive.Trigger>
@@ -102,11 +131,11 @@ function AccordionContent({
   className?: string
 }) {
   return (
-    <TextClassContext.Provider value="text-sm text-foreground">
-      <AccordionPrimitive.Panel className="overflow-hidden px-4" {...props}>
+    <TextClassContext.Provider value="text-sm text-label-secondary">
+      <AccordionPrimitive.Panel className="overflow-hidden" {...props}>
         <Animated.View
           exiting={FadeOutUp.duration(200).reduceMotion(ReduceMotion.System)}
-          className={cn("pt-0 pb-4", className)}
+          className={cn("gap-4 pe-10 pb-3", className)}
         >
           {children}
         </Animated.View>
@@ -115,4 +144,10 @@ function AccordionContent({
   )
 }
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
+export {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  accordionVariants,
+}

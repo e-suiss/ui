@@ -4,6 +4,7 @@ import { Image, View } from "react-native"
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -49,10 +50,10 @@ export const Default: Story = {
         </View>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button className="w-full">
+        <Button block>
           <Text>Login</Text>
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button block variant="secondary">
           <Text>Login with Google</Text>
         </Button>
       </CardFooter>
@@ -62,12 +63,12 @@ export const Default: Story = {
 
 export const Small: Story = {
   render: () => (
-    <Card className="w-full gap-4 py-4">
-      <CardHeader className="px-4">
+    <Card size="sm" className="w-full">
+      <CardHeader>
         <CardTitle>Team plan</CardTitle>
         <CardDescription>Up to 10 members</CardDescription>
       </CardHeader>
-      <CardContent className="px-4">
+      <CardContent>
         <Text className="text-sm">
           Shared workspaces, unlimited projects and priority support.
         </Text>
@@ -79,14 +80,14 @@ export const Small: Story = {
 export const WithAction: Story = {
   render: () => (
     <Card className="w-full">
-      <CardHeader className="flex-row items-start justify-between gap-4">
-        <View className="flex-1 gap-1.5">
-          <CardTitle>Notifications</CardTitle>
-          <CardDescription>You have 3 unread messages.</CardDescription>
-        </View>
-        <Button size="icon" variant="ghost">
-          <Icon as={BellIcon} />
-        </Button>
+      <CardHeader>
+        <CardTitle>Notifications</CardTitle>
+        <CardDescription>You have 3 unread messages.</CardDescription>
+        <CardAction>
+          <Button size="icon" variant="ghost">
+            <Icon as={BellIcon} />
+          </Button>
+        </CardAction>
       </CardHeader>
       <CardContent>
         <Text className="text-sm">
@@ -94,7 +95,7 @@ export const WithAction: Story = {
         </Text>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
+        <Button block>
           <Text>Mark all as read</Text>
         </Button>
       </CardFooter>
@@ -104,7 +105,7 @@ export const WithAction: Story = {
 
 export const WithImage: Story = {
   render: () => (
-    <Card className="w-full overflow-hidden pt-0">
+    <Card className="w-full pt-0">
       <Image
         source={{
           uri: "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80",
@@ -116,10 +117,26 @@ export const WithImage: Story = {
         <CardDescription>A quiet cabin with a view.</CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button variant="outline" className="w-full">
+        <Button block variant="tinted">
           <Text>Book now</Text>
         </Button>
       </CardFooter>
+    </Card>
+  ),
+}
+
+export const Filled: Story = {
+  render: () => (
+    <Card variant="filled" className="w-full">
+      <CardHeader>
+        <CardTitle>Storage</CardTitle>
+        <CardDescription>42 GB of 128 GB used</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Text className="text-sm text-label-secondary">
+          Photos and backups take up most of your space.
+        </Text>
+      </CardContent>
     </Card>
   ),
 }

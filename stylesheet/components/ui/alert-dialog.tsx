@@ -1,12 +1,11 @@
 import * as React from "react"
+import { Platform, StyleSheet, View, type ViewProps } from "react-native"
 import {
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-  type ViewProps,
-} from "react-native"
-import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
+  FadeIn,
+  FadeOut,
+  Keyframe,
+  ReduceMotion,
+} from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as AlertDialogPrimitive from "@/components/primitives/alert-dialog"
 import { AnimatedView } from "@/components/ui/animated-view"
@@ -23,53 +22,63 @@ const AlertDialogPortal = AlertDialogPrimitive.Portal
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
+const POPUP_ENTERING = new Keyframe({
+  0: { opacity: 0, transform: [{ scale: 0.95 }] },
+  100: { opacity: 1, transform: [{ scale: 1 }] },
+})
+  .duration(150)
+  .reduceMotion(ReduceMotion.System)
+
+const POPUP_EXITING = new Keyframe({
+  0: { opacity: 1, transform: [{ scale: 1 }] },
+  100: { opacity: 0, transform: [{ scale: 0.95 }] },
+})
+  .duration(100)
+  .reduceMotion(ReduceMotion.System)
+
+const AlertDialogFooterContext = React.createContext(false)
+
 const styles = StyleSheet.create({
   backdrop: { ...StyleSheet.absoluteFill, zIndex: 50 },
   container: {
     ...StyleSheet.absoluteFill,
     zIndex: 50,
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
     pointerEvents: "box-none",
   },
-  containerInner: {
-    flex: 1,
-    alignSelf: "stretch",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    pointerEvents: "box-none",
-  },
+  containerInner: { width: "100%", maxWidth: 340, pointerEvents: "box-none" },
+  containerInnerSm: { maxWidth: 320 },
   content: {
     zIndex: 50,
     width: "100%",
-    maxWidth: 320,
     flexDirection: "column",
     gap: 24,
-    borderRadius: radius["4xl"],
+    borderRadius: radius["2xl"],
     borderWidth: 1,
     padding: 24,
     ...shadow.xl,
   },
-  contentSm: { maxWidth: 448 },
-  header: {
-    display: "flex",
-    flexDirection: "column",
+  header: { flexDirection: "column", alignItems: "center", gap: 6 },
+  footer: { flexDirection: "row", gap: 8 },
+  footerItem: { flex: 1 },
+  media: {
+    marginBottom: 8,
+    width: 64,
+    height: 64,
     alignItems: "center",
-    gap: 6,
+    justifyContent: "center",
+    borderRadius: radius.full,
   },
-  headerSm: { alignItems: "flex-start" },
-  footer: {
-    display: "flex",
-    flexDirection: "column-reverse",
-    gap: 8,
-  },
-  footerSm: { flexDirection: "row", justifyContent: "flex-end" },
-  title: { ...fontSize.lg, fontWeight: "500" },
-  description: { ...fontSize.sm },
+  title: { ...fontSize.lg, fontWeight: "600", textAlign: "center" },
+  description: { ...fontSize.sm, textAlign: "center" },
 })
+
+function withAlpha(hex: string, alpha: number) {
+  const value = Number.parseInt(hex.slice(1), 16)
+  return `rgba(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`
+}
 
 function AlertDialogOverlay({
   style,
@@ -81,15 +90,13 @@ function AlertDialogOverlay({
       render={
         <AnimatedView
           as="Pressable"
-          entering={FadeIn.duration(200)
-            .delay(50)
-            .reduceMotion(ReduceMotion.System)}
-          exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
+          entering={FadeIn.duration(150).reduceMotion(ReduceMotion.System)}
+          exiting={FadeOut.duration(100).reduceMotion(ReduceMotion.System)}
         />
       }
       style={(state) => [
         styles.backdrop,
-        { backgroundColor: colors.overlay },
+        { backgroundColor: colors.scrim },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -100,32 +107,33 @@ function AlertDialogOverlay({
 function AlertDialogContent({
   style,
   portalHost,
+  size = "default",
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Popup> & {
   portalHost?: string
+  size?: "default" | "sm"
 }) {
-  const { colors } = useTheme()
-  const { width } = useWindowDimensions()
+  const { colors, isDark } = useTheme()
   return (
     <AlertDialogPortal hostName={portalHost}>
       <FullWindowOverlay>
         <AlertDialogOverlay />
         <View style={styles.container}>
           <AnimatedView
-            entering={FadeIn.duration(200)
-              .delay(50)
-              .reduceMotion(ReduceMotion.System)}
-            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-            style={styles.containerInner}
+            entering={POPUP_ENTERING}
+            exiting={POPUP_EXITING}
+            style={[
+              styles.containerInner,
+              size === "sm" && styles.containerInnerSm,
+            ]}
           >
             <AlertDialogPrimitive.Popup
               style={(state) => [
                 styles.content,
                 {
-                  borderColor: colors.outline,
-                  backgroundColor: colors.popover,
+                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
+                  backgroundColor: colors.surfaceRaised,
                 },
-                width >= 640 && styles.contentSm,
                 typeof style === "function" ? style(state) : style,
               ]}
               {...props}
@@ -138,23 +146,30 @@ function AlertDialogContent({
 }
 
 function AlertDialogHeader({ style, ...props }: ViewProps) {
-  const { width } = useWindowDimensions()
-  const isSm = width >= 640
   return (
-    <TextStyleContext.Provider value={{ textAlign: isSm ? "left" : "center" }}>
-      <View
-        style={[styles.header, isSm && styles.headerSm, style]}
-        {...props}
-      />
+    <TextStyleContext.Provider value={{ textAlign: "center" }}>
+      <View style={[styles.header, style]} {...props} />
     </TextStyleContext.Provider>
   )
 }
 
 function AlertDialogFooter({ style, ...props }: ViewProps) {
-  const { width } = useWindowDimensions()
+  return (
+    <AlertDialogFooterContext.Provider value={true}>
+      <View style={[styles.footer, style]} {...props} />
+    </AlertDialogFooterContext.Provider>
+  )
+}
+
+function AlertDialogMedia({ style, ...props }: ViewProps) {
+  const { colors } = useTheme()
   return (
     <View
-      style={[styles.footer, width >= 640 && styles.footerSm, style]}
+      style={[
+        styles.media,
+        { backgroundColor: colors.surfaceSecondary },
+        style,
+      ]}
       {...props}
     />
   )
@@ -169,7 +184,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.foreground },
+        { color: colors.label },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -186,7 +201,7 @@ function AlertDialogDescription({
     <AlertDialogPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.mutedForeground },
+        { color: colors.labelSecondary },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -195,28 +210,40 @@ function AlertDialogDescription({
 }
 
 function AlertDialogAction({
+  style,
   variant = "default",
   size = "default",
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
   Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+  const inFooter = React.useContext(AlertDialogFooterContext)
   return (
     <AlertDialogPrimitive.Close
       render={<Button variant={variant} size={size} />}
+      style={(state) => [
+        inFooter && styles.footerItem,
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
 }
 
 function AlertDialogCancel({
-  variant = "outline",
+  style,
+  variant = "secondary",
   size = "default",
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
   Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+  const inFooter = React.useContext(AlertDialogFooterContext)
   return (
     <AlertDialogPrimitive.Close
       render={<Button variant={variant} size={size} />}
+      style={(state) => [
+        inFooter && styles.footerItem,
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
@@ -230,6 +257,7 @@ export {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogOverlay,
   AlertDialogPortal,
   AlertDialogTitle,

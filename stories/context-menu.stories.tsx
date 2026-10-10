@@ -20,8 +20,8 @@ import { Text } from "@/components/ui/text"
 
 function TriggerArea() {
   return (
-    <ContextMenuTrigger className="border-border h-36 w-full items-center justify-center rounded-md border border-dashed">
-      <Text variant="muted">Long press here</Text>
+    <ContextMenuTrigger className="border-separator h-36 w-full items-center justify-center rounded-md border border-dashed">
+      <Text className="text-sm text-label-secondary">Long press here</Text>
     </ContextMenuTrigger>
   )
 }

@@ -1,50 +1,138 @@
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
-import * as TogglePrimitive from "@/components/primitives/toggle"
-import * as ToggleGroupPrimitive from "@/components/primitives/toggle-group"
+import { Pressable } from "react-native"
+import {
+  Toggle as TogglePrimitive,
+  type ToggleState,
+} from "@/components/primitives/toggle"
+import { ToggleGroup as ToggleGroupPrimitive } from "@/components/primitives/toggle-group"
+import type { Orientation } from "@/components/primitives/types"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
-import { toggleVariants } from "@/components/ui/toggle"
+import {
+  toggleStateClassName,
+  toggleTextClassName,
+  toggleVariants,
+} from "@/components/ui/toggle"
 
-const ToggleGroupContext = React.createContext<VariantProps<
-  typeof toggleVariants
-> | null>(null)
+type ToggleGroupContextValue = VariantProps<typeof toggleVariants> & {
+  spacing: number
+  orientation: Orientation
+}
+
+const ToggleGroupContext = React.createContext<ToggleGroupContextValue>({
+  variant: "default",
+  size: "default",
+  spacing: 2,
+  orientation: "horizontal",
+})
+
+const ItemPositionContext = React.createContext({ first: true, last: true })
 
 function ToggleGroup({
   className,
-  variant,
-  size,
+  style,
+  variant = "default",
+  size = "default",
+  spacing = 2,
+  orientation = "horizontal",
   children,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
-  VariantProps<typeof toggleVariants>) {
+}: React.ComponentProps<typeof ToggleGroupPrimitive> &
+  VariantProps<typeof toggleVariants> & {
+    spacing?: number
+  }) {
+  const segmented = spacing === 0 && variant === "default"
+  const items = React.Children.toArray(children)
+  const context = React.useMemo(
+    () => ({ variant, size, spacing, orientation }),
+    [variant, size, spacing, orientation]
+  )
   return (
-    <ToggleGroupPrimitive.Root
+    <ToggleGroupPrimitive
+      orientation={orientation}
       className={(state) =>
         cn(
-          "flex-row items-center gap-2 self-start",
+          "relative flex-row items-center self-start",
+          orientation === "vertical" && "flex-col items-stretch",
+          spacing === 0 && variant === "outline" && "rounded-lg",
+          segmented && "rounded-xl bg-control p-1",
           resolveClassName(className, state)
         )
       }
+      style={(state) => [
+        { gap: segmented ? 4 : spacing * 4 },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     >
-      <ToggleGroupContext.Provider value={{ variant, size }}>
-        {children}
+      <ToggleGroupContext.Provider value={context}>
+        {items.map((child, index) => (
+          <ItemPositionContext.Provider
+            key={React.isValidElement(child) ? child.key : index}
+            value={{ first: index === 0, last: index === items.length - 1 }}
+          >
+            {child}
+          </ItemPositionContext.Provider>
+        ))}
       </ToggleGroupContext.Provider>
-    </ToggleGroupPrimitive.Root>
+    </ToggleGroupPrimitive>
   )
 }
 
-function useToggleGroupContext() {
-  const context = React.useContext(ToggleGroupContext)
-  if (context === null) {
-    throw new Error(
-      "ToggleGroup compound components cannot be rendered outside the ToggleGroup component"
+function itemClassName(
+  context: ToggleGroupContextValue,
+  position: { first: boolean; last: boolean },
+  state: ToggleState
+) {
+  const vertical = context.orientation === "vertical"
+  if (context.spacing === 0 && context.variant === "default") {
+    return cn(
+      "rounded-md px-3",
+      state.pressed &&
+        (state.disabled
+          ? "bg-control-disabled"
+          : "bg-surface-raised shadow dark:bg-label-quaternary")
     )
   }
-  return context
+  return cn(
+    toggleStateClassName(state),
+    context.spacing === 0 &&
+      cn(
+        "rounded-none",
+        vertical
+          ? cn(
+              position.first && "rounded-t-xl",
+              position.last && "rounded-b-xl"
+            )
+          : cn(
+              position.first && "rounded-l-lg",
+              position.last && "rounded-r-lg"
+            ),
+        context.variant === "outline" &&
+          !position.first &&
+          (vertical ? "border-t-0" : "border-l-0")
+      )
+  )
+}
+
+function itemTextClassName(
+  context: ToggleGroupContextValue,
+  state: ToggleState
+) {
+  if (context.spacing === 0 && context.variant === "default") {
+    return cn(
+      "text-sm",
+      state.disabled
+        ? "text-label-quaternary"
+        : state.pressed
+          ? "text-label"
+          : "text-label-secondary"
+    )
+  }
+  return toggleTextClassName(state)
 }
 
 function ToggleGroupItem({
@@ -52,36 +140,36 @@ function ToggleGroupItem({
   children,
   variant,
   size,
-  isFirst,
-  isLast,
   ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> &
-  VariantProps<typeof toggleVariants> & {
-    isFirst?: boolean
-    isLast?: boolean
-  }) {
-  const context = useToggleGroupContext()
+}: React.ComponentProps<typeof TogglePrimitive> &
+  VariantProps<typeof toggleVariants>) {
+  const context = React.useContext(ToggleGroupContext)
+  const position = React.useContext(ItemPositionContext)
+  const resolved = {
+    ...context,
+    variant: context.variant || variant,
+    size: context.size || size,
+  }
 
   return (
-    <TextClassContext.Provider value="text-sm font-medium text-foreground">
-      <TogglePrimitive.Root
-        className={(state) =>
-          cn(
-            toggleVariants({
-              variant: context.variant || variant,
-              size: context.size || size,
-            }),
-            state.disabled && "opacity-50",
-            state.pressed && "bg-muted",
-            "shrink-0",
-            resolveClassName(className, state)
-          )
-        }
-        {...props}
-      >
-        {children}
-      </TogglePrimitive.Root>
-    </TextClassContext.Provider>
+    <TogglePrimitive
+      className={(state) =>
+        cn(
+          "shrink-0",
+          toggleVariants({ variant: resolved.variant, size: resolved.size }),
+          itemClassName(resolved, position, state),
+          resolveClassName(className, state)
+        )
+      }
+      render={(renderProps, state) => (
+        <TextClassContext.Provider value={itemTextClassName(resolved, state)}>
+          <Pressable {...renderProps} />
+        </TextClassContext.Provider>
+      )}
+      {...props}
+    >
+      {children}
+    </TogglePrimitive>
   )
 }
 
@@ -89,10 +177,7 @@ function ToggleGroupIcon({
   className,
   ...props
 }: React.ComponentProps<typeof Icon>) {
-  const textClass = React.useContext(TextClassContext)
-  return (
-    <Icon className={cn("size-4 shrink-0", textClass, className)} {...props} />
-  )
+  return <Icon className={cn("size-4 shrink-0", className)} {...props} />
 }
 
 export { ToggleGroup, ToggleGroupIcon, ToggleGroupItem }

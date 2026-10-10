@@ -67,7 +67,7 @@ function WithDescriptionDemo() {
         >
           Enable notifications
         </Label>
-        <Text variant="muted">
+        <Text className="text-sm text-label-secondary">
           You can enable or disable notifications at any time.
         </Text>
       </View>
@@ -92,4 +92,42 @@ export const Disabled: Story = {
       </View>
     </View>
   ),
+}
+
+export const Indeterminate: Story = {
+  render: () => (
+    <View className="flex-row items-center gap-3">
+      <Checkbox
+        indeterminate
+        checked={false}
+        onCheckedChange={() => {}}
+        accessibilityLabelledBy="select-all"
+      />
+      <Label nativeID="select-all">Select all</Label>
+    </View>
+  ),
+}
+
+function InvalidDemo() {
+  const [checked, setChecked] = React.useState(false)
+  return (
+    <View className="flex-row items-center gap-3">
+      <Checkbox
+        invalid={!checked}
+        accessibilityLabelledBy="terms-invalid"
+        checked={checked}
+        onCheckedChange={setChecked}
+      />
+      <Label
+        nativeID="terms-invalid"
+        onPress={() => setChecked((value) => !value)}
+      >
+        Accept terms and conditions
+      </Label>
+    </View>
+  )
+}
+
+export const Invalid: Story = {
+  render: () => <InvalidDemo />,
 }

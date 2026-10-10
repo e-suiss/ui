@@ -6,10 +6,19 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native"
-import * as TogglePrimitive from "@/components/primitives/toggle"
+import {
+  Toggle as TogglePrimitive,
+  type ToggleState,
+} from "@/components/primitives/toggle"
+import { resolveStyle } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 type ToggleVariant = "default" | "outline"
 
@@ -32,32 +41,51 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
-    borderRadius: 26.4,
+    borderRadius: radius.lg,
+    backgroundColor: "transparent",
   },
   outline: { borderWidth: 1 },
-  disabled: { opacity: 0.5 },
+  scaled: { transform: [{ scale: 0.96 }] },
   icon: { flexShrink: 0 },
 })
 
 function toggleStyle(
   { variant, size }: ToggleVariantProps,
   colors: ThemeColors,
-  state: { pressed?: boolean; selected?: boolean; disabled?: boolean | null }
+  state: ToggleState,
+  pressing: boolean
 ): StyleProp<ViewStyle> {
   return [
     styles.root,
     sizes[size ?? "default"],
-    variant === "outline" && [styles.outline, { borderColor: colors.input }],
-    {
-      backgroundColor:
-        state.pressed || state.selected ? colors.muted : "transparent",
-    },
-    state.disabled && styles.disabled,
+    variant === "outline" && [
+      styles.outline,
+      { borderColor: colors.separator },
+    ],
+    state.disabled
+      ? state.pressed && { backgroundColor: colors.controlDisabled }
+      : [
+          pressing && styles.scaled,
+          state.pressed
+            ? {
+                backgroundColor: pressing
+                  ? colors.itemPressed
+                  : colors.itemHover,
+              }
+            : pressing && { backgroundColor: colors.itemHover },
+        ],
   ]
 }
 
-function toggleTextStyle(colors: ThemeColors): TextStyle {
-  return { ...fontSize.sm, fontWeight: "500", color: colors.foreground }
+function toggleTextStyle(colors: ThemeColors, state: ToggleState): TextStyle {
+  return {
+    ...fontSize.sm,
+    color: state.disabled
+      ? colors.labelQuaternary
+      : state.pressed
+        ? colors.link
+        : colors.label,
+  }
 }
 
 function Toggle({
@@ -65,28 +93,23 @@ function Toggle({
   variant,
   size,
   ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> & ToggleVariantProps) {
+}: React.ComponentProps<typeof TogglePrimitive> & ToggleVariantProps) {
   const { colors } = useTheme()
   return (
-    <TextStyleContext.Provider value={toggleTextStyle(colors)}>
-      <TogglePrimitive.Root
-        render={(renderProps, state) => (
+    <TogglePrimitive
+      {...props}
+      render={(renderProps, state) => (
+        <TextStyleContext.Provider value={toggleTextStyle(colors, state)}>
           <Pressable
             {...renderProps}
-            style={(pressable) => [
-              toggleStyle({ variant, size }, colors, {
-                pressed: pressable.pressed,
-                selected: state.pressed,
-                disabled: state.disabled,
-              }),
-              renderProps.style,
-              typeof style === "function" ? style(state) : style,
+            style={({ pressed }) => [
+              toggleStyle({ variant, size }, colors, state, pressed),
+              resolveStyle(style, state) as StyleProp<ViewStyle>,
             ]}
           />
-        )}
-        {...props}
-      />
-    </TextStyleContext.Provider>
+        </TextStyleContext.Provider>
+      )}
+    />
   )
 }
 

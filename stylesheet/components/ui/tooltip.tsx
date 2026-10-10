@@ -1,13 +1,9 @@
 import * as React from "react"
 import { Platform, StyleSheet, type ViewStyle } from "react-native"
-import {
-  FadeInDown,
-  FadeInUp,
-  FadeOut,
-  ReduceMotion,
-} from "react-native-reanimated"
+import { Keyframe, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as TooltipPrimitive from "@/components/primitives/tooltip"
+import type { Side } from "@/components/primitives/types"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, useTheme } from "@/components/ui/theme"
@@ -19,6 +15,46 @@ const TooltipTrigger = TooltipPrimitive.Trigger
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
+const ENTER_FROM: Record<Side, { translateX: number; translateY: number }> = {
+  top: { translateX: 0, translateY: 8 },
+  bottom: { translateX: 0, translateY: -8 },
+  left: { translateX: 8, translateY: 0 },
+  right: { translateX: -8, translateY: 0 },
+}
+
+function createEntering(side: Side) {
+  const from = ENTER_FROM[side]
+  return new Keyframe({
+    0: {
+      opacity: 0,
+      transform: [
+        { translateX: from.translateX },
+        { translateY: from.translateY },
+        { scale: 0.95 },
+      ],
+    },
+    100: {
+      opacity: 1,
+      transform: [{ translateX: 0 }, { translateY: 0 }, { scale: 1 }],
+    },
+  })
+    .duration(150)
+    .reduceMotion(ReduceMotion.System)
+}
+
+const ENTERING: Record<Side, ReturnType<typeof createEntering>> = {
+  top: createEntering("top"),
+  bottom: createEntering("bottom"),
+  left: createEntering("left"),
+  right: createEntering("right"),
+}
+
+const EXITING = new Keyframe({
+  0: { opacity: 1, transform: [{ scale: 1 }] },
+  100: { opacity: 0, transform: [{ scale: 0.95 }] },
+})
+  .duration(100)
+  .reduceMotion(ReduceMotion.System)
 const styles = StyleSheet.create({
   positioner: { zIndex: 50 },
   content: {
@@ -34,18 +70,17 @@ const styles = StyleSheet.create({
   arrow: {
     width: 10,
     height: 10,
-    borderRadius: 2,
+    borderRadius: radius.xs,
     transform: [{ rotate: "45deg" }],
   },
 })
 
-const ARROW_SIDE_STYLE: Record<TooltipPrimitive.ArrowState["side"], ViewStyle> =
-  {
-    top: { bottom: -4 },
-    bottom: { top: -4 },
-    left: { right: -4 },
-    right: { left: -4 },
-  }
+const ARROW_SIDE_STYLE: Record<Side, ViewStyle> = {
+  top: { bottom: -3 },
+  bottom: { top: -3 },
+  left: { right: -3 },
+  right: { left: -3 },
+}
 
 function TooltipContent({
   style,
@@ -75,28 +110,15 @@ function TooltipContent({
           style={styles.positioner}
         >
           <TextStyleContext.Provider
-            value={{ ...fontSize.xs, color: colors.background }}
+            value={{ ...fontSize.xs, color: colors.surface }}
           >
             <TooltipPrimitive.Popup
               render={
-                <AnimatedView
-                  entering={
-                    side === "top"
-                      ? FadeInDown.withInitialValues({
-                          transform: [{ translateY: 3 }],
-                        })
-                          .duration(150)
-                          .reduceMotion(ReduceMotion.System)
-                      : FadeInUp.withInitialValues({
-                          transform: [{ translateY: -5 }],
-                        }).reduceMotion(ReduceMotion.System)
-                  }
-                  exiting={FadeOut.reduceMotion(ReduceMotion.System)}
-                />
+                <AnimatedView entering={ENTERING[side]} exiting={EXITING} />
               }
               style={(state) => [
                 styles.content,
-                { backgroundColor: colors.foreground },
+                { backgroundColor: colors.label },
                 typeof style === "function" ? style(state) : style,
               ]}
               {...props}
@@ -105,7 +127,7 @@ function TooltipContent({
               <TooltipPrimitive.Arrow
                 style={(state) => [
                   styles.arrow,
-                  { backgroundColor: colors.foreground },
+                  { backgroundColor: colors.label },
                   ARROW_SIDE_STYLE[state.side],
                 ]}
               />

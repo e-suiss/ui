@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
+import * as React from "react"
 import { View } from "react-native"
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 
 const meta = {
@@ -34,6 +40,16 @@ export const Types: Story = {
   ),
 }
 
+export const Sizes: Story = {
+  render: () => (
+    <View className="gap-3">
+      <Input size="sm" placeholder="Small" />
+      <Input size="md" placeholder="Medium" />
+      <Input placeholder="Default" />
+    </View>
+  ),
+}
+
 export const WithValue: Story = {
   args: {
     defaultValue: "hello@example.com",
@@ -42,33 +58,45 @@ export const WithValue: Story = {
 
 export const WithLabel: Story = {
   render: () => (
-    <View className="gap-2">
-      <Label nativeID="input-email">Email</Label>
+    <Field>
+      <FieldLabel>Email</FieldLabel>
       <Input
-        accessibilityLabelledBy="input-email"
         placeholder="m@example.com"
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <Text variant="muted">We will never share your email.</Text>
-    </View>
+      <FieldDescription>We will never share your email.</FieldDescription>
+    </Field>
   ),
 }
 
 export const Invalid: Story = {
   render: () => (
-    <View className="gap-2">
-      <Label nativeID="input-invalid">Username</Label>
-      <Input
-        accessibilityLabelledBy="input-invalid"
-        className="border-destructive"
-        defaultValue="x"
-      />
-      <Text className="text-destructive text-sm">
-        Username must be at least 3 characters.
-      </Text>
-    </View>
+    <Field invalid>
+      <FieldLabel>Username</FieldLabel>
+      <Input defaultValue="x" />
+      <FieldError>Username must be at least 3 characters.</FieldError>
+    </Field>
   ),
+}
+
+function ControlledDemo() {
+  const [value, setValue] = React.useState("")
+  return (
+    <View className="gap-2">
+      <Input
+        placeholder="Lowercase only"
+        autoCapitalize="none"
+        value={value}
+        onValueChange={(next) => setValue(next.toLowerCase())}
+      />
+      <Text variant="muted">Value: {value}</Text>
+    </View>
+  )
+}
+
+export const Controlled: Story = {
+  render: () => <ControlledDemo />,
 }
 
 export const Disabled: Story = {

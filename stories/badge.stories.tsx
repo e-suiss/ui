@@ -39,6 +39,12 @@ export const Variants: Story = {
       <Badge variant="outline">
         <Text>Outline</Text>
       </Badge>
+      <Badge variant="ghost">
+        <Text>Ghost</Text>
+      </Badge>
+      <Badge variant="link">
+        <Text>Link</Text>
+      </Badge>
     </View>
   ),
 }
@@ -47,14 +53,14 @@ export const WithIcon: Story = {
   render: () => (
     <View className="flex-row flex-wrap gap-2">
       <Badge variant="secondary">
-        <Icon as={SealCheckIcon} className="text-secondary-foreground size-3" />
+        <Icon as={SealCheckIcon} />
         <Text>Verified</Text>
       </Badge>
       <Badge variant="outline">
-        <Icon as={StarIcon} className="size-3" />
+        <Icon as={StarIcon} />
         <Text>Featured</Text>
       </Badge>
-      <Badge className="min-w-5 px-1">
+      <Badge variant="outline" className="min-w-5 px-1">
         <Text>8</Text>
       </Badge>
     </View>

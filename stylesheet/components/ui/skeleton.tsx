@@ -11,7 +11,7 @@ import { radius, useTheme } from "@/components/ui/theme"
 const duration = 1000
 
 const styles = StyleSheet.create({
-  root: { borderRadius: radius["2xl"] },
+  root: { borderRadius: radius.md },
 })
 
 function Skeleton({
@@ -32,7 +32,7 @@ function Skeleton({
     <Animated.View
       style={[
         styles.root,
-        { backgroundColor: colors.muted },
+        { backgroundColor: colors.surfaceSecondary },
         style,
         animatedStyle,
       ]}

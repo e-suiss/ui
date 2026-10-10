@@ -3,17 +3,20 @@ import { cn } from "cn"
 import { View } from "react-native"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
+import { IconClassContext } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const badgeVariants = cva(
-  "h-5 shrink-0 flex-row items-center justify-center gap-1 self-start overflow-hidden rounded-3xl border border-transparent px-2 py-0.5",
+  "h-5 shrink-0 flex-row items-center justify-center gap-1 self-start overflow-hidden rounded-full border border-transparent",
   {
     variants: {
       variant: {
-        default: "bg-primary",
-        secondary: "bg-secondary",
-        destructive: "bg-destructive/10 dark:bg-destructive/20",
-        outline: "border-border",
+        default: "",
+        secondary: "",
+        destructive: "",
+        outline: "border-separator px-2",
+        ghost: "px-2",
+        link: "",
       },
     },
     defaultVariants: {
@@ -22,13 +25,15 @@ const badgeVariants = cva(
   }
 )
 
-const badgeTextVariants = cva("text-xs font-medium", {
+const badgeTextVariants = cva("text-xs font-semibold", {
   variants: {
     variant: {
-      default: "text-primary-foreground",
-      secondary: "text-secondary-foreground",
-      destructive: "text-destructive",
-      outline: "text-foreground",
+      default: "text-link",
+      secondary: "text-label-secondary",
+      destructive: "text-danger",
+      outline: "text-label",
+      ghost: "text-label",
+      link: "text-link",
     },
   },
   defaultVariants: {
@@ -49,7 +54,9 @@ function Badge({ className, variant, render, ...props }: BadgeProps) {
   })
   return (
     <TextClassContext.Provider value={badgeTextVariants({ variant })}>
-      {element}
+      <IconClassContext.Provider value="size-3">
+        {element}
+      </IconClassContext.Provider>
     </TextClassContext.Provider>
   )
 }

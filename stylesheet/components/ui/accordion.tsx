@@ -1,5 +1,11 @@
 import { CaretDownIcon } from "phosphor-react-native"
-import { type StyleProp, StyleSheet, type ViewStyle } from "react-native"
+import * as React from "react"
+import {
+  type GestureResponderEvent,
+  type StyleProp,
+  StyleSheet,
+  type ViewStyle,
+} from "react-native"
 import Animated, {
   FadeOutUp,
   LayoutAnimationConfig,
@@ -12,43 +18,48 @@ import Animated, {
 import * as AccordionPrimitive from "@/components/primitives/accordion"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+type AccordionVariant = "default" | "filled"
 
 const styles = StyleSheet.create({
-  root: {
-    width: "100%",
-    flexDirection: "column",
-    overflow: "hidden",
-    borderRadius: 21.6,
-    borderWidth: 1,
-  },
-  item: { borderBottomWidth: 1, overflow: "hidden" },
+  root: { width: "100%", flexDirection: "column" },
+  filled: { overflow: "hidden", borderRadius: radius["2xl"] },
+  item: { marginStart: 16, overflow: "hidden" },
+  itemSeparated: { borderTopWidth: 1 },
+  header: { flexDirection: "row" },
   trigger: {
+    minHeight: 44,
+    flex: 1,
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
     gap: 24,
-    borderWidth: 1,
-    borderColor: "transparent",
-    padding: 16,
+    paddingVertical: 11,
+    paddingEnd: 16,
   },
-  disabled: { opacity: 0.5 },
   icon: { flexShrink: 0 },
-  content: { overflow: "hidden", paddingHorizontal: 16 },
-  contentInner: { paddingTop: 0, paddingBottom: 16 },
+  content: { overflow: "hidden" },
+  contentInner: { gap: 16, paddingEnd: 40, paddingBottom: 12 },
 })
 
 function Accordion({
   style,
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Root> & {
+  variant?: AccordionVariant
+}) {
   const { colors } = useTheme()
   return (
     <LayoutAnimationConfig skipEntering>
       <AccordionPrimitive.Root
         style={(state) => [
           styles.root,
-          { borderColor: colors.border },
+          variant === "filled" && [
+            styles.filled,
+            { backgroundColor: colors.surfaceSecondary },
+          ],
           typeof style === "function" ? style(state) : style,
         ]}
         render={<Animated.View layout={LinearTransition.duration(200)} />}
@@ -67,8 +78,10 @@ function AccordionItem({
     <AccordionPrimitive.Item
       style={(state) => [
         styles.item,
-        { borderColor: colors.border },
-        state.open && { backgroundColor: colors.mutedSubtle },
+        state.index > 0 && [
+          styles.itemSeparated,
+          { borderColor: colors.separator },
+        ],
         typeof style === "function" ? style(state) : style,
       ]}
       render={<Animated.View layout={LinearTransition.duration(200)} />}
@@ -80,42 +93,53 @@ function AccordionItem({
 function AccordionTrigger({
   style,
   children,
+  onPressIn,
+  onPressOut,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
   const { colors } = useTheme()
-  const { open } = AccordionPrimitive.useItemContext()
+  const { open, disabled } = AccordionPrimitive.useItemContext()
+  const [pressed, setPressed] = React.useState(false)
 
   const progress = useDerivedValue(() =>
     open ? withTiming(1, { duration: 250 }) : withTiming(0, { duration: 200 })
   )
-  const chevronStyle = useAnimatedStyle(() => ({
+  const caretStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${progress.value * 180}deg` }],
   }))
 
   return (
     <TextStyleContext.Provider
       value={{
-        ...fontSize.sm,
+        ...fontSize.base,
+        flexShrink: 1,
         textAlign: "left",
-        fontWeight: "500",
-        color: colors.foreground,
+        color: disabled ? colors.labelQuaternary : colors.label,
+        textDecorationLine: pressed && !disabled ? "underline" : "none",
       }}
     >
-      <AccordionPrimitive.Header>
+      <AccordionPrimitive.Header style={styles.header}>
         <AccordionPrimitive.Trigger
           style={(state) => [
             styles.trigger,
-            state.disabled && styles.disabled,
             typeof style === "function" ? style(state) : style,
           ]}
+          onPressIn={(event: GestureResponderEvent) => {
+            setPressed(true)
+            onPressIn?.(event)
+          }}
+          onPressOut={(event: GestureResponderEvent) => {
+            setPressed(false)
+            onPressOut?.(event)
+          }}
           {...props}
         >
           {children}
-          <Animated.View style={chevronStyle}>
+          <Animated.View style={caretStyle}>
             <Icon
               as={CaretDownIcon}
               size={16}
-              color={colors.mutedForeground}
+              color={colors.labelSecondary}
               style={styles.icon}
             />
           </Animated.View>
@@ -135,7 +159,7 @@ function AccordionContent({
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...fontSize.sm, color: colors.foreground }}
+      value={{ ...fontSize.sm, color: colors.labelSecondary }}
     >
       <AccordionPrimitive.Panel style={styles.content} {...props}>
         <Animated.View
@@ -149,4 +173,5 @@ function AccordionContent({
   )
 }
 
+export type { AccordionVariant }
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }

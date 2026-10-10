@@ -1,18 +1,21 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
-import * as React from "react"
-import * as TogglePrimitive from "@/components/primitives/toggle"
+import { Pressable } from "react-native"
+import {
+  Toggle as TogglePrimitive,
+  type ToggleState,
+} from "@/components/primitives/toggle"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const toggleVariants = cva(
-  "group flex-row items-center justify-center gap-1 rounded-3xl active:bg-muted",
+  "flex-row items-center justify-center gap-1 rounded-lg",
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border border-input bg-transparent active:bg-muted",
+        outline: "border border-separator bg-transparent",
       },
       size: {
         default: "h-9 min-w-9 px-3",
@@ -27,32 +30,47 @@ const toggleVariants = cva(
   }
 )
 
+function toggleStateClassName(state: ToggleState) {
+  if (state.disabled) return state.pressed ? "bg-control-disabled" : undefined
+  return cn(
+    "active:scale-96",
+    state.pressed
+      ? "bg-item-hover active:bg-item-pressed"
+      : "active:bg-item-hover"
+  )
+}
+
+function toggleTextClassName(state: ToggleState) {
+  return cn(
+    "text-sm text-label",
+    state.pressed && "text-link",
+    state.disabled && "text-label-quaternary"
+  )
+}
+
 function Toggle({
   className,
   variant,
   size,
   ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> &
+}: React.ComponentProps<typeof TogglePrimitive> &
   VariantProps<typeof toggleVariants>) {
   return (
-    <TextClassContext.Provider
-      value={cn(
-        "text-sm font-medium text-foreground",
-        typeof className === "string" ? className : undefined
+    <TogglePrimitive
+      className={(state) =>
+        cn(
+          toggleVariants({ variant, size }),
+          toggleStateClassName(state),
+          resolveClassName(className, state)
+        )
+      }
+      render={(renderProps, state) => (
+        <TextClassContext.Provider value={toggleTextClassName(state)}>
+          <Pressable {...renderProps} />
+        </TextClassContext.Provider>
       )}
-    >
-      <TogglePrimitive.Root
-        className={(state) =>
-          cn(
-            toggleVariants({ variant, size }),
-            state.disabled && "opacity-50",
-            state.pressed && "bg-muted",
-            resolveClassName(className, state)
-          )
-        }
-        {...props}
-      />
-    </TextClassContext.Provider>
+      {...props}
+    />
   )
 }
 
@@ -60,10 +78,13 @@ function ToggleIcon({
   className,
   ...props
 }: React.ComponentProps<typeof Icon>) {
-  const textClass = React.useContext(TextClassContext)
-  return (
-    <Icon className={cn("size-4 shrink-0", textClass, className)} {...props} />
-  )
+  return <Icon className={cn("size-4 shrink-0", className)} {...props} />
 }
 
-export { Toggle, ToggleIcon, toggleVariants }
+export {
+  Toggle,
+  ToggleIcon,
+  toggleStateClassName,
+  toggleTextClassName,
+  toggleVariants,
+}

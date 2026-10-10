@@ -7,7 +7,12 @@ import {
 } from "react-native"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 type TextVariant =
   | "default"
@@ -32,54 +37,43 @@ const ROLE: Partial<Record<TextVariant, Role>> = {
 
 const styles = StyleSheet.create({
   default: { ...fontSize.base },
-  h1: {
-    ...fontSize["4xl"],
-    textAlign: "center",
-    fontWeight: "800",
-    letterSpacing: -0.9,
-  },
-  h2: {
-    ...fontSize["3xl"],
-    fontWeight: "600",
-    letterSpacing: -0.75,
-    borderBottomWidth: 1,
-    paddingBottom: 8,
-  },
-  h3: { ...fontSize["2xl"], fontWeight: "600", letterSpacing: -0.6 },
-  h4: { ...fontSize.xl, fontWeight: "600", letterSpacing: -0.5 },
-  p: { ...fontSize.base, lineHeight: 28, marginTop: 12 },
+  h1: { ...fontSize["3xl"], fontWeight: "700" },
+  h2: { ...fontSize["2xl"], fontWeight: "700" },
+  h3: { ...fontSize.xl, fontWeight: "600" },
+  h4: { ...fontSize.lg, fontWeight: "600" },
+  p: { ...fontSize.base, marginTop: 12 },
   blockquote: {
     ...fontSize.base,
     marginTop: 16,
-    borderLeftWidth: 2,
-    paddingLeft: 12,
+    borderStartWidth: 2,
+    paddingStart: 12,
     fontStyle: "italic",
   },
   code: {
     ...fontSize.sm,
     fontFamily: "Menlo",
     fontWeight: "600",
-    borderRadius: 4,
-    paddingHorizontal: 4.8,
-    paddingVertical: 3.2,
+    borderRadius: radius.sm,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
   },
-  lead: { ...fontSize.xl },
+  lead: { ...fontSize.lg },
   large: { ...fontSize.lg, fontWeight: "600" },
-  small: { ...fontSize.sm, fontWeight: "500", lineHeight: 14 },
+  small: { ...fontSize.sm, fontWeight: "500" },
   muted: { ...fontSize.sm },
 })
 
 function variantColors(variant: TextVariant, colors: ThemeColors): TextStyle {
   switch (variant) {
-    case "h2":
-      return { color: colors.foreground, borderColor: colors.border }
+    case "blockquote":
+      return { color: colors.label, borderColor: colors.separator }
     case "code":
-      return { color: colors.foreground, backgroundColor: colors.muted }
+      return { color: colors.label, backgroundColor: colors.surfaceSecondary }
     case "lead":
     case "muted":
-      return { color: colors.mutedForeground }
+      return { color: colors.labelSecondary }
     default:
-      return { color: colors.foreground }
+      return { color: colors.label }
   }
 }
 

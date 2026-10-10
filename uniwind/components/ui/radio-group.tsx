@@ -1,39 +1,58 @@
 import { cn } from "cn"
 import { View } from "react-native"
-import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
+import * as RadioPrimitive from "@/components/primitives/radio"
+import {
+  RadioGroup as RadioGroupPrimitive,
+  type RadioGroupProps,
+} from "@/components/primitives/radio-group"
 import { resolveClassName } from "@/components/primitives/use-render"
 
-function RadioGroup({
+const HIT_SLOP = { top: 8, bottom: 8, left: 12, right: 12 }
+
+function RadioGroup<Value = string>({
   className,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+}: RadioGroupProps<Value>) {
   return (
-    <RadioGroupPrimitive.Root
-      className={(state) => cn("gap-3", resolveClassName(className, state))}
+    <RadioGroupPrimitive<Value>
+      className={(state) =>
+        cn("w-full gap-3", resolveClassName(className, state))
+      }
       {...props}
     />
   )
 }
 
-function RadioGroupItem({
+function RadioGroupItem<Value = string>({
   className,
+  invalid,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+}: RadioPrimitive.RootProps<Value> & { invalid?: boolean }) {
   return (
-    <RadioGroupPrimitive.Item
+    <RadioPrimitive.Root<Value>
       className={(state) =>
         cn(
-          "aspect-square size-4 shrink-0 items-center justify-center rounded-full border border-transparent bg-input/90",
-          state.disabled && "opacity-50",
+          "aspect-square size-4 shrink-0 items-center justify-center rounded-full border",
+          state.checked
+            ? state.disabled
+              ? "border-transparent bg-accent-disabled"
+              : "border-accent bg-accent active:border-accent-pressed active:bg-accent-pressed"
+            : state.disabled
+              ? "border-label/10 bg-control-disabled dark:border-transparent"
+              : cn(
+                  "border-label/25 bg-surface shadow-xs active:bg-control dark:border-transparent dark:bg-label-quaternary dark:shadow-none",
+                  invalid && "border-danger dark:border-danger"
+                ),
           resolveClassName(className, state)
         )
       }
+      hitSlop={HIT_SLOP}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="size-4 items-center justify-center rounded-full bg-primary">
-        <View className="size-2 rounded-full bg-primary-foreground dark:size-2.5" />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
+      <RadioPrimitive.Indicator className="items-center justify-center">
+        <View className="size-2 rounded-full bg-on-accent dark:size-2.5" />
+      </RadioPrimitive.Indicator>
+    </RadioPrimitive.Root>
   )
 }
 

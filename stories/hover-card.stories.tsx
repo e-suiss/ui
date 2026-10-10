@@ -29,8 +29,8 @@ function ProfileCard() {
           An open-source framework for making universal native apps.
         </Text>
         <View className="flex-row items-center gap-2 pt-2">
-          <Icon as={CalendarIcon} className="text-muted-foreground size-4" />
-          <Text variant="muted" className="text-xs">
+          <Icon as={CalendarIcon} className="size-4 text-label-secondary" />
+          <Text className="text-xs text-label-secondary">
             Joined December 2015
           </Text>
         </View>

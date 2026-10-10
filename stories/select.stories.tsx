@@ -16,7 +16,7 @@ import {
 import { Text } from "@/components/ui/text"
 
 const fruits: Option[] = [
-  { value: "apple", label: "Apple" },
+  { value: "mango", label: "Mango" },
   { value: "banana", label: "Banana" },
   { value: "blueberry", label: "Blueberry" },
   { value: "grapes", label: "Grapes" },
@@ -58,7 +58,8 @@ function SelectDemo({
       <SelectTrigger
         size={size}
         accessibilityLabelledBy={labelledBy}
-        className={invalid ? "border-destructive w-48" : "w-48"}
+        invalid={invalid}
+        className="w-48"
       >
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
@@ -146,7 +147,9 @@ export const WithLabel: Story = {
     <View className="gap-2">
       <Label nativeID="select-fruit">Favorite fruit</Label>
       <SelectDemo labelledBy="select-fruit" />
-      <Text variant="muted">Used to personalize your recommendations.</Text>
+      <Text className="text-sm text-label-secondary">
+        Used to personalize your recommendations.
+      </Text>
     </View>
   ),
 }
@@ -159,7 +162,7 @@ export const Invalid: Story = {
   render: () => (
     <View className="gap-2">
       <SelectDemo invalid />
-      <Text className="text-destructive text-sm">Please select a fruit.</Text>
+      <Text className="text-sm text-danger">Please select a fruit.</Text>
     </View>
   ),
 }

@@ -2,12 +2,19 @@ import { cn } from "cn"
 import { XIcon } from "phosphor-react-native"
 import * as React from "react"
 import { Platform, View, type ViewProps } from "react-native"
-import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
+import {
+  FadeIn,
+  FadeOut,
+  Keyframe,
+  ReduceMotion,
+} from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as DialogPrimitive from "@/components/primitives/dialog"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
+import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
 
 const Dialog = DialogPrimitive.Root
 
@@ -20,6 +27,25 @@ const DialogClose = DialogPrimitive.Close
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
+const POPUP_ENTERING = new Keyframe({
+  0: { opacity: 0, transform: [{ scale: 0.95 }] },
+  100: { opacity: 1, transform: [{ scale: 1 }] },
+})
+  .duration(150)
+  .reduceMotion(ReduceMotion.System)
+
+const POPUP_EXITING = new Keyframe({
+  0: { opacity: 1, transform: [{ scale: 1 }] },
+  100: { opacity: 0, transform: [{ scale: 0.95 }] },
+})
+  .duration(100)
+  .reduceMotion(ReduceMotion.System)
+
+const DialogCloseContext = React.createContext({
+  hasCloseButton: false,
+  hasCloseLabel: false,
+})
+
 function DialogOverlay({
   className,
   ...props
@@ -29,13 +55,13 @@ function DialogOverlay({
       render={
         <AnimatedView
           as="Pressable"
-          entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
-          exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
+          entering={FadeIn.duration(150).reduceMotion(ReduceMotion.System)}
+          exiting={FadeOut.duration(100).reduceMotion(ReduceMotion.System)}
         />
       }
       className={(state) =>
         cn(
-          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-black/30",
+          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-scrim",
           resolveClassName(className, state)
         )
       }
@@ -44,55 +70,78 @@ function DialogOverlay({
   )
 }
 
+function DialogCloseButton({ closeLabel }: { closeLabel?: string }) {
+  return (
+    <DialogPrimitive.Close
+      render={
+        <Button
+          variant={closeLabel ? "plain" : "ghost"}
+          size={closeLabel ? "sm" : "icon-sm"}
+          className={cn(
+            "absolute top-[19px] right-4",
+            !closeLabel && "bg-surface-tertiary active:bg-separator"
+          )}
+        />
+      }
+      hitSlop={8}
+      accessibilityLabel={closeLabel ? undefined : "Close"}
+    >
+      {closeLabel ? (
+        <Text className="text-base">{closeLabel}</Text>
+      ) : (
+        <Icon as={XIcon} className="size-4 text-label" />
+      )}
+    </DialogPrimitive.Close>
+  )
+}
+
 function DialogContent({
   className,
   portalHost,
   showCloseButton = true,
+  closeLabel,
   children,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Popup> & {
   portalHost?: string
   showCloseButton?: boolean
+  closeLabel?: string
 }) {
+  const closeContext = React.useMemo(
+    () => ({
+      hasCloseButton: showCloseButton,
+      hasCloseLabel: showCloseButton && closeLabel !== undefined,
+    }),
+    [showCloseButton, closeLabel]
+  )
   return (
     <DialogPortal hostName={portalHost}>
       <FullWindowOverlay>
         <DialogOverlay />
         <View
-          className="absolute top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center p-4"
+          className="absolute top-0 right-0 bottom-0 left-0 z-50 items-center justify-center p-4"
           style={{ pointerEvents: "box-none" }}
         >
           <AnimatedView
-            entering={FadeIn.delay(50).reduceMotion(ReduceMotion.System)}
-            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-            style={{
-              width: "100%",
-              maxWidth: 448,
-              paddingHorizontal: 16,
-              pointerEvents: "box-none",
-            }}
+            entering={POPUP_ENTERING}
+            exiting={POPUP_EXITING}
+            className="w-full max-w-md"
+            style={{ pointerEvents: "box-none" }}
           >
             <DialogPrimitive.Popup
               className={(state) =>
                 cn(
-                  "z-50 mx-auto flex w-full flex-col gap-6 rounded-4xl border border-foreground-5 bg-popover p-6 shadow-xl sm:max-w-md dark:border-foreground-10",
+                  "z-50 w-full flex-col gap-6 rounded-2xl border border-label-5 bg-surface-raised p-6 shadow-xl dark:border-label-10",
                   resolveClassName(className, state)
                 )
               }
               {...props}
             >
-              {children}
+              <DialogCloseContext.Provider value={closeContext}>
+                {children}
+              </DialogCloseContext.Provider>
               {showCloseButton ? (
-                <DialogPrimitive.Close
-                  className="absolute top-4 right-4 size-8 items-center justify-center rounded-full bg-secondary active:bg-muted dark:active:bg-muted-50"
-                  hitSlop={12}
-                  accessibilityLabel="Close"
-                >
-                  <Icon
-                    as={XIcon}
-                    className="size-4 shrink-0 text-foreground"
-                  />
-                </DialogPrimitive.Close>
+                <DialogCloseButton closeLabel={closeLabel} />
               ) : null}
             </DialogPrimitive.Popup>
           </AnimatedView>
@@ -103,18 +152,41 @@ function DialogContent({
 }
 
 function DialogHeader({ className, ...props }: ViewProps) {
-  return <View className={cn("flex flex-col gap-1.5", className)} {...props} />
-}
-
-function DialogFooter({ className, ...props }: ViewProps) {
+  const { hasCloseButton, hasCloseLabel } = React.useContext(DialogCloseContext)
   return (
     <View
       className={cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+        "flex-col gap-1.5",
+        hasCloseButton && "pr-8",
+        hasCloseLabel && "pr-[4.5rem]",
         className
       )}
       {...props}
     />
+  )
+}
+
+function DialogFooter({
+  className,
+  showCloseButton = false,
+  children,
+  ...props
+}: ViewProps & { showCloseButton?: boolean }) {
+  return (
+    <View
+      className={cn(
+        "flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      {showCloseButton ? (
+        <DialogPrimitive.Close render={<Button variant="secondary" />}>
+          <Text>Close</Text>
+        </DialogPrimitive.Close>
+      ) : null}
+    </View>
   )
 }
 
@@ -126,7 +198,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-medium leading-none text-foreground",
+          "text-base font-semibold text-label",
           resolveClassName(className, state)
         )
       }
@@ -142,7 +214,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       className={(state) =>
-        cn("text-sm text-muted-foreground", resolveClassName(className, state))
+        cn("text-sm text-label-secondary", resolveClassName(className, state))
       }
       {...props}
     />

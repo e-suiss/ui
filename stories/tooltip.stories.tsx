@@ -37,7 +37,7 @@ export const Default: Story = {
 export const Sides: Story = {
   render: () => (
     <View className="items-center gap-4 py-12">
-      {(["top", "bottom"] as const).map((side) => (
+      {(["top", "right", "bottom", "left"] as const).map((side) => (
         <Tooltip key={side}>
           <TooltipTrigger render={<Button variant="outline" />}>
             <Text className="capitalize">{side}</Text>

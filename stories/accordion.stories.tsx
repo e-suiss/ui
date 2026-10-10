@@ -57,6 +57,14 @@ export const Default: Story = {
   ),
 }
 
+export const Filled: Story = {
+  render: () => (
+    <Accordion variant="filled">
+      <AccordionItems />
+    </Accordion>
+  ),
+}
+
 export const OpenByDefault: Story = {
   render: () => (
     <Accordion defaultValue={["item-2"]}>

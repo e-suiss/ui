@@ -1,9 +1,10 @@
 import { cn } from "cn"
 import * as React from "react"
 import { Platform, View, type ViewProps } from "react-native"
-import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
+import { Keyframe, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as PopoverPrimitive from "@/components/primitives/popover"
+import type { Side } from "@/components/primitives/types"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextClassContext } from "@/components/ui/text"
@@ -15,6 +16,46 @@ const PopoverTrigger = PopoverPrimitive.Trigger
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
+const ENTER_FROM: Record<Side, { translateX: number; translateY: number }> = {
+  top: { translateX: 0, translateY: 8 },
+  bottom: { translateX: 0, translateY: -8 },
+  left: { translateX: 8, translateY: 0 },
+  right: { translateX: -8, translateY: 0 },
+}
+
+function createEntering(side: Side) {
+  const from = ENTER_FROM[side]
+  return new Keyframe({
+    0: {
+      opacity: 0,
+      transform: [
+        { translateX: from.translateX },
+        { translateY: from.translateY },
+        { scale: 0.95 },
+      ],
+    },
+    100: {
+      opacity: 1,
+      transform: [{ translateX: 0 }, { translateY: 0 }, { scale: 1 }],
+    },
+  })
+    .duration(150)
+    .reduceMotion(ReduceMotion.System)
+}
+
+const ENTERING: Record<Side, ReturnType<typeof createEntering>> = {
+  top: createEntering("top"),
+  bottom: createEntering("bottom"),
+  left: createEntering("left"),
+  right: createEntering("right"),
+}
+
+const EXITING = new Keyframe({
+  0: { opacity: 1, transform: [{ scale: 1 }] },
+  100: { opacity: 0, transform: [{ scale: 0.95 }] },
+})
+  .duration(100)
+  .reduceMotion(ReduceMotion.System)
 function PopoverContent({
   className,
   align = "center",
@@ -40,19 +81,14 @@ function PopoverContent({
           sideOffset={sideOffset}
           className="z-50"
         >
-          <TextClassContext.Provider value="text-sm text-popover-foreground">
+          <TextClassContext.Provider value="text-base text-label">
             <PopoverPrimitive.Popup
               render={
-                <AnimatedView
-                  entering={FadeIn.duration(200).reduceMotion(
-                    ReduceMotion.System
-                  )}
-                  exiting={FadeOut.reduceMotion(ReduceMotion.System)}
-                />
+                <AnimatedView entering={ENTERING[side]} exiting={EXITING} />
               }
               className={(state) =>
                 cn(
-                  "z-50 w-72 flex-col gap-4 rounded-3xl border border-foreground-5 bg-popover p-4 shadow-lg dark:border-foreground-10",
+                  "z-50 w-72 flex-col gap-4 rounded-2xl border border-label-5 bg-surface-raised p-4 shadow-lg dark:border-label-10",
                   resolveClassName(className, state)
                 )
               }
@@ -66,7 +102,11 @@ function PopoverContent({
 }
 
 function PopoverHeader({ className, ...props }: ViewProps) {
-  return <View className={cn("flex flex-col gap-1", className)} {...props} />
+  return (
+    <TextClassContext.Provider value="text-sm text-label">
+      <View className={cn("flex-col gap-1", className)} {...props} />
+    </TextClassContext.Provider>
+  )
 }
 
 function PopoverTitle({
@@ -77,7 +117,7 @@ function PopoverTitle({
     <PopoverPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-medium text-popover-foreground",
+          "text-base font-semibold text-label",
           resolveClassName(className, state)
         )
       }
@@ -93,7 +133,7 @@ function PopoverDescription({
   return (
     <PopoverPrimitive.Description
       className={(state) =>
-        cn("text-sm text-muted-foreground", resolveClassName(className, state))
+        cn("text-sm text-label-secondary", resolveClassName(className, state))
       }
       {...props}
     />

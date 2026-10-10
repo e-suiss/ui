@@ -6,63 +6,67 @@ import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import { Icon } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({
   root: {
     position: "relative",
     width: "100%",
-    gap: 2,
-    borderRadius: 21.6,
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    flexDirection: "row",
+    gap: 12,
+    borderRadius: radius["2xl"],
+    padding: 20,
   },
-  iconWrapper: { position: "absolute", top: 14, left: 16 },
-  title: { marginLeft: 2, paddingLeft: 24, fontWeight: "500" },
-  description: { ...fontSize.sm, marginLeft: 2, paddingLeft: 24 },
+  withAction: { paddingEnd: 96 },
+  icon: { marginTop: 1 },
+  content: { flex: 1, gap: 2 },
+  title: { fontWeight: "600" },
+  action: { position: "absolute", top: 16, end: 16 },
 })
 
 function Alert({
   style,
-  variant,
+  variant = "default",
   children,
   icon,
   iconStyle,
   ...props
 }: React.ComponentProps<typeof View> &
   React.RefAttributes<View> & {
-    icon: PhosphorIcon
+    icon?: PhosphorIcon
     variant?: "default" | "destructive"
     iconStyle?: PhosphorIconProps["style"]
   }) {
   const { colors } = useTheme()
-  const isDestructive = variant === "destructive"
+  const nodes = React.Children.toArray(children)
+  const actions = nodes.filter(
+    (node) => React.isValidElement(node) && node.type === AlertAction
+  )
+  const content = nodes.filter((node) => !actions.includes(node))
   return (
     <TextStyleContext.Provider
-      value={{
-        ...fontSize.sm,
-        color: isDestructive ? colors.destructive : colors.cardForeground,
-      }}
+      value={{ ...fontSize.base, color: colors.label }}
     >
       <View
         role="alert"
         style={[
           styles.root,
-          { borderColor: colors.border, backgroundColor: colors.card },
+          { backgroundColor: colors.surfaceSecondary },
+          actions.length > 0 && styles.withAction,
           style,
         ]}
         {...props}
       >
-        <View style={styles.iconWrapper}>
+        {icon ? (
           <Icon
             as={icon}
-            size={16}
-            color={isDestructive ? colors.destructive : undefined}
-            style={iconStyle}
+            size={20}
+            color={variant === "destructive" ? colors.danger : colors.accent}
+            style={[styles.icon, iconStyle]}
           />
-        </View>
-        {children}
+        ) : null}
+        <View style={styles.content}>{content}</View>
+        {actions}
       </View>
     </TextStyleContext.Provider>
   )
@@ -77,22 +81,14 @@ function AlertDescription({
   ...props
 }: React.ComponentProps<typeof Text>) {
   const { colors } = useTheme()
-  const textStyle = React.useContext(TextStyleContext)
-  const isDestructive = textStyle?.color === colors.destructive
-  return (
-    <Text
-      style={[
-        styles.description,
-        {
-          color: isDestructive
-            ? colors.destructiveStrong
-            : colors.mutedForeground,
-        },
-        style,
-      ]}
-      {...props}
-    />
-  )
+  return <Text style={[{ color: colors.labelSecondary }, style]} {...props} />
 }
 
-export { Alert, AlertDescription, AlertTitle }
+function AlertAction({
+  style,
+  ...props
+}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  return <View style={[styles.action, style]} {...props} />
+}
+
+export { Alert, AlertAction, AlertDescription, AlertTitle }

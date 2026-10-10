@@ -1,5 +1,5 @@
 import { cn } from "cn"
-import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
+import { CaretRightIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
 import { Platform, Text, View } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
@@ -49,11 +49,11 @@ function DropdownMenuContent({
           sideOffset={sideOffset}
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-            <TextClassContext.Provider value="text-sm text-popover-foreground">
+            <TextClassContext.Provider value="text-base text-label">
               <MenuPrimitive.Popup
                 className={(state) =>
                   cn(
-                    "min-w-48 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+                    "min-w-48 rounded-xl border border-label/5 bg-surface-raised p-1.5 shadow-lg dark:border-label/10",
                     resolveClassName(className, state)
                   )
                 }
@@ -82,16 +82,16 @@ function DropdownMenuSubTrigger({
   return (
     <TextClassContext.Provider
       value={cn(
-        "select-none text-sm font-medium text-popover-foreground",
-        open && "text-accent-foreground"
+        "select-none text-base text-label",
+        props.disabled && "text-label-quaternary"
       )}
     >
       <MenuPrimitive.SubmenuTrigger
         className={(state) =>
           cn(
-            "group flex-row items-center gap-2 rounded-2xl px-3 py-2",
-            (state.highlighted || state.open) && "bg-accent",
-            state.disabled && "opacity-50",
+            "group flex-row items-center gap-2 rounded-md px-3 py-2",
+            state.highlighted && "bg-item-pressed",
+            state.open && !state.highlighted && "bg-item-selected",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -99,13 +99,9 @@ function DropdownMenuSubTrigger({
         {...props}
       >
         {children}
-        <Icon
-          as={open ? CaretUpIcon : CaretDownIcon}
-          className={cn(
-            "ml-auto size-4 shrink-0 text-foreground",
-            iconClassName
-          )}
-        />
+        <View className={cn("ml-auto shrink-0", open && "rotate-90")}>
+          <Icon as={CaretRightIcon} className={cn("size-4", iconClassName)} />
+        </View>
       </MenuPrimitive.SubmenuTrigger>
     </TextClassContext.Provider>
   )
@@ -120,7 +116,7 @@ function DropdownMenuSubContent({
       <MenuPrimitive.Popup
         className={(state) =>
           cn(
-            "min-w-36 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+            "min-w-36 rounded-xl border border-label/5 bg-surface-raised p-1.5 shadow-lg dark:border-label/10",
             resolveClassName(className, state)
           )
         }
@@ -143,19 +139,17 @@ function DropdownMenuItem({
   return (
     <TextClassContext.Provider
       value={cn(
-        "select-none text-sm font-medium text-popover-foreground",
-        destructive && "text-destructive"
+        "select-none text-base text-label",
+        destructive && "text-danger",
+        props.disabled && "text-label-quaternary"
       )}
     >
       <MenuPrimitive.Item
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-2xl px-3 py-2",
+            "group relative flex-row items-center gap-2.5 rounded-md px-3 py-2",
             state.highlighted &&
-              (destructive
-                ? "bg-destructive/10 dark:bg-destructive/20"
-                : "bg-accent"),
-            state.disabled && "opacity-50",
+              (destructive ? "bg-danger-surface-pressed" : "bg-item-pressed"),
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -176,13 +170,17 @@ function DropdownMenuCheckboxItem({
   inset?: boolean
 }) {
   return (
-    <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
+    <TextClassContext.Provider
+      value={cn(
+        "select-none text-base text-label",
+        props.disabled && "text-label-quaternary"
+      )}
+    >
       <MenuPrimitive.CheckboxItem
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3",
-            state.highlighted && "bg-accent",
-            state.disabled && "opacity-50",
+            "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+            state.highlighted && "bg-item-pressed",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -191,7 +189,7 @@ function DropdownMenuCheckboxItem({
       >
         <View className="absolute right-2 size-4 items-center justify-center">
           <MenuPrimitive.CheckboxItemIndicator>
-            <Icon as={CheckIcon} className="size-4 text-foreground" />
+            <Icon as={CheckIcon} className="size-4" />
           </MenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
@@ -210,13 +208,17 @@ function DropdownMenuRadioItem({
   inset?: boolean
 }) {
   return (
-    <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
+    <TextClassContext.Provider
+      value={cn(
+        "select-none text-base text-label",
+        props.disabled && "text-label-quaternary"
+      )}
+    >
       <MenuPrimitive.RadioItem
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3",
-            state.highlighted && "bg-accent",
-            state.disabled && "opacity-50",
+            "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+            state.highlighted && "bg-item-pressed",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -225,7 +227,7 @@ function DropdownMenuRadioItem({
       >
         <View className="absolute right-2 size-4 items-center justify-center">
           <MenuPrimitive.RadioItemIndicator>
-            <Icon as={CheckIcon} className="size-4 text-foreground" />
+            <Icon as={CheckIcon} className="size-4" />
           </MenuPrimitive.RadioItemIndicator>
         </View>
         {children}
@@ -245,7 +247,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs text-muted-foreground",
+          "px-3 py-2.5 text-xs font-semibold text-label-secondary",
           inset && "pl-9.5",
           resolveClassName(className, state)
         )
@@ -263,7 +265,7 @@ function DropdownMenuSeparator({
     <MenuPrimitive.Separator
       className={(state) =>
         cn(
-          "-mx-1.5 my-1.5 h-px bg-border/50",
+          "-mx-1.5 my-1.5 h-px bg-separator/50",
           resolveClassName(className, state)
         )
       }
@@ -278,10 +280,7 @@ function DropdownMenuShortcut({
 }: React.ComponentProps<typeof Text>) {
   return (
     <Text
-      className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground",
-        className
-      )}
+      className={cn("ml-auto text-xs text-label-secondary", className)}
       {...props}
     />
   )

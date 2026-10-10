@@ -1,30 +1,75 @@
 import { cn } from "cn"
+import * as React from "react"
 import { View } from "react-native"
 import { Text, TextClassContext } from "@/components/ui/text"
 
+type CardSize = "default" | "sm"
+
+type CardVariant = "default" | "filled"
+
+const CardSizeContext = React.createContext<CardSize>("default")
+
+const SPACING_X: Record<CardSize, string> = { default: "px-6", sm: "px-4" }
+
 function Card({
   className,
+  size = "default",
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<View> & {
+    size?: CardSize
+    variant?: CardVariant
+  }) {
   return (
-    <TextClassContext.Provider value="text-card-foreground">
-      <View
-        className={cn(
-          "flex flex-col gap-6 overflow-hidden rounded-4xl border border-foreground-5 bg-card py-6 shadow-md dark:border-foreground-10",
-          className
-        )}
-        {...props}
-      />
-    </TextClassContext.Provider>
+    <CardSizeContext.Provider value={size}>
+      <TextClassContext.Provider value="text-base text-label">
+        <View
+          className={cn(
+            "flex-col overflow-hidden rounded-2xl",
+            size === "sm" ? "gap-4 py-4" : "gap-6 py-6",
+            variant === "filled"
+              ? "bg-surface-secondary"
+              : "border border-label-5 bg-surface-raised shadow-md dark:border-label-10",
+            className
+          )}
+          {...props}
+        />
+      </TextClassContext.Provider>
+    </CardSizeContext.Provider>
   )
 }
 
 function CardHeader({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  const size = React.useContext(CardSizeContext)
+  const nodes = React.Children.toArray(children)
+  const action = nodes.find(
+    (node) => React.isValidElement(node) && node.type === CardAction
+  )
+  if (!action) {
+    return (
+      <View
+        className={cn("flex-col gap-1.5", SPACING_X[size], className)}
+        {...props}
+      >
+        {children}
+      </View>
+    )
+  }
   return (
-    <View className={cn("flex flex-col gap-1.5 px-6", className)} {...props} />
+    <View
+      className={cn("flex-row items-start gap-1.5", SPACING_X[size], className)}
+      {...props}
+    >
+      <View className="flex-1 flex-col gap-1.5">
+        {nodes.filter((node) => node !== action)}
+      </View>
+      {action}
+    </View>
   )
 }
 
@@ -37,7 +82,7 @@ function CardTitle({
     <Text
       ref={ref}
       role="heading"
-      className={cn("text-base font-medium leading-snug", className)}
+      className={cn("text-base font-semibold", className)}
       {...props}
     />
   )
@@ -49,29 +94,46 @@ function CardDescription({
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
   return (
     <Text
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn("text-sm text-label-secondary", className)}
       {...props}
     />
   )
+}
+
+function CardAction({
+  className,
+  ...props
+}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  return <View className={cn("self-start", className)} {...props} />
 }
 
 function CardContent({
   className,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
-  return <View className={cn("px-6", className)} {...props} />
+  const size = React.useContext(CardSizeContext)
+  return <View className={cn(SPACING_X[size], className)} {...props} />
 }
 
 function CardFooter({
   className,
   ...props
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+  const size = React.useContext(CardSizeContext)
   return (
     <View
-      className={cn("flex flex-row items-center px-6", className)}
+      className={cn("flex-row items-center", SPACING_X[size], className)}
       {...props}
     />
   )
 }
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
+export {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+}

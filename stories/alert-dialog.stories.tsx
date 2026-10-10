@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
+import { TrashIcon } from "phosphor-react-native"
 import { View } from "react-native"
 import {
   AlertDialog,
@@ -8,10 +9,12 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
 function AlertDialogBody() {
@@ -71,6 +74,66 @@ export const OpenByDefault: Story = {
   ),
 }
 
+export const Small: Story = {
+  render: () => (
+    <View className="items-start">
+      <AlertDialog>
+        <AlertDialogTrigger render={<Button variant="outline" />}>
+          <Text>Discard draft</Text>
+        </AlertDialogTrigger>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Discard draft?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your unsaved message will be lost.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Text>Keep</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction variant="destructive">
+              <Text>Discard</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </View>
+  ),
+}
+
+export const WithMedia: Story = {
+  render: () => (
+    <View className="items-start">
+      <AlertDialog>
+        <AlertDialogTrigger render={<Button variant="destructive" />}>
+          <Text>Delete project</Text>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-danger/10">
+              <Icon as={TrashIcon} className="text-danger" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This permanently removes the project and all of its files. This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Text>Cancel</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction variant="destructive">
+              <Text>Delete</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </View>
+  ),
+}
+
 export const Destructive: Story = {
   render: () => (
     <View className="items-start">
@@ -89,8 +152,8 @@ export const Destructive: Story = {
             <AlertDialogCancel>
               <Text>Cancel</Text>
             </AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive">
-              <Text className="text-white">Delete</Text>
+            <AlertDialogAction variant="destructive">
+              <Text>Delete</Text>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

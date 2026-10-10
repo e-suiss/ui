@@ -10,19 +10,22 @@ type IconProps = PhosphorIconProps & {
   as: PhosphorIcon
 }
 
-function Icon({ as: IconComponent, size = 20, color, ...props }: IconProps) {
+const IconSizeContext = React.createContext<number | undefined>(undefined)
+
+function Icon({ as: IconComponent, size, color, ...props }: IconProps) {
   const { colors } = useTheme()
   const inherited = React.useContext(TextStyleContext)
+  const inheritedSize = React.useContext(IconSizeContext)
   const inheritedColor =
     typeof inherited?.color === "string" ? inherited.color : undefined
   return (
     <IconComponent
-      size={size}
-      color={color ?? inheritedColor ?? colors.foreground}
+      size={size ?? inheritedSize ?? 20}
+      color={color ?? inheritedColor ?? colors.label}
       {...props}
     />
   )
 }
 
 export type { IconProps }
-export { Icon }
+export { Icon, IconSizeContext }

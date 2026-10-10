@@ -1,11 +1,16 @@
 import { cn } from "cn"
-import { CaretDownIcon, CheckIcon } from "phosphor-react-native"
+import { CaretUpDownIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
-import { Platform } from "react-native"
+import { Platform, type StyleProp, type ViewStyle } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
+import { useFieldRootContext } from "@/components/primitives/field"
+import { useOptionalPositionerContext } from "@/components/primitives/positioner"
 import * as SelectPrimitive from "@/components/primitives/select"
-import { resolveClassName } from "@/components/primitives/use-render"
+import {
+  resolveClassName,
+  resolveStyle,
+} from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
@@ -17,19 +22,33 @@ interface Option {
 
 const Select = SelectPrimitive.Root
 
-const SelectGroup = SelectPrimitive.Group
+const SelectTriggerContext = React.createContext({ disabled: false })
+
+function SelectGroup({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
+  return (
+    <SelectPrimitive.Group
+      className={(state) => cn("p-1.5", resolveClassName(className, state))}
+      {...props}
+    />
+  )
+}
 
 function SelectValue({
   className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
+  const { disabled } = React.useContext(SelectTriggerContext)
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
       className={(state) =>
         cn(
-          "flex flex-row items-center gap-1.5 text-sm text-foreground",
-          state.placeholder && "text-muted-foreground",
+          "flex-1 text-left text-base text-label",
+          state.placeholder && "text-label-secondary",
+          disabled && "text-label-quaternary",
           resolveClassName(className, state)
         )
       }
@@ -42,26 +61,36 @@ function SelectTrigger({
   className,
   children,
   size = "default",
+  invalid,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   children?: React.ReactNode
   size?: "default" | "sm"
+  invalid?: boolean
 }) {
+  const field = useFieldRootContext()
+  const select = SelectPrimitive.useSelectRootContext("SelectTrigger")
+  const isInvalid = invalid ?? field.state.invalid
+  const disabled = !!props.disabled || select.floating.disabled
+  const context = React.useMemo(() => ({ disabled }), [disabled])
   return (
     <SelectPrimitive.Trigger
       className={(state) =>
         cn(
-          "h-9 flex-row items-center justify-between gap-1.5 rounded-3xl border border-transparent bg-input-50 px-3 py-2",
-          state.disabled && "opacity-50",
-          size === "sm" && "h-8",
+          "h-11 flex-row items-center justify-between gap-1.5 self-start rounded-lg border border-transparent bg-control px-3 py-2",
+          size === "sm" && "h-9 rounded-md",
+          isInvalid && "border-danger bg-danger-5 dark:bg-danger-10",
+          state.disabled && "bg-control-disabled",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
-      {children}
+      <SelectTriggerContext.Provider value={context}>
+        {children}
+      </SelectTriggerContext.Provider>
       <SelectPrimitive.Icon>
-        <Icon as={CaretDownIcon} className="size-4 text-muted-foreground" />
+        <Icon as={CaretUpDownIcon} className="size-4 text-label-secondary" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -72,9 +101,36 @@ const FullWindowOverlay =
 
 type PositionerProps = React.ComponentProps<typeof SelectPrimitive.Positioner>
 
-function SelectContent({
+function ContentPopup({
   className,
+  style,
   children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Popup>) {
+  const positioner = useOptionalPositionerContext()
+  const width = positioner?.anchorWidth || undefined
+  return (
+    <SelectPrimitive.Popup
+      className={(state) =>
+        cn(
+          "relative min-w-36 overflow-hidden rounded-xl border border-label-5 bg-surface-raised shadow-lg dark:border-label-10",
+          resolveClassName(className, state)
+        )
+      }
+      style={(state) => [
+        { width },
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
+      ]}
+      {...props}
+    >
+      <SelectPrimitive.List className="relative w-full">
+        {children}
+      </SelectPrimitive.List>
+    </SelectPrimitive.Popup>
+  )
+}
+
+function SelectContent({
   side = "bottom",
   sideOffset = 4,
   align = "center",
@@ -98,20 +154,8 @@ function SelectContent({
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
-            <TextClassContext.Provider value="text-sm text-popover-foreground">
-              <SelectPrimitive.Popup
-                className={(state) =>
-                  cn(
-                    "relative min-w-36 rounded-3xl border border-foreground-5 bg-popover shadow-lg dark:border-foreground-10",
-                    resolveClassName(className, state)
-                  )
-                }
-                {...props}
-              >
-                <SelectPrimitive.List className="w-full p-1.5">
-                  {children}
-                </SelectPrimitive.List>
-              </SelectPrimitive.Popup>
+            <TextClassContext.Provider value="text-base text-label">
+              <ContentPopup {...props} />
             </TextClassContext.Provider>
           </AnimatedView>
         </SelectPrimitive.Positioner>
@@ -128,7 +172,7 @@ function SelectLabel({
     <SelectPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs text-muted-foreground",
+          "px-3 py-2.5 text-xs font-semibold text-label-secondary",
           resolveClassName(className, state)
         )
       }
@@ -148,20 +192,26 @@ function SelectItem({
     <SelectPrimitive.Item
       className={(state) =>
         cn(
-          "relative w-full flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3",
-          state.highlighted && "bg-accent",
-          state.disabled && "opacity-50",
+          "relative w-full flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+          state.highlighted && "bg-item-pressed",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
-      <SelectPrimitive.ItemIndicator className="absolute right-2 size-4 items-center justify-center">
-        <Icon as={CheckIcon} className="size-4 shrink-0 text-foreground" />
-      </SelectPrimitive.ItemIndicator>
-      <SelectPrimitive.ItemText className="select-none text-sm font-medium text-foreground">
+      <SelectPrimitive.ItemText
+        className={(state) =>
+          cn(
+            "flex-1 select-none text-base text-label",
+            state.disabled && "text-label-quaternary"
+          )
+        }
+      >
         {children}
       </SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemIndicator className="absolute right-2 size-4 items-center justify-center">
+        <Icon as={CheckIcon} className="size-4 shrink-0 text-link" />
+      </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
 }
@@ -173,7 +223,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       className={(state) =>
-        cn("-mx-1.5 my-1.5 h-px bg-border", resolveClassName(className, state))
+        cn("my-1.5 h-px bg-separator", resolveClassName(className, state))
       }
       {...props}
     />

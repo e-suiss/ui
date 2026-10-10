@@ -16,7 +16,7 @@ export const Default: Story = {
   render: () => (
     <View>
       <View className="gap-1">
-        <Text className="text-sm font-medium leading-none">esuiss</Text>
+        <Text className="text-sm font-medium">esuiss</Text>
         <Text variant="muted">An open-source UI component library.</Text>
       </View>
       <Separator className="my-4" />

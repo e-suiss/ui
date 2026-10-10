@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import * as SeparatorPrimitive from "@/components/primitives/separator"
+import { Separator as SeparatorPrimitive } from "@/components/primitives/separator"
 import { useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({
@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
 function Separator({
   style,
   ...props
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
+}: React.ComponentProps<typeof SeparatorPrimitive>) {
   const { colors } = useTheme()
   return (
-    <SeparatorPrimitive.Root
+    <SeparatorPrimitive
       style={(state) => [
         styles.root,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.separator },
         state.orientation === "horizontal"
           ? styles.horizontal
           : styles.vertical,

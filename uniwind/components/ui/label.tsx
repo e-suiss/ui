@@ -13,12 +13,7 @@ function Label({
 }: React.ComponentProps<typeof LabelPrimitive.Text>) {
   return (
     <LabelPrimitive.Root
-      className={(state) =>
-        cn(
-          "flex select-none flex-row items-center gap-2",
-          state.disabled && "opacity-50"
-        )
-      }
+      className="flex-row items-center gap-2"
       onPress={onPress}
       onLongPress={onLongPress}
       onPressIn={onPressIn}
@@ -28,7 +23,8 @@ function Label({
       <LabelPrimitive.Text
         className={(state) =>
           cn(
-            "text-foreground text-sm font-medium",
+            "text-base font-semibold text-label",
+            state.disabled && "text-label-quaternary",
             resolveClassName(className, state)
           )
         }

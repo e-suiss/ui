@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
 import * as React from "react"
 import { View } from "react-native"
-import { Progress } from "@/components/ui/progress"
-import { Text } from "@/components/ui/text"
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress"
 
 const meta = {
   title: "Components/Progress",
@@ -22,7 +25,7 @@ function ProgressDemo() {
     const timer = setTimeout(() => setValue(66), 500)
     return () => clearTimeout(timer)
   }, [])
-  return <Progress value={value} className="w-full" />
+  return <Progress value={value} />
 }
 
 export const Default: Story = {
@@ -38,13 +41,10 @@ function WithLabelDemo() {
     return () => clearInterval(timer)
   }, [])
   return (
-    <View className="w-full gap-2">
-      <View className="flex-row items-center justify-between">
-        <Text className="text-sm font-medium">Uploading</Text>
-        <Text variant="muted">{value}%</Text>
-      </View>
-      <Progress value={value} />
-    </View>
+    <Progress value={value}>
+      <ProgressLabel>Uploading</ProgressLabel>
+      <ProgressValue />
+    </Progress>
   )
 }
 
@@ -65,7 +65,7 @@ export const Values: Story = {
       <Progress value={25} />
       <Progress value={50} />
       <Progress value={75} />
-      <Progress value={100} indicatorClassName="bg-primary" />
+      <Progress value={100} indicatorClassName="bg-green" />
     </View>
   ),
 }

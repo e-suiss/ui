@@ -1,6 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-native"
+import { CheckIcon } from "phosphor-react-native"
 import { View } from "react-native"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
 const people = [
@@ -48,7 +57,7 @@ export const Fallback: Story = {
   render: () => (
     <Avatar accessibilityLabel="Alan Turing">
       <AvatarFallback>
-        <Text className="text-sm">AT</Text>
+        <Text>AT</Text>
       </AvatarFallback>
     </Avatar>
   ),
@@ -57,53 +66,56 @@ export const Fallback: Story = {
 export const Sizes: Story = {
   render: () => (
     <View className="flex-row items-center gap-4">
-      <Avatar className="size-6">
-        <AvatarImage
-          alt="Ada Lovelace"
-          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
-        />
-        <AvatarFallback>
-          <Text className="text-xs">SM</Text>
-        </AvatarFallback>
-      </Avatar>
-      <Avatar>
-        <AvatarImage
-          alt="Ada Lovelace"
-          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
-        />
-        <AvatarFallback>
-          <Text className="text-sm">MD</Text>
-        </AvatarFallback>
-      </Avatar>
-      <Avatar className="size-12">
-        <AvatarImage
-          alt="Ada Lovelace"
-          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
-        />
-        <AvatarFallback>
-          <Text>LG</Text>
-        </AvatarFallback>
-      </Avatar>
+      {(["sm", "default", "lg", "xl"] as const).map((size) => (
+        <Avatar key={size} size={size}>
+          <AvatarImage
+            alt="Ada Lovelace"
+            source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+          />
+          <AvatarFallback>
+            <Text>AL</Text>
+          </AvatarFallback>
+        </Avatar>
+      ))}
     </View>
   ),
 }
 
 export const Group: Story = {
   render: () => (
-    <View className="flex-row">
+    <AvatarGroup>
       {people.map((person) => (
-        <Avatar key={person.name} className="border-background -mr-2 border-2">
+        <Avatar key={person.name}>
           <AvatarImage alt={person.name} source={{ uri: person.uri }} />
           <AvatarFallback>
-            <Text className="text-xs">{person.initials}</Text>
+            <Text>{person.initials}</Text>
           </AvatarFallback>
         </Avatar>
       ))}
-      <Avatar accessibilityLabel="More" className="border-background border-2">
-        <AvatarFallback>
-          <Text className="text-xs">+4</Text>
-        </AvatarFallback>
-      </Avatar>
+      <AvatarGroupCount accessibilityLabel="4 more">
+        <Text>+4</Text>
+      </AvatarGroupCount>
+    </AvatarGroup>
+  ),
+}
+
+export const WithBadge: Story = {
+  render: () => (
+    <View className="flex-row items-center gap-4">
+      {(["sm", "default", "lg", "xl"] as const).map((size) => (
+        <Avatar key={size} size={size}>
+          <AvatarImage
+            alt="Alan Turing"
+            source={{ uri: "https://i.pravatar.cc/150?img=12" }}
+          />
+          <AvatarFallback>
+            <Text>AT</Text>
+          </AvatarFallback>
+          <AvatarBadge>
+            <Icon as={CheckIcon} weight="bold" />
+          </AvatarBadge>
+        </Avatar>
+      ))}
     </View>
   ),
 }

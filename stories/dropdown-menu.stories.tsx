@@ -92,7 +92,7 @@ export const Default: Story = {
           </DropdownMenuSub>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive">
-            <Icon as={SignOutIcon} className="text-destructive size-4" />
+            <Icon as={SignOutIcon} className="size-4" />
             <Text>Log out</Text>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -237,7 +237,7 @@ export const OpenByDefault: Story = {
           </DropdownMenuSub>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive">
-            <Icon as={SignOutIcon} className="text-destructive size-4" />
+            <Icon as={SignOutIcon} className="size-4" />
             <Text>Log out</Text>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

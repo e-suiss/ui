@@ -39,9 +39,9 @@ export const Colors: Story = {
   render: () => (
     <View className="flex-row items-center gap-4">
       <Icon as={InfoIcon} />
-      <Icon as={GearIcon} className="text-muted-foreground" />
-      <Icon as={HeartIcon} className="text-primary" weight="fill" />
-      <Icon as={WarningIcon} className="text-destructive" />
+      <Icon as={GearIcon} className="text-label-secondary" />
+      <Icon as={HeartIcon} className="text-accent" weight="fill" />
+      <Icon as={WarningIcon} className="text-danger" />
     </View>
   ),
 }
