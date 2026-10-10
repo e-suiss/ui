@@ -3,12 +3,17 @@
   "homepage": "https://github.com/e-suiss/uim",
   "styles": {
     "uniwind": {
-      "stylesheet": "styles/uniwind.css"
+      "stylesheet": "styles/uniwind.css",
+      "directory": "uniwind"
     },
     "nativewind": {
       "stylesheet": "styles/nativewind.css",
       "config": "styles/nativewind.config.js",
       "directory": "nativewind"
+    },
+    "stylesheet": {
+      "theme": "stylesheet/components/ui/theme.ts",
+      "directory": "stylesheet"
     }
   },
   "items": [
@@ -32,6 +37,13 @@
           "react-native-reanimated",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/accordion",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -42,7 +54,9 @@
         "components/ui/accordion.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -63,6 +77,12 @@
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/alert-dialog",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -74,7 +94,9 @@
         "components/ui/alert-dialog.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -91,6 +113,10 @@
           "cn",
           "phosphor-react-native",
           "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
         ]
       },
       "requires": [
@@ -101,7 +127,9 @@
         "components/ui/alert.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -116,11 +144,20 @@
         "nativewind": [
           "react-native-reanimated",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/animated-view.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -133,11 +170,19 @@
         ],
         "nativewind": [
           "@rn-primitives/aspect-ratio"
+        ],
+        "stylesheet": [
+          "@rn-primitives/aspect-ratio"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/aspect-ratio.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -152,6 +197,9 @@
         "nativewind": [
           "@rn-primitives/avatar",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/avatar"
         ]
       },
       "requires": [
@@ -159,6 +207,11 @@
       ],
       "files": [
         "components/ui/avatar.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -175,6 +228,9 @@
           "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/slot"
         ]
       },
       "requires": [
@@ -184,7 +240,9 @@
         "components/ui/badge.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -199,7 +257,8 @@
         "nativewind": [
           "class-variance-authority",
           "cn"
-        ]
+        ],
+        "stylesheet": []
       },
       "requires": [
         "text"
@@ -208,7 +267,9 @@
         "components/ui/button.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -221,7 +282,8 @@
         ],
         "nativewind": [
           "cn"
-        ]
+        ],
+        "stylesheet": []
       },
       "requires": [
         "text"
@@ -230,7 +292,9 @@
         "components/ui/card.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -249,16 +313,24 @@
           "cn",
           "phosphor-react-native",
           "react-native-svg"
+        ],
+        "stylesheet": [
+          "@rn-primitives/checkbox",
+          "phosphor-react-native",
+          "react-native-svg"
         ]
       },
       "requires": [
-        "icon"
+        "icon",
+        "text"
       ],
       "files": [
         "components/ui/checkbox.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -271,11 +343,19 @@
         ],
         "nativewind": [
           "@rn-primitives/collapsible"
+        ],
+        "stylesheet": [
+          "@rn-primitives/collapsible"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/collapsible.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -300,6 +380,14 @@
           "react-native-screens",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/context-menu",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -311,7 +399,9 @@
         "components/ui/context-menu.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -336,6 +426,14 @@
           "react-native-screens",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/dialog",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -346,7 +444,9 @@
         "components/ui/dialog.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -371,6 +471,14 @@
           "react-native-screens",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/dropdown-menu",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -382,7 +490,9 @@
         "components/ui/dropdown-menu.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -403,6 +513,12 @@
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/hover-card",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -413,7 +529,9 @@
         "components/ui/hover-card.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -432,6 +550,10 @@
           "nativewind",
           "phosphor-react-native",
           "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
         ]
       },
       "requires": [
@@ -441,7 +563,9 @@
         "components/ui/icon.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -455,14 +579,17 @@
         "nativewind": [
           "cn",
           "nativewind"
-        ]
+        ],
+        "stylesheet": []
       },
       "requires": [],
       "files": [
         "components/ui/input.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -477,11 +604,19 @@
         "nativewind": [
           "@rn-primitives/label",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/label"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/label.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -508,6 +643,15 @@
           "react-native-screens",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/menubar",
+          "@rn-primitives/portal",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -519,7 +663,9 @@
         "components/ui/menubar.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -540,6 +686,12 @@
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/popover",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -550,7 +702,9 @@
         "components/ui/popover.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -569,11 +723,21 @@
           "cn",
           "react-native-reanimated",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/progress",
+          "react-native-reanimated",
+          "react-native-worklets"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/progress.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -588,6 +752,9 @@
         "nativewind": [
           "@rn-primitives/radio-group",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/radio-group"
         ]
       },
       "requires": [],
@@ -595,7 +762,9 @@
         "components/ui/radio-group.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -620,6 +789,14 @@
           "react-native-screens",
           "react-native-svg",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/select",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -631,7 +808,9 @@
         "components/ui/select.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -646,11 +825,19 @@
         "nativewind": [
           "@rn-primitives/separator",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/separator"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/separator.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -667,11 +854,20 @@
           "cn",
           "react-native-reanimated",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/skeleton.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -686,6 +882,9 @@
         "nativewind": [
           "@rn-primitives/switch",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/switch"
         ]
       },
       "requires": [],
@@ -693,7 +892,9 @@
         "components/ui/switch.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -708,6 +909,9 @@
         "nativewind": [
           "@rn-primitives/tabs",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/tabs"
         ]
       },
       "requires": [
@@ -717,7 +921,9 @@
         "components/ui/tabs.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -734,11 +940,19 @@
           "@rn-primitives/slot",
           "class-variance-authority",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/slot"
         ]
       },
       "requires": [],
       "files": [
         "components/ui/text.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -752,14 +966,17 @@
         "nativewind": [
           "cn",
           "nativewind"
-        ]
+        ],
+        "stylesheet": []
       },
       "requires": [],
       "files": [
         "components/ui/textarea.tsx"
       ],
       "overrides": [
-        "nativewind"
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -776,6 +993,9 @@
           "@rn-primitives/toggle-group",
           "class-variance-authority",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/toggle-group"
         ]
       },
       "requires": [
@@ -785,6 +1005,11 @@
       ],
       "files": [
         "components/ui/toggle-group.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -801,6 +1026,9 @@
           "@rn-primitives/toggle",
           "class-variance-authority",
           "cn"
+        ],
+        "stylesheet": [
+          "@rn-primitives/toggle"
         ]
       },
       "requires": [
@@ -809,6 +1037,11 @@
       ],
       "files": [
         "components/ui/toggle.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     },
     {
@@ -829,6 +1062,12 @@
           "react-native-reanimated",
           "react-native-screens",
           "react-native-worklets"
+        ],
+        "stylesheet": [
+          "@rn-primitives/tooltip",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-worklets"
         ]
       },
       "requires": [
@@ -837,6 +1076,11 @@
       ],
       "files": [
         "components/ui/tooltip.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
       ]
     }
   ]
