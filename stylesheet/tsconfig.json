@@ -1,0 +1,17 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/components/primitives/*": ["../components/primitives/*"],
+      "@/components/*": ["./components/*"],
+      "@/*": ["../*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../components/primitives/**/*.ts",
+    "../components/primitives/**/*.tsx"
+  ]
+}
