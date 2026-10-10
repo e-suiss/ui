@@ -21,7 +21,6 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -58,17 +57,14 @@ export const Default: Story = {
             <DropdownMenuItem>
               <Icon as={UserIcon} className="size-4" />
               <Text>Profile</Text>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Icon as={CreditCardIcon} className="size-4" />
               <Text>Billing</Text>
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Icon as={GearIcon} className="size-4" />
               <Text>Settings</Text>
-              <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -94,7 +90,6 @@ export const Default: Story = {
           <DropdownMenuItem variant="destructive">
             <Icon as={SignOutIcon} className="size-4" />
             <Text>Log out</Text>
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -203,17 +198,14 @@ export const OpenByDefault: Story = {
             <DropdownMenuItem>
               <Icon as={UserIcon} className="size-4" />
               <Text>Profile</Text>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Icon as={CreditCardIcon} className="size-4" />
               <Text>Billing</Text>
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Icon as={GearIcon} className="size-4" />
               <Text>Settings</Text>
-              <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -239,7 +231,6 @@ export const OpenByDefault: Story = {
           <DropdownMenuItem variant="destructive">
             <Icon as={SignOutIcon} className="size-4" />
             <Text>Log out</Text>
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

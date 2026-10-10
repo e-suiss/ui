@@ -258,7 +258,7 @@ private fun Scene(scene: Scene) {
         ) {
             DropdownMenuGroup {
                 DropdownMenuLabel("My Account")
-                DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
+                DropdownMenuItem("Profile", onClick = {})
                 DropdownMenuItem("Duplicate", onClick = {}, icon = PhosphorIcons.Regular.Copy)
                 DropdownMenuSub("Invite users") {
                     DropdownMenuItem("Email", onClick = {})
@@ -283,7 +283,7 @@ private fun Scene(scene: Scene) {
             },
             modifier = Modifier.testTag(Overlay),
         ) {
-            DropdownMenuItem("Back", onClick = {}, shortcut = "⌘[")
+            DropdownMenuItem("Back", onClick = {})
             DropdownMenuItem("Forward", onClick = {}, enabled = false)
             DropdownMenuItem("Reload", onClick = {})
         }

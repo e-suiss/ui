@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import { CaretRightIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
-import { Platform, Text, View } from "react-native"
+import { Platform, View } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as ContextMenuPrimitive from "@/components/primitives/context-menu"
@@ -275,18 +275,6 @@ function ContextMenuSeparator({
   )
 }
 
-function ContextMenuShortcut({
-  className,
-  ...props
-}: React.ComponentProps<typeof Text>) {
-  return (
-    <Text
-      className={cn("ml-auto text-xs text-label-secondary", className)}
-      {...props}
-    />
-  )
-}
-
 export {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -297,7 +285,6 @@ export {
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
   ContextMenuSeparator,
-  ContextMenuShortcut,
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,

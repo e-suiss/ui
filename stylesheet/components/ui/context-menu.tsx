@@ -5,7 +5,6 @@ import {
   Platform,
   type StyleProp,
   StyleSheet,
-  Text,
   type TextStyle,
   View,
   type ViewStyle,
@@ -98,7 +97,6 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.5,
   },
-  shortcut: { marginLeft: "auto", ...fontSize.xs },
 })
 
 function usePopupColors() {
@@ -368,19 +366,6 @@ function ContextMenuSeparator({
   )
 }
 
-function ContextMenuShortcut({
-  style,
-  ...props
-}: React.ComponentProps<typeof Text>) {
-  const { colors } = useTheme()
-  return (
-    <Text
-      style={[styles.shortcut, { color: colors.labelSecondary }, style]}
-      {...props}
-    />
-  )
-}
-
 export {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -391,7 +376,6 @@ export {
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
   ContextMenuSeparator,
-  ContextMenuShortcut,
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,

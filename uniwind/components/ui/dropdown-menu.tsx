@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import { CaretRightIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
-import { Platform, Text, View } from "react-native"
+import { Platform, View } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as MenuPrimitive from "@/components/primitives/menu"
@@ -274,18 +274,6 @@ function DropdownMenuSeparator({
   )
 }
 
-function DropdownMenuShortcut({
-  className,
-  ...props
-}: React.ComponentProps<typeof Text>) {
-  return (
-    <Text
-      className={cn("ml-auto text-xs text-label-secondary", className)}
-      {...props}
-    />
-  )
-}
-
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -297,7 +285,6 @@ export {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,

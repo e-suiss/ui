@@ -10,7 +10,6 @@ import {
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
   ContextMenuSeparator,
-  ContextMenuShortcut,
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,
@@ -36,15 +35,12 @@ function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
       <ContextMenuContent className="w-64">
         <ContextMenuItem inset>
           <Text>Back</Text>
-          <ContextMenuShortcut>⌘[</ContextMenuShortcut>
         </ContextMenuItem>
         <ContextMenuItem inset disabled>
           <Text>Forward</Text>
-          <ContextMenuShortcut>⌘]</ContextMenuShortcut>
         </ContextMenuItem>
         <ContextMenuItem inset>
           <Text>Reload</Text>
-          <ContextMenuShortcut>⌘R</ContextMenuShortcut>
         </ContextMenuItem>
         <ContextMenuSub>
           <ContextMenuSubTrigger inset>

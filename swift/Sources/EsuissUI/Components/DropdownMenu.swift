@@ -146,7 +146,6 @@ public struct DropdownMenuItem<Label: View>: View {
 
   let variant: Variant
   let inset: Bool
-  let shortcut: LocalizedStringKey?
   let action: () -> Void
   let label: Label
 
@@ -156,13 +155,11 @@ public struct DropdownMenuItem<Label: View>: View {
   public init(
     variant: Variant = .default,
     inset: Bool = false,
-    shortcut: LocalizedStringKey? = nil,
     action: @escaping () -> Void,
     @ViewBuilder label: () -> Label
   ) {
     self.variant = variant
     self.inset = inset
-    self.shortcut = shortcut
     self.action = action
     self.label = label()
   }
@@ -179,10 +176,6 @@ public struct DropdownMenuItem<Label: View>: View {
       } label: {
         HStack(spacing: 10) {
           label
-          if let shortcut {
-            Spacer(minLength: 16)
-            DropdownMenuShortcut(shortcut)
-          }
         }
       }
       .buttonStyle(MenuRowStyle(destructive: variant == .destructive, inset: inset))
@@ -195,10 +188,9 @@ extension DropdownMenuItem where Label == Text {
     _ title: LocalizedStringKey,
     variant: Variant = .default,
     inset: Bool = false,
-    shortcut: LocalizedStringKey? = nil,
     action: @escaping () -> Void
   ) {
-    self.init(variant: variant, inset: inset, shortcut: shortcut, action: action) { Text(title) }
+    self.init(variant: variant, inset: inset, action: action) { Text(title) }
   }
 }
 
@@ -207,10 +199,9 @@ extension DropdownMenuItem where Label == SwiftUI.Label<Text, Image> {
     _ title: LocalizedStringKey,
     icon: Image,
     variant: Variant = .default,
-    shortcut: LocalizedStringKey? = nil,
     action: @escaping () -> Void
   ) {
-    self.init(variant: variant, shortcut: shortcut, action: action) {
+    self.init(variant: variant, action: action) {
       SwiftUI.Label { Text(title) } icon: { icon }
     }
   }
@@ -376,21 +367,6 @@ public struct DropdownMenuSeparator: View {
         .padding(.horizontal, -6)
         .accessibilityHidden(true)
     }
-  }
-}
-
-public struct DropdownMenuShortcut: View {
-  let text: LocalizedStringKey
-
-  public init(_ text: LocalizedStringKey) {
-    self.text = text
-  }
-
-  public var body: some View {
-    Text(text)
-      .font(TextStyle.xs.font())
-      .tracking(TextStyle.xs.letterSpacing)
-      .foregroundStyle(Color.labelSecondary)
   }
 }
 

@@ -289,8 +289,8 @@ private struct MenusGallery: View {
         MenuPanel {
           DropdownMenuLabel("My Account")
           DropdownMenuGroup {
-            DropdownMenuItem("Profile", icon: Ph.user.regular, shortcut: "⇧⌘P") {}
-            DropdownMenuItem("Billing", icon: Ph.creditCard.regular, shortcut: "⌘B") {}
+            DropdownMenuItem("Profile", icon: Ph.user.regular) {}
+            DropdownMenuItem("Billing", icon: Ph.creditCard.regular) {}
             DropdownMenuItem("Disabled", icon: Ph.gear.regular) {}.disabled(true)
           }
           DropdownMenuSeparator()

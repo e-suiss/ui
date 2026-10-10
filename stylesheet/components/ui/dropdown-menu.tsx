@@ -5,7 +5,6 @@ import {
   Platform,
   type StyleProp,
   StyleSheet,
-  Text,
   type TextStyle,
   View,
   type ViewStyle,
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.5,
   },
-  shortcut: { marginLeft: "auto", ...fontSize.xs },
 })
 
 function usePopupColors() {
@@ -367,19 +365,6 @@ function DropdownMenuSeparator({
   )
 }
 
-function DropdownMenuShortcut({
-  style,
-  ...props
-}: React.ComponentProps<typeof Text>) {
-  const { colors } = useTheme()
-  return (
-    <Text
-      style={[styles.shortcut, { color: colors.labelSecondary }, style]}
-      {...props}
-    />
-  )
-}
-
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -391,7 +376,6 @@ export {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,

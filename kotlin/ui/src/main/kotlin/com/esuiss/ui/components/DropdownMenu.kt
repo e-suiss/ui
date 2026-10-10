@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -243,7 +242,6 @@ fun DropdownMenuItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
-    shortcut: String? = null,
     variant: MenuItemVariant = MenuItemVariant.Default,
     enabled: Boolean = true,
     inset: Boolean = false,
@@ -252,7 +250,6 @@ fun DropdownMenuItem(
     DropdownMenuItem(onClick, modifier, variant, enabled, inset, closeOnClick) {
         if (icon != null) Icon(icon, contentDescription = null)
         BasicText(text, style = LocalContentStyle.current, maxLines = 1)
-        if (shortcut != null) DropdownMenuShortcut(shortcut)
     }
 }
 
@@ -413,17 +410,6 @@ internal fun MenuSeparatorLine(modifier: Modifier, bleed: Dp, color: Color) {
             }
             .height(1.dp)
             .background(color),
-    )
-}
-
-@Composable
-fun RowScope.DropdownMenuShortcut(text: String, modifier: Modifier = Modifier) {
-    Spacer(Modifier.weight(1f))
-    BasicText(
-        text,
-        modifier = modifier,
-        style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary),
-        maxLines = 1,
     )
 }
 
