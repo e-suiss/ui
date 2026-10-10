@@ -47,7 +47,7 @@ function ContextMenuSubTrigger({
           "group flex-row items-center gap-2 rounded-2xl px-3 py-2 active:bg-accent",
           className,
           open && cn("bg-accent", "mb-1"),
-          inset && "pl-9.5"
+          inset && "pl-[2.375rem]"
         )}
         {...props}
       >
@@ -153,7 +153,7 @@ function ContextMenuItem({
           variant === "destructive" &&
             "active:bg-destructive-10 dark:active:bg-destructive-20",
           props.disabled && "opacity-50",
-          inset && "pl-9.5",
+          inset && "pl-[2.375rem]",
           className
         )}
         {...props}
@@ -230,7 +230,7 @@ function ContextMenuLabel({
     <ContextMenuPrimitive.Label
       className={cn(
         "px-3 py-2.5 text-xs text-muted-foreground",
-        inset && "pl-9.5",
+        inset && "pl-[2.375rem]",
         className
       )}
       {...props}

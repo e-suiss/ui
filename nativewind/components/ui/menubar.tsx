@@ -87,7 +87,7 @@ function MenubarTrigger({
     <TextClassContext.Provider value="select-none text-sm font-medium text-foreground">
       <MenubarPrimitive.Trigger
         className={cn(
-          "group flex-row items-center rounded-2xl px-2 py-0.75 active:bg-muted",
+          "group flex-row items-center rounded-2xl px-2 py-[0.1875rem] active:bg-muted",
           value === itemValue && "bg-muted",
           className
         )}
@@ -122,7 +122,7 @@ function MenubarSubTrigger({
           "group flex-row items-center gap-2 rounded-2xl px-3 py-2 active:bg-accent",
           className,
           open && "bg-accent",
-          inset && "pl-9.5"
+          inset && "pl-[2.375rem]"
         )}
         {...props}
       >
@@ -221,7 +221,7 @@ function MenubarItem({
           variant === "destructive" &&
             "active:bg-destructive-10 dark:active:bg-destructive-20",
           props.disabled && "opacity-50",
-          inset && "pl-9.5",
+          inset && "pl-[2.375rem]",
           className
         )}
         {...props}
@@ -241,7 +241,7 @@ function MenubarCheckboxItem({
     <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
       <MenubarPrimitive.CheckboxItem
         className={cn(
-          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-3 pl-9.5 active:bg-accent",
+          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-3 pl-[2.375rem] active:bg-accent",
           props.disabled && "opacity-50",
           className
         )}
@@ -269,7 +269,7 @@ function MenubarRadioItem({
     <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
       <MenubarPrimitive.RadioItem
         className={cn(
-          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-3 pl-9.5 active:bg-accent",
+          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-3 pl-[2.375rem] active:bg-accent",
           props.disabled && "opacity-50",
           className
         )}
@@ -298,7 +298,7 @@ function MenubarLabel({
     <MenubarPrimitive.Label
       className={cn(
         "px-3.5 py-2.5 text-xs text-muted-foreground",
-        inset && "pl-9.5",
+        inset && "pl-[2.375rem]",
         className
       )}
       {...props}

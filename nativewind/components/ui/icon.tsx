@@ -1,5 +1,5 @@
 import { cn } from "cn"
-import { styled } from "nativewind"
+import { cssInterop } from "nativewind"
 import type {
   Icon as PhosphorIcon,
   IconProps as PhosphorIconProps,
@@ -16,10 +16,10 @@ function IconImpl({ as: IconComponent, ...props }: IconProps) {
   return <IconComponent {...props} />
 }
 
-const StyledIcon = styled(IconImpl, {
+const StyledIcon = cssInterop(IconImpl, {
   className: {
     target: "style",
-    nativeStyleMapping: {
+    nativeStyleToProp: {
       color: true,
       width: "size",
     },

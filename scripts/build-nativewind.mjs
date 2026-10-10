@@ -9,6 +9,54 @@ const SOURCE_DIR = "components/ui"
 const OUTPUT_DIR = "nativewind/components/ui"
 const SOURCE_STYLESHEET = "styles/uniwind.css"
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
+const OUTPUT_CONFIG = "styles/nativewind.config.js"
+const V3_SPACING = new Set([
+  "0",
+  "0.5",
+  "1",
+  "1.5",
+  "2",
+  "2.5",
+  "3",
+  "3.5",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "14",
+  "16",
+  "20",
+  "24",
+  "28",
+  "32",
+  "36",
+  "40",
+  "44",
+  "48",
+  "52",
+  "56",
+  "60",
+  "64",
+  "72",
+  "80",
+  "96",
+])
+const SPACING_PREFIXES =
+  "-?(?:p|px|py|pt|pr|pb|pl|ps|pe|m|mx|my|mt|mr|mb|ml|ms|me|gap|gap-x|gap-y|w|h|size|min-w|min-h|top|right|bottom|left|start|end|inset|inset-x|inset-y|translate-x|translate-y|space-x|space-y)"
+const TEXT_INPUT_INTEROP = `cssInterop(TextInput, {
+  className: { target: "style", nativeStyleToProp: { textAlign: true } },
+  placeholderClassName: {
+    target: false,
+    nativeStyleToProp: { color: "placeholderTextColor" },
+  },
+})
+
+`
 const UTILITY_PREFIXES =
   "bg|text|border|border-[trblxyse]|ring|outline|divide|fill|stroke|shadow|decoration|placeholder|accent|caret"
 
@@ -17,14 +65,14 @@ const FILE_TRANSFORMS = {
     code
       .replace(
         'import { withUniwind } from "uniwind"',
-        'import { styled } from "nativewind"'
+        'import { cssInterop } from "nativewind"'
       )
       .replace(
         /const StyledIcon = withUniwind\(IconImpl, \{[\s\S]*?\n\}\)\n/,
-        `const StyledIcon = styled(IconImpl, {
+        `const StyledIcon = cssInterop(IconImpl, {
   className: {
     target: "style",
-    nativeStyleMapping: {
+    nativeStyleToProp: {
       color: true,
       width: "size",
     },
@@ -37,16 +85,32 @@ const FILE_TRANSFORMS = {
 }
 
 function usePlaceholderClass(code) {
+  const firstFunction = code.indexOf("\nfunction ")
+  return `${code.slice(0, firstFunction + 1)}${TEXT_INPUT_INTEROP}${code.slice(firstFunction + 1)}`
+    .replace(
+      'placeholderTextColorClassName="accent-muted-foreground"',
+      'placeholderClassName="text-muted-foreground"'
+    )
+    .replace(
+      /^import \{ cn \} from "cn"\n/m,
+      'import { cn } from "cn"\nimport { cssInterop } from "nativewind"\n'
+    )
+}
+
+function toTailwindV3(code) {
   return code
     .replace(
-      '      placeholderTextColorClassName="accent-muted-foreground"\n',
-      ""
+      new RegExp(
+        `(?<![\\w-])((?:[\\w-]+:)*${SPACING_PREFIXES})-(\\d+(?:\\.\\d+)?)(?![\\w./\\]])`,
+        "g"
+      ),
+      (match, utility, value) =>
+        V3_SPACING.has(value)
+          ? match
+          : `${utility}-[${Number(value) * 0.25}rem]`
     )
-    .replace(
-      /className=\{cn\(\n(\s*)"([^"]*)"/,
-      (_match, indent, classes) =>
-        `className={cn(\n${indent}"${classes} placeholder:text-muted-foreground"`
-    )
+    .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-sm(?![\w-])/g, "$1shadow")
+    .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-xs(?![\w-])/g, "$1shadow-sm")
 }
 
 function parseTheme(css) {
@@ -113,10 +177,6 @@ function collectTokens(sources, pattern) {
 }
 
 function buildStylesheet(theme, tokens) {
-  const lines = (values, indent) =>
-    Object.entries(values)
-      .map(([name, value]) => `${indent}--color-${name}: ${value};`)
-      .join("\n")
   const tokenValues = (mode) =>
     Object.fromEntries(
       tokens.map(([name, { color, percent }]) => [
@@ -124,27 +184,55 @@ function buildStylesheet(theme, tokens) {
         withOpacity(theme[mode][color], percent),
       ])
     )
+  const lines = (values) =>
+    Object.entries(values)
+      .map(([name, value]) => `    --${name}: ${value};`)
+      .join("\n")
 
-  return `@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css";
-@import "nativewind/theme";
+  return `@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-${lines(theme.light, "  ")}
-${lines(tokenValues("light"), "  ")}
-  ${theme.radius.replace(/\n\s*/g, "\n  ")}
-}
-
-:root {
-  font-size: 16px;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-${lines(theme.dark, "    ")}
-${lines(tokenValues("dark"), "    ")}
+${lines({ ...theme.light, ...tokenValues("light") })}
   }
+
+  .dark:root {
+${lines({ ...theme.dark, ...tokenValues("dark") })}
+  }
+}
+`
+}
+
+function buildConfig(theme, tokens) {
+  const colors = [...Object.keys(theme.light), ...tokens.map(([name]) => name)]
+    .map((name) => `        "${name}": "var(--${name})",`)
+    .join("\n")
+  const radius = [...theme.radius.matchAll(/--radius-([\w]+):\s*([^;]+);/g)]
+    .map((match) => `        "${match[1]}": "${match[2]}",`)
+    .join("\n")
+
+  return `module.exports = {
+  darkMode: "class",
+  content: [
+    "./App.{js,jsx,ts,tsx}",
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+  ],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      colors: {
+${colors}
+      },
+      borderRadius: {
+${radius}
+      },
+    },
+  },
+  plugins: [],
 }
 `
 }
@@ -168,9 +256,11 @@ async function generate(target) {
   const outputs = new Map()
   for (const [file, code] of sources) {
     const transformed = (FILE_TRANSFORMS[file] ?? ((value) => value))(
-      code.replace(
-        pattern,
-        (_match, utility, _color, percent) => `${utility}-${percent}`
+      toTailwindV3(
+        code.replace(
+          pattern,
+          (_match, utility, _color, percent) => `${utility}-${percent}`
+        )
       )
     )
     if (transformed !== code) outputs.set(file, transformed)
@@ -187,10 +277,11 @@ async function generate(target) {
     path.join(target, OUTPUT_STYLESHEET),
     buildStylesheet(theme, tokens)
   )
+  await writeFile(path.join(target, OUTPUT_CONFIG), buildConfig(theme, tokens))
 
   execFileSync(
     path.join(ROOT, "node_modules/.bin/biome"),
-    ["check", "--write", OUTPUT_DIR, OUTPUT_STYLESHEET],
+    ["check", "--write", OUTPUT_DIR, OUTPUT_STYLESHEET, OUTPUT_CONFIG],
     { cwd: target, stdio: "ignore" }
   )
   return { files: [...outputs.keys()], tokens: tokens.length }
@@ -205,12 +296,14 @@ async function snapshot(base) {
       await readFile(path.join(dir, file), "utf8"),
     ])
   )
-  const stylesheet = path.join(base, OUTPUT_STYLESHEET)
+  const read = async (file) =>
+    existsSync(path.join(base, file))
+      ? await readFile(path.join(base, file), "utf8")
+      : ""
   return JSON.stringify({
     files: entries,
-    stylesheet: existsSync(stylesheet)
-      ? await readFile(stylesheet, "utf8")
-      : "",
+    stylesheet: await read(OUTPUT_STYLESHEET),
+    config: await read(OUTPUT_CONFIG),
   })
 }
 

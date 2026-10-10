@@ -19,7 +19,7 @@ function Switch({
     >
       <SwitchPrimitives.Thumb
         className={cn(
-          "h-4 w-6 rounded-full bg-background shadow-sm",
+          "h-4 w-6 rounded-full bg-background shadow",
           props.checked
             ? "translate-x-4 dark:bg-primary-foreground"
             : "dark:bg-foreground translate-x-0"

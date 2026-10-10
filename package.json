@@ -78,8 +78,7 @@
     "knip": "6.38.0",
     "lefthook": "2.1.15",
     "lint-staged": "17.6.0",
-    "nativewind": "5.0.0-rc.0",
-    "react-native-css": "3.1.0-rc.0",
+    "nativewind": "4.2.7",
     "storybook": "10.6.0",
     "typescript": "~6.0.3"
   },

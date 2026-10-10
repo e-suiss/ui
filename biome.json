@@ -53,6 +53,16 @@
           }
         }
       }
+    },
+    {
+      "includes": ["styles/nativewind.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
+          }
+        }
+      }
     }
   ]
 }

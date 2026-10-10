@@ -53,7 +53,7 @@ function DropdownMenuSubTrigger({
           "group flex-row items-center gap-2 rounded-2xl px-3 py-2 active:bg-accent",
           className,
           open && "bg-accent",
-          inset && "pl-9.5"
+          inset && "pl-[2.375rem]"
         )}
         {...props}
       >
@@ -159,7 +159,7 @@ function DropdownMenuItem({
           variant === "destructive" &&
             "active:bg-destructive-10 dark:active:bg-destructive-20",
           props.disabled && "opacity-50",
-          inset && "pl-9.5",
+          inset && "pl-[2.375rem]",
           className
         )}
         {...props}
@@ -236,7 +236,7 @@ function DropdownMenuLabel({
     <DropdownMenuPrimitive.Label
       className={cn(
         "px-3 py-2.5 text-xs text-muted-foreground",
-        inset && "pl-9.5",
+        inset && "pl-[2.375rem]",
         className
       )}
       {...props}

@@ -70,3 +70,60 @@ export function ensureBabelPlugin(project, name, entry, { last = false } = {}) {
   step(`Added ${name} to ${relative}`)
   return []
 }
+
+const EXPO_NATIVEWIND_CONFIG = `module.exports = function (api) {
+  api.cache(true)
+  return {
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
+  }
+}
+`
+
+function addPreset(text, entry) {
+  const presets = text.match(/presets\s*:\s*\[/)
+  if (!presets) return null
+  const open = presets.index + presets[0].length - 1
+  const close = closingBracket(text, open)
+  if (close === -1) return null
+  const body = text
+    .slice(open + 1, close)
+    .trim()
+    .replace(/,\s*$/, "")
+  return `${text.slice(0, open + 1)}${body ? `${body}, ` : ""}${entry}${text.slice(close)}`
+}
+
+export function configureNativewindBabel(project) {
+  const existing = BABEL_CONFIGS.map((file) =>
+    path.join(project.cwd, file)
+  ).find(existsSync)
+  if (!existing) {
+    const file = path.join(project.cwd, "babel.config.js")
+    writeFileSync(
+      file,
+      project.framework === "expo"
+        ? EXPO_NATIVEWIND_CONFIG
+        : DEFAULT_CONFIG.replace(
+            '"module:@react-native/babel-preset"',
+            '"module:@react-native/babel-preset", "nativewind/babel"'
+          )
+    )
+    step("Created babel.config.js")
+    return []
+  }
+  const text = readFileSync(existing, "utf8")
+  const relative = path.relative(project.cwd, existing)
+  if (text.includes("nativewind/babel")) return []
+  if (project.framework === "expo") {
+    return [
+      `Add jsxImportSource: "nativewind" to babel-preset-expo and "nativewind/babel" to the presets in ${relative}.`,
+    ]
+  }
+  const updated = addPreset(text, '"nativewind/babel"')
+  if (!updated) return [`Add "nativewind/babel" to the presets in ${relative}.`]
+  writeFileSync(existing, updated)
+  step(`Added nativewind/babel to ${relative}`)
+  return []
+}

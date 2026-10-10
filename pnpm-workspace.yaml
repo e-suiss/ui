@@ -18,5 +18,3 @@ minimumReleaseAgeExclude:
   - lefthook-openbsd-x64@2.1.15
   - lefthook-windows-arm64@2.1.15
   - lefthook-windows-x64@2.1.15
-  - nativewind@5.0.0-rc.0
-  - react-native-css@3.1.0-rc.0

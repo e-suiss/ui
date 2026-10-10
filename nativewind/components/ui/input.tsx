@@ -1,5 +1,14 @@
 import { cn } from "cn"
+import { cssInterop } from "nativewind"
 import { TextInput } from "react-native"
+
+cssInterop(TextInput, {
+  className: { target: "style", nativeStyleToProp: { textAlign: true } },
+  placeholderClassName: {
+    target: false,
+    nativeStyleToProp: { color: "placeholderTextColor" },
+  },
+})
 
 function Input({
   className,
@@ -8,10 +17,11 @@ function Input({
   return (
     <TextInput
       className={cn(
-        "h-9 w-full min-w-0 flex-row items-center rounded-3xl border border-transparent bg-input-50 px-3 py-1 text-base leading-5 text-foreground focus:border-ring placeholder:text-muted-foreground",
+        "h-9 w-full min-w-0 flex-row items-center rounded-3xl border border-transparent bg-input-50 px-3 py-1 text-base leading-5 text-foreground focus:border-ring",
         props.editable === false && "opacity-50",
         className
       )}
+      placeholderClassName="text-muted-foreground"
       {...props}
     />
   )

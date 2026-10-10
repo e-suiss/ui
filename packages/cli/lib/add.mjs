@@ -63,7 +63,8 @@ export async function installItems(
   const dependencies = items.flatMap((item) => item.dependencies[styling])
   const installed = install(project, dependencies)
   const manual = [
-    ...(dependencies.includes("react-native-reanimated")
+    ...(dependencies.includes("react-native-reanimated") &&
+    styling !== "nativewind"
       ? ensureBabelPlugin(
           project,
           "react-native-worklets/plugin",

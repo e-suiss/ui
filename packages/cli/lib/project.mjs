@@ -13,10 +13,10 @@ const LOCKFILES = [
 ]
 
 const INSTALL_ARGS = {
-  npm: { command: "install", dev: "--save-dev", exact: "--save-exact" },
-  pnpm: { command: "add", dev: "--save-dev", exact: "--save-exact" },
-  yarn: { command: "add", dev: "--dev", exact: "--exact" },
-  bun: { command: "add", dev: "--dev", exact: "--exact" },
+  npm: { command: "install", dev: "--save-dev" },
+  pnpm: { command: "add", dev: "--save-dev" },
+  yarn: { command: "add", dev: "--dev" },
+  bun: { command: "add", dev: "--dev" },
 }
 
 export const STYLINGS = ["uniwind", "nativewind"]
@@ -95,10 +95,6 @@ function spawn(project, command, args) {
   }
 }
 
-export function reinstall(project) {
-  spawn(project, project.packageManager, ["install"])
-}
-
 export function run(project, args) {
   const [command, ...prefix] = RUNNERS[project.packageManager]
   spawn(project, command, [...prefix, ...args])
@@ -126,23 +122,18 @@ export function detectStyling(project, requested) {
   return installed[0] ?? null
 }
 
-export function install(
-  project,
-  packages,
-  { dev = false, exact = false } = {}
-) {
+export function install(project, packages, { dev = false } = {}) {
   const missing = [...new Set(packages)].filter(
     (spec) => !project.packages[packageOf(spec)]
   )
   if (!missing.length) return []
-  if (project.framework === "expo" && !dev && !exact) {
+  if (project.framework === "expo" && !dev) {
     run(project, ["expo", "install", ...missing])
   } else {
     const flags = INSTALL_ARGS[project.packageManager]
     spawn(project, project.packageManager, [
       flags.command,
       ...(dev ? [flags.dev] : []),
-      ...(exact ? [flags.exact] : []),
       ...missing,
     ])
   }

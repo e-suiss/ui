@@ -7,6 +7,7 @@
     },
     "nativewind": {
       "stylesheet": "styles/nativewind.css",
+      "config": "styles/nativewind.config.js",
       "directory": "nativewind"
     }
   },
@@ -452,7 +453,8 @@
           "cn"
         ],
         "nativewind": [
-          "cn"
+          "cn",
+          "nativewind"
         ]
       },
       "requires": [],
@@ -748,7 +750,8 @@
           "cn"
         ],
         "nativewind": [
-          "cn"
+          "cn",
+          "nativewind"
         ]
       },
       "requires": [],

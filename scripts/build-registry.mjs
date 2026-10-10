@@ -6,7 +6,11 @@ const ROOT = process.cwd()
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLES = {
   uniwind: { stylesheet: "styles/uniwind.css" },
-  nativewind: { stylesheet: "styles/nativewind.css", directory: "nativewind" },
+  nativewind: {
+    stylesheet: "styles/nativewind.css",
+    config: "styles/nativewind.config.js",
+    directory: "nativewind",
+  },
 }
 const IGNORED_PACKAGES = new Set(["react", "react-native"])
 const COMPANIONS = {
@@ -95,9 +99,9 @@ function validate(items) {
       .filter((required) => !names.has(required))
       .map((required) => `${item.name} requires missing item "${required}"`)
   )
-  for (const { stylesheet } of Object.values(STYLES)) {
-    if (!existsSync(path.join(ROOT, stylesheet))) {
-      problems.push(`missing ${stylesheet}`)
+  for (const { stylesheet, config } of Object.values(STYLES)) {
+    for (const file of [stylesheet, config].filter(Boolean)) {
+      if (!existsSync(path.join(ROOT, file))) problems.push(`missing ${file}`)
     }
   }
   return problems
