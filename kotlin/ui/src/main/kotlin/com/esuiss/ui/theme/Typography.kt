@@ -15,7 +15,7 @@ private fun textStyle(size: Double, lineHeight: Int, letterSpacing: Double) = Te
     ),
 )
 
-object EsuissTypography {
+object Typography {
     val xs3 = textStyle(11.0, 13, 0.006)
     val xs2 = textStyle(12.0, 16, 0.0)
     val xs = textStyle(13.0, 18, -0.006)

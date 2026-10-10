@@ -39,7 +39,7 @@ import com.esuiss.ui.components.CardVariant
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentStyle
 import com.esuiss.ui.theme.EsuissTheme
-import com.esuiss.ui.theme.EsuissTypography
+import com.esuiss.ui.theme.Typography
 import java.io.File
 import org.junit.Rule
 import org.junit.Test
@@ -83,7 +83,7 @@ private fun Gallery() {
             BasicText("Continue", style = LocalContentStyle.current)
         }
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            EsuissTypography.all.forEach { style ->
+            Typography.all.forEach { style ->
                 BasicText("Type ${style.fontSize.value.toInt()}", style = style.copy(color = colors.label))
             }
         }
@@ -94,7 +94,7 @@ private fun Gallery() {
                 action = { Button("Sign Up", onClick = {}, variant = ButtonVariant.Link, size = ButtonSize.Sm) },
             )
             CardContent {
-                BasicText("Card content", style = EsuissTypography.base.copy(color = colors.labelSecondary))
+                BasicText("Card content", style = Typography.base.copy(color = colors.labelSecondary))
             }
             CardFooter {
                 Button("Login", onClick = {}, block = true)

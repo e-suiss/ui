@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct EsuissBadge<Label: View>: View {
+public struct Badge<Label: View>: View {
   public enum Variant: CaseIterable, Sendable {
     case `default`, secondary, destructive, outline, ghost, link
   }
@@ -15,16 +15,16 @@ public struct EsuissBadge<Label: View>: View {
 
   public var body: some View {
     label
-      .labelStyle(EsuissButtonLabelStyle(spacing: 4, iconSize: 12))
-      .font(EsuissTextStyle.xs.font(weight: .semibold))
-      .tracking(EsuissTextStyle.xs.letterSpacing)
+      .labelStyle(ButtonLabelStyle(spacing: 4, iconSize: 12))
+      .font(TextStyle.xs.font(weight: .semibold))
+      .tracking(TextStyle.xs.letterSpacing)
       .lineLimit(1)
       .foregroundStyle(foreground)
       .padding(.horizontal, padded ? 8 : 0)
       .frame(height: 20)
       .overlay {
         if variant == .outline {
-          Capsule().strokeBorder(Color.esuissSeparator)
+          Capsule().strokeBorder(Color.separator)
         }
       }
       .clipShape(Capsule())
@@ -36,15 +36,15 @@ public struct EsuissBadge<Label: View>: View {
 
   private var foreground: Color {
     switch variant {
-    case .default, .link: .esuissLink
-    case .secondary: .esuissLabelSecondary
-    case .destructive: .esuissDanger
-    case .outline, .ghost: .esuissLabel
+    case .default, .link: .link
+    case .secondary: .labelSecondary
+    case .destructive: .danger
+    case .outline, .ghost: .label
     }
   }
 }
 
-extension EsuissBadge where Label == Text {
+extension Badge where Label == Text {
   public init(_ title: LocalizedStringKey, variant: Variant = .default) {
     self.init(variant) { Text(title) }
   }

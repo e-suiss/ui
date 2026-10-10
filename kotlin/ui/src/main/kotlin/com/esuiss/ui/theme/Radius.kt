@@ -2,7 +2,7 @@ package com.esuiss.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-object EsuissRadius {
+object Radius {
     val xs = 3.dp
     val sm = 5.dp
     val md = 8.dp

@@ -8,7 +8,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-data class EsuissColors(
+data class Colors(
     val surface: Color,
     val surfaceSecondary: Color,
     val surfaceTertiary: Color,
@@ -64,7 +64,7 @@ data class EsuissColors(
     val isDark: Boolean,
 )
 
-val LightColors = EsuissColors(
+val LightColors = Colors(
     surface = Color(0xFFFFFFFF),
     surfaceSecondary = Color(0xFFF5F5F7),
     surfaceTertiary = Color(0xFFE8E8ED),
@@ -120,7 +120,7 @@ val LightColors = EsuissColors(
     isDark = false,
 )
 
-val DarkColors = EsuissColors(
+val DarkColors = Colors(
     surface = Color(0xFF000000),
     surfaceSecondary = Color(0xFF161617),
     surfaceTertiary = Color(0xFF2C2C2E),
@@ -176,20 +176,20 @@ val DarkColors = EsuissColors(
     isDark = true,
 )
 
-val LocalEsuissColors = staticCompositionLocalOf { LightColors }
+val LocalColors = staticCompositionLocalOf { LightColors }
 
 object EsuissTheme {
-    val colors: EsuissColors
-        @Composable get() = LocalEsuissColors.current
+    val colors: Colors
+        @Composable get() = LocalColors.current
 
-    val typography: EsuissTypography
-        get() = EsuissTypography
+    val typography: Typography
+        get() = Typography
 
-    val radius: EsuissRadius
-        get() = EsuissRadius
+    val radius: Radius
+        get() = Radius
 
-    val shadows: EsuissShadows
-        get() = EsuissShadows
+    val shadows: Shadows
+        get() = Shadows
 }
 
 @Composable
@@ -198,7 +198,7 @@ fun EsuissTheme(
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalEsuissColors provides if (darkTheme) DarkColors else LightColors,
+        LocalColors provides if (darkTheme) DarkColors else LightColors,
         content = content,
     )
 }

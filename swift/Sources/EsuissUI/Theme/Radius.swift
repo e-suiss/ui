@@ -1,6 +1,6 @@
 import CoreGraphics
 
-public enum EsuissRadius {
+public enum Radius {
   public static let xs: CGFloat = 3
   public static let sm: CGFloat = 5
   public static let md: CGFloat = 8

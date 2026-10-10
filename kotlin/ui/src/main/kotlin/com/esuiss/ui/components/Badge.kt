@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
-import com.esuiss.ui.theme.EsuissTypography
+import com.esuiss.ui.theme.Typography
 
 enum class BadgeVariant { Default, Secondary, Destructive, Outline, Ghost, Link }
 
@@ -44,7 +44,7 @@ fun Badge(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides EsuissTypography.xs.copy(color = foreground, fontWeight = FontWeight.SemiBold),
+            LocalContentStyle provides Typography.xs.copy(color = foreground, fontWeight = FontWeight.SemiBold),
             LocalContentColor provides foreground,
             LocalIconSize provides 12.dp,
         ) {

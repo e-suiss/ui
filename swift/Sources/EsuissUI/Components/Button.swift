@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct EsuissButtonStyle: ButtonStyle {
+public struct VariantButtonStyle: ButtonStyle {
   public enum Variant: CaseIterable, Sendable {
     case `default`, outline, secondary, tinted, ghost, plain, destructive, link
   }
@@ -37,7 +37,7 @@ public struct EsuissButtonStyle: ButtonStyle {
       }
     }
 
-    var textStyle: EsuissTextStyle {
+    var textStyle: TextStyle {
       switch self {
       case .xs, .iconXs: .xs2
       case .lg, .xl: .base
@@ -54,10 +54,10 @@ public struct EsuissButtonStyle: ButtonStyle {
 
     var blockRadius: CGFloat {
       switch self {
-      case .xs, .iconXs: EsuissRadius.sm
-      case .lg, .iconLg: EsuissRadius.lg
-      case .xl, .iconXl: EsuissRadius.xl
-      default: EsuissRadius.md
+      case .xs, .iconXs: Radius.sm
+      case .lg, .iconLg: Radius.lg
+      case .xl, .iconXl: Radius.xl
+      default: Radius.md
       }
     }
 
@@ -86,8 +86,8 @@ public struct EsuissButtonStyle: ButtonStyle {
 
 private struct StyledButton: View {
   let configuration: ButtonStyleConfiguration
-  let variant: EsuissButtonStyle.Variant
-  let size: EsuissButtonStyle.Size
+  let variant: VariantButtonStyle.Variant
+  let size: VariantButtonStyle.Size
   let block: Bool
 
   @Environment(\.colorScheme) private var colorScheme
@@ -95,11 +95,11 @@ private struct StyledButton: View {
 
   var body: some View {
     let shape = RoundedRectangle(
-      cornerRadius: block ? size.blockRadius : EsuissRadius.full,
+      cornerRadius: block ? size.blockRadius : Radius.full,
       style: .continuous
     )
     configuration.label
-      .labelStyle(EsuissButtonLabelStyle(spacing: size.spacing, iconSize: size.iconSize))
+      .labelStyle(ButtonLabelStyle(spacing: size.spacing, iconSize: size.iconSize))
     .font(size.textStyle.font())
     .tracking(size.textStyle.letterSpacing)
     .underline(variant == .link && pressed && isEnabled)
@@ -111,7 +111,7 @@ private struct StyledButton: View {
     .background(background, in: shape)
     .overlay {
       if variant == .outline {
-        shape.strokeBorder(Color.esuissSeparator)
+        shape.strokeBorder(Color.separator)
       }
     }
     .contentShape(shape)
@@ -123,41 +123,41 @@ private struct StyledButton: View {
   private var foreground: Color {
     switch variant {
     case .default:
-      .esuissOnAccent
+      .onAccent
     case .outline, .secondary, .ghost:
-      isEnabled ? .esuissLabel : .esuissLabelQuaternary
+      isEnabled ? .label : .labelQuaternary
     case .tinted, .plain:
-      isEnabled ? .esuissLink : .esuissLink.opacity(0.4)
+      isEnabled ? .link : .link.opacity(0.4)
     case .destructive:
-      isEnabled ? .esuissDanger : .esuissDanger.opacity(0.4)
+      isEnabled ? .danger : .danger.opacity(0.4)
     case .link:
-      isEnabled ? .esuissLink : .esuissLabelQuaternary
+      isEnabled ? .link : .labelQuaternary
     }
   }
 
   private var background: Color {
     switch variant {
     case .default:
-      !isEnabled ? .esuissAccentDisabled : pressed ? .esuissAccentPressed : .esuissAccent
+      !isEnabled ? .accentDisabled : pressed ? .accentPressed : .accent
     case .outline:
-      isEnabled && pressed ? .esuissItemPressed : isDark ? .clear : .esuissSurface
+      isEnabled && pressed ? .itemPressed : isDark ? .clear : .surface
     case .secondary:
-      !isEnabled ? .esuissControlDisabled : pressed ? .esuissControlPressed : .esuissControl
+      !isEnabled ? .controlDisabled : pressed ? .controlPressed : .control
     case .tinted:
-      isEnabled && pressed ? .esuissAccentSurfacePressed : .esuissAccentSurface
+      isEnabled && pressed ? .accentSurfacePressed : .accentSurface
     case .ghost:
-      isEnabled && pressed ? .esuissItemHover : .clear
+      isEnabled && pressed ? .itemHover : .clear
     case .plain:
-      isEnabled && pressed ? .esuissItemPressed : .clear
+      isEnabled && pressed ? .itemPressed : .clear
     case .destructive:
-      isEnabled && pressed ? .esuissDangerSurfacePressed : .esuissDangerSurface
+      isEnabled && pressed ? .dangerSurfacePressed : .dangerSurface
     case .link:
       .clear
     }
   }
 }
 
-struct EsuissButtonLabelStyle: LabelStyle {
+struct ButtonLabelStyle: LabelStyle {
   let spacing: CGFloat
   let iconSize: CGFloat
 
@@ -170,12 +170,12 @@ struct EsuissButtonLabelStyle: LabelStyle {
   }
 }
 
-extension ButtonStyle where Self == EsuissButtonStyle {
-  public static func esuiss(
-    _ variant: EsuissButtonStyle.Variant = .default,
-    size: EsuissButtonStyle.Size = .default,
+extension ButtonStyle where Self == VariantButtonStyle {
+  public static func variant(
+    _ variant: VariantButtonStyle.Variant = .default,
+    size: VariantButtonStyle.Size = .default,
     block: Bool = false
-  ) -> EsuissButtonStyle {
-    EsuissButtonStyle(variant, size: size, block: block)
+  ) -> VariantButtonStyle {
+    VariantButtonStyle(variant, size: size, block: block)
   }
 }

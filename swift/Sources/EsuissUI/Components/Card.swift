@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct EsuissCard<Content: View>: View {
+public struct Card<Content: View>: View {
   public enum Variant: CaseIterable, Sendable {
     case `default`, filled
   }
@@ -33,37 +33,37 @@ public struct EsuissCard<Content: View>: View {
   }
 
   public var body: some View {
-    let shape = RoundedRectangle(cornerRadius: EsuissRadius.xl2, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
     VStack(alignment: .leading, spacing: size.spacing) {
       content
     }
     .padding(.vertical, size.spacing)
     .frame(maxWidth: .infinity, alignment: .leading)
-    .environment(\.esuissCardSpacing, size.spacing)
-    .font(EsuissTextStyle.base.font())
-    .tracking(EsuissTextStyle.base.letterSpacing)
-    .foregroundStyle(Color.esuissLabel)
-    .background(variant == .filled ? Color.esuissSurfaceSecondary : .esuissSurfaceRaised, in: shape)
+    .environment(\.cardSpacing, size.spacing)
+    .font(TextStyle.base.font())
+    .tracking(TextStyle.base.letterSpacing)
+    .foregroundStyle(Color.label)
+    .background(variant == .filled ? Color.surfaceSecondary : .surfaceRaised, in: shape)
     .clipShape(shape)
     .overlay {
       if variant == .default {
-        shape.strokeBorder(Color.esuissLabel.opacity(colorScheme == .dark ? 0.1 : 0.05))
+        shape.strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
       }
     }
-    .esuissShadow(variant == .default ? .md : EsuissShadow(color: .clear, radius: 0))
+    .shadow(variant == .default ? .md : Shadow(color: .clear, radius: 0))
   }
 }
 
 extension EnvironmentValues {
-  @Entry var esuissCardSpacing: CGFloat = 24
+  @Entry var cardSpacing: CGFloat = 24
 }
 
-public struct EsuissCardHeader<Action: View>: View {
+public struct CardHeader<Action: View>: View {
   let title: LocalizedStringKey
   let description: LocalizedStringKey?
   let action: Action
 
-  @Environment(\.esuissCardSpacing) private var spacing
+  @Environment(\.cardSpacing) private var spacing
 
   public init(
     _ title: LocalizedStringKey,
@@ -78,9 +78,9 @@ public struct EsuissCardHeader<Action: View>: View {
   public var body: some View {
     HStack(alignment: .top, spacing: 6) {
       VStack(alignment: .leading, spacing: 6) {
-        EsuissCardTitle(title)
+        CardTitle(title)
         if let description {
-          EsuissCardDescription(description)
+          CardDescription(description)
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,13 +90,13 @@ public struct EsuissCardHeader<Action: View>: View {
   }
 }
 
-extension EsuissCardHeader where Action == EmptyView {
+extension CardHeader where Action == EmptyView {
   public init(_ title: LocalizedStringKey, description: LocalizedStringKey? = nil) {
     self.init(title, description: description) { EmptyView() }
   }
 }
 
-public struct EsuissCardTitle: View {
+public struct CardTitle: View {
   let title: LocalizedStringKey
 
   public init(_ title: LocalizedStringKey) {
@@ -105,12 +105,12 @@ public struct EsuissCardTitle: View {
 
   public var body: some View {
     Text(title)
-      .esuissTextStyle(.base, weight: .semibold)
-      .foregroundStyle(Color.esuissLabel)
+      .textStyle(.base, weight: .semibold)
+      .foregroundStyle(Color.label)
   }
 }
 
-public struct EsuissCardDescription: View {
+public struct CardDescription: View {
   let text: LocalizedStringKey
 
   public init(_ text: LocalizedStringKey) {
@@ -119,15 +119,15 @@ public struct EsuissCardDescription: View {
 
   public var body: some View {
     Text(text)
-      .esuissTextStyle(.sm)
-      .foregroundStyle(Color.esuissLabelSecondary)
+      .textStyle(.sm)
+      .foregroundStyle(Color.labelSecondary)
   }
 }
 
-public struct EsuissCardContent<Content: View>: View {
+public struct CardContent<Content: View>: View {
   let content: Content
 
-  @Environment(\.esuissCardSpacing) private var spacing
+  @Environment(\.cardSpacing) private var spacing
 
   public init(@ViewBuilder content: () -> Content) {
     self.content = content()
@@ -142,10 +142,10 @@ public struct EsuissCardContent<Content: View>: View {
   }
 }
 
-public struct EsuissCardFooter<Content: View>: View {
+public struct CardFooter<Content: View>: View {
   let content: Content
 
-  @Environment(\.esuissCardSpacing) private var spacing
+  @Environment(\.cardSpacing) private var spacing
 
   public init(@ViewBuilder content: () -> Content) {
     self.content = content()

@@ -28,10 +28,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.esuiss.ui.theme.EsuissColors
-import com.esuiss.ui.theme.EsuissRadius
+import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
-import com.esuiss.ui.theme.EsuissTypography
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Typography
 
 enum class ButtonVariant { Default, Outline, Secondary, Tinted, Ghost, Plain, Destructive, Link }
 
@@ -43,23 +43,23 @@ enum class ButtonSize(
     val blockRadius: Dp,
     val isIcon: Boolean,
 ) {
-    Default(36.dp, 16.dp, 6.dp, 16.dp, EsuissRadius.md, false),
-    Xs(24.dp, 11.dp, 4.dp, 12.dp, EsuissRadius.sm, false),
-    Sm(32.dp, 12.dp, 4.dp, 16.dp, EsuissRadius.md, false),
-    Lg(44.dp, 22.dp, 6.dp, 16.dp, EsuissRadius.lg, false),
-    Xl(56.dp, 31.dp, 8.dp, 16.dp, EsuissRadius.xl, false),
-    Icon(36.dp, 0.dp, 6.dp, 16.dp, EsuissRadius.md, true),
-    IconXs(24.dp, 0.dp, 4.dp, 12.dp, EsuissRadius.sm, true),
-    IconSm(32.dp, 0.dp, 4.dp, 16.dp, EsuissRadius.md, true),
-    IconLg(44.dp, 0.dp, 6.dp, 16.dp, EsuissRadius.lg, true),
-    IconXl(56.dp, 0.dp, 8.dp, 16.dp, EsuissRadius.xl, true),
+    Default(36.dp, 16.dp, 6.dp, 16.dp, Radius.md, false),
+    Xs(24.dp, 11.dp, 4.dp, 12.dp, Radius.sm, false),
+    Sm(32.dp, 12.dp, 4.dp, 16.dp, Radius.md, false),
+    Lg(44.dp, 22.dp, 6.dp, 16.dp, Radius.lg, false),
+    Xl(56.dp, 31.dp, 8.dp, 16.dp, Radius.xl, false),
+    Icon(36.dp, 0.dp, 6.dp, 16.dp, Radius.md, true),
+    IconXs(24.dp, 0.dp, 4.dp, 12.dp, Radius.sm, true),
+    IconSm(32.dp, 0.dp, 4.dp, 16.dp, Radius.md, true),
+    IconLg(44.dp, 0.dp, 6.dp, 16.dp, Radius.lg, true),
+    IconXl(56.dp, 0.dp, 8.dp, 16.dp, Radius.xl, true),
     ;
 
     val textStyle: TextStyle
         get() = when (this) {
-            Xs, IconXs -> EsuissTypography.xs2
-            Lg, Xl -> EsuissTypography.base
-            else -> EsuissTypography.sm
+            Xs, IconXs -> Typography.xs2
+            Lg, Xl -> Typography.base
+            else -> Typography.sm
         }
 }
 
@@ -135,7 +135,7 @@ fun Button(
     }
 }
 
-private fun buttonForeground(variant: ButtonVariant, colors: EsuissColors, enabled: Boolean): Color =
+private fun buttonForeground(variant: ButtonVariant, colors: Colors, enabled: Boolean): Color =
     when (variant) {
         ButtonVariant.Default -> colors.onAccent
         ButtonVariant.Outline, ButtonVariant.Secondary, ButtonVariant.Ghost ->
@@ -147,7 +147,7 @@ private fun buttonForeground(variant: ButtonVariant, colors: EsuissColors, enabl
         ButtonVariant.Link -> if (enabled) colors.link else colors.labelQuaternary
     }
 
-private fun buttonBackground(variant: ButtonVariant, colors: EsuissColors, pressed: Boolean, enabled: Boolean): Color =
+private fun buttonBackground(variant: ButtonVariant, colors: Colors, pressed: Boolean, enabled: Boolean): Color =
     when (variant) {
         ButtonVariant.Default -> when {
             !enabled -> colors.accentDisabled

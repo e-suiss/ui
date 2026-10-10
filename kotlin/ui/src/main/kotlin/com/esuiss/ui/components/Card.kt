@@ -20,11 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.esuiss.ui.theme.EsuissRadius
-import com.esuiss.ui.theme.EsuissShadows
 import com.esuiss.ui.theme.EsuissTheme
-import com.esuiss.ui.theme.EsuissTypography
-import com.esuiss.ui.theme.esuissShadow
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Shadows
+import com.esuiss.ui.theme.Typography
+import com.esuiss.ui.theme.shadow
 
 enum class CardVariant { Default, Filled }
 
@@ -43,12 +43,12 @@ fun Card(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val shape = RoundedCornerShape(EsuissRadius.xl2)
+    val shape = RoundedCornerShape(Radius.xl2)
     val filled = variant == CardVariant.Filled
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .then(if (filled) Modifier else Modifier.esuissShadow(EsuissShadows.md, shape))
+            .then(if (filled) Modifier else Modifier.shadow(Shadows.md, shape))
             .clip(shape)
             .background(if (filled) colors.surfaceSecondary else colors.surfaceRaised, shape)
             .then(
@@ -63,7 +63,7 @@ fun Card(
     ) {
         CompositionLocalProvider(
             LocalCardSpacing provides size.spacing,
-            LocalContentStyle provides EsuissTypography.base.copy(color = colors.label),
+            LocalContentStyle provides Typography.base.copy(color = colors.label),
             LocalContentColor provides colors.label,
         ) {
             content()
@@ -100,7 +100,7 @@ fun CardTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = EsuissTypography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
+        style = Typography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -109,7 +109,7 @@ fun CardDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = EsuissTypography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
     )
 }
 
