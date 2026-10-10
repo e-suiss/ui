@@ -5,7 +5,7 @@ import { tmpdir } from "node:os"
 import path from "node:path"
 
 const ROOT = process.cwd()
-const SOURCE_DIR = "components/ui"
+const SOURCE_DIR = "uniwind/components/ui"
 const OUTPUT_DIR = "nativewind/components/ui"
 const SOURCE_STYLESHEET = "styles/uniwind.css"
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
@@ -263,7 +263,7 @@ async function generate(target) {
         )
       )
     )
-    if (transformed !== code) outputs.set(file, transformed)
+    outputs.set(file, transformed)
   }
 
   await mkdir(path.join(target, OUTPUT_DIR), { recursive: true })
