@@ -3,7 +3,7 @@ pre-commit:
     lint-staged:
       run: pnpm exec lint-staged
     registry:
-      glob: "{uniwind/components/ui/*.tsx,stylesheet/components/ui/*.ts*,styles/uniwind.css,packages/tokens/tokens.json}"
+      glob: "{uniwind/components/**/*.tsx,stylesheet/components/**/*.ts*,styles/uniwind.css,packages/tokens/tokens.json}"
       run: node scripts/build-tokens.mjs && node scripts/build-nativewind.mjs && node scripts/build-registry.mjs && git add styles/uniwind.css stylesheet/components/ui/theme.ts swift/Sources/EsuissUI/Theme/Tokens.swift kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt nativewind styles/nativewind.css styles/nativewind.config.js registry.json
 
 pre-push:

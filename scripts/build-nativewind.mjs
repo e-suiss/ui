@@ -7,8 +7,9 @@ import path from "node:path"
 import { loadTokens, toRgb } from "./theme.mjs"
 
 const ROOT = process.cwd()
-const SOURCE_DIR = "uniwind/components/ui"
-const OUTPUT_DIR = "nativewind/components/ui"
+const SOURCE_ROOT = "uniwind/components"
+const OUTPUT_ROOT = "nativewind/components"
+const COMPONENT_DIRS = ["ui", "patterns", "interactions", "blocks"]
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
 const OUTPUT_CONFIG = "styles/nativewind.config.js"
 const V3_SPACING = new Set([
@@ -113,6 +114,24 @@ const FILE_TRANSFORMS = {
 })
 `
       ),
+  "pull-to-refresh.tsx": (code) =>
+    code
+      .replace(
+        'import { withUniwind } from "uniwind"',
+        'import { cssInterop } from "nativewind"'
+      )
+      .replace(
+        "const StyledRefreshIndicator = withUniwind(RefreshIndicator)\n",
+        `const StyledRefreshIndicator = cssInterop(RefreshIndicator, {
+  colorClassName: { target: false, nativeStyleToProp: { color: true } },
+  progressBackgroundColorClassName: {
+    target: false,
+    nativeStyleToProp: { color: "progressBackgroundColor" },
+  },
+})
+`
+      )
+      .replace(/"accent-([\w-]+)"/g, '"text-$1"'),
 }
 
 function addReactNativeImport(code, name) {
@@ -302,19 +321,26 @@ async function generate(target) {
   const colors = new Set(Object.keys(theme.light))
   const pattern = opacityPattern(colors)
 
-  const files = (await readdir(path.join(ROOT, SOURCE_DIR)))
-    .filter((file) => file.endsWith(".tsx"))
-    .sort()
   const sources = new Map()
-  for (const file of files) {
-    sources.set(file, await readFile(path.join(ROOT, SOURCE_DIR, file), "utf8"))
+  for (const dir of COMPONENT_DIRS) {
+    const source = path.join(ROOT, SOURCE_ROOT, dir)
+    if (!existsSync(source)) continue
+    const files = (await readdir(source))
+      .filter((file) => file.endsWith(".tsx"))
+      .sort()
+    for (const file of files) {
+      sources.set(
+        path.posix.join(dir, file),
+        await readFile(path.join(source, file), "utf8")
+      )
+    }
   }
 
   const tokens = collectTokens(sources.values(), pattern)
   const outputs = new Map()
   for (const [file, code] of sources) {
     const transformed = applyColorClassProps(
-      (FILE_TRANSFORMS[file] ?? ((value) => value))(
+      (FILE_TRANSFORMS[path.posix.basename(file)] ?? ((value) => value))(
         toTailwindV3(
           code.replace(
             pattern,
@@ -326,12 +352,14 @@ async function generate(target) {
     outputs.set(file, transformed)
   }
 
-  await mkdir(path.join(target, OUTPUT_DIR), { recursive: true })
   await mkdir(path.join(target, path.dirname(OUTPUT_STYLESHEET)), {
     recursive: true,
   })
   for (const [file, code] of outputs) {
-    await writeFile(path.join(target, OUTPUT_DIR, file), code)
+    await mkdir(path.join(target, OUTPUT_ROOT, path.dirname(file)), {
+      recursive: true,
+    })
+    await writeFile(path.join(target, OUTPUT_ROOT, file), code)
   }
   await writeFile(
     path.join(target, OUTPUT_STYLESHEET),
@@ -341,21 +369,24 @@ async function generate(target) {
 
   execFileSync(
     path.join(ROOT, "node_modules/.bin/biome"),
-    ["check", "--write", OUTPUT_DIR, OUTPUT_STYLESHEET, OUTPUT_CONFIG],
+    ["check", "--write", OUTPUT_ROOT, OUTPUT_STYLESHEET, OUTPUT_CONFIG],
     { cwd: target, stdio: "ignore" }
   )
   return { files: [...outputs.keys()], tokens: tokens.length }
 }
 
 async function snapshot(base) {
-  const dir = path.join(base, OUTPUT_DIR)
-  const files = existsSync(dir) ? (await readdir(dir)).sort() : []
-  const entries = await Promise.all(
-    files.map(async (file) => [
-      file,
-      await readFile(path.join(dir, file), "utf8"),
-    ])
-  )
+  const entries = []
+  for (const dir of COMPONENT_DIRS) {
+    const folder = path.join(base, OUTPUT_ROOT, dir)
+    if (!existsSync(folder)) continue
+    for (const file of (await readdir(folder)).sort()) {
+      entries.push([
+        path.posix.join(dir, file),
+        await readFile(path.join(folder, file), "utf8"),
+      ])
+    }
+  }
   const read = async (file) =>
     existsSync(path.join(base, file))
       ? await readFile(path.join(base, file), "utf8")
@@ -387,7 +418,9 @@ if (process.argv.includes("--check")) {
     rmSync(temp, { recursive: true, force: true })
   }
 } else {
-  rmSync(path.join(ROOT, OUTPUT_DIR), { recursive: true, force: true })
+  for (const dir of COMPONENT_DIRS) {
+    rmSync(path.join(ROOT, OUTPUT_ROOT, dir), { recursive: true, force: true })
+  }
   const { files, tokens } = await generate(ROOT)
   console.log(
     `NativeWind: ${files.length} component files, ${tokens} color tokens`

@@ -1,13 +1,13 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
-    "uniwind/components/ui/*.tsx",
+    "uniwind/components/**/*.tsx",
     "scripts/*.mjs",
     "packages/cli/index.mjs",
     "stories/**/*.stories.tsx",
     ".rnstorybook/*.{ts,tsx}",
-    "nativewind/components/ui/*.tsx",
-    "stylesheet/components/ui/*.{ts,tsx}",
+    "nativewind/components/**/*.tsx",
+    "stylesheet/components/**/*.{ts,tsx}",
     "components/primitives/*.{ts,tsx}"
   ],
   "project": [

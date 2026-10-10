@@ -23,10 +23,15 @@ const COMPANIONS = {
   "react-native-reanimated": ["react-native-worklets"],
 }
 const LOCAL_IMPORT =
-  /^@\/(components\/ui|components\/primitives|hooks)\/([\w-]+)$/
+  /^@\/(components\/(?:ui|patterns|interactions|blocks)|components\/primitives|hooks)\/([\w-]+)$/
 const PRIMITIVES_DIR = "components/primitives"
 
-const sources = [{ dir: "components/ui", type: "ui" }]
+const sources = [
+  { dir: "components/ui", type: "ui" },
+  { dir: "components/patterns", type: "pattern" },
+  { dir: "components/interactions", type: "interaction" },
+  { dir: "components/blocks", type: "block" },
+]
 
 function toTitle(name) {
   return name
@@ -140,7 +145,9 @@ function validate(items) {
 
 const items = []
 for (const { dir, type } of sources) {
-  const files = (await readdir(path.join(ROOT, STYLES.uniwind.directory, dir)))
+  const folder = path.join(ROOT, STYLES.uniwind.directory, dir)
+  if (!existsSync(folder)) continue
+  const files = (await readdir(folder))
     .filter((file) => /\.(tsx?|jsx?)$/.test(file))
     .sort()
   for (const file of files) items.push(await buildItem(dir, type, file))
