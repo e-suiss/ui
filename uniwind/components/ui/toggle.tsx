@@ -35,8 +35,8 @@ function toggleStateClassName(state: ToggleState) {
   return cn(
     "active:scale-96",
     state.pressed
-      ? "bg-item-hover active:bg-item-pressed"
-      : "active:bg-item-hover"
+      ? "bg-item-selected active:bg-item-pressed"
+      : "active:bg-item-pressed"
   )
 }
 

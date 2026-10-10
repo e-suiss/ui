@@ -106,7 +106,7 @@ struct ToggleSurface<Content: View>: View {
 
   private var background: Color {
     if !isEnabled { return isOn ? .controlDisabled : .clear }
-    if isOn { return pressed ? .itemPressed : .itemHover }
-    return pressed ? .itemHover : .clear
+    if isOn { return pressed ? .itemPressed : .itemSelected }
+    return pressed ? .itemPressed : .clear
   }
 }

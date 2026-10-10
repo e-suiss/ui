@@ -85,8 +85,8 @@ fun Toggle(
 
 internal fun toggleBackground(colors: Colors, on: Boolean, enabled: Boolean, touching: Boolean): Color = when {
     !enabled -> if (on) colors.controlDisabled else Color.Transparent
-    on -> if (touching) colors.itemPressed else colors.itemHover
-    touching -> colors.itemHover
+    on -> if (touching) colors.itemPressed else colors.itemSelected
+    touching -> colors.itemPressed
     else -> Color.Transparent
 }
 

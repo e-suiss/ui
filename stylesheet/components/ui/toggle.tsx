@@ -70,9 +70,9 @@ function toggleStyle(
             ? {
                 backgroundColor: pressing
                   ? colors.itemPressed
-                  : colors.itemHover,
+                  : colors.itemSelected,
               }
-            : pressing && { backgroundColor: colors.itemHover },
+            : pressing && { backgroundColor: colors.itemPressed },
         ],
   ]
 }

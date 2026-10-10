@@ -165,7 +165,7 @@ private fun buttonBackground(variant: ButtonVariant, colors: Colors, pressed: Bo
             else -> colors.control
         }
         ButtonVariant.Tinted -> if (pressed) colors.accentSurfacePressed else colors.accentSurface
-        ButtonVariant.Ghost -> if (pressed) colors.itemHover else Color.Transparent
+        ButtonVariant.Ghost -> if (pressed) colors.itemPressed else Color.Transparent
         ButtonVariant.Plain -> if (pressed) colors.itemPressed else Color.Transparent
         ButtonVariant.Destructive -> if (pressed) colors.dangerSurfacePressed else colors.dangerSurface
         ButtonVariant.Link -> Color.Transparent

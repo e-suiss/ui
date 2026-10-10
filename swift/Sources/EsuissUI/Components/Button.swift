@@ -162,7 +162,7 @@ private struct StyledButton: View {
     case .tinted:
       isEnabled && pressed ? .accentSurfacePressed : .accentSurface
     case .ghost:
-      isEnabled && pressed ? .itemHover : .clear
+      isEnabled && pressed ? .itemPressed : .clear
     case .plain:
       isEnabled && pressed ? .itemPressed : .clear
     case .destructive:
