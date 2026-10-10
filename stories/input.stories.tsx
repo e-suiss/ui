@@ -45,7 +45,7 @@ export const WithLabel: Story = {
     <View className="gap-2">
       <Label nativeID="input-email">Email</Label>
       <Input
-        aria-labelledby="input-email"
+        accessibilityLabelledBy="input-email"
         placeholder="m@example.com"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -60,8 +60,7 @@ export const Invalid: Story = {
     <View className="gap-2">
       <Label nativeID="input-invalid">Username</Label>
       <Input
-        aria-labelledby="input-invalid"
-        aria-invalid
+        accessibilityLabelledBy="input-invalid"
         className="border-destructive"
         defaultValue="x"
       />

@@ -1,5 +1,6 @@
 import { StyleSheet, type TextStyle, View, type ViewStyle } from "react-native"
-import { Slot } from "@/components/primitives/slot"
+import type { RenderProp } from "@/components/primitives/types"
+import { useRender } from "@/components/primitives/use-render"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
@@ -55,19 +56,23 @@ function badgeTextStyle(variant: BadgeVariant, colors: ThemeColors): TextStyle {
 
 type BadgeProps = React.ComponentProps<typeof View> &
   React.RefAttributes<View> & {
-    asChild?: boolean
+    render?: RenderProp<Record<string, unknown>, Record<string, never>>
     variant?: BadgeVariant
   }
 
-function Badge({ style, variant = "default", asChild, ...props }: BadgeProps) {
+function Badge({ style, variant = "default", render, ...props }: BadgeProps) {
   const { colors } = useTheme()
-  const Component = asChild ? Slot : View
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    props: [
+      { style: [styles.root, badgeStyle(variant, colors), style] },
+      props,
+    ],
+  })
   return (
     <TextStyleContext.Provider value={badgeTextStyle(variant, colors)}>
-      <Component
-        style={[styles.root, badgeStyle(variant, colors), style]}
-        {...props}
-      />
+      {element}
     </TextStyleContext.Provider>
   )
 }

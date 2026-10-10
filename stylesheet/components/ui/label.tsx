@@ -25,15 +25,19 @@ function Label({
   const { colors } = useTheme()
   return (
     <LabelPrimitive.Root
-      style={StyleSheet.flatten([styles.root, disabled && styles.disabled])}
+      style={(state) => [styles.root, state.disabled && styles.disabled]}
       onPress={onPress}
       onLongPress={onLongPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      disabled={disabled}
+      disabled={disabled ?? undefined}
     >
       <LabelPrimitive.Text
-        style={[styles.text, { color: colors.foreground }, style]}
+        style={(state) => [
+          styles.text,
+          { color: colors.foreground },
+          typeof style === "function" ? style(state) : style,
+        ]}
         {...props}
       />
     </LabelPrimitive.Root>

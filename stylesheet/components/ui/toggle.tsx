@@ -1,6 +1,6 @@
 import type * as React from "react"
 import {
-  type PressableStateCallbackType,
+  Pressable,
   type StyleProp,
   StyleSheet,
   type TextStyle,
@@ -70,14 +70,20 @@ function Toggle({
   return (
     <TextStyleContext.Provider value={toggleTextStyle(colors)}>
       <TogglePrimitive.Root
-        style={(state: PressableStateCallbackType) => [
-          toggleStyle({ variant, size }, colors, {
-            pressed: state.pressed,
-            selected: props.pressed,
-            disabled: props.disabled,
-          }),
-          typeof style === "function" ? style(state) : style,
-        ]}
+        render={(renderProps, state) => (
+          <Pressable
+            {...renderProps}
+            style={(pressable) => [
+              toggleStyle({ variant, size }, colors, {
+                pressed: pressable.pressed,
+                selected: state.pressed,
+                disabled: state.disabled,
+              }),
+              renderProps.style,
+              typeof style === "function" ? style(state) : style,
+            ]}
+          />
+        )}
         {...props}
       />
     </TextStyleContext.Provider>

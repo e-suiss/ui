@@ -36,7 +36,7 @@ function WithLabelDemo() {
   return (
     <View className="flex-row items-center gap-3">
       <Checkbox
-        aria-labelledby="terms"
+        accessibilityLabelledBy="terms"
         checked={checked}
         onCheckedChange={setChecked}
       />
@@ -56,7 +56,7 @@ function WithDescriptionDemo() {
   return (
     <View className="flex-row items-start gap-3">
       <Checkbox
-        aria-labelledby="notifications"
+        accessibilityLabelledBy="notifications"
         checked={checked}
         onCheckedChange={setChecked}
       />

@@ -14,8 +14,11 @@ import { Text } from "@/components/ui/text"
 function ProfileCard() {
   return (
     <View className="flex-row gap-4">
-      <Avatar alt="Expo">
-        <AvatarImage source={{ uri: "https://github.com/expo.png" }} />
+      <Avatar>
+        <AvatarImage
+          alt="Expo"
+          source={{ uri: "https://github.com/expo.png" }}
+        />
         <AvatarFallback>
           <Text className="text-xs">EX</Text>
         </AvatarFallback>
@@ -49,10 +52,8 @@ export const Default: Story = {
   render: () => (
     <View className="items-start">
       <HoverCard>
-        <HoverCardTrigger asChild>
-          <Button variant="link">
-            <Text>@expo</Text>
-          </Button>
+        <HoverCardTrigger render={<Button variant="link" />}>
+          <Text>@expo</Text>
         </HoverCardTrigger>
         <HoverCardContent className="w-80" align="start">
           <ProfileCard />
@@ -67,10 +68,8 @@ export const Sides: Story = {
     <View className="items-center gap-4 py-24">
       {(["top", "bottom"] as const).map((side) => (
         <HoverCard key={side}>
-          <HoverCardTrigger asChild>
-            <Button variant="outline">
-              <Text className="capitalize">{side}</Text>
-            </Button>
+          <HoverCardTrigger render={<Button variant="outline" />}>
+            <Text className="capitalize">{side}</Text>
           </HoverCardTrigger>
           <HoverCardContent side={side} className="w-64">
             <Text className="text-sm">This card opens on the {side}.</Text>
@@ -85,10 +84,8 @@ export const OpenByDefault: Story = {
   render: () => (
     <View className="items-start">
       <HoverCard defaultOpen>
-        <HoverCardTrigger asChild>
-          <Button variant="link">
-            <Text>@expo</Text>
-          </Button>
+        <HoverCardTrigger render={<Button variant="link" />}>
+          <Text>@expo</Text>
         </HoverCardTrigger>
         <HoverCardContent className="w-80" align="start">
           <ProfileCard />

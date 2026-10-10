@@ -49,10 +49,8 @@ export const Default: Story = {
   render: () => (
     <View className="items-start">
       <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline">
-            <Text>Show dialog</Text>
-          </Button>
+        <AlertDialogTrigger render={<Button variant="outline" />}>
+          <Text>Show dialog</Text>
         </AlertDialogTrigger>
         <AlertDialogBody />
       </AlertDialog>
@@ -64,10 +62,8 @@ export const OpenByDefault: Story = {
   render: () => (
     <View className="items-start">
       <AlertDialog defaultOpen>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline">
-            <Text>Show dialog</Text>
-          </Button>
+        <AlertDialogTrigger render={<Button variant="outline" />}>
+          <Text>Show dialog</Text>
         </AlertDialogTrigger>
         <AlertDialogBody />
       </AlertDialog>
@@ -79,10 +75,8 @@ export const Destructive: Story = {
   render: () => (
     <View className="items-start">
       <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive">
-            <Text>Delete project</Text>
-          </Button>
+        <AlertDialogTrigger render={<Button variant="destructive" />}>
+          <Text>Delete project</Text>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

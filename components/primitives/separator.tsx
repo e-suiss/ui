@@ -1,36 +1,43 @@
-import type * as React from "react"
+import * as React from "react"
 import { View } from "react-native"
-import { Slot } from "./slot"
-import type { SlottableViewProps, ViewRef } from "./types"
+import type { BaseUIComponentProps, Orientation } from "./types"
+import { useRender } from "./use-render"
 
-type RootProps = SlottableViewProps & {
-  orientation?: "horizontal" | "vertical"
-  decorative?: boolean
+interface RootState {
+  orientation: Orientation
 }
 
-type RootRef = ViewRef
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+  orientation?: Orientation | undefined
+}
 
 function Root({
-  asChild,
-  decorative,
   orientation = "horizontal",
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role={decorative ? "presentation" : "separator"}
-      aria-hidden={decorative === true}
-      aria-orientation={orientation}
-      importantForAccessibility={decorative ? "no-hide-descendants" : "auto"}
-      {...props}
-    />
-  )
+  ...elementProps
+}: RootProps) {
+  const state = React.useMemo<RootState>(() => ({ orientation }), [orientation])
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
 }
 
-Root.displayName = "SeparatorRoot"
+Root.displayName = "Separator"
 
-export type { RootProps, RootRef }
+export type { RootProps, RootState }
 export { Root }

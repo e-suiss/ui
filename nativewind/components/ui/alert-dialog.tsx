@@ -4,8 +4,9 @@ import { Platform, View, type ViewProps } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as AlertDialogPrimitive from "@/components/primitives/alert-dialog"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
-import { buttonTextVariants, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { TextClassContext } from "@/components/ui/text"
 
 const AlertDialog = AlertDialogPrimitive.Root
@@ -19,41 +20,27 @@ const FullWindowOverlay =
 
 function AlertDialogOverlay({
   className,
-  children,
   ...props
-}: Omit<
-  React.ComponentProps<typeof AlertDialogPrimitive.Overlay>,
-  "asChild"
-> & {
-  children?: React.ReactNode
-}) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>) {
   return (
-    <FullWindowOverlay>
-      <AlertDialogPrimitive.Overlay
-        className={cn(
-          "absolute top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center bg-black/30 p-4",
-          className
-        )}
-        {...props}
-        asChild
-      >
+    <AlertDialogPrimitive.Backdrop
+      render={
         <AnimatedView
+          as="Pressable"
           entering={FadeIn.duration(200)
             .delay(50)
             .reduceMotion(ReduceMotion.System)}
           exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-          as="Pressable"
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            paddingHorizontal: 16,
-          }}
-        >
-          {children}
-        </AnimatedView>
-      </AlertDialogPrimitive.Overlay>
-    </FullWindowOverlay>
+        />
+      }
+      className={(state) =>
+        cn(
+          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-black/30",
+          resolveClassName(className, state)
+        )
+      }
+      {...props}
+    />
   )
 }
 
@@ -61,20 +48,43 @@ function AlertDialogContent({
   className,
   portalHost,
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Popup> & {
   portalHost?: string
 }) {
   return (
     <AlertDialogPortal hostName={portalHost}>
-      <AlertDialogOverlay>
-        <AlertDialogPrimitive.Content
-          className={cn(
-            "z-50 w-full max-w-xs flex-col gap-6 rounded-4xl border border-foreground-5 bg-popover p-6 shadow-xl sm:max-w-md dark:border-foreground-10",
-            className
-          )}
-          {...props}
-        />
-      </AlertDialogOverlay>
+      <FullWindowOverlay>
+        <AlertDialogOverlay />
+        <View
+          className="absolute top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center p-4"
+          style={{ pointerEvents: "box-none" }}
+        >
+          <AnimatedView
+            entering={FadeIn.duration(200)
+              .delay(50)
+              .reduceMotion(ReduceMotion.System)}
+            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
+            style={{
+              flex: 1,
+              alignSelf: "stretch",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingHorizontal: 16,
+              pointerEvents: "box-none",
+            }}
+          >
+            <AlertDialogPrimitive.Popup
+              className={(state) =>
+                cn(
+                  "z-50 w-full max-w-xs flex-col gap-6 rounded-4xl border border-foreground-5 bg-popover p-6 shadow-xl sm:max-w-md dark:border-foreground-10",
+                  resolveClassName(className, state)
+                )
+              }
+              {...props}
+            />
+          </AnimatedView>
+        </View>
+      </FullWindowOverlay>
     </AlertDialogPortal>
   )
 }
@@ -111,7 +121,12 @@ function AlertDialogTitle({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
   return (
     <AlertDialogPrimitive.Title
-      className={cn("text-lg font-medium text-foreground", className)}
+      className={(state) =>
+        cn(
+          "text-lg font-medium text-foreground",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     />
   )
@@ -123,39 +138,39 @@ function AlertDialogDescription({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
   return (
     <AlertDialogPrimitive.Description
-      className={cn("text-sm text-muted-foreground", className)}
+      className={(state) =>
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
+      }
       {...props}
     />
   )
 }
 
 function AlertDialogAction({
-  className,
+  variant = "default",
+  size = "default",
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Action>) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <TextClassContext.Provider value={buttonTextVariants({ className })}>
-      <AlertDialogPrimitive.Action
-        className={cn(buttonVariants(), className)}
-        {...props}
-      />
-    </TextClassContext.Provider>
+    <AlertDialogPrimitive.Close
+      render={<Button variant={variant} size={size} />}
+      {...props}
+    />
   )
 }
 
 function AlertDialogCancel({
-  className,
+  variant = "outline",
+  size = "default",
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <TextClassContext.Provider
-      value={buttonTextVariants({ className, variant: "outline" })}
-    >
-      <AlertDialogPrimitive.Cancel
-        className={cn(buttonVariants({ variant: "outline" }), className)}
-        {...props}
-      />
-    </TextClassContext.Provider>
+    <AlertDialogPrimitive.Close
+      render={<Button variant={variant} size={size} />}
+      {...props}
+    />
   )
 }
 

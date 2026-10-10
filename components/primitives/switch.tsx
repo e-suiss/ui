@@ -1,75 +1,143 @@
-import type * as React from "react"
+import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
-import { useControllableState } from "./hooks"
-import { Slot } from "./slot"
-import type {
-  PressableRef,
-  SlottablePressableProps,
-  SlottableViewProps,
-  ViewRef,
-} from "./types"
+import { createChangeEventDetails, REASONS } from "./event-details"
+import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type RootProps = SlottablePressableProps & {
-  checked?: boolean
-  defaultChecked?: boolean
-  onCheckedChange?: (checked: boolean) => void
-  disabled?: boolean
+type ChangeEventReason = typeof REASONS.triggerPress | typeof REASONS.none
+
+type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
+
+interface RootState {
+  checked: boolean
+  disabled: boolean
+  readOnly: boolean
+  required: boolean
 }
 
-type ThumbProps = SlottableViewProps
+type ThumbState = RootState
 
-type RootRef = PressableRef
-type ThumbRef = ViewRef
+type RootProps = Omit<
+  BaseUIComponentProps<typeof Pressable, RootState>,
+  "children"
+> & {
+  children?: React.ReactNode
+  checked?: boolean | undefined
+  defaultChecked?: boolean | undefined
+  onCheckedChange?:
+    | ((checked: boolean, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  disabled?: boolean | undefined
+  readOnly?: boolean | undefined
+  required?: boolean | undefined
+}
+
+type ThumbProps = BaseUIComponentProps<typeof View, ThumbState>
+
+interface RootContextValue {
+  state: RootState
+}
+
+const RootContext = React.createContext<RootContextValue | null>(null)
+
+function useRootContext() {
+  const context = React.useContext(RootContext)
+  if (!context) {
+    throw new Error("Switch parts must be rendered inside Switch.Root")
+  }
+  return context
+}
 
 function Root({
-  asChild,
   checked: checkedProp,
-  defaultChecked,
+  defaultChecked = false,
   onCheckedChange,
   disabled = false,
-  onPress: onPressProp,
+  readOnly = false,
+  required = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const [checked = false, setChecked] = useControllableState<boolean>({
-    prop: checkedProp,
-    defaultProp: defaultChecked,
+  ...elementProps
+}: RootProps) {
+  const [checked, setChecked] = useControllableState<
+    boolean,
+    ChangeEventDetails
+  >({
+    value: checkedProp,
+    defaultValue: defaultChecked,
     onChange: onCheckedChange,
   })
+  const rootRef = React.useRef<View>(null)
+
+  const state = React.useMemo<RootState>(
+    () => ({ checked, disabled, readOnly, required }),
+    [checked, disabled, readOnly, required]
+  )
+
+  const context = React.useMemo<RootContextValue>(() => ({ state }), [state])
 
   const onPress = (event: GestureResponderEvent) => {
-    if (disabled) return
-    setChecked(!checked)
-    onPressProp?.(event)
+    if (disabled || readOnly) return
+    setChecked(
+      !checked,
+      createChangeEventDetails(REASONS.triggerPress, event, rootRef.current)
+    )
   }
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={ref}
-      role="switch"
-      aria-checked={checked}
-      aria-disabled={disabled}
-      accessibilityState={{ checked, disabled }}
-      disabled={disabled}
-      onPress={onPress}
-      {...props}
-    />
-  )
+  const element = useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: [ref, rootRef],
+    props: [
+      {
+        accessibilityRole: "switch",
+        accessibilityState: { checked, disabled },
+        disabled,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "SwitchRoot"
 
-function Thumb({
-  asChild,
-  ref,
-  ...props
-}: ThumbProps & React.RefAttributes<ThumbRef>) {
-  const Component = asChild ? Slot : View
-  return <Component ref={ref} role="presentation" {...props} />
+function Thumb({ render, className, style, ref, ...elementProps }: ThumbProps) {
+  const { state } = useRootContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
 }
 
 Thumb.displayName = "SwitchThumb"
 
-export type { RootProps, RootRef, ThumbProps, ThumbRef }
-export { Root, Thumb }
+export type {
+  ChangeEventDetails,
+  ChangeEventReason,
+  RootContextValue,
+  RootProps,
+  RootState,
+  ThumbProps,
+  ThumbState,
+}
+export { Root, Thumb, useRootContext }

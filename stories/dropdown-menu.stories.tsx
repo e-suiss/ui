@@ -32,10 +32,8 @@ import { Text } from "@/components/ui/text"
 
 function OpenButton({ label = "Open menu" }: { label?: string }) {
   return (
-    <DropdownMenuTrigger asChild>
-      <Button variant="outline">
-        <Text>{label}</Text>
-      </Button>
+    <DropdownMenuTrigger render={<Button variant="outline" />}>
+      <Text>{label}</Text>
     </DropdownMenuTrigger>
   )
 }
@@ -118,23 +116,17 @@ function CheckboxesDemo() {
           <DropdownMenuCheckboxItem
             checked={statusBar}
             onCheckedChange={setStatusBar}
-            closeOnPress={false}
           >
             <Text>Status bar</Text>
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             checked={activityBar}
             onCheckedChange={setActivityBar}
-            closeOnPress={false}
             disabled
           >
             <Text>Activity bar</Text>
           </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            checked={panel}
-            onCheckedChange={setPanel}
-            closeOnPress={false}
-          >
+          <DropdownMenuCheckboxItem checked={panel} onCheckedChange={setPanel}>
             <Text>Panel</Text>
           </DropdownMenuCheckboxItem>
         </DropdownMenuContent>
@@ -157,13 +149,13 @@ function RadioGroupDemo() {
           <DropdownMenuLabel>Panel position</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-            <DropdownMenuRadioItem value="top" closeOnPress={false}>
+            <DropdownMenuRadioItem value="top">
               <Text>Top</Text>
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="bottom" closeOnPress={false}>
+            <DropdownMenuRadioItem value="bottom">
               <Text>Bottom</Text>
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="right" closeOnPress={false}>
+            <DropdownMenuRadioItem value="right">
               <Text>Right</Text>
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>

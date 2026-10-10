@@ -33,14 +33,30 @@ function Avatar({
   style,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Root>) {
-  return <AvatarPrimitive.Root style={[styles.root, style]} {...props} />
+  return (
+    <AvatarPrimitive.Root
+      style={(state) => [
+        styles.root,
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
+  )
 }
 
 function AvatarImage({
   style,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
-  return <AvatarPrimitive.Image style={[styles.image, style]} {...props} />
+  return (
+    <AvatarPrimitive.Image
+      style={(state) => [
+        styles.image,
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
+  )
 }
 
 function AvatarFallback({
@@ -53,7 +69,11 @@ function AvatarFallback({
       value={{ ...fontSize.sm, color: colors.mutedForeground }}
     >
       <AvatarPrimitive.Fallback
-        style={[styles.fallback, { backgroundColor: colors.muted }, style]}
+        style={(state) => [
+          styles.fallback,
+          { backgroundColor: colors.muted },
+          typeof style === "function" ? style(state) : style,
+        ]}
         {...props}
       />
     </TextStyleContext.Provider>

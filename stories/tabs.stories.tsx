@@ -40,12 +40,15 @@ function TabsDemo() {
           <CardContent className="gap-4">
             <View className="gap-2">
               <Label nativeID="tabs-name">Name</Label>
-              <Input aria-labelledby="tabs-name" defaultValue="Pedro Duarte" />
+              <Input
+                accessibilityLabelledBy="tabs-name"
+                defaultValue="Pedro Duarte"
+              />
             </View>
             <View className="gap-2">
               <Label nativeID="tabs-username">Username</Label>
               <Input
-                aria-labelledby="tabs-username"
+                accessibilityLabelledBy="tabs-username"
                 defaultValue="@peduarte"
                 autoCapitalize="none"
               />
@@ -69,11 +72,11 @@ function TabsDemo() {
           <CardContent className="gap-4">
             <View className="gap-2">
               <Label nativeID="tabs-current">Current password</Label>
-              <Input aria-labelledby="tabs-current" secureTextEntry />
+              <Input accessibilityLabelledBy="tabs-current" secureTextEntry />
             </View>
             <View className="gap-2">
               <Label nativeID="tabs-new">New password</Label>
-              <Input aria-labelledby="tabs-new" secureTextEntry />
+              <Input accessibilityLabelledBy="tabs-new" secureTextEntry />
             </View>
           </CardContent>
           <CardFooter>

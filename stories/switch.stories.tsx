@@ -36,7 +36,7 @@ function WithLabelDemo() {
   return (
     <View className="flex-row items-center gap-2">
       <Switch
-        aria-labelledby="airplane-mode"
+        accessibilityLabelledBy="airplane-mode"
         checked={checked}
         onCheckedChange={setChecked}
       />
@@ -62,7 +62,7 @@ function WithDescriptionDemo() {
         <Text variant="muted">Receive emails about new products.</Text>
       </View>
       <Switch
-        aria-labelledby="marketing"
+        accessibilityLabelledBy="marketing"
         checked={checked}
         onCheckedChange={setChecked}
       />

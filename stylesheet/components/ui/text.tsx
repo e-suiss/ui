@@ -5,7 +5,8 @@ import {
   StyleSheet,
   type TextStyle,
 } from "react-native"
-import { Slot } from "@/components/primitives/slot"
+import type { RenderProp } from "@/components/primitives/types"
+import { useRender } from "@/components/primitives/use-render"
 import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
 
 type TextVariant =
@@ -27,13 +28,6 @@ const ROLE: Partial<Record<TextVariant, Role>> = {
   h2: "heading",
   h3: "heading",
   h4: "heading",
-}
-
-const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
-  h1: "1",
-  h2: "2",
-  h3: "3",
-  h4: "4",
 }
 
 const styles = StyleSheet.create({
@@ -93,30 +87,32 @@ const TextStyleContext = React.createContext<TextStyle | undefined>(undefined)
 
 function Text({
   style,
-  asChild = false,
+  render,
   variant = "default",
   ...props
 }: React.ComponentProps<typeof RNText> &
   React.RefAttributes<typeof RNText> & {
-    asChild?: boolean
+    render?: RenderProp<Record<string, unknown>, Record<string, never>>
     variant?: TextVariant
   }) {
   const { colors } = useTheme()
   const inherited = React.useContext(TextStyleContext)
-  const Component = asChild ? Slot : RNText
-  return (
-    <Component
-      style={[
-        styles[variant],
-        variantColors(variant, colors),
-        inherited,
-        style,
-      ]}
-      role={ROLE[variant]}
-      aria-level={ARIA_LEVEL[variant]}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: RNText,
+    render,
+    props: [
+      {
+        style: [
+          styles[variant],
+          variantColors(variant, colors),
+          inherited,
+          style,
+        ],
+        role: ROLE[variant],
+      },
+      props,
+    ],
+  })
 }
 
 export type { TextVariant }

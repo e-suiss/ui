@@ -66,13 +66,7 @@ function CardTitle({
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
   return (
-    <Text
-      ref={ref}
-      role="heading"
-      aria-level={3}
-      style={[styles.title, style]}
-      {...props}
-    />
+    <Text ref={ref} role="heading" style={[styles.title, style]} {...props} />
   )
 }
 

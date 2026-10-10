@@ -2,7 +2,8 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 import { Text as RNText, type Role } from "react-native"
-import { Slot } from "@/components/primitives/slot"
+import type { RenderProp } from "@/components/primitives/types"
+import { useRender } from "@/components/primitives/use-render"
 
 const textVariants = cva("text-foreground text-base", {
   variants: {
@@ -37,35 +38,30 @@ const ROLE: Partial<Record<TextVariant, Role>> = {
   h4: "heading",
 }
 
-const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
-  h1: "1",
-  h2: "2",
-  h3: "3",
-  h4: "4",
-}
-
 const TextClassContext = React.createContext<string | undefined>(undefined)
 
 function Text({
   className,
-  asChild = false,
+  render,
   variant = "default",
   ...props
 }: React.ComponentProps<typeof RNText> &
   React.RefAttributes<typeof RNText> &
   TextVariantProps & {
-    asChild?: boolean
+    render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {
   const textClass = React.useContext(TextClassContext)
-  const Component = asChild ? Slot : RNText
-  return (
-    <Component
-      className={cn(textVariants({ variant }), textClass, className)}
-      role={variant ? ROLE[variant] : undefined}
-      aria-level={variant ? ARIA_LEVEL[variant] : undefined}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: RNText,
+    render,
+    props: [
+      {
+        className: cn(textVariants({ variant }), textClass, className),
+        role: variant ? ROLE[variant] : undefined,
+      },
+      props,
+    ],
+  })
 }
 
 export { Text, TextClassContext }

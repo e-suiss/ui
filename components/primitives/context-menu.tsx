@@ -2,219 +2,158 @@ import * as React from "react"
 import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
+  type HostInstance,
   Pressable,
-  View,
 } from "react-native"
+import { REASONS } from "./event-details"
+import { useComposedRefs } from "./hooks"
 import {
-  FloatingContent as FloatingContentPrimitive,
-  type FloatingContentProps,
-  FloatingOverlay,
-  type FloatingRoot,
-  type OverlayProps,
-  type OverlayRef,
-  useFloatingRoot,
-  useTriggerRef,
-} from "./menu-core"
-import { Portal as PortalPrimitive } from "./portal"
-import { Slot } from "./slot"
-import type {
-  ForceMountable,
-  SlottablePressableProps,
-  SlottableViewProps,
-  TriggerRef,
-  ViewRef,
-} from "./types"
+  Positioner as MenuPositioner,
+  MenuRootImpl,
+  type PositionerProps,
+  type RootProps,
+  useMenuRootContext,
+} from "./menu"
+import type { BaseUIComponentProps } from "./types"
+import { useRender } from "./use-render"
 
-type RelativeTo = "longPress" | "trigger"
-
-type RootProps = SlottableViewProps & {
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  relativeTo?: RelativeTo
-}
-
-type TriggerProps = SlottablePressableProps
-
-interface PortalProps extends ForceMountable {
-  children: React.ReactNode
-  hostName?: string
-}
-
-type ContentProps = FloatingContentProps
-
-type RootRef = ViewRef
-type ContentRef = ViewRef
-
-interface RootContextValue extends FloatingRoot {
-  relativeTo: RelativeTo
-}
-
-const RootContext = React.createContext<RootContextValue | null>(null)
-
-function useRootContext() {
-  const context = React.useContext(RootContext)
-  if (!context) {
-    throw new Error(
-      "ContextMenu compound components cannot be rendered outside the ContextMenu component"
-    )
-  }
-  return context
-}
-
-function Root({
-  asChild,
-  open,
-  defaultOpen,
-  onOpenChange,
-  relativeTo = "longPress",
-  ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const floating = useFloatingRoot({ open, defaultOpen, onOpenChange })
-  const value = React.useMemo(
-    () => ({ ...floating, relativeTo }),
-    [floating, relativeTo]
-  )
-  const Component = asChild ? Slot : View
-  return (
-    <RootContext.Provider value={value}>
-      <Component ref={ref} {...props} />
-    </RootContext.Provider>
-  )
+function Root(props: RootProps) {
+  return <MenuRootImpl parent="context-menu" {...props} />
 }
 
 Root.displayName = "ContextMenuRoot"
 
+interface TriggerState {
+  open: boolean
+  disabled: boolean
+}
+
+type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+
 const ACCESSIBILITY_ACTIONS = [{ name: "longpress" }]
 
 function Trigger({
-  asChild,
-  disabled,
-  onLongPress: onLongPressProp,
-  onAccessibilityAction: onAccessibilityActionProp,
+  disabled: disabledProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: TriggerProps & React.RefAttributes<TriggerRef>) {
-  const root = useRootContext()
-  const composedRef = useTriggerRef(ref, root)
-
-  function onLongPress(event: GestureResponderEvent) {
-    if (disabled) return
-    if (root.relativeTo === "longPress") {
-      root.openAt({
-        pageX: event.nativeEvent.pageX,
-        pageY: event.nativeEvent.pageY,
-        width: 0,
-        height: 0,
-      })
-    } else {
-      root.onOpenChange(true)
-    }
-    onLongPressProp?.(event)
-  }
-
-  function onAccessibilityAction(event: AccessibilityActionEvent) {
-    if (!disabled && event.nativeEvent.actionName === "longpress") {
-      root.onOpenChange(!root.open)
-    }
-    onAccessibilityActionProp?.(event)
-  }
-
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={composedRef}
-      role="button"
-      aria-haspopup="menu"
-      aria-expanded={root.open}
-      aria-disabled={!!disabled}
-      disabled={disabled}
-      accessibilityActions={ACCESSIBILITY_ACTIONS}
-      onAccessibilityAction={onAccessibilityAction}
-      onLongPress={onLongPress}
-      {...props}
-    />
+  ...elementProps
+}: TriggerProps) {
+  const { floating } = useMenuRootContext("ContextMenu.Trigger")
+  const { open, openAt, setOpen } = floating
+  const disabled = !!disabledProp || floating.disabled
+  const composedRef = useComposedRefs<HostInstance>(
+    ref as React.Ref<HostInstance> | undefined,
+    floating.triggerRef
   )
+
+  const onLongPress = React.useCallback(
+    (event: GestureResponderEvent) => {
+      if (disabled) return
+      openAt(
+        {
+          pageX: event.nativeEvent.pageX,
+          pageY: event.nativeEvent.pageY,
+          width: 0,
+          height: 0,
+        },
+        REASONS.triggerLongPress,
+        event
+      )
+    },
+    [disabled, openAt]
+  )
+
+  const onAccessibilityAction = React.useCallback(
+    (event: AccessibilityActionEvent) => {
+      if (disabled || event.nativeEvent.actionName !== "longpress") return
+      setOpen(!open, REASONS.triggerLongPress, event)
+    },
+    [disabled, open, setOpen]
+  )
+
+  const state = React.useMemo<TriggerState>(
+    () => ({ open, disabled }),
+    [open, disabled]
+  )
+
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: composedRef,
+    props: [
+      {
+        accessibilityActions: ACCESSIBILITY_ACTIONS,
+        accessibilityState: { expanded: open, disabled },
+        onAccessibilityAction,
+        onLongPress,
+        disabled: disabled || undefined,
+      },
+      elementProps,
+    ],
+  })
 }
 
 Trigger.displayName = "ContextMenuTrigger"
 
-function Portal({ forceMount, hostName, children }: PortalProps) {
-  const value = useRootContext()
-  if (!forceMount && !value.open) return null
-  return (
-    <PortalPrimitive hostName={hostName} name={`${value.nativeID}_portal`}>
-      <RootContext.Provider value={value}>{children}</RootContext.Provider>
-    </PortalPrimitive>
-  )
+function Positioner({
+  side = "bottom",
+  align = "start",
+  ...props
+}: PositionerProps) {
+  return <MenuPositioner side={side} align={align} {...props} />
 }
 
-Portal.displayName = "ContextMenuPortal"
-
-function Overlay(props: OverlayProps & React.RefAttributes<OverlayRef>) {
-  const { open, close } = useRootContext()
-  return <FloatingOverlay open={open} close={close} {...props} />
-}
-
-Overlay.displayName = "ContextMenuOverlay"
-
-function Content(props: ContentProps & React.RefAttributes<ContentRef>) {
-  const root = useRootContext()
-  return <FloatingContentPrimitive state={root} role="menu" {...props} />
-}
-
-Content.displayName = "ContextMenuContent"
+Positioner.displayName = "ContextMenuPositioner"
 
 export type {
+  ArrowProps,
+  ArrowState,
+  BackdropProps,
+  BackdropState,
   CheckboxItemProps,
-  CheckboxItemRef,
+  CheckboxItemState,
+  GroupLabelProps,
   GroupProps,
-  GroupRef,
-  ItemIndicatorProps,
-  ItemIndicatorRef,
+  IndicatorProps,
   ItemProps,
-  ItemRef,
-  LabelProps,
-  LabelRef,
-  OverlayProps,
-  OverlayRef,
+  ItemState,
+  MenuChangeEventDetails as ContextMenuChangeEventDetails,
+  MenuChangeEventReason as ContextMenuChangeEventReason,
+  PopupProps,
+  PopupState,
+  PortalProps,
+  PositionerProps,
   RadioGroupProps,
-  RadioGroupRef,
   RadioItemProps,
-  RadioItemRef,
+  RadioItemState,
+  RootProps,
   SeparatorProps,
-  SeparatorRef,
-  SubContentProps,
-  SubContentRef,
-  SubProps,
-  SubRef,
-  SubTriggerProps,
-  SubTriggerRef,
-} from "./menu-core"
+  SubmenuRootProps,
+  SubmenuTriggerProps,
+  SubmenuTriggerState,
+} from "./menu"
 export {
+  Arrow,
+  Backdrop,
   CheckboxItem,
+  CheckboxItemIndicator,
   Group,
+  GroupLabel,
   Item,
-  ItemIndicator,
-  Label,
+  Popup,
+  Portal,
   RadioGroup,
   RadioItem,
+  RadioItemIndicator,
   Separator,
-  Sub,
-  SubContent,
-  SubTrigger,
-  useSubContext,
-} from "./menu-core"
-export type {
-  ContentProps,
-  ContentRef,
-  PortalProps,
-  RelativeTo,
-  RootContextValue,
-  RootProps,
-  RootRef,
-  TriggerProps,
-  TriggerRef,
-}
-export { Content, Overlay, Portal, Root, Trigger, useRootContext }
+  SubmenuRoot,
+  SubmenuTrigger,
+  useMenuRootContext,
+} from "./menu"
+export type { TriggerProps, TriggerState }
+export { Positioner, Root, Trigger }

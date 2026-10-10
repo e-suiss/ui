@@ -1,36 +1,48 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
-import { useControllableState } from "./hooks"
-import { Slot } from "./slot"
-import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableViewProps,
-  ViewRef,
-} from "./types"
+import { createChangeEventDetails, REASONS } from "./event-details"
+import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type RootProps = SlottableViewProps & {
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  disabled?: boolean
+type ChangeEventReason = typeof REASONS.triggerPress | typeof REASONS.none
+
+type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
+
+interface RootState {
+  open: boolean
+  disabled: boolean
 }
 
-type TriggerProps = SlottablePressableProps & {
-  disabled?: boolean
+type TriggerState = RootState
+
+type PanelState = RootState
+
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+  open?: boolean | undefined
+  defaultOpen?: boolean | undefined
+  onOpenChange?:
+    | ((open: boolean, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  disabled?: boolean | undefined
 }
 
-type ContentProps = ForceMountable & SlottableViewProps
+type TriggerProps = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "children"
+> & {
+  children?: React.ReactNode
+}
 
-type RootRef = ViewRef
-type TriggerRef = PressableRef
-type ContentRef = ViewRef
+type PanelProps = BaseUIComponentProps<typeof View, PanelState> & {
+  keepMounted?: boolean | undefined
+}
 
 interface RootContextValue {
   open: boolean
   disabled: boolean
-  onOpenChange: (open: boolean) => void
+  state: RootState
+  setOpen: (open: boolean, eventDetails: ChangeEventDetails) => boolean
 }
 
 const RootContext = React.createContext<RootContextValue | null>(null)
@@ -39,103 +51,137 @@ function useRootContext() {
   const context = React.useContext(RootContext)
   if (!context) {
     throw new Error(
-      "Collapsible compound components cannot be rendered outside the Collapsible component"
+      "Collapsible parts must be rendered inside Collapsible.Root"
     )
   }
   return context
 }
 
 function Root({
-  asChild,
   open: openProp,
-  defaultOpen,
+  defaultOpen = false,
   onOpenChange,
   disabled = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const [open = false, setOpen] = useControllableState<boolean>({
-    prop: openProp,
-    defaultProp: defaultOpen,
+  ...elementProps
+}: RootProps) {
+  const [open, setOpen] = useControllableState<boolean, ChangeEventDetails>({
+    value: openProp,
+    defaultValue: defaultOpen,
     onChange: onOpenChange,
   })
 
-  const context = React.useMemo<RootContextValue>(
-    () => ({ open, disabled, onOpenChange: setOpen }),
-    [open, disabled, setOpen]
+  const state = React.useMemo<RootState>(
+    () => ({ open, disabled }),
+    [open, disabled]
   )
 
-  const Component = asChild ? Slot : View
-  return (
-    <RootContext.Provider value={context}>
-      <Component ref={ref} {...props} />
-    </RootContext.Provider>
+  const context = React.useMemo<RootContextValue>(
+    () => ({ open, disabled, state, setOpen }),
+    [open, disabled, state, setOpen]
   )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "CollapsibleRoot"
 
 function Trigger({
-  asChild,
-  disabled: disabledProp = false,
-  onPress: onPressProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: TriggerProps & React.RefAttributes<TriggerRef>) {
-  const { open, disabled: rootDisabled, onOpenChange } = useRootContext()
-  const disabled = rootDisabled || disabledProp
+  ...elementProps
+}: TriggerProps) {
+  const { open, disabled, state, setOpen } = useRootContext()
+  const triggerRef = React.useRef<View>(null)
 
   const onPress = (event: GestureResponderEvent) => {
     if (disabled) return
-    onOpenChange(!open)
-    onPressProp?.(event)
+    setOpen(
+      !open,
+      createChangeEventDetails(REASONS.triggerPress, event, triggerRef.current)
+    )
   }
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={ref}
-      role="button"
-      aria-expanded={open}
-      aria-disabled={disabled}
-      accessibilityState={{ expanded: open, disabled }}
-      disabled={disabled}
-      onPress={onPress}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: [ref, triggerRef],
+    props: [
+      {
+        accessibilityRole: "button",
+        accessibilityState: { expanded: open, disabled },
+        disabled,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
 }
 
 Trigger.displayName = "CollapsibleTrigger"
 
-function Content({
-  asChild,
-  forceMount,
+const HIDDEN_STYLE = { display: "none" } as const
+
+function Panel({
+  keepMounted = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ContentProps & React.RefAttributes<ContentRef>) {
-  const { open } = useRootContext()
-  if (!forceMount && !open) return null
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="region"
-      aria-hidden={!open}
-      importantForAccessibility={open ? "auto" : "no-hide-descendants"}
-      {...props}
-    />
-  )
+  ...elementProps
+}: PanelProps) {
+  const { open, state } = useRootContext()
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: open || keepMounted,
+    props: [
+      open
+        ? null
+        : {
+            style: HIDDEN_STYLE,
+            accessibilityElementsHidden: true,
+            importantForAccessibility: "no-hide-descendants",
+          },
+      elementProps,
+    ],
+  })
 }
 
-Content.displayName = "CollapsibleContent"
+Panel.displayName = "CollapsiblePanel"
 
 export type {
-  ContentProps,
-  ContentRef,
+  ChangeEventDetails,
+  ChangeEventReason,
+  PanelProps,
+  PanelState,
+  RootContextValue,
   RootProps,
-  RootRef,
+  RootState,
   TriggerProps,
-  TriggerRef,
+  TriggerState,
 }
-export { Content, Root, Trigger, useRootContext }
+export { Panel, Root, Trigger, useRootContext }

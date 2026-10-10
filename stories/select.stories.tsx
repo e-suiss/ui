@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select"
 import { Text } from "@/components/ui/text"
 
-const fruits = [
+const fruits: Option[] = [
   { value: "apple", label: "Apple" },
   { value: "banana", label: "Banana" },
   { value: "blueberry", label: "Blueberry" },
@@ -23,7 +23,7 @@ const fruits = [
   { value: "pineapple", label: "Pineapple" },
 ]
 
-const vegetables = [
+const vegetables: Option[] = [
   { value: "carrot", label: "Carrot" },
   { value: "broccoli", label: "Broccoli" },
   { value: "spinach", label: "Spinach" },
@@ -44,9 +44,12 @@ function SelectDemo({
   labelledBy?: string
   defaultOpen?: boolean
 }) {
-  const [value, setValue] = React.useState<Option>(initial)
+  const [value, setValue] = React.useState<string | null>(
+    initial?.value ?? null
+  )
   return (
     <Select
+      items={fruits}
       value={value}
       onValueChange={setValue}
       disabled={disabled}
@@ -54,9 +57,7 @@ function SelectDemo({
     >
       <SelectTrigger
         size={size}
-        disabled={disabled}
-        aria-invalid={invalid}
-        aria-labelledby={labelledBy}
+        accessibilityLabelledBy={labelledBy}
         className={invalid ? "border-destructive w-48" : "w-48"}
       >
         <SelectValue placeholder="Select a fruit" />
@@ -99,9 +100,13 @@ export const Small: Story = {
 }
 
 function GroupedDemo() {
-  const [value, setValue] = React.useState<Option>()
+  const [value, setValue] = React.useState<string | null>(null)
   return (
-    <Select value={value} onValueChange={setValue}>
+    <Select
+      items={[...fruits.slice(0, 3), ...vegetables]}
+      value={value}
+      onValueChange={setValue}
+    >
       <SelectTrigger className="w-56">
         <SelectValue placeholder="Select produce" />
       </SelectTrigger>

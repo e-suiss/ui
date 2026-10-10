@@ -1,276 +1,380 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
-import { useControllableState } from "./hooks"
-import { Slot } from "./slot"
+import { createChangeEventDetails, REASONS } from "./event-details"
 import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableViewProps,
-  ViewRef,
+  BaseUIChangeEventDetails,
+  BaseUIComponentProps,
+  Orientation,
 } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type AccordionValue = string | string[] | undefined
+type AccordionValue = string[]
 
-interface SingleRootProps {
-  type: "single"
-  value?: string | undefined
-  defaultValue?: string | undefined
-  onValueChange?: (value: string | undefined) => void
-}
+type ChangeEventReason = typeof REASONS.triggerPress | typeof REASONS.none
 
-interface MultipleRootProps {
-  type: "multiple"
-  value?: string[]
-  defaultValue?: string[]
-  onValueChange?: (value: string[]) => void
-}
+type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
 
-type RootProps = (SingleRootProps | MultipleRootProps) &
-  SlottableViewProps & {
-    disabled?: boolean
-    collapsible?: boolean
-  }
-
-type ItemProps = SlottableViewProps & {
-  value: string
-  disabled?: boolean
-}
-
-type HeaderProps = SlottableViewProps
-type TriggerProps = SlottablePressableProps & {
-  disabled?: boolean
-}
-type ContentProps = ForceMountable & SlottableViewProps
-
-type RootRef = ViewRef
-type ItemRef = ViewRef
-type HeaderRef = ViewRef
-type TriggerRef = PressableRef
-type ContentRef = ViewRef
-
-interface RootContext {
-  type: "single" | "multiple"
+interface RootState {
   value: AccordionValue
-  onValueChange: (value: AccordionValue) => void
-  collapsible: boolean
   disabled: boolean
+  orientation: Orientation
 }
 
-interface ItemContext {
+interface ItemState extends RootState {
+  open: boolean
+  index: number
+}
+
+type HeaderState = ItemState
+
+type TriggerState = ItemState
+
+type PanelState = ItemState
+
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+  value?: AccordionValue | undefined
+  defaultValue?: AccordionValue | undefined
+  onValueChange?:
+    | ((value: AccordionValue, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  multiple?: boolean | undefined
+  disabled?: boolean | undefined
+  keepMounted?: boolean | undefined
+  orientation?: Orientation | undefined
+}
+
+type ItemProps = BaseUIComponentProps<typeof View, ItemState> & {
+  value?: string | undefined
+  disabled?: boolean | undefined
+  onOpenChange?:
+    | ((open: boolean, eventDetails: ChangeEventDetails) => void)
+    | undefined
+}
+
+type HeaderProps = BaseUIComponentProps<typeof View, HeaderState>
+
+type TriggerProps = Omit<
+  BaseUIComponentProps<typeof Pressable, TriggerState>,
+  "children"
+> & {
+  children?: React.ReactNode
+}
+
+type PanelProps = BaseUIComponentProps<typeof View, PanelState> & {
+  keepMounted?: boolean | undefined
+}
+
+interface RootContextValue {
+  value: AccordionValue
+  multiple: boolean
+  disabled: boolean
+  keepMounted: boolean
+  orientation: Orientation
+  state: RootState
+  setItemOpen: (
+    itemValue: string,
+    open: boolean,
+    eventDetails: ChangeEventDetails
+  ) => boolean
+  registerItem: (itemValue: string) => () => void
+  items: readonly string[]
+}
+
+interface ItemContextValue {
   value: string
+  open: boolean
   disabled: boolean
-  isExpanded: boolean
+  state: ItemState
+  setOpen: (open: boolean, eventDetails: ChangeEventDetails) => boolean
 }
 
-function toArray(value: AccordionValue): string[] {
-  if (value === undefined) return []
-  return typeof value === "string" ? [value] : value
-}
+const EMPTY_VALUE: AccordionValue = []
 
-function isItemExpanded(rootValue: AccordionValue, value: string) {
-  return Array.isArray(rootValue)
-    ? rootValue.includes(value)
-    : rootValue === value
-}
-
-const AccordionContext = React.createContext<RootContext | null>(null)
+const RootContext = React.createContext<RootContextValue | null>(null)
 
 function useRootContext() {
-  const context = React.useContext(AccordionContext)
+  const context = React.useContext(RootContext)
   if (!context) {
-    throw new Error(
-      "Accordion compound components cannot be rendered outside the Accordion component"
-    )
+    throw new Error("Accordion parts must be rendered inside Accordion.Root")
   }
   return context
 }
 
-function Root(props: RootProps & React.RefAttributes<RootRef>) {
-  const {
-    asChild,
-    type,
+const ItemContext = React.createContext<ItemContextValue | null>(null)
+
+function useItemContext() {
+  const context = React.useContext(ItemContext)
+  if (!context) {
+    throw new Error("Accordion parts must be rendered inside Accordion.Item")
+  }
+  return context
+}
+
+function Root({
+  value: valueProp,
+  defaultValue = EMPTY_VALUE,
+  onValueChange,
+  multiple = false,
+  disabled = false,
+  keepMounted = false,
+  orientation = "vertical",
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: RootProps) {
+  const [value, setValue] = useControllableState<
+    AccordionValue,
+    ChangeEventDetails
+  >({
     value: valueProp,
     defaultValue,
-    onValueChange: _onValueChange,
-    disabled = false,
-    collapsible = true,
+    onChange: onValueChange,
+  })
+
+  const [items, setItems] = React.useState<readonly string[]>([])
+
+  const registerItem = React.useCallback((itemValue: string) => {
+    setItems((current) =>
+      current.includes(itemValue) ? current : [...current, itemValue]
+    )
+    return () => {
+      setItems((current) => current.filter((entry) => entry !== itemValue))
+    }
+  }, [])
+
+  const setItemOpen = React.useCallback(
+    (itemValue: string, open: boolean, eventDetails: ChangeEventDetails) =>
+      setValue((current) => {
+        if (open) {
+          if (current.includes(itemValue)) return current
+          return multiple ? [...current, itemValue] : [itemValue]
+        }
+        if (!current.includes(itemValue)) return current
+        return current.filter((entry) => entry !== itemValue)
+      }, eventDetails),
+    [multiple, setValue]
+  )
+
+  const state = React.useMemo<RootState>(
+    () => ({ value, disabled, orientation }),
+    [value, disabled, orientation]
+  )
+
+  const context = React.useMemo<RootContextValue>(
+    () => ({
+      value,
+      multiple,
+      disabled,
+      keepMounted,
+      orientation,
+      state,
+      setItemOpen,
+      registerItem,
+      items,
+    }),
+    [
+      value,
+      multiple,
+      disabled,
+      keepMounted,
+      orientation,
+      state,
+      setItemOpen,
+      registerItem,
+      items,
+    ]
+  )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
     ref,
-    ...viewProps
-  } = props
+    props: elementProps,
+  })
 
-  const onChange = (next: AccordionValue) => {
-    if (props.type === "multiple") props.onValueChange?.(toArray(next))
-    else props.onValueChange?.(typeof next === "string" ? next : undefined)
-  }
-
-  const [value = type === "multiple" ? [] : undefined, setValue] =
-    useControllableState<AccordionValue>({
-      prop: valueProp,
-      defaultProp: defaultValue,
-      onChange,
-    })
-
-  const context = React.useMemo<RootContext>(
-    () => ({ type, value, onValueChange: setValue, collapsible, disabled }),
-    [type, value, setValue, collapsible, disabled]
-  )
-
-  const Component = asChild ? Slot : View
-  return (
-    <AccordionContext.Provider value={context}>
-      <Component ref={ref} {...viewProps} />
-    </AccordionContext.Provider>
-  )
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "AccordionRoot"
 
-const AccordionItemContext = React.createContext<ItemContext | null>(null)
-
-function useItemContext() {
-  const context = React.useContext(AccordionItemContext)
-  if (!context) {
-    throw new Error(
-      "AccordionItem compound components cannot be rendered outside the AccordionItem component"
-    )
-  }
-  return context
-}
-
 function Item({
-  asChild,
-  value,
-  disabled = false,
+  value: valueProp,
+  disabled: disabledProp = false,
+  onOpenChange,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ItemProps & React.RefAttributes<ItemRef>) {
-  const { value: rootValue } = useRootContext()
-  const isExpanded = isItemExpanded(rootValue, value)
+  ...elementProps
+}: ItemProps) {
+  const root = useRootContext()
+  const generatedValue = React.useId()
+  const value = valueProp ?? generatedValue
+  const disabled = root.disabled || disabledProp
+  const open = root.value.includes(value)
+  const index = root.items.indexOf(value)
+  const { registerItem, setItemOpen } = root
 
-  const context = React.useMemo<ItemContext>(
-    () => ({ value, disabled, isExpanded }),
-    [value, disabled, isExpanded]
+  React.useLayoutEffect(() => registerItem(value), [registerItem, value])
+
+  const state = React.useMemo<ItemState>(
+    () => ({
+      value: root.value,
+      orientation: root.orientation,
+      disabled,
+      open,
+      index,
+    }),
+    [root.value, root.orientation, disabled, open, index]
   )
 
-  const Component = asChild ? Slot : View
-  return (
-    <AccordionItemContext.Provider value={context}>
-      <Component ref={ref} {...props} />
-    </AccordionItemContext.Provider>
+  const setOpen = React.useCallback(
+    (nextOpen: boolean, eventDetails: ChangeEventDetails) => {
+      onOpenChange?.(nextOpen, eventDetails)
+      if (eventDetails.isCanceled) return false
+      return setItemOpen(value, nextOpen, eventDetails)
+    },
+    [onOpenChange, setItemOpen, value]
   )
+
+  const context = React.useMemo<ItemContextValue>(
+    () => ({ value, open, disabled, state, setOpen }),
+    [value, open, disabled, state, setOpen]
+  )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+
+  return <ItemContext.Provider value={context}>{element}</ItemContext.Provider>
 }
 
 Item.displayName = "AccordionItem"
 
 function Header({
-  asChild,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: HeaderProps & React.RefAttributes<HeaderRef>) {
-  const { disabled: rootDisabled } = useRootContext()
-  const { disabled: itemDisabled, isExpanded } = useItemContext()
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="heading"
-      aria-expanded={isExpanded}
-      aria-disabled={rootDisabled || itemDisabled}
-      {...props}
-    />
-  )
+  ...elementProps
+}: HeaderProps) {
+  const { state } = useItemContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ accessibilityRole: "header" }, elementProps],
+  })
 }
 
 Header.displayName = "AccordionHeader"
 
 function Trigger({
-  asChild,
-  disabled: disabledProp = false,
-  onPress: onPressProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: TriggerProps & React.RefAttributes<TriggerRef>) {
-  const {
-    type,
-    value: rootValue,
-    onValueChange,
-    collapsible,
-    disabled: rootDisabled,
-  } = useRootContext()
-  const { value, disabled: itemDisabled, isExpanded } = useItemContext()
-  const disabled = disabledProp || rootDisabled || itemDisabled
+  ...elementProps
+}: TriggerProps) {
+  const { open, disabled, state, setOpen } = useItemContext()
+  const triggerRef = React.useRef<View>(null)
 
   const onPress = (event: GestureResponderEvent) => {
     if (disabled) return
-    if (type === "single") {
-      if (isExpanded) {
-        if (collapsible) onValueChange(undefined)
-      } else {
-        onValueChange(value)
-      }
-    } else {
-      const current = toArray(rootValue)
-      onValueChange(
-        isExpanded
-          ? current.filter((entry) => entry !== value)
-          : [...current, value]
-      )
-    }
-    onPressProp?.(event)
+    setOpen(
+      !open,
+      createChangeEventDetails(REASONS.triggerPress, event, triggerRef.current)
+    )
   }
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={ref}
-      role="button"
-      aria-expanded={isExpanded}
-      aria-disabled={disabled}
-      accessibilityState={{ expanded: isExpanded, disabled }}
-      disabled={disabled}
-      onPress={onPress}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: [ref, triggerRef],
+    props: [
+      {
+        accessibilityRole: "button",
+        accessibilityState: { expanded: open, disabled },
+        disabled,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
 }
 
 Trigger.displayName = "AccordionTrigger"
 
-function Content({
-  asChild,
-  forceMount,
+const HIDDEN_STYLE = { display: "none" } as const
+
+function Panel({
+  keepMounted: keepMountedProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ContentProps & React.RefAttributes<ContentRef>) {
-  const { isExpanded } = useItemContext()
-  if (!forceMount && !isExpanded) return null
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="region"
-      aria-hidden={!isExpanded}
-      importantForAccessibility={isExpanded ? "auto" : "no-hide-descendants"}
-      {...props}
-    />
-  )
+  ...elementProps
+}: PanelProps) {
+  const root = useRootContext()
+  const { open, state } = useItemContext()
+  const keepMounted = keepMountedProp ?? root.keepMounted
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: open || keepMounted,
+    props: [
+      open
+        ? null
+        : {
+            style: HIDDEN_STYLE,
+            accessibilityElementsHidden: true,
+            importantForAccessibility: "no-hide-descendants",
+          },
+      elementProps,
+    ],
+  })
 }
 
-Content.displayName = "AccordionContent"
+Panel.displayName = "AccordionPanel"
 
 export type {
-  ContentProps,
-  ContentRef,
+  AccordionValue,
+  ChangeEventDetails,
+  ChangeEventReason,
   HeaderProps,
-  HeaderRef,
-  ItemContext,
+  HeaderState,
+  ItemContextValue,
   ItemProps,
-  ItemRef,
-  RootContext,
+  ItemState,
+  PanelProps,
+  PanelState,
+  RootContextValue,
   RootProps,
-  RootRef,
+  RootState,
   TriggerProps,
-  TriggerRef,
+  TriggerState,
 }
-export { Content, Header, Item, Root, Trigger, useItemContext, useRootContext }
+export { Header, Item, Panel, Root, Trigger, useItemContext, useRootContext }

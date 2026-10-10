@@ -45,7 +45,7 @@ function RadioGroupDemo({
           <View key={option.value} className="flex-row items-center gap-3">
             <RadioGroupItem
               value={option.value}
-              aria-labelledby={`radio-${option.value}`}
+              accessibilityLabelledBy={`radio-${option.value}`}
               disabled={isDisabled}
             />
             <Label
@@ -87,7 +87,7 @@ function WithDescriptionsDemo() {
         <View key={plan.value} className="flex-row items-start gap-3">
           <RadioGroupItem
             value={plan.value}
-            aria-labelledby={`plan-${plan.value}`}
+            accessibilityLabelledBy={`plan-${plan.value}`}
           />
           <View className="flex-1 gap-1">
             <Label

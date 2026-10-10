@@ -30,7 +30,7 @@ export const WithLabel: Story = {
     <View className="gap-2">
       <Label nativeID="textarea-message">Your message</Label>
       <Textarea
-        aria-labelledby="textarea-message"
+        accessibilityLabelledBy="textarea-message"
         placeholder="Type your message here."
       />
       <Text variant="muted">Your message will be copied to the team.</Text>
@@ -48,11 +48,7 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   render: () => (
     <View className="gap-2">
-      <Textarea
-        aria-invalid
-        className="border-destructive"
-        defaultValue="Too short"
-      />
+      <Textarea className="border-destructive" defaultValue="Too short" />
       <Text className="text-destructive text-sm">
         Message must be at least 20 characters.
       </Text>

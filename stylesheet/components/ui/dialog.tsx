@@ -2,6 +2,7 @@ import { XIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
   Platform,
+  Pressable,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -26,15 +27,22 @@ const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
-  overlay: {
+  backdrop: { ...StyleSheet.absoluteFill, zIndex: 50 },
+  container: {
     ...StyleSheet.absoluteFill,
     zIndex: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
+    pointerEvents: "box-none",
   },
-  overlayInner: { width: "100%", maxWidth: 448, paddingHorizontal: 16 },
+  containerInner: {
+    width: "100%",
+    maxWidth: 448,
+    paddingHorizontal: 16,
+    pointerEvents: "box-none",
+  },
   content: {
     zIndex: 50,
     marginHorizontal: "auto",
@@ -72,87 +80,94 @@ const styles = StyleSheet.create({
 
 function DialogOverlay({
   style,
-  children,
   ...props
-}: Omit<React.ComponentProps<typeof DialogPrimitive.Overlay>, "asChild"> & {
-  children?: React.ReactNode
-}) {
+}: React.ComponentProps<typeof DialogPrimitive.Backdrop>) {
   const { colors } = useTheme()
   return (
-    <FullWindowOverlay>
-      <DialogPrimitive.Overlay
-        style={[
-          styles.overlay,
-          { backgroundColor: colors.overlay },
-          typeof style === "function" ? undefined : style,
-        ]}
-        {...props}
-        asChild
-      >
+    <DialogPrimitive.Backdrop
+      render={
         <AnimatedView
+          as="Pressable"
           entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
           exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-          as="Pressable"
-        >
-          <AnimatedView
-            entering={FadeIn.delay(50).reduceMotion(ReduceMotion.System)}
-            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-            style={styles.overlayInner}
-          >
-            {children}
-          </AnimatedView>
-        </AnimatedView>
-      </DialogPrimitive.Overlay>
-    </FullWindowOverlay>
+        />
+      }
+      style={(state) => [
+        styles.backdrop,
+        { backgroundColor: colors.overlay },
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
   )
 }
 
 function DialogContent({
   style,
   portalHost,
+  showCloseButton = true,
   children,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+}: React.ComponentProps<typeof DialogPrimitive.Popup> & {
   portalHost?: string
+  showCloseButton?: boolean
 }) {
   const { colors, isDark } = useTheme()
   const { width } = useWindowDimensions()
   return (
     <DialogPortal hostName={portalHost}>
-      <DialogOverlay>
-        <DialogPrimitive.Content
-          style={[
-            styles.content,
-            { borderColor: colors.outline, backgroundColor: colors.popover },
-            width >= 640 && styles.contentSm,
-            style,
-          ]}
-          {...props}
-        >
-          {children}
-          <DialogPrimitive.Close
-            style={({ pressed }) => [
-              styles.close,
-              {
-                backgroundColor: pressed
-                  ? isDark
-                    ? colors.mutedSubtle
-                    : colors.muted
-                  : colors.secondary,
-              },
-            ]}
-            hitSlop={12}
-            aria-label="Close"
+      <FullWindowOverlay>
+        <DialogOverlay />
+        <View style={styles.container}>
+          <AnimatedView
+            entering={FadeIn.delay(50).reduceMotion(ReduceMotion.System)}
+            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
+            style={styles.containerInner}
           >
-            <Icon
-              as={XIcon}
-              size={16}
-              color={colors.foreground}
-              style={styles.closeIcon}
-            />
-          </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-      </DialogOverlay>
+            <DialogPrimitive.Popup
+              style={(state) => [
+                styles.content,
+                {
+                  borderColor: colors.outline,
+                  backgroundColor: colors.popover,
+                },
+                width >= 640 && styles.contentSm,
+                typeof style === "function" ? style(state) : style,
+              ]}
+              {...props}
+            >
+              {children}
+              {showCloseButton ? (
+                <DialogPrimitive.Close
+                  render={
+                    <Pressable
+                      style={({ pressed }) => [
+                        styles.close,
+                        {
+                          backgroundColor: pressed
+                            ? isDark
+                              ? colors.mutedSubtle
+                              : colors.muted
+                            : colors.secondary,
+                        },
+                      ]}
+                    />
+                  }
+                  hitSlop={12}
+                  accessibilityLabel="Close"
+                >
+                  <Icon
+                    as={XIcon}
+                    size={16}
+                    color={colors.foreground}
+                    style={styles.closeIcon}
+                  />
+                </DialogPrimitive.Close>
+              ) : null}
+            </DialogPrimitive.Popup>
+          </AnimatedView>
+        </View>
+      </FullWindowOverlay>
     </DialogPortal>
   )
 }
@@ -178,7 +193,11 @@ function DialogTitle({
   const { colors } = useTheme()
   return (
     <DialogPrimitive.Title
-      style={[styles.title, { color: colors.foreground }, style]}
+      style={(state) => [
+        styles.title,
+        { color: colors.foreground },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
@@ -191,7 +210,11 @@ function DialogDescription({
   const { colors } = useTheme()
   return (
     <DialogPrimitive.Description
-      style={[styles.description, { color: colors.mutedForeground }, style]}
+      style={(state) => [
+        styles.description,
+        { color: colors.mutedForeground },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )

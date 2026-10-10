@@ -29,10 +29,8 @@ export const Default: Story = {
   render: () => (
     <View className="items-start">
       <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline">
-            <Text>Open popover</Text>
-          </Button>
+        <PopoverTrigger render={<Button variant="outline" />}>
+          <Text>Open popover</Text>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <View className="gap-4">
@@ -50,7 +48,7 @@ export const Default: Story = {
                     {dimension.label}
                   </Label>
                   <Input
-                    aria-labelledby={`popover-${dimension.id}`}
+                    accessibilityLabelledBy={`popover-${dimension.id}`}
                     defaultValue={dimension.value}
                     className="h-8 flex-1"
                   />
@@ -69,10 +67,8 @@ export const Sides: Story = {
     <View className="items-center gap-4 py-24">
       {(["top", "bottom"] as const).map((side) => (
         <Popover key={side}>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              <Text className="capitalize">{side}</Text>
-            </Button>
+          <PopoverTrigger render={<Button variant="outline" />}>
+            <Text className="capitalize">{side}</Text>
           </PopoverTrigger>
           <PopoverContent side={side} className="w-56">
             <Text className="text-sm">Popover on the {side}.</Text>
@@ -87,10 +83,8 @@ export const Simple: Story = {
   render: () => (
     <View className="items-start">
       <Popover>
-        <PopoverTrigger asChild>
-          <Button>
-            <Text>Info</Text>
-          </Button>
+        <PopoverTrigger render={<Button />}>
+          <Text>Info</Text>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-64">
           <Text className="text-sm">
@@ -106,10 +100,8 @@ export const OpenByDefault: Story = {
   render: () => (
     <View className="items-start">
       <Popover defaultOpen>
-        <PopoverTrigger asChild>
-          <Button variant="outline">
-            <Text>Open popover</Text>
-          </Button>
+        <PopoverTrigger render={<Button variant="outline" />}>
+          <Text>Open popover</Text>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <View className="gap-4">
@@ -127,7 +119,7 @@ export const OpenByDefault: Story = {
                     {dimension.label}
                   </Label>
                   <Input
-                    aria-labelledby={`popover-${dimension.id}`}
+                    accessibilityLabelledBy={`popover-${dimension.id}`}
                     defaultValue={dimension.value}
                     className="h-8 flex-1"
                   />

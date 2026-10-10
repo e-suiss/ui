@@ -1,5 +1,6 @@
 import { cn } from "cn"
 import * as TabsPrimitive from "@/components/primitives/tabs"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { TextClassContext } from "@/components/ui/text"
 
 function Tabs({
@@ -8,7 +9,9 @@ function Tabs({
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return (
     <TabsPrimitive.Root
-      className={cn("flex flex-col gap-2", className)}
+      className={(state) =>
+        cn("flex flex-col gap-2", resolveClassName(className, state))
+      }
       {...props}
     />
   )
@@ -20,11 +23,13 @@ function TabsList({
 }: React.ComponentProps<typeof TabsPrimitive.List>) {
   return (
     <TabsPrimitive.List
-      className={cn(
-        "h-9 flex-row items-center justify-center rounded-full bg-muted p-1",
-        "self-start",
-        className
-      )}
+      className={(state) =>
+        cn(
+          "h-9 flex-row items-center justify-center rounded-full bg-muted p-1",
+          "self-start",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     />
   )
@@ -33,7 +38,7 @@ function TabsList({
 function TabsTrigger({
   className,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+}: React.ComponentProps<typeof TabsPrimitive.Tab>) {
   const { value } = TabsPrimitive.useRootContext()
   return (
     <TextClassContext.Provider
@@ -42,24 +47,23 @@ function TabsTrigger({
         value === props.value && "text-foreground dark:text-foreground"
       )}
     >
-      <TabsPrimitive.Trigger
-        className={cn(
-          "flex-row items-center justify-center gap-2 rounded-full border border-transparent px-3 py-1",
-          props.disabled && "opacity-50",
-          props.value === value && "bg-background dark:bg-input/30",
-          className
-        )}
+      <TabsPrimitive.Tab
+        className={(state) =>
+          cn(
+            "flex-row items-center justify-center gap-2 rounded-full border border-transparent px-3 py-1",
+            state.disabled && "opacity-50",
+            state.active && "bg-background dark:bg-input/30",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       />
     </TextClassContext.Provider>
   )
 }
 
-function TabsContent({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) {
-  return <TabsPrimitive.Content className={cn(className)} {...props} />
+function TabsContent(props: React.ComponentProps<typeof TabsPrimitive.Panel>) {
+  return <TabsPrimitive.Panel {...props} />
 }
 
 export { Tabs, TabsContent, TabsList, TabsTrigger }

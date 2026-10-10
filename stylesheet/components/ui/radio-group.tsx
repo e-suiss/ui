@@ -1,4 +1,4 @@
-import { type PressableStateCallbackType, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
 import { useTheme } from "@/components/ui/theme"
 
@@ -31,7 +31,15 @@ function RadioGroup({
   style,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
-  return <RadioGroupPrimitive.Root style={[styles.root, style]} {...props} />
+  return (
+    <RadioGroupPrimitive.Root
+      style={(state) => [
+        styles.root,
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
+  )
 }
 
 function RadioGroupItem({
@@ -41,10 +49,10 @@ function RadioGroupItem({
   const { colors, isDark } = useTheme()
   return (
     <RadioGroupPrimitive.Item
-      style={(state: PressableStateCallbackType) => [
+      style={(state) => [
         styles.item,
         { backgroundColor: colors.inputStrong },
-        props.disabled && styles.disabled,
+        state.disabled && styles.disabled,
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

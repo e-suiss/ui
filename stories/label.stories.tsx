@@ -23,7 +23,10 @@ export const WithInput: Story = {
   render: () => (
     <View className="gap-2">
       <Label nativeID="label-email">Email</Label>
-      <Input aria-labelledby="label-email" placeholder="m@example.com" />
+      <Input
+        accessibilityLabelledBy="label-email"
+        placeholder="m@example.com"
+      />
     </View>
   ),
 }
@@ -33,7 +36,7 @@ function WithCheckboxDemo() {
   return (
     <View className="flex-row items-center gap-3">
       <Checkbox
-        aria-labelledby="label-terms"
+        accessibilityLabelledBy="label-terms"
         checked={checked}
         onCheckedChange={setChecked}
       />

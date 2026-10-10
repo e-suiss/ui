@@ -23,10 +23,8 @@ export const Default: Story = {
   render: () => (
     <View className="items-center py-12">
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant="outline">
-            <Text>Hover or press</Text>
-          </Button>
+        <TooltipTrigger render={<Button variant="outline" />}>
+          <Text>Long press</Text>
         </TooltipTrigger>
         <TooltipContent>
           <Text>Add to library</Text>
@@ -41,10 +39,8 @@ export const Sides: Story = {
     <View className="items-center gap-4 py-12">
       {(["top", "bottom"] as const).map((side) => (
         <Tooltip key={side}>
-          <TooltipTrigger asChild>
-            <Button variant="outline">
-              <Text className="capitalize">{side}</Text>
-            </Button>
+          <TooltipTrigger render={<Button variant="outline" />}>
+            <Text className="capitalize">{side}</Text>
           </TooltipTrigger>
           <TooltipContent side={side}>
             <Text>Tooltip on the {side}</Text>
@@ -59,10 +55,8 @@ export const WithIcon: Story = {
   render: () => (
     <View className="items-center py-12">
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant="outline" size="icon">
-            <Icon as={PlusIcon} />
-          </Button>
+        <TooltipTrigger render={<Button variant="outline" size="icon" />}>
+          <Icon as={PlusIcon} />
         </TooltipTrigger>
         <TooltipContent>
           <Text>New item</Text>
@@ -76,10 +70,8 @@ export const OpenByDefault: Story = {
   render: () => (
     <View className="items-center py-12">
       <Tooltip defaultOpen>
-        <TooltipTrigger asChild>
-          <Button variant="outline">
-            <Text>Hover or press</Text>
-          </Button>
+        <TooltipTrigger render={<Button variant="outline" />}>
+          <Text>Long press</Text>
         </TooltipTrigger>
         <TooltipContent>
           <Text>Add to library</Text>

@@ -46,6 +46,7 @@
       "requires": [
         "icon",
         "primitives/accordion",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -84,6 +85,7 @@
         "animated-view",
         "button",
         "primitives/alert-dialog",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -192,6 +194,7 @@
       },
       "requires": [
         "primitives/avatar",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -219,7 +222,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
+        "primitives/types",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -306,6 +310,7 @@
       "requires": [
         "icon",
         "primitives/checkbox",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -371,6 +376,7 @@
         "animated-view",
         "icon",
         "primitives/context-menu",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -414,7 +420,8 @@
       "requires": [
         "animated-view",
         "icon",
-        "primitives/dialog"
+        "primitives/dialog",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/dialog.tsx"
@@ -457,7 +464,8 @@
       "requires": [
         "animated-view",
         "icon",
-        "primitives/dropdown-menu",
+        "primitives/menu",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -495,6 +503,7 @@
       "requires": [
         "animated-view",
         "primitives/hover-card",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -578,7 +587,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/label"
+        "primitives/label",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/label.tsx"
@@ -621,8 +631,9 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/menu",
         "primitives/menubar",
-        "primitives/portal",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -660,6 +671,7 @@
       "requires": [
         "animated-view",
         "primitives/popover",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -692,7 +704,8 @@
         ]
       },
       "requires": [
-        "primitives/progress"
+        "primitives/progress",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/progress.tsx"
@@ -717,7 +730,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/radio-group"
+        "primitives/radio-group",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/radio-group.tsx"
@@ -761,6 +775,7 @@
         "animated-view",
         "icon",
         "primitives/select",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -786,7 +801,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/separator"
+        "primitives/separator",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/separator.tsx"
@@ -841,7 +857,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/switch"
+        "primitives/switch",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/switch.tsx"
@@ -867,6 +884,7 @@
       },
       "requires": [
         "primitives/tabs",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -894,7 +912,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot"
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/ui/text.tsx"
@@ -946,7 +965,9 @@
       },
       "requires": [
         "icon",
+        "primitives/toggle",
         "primitives/toggle-group",
+        "primitives/use-render",
         "text",
         "toggle"
       ],
@@ -977,6 +998,7 @@
       "requires": [
         "icon",
         "primitives/toggle",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -1014,6 +1036,7 @@
       "requires": [
         "animated-view",
         "primitives/tooltip",
+        "primitives/use-render",
         "text"
       ],
       "files": [
@@ -1035,9 +1058,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/accordion.tsx"
@@ -1053,9 +1077,7 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/dialog",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/dialog"
       ],
       "files": [
         "components/primitives/alert-dialog.tsx"
@@ -1071,8 +1093,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
-        "primitives/types"
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/aspect-ratio.tsx"
@@ -1088,8 +1110,9 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
-        "primitives/types"
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/avatar.tsx"
@@ -1105,9 +1128,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/checkbox.tsx"
@@ -1123,9 +1147,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/collapsible.tsx"
@@ -1141,10 +1166,11 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/menu-core",
-        "primitives/portal",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/menu",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/context-menu.tsx"
@@ -1160,51 +1186,49 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/portal",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/dialog.tsx"
       ]
     },
     {
-      "name": "primitives/dropdown-menu",
+      "name": "primitives/event-details",
       "type": "primitive",
-      "title": "Dropdown Menu",
+      "title": "Event Details",
       "dependencies": {
         "uniwind": [],
         "nativewind": [],
         "stylesheet": []
       },
       "requires": [
-        "primitives/menu-core",
-        "primitives/portal",
-        "primitives/slot",
         "primitives/types"
       ],
       "files": [
-        "components/primitives/dropdown-menu.tsx"
+        "components/primitives/event-details.ts"
       ]
     },
     {
-      "name": "primitives/floating",
+      "name": "primitives/floating-root",
       "type": "primitive",
-      "title": "Floating",
+      "title": "Floating Root",
       "dependencies": {
         "uniwind": [],
         "nativewind": [],
         "stylesheet": []
       },
       "requires": [
+        "primitives/event-details",
         "primitives/hooks",
         "primitives/portal",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/types",
+        "primitives/use-controllable-state"
       ],
       "files": [
-        "components/primitives/floating.tsx"
+        "components/primitives/floating-root.tsx"
       ]
     },
     {
@@ -1216,9 +1240,7 @@
         "nativewind": [],
         "stylesheet": []
       },
-      "requires": [
-        "primitives/types"
-      ],
+      "requires": [],
       "files": [
         "components/primitives/hooks.ts"
       ]
@@ -1233,7 +1255,13 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/floating"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/hooks",
+        "primitives/popover",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/hover-card.tsx"
@@ -1249,29 +1277,32 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
-        "primitives/types"
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/label.tsx"
       ]
     },
     {
-      "name": "primitives/menu-core",
+      "name": "primitives/menu",
       "type": "primitive",
-      "title": "Menu Core",
+      "title": "Menu",
       "dependencies": {
         "uniwind": [],
         "nativewind": [],
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
-        "components/primitives/menu-core.tsx"
+        "components/primitives/menu.tsx"
       ]
     },
     {
@@ -1284,14 +1315,26 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/menu-core",
-        "primitives/portal",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/menu",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/menubar.tsx"
+      ]
+    },
+    {
+      "name": "primitives/merge-props",
+      "type": "primitive",
+      "title": "Merge Props",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/merge-props.ts"
       ]
     },
     {
@@ -1304,7 +1347,11 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/floating"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/popover.tsx"
@@ -1325,6 +1372,25 @@
       ]
     },
     {
+      "name": "primitives/positioner",
+      "type": "primitive",
+      "title": "Positioner",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/positioner.tsx"
+      ]
+    },
+    {
       "name": "primitives/progress",
       "type": "primitive",
       "title": "Progress",
@@ -1334,8 +1400,8 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
-        "primitives/types"
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/progress.tsx"
@@ -1351,9 +1417,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/radio-group.tsx"
@@ -1369,11 +1436,12 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/menu-core",
-        "primitives/portal",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/select.tsx"
@@ -1389,28 +1457,11 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/slot",
-        "primitives/types"
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/separator.tsx"
-      ]
-    },
-    {
-      "name": "primitives/slot",
-      "type": "primitive",
-      "title": "Slot",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "primitives/hooks",
-        "primitives/types"
-      ],
-      "files": [
-        "components/primitives/slot.tsx"
       ]
     },
     {
@@ -1423,9 +1474,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/switch.tsx"
@@ -1441,9 +1493,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/tabs.tsx"
@@ -1459,9 +1512,10 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/toggle-group.tsx"
@@ -1477,9 +1531,11 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/hooks",
-        "primitives/slot",
-        "primitives/types"
+        "primitives/event-details",
+        "primitives/toggle-group",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/toggle.tsx"
@@ -1495,7 +1551,13 @@
         "stylesheet": []
       },
       "requires": [
-        "primitives/floating"
+        "primitives/event-details",
+        "primitives/floating-root",
+        "primitives/hooks",
+        "primitives/popover",
+        "primitives/positioner",
+        "primitives/types",
+        "primitives/use-render"
       ],
       "files": [
         "components/primitives/tooltip.tsx"
@@ -1513,6 +1575,41 @@
       "requires": [],
       "files": [
         "components/primitives/types.ts"
+      ]
+    },
+    {
+      "name": "primitives/use-controllable-state",
+      "type": "primitive",
+      "title": "Use Controllable State",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/use-controllable-state.ts"
+      ]
+    },
+    {
+      "name": "primitives/use-render",
+      "type": "primitive",
+      "title": "Use Render",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/merge-props",
+        "primitives/types"
+      ],
+      "files": [
+        "components/primitives/use-render.tsx"
       ]
     }
   ]

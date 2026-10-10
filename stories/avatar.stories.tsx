@@ -24,9 +24,6 @@ const people = [
 const meta = {
   title: "Components/Avatar",
   component: Avatar,
-  args: {
-    alt: "Ada Lovelace",
-  },
 } satisfies Meta<typeof Avatar>
 
 export default meta
@@ -35,8 +32,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <Avatar alt="Ada Lovelace">
-      <AvatarImage source={{ uri: "https://i.pravatar.cc/150?img=5" }} />
+    <Avatar>
+      <AvatarImage
+        alt="Ada Lovelace"
+        source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+      />
       <AvatarFallback>
         <Text>AL</Text>
       </AvatarFallback>
@@ -46,7 +46,7 @@ export const Default: Story = {
 
 export const Fallback: Story = {
   render: () => (
-    <Avatar alt="Alan Turing">
+    <Avatar accessibilityLabel="Alan Turing">
       <AvatarFallback>
         <Text className="text-sm">AT</Text>
       </AvatarFallback>
@@ -57,20 +57,29 @@ export const Fallback: Story = {
 export const Sizes: Story = {
   render: () => (
     <View className="flex-row items-center gap-4">
-      <Avatar alt="Small" className="size-6">
-        <AvatarImage source={{ uri: "https://i.pravatar.cc/150?img=5" }} />
+      <Avatar className="size-6">
+        <AvatarImage
+          alt="Ada Lovelace"
+          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+        />
         <AvatarFallback>
           <Text className="text-xs">SM</Text>
         </AvatarFallback>
       </Avatar>
-      <Avatar alt="Default">
-        <AvatarImage source={{ uri: "https://i.pravatar.cc/150?img=5" }} />
+      <Avatar>
+        <AvatarImage
+          alt="Ada Lovelace"
+          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+        />
         <AvatarFallback>
           <Text className="text-sm">MD</Text>
         </AvatarFallback>
       </Avatar>
-      <Avatar alt="Large" className="size-12">
-        <AvatarImage source={{ uri: "https://i.pravatar.cc/150?img=5" }} />
+      <Avatar className="size-12">
+        <AvatarImage
+          alt="Ada Lovelace"
+          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+        />
         <AvatarFallback>
           <Text>LG</Text>
         </AvatarFallback>
@@ -83,18 +92,14 @@ export const Group: Story = {
   render: () => (
     <View className="flex-row">
       {people.map((person) => (
-        <Avatar
-          key={person.name}
-          alt={person.name}
-          className="border-background -mr-2 border-2"
-        >
-          <AvatarImage source={{ uri: person.uri }} />
+        <Avatar key={person.name} className="border-background -mr-2 border-2">
+          <AvatarImage alt={person.name} source={{ uri: person.uri }} />
           <AvatarFallback>
             <Text className="text-xs">{person.initials}</Text>
           </AvatarFallback>
         </Avatar>
       ))}
-      <Avatar alt="More" className="border-background border-2">
+      <Avatar accessibilityLabel="More" className="border-background border-2">
         <AvatarFallback>
           <Text className="text-xs">+4</Text>
         </AvatarFallback>

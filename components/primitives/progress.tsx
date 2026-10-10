@@ -1,79 +1,249 @@
-import type * as React from "react"
-import { View } from "react-native"
-import { Slot } from "./slot"
-import type { SlottableViewProps, ViewRef } from "./types"
+import * as React from "react"
+import { Text, View } from "react-native"
+import type { BaseUIComponentProps } from "./types"
+import { useRender } from "./use-render"
 
-const DEFAULT_MAX = 100
+type ProgressStatus = "indeterminate" | "progressing" | "complete"
 
-type RootProps = SlottableViewProps & {
-  value?: number | null | undefined
-  max?: number
-  getValueLabel?: (value: number, max: number) => string
+interface RootState {
+  status: ProgressStatus
 }
 
-type IndicatorProps = SlottableViewProps
+type TrackState = RootState
 
-type RootRef = ViewRef
-type IndicatorRef = ViewRef
+type IndicatorState = RootState
 
-function defaultGetValueLabel(value: number, max: number) {
-  return `${Math.round((value / max) * 100)}%`
+type LabelState = RootState
+
+type ValueState = RootState
+
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+  value: number | null
+  min?: number | undefined
+  max?: number | undefined
+  format?: Intl.NumberFormatOptions | undefined
+  locale?: Intl.LocalesArgument | undefined
+  getAccessibilityValueText?:
+    | ((formattedValue: string, value: number | null) => string)
+    | undefined
 }
 
-function resolveMax(max: number | undefined) {
-  return typeof max === "number" && Number.isFinite(max) && max > 0
-    ? max
-    : DEFAULT_MAX
+type TrackProps = BaseUIComponentProps<typeof View, TrackState>
+
+type IndicatorProps = BaseUIComponentProps<typeof View, IndicatorState>
+
+type LabelProps = BaseUIComponentProps<typeof Text, LabelState>
+
+type ValueProps = Omit<
+  BaseUIComponentProps<typeof Text, ValueState>,
+  "children"
+> & {
+  children?:
+    | null
+    | ((formattedValue: string | null, value: number | null) => React.ReactNode)
+    | undefined
 }
 
-function resolveValue(value: number | null | undefined, max: number) {
-  return typeof value === "number" &&
-    Number.isFinite(value) &&
-    value >= 0 &&
-    value <= max
-    ? value
-    : 0
+interface RootContextValue {
+  value: number | null
+  min: number
+  max: number
+  percentage: number | null
+  formattedValue: string | null
+  status: ProgressStatus
+  state: RootState
+}
+
+const RootContext = React.createContext<RootContextValue | null>(null)
+
+function useRootContext() {
+  const context = React.useContext(RootContext)
+  if (!context) {
+    throw new Error("Progress parts must be rendered inside Progress.Root")
+  }
+  return context
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function formatValue(
+  value: number | null,
+  min: number,
+  max: number,
+  format: Intl.NumberFormatOptions | undefined,
+  locale: Intl.LocalesArgument | undefined
+) {
+  if (value === null) return null
+  if (format) return new Intl.NumberFormat(locale, format).format(value)
+  const ratio = max === min ? 0 : (value - min) / (max - min)
+  return new Intl.NumberFormat(locale, { style: "percent" }).format(ratio)
+}
+
+function getStatus(value: number | null, max: number): ProgressStatus {
+  if (value === null) return "indeterminate"
+  return value >= max ? "complete" : "progressing"
+}
+
+function defaultGetAccessibilityValueText(
+  formattedValue: string,
+  value: number | null
+) {
+  return value === null ? "indeterminate progress" : formattedValue
 }
 
 function Root({
-  asChild,
   value: valueProp,
-  max: maxProp,
-  getValueLabel = defaultGetValueLabel,
+  min = 0,
+  max = 100,
+  format,
+  locale,
+  getAccessibilityValueText = defaultGetAccessibilityValueText,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const max = resolveMax(maxProp)
-  const value = resolveValue(valueProp, max)
-  const label = getValueLabel(value, max)
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="progressbar"
-      accessible
-      aria-valuemin={0}
-      aria-valuemax={max}
-      aria-valuenow={value}
-      aria-valuetext={label}
-      accessibilityValue={{ min: 0, max, now: value, text: label }}
-      {...props}
-    />
+  ...elementProps
+}: RootProps) {
+  const value =
+    typeof valueProp === "number" && Number.isFinite(valueProp)
+      ? clamp(valueProp, min, max)
+      : null
+  const status = getStatus(value, max)
+  const formattedValue = formatValue(value, min, max, format, locale)
+  const percentage =
+    value === null || max === min ? null : ((value - min) / (max - min)) * 100
+
+  const state = React.useMemo<RootState>(() => ({ status }), [status])
+
+  const context = React.useMemo<RootContextValue>(
+    () => ({ value, min, max, percentage, formattedValue, status, state }),
+    [value, min, max, percentage, formattedValue, status, state]
   )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        accessible: true,
+        accessibilityRole: "progressbar",
+        accessibilityValue: {
+          min,
+          max,
+          now: value ?? undefined,
+          text: getAccessibilityValueText(formattedValue ?? "", value),
+        },
+      },
+      elementProps,
+    ],
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "ProgressRoot"
 
+function Track({ render, className, style, ref, ...elementProps }: TrackProps) {
+  const { state } = useRootContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+}
+
+Track.displayName = "ProgressTrack"
+
 function Indicator({
-  asChild,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: IndicatorProps & React.RefAttributes<IndicatorRef>) {
-  const Component = asChild ? Slot : View
-  return <Component ref={ref} role="presentation" {...props} />
+  ...elementProps
+}: IndicatorProps) {
+  const { state, percentage } = useRootContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      percentage === null ? null : { style: { width: `${percentage}%` } },
+      elementProps,
+    ],
+  })
 }
 
 Indicator.displayName = "ProgressIndicator"
 
-export type { IndicatorProps, IndicatorRef, RootProps, RootRef }
-export { Indicator, Root }
+function Label({ render, className, style, ref, ...elementProps }: LabelProps) {
+  const { state } = useRootContext()
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ importantForAccessibility: "no" }, elementProps],
+  })
+}
+
+Label.displayName = "ProgressLabel"
+
+function Value({
+  children,
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: ValueProps) {
+  const { state, value, formattedValue } = useRootContext()
+  const content =
+    typeof children === "function"
+      ? children(formattedValue, value)
+      : formattedValue
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      { importantForAccessibility: "no", children: content },
+      elementProps,
+    ],
+  })
+}
+
+Value.displayName = "ProgressValue"
+
+export type {
+  IndicatorProps,
+  IndicatorState,
+  LabelProps,
+  LabelState,
+  ProgressStatus,
+  RootContextValue,
+  RootProps,
+  RootState,
+  TrackProps,
+  TrackState,
+  ValueProps,
+  ValueState,
+}
+export { Indicator, Label, Root, Track, useRootContext, Value }

@@ -30,20 +30,24 @@ function FormattingDemo({
   const [value, setValue] = React.useState<string[]>(["bold"])
   return (
     <ToggleGroup
-      type="multiple"
+      multiple
       value={value}
       onValueChange={setValue}
       variant={variant}
       size={size}
       disabled={disabled}
     >
-      <ToggleGroupItem value="bold" aria-label="Toggle bold" isFirst>
+      <ToggleGroupItem value="bold" accessibilityLabel="Toggle bold" isFirst>
         <ToggleGroupIcon as={TextBIcon} />
       </ToggleGroupItem>
-      <ToggleGroupItem value="italic" aria-label="Toggle italic">
+      <ToggleGroupItem value="italic" accessibilityLabel="Toggle italic">
         <ToggleGroupIcon as={TextItalicIcon} />
       </ToggleGroupItem>
-      <ToggleGroupItem value="underline" aria-label="Toggle underline" isLast>
+      <ToggleGroupItem
+        value="underline"
+        accessibilityLabel="Toggle underline"
+        isLast
+      >
         <ToggleGroupIcon as={TextUnderlineIcon} />
       </ToggleGroupItem>
     </ToggleGroup>
@@ -51,21 +55,16 @@ function FormattingDemo({
 }
 
 function AlignmentDemo() {
-  const [value, setValue] = React.useState<string | undefined>("left")
+  const [value, setValue] = React.useState<string[]>(["left"])
   return (
-    <ToggleGroup
-      type="single"
-      value={value}
-      onValueChange={setValue}
-      variant="outline"
-    >
-      <ToggleGroupItem value="left" aria-label="Align left" isFirst>
+    <ToggleGroup value={value} onValueChange={setValue} variant="outline">
+      <ToggleGroupItem value="left" accessibilityLabel="Align left" isFirst>
         <ToggleGroupIcon as={TextAlignLeftIcon} />
       </ToggleGroupItem>
-      <ToggleGroupItem value="center" aria-label="Align center">
+      <ToggleGroupItem value="center" accessibilityLabel="Align center">
         <ToggleGroupIcon as={TextAlignCenterIcon} />
       </ToggleGroupItem>
-      <ToggleGroupItem value="right" aria-label="Align right" isLast>
+      <ToggleGroupItem value="right" accessibilityLabel="Align right" isLast>
         <ToggleGroupIcon as={TextAlignRightIcon} />
       </ToggleGroupItem>
     </ToggleGroup>
@@ -76,7 +75,7 @@ const meta = {
   title: "Components/Toggle Group",
   component: ToggleGroup,
   args: {
-    type: "multiple",
+    multiple: true,
     value: [],
     onValueChange: () => {},
   },

@@ -3,31 +3,32 @@ import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
   Platform,
-  Pressable,
   type StyleProp,
   StyleSheet,
   Text,
+  type TextStyle,
   View,
   type ViewStyle,
 } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
-import * as MenubarPrimitive from "@/components/primitives/menubar"
-import { Portal } from "@/components/primitives/portal"
+import * as MenuPrimitive from "@/components/primitives/menu"
+import { Menubar as MenubarPrimitive } from "@/components/primitives/menubar"
+import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
-const MenubarMenu = MenubarPrimitive.Menu
+const MenubarMenu = MenuPrimitive.Root
 
-const MenubarGroup = MenubarPrimitive.Group
+const MenubarPortal = MenuPrimitive.Portal
 
-const MenubarPortal = MenubarPrimitive.Portal
+const MenubarGroup = MenuPrimitive.Group
 
-const MenubarSub = MenubarPrimitive.Sub
+const MenubarSub = MenuPrimitive.SubmenuRoot
 
-const MenubarRadioGroup = MenubarPrimitive.RadioGroup
+const MenubarRadioGroup = MenuPrimitive.RadioGroup
 
 const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
@@ -106,72 +107,89 @@ const styles = StyleSheet.create({
   shortcut: { marginLeft: "auto", ...fontSize.xs, letterSpacing: 1.2 },
 })
 
-type MenubarProps = Omit<
-  React.ComponentProps<typeof MenubarPrimitive.Root>,
-  "value" | "onValueChange"
-> & {
-  value?: string
-  onValueChange?: (value: string | undefined) => void
-}
-
 function Menubar({
   style,
-  value: valueProp,
-  onValueChange: onValueChangeProp,
   ...props
-}: MenubarProps) {
-  const id = React.useId()
+}: React.ComponentProps<typeof MenubarPrimitive>) {
   const { colors } = useTheme()
-  const [uncontrolledValue, setUncontrolledValue] = React.useState<
-    string | undefined
-  >(undefined)
-  const isControlled = onValueChangeProp !== undefined
-  const value = isControlled ? valueProp : uncontrolledValue
-  const onValueChange = onValueChangeProp ?? setUncontrolledValue
-
   return (
-    <>
-      {value ? (
-        <Portal name={`menubar-overlay-${id}`}>
-          <Pressable
-            onPress={() => onValueChange(undefined)}
-            style={StyleSheet.absoluteFill}
-          />
-        </Portal>
-      ) : null}
-      <MenubarPrimitive.Root
-        style={[styles.root, { borderColor: colors.border }, style]}
-        value={value}
-        onValueChange={onValueChange}
-        {...props}
-      />
-    </>
+    <MenubarPrimitive
+      style={(state) => [
+        styles.root,
+        { borderColor: colors.border },
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
+      ]}
+      {...props}
+    />
   )
 }
 
 function MenubarTrigger({
   style,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {
-  const { value } = MenubarPrimitive.useRootContext()
-  const { value: itemValue } = MenubarPrimitive.useMenuContext()
+}: React.ComponentProps<typeof MenuPrimitive.Trigger>) {
   const { colors } = useTheme()
-
   return (
     <TextStyleContext.Provider
       value={{ ...styles.itemText, color: colors.foreground }}
     >
-      <MenubarPrimitive.Trigger
+      <MenuPrimitive.Trigger
         style={(state) => [
           styles.trigger,
-          (state.pressed || value === itemValue) && {
-            backgroundColor: colors.muted,
-          },
-          typeof style === "function" ? style(state) : style,
+          state.open && { backgroundColor: colors.muted },
+          state.disabled && styles.disabled,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
     </TextStyleContext.Provider>
+  )
+}
+
+type PositionerProps = React.ComponentProps<typeof MenuPrimitive.Positioner>
+
+function MenubarContent({
+  style,
+  align = "start",
+  alignOffset = -4,
+  side = "bottom",
+  sideOffset = 8,
+  portalHost,
+  ...props
+}: React.ComponentProps<typeof MenuPrimitive.Popup> &
+  Pick<PositionerProps, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    portalHost?: string
+  }) {
+  const { colors } = useTheme()
+  return (
+    <MenuPrimitive.Portal hostName={portalHost}>
+      <FullWindowOverlay>
+        <MenuPrimitive.Positioner
+          align={align}
+          alignOffset={alignOffset}
+          side={side}
+          sideOffset={sideOffset}
+        >
+          <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
+            <TextStyleContext.Provider
+              value={{ ...fontSize.sm, color: colors.popoverForeground }}
+            >
+              <MenuPrimitive.Popup
+                style={(state) => [
+                  styles.content,
+                  {
+                    borderColor: colors.outline,
+                    backgroundColor: colors.popover,
+                  },
+                  resolveStyle(style, state) as StyleProp<ViewStyle>,
+                ]}
+                {...props}
+              />
+            </TextStyleContext.Provider>
+          </AnimatedView>
+        </MenuPrimitive.Positioner>
+      </FullWindowOverlay>
+    </MenuPrimitive.Portal>
   )
 }
 
@@ -181,14 +199,13 @@ function MenubarSubTrigger({
   children,
   iconStyle,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.SubTrigger> & {
+}: React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger> & {
   children?: React.ReactNode
   iconStyle?: PhosphorIconProps["style"]
   inset?: boolean
 }) {
-  const { open } = MenubarPrimitive.useSubContext()
+  const { open } = MenuPrimitive.useMenuRootContext().floating
   const { colors } = useTheme()
-  const icon = open ? CaretUpIcon : CaretDownIcon
   return (
     <TextStyleContext.Provider
       value={{
@@ -196,24 +213,26 @@ function MenubarSubTrigger({
         color: open ? colors.accentForeground : colors.popoverForeground,
       }}
     >
-      <MenubarPrimitive.SubTrigger
+      <MenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.pressed && { backgroundColor: colors.accent },
-          typeof style === "function" ? style(state) : style,
-          open && { backgroundColor: colors.accent },
+          (state.highlighted || state.open) && {
+            backgroundColor: colors.accent,
+          },
+          state.disabled && styles.disabled,
           inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         {children}
         <Icon
-          as={icon}
+          as={open ? CaretUpIcon : CaretDownIcon}
           size={16}
           color={colors.foreground}
           style={[styles.subTriggerIcon, iconStyle]}
         />
-      </MenubarPrimitive.SubTrigger>
+      </MenuPrimitive.SubmenuTrigger>
     </TextStyleContext.Provider>
   )
 }
@@ -221,15 +240,15 @@ function MenubarSubTrigger({
 function MenubarSubContent({
   style,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.SubContent>) {
+}: React.ComponentProps<typeof MenuPrimitive.Popup>) {
   const { colors } = useTheme()
   return (
     <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-      <MenubarPrimitive.SubContent
-        style={[
+      <MenuPrimitive.Popup
+        style={(state) => [
           styles.subContent,
           { borderColor: colors.outline, backgroundColor: colors.popover },
-          style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -237,59 +256,12 @@ function MenubarSubContent({
   )
 }
 
-function MenubarContent({
-  style,
-  overlayStyle,
-  portalHost,
-  align = "start",
-  alignOffset = -4,
-  sideOffset = 8,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Content> & {
-  overlayStyle?: StyleProp<ViewStyle>
-  portalHost?: string
-}) {
-  const { colors } = useTheme()
-  return (
-    <MenubarPrimitive.Portal hostName={portalHost}>
-      <FullWindowOverlay>
-        <AnimatedView
-          as="Pressable"
-          accessible={false}
-          entering={FadeIn.reduceMotion(ReduceMotion.System)}
-          style={StyleSheet.absoluteFill}
-          pointerEvents="box-none"
-        >
-          <TextStyleContext.Provider
-            value={{ ...fontSize.sm, color: colors.popoverForeground }}
-          >
-            <MenubarPrimitive.Content
-              style={StyleSheet.flatten<ViewStyle>([
-                styles.content,
-                {
-                  borderColor: colors.outline,
-                  backgroundColor: colors.popover,
-                },
-                style as StyleProp<ViewStyle>,
-              ])}
-              align={align}
-              alignOffset={alignOffset}
-              sideOffset={sideOffset}
-              {...props}
-            />
-          </TextStyleContext.Provider>
-        </AnimatedView>
-      </FullWindowOverlay>
-    </MenubarPrimitive.Portal>
-  )
-}
-
 function MenubarItem({
   style,
   inset,
-  variant,
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Item> & {
+}: React.ComponentProps<typeof MenuPrimitive.Item> & {
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
@@ -302,17 +274,17 @@ function MenubarItem({
         color: destructive ? colors.destructive : colors.popoverForeground,
       }}
     >
-      <MenubarPrimitive.Item
+      <MenuPrimitive.Item
         style={(state) => [
           styles.item,
-          state.pressed && {
+          state.highlighted && {
             backgroundColor: destructive
               ? colors.destructiveSubtle
               : colors.accent,
           },
-          props.disabled && styles.disabled,
+          state.disabled && styles.disabled,
           inset && styles.inset,
-          typeof style === "function" ? style(state) : style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -323,31 +295,34 @@ function MenubarItem({
 function MenubarCheckboxItem({
   style,
   children,
+  inset,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.CheckboxItem> & {
+}: React.ComponentProps<typeof MenuPrimitive.CheckboxItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
       value={{ ...styles.itemText, color: colors.popoverForeground }}
     >
-      <MenubarPrimitive.CheckboxItem
+      <MenuPrimitive.CheckboxItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <MenubarPrimitive.ItemIndicator>
+          <MenuPrimitive.CheckboxItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </MenubarPrimitive.ItemIndicator>
+          </MenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
-      </MenubarPrimitive.CheckboxItem>
+      </MenuPrimitive.CheckboxItem>
     </TextStyleContext.Provider>
   )
 }
@@ -355,31 +330,34 @@ function MenubarCheckboxItem({
 function MenubarRadioItem({
   style,
   children,
+  inset,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {
+}: React.ComponentProps<typeof MenuPrimitive.RadioItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
       value={{ ...styles.itemText, color: colors.popoverForeground }}
     >
-      <MenubarPrimitive.RadioItem
+      <MenuPrimitive.RadioItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <MenubarPrimitive.ItemIndicator>
+          <MenuPrimitive.RadioItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </MenubarPrimitive.ItemIndicator>
+          </MenuPrimitive.RadioItemIndicator>
         </View>
         {children}
-      </MenubarPrimitive.RadioItem>
+      </MenuPrimitive.RadioItem>
     </TextStyleContext.Provider>
   )
 }
@@ -388,17 +366,17 @@ function MenubarLabel({
   style,
   inset,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Label> & {
+}: React.ComponentProps<typeof MenuPrimitive.GroupLabel> & {
   inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
-    <MenubarPrimitive.Label
-      style={[
+    <MenuPrimitive.GroupLabel
+      style={(state) => [
         styles.label,
         { color: colors.mutedForeground },
         inset && styles.inset,
-        style,
+        resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
     />
@@ -408,14 +386,14 @@ function MenubarLabel({
 function MenubarSeparator({
   style,
   ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Separator>) {
+}: React.ComponentProps<typeof MenuPrimitive.Separator>) {
   const { colors } = useTheme()
   return (
-    <MenubarPrimitive.Separator
-      style={[
+    <MenuPrimitive.Separator
+      style={(state) => [
         styles.separator,
         { backgroundColor: colors.borderSubtle },
-        style,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     />

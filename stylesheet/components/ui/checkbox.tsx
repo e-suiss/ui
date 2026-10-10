@@ -50,11 +50,11 @@ function Checkbox({
       style={(state) => [
         styles.root,
         { backgroundColor: colors.inputStrong },
-        props.checked && [
+        state.checked && [
           { borderColor: colors.primary, backgroundColor: colors.primary },
           checkedStyle,
         ],
-        props.disabled && styles.disabled,
+        state.disabled && styles.disabled,
         typeof style === "function" ? style(state) : style,
       ]}
       hitSlop={DEFAULT_HIT_SLOP}

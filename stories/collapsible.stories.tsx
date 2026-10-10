@@ -30,11 +30,13 @@ function CollapsibleDemo({
     >
       <View className="flex-row items-center justify-between gap-4 px-4">
         <Text className="text-sm font-semibold">3 starred repositories</Text>
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="icon" disabled={disabled}>
-            <Icon as={CaretUpDownIcon} className="size-4" />
-          </Button>
-        </CollapsibleTrigger>
+        <CollapsibleTrigger
+          render={
+            <Button variant="ghost" size="icon" disabled={disabled}>
+              <Icon as={CaretUpDownIcon} className="size-4" />
+            </Button>
+          }
+        />
       </View>
       <View className="border-border rounded-md border px-4 py-3">
         <Text className="font-mono text-sm">{repositories[0]}</Text>

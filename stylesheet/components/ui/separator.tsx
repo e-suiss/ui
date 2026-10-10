@@ -10,20 +10,18 @@ const styles = StyleSheet.create({
 
 function Separator({
   style,
-  orientation = "horizontal",
-  decorative = true,
   ...props
 }: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
   const { colors } = useTheme()
   return (
     <SeparatorPrimitive.Root
-      decorative={decorative}
-      orientation={orientation}
-      style={[
+      style={(state) => [
         styles.root,
         { backgroundColor: colors.border },
-        orientation === "horizontal" ? styles.horizontal : styles.vertical,
-        style,
+        state.orientation === "horizontal"
+          ? styles.horizontal
+          : styles.vertical,
+        typeof style === "function" ? style(state) : style,
       ]}
       {...props}
     />

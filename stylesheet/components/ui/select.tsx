@@ -4,22 +4,29 @@ import {
   Platform,
   type StyleProp,
   StyleSheet,
-  View,
+  type TextStyle,
   type ViewStyle,
 } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as SelectPrimitive from "@/components/primitives/select"
+import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
-type Option = SelectPrimitive.Option
+interface Option {
+  value: string
+  label: string
+}
 
 const Select = SelectPrimitive.Root
 
 const SelectGroup = SelectPrimitive.Group
+
+const FullWindowOverlay =
+  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
   value: {
@@ -43,15 +50,14 @@ const styles = StyleSheet.create({
   },
   triggerSm: { height: 32 },
   disabled: { opacity: 0.5 },
-  overlay: { zIndex: 50 },
   content: {
     position: "relative",
-    zIndex: 50,
     minWidth: 144,
     borderRadius: radius["3xl"],
     borderWidth: 1,
     ...shadow.lg,
   },
+  list: { width: "100%", padding: 6 },
   label: { paddingHorizontal: 12, paddingVertical: 10, ...fontSize.xs },
   item: {
     position: "relative",
@@ -78,20 +84,19 @@ const styles = StyleSheet.create({
 })
 
 function SelectValue({
-  ref,
   style,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  const { value } = SelectPrimitive.useRootContext()
   const { colors } = useTheme()
   return (
     <SelectPrimitive.Value
-      ref={ref}
       numberOfLines={1}
-      style={[
+      style={(state) => [
         styles.value,
-        { color: value ? colors.foreground : colors.mutedForeground },
-        style,
+        {
+          color: state.placeholder ? colors.mutedForeground : colors.foreground,
+        },
+        resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
     />
@@ -99,7 +104,6 @@ function SelectValue({
 }
 
 function SelectTrigger({
-  ref,
   style,
   children,
   size = "default",
@@ -111,70 +115,73 @@ function SelectTrigger({
   const { colors } = useTheme()
   return (
     <SelectPrimitive.Trigger
-      ref={ref}
       style={(state) => [
         styles.trigger,
         { backgroundColor: colors.inputSoft },
-        props.disabled && styles.disabled,
+        state.disabled && styles.disabled,
         size === "sm" && styles.triggerSm,
-        typeof style === "function" ? style(state) : style,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     >
       {children}
-      <Icon
-        as={CaretDownIcon}
-        aria-hidden={true}
-        size={16}
-        color={colors.mutedForeground}
-      />
+      <SelectPrimitive.Icon>
+        <Icon as={CaretDownIcon} size={16} color={colors.mutedForeground} />
+      </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
 }
 
-const FullWindowOverlay =
-  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
+type PositionerProps = React.ComponentProps<typeof SelectPrimitive.Positioner>
 
 function SelectContent({
   style,
   children,
-  position = "popper",
+  side = "bottom",
+  sideOffset = 4,
+  align = "center",
+  alignOffset = 0,
   portalHost,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Content> & {
-  portalHost?: string
-}) {
+}: React.ComponentProps<typeof SelectPrimitive.Popup> &
+  Pick<PositionerProps, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    portalHost?: string
+  }) {
   const { colors } = useTheme()
   return (
     <SelectPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
-        <SelectPrimitive.Overlay style={StyleSheet.absoluteFill} asChild>
+        <SelectPrimitive.Positioner
+          side={side}
+          sideOffset={sideOffset}
+          align={align}
+          alignOffset={alignOffset}
+        >
           <AnimatedView
-            style={styles.overlay}
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
-            as="Pressable"
           >
             <TextStyleContext.Provider
               value={{ ...fontSize.sm, color: colors.popoverForeground }}
             >
-              <SelectPrimitive.Content
-                style={StyleSheet.flatten<ViewStyle>([
+              <SelectPrimitive.Popup
+                style={(state) => [
                   styles.content,
                   {
                     borderColor: colors.outline,
                     backgroundColor: colors.popover,
                   },
-                  style as StyleProp<ViewStyle>,
-                ])}
-                position={position}
+                  resolveStyle(style, state) as StyleProp<ViewStyle>,
+                ]}
                 {...props}
               >
-                <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
-              </SelectPrimitive.Content>
+                <SelectPrimitive.List style={styles.list}>
+                  {children}
+                </SelectPrimitive.List>
+              </SelectPrimitive.Popup>
             </TextStyleContext.Provider>
           </AnimatedView>
-        </SelectPrimitive.Overlay>
+        </SelectPrimitive.Positioner>
       </FullWindowOverlay>
     </SelectPrimitive.Portal>
   )
@@ -183,11 +190,15 @@ function SelectContent({
 function SelectLabel({
   style,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Label>) {
+}: React.ComponentProps<typeof SelectPrimitive.GroupLabel>) {
   const { colors } = useTheme()
   return (
-    <SelectPrimitive.Label
-      style={[styles.label, { color: colors.mutedForeground }, style]}
+    <SelectPrimitive.GroupLabel
+      style={(state) => [
+        styles.label,
+        { color: colors.mutedForeground },
+        resolveStyle(style, state) as StyleProp<TextStyle>,
+      ]}
       {...props}
     />
   )
@@ -195,32 +206,35 @@ function SelectLabel({
 
 function SelectItem({
   style,
+  children,
   ...props
-}: Omit<React.ComponentProps<typeof SelectPrimitive.Item>, "children">) {
+}: Omit<React.ComponentProps<typeof SelectPrimitive.Item>, "children"> & {
+  children?: React.ReactNode
+}) {
   const { colors } = useTheme()
   return (
     <SelectPrimitive.Item
       style={(state) => [
         styles.item,
-        state.pressed && { backgroundColor: colors.accent },
-        props.disabled && styles.disabled,
-        typeof style === "function" ? style(state) : style,
+        state.highlighted && { backgroundColor: colors.accent },
+        state.disabled && styles.disabled,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     >
-      <View style={styles.indicator}>
-        <SelectPrimitive.ItemIndicator>
-          <Icon
-            as={CheckIcon}
-            size={16}
-            color={colors.foreground}
-            style={styles.indicatorIcon}
-          />
-        </SelectPrimitive.ItemIndicator>
-      </View>
+      <SelectPrimitive.ItemIndicator style={styles.indicator}>
+        <Icon
+          as={CheckIcon}
+          size={16}
+          color={colors.foreground}
+          style={styles.indicatorIcon}
+        />
+      </SelectPrimitive.ItemIndicator>
       <SelectPrimitive.ItemText
         style={[styles.itemText, { color: colors.foreground }]}
-      />
+      >
+        {children}
+      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 }
@@ -232,7 +246,11 @@ function SelectSeparator({
   const { colors } = useTheme()
   return (
     <SelectPrimitive.Separator
-      style={[styles.separator, { backgroundColor: colors.border }, style]}
+      style={(state) => [
+        styles.separator,
+        { backgroundColor: colors.border },
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
+      ]}
       {...props}
     />
   )

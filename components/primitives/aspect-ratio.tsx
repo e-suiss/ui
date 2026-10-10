@@ -1,29 +1,37 @@
-import type * as React from "react"
-import { type StyleProp, View, type ViewStyle } from "react-native"
-import { Slot } from "./slot"
-import type { SlottableViewProps, ViewRef } from "./types"
+import * as React from "react"
+import { View } from "react-native"
+import type { BaseUIComponentProps } from "./types"
+import { useRender } from "./use-render"
 
-type RootProps = Omit<SlottableViewProps, "style"> & {
-  ratio?: number
-  style?: StyleProp<ViewStyle>
+interface RootState {
+  ratio: number
 }
 
-type RootRef = ViewRef
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
+  ratio?: number | undefined
+}
 
 function Root({
-  asChild,
   ratio = 1,
+  render,
+  className,
   style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const Component = asChild ? Slot : View
-  return (
-    <Component ref={ref} style={[style, { aspectRatio: ratio }]} {...props} />
-  )
+  ...elementProps
+}: RootProps) {
+  const state = React.useMemo<RootState>(() => ({ ratio }), [ratio])
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [elementProps, { style: { aspectRatio: ratio } }],
+  })
 }
 
-Root.displayName = "AspectRatioRoot"
+Root.displayName = "AspectRatio"
 
-export type { RootProps, RootRef }
+export type { RootProps, RootState }
 export { Root }

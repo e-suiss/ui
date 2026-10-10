@@ -1,7 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import { View } from "react-native"
-import { Slot } from "@/components/primitives/slot"
+import type { RenderProp } from "@/components/primitives/types"
+import { useRender } from "@/components/primitives/use-render"
 import { TextClassContext } from "@/components/ui/text"
 
 const badgeVariants = cva(
@@ -37,17 +38,18 @@ const badgeTextVariants = cva("text-xs font-medium", {
 
 type BadgeProps = React.ComponentProps<typeof View> &
   React.RefAttributes<View> & {
-    asChild?: boolean
+    render?: RenderProp<Record<string, unknown>, Record<string, never>>
   } & VariantProps<typeof badgeVariants>
 
-function Badge({ className, variant, asChild, ...props }: BadgeProps) {
-  const Component = asChild ? Slot : View
+function Badge({ className, variant, render, ...props }: BadgeProps) {
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    props: [{ className: cn(badgeVariants({ variant }), className) }, props],
+  })
   return (
     <TextClassContext.Provider value={badgeTextVariants({ variant })}>
-      <Component
-        className={cn(badgeVariants({ variant }), className)}
-        {...props}
-      />
+      {element}
     </TextClassContext.Provider>
   )
 }

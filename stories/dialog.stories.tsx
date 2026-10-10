@@ -27,22 +27,23 @@ function EditProfileContent() {
       <View className="gap-4">
         <View className="gap-2">
           <Label nativeID="dialog-name">Name</Label>
-          <Input aria-labelledby="dialog-name" defaultValue="Pedro Duarte" />
+          <Input
+            accessibilityLabelledBy="dialog-name"
+            defaultValue="Pedro Duarte"
+          />
         </View>
         <View className="gap-2">
           <Label nativeID="dialog-username">Username</Label>
           <Input
-            aria-labelledby="dialog-username"
+            accessibilityLabelledBy="dialog-username"
             defaultValue="@peduarte"
             autoCapitalize="none"
           />
         </View>
       </View>
       <DialogFooter>
-        <DialogClose asChild>
-          <Button variant="outline">
-            <Text>Cancel</Text>
-          </Button>
+        <DialogClose render={<Button variant="outline" />}>
+          <Text>Cancel</Text>
         </DialogClose>
         <Button>
           <Text>Save changes</Text>
@@ -65,10 +66,8 @@ export const Default: Story = {
   render: () => (
     <View className="items-start">
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            <Text>Edit profile</Text>
-          </Button>
+        <DialogTrigger render={<Button variant="outline" />}>
+          <Text>Edit profile</Text>
         </DialogTrigger>
         <EditProfileContent />
       </Dialog>
@@ -80,10 +79,8 @@ export const OpenByDefault: Story = {
   render: () => (
     <View className="items-start">
       <Dialog defaultOpen>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            <Text>Edit profile</Text>
-          </Button>
+        <DialogTrigger render={<Button variant="outline" />}>
+          <Text>Edit profile</Text>
         </DialogTrigger>
         <EditProfileContent />
       </Dialog>
@@ -95,10 +92,8 @@ export const Destructive: Story = {
   render: () => (
     <View className="items-start">
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="destructive">
-            <Text>Delete account</Text>
-          </Button>
+        <DialogTrigger render={<Button variant="destructive" />}>
+          <Text>Delete account</Text>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -108,15 +103,11 @@ export const Destructive: Story = {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">
-                <Text>Cancel</Text>
-              </Button>
+            <DialogClose render={<Button variant="outline" />}>
+              <Text>Cancel</Text>
             </DialogClose>
-            <DialogClose asChild>
-              <Button variant="destructive">
-                <Text>Delete</Text>
-              </Button>
+            <DialogClose render={<Button variant="destructive" />}>
+              <Text>Delete</Text>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

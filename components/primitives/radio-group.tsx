@@ -1,43 +1,61 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
-import { useControllableState } from "./hooks"
-import { Slot } from "./slot"
-import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableViewProps,
-  ViewRef,
-} from "./types"
+import { createChangeEventDetails, REASONS } from "./event-details"
+import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type RootProps = SlottableViewProps & {
+type ChangeEventReason = typeof REASONS.itemPress | typeof REASONS.none
+
+type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
+
+interface RootState {
+  disabled: boolean
+  readOnly: boolean
+  required: boolean
+}
+
+interface ItemState extends RootState {
+  checked: boolean
+}
+
+type IndicatorState = ItemState
+
+type RootProps = BaseUIComponentProps<typeof View, RootState> & {
   value?: string | undefined
   defaultValue?: string | undefined
-  onValueChange?: (value: string) => void
-  disabled?: boolean
+  onValueChange?:
+    | ((value: string, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  disabled?: boolean | undefined
+  readOnly?: boolean | undefined
+  required?: boolean | undefined
 }
 
-type ItemProps = SlottablePressableProps & {
+type ItemProps = Omit<
+  BaseUIComponentProps<typeof Pressable, ItemState>,
+  "children"
+> & {
+  children?: React.ReactNode
   value: string
-  disabled?: boolean
-  "aria-labelledby"?: string
+  disabled?: boolean | undefined
+  readOnly?: boolean | undefined
 }
 
-type IndicatorProps = SlottableViewProps & ForceMountable
-
-type RootRef = ViewRef
-type ItemRef = PressableRef
-type IndicatorRef = ViewRef
+type IndicatorProps = BaseUIComponentProps<typeof View, IndicatorState> & {
+  keepMounted?: boolean | undefined
+}
 
 interface RootContextValue {
   value: string | undefined
   disabled: boolean
-  onValueChange: (value: string) => void
+  readOnly: boolean
+  required: boolean
+  setValue: (value: string, eventDetails: ChangeEventDetails) => boolean
 }
 
 interface ItemContextValue {
-  itemValue: string
-  isChecked: boolean
+  state: ItemState
 }
 
 const RootContext = React.createContext<RootContextValue | null>(null)
@@ -45,129 +63,169 @@ const RootContext = React.createContext<RootContextValue | null>(null)
 function useRootContext() {
   const context = React.useContext(RootContext)
   if (!context) {
-    throw new Error(
-      "RadioGroup compound components cannot be rendered outside the RadioGroup component"
-    )
+    throw new Error("Radio parts must be rendered inside RadioGroup.Root")
   }
   return context
 }
-
-function Root({
-  asChild,
-  value: valueProp,
-  defaultValue,
-  onValueChange,
-  disabled = false,
-  ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const [value, setValue] = useControllableState<string>({
-    prop: valueProp,
-    defaultProp: defaultValue,
-    onChange: onValueChange,
-  })
-
-  const context = React.useMemo<RootContextValue>(
-    () => ({ value, disabled, onValueChange: setValue }),
-    [value, disabled, setValue]
-  )
-
-  const Component = asChild ? Slot : View
-  return (
-    <RootContext.Provider value={context}>
-      <Component
-        ref={ref}
-        role="radiogroup"
-        aria-disabled={disabled}
-        {...props}
-      />
-    </RootContext.Provider>
-  )
-}
-
-Root.displayName = "RadioGroupRoot"
 
 const ItemContext = React.createContext<ItemContextValue | null>(null)
 
 function useItemContext() {
   const context = React.useContext(ItemContext)
   if (!context) {
-    throw new Error(
-      "RadioGroupItem compound components cannot be rendered outside the RadioGroupItem component"
-    )
+    throw new Error("Radio.Indicator must be rendered inside Radio.Root")
   }
   return context
 }
 
+function Root({
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  disabled = false,
+  readOnly = false,
+  required = false,
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: RootProps) {
+  const [value, setValue] = useControllableState<
+    string | undefined,
+    ChangeEventDetails
+  >({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange as
+      | ((value: string | undefined, eventDetails: ChangeEventDetails) => void)
+      | undefined,
+  })
+
+  const state = React.useMemo<RootState>(
+    () => ({ disabled, readOnly, required }),
+    [disabled, readOnly, required]
+  )
+
+  const context = React.useMemo<RootContextValue>(
+    () => ({ value, disabled, readOnly, required, setValue }),
+    [value, disabled, readOnly, required, setValue]
+  )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        accessibilityRole: "radiogroup",
+        accessibilityState: { disabled },
+      },
+      elementProps,
+    ],
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
+}
+
+Root.displayName = "RadioGroup"
+
 function Item({
-  asChild,
   value: itemValue,
   disabled: disabledProp = false,
-  onPress: onPressProp,
+  readOnly: readOnlyProp = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ItemProps & React.RefAttributes<ItemRef>) {
-  const { value, disabled: rootDisabled, onValueChange } = useRootContext()
-  const disabled = rootDisabled || disabledProp
-  const isChecked = value === itemValue
+  ...elementProps
+}: ItemProps) {
+  const root = useRootContext()
+  const disabled = root.disabled || disabledProp
+  const readOnly = root.readOnly || readOnlyProp
+  const checked = root.value === itemValue
+  const itemRef = React.useRef<View>(null)
 
-  const itemContext = React.useMemo<ItemContextValue>(
-    () => ({ itemValue, isChecked }),
-    [itemValue, isChecked]
+  const state = React.useMemo<ItemState>(
+    () => ({ checked, disabled, readOnly, required: root.required }),
+    [checked, disabled, readOnly, root.required]
   )
+
+  const context = React.useMemo<ItemContextValue>(() => ({ state }), [state])
 
   const onPress = (event: GestureResponderEvent) => {
-    if (disabled) return
-    onValueChange(itemValue)
-    onPressProp?.(event)
+    if (disabled || readOnly || checked) return
+    root.setValue(
+      itemValue,
+      createChangeEventDetails(REASONS.itemPress, event, itemRef.current)
+    )
   }
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <ItemContext.Provider value={itemContext}>
-      <Component
-        ref={ref}
-        role="radio"
-        aria-checked={isChecked}
-        aria-disabled={disabled}
-        accessibilityState={{ checked: isChecked, disabled }}
-        disabled={disabled}
-        onPress={onPress}
-        {...props}
-      />
-    </ItemContext.Provider>
-  )
+  const element = useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: [ref, itemRef],
+    props: [
+      {
+        accessibilityRole: "radio",
+        accessibilityState: { checked, disabled },
+        disabled,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
+
+  return <ItemContext.Provider value={context}>{element}</ItemContext.Provider>
 }
 
-Item.displayName = "RadioGroupItem"
+Item.displayName = "RadioRoot"
 
 function Indicator({
-  asChild,
-  forceMount,
+  keepMounted = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: IndicatorProps & React.RefAttributes<IndicatorRef>) {
-  const { isChecked } = useItemContext()
-  if (!forceMount && !isChecked) return null
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="presentation"
-      aria-hidden={!isChecked}
-      {...props}
-    />
-  )
+  ...elementProps
+}: IndicatorProps) {
+  const { state } = useItemContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: state.checked || keepMounted,
+    props: [
+      {
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
 }
 
-Indicator.displayName = "RadioGroupIndicator"
+Indicator.displayName = "RadioIndicator"
 
 export type {
+  ChangeEventDetails,
+  ChangeEventReason,
   IndicatorProps,
-  IndicatorRef,
+  IndicatorState,
+  ItemContextValue,
   ItemProps,
-  ItemRef,
+  ItemState,
+  RootContextValue,
   RootProps,
-  RootRef,
+  RootState,
 }
 export { Indicator, Item, Root, useItemContext, useRootContext }

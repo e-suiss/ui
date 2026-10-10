@@ -18,14 +18,13 @@ import {
 import { Text } from "@/components/ui/text"
 
 function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
-  const [value, setValue] = React.useState<string | undefined>()
   const [showBookmarks, setShowBookmarks] = React.useState(true)
   const [showUrls, setShowUrls] = React.useState(false)
   const [profile, setProfile] = React.useState("benoit")
 
   return (
-    <Menubar value={value} onValueChange={setValue} className="self-start">
-      <MenubarMenu value="file">
+    <Menubar className="self-start">
+      <MenubarMenu>
         <MenubarTrigger>
           <Text>File</Text>
         </MenubarTrigger>
@@ -65,7 +64,7 @@ function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <MenubarMenu value="edit">
+      <MenubarMenu>
         <MenubarTrigger disabled={disabled}>
           <Text>Edit</Text>
         </MenubarTrigger>
@@ -90,7 +89,7 @@ function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <MenubarMenu value="view">
+      <MenubarMenu>
         <MenubarTrigger disabled={disabled}>
           <Text>View</Text>
         </MenubarTrigger>
@@ -98,15 +97,10 @@ function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
           <MenubarCheckboxItem
             checked={showBookmarks}
             onCheckedChange={setShowBookmarks}
-            closeOnPress={false}
           >
             <Text>Always Show Bookmarks Bar</Text>
           </MenubarCheckboxItem>
-          <MenubarCheckboxItem
-            checked={showUrls}
-            onCheckedChange={setShowUrls}
-            closeOnPress={false}
-          >
+          <MenubarCheckboxItem checked={showUrls} onCheckedChange={setShowUrls}>
             <Text>Always Show Full URLs</Text>
           </MenubarCheckboxItem>
           <MenubarSeparator />
@@ -116,19 +110,19 @@ function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <MenubarMenu value="profiles">
+      <MenubarMenu>
         <MenubarTrigger disabled={disabled}>
           <Text>Profiles</Text>
         </MenubarTrigger>
         <MenubarContent>
           <MenubarRadioGroup value={profile} onValueChange={setProfile}>
-            <MenubarRadioItem value="andy" closeOnPress={false}>
+            <MenubarRadioItem value="andy">
               <Text>Andy</Text>
             </MenubarRadioItem>
-            <MenubarRadioItem value="benoit" closeOnPress={false}>
+            <MenubarRadioItem value="benoit">
               <Text>Benoit</Text>
             </MenubarRadioItem>
-            <MenubarRadioItem value="luis" closeOnPress={false}>
+            <MenubarRadioItem value="luis">
               <Text>Luis</Text>
             </MenubarRadioItem>
           </MenubarRadioGroup>
@@ -145,10 +139,6 @@ function MenubarDemo({ disabled = false }: { disabled?: boolean }) {
 const meta = {
   title: "Components/Menubar",
   component: Menubar,
-  args: {
-    value: undefined,
-    onValueChange: () => {},
-  },
 } satisfies Meta<typeof Menubar>
 
 export default meta

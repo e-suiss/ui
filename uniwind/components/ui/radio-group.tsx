@@ -1,13 +1,17 @@
 import { cn } from "cn"
 import { View } from "react-native"
 import * as RadioGroupPrimitive from "@/components/primitives/radio-group"
+import { resolveClassName } from "@/components/primitives/use-render"
 
 function RadioGroup({
   className,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
   return (
-    <RadioGroupPrimitive.Root className={cn("gap-3", className)} {...props} />
+    <RadioGroupPrimitive.Root
+      className={(state) => cn("gap-3", resolveClassName(className, state))}
+      {...props}
+    />
   )
 }
 
@@ -17,11 +21,13 @@ function RadioGroupItem({
 }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
   return (
     <RadioGroupPrimitive.Item
-      className={cn(
-        "aspect-square size-4 shrink-0 items-center justify-center rounded-full border border-transparent bg-input/90",
-        props.disabled && "opacity-50",
-        className
-      )}
+      className={(state) =>
+        cn(
+          "aspect-square size-4 shrink-0 items-center justify-center rounded-full border border-transparent bg-input/90",
+          state.disabled && "opacity-50",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="size-4 items-center justify-center rounded-full bg-primary">

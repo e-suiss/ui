@@ -1,7 +1,9 @@
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
+import * as TogglePrimitive from "@/components/primitives/toggle"
 import * as ToggleGroupPrimitive from "@/components/primitives/toggle-group"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 import { toggleVariants } from "@/components/ui/toggle"
@@ -20,7 +22,12 @@ function ToggleGroup({
   VariantProps<typeof toggleVariants>) {
   return (
     <ToggleGroupPrimitive.Root
-      className={cn("flex-row items-center gap-2 self-start", className)}
+      className={(state) =>
+        cn(
+          "flex-row items-center gap-2 self-start",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>
@@ -48,32 +55,32 @@ function ToggleGroupItem({
   isFirst,
   isLast,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
+}: React.ComponentProps<typeof TogglePrimitive.Root> &
   VariantProps<typeof toggleVariants> & {
     isFirst?: boolean
     isLast?: boolean
   }) {
   const context = useToggleGroupContext()
-  const { value } = ToggleGroupPrimitive.useRootContext()
 
   return (
     <TextClassContext.Provider value="text-sm font-medium text-foreground">
-      <ToggleGroupPrimitive.Item
-        className={cn(
-          toggleVariants({
-            variant: context.variant || variant,
-            size: context.size || size,
-          }),
-          props.disabled && "opacity-50",
-          ToggleGroupPrimitive.utils.getIsSelected(value, props.value) &&
-            "bg-muted",
-          "shrink-0",
-          className
-        )}
+      <TogglePrimitive.Root
+        className={(state) =>
+          cn(
+            toggleVariants({
+              variant: context.variant || variant,
+              size: context.size || size,
+            }),
+            state.disabled && "opacity-50",
+            state.pressed && "bg-muted",
+            "shrink-0",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       >
         {children}
-      </ToggleGroupPrimitive.Item>
+      </TogglePrimitive.Root>
     </TextClassContext.Provider>
   )
 }

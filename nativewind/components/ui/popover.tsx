@@ -1,9 +1,10 @@
 import { cn } from "cn"
 import * as React from "react"
-import { Platform, StyleSheet } from "react-native"
+import { Platform, View, type ViewProps } from "react-native"
 import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as PopoverPrimitive from "@/components/primitives/popover"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextClassContext } from "@/components/ui/text"
 
@@ -17,37 +18,93 @@ const FullWindowOverlay =
 function PopoverContent({
   className,
   align = "center",
+  alignOffset = 0,
+  side = "bottom",
   sideOffset = 4,
   portalHost,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content> & {
-  portalHost?: string
-}) {
+}: React.ComponentProps<typeof PopoverPrimitive.Popup> &
+  Pick<
+    React.ComponentProps<typeof PopoverPrimitive.Positioner>,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  > & {
+    portalHost?: string
+  }) {
   return (
     <PopoverPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
-        <PopoverPrimitive.Overlay style={StyleSheet.absoluteFill} asChild>
-          <AnimatedView
-            entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
-            exiting={FadeOut.reduceMotion(ReduceMotion.System)}
-            as="Pressable"
-          >
-            <TextClassContext.Provider value="text-sm text-popover-foreground">
-              <PopoverPrimitive.Content
-                align={align}
-                sideOffset={sideOffset}
-                className={cn(
+        <PopoverPrimitive.Positioner
+          align={align}
+          alignOffset={alignOffset}
+          side={side}
+          sideOffset={sideOffset}
+          className="z-50"
+        >
+          <TextClassContext.Provider value="text-sm text-popover-foreground">
+            <PopoverPrimitive.Popup
+              render={
+                <AnimatedView
+                  entering={FadeIn.duration(200).reduceMotion(
+                    ReduceMotion.System
+                  )}
+                  exiting={FadeOut.reduceMotion(ReduceMotion.System)}
+                />
+              }
+              className={(state) =>
+                cn(
                   "z-50 w-72 flex-col gap-4 rounded-3xl border border-foreground-5 bg-popover p-4 shadow-lg dark:border-foreground-10",
-                  className
-                )}
-                {...props}
-              />
-            </TextClassContext.Provider>
-          </AnimatedView>
-        </PopoverPrimitive.Overlay>
+                  resolveClassName(className, state)
+                )
+              }
+              {...props}
+            />
+          </TextClassContext.Provider>
+        </PopoverPrimitive.Positioner>
       </FullWindowOverlay>
     </PopoverPrimitive.Portal>
   )
 }
 
-export { Popover, PopoverContent, PopoverTrigger }
+function PopoverHeader({ className, ...props }: ViewProps) {
+  return <View className={cn("flex flex-col gap-1", className)} {...props} />
+}
+
+function PopoverTitle({
+  className,
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Title>) {
+  return (
+    <PopoverPrimitive.Title
+      className={(state) =>
+        cn(
+          "text-base font-medium text-popover-foreground",
+          resolveClassName(className, state)
+        )
+      }
+      {...props}
+    />
+  )
+}
+
+function PopoverDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Description>) {
+  return (
+    <PopoverPrimitive.Description
+      className={(state) =>
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
+      }
+      {...props}
+    />
+  )
+}
+
+export {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+}

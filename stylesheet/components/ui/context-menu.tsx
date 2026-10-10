@@ -6,12 +6,14 @@ import {
   type StyleProp,
   StyleSheet,
   Text,
+  type TextStyle,
   View,
   type ViewStyle,
 } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as ContextMenuPrimitive from "@/components/primitives/context-menu"
+import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
@@ -23,9 +25,12 @@ const ContextMenuTrigger = ContextMenuPrimitive.Trigger
 
 const ContextMenuGroup = ContextMenuPrimitive.Group
 
-const ContextMenuSub = ContextMenuPrimitive.Sub
+const ContextMenuSub = ContextMenuPrimitive.SubmenuRoot
 
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
+
+const FullWindowOverlay =
+  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
   itemText: { ...fontSize.sm, fontWeight: "500", userSelect: "none" },
@@ -86,20 +91,68 @@ const styles = StyleSheet.create({
   shortcut: { marginLeft: "auto", ...fontSize.xs, letterSpacing: 1.2 },
 })
 
+type PositionerProps = React.ComponentProps<
+  typeof ContextMenuPrimitive.Positioner
+>
+
+function ContextMenuContent({
+  style,
+  align = "start",
+  alignOffset = 0,
+  side = "bottom",
+  sideOffset = 0,
+  portalHost,
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.Popup> &
+  Pick<PositionerProps, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    portalHost?: string
+  }) {
+  const { colors } = useTheme()
+  return (
+    <ContextMenuPrimitive.Portal hostName={portalHost}>
+      <FullWindowOverlay>
+        <ContextMenuPrimitive.Positioner
+          align={align}
+          alignOffset={alignOffset}
+          side={side}
+          sideOffset={sideOffset}
+        >
+          <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
+            <TextStyleContext.Provider
+              value={{ ...fontSize.sm, color: colors.popoverForeground }}
+            >
+              <ContextMenuPrimitive.Popup
+                style={(state) => [
+                  styles.content,
+                  {
+                    borderColor: colors.outline,
+                    backgroundColor: colors.popover,
+                  },
+                  resolveStyle(style, state) as StyleProp<ViewStyle>,
+                ]}
+                {...props}
+              />
+            </TextStyleContext.Provider>
+          </AnimatedView>
+        </ContextMenuPrimitive.Positioner>
+      </FullWindowOverlay>
+    </ContextMenuPrimitive.Portal>
+  )
+}
+
 function ContextMenuSubTrigger({
   style,
   inset,
   children,
   iconStyle,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & {
+}: React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger> & {
   children?: React.ReactNode
   iconStyle?: PhosphorIconProps["style"]
   inset?: boolean
 }) {
-  const { open } = ContextMenuPrimitive.useSubContext()
+  const { open } = ContextMenuPrimitive.useMenuRootContext().floating
   const { colors } = useTheme()
-  const icon = open ? CaretUpIcon : CaretDownIcon
   return (
     <TextStyleContext.Provider
       value={{
@@ -107,24 +160,27 @@ function ContextMenuSubTrigger({
         color: open ? colors.accentForeground : colors.popoverForeground,
       }}
     >
-      <ContextMenuPrimitive.SubTrigger
+      <ContextMenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.pressed && { backgroundColor: colors.accent },
-          typeof style === "function" ? style(state) : style,
-          open && { backgroundColor: colors.accent, marginBottom: 4 },
+          (state.highlighted || state.open) && {
+            backgroundColor: colors.accent,
+          },
+          state.open && { marginBottom: 4 },
+          state.disabled && styles.disabled,
           inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         {children}
         <Icon
-          as={icon}
+          as={open ? CaretUpIcon : CaretDownIcon}
           size={16}
           color={colors.foreground}
           style={[styles.subTriggerIcon, iconStyle]}
         />
-      </ContextMenuPrimitive.SubTrigger>
+      </ContextMenuPrimitive.SubmenuTrigger>
     </TextStyleContext.Provider>
   )
 }
@@ -132,15 +188,15 @@ function ContextMenuSubTrigger({
 function ContextMenuSubContent({
   style,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.SubContent>) {
+}: React.ComponentProps<typeof ContextMenuPrimitive.Popup>) {
   const { colors } = useTheme()
   return (
     <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-      <ContextMenuPrimitive.SubContent
+      <ContextMenuPrimitive.Popup
         style={(state) => [
           styles.subContent,
           { borderColor: colors.outline, backgroundColor: colors.popover },
-          typeof style === "function" ? style(state) : style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -148,63 +204,10 @@ function ContextMenuSubContent({
   )
 }
 
-const FullWindowOverlay =
-  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
-
-function ContextMenuContent({
-  style,
-  overlayStyle,
-  portalHost,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Content> & {
-  overlayStyle?: StyleProp<ViewStyle>
-  portalHost?: string
-}) {
-  const { colors } = useTheme()
-  return (
-    <ContextMenuPrimitive.Portal hostName={portalHost}>
-      <FullWindowOverlay>
-        <ContextMenuPrimitive.Overlay
-          style={
-            overlayStyle
-              ? StyleSheet.flatten([
-                  StyleSheet.absoluteFill,
-                  overlayStyle as typeof StyleSheet.absoluteFill,
-                ])
-              : StyleSheet.absoluteFill
-          }
-          asChild
-        >
-          <AnimatedView
-            entering={FadeIn.reduceMotion(ReduceMotion.System)}
-            as="Pressable"
-          >
-            <TextStyleContext.Provider
-              value={{ ...fontSize.sm, color: colors.popoverForeground }}
-            >
-              <ContextMenuPrimitive.Content
-                style={StyleSheet.flatten<ViewStyle>([
-                  styles.content,
-                  {
-                    borderColor: colors.outline,
-                    backgroundColor: colors.popover,
-                  },
-                  style as StyleProp<ViewStyle>,
-                ])}
-                {...props}
-              />
-            </TextStyleContext.Provider>
-          </AnimatedView>
-        </ContextMenuPrimitive.Overlay>
-      </FullWindowOverlay>
-    </ContextMenuPrimitive.Portal>
-  )
-}
-
 function ContextMenuItem({
   style,
   inset,
-  variant,
+  variant = "default",
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Item> & {
   inset?: boolean
@@ -222,14 +225,14 @@ function ContextMenuItem({
       <ContextMenuPrimitive.Item
         style={(state) => [
           styles.item,
-          state.pressed && {
+          state.highlighted && {
             backgroundColor: destructive
               ? colors.destructiveSubtle
               : colors.accent,
           },
-          props.disabled && styles.disabled,
+          state.disabled && styles.disabled,
           inset && styles.inset,
-          typeof style === "function" ? style(state) : style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -240,9 +243,11 @@ function ContextMenuItem({
 function ContextMenuCheckboxItem({
   style,
   children,
+  inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
@@ -252,16 +257,17 @@ function ContextMenuCheckboxItem({
       <ContextMenuPrimitive.CheckboxItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <ContextMenuPrimitive.ItemIndicator>
+          <ContextMenuPrimitive.CheckboxItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </ContextMenuPrimitive.ItemIndicator>
+          </ContextMenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
       </ContextMenuPrimitive.CheckboxItem>
@@ -272,9 +278,11 @@ function ContextMenuCheckboxItem({
 function ContextMenuRadioItem({
   style,
   children,
+  inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
@@ -284,16 +292,17 @@ function ContextMenuRadioItem({
       <ContextMenuPrimitive.RadioItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <ContextMenuPrimitive.ItemIndicator>
+          <ContextMenuPrimitive.RadioItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </ContextMenuPrimitive.ItemIndicator>
+          </ContextMenuPrimitive.RadioItemIndicator>
         </View>
         {children}
       </ContextMenuPrimitive.RadioItem>
@@ -305,17 +314,17 @@ function ContextMenuLabel({
   style,
   inset,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Label> & {
+}: React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel> & {
   inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
-    <ContextMenuPrimitive.Label
-      style={[
+    <ContextMenuPrimitive.GroupLabel
+      style={(state) => [
         styles.label,
         { color: colors.mutedForeground },
         inset && styles.inset,
-        style,
+        resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
     />
@@ -329,10 +338,10 @@ function ContextMenuSeparator({
   const { colors } = useTheme()
   return (
     <ContextMenuPrimitive.Separator
-      style={[
+      style={(state) => [
         styles.separator,
         { backgroundColor: colors.borderSubtle },
-        style,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     />

@@ -24,19 +24,23 @@ const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
-  overlay: {
+  backdrop: { ...StyleSheet.absoluteFill, zIndex: 50 },
+  container: {
     ...StyleSheet.absoluteFill,
     zIndex: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
+    pointerEvents: "box-none",
   },
-  overlayInner: {
+  containerInner: {
     flex: 1,
+    alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 16,
+    pointerEvents: "box-none",
   },
   content: {
     zIndex: 50,
@@ -69,34 +73,27 @@ const styles = StyleSheet.create({
 
 function AlertDialogOverlay({
   style,
-  children,
   ...props
-}: Omit<
-  React.ComponentProps<typeof AlertDialogPrimitive.Overlay>,
-  "asChild"
-> & {
-  children?: React.ReactNode
-}) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>) {
   const { colors } = useTheme()
   return (
-    <FullWindowOverlay>
-      <AlertDialogPrimitive.Overlay
-        style={[styles.overlay, { backgroundColor: colors.overlay }, style]}
-        {...props}
-        asChild
-      >
+    <AlertDialogPrimitive.Backdrop
+      render={
         <AnimatedView
+          as="Pressable"
           entering={FadeIn.duration(200)
             .delay(50)
             .reduceMotion(ReduceMotion.System)}
           exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-          as="Pressable"
-          style={styles.overlayInner}
-        >
-          {children}
-        </AnimatedView>
-      </AlertDialogPrimitive.Overlay>
-    </FullWindowOverlay>
+        />
+      }
+      style={(state) => [
+        styles.backdrop,
+        { backgroundColor: colors.overlay },
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
   )
 }
 
@@ -104,24 +101,38 @@ function AlertDialogContent({
   style,
   portalHost,
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Popup> & {
   portalHost?: string
 }) {
   const { colors } = useTheme()
   const { width } = useWindowDimensions()
   return (
     <AlertDialogPortal hostName={portalHost}>
-      <AlertDialogOverlay>
-        <AlertDialogPrimitive.Content
-          style={[
-            styles.content,
-            { borderColor: colors.outline, backgroundColor: colors.popover },
-            width >= 640 && styles.contentSm,
-            style,
-          ]}
-          {...props}
-        />
-      </AlertDialogOverlay>
+      <FullWindowOverlay>
+        <AlertDialogOverlay />
+        <View style={styles.container}>
+          <AnimatedView
+            entering={FadeIn.duration(200)
+              .delay(50)
+              .reduceMotion(ReduceMotion.System)}
+            exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
+            style={styles.containerInner}
+          >
+            <AlertDialogPrimitive.Popup
+              style={(state) => [
+                styles.content,
+                {
+                  borderColor: colors.outline,
+                  backgroundColor: colors.popover,
+                },
+                width >= 640 && styles.contentSm,
+                typeof style === "function" ? style(state) : style,
+              ]}
+              {...props}
+            />
+          </AnimatedView>
+        </View>
+      </FullWindowOverlay>
     </AlertDialogPortal>
   )
 }
@@ -156,7 +167,11 @@ function AlertDialogTitle({
   const { colors } = useTheme()
   return (
     <AlertDialogPrimitive.Title
-      style={[styles.title, { color: colors.foreground }, style]}
+      style={(state) => [
+        styles.title,
+        { color: colors.foreground },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
@@ -169,35 +184,41 @@ function AlertDialogDescription({
   const { colors } = useTheme()
   return (
     <AlertDialogPrimitive.Description
-      style={[styles.description, { color: colors.mutedForeground }, style]}
+      style={(state) => [
+        styles.description,
+        { color: colors.mutedForeground },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
 }
 
 function AlertDialogAction({
-  style,
-  children,
+  variant = "default",
+  size = "default",
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Action>) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <AlertDialogPrimitive.Action {...props} asChild>
-      <Button style={style}>{children}</Button>
-    </AlertDialogPrimitive.Action>
+    <AlertDialogPrimitive.Close
+      render={<Button variant={variant} size={size} />}
+      {...props}
+    />
   )
 }
 
 function AlertDialogCancel({
-  style,
-  children,
+  variant = "outline",
+  size = "default",
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
+}: React.ComponentProps<typeof AlertDialogPrimitive.Close> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <AlertDialogPrimitive.Cancel {...props} asChild>
-      <Button variant="outline" style={style}>
-        {children}
-      </Button>
-    </AlertDialogPrimitive.Cancel>
+    <AlertDialogPrimitive.Close
+      render={<Button variant={variant} size={size} />}
+      {...props}
+    />
   )
 }
 

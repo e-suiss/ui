@@ -1,31 +1,46 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
-import { useControllableState } from "./hooks"
-import { Slot } from "./slot"
-import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableViewProps,
-  ViewRef,
-} from "./types"
+import { createChangeEventDetails, REASONS } from "./event-details"
+import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type RootProps = SlottablePressableProps & {
-  checked?: boolean
-  defaultChecked?: boolean
-  onCheckedChange?: (checked: boolean) => void
-  disabled?: boolean
-}
+type ChangeEventReason = typeof REASONS.triggerPress | typeof REASONS.none
 
-type IndicatorProps = ForceMountable & SlottableViewProps
+type ChangeEventDetails = BaseUIChangeEventDetails<ChangeEventReason>
 
-type RootRef = PressableRef
-type IndicatorRef = ViewRef
-
-interface RootContextValue {
+interface RootState {
   checked: boolean
   disabled: boolean
-  setChecked: (checked: boolean) => void
+  readOnly: boolean
+  required: boolean
+  indeterminate: boolean
+}
+
+type IndicatorState = RootState
+
+type RootProps = Omit<
+  BaseUIComponentProps<typeof Pressable, RootState>,
+  "children"
+> & {
+  children?: React.ReactNode
+  checked?: boolean | undefined
+  defaultChecked?: boolean | undefined
+  onCheckedChange?:
+    | ((checked: boolean, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  disabled?: boolean | undefined
+  readOnly?: boolean | undefined
+  required?: boolean | undefined
+  indeterminate?: boolean | undefined
+}
+
+type IndicatorProps = BaseUIComponentProps<typeof View, IndicatorState> & {
+  keepMounted?: boolean | undefined
+}
+
+interface RootContextValue {
+  state: RootState
 }
 
 const RootContext = React.createContext<RootContextValue | null>(null)
@@ -33,79 +48,112 @@ const RootContext = React.createContext<RootContextValue | null>(null)
 function useRootContext() {
   const context = React.useContext(RootContext)
   if (!context) {
-    throw new Error(
-      "Checkbox compound components cannot be rendered outside the Checkbox component"
-    )
+    throw new Error("Checkbox parts must be rendered inside Checkbox.Root")
   }
   return context
 }
 
 function Root({
-  asChild,
   checked: checkedProp,
-  defaultChecked,
+  defaultChecked = false,
   onCheckedChange,
   disabled = false,
-  onPress: onPressProp,
+  readOnly = false,
+  required = false,
+  indeterminate = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const [checked = false, setChecked] = useControllableState<boolean>({
-    prop: checkedProp,
-    defaultProp: defaultChecked,
+  ...elementProps
+}: RootProps) {
+  const [checked, setChecked] = useControllableState<
+    boolean,
+    ChangeEventDetails
+  >({
+    value: checkedProp,
+    defaultValue: defaultChecked,
     onChange: onCheckedChange,
   })
+  const rootRef = React.useRef<View>(null)
 
-  const value = React.useMemo<RootContextValue>(
-    () => ({ checked, disabled, setChecked }),
-    [checked, disabled, setChecked]
+  const state = React.useMemo<RootState>(
+    () => ({ checked, disabled, readOnly, required, indeterminate }),
+    [checked, disabled, readOnly, required, indeterminate]
   )
+
+  const context = React.useMemo<RootContextValue>(() => ({ state }), [state])
 
   const onPress = (event: GestureResponderEvent) => {
-    if (disabled) return
-    setChecked(!checked)
-    onPressProp?.(event)
+    if (disabled || readOnly) return
+    setChecked(
+      !checked,
+      createChangeEventDetails(REASONS.triggerPress, event, rootRef.current)
+    )
   }
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <RootContext.Provider value={value}>
-      <Component
-        ref={ref}
-        role="checkbox"
-        aria-checked={checked}
-        aria-disabled={disabled}
-        accessibilityState={{ checked, disabled }}
-        disabled={disabled}
-        onPress={onPress}
-        {...props}
-      />
-    </RootContext.Provider>
-  )
+  const element = useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: [ref, rootRef],
+    props: [
+      {
+        accessibilityRole: "checkbox",
+        accessibilityState: {
+          checked: indeterminate ? "mixed" : checked,
+          disabled,
+        },
+        disabled,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "CheckboxRoot"
 
 function Indicator({
-  asChild,
-  forceMount,
+  keepMounted = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: IndicatorProps & React.RefAttributes<IndicatorRef>) {
-  const { checked } = useRootContext()
-  if (!forceMount && !checked) return null
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="presentation"
-      aria-hidden={!checked}
-      {...props}
-    />
-  )
+  ...elementProps
+}: IndicatorProps) {
+  const { state } = useRootContext()
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: state.checked || state.indeterminate || keepMounted,
+    props: [
+      {
+        accessibilityElementsHidden: true,
+        importantForAccessibility: "no-hide-descendants",
+      },
+      elementProps,
+    ],
+  })
 }
 
 Indicator.displayName = "CheckboxIndicator"
 
-export type { IndicatorProps, IndicatorRef, RootProps, RootRef }
+export type {
+  ChangeEventDetails,
+  ChangeEventReason,
+  IndicatorProps,
+  IndicatorState,
+  RootContextValue,
+  RootProps,
+  RootState,
+}
 export { Indicator, Root, useRootContext }

@@ -1,26 +1,71 @@
 import { cn } from "cn"
 import { CaretDownIcon, CaretUpIcon, CheckIcon } from "phosphor-react-native"
 import * as React from "react"
-import {
-  Platform,
-  type StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  type ViewStyle,
-} from "react-native"
+import { Platform, Text, View } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as ContextMenuPrimitive from "@/components/primitives/context-menu"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const ContextMenu = ContextMenuPrimitive.Root
+
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger
+
 const ContextMenuGroup = ContextMenuPrimitive.Group
-const ContextMenuSub = ContextMenuPrimitive.Sub
+
+const ContextMenuSub = ContextMenuPrimitive.SubmenuRoot
+
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
+
+const FullWindowOverlay =
+  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
+
+type PositionerProps = React.ComponentProps<
+  typeof ContextMenuPrimitive.Positioner
+>
+
+function ContextMenuContent({
+  className,
+  align = "start",
+  alignOffset = 0,
+  side = "bottom",
+  sideOffset = 0,
+  portalHost,
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.Popup> &
+  Pick<PositionerProps, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    portalHost?: string
+  }) {
+  return (
+    <ContextMenuPrimitive.Portal hostName={portalHost}>
+      <FullWindowOverlay>
+        <ContextMenuPrimitive.Positioner
+          align={align}
+          alignOffset={alignOffset}
+          side={side}
+          sideOffset={sideOffset}
+        >
+          <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
+            <TextClassContext.Provider value="text-sm text-popover-foreground">
+              <ContextMenuPrimitive.Popup
+                className={(state) =>
+                  cn(
+                    "min-w-48 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+                    resolveClassName(className, state)
+                  )
+                }
+                {...props}
+              />
+            </TextClassContext.Provider>
+          </AnimatedView>
+        </ContextMenuPrimitive.Positioner>
+      </FullWindowOverlay>
+    </ContextMenuPrimitive.Portal>
+  )
+}
 
 function ContextMenuSubTrigger({
   className,
@@ -28,13 +73,12 @@ function ContextMenuSubTrigger({
   children,
   iconClassName,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & {
+}: React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger> & {
   children?: React.ReactNode
   iconClassName?: string
   inset?: boolean
 }) {
-  const { open } = ContextMenuPrimitive.useSubContext()
-  const icon = open ? CaretUpIcon : CaretDownIcon
+  const { open } = ContextMenuPrimitive.useMenuRootContext().floating
   return (
     <TextClassContext.Provider
       value={cn(
@@ -42,24 +86,28 @@ function ContextMenuSubTrigger({
         open && "text-accent-foreground"
       )}
     >
-      <ContextMenuPrimitive.SubTrigger
-        className={cn(
-          "group flex-row items-center gap-2 rounded-2xl px-3 py-2 active:bg-accent",
-          className,
-          open && cn("bg-accent", "mb-1"),
-          inset && "pl-9.5"
-        )}
+      <ContextMenuPrimitive.SubmenuTrigger
+        className={(state) =>
+          cn(
+            "group flex-row items-center gap-2 rounded-2xl px-3 py-2",
+            (state.highlighted || state.open) && "bg-accent",
+            state.open && "mb-1",
+            state.disabled && "opacity-50",
+            inset && "pl-9.5",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       >
         {children}
         <Icon
-          as={icon}
+          as={open ? CaretUpIcon : CaretDownIcon}
           className={cn(
             "ml-auto size-4 shrink-0 text-foreground",
             iconClassName
           )}
         />
-      </ContextMenuPrimitive.SubTrigger>
+      </ContextMenuPrimitive.SubmenuTrigger>
     </TextClassContext.Provider>
   )
 }
@@ -67,95 +115,52 @@ function ContextMenuSubTrigger({
 function ContextMenuSubContent({
   className,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.SubContent>) {
+}: React.ComponentProps<typeof ContextMenuPrimitive.Popup>) {
   return (
     <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-      <ContextMenuPrimitive.SubContent
-        className={cn(
-          "min-w-36 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
-          className
-        )}
+      <ContextMenuPrimitive.Popup
+        className={(state) =>
+          cn(
+            "min-w-36 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       />
     </AnimatedView>
   )
 }
 
-const FullWindowOverlay =
-  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
-
-function ContextMenuContent({
-  className,
-  overlayClassName,
-  overlayStyle,
-  portalHost,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Content> & {
-  overlayStyle?: StyleProp<ViewStyle>
-  overlayClassName?: string
-  portalHost?: string
-}) {
-  return (
-    <ContextMenuPrimitive.Portal hostName={portalHost}>
-      <FullWindowOverlay>
-        <ContextMenuPrimitive.Overlay
-          style={
-            overlayStyle
-              ? StyleSheet.flatten([
-                  StyleSheet.absoluteFill,
-                  overlayStyle as typeof StyleSheet.absoluteFill,
-                ])
-              : StyleSheet.absoluteFill
-          }
-          className={overlayClassName}
-          asChild
-        >
-          <AnimatedView
-            entering={FadeIn.reduceMotion(ReduceMotion.System)}
-            as="Pressable"
-          >
-            <TextClassContext.Provider value="text-sm text-popover-foreground">
-              <ContextMenuPrimitive.Content
-                className={cn(
-                  "min-w-48 rounded-3xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
-                  className
-                )}
-                {...props}
-              />
-            </TextClassContext.Provider>
-          </AnimatedView>
-        </ContextMenuPrimitive.Overlay>
-      </FullWindowOverlay>
-    </ContextMenuPrimitive.Portal>
-  )
-}
-
 function ContextMenuItem({
   className,
   inset,
-  variant,
+  variant = "default",
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Item> & {
-  className?: string
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
+  const destructive = variant === "destructive"
   return (
     <TextClassContext.Provider
       value={cn(
         "select-none text-sm font-medium text-popover-foreground",
-        variant === "destructive" && "text-destructive"
+        destructive && "text-destructive"
       )}
     >
       <ContextMenuPrimitive.Item
-        className={cn(
-          "group relative flex-row items-center gap-2.5 rounded-2xl px-3 py-2 active:bg-accent",
-          variant === "destructive" &&
-            "active:bg-destructive/10 dark:active:bg-destructive/20",
-          props.disabled && "opacity-50",
-          inset && "pl-9.5",
-          className
-        )}
+        className={(state) =>
+          cn(
+            "group relative flex-row items-center gap-2.5 rounded-2xl px-3 py-2",
+            state.highlighted &&
+              (destructive
+                ? "bg-destructive/10 dark:bg-destructive/20"
+                : "bg-accent"),
+            state.disabled && "opacity-50",
+            inset && "pl-9.5",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       />
     </TextClassContext.Provider>
@@ -165,24 +170,30 @@ function ContextMenuItem({
 function ContextMenuCheckboxItem({
   className,
   children,
+  inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   return (
     <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
       <ContextMenuPrimitive.CheckboxItem
-        className={cn(
-          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3 active:bg-accent",
-          props.disabled && "opacity-50",
-          className
-        )}
+        className={(state) =>
+          cn(
+            "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3",
+            state.highlighted && "bg-accent",
+            state.disabled && "opacity-50",
+            inset && "pl-9.5",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       >
         <View className="absolute right-2 size-4 items-center justify-center">
-          <ContextMenuPrimitive.ItemIndicator>
+          <ContextMenuPrimitive.CheckboxItemIndicator>
             <Icon as={CheckIcon} className="size-4 text-foreground" />
-          </ContextMenuPrimitive.ItemIndicator>
+          </ContextMenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
       </ContextMenuPrimitive.CheckboxItem>
@@ -193,24 +204,30 @@ function ContextMenuCheckboxItem({
 function ContextMenuRadioItem({
   className,
   children,
+  inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   return (
     <TextClassContext.Provider value="select-none text-sm font-medium text-popover-foreground">
       <ContextMenuPrimitive.RadioItem
-        className={cn(
-          "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3 active:bg-accent",
-          props.disabled && "opacity-50",
-          className
-        )}
+        className={(state) =>
+          cn(
+            "group relative flex-row items-center gap-2.5 rounded-2xl py-2 pr-8 pl-3",
+            state.highlighted && "bg-accent",
+            state.disabled && "opacity-50",
+            inset && "pl-9.5",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       >
         <View className="absolute right-2 size-4 items-center justify-center">
-          <ContextMenuPrimitive.ItemIndicator>
+          <ContextMenuPrimitive.RadioItemIndicator>
             <Icon as={CheckIcon} className="size-4 text-foreground" />
-          </ContextMenuPrimitive.ItemIndicator>
+          </ContextMenuPrimitive.RadioItemIndicator>
         </View>
         {children}
       </ContextMenuPrimitive.RadioItem>
@@ -222,17 +239,18 @@ function ContextMenuLabel({
   className,
   inset,
   ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Label> & {
-  className?: string
+}: React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel> & {
   inset?: boolean
 }) {
   return (
-    <ContextMenuPrimitive.Label
-      className={cn(
-        "px-3 py-2.5 text-xs text-muted-foreground",
-        inset && "pl-9.5",
-        className
-      )}
+    <ContextMenuPrimitive.GroupLabel
+      className={(state) =>
+        cn(
+          "px-3 py-2.5 text-xs text-muted-foreground",
+          inset && "pl-9.5",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     />
   )
@@ -244,7 +262,12 @@ function ContextMenuSeparator({
 }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {
   return (
     <ContextMenuPrimitive.Separator
-      className={cn("-mx-1.5 my-1.5 h-px bg-border/50", className)}
+      className={(state) =>
+        cn(
+          "-mx-1.5 my-1.5 h-px bg-border/50",
+          resolveClassName(className, state)
+        )
+      }
       {...props}
     />
   )

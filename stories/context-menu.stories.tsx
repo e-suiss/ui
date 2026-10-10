@@ -31,7 +31,7 @@ function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
   const [showUrls, setShowUrls] = React.useState(false)
   const [person, setPerson] = React.useState("pedro")
   return (
-    <ContextMenu relativeTo="trigger" defaultOpen={defaultOpen}>
+    <ContextMenu defaultOpen={defaultOpen}>
       <TriggerArea />
       <ContextMenuContent className="w-64">
         <ContextMenuItem inset>
@@ -67,24 +67,22 @@ function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
         <ContextMenuCheckboxItem
           checked={showBookmarks}
           onCheckedChange={setShowBookmarks}
-          closeOnPress={false}
         >
           <Text>Show bookmarks</Text>
         </ContextMenuCheckboxItem>
         <ContextMenuCheckboxItem
           checked={showUrls}
           onCheckedChange={setShowUrls}
-          closeOnPress={false}
         >
           <Text>Show full URLs</Text>
         </ContextMenuCheckboxItem>
         <ContextMenuSeparator />
         <ContextMenuRadioGroup value={person} onValueChange={setPerson}>
           <ContextMenuLabel inset>People</ContextMenuLabel>
-          <ContextMenuRadioItem value="pedro" closeOnPress={false}>
+          <ContextMenuRadioItem value="pedro">
             <Text>Pedro Duarte</Text>
           </ContextMenuRadioItem>
-          <ContextMenuRadioItem value="colm" closeOnPress={false}>
+          <ContextMenuRadioItem value="colm">
             <Text>Colm Tuite</Text>
           </ContextMenuRadioItem>
         </ContextMenuRadioGroup>
@@ -109,7 +107,7 @@ export const Default: Story = {
 export const Simple: Story = {
   render: () => (
     <View>
-      <ContextMenu relativeTo="trigger">
+      <ContextMenu>
         <TriggerArea />
         <ContextMenuContent className="w-48">
           <ContextMenuItem>

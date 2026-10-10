@@ -1,6 +1,7 @@
 import { cn } from "cn"
 import { CheckIcon } from "phosphor-react-native"
 import * as CheckboxPrimitive from "@/components/primitives/checkbox"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 
 const DEFAULT_HIT_SLOP = 24
@@ -18,13 +19,15 @@ function Checkbox({
 }) {
   return (
     <CheckboxPrimitive.Root
-      className={cn(
-        "size-4 shrink-0 items-center justify-center rounded-[5px] border border-transparent bg-input-90",
-        "overflow-hidden",
-        props.checked && cn("border-primary bg-primary", checkedClassName),
-        props.disabled && "opacity-50",
-        className
-      )}
+      className={(state) =>
+        cn(
+          "size-4 shrink-0 items-center justify-center rounded-[5px] border border-transparent bg-input-90",
+          "overflow-hidden",
+          state.checked && cn("border-primary bg-primary", checkedClassName),
+          state.disabled && "opacity-50",
+          resolveClassName(className, state)
+        )
+      }
       hitSlop={DEFAULT_HIT_SLOP}
       {...props}
     >

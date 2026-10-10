@@ -1,5 +1,6 @@
 import * as React from "react"
-import { type PressableStateCallbackType, StyleSheet } from "react-native"
+import { Pressable, StyleSheet } from "react-native"
+import * as TogglePrimitive from "@/components/primitives/toggle"
 import * as ToggleGroupPrimitive from "@/components/primitives/toggle-group"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
@@ -32,7 +33,13 @@ function ToggleGroup({
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
   ToggleVariantProps) {
   return (
-    <ToggleGroupPrimitive.Root style={[styles.root, style]} {...props}>
+    <ToggleGroupPrimitive.Root
+      style={(state) => [
+        styles.root,
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    >
       <ToggleGroupContext.Provider value={{ variant, size }}>
         {children}
       </ToggleGroupContext.Provider>
@@ -58,41 +65,43 @@ function ToggleGroupItem({
   isFirst,
   isLast,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
+}: React.ComponentProps<typeof TogglePrimitive.Root> &
   ToggleVariantProps & {
     isFirst?: boolean
     isLast?: boolean
   }) {
   const context = useToggleGroupContext()
-  const { value } = ToggleGroupPrimitive.useRootContext()
   const { colors } = useTheme()
 
   return (
     <TextStyleContext.Provider value={toggleTextStyle(colors)}>
-      <ToggleGroupPrimitive.Item
-        style={(state: PressableStateCallbackType) => [
-          toggleStyle(
-            {
-              variant: context.variant || variant,
-              size: context.size || size,
-            },
-            colors,
-            {
-              pressed: state.pressed,
-              selected: ToggleGroupPrimitive.utils.getIsSelected(
-                value,
-                props.value
+      <TogglePrimitive.Root
+        render={(renderProps, state) => (
+          <Pressable
+            {...renderProps}
+            style={(pressable) => [
+              toggleStyle(
+                {
+                  variant: context.variant || variant,
+                  size: context.size || size,
+                },
+                colors,
+                {
+                  pressed: pressable.pressed,
+                  selected: state.pressed,
+                  disabled: state.disabled,
+                }
               ),
-              disabled: props.disabled,
-            }
-          ),
-          styles.item,
-          typeof style === "function" ? style(state) : style,
-        ]}
+              styles.item,
+              renderProps.style,
+              typeof style === "function" ? style(state) : style,
+            ]}
+          />
+        )}
         {...props}
       >
         {children}
-      </ToggleGroupPrimitive.Item>
+      </TogglePrimitive.Root>
     </TextStyleContext.Provider>
   )
 }

@@ -1,73 +1,179 @@
 import type * as React from "react"
 import type {
-  Image,
-  Pressable,
+  GestureResponderEvent,
+  HostInstance,
+  NativeSyntheticEvent,
   StyleProp,
-  Text,
-  View,
   ViewStyle,
 } from "react-native"
 
-type ComponentPropsWithAsChild<T extends React.ElementType> =
-  React.ComponentPropsWithoutRef<T> & { asChild?: boolean }
-
-type ViewRef = React.ComponentRef<typeof View>
-type PressableRef = React.ComponentRef<typeof Pressable>
-type TextRef = React.ComponentRef<typeof Text>
-type ImageRef = React.ComponentRef<typeof Image>
-
-type SlottableViewProps = ComponentPropsWithAsChild<typeof View>
-type SlottablePressableProps = ComponentPropsWithAsChild<typeof Pressable>
-type SlottableTextProps = ComponentPropsWithAsChild<typeof Text>
-type SlottableImageProps = ComponentPropsWithAsChild<typeof Image>
-
-type Side = "top" | "bottom"
+type Side = "top" | "bottom" | "left" | "right"
 type Align = "start" | "center" | "end"
+type Orientation = "horizontal" | "vertical"
 
-interface Insets {
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+type ComponentRenderFn<Props, State> = (
+  props: Props,
+  state: State
+) => React.ReactElement<unknown>
+
+type RenderProp<Props, State> =
+  | React.ReactElement
+  | ComponentRenderFn<Props, State>
+
+type ClassNameProp<State> =
+  | string
+  | ((state: State) => string | undefined)
+  | undefined
+
+type StyleOf<ElementType extends React.ElementType> =
+  React.ComponentProps<ElementType> extends { style?: infer S }
+    ? Exclude<S, (...args: never[]) => unknown>
+    : StyleProp<ViewStyle>
+
+type StyleValue<Style, State> =
+  | Style
+  | ((state: State) => Style | undefined)
+  | undefined
+
+type HostProps<ElementType extends React.ElementType> = Omit<
+  React.ComponentPropsWithRef<ElementType>,
+  "className" | "style"
+> & {
+  className?: string | undefined
+  style?: StyleOf<ElementType> | undefined
 }
 
-interface ForceMountable {
-  forceMount?: true | undefined
+type BaseUIComponentProps<
+  ElementType extends React.ElementType,
+  State,
+  RenderFunctionProps = HostProps<ElementType>,
+> = Omit<React.ComponentPropsWithRef<ElementType>, "className" | "style"> & {
+  className?: ClassNameProp<State>
+  style?: StyleValue<StyleOf<ElementType>, State>
+  render?: RenderProp<RenderFunctionProps, State> | undefined
 }
 
-interface PositionedContentProps extends ForceMountable {
-  style?: StyleProp<ViewStyle>
-  side?: Side
-  align?: Align
-  sideOffset?: number
-  alignOffset?: number
-  avoidCollisions?: boolean
-  insets?: Insets
-  disablePositioningStyle?: boolean
+type ChangeEvent =
+  | GestureResponderEvent
+  | NativeSyntheticEvent<unknown>
+  | undefined
+
+type BaseUIChangeEventDetails<
+  Reason extends string = string,
+  CustomProperties extends object = Record<never, never>,
+> = {
+  reason: Reason
+  event: ChangeEvent
+  cancel: () => void
+  readonly isCanceled: boolean
+  trigger: HostInstance | undefined
+} & CustomProperties
+
+type BaseUIGenericEventDetails<
+  Reason extends string = string,
+  CustomProperties extends object = Record<never, never>,
+> = {
+  reason: Reason
+  event: ChangeEvent
+} & CustomProperties
+
+type Padding =
+  | number
+  | {
+      top?: number
+      right?: number
+      bottom?: number
+      left?: number
+    }
+
+interface OffsetFunctionData {
+  side: Side
+  align: Align
+  anchor: { width: number; height: number }
+  positioner: { width: number; height: number }
 }
 
-interface TriggerRefMethods {
-  open: () => void
-  close: () => void
+type OffsetFunction = (data: OffsetFunctionData) => number
+
+interface SideFlipMode {
+  side?: "flip" | "none" | undefined
+  align?: "flip" | "shift" | "none" | undefined
+  fallbackAxisSide?: "start" | "end" | "none" | undefined
 }
 
-type TriggerRef = PressableRef & Partial<TriggerRefMethods>
+interface SideShiftMode {
+  side?: "shift" | "none" | undefined
+  align?: "shift" | "none" | undefined
+  fallbackAxisSide?: "start" | "end" | "none" | undefined
+}
+
+type CollisionAvoidance = SideFlipMode | SideShiftMode
+
+interface AnchorRect {
+  pageX: number
+  pageY: number
+  width: number
+  height: number
+}
+
+interface MeasurableAnchor {
+  measure: (
+    callback: (
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      pageX: number,
+      pageY: number
+    ) => void
+  ) => void
+}
+
+type PositionerAnchor =
+  | AnchorRect
+  | React.RefObject<MeasurableAnchor | null>
+  | null
+  | undefined
+
+interface PositionerParameters {
+  anchor?: PositionerAnchor
+  side?: Side | undefined
+  align?: Align | undefined
+  sideOffset?: number | OffsetFunction | undefined
+  alignOffset?: number | OffsetFunction | undefined
+  collisionPadding?: Padding | undefined
+  collisionAvoidance?: CollisionAvoidance | undefined
+  arrowPadding?: number | undefined
+}
+
+interface PortalParameters {
+  keepMounted?: boolean | undefined
+  hostName?: string | undefined
+}
 
 export type {
   Align,
-  ComponentPropsWithAsChild,
-  ForceMountable,
-  ImageRef,
-  Insets,
-  PositionedContentProps,
-  PressableRef,
+  AnchorRect,
+  BaseUIChangeEventDetails,
+  BaseUIComponentProps,
+  BaseUIGenericEventDetails,
+  ChangeEvent,
+  ClassNameProp,
+  CollisionAvoidance,
+  ComponentRenderFn,
+  HostProps,
+  MeasurableAnchor,
+  OffsetFunction,
+  OffsetFunctionData,
+  Orientation,
+  Padding,
+  PortalParameters,
+  PositionerAnchor,
+  PositionerParameters,
+  RenderProp,
   Side,
-  SlottableImageProps,
-  SlottablePressableProps,
-  SlottableTextProps,
-  SlottableViewProps,
-  TextRef,
-  TriggerRef,
-  TriggerRefMethods,
-  ViewRef,
+  SideFlipMode,
+  SideShiftMode,
+  StyleOf,
+  StyleValue,
 }

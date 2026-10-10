@@ -30,24 +30,24 @@ function Switch({
     <SwitchPrimitives.Root
       style={(state) => [
         styles.root,
-        props.checked
+        state.checked
           ? { borderColor: colors.primary, backgroundColor: colors.primary }
           : { borderColor: "transparent", backgroundColor: colors.inputStrong },
-        props.disabled && styles.disabled,
+        state.disabled && styles.disabled,
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
     >
       <SwitchPrimitives.Thumb
-        style={[
+        style={(state) => [
           styles.thumb,
           {
             backgroundColor: isDark
-              ? props.checked
+              ? state.checked
                 ? colors.primaryForeground
                 : colors.foreground
               : colors.background,
-            transform: [{ translateX: props.checked ? 16 : 0 }],
+            transform: [{ translateX: state.checked ? 16 : 0 }],
           },
         ]}
       />

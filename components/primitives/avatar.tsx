@@ -1,40 +1,33 @@
 import * as React from "react"
-import {
-  type ImageErrorEventData,
-  type ImageLoadEventData,
-  type ImageSourcePropType,
-  type NativeSyntheticEvent,
-  Image as RNImage,
-  View,
-} from "react-native"
-import { Slot } from "./slot"
-import type {
-  ComponentPropsWithAsChild,
-  ImageRef,
-  SlottableViewProps,
-  ViewRef,
-} from "./types"
+import { type ImageSourcePropType, Image as RNImage, View } from "react-native"
+import { useEffectEvent } from "./hooks"
+import type { BaseUIComponentProps } from "./types"
+import { useRender } from "./use-render"
 
-type AvatarStatus = "loading" | "loaded" | "error"
+type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error"
 
-type RootProps = SlottableViewProps & {
-  alt: string
+interface RootState {
+  imageLoadingStatus: ImageLoadingStatus
 }
 
-type ImageProps = Omit<ComponentPropsWithAsChild<typeof RNImage>, "alt"> & {
-  children?: React.ReactNode
-  onLoadingStatusChange?: (status: "loaded" | "error") => void
+type ImageState = RootState
+
+type FallbackState = RootState
+
+type RootProps = BaseUIComponentProps<typeof View, RootState>
+
+type ImageProps = BaseUIComponentProps<typeof RNImage, ImageState> & {
+  onLoadingStatusChange?: ((status: ImageLoadingStatus) => void) | undefined
 }
 
-type FallbackProps = SlottableViewProps
-
-type RootRef = ViewRef
-type FallbackRef = ViewRef
+type FallbackProps = BaseUIComponentProps<typeof View, FallbackState> & {
+  delay?: number | undefined
+}
 
 interface RootContextValue {
-  alt: string
-  status: AvatarStatus
-  setStatus: (status: AvatarStatus) => void
+  imageLoadingStatus: ImageLoadingStatus
+  setImageLoadingStatus: (status: ImageLoadingStatus) => void
+  state: RootState
 }
 
 const RootContext = React.createContext<RootContextValue | null>(null)
@@ -42,27 +35,36 @@ const RootContext = React.createContext<RootContextValue | null>(null)
 function useRootContext() {
   const context = React.useContext(RootContext)
   if (!context) {
-    throw new Error(
-      "Avatar compound components cannot be rendered outside the Avatar component"
-    )
+    throw new Error("Avatar parts must be rendered inside Avatar.Root")
   }
   return context
 }
 
-function Root({
-  asChild,
-  alt,
-  ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const [status, setStatus] = React.useState<AvatarStatus>("error")
-  const value = React.useMemo(() => ({ alt, status, setStatus }), [alt, status])
-  const Component = asChild ? Slot : View
-  return (
-    <RootContext.Provider value={value}>
-      <Component ref={ref} {...props} />
-    </RootContext.Provider>
+function Root({ render, className, style, ref, ...elementProps }: RootProps) {
+  const [imageLoadingStatus, setImageLoadingStatus] =
+    React.useState<ImageLoadingStatus>("idle")
+
+  const state = React.useMemo<RootState>(
+    () => ({ imageLoadingStatus }),
+    [imageLoadingStatus]
   )
+
+  const context = React.useMemo<RootContextValue>(
+    () => ({ imageLoadingStatus, setImageLoadingStatus, state }),
+    [imageLoadingStatus, state]
+  )
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: elementProps,
+  })
+
+  return <RootContext.Provider value={context}>{element}</RootContext.Provider>
 }
 
 Root.displayName = "AvatarRoot"
@@ -76,71 +78,100 @@ function getSourceKey(source: ImageSourcePropType | undefined) {
   return uris.length > 0 ? uris.join("|") : null
 }
 
+const LOADING_STYLE = { position: "absolute", opacity: 0 } as const
+
 function Image({
-  asChild,
-  onLoad: onLoadProp,
-  onError: onErrorProp,
   onLoadingStatusChange,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ImageProps & React.RefAttributes<ImageRef>) {
-  const { alt, status, setStatus } = useRootContext()
-  const sourceKey = getSourceKey(props.source)
+  ...elementProps
+}: ImageProps) {
+  const { imageLoadingStatus, setImageLoadingStatus, state } = useRootContext()
+  const sourceKey = getSourceKey(elementProps.source)
+
+  const updateStatus = useEffectEvent((status: ImageLoadingStatus) => {
+    setImageLoadingStatus(status)
+    onLoadingStatusChange?.(status)
+  })
 
   React.useLayoutEffect(() => {
-    setStatus(sourceKey === null ? "error" : "loading")
-    return () => setStatus("error")
-  }, [sourceKey, setStatus])
+    updateStatus(sourceKey === null ? "error" : "loading")
+    return () => setImageLoadingStatus("idle")
+  }, [sourceKey, updateStatus, setImageLoadingStatus])
 
-  const onLoad = (event: NativeSyntheticEvent<ImageLoadEventData>) => {
-    setStatus("loaded")
-    onLoadingStatusChange?.("loaded")
-    onLoadProp?.(event)
-  }
+  const onLoad = () => updateStatus("loaded")
+  const onError = () => updateStatus("error")
 
-  const onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
-    setStatus("error")
-    onLoadingStatusChange?.("error")
-    onErrorProp?.(event)
-  }
-
-  if (status === "error") return null
-
-  const Component = asChild ? Slot : RNImage
-  return (
-    <Component
-      ref={ref}
-      alt={alt}
-      accessibilityLabel={alt}
-      onLoad={onLoad}
-      onError={onError}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: RNImage,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled:
+      imageLoadingStatus === "loading" || imageLoadingStatus === "loaded",
+    props: [
+      {
+        accessibilityLabel: elementProps.alt,
+        onLoad,
+        onError,
+      },
+      elementProps,
+      imageLoadingStatus === "loaded"
+        ? null
+        : {
+            style: LOADING_STYLE,
+            accessibilityElementsHidden: true,
+            importantForAccessibility: "no-hide-descendants",
+          },
+    ],
+  })
 }
 
 Image.displayName = "AvatarImage"
 
 function Fallback({
-  asChild,
+  delay,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: FallbackProps & React.RefAttributes<FallbackRef>) {
-  const { alt, status } = useRootContext()
-  if (status !== "error") return null
-  const Component = asChild ? Slot : View
-  return <Component ref={ref} role="img" aria-label={alt} {...props} />
+  ...elementProps
+}: FallbackProps) {
+  const { imageLoadingStatus, state } = useRootContext()
+  const [delayPassed, setDelayPassed] = React.useState(delay === undefined)
+
+  React.useEffect(() => {
+    if (delay === undefined) return
+    const timeout = setTimeout(() => setDelayPassed(true), delay)
+    return () => clearTimeout(timeout)
+  }, [delay])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: imageLoadingStatus !== "loaded" && delayPassed,
+    props: elementProps,
+  })
 }
 
 Fallback.displayName = "AvatarFallback"
 
 export type {
-  AvatarStatus,
   FallbackProps,
-  FallbackRef,
+  FallbackState,
+  ImageLoadingStatus,
   ImageProps,
-  ImageRef,
+  ImageState,
+  RootContextValue,
   RootProps,
-  RootRef,
+  RootState,
 }
 export { Fallback, Image, Root, useRootContext }

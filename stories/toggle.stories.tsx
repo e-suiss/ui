@@ -41,7 +41,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => (
     <View className="flex-row">
-      <ToggleDemo aria-label="Toggle bold">
+      <ToggleDemo accessibilityLabel="Toggle bold">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
     </View>
@@ -51,7 +51,7 @@ export const Default: Story = {
 export const Pressed: Story = {
   render: () => (
     <View className="flex-row">
-      <ToggleDemo initial aria-label="Toggle bold">
+      <ToggleDemo initial accessibilityLabel="Toggle bold">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
     </View>
@@ -61,10 +61,10 @@ export const Pressed: Story = {
 export const Variants: Story = {
   render: () => (
     <View className="flex-row gap-2">
-      <ToggleDemo aria-label="Toggle italic">
+      <ToggleDemo accessibilityLabel="Toggle italic">
         <ToggleIcon as={TextItalicIcon} />
       </ToggleDemo>
-      <ToggleDemo variant="outline" aria-label="Toggle italic">
+      <ToggleDemo variant="outline" accessibilityLabel="Toggle italic">
         <ToggleIcon as={TextItalicIcon} />
       </ToggleDemo>
     </View>
@@ -74,13 +74,13 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: () => (
     <View className="flex-row items-center gap-2">
-      <ToggleDemo size="sm" variant="outline" aria-label="Small">
+      <ToggleDemo size="sm" variant="outline" accessibilityLabel="Small">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
-      <ToggleDemo variant="outline" aria-label="Default">
+      <ToggleDemo variant="outline" accessibilityLabel="Default">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
-      <ToggleDemo size="lg" variant="outline" aria-label="Large">
+      <ToggleDemo size="lg" variant="outline" accessibilityLabel="Large">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
     </View>
@@ -90,7 +90,7 @@ export const Sizes: Story = {
 export const WithText: Story = {
   render: () => (
     <View className="flex-row">
-      <ToggleDemo variant="outline" aria-label="Bookmark">
+      <ToggleDemo variant="outline" accessibilityLabel="Bookmark">
         <ToggleIcon as={BookmarkSimpleIcon} />
         <Text>Bookmark</Text>
       </ToggleDemo>
@@ -101,10 +101,15 @@ export const WithText: Story = {
 export const Disabled: Story = {
   render: () => (
     <View className="flex-row gap-2">
-      <ToggleDemo disabled aria-label="Toggle bold">
+      <ToggleDemo disabled accessibilityLabel="Toggle bold">
         <ToggleIcon as={TextBIcon} />
       </ToggleDemo>
-      <ToggleDemo disabled initial variant="outline" aria-label="Toggle italic">
+      <ToggleDemo
+        disabled
+        initial
+        variant="outline"
+        accessibilityLabel="Toggle italic"
+      >
         <ToggleIcon as={TextItalicIcon} />
       </ToggleDemo>
     </View>

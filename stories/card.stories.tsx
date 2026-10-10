@@ -37,7 +37,7 @@ export const Default: Story = {
         <View className="gap-2">
           <Label nativeID="card-email">Email</Label>
           <Input
-            aria-labelledby="card-email"
+            accessibilityLabelledBy="card-email"
             placeholder="m@example.com"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -45,7 +45,7 @@ export const Default: Story = {
         </View>
         <View className="gap-2">
           <Label nativeID="card-password">Password</Label>
-          <Input aria-labelledby="card-password" secureTextEntry />
+          <Input accessibilityLabelledBy="card-password" secureTextEntry />
         </View>
       </CardContent>
       <CardFooter className="flex-col gap-2">

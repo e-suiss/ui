@@ -6,28 +6,33 @@ import {
   type StyleProp,
   StyleSheet,
   Text,
+  type TextStyle,
   View,
   type ViewStyle,
 } from "react-native"
 import { FadeIn, ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
-import * as DropdownMenuPrimitive from "@/components/primitives/dropdown-menu"
+import * as MenuPrimitive from "@/components/primitives/menu"
+import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
-const DropdownMenu = DropdownMenuPrimitive.Root
+const DropdownMenu = MenuPrimitive.Root
 
-const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+const DropdownMenuPortal = MenuPrimitive.Portal
 
-const DropdownMenuGroup = DropdownMenuPrimitive.Group
+const DropdownMenuTrigger = MenuPrimitive.Trigger
 
-const DropdownMenuPortal = DropdownMenuPrimitive.Portal
+const DropdownMenuGroup = MenuPrimitive.Group
 
-const DropdownMenuSub = DropdownMenuPrimitive.Sub
+const DropdownMenuSub = MenuPrimitive.SubmenuRoot
 
-const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
+const DropdownMenuRadioGroup = MenuPrimitive.RadioGroup
+
+const FullWindowOverlay =
+  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
   itemText: { ...fontSize.sm, fontWeight: "500", userSelect: "none" },
@@ -88,20 +93,66 @@ const styles = StyleSheet.create({
   shortcut: { marginLeft: "auto", ...fontSize.xs, letterSpacing: 1.2 },
 })
 
+type PositionerProps = React.ComponentProps<typeof MenuPrimitive.Positioner>
+
+function DropdownMenuContent({
+  style,
+  align = "start",
+  alignOffset = 0,
+  side = "bottom",
+  sideOffset = 4,
+  portalHost,
+  ...props
+}: React.ComponentProps<typeof MenuPrimitive.Popup> &
+  Pick<PositionerProps, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    portalHost?: string
+  }) {
+  const { colors } = useTheme()
+  return (
+    <MenuPrimitive.Portal hostName={portalHost}>
+      <FullWindowOverlay>
+        <MenuPrimitive.Positioner
+          align={align}
+          alignOffset={alignOffset}
+          side={side}
+          sideOffset={sideOffset}
+        >
+          <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
+            <TextStyleContext.Provider
+              value={{ ...fontSize.sm, color: colors.popoverForeground }}
+            >
+              <MenuPrimitive.Popup
+                style={(state) => [
+                  styles.content,
+                  {
+                    borderColor: colors.outline,
+                    backgroundColor: colors.popover,
+                  },
+                  resolveStyle(style, state) as StyleProp<ViewStyle>,
+                ]}
+                {...props}
+              />
+            </TextStyleContext.Provider>
+          </AnimatedView>
+        </MenuPrimitive.Positioner>
+      </FullWindowOverlay>
+    </MenuPrimitive.Portal>
+  )
+}
+
 function DropdownMenuSubTrigger({
   style,
   inset,
   children,
   iconStyle,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
+}: React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger> & {
   children?: React.ReactNode
   iconStyle?: PhosphorIconProps["style"]
   inset?: boolean
 }) {
-  const { open } = DropdownMenuPrimitive.useSubContext()
+  const { open } = MenuPrimitive.useMenuRootContext().floating
   const { colors } = useTheme()
-  const icon = open ? CaretUpIcon : CaretDownIcon
   return (
     <TextStyleContext.Provider
       value={{
@@ -109,24 +160,26 @@ function DropdownMenuSubTrigger({
         color: open ? colors.accentForeground : colors.popoverForeground,
       }}
     >
-      <DropdownMenuPrimitive.SubTrigger
+      <MenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.pressed && { backgroundColor: colors.accent },
-          typeof style === "function" ? style(state) : style,
-          open && { backgroundColor: colors.accent },
+          (state.highlighted || state.open) && {
+            backgroundColor: colors.accent,
+          },
+          state.disabled && styles.disabled,
           inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         {children}
         <Icon
-          as={icon}
+          as={open ? CaretUpIcon : CaretDownIcon}
           size={16}
           color={colors.foreground}
           style={[styles.subTriggerIcon, iconStyle]}
         />
-      </DropdownMenuPrimitive.SubTrigger>
+      </MenuPrimitive.SubmenuTrigger>
     </TextStyleContext.Provider>
   )
 }
@@ -134,15 +187,15 @@ function DropdownMenuSubTrigger({
 function DropdownMenuSubContent({
   style,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
+}: React.ComponentProps<typeof MenuPrimitive.Popup>) {
   const { colors } = useTheme()
   return (
     <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-      <DropdownMenuPrimitive.SubContent
+      <MenuPrimitive.Popup
         style={(state) => [
           styles.subContent,
           { borderColor: colors.outline, backgroundColor: colors.popover },
-          typeof style === "function" ? style(state) : style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -150,65 +203,12 @@ function DropdownMenuSubContent({
   )
 }
 
-const FullWindowOverlay =
-  Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
-
-function DropdownMenuContent({
-  style,
-  overlayStyle,
-  portalHost,
-  ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Content> & {
-  overlayStyle?: StyleProp<ViewStyle>
-  portalHost?: string
-}) {
-  const { colors } = useTheme()
-  return (
-    <DropdownMenuPrimitive.Portal hostName={portalHost}>
-      <FullWindowOverlay>
-        <DropdownMenuPrimitive.Overlay
-          style={
-            overlayStyle
-              ? StyleSheet.flatten([
-                  StyleSheet.absoluteFill,
-                  overlayStyle as typeof StyleSheet.absoluteFill,
-                ])
-              : StyleSheet.absoluteFill
-          }
-          asChild
-        >
-          <AnimatedView
-            entering={FadeIn.reduceMotion(ReduceMotion.System)}
-            as="Pressable"
-          >
-            <TextStyleContext.Provider
-              value={{ ...fontSize.sm, color: colors.popoverForeground }}
-            >
-              <DropdownMenuPrimitive.Content
-                style={StyleSheet.flatten<ViewStyle>([
-                  styles.content,
-                  {
-                    borderColor: colors.outline,
-                    backgroundColor: colors.popover,
-                  },
-                  style as StyleProp<ViewStyle>,
-                ])}
-                {...props}
-              />
-            </TextStyleContext.Provider>
-          </AnimatedView>
-        </DropdownMenuPrimitive.Overlay>
-      </FullWindowOverlay>
-    </DropdownMenuPrimitive.Portal>
-  )
-}
-
 function DropdownMenuItem({
   style,
   inset,
-  variant,
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
+}: React.ComponentProps<typeof MenuPrimitive.Item> & {
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
@@ -221,17 +221,17 @@ function DropdownMenuItem({
         color: destructive ? colors.destructive : colors.popoverForeground,
       }}
     >
-      <DropdownMenuPrimitive.Item
+      <MenuPrimitive.Item
         style={(state) => [
           styles.item,
-          state.pressed && {
+          state.highlighted && {
             backgroundColor: destructive
               ? colors.destructiveSubtle
               : colors.accent,
           },
-          props.disabled && styles.disabled,
+          state.disabled && styles.disabled,
           inset && styles.inset,
-          typeof style === "function" ? style(state) : style,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       />
@@ -242,31 +242,34 @@ function DropdownMenuItem({
 function DropdownMenuCheckboxItem({
   style,
   children,
+  inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem> & {
+}: React.ComponentProps<typeof MenuPrimitive.CheckboxItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
       value={{ ...styles.itemText, color: colors.popoverForeground }}
     >
-      <DropdownMenuPrimitive.CheckboxItem
+      <MenuPrimitive.CheckboxItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <DropdownMenuPrimitive.ItemIndicator>
+          <MenuPrimitive.CheckboxItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </DropdownMenuPrimitive.ItemIndicator>
+          </MenuPrimitive.CheckboxItemIndicator>
         </View>
         {children}
-      </DropdownMenuPrimitive.CheckboxItem>
+      </MenuPrimitive.CheckboxItem>
     </TextStyleContext.Provider>
   )
 }
@@ -274,31 +277,34 @@ function DropdownMenuCheckboxItem({
 function DropdownMenuRadioItem({
   style,
   children,
+  inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {
+}: React.ComponentProps<typeof MenuPrimitive.RadioItem> & {
   children?: React.ReactNode
+  inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
       value={{ ...styles.itemText, color: colors.popoverForeground }}
     >
-      <DropdownMenuPrimitive.RadioItem
+      <MenuPrimitive.RadioItem
         style={(state) => [
           styles.checkItem,
-          state.pressed && { backgroundColor: colors.accent },
-          props.disabled && styles.disabled,
-          typeof style === "function" ? style(state) : style,
+          state.highlighted && { backgroundColor: colors.accent },
+          state.disabled && styles.disabled,
+          inset && styles.inset,
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}
       >
         <View style={styles.indicator}>
-          <DropdownMenuPrimitive.ItemIndicator>
+          <MenuPrimitive.RadioItemIndicator>
             <Icon as={CheckIcon} size={16} color={colors.foreground} />
-          </DropdownMenuPrimitive.ItemIndicator>
+          </MenuPrimitive.RadioItemIndicator>
         </View>
         {children}
-      </DropdownMenuPrimitive.RadioItem>
+      </MenuPrimitive.RadioItem>
     </TextStyleContext.Provider>
   )
 }
@@ -307,17 +313,17 @@ function DropdownMenuLabel({
   style,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
+}: React.ComponentProps<typeof MenuPrimitive.GroupLabel> & {
   inset?: boolean
 }) {
   const { colors } = useTheme()
   return (
-    <DropdownMenuPrimitive.Label
-      style={[
+    <MenuPrimitive.GroupLabel
+      style={(state) => [
         styles.label,
         { color: colors.mutedForeground },
         inset && styles.inset,
-        style,
+        resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
     />
@@ -327,14 +333,14 @@ function DropdownMenuLabel({
 function DropdownMenuSeparator({
   style,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
+}: React.ComponentProps<typeof MenuPrimitive.Separator>) {
   const { colors } = useTheme()
   return (
-    <DropdownMenuPrimitive.Separator
-      style={[
+    <MenuPrimitive.Separator
+      style={(state) => [
         styles.separator,
         { backgroundColor: colors.borderSubtle },
-        style,
+        resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     />

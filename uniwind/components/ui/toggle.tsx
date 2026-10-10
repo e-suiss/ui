@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 import * as TogglePrimitive from "@/components/primitives/toggle"
+import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
@@ -35,15 +36,20 @@ function Toggle({
   VariantProps<typeof toggleVariants>) {
   return (
     <TextClassContext.Provider
-      value={cn("text-sm font-medium text-foreground", className)}
+      value={cn(
+        "text-sm font-medium text-foreground",
+        typeof className === "string" ? className : undefined
+      )}
     >
       <TogglePrimitive.Root
-        className={cn(
-          toggleVariants({ variant, size }),
-          props.disabled && "opacity-50",
-          props.pressed && "bg-muted",
-          className
-        )}
+        className={(state) =>
+          cn(
+            toggleVariants({ variant, size }),
+            state.disabled && "opacity-50",
+            state.pressed && "bg-muted",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       />
     </TextClassContext.Provider>

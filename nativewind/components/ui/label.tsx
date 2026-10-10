@@ -1,5 +1,6 @@
 import { cn } from "cn"
 import * as LabelPrimitive from "@/components/primitives/label"
+import { resolveClassName } from "@/components/primitives/use-render"
 
 function Label({
   className,
@@ -12,18 +13,25 @@ function Label({
 }: React.ComponentProps<typeof LabelPrimitive.Text>) {
   return (
     <LabelPrimitive.Root
-      className={cn(
-        "flex select-none flex-row items-center gap-2",
-        disabled && "opacity-50"
-      )}
+      className={(state) =>
+        cn(
+          "flex select-none flex-row items-center gap-2",
+          state.disabled && "opacity-50"
+        )
+      }
       onPress={onPress}
       onLongPress={onLongPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      disabled={disabled}
+      disabled={disabled ?? undefined}
     >
       <LabelPrimitive.Text
-        className={cn("text-foreground text-sm font-medium", className)}
+        className={(state) =>
+          cn(
+            "text-foreground text-sm font-medium",
+            resolveClassName(className, state)
+          )
+        }
         {...props}
       />
     </LabelPrimitive.Root>

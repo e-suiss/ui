@@ -1,331 +1,431 @@
 import * as React from "react"
 import {
   type GestureResponderEvent,
+  type HostInstance,
   Pressable,
-  Text as RNText,
+  Text,
   View,
+  type ViewStyle,
 } from "react-native"
+import { REASONS } from "./event-details"
 import {
-  useAccessibilityFocus,
-  useAugmentedRef,
-  useBackHandler,
-  useComposedRefs,
-  useControllableState,
-  useRestoreAccessibilityFocus,
-} from "./hooks"
-import { Portal as PortalPrimitive } from "./portal"
-import { Slot } from "./slot"
+  FloatingPortal,
+  type FloatingRootActions,
+  type FloatingRootValue,
+  type FocusTarget,
+  useFloatingPopup,
+  useFloatingRoot,
+  useFloatingTrigger,
+} from "./floating-root"
 import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableTextProps,
-  SlottableViewProps,
-  TextRef,
-  TriggerRef,
-  ViewRef,
+  BaseUIChangeEventDetails,
+  BaseUIComponentProps,
+  PortalParameters,
 } from "./types"
+import { useRender } from "./use-render"
 
-type RootProps = SlottableViewProps & {
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
+type OpenChangeReason =
+  | typeof REASONS.triggerPress
+  | typeof REASONS.outsidePress
+  | typeof REASONS.closePress
+  | typeof REASONS.backPress
+  | typeof REASONS.accessibilityEscape
+  | typeof REASONS.imperativeAction
+  | typeof REASONS.none
+
+type ChangeEventDetails = BaseUIChangeEventDetails<OpenChangeReason>
+
+type RootActions = FloatingRootActions
+
+interface RootProps {
+  open?: boolean | undefined
+  defaultOpen?: boolean | undefined
+  onOpenChange?:
+    | ((open: boolean, eventDetails: ChangeEventDetails) => void)
+    | undefined
+  onOpenChangeComplete?: ((open: boolean) => void) | undefined
+  actionsRef?: React.RefObject<RootActions | null> | undefined
+  modal?: boolean | undefined
+  disablePointerDismissal?: boolean | undefined
+  children?: React.ReactNode
 }
 
-interface PortalProps extends ForceMountable {
-  children: React.ReactNode
-  hostName?: string
-}
-
-type OverlayProps = ForceMountable &
-  SlottablePressableProps & {
-    closeOnPress?: boolean
-  }
-
-type TriggerProps = SlottablePressableProps
-type ContentProps = ForceMountable & SlottableViewProps
-type CloseProps = SlottablePressableProps
-type TitleProps = SlottableTextProps
-type DescriptionProps = SlottableTextProps
-
-type RootRef = ViewRef
-type OverlayRef = PressableRef
-type ContentRef = ViewRef
-type CloseRef = PressableRef
-type TitleRef = TextRef
-type DescriptionRef = TextRef
-
-interface RootContextValue {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  nativeID: string
-  titleID: string
-  descriptionID: string
+interface DialogRootContextValue {
+  root: FloatingRootValue
+  role: "dialog" | "alertdialog"
+  disablePointerDismissal: boolean
+  nested: boolean
+  titleId: string
+  descriptionId: string
+  titleRef: React.RefObject<HostInstance | null>
   hasTitle: boolean
   registerTitle: () => () => void
 }
 
-const RootContext = React.createContext<RootContextValue | null>(null)
+const DialogRootContext = React.createContext<DialogRootContextValue | null>(
+  null
+)
 
-function useRootContext() {
-  const context = React.useContext(RootContext)
+function useDialogRootContext(componentName = "Dialog part") {
+  const context = React.useContext(DialogRootContext)
   if (!context) {
-    throw new Error(
-      "Dialog compound components cannot be rendered outside the Dialog component"
-    )
+    throw new Error(`${componentName} must be rendered inside Dialog.Root`)
   }
   return context
 }
 
-function Root({
-  asChild,
-  open: openProp,
-  defaultOpen,
-  onOpenChange: onOpenChangeProp,
-  ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const nativeID = React.useId()
-  const [titleCount, setTitleCount] = React.useState(0)
-  const [open = false, setOpen] = useControllableState({
-    prop: openProp,
-    defaultProp: defaultOpen,
-    onChange: onOpenChangeProp,
-  })
+interface UseDialogRootParameters extends Omit<RootProps, "children"> {
+  role: "dialog" | "alertdialog"
+}
 
-  const onOpenChange = React.useCallback(
-    (value: boolean) => setOpen(value),
-    [setOpen]
-  )
+function useDialogRoot({
+  role,
+  modal = true,
+  disablePointerDismissal = false,
+  open,
+  defaultOpen,
+  onOpenChange,
+  onOpenChangeComplete,
+  actionsRef,
+}: UseDialogRootParameters): DialogRootContextValue {
+  const parent = React.useContext(DialogRootContext)
+  const root = useFloatingRoot<OpenChangeReason>({
+    open,
+    defaultOpen,
+    onOpenChange,
+    onOpenChangeComplete,
+    actionsRef,
+    modal,
+  })
+  const titleRef = React.useRef<HostInstance>(null)
+  const [titleCount, setTitleCount] = React.useState(0)
 
   const registerTitle = React.useCallback(() => {
     setTitleCount((count) => count + 1)
     return () => setTitleCount((count) => count - 1)
   }, [])
 
-  const value = React.useMemo<RootContextValue>(
+  const nested = parent !== null
+  const hasTitle = titleCount > 0
+
+  return React.useMemo<DialogRootContextValue>(
     () => ({
-      open,
-      onOpenChange,
-      nativeID,
-      titleID: `${nativeID}_title`,
-      descriptionID: `${nativeID}_description`,
-      hasTitle: titleCount > 0,
+      root,
+      role,
+      disablePointerDismissal,
+      nested,
+      titleId: `${root.id}-title`,
+      descriptionId: `${root.id}-description`,
+      titleRef,
+      hasTitle,
       registerTitle,
     }),
-    [open, onOpenChange, nativeID, titleCount, registerTitle]
+    [root, role, disablePointerDismissal, nested, hasTitle, registerTitle]
   )
+}
 
-  const Component = asChild ? Slot : View
+function Root({ children, ...parameters }: RootProps) {
+  const context = useDialogRoot({ ...parameters, role: "dialog" })
   return (
-    <RootContext.Provider value={value}>
-      <Component ref={ref} {...props} />
-    </RootContext.Provider>
+    <DialogRootContext.Provider value={context}>
+      {children}
+    </DialogRootContext.Provider>
   )
 }
 
 Root.displayName = "DialogRoot"
 
+interface TriggerState {
+  open: boolean
+  disabled: boolean
+}
+
+type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+
 function Trigger({
-  asChild,
-  onPress: onPressProp,
-  disabled,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: TriggerProps & React.RefAttributes<TriggerRef>) {
-  const { open, onOpenChange } = useRootContext()
-  const augmentedRef = useAugmentedRef<TriggerRef>({
+  disabled,
+  ...elementProps
+}: TriggerProps) {
+  const { root } = useDialogRootContext("DialogTrigger")
+  const trigger = useFloatingTrigger({
+    root,
     ref,
-    methods: {
-      open: () => onOpenChange(true),
-      close: () => onOpenChange(false),
-    },
+    disabled: disabled ?? undefined,
   })
-  useRestoreAccessibilityFocus(open, augmentedRef)
-
-  function onPress(event: GestureResponderEvent) {
-    if (disabled) return
-    onOpenChange(!open)
-    onPressProp?.(event)
-  }
-
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={augmentedRef}
-      role="button"
-      aria-disabled={disabled ?? undefined}
-      accessibilityState={{ disabled: disabled ?? false }}
-      disabled={disabled ?? undefined}
-      onPress={onPress}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state: trigger.state,
+    ref: trigger.ref,
+    props: [trigger.props, elementProps],
+  })
 }
 
 Trigger.displayName = "DialogTrigger"
 
-function Portal({ forceMount, hostName, children }: PortalProps) {
-  const value = useRootContext()
+interface PortalProps extends PortalParameters {
+  children?: React.ReactNode
+}
 
-  if (!forceMount && !value.open) return null
-
+function Portal({ children, keepMounted, hostName }: PortalProps) {
+  const context = useDialogRootContext("DialogPortal")
   return (
-    <PortalPrimitive hostName={hostName} name={`${value.nativeID}_portal`}>
-      <RootContext.Provider value={value}>{children}</RootContext.Provider>
-    </PortalPrimitive>
+    <FloatingPortal
+      root={context.root}
+      keepMounted={keepMounted}
+      hostName={hostName}
+    >
+      <DialogRootContext.Provider value={context}>
+        {children}
+      </DialogRootContext.Provider>
+    </FloatingPortal>
   )
 }
 
 Portal.displayName = "DialogPortal"
 
-function Overlay({
-  asChild,
-  forceMount,
-  closeOnPress = true,
-  onPress: onPressProp,
-  ref,
-  ...props
-}: OverlayProps & React.RefAttributes<OverlayRef>) {
-  const { open, onOpenChange } = useRootContext()
-
-  function onPress(event: GestureResponderEvent) {
-    if (closeOnPress) onOpenChange(false)
-    onPressProp?.(event)
-  }
-
-  if (!forceMount && !open) return null
-
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return <Component ref={ref} accessible={false} onPress={onPress} {...props} />
+interface BackdropState {
+  open: boolean
 }
 
-Overlay.displayName = "DialogOverlay"
+type BackdropProps = BaseUIComponentProps<typeof Pressable, BackdropState>
+
+function Backdrop({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: BackdropProps) {
+  const { root, disablePointerDismissal } =
+    useDialogRootContext("DialogBackdrop")
+  const { open, setOpen } = root
+
+  const onPress = React.useCallback(
+    (event: GestureResponderEvent) => {
+      if (disablePointerDismissal) return
+      setOpen(false, REASONS.outsidePress, event)
+    },
+    [disablePointerDismissal, setOpen]
+  )
+
+  const state = React.useMemo<BackdropState>(() => ({ open }), [open])
+
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    enabled: open,
+    props: [
+      { accessible: false, importantForAccessibility: "no", onPress },
+      elementProps,
+    ],
+  })
+}
+
+Backdrop.displayName = "DialogBackdrop"
+
+interface PopupState {
+  open: boolean
+  nested: boolean
+}
+
+type PopupProps = BaseUIComponentProps<typeof View, PopupState> & {
+  initialFocus?: FocusTarget | undefined
+  finalFocus?: FocusTarget | undefined
+}
+
+const HIDDEN_STYLE: ViewStyle = { display: "none" }
 
 function claimResponder() {
   return true
 }
 
-function Content({
-  asChild,
-  forceMount,
+function Popup({
+  initialFocus,
+  finalFocus,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ContentProps & React.RefAttributes<ContentRef>) {
-  const { open, onOpenChange, titleID, hasTitle } = useRootContext()
-  const focusRef = useAccessibilityFocus<ContentRef>(open && !hasTitle)
-  const composedRef = useComposedRefs<ContentRef>(ref, focusRef)
+  ...elementProps
+}: PopupProps) {
+  const { root, role, nested, titleId, titleRef, hasTitle } =
+    useDialogRootContext("DialogPopup")
+  const { open } = root
+  const popup = useFloatingPopup({
+    root,
+    ref,
+    role,
+    initialFocus: initialFocus ?? titleRef,
+    finalFocus,
+  })
 
-  const close = React.useCallback(() => onOpenChange(false), [onOpenChange])
-  useBackHandler(open, close)
-
-  if (!forceMount && !open) return null
-
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={composedRef}
-      role="dialog"
-      aria-modal
-      accessibilityViewIsModal
-      aria-labelledby={hasTitle ? titleID : undefined}
-      onAccessibilityEscape={close}
-      onStartShouldSetResponder={claimResponder}
-      {...props}
-    />
+  const state = React.useMemo<PopupState>(
+    () => ({ open, nested }),
+    [open, nested]
   )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref: popup.ref,
+    props: [
+      popup.props,
+      {
+        accessibilityLabelledBy: hasTitle ? titleId : undefined,
+        onStartShouldSetResponder: claimResponder,
+      },
+      elementProps,
+      open ? undefined : { style: HIDDEN_STYLE },
+    ],
+  })
 }
 
-Content.displayName = "DialogContent"
+Popup.displayName = "DialogPopup"
 
-function Close({
-  asChild,
-  onPress: onPressProp,
-  disabled,
-  ref,
-  ...props
-}: CloseProps & React.RefAttributes<CloseRef>) {
-  const { onOpenChange } = useRootContext()
+type TitleState = Record<never, never>
 
-  function onPress(event: GestureResponderEvent) {
-    if (disabled) return
-    onOpenChange(false)
-    onPressProp?.(event)
-  }
+type TitleProps = BaseUIComponentProps<typeof Text, TitleState>
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={ref}
-      role="button"
-      aria-disabled={disabled ?? undefined}
-      accessibilityState={{ disabled: disabled ?? false }}
-      disabled={disabled ?? undefined}
-      onPress={onPress}
-      {...props}
-    />
-  )
-}
+const EMPTY_STATE: TitleState = {}
 
-Close.displayName = "DialogClose"
-
-function Title({
-  asChild,
-  ref,
-  ...props
-}: TitleProps & React.RefAttributes<TitleRef>) {
-  const { open, titleID, registerTitle } = useRootContext()
-  const focusRef = useAccessibilityFocus<TitleRef>(open)
-  const composedRef = useComposedRefs<TitleRef>(ref, focusRef)
+function Title({ render, className, style, ref, ...elementProps }: TitleProps) {
+  const { titleId, titleRef, registerTitle } =
+    useDialogRootContext("DialogTitle")
 
   React.useLayoutEffect(() => registerTitle(), [registerTitle])
 
-  const Component = asChild ? Slot : RNText
-  return (
-    <Component ref={composedRef} role="heading" nativeID={titleID} {...props} />
-  )
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state: EMPTY_STATE,
+    ref: [ref, titleRef],
+    props: [{ role: "heading", nativeID: titleId }, elementProps],
+  })
 }
 
 Title.displayName = "DialogTitle"
 
+type DescriptionState = Record<never, never>
+
+type DescriptionProps = BaseUIComponentProps<typeof Text, DescriptionState>
+
 function Description({
-  asChild,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: DescriptionProps & React.RefAttributes<DescriptionRef>) {
-  const { descriptionID } = useRootContext()
-  const Component = asChild ? Slot : RNText
-  return <Component ref={ref} nativeID={descriptionID} {...props} />
+  ...elementProps
+}: DescriptionProps) {
+  const { descriptionId } = useDialogRootContext("DialogDescription")
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state: EMPTY_STATE,
+    ref,
+    props: [{ nativeID: descriptionId }, elementProps],
+  })
 }
 
 Description.displayName = "DialogDescription"
 
+interface CloseState {
+  disabled: boolean
+}
+
+type CloseProps = BaseUIComponentProps<typeof Pressable, CloseState>
+
+function Close({
+  render,
+  className,
+  style,
+  ref,
+  disabled: disabledProp,
+  ...elementProps
+}: CloseProps) {
+  const { root } = useDialogRootContext("DialogClose")
+  const { setOpen } = root
+  const disabled = disabledProp ?? false
+
+  const onPress = React.useCallback(
+    (event: GestureResponderEvent) => {
+      if (disabled) return
+      setOpen(false, REASONS.closePress, event)
+    },
+    [disabled, setOpen]
+  )
+
+  const state = React.useMemo<CloseState>(() => ({ disabled }), [disabled])
+
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        role: "button",
+        accessibilityState: { disabled },
+        disabled: disabled || undefined,
+        onPress,
+      },
+      elementProps,
+    ],
+  })
+}
+
+Close.displayName = "DialogClose"
+
 export type {
+  BackdropProps,
+  BackdropState,
+  ChangeEventDetails,
   CloseProps,
-  CloseRef,
-  ContentProps,
-  ContentRef,
+  CloseState,
   DescriptionProps,
-  DescriptionRef,
-  OverlayProps,
-  OverlayRef,
+  DescriptionState,
+  DialogRootContextValue,
+  OpenChangeReason,
+  PopupProps,
+  PopupState,
   PortalProps,
-  RootContextValue,
+  RootActions,
   RootProps,
-  RootRef,
   TitleProps,
-  TitleRef,
+  TitleState,
   TriggerProps,
-  TriggerRef,
+  TriggerState,
+  UseDialogRootParameters,
 }
 export {
+  Backdrop,
   Close,
-  Content,
   Description,
-  Overlay,
+  DialogRootContext,
+  Popup,
   Portal,
   Root,
   Title,
   Trigger,
-  useRootContext,
+  useDialogRoot,
+  useDialogRootContext,
 }

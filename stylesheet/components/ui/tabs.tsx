@@ -1,4 +1,4 @@
-import { type PressableStateCallbackType, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import * as TabsPrimitive from "@/components/primitives/tabs"
 import { TextStyleContext } from "@/components/ui/text"
 import { fontSize, useTheme } from "@/components/ui/theme"
@@ -32,7 +32,15 @@ function Tabs({
   style,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
-  return <TabsPrimitive.Root style={[styles.root, style]} {...props} />
+  return (
+    <TabsPrimitive.Root
+      style={(state) => [
+        styles.root,
+        typeof style === "function" ? style(state) : style,
+      ]}
+      {...props}
+    />
+  )
 }
 
 function TabsList({
@@ -42,7 +50,11 @@ function TabsList({
   const { colors } = useTheme()
   return (
     <TabsPrimitive.List
-      style={[styles.list, { backgroundColor: colors.muted }, style]}
+      style={(state) => [
+        styles.list,
+        { backgroundColor: colors.muted },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     />
   )
@@ -51,7 +63,7 @@ function TabsList({
 function TabsTrigger({
   style,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+}: React.ComponentProps<typeof TabsPrimitive.Tab>) {
   const { value } = TabsPrimitive.useRootContext()
   const { colors, isDark } = useTheme()
   const isActive = value === props.value
@@ -67,11 +79,11 @@ function TabsTrigger({
             : colors.foregroundSubtle,
       }}
     >
-      <TabsPrimitive.Trigger
-        style={(state: PressableStateCallbackType) => [
+      <TabsPrimitive.Tab
+        style={(state) => [
           styles.trigger,
-          props.disabled && styles.disabled,
-          isActive && {
+          state.disabled && styles.disabled,
+          state.active && {
             backgroundColor: isDark ? colors.inputSubtle : colors.background,
           },
           typeof style === "function" ? style(state) : style,
@@ -82,10 +94,8 @@ function TabsTrigger({
   )
 }
 
-function TabsContent(
-  props: React.ComponentProps<typeof TabsPrimitive.Content>
-) {
-  return <TabsPrimitive.Content {...props} />
+function TabsContent(props: React.ComponentProps<typeof TabsPrimitive.Panel>) {
+  return <TabsPrimitive.Panel {...props} />
 }
 
 export { Tabs, TabsContent, TabsList, TabsTrigger }

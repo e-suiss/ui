@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
 
 function Progress({
   style,
-  value,
   indicatorStyle,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root> & {
@@ -33,24 +32,24 @@ function Progress({
   const { colors } = useTheme()
   return (
     <ProgressPrimitive.Root
-      style={[styles.root, { backgroundColor: colors.muted }, style]}
+      style={(state) => [
+        styles.root,
+        { backgroundColor: colors.muted },
+        typeof style === "function" ? style(state) : style,
+      ]}
       {...props}
     >
-      <Indicator value={value} style={indicatorStyle} />
+      <Indicator style={indicatorStyle} />
     </ProgressPrimitive.Root>
   )
 }
 
 export { Progress }
 
-type IndicatorProps = {
-  value: number | undefined | null
-  style?: StyleProp<ViewStyle>
-}
-
-function Indicator({ value, style }: IndicatorProps) {
+function Indicator({ style }: { style?: StyleProp<ViewStyle> }) {
   const { colors } = useTheme()
-  const progress = useDerivedValue(() => value ?? 0)
+  const { percentage } = ProgressPrimitive.useRootContext()
+  const progress = useDerivedValue(() => percentage ?? 0)
 
   const indicator = useAnimatedStyle(() => {
     return {
@@ -62,15 +61,9 @@ function Indicator({ value, style }: IndicatorProps) {
   })
 
   return (
-    <ProgressPrimitive.Indicator asChild>
-      <Animated.View
-        style={[
-          styles.indicator,
-          { backgroundColor: colors.primary },
-          style,
-          indicator,
-        ]}
-      />
-    </ProgressPrimitive.Indicator>
+    <ProgressPrimitive.Indicator
+      style={[styles.indicator, { backgroundColor: colors.primary }, style]}
+      render={<Animated.View style={indicator} />}
+    />
   )
 }

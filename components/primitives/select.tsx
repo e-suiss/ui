@@ -1,415 +1,948 @@
 import * as React from "react"
-import { type GestureResponderEvent, Pressable, Text, View } from "react-native"
-import { useControllableState } from "./hooks"
 import {
-  FloatingContent as FloatingContentPrimitive,
-  type FloatingContentProps,
-  FloatingOverlay,
-  type FloatingRoot,
-  type OverlayProps,
-  type OverlayRef,
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native"
+import {
+  type BaseUIEventReason,
+  createChangeEventDetails,
+  REASONS,
+} from "./event-details"
+import {
+  FloatingPortal,
+  type FloatingRootActions,
+  FloatingRootContext,
+  type FloatingRootValue,
+  type FocusTarget,
+  useFloatingPopup,
   useFloatingRoot,
-  useTriggerRef,
-} from "./menu-core"
-import { Portal as PortalPrimitive } from "./portal"
-import { Slot } from "./slot"
+  useFloatingTrigger,
+} from "./floating-root"
+import {
+  Positioner as PositionerPrimitive,
+  type PositionerProps as PositionerPrimitiveProps,
+  useOptionalPositionerContext,
+  usePositionerContext,
+} from "./positioner"
 import type {
-  ForceMountable,
-  PressableRef,
-  SlottablePressableProps,
-  SlottableTextProps,
-  SlottableViewProps,
-  TextRef,
-  TriggerRef,
-  ViewRef,
+  Align,
+  BaseUIChangeEventDetails,
+  BaseUIComponentProps,
+  ChangeEvent,
+  Orientation,
+  Side,
 } from "./types"
+import { useControllableState } from "./use-controllable-state"
+import { useRender } from "./use-render"
 
-type Option =
-  | {
-      value: string
-      label: string
-    }
-  | undefined
+type SelectChangeEventReason = BaseUIEventReason
 
-type RootProps = SlottableViewProps & {
-  value?: Option
-  defaultValue?: Option
-  onValueChange?: (option: Option) => void
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  disabled?: boolean
+type SelectChangeEventDetails =
+  BaseUIChangeEventDetails<SelectChangeEventReason>
+
+interface SelectItemEntry {
+  label: React.ReactNode
+  value: unknown
 }
 
-type TriggerProps = SlottablePressableProps
-
-type ValueProps = SlottableTextProps & {
-  placeholder: string
+interface SelectItemGroup {
+  value: unknown
+  items: readonly SelectItemEntry[]
 }
 
-interface PortalProps extends ForceMountable {
-  children: React.ReactNode
-  hostName?: string
+type SelectItems =
+  | Record<string, React.ReactNode>
+  | readonly SelectItemEntry[]
+  | readonly SelectItemGroup[]
+
+type SelectValueType<
+  Value,
+  Multiple extends boolean | undefined,
+> = Multiple extends true ? Value[] : Value
+
+interface SelectRootContextValue {
+  floating: FloatingRootValue
+  value: unknown
+  multiple: boolean
+  readOnly: boolean
+  hasValue: boolean
+  isSelected: (itemValue: unknown) => boolean
+  selectValue: (itemValue: unknown, event?: ChangeEvent) => void
+  getLabel: (itemValue: unknown) => React.ReactNode
+  registerLabel: (itemValue: unknown, label: React.ReactNode) => void
 }
 
-type ContentProps = FloatingContentProps & {
-  position?: "popper" | "item-aligned"
-}
+const SelectRootContext = React.createContext<SelectRootContextValue | null>(
+  null
+)
 
-type ViewportProps = Pick<SlottableViewProps, "style"> & {
-  children?: React.ReactNode
-  className?: string
-}
-
-type ItemProps = SlottablePressableProps & {
-  value: string
-  label: string
-  closeOnPress?: boolean
-}
-
-type ItemTextProps = Omit<SlottableTextProps, "children">
-type ItemIndicatorProps = SlottableViewProps & ForceMountable
-type GroupProps = SlottableViewProps
-type LabelProps = SlottableTextProps
-type SeparatorProps = SlottableViewProps & {
-  decorative?: boolean
-}
-
-type RootRef = ViewRef
-type ValueRef = TextRef
-type ContentRef = ViewRef
-type ItemRef = PressableRef
-type ItemTextRef = TextRef
-type ItemIndicatorRef = ViewRef
-type GroupRef = ViewRef
-type LabelRef = TextRef
-type SeparatorRef = ViewRef
-
-interface RootContextValue extends FloatingRoot {
-  value: Option
-  onValueChange: (option: Option) => void
-  disabled: boolean
-}
-
-const RootContext = React.createContext<RootContextValue | null>(null)
-
-function useRootContext() {
-  const context = React.useContext(RootContext)
+function useSelectRootContext(componentName = "Select part") {
+  const context = React.useContext(SelectRootContext)
   if (!context) {
-    throw new Error(
-      "Select compound components cannot be rendered outside the Select component"
-    )
+    throw new Error(`${componentName} must be rendered inside Select.Root`)
   }
   return context
 }
 
-function Root({
-  asChild,
+function isGroup(entry: unknown): entry is SelectItemGroup {
+  return (
+    typeof entry === "object" &&
+    entry !== null &&
+    "items" in entry &&
+    Array.isArray((entry as SelectItemGroup).items)
+  )
+}
+
+function findItemLabel(
+  items: SelectItems | undefined,
+  value: unknown,
+  isEqual: (itemValue: unknown, value: unknown) => boolean
+): { found: boolean; label: React.ReactNode } {
+  if (!items) return { found: false, label: undefined }
+  if (!Array.isArray(items)) {
+    const record = items as Record<string, React.ReactNode>
+    const key = String(value)
+    if (key in record) return { found: true, label: record[key] }
+    return { found: false, label: undefined }
+  }
+  for (const entry of items as readonly (SelectItemEntry | SelectItemGroup)[]) {
+    if (isGroup(entry)) {
+      const match = entry.items.find((item) => isEqual(item.value, value))
+      if (match) return { found: true, label: match.label }
+    } else if (isEqual(entry.value, value)) {
+      return { found: true, label: entry.label }
+    }
+  }
+  return { found: false, label: undefined }
+}
+
+interface RootProps<Value, Multiple extends boolean | undefined = false> {
+  children?: React.ReactNode
+  value?: SelectValueType<Value, Multiple> | null | undefined
+  defaultValue?: SelectValueType<Value, Multiple> | null | undefined
+  onValueChange?:
+    | ((
+        value:
+          | SelectValueType<Value, Multiple>
+          | (Multiple extends true ? never : null),
+        details: SelectChangeEventDetails
+      ) => void)
+    | undefined
+  multiple?: Multiple | undefined
+  items?: SelectItems | undefined
+  itemToStringLabel?: ((itemValue: Value) => string) | undefined
+  isItemEqualToValue?: ((itemValue: Value, value: Value) => boolean) | undefined
+  open?: boolean | undefined
+  defaultOpen?: boolean | undefined
+  onOpenChange?:
+    | ((open: boolean, details: SelectChangeEventDetails) => void)
+    | undefined
+  onOpenChangeComplete?: ((open: boolean) => void) | undefined
+  actionsRef?: React.RefObject<FloatingRootActions | null> | undefined
+  modal?: boolean | undefined
+  disabled?: boolean | undefined
+  readOnly?: boolean | undefined
+}
+
+function Root<Value, Multiple extends boolean | undefined = false>({
+  children,
   value: valueProp,
   defaultValue,
-  onValueChange: onValueChangeProp,
-  open,
-  defaultOpen,
-  onOpenChange,
+  onValueChange,
+  multiple: multipleProp,
+  items,
+  itemToStringLabel,
+  isItemEqualToValue,
+  modal = true,
   disabled = false,
-  ref,
-  ...props
-}: RootProps & React.RefAttributes<RootRef>) {
-  const floating = useFloatingRoot({ open, defaultOpen, onOpenChange })
-  const [value, setValue] = useControllableState<Option>({
-    prop: valueProp,
-    defaultProp: defaultValue,
-    onChange: onValueChangeProp,
+  readOnly = false,
+  ...parameters
+}: RootProps<Value, Multiple>) {
+  const multiple = !!multipleProp
+  const floating = useFloatingRoot<SelectChangeEventReason>({
+    ...parameters,
+    modal,
+    disabled,
   })
-  const onValueChange = React.useCallback(
-    (option: Option) => setValue(option),
-    [setValue]
+  const labelsRef = React.useRef(new Map<unknown, React.ReactNode>())
+
+  const [value, setValue] = useControllableState<
+    unknown,
+    SelectChangeEventDetails
+  >({
+    value: valueProp,
+    defaultValue: defaultValue ?? (multiple ? [] : null),
+    onChange: onValueChange as
+      | ((value: unknown, details: SelectChangeEventDetails) => void)
+      | undefined,
+  })
+
+  const isEqual = React.useCallback(
+    (itemValue: unknown, current: unknown) =>
+      isItemEqualToValue
+        ? isItemEqualToValue(itemValue as Value, current as Value)
+        : Object.is(itemValue, current),
+    [isItemEqualToValue]
   )
-  const context = React.useMemo(
-    () => ({ ...floating, value, onValueChange, disabled }),
-    [floating, value, onValueChange, disabled]
+
+  const isSelected = React.useCallback(
+    (itemValue: unknown) => {
+      if (multiple) {
+        return (
+          Array.isArray(value) &&
+          value.some((entry: unknown) => isEqual(itemValue, entry))
+        )
+      }
+      return value !== null && value !== undefined && isEqual(itemValue, value)
+    },
+    [multiple, value, isEqual]
   )
-  const Component = asChild ? Slot : View
+
+  const { setOpen } = floating
+
+  const selectValue = React.useCallback(
+    (itemValue: unknown, event?: ChangeEvent) => {
+      const details = createChangeEventDetails<SelectChangeEventReason>(
+        REASONS.itemPress,
+        event
+      )
+      if (multiple) {
+        setValue((previous: unknown) => {
+          const current: unknown[] = Array.isArray(previous) ? previous : []
+          return current.some((entry) => isEqual(itemValue, entry))
+            ? current.filter((entry) => !isEqual(itemValue, entry))
+            : [...current, itemValue]
+        }, details)
+        return
+      }
+      setValue(itemValue, details)
+      setOpen(false, REASONS.itemPress, event)
+    },
+    [multiple, setValue, isEqual, setOpen]
+  )
+
+  const getLabel = React.useCallback(
+    (itemValue: unknown): React.ReactNode => {
+      const fromItems = findItemLabel(items, itemValue, isEqual)
+      if (fromItems.found) return fromItems.label
+      if (itemToStringLabel) return itemToStringLabel(itemValue as Value)
+      for (const [key, label] of labelsRef.current) {
+        if (isEqual(key, itemValue)) return label
+      }
+      if (itemValue === null || itemValue === undefined) return null
+      return String(itemValue)
+    },
+    [items, itemToStringLabel, isEqual]
+  )
+
+  const registerLabel = React.useCallback(
+    (itemValue: unknown, label: React.ReactNode) => {
+      if (label === undefined) labelsRef.current.delete(itemValue)
+      else labelsRef.current.set(itemValue, label)
+    },
+    []
+  )
+
+  const hasValue = multiple
+    ? Array.isArray(value) && value.length > 0
+    : value !== null && value !== undefined
+
+  const context = React.useMemo<SelectRootContextValue>(
+    () => ({
+      floating,
+      value,
+      multiple,
+      readOnly,
+      hasValue,
+      isSelected,
+      selectValue,
+      getLabel,
+      registerLabel,
+    }),
+    [
+      floating,
+      value,
+      multiple,
+      readOnly,
+      hasValue,
+      isSelected,
+      selectValue,
+      getLabel,
+      registerLabel,
+    ]
+  )
+
   return (
-    <RootContext.Provider value={context}>
-      <Component ref={ref} {...props} />
-    </RootContext.Provider>
+    <SelectRootContext.Provider value={context}>
+      <FloatingRootContext.Provider value={floating}>
+        {children}
+      </FloatingRootContext.Provider>
+    </SelectRootContext.Provider>
   )
 }
 
 Root.displayName = "SelectRoot"
 
+interface TriggerState {
+  open: boolean
+  disabled: boolean
+  readOnly: boolean
+  value: unknown
+  placeholder: boolean
+}
+
+type TriggerProps = BaseUIComponentProps<typeof Pressable, TriggerState>
+
 function Trigger({
-  asChild,
   disabled: disabledProp,
-  onPress: onPressProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: TriggerProps & React.RefAttributes<TriggerRef>) {
-  const root = useRootContext()
-  const composedRef = useTriggerRef(ref, root)
-  const disabled = !!disabledProp || root.disabled
+  ...elementProps
+}: TriggerProps) {
+  const select = useSelectRootContext("Select.Trigger")
+  const disabled = !!disabledProp || select.floating.disabled
+  const trigger = useFloatingTrigger({
+    root: select.floating,
+    ref,
+    disabled: disabled || select.readOnly,
+    role: "combobox",
+  })
 
-  function onPress(event: GestureResponderEvent) {
-    if (disabled) return
-    root.onOpenChange(!root.open)
-    onPressProp?.(event)
-  }
-
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <Component
-      ref={composedRef}
-      role="combobox"
-      aria-haspopup="listbox"
-      aria-expanded={root.open}
-      aria-disabled={disabled}
-      disabled={disabled}
-      onPress={onPress}
-      {...props}
-    />
+  const { open } = select.floating
+  const state = React.useMemo<TriggerState>(
+    () => ({
+      open,
+      disabled,
+      readOnly: select.readOnly,
+      value: select.value,
+      placeholder: !select.hasValue,
+    }),
+    [open, disabled, select.readOnly, select.value, select.hasValue]
   )
+
+  return useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref: trigger.ref,
+    props: [
+      trigger.props,
+      { accessibilityState: { expanded: open, disabled } },
+      elementProps,
+    ],
+  })
 }
 
 Trigger.displayName = "SelectTrigger"
 
+interface ValueState {
+  value: unknown
+  placeholder: boolean
+}
+
+type ValueProps = Omit<
+  BaseUIComponentProps<typeof Text, ValueState>,
+  "children"
+> & {
+  children?: React.ReactNode | ((value: unknown) => React.ReactNode)
+  placeholder?: React.ReactNode
+}
+
 function Value({
-  asChild,
+  children,
   placeholder,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ValueProps & React.RefAttributes<ValueRef>) {
-  const { value } = useRootContext()
-  const Component = asChild ? Slot : Text
-  return (
-    <Component ref={ref} {...props}>
-      {value?.label ?? placeholder}
-    </Component>
+  ...elementProps
+}: ValueProps) {
+  const select = useSelectRootContext("Select.Value")
+  const { value, hasValue, multiple, getLabel } = select
+
+  const state = React.useMemo<ValueState>(
+    () => ({ value, placeholder: !hasValue }),
+    [value, hasValue]
   )
+
+  let content: React.ReactNode
+  if (typeof children === "function") {
+    content = children(value)
+  } else if (children !== undefined && children !== null) {
+    content = children
+  } else if (!hasValue) {
+    content = placeholder
+  } else if (multiple && Array.isArray(value)) {
+    content = value.map((entry: unknown) => String(getLabel(entry))).join(", ")
+  } else {
+    content = getLabel(value)
+  }
+
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ children: content }, elementProps],
+  })
 }
 
 Value.displayName = "SelectValue"
 
-function Portal({ forceMount, hostName, children }: PortalProps) {
-  const value = useRootContext()
-  if (!forceMount && !value.open) return null
+interface IconState {
+  open: boolean
+}
+
+type IconProps = BaseUIComponentProps<typeof View, IconState>
+
+const HIDDEN_PROPS = {
+  pointerEvents: "none",
+  accessibilityElementsHidden: true,
+  importantForAccessibility: "no-hide-descendants",
+} as const
+
+function Icon({ render, className, style, ref, ...elementProps }: IconProps) {
+  const { open } = useSelectRootContext("Select.Icon").floating
+  const state = React.useMemo<IconState>(() => ({ open }), [open])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [HIDDEN_PROPS, elementProps],
+  })
+}
+
+Icon.displayName = "SelectIcon"
+
+interface PortalProps {
+  children?: React.ReactNode
+  keepMounted?: boolean | undefined
+  hostName?: string | undefined
+}
+
+function Portal({ children, keepMounted, hostName }: PortalProps) {
+  const select = useSelectRootContext("Select.Portal")
   return (
-    <PortalPrimitive hostName={hostName} name={`${value.nativeID}_portal`}>
-      <RootContext.Provider value={value}>{children}</RootContext.Provider>
-    </PortalPrimitive>
+    <FloatingPortal
+      root={select.floating}
+      keepMounted={keepMounted}
+      hostName={hostName}
+    >
+      <SelectRootContext.Provider value={select}>
+        {children}
+      </SelectRootContext.Provider>
+    </FloatingPortal>
   )
 }
 
 Portal.displayName = "SelectPortal"
 
-function Overlay(props: OverlayProps & React.RefAttributes<OverlayRef>) {
-  const { open, close } = useRootContext()
-  return <FloatingOverlay open={open} close={close} {...props} />
-}
+type PositionerProps = Omit<PositionerPrimitiveProps, "root">
 
-Overlay.displayName = "SelectOverlay"
-
-function Content({
-  position: _position,
+function Positioner({
+  side = "bottom",
+  align = "center",
   ...props
-}: ContentProps & React.RefAttributes<ContentRef>) {
-  const root = useRootContext()
-  return <FloatingContentPrimitive state={root} role="menu" {...props} />
+}: PositionerProps) {
+  const select = useSelectRootContext("Select.Positioner")
+  return (
+    <PositionerPrimitive
+      root={select.floating}
+      side={side}
+      align={align}
+      {...props}
+    />
+  )
 }
 
-Content.displayName = "SelectContent"
+Positioner.displayName = "SelectPositioner"
 
-function Viewport({ children }: ViewportProps) {
-  return <>{children}</>
+interface PopupState {
+  open: boolean
+  side: Side
+  align: Align
 }
 
-Viewport.displayName = "SelectViewport"
+type PopupProps = BaseUIComponentProps<typeof View, PopupState> & {
+  initialFocus?: FocusTarget | undefined
+  finalFocus?: FocusTarget | undefined
+}
 
-interface ItemContextValue {
-  itemValue: string
-  label: string
+function Popup({
+  initialFocus,
+  finalFocus,
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: PopupProps) {
+  const select = useSelectRootContext("Select.Popup")
+  const positioner = useOptionalPositionerContext()
+  const { open } = select.floating
+  const popup = useFloatingPopup({
+    root: select.floating,
+    ref,
+    ready: positioner ? positioner.isPositioned : true,
+    initialFocus,
+    finalFocus,
+  })
+
+  const side = positioner?.side ?? "bottom"
+  const align = positioner?.align ?? "center"
+  const state = React.useMemo<PopupState>(
+    () => ({ open, side, align }),
+    [open, side, align]
+  )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref: popup.ref,
+    props: [popup.props, elementProps],
+    enabled: open || positioner !== null,
+  })
+}
+
+Popup.displayName = "SelectPopup"
+
+interface ListState {
+  multiple: boolean
+}
+
+type ListProps = BaseUIComponentProps<typeof View, ListState>
+
+function List({ render, className, style, ref, ...elementProps }: ListProps) {
+  const { multiple } = useSelectRootContext("Select.List")
+  const state = React.useMemo<ListState>(() => ({ multiple }), [multiple])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ role: "list" }, elementProps],
+  })
+}
+
+List.displayName = "SelectList"
+
+interface ArrowState {
+  open: boolean
+  side: Side
+  align: Align
+  uncentered: boolean
+}
+
+type ArrowProps = BaseUIComponentProps<typeof View, ArrowState>
+
+function Arrow({ render, className, style, ref, ...elementProps }: ArrowProps) {
+  const positioner = usePositionerContext("Select.Arrow")
+  const { setArrowSize } = positioner
+
+  const onLayout = React.useCallback(
+    (event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout
+      setArrowSize({ width, height })
+    },
+    [setArrowSize]
+  )
+
+  React.useEffect(() => () => setArrowSize(null), [setArrowSize])
+
+  const state = React.useMemo<ArrowState>(
+    () => ({
+      open: positioner.open,
+      side: positioner.side,
+      align: positioner.align,
+      uncentered: positioner.arrow.uncentered,
+    }),
+    [
+      positioner.open,
+      positioner.side,
+      positioner.align,
+      positioner.arrow.uncentered,
+    ]
+  )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      { style: positioner.arrowStyle, onLayout },
+      HIDDEN_PROPS,
+      elementProps,
+    ],
+  })
+}
+
+Arrow.displayName = "SelectArrow"
+
+interface BackdropState {
+  open: boolean
+}
+
+type BackdropProps = BaseUIComponentProps<typeof View, BackdropState>
+
+function Backdrop({
+  render,
+  className,
+  style,
+  ref,
+  ...elementProps
+}: BackdropProps) {
+  const { open } = useSelectRootContext("Select.Backdrop").floating
+  const state = React.useMemo<BackdropState>(() => ({ open }), [open])
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ style: StyleSheet.absoluteFill }, HIDDEN_PROPS, elementProps],
+    enabled: open,
+  })
+}
+
+Backdrop.displayName = "SelectBackdrop"
+
+interface ItemState {
+  disabled: boolean
+  selected: boolean
+  highlighted: boolean
+}
+
+interface ItemContextValue extends ItemState {
+  label: React.ReactNode
 }
 
 const ItemContext = React.createContext<ItemContextValue | null>(null)
 
-function useItemContext() {
+function useItemContext(componentName: string) {
   const context = React.useContext(ItemContext)
   if (!context) {
-    throw new Error(
-      "Select Item compound components cannot be rendered outside of an Item component"
-    )
+    throw new Error(`${componentName} must be rendered inside Select.Item`)
   }
   return context
 }
 
+type ItemProps = BaseUIComponentProps<typeof Pressable, ItemState> & {
+  value?: unknown
+  label?: string | undefined
+}
+
 function Item({
-  asChild,
-  value: itemValue,
+  value = null,
   label,
-  closeOnPress = true,
-  disabled,
-  onPress: onPressProp,
+  disabled: disabledProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ItemProps & React.RefAttributes<ItemRef>) {
-  const { value, onValueChange, close } = useRootContext()
-  const context = React.useMemo(
-    () => ({ itemValue, label }),
-    [itemValue, label]
-  )
-  const selected = value?.value === itemValue
+  ...elementProps
+}: ItemProps) {
+  const select = useSelectRootContext("Select.Item")
+  const { selectValue, registerLabel, isSelected } = select
+  const disabled = !!disabledProp
+  const selected = isSelected(value)
+  const [highlighted, setHighlighted] = React.useState(false)
 
-  function onPress(event: GestureResponderEvent) {
-    if (disabled) return
-    onValueChange({ value: itemValue, label })
-    onPressProp?.(event)
-    if (closeOnPress) close()
-  }
+  React.useEffect(() => {
+    if (label !== undefined) registerLabel(value, label)
+  }, [registerLabel, value, label])
 
-  const Component = (asChild ? Slot : Pressable) as typeof Pressable
-  return (
-    <ItemContext.Provider value={context}>
-      <Component
-        ref={ref}
-        role="menuitem"
-        aria-label={label}
-        aria-selected={selected}
-        aria-disabled={!!disabled}
-        disabled={disabled}
-        onPress={onPress}
-        {...props}
-      />
-    </ItemContext.Provider>
+  const onPressIn = React.useCallback(() => setHighlighted(true), [])
+  const onPressOut = React.useCallback(() => setHighlighted(false), [])
+
+  const onPress = React.useCallback(
+    (event: GestureResponderEvent) => {
+      if (disabled || select.readOnly) return
+      selectValue(value, event)
+    },
+    [disabled, select.readOnly, selectValue, value]
   )
+
+  const state = React.useMemo<ItemState>(
+    () => ({ disabled, selected, highlighted }),
+    [disabled, selected, highlighted]
+  )
+
+  const context = React.useMemo<ItemContextValue>(
+    () => ({ ...state, label: label ?? select.getLabel(value) }),
+    [state, label, select.getLabel, value]
+  )
+
+  const element = useRender({
+    defaultComponent: Pressable,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [
+      {
+        role: "option",
+        accessibilityLabel: label,
+        accessibilityState: { selected, disabled },
+        disabled: disabled || undefined,
+        onPress,
+        onPressIn,
+        onPressOut,
+      },
+      elementProps,
+    ],
+  })
+
+  return <ItemContext.Provider value={context}>{element}</ItemContext.Provider>
 }
 
 Item.displayName = "SelectItem"
 
+type ItemTextProps = BaseUIComponentProps<typeof Text, ItemState>
+
 function ItemText({
-  asChild,
+  children,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ItemTextProps & React.RefAttributes<ItemTextRef>) {
-  const { label } = useItemContext()
-  const Component = asChild ? Slot : Text
-  return (
-    <Component ref={ref} {...props}>
-      {label}
-    </Component>
+  ...elementProps
+}: ItemTextProps) {
+  const item = useItemContext("Select.ItemText")
+  const state = React.useMemo<ItemState>(
+    () => ({
+      disabled: item.disabled,
+      selected: item.selected,
+      highlighted: item.highlighted,
+    }),
+    [item.disabled, item.selected, item.highlighted]
   )
+
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ children: children ?? item.label }, elementProps],
+  })
 }
 
 ItemText.displayName = "SelectItemText"
 
+type ItemIndicatorProps = BaseUIComponentProps<typeof View, ItemState> & {
+  keepMounted?: boolean | undefined
+}
+
 function ItemIndicator({
-  asChild,
-  forceMount,
+  keepMounted = false,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: ItemIndicatorProps & React.RefAttributes<ItemIndicatorRef>) {
-  const { itemValue } = useItemContext()
-  const { value } = useRootContext()
-  if (!forceMount && value?.value !== itemValue) return null
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role="presentation"
-      aria-hidden={true}
-      importantForAccessibility="no-hide-descendants"
-      {...props}
-    />
+  ...elementProps
+}: ItemIndicatorProps) {
+  const item = useItemContext("Select.ItemIndicator")
+  const state = React.useMemo<ItemState>(
+    () => ({
+      disabled: item.disabled,
+      selected: item.selected,
+      highlighted: item.highlighted,
+    }),
+    [item.disabled, item.selected, item.highlighted]
   )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [HIDDEN_PROPS, elementProps],
+    enabled: keepMounted || item.selected,
+  })
 }
 
 ItemIndicator.displayName = "SelectItemIndicator"
 
-function Group({
-  asChild,
-  ref,
-  ...props
-}: GroupProps & React.RefAttributes<GroupRef>) {
-  const Component = asChild ? Slot : View
-  return <Component ref={ref} role="group" {...props} />
+type GroupState = Record<never, never>
+
+const EMPTY_STATE: GroupState = {}
+
+interface GroupContextValue {
+  setLabelId: (id: string | undefined) => void
+}
+
+const GroupContext = React.createContext<GroupContextValue | null>(null)
+
+type GroupProps = BaseUIComponentProps<typeof View, GroupState>
+
+function Group({ render, className, style, ref, ...elementProps }: GroupProps) {
+  const [labelId, setLabelId] = React.useState<string | undefined>(undefined)
+  const context = React.useMemo<GroupContextValue>(() => ({ setLabelId }), [])
+
+  const element = useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state: EMPTY_STATE,
+    ref,
+    props: [{ role: "group", accessibilityLabelledBy: labelId }, elementProps],
+  })
+
+  return (
+    <GroupContext.Provider value={context}>{element}</GroupContext.Provider>
+  )
 }
 
 Group.displayName = "SelectGroup"
 
-function Label({
-  asChild,
+type GroupLabelProps = BaseUIComponentProps<typeof Text, GroupState>
+
+function GroupLabel({
+  nativeID: nativeIDProp,
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: LabelProps & React.RefAttributes<LabelRef>) {
-  const Component = asChild ? Slot : Text
-  return <Component ref={ref} {...props} />
+  ...elementProps
+}: GroupLabelProps) {
+  const generatedId = React.useId()
+  const nativeID = nativeIDProp ?? generatedId
+  const setLabelId = React.useContext(GroupContext)?.setLabelId
+
+  React.useEffect(() => {
+    if (!setLabelId) return
+    setLabelId(nativeID)
+    return () => setLabelId(undefined)
+  }, [setLabelId, nativeID])
+
+  return useRender({
+    defaultComponent: Text,
+    render,
+    className,
+    style,
+    state: EMPTY_STATE,
+    ref,
+    props: [{ nativeID }, elementProps],
+  })
 }
 
-Label.displayName = "SelectLabel"
+GroupLabel.displayName = "SelectGroupLabel"
+
+interface SeparatorState {
+  orientation: Orientation
+}
+
+type SeparatorProps = BaseUIComponentProps<typeof View, SeparatorState> & {
+  orientation?: Orientation | undefined
+}
 
 function Separator({
-  asChild,
-  decorative,
+  orientation = "horizontal",
+  render,
+  className,
+  style,
   ref,
-  ...props
-}: SeparatorProps & React.RefAttributes<SeparatorRef>) {
-  const Component = asChild ? Slot : View
-  return (
-    <Component
-      ref={ref}
-      role={decorative ? "presentation" : "separator"}
-      aria-hidden={decorative === true}
-      importantForAccessibility={decorative ? "no-hide-descendants" : "auto"}
-      {...props}
-    />
+  ...elementProps
+}: SeparatorProps) {
+  const state = React.useMemo<SeparatorState>(
+    () => ({ orientation }),
+    [orientation]
   )
+
+  return useRender({
+    defaultComponent: View,
+    render,
+    className,
+    style,
+    state,
+    ref,
+    props: [{ role: "separator" }, elementProps],
+  })
 }
 
 Separator.displayName = "SelectSeparator"
 
 export type {
-  OverlayProps,
-  OverlayRef,
-} from "./menu-core"
-export type {
-  ContentProps,
-  ContentRef,
+  ArrowProps,
+  ArrowState,
+  BackdropProps,
+  BackdropState,
+  GroupLabelProps,
   GroupProps,
-  GroupRef,
+  GroupState,
+  IconProps,
+  IconState,
   ItemIndicatorProps,
-  ItemIndicatorRef,
   ItemProps,
-  ItemRef,
+  ItemState,
   ItemTextProps,
-  ItemTextRef,
-  LabelProps,
-  LabelRef,
-  Option,
+  ListProps,
+  ListState,
+  PopupProps,
+  PopupState,
   PortalProps,
-  RootContextValue,
+  PositionerProps,
   RootProps,
-  RootRef,
+  SelectChangeEventDetails,
+  SelectChangeEventReason,
+  SelectItemEntry,
+  SelectItemGroup,
+  SelectItems,
+  SelectRootContextValue,
+  SelectValueType,
   SeparatorProps,
-  SeparatorRef,
+  SeparatorState,
   TriggerProps,
-  TriggerRef,
+  TriggerState,
   ValueProps,
-  ValueRef,
-  ViewportProps,
+  ValueState,
 }
 export {
-  Content,
+  Arrow,
+  Backdrop,
   Group,
+  GroupLabel,
+  Icon,
   Item,
   ItemIndicator,
   ItemText,
-  Label,
-  Overlay,
+  List,
+  Popup,
   Portal,
+  Positioner,
   Root,
   Separator,
   Trigger,
-  useItemContext,
-  useRootContext,
+  useSelectRootContext,
   Value,
-  Viewport,
 }
