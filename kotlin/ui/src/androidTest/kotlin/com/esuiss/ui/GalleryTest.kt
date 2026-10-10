@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.testTag
@@ -46,64 +48,64 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @Composable
-private fun Gallery() {
-    val colors = EsuissTheme.colors
-    Column(
-        modifier = Modifier
-            .testTag("gallery")
-            .width(402.dp)
-            .background(colors.surface)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            BadgeVariant.entries.forEach { variant ->
-                Badge(variant.name.lowercase(), variant = variant)
-            }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ButtonVariant.entries.forEach { variant ->
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Button(variant.name.lowercase(), onClick = {}, variant = variant)
-                    Button("Disabled", onClick = {}, variant = variant, enabled = false)
-                }
-            }
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button("XS", onClick = {}, size = ButtonSize.Xs)
-            Button("SM", onClick = {}, size = ButtonSize.Sm)
-            Button("Default", onClick = {})
-            Button("LG", onClick = {}, size = ButtonSize.Lg)
-            Button(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) {
-                Icon(PhosphorIcons.Regular.Plus, contentDescription = "Add")
-            }
-        }
-        Button(onClick = {}, size = ButtonSize.Xl, block = true) {
-            Icon(PhosphorIcons.Regular.ArrowRight, contentDescription = null)
-            BasicText("Continue", style = LocalContentStyle.current)
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Typography.all.forEach { style ->
-                BasicText("Type ${style.fontSize.value.toInt()}", style = style.copy(color = colors.label))
-            }
-        }
-        Card {
-            CardHeader(
-                "Login to your account",
-                description = "Enter your email below.",
-                action = { Button("Sign Up", onClick = {}, variant = ButtonVariant.Link, size = ButtonSize.Sm) },
-            )
-            CardContent {
-                BasicText("Card content", style = Typography.base.copy(color = colors.labelSecondary))
-            }
-            CardFooter {
-                Button("Login", onClick = {}, block = true)
-            }
-        }
-        Card(variant = CardVariant.Filled, size = CardSize.Sm) {
-            CardHeader("Filled", description = "Small filled card.")
+private fun ButtonsSection() {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        BadgeVariant.entries.forEach { variant ->
+            Badge(variant.name.lowercase(), variant = variant)
         }
     }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        ButtonVariant.entries.forEach { variant ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(variant.name.lowercase(), onClick = {}, variant = variant)
+                Button("Disabled", onClick = {}, variant = variant, enabled = false)
+            }
+        }
+    }
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Button("XS", onClick = {}, size = ButtonSize.Xs)
+        Button("SM", onClick = {}, size = ButtonSize.Sm)
+        Button("Default", onClick = {})
+        Button("LG", onClick = {}, size = ButtonSize.Lg)
+        Button(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) {
+            Icon(PhosphorIcons.Regular.Plus, contentDescription = "Add")
+        }
+    }
+    Button(onClick = {}, size = ButtonSize.Xl, block = true) {
+        Icon(PhosphorIcons.Regular.ArrowRight, contentDescription = null)
+        BasicText("Continue", style = LocalContentStyle.current)
+    }
+}
+
+@Composable
+private fun SurfacesSection() {
+    val colors = EsuissTheme.colors
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Typography.all.forEach { style ->
+            BasicText("Type ${style.fontSize.value.toInt()}", style = style.copy(color = colors.label))
+        }
+    }
+    Card {
+        CardHeader(
+            "Login to your account",
+            description = "Enter your email below.",
+            action = { Button("Sign Up", onClick = {}, variant = ButtonVariant.Link, size = ButtonSize.Sm) },
+        )
+        CardContent {
+            BasicText("Card content", style = Typography.base.copy(color = colors.labelSecondary))
+        }
+        CardFooter {
+            Button("Login", onClick = {}, block = true)
+        }
+    }
+    Card(variant = CardVariant.Filled, size = CardSize.Sm) {
+        CardHeader("Filled", description = "Small filled card.")
+    }
+}
+
+private enum class GalleryScene(val content: @Composable () -> Unit) {
+    Buttons({ ButtonsSection() }),
+    Surfaces({ SurfacesSection() }),
 }
 
 @RunWith(AndroidJUnit4::class)
@@ -114,15 +116,32 @@ class GalleryTest {
     @Test
     fun rendersGalleryInBothSchemes() {
         var dark by mutableStateOf(false)
-        compose.setContent { EsuissTheme(darkTheme = dark) { Gallery() } }
+        var scene by mutableStateOf(GalleryScene.Buttons)
+        compose.setContent {
+            EsuissTheme(darkTheme = dark) {
+                Column(
+                    modifier = Modifier
+                        .testTag("gallery")
+                        .width(402.dp)
+                        .background(EsuissTheme.colors.surface)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    key(scene) { scene.content() }
+                }
+            }
+        }
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        for (scheme in listOf(false, true)) {
-            dark = scheme
-            compose.waitForIdle()
-            val bitmap = compose.onNodeWithTag("gallery").captureToImage().asAndroidBitmap()
-            val name = if (scheme) "gallery-dark.png" else "gallery-light.png"
-            File(context.getExternalFilesDir(null), name).outputStream().use {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+        for (current in GalleryScene.entries) {
+            for (scheme in listOf(false, true)) {
+                scene = current
+                dark = scheme
+                compose.waitForIdle()
+                val bitmap = compose.onNodeWithTag("gallery").captureToImage().asAndroidBitmap()
+                val name = "gallery-${current.name.lowercase()}-${if (scheme) "dark" else "light"}.png"
+                File(context.getExternalFilesDir(null), name).outputStream().use {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                }
             }
         }
     }
