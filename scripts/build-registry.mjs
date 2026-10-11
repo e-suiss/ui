@@ -23,7 +23,7 @@ const COMPANIONS = {
   "react-native-reanimated": ["react-native-worklets"],
 }
 const LOCAL_IMPORT =
-  /^@\/(components\/(?:ui|patterns|interactions|blocks)|components\/primitives|hooks)\/([\w-]+)$/
+  /^@\/(components\/(?:ui|patterns|interactions|blocks|charts)|components\/primitives|hooks)\/([\w-]+)$/
 const PRIMITIVES_DIR = "components/primitives"
 
 const sources = [
@@ -31,6 +31,7 @@ const sources = [
   { dir: "components/patterns", type: "pattern" },
   { dir: "components/interactions", type: "interaction" },
   { dir: "components/blocks", type: "block" },
+  { dir: "components/charts", type: "chart" },
 ]
 
 function toTitle(name) {

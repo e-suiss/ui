@@ -99,6 +99,21 @@ final class AdminGalleryTests: XCTestCase {
     ], name: "blocks-dash-health")
   }
 
+  func testRendersDashAnalytics() throws {
+    try snapshot([
+      Shot("Route, downloads") { DashAnalytics(app: "route", metric: "downloads") },
+      Shot("Fitness+, revenue, week 5") { DashAnalytics(app: "fitness", metric: "revenue", active: 4) },
+    ], name: "blocks-dash-analytics")
+  }
+
+  func testRendersDashStore() throws {
+    try snapshot([
+      Shot("Overview") { DashStore(range: "7d", filter: "All") },
+      Shot("30 days, Saturday, delivered") { DashStore(range: "30d", filter: "Delivered", active: 5) },
+      Shot("Full page", height: 1560) { DashStore(range: "7d", filter: "All") },
+    ], name: "blocks-dash-store")
+  }
+
   func testRendersInboxCategories() throws {
     try snapshot([
       Shot("Primary") { InboxCategories(category: "Primary") },

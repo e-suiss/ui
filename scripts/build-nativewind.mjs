@@ -9,7 +9,7 @@ import { loadTokens, toRgb } from "./theme.mjs"
 const ROOT = process.cwd()
 const SOURCE_ROOT = "uniwind/components"
 const OUTPUT_ROOT = "nativewind/components"
-const COMPONENT_DIRS = ["ui", "patterns", "interactions", "blocks"]
+const COMPONENT_DIRS = ["ui", "patterns", "interactions", "blocks", "charts"]
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
 const OUTPUT_CONFIG = "styles/nativewind.config.js"
 const V3_SPACING = new Set([

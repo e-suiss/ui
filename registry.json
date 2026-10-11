@@ -588,6 +588,40 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "ui",
+      "title": "Chart",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/chart",
+        "text"
+      ],
+      "files": [
+        "components/ui/chart.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "ui",
       "title": "Checkbox",
@@ -3679,6 +3713,45 @@
       ]
     },
     {
+      "name": "dash-analytics",
+      "type": "block",
+      "title": "Dash Analytics",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "button",
+        "chart",
+        "dropdown-menu",
+        "header",
+        "icon",
+        "item",
+        "screen",
+        "tab-bar",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/dash-analytics.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "dash-health",
       "type": "block",
       "title": "Dash Health",
@@ -3716,6 +3789,56 @@
       ],
       "files": [
         "components/blocks/dash-health.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "dash-store",
+      "type": "block",
+      "title": "Dash Store",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "chart",
+        "chip",
+        "dropdown-menu",
+        "header",
+        "icon",
+        "item",
+        "screen",
+        "tab-bar",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/dash-store.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -5232,6 +5355,1166 @@
       ]
     },
     {
+      "name": "area-chart-axes",
+      "type": "chart",
+      "title": "Area Chart Axes",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-axes.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-default",
+      "type": "chart",
+      "title": "Area Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-gradient",
+      "type": "chart",
+      "title": "Area Chart Gradient",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-gradient.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-interactive",
+      "type": "chart",
+      "title": "Area Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/area-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-linear",
+      "type": "chart",
+      "title": "Area Chart Linear",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-linear.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-range",
+      "type": "chart",
+      "title": "Area Chart Range",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/area-chart-range.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-sparkline",
+      "type": "chart",
+      "title": "Area Chart Sparkline",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/area-chart-sparkline.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-stacked-expand",
+      "type": "chart",
+      "title": "Area Chart Stacked Expand",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-stacked-expand.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-stacked",
+      "type": "chart",
+      "title": "Area Chart Stacked",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-stacked.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "area-chart-step",
+      "type": "chart",
+      "title": "Area Chart Step",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/area-chart-step.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-active",
+      "type": "chart",
+      "title": "Bar Chart Active",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/bar-chart-active.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-default",
+      "type": "chart",
+      "title": "Bar Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-horizontal",
+      "type": "chart",
+      "title": "Bar Chart Horizontal",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-horizontal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-hourly",
+      "type": "chart",
+      "title": "Bar Chart Hourly",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/bar-chart-hourly.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-interactive",
+      "type": "chart",
+      "title": "Bar Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/bar-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-labeled",
+      "type": "chart",
+      "title": "Bar Chart Labeled",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-labeled.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-multiple",
+      "type": "chart",
+      "title": "Bar Chart Multiple",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-multiple.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-negative",
+      "type": "chart",
+      "title": "Bar Chart Negative",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-negative.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-range",
+      "type": "chart",
+      "title": "Bar Chart Range",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/bar-chart-range.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bar-chart-stacked",
+      "type": "chart",
+      "title": "Bar Chart Stacked",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/bar-chart-stacked.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-default",
+      "type": "chart",
+      "title": "Line Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-dots",
+      "type": "chart",
+      "title": "Line Chart Dots",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/line-chart-dots.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-forecast",
+      "type": "chart",
+      "title": "Line Chart Forecast",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-forecast.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-goal-dots",
+      "type": "chart",
+      "title": "Line Chart Goal Dots",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/line-chart-goal-dots.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-goal",
+      "type": "chart",
+      "title": "Line Chart Goal",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/line-chart-goal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-interactive",
+      "type": "chart",
+      "title": "Line Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/line-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-labeled",
+      "type": "chart",
+      "title": "Line Chart Labeled",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-labeled.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-linear",
+      "type": "chart",
+      "title": "Line Chart Linear",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-linear.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-multiple",
+      "type": "chart",
+      "title": "Line Chart Multiple",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-multiple.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "line-chart-step",
+      "type": "chart",
+      "title": "Line Chart Step",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/line-chart-step.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-active",
+      "type": "chart",
+      "title": "Pie Chart Active",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-active.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-default",
+      "type": "chart",
+      "title": "Pie Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-donut-text",
+      "type": "chart",
+      "title": "Pie Chart Donut Text",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/pie-chart-donut-text.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-donut",
+      "type": "chart",
+      "title": "Pie Chart Donut",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-donut.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-half",
+      "type": "chart",
+      "title": "Pie Chart Half",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/pie-chart-half.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-interactive",
+      "type": "chart",
+      "title": "Pie Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/pie-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-label",
+      "type": "chart",
+      "title": "Pie Chart Label",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-label.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-legend",
+      "type": "chart",
+      "title": "Pie Chart Legend",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-legend.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-nested",
+      "type": "chart",
+      "title": "Pie Chart Nested",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-nested.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pie-chart-separated",
+      "type": "chart",
+      "title": "Pie Chart Separated",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/pie-chart-separated.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-batteries",
+      "type": "chart",
+      "title": "Radial Chart Batteries",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/radial-chart-batteries.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-default",
+      "type": "chart",
+      "title": "Radial Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-gauge",
+      "type": "chart",
+      "title": "Radial Chart Gauge",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/radial-chart-gauge.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-interactive",
+      "type": "chart",
+      "title": "Radial Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/charts/radial-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-label",
+      "type": "chart",
+      "title": "Radial Chart Label",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-label.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-progress",
+      "type": "chart",
+      "title": "Radial Chart Progress",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/radial-chart-progress.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-rings",
+      "type": "chart",
+      "title": "Radial Chart Rings",
+      "dependencies": {
+        "uniwind": [
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-rings.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-stacked",
+      "type": "chart",
+      "title": "Radial Chart Stacked",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/radial-chart-stacked.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-text",
+      "type": "chart",
+      "title": "Radial Chart Text",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text"
+      ],
+      "files": [
+        "components/charts/radial-chart-text.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radial-chart-tinted",
+      "type": "chart",
+      "title": "Radial Chart Tinted",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radial-chart-tinted.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "primitives/accordion",
       "type": "primitive",
       "title": "Accordion",
@@ -5337,6 +6620,22 @@
       ],
       "files": [
         "components/primitives/carousel.tsx"
+      ]
+    },
+    {
+      "name": "primitives/chart",
+      "type": "primitive",
+      "title": "Chart",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/haptics"
+      ],
+      "files": [
+        "components/primitives/chart.tsx"
       ]
     },
     {

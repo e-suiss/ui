@@ -8,7 +8,11 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -17,10 +21,13 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.esuiss.ui.blocks.DashAnalytics
 import com.esuiss.ui.blocks.DashHealth
+import com.esuiss.ui.blocks.DashStore
 import com.esuiss.ui.blocks.InboxCategories
 import com.esuiss.ui.blocks.InboxMail
 import com.esuiss.ui.blocks.InboxSupport
@@ -43,6 +50,16 @@ private enum class AdminScene {
     DashHealth,
     DashHealthEditing,
     DashHealthHeart,
+    DashAnalytics,
+    DashAnalyticsRevenue,
+    DashAnalyticsMenu,
+    DashAnalyticsNotebook,
+    DashAnalyticsRatings,
+    DashStore,
+    DashStoreSaturday,
+    DashStoreReturned,
+    DashStoreMenu,
+    DashStoreFifthAvenue,
     InboxCategories,
     InboxCategoriesUpdates,
     InboxMail,
@@ -77,6 +94,20 @@ private fun Scene(scene: AdminScene, events: MutableList<String>) {
     when (scene) {
         AdminScene.DashHealth, AdminScene.DashHealthEditing, AdminScene.DashHealthHeart -> DashHealth(
             onPinnedChange = { events += "pinned:${it.joinToString(",")}" },
+        )
+        AdminScene.DashAnalytics, AdminScene.DashAnalyticsRevenue, AdminScene.DashAnalyticsMenu,
+        AdminScene.DashAnalyticsNotebook, AdminScene.DashAnalyticsRatings -> DashAnalytics(
+            onAppChange = { events += "app:$it" },
+            onMetricChange = { events += "metric:$it" },
+            onNavigate = { events += "navigate:$it" },
+        )
+        AdminScene.DashStore, AdminScene.DashStoreSaturday, AdminScene.DashStoreReturned,
+        AdminScene.DashStoreMenu, AdminScene.DashStoreFifthAvenue -> DashStore(
+            onRangeChange = { events += "range:$it" },
+            onFilterChange = { events += "filter:$it" },
+            onStoreChange = { events += "store:$it" },
+            onOrderPress = { events += "order:$it" },
+            onNavigate = { events += "navigate:$it" },
         )
         AdminScene.InboxCategories, AdminScene.InboxCategoriesUpdates -> InboxCategories(
             onCategoryChange = { events += "category:$it" },
@@ -176,6 +207,78 @@ class AdminGalleryTest {
                 compose.onNodeWithText("Heart").performScrollTo().performClick()
                 settle()
                 compose.onNodeWithText("Last 7 days").assertExists()
+            }
+            AdminScene.DashAnalytics -> {
+                compose.onNodeWithText("This week · Downloads").assertExists()
+                compose.onNodeWithText("5.6 K").assertExists()
+            }
+            AdminScene.DashAnalyticsRevenue -> {
+                compose.onNodeWithText("Revenue").performClick()
+                settle()
+                compose.onNodeWithContentDescription("Revenue", substring = true).performTouchInput {
+                    click(Offset(width * 0.5f, height * 0.5f))
+                }
+                settle()
+                assertEquals(listOf("metric:revenue"), events)
+                compose.onNodeWithText("Week 7 · Revenue").assertExists()
+                compose.onNodeWithText("15.0 K $").assertExists()
+            }
+            AdminScene.DashAnalyticsMenu -> {
+                compose.onNodeWithContentDescription("Apps").performClick()
+                settle()
+                compose.onNodeWithText("Notebook").assertExists()
+            }
+            AdminScene.DashAnalyticsNotebook -> {
+                compose.onNodeWithContentDescription("Apps").performClick()
+                settle()
+                compose.onNodeWithText("Notebook").performClick()
+                settle()
+                assertEquals(listOf("app:notebook"), events)
+                compose.onAllNodesWithText("Notebook").assertCountEquals(2)
+                compose.onNodeWithText("4.0 K").assertExists()
+            }
+            AdminScene.DashAnalyticsRatings -> {
+                compose.onNodeWithText("Ratings").performClick()
+                settle()
+                assertEquals(listOf("navigate:ratings"), events)
+                compose.onNodeWithText("This section isn't part of the sample. Choose Analytics.").assertExists()
+            }
+            AdminScene.DashStore -> {
+                compose.onNodeWithText("Weekly sales").assertExists()
+                compose.onNodeWithText("All stores").assertExists()
+            }
+            AdminScene.DashStoreSaturday -> {
+                compose.onNodeWithText("30 Days").performClick()
+                settle()
+                compose.onNodeWithContentDescription("Weekly sales", substring = true).performTouchInput {
+                    click(Offset(width * 5.5f / 7f, height * 0.6f))
+                }
+                settle()
+                assertEquals(listOf("range:30d"), events)
+                compose.onNodeWithText("Sat").assertExists()
+                compose.onNodeWithText("$142,000").assertExists()
+                compose.onNodeWithText("$5,523,350").assertExists()
+            }
+            AdminScene.DashStoreReturned -> {
+                compose.onAllNodesWithText("Returned")[0].performScrollTo().performClick()
+                settle()
+                assertEquals(listOf("filter:Returned"), events)
+                compose.onNodeWithText("Riley Chen").assertDoesNotExist()
+                compose.onNodeWithText("Avery Brooks").performSemanticsAction(SemanticsActions.OnClick)
+                assertEquals(listOf("filter:Returned", "order:W1045"), events)
+            }
+            AdminScene.DashStoreMenu -> {
+                compose.onNodeWithContentDescription("Stores").performClick()
+                settle()
+                compose.onNodeWithText("Fifth Avenue").assertExists()
+            }
+            AdminScene.DashStoreFifthAvenue -> {
+                compose.onNodeWithContentDescription("Stores").performClick()
+                settle()
+                compose.onNodeWithText("Fifth Avenue").performClick()
+                settle()
+                assertEquals(listOf("store:Fifth Avenue"), events)
+                compose.onNodeWithText("Fifth Avenue").assertExists()
             }
             AdminScene.InboxCategoriesUpdates -> {
                 compose.onNodeWithContentDescription("Updates").performClick()
