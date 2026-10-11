@@ -22,10 +22,34 @@ function readText(file) {
   return existsSync(file) ? readFileSync(file, "utf8") : ""
 }
 
-function detectXcode(cwd, target) {
+function xcodeEntries(cwd) {
   const entries = existsSync(cwd) ? readdirSync(cwd) : []
-  const project = entries.find((entry) => entry.endsWith(".xcodeproj"))
-  const manifest = entries.includes("Package.swift")
+  return {
+    project: entries.find((entry) => entry.endsWith(".xcodeproj")),
+    manifest: entries.includes("Package.swift"),
+  }
+}
+
+function gradleModule(cwd) {
+  return [cwd, path.join(cwd, "app")].find((dir) =>
+    GRADLE_FILES.some((file) =>
+      ANDROID_PLUGIN.test(
+        readText(path.join(dir, file)).replace(/^.*\bapply\s+false.*$/gm, "")
+      )
+    )
+  )
+}
+
+export function detectNativePlatforms(cwd) {
+  const { project, manifest } = xcodeEntries(cwd)
+  return [
+    ...(project || manifest ? ["swift"] : []),
+    ...(gradleModule(cwd) ? ["kotlin"] : []),
+  ]
+}
+
+function detectXcode(cwd, target) {
+  const { project, manifest } = xcodeEntries(cwd)
   if (!project && !manifest) {
     throw new CliError(
       `No Xcode project or Package.swift found in ${cwd}. Run this in your app folder or pass --cwd.`
@@ -48,13 +72,7 @@ function detectXcode(cwd, target) {
 }
 
 function detectGradle(cwd, target) {
-  const module = [cwd, path.join(cwd, "app")].find((dir) =>
-    GRADLE_FILES.some((file) =>
-      ANDROID_PLUGIN.test(
-        readText(path.join(dir, file)).replace(/^.*\bapply\s+false.*$/gm, "")
-      )
-    )
-  )
+  const module = gradleModule(cwd)
   if (!module) {
     throw new CliError(
       `No Android Gradle module found in ${cwd}. Run this in your app module or pass --cwd.`

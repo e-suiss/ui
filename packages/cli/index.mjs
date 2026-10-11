@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 
 import { add } from "./lib/add.mjs"
 import { init } from "./lib/init.mjs"
-import { addNative, initNative } from "./lib/native.mjs"
-import { CliError, color } from "./lib/output.mjs"
+import { addNative, detectNativePlatforms, initNative } from "./lib/native.mjs"
+import { CliError, choose, color, step } from "./lib/output.mjs"
 
 const { name, version } = JSON.parse(
   readFileSync(new URL("./package.json", import.meta.url), "utf8")
@@ -25,7 +25,8 @@ Options:
   -s, --styling <uniwind|nativewind|stylesheet>
                    styling to use (detected from the project when omitted)
   -p, --platform <rn|swift|kotlin>
-                   React Native (default), SwiftUI or Jetpack Compose sources
+                   React Native, SwiftUI or Jetpack Compose sources
+                   (detected from the project when omitted)
   --path <dir>     where SwiftUI or Compose files go, relative to --cwd
                    (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)
   -c, --cwd <dir>  project directory (defaults to the current directory)
@@ -33,9 +34,14 @@ Options:
   -v, --version    show the version
 
 Supports React Native and Expo projects with TypeScript, Xcode projects and
-Swift packages (--platform swift), and Android Gradle modules (--platform kotlin).`
+Swift packages, and Android Gradle modules.`
 
 const PLATFORMS = ["rn", "swift", "kotlin"]
+const PLATFORM_TITLES = {
+  rn: "React Native",
+  swift: "SwiftUI",
+  kotlin: "Jetpack Compose",
+}
 
 function parseArgs(args) {
   const options = {
@@ -44,7 +50,6 @@ function parseArgs(args) {
     overwrite: false,
     diff: false,
     all: false,
-    platform: "rn",
   }
   const names = []
 
@@ -101,10 +106,53 @@ function parseArgs(args) {
         names.push(arg)
     }
   }
+  return { options, names }
+}
+
+function isReactNative(cwd) {
+  const manifest = path.join(cwd, "package.json")
+  if (!existsSync(manifest)) return false
+  const { dependencies, devDependencies } = JSON.parse(
+    readFileSync(manifest, "utf8")
+  )
+  const packages = { ...dependencies, ...devDependencies }
+  return Boolean(packages.expo || packages["react-native"])
+}
+
+async function resolvePlatform(options) {
+  if (!options.platform) {
+    const found = [
+      ...(isReactNative(options.cwd) ? ["rn"] : []),
+      ...detectNativePlatforms(options.cwd),
+    ]
+    if (!found.length) {
+      throw new CliError(
+        `No React Native, Xcode or Android Gradle project found in ${options.cwd}. Run this in your project folder, or pass --cwd or --platform.`
+      )
+    }
+    if (found.length === 1) {
+      options.platform = found[0]
+      if (options.platform !== "rn") {
+        step(`Found a ${PLATFORM_TITLES[options.platform]} project.`)
+      }
+    } else if (options.yes || !process.stdin.isTTY) {
+      throw new CliError(
+        `This folder has ${found.map((platform) => PLATFORM_TITLES[platform]).join(" and ")} projects. Pick one with --platform ${found.join("|")}.`
+      )
+    } else {
+      const answer = await choose(
+        "Which project should get the components?",
+        found.map((platform) => PLATFORM_TITLES[platform])
+      )
+      options.platform = found.find(
+        (platform) => PLATFORM_TITLES[platform] === answer
+      )
+    }
+  }
   if (options.path && options.platform === "rn") {
     throw new CliError("--path works with --platform swift or kotlin.")
   }
-  return { options, names }
+  return options
 }
 
 async function main() {
@@ -113,11 +161,13 @@ async function main() {
   switch (command) {
     case "init": {
       const { options } = parseArgs(args)
+      await resolvePlatform(options)
       await (options.platform === "rn" ? init(options) : initNative(options))
       break
     }
     case "add": {
       const { options, names } = parseArgs(args)
+      await resolvePlatform(options)
       await (options.platform === "rn"
         ? add(names, options)
         : addNative(names, options))
