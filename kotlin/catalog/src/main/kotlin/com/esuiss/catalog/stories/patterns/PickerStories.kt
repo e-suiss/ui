@@ -20,7 +20,6 @@ import com.esuiss.ui.components.Text
 import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerGroup
 import com.esuiss.ui.patterns.PickerItem
-import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.patterns.PickerSeparator
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Typography
@@ -34,14 +33,6 @@ val pickerStories = StoryGroup(
     ),
 )
 
-private val pickerFruits = listOf(
-    PickerItemData("cherry", "Cherry"),
-    PickerItemData("banana", "Banana"),
-    PickerItemData("mango", "Mango"),
-    PickerItemData("carrot", "Carrot"),
-    PickerItemData("spinach", "Spinach", enabled = false),
-)
-
 @Composable
 private fun PickerDefault() {
     var value by rememberSaveable { mutableStateOf<String?>(null) }
@@ -50,7 +41,6 @@ private fun PickerDefault() {
             value = value,
             onValueChange = { value = it },
             modifier = Modifier.width(224.dp).semantics { contentDescription = "Fruit" },
-            items = pickerFruits,
             placeholder = "Select a fruit",
         ) {
             PickerGroup(label = "Fruits") {
@@ -77,24 +67,28 @@ private fun PickerStates() {
             value = fruit,
             onValueChange = { fruit = it },
             modifier = Modifier.width(224.dp),
-            items = listOf(PickerItemData("cherry", "Cherry"), PickerItemData("banana", "Banana")),
             size = SelectSize.Sm,
-        )
+        ) {
+            PickerItem("cherry", "Cherry")
+            PickerItem("banana", "Banana")
+        }
         Picker(
             value = invalid,
             onValueChange = { invalid = it },
             modifier = Modifier.width(224.dp),
-            items = listOf(PickerItemData("cherry", "Cherry")),
             placeholder = "Invalid",
             invalid = true,
-        )
+        ) {
+            PickerItem("cherry", "Cherry")
+        }
         Picker(
             value = null,
             onValueChange = {},
             modifier = Modifier.width(224.dp),
-            items = listOf(PickerItemData("cherry", "Cherry")),
             placeholder = "Disabled",
             enabled = false,
-        )
+        ) {
+            PickerItem("cherry", "Cherry")
+        }
     }
 }

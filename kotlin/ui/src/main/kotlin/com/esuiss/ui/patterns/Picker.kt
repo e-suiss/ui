@@ -8,6 +8,7 @@ import com.esuiss.ui.components.Select
 import com.esuiss.ui.components.SelectGroup
 import com.esuiss.ui.components.SelectItem
 import com.esuiss.ui.components.SelectLabel
+import com.esuiss.ui.components.SelectSeparator
 import com.esuiss.ui.components.SelectSize
 
 @Immutable
@@ -73,4 +74,5 @@ fun PickerItem(
 
 @Composable
 fun PickerSeparator() {
+    SelectSeparator()
 }

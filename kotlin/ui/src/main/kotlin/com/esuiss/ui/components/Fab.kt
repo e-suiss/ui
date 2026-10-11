@@ -58,6 +58,10 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.Plus
+import com.adamglin.phosphoricons.regular.X
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -99,7 +103,8 @@ fun Fab(
 ) {
     val transition = remember { MutableTransitionState(false) }
     transition.targetState = open
-    val rotation by animateFloatAsState(if (open) 45f else 0f, tween(250, easing = FormEasing), label = "fab")
+    val plus = icon == PhosphorIcons.Regular.Plus
+    val rotation by animateFloatAsState(if (open && plus) 45f else 0f, tween(250, easing = FormEasing), label = "fab")
     Box(modifier = Modifier.fillMaxSize()) {
         FabScrim(open, onDismiss = { onOpenChange(false) })
         FabFrame(modifier) {
@@ -123,7 +128,16 @@ fun Fab(
                         )
                     }
                 }
-                FabButton(icon, contentDescription, { onOpenChange(!open) }, size, label, enabled, rotation, expanded = open)
+                FabButton(
+                    if (open && !plus) PhosphorIcons.Regular.X else icon,
+                    contentDescription,
+                    { onOpenChange(!open) },
+                    size,
+                    label,
+                    enabled,
+                    rotation,
+                    expanded = open,
+                )
             }
         }
     }

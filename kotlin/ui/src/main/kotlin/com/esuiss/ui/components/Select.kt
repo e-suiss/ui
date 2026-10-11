@@ -22,16 +22,20 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -63,6 +67,8 @@ class SelectOption(val value: String, val label: String, val enabled: Boolean = 
 private data class SelectContext(val value: String?, val onSelect: (String) -> Unit)
 
 private val LocalSelect = staticCompositionLocalOf { SelectContext(null) {} }
+
+private val LocalSelectLabels = staticCompositionLocalOf<SnapshotStateMap<String, String>?> { null }
 
 internal fun controlBackground(colors: Colors, invalid: Boolean, enabled: Boolean): Color = when {
     !enabled -> colors.controlDisabled
@@ -124,13 +130,21 @@ fun Select(
     val isEnabled = enabled && field.enabled
     var expanded by remember { mutableStateOf(false) }
     val shape = RoundedCornerShape(size.radius)
-    val text = displayValue ?: value
+    val labels = remember { mutableStateMapOf<String, String>() }
+    val text = displayValue ?: value?.let { labels[it] ?: it }
     val foreground = when {
         !isEnabled -> colors.labelQuaternary
         text == null -> colors.labelSecondary
         else -> colors.label
     }
     Box(modifier = modifier, propagateMinConstraints = true) {
+        if (displayValue == null) {
+            Layout(
+                content = {
+                    CompositionLocalProvider(LocalSelectLabels provides labels) { Column(content = content) }
+                },
+            ) { _, _ -> layout(0, 0) {} }
+        }
         Row(
             modifier = Modifier
                 .height(size.height)
@@ -213,6 +227,14 @@ fun SelectItem(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
+    val labels = LocalSelectLabels.current
+    if (labels != null) {
+        DisposableEffect(labels, value, text) {
+            labels[value] = text
+            onDispose { labels.remove(value) }
+        }
+        return
+    }
     val colors = EsuissTheme.colors
     val select = LocalSelect.current
     val selected = select.value == value

@@ -87,6 +87,8 @@ import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
+import java.math.BigDecimal
+import java.math.MathContext
 import java.text.NumberFormat
 import kotlin.math.PI
 import kotlin.math.abs
@@ -697,8 +699,11 @@ private fun formatStep(rough: Double, correction: Int): Double {
     val unit = 10.0.pow(digits)
     val ratio = rough / unit
     val scale = if (digits != 1) 0.05 else 0.1
-    return (ceil(ratio / scale - 1e-9) + correction) * scale * unit
+    return clean((ceil(ratio / scale - 1e-9) + correction) * scale * unit)
 }
+
+private fun clean(value: Double): Double =
+    if (value.isFinite()) BigDecimal(value).round(MathContext(12)).toDouble() else value
 
 private fun niceTicks(min: Double, max: Double, count: Int): List<Double> {
     val n = max(count, 2)
@@ -710,7 +715,7 @@ private fun niceTicks(min: Double, max: Double, count: Int): List<Double> {
     while (correction < 20) {
         val step = formatStep((max - min) / (n - 1), correction)
         if (step <= 0.0) return listOf(min, max)
-        val middle = if (min <= 0 && max >= 0) 0.0 else ((min + max) / 2).let { it - it.mod(step) }
+        val middle = if (min <= 0 && max >= 0) 0.0 else ((min + max) / 2).let { clean(it - it.mod(step)) }
         var below = ceil((middle - min) / step - 1e-9).toInt()
         var up = ceil((max - middle) / step - 1e-9).toInt()
         val total = below + up + 1
@@ -721,7 +726,7 @@ private fun niceTicks(min: Double, max: Double, count: Int): List<Double> {
         if (total < n) {
             if (max > 0) up += n - total else below += n - total
         }
-        return (0 until below + up + 1).map { middle - below * step + it * step }
+        return (0 until below + up + 1).map { clean(middle - below * step + it * step) }
     }
     return listOf(min, max)
 }

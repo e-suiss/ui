@@ -62,6 +62,7 @@ import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
 import kotlin.math.roundToInt
+import kotlinx.coroutines.flow.drop
 
 private const val Hidden = -1
 
@@ -119,9 +120,9 @@ fun Drawer(
     }
 
     LaunchedEffect(state) {
-        snapshotFlow { state.settledValue }.collect { value ->
+        snapshotFlow { state.settledValue }.drop(1).collect { value ->
             if (value == Hidden) {
-                if (currentOpen && sheetHeight > 0) currentOnOpenChange(false)
+                if (currentOpen) currentOnOpenChange(false)
             } else {
                 currentSnapPoints.getOrNull(value)?.let { currentOnSnapPointChange(it) }
             }

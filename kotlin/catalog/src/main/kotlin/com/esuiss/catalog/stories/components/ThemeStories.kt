@@ -70,9 +70,9 @@ private fun ThemePreview() {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text("Selected", style = Typography.sm, color = colors.labelSecondary)
-            Text(state.theme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold), color = colors.label)
+            Text(state.theme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold))
             Text("Showing", Modifier.padding(top = 8.dp), style = Typography.sm, color = colors.labelSecondary)
-            Text(state.resolvedTheme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold), color = colors.label)
+            Text(state.resolvedTheme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold))
         }
     }
 }

@@ -322,10 +322,8 @@ private fun chartTotal(value: Double): String = NumberFormat.getNumberInstance()
     maximumFractionDigits = 1
 }.format(value)
 
-private fun chartTick(value: Double): String {
-    val rounded = Math.round(value * 1_000_000.0) / 1_000_000.0
-    return if (rounded == Math.floor(rounded)) rounded.toLong().toString() else rounded.toString()
-}
+private fun chartTick(value: Double): String =
+    if (value == Math.floor(value)) value.toLong().toString() else value.toString()
 
 @Composable
 private fun ChartSetting(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {

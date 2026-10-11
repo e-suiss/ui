@@ -137,21 +137,27 @@ fun ThemeProvider(
     val snapshot = rememberGraphicsLayer()
     CompositionLocalProvider(LocalThemeState provides state) {
         EsuissTheme(darkTheme = state.resolvedTheme == ResolvedTheme.Dark) {
-            Box(
-                modifier = Modifier.drawWithContent {
-                    if (state.fade == ThemeFade.Capture) {
-                        snapshot.record { this@drawWithContent.drawContent() }
-                    }
-                    drawContent()
-                    val alpha = state.overlay.value
-                    if (alpha > 0f) {
-                        snapshot.alpha = alpha
-                        drawLayer(snapshot)
-                    }
-                },
-                propagateMinConstraints = true,
+            val label = EsuissTheme.colors.label
+            CompositionLocalProvider(
+                LocalContentStyle provides LocalContentStyle.current.copy(color = label),
+                LocalContentColor provides label,
             ) {
-                content()
+                Box(
+                    modifier = Modifier.drawWithContent {
+                        if (state.fade == ThemeFade.Capture) {
+                            snapshot.record { this@drawWithContent.drawContent() }
+                        }
+                        drawContent()
+                        val alpha = state.overlay.value
+                        if (alpha > 0f) {
+                            snapshot.alpha = alpha
+                            drawLayer(snapshot)
+                        }
+                    },
+                    propagateMinConstraints = true,
+                ) {
+                    content()
+                }
             }
         }
     }
