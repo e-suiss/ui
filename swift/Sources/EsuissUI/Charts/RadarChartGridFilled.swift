@@ -1,0 +1,42 @@
+import SwiftUI
+
+private let chartData: [(skill: String, thisMonth: Double, lastMonth: Double)] = [
+  ("Cardio", 86, 72),
+  ("Strength", 62, 58),
+  ("Flexibility", 48, 55),
+  ("Balance", 70, 60),
+  ("Endurance", 80, 66),
+  ("Speed", 74, 70),
+]
+
+private let chartConfig: ChartConfig = [
+  "thisMonth": .init("This month", color: .green),
+  "lastMonth": .init("Last month", color: .gray),
+]
+
+public struct RadarChartGridFilled: View {
+  @State private var selection: Int?
+
+  public init() {}
+
+  public var body: some View {
+    Card(.filled, size: .sm) {
+      CardHeader("Filled grid", description: "Shaded rings")
+      CardContent {
+        ChartContainer(config: chartConfig) {
+          RadarChart(
+            [Radar("thisMonth", values: chartData.map(\.thisMonth), fillOpacity: 0.45, strokeWidth: 0)],
+            labels: chartData.map(\.skill),
+            outerRadius: 0.7,
+            grid: PolarGrid(gridType: .circle, stroke: .surfaceSecondary, strokeWidth: 2, fill: .control, fillOpacity: 0.5),
+            selection: $selection,
+            accessibilityLabel: "Filled grid"
+          ) { payload in
+            ChartTooltipContent(payload, indicator: .line)
+          }
+        }
+        .frame(height: 224)
+      }
+    }
+  }
+}

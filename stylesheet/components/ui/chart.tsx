@@ -61,6 +61,7 @@ type ChartConfig = Record<
 const DEFAULT_COLORS: ChartPrimitive.DefaultColors = {
   grid: "separator",
   cursor: "separator",
+  spoke: "separator-strong",
   reference: "separator",
   fallback: "label",
 }
@@ -351,6 +352,21 @@ function RadialBarChart(
   )
 }
 
+function RadarChart(
+  props: ChartRootProps &
+    Pick<ChartPrimitive.RootProps, "data" | "margin" | "outerRadius" | "cy">
+) {
+  return (
+    <ChartPrimitive.Root
+      kind="radar"
+      colors={DEFAULT_COLORS}
+      renderSurface={renderSurface}
+      renderText={renderText}
+      {...props}
+    />
+  )
+}
+
 const CartesianGrid: (props: ChartPrimitive.CartesianGridProps) => null =
   ChartPrimitive.CartesianGrid
 
@@ -389,8 +405,19 @@ const Pie: (props: ChartPrimitive.PieProps<ChartColor>) => null =
 const RadialBar: (props: ChartPrimitive.RadialBarProps<ChartColor>) => null =
   ChartPrimitive.RadialBar
 
-const PolarAngleAxis: (props: ChartPrimitive.PolarAngleAxisProps) => null =
-  ChartPrimitive.PolarAngleAxis
+const PolarAngleAxis: (
+  props: Omit<ChartPrimitive.PolarAngleAxisProps, "tickClassName">
+) => null = ChartPrimitive.PolarAngleAxis
+
+const PolarRadiusAxis: (
+  props: Omit<ChartPrimitive.PolarRadiusAxisProps, "tickClassName">
+) => null = ChartPrimitive.PolarRadiusAxis
+
+const PolarGrid: (props: ChartPrimitive.PolarGridProps<ChartColor>) => null =
+  ChartPrimitive.PolarGrid
+
+const Radar: (props: ChartPrimitive.RadarProps<ChartColor>) => null =
+  ChartPrimitive.Radar
 
 const ChartTooltip: (props: ChartPrimitive.TooltipProps<ChartColor>) => null =
   ChartPrimitive.Tooltip
@@ -633,6 +660,10 @@ export {
   Pie,
   PieChart,
   PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
   RadialBar,
   RadialBarChart,
   ReferenceArea,

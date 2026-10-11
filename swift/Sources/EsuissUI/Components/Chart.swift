@@ -456,7 +456,7 @@ struct ChartLegendLayout: Layout {
 }
 
 enum ChartSelectionAxis {
-  case x, y, angle, radius
+  case x, y, angle, radius, spoke
 }
 
 struct ChartTooltipModifier<Value: Plottable & Hashable, Tooltip: View>: ViewModifier {
@@ -575,7 +575,7 @@ struct ChartTooltipModifier<Value: Plottable & Hashable, Tooltip: View>: ViewMod
         .overlay(alignment: .topLeading) {
           polarTooltip
         }
-    case .radius:
+    case .radius, .spoke:
       content
         .onGeometryChange(for: CGSize.self) { $0.size } action: { size = $0 }
         .contentShape(Rectangle())
@@ -634,6 +634,9 @@ struct ChartTooltipModifier<Value: Plottable & Hashable, Tooltip: View>: ViewMod
   }
 
   private func trailing(_ index: Int) -> Bool {
+    if axis == .spoke {
+      return sin(2 * .pi * Double(index) / Double(max(values.count, 1))) < -0.0001
+    }
     guard axis == .angle else { return false }
     let numbers = values.map { Self.number($0) ?? 0 }
     let total = numbers.reduce(0, +)
@@ -692,7 +695,7 @@ struct ChartTooltipModifier<Value: Plottable & Hashable, Tooltip: View>: ViewMod
       CGPoint(x: plot.minX + (proxy.position(forX: values[index]) ?? 0), y: 0)
     case .y:
       CGPoint(x: plot.maxX, y: plot.minY + (proxy.position(forY: values[index]) ?? 0))
-    case .angle, .radius:
+    case .angle, .radius, .spoke:
       .zero
     }
   }
@@ -793,7 +796,7 @@ struct ChartTooltipLayout: Layout {
         x: bounds.minX + anchor.x - size.width,
         y: min(max(bounds.minY, bounds.minY + anchor.y - size.height / 2), bounds.maxY - size.height)
       )
-    case .angle, .radius:
+    case .angle, .radius, .spoke:
       origin = CGPoint(x: anchor.x > 0 ? bounds.maxX - size.width : bounds.minX, y: bounds.minY)
     }
     view.place(at: origin, anchor: .topLeading, proposal: ProposedViewSize(size))
@@ -1149,5 +1152,438 @@ struct ChartArc: Shape {
       line.closeSubpath()
     }
     return line.strokedPath(StrokeStyle(lineWidth: thickness, lineCap: rounded ? .round : .butt, lineJoin: .round))
+  }
+}
+
+public enum PolarGridType: CaseIterable, Sendable {
+  case polygon, circle
+}
+
+public struct PolarGrid: Sendable {
+  public var gridType: PolarGridType
+  public var stroke: Color
+  public var strokeWidth: CGFloat
+  public var fill: Color?
+  public var fillOpacity: Double
+
+  public init(
+    gridType: PolarGridType = .polygon,
+    stroke: Color = .separator,
+    strokeWidth: CGFloat = 1,
+    fill: Color? = nil,
+    fillOpacity: Double = 1
+  ) {
+    self.gridType = gridType
+    self.stroke = stroke
+    self.strokeWidth = strokeWidth
+    self.fill = fill
+    self.fillOpacity = fillOpacity
+  }
+}
+
+public struct PolarAngleAxis: Sendable {
+  public var textStyle: TextStyle
+  public var highlightsSelection: Bool
+
+  public init(textStyle: TextStyle = .xs, highlightsSelection: Bool = false) {
+    self.textStyle = textStyle
+    self.highlightsSelection = highlightsSelection
+  }
+}
+
+public struct PolarRadiusAxis: Sendable {
+  public var angle: Angle
+  public var tickCount: Int
+
+  public init(angle: Angle, tickCount: Int = 5) {
+    self.angle = angle
+    self.tickCount = tickCount
+  }
+}
+
+public struct Radar: Identifiable, Sendable {
+  public let key: String
+  public let values: [Double]
+  public var color: Color?
+  public var fillOpacity: Double
+  public var strokeWidth: CGFloat
+  public var strokeOpacity: Double
+  public var dot: CGFloat?
+
+  public var id: String { key }
+
+  public init(
+    _ key: String,
+    values: [Double],
+    color: Color? = nil,
+    fillOpacity: Double = 0.3,
+    strokeWidth: CGFloat = 2,
+    strokeOpacity: Double = 1,
+    dot: CGFloat? = nil
+  ) {
+    self.key = key
+    self.values = values
+    self.color = color
+    self.fillOpacity = fillOpacity
+    self.strokeWidth = strokeWidth
+    self.strokeOpacity = strokeOpacity
+    self.dot = dot
+  }
+}
+
+public struct RadarChart<Tooltip: View>: View {
+  let series: [Radar]
+  let labels: [String]
+  let domain: ClosedRange<Double>?
+  let outerRadius: CGFloat
+  let center: UnitPoint
+  let margin: EdgeInsets
+  let grid: PolarGrid?
+  let angleAxis: PolarAngleAxis
+  let radiusAxis: PolarRadiusAxis?
+  let selection: Binding<Int?>?
+  let sticky: Bool
+  let summary: String?
+  let items: ((Int) -> [ChartTooltipItem])?
+  let tooltip: (ChartTooltipPayload) -> Tooltip
+
+  @State private var owned: Int?
+  @Environment(\.chartConfig) private var config
+
+  public init(
+    _ series: [Radar],
+    labels: [String],
+    domain: ClosedRange<Double>? = nil,
+    outerRadius: CGFloat = 0.8,
+    center: UnitPoint = .center,
+    margin: EdgeInsets = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5),
+    grid: PolarGrid? = PolarGrid(),
+    angleAxis: PolarAngleAxis = PolarAngleAxis(),
+    radiusAxis: PolarRadiusAxis? = nil,
+    selection: Binding<Int?>? = nil,
+    defaultIndex: Int? = nil,
+    sticky: Bool = true,
+    accessibilityLabel: String? = nil,
+    items: ((Int) -> [ChartTooltipItem])? = nil,
+    @ViewBuilder tooltip: @escaping (ChartTooltipPayload) -> Tooltip
+  ) {
+    self.series = series
+    self.labels = labels
+    self.domain = domain
+    self.outerRadius = outerRadius
+    self.center = center
+    self.margin = margin
+    self.grid = grid
+    self.angleAxis = angleAxis
+    self.radiusAxis = radiusAxis
+    self.selection = selection
+    self.sticky = sticky
+    summary = accessibilityLabel
+    self.items = items
+    self.tooltip = tooltip
+    _owned = State(initialValue: defaultIndex)
+  }
+
+  private var current: Int? {
+    guard let value = selection?.wrappedValue ?? owned, labels.indices.contains(value) else { return nil }
+    return value
+  }
+
+  public var body: some View {
+    GeometryReader { geometry in
+      let layout = RadarLayout(chart: self, size: geometry.size)
+      ZStack(alignment: .topLeading) {
+        if let grid {
+          gridView(grid, layout: layout)
+        }
+        if let index = current {
+          ChartSpokes(center: layout.center, radius: layout.outer, angles: [layout.angle(index)])
+            .stroke(Color.separatorStrong, lineWidth: 1)
+        }
+        ForEach(series) { radar in
+          let color = radar.color ?? config.color(radar.key)
+          let ratios = ChartVector(values: radar.values.map(layout.ratio))
+          ZStack {
+            RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
+              .fill(color)
+              .opacity(radar.fillOpacity)
+            if radar.strokeWidth > 0 {
+              RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
+                .stroke(color, style: StrokeStyle(lineWidth: radar.strokeWidth, lineJoin: .round))
+                .opacity(radar.strokeOpacity)
+            }
+          }
+        }
+        ForEach(series) { radar in
+          if let dot = radar.dot {
+            let color = radar.color ?? config.color(radar.key)
+            ForEach(radar.values.indices, id: \.self) { index in
+              Circle()
+                .fill(color)
+                .frame(width: (dot + radar.strokeWidth / 2) * 2, height: (dot + radar.strokeWidth / 2) * 2)
+                .position(layout.point(index, ratio: layout.ratio(radar.values[index])))
+                .opacity(radar.strokeOpacity)
+            }
+          }
+        }
+        if let index = current {
+          ForEach(series) { radar in
+            if radar.values.indices.contains(index) {
+              Circle()
+                .fill(radar.color ?? config.color(radar.key))
+                .frame(width: 8, height: 8)
+                .position(layout.point(index, ratio: layout.ratio(radar.values[index])))
+                .opacity(radar.strokeOpacity)
+            }
+          }
+        }
+        if let radiusAxis {
+          ChartPointLayout(placements: layout.radiusTicks(radiusAxis)) {
+            ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
+              Text(verbatim: value.formatted())
+                .font(TextStyle.xs2.font())
+                .foregroundStyle(Color.labelTertiary)
+                .fixedSize()
+            }
+          }
+        }
+        ChartPointLayout(placements: labels.indices.map(layout.labelPlacement)) {
+          ForEach(labels.indices, id: \.self) { index in
+            let active = angleAxis.highlightsSelection && current == index
+            Text(LocalizedStringKey(labels[index]))
+              .font(angleAxis.textStyle.font(weight: active ? .semibold : .regular))
+              .foregroundStyle(active ? Color.label : .labelSecondary)
+              .fixedSize()
+          }
+        }
+      }
+      .frame(width: geometry.size.width, height: geometry.size.height)
+    }
+    .modifier(
+      ChartTooltipModifier(
+        axis: .spoke, values: labels.indices.map(Double.init), labels: labels,
+        selection: selection ?? $owned, defaultIndex: nil, cursor: false, sticky: sticky, summary: summary,
+        items: items ?? { index in
+          series.compactMap { radar in
+            radar.values.indices.contains(index)
+              ? ChartTooltipItem(radar.key, value: radar.values[index], color: radar.color) : nil
+          }
+        },
+        tooltip: tooltip,
+        hit: { location, size in RadarLayout(chart: self, size: size).index(at: location) }
+      )
+    )
+  }
+
+  @ViewBuilder private func gridView(_ grid: PolarGrid, layout: RadarLayout) -> some View {
+    let circle = grid.gridType == .circle
+    let radii = layout.gridRadii(radiusAxis?.tickCount ?? 5)
+    if let fill = grid.fill {
+      ChartRings(center: layout.center, radii: [radii.max() ?? 0], count: layout.count, circle: circle)
+        .fill(fill)
+        .opacity(grid.fillOpacity)
+    }
+    ChartRings(center: layout.center, radii: radii, count: layout.count, circle: circle)
+      .stroke(grid.stroke, lineWidth: grid.strokeWidth)
+    ChartSpokes(center: layout.center, radius: layout.outer, angles: (0..<layout.count).map(layout.angle))
+      .stroke(grid.stroke, lineWidth: grid.strokeWidth)
+  }
+}
+
+struct RadarLayout {
+  let center: CGPoint
+  let outer: CGFloat
+  let count: Int
+  let low: Double
+  let high: Double
+
+  init<Tooltip: View>(chart: RadarChart<Tooltip>, size: CGSize) {
+    let plot = CGRect(
+      x: chart.margin.leading,
+      y: chart.margin.top,
+      width: max(0, size.width - chart.margin.leading - chart.margin.trailing),
+      height: max(0, size.height - chart.margin.top - chart.margin.bottom)
+    )
+    center = CGPoint(x: plot.minX + plot.width * chart.center.x, y: plot.minY + plot.height * chart.center.y)
+    outer = min(plot.width, plot.height) / 2 * chart.outerRadius
+    count = max(chart.labels.count, 1)
+    low = chart.domain?.lowerBound ?? 0
+    high = chart.domain?.upperBound ?? RadialBarLayout.niceMax(chart.series.flatMap(\.values).max() ?? 1)
+  }
+
+  func angle(_ index: Int) -> Double {
+    2 * .pi * Double(index) / Double(count)
+  }
+
+  func ratio(_ value: Double) -> Double {
+    high > low ? max(0, (value - low) / (high - low)) : 0
+  }
+
+  func point(_ index: Int, ratio: Double) -> CGPoint {
+    ChartArc.point(center: center, radius: outer * CGFloat(ratio), angle: angle(index))
+  }
+
+  func gridRadii(_ ticks: Int) -> [CGFloat] {
+    let steps = max(ticks - 1, 1)
+    return (0...steps).map { outer * CGFloat($0) / CGFloat(steps) }
+  }
+
+  func radiusValues(_ axis: PolarRadiusAxis) -> [Double] {
+    let steps = max(axis.tickCount - 1, 1)
+    return (0...steps).map { low + (high - low) * Double($0) / Double(steps) }
+  }
+
+  func radiusTicks(_ axis: PolarRadiusAxis) -> [ChartPointLayout.Placement] {
+    gridRadii(axis.tickCount).map { radius in
+      ChartPointLayout.Placement(
+        point: ChartArc.point(center: center, radius: radius, angle: axis.angle.radians),
+        anchor: .bottomLeading
+      )
+    }
+  }
+
+  func labelPlacement(_ index: Int) -> ChartPointLayout.Placement {
+    let angle = angle(index)
+    let horizontal = sin(angle)
+    let vertical = cos(angle)
+    let x: CGFloat = horizontal > 0.00001 ? 0 : horizontal < -0.00001 ? 1 : 0.5
+    let y: CGFloat = abs(horizontal) <= 0.5.squareRoot() ? (vertical > 0 ? 1 : 0) : 0.5
+    return ChartPointLayout.Placement(
+      point: ChartArc.point(center: center, radius: outer + 8, angle: angle),
+      anchor: UnitPoint(x: x, y: y)
+    )
+  }
+
+  func index(at location: CGPoint) -> Int? {
+    var angle = atan2(Double(location.x - center.x), Double(center.y - location.y))
+    if angle < 0 { angle += 2 * .pi }
+    return Int((angle / (2 * .pi / Double(count))).rounded()) % count
+  }
+}
+
+struct ChartPointLayout: Layout {
+  struct Placement {
+    var point: CGPoint
+    var anchor: UnitPoint
+  }
+
+  var placements: [Placement]
+
+  func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    proposal.replacingUnspecifiedDimensions()
+  }
+
+  func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    for (index, subview) in subviews.enumerated() where placements.indices.contains(index) {
+      let placement = placements[index]
+      subview.place(
+        at: CGPoint(x: bounds.minX + placement.point.x, y: bounds.minY + placement.point.y),
+        anchor: placement.anchor,
+        proposal: .unspecified
+      )
+    }
+  }
+}
+
+struct ChartVector: VectorArithmetic {
+  var values: [Double]
+
+  static var zero: ChartVector { ChartVector(values: []) }
+
+  static func + (lhs: ChartVector, rhs: ChartVector) -> ChartVector {
+    combine(lhs, rhs, +)
+  }
+
+  static func - (lhs: ChartVector, rhs: ChartVector) -> ChartVector {
+    combine(lhs, rhs, -)
+  }
+
+  mutating func scale(by rhs: Double) {
+    values = values.map { $0 * rhs }
+  }
+
+  var magnitudeSquared: Double {
+    values.reduce(0) { $0 + $1 * $1 }
+  }
+
+  private static func combine(_ lhs: ChartVector, _ rhs: ChartVector, _ operation: (Double, Double) -> Double) -> ChartVector {
+    let count = max(lhs.values.count, rhs.values.count)
+    return ChartVector(values: (0..<count).map { index in
+      operation(
+        lhs.values.indices.contains(index) ? lhs.values[index] : 0,
+        rhs.values.indices.contains(index) ? rhs.values[index] : 0
+      )
+    })
+  }
+}
+
+struct RadarPolygon: Shape {
+  var center: CGPoint
+  var radius: CGFloat
+  var ratios: ChartVector
+
+  var animatableData: ChartVector {
+    get { ratios }
+    set { ratios = newValue }
+  }
+
+  func path(in rect: CGRect) -> Path {
+    let count = ratios.values.count
+    guard count > 0 else { return Path() }
+    var path = Path()
+    for (index, ratio) in ratios.values.enumerated() {
+      let point = ChartArc.point(
+        center: center, radius: radius * CGFloat(max(ratio, 0)), angle: 2 * .pi * Double(index) / Double(count)
+      )
+      if index == 0 {
+        path.move(to: point)
+      } else {
+        path.addLine(to: point)
+      }
+    }
+    path.closeSubpath()
+    return path
+  }
+}
+
+struct ChartRings: Shape {
+  var center: CGPoint
+  var radii: [CGFloat]
+  var count: Int
+  var circle: Bool
+
+  func path(in rect: CGRect) -> Path {
+    var path = Path()
+    for radius in radii where radius > 0 {
+      if circle {
+        path.addEllipse(in: CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2))
+      } else {
+        for index in 0..<max(count, 1) {
+          let point = ChartArc.point(center: center, radius: radius, angle: 2 * .pi * Double(index) / Double(max(count, 1)))
+          if index == 0 {
+            path.move(to: point)
+          } else {
+            path.addLine(to: point)
+          }
+        }
+        path.closeSubpath()
+      }
+    }
+    return path
+  }
+}
+
+struct ChartSpokes: Shape {
+  var center: CGPoint
+  var radius: CGFloat
+  var angles: [Double]
+
+  func path(in rect: CGRect) -> Path {
+    var path = Path()
+    for angle in angles {
+      path.move(to: center)
+      path.addLine(to: ChartArc.point(center: center, radius: radius, angle: angle))
+    }
+    return path
   }
 }

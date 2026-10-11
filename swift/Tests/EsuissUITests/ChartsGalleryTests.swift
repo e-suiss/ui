@@ -447,6 +447,47 @@ private struct RadialTooltipCase: View {
   }
 }
 
+private let radarSkills: [(skill: String, thisMonth: Double, lastMonth: Double)] = [
+  ("Cardio", 86, 72),
+  ("Strength", 62, 58),
+  ("Flexibility", 48, 55),
+  ("Balance", 70, 60),
+  ("Endurance", 80, 66),
+  ("Speed", 74, 70),
+]
+
+private struct RadarTooltipCase: View {
+  let title: LocalizedStringKey
+  let defaultIndex: Int
+  var dots = false
+
+  var body: some View {
+    let config: ChartConfig = [
+      "thisMonth": .init("This month", color: .green),
+      "lastMonth": .init("Last month", color: .gray),
+    ]
+    Card(.filled, size: .sm) {
+      CardHeader(title, description: "defaultIndex \(defaultIndex)")
+      CardContent {
+        ChartContainer(config: config) {
+          RadarChart(
+            [
+              Radar("lastMonth", values: radarSkills.map(\.lastMonth), fillOpacity: 0.18, strokeWidth: 2, dot: dots ? 4 : nil),
+              Radar("thisMonth", values: radarSkills.map(\.thisMonth), fillOpacity: 0.18, strokeWidth: 2, dot: dots ? 4 : nil),
+            ],
+            labels: radarSkills.map(\.skill),
+            outerRadius: 0.7,
+            defaultIndex: defaultIndex
+          ) { payload in
+            ChartTooltipContent(payload, indicator: .line)
+          }
+        }
+        .frame(height: 224)
+      }
+    }
+  }
+}
+
 @MainActor
 final class ChartsGalleryTests: XCTestCase {
   private var output: String {
@@ -559,5 +600,40 @@ final class ChartsGalleryTests: XCTestCase {
       RadialChartInteractive(selected: 6, filled: true)
       RadialTooltipCase()
     }, name: "charts-radial")
+  }
+
+  func testRendersRadarGallery() throws {
+    try render(board {
+      RadarChartDefault()
+      RadarChartDots()
+      RadarChartGridCircle()
+      RadarChartGridFilled()
+      RadarChartGridNone()
+      RadarChartLegend()
+      RadarChartLinesOnly()
+      RadarChartMultiple()
+      RadarChartRadiusAxis()
+      RadarTooltipCase(title: "Radar tooltip, right spoke", defaultIndex: 1)
+      RadarTooltipCase(title: "Radar tooltip, left spoke", defaultIndex: 4, dots: true)
+      RadarTooltipCase(title: "Radar tooltip, top spoke", defaultIndex: 0)
+    }, name: "charts-radar")
+    try render(board {
+      RadarChartInteractive()
+      RadarChartInteractive(selected: ["pro", "air", "lite"], axis: 2)
+    }, name: "charts-radar-interactive")
+  }
+
+  func testRadarHitPicksNearestSpoke() {
+    let chart = RadarChart(
+      [Radar("thisMonth", values: radarSkills.map(\.thisMonth))],
+      labels: radarSkills.map(\.skill)
+    ) { _ in EmptyView() }
+    let layout = RadarLayout(chart: chart, size: CGSize(width: 200, height: 200))
+    XCTAssertEqual(layout.high, 100)
+    XCTAssertEqual(layout.index(at: CGPoint(x: 100, y: 10)), 0)
+    XCTAssertEqual(layout.index(at: CGPoint(x: 190, y: 60)), 1)
+    XCTAssertEqual(layout.index(at: CGPoint(x: 104, y: 190)), 3)
+    XCTAssertEqual(layout.index(at: CGPoint(x: 10, y: 60)), 5)
+    XCTAssertEqual(layout.index(at: CGPoint(x: 96, y: 5)), 0)
   }
 }

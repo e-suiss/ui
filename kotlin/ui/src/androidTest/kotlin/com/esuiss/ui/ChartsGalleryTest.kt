@@ -91,6 +91,16 @@ import com.esuiss.ui.charts.PieChartLabel
 import com.esuiss.ui.charts.PieChartLegend
 import com.esuiss.ui.charts.PieChartNested
 import com.esuiss.ui.charts.PieChartSeparated
+import com.esuiss.ui.charts.RadarChartDefault
+import com.esuiss.ui.charts.RadarChartDots
+import com.esuiss.ui.charts.RadarChartGridCircle
+import com.esuiss.ui.charts.RadarChartGridFilled
+import com.esuiss.ui.charts.RadarChartGridNone
+import com.esuiss.ui.charts.RadarChartInteractive
+import com.esuiss.ui.charts.RadarChartLegend
+import com.esuiss.ui.charts.RadarChartLinesOnly
+import com.esuiss.ui.charts.RadarChartMultiple
+import com.esuiss.ui.charts.RadarChartRadiusAxis
 import com.esuiss.ui.charts.RadialChartBatteries
 import com.esuiss.ui.charts.RadialChartDefault
 import com.esuiss.ui.charts.RadialChartGauge
@@ -118,6 +128,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartRadius
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.ChartTooltipIndicator
+import com.esuiss.ui.components.RadarChart
 import com.esuiss.ui.components.Switch
 import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
@@ -580,6 +591,65 @@ private fun PolarRadial() {
     }
 }
 
+private class Skill(val skill: String, val thisMonth: Double, val lastMonth: Double)
+
+private val skills = listOf(
+    Skill("Cardio", 86.0, 72.0),
+    Skill("Strength", 62.0, 58.0),
+    Skill("Flexibility", 48.0, 55.0),
+    Skill("Balance", 70.0, 60.0),
+    Skill("Endurance", 80.0, 66.0),
+    Skill("Speed", 74.0, 70.0),
+)
+
+private val skillsConfig = ChartConfig(
+    "thisMonth" to ChartConfigItem("This month") { green },
+    "lastMonth" to ChartConfigItem("Last month") { gray },
+)
+
+@Composable
+private fun RadarSelected(indicator: ChartTooltipIndicator, defaultIndex: Int) {
+    val colors = EsuissTheme.colors
+    TooltipCard("Default selection", "Selected on first render") {
+        ChartContainer(skillsConfig, Modifier.fillMaxWidth().height(224.dp)) {
+            RadarChart(skills, outerRadius = 0.7f, accessibilityLabel = "Default selection") {
+                ChartTooltip(defaultIndex = defaultIndex) { ChartTooltipContent(indicator = indicator) }
+                PolarGrid(stroke = colors.separator)
+                PolarAngleAxis(label = { it.skill })
+                Radar("lastMonth", value = { it.lastMonth }, fillOpacity = 0.18f, strokeWidth = 2.dp)
+                Radar("thisMonth", value = { it.thisMonth }, fillOpacity = 0.18f, strokeWidth = 2.dp)
+            }
+        }
+    }
+}
+
+private enum class RadarScene(val content: @Composable () -> Unit) {
+    DefaultDots({
+        RadarChartDefault()
+        RadarChartDots()
+    }),
+    GridCircleFilled({
+        RadarChartGridCircle()
+        RadarChartGridFilled()
+    }),
+    GridNoneRadiusAxis({
+        RadarChartGridNone()
+        RadarChartRadiusAxis()
+    }),
+    LinesOnlyMultiple({
+        RadarChartLinesOnly()
+        RadarChartMultiple()
+    }),
+    Legend({ RadarChartLegend() }),
+    Selected({
+        RadarSelected(ChartTooltipIndicator.Line, 1)
+        RadarSelected(ChartTooltipIndicator.Dot, 3)
+    }),
+    MultipleTouched({ RadarChartMultiple() }),
+    Interactive({ RadarChartInteractive() }),
+    InteractiveTouched({ RadarChartInteractive() }),
+}
+
 private enum class ChartScene(val content: @Composable () -> Unit) {
     TooltipDotLine({
         StackedVisitors("Dot indicator", "The default") { ChartTooltipContent(indicator = ChartTooltipIndicator.Dot) }
@@ -744,6 +814,84 @@ class ChartsGalleryTest {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
                 }
             }
+        }
+    }
+
+
+    @Test
+    fun rendersRadarChartsInBothSchemes() {
+        var dark by mutableStateOf(false)
+        var scene by mutableStateOf(RadarScene.DefaultDots)
+        compose.setContent {
+            EsuissTheme(darkTheme = dark) {
+                Column(
+                    modifier = Modifier
+                        .testTag("charts")
+                        .width(402.dp)
+                        .background(EsuissTheme.colors.surface)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    key(scene, dark) { scene.content() }
+                }
+            }
+        }
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        for (current in RadarScene.entries) {
+            for (scheme in listOf(false, true)) {
+                scene = current
+                dark = scheme
+                compose.waitForIdle()
+                interactRadar(current)
+                compose.waitForIdle()
+                val bitmap = compose.onNodeWithTag("charts").captureToImage().asAndroidBitmap()
+                val name = "radar-${current.name.lowercase()}-${if (scheme) "dark" else "light"}.png"
+                File(context.getExternalFilesDir(null), name).outputStream().use {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                }
+            }
+        }
+    }
+
+    private fun interactRadar(scene: RadarScene) {
+        when (scene) {
+            RadarScene.DefaultDots -> compose.onNodeWithContentDescription("Radar chart, Cardio, Strength", substring = true).assertExists()
+            RadarScene.Selected -> {
+                compose.onNodeWithText("Strength").assertExists()
+                compose.onNodeWithText("Balance").assertExists()
+                compose.onAllNodesWithText("62").assertCountEquals(1)
+                compose.onAllNodesWithText("70").assertCountEquals(1)
+            }
+            RadarScene.MultipleTouched -> {
+                val chart = compose.onNodeWithContentDescription("Comparison", substring = true)
+                chart.performTouchInput { click(Offset(width * 0.5f, height * 0.95f)) }
+                compose.waitForIdle()
+                compose.onNodeWithText("Balance").assertExists()
+                compose.onNodeWithText("This month").assertExists()
+                chart.performTouchInput { click(Offset(width * 0.5f, height * 0.95f)) }
+                compose.waitForIdle()
+                compose.onNodeWithText("Balance").assertDoesNotExist()
+                chart.performTouchInput { click(Offset(width * 0.8f, height * 0.3f)) }
+                compose.waitForIdle()
+                compose.onNodeWithText("Strength").assertExists()
+                compose.onNodeWithText("62").assertExists()
+            }
+            RadarScene.Interactive -> {
+                compose.onAllNodesWithText("Overall score").assertCountEquals(2)
+                compose.onAllNodesWithText("82").assertCountEquals(2)
+            }
+            RadarScene.InteractiveTouched -> {
+                compose.onNodeWithText("Phone").performClick()
+                compose.waitForIdle()
+                compose.onAllNodesWithText("Overall score").assertCountEquals(3)
+                compose.onNodeWithContentDescription("Compare phone models", substring = true).performTouchInput {
+                    click(Offset(width * 0.5f + width * 0.3f, height * 0.5f - width * 0.17f))
+                }
+                compose.waitForIdle()
+                compose.onAllNodesWithText("Battery").assertCountEquals(4)
+                compose.onNodeWithText("Performance").assertDoesNotExist()
+            }
+            else -> Unit
         }
     }
 

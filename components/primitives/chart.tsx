@@ -194,7 +194,36 @@ type RadialBarProps<C extends string = string> = {
 }
 
 type PolarAngleAxisProps = {
+  dataKey?: string
   domain?: readonly [number, number]
+  tickClassName?(value: AxisTick, index: number): string | undefined
+  tickStyle?(value: AxisTick, index: number): StyleProp<TextStyle>
+}
+
+type PolarRadiusAxisProps = {
+  angle?: number
+  domain?: readonly [number, number]
+  tickCount?: number
+  tick?: boolean
+  tickClassName?: string
+  tickStyle?: StyleProp<TextStyle>
+}
+
+type PolarGridProps<C extends string = string> = {
+  gridType?: "polygon" | "circle"
+  stroke?: C
+  strokeWidth?: number
+  fill?: C
+  fillOpacity?: number
+}
+
+type RadarProps<C extends string = string> = {
+  dataKey: string
+  fill?: C
+  fillOpacity?: number
+  stroke?: C | "none"
+  strokeWidth?: number
+  dot?: ChartDot<C>
 }
 
 type TooltipItem = {
@@ -256,11 +285,19 @@ type TextItem = {
   style?: StyleProp<TextStyle>
 }
 
-type ChartKind = "line" | "area" | "bar" | "composed" | "pie" | "radial"
+type ChartKind =
+  | "line"
+  | "area"
+  | "bar"
+  | "composed"
+  | "pie"
+  | "radial"
+  | "radar"
 
 type DefaultColors = {
   grid: string
   cursor: string
+  spoke: string
   reference: string
   fallback: string
 }
@@ -331,7 +368,10 @@ const LINE_HEIGHT = 16
 const X_AXIS_HEIGHT = 30
 const TICK_SIZE = 6
 const TEXT_BOX = 160
+const TEXT_BOX_HEIGHT = 32
 const TOOLTIP_GAP = 8
+const ANGLE_TICK_SIZE = 8
+const COS_45 = Math.SQRT1_2
 const TAP_SLOP = 10
 const RADIAN = Math.PI / 180
 
@@ -393,6 +433,18 @@ function RadialBar(_: RadialBarProps) {
 }
 
 function PolarAngleAxis(_: PolarAngleAxisProps) {
+  return null
+}
+
+function PolarRadiusAxis(_: PolarRadiusAxisProps) {
+  return null
+}
+
+function PolarGrid(_: PolarGridProps) {
+  return null
+}
+
+function Radar(_: RadarProps) {
   return null
 }
 
@@ -2069,9 +2121,238 @@ function buildRadial(input: BuildInput): Scene {
   }
 }
 
+function polygonPath(points: Point[]) {
+  return `${points
+    .map(
+      (point, index) =>
+        `${index ? "L" : "M"}${round(point.x)},${round(point.y)}`
+    )
+    .join("")}Z`
+}
+
+function buildRadar(input: BuildInput): Scene {
+  const { elements, config, colors, width, height, props } = input
+  const data = props.data ?? []
+  const count = data.length
+  if (count === 0 || width <= 0 || height <= 0) return emptyScene()
+  const margin = { ...DEFAULT_MARGIN, ...props.margin }
+  const areaWidth = width - margin.left - margin.right
+  const areaHeight = height - margin.top - margin.bottom
+  const maxRadius = Math.min(Math.abs(areaWidth), Math.abs(areaHeight)) / 2
+  const cx = margin.left + percent(props.cx ?? "50%", areaWidth)
+  const cy = margin.top + percent(props.cy ?? "50%", areaHeight)
+  const outer = percent(props.outerRadius ?? "80%", maxRadius)
+  const angleAxis = propsOf(elements, PolarAngleAxis)[0]
+  const radiusAxis = propsOf(elements, PolarRadiusAxis)[0]
+  const grid = propsOf(elements, PolarGrid)[0]
+  const radars = propsOf(elements, Radar).map((radar) => ({
+    props: radar,
+    color: configColor(config, radar.dataKey, colors.fallback),
+  }))
+  const angles = data.map((_, index) => 90 - (360 / count) * index)
+  const values = radars.flatMap((radar) =>
+    data.map((datum) => toNumber(datum[radar.props.dataKey]) ?? 0)
+  )
+  const tickCount = radiusAxis?.tickCount ?? 5
+  const domain = radiusAxis?.domain
+  const ticks = domain
+    ? fixedTicks(domain[0], domain[1], tickCount)
+    : niceTicks(0, Math.max(0, ...values) || 1, tickCount)
+  const low = domain ? domain[0] : (ticks[0] ?? 0)
+  const high = domain ? domain[1] : (ticks[ticks.length - 1] ?? 1)
+  const radiusOf = (value: number) =>
+    ((value - low) / (high - low || 1)) * outer
+  const pointAt = (value: number, index: number) =>
+    polar(cx, cy, radiusOf(value), angles[index] ?? 90)
+  const shapes: Shape[] = []
+  const texts: TextItem[] = []
+  if (grid) {
+    const stroke = grid.stroke ?? colors.grid
+    const strokeWidth = grid.strokeWidth ?? 1
+    const outline = (radius: number) =>
+      grid.gridType === "circle"
+        ? ringPath(cx, cy, 0, radius)
+        : polygonPath(angles.map((angle) => polar(cx, cy, radius, angle)))
+    const radii = ticks.map(radiusOf).filter((radius) => radius > 0)
+    if (grid.fill) {
+      shapes.push({
+        key: "grid-fill",
+        d: outline(Math.max(0, ...radii)),
+        fill: grid.fill,
+        fillOpacity: grid.fillOpacity,
+        stroke,
+        strokeWidth,
+      })
+    }
+    radii.forEach((radius, index) => {
+      shapes.push({
+        key: `grid-ring-${index}`,
+        d: outline(radius),
+        stroke,
+        strokeWidth,
+      })
+    })
+    angles.forEach((angle, index) => {
+      const end = polar(cx, cy, outer, angle)
+      shapes.push(
+        line(`grid-spoke-${index}`, cx, cy, end.x, end.y, stroke, strokeWidth)
+      )
+    })
+  }
+  radars.forEach((radar, radarIndex) => {
+    const points = data.map((datum, index) =>
+      pointAt(toNumber(datum[radar.props.dataKey]) ?? 0, index)
+    )
+    const strokeWidth = radar.props.strokeWidth ?? 1
+    const stroke =
+      radar.props.stroke === "none" || strokeWidth <= 0
+        ? undefined
+        : (radar.props.stroke ?? radar.color)
+    shapes.push({
+      key: `radar-${radarIndex}`,
+      d: polygonPath(points),
+      fill: radar.props.fill ?? radar.color,
+      fillOpacity: radar.props.fillOpacity ?? 1,
+      stroke,
+      strokeWidth: stroke ? strokeWidth : 0,
+    })
+    const dot = radar.props.dot
+    if (dot) {
+      points.forEach((point, index) => {
+        shapes.push({
+          key: `radar-${radarIndex}-dot-${index}`,
+          circle: { cx: point.x, cy: point.y, r: dot.r ?? 3 },
+          fill: dot.fill ?? radar.props.fill ?? radar.color,
+          stroke: dot.stroke,
+          strokeWidth: dot.strokeWidth ?? (dot.stroke ? 1 : 0),
+        })
+      })
+    }
+  })
+  if (radiusAxis && radiusAxis.tick !== false) {
+    const angle = radiusAxis.angle ?? 0
+    ticks.forEach((tick, index) => {
+      const point = polar(cx, cy, radiusOf(tick), angle)
+      texts.push({
+        key: `radius-tick-${index}`,
+        x: point.x,
+        y: point.y,
+        value: formatNumber(tick),
+        anchor: "start",
+        baseline: "bottom",
+        role: "tick",
+        className: radiusAxis.tickClassName,
+        style: radiusAxis.tickStyle,
+      })
+    })
+  }
+  const categories = data.map((datum) => {
+    const value = angleAxis?.dataKey ? datum[angleAxis.dataKey] : undefined
+    return typeof value === "string" || typeof value === "number"
+      ? value
+      : undefined
+  })
+  categories.forEach((value, index) => {
+    if (value === undefined || !angleAxis) return
+    const angle = angles[index] ?? 90
+    const point = polar(cx, cy, outer + ANGLE_TICK_SIZE, angle)
+    const cos = Math.cos(angle * RADIAN)
+    const sin = Math.sin(angle * RADIAN)
+    texts.push({
+      key: `angle-tick-${index}`,
+      x: point.x,
+      y: point.y,
+      value: String(value),
+      anchor: cos > 1e-5 ? "start" : cos < -1e-5 ? "end" : "middle",
+      baseline:
+        Math.abs(cos) <= COS_45 ? (sin > 0 ? "bottom" : "top") : "middle",
+      role: "tick",
+      className: angleAxis.tickClassName?.(value, index),
+      style: angleAxis.tickStyle?.(value, index),
+    })
+  })
+  return {
+    shapes,
+    texts,
+    count,
+    names: radars.map(
+      (radar) => config[radar.props.dataKey]?.label ?? radar.props.dataKey
+    ),
+    legend: radars.map((radar) => ({
+      dataKey: radar.props.dataKey,
+      value: radar.props.dataKey,
+      color: radar.color,
+    })),
+    hitTest: (x, y) => {
+      const angle = Math.atan2(cy - y, x - cx) / RADIAN
+      let nearest = 0
+      let distance = Number.POSITIVE_INFINITY
+      angles.forEach((candidate, index) => {
+        const difference = Math.abs(
+          ((((angle - candidate) % 360) + 540) % 360) - 180
+        )
+        if (difference < distance) {
+          distance = difference
+          nearest = index
+        }
+      })
+      return nearest
+    },
+    items: (index) =>
+      radars.flatMap((radar) => {
+        const datum = data[index] ?? {}
+        const value = toValue(datum[radar.props.dataKey])
+        if (value === null) return []
+        return [
+          {
+            dataKey: radar.props.dataKey,
+            name: radar.props.dataKey,
+            value,
+            color: radar.color,
+            payload: datum,
+          },
+        ]
+      }),
+    label: (index) => categories[index],
+    anchor: (index) => polar(cx, cy, outer, angles[index] ?? 90),
+    overlay: (index, cursor) => {
+      const result: Shape[] = []
+      const angle = angles[index] ?? 90
+      if (cursor) {
+        const end = polar(cx, cy, outer, angle)
+        result.push(
+          line(
+            "cursor",
+            cx,
+            cy,
+            end.x,
+            end.y,
+            cursor.stroke ?? colors.spoke,
+            cursor.strokeWidth ?? 1.5
+          )
+        )
+      }
+      radars.forEach((radar, radarIndex) => {
+        const value = toNumber(data[index]?.[radar.props.dataKey])
+        if (value === null) return
+        const point = pointAt(value, index)
+        result.push({
+          key: `active-${radarIndex}`,
+          circle: { cx: point.x, cy: point.y, r: 4 },
+          fill: radar.color,
+          strokeWidth: 0,
+        })
+      })
+      return result
+    },
+    external: (index) => index,
+  }
+}
+
 function build(kind: ChartKind, input: BuildInput) {
   if (kind === "pie") return buildPie(input)
   if (kind === "radial") return buildRadial(input)
+  if (kind === "radar") return buildRadar(input)
   return buildCartesian(input)
 }
 
@@ -2112,18 +2393,18 @@ function textBox(text: TextItem) {
       : text.anchor === "end"
         ? text.x - TEXT_BOX
         : text.x - TEXT_BOX / 2
-  const top =
+  const center =
     text.baseline === "top"
-      ? text.y
+      ? text.y + LINE_HEIGHT / 2
       : text.baseline === "bottom"
-        ? text.y - LINE_HEIGHT
-        : text.y - LINE_HEIGHT / 2
+        ? text.y - LINE_HEIGHT / 2
+        : text.y
   return {
     position: "absolute" as const,
     left,
-    top,
+    top: center - TEXT_BOX_HEIGHT / 2,
     width: TEXT_BOX,
-    height: LINE_HEIGHT,
+    height: TEXT_BOX_HEIGHT,
     justifyContent: "center" as const,
     alignItems:
       text.anchor === "start"
@@ -2393,6 +2674,9 @@ export type {
   PieLabelEntry,
   PieProps,
   PolarAngleAxisProps,
+  PolarGridProps,
+  PolarRadiusAxisProps,
+  RadarProps,
   RadialBarProps,
   ReferenceAreaProps,
   ReferenceLineProps,
@@ -2420,6 +2704,9 @@ export {
   Line,
   Pie,
   PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
   RadialBar,
   ReferenceArea,
   ReferenceLine,

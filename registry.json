@@ -6274,6 +6274,232 @@
       ]
     },
     {
+      "name": "radar-chart-default",
+      "type": "chart",
+      "title": "Radar Chart Default",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-default.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-dots",
+      "type": "chart",
+      "title": "Radar Chart Dots",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-dots.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-circle",
+      "type": "chart",
+      "title": "Radar Chart Grid Circle",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-circle.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-filled",
+      "type": "chart",
+      "title": "Radar Chart Grid Filled",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-filled.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-grid-none",
+      "type": "chart",
+      "title": "Radar Chart Grid None",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-grid-none.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-interactive",
+      "type": "chart",
+      "title": "Radar Chart Interactive",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart",
+        "text",
+        "toggle"
+      ],
+      "files": [
+        "components/charts/radar-chart-interactive.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-legend",
+      "type": "chart",
+      "title": "Radar Chart Legend",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-legend.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-lines-only",
+      "type": "chart",
+      "title": "Radar Chart Lines Only",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-lines-only.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-multiple",
+      "type": "chart",
+      "title": "Radar Chart Multiple",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-multiple.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "radar-chart-radius-axis",
+      "type": "chart",
+      "title": "Radar Chart Radius Axis",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "card",
+        "chart"
+      ],
+      "files": [
+        "components/charts/radar-chart-radius-axis.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "radial-chart-batteries",
       "type": "chart",
       "title": "Radial Chart Batteries",

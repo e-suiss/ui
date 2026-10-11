@@ -241,18 +241,19 @@ fun ChartTooltipScope.ChartTooltipContent(
     labelFormatter: (@Composable (label: String, items: List<ChartTooltipItem>) -> Unit)? = null,
     formatter: (@Composable RowScope.(item: ChartTooltipItem) -> Unit)? = null,
     color: Color? = null,
+    payload: List<ChartTooltipItem> = items,
 ) {
-    if (items.isEmpty()) return
+    if (payload.isEmpty()) return
     val colors = EsuissTheme.colors
     val config = LocalChartConfig.current
     val baseStyle = Typography.xs.copy(color = colors.label)
     val labelStyle = baseStyle.copy(fontWeight = FontWeight.SemiBold)
     val labelText = config[label]?.label ?: label
     val showLabel = !hideLabel && (labelFormatter != null || labelText.isNotEmpty())
-    val nest = items.size == 1 && indicator != ChartTooltipIndicator.Dot
+    val nest = payload.size == 1 && indicator != ChartTooltipIndicator.Dot
     val tooltipLabel: @Composable () -> Unit = {
         CompositionLocalProvider(LocalContentStyle provides labelStyle) {
-            if (labelFormatter != null) labelFormatter(labelText, items) else BasicText(labelText, style = labelStyle)
+            if (labelFormatter != null) labelFormatter(labelText, payload) else BasicText(labelText, style = labelStyle)
         }
     }
     val shape = RoundedCornerShape(Radius.md)
@@ -269,7 +270,7 @@ fun ChartTooltipScope.ChartTooltipContent(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             if (showLabel && !nest) tooltipLabel()
-            for (item in items) {
+            for (item in payload) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -1923,6 +1924,308 @@ fun <T> RadialBarChart(
                     val outer = scope.bars.maxOfOrNull { ring(selected, it).second } ?: r1
                     val point = Offset(center.x, center.y - outer)
                     if (list.isNotEmpty()) TooltipOverlay(ChartTooltipScope("", list), Rect(point, point), tooltip.content)
+                }
+            }
+        }
+        val legend = scope.legend
+        if (legend != null) ChartLegendContent(legendKeys, hideIcon = legend)
+    }
+}
+
+enum class PolarGridType { Polygon, Circle }
+
+internal class PolarGridSpec(
+    val gridType: PolarGridType,
+    val stroke: Color?,
+    val strokeWidth: Dp,
+    val fill: Color?,
+    val fillOpacity: Float,
+)
+
+internal class PolarAngleAxisSpec<T>(
+    val label: (T) -> String,
+    val tickStyle: TextStyle?,
+    val activeTickStyle: TextStyle?,
+)
+
+internal class PolarRadiusAxisSpec(
+    val angle: Float,
+    val domain: ClosedFloatingPointRange<Double>?,
+    val tickCount: Int,
+    val tick: Boolean,
+    val tickStyle: TextStyle?,
+)
+
+internal class RadarSpec<T>(
+    val dataKey: String,
+    val value: (T) -> Double,
+    val fill: Color?,
+    val fillOpacity: Float,
+    val stroke: Color?,
+    val strokeWidth: Dp,
+    val strokeOpacity: Float,
+    val dot: ChartDot?,
+    val activeDot: ChartDot?,
+)
+
+class RadarChartScope<T> internal constructor() {
+    internal var grid: PolarGridSpec? = null
+    internal var angleAxis: PolarAngleAxisSpec<T>? = null
+    internal var radiusAxis: PolarRadiusAxisSpec? = null
+    internal val radars = mutableListOf<RadarSpec<T>>()
+    internal var tooltip: ChartTooltipSpec? = null
+    internal var legend: Boolean? = null
+
+    fun PolarGrid(
+        gridType: PolarGridType = PolarGridType.Polygon,
+        stroke: Color? = null,
+        strokeWidth: Dp = 1.dp,
+        fill: Color? = null,
+        fillOpacity: Float = 1f,
+    ) {
+        grid = PolarGridSpec(gridType, stroke, strokeWidth, fill, fillOpacity)
+    }
+
+    fun PolarAngleAxis(
+        label: (T) -> String,
+        tickStyle: TextStyle? = null,
+        activeTickStyle: TextStyle? = null,
+    ) {
+        angleAxis = PolarAngleAxisSpec(label, tickStyle, activeTickStyle)
+    }
+
+    fun PolarRadiusAxis(
+        angle: Float = 0f,
+        domain: ClosedFloatingPointRange<Double>? = null,
+        tickCount: Int = 5,
+        tick: Boolean = true,
+        tickStyle: TextStyle? = null,
+    ) {
+        radiusAxis = PolarRadiusAxisSpec(angle, domain, tickCount, tick, tickStyle)
+    }
+
+    fun Radar(
+        dataKey: String,
+        value: (T) -> Double,
+        fill: Color? = null,
+        fillOpacity: Float = 1f,
+        stroke: Color? = null,
+        strokeWidth: Dp = 1.dp,
+        strokeOpacity: Float = 1f,
+        dot: ChartDot? = null,
+        activeDot: ChartDot? = ChartDot(4.dp),
+    ) {
+        radars += RadarSpec(dataKey, value, fill, fillOpacity, stroke, strokeWidth, strokeOpacity, dot, activeDot)
+    }
+
+    fun ChartTooltip(
+        defaultIndex: Int? = null,
+        cursor: ChartCursor? = ChartCursor(),
+        content: @Composable ChartTooltipScope.() -> Unit = { ChartTooltipContent() },
+    ) {
+        tooltip = ChartTooltipSpec(defaultIndex, cursor, content)
+    }
+
+    fun ChartLegend(hideIcon: Boolean = false) {
+        legend = hideIcon
+    }
+}
+
+private class RadarTick(val layout: TextLayoutResult, val topLeft: Offset, val rotation: Float, val pivot: Offset)
+
+@Composable
+fun <T> RadarChart(
+    data: List<T>,
+    modifier: Modifier = Modifier,
+    margin: ChartMargin = ChartMargin(),
+    outerRadius: Float = 0.8f,
+    cy: Float = 0.5f,
+    accessibilityLabel: String? = null,
+    selectedIndex: Int? = null,
+    onSelectedIndexChange: ((Int?) -> Unit)? = null,
+    content: RadarChartScope<T>.() -> Unit,
+) {
+    val scope = RadarChartScope<T>().apply(content)
+    val config = LocalChartConfig.current
+    val colors = EsuissTheme.colors
+    val density = LocalDensity.current
+    val measurer = rememberTextMeasurer()
+    val tooltip = scope.tooltip
+    val (selected, select) = rememberSelection(tooltip?.defaultIndex, selectedIndex, onSelectedIndexChange)
+    val interactive = tooltip != null || onSelectedIndexChange != null
+    val n = data.size
+    val angleAxis = scope.angleAxis
+    val radiusAxis = scope.radiusAxis
+    fun categoryLabel(i: Int) = angleAxis?.label?.invoke(data[i]) ?: ""
+    fun color(radar: RadarSpec<T>) = radar.fill ?: radar.stroke ?: configColor(config, radar.dataKey, colors)
+    fun items(i: Int) = scope.radars.map { radar ->
+        ChartTooltipItem(radar.dataKey, radar.dataKey, radar.value(data[i]), null, color(radar), i, data[i])
+    }
+    fun describe(i: Int): String {
+        val label = categoryLabel(i).let { config[it]?.label ?: it }
+        val values = items(i).joinToString(", ") { "${config[it.key]?.label ?: it.key} ${itemValueText(it)}" }
+        return if (label.isEmpty()) values else "$label: $values"
+    }
+    val description = listOfNotNull(
+        accessibilityLabel,
+        if (angleAxis != null && n > 0) (0 until n).joinToString(", ") { categoryLabel(it) } else null,
+    ).joinToString(", ")
+    val legendKeys = scope.radars.map { it.dataKey }
+    val ticks = run {
+        val domain = radiusAxis?.domain
+        val count = radiusAxis?.tickCount ?: 5
+        if (domain != null) {
+            niceTicks(domain.start, domain.endInclusive, count).filter { it >= domain.start - 1e-9 && it <= domain.endInclusive + 1e-9 }
+        } else {
+            val max = scope.radars.flatMap { radar -> data.map(radar.value) }.maxOrNull()?.coerceAtLeast(0.0) ?: 1.0
+            niceTicks(0.0, max, count)
+        }
+    }
+    val lo = radiusAxis?.domain?.start ?: ticks.first()
+    val hi = radiusAxis?.domain?.endInclusive ?: ticks.last()
+    val tickStyle = Typography.xs.copy(color = colors.labelSecondary)
+
+    Column(modifier.fillMaxSize()) {
+        BoxWithConstraints(
+            Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+        ) {
+            val px = { dp: Dp -> with(density) { dp.toPx() } }
+            val left = px(margin.left)
+            val top = px(margin.top)
+            val innerWidth = constraints.maxWidth - left - px(margin.right)
+            val innerHeight = constraints.maxHeight - top - px(margin.bottom)
+            val center = Offset(left + innerWidth / 2f, top + cy * innerHeight)
+            val radius = outerRadius * min(innerWidth, innerHeight) / 2f
+            val span = (hi - lo).takeIf { it != 0.0 } ?: 1.0
+            fun radiusOf(v: Double) = (((v - lo) / span).toFloat() * radius).coerceAtLeast(0f)
+            fun angleOf(i: Int) = 90f - 360f * i / n.coerceAtLeast(1)
+            fun vertex(radar: RadarSpec<T>, i: Int) = polar(center, radiusOf(radar.value(data[i])), angleOf(i))
+            val hit: (Offset) -> Int? = { offset ->
+                if (n == 0) {
+                    null
+                } else {
+                    val angle = atan2(-(offset.y - center.y), offset.x - center.x) * 180f / PI.toFloat()
+                    val step = 360f / n
+                    (((90f - angle) / step).roundToInt() % n + n) % n
+                }
+            }
+            val hitState = rememberUpdatedState(hit)
+            val selectedState = rememberUpdatedState(selected)
+            val selectState = rememberUpdatedState(select)
+            val angleTicks = if (angleAxis != null) {
+                (0 until n).map { i ->
+                    val active = i == selected && angleAxis.activeTickStyle != null
+                    val base = angleAxis.tickStyle?.let { tickStyle.merge(it) } ?: tickStyle
+                    val style = if (active) base.merge(angleAxis.activeTickStyle) else base
+                    val layout = measure(measurer, categoryLabel(i), style)
+                    val a = angleOf(i)
+                    val point = polar(center, radius + px(8.dp), a)
+                    val rad = a * PI.toFloat() / 180f
+                    val cos = cos(rad)
+                    val sin = -sin(rad)
+                    val w = layout.size.width.toFloat()
+                    val x = when {
+                        cos > 1e-5f -> point.x
+                        cos < -1e-5f -> point.x - w
+                        else -> point.x - w / 2f
+                    }
+                    val cap = 0.71f * with(density) { style.fontSize.toPx() }
+                    val baseline = when {
+                        abs(cos) <= cos(PI.toFloat() / 4f) && sin > 0f -> point.y + cap
+                        abs(cos) <= cos(PI.toFloat() / 4f) -> point.y
+                        else -> point.y + cap / 2f
+                    }
+                    RadarTick(layout, Offset(x, baseline - layout.firstBaseline), 0f, point)
+                }
+            } else {
+                emptyList()
+            }
+            val radiusTicks = if (radiusAxis != null && radiusAxis.tick) {
+                val style = radiusAxis.tickStyle?.let { tickStyle.merge(it) } ?: tickStyle
+                ticks.map { value ->
+                    val layout = measure(measurer, chartNumber(value), style)
+                    val point = polar(center, radiusOf(value), radiusAxis.angle)
+                    RadarTick(layout, Offset(point.x, point.y - layout.firstBaseline), 90f - radiusAxis.angle, point)
+                }
+            } else {
+                emptyList()
+            }
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .chartSemantics(description, interactive, n, selected, ::describe, select)
+                    .chartGestures(interactive, hitState, selectedState, selectState),
+            ) {
+                Canvas(Modifier.fillMaxSize()) {
+                    val grid = scope.grid
+                    if (grid != null && n > 0) {
+                        val stroke = grid.stroke ?: colors.separator
+                        val width = grid.strokeWidth.toPx()
+                        fun ring(r: Float): Path = Path().apply {
+                            if (grid.gridType == PolarGridType.Circle) {
+                                addOval(Rect(center, r))
+                            } else {
+                                for (i in 0 until n) {
+                                    val p = polar(center, r, angleOf(i))
+                                    if (i == 0) moveTo(p.x, p.y) else lineTo(p.x, p.y)
+                                }
+                                close()
+                            }
+                        }
+                        val radii = ticks.map(::radiusOf).filter { it > 0f }
+                        val outer = radii.maxOrNull() ?: radius
+                        if (grid.fill != null) {
+                            val path = ring(outer)
+                            drawPath(path, grid.fill, alpha = grid.fillOpacity)
+                            drawPath(path, stroke, style = Stroke(width, join = StrokeJoin.Round))
+                        }
+                        for (i in 0 until n) drawLine(stroke, center, polar(center, outer, angleOf(i)), width)
+                        for (r in radii) drawPath(ring(r), stroke, style = Stroke(width, join = StrokeJoin.Round))
+                    }
+                    val cursor = tooltip?.cursor
+                    if (cursor != null && selected != null && selected in 0 until n) {
+                        drawLine(cursor.color ?: colors.separatorStrong, center, polar(center, radius, angleOf(selected)), max(cursor.width.toPx(), 1.5.dp.toPx()))
+                    }
+                    for (radar in scope.radars) {
+                        if (n == 0) break
+                        val path = Path()
+                        for (i in 0 until n) {
+                            val p = vertex(radar, i)
+                            if (i == 0) path.moveTo(p.x, p.y) else path.lineTo(p.x, p.y)
+                        }
+                        path.close()
+                        val fill = radar.fill ?: configColor(config, radar.dataKey, colors)
+                        if (radar.fillOpacity > 0f) drawPath(path, fill, alpha = radar.fillOpacity)
+                        val stroke = radar.stroke ?: configColor(config, radar.dataKey, colors)
+                        if (radar.strokeWidth > 0.dp && radar.strokeOpacity > 0f) {
+                            drawPath(path, stroke, alpha = radar.strokeOpacity, style = Stroke(radar.strokeWidth.toPx(), join = StrokeJoin.Round))
+                        }
+                        val dot = radar.dot ?: continue
+                        val ring = dot.strokeColor ?: stroke.copy(alpha = stroke.alpha * radar.strokeOpacity)
+                        for (i in 0 until n) drawDot(dot.copy(strokeColor = ring), vertex(radar, i), dot.color ?: fill)
+                    }
+                    if (selected != null && selected in 0 until n) {
+                        for (radar in scope.radars) {
+                            val dot = radar.activeDot ?: continue
+                            drawDot(dot, vertex(radar, selected), dot.color ?: color(radar))
+                        }
+                    }
+                    for (tick in radiusTicks + angleTicks) {
+                        if (tick.rotation == 0f) {
+                            drawText(tick.layout, topLeft = tick.topLeft)
+                        } else {
+                            rotate(tick.rotation, tick.pivot) { drawText(tick.layout, topLeft = tick.topLeft) }
+                        }
+                    }
+                }
+                if (tooltip != null && selected != null && selected in 0 until n) {
+                    val list = items(selected)
+                    if (list.isNotEmpty()) {
+                        val point = scope.radars.map { vertex(it, selected) }.minByOrNull { it.y } ?: polar(center, radius, angleOf(selected))
+                        TooltipOverlay(ChartTooltipScope(categoryLabel(selected), list), Rect(point, point), tooltip.content)
+                    }
                 }
             }
         }
