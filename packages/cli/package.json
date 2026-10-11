@@ -1,14 +1,39 @@
 {
   "name": "@esuiss/uim",
   "version": "0.2.0",
-  "description": "Add esuiss components to React Native and Expo projects.",
+  "description": "Copy-paste React Native components with a clean, minimal design for Expo and React Native, styled with Uniwind, NativeWind or StyleSheet. CLI that copies components into your app.",
+  "keywords": [
+    "react-native",
+    "expo",
+    "components",
+    "ui",
+    "ui-components",
+    "component-library",
+    "design-system",
+    "uniwind",
+    "nativewind",
+    "tailwindcss",
+    "stylesheet",
+    "ios",
+    "android",
+    "mobile",
+    "accessibility",
+    "cli",
+    "copy-paste",
+    "typescript",
+    "reanimated",
+    "phosphor-icons"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/e-suiss/uim.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/e-suiss/uim",
+  "bugs": {
+    "url": "https://github.com/e-suiss/uim/issues"
+  },
+  "homepage": "https://uim.suiss.app",
   "type": "module",
   "bin": {
     "esuiss-uim": "index.mjs"

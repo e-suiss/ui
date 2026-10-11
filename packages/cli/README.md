@@ -1,6 +1,8 @@
 # @esuiss/uim
 
-Add esuiss components to React Native and Expo projects.
+Copy-paste React Native components with a clean, minimal design for Expo and React Native projects, styled with [Uniwind](https://uniwind.dev), [NativeWind](https://www.nativewind.dev) or plain StyleSheet.
+
+**[Documentation](https://uim.suiss.app/docs)** · [Components](https://uim.suiss.app/docs/components) · [CLI reference](https://uim.suiss.app/docs/cli) · [GitHub](https://github.com/e-suiss/uim)
 
 ```bash
 npx @esuiss/uim@latest init
