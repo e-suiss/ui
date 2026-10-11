@@ -14,12 +14,12 @@ let package = Package(
     .target(
       name: "EsuissUI",
       dependencies: [.product(name: "PhosphorSwift", package: "swift")],
-      path: "swift/Sources/EsuissUI"
+      path: "Sources/EsuissUI"
     ),
     .testTarget(
       name: "EsuissUITests",
       dependencies: ["EsuissUI", .product(name: "PhosphorSwift", package: "swift")],
-      path: "swift/Tests/EsuissUITests"
+      path: "Tests/EsuissUITests"
     ),
   ]
 )

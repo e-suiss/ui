@@ -100,7 +100,7 @@ Git hooks are installed by `pnpm install`:
 - `styles/uniwind.css`: the theme and Uniwind setup, written to the project stylesheet by `init`. Colors use the same values as the web library.
 - `nativewind/components/ui/`, `styles/nativewind.css` and `styles/nativewind.config.js`: the NativeWind v4 versions, generated from the Uniwind sources by `pnpm nativewind`. They use precomputed color tokens such as `bg-destructive-10` instead of opacity modifiers on theme colors, and Tailwind CSS v3 class names. Don't edit them by hand.
 - `stylesheet/components/ui/`: the StyleSheet versions, written by hand with `theme.ts`. Keep them in step with the Uniwind components when you change one.
-- `swift/` and `Package.swift`: the SwiftUI package `EsuissUI`.
+- `swiftui/`: the SwiftUI package `EsuissUI` and its catalog app, published to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) on every release.
 - `kotlin/`: the Jetpack Compose library.
 - `stories/`: one Storybook file per component, rendered on the device. Light and dark mode follow the system appearance.
 - `packages/cli/`: the `@esuiss/uim` command.

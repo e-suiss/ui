@@ -14,7 +14,7 @@ import { convertColors, loadTokens, toRgb, toRgba } from "./theme.mjs"
 const ROOT = process.cwd()
 const CSS = "styles/uniwind.css"
 const THEME = "stylesheet/components/ui/theme.ts"
-const SWIFT = "swift/Sources/EsuissUI/Theme/Tokens.swift"
+const SWIFT = "swiftui/Sources/EsuissUI/Theme/Tokens.swift"
 const KOTLIN = "kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt"
 const OUTPUTS = [CSS, THEME, SWIFT, KOTLIN]
 const FORMATTED = [CSS, THEME]

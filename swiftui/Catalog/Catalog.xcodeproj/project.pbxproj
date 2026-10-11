@@ -232,7 +232,7 @@
 		};
 		C47A10000000000000000081 = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../..;
+			relativePath = ..;
 		};
 		C47A10000000000000000082 = {
 			isa = XCRemoteSwiftPackageReference;
