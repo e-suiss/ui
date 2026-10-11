@@ -31,6 +31,8 @@
       --color-link: oklch(0.522 0.1771 255.83);
       --color-focus: oklch(0.5629 0.1933 256.16);
       --color-scrim: oklch(0 0 0 / 48%);
+      --color-media: oklch(0 0 0);
+      --color-on-media: oklch(1 0 0);
       --color-danger: oklch(0.5329 0.2255 27.27);
       --color-danger-surface: oklch(0.5529 0.2255 27.27 / 8%);
       --color-danger-surface-pressed: oklch(0.5529 0.2255 27.27 / 16%);
@@ -81,6 +83,8 @@
       --color-link: oklch(0.669 0.1808 251.84);
       --color-focus: oklch(0.5629 0.1933 256.16);
       --color-scrim: oklch(0 0 0 / 48%);
+      --color-media: oklch(0 0 0);
+      --color-on-media: oklch(1 0 0);
       --color-danger: oklch(0.7033 0.2236 28.29);
       --color-danger-surface: oklch(0.6633 0.2236 28.29 / 20%);
       --color-danger-surface-pressed: oklch(0.6633 0.2236 28.29 / 36%);

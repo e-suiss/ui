@@ -28,6 +28,8 @@ extension Color {
   public static let link = Color.adaptive(light: .init(0x0066CC), dark: .init(0x2997FF))
   public static let focus = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0071E3))
   public static let scrim = Color.adaptive(light: .init(0x000000, 0.48), dark: .init(0x000000, 0.48))
+  public static let media = Color.adaptive(light: .init(0x000000), dark: .init(0x000000))
+  public static let onMedia = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0xFFFFFF))
   public static let danger = Color.adaptive(light: .init(0xD0000A), dark: .init(0xFF5447))
   public static let dangerSurface = Color.adaptive(light: .init(0xD70015, 0.08), dark: .init(0xFF453A, 0.2))
   public static let dangerSurfacePressed = Color.adaptive(light: .init(0xD70015, 0.16), dark: .init(0xFF453A, 0.36))

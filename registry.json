@@ -546,6 +546,48 @@
       ]
     },
     {
+      "name": "carousel",
+      "type": "ui",
+      "title": "Carousel",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/carousel",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/ui/carousel.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "ui",
       "title": "Checkbox",
@@ -1451,6 +1493,39 @@
       ]
     },
     {
+      "name": "page-indicator",
+      "type": "ui",
+      "title": "Page Indicator",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "primitives/haptics"
+      ],
+      "files": [
+        "components/ui/page-indicator.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "pin-pad",
       "type": "ui",
       "title": "Pin Pad",
@@ -1847,6 +1922,46 @@
       ],
       "files": [
         "components/ui/switch.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "tab-bar",
+      "type": "ui",
+      "title": "Tab Bar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-safe-area-context",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-safe-area-context",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-safe-area-context",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/haptics",
+        "primitives/tabs",
+        "primitives/use-render",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/ui/tab-bar.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2346,6 +2461,33 @@
       ]
     },
     {
+      "name": "preview",
+      "type": "pattern",
+      "title": "Preview",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "drawer",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/patterns/preview.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "search-picker",
       "type": "pattern",
       "title": "Search Picker",
@@ -2402,6 +2544,47 @@
       ]
     },
     {
+      "name": "split-view",
+      "type": "pattern",
+      "title": "Split View",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/hooks",
+        "text"
+      ],
+      "files": [
+        "components/patterns/split-view.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "table-list",
       "type": "pattern",
       "title": "Table List",
@@ -2420,6 +2603,54 @@
       ],
       "files": [
         "components/patterns/table-list.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "image-viewer",
+      "type": "interaction",
+      "title": "Image Viewer",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/image-viewer",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/interactions/image-viewer.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2459,6 +2690,48 @@
       ],
       "files": [
         "components/interactions/otp-autofill.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "preview-menu",
+      "type": "interaction",
+      "title": "Preview Menu",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-screens",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/preview-menu",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/interactions/preview-menu.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2568,6 +2841,41 @@
       ],
       "files": [
         "components/interactions/search-reveal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "section-index",
+      "type": "interaction",
+      "title": "Section Index",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "primitives/section-index",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/interactions/section-index.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2919,6 +3227,24 @@
       ]
     },
     {
+      "name": "primitives/carousel",
+      "type": "primitive",
+      "title": "Carousel",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/carousel.tsx"
+      ]
+    },
+    {
       "name": "primitives/checkbox-group",
       "type": "primitive",
       "title": "Checkbox Group",
@@ -3193,6 +3519,39 @@
       ]
     },
     {
+      "name": "primitives/image-viewer",
+      "type": "primitive",
+      "title": "Image Viewer",
+      "dependencies": {
+        "uniwind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/hooks",
+        "primitives/portal",
+        "primitives/types",
+        "primitives/use-controllable-state",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/image-viewer.tsx"
+      ]
+    },
+    {
       "name": "primitives/input",
       "type": "primitive",
       "title": "Input",
@@ -3369,6 +3728,36 @@
       ]
     },
     {
+      "name": "primitives/preview-menu",
+      "type": "primitive",
+      "title": "Preview Menu",
+      "dependencies": {
+        "uniwind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "primitives/event-details",
+        "primitives/haptics",
+        "primitives/hooks",
+        "primitives/menu",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/preview-menu.tsx"
+      ]
+    },
+    {
       "name": "primitives/progress",
       "type": "primitive",
       "title": "Progress",
@@ -3422,6 +3811,24 @@
       ],
       "files": [
         "components/primitives/radio.tsx"
+      ]
+    },
+    {
+      "name": "primitives/section-index",
+      "type": "primitive",
+      "title": "Section Index",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/haptics",
+        "primitives/types",
+        "primitives/use-render"
+      ],
+      "files": [
+        "components/primitives/section-index.tsx"
       ]
     },
     {
