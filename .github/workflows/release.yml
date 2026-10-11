@@ -45,22 +45,25 @@ jobs:
         working-directory: packages/cli
         run: npm publish
 
-      - name: Publish the Swift package
+      - name: Publish the Swift and Kotlin repositories
         env:
           SWIFT_MIRROR_KEY: ${{ secrets.SWIFT_MIRROR_KEY }}
+          KOTLIN_MIRROR_KEY: ${{ secrets.KOTLIN_MIRROR_KEY }}
         run: |
-          if [ -z "$SWIFT_MIRROR_KEY" ]; then
-            echo "::warning::SWIFT_MIRROR_KEY is not set; e-suiss/uim-swift was not updated."
-            exit 0
-          fi
           mkdir -p ~/.ssh
-          echo "$SWIFT_MIRROR_KEY" > ~/.ssh/uim_swift
-          chmod 600 ~/.ssh/uim_swift
           ssh-keyscan github.com >> ~/.ssh/known_hosts 2> /dev/null
-          export GIT_SSH_COMMAND="ssh -i ~/.ssh/uim_swift -o IdentitiesOnly=yes"
-          git subtree split --prefix=swiftui --branch swift-release
-          git push git@github.com:e-suiss/uim-swift.git swift-release:main
-          git push git@github.com:e-suiss/uim-swift.git "swift-release:refs/tags/$GITHUB_REF_NAME"
+          publish() {
+            if [ -z "$2" ]; then
+              echo "::warning::No deploy key for e-suiss/$3; it was not updated."
+              return
+            fi
+            echo "$2" > ~/.ssh/$3
+            chmod 600 ~/.ssh/$3
+            git subtree split --prefix="$1" --branch "$3-release"
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/$3 -o IdentitiesOnly=yes" git push "git@github.com:e-suiss/$3.git" "$3-release:main" "$3-release:refs/tags/$GITHUB_REF_NAME"
+          }
+          publish swiftui "$SWIFT_MIRROR_KEY" uim-swift
+          publish kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
 
       - name: Create GitHub release
         env:
