@@ -1,0 +1,34 @@
+---
+title: Introduction
+description: Copy-paste React Native components with a clean, minimal design, for Expo and React Native.
+eyebrow: suiss/uim
+---
+
+## Overview
+
+suiss/uim is the mobile counterpart of suiss/ui: a set of React Native components for Expo and React Native projects with TypeScript.
+
+The components reach your project through the `@esuiss/uim` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init
+npx @esuiss/uim@latest add button dialog sheet
+```
+
+## Principles
+
+### You own the code
+
+Every component lives in `components/ui/` in your project. Change the markup, the styles or the behavior without waiting for a release.
+
+### Your styling, your choice
+
+Each component ships in three flavors with the same API:
+
+- **Uniwind** with Tailwind CSS v4
+- **NativeWind** v4 with Tailwind CSS v3
+- **StyleSheet** with plain React Native styles and a `useTheme()` hook
+
+### Same names as the web
+
+Component names, parts and variants mirror suiss/ui, so moving between web and mobile feels familiar.

@@ -1,0 +1,50 @@
+---
+title: Installation
+description: Set up suiss/uim in an Expo or React Native project.
+eyebrow: suiss/uim
+---
+
+## Requirements
+
+An Expo or React Native project with TypeScript.
+
+## Initialize
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init
+```
+
+`init` sets up:
+
+- the styling library: Uniwind, NativeWind or StyleSheet
+- the `@/*` import alias
+- the theme stylesheet
+- the Metro config
+- the portal host in the root layout
+- the `button` component
+
+The styling library is detected from your project. When neither Uniwind nor NativeWind is installed, `init` asks. Pass `--styling` to choose up front:
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init --styling uniwind
+npx @esuiss/uim@latest init --styling nativewind
+npx @esuiss/uim@latest init --styling stylesheet
+```
+
+StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
+
+## React Native without Expo
+
+`init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `pod install` after adding components:
+
+```bash title="Terminal"
+cd ios && pod install
+```
+
+## Add components
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add dialog
+```
+
+Components are copied into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK.

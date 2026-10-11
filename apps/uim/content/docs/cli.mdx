@@ -1,0 +1,50 @@
+---
+title: CLI
+description: The @esuiss/uim command sets up your project and copies components, patterns and interactions into it.
+eyebrow: suiss/uim
+---
+
+## Overview
+
+`@esuiss/uim` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`.
+
+## init
+
+Sets up the styling, the theme and the `button` component. See [Installation](/docs/installation) for every step.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-s, --styling <uniwind\|nativewind\|stylesheet>` | Styling to use, detected from the project when omitted |
+| `-y, --yes` | Skip confirmation prompts |
+| `-c, --cwd <dir>` | Run in another project directory |
+| `-h, --help` | Show help |
+| `-v, --version` | Show the version |
+
+## add
+
+Copies components into your project, together with the components and packages they depend on.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add <component...> [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-a, --all` | Add every component |
+| `--diff` | Show how local files differ from the registry |
+| `-o, --overwrite` | Replace local files that differ from the registry |
+| `-y, --yes` | Skip confirmation prompts |
+| `-c, --cwd <dir>` | Run in another project directory |
+
+## Update a component
+
+Check what changed, then overwrite:
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add button --diff
+npx @esuiss/uim@latest add button --overwrite
+```
