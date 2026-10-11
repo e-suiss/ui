@@ -1,0 +1,100 @@
+package com.esuiss.catalog.stories.patterns
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.catalog.Section
+import com.esuiss.catalog.Story
+import com.esuiss.catalog.StoryGroup
+import com.esuiss.ui.components.SelectSize
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.patterns.Picker
+import com.esuiss.ui.patterns.PickerGroup
+import com.esuiss.ui.patterns.PickerItem
+import com.esuiss.ui.patterns.PickerItemData
+import com.esuiss.ui.patterns.PickerSeparator
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+val pickerStories = StoryGroup(
+    section = Section.Patterns,
+    title = "Picker",
+    stories = listOf(
+        Story("Default") { PickerDefault() },
+        Story("States") { PickerStates() },
+    ),
+)
+
+private val pickerFruits = listOf(
+    PickerItemData("cherry", "Cherry"),
+    PickerItemData("banana", "Banana"),
+    PickerItemData("mango", "Mango"),
+    PickerItemData("carrot", "Carrot"),
+    PickerItemData("spinach", "Spinach", enabled = false),
+)
+
+@Composable
+private fun PickerDefault() {
+    var value by rememberSaveable { mutableStateOf<String?>(null) }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Picker(
+            value = value,
+            onValueChange = { value = it },
+            modifier = Modifier.width(224.dp).semantics { contentDescription = "Fruit" },
+            items = pickerFruits,
+            placeholder = "Select a fruit",
+        ) {
+            PickerGroup(label = "Fruits") {
+                PickerItem("cherry", "Cherry")
+                PickerItem("banana", "Banana")
+                PickerItem("mango", "Mango")
+            }
+            PickerSeparator()
+            PickerGroup(label = "Vegetables") {
+                PickerItem("carrot", "Carrot")
+                PickerItem("spinach", "Spinach", enabled = false)
+            }
+        }
+        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    }
+}
+
+@Composable
+private fun PickerStates() {
+    var fruit by rememberSaveable { mutableStateOf<String?>("banana") }
+    var invalid by rememberSaveable { mutableStateOf<String?>(null) }
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Picker(
+            value = fruit,
+            onValueChange = { fruit = it },
+            modifier = Modifier.width(224.dp),
+            items = listOf(PickerItemData("cherry", "Cherry"), PickerItemData("banana", "Banana")),
+            size = SelectSize.Sm,
+        )
+        Picker(
+            value = invalid,
+            onValueChange = { invalid = it },
+            modifier = Modifier.width(224.dp),
+            items = listOf(PickerItemData("cherry", "Cherry")),
+            placeholder = "Invalid",
+            invalid = true,
+        )
+        Picker(
+            value = null,
+            onValueChange = {},
+            modifier = Modifier.width(224.dp),
+            items = listOf(PickerItemData("cherry", "Cherry")),
+            placeholder = "Disabled",
+            enabled = false,
+        )
+    }
+}
