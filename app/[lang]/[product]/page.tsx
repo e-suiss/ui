@@ -69,10 +69,10 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/[produc
   return (
     <main>
       <JsonLd data={structuredData} />
-      <section className="relative flex min-h-[min(100svh,64rem)] flex-col justify-end overflow-hidden bg-black text-white">
+      <section className="relative flex flex-col justify-end overflow-hidden bg-black text-white">
         <Image src={product.image} alt="" fill priority sizes="100vw" className="object-cover" />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
-        <div className={cn(frame, "relative flex flex-col gap-8 pt-40 pb-12 md:pb-16")}>
+        <div className={cn(frame, "relative flex flex-col gap-8 pt-56 pb-12 md:pt-[24rem] md:pb-16")}>
           <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs tracking-[0.02em] uppercase">
             <span>
               ({String(index + 1).padStart(2, "0")}) {product.category[locale]}

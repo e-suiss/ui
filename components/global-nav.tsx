@@ -50,7 +50,7 @@ export function GlobalNav({
   items: Item[];
   labels: { menu: string; close: string; developers: string; switchLanguage: string };
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname().replace(/^\/en(?=\/|$)/, "") || "/";
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [menuMounted, setMenuMounted] = React.useState(false);
   const home = pathname === localePath(locale, "/");
