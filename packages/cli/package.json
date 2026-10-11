@@ -1,6 +1,6 @@
 {
   "name": "@esuiss/uim",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Copy-paste React Native components with a clean, minimal design for Expo and React Native, styled with Uniwind, NativeWind or StyleSheet. CLI that copies components into your app.",
   "keywords": [
     "react-native",
