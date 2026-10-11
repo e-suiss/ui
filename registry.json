@@ -1639,6 +1639,92 @@
       ]
     },
     {
+      "name": "qr-scanner",
+      "type": "ui",
+      "title": "Qr Scanner",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/haptics",
+        "primitives/hooks",
+        "text"
+      ],
+      "files": [
+        "components/ui/qr-scanner.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "questionnaire",
+      "type": "ui",
+      "title": "Questionnaire",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "button",
+        "icon",
+        "input",
+        "primitives/haptics",
+        "primitives/hooks",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/questionnaire.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "radio-group",
       "type": "ui",
       "title": "Radio Group",
@@ -1809,6 +1895,42 @@
       ],
       "files": [
         "components/ui/sheet.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "signature-pad",
+      "type": "ui",
+      "title": "Signature Pad",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "react-native-gesture-handler",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "button",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/signature-pad.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2061,6 +2183,32 @@
       ]
     },
     {
+      "name": "theme",
+      "type": "ui",
+      "title": "Theme",
+      "dependencies": {
+        "uniwind": [
+          "uniwind"
+        ],
+        "nativewind": [
+          "nativewind"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/ui/theme.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "toast",
       "type": "ui",
       "title": "Toast",
@@ -2193,6 +2341,50 @@
       ],
       "files": [
         "components/ui/wheel-picker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "widget",
+      "type": "ui",
+      "title": "Widget",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/haptics",
+        "text"
+      ],
+      "files": [
+        "components/ui/widget.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2611,6 +2803,51 @@
       ]
     },
     {
+      "name": "card-stack",
+      "type": "interaction",
+      "title": "Card Stack",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/haptics",
+        "text"
+      ],
+      "files": [
+        "components/interactions/card-stack.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "image-viewer",
       "type": "interaction",
       "title": "Image Viewer",
@@ -2651,6 +2888,54 @@
       ],
       "files": [
         "components/interactions/image-viewer.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "island",
+      "type": "interaction",
+      "title": "Island",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/hooks",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/interactions/island.tsx"
       ],
       "overrides": [
         "uniwind",

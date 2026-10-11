@@ -142,7 +142,18 @@ function buildTheme(theme) {
     )
     .join("\n")
 
-  return `import { type BoxShadowValue, useColorScheme } from "react-native"
+  return `import * as React from "react"
+import { jsx } from "react/jsx-runtime"
+import {
+  Appearance,
+  type BoxShadowValue,
+  Pressable,
+  type StyleProp,
+  Text,
+  useColorScheme,
+  View,
+  type ViewStyle,
+} from "react-native"
 
 const light = {
 ${colorObject(theme.light)}
@@ -166,14 +177,219 @@ const shadow = {
 ${shadow}
 } satisfies Record<string, { boxShadow: string | BoxShadowValue[] }>
 
-function useTheme() {
-  const scheme = useColorScheme()
-  const isDark = scheme === "dark"
-  return { colors: isDark ? dark : light, isDark, radius, fontSize, shadow }
+type Theme = "light" | "dark" | "system"
+
+type ResolvedTheme = "light" | "dark"
+
+type ThemeStorage = {
+  getItem: (key: string) => string | null | Promise<string | null>
+  setItem: (key: string, value: string) => void | Promise<void>
 }
 
-export type { ThemeColors }
-export { dark, fontSize, light, radius, shadow, useTheme }
+const THEMES: readonly Theme[] = ["light", "dark", "system"]
+
+const LABELS: Record<Theme, string> = {
+  light: "Light",
+  dark: "Dark",
+  system: "System",
+}
+
+const memory = new Map<string, string>()
+
+const memoryStorage: ThemeStorage = {
+  getItem: (key) => memory.get(key) ?? null,
+  setItem: (key, value) => {
+    memory.set(key, value)
+  },
+}
+
+const store = {
+  theme: "system" as Theme,
+  storage: memoryStorage,
+  storageKey: "theme",
+  listeners: new Set<() => void>(),
+}
+
+function isTheme(value: unknown): value is Theme {
+  return value === "light" || value === "dark" || value === "system"
+}
+
+function subscribe(listener: () => void) {
+  store.listeners.add(listener)
+  return () => {
+    store.listeners.delete(listener)
+  }
+}
+
+function getTheme() {
+  return store.theme
+}
+
+function applyTheme(theme: Theme) {
+  if (store.theme === theme) return
+  store.theme = theme
+  Appearance.setColorScheme(theme === "system" ? "unspecified" : theme)
+  for (const listener of store.listeners) listener()
+}
+
+function setTheme(theme: Theme) {
+  applyTheme(theme)
+  try {
+    Promise.resolve(store.storage.setItem(store.storageKey, theme)).catch(
+      () => undefined
+    )
+  } catch {
+    return
+  }
+}
+
+function readStoredTheme(storage: ThemeStorage, storageKey: string) {
+  try {
+    return Promise.resolve(storage.getItem(storageKey)).catch(() => null)
+  } catch {
+    return Promise.resolve(null)
+  }
+}
+
+function ThemeProvider({
+  defaultTheme = "system",
+  storage = memoryStorage,
+  storageKey = "theme",
+  children,
+}: {
+  defaultTheme?: Theme
+  storage?: ThemeStorage
+  storageKey?: string
+  children?: React.ReactNode
+}) {
+  const defaultRef = React.useRef(defaultTheme)
+
+  React.useLayoutEffect(() => {
+    let active = true
+    store.storage = storage
+    store.storageKey = storageKey
+    const initial = store.theme
+    applyTheme(defaultRef.current)
+    readStoredTheme(storage, storageKey).then((stored) => {
+      if (active && store.theme === defaultRef.current && isTheme(stored)) {
+        applyTheme(stored)
+      }
+    })
+    return () => {
+      active = false
+      store.storage = memoryStorage
+      store.storageKey = "theme"
+      applyTheme(initial)
+    }
+  }, [storage, storageKey])
+
+  return children
+}
+
+function useTheme() {
+  const scheme = useColorScheme()
+  const theme = React.useSyncExternalStore(subscribe, getTheme)
+  const resolvedTheme: ResolvedTheme =
+    theme === "system" ? (scheme === "dark" ? "dark" : "light") : theme
+  const isDark = resolvedTheme === "dark"
+  return {
+    colors: isDark ? dark : light,
+    isDark,
+    radius,
+    fontSize,
+    shadow,
+    theme,
+    resolvedTheme,
+    setTheme,
+  }
+}
+
+function ThemeToggle({
+  labels,
+  disabled = false,
+  style,
+}: {
+  labels?: Partial<Record<Theme, string>>
+  disabled?: boolean
+  style?: StyleProp<ViewStyle>
+}) {
+  const { colors, isDark, theme } = useTheme()
+  return jsx(View, {
+    role: "radiogroup",
+    accessibilityLabel: "Theme",
+    style: [
+      {
+        position: "relative",
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-start",
+        gap: 4,
+        padding: 4,
+        borderRadius: radius.xl,
+        backgroundColor: colors.control,
+      },
+      style,
+    ],
+    children: THEMES.map((value) => {
+      const selected = theme === value
+      return jsx(
+        Pressable,
+        {
+          role: "radio",
+          accessibilityState: { checked: selected, disabled },
+          disabled,
+          onPress: () => {
+            if (!selected) setTheme(value)
+          },
+          style: [
+            {
+              height: 36,
+              minWidth: 36,
+              flexShrink: 0,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingHorizontal: 12,
+              borderRadius: radius.md,
+            },
+            selected &&
+              (disabled
+                ? { backgroundColor: colors.controlDisabled }
+                : {
+                    backgroundColor: isDark
+                      ? colors.labelQuaternary
+                      : colors.surfaceRaised,
+                    ...shadow.sm,
+                  }),
+          ],
+          children: jsx(Text, {
+            style: {
+              ...fontSize.sm,
+              color: disabled
+                ? colors.labelQuaternary
+                : selected
+                  ? colors.label
+                  : colors.labelSecondary,
+            },
+            children: labels?.[value] ?? LABELS[value],
+          }),
+        },
+        value
+      )
+    }),
+  })
+}
+
+export type { ResolvedTheme, Theme, ThemeColors, ThemeStorage }
+export {
+  dark,
+  fontSize,
+  light,
+  radius,
+  shadow,
+  ThemeProvider,
+  ThemeToggle,
+  useTheme,
+}
 `
 }
 

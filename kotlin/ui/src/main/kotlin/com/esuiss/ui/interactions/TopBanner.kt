@@ -35,7 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.layout.positionOnScreen
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -188,13 +190,19 @@ private fun TopBannerCard(
         scope.launch { drag.snapTo((drag.value + delta).coerceAtMost(with(density) { 12.dp.toPx() })) }
     }
     val shape = RoundedCornerShape(Radius.xl2)
-    Box(modifier = Modifier.padding(top = topInset + 8.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)) {
+    var origin by remember { mutableStateOf<Float?>(null) }
+    val inset = origin?.let { with(density) { (topInset.toPx() - it).coerceAtLeast(0f).toDp() } } ?: topInset
+    Box(
+        modifier = Modifier
+            .onGloballyPositioned { origin = it.positionOnScreen().y }
+            .padding(top = inset + 8.dp, start = 16.dp, end = 16.dp, bottom = 24.dp),
+    ) {
         Row(
             modifier = modifier
                 .width(width)
                 .onSizeChanged { height = it.height }
                 .graphicsLayer {
-                    translationY = -travel.value * (height + gap + topInset.toPx()) + drag.value
+                    translationY = -travel.value * (height + gap + inset.toPx()) + drag.value
                     alpha = if (reduced) 1f - travel.value else 1f
                 }
                 .shadow(Shadows.lg, shape)

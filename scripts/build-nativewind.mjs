@@ -132,6 +132,13 @@ const FILE_TRANSFORMS = {
 `
       )
       .replace(/"accent-([\w-]+)"/g, '"text-$1"'),
+  "theme.tsx": (code) =>
+    code
+      .replace(
+        'import { Uniwind } from "uniwind"',
+        'import { colorScheme } from "nativewind"'
+      )
+      .replaceAll("Uniwind.setTheme(", "colorScheme.set("),
 }
 
 function addReactNativeImport(code, name) {

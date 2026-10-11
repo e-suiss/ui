@@ -67,6 +67,7 @@ module.exports = {
         "danger-40": "var(--danger-40)",
         "label-5": "var(--label-5)",
         "label-10": "var(--label-10)",
+        "label-15": "var(--label-15)",
         "label-20": "var(--label-20)",
         "label-25": "var(--label-25)",
         "label-secondary-60": "var(--label-secondary-60)",
@@ -76,6 +77,8 @@ module.exports = {
         "separator-30": "var(--separator-30)",
         "separator-40": "var(--separator-40)",
         "separator-50": "var(--separator-50)",
+        "surface-15": "var(--surface-15)",
+        "surface-70": "var(--surface-70)",
         "surface-secondary-50": "var(--surface-secondary-50)",
       },
       borderRadius: {
