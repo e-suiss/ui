@@ -5,7 +5,7 @@ import path from "node:path";
 import { componentApi, storyExamples } from "./lib/extract.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
-const uiRepo = path.resolve(root, process.argv[2] ?? "../ui");
+const uiRepo = path.resolve(root, process.argv[2] ?? "../../../ui");
 const registry = JSON.parse(readFileSync(path.join(uiRepo, "registry.json"), "utf8"));
 
 const MARKER = "generated: true";
