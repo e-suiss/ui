@@ -1,0 +1,14 @@
+{
+  "name": "esuiss-docs",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "registry": "turbo run registry --filter=ui"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.7"
+  },
+  "packageManager": "pnpm@11.24.0"
+}
