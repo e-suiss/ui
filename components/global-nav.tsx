@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { Anchor } from "@/components/anchor";
 import { ease } from "@/components/arrow";
+import { ThemeToggle } from "@/components/theme";
 import { type Locale, localePath } from "@/lib/i18n";
 
 const MENU_EXIT = 500;
@@ -45,10 +46,12 @@ export function GlobalNav({
   locale,
   items,
   labels,
+  themeLabels,
 }: {
   locale: Locale;
   items: Item[];
   labels: { menu: string; close: string; developers: string; switchLanguage: string };
+  themeLabels: { system: string; light: string; dark: string };
 }) {
   const pathname = usePathname().replace(/^\/en(?=\/|$)/, "") || "/";
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -81,6 +84,7 @@ export function GlobalNav({
   }, [menuOpen]);
 
   const developers = localePath(locale, "/#developers");
+  const glass = !overlay || menuOpen ? "bg-label/5 hover:bg-label/10" : home ? "bg-white/35 text-[#1d1d1f] backdrop-blur-2xl hover:bg-white/55" : "bg-black/25 text-white backdrop-blur-2xl hover:bg-black/40";
 
   return (
     <header
@@ -98,7 +102,7 @@ export function GlobalNav({
         <ul
           className={cn(
             "absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 rounded-full p-1 backdrop-blur-2xl backdrop-saturate-150 xl:flex",
-            overlay ? "bg-white/35 text-[#1d1d1f]" : "bg-label/5",
+            !overlay ? "bg-label/5" : home ? "bg-white/35 text-[#1d1d1f]" : "bg-black/25 text-white",
           )}
         >
           {items.map((item) => (
@@ -111,24 +115,35 @@ export function GlobalNav({
         </ul>
 
         <div className="ms-auto flex items-center gap-2">
+          <ThemeToggle
+            labels={themeLabels}
+            className={cn(
+              "hidden sm:flex",
+              glass,
+            )}
+          />
           <Anchor
             href={switchLocalePath(pathname, locale)}
             hrefLang={locale === "en" ? "tr" : "en"}
             className={cn(
               "flex h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
-              overlay && !menuOpen ? "bg-white/35 text-[#1d1d1f] backdrop-blur-2xl hover:bg-white/55" : "bg-label/5 hover:bg-label/10",
+              glass,
             )}
           >
             {labels.switchLanguage}
           </Anchor>
           <Anchor
             href={developers}
-            className="group hidden h-10 items-center gap-2 rounded-full bg-[#1d1d1f] ps-4.5 pe-1 text-sm font-medium text-white outline-none focus-visible:focus-ring sm:flex"
+            className={cn(
+              "group hidden h-10 items-center gap-2 rounded-full ps-4.5 pe-1 text-sm font-medium outline-none focus-visible:focus-ring sm:flex",
+              overlay && !menuOpen ? "bg-[#1d1d1f] text-white" : "bg-label text-surface",
+            )}
           >
             {labels.developers}
             <span
               className={cn(
-                "flex size-8 items-center justify-center rounded-full bg-white text-[#1d1d1f] transition-transform duration-500 group-hover:rotate-45",
+                "flex size-8 items-center justify-center rounded-full transition-transform duration-500 group-hover:rotate-45",
+                overlay && !menuOpen ? "bg-white text-[#1d1d1f]" : "bg-surface text-label",
                 ease,
               )}
             >
@@ -141,7 +156,7 @@ export function GlobalNav({
             onClick={() => setMenuOpen((value) => !value)}
             className={cn(
               "h-10 rounded-full px-4.5 text-sm font-medium outline-none transition-colors duration-300 focus-visible:focus-ring xl:hidden",
-              overlay && !menuOpen ? "bg-white/35 text-[#1d1d1f] backdrop-blur-2xl backdrop-saturate-150" : "bg-label/5",
+              glass,
             )}
           >
             {menuOpen ? labels.close : labels.menu}

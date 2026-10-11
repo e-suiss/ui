@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalNav } from "@/components/global-nav";
 import { JsonLd } from "@/components/json-ld";
+import { ThemeScript } from "@/components/theme";
 import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n";
 import { libraries, products } from "@/lib/products";
 import { absolute, site } from "@/lib/site";
@@ -31,8 +32,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+  colorScheme: "light dark",
 };
 
 export function generateStaticParams() {
@@ -44,6 +48,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLocale(lang)) notFound();
   const dictionary = getDictionary(lang);
 
+  const themeLabels = { system: dictionary.themeSystem, light: dictionary.themeLight, dark: dictionary.themeDark };
   const items = products.map((product) => ({ label: product.name, href: localePath(lang, `/${product.slug}`) }));
   const columns = [
     { title: dictionary.products, links: items.slice(0, 4) },
@@ -88,8 +93,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   };
 
   return (
-    <html lang={dictionary.htmlLang} className={fontInter.variable}>
+    <html lang={dictionary.htmlLang} className={fontInter.variable} suppressHydrationWarning>
       <head>
+        <ThemeScript />
         <JsonLd data={structuredData} />
       </head>
       <body className="flex min-h-svh flex-col bg-surface text-label antialiased">
@@ -102,9 +108,10 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
             developers: dictionary.developers,
             switchLanguage: dictionary.switchLanguage,
           }}
+          themeLabels={themeLabels}
         />
         <div className="flex flex-1 flex-col">{children}</div>
-        <Footer columns={columns} labels={{ copyright: dictionary.copyright, backToTop: dictionary.backToTop }} />
+        <Footer columns={columns} labels={{ copyright: dictionary.copyright, backToTop: dictionary.backToTop }} themeLabels={themeLabels} />
       </body>
     </html>
   );

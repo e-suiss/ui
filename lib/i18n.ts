@@ -60,6 +60,9 @@ const dictionaries = {
     github: "GitHub",
     copyright: "Copyright © 2026 suiss. All rights reserved.",
     backToTop: "Back to top",
+    themeSystem: "Theme: system",
+    themeLight: "Theme: light",
+    themeDark: "Theme: dark",
     allProducts: "All products",
   },
   tr: {
@@ -110,6 +113,9 @@ const dictionaries = {
     github: "GitHub",
     copyright: "Telif hakkı © 2026 suiss. Tüm hakları saklıdır.",
     backToTop: "Başa dön",
+    themeSystem: "Tema: sistem",
+    themeLight: "Tema: açık",
+    themeDark: "Tema: koyu",
     allProducts: "Tüm ürünler",
   },
 } satisfies Record<Locale, Record<string, string>>;

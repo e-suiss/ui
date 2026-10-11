@@ -128,7 +128,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/[produc
         </p>
       </Section>
 
-      <div className="dark bg-surface text-label">
+      <div className="dark bg-surface text-label dark:bg-surface-secondary">
         <Section index={nextIndex()} label={dictionary.questionLabel}>
           <blockquote className="text-[clamp(2.5rem,6vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.055em] text-balance">
             “{product.question[locale]}”
