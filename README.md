@@ -1,15 +1,47 @@
-# esuiss-ui
+# suiss/ui
 
-Component source and registry for esuiss-ui, for Next.js and React (Vite) projects with TypeScript.
+[![npm version](https://img.shields.io/npm/v/@esuiss/ui?label=%40esuiss%2Fui)](https://www.npmjs.com/package/@esuiss/ui)
+[![npm downloads](https://img.shields.io/npm/dm/@esuiss/ui)](https://www.npmjs.com/package/@esuiss/ui)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-ui.esuiss.com-black)](https://ui.esuiss.com)
 
-## Use in a project
+**suiss/ui is an open-source library of copy-paste React components with a clean, minimal design.** It is built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4 for Next.js and React (Vite) projects with TypeScript. Instead of installing a component package, the `@esuiss/ui` command-line tool copies each component's source into your project, so you own the code and can change anything.
+
+**[Documentation](https://ui.esuiss.com/docs)** · [Components](https://ui.esuiss.com/docs/components) · [Patterns](https://ui.esuiss.com/docs/patterns) · [Interactions](https://ui.esuiss.com/docs/interactions) · [Charts](https://ui.esuiss.com/docs/charts) · [Blocks](https://ui.esuiss.com/docs/blocks) · [CLI](https://ui.esuiss.com/docs/cli)
+
+## Features
+
+- **Components**: buttons, inputs, dialogs, sheets, drawers, menus, sidebars, tables, calendars, toasts, chat views and more.
+- **Patterns and interactions**: command palettes, pickers, split views, swipe actions, pull to refresh, steppers and other compositions built from the components.
+- **Charts**: area, bar, line, pie, radar and radial charts built on Recharts.
+- **Blocks**: full sections such as sign-up, checkout, dashboards, settings and pricing pages.
+- **Accessible**: keyboard navigation, focus management and ARIA come from Base UI primitives.
+- **Themeable**: colors named by role (`bg-surface`, `text-label`, `bg-accent`), written in oklch for light and dark mode.
+- **Phosphor icons** throughout.
+- **No runtime dependency**: the CLI runs with `npx` and is never installed in your project.
+
+## Quick start
 
 ```bash
 npx @esuiss/ui@latest init
-npx @esuiss/ui@latest add sidebar
+npx @esuiss/ui@latest add button dialog sidebar
 ```
 
-`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-surface`, `text-label` and `bg-accent`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on.
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function Example() {
+  return <Button>Continue</Button>
+}
+```
+
+`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-surface`, `text-label` and `bg-accent`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on. Patterns, interactions, charts and blocks are added by name:
+
+```bash
+npx @esuiss/ui@latest add patterns command-palette
+npx @esuiss/ui@latest add charts bar-chart-default
+npx @esuiss/ui@latest add blocks login-account
+```
 
 Update a component later:
 
@@ -17,6 +49,29 @@ Update a component later:
 npx @esuiss/ui@latest add button --diff
 npx @esuiss/ui@latest add button --overwrite
 ```
+
+## FAQ
+
+**What is suiss/ui?**
+An open-source collection of React components, patterns, interactions, charts and blocks with a clean, minimal design, distributed as source code through the `@esuiss/ui` CLI.
+
+**How is it different from a component library on npm?**
+Components are not imported from a package. Their source is copied into `components/ui/` in your project, so you can read, change and extend every line without waiting for a release.
+
+**Which frameworks does it support?**
+Next.js and React with Vite, using TypeScript and Tailwind CSS 4.2 or later.
+
+**Does it support dark mode?**
+Yes. Every color has a light and a dark value, and components switch with the `.dark` class.
+
+**Is there a version for mobile apps?**
+Yes. [suiss/uim](https://github.com/e-suiss/uim) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose.
+
+**Is it free?**
+Yes, it is released under the [MIT License](LICENSE).
+
+**Is the documentation available for AI assistants?**
+Yes. [ui.esuiss.com/llms.txt](https://ui.esuiss.com/llms.txt) lists every page, [ui.esuiss.com/llms-full.txt](https://ui.esuiss.com/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
 
 ## Develop
 

@@ -22,7 +22,7 @@
     "url": "git+https://github.com/e-suiss/ui.git",
     "directory": "packages/tailwind"
   },
-  "homepage": "https://github.com/e-suiss/ui",
+  "homepage": "https://ui.esuiss.com/docs/theming",
   "bugs": {
     "url": "https://github.com/e-suiss/ui/issues"
   },

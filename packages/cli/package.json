@@ -17,7 +17,11 @@
     "cli",
     "copy-paste",
     "typescript",
-    "phosphor-icons"
+    "phosphor-icons",
+    "react-components",
+    "ui-components",
+    "component-library",
+    "accessibility"
   ],
   "author": "ademceper",
   "license": "MIT",
@@ -26,7 +30,7 @@
     "url": "git+https://github.com/e-suiss/ui.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/e-suiss/ui",
+  "homepage": "https://ui.esuiss.com",
   "bugs": {
     "url": "https://github.com/e-suiss/ui/issues"
   },
