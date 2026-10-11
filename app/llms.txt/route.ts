@@ -7,11 +7,11 @@ export function GET() {
   const lines = [
     `# ${site.name}`,
     `> ${dictionary.description}`,
-    "suiss is an agent-native infrastructure ecosystem of eight products. Each product does one job for people and AI agents alike: One understands and coordinates, Access authorizes, Relay communicates, Money holds, Pay moves money, Commerce buys and sells, Serve fulfills and Work lets people collaborate with agents. The products are in development; the open-source component libraries suiss/ui and suiss/uim are available now.",
+    "suiss is an agent-native infrastructure ecosystem of eight products. Each product does one job for people and AI agents alike: One understands, Access authorizes, Relay communicates, Money holds, Pay moves money, Commerce buys and sells, Serve fulfills and Work coordinates. One, Access, Relay and Work are in development; Money, Pay, Commerce and Serve are planned. The open-source component libraries suiss/ui and suiss/uim are available now.",
     `## Products\n\n${products
       .map(
         (product) =>
-          `- [suiss ${product.name}](${absolute(localePath("en", `/${product.slug}`))}): ${product.category.en}. ${product.summary.en} Core question: ${product.question.en}`,
+          `- [suiss ${product.name}](${absolute(localePath("en", `/${product.slug}`))}): ${product.category.en} (${product.status === "development" ? "in development" : "planned"}). ${product.summary.en} Core question: ${product.question.en}`,
       )
       .join("\n")}`,
     `## Developers\n\n${libraries
