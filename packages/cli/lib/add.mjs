@@ -18,15 +18,28 @@ import {
   sourceOf,
 } from "./registry.mjs"
 
+const CONCURRENCY = 8
+
 async function fetchFiles(registry, items, styling) {
-  return Promise.all(
-    items.flatMap((item) =>
-      item.files.map(async (file) => ({
+  const queue = items.flatMap((item) =>
+    item.files.map((file) => ({ item, file }))
+  )
+  const results = new Array(queue.length)
+  let next = 0
+  const worker = async () => {
+    while (next < queue.length) {
+      const index = next++
+      const { item, file } = queue[index]
+      results[index] = {
         file,
         content: await fetchText(sourceOf(registry, item, file, styling)),
-      }))
-    )
+      }
+    }
+  }
+  await Promise.all(
+    Array.from({ length: Math.min(CONCURRENCY, queue.length) }, worker)
   )
+  return results
 }
 
 export async function installItems(
