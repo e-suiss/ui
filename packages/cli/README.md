@@ -2,7 +2,7 @@
 
 Copy-paste React components with a clean, minimal design, built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4.
 
-**[Documentation](https://ui.esuiss.com/docs)** · [Components](https://ui.esuiss.com/docs/components) · [CLI reference](https://ui.esuiss.com/docs/cli) · [GitHub](https://github.com/e-suiss/ui)
+**[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [CLI reference](https://ui.suiss.app/docs/cli) · [GitHub](https://github.com/e-suiss/ui)
 
 `@esuiss/ui` is a command-line tool. It does not ship components as a dependency. Instead, it copies their source into your project so you own the code and can change it however you like.
 

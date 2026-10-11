@@ -30,7 +30,7 @@
     "url": "git+https://github.com/e-suiss/ui.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://ui.esuiss.com",
+  "homepage": "https://ui.suiss.app",
   "bugs": {
     "url": "https://github.com/e-suiss/ui/issues"
   },

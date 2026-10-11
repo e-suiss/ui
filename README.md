@@ -3,11 +3,11 @@
 [![npm version](https://img.shields.io/npm/v/@esuiss/ui?label=%40esuiss%2Fui)](https://www.npmjs.com/package/@esuiss/ui)
 [![npm downloads](https://img.shields.io/npm/dm/@esuiss/ui)](https://www.npmjs.com/package/@esuiss/ui)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-ui.esuiss.com-black)](https://ui.esuiss.com)
+[![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
 
 **suiss/ui is an open-source library of copy-paste React components with a clean, minimal design.** It is built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4 for Next.js and React (Vite) projects with TypeScript. Instead of installing a component package, the `@esuiss/ui` command-line tool copies each component's source into your project, so you own the code and can change anything.
 
-**[Documentation](https://ui.esuiss.com/docs)** · [Components](https://ui.esuiss.com/docs/components) · [Patterns](https://ui.esuiss.com/docs/patterns) · [Interactions](https://ui.esuiss.com/docs/interactions) · [Charts](https://ui.esuiss.com/docs/charts) · [Blocks](https://ui.esuiss.com/docs/blocks) · [CLI](https://ui.esuiss.com/docs/cli)
+**[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [Patterns](https://ui.suiss.app/docs/patterns) · [Interactions](https://ui.suiss.app/docs/interactions) · [Charts](https://ui.suiss.app/docs/charts) · [Blocks](https://ui.suiss.app/docs/blocks) · [CLI](https://ui.suiss.app/docs/cli)
 
 ## Features
 
@@ -71,7 +71,7 @@ Yes. [suiss/uim](https://github.com/e-suiss/uim) brings the same components to R
 Yes, it is released under the [MIT License](LICENSE).
 
 **Is the documentation available for AI assistants?**
-Yes. [ui.esuiss.com/llms.txt](https://ui.esuiss.com/llms.txt) lists every page, [ui.esuiss.com/llms-full.txt](https://ui.esuiss.com/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
+Yes. [ui.suiss.app/llms.txt](https://ui.suiss.app/llms.txt) lists every page, [ui.suiss.app/llms-full.txt](https://ui.suiss.app/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
 
 ## Develop
 
