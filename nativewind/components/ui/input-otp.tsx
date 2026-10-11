@@ -17,6 +17,15 @@ import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
+type InputOTPSlotClassNames = {
+  className?: string
+  textClassName?: string
+}
+
+const InputOTPSlotClassContext = React.createContext<
+  InputOTPSlotClassNames | undefined
+>(undefined)
+
 function InputOTP({
   className,
   ...props
@@ -79,6 +88,7 @@ function InputOTPSlot({
   ...props
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
   const { disabled } = OTPFieldPrimitive.useRootContext().state
+  const slotClassNames = React.useContext(InputOTPSlotClassContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
@@ -87,6 +97,7 @@ function InputOTPSlot({
           "relative h-[3.25rem] w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control",
           state.disabled && "bg-control-disabled",
           state.active && "z-10 border-accent",
+          slotClassNames?.className,
           resolveClassName(className, state)
         )
       }
@@ -97,7 +108,8 @@ function InputOTPSlot({
           <Text
             className={cn(
               "text-xl font-semibold tabular-nums",
-              disabled ? "text-label-quaternary" : "text-label"
+              disabled ? "text-label-quaternary" : "text-label",
+              slotClassNames?.textClassName
             )}
           >
             {slot.char}
@@ -138,4 +150,11 @@ function OTPSeparatorIcon() {
   )
 }
 
-export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot }
+export type { InputOTPSlotClassNames }
+export {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+  InputOTPSlotClassContext,
+}

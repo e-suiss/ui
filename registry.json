@@ -179,6 +179,41 @@
       ]
     },
     {
+      "name": "amount-input",
+      "type": "ui",
+      "title": "Amount Input",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "keypad",
+        "primitives/haptics",
+        "text"
+      ],
+      "files": [
+        "components/ui/amount-input.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "animated-view",
       "type": "ui",
       "title": "Animated View",
@@ -1192,6 +1227,39 @@
       ]
     },
     {
+      "name": "keypad",
+      "type": "ui",
+      "title": "Keypad",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/keypad.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "label",
       "type": "ui",
       "title": "Label",
@@ -1240,6 +1308,47 @@
       ],
       "files": [
         "components/ui/marker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "pin-pad",
+      "type": "ui",
+      "title": "Pin Pad",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "keypad",
+        "primitives/haptics",
+        "primitives/hooks"
+      ],
+      "files": [
+        "components/ui/pin-pad.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2176,6 +2285,45 @@
       ],
       "files": [
         "components/patterns/table-list.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "otp-autofill",
+      "type": "interaction",
+      "title": "Otp Autofill",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "input-otp",
+        "primitives/keyboard",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/interactions/otp-autofill.tsx"
       ],
       "overrides": [
         "uniwind",

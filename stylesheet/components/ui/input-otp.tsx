@@ -1,6 +1,6 @@
 import { MinusIcon } from "phosphor-react-native"
 import * as React from "react"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, type TextStyle, View, type ViewStyle } from "react-native"
 import Animated, {
   cancelAnimation,
   ReduceMotion,
@@ -15,6 +15,15 @@ import * as OTPFieldPrimitive from "@/components/primitives/otp-field"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+type InputOTPSlotStyles = {
+  style?: ViewStyle
+  textStyle?: TextStyle
+}
+
+const InputOTPSlotStyleContext = React.createContext<
+  InputOTPSlotStyles | undefined
+>(undefined)
 
 const styles = StyleSheet.create({
   root: { flexDirection: "row", alignItems: "center", gap: 8 },
@@ -100,6 +109,7 @@ function InputOTPSlot({
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
   const { colors } = useTheme()
   const { disabled } = OTPFieldPrimitive.useRootContext().state
+  const slotStyles = React.useContext(InputOTPSlotStyleContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
@@ -111,6 +121,7 @@ function InputOTPSlot({
             : colors.control,
         },
         state.active && [styles.slotActive, { borderColor: colors.accent }],
+        slotStyles?.style,
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -123,6 +134,7 @@ function InputOTPSlot({
               {
                 color: disabled ? colors.labelQuaternary : colors.label,
               },
+              slotStyles?.textStyle,
             ]}
           >
             {slot.char}
@@ -163,4 +175,11 @@ function OTPSeparatorIcon() {
   )
 }
 
-export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot }
+export type { InputOTPSlotStyles }
+export {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+  InputOTPSlotStyleContext,
+}
