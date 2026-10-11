@@ -5,6 +5,9 @@ import { createMDX } from "fumadocs-mdx/next";
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
+  outputFileTracingIncludes: {
+    "/**": ["./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff"],
+  },
   reactStrictMode: true,
   agentRules: false,
   cacheComponents: true,
