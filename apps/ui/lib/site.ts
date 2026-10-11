@@ -3,7 +3,7 @@ import { strings } from "@/lib/strings";
 
 export const site = {
   name: strings.brand,
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ui.esuiss.com").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ui.suiss.app").replace(/\/$/, ""),
   title: `${strings.brand} – Copy-paste React components for Base UI and Tailwind CSS`,
   description: strings.heroSubtitle,
   summary:

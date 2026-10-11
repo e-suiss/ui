@@ -4,8 +4,8 @@ Documentation sites for the suiss component libraries:
 
 | Site | Library | Source |
 | --- | --- | --- |
-| [ui.esuiss.com](https://ui.esuiss.com) | suiss/ui: copy-paste React components built on Base UI and Tailwind CSS v4 | [e-suiss/ui](https://github.com/e-suiss/ui) |
-| [uim.esuiss.com](https://uim.esuiss.com) | suiss/uim: copy-paste React Native components for Expo, styled with Uniwind, NativeWind or StyleSheet | [e-suiss/uim](https://github.com/e-suiss/uim) |
+| [ui.suiss.app](https://ui.suiss.app) | suiss/ui: copy-paste React components built on Base UI and Tailwind CSS v4 | [e-suiss/ui](https://github.com/e-suiss/ui) |
+| [uim.suiss.app](https://uim.suiss.app) | suiss/uim: copy-paste React Native components for Expo, styled with Uniwind, NativeWind or StyleSheet | [e-suiss/uim](https://github.com/e-suiss/uim) |
 
 Both sites are built with [Next.js](https://nextjs.org) and [Fumadocs](https://fumadocs.dev) in a [Turborepo](https://turborepo.com) workspace. Every page is also served as Markdown for AI assistants: see `/llms.txt`, `/llms-full.txt`, or add `.md` to any docs URL.
 
