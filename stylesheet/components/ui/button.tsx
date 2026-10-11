@@ -1,3 +1,4 @@
+import * as React from "react"
 import {
   Pressable,
   type PressableStateCallbackType,
@@ -169,6 +170,10 @@ function buttonTextStyle(
   return { ...scale, color: buttonTextColor(variant, colors, disabled) }
 }
 
+const ButtonStyleContext = React.createContext<
+  ((variant: ButtonVariant) => ViewStyle | undefined) | undefined
+>(undefined)
+
 type ButtonProps = Omit<React.ComponentProps<typeof Pressable>, "style"> &
   React.RefAttributes<typeof Pressable> & {
     variant?: ButtonVariant
@@ -190,32 +195,36 @@ function Button({
   const { colors, isDark } = useTheme()
   const isDisabled = Boolean(disabled)
   const blockRadiusValue = block ? blockRadius[size] : undefined
+  const groupStyle = React.useContext(ButtonStyleContext)
   return (
-    <TextStyleContext.Provider
-      value={buttonTextStyle(variant, size, colors, isDisabled)}
-    >
-      <IconSizeContext.Provider
-        value={size === "xs" || size === "icon-xs" ? 12 : 16}
+    <ButtonStyleContext.Provider value={undefined}>
+      <TextStyleContext.Provider
+        value={buttonTextStyle(variant, size, colors, isDisabled)}
       >
-        <Pressable
-          role="button"
-          disabled={disabled}
-          style={(state) => [
-            styles.root,
-            sizes[size],
-            block && styles.block,
-            blockRadiusValue !== undefined && {
-              borderRadius: blockRadiusValue,
-            },
-            buttonColors(variant, colors, isDark, state.pressed, isDisabled),
-            typeof style === "function" ? style(state) : style,
-          ]}
-          {...props}
-        />
-      </IconSizeContext.Provider>
-    </TextStyleContext.Provider>
+        <IconSizeContext.Provider
+          value={size === "xs" || size === "icon-xs" ? 12 : 16}
+        >
+          <Pressable
+            role="button"
+            disabled={disabled}
+            style={(state) => [
+              styles.root,
+              sizes[size],
+              block && styles.block,
+              blockRadiusValue !== undefined && {
+                borderRadius: blockRadiusValue,
+              },
+              buttonColors(variant, colors, isDark, state.pressed, isDisabled),
+              groupStyle?.(variant),
+              typeof style === "function" ? style(state) : style,
+            ]}
+            {...props}
+          />
+        </IconSizeContext.Provider>
+      </TextStyleContext.Provider>
+    </ButtonStyleContext.Provider>
   )
 }
 
 export type { ButtonProps, ButtonSize, ButtonVariant }
-export { Button, buttonTextStyle }
+export { Button, ButtonStyleContext, buttonTextStyle }

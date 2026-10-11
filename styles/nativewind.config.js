@@ -62,6 +62,7 @@ module.exports = {
         "danger-40": "var(--danger-40)",
         "label-5": "var(--label-5)",
         "label-10": "var(--label-10)",
+        "label-20": "var(--label-20)",
         "label-25": "var(--label-25)",
         "label-secondary-60": "var(--label-secondary-60)",
         "link-40": "var(--link-40)",

@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -251,7 +252,9 @@ internal fun AnchoredPopup(
                 exit = fadeOut(tween(exitMillis)) +
                     scaleOut(tween(exitMillis), targetScale = 0.95f, transformOrigin = origin),
             ) {
-                content(placement)
+                CompositionLocalProvider(LocalButtonGroup provides null) {
+                    content(placement)
+                }
             }
         }
     }
@@ -295,7 +298,7 @@ internal fun ModalWindow(
                 clearSystemBarColors()
             }
         }
-        content()
+        CompositionLocalProvider(LocalButtonGroup provides null, content = content)
     }
 }
 

@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import * as React from "react"
 import { Pressable } from "react-native"
 import { IconClassContext } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
@@ -103,28 +104,41 @@ const buttonTextVariants = cva("text-sm text-label", {
   },
 })
 
+type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>
+
+const ButtonClassContext = React.createContext<
+  ((variant: ButtonVariant) => string | undefined) | undefined
+>(undefined)
+
 type ButtonProps = React.ComponentProps<typeof Pressable> &
   React.RefAttributes<typeof Pressable> &
   VariantProps<typeof buttonVariants>
 
 function Button({ className, variant, size, block, ...props }: ButtonProps) {
   const disabled = Boolean(props.disabled)
+  const groupClassName = React.useContext(ButtonClassContext)
   return (
-    <TextClassContext.Provider
-      value={buttonTextVariants({ variant, size, disabled })}
-    >
-      <IconClassContext.Provider
-        value={size === "xs" || size === "icon-xs" ? "size-3" : "size-4"}
+    <ButtonClassContext.Provider value={undefined}>
+      <TextClassContext.Provider
+        value={buttonTextVariants({ variant, size, disabled })}
       >
-        <Pressable
-          className={cn(buttonVariants({ variant, size, block }), className)}
-          role="button"
-          {...props}
-        />
-      </IconClassContext.Provider>
-    </TextClassContext.Provider>
+        <IconClassContext.Provider
+          value={size === "xs" || size === "icon-xs" ? "size-3" : "size-4"}
+        >
+          <Pressable
+            className={cn(
+              buttonVariants({ variant, size, block }),
+              groupClassName?.(variant ?? "default"),
+              className
+            )}
+            role="button"
+            {...props}
+          />
+        </IconClassContext.Provider>
+      </TextClassContext.Provider>
+    </ButtonClassContext.Provider>
   )
 }
 
-export type { ButtonProps }
-export { Button, buttonTextVariants, buttonVariants }
+export type { ButtonProps, ButtonVariant }
+export { Button, ButtonClassContext, buttonTextVariants, buttonVariants }

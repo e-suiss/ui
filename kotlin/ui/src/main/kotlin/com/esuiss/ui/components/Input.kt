@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.VisualTransformation
@@ -56,7 +57,8 @@ fun Input(
     val colors = EsuissTheme.colors
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val focused by source.collectIsFocusedAsState()
-    val shape = RoundedCornerShape(size.radius)
+    val group = LocalButtonGroup.current
+    val shape = group.itemShape(RoundedCornerShape(size.radius))
     val textStyle = (if (size == InputSize.Default) Typography.base else Typography.sm)
         .copy(color = if (enabled) colors.label else colors.labelQuaternary)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
@@ -64,6 +66,7 @@ fun Input(
             value = value,
             onValueChange = onValueChange,
             modifier = modifier
+                .then(if (group != null) Modifier.layoutId(ButtonGroupFill) else Modifier)
                 .fillMaxWidth()
                 .height(size.height)
                 .formInputSurface(colors, shape, focused, invalid, enabled)

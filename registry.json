@@ -286,6 +286,38 @@
       ]
     },
     {
+      "name": "button-group",
+      "type": "ui",
+      "title": "Button Group",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "button",
+        "icon",
+        "primitives/types",
+        "primitives/use-render",
+        "separator",
+        "text"
+      ],
+      "files": [
+        "components/ui/button-group.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "button",
       "type": "ui",
       "title": "Button",
@@ -1508,6 +1540,42 @@
       ]
     },
     {
+      "name": "action-bar",
+      "type": "pattern",
+      "title": "Action Bar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "alert-sheet",
+        "button",
+        "drawer",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/patterns/action-bar.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "action-menu",
       "type": "pattern",
       "title": "Action Menu",
@@ -1652,6 +1720,32 @@
       ],
       "files": [
         "components/patterns/modal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "paged-list",
+      "type": "pattern",
+      "title": "Paged List",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "button",
+        "text"
+      ],
+      "files": [
+        "components/patterns/paged-list.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1813,6 +1907,91 @@
       ]
     },
     {
+      "name": "search-reveal",
+      "type": "interaction",
+      "title": "Search Reveal",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "nativewind",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "icon"
+      ],
+      "files": [
+        "components/interactions/search-reveal.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "selection-list",
+      "type": "interaction",
+      "title": "Selection List",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/hooks",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/interactions/selection-list.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "stepper",
       "type": "interaction",
       "title": "Stepper",
@@ -1879,6 +2058,90 @@
       ],
       "files": [
         "components/interactions/swipe-actions.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "tip",
+      "type": "interaction",
+      "title": "Tip",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-screens",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/popover",
+        "primitives/types",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/interactions/tip.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "undo-bar",
+      "type": "interaction",
+      "title": "Undo Bar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/interactions/undo-bar.tsx"
       ],
       "overrides": [
         "uniwind",

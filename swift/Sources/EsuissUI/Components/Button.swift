@@ -108,12 +108,15 @@ private struct StyledButton: View {
 
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.buttonGroup) private var group
 
   var body: some View {
-    let shape = RoundedRectangle(
+    let joined = group != nil && variant != .ghost && variant != .plain
+    let rounded = RoundedRectangle(
       cornerRadius: block ? size.blockRadius : Radius.full,
       style: .continuous
     )
+    let shape = joined ? AnyShape(Rectangle()) : AnyShape(rounded)
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
     .font((metrics?.textStyle ?? size.textStyle).font())
@@ -123,14 +126,17 @@ private struct StyledButton: View {
     .foregroundStyle(foreground)
     .padding(.horizontal, metrics?.horizontalPadding ?? size.horizontalPadding)
     .frame(width: size.isIcon && !block ? size.height : nil, height: size.height)
-    .frame(maxWidth: block ? .infinity : nil)
+    .frame(maxWidth: block || group == .vertical ? .infinity : nil)
     .background(background, in: shape)
     .overlay {
-      if variant == .outline {
-        shape.strokeBorder(Color.separator)
+      if variant == .outline && !joined {
+        rounded.strokeBorder(Color.separator)
       }
     }
     .contentShape(shape)
+    .anchorPreference(key: ButtonGroupFramesKey.self, value: .bounds) { anchor in
+      joined ? [ButtonGroupFrame(bounds: anchor, outlined: variant == .outline)] : []
+    }
   }
 
   private var isDark: Bool { colorScheme == .dark }

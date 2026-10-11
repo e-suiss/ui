@@ -77,7 +77,9 @@ fun Button(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val foreground = buttonForeground(variant, colors, enabled)
-    val shape = if (block) RoundedCornerShape(size.blockRadius) else CircleShape
+    val group = LocalButtonGroup.current?.takeIf { variant != ButtonVariant.Ghost && variant != ButtonVariant.Plain }
+    RegisterButtonGroupOutline(group, variant == ButtonVariant.Outline)
+    val shape = group.itemShape(if (block) RoundedCornerShape(size.blockRadius) else CircleShape)
     val sizing = when {
         block -> Modifier.fillMaxWidth().height(size.height)
         size.isIcon -> Modifier.size(size.height)
@@ -90,7 +92,11 @@ fun Button(
             .clip(shape)
             .background(buttonBackground(variant, colors, pressed && enabled, enabled), shape)
             .then(
-                if (variant == ButtonVariant.Outline) Modifier.border(1.dp, colors.separator, shape) else Modifier,
+                when {
+                    variant != ButtonVariant.Outline -> Modifier
+                    group != null -> Modifier.buttonGroupEdge(group, colors.separator)
+                    else -> Modifier.border(1.dp, colors.separator, shape)
+                },
             )
             .clickable(
                 interactionSource = interaction,
@@ -104,6 +110,7 @@ fun Button(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
+            LocalButtonGroup provides null,
             LocalContentStyle provides size.textStyle.copy(
                 color = foreground,
                 textDecoration = if (variant == ButtonVariant.Link && pressed && enabled) {

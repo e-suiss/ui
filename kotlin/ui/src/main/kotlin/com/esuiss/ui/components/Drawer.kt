@@ -46,6 +46,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
@@ -75,6 +76,8 @@ private data class DrawerInfo(
 
 private val LocalDrawerInfo = staticCompositionLocalOf { DrawerInfo(false, false, false) }
 
+internal val LocalDrawerSquareTop = staticCompositionLocalOf { false }
+
 @Composable
 fun Drawer(
     open: Boolean,
@@ -88,6 +91,7 @@ fun Drawer(
     closeLabel: String? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val squareTop = LocalDrawerSquareTop.current
     var visible by remember { mutableStateOf(false) }
     if (open && !visible) visible = true
     val state = remember { AnchoredDraggableState(initialValue = Hidden) }
@@ -162,10 +166,10 @@ fun Drawer(
                     .pointerInput(Unit) { detectTapGestures { close() } },
             )
 
-            val shape = if (floating) {
-                RoundedCornerShape(Radius.xl3)
-            } else {
-                RoundedCornerShape(topStart = Radius.xl3, topEnd = Radius.xl3)
+            val shape = when {
+                floating -> RoundedCornerShape(Radius.xl3)
+                squareTop -> RectangleShape
+                else -> RoundedCornerShape(topStart = Radius.xl3, topEnd = Radius.xl3)
             }
             Box(
                 modifier = Modifier
@@ -227,6 +231,7 @@ fun Drawer(
                 ) {
                     if (showSwipeHandle) DrawerHandle()
                     CompositionLocalProvider(
+                        LocalDrawerSquareTop provides false,
                         LocalPaneTitle provides paneTitle,
                         LocalDrawerInfo provides DrawerInfo(showCloseButton, showCloseButton && closeLabel != null, fixedHeight != null),
                         LocalContentStyle provides Typography.base.copy(color = colors.label),
