@@ -4,7 +4,7 @@ import { View } from "react-native"
 import * as AvatarPrimitive from "@/components/primitives/avatar"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { IconClassContext } from "@/components/ui/icon"
-import { TextClassContext } from "@/components/ui/text"
+import { Text, TextClassContext } from "@/components/ui/text"
 
 type AvatarSize = "default" | "sm" | "lg" | "xl"
 
@@ -103,6 +103,7 @@ function AvatarImage({
 
 function AvatarFallback({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
   const size = React.useContext(AvatarSizeContext)
@@ -119,7 +120,13 @@ function AvatarFallback({
             )
           }
           {...props}
-        />
+        >
+          {typeof children === "string" || typeof children === "number" ? (
+            <Text>{children}</Text>
+          ) : (
+            children
+          )}
+        </AvatarPrimitive.Fallback>
       </IconClassContext.Provider>
     </TextClassContext.Provider>
   )

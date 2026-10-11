@@ -51,6 +51,8 @@
     --cyan: #32ade6;
     --brown: #a2845e;
     --gray: #8e8e93;
+    --accent-12: rgba(0, 113, 227, 0.12);
+    --accent-20: rgba(0, 113, 227, 0.2);
     --control-selected-40: rgba(29, 29, 31, 0.4);
     --danger-5: rgba(208, 0, 10, 0.05);
     --danger-10: rgba(208, 0, 10, 0.1);
@@ -114,6 +116,8 @@
     --cyan: #64d2ff;
     --brown: #ac8e68;
     --gray: #8e8e93;
+    --accent-12: rgba(0, 113, 227, 0.12);
+    --accent-20: rgba(0, 113, 227, 0.2);
     --control-selected-40: rgba(245, 245, 247, 0.4);
     --danger-5: rgba(255, 84, 71, 0.05);
     --danger-10: rgba(255, 84, 71, 0.1);

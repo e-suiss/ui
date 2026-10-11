@@ -2,7 +2,7 @@ import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import * as AvatarPrimitive from "@/components/primitives/avatar"
 import { IconSizeContext } from "@/components/ui/icon"
-import { TextStyleContext } from "@/components/ui/text"
+import { Text, TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, useTheme } from "@/components/ui/theme"
 
 type AvatarSize = "default" | "sm" | "lg" | "xl"
@@ -157,6 +157,7 @@ function AvatarImage({
 
 function AvatarFallback({
   style,
+  children,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
   const { colors, isDark } = useTheme()
@@ -182,7 +183,13 @@ function AvatarFallback({
             typeof style === "function" ? style(state) : style,
           ]}
           {...props}
-        />
+        >
+          {typeof children === "string" || typeof children === "number" ? (
+            <Text>{children}</Text>
+          ) : (
+            children
+          )}
+        </AvatarPrimitive.Fallback>
       </IconSizeContext.Provider>
     </TextStyleContext.Provider>
   )

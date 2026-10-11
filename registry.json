@@ -263,6 +263,37 @@
       ]
     },
     {
+      "name": "attachment",
+      "type": "ui",
+      "title": "Attachment",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "button",
+        "icon",
+        "primitives/progress",
+        "primitives/types",
+        "primitives/use-render",
+        "progress",
+        "text"
+      ],
+      "files": [
+        "components/ui/attachment.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "avatar",
       "type": "ui",
       "title": "Avatar",
@@ -350,6 +381,41 @@
       ],
       "files": [
         "components/ui/bottom-bar.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bubble",
+      "type": "ui",
+      "title": "Bubble",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/types",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/bubble.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1308,6 +1374,75 @@
       ],
       "files": [
         "components/ui/marker.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "message-scroller",
+      "type": "ui",
+      "title": "Message Scroller",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/hooks",
+        "text"
+      ],
+      "files": [
+        "components/ui/message-scroller.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "message",
+      "type": "ui",
+      "title": "Message",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "bubble",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/message.tsx"
       ],
       "overrides": [
         "uniwind",

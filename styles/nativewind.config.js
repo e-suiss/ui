@@ -57,6 +57,8 @@ module.exports = {
         cyan: "var(--cyan)",
         brown: "var(--brown)",
         gray: "var(--gray)",
+        "accent-12": "var(--accent-12)",
+        "accent-20": "var(--accent-20)",
         "control-selected-40": "var(--control-selected-40)",
         "danger-5": "var(--danger-5)",
         "danger-10": "var(--danger-10)",
