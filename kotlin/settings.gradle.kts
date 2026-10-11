@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "esuiss"
 include(":ui")
+include(":catalog")
