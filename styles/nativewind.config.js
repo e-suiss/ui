@@ -82,6 +82,7 @@ module.exports = {
         "surface-15": "var(--surface-15)",
         "surface-70": "var(--surface-70)",
         "surface-secondary-50": "var(--surface-secondary-50)",
+        "surface-secondary-60": "var(--surface-secondary-60)",
       },
       borderRadius: {
         xs: "3px",

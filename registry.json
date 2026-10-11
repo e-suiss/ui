@@ -3422,6 +3422,263 @@
       ]
     },
     {
+      "name": "bag-checkout",
+      "type": "block",
+      "title": "Bag Checkout",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "header",
+        "icon",
+        "radio-group",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/bag-checkout.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bag-configure",
+      "type": "block",
+      "title": "Bag Configure",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "screen",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/bag-configure.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "bag-review",
+      "type": "block",
+      "title": "Bag Review",
+      "dependencies": {
+        "uniwind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "screen",
+        "stepper",
+        "text"
+      ],
+      "files": [
+        "components/blocks/bag-review.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "chat-conversations",
+      "type": "block",
+      "title": "Chat Conversations",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "bottom-bar",
+        "bubble",
+        "button",
+        "header",
+        "icon",
+        "input-group",
+        "message",
+        "message-scroller",
+        "screen",
+        "swipe-actions",
+        "text"
+      ],
+      "files": [
+        "components/blocks/chat-conversations.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "chat-support",
+      "type": "block",
+      "title": "Chat Support",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "bubble",
+        "button",
+        "icon",
+        "input-group",
+        "message",
+        "message-scroller",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/chat-support.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "chat-thread",
+      "type": "block",
+      "title": "Chat Thread",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "attachment",
+        "avatar",
+        "bottom-bar",
+        "bubble",
+        "button",
+        "icon",
+        "input-group",
+        "message",
+        "message-scroller",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/chat-thread.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "empty-bag",
       "type": "block",
       "title": "Empty Bag",
@@ -3543,6 +3800,119 @@
       ],
       "files": [
         "components/blocks/empty-search.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "grid-accessories",
+      "type": "block",
+      "title": "Grid Accessories",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "chip",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/grid-accessories.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "grid-carousel",
+      "type": "block",
+      "title": "Grid Carousel",
+      "dependencies": {
+        "uniwind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "carousel",
+        "page-indicator",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/grid-carousel.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "grid-lineup",
+      "type": "block",
+      "title": "Grid Lineup",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "screen",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/grid-lineup.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -3681,6 +4051,39 @@
       ]
     },
     {
+      "name": "nav-categories",
+      "type": "block",
+      "title": "Nav Categories",
+      "dependencies": {
+        "uniwind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "chip",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/nav-categories.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "onboarding",
       "type": "block",
       "title": "Onboarding",
@@ -3745,6 +4148,133 @@
       ],
       "files": [
         "components/blocks/permission-primer.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "price-bundle",
+      "type": "block",
+      "title": "Price Bundle",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/price-bundle.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "price-care",
+      "type": "block",
+      "title": "Price Care",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "radio-group",
+        "screen",
+        "switch",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/price-care.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "price-storage",
+      "type": "block",
+      "title": "Price Storage",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "icon",
+        "radio-group",
+        "screen",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/price-storage.tsx"
       ],
       "overrides": [
         "uniwind",
