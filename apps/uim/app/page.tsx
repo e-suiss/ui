@@ -1,11 +1,16 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "cn";
+import type { Metadata } from "next";
 import type * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
 import { Gradient } from "@/components/site/gradient";
 import { InstallCommand } from "@/components/site/install-command";
 import { Search } from "@/components/site/search";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";

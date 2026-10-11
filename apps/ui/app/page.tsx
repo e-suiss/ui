@@ -1,4 +1,5 @@
 import { cn } from "cn";
+import type { Metadata } from "next";
 import type * as React from "react";
 
 import { Gradient } from "@/components/site/gradient";
@@ -6,6 +7,10 @@ import { InstallCommand } from "@/components/site/install-command";
 import { LibraryScroller } from "@/components/site/library-scroller";
 import { Bento } from "@/components/site/bento";
 import { Search } from "@/components/site/search";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
 

@@ -16,6 +16,22 @@ const nextConfig: NextConfig = {
       { source: "/docs/:product(uim|access|relay|work|one)/:path*", destination: "/docs", permanent: true },
     ];
   },
+  async rewrites() {
+    const markdown = [{ type: "header" as const, key: "accept", value: "(.*)text/markdown(.*)" }];
+    return {
+      beforeFiles: [
+        { source: "/docs.md", destination: "/llms.mdx/docs" },
+        { source: "/docs/:path*.md", destination: "/llms.mdx/docs/:path*" },
+        { source: "/docs", has: markdown, destination: "/llms.mdx/docs" },
+        { source: "/docs/:path*", has: markdown, destination: "/llms.mdx/docs/:path*" },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+  async headers() {
+    return [{ source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] }];
+  },
   turbopack: {
     resolveAlias: {
       "storybook/test": "./lib/storybook/test.ts",

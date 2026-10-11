@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "cn";
+import { getBreadcrumbItems } from "fumadocs-core/breadcrumb";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import type { Metadata } from "next";
 import * as React from "react";
@@ -7,8 +8,11 @@ import { notFound } from "next/navigation";
 
 import { getMDXComponents } from "@/components/mdx";
 import { Anchor } from "@/components/site/anchor";
+import { JsonLd } from "@/components/site/json-ld";
 import { PageActions } from "@/components/site/page-actions";
 import { Toc } from "@/components/site/toc";
+import { markdownUrl } from "@/lib/llms";
+import { absolute, site } from "@/lib/site";
 import { source } from "@/lib/source";
 import { strings } from "@/lib/strings";
 
@@ -98,8 +102,46 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
     separateRoot: true,
   });
 
+  const crumbs = [
+    { name: site.name, url: "/" },
+    { name: "Docs", url: "/docs" },
+    ...getBreadcrumbItems(page.url, source.getPageTree(), { includePage: true })
+      .filter((item) => item.url && item.url !== "/docs")
+      .map((item) => ({ name: String(item.name), url: item.url as string })),
+  ];
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${absolute(page.url)}#article`,
+        headline: page.data.title,
+        description: page.data.description ?? site.description,
+        url: absolute(page.url),
+        image: absolute(`/og/docs/${[...page.slugs, "image.png"].join("/")}`),
+        inLanguage: "en",
+        isPartOf: { "@id": absolute("/#website") },
+        about: { "@id": absolute("/#software") },
+        author: { "@id": absolute("/#organization") },
+        publisher: { "@id": absolute("/#organization") },
+        keywords: [page.data.title, kind, ...site.topics].filter(Boolean).join(", "),
+        encoding: { "@type": "MediaObject", encodingFormat: "text/markdown", contentUrl: absolute(markdownUrl(page.url)) },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: crumbs.map((crumb, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: crumb.name,
+          item: absolute(crumb.url),
+        })),
+      },
+    ],
+  };
+
   return (
     <div className="flex gap-12 px-5 pt-14 pb-24 md:px-10 md:pt-20 xl:pe-10">
+      <JsonLd data={structuredData} />
       <article className="mx-auto w-full max-w-205 min-w-0">
         <header className="mb-14 flex flex-col gap-5 md:mb-16">
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -145,8 +187,30 @@ export async function generateMetadata(
   const page = getDocPage(await props.params);
   if (!page) notFound();
 
+  const image = `/og/docs/${[...page.slugs, "image.png"].join("/")}`;
+  const description = page.data.description ?? site.description;
+
   return {
     title: page.data.title,
-    description: page.data.description,
+    description,
+    alternates: {
+      canonical: page.url,
+      types: { "text/markdown": markdownUrl(page.url) },
+    },
+    openGraph: {
+      type: "article",
+      siteName: site.name,
+      locale: "en_US",
+      url: page.url,
+      title: page.data.title,
+      description,
+      images: [{ url: image, width: 1200, height: 630, alt: page.data.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: page.data.title,
+      description,
+      images: [image],
+    },
   };
 }
