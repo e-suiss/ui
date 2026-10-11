@@ -10,14 +10,14 @@ enum ButtonStories {
     },
     Story("Variants") {
       VStack(alignment: .leading, spacing: 12) {
-        Button("Default") {}.buttonStyle(.variant())
-        Button("Secondary") {}.buttonStyle(.variant(.secondary))
-        Button("Tinted") {}.buttonStyle(.variant(.tinted))
-        Button("Outline") {}.buttonStyle(.variant(.outline))
-        Button("Ghost") {}.buttonStyle(.variant(.ghost))
-        Button("Plain") {}.buttonStyle(.variant(.plain))
-        Button("Destructive") {}.buttonStyle(.variant(.destructive))
-        Button("Link") {}.buttonStyle(.variant(.link))
+        WideButton(title: "Default", variant: .default)
+        WideButton(title: "Secondary", variant: .secondary)
+        WideButton(title: "Tinted", variant: .tinted)
+        WideButton(title: "Outline", variant: .outline)
+        WideButton(title: "Ghost", variant: .ghost)
+        WideButton(title: "Plain", variant: .plain)
+        WideButton(title: "Destructive", variant: .destructive)
+        WideButton(title: "Link", variant: .link)
         IconButton(icon: Ph.plus.regular, size: .icon, variant: .outline)
       }
     },
@@ -85,6 +85,18 @@ enum ButtonStories {
       }
     },
   ])
+}
+
+private struct WideButton: View {
+  let title: LocalizedStringKey
+  let variant: VariantButtonStyle.Variant
+
+  var body: some View {
+    Button {} label: {
+      Text(title).frame(maxWidth: .infinity)
+    }
+    .buttonStyle(.variant(variant))
+  }
 }
 
 private struct IconButton<Icon: View>: View {
