@@ -1,6 +1,7 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, type View } from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useToggleGroupContext } from "./toggle-group"
 import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
 import { useControllableState } from "./use-controllable-state"
@@ -61,6 +62,7 @@ function Toggle({
   const pressed = group ? group.value.includes(itemValue) : localPressed
   const disabled = disabledProp || (group?.disabled ?? false)
   const rootRef = React.useRef<View>(null)
+  const haptics = useHaptics()
 
   const state = React.useMemo<ToggleState>(
     () => ({ pressed, disabled }),
@@ -78,13 +80,14 @@ function Toggle({
       )
       onPressedChange?.(next, details)
       if (details.isCanceled) return
-      group.setItemPressed(itemValue, next, details)
+      if (group.setItemPressed(itemValue, next, details)) haptics.selection()
       return
     }
-    setLocalPressed(
+    const changed = setLocalPressed(
       next,
       createChangeEventDetails(REASONS.triggerPress, event, rootRef.current)
     )
+    if (changed) haptics.selection()
   }
 
   const singleSelect = group !== null && !group.multiple

@@ -874,6 +874,54 @@
       ]
     },
     {
+      "name": "haptics-expo",
+      "type": "ui",
+      "title": "Haptics Expo",
+      "dependencies": {
+        "uniwind": [
+          "expo-haptics"
+        ],
+        "nativewind": [
+          "expo-haptics"
+        ],
+        "stylesheet": [
+          "expo-haptics"
+        ]
+      },
+      "requires": [
+        "haptics"
+      ],
+      "files": [
+        "components/ui/haptics-expo.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "haptics",
+      "type": "ui",
+      "title": "Haptics",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/haptics"
+      ],
+      "files": [
+        "components/ui/haptics.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "header",
       "type": "ui",
       "title": "Header",
@@ -2150,7 +2198,9 @@
         ],
         "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/haptics"
+      ],
       "files": [
         "components/interactions/pull-to-refresh.tsx"
       ],
@@ -2191,7 +2241,8 @@
       },
       "requires": [
         "animated-view",
-        "icon"
+        "icon",
+        "primitives/haptics"
       ],
       "files": [
         "components/interactions/reorder-list.tsx"
@@ -2350,6 +2401,7 @@
       "requires": [
         "animated-view",
         "icon",
+        "primitives/haptics",
         "text"
       ],
       "files": [
@@ -2614,6 +2666,7 @@
       "requires": [
         "primitives/checkbox-group",
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/types",
         "primitives/use-controllable-state",
         "primitives/use-render"
@@ -2673,6 +2726,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/hooks",
         "primitives/menu",
         "primitives/types",
@@ -2828,6 +2882,20 @@
       ]
     },
     {
+      "name": "primitives/haptics",
+      "type": "primitive",
+      "title": "Haptics",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/haptics.tsx"
+      ]
+    },
+    {
       "name": "primitives/hooks",
       "type": "primitive",
       "title": "Hooks",
@@ -2934,6 +3002,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/hooks",
         "primitives/types",
         "primitives/use-render"
@@ -2990,7 +3059,9 @@
         "nativewind": [],
         "stylesheet": []
       },
-      "requires": [],
+      "requires": [
+        "primitives/haptics"
+      ],
       "files": [
         "components/primitives/portal.tsx"
       ]
@@ -3061,6 +3132,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/radio-group",
         "primitives/types",
         "primitives/use-render"
@@ -3118,6 +3190,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/hooks",
         "primitives/types",
         "primitives/use-controllable-state",
@@ -3138,6 +3211,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/types",
         "primitives/use-controllable-state",
         "primitives/use-render"
@@ -3225,6 +3299,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/toggle-group",
         "primitives/types",
         "primitives/use-controllable-state",
@@ -3294,6 +3369,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/haptics",
         "primitives/hooks",
         "primitives/types",
         "primitives/use-controllable-state",

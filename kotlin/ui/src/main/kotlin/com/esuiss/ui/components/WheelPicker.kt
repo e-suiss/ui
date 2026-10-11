@@ -130,7 +130,12 @@ fun WheelPickerColumn(
     val reducedMotion = formReducedMotion()
     val currentValue by rememberUpdatedState(value)
     val currentEntries by rememberUpdatedState(entries)
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    val haptics = rememberHaptics()
+    val select: (String) -> Unit = {
+        if (it != value) haptics.selection()
+        onValueChange(it)
+    }
+    val currentOnValueChange by rememberUpdatedState(select)
 
     LaunchedEffect(state) {
         snapshotFlow { state.isScrollInProgress }
@@ -201,7 +206,7 @@ fun WheelPickerColumn(
                                 wanted < current -> enabledIndex(entries, wanted, -1)
                                 else -> -1
                             }
-                            if (index >= 0) onValueChange(entries[index].value)
+                            if (index >= 0) select(entries[index].value)
                             index >= 0
                         }
                     }
@@ -213,7 +218,7 @@ fun WheelPickerColumn(
                         .height(WheelItemHeight)
                         .fillMaxWidth()
                         .clickable(interactionSource = null, indication = null, enabled = entry.enabled) {
-                            onValueChange(entry.value)
+                            select(entry.value)
                         }
                         .padding(horizontal = itemPadding),
                     contentAlignment = Alignment.CenterStart,

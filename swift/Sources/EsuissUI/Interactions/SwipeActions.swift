@@ -135,6 +135,7 @@ public struct SwipeActions<Content: View, Leading: View, Trailing: View>: View {
     }
     .frame(height: collapsed, alignment: .top)
     .clipped()
+    .hapticFeedback(.impact(weight: .medium), trigger: full) { HapticMoments.crossed($0, $1) }
     .accessibilityElement(children: .contain)
     .accessibilityAction(.escape) { settle(0) }
     .onReceive(NotificationCenter.default.publisher(for: .swipeActionsOpen)) { note in

@@ -13,11 +13,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
 import com.esuiss.ui.components.AlertSheetAction
 import com.esuiss.ui.components.MenuItemVariant
+import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.components.rememberLongPressModifier
 
 private val LocalContextActions = staticCompositionLocalOf<SheetMenuState?> { null }
@@ -50,10 +50,10 @@ fun ContextActionsTrigger(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val state = LocalContextActions.current
-    val haptics = LocalHapticFeedback.current
+    val haptics = rememberHaptics()
     val show = {
         if (state != null) {
-            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+            haptics.perform(HapticFeedbackType.LongPress)
             state.onOpenChange(true)
         }
     }

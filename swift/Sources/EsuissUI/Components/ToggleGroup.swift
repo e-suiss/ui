@@ -150,14 +150,13 @@ public struct ToggleGroupItem<Value: Hashable, Label: View>: View {
 
   public var body: some View {
     let isOn = group?.isSelected(AnyHashable(value)) ?? false
-    Button {
-      group?.toggle(AnyHashable(value))
-    } label: {
-      EmptyView()
-    }
-    .buttonStyle(PressReader { pressed in
+    HapticButton(style: PressReader { pressed in
       item(isOn: isOn, pressed: pressed)
-    })
+    }) {
+      guard let group else { return false }
+      group.toggle(AnyHashable(value))
+      return true
+    }
     .accessibilityAddTraits(isOn ? .isSelected : [])
   }
 

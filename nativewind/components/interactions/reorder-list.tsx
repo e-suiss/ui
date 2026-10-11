@@ -11,6 +11,7 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated"
+import { useHaptics } from "@/components/primitives/haptics"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 
@@ -307,6 +308,7 @@ function ReorderListHandle({
     moveDownLabel,
   } = useReorderList()
   const key = useReorderListItemKey()
+  const { impact, selection } = useHaptics()
 
   const gesture = React.useMemo(
     () =>
@@ -319,17 +321,23 @@ function ReorderListHandle({
           dragY.value = 0
           active.value = key
           runOnJS(setActiveKey)(key)
+          runOnJS(impact)("medium")
         })
         .onUpdate((event) => {
           dragY.value = event.translationY
-          target.value = targetIndex(
+          const next = targetIndex(
             order.value,
             heights.value,
             start.value,
             event.translationY
           )
+          if (next !== target.value) {
+            target.value = next
+            runOnJS(selection)()
+          }
         })
         .onEnd(() => {
+          runOnJS(impact)("light")
           const from = start.value
           const to = target.value
           if (from === to || from < 0) {
@@ -353,7 +361,19 @@ function ReorderListHandle({
             }
           )
         }),
-    [key, order, heights, active, start, target, dragY, setActiveKey, commit]
+    [
+      key,
+      order,
+      heights,
+      active,
+      start,
+      target,
+      dragY,
+      setActiveKey,
+      commit,
+      impact,
+      selection,
+    ]
   )
 
   const index = value.indexOf(key)

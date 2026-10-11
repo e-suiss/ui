@@ -48,6 +48,7 @@ public struct ValueStepper<Content: View>: View {
 
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.locale) private var locale
+  @State private var ticks = 0
 
   public init<F: ParseableFormatStyle>(
     value: Binding<Double>,
@@ -106,6 +107,7 @@ public struct ValueStepper<Content: View>: View {
     let step = step
     let enabled = isEnabled
     let resolved = style(locale)
+    let ticks = $ticks
     HStack(spacing: 12) {
       content
     }
@@ -120,12 +122,14 @@ public struct ValueStepper<Content: View>: View {
       change: { direction in
         guard enabled, let next = StepperMath.next(binding.wrappedValue, direction: direction, step: step, bounds: bounds) else { return false }
         binding.wrappedValue = next
+        ticks.wrappedValue += 1
         return true
       },
       set: { next in
         binding.wrappedValue = min(max(next, bounds.lowerBound), bounds.upperBound)
       }
     ))
+    .hapticFeedback(.selection, trigger: ticks.wrappedValue)
     .accessibilityElement(children: .contain)
   }
 }

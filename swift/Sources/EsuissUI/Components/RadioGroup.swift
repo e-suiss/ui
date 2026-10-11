@@ -57,12 +57,7 @@ public struct RadioGroupItem<Value: Hashable, Label: View>: View {
 
   public var body: some View {
     let checked = group?.selection == AnyHashable(value)
-    Button {
-      group?.select(AnyHashable(value))
-    } label: {
-      EmptyView()
-    }
-    .buttonStyle(PressReader { pressed in
+    HapticButton(style: PressReader { pressed in
       HStack(spacing: 12) {
         SelectionIndicator(checked: checked, pressed: pressed, cornerRadius: 8) {
           Circle()
@@ -72,7 +67,11 @@ public struct RadioGroupItem<Value: Hashable, Label: View>: View {
         label
       }
       .contentShape(Rectangle().inset(by: -8))
-    })
+    }) {
+      guard let group, !checked else { return false }
+      group.select(AnyHashable(value))
+      return true
+    }
     .accessibilityElement(children: .combine)
     .accessibilityAddTraits(checked ? .isSelected : [])
   }

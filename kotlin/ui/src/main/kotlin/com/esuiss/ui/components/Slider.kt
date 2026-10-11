@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.Layout
@@ -109,6 +110,7 @@ private fun SliderLayout(
     val currentValues by rememberUpdatedState(values)
     val currentOnChange by rememberUpdatedState(onValuesChange)
     val currentOnFinished by rememberUpdatedState(onValueChangeFinished)
+    val currentHaptics by rememberUpdatedState(rememberHaptics())
     var activeThumb by remember { mutableIntStateOf(-1) }
 
     fun snap(raw: Float): Float {
@@ -126,7 +128,10 @@ private fun SliderLayout(
             value = if (index == 0) value.coerceAtMost(next[1]) else value.coerceAtLeast(next[0])
         }
         next[index] = value
-        if (next != currentValues) currentOnChange(next)
+        if (next != currentValues) {
+            if (step > 0f) currentHaptics.perform(HapticFeedbackType.SegmentFrequentTick)
+            currentOnChange(next)
+        }
         return true
     }
 

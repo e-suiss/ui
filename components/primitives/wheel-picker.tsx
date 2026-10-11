@@ -12,6 +12,7 @@ import {
   type ViewStyle,
 } from "react-native"
 import { createChangeEventDetails } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useEffectEvent } from "./hooks"
 import type {
   BaseUIChangeEventDetails,
@@ -279,6 +280,7 @@ function Column({
   ...elementProps
 }: ColumnProps) {
   const { itemHeight } = useRootContext()
+  const haptics = useHaptics()
   const [value, setValue] = useControllableState<
     string | undefined,
     ChangeEventDetails
@@ -350,7 +352,9 @@ function Column({
     (index: number, reason: ChangeEventReason, event?: ChangeEvent) => {
       const item = itemsRef.current[index]
       if (!item || item.disabled) return
-      setValue(item.value, createChangeEventDetails(reason, event))
+      if (setValue(item.value, createChangeEventDetails(reason, event))) {
+        haptics.selection()
+      }
     }
   )
 

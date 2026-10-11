@@ -75,6 +75,7 @@ fun <T> RadioGroupItem(
     val error = invalid || (group?.invalid ?: false)
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
+    val haptics = rememberHaptics()
     val look = selectionControlLook(colors, selected, active, error, pressed)
     val select = Modifier
         .selectable(
@@ -83,7 +84,10 @@ fun <T> RadioGroupItem(
             indication = null,
             enabled = active && group != null,
             role = Role.RadioButton,
-            onClick = { group?.onSelect(value) },
+            onClick = {
+                if (group != null && !selected) haptics.selection()
+                group?.onSelect(value)
+            },
         )
         .then(if (error) Modifier.semantics { error("Invalid") } else Modifier)
     val control = @Composable { controlModifier: Modifier ->

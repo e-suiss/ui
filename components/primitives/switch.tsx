@@ -1,6 +1,7 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
+import { useHaptics } from "./haptics"
 import type { BaseUIChangeEventDetails, BaseUIComponentProps } from "./types"
 import { useControllableState } from "./use-controllable-state"
 import { useRender } from "./use-render"
@@ -71,6 +72,7 @@ function Root({
     onChange: onCheckedChange,
   })
   const rootRef = React.useRef<View>(null)
+  const haptics = useHaptics()
 
   const state = React.useMemo<RootState>(
     () => ({ checked, disabled, readOnly, required }),
@@ -81,10 +83,11 @@ function Root({
 
   const onPress = (event: GestureResponderEvent) => {
     if (disabled || readOnly) return
-    setChecked(
+    const changed = setChecked(
       !checked,
       createChangeEventDetails(REASONS.triggerPress, event, rootRef.current)
     )
+    if (changed) haptics.selection()
   }
 
   const element = useRender({

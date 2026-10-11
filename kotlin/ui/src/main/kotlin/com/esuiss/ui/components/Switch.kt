@@ -50,6 +50,7 @@ fun Switch(
     interactionSource: MutableInteractionSource? = null,
 ) {
     val colors = EsuissTheme.colors
+    val haptics = rememberHaptics()
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
     val squeezed = pressed && enabled && onCheckedChange != null
@@ -83,7 +84,10 @@ fun Switch(
                 indication = null,
                 enabled = enabled,
                 role = Role.Switch,
-                onValueChange = onCheckedChange,
+                onValueChange = {
+                    haptics.toggle(it)
+                    onCheckedChange(it)
+                },
             )
             .formTouchTarget()
     } else {

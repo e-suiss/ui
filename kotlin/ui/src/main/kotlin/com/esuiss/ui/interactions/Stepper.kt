@@ -56,6 +56,7 @@ import com.adamglin.phosphoricons.bold.Plus
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentColor
 import com.esuiss.ui.components.LocalIconSize
+import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
@@ -105,6 +106,7 @@ fun Stepper(
 ) {
     val currentValue by rememberUpdatedState(value)
     val currentOnValueChange by rememberUpdatedState(onValueChange)
+    val currentHaptics by rememberUpdatedState(rememberHaptics())
     val canChange: (Int) -> Boolean = { direction ->
         enabled && if (direction > 0) currentValue < max else currentValue > min
     }
@@ -120,6 +122,7 @@ fun Stepper(
                 val precision = max(0, -floor(log10(step)).toInt())
                 val factor = 10.0.pow(precision)
                 val next = Math.round((currentValue + direction * step) * factor) / factor
+                currentHaptics.selection()
                 currentOnValueChange(next.coerceIn(min, max))
                 true
             }

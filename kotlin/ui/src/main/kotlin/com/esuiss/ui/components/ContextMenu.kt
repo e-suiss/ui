@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
@@ -24,9 +25,11 @@ fun ContextMenu(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var point by remember { mutableStateOf<IntOffset?>(null) }
+    val haptics = rememberHaptics()
     Box(
         modifier = rememberLongPressModifier(enabled) {
             point = it.round()
+            haptics.perform(HapticFeedbackType.LongPress)
             onExpandedChange(true)
         }.semantics {
             if (enabled) {

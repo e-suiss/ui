@@ -224,6 +224,11 @@ private fun ChipSurface(
     val colors = EsuissTheme.colors
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
+    val haptics = rememberHaptics()
+    val select = {
+        if (multiple) haptics.toggle(!selected) else haptics.selection()
+        onClick()
+    }
     val scale by animateFloatAsState(if (pressed && enabled) 0.96f else 1f, tween(150), label = "chip")
     val foreground = chipForeground(colors, selected, enabled)
     val semantics = if (multiple) {
@@ -233,7 +238,7 @@ private fun ChipSurface(
             indication = null,
             enabled = enabled,
             role = Role.Checkbox,
-            onValueChange = { onClick() },
+            onValueChange = { select() },
         )
     } else {
         Modifier.selectable(
@@ -242,7 +247,7 @@ private fun ChipSurface(
             indication = null,
             enabled = enabled,
             role = Role.RadioButton,
-            onClick = onClick,
+            onClick = select,
         )
     }
     Row(

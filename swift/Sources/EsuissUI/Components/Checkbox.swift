@@ -75,12 +75,7 @@ public struct CheckboxStyle: ToggleStyle {
   public init() {}
 
   public func makeBody(configuration: Configuration) -> some View {
-    Button {
-      configuration.isOn.toggle()
-    } label: {
-      EmptyView()
-    }
-    .buttonStyle(PressReader { pressed in
+    HapticButton(style: PressReader { pressed in
       HStack(spacing: 12) {
         SelectionIndicator(
           checked: configuration.isOn || configuration.isMixed,
@@ -94,7 +89,10 @@ public struct CheckboxStyle: ToggleStyle {
         configuration.label
       }
       .contentShape(Rectangle().inset(by: -8))
-    })
+    }) {
+      configuration.isOn.toggle()
+      return true
+    }
     .accessibilityElement(children: .combine)
     .accessibilityRemoveTraits(.isButton)
     .accessibilityAddTraits(.isToggle)

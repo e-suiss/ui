@@ -1,6 +1,7 @@
 import * as React from "react"
 import { type GestureResponderEvent, Pressable, View } from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useRadioGroupContext } from "./radio-group"
 import type { BaseUIComponentProps } from "./types"
 import { useRender } from "./use-render"
@@ -64,6 +65,7 @@ function Root<Value = unknown>({
   const checked = Object.is(group.value, itemValue)
   const rootRef = React.useRef<View>(null)
   const { setValue } = group
+  const haptics = useHaptics()
 
   const state = React.useMemo<RootState>(
     () => ({ checked, disabled, readOnly, required }),
@@ -77,10 +79,11 @@ function Root<Value = unknown>({
 
   const onPress = (event: GestureResponderEvent) => {
     if (disabled || readOnly || checked) return
-    setValue(
+    const changed = setValue(
       itemValue,
       createChangeEventDetails(REASONS.itemPress, event, rootRef.current)
     )
+    if (changed) haptics.selection()
   }
 
   const element = useRender({

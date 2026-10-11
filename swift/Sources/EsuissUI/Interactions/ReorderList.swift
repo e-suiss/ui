@@ -49,6 +49,7 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
   @State private var heights: [Value: CGFloat] = [:]
   @State private var dragging: Value?
   @State private var translation: CGFloat = 0
+  @State private var drops = 0
   @Environment(\.screenBackground) private var background
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -93,6 +94,9 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
       }
     }
     .coordinateSpace(.named(ReorderSpace.name))
+    .hapticFeedback(.impact(weight: .medium), trigger: dragging) { HapticMoments.lifted($0, $1) }
+    .hapticFeedback(.selection, trigger: target) { HapticMoments.moved($0, $1) }
+    .hapticFeedback(.impact(weight: .light), trigger: drops)
   }
 
   private func rowView(_ item: Value, index: Int, active: Bool) -> some View {
@@ -111,6 +115,7 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
               translation = gesture.translation.height
             }
             .onEnded { gesture in
+              drops += 1
               let destination = ReorderMath.target(from: index, translation: gesture.translation.height, heights: sizes)
               if destination != index {
                 var transaction = Transaction()

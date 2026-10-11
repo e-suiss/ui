@@ -155,12 +155,16 @@ fun ToggleGroupItem(
     val group = LocalToggleGroupState.current ?: return
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val touching by source.collectIsPressedAsState()
+    val haptics = rememberHaptics()
     val on = group.isSelected(value)
     val active = enabled && group.enabled
     val fill = if (group.orientation == Orientation.Vertical) Modifier.fillMaxWidth() else Modifier
     val semantics = modifier
         .then(fill)
-        .toggleSemantics(on, active, source, group.multiple) { group.toggle(value) }
+        .toggleSemantics(on, active, source, group.multiple) {
+            if (group.multiple) haptics.toggle(!on) else haptics.selection()
+            group.toggle(value)
+        }
     when {
         group.segmented -> {
             val shape = RoundedCornerShape(Radius.md)

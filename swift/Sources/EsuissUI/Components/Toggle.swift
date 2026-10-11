@@ -30,16 +30,14 @@ public struct VariantToggleStyle: ToggleStyle {
   }
 
   public func makeBody(configuration: Configuration) -> some View {
-    Button {
-      configuration.isOn.toggle()
-    } label: {
-      EmptyView()
-    }
-    .buttonStyle(PressReader { pressed in
+    HapticButton(style: PressReader { pressed in
       ToggleSurface(isOn: configuration.isOn, pressed: pressed, variant: variant, size: size) {
         configuration.label
       }
-    })
+    }) {
+      configuration.isOn.toggle()
+      return true
+    }
     .accessibilityAddTraits(configuration.isOn ? .isSelected : [])
   }
 }

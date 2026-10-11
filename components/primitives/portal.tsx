@@ -1,4 +1,5 @@
 import * as React from "react"
+import { HapticsContext } from "./haptics"
 
 const DEFAULT_PORTAL_HOST = "INTERNAL_PRIMITIVE_DEFAULT_HOST_NAME"
 
@@ -79,9 +80,17 @@ function Portal({
   hostName = DEFAULT_PORTAL_HOST,
   children,
 }: PortalProps) {
+  const haptics = React.useContext(HapticsContext)
+
   React.useEffect(() => {
-    mountPortal(hostName, name, children)
-  }, [hostName, name, children])
+    mountPortal(
+      hostName,
+      name,
+      <HapticsContext.Provider value={haptics}>
+        {children}
+      </HapticsContext.Provider>
+    )
+  }, [hostName, name, children, haptics])
 
   React.useEffect(() => {
     return () => unmountPortal(hostName, name)

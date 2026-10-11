@@ -13,6 +13,7 @@ import {
   createChangeEventDetails,
   createGenericEventDetails,
 } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useEffectEvent } from "./hooks"
 import type {
   BaseUIChangeEventDetails,
@@ -245,6 +246,7 @@ function Root({
   const value = isControlled ? valueProp : uncontrolled
   const valueRef = React.useRef(value)
   valueRef.current = value
+  const haptics = useHaptics()
 
   const [inputValue, setInputValue] = React.useState(() => formatValue(value))
   const [focused, setFocused] = React.useState(false)
@@ -337,6 +339,7 @@ function Root({
       next = toPrecision(clamp(next, min, max), step)
       if (setValue(next, reason, event, direction)) {
         setInputValue(formatValue(next))
+        haptics.selection()
       }
     }
   )

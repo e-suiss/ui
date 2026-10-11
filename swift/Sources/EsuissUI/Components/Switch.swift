@@ -40,18 +40,16 @@ public struct SwitchStyle: ToggleStyle {
   }
 
   public func makeBody(configuration: Configuration) -> some View {
-    Button {
-      configuration.isOn.toggle()
-    } label: {
-      EmptyView()
-    }
-    .buttonStyle(PressReader { pressed in
+    HapticButton(style: PressReader { pressed in
       HStack(spacing: 12) {
         SwitchTrack(isOn: configuration.isOn, pressed: pressed, size: size)
         configuration.label
       }
       .contentShape(Rectangle().inset(by: -8))
-    })
+    }) {
+      configuration.isOn.toggle()
+      return true
+    }
     .accessibilityElement(children: .combine)
     .accessibilityRemoveTraits(.isButton)
     .accessibilityAddTraits(.isToggle)

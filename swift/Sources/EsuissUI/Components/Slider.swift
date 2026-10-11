@@ -86,6 +86,7 @@ private struct SliderTrack: View {
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @State private var active: Int?
+  @State private var ticks = 0
 
   private let thumbWidth: CGFloat = 32
   private let thumbHeight: CGFloat = 20
@@ -143,7 +144,7 @@ private struct SliderTrack: View {
               onEditingChanged(true)
             }
             let ratio = travel > 0 ? (gesture.location.x - thumbWidth / 2) / travel : 0
-            update(index, clamp(bounds.lowerBound + Double(ratio) * (bounds.upperBound - bounds.lowerBound)))
+            change(index, clamp(bounds.lowerBound + Double(ratio) * (bounds.upperBound - bounds.lowerBound)))
           }
           .onEnded { _ in
             withAnimation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.2)) {
@@ -154,6 +155,7 @@ private struct SliderTrack: View {
       )
     }
     .frame(height: 32)
+    .hapticFeedback(.selection, trigger: ticks)
     .accessibilityElement(children: values.count > 1 ? .contain : .ignore)
     .accessibilityValue(values.count > 1 ? Text(verbatim: "") : Text(format(values.first ?? 0)))
     .accessibilityAdjustableAction { direction in
@@ -164,7 +166,18 @@ private struct SliderTrack: View {
   private func adjust(_ index: Int, _ direction: AccessibilityAdjustmentDirection) {
     let delta = step ?? (bounds.upperBound - bounds.lowerBound) / 10
     let next = direction == .increment ? values[index] + delta : values[index] - delta
-    update(index, clamp(next))
+    change(index, clamp(next))
+  }
+
+  private func change(_ index: Int, _ value: Double) {
+    var next = value
+    if values.count > 1 {
+      next = index == 0 ? min(next, values[1]) : max(next, values[0])
+    }
+    let before = HapticMoments.step(values[index], bounds: bounds, step: step)
+    let after = HapticMoments.step(next, bounds: bounds, step: step)
+    update(index, next)
+    if before != after { ticks += 1 }
   }
 
   private func thumb(dragging: Bool) -> some View {

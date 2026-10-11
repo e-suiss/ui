@@ -7,6 +7,7 @@ import {
   type RefreshControlProps,
   ScrollView,
 } from "react-native"
+import { useHaptics } from "@/components/primitives/haptics"
 
 const MIN_REFRESH = 600
 
@@ -16,6 +17,7 @@ function useRefresh(onRefresh: RefreshHandler) {
   const [refreshing, setRefreshing] = React.useState(false)
   const onRefreshRef = React.useRef(onRefresh)
   const mountedRef = React.useRef(true)
+  const haptics = useHaptics()
 
   React.useEffect(() => {
     onRefreshRef.current = onRefresh
@@ -29,6 +31,7 @@ function useRefresh(onRefresh: RefreshHandler) {
   }, [])
 
   const refresh = React.useCallback(async () => {
+    haptics.impact("light")
     setRefreshing(true)
     const started = Date.now()
     await Promise.allSettled([
@@ -39,7 +42,7 @@ function useRefresh(onRefresh: RefreshHandler) {
       setTimeout(resolve, Math.max(0, MIN_REFRESH - elapsed))
     )
     if (mountedRef.current) setRefreshing(false)
-  }, [])
+  }, [haptics])
 
   return { refreshing, refresh }
 }

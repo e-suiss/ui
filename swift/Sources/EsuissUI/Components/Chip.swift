@@ -182,14 +182,17 @@ public struct Chip<Label: View>: View {
     }
   }
 
-  private func activate() {
+  private func activate() -> Bool {
     switch source {
     case .none:
-      break
+      return false
     case .binding(let binding):
       binding.wrappedValue.toggle()
+      return true
     case .value(let value):
-      group?.toggle(value)
+      guard let group else { return false }
+      group.toggle(value)
+      return true
     }
   }
 
@@ -198,12 +201,11 @@ public struct Chip<Label: View>: View {
     let selected = selected
     Group {
       if selectable {
-        Button(action: activate) {
-          EmptyView()
-        }
-        .buttonStyle(PressReader { pressed in
+        HapticButton(style: PressReader { pressed in
           surface(size: resolved, selected: selected, pressed: pressed)
-        })
+        }) {
+          activate()
+        }
         .accessibilityAddTraits(selected ? .isSelected : [])
       } else {
         surface(size: resolved, selected: selected, pressed: false)

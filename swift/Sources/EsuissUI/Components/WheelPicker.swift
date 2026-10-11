@@ -127,6 +127,7 @@ public struct WheelPickerColumn<Value: Hashable & Sendable, Content: View>: View
   @State private var entries: [WheelPickerEntry] = []
   @State private var offset: CGFloat = 0
   @State private var settling: Task<Void, Never>?
+  @State private var ticks = 0
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init(
@@ -157,6 +158,7 @@ public struct WheelPickerColumn<Value: Hashable & Sendable, Content: View>: View
       .frame(height: WheelPickerMetrics.height)
       .fixedSize(horizontal: true, vertical: false)
       .clipShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      .hapticFeedback(.selection, trigger: ticks)
       .environment(\.wheelPickerColumn, WheelPickerColumnContext(
         alignment: Alignment(horizontal: alignment, vertical: .center),
         select: { value in
@@ -197,6 +199,7 @@ public struct WheelPickerColumn<Value: Hashable & Sendable, Content: View>: View
   private func commit(_ value: Value) {
     if selection.wrappedValue != value {
       selection.wrappedValue = value
+      ticks += 1
     }
   }
 

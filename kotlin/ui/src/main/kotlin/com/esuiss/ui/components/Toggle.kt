@@ -56,8 +56,12 @@ fun Toggle(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val touching by source.collectIsPressedAsState()
     val colors = EsuissTheme.colors
+    val haptics = rememberHaptics()
     ToggleSurface(
-        modifier = modifier.toggleSemantics(pressed, enabled, source, multiple = true) { onPressedChange(!pressed) },
+        modifier = modifier.toggleSemantics(pressed, enabled, source, multiple = true) {
+            haptics.toggle(!pressed)
+            onPressedChange(!pressed)
+        },
         size = size,
         shape = RoundedCornerShape(Radius.lg),
         outlined = variant == ToggleVariant.Outline,

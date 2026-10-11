@@ -56,6 +56,7 @@ fun TriStateCheckbox(
     interactionSource: MutableInteractionSource? = null,
 ) {
     val colors = EsuissTheme.colors
+    val haptics = rememberHaptics()
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
     val on = state != ToggleableState.Off
@@ -69,7 +70,10 @@ fun TriStateCheckbox(
                 indication = null,
                 enabled = enabled,
                 role = Role.Checkbox,
-                onClick = onClick,
+                onClick = {
+                    haptics.toggle(state != ToggleableState.On)
+                    onClick()
+                },
             )
             .formTouchTarget()
     } else {

@@ -53,6 +53,7 @@
     "@storybook/react-native": "10.6.0",
     "@types/node": "^26.6.3",
     "@types/react": "~19.2.18",
+    "expo-haptics": "~57.0.3",
     "knip": "6.38.0",
     "lefthook": "2.1.15",
     "lint-staged": "17.6.0",

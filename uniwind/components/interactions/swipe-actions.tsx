@@ -20,6 +20,7 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated"
+import { useHaptics } from "@/components/primitives/haptics"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { IconClassContext } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
@@ -147,6 +148,7 @@ function SwipeActions({
   const mountedRef = React.useRef(true)
   const [full, setFull] = React.useState<SwipeActionsSide | null>(null)
   const [openSide, setOpenSide] = React.useState<SwipeActionsSide | null>(null)
+  const haptics = useHaptics()
 
   const nodes = React.Children.toArray(children)
   const isActions = (node: React.ReactNode) =>
@@ -181,6 +183,7 @@ function SwipeActions({
 
   const setFullSide = (side: SwipeActionsSide) => (next: boolean) => {
     if (committingRef.current) return
+    if (next && fullRef.current !== side) haptics.impact("medium")
     const value = next
       ? side
       : fullRef.current === side

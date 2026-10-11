@@ -49,10 +49,25 @@ enum PullToRefreshTiming {
   }
 }
 
+private struct PullToRefreshModifier: ViewModifier {
+  let action: @MainActor @Sendable () async -> Void
+
+  @State private var triggers = 0
+
+  func body(content: Content) -> some View {
+    let action = action
+    let triggers = $triggers
+    content
+      .refreshable { @MainActor in
+        triggers.wrappedValue += 1
+        await PullToRefreshTiming.run(action)
+      }
+      .hapticFeedback(.impact(weight: .light), trigger: triggers.wrappedValue)
+  }
+}
+
 extension View {
   public func pullToRefresh(_ action: @escaping @MainActor @Sendable () async -> Void) -> some View {
-    refreshable {
-      await PullToRefreshTiming.run(action)
-    }
+    modifier(PullToRefreshModifier(action: action))
   }
 }

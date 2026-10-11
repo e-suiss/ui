@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
@@ -64,6 +65,7 @@ import androidx.compose.ui.unit.dp
 import com.esuiss.ui.components.FormEasing
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.formReducedMotion
+import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Typography
@@ -73,6 +75,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 
 enum class SwipeActionsSide { Leading, Trailing }
 
@@ -231,6 +235,13 @@ fun SwipeActions(
                 else -> null
             }
         }
+    }
+    val currentHaptics by rememberUpdatedState(rememberHaptics())
+    LaunchedEffect(state) {
+        snapshotFlow { fullSide }
+            .drop(1)
+            .filter { it != null }
+            .collect { currentHaptics.perform(HapticFeedbackType.GestureThresholdActivate) }
     }
     val fullProgress = animateFloatAsState(
         targetValue = if (fullSide != null) 1f else 0f,

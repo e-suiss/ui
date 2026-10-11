@@ -39,6 +39,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -51,9 +52,11 @@ import androidx.compose.ui.zIndex
 import com.adamglin.PhosphorIcons
 import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.DotsSixVertical
+import com.esuiss.ui.components.Haptics
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentColor
 import com.esuiss.ui.components.LocalContentStyle
+import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
@@ -84,10 +87,12 @@ private class ReorderController {
     var onChange: (List<String>) -> Unit = {}
     val placements = mutableMapOf<String, Animatable<Float, AnimationVector1D>>()
     var scope: CoroutineScope? = null
+    var haptics: Haptics? = null
 
     fun start(key: String) {
         active = key
         offset = 0f
+        haptics?.perform(HapticFeedbackType.LongPress)
     }
 
     fun drag(delta: Float) {
@@ -105,11 +110,13 @@ private class ReorderController {
                     order = order.toMutableList().apply { add(index + 1, removeAt(index)) }
                     offset -= nextHeight
                     index += 1
+                    haptics?.selection()
                 }
                 previous != null && offset < -previousHeight / 2f -> {
                     order = order.toMutableList().apply { add(index - 1, removeAt(index)) }
                     offset += previousHeight
                     index -= 1
+                    haptics?.selection()
                 }
                 else -> break
             }
@@ -119,6 +126,7 @@ private class ReorderController {
 
     fun end() {
         val key = active ?: return
+        haptics?.perform(HapticFeedbackType.GestureEnd)
         val released = offset
         val placement = placements[key]
         val launcher = scope
@@ -157,6 +165,7 @@ fun ReorderList(
     val change by rememberUpdatedState(onValueChange)
     controller.onChange = { if (it != value) change(it) }
     controller.scope = scope
+    controller.haptics = rememberHaptics()
     if (controller.active == null && controller.order != value) controller.order = value
     val order = controller.order
     Column(modifier = modifier) {

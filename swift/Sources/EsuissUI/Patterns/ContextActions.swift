@@ -8,6 +8,7 @@ public struct ContextActions<Label: View, Content: View>: View {
   let label: Label
 
   @State private var open = false
+  @State private var lifts = 0
   @CompactLayout private var compact
 
   public init(
@@ -36,8 +37,10 @@ public struct ContextActions<Label: View, Content: View>: View {
       label
         .contentShape(Rectangle())
         .onLongPressGesture(minimumDuration: 0.5, maximumDistance: 10) {
+          lifts += 1
           open = true
         }
+        .hapticFeedback(.impact(weight: .medium), trigger: lifts)
         .accessibilityAction(named: Text("Show actions")) { open = true }
         .accessibilityHint(Text("Long press to show actions"))
         .alertSheet(isPresented: $open, dismissible: dismissible) {

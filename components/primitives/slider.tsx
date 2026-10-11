@@ -13,6 +13,7 @@ import {
   createChangeEventDetails,
   createGenericEventDetails,
 } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useEffectEvent } from "./hooks"
 import type {
   BaseUIChangeEventDetails,
@@ -358,6 +359,7 @@ function Root<Value extends SliderValue = SliderValue>({
 
   const valuesRef = React.useRef(values)
   valuesRef.current = values
+  const haptics = useHaptics()
 
   const setThumbValue = React.useCallback(
     (
@@ -387,6 +389,7 @@ function Root<Value extends SliderValue = SliderValue>({
       const applied = setValues(nextValues, details)
       if (!applied) return null
       valuesRef.current = nextValues
+      haptics.selection()
       return nextValues
     },
     [
@@ -397,6 +400,7 @@ function Root<Value extends SliderValue = SliderValue>({
       minStepsBetweenValues,
       setValues,
       setActiveThumbIndex,
+      haptics,
     ]
   )
 

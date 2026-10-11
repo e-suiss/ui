@@ -6,6 +6,7 @@ import {
   Pressable,
 } from "react-native"
 import { REASONS } from "./event-details"
+import { useHaptics } from "./haptics"
 import { useComposedRefs } from "./hooks"
 import {
   Positioner as MenuPositioner,
@@ -42,6 +43,7 @@ function Trigger({
 }: TriggerProps) {
   const { floating } = useMenuRootContext("ContextMenu.Trigger")
   const { open, openAt, setOpen } = floating
+  const haptics = useHaptics()
   const disabled = !!disabledProp || floating.disabled
   const composedRef = useComposedRefs<HostInstance>(
     ref as React.Ref<HostInstance> | undefined,
@@ -51,7 +53,7 @@ function Trigger({
   const onLongPress = React.useCallback(
     (event: GestureResponderEvent) => {
       if (disabled) return
-      openAt(
+      const opened = openAt(
         {
           pageX: event.nativeEvent.pageX,
           pageY: event.nativeEvent.pageY,
@@ -61,8 +63,9 @@ function Trigger({
         REASONS.triggerLongPress,
         event
       )
+      if (opened) haptics.impact("medium")
     },
-    [disabled, openAt]
+    [disabled, openAt, haptics]
   )
 
   const onAccessibilityAction = React.useCallback(

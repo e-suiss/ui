@@ -28,7 +28,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.customActions
@@ -42,6 +41,7 @@ import com.esuiss.ui.components.Spinner
 import com.esuiss.ui.components.SpinnerSpokes
 import com.esuiss.ui.components.drawSpinnerSpokes
 import com.esuiss.ui.components.formReducedMotion
+import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -99,7 +99,7 @@ fun PullToRefresh(
 ) {
     val colors = EsuissTheme.colors
     val density = LocalDensity.current
-    val haptics = LocalHapticFeedback.current
+    val haptics by rememberUpdatedState(rememberHaptics())
     val reduced = formReducedMotion()
     val scope = rememberCoroutineScope()
     val thresholdPx = with(density) { PullThreshold.toPx() }
@@ -110,7 +110,6 @@ fun PullToRefresh(
     var raw by remember { mutableFloatStateOf(0f) }
     var phase by remember { mutableStateOf(PullToRefreshPhase.Idle) }
     var requested by remember { mutableStateOf(false) }
-    var armed by remember { mutableStateOf(false) }
     val active = refreshing || requested
 
     suspend fun animatePull(target: Float, millis: Int) {
@@ -140,8 +139,8 @@ fun PullToRefresh(
 
     fun release() {
         raw = 0f
-        armed = false
         if (pull >= thresholdPx) {
+            haptics.perform(HapticFeedbackType.Confirm)
             requested = true
             trigger()
         } else {
@@ -155,9 +154,6 @@ fun PullToRefresh(
     fun pullTo(distance: Float) {
         raw = distance.coerceAtLeast(0f)
         pull = resist(raw)
-        val crossed = pull >= thresholdPx
-        if (crossed && !armed) haptics.performHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
-        armed = crossed
     }
 
     val connection = remember(enabled) {
