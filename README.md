@@ -51,6 +51,17 @@ npx @esuiss/uim@latest add button --diff
 npx @esuiss/uim@latest add button --overwrite
 ```
 
+SwiftUI and Jetpack Compose components are copied the same way:
+
+```bash
+npx @esuiss/uim@latest init --platform swift    # Xcode project or Swift package
+npx @esuiss/uim@latest add dialog --platform swift
+npx @esuiss/uim@latest init --platform kotlin   # Android Gradle module
+npx @esuiss/uim@latest add dialog --platform kotlin
+```
+
+`add` copies the component and every file it uses into `EsuissUI/` or `src/main/kotlin/com/esuiss/ui/` (change it with `--path`) and prints the packages to add. You can also use the SwiftUI library as a Swift package from [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift).
+
 ## FAQ
 
 **What is suiss/uim?**

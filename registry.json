@@ -16,6 +16,43 @@
       "directory": "stylesheet"
     }
   },
+  "platforms": {
+    "swift": {
+      "directory": "swiftui/Sources/EsuissUI",
+      "base": [
+        "Theme/Theme.swift",
+        "Theme/Tokens.swift"
+      ],
+      "requirements": {
+        "ios": 17,
+        "packages": [
+          {
+            "url": "https://github.com/phosphor-icons/swift",
+            "from": "2.1.0",
+            "products": [
+              "PhosphorSwift"
+            ]
+          }
+        ]
+      }
+    },
+    "kotlin": {
+      "directory": "kotlin/ui/src/main/kotlin/com/esuiss/ui",
+      "base": [
+        "theme/Theme.kt",
+        "theme/Tokens.kt"
+      ],
+      "requirements": {
+        "minSdk": 24,
+        "bom": "androidx.compose:compose-bom:2026.09.00",
+        "dependencies": [
+          "androidx.compose.foundation:foundation",
+          "androidx.compose.ui:ui",
+          "com.adamglin:phosphor-icon-android:1.0.0"
+        ]
+      }
+    }
+  },
   "items": [
     {
       "name": "accordion",
@@ -58,6 +95,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Accordion.swift"
+      ],
+      "kotlin": [
+        "components/Accordion.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -98,6 +145,27 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/AlertDialog.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/AlertDialog.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Dialog.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -143,6 +211,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/AlertSheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/AlertSheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -176,6 +264,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Alert.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Alert.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Text.kt"
       ]
     },
     {
@@ -211,6 +309,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/AmountInput.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Keypad.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/AmountInput.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Keypad.kt"
       ]
     },
     {
@@ -260,6 +377,12 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/AspectRatio.swift"
+      ],
+      "kotlin": [
+        "components/AspectRatio.kt"
       ]
     },
     {
@@ -291,6 +414,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Attachment.swift",
+        "Components/Avatar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Attachment.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -319,6 +460,14 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Avatar.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Avatar.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -349,6 +498,20 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Badge.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Badge.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -386,6 +549,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/BottomBar.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift"
+      ],
+      "kotlin": [
+        "components/BottomBar.kt",
+        "components/Content.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -421,6 +594,28 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Bubble.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Message.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Bubble.kt",
+        "components/Avatar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Message.kt",
+        "components/SignaturePad.kt"
       ]
     },
     {
@@ -453,6 +648,19 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/ButtonGroup.swift",
+        "Components/Button.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/ButtonGroup.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -481,6 +689,21 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -518,6 +741,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Calendar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Calendar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -543,6 +791,13 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Card.swift"
+      ],
+      "kotlin": [
+        "components/Card.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -585,6 +840,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Carousel.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Carousel.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -619,6 +891,20 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -654,6 +940,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -692,6 +995,34 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Chip.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Chip.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -713,6 +1044,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Collapsible.swift"
+      ],
+      "kotlin": [
+        "components/Collapsible.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -762,6 +1103,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Combobox.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Combobox.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Select.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -807,6 +1178,34 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/ContextMenu.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/ContextMenu.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -853,6 +1252,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Dialog.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Dialog.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -902,6 +1320,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Drawer.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Drawer.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -947,6 +1385,32 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/DropdownMenu.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/DropdownMenu.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -975,6 +1439,15 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Empty.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Empty.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1020,6 +1493,22 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Fab.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Fab.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1048,6 +1537,18 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Field.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Field.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1075,6 +1576,12 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "components/Haptics.kt"
       ]
     },
     {
@@ -1096,6 +1603,12 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "components/Haptics.kt"
       ]
     },
     {
@@ -1136,6 +1649,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Header.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Header.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1170,6 +1702,10 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "kotlin": [
+        "components/Icon.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -1209,6 +1745,22 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/InputAccessoryBar.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/InputAccessoryBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -1242,6 +1794,27 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/InputGroup.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/InputGroup.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1283,6 +1856,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/InputOTP.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/InputOTP.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1310,6 +1900,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Input.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Input.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1340,6 +1947,19 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Item.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Header.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1366,6 +1986,14 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/KeyboardScrollView.swift"
+      ],
+      "kotlin": [
+        "components/KeyboardScrollView.kt",
+        "components/Content.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -1399,6 +2027,22 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Keypad.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Keypad.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1425,6 +2069,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Label.swift",
+        "Components/Field.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Label.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -1455,6 +2109,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Marker.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Marker.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1497,6 +2161,18 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/MessageScroller.swift"
+      ],
+      "kotlin": [
+        "components/MessageScroller.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -1524,6 +2200,28 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Message.swift",
+        "Components/Bubble.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Message.kt",
+        "components/Avatar.kt",
+        "components/Bubble.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/SignaturePad.kt"
       ]
     },
     {
@@ -1557,6 +2255,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/PageIndicator.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Carousel.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/PageIndicator.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Carousel.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -1598,6 +2316,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/PinPad.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Keypad.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/PinPad.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Keypad.kt"
       ]
     },
     {
@@ -1637,6 +2374,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Popover.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Popover.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -1670,6 +2427,13 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Progress.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Progress.kt"
       ]
     },
     {
@@ -1712,6 +2476,38 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/QRScanner.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Keypad.swift",
+        "Components/Overlay.swift",
+        "Components/Popover.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/Flyout.swift",
+        "Patterns/Preview.swift"
+      ],
+      "kotlin": [
+        "components/QrScanner.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Keypad.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Switch.kt"
       ]
     },
     {
@@ -1756,6 +2552,30 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Questionnaire.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Questionnaire.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Input.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1783,6 +2603,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/RadioGroup.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Label.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/RadioGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1812,6 +2657,14 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Screen.swift",
+        "Components/KeyboardScrollView.swift"
+      ],
+      "kotlin": [
+        "components/Screen.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -1859,6 +2712,30 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Select.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Select.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -1885,6 +2762,12 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Separator.swift"
+      ],
+      "kotlin": [
+        "components/Separator.kt"
       ]
     },
     {
@@ -1934,6 +2817,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Sheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Sheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -1970,6 +2873,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/SignaturePad.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/SignaturePad.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -2000,6 +2920,13 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Skeleton.swift"
+      ],
+      "kotlin": [
+        "components/Skeleton.kt",
+        "components/FormSupport.kt"
       ]
     },
     {
@@ -2026,6 +2953,19 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Slider.swift",
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "components/Slider.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2050,6 +2990,14 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Spinner.swift"
+      ],
+      "kotlin": [
+        "components/Spinner.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt"
       ]
     },
     {
@@ -2083,6 +3031,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Switch.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Switch.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2123,6 +3088,27 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/TabBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/TabBar.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -2159,6 +3145,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Tabs.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Tabs.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -2187,6 +3190,13 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Text.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -2214,6 +3224,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Textarea.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Input.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Textarea.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2240,6 +3267,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/ThemeProvider.swift",
+        "Components/Haptics.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Theme.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -2290,6 +3335,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Toast.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Toast.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -2323,6 +3385,29 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/ToggleGroup.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift"
+      ],
+      "kotlin": [
+        "components/ToggleGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt"
       ]
     },
     {
@@ -2353,6 +3438,27 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Toggle.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/Toggle.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2380,6 +3486,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/WheelPicker.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "components/WheelPicker.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt"
       ]
     },
     {
@@ -2424,6 +3549,29 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Components/Widget.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Popover.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/Flyout.swift",
+        "Patterns/Preview.swift"
+      ],
+      "kotlin": [
+        "components/Widget.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt"
       ]
     },
     {
@@ -2460,6 +3608,43 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/ActionBar.swift",
+        "Components/AlertSheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Sheet.swift",
+        "Components/TextVariant.swift",
+        "Patterns/ActionMenu.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/ActionBar.kt",
+        "components/AlertSheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt",
+        "patterns/ActionMenu.kt"
       ]
     },
     {
@@ -2481,6 +3666,39 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/ActionMenu.swift",
+        "Components/AlertSheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Sheet.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/ActionMenu.kt",
+        "components/AlertSheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2506,6 +3724,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/Confirm.swift",
+        "Components/AlertDialog.swift",
+        "Components/AlertSheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/Confirm.kt",
+        "components/AlertSheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -2527,6 +3770,42 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/ContextActions.swift",
+        "Components/AlertSheet.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/ContextMenu.swift",
+        "Components/Dialog.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Sheet.swift",
+        "Components/TextVariant.swift",
+        "Patterns/ActionMenu.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/ContextActions.kt",
+        "components/AlertSheet.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt",
+        "patterns/ActionMenu.kt"
       ]
     },
     {
@@ -2562,6 +3841,40 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/DatePicker.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Calendar.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/WheelPicker.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/DatePicker.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/WheelPicker.kt"
       ]
     },
     {
@@ -2587,6 +3900,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/Flyout.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Popover.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/Flyout.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt",
+        "patterns/DrawerPatterns.kt"
       ]
     },
     {
@@ -2612,6 +3950,30 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/Modal.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/Modal.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt",
+        "patterns/DrawerPatterns.kt"
       ]
     },
     {
@@ -2638,6 +4000,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/PagedList.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "patterns/PagedList.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -2663,6 +4043,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/Panel.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/Sheet.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/Panel.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt",
+        "patterns/DrawerPatterns.kt"
       ]
     },
     {
@@ -2684,6 +4089,33 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/OptionPicker.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/Picker.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Select.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -2711,6 +4143,32 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/Preview.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Popover.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/Flyout.swift"
+      ],
+      "kotlin": [
+        "patterns/Preview.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt",
+        "patterns/DrawerPatterns.kt"
       ]
     },
     {
@@ -2746,6 +4204,37 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/SearchPicker.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/SearchPicker.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/WheelPicker.kt",
+        "patterns/DatePicker.kt"
       ]
     },
     {
@@ -2767,6 +4256,33 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/SegmentPicker.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift",
+        "Patterns/Adaptive.swift"
+      ],
+      "kotlin": [
+        "patterns/SegmentPicker.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "patterns/Picker.kt"
       ]
     },
     {
@@ -2808,6 +4324,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/SplitView.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "patterns/SplitView.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -2834,6 +4368,21 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Patterns/TableList.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "patterns/TableList.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt"
       ]
     },
     {
@@ -2879,6 +4428,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/CardStack.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Card.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/CardStack.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt"
       ]
     },
     {
@@ -2927,6 +4493,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/ImageViewer.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Carousel.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/ImageViewer.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -2975,6 +4561,15 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/Island.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/Island.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt"
       ]
     },
     {
@@ -3014,6 +4609,30 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/OtpAutofill.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputOTP.swift",
+        "Components/Keypad.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/OtpAutofill.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputOTP.kt",
+        "components/Keypad.kt",
+        "components/Label.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -3056,6 +4675,32 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/PreviewMenu.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Overlay.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/PreviewMenu.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -3083,6 +4728,17 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/PullToRefresh.swift",
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "interactions/PullToRefresh.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -3126,6 +4782,18 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/ReorderList.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift"
+      ],
+      "kotlin": [
+        "interactions/ReorderList.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -3165,6 +4833,15 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/SearchReveal.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/SearchReveal.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -3200,6 +4877,23 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/SectionIndex.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/SectionIndex.kt",
+        "components/Haptics.kt"
       ]
     },
     {
@@ -3246,6 +4940,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/SelectionList.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/SelectionList.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "interactions/FloatingBar.kt"
       ]
     },
     {
@@ -3281,6 +4994,16 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/Stepper.swift",
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "interactions/Stepper.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -3321,6 +5044,17 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/SwipeActions.swift",
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "interactions/SwipeActions.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -3367,6 +5101,19 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/Tip.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/Tip.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -3415,6 +5162,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/TopBanner.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "interactions/TopBanner.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -3453,6 +5218,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Interactions/UndoBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Interactions/SelectionList.swift"
+      ],
+      "kotlin": [
+        "interactions/UndoBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "interactions/FloatingBar.kt"
       ]
     },
     {
@@ -3498,6 +5283,42 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/BagCheckout.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Label.swift",
+        "Components/Overlay.swift",
+        "Components/RadioGroup.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/BagCheckout.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/RadioGroup.kt",
+        "components/Screen.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -3535,6 +5356,29 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/BagConfigure.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/BagConfigure.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -3570,6 +5414,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/BagReview.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Interactions/Stepper.swift"
+      ],
+      "kotlin": [
+        "blocks/BagReview.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Screen.kt",
+        "interactions/Stepper.kt"
       ]
     },
     {
@@ -3618,6 +5487,48 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/ChatConversations.swift",
+        "Components/BottomBar.swift",
+        "Components/Bubble.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/InputGroup.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Message.swift",
+        "Components/MessageScroller.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Interactions/SwipeActions.swift"
+      ],
+      "kotlin": [
+        "blocks/ChatConversations.kt",
+        "components/Avatar.kt",
+        "components/BottomBar.kt",
+        "components/Bubble.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Label.kt",
+        "components/Message.kt",
+        "components/MessageScroller.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/SignaturePad.kt",
+        "components/Spinner.kt",
+        "interactions/SwipeActions.kt"
       ]
     },
     {
@@ -3663,6 +5574,43 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/ChatSupport.swift",
+        "Components/Bubble.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Fab.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputGroup.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Message.swift",
+        "Components/MessageScroller.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/ChatSupport.kt",
+        "components/Avatar.kt",
+        "components/Bubble.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Label.kt",
+        "components/Message.kt",
+        "components/MessageScroller.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/SignaturePad.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -3710,6 +5658,45 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/ChatThread.swift",
+        "Components/BottomBar.swift",
+        "Components/Bubble.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputGroup.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Message.swift",
+        "Components/MessageScroller.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/ChatThread.kt",
+        "components/Attachment.kt",
+        "components/Avatar.kt",
+        "components/BottomBar.kt",
+        "components/Bubble.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Label.kt",
+        "components/Message.kt",
+        "components/MessageScroller.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/SignaturePad.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -3749,6 +5736,51 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/DashAnalytics.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "blocks/DashAnalytics.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Empty.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -3794,6 +5826,30 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/DashHealth.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/DashHealth.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -3844,6 +5900,52 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/DashStore.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "blocks/DashStore.kt",
+        "blocks/DashAnalytics.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/DropdownMenu.kt",
+        "components/Empty.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -3887,6 +5989,28 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/EmptyBag.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/EmptyBag.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Empty.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -3929,6 +6053,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/EmptyOffline.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/Spinner.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/EmptyOffline.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Empty.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/Screen.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -3973,6 +6122,32 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/EmptySearch.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/EmptySearch.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Empty.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4016,6 +6191,39 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/GridAccessories.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/GridAccessories.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -4050,6 +6258,31 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/GridCarousel.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Carousel.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/PageIndicator.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/GridCarousel.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Carousel.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/PageIndicator.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4086,6 +6319,27 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/GridLineup.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/GridLineup.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4133,6 +6387,41 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/InboxCategories.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Input.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Textarea.swift",
+        "Interactions/SwipeActions.swift",
+        "Patterns/SplitView.swift"
+      ],
+      "kotlin": [
+        "blocks/InboxCategories.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Textarea.kt",
+        "interactions/SwipeActions.kt",
+        "patterns/SplitView.kt"
       ]
     },
     {
@@ -4180,6 +6469,43 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/InboxMail.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Input.swift",
+        "Components/InputGroup.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Textarea.swift",
+        "Interactions/SwipeActions.swift",
+        "Patterns/SplitView.swift"
+      ],
+      "kotlin": [
+        "blocks/InboxMail.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Textarea.kt",
+        "interactions/SwipeActions.kt",
+        "patterns/SplitView.kt"
       ]
     },
     {
@@ -4226,6 +6552,46 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/InboxSupport.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Input.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Textarea.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift",
+        "Interactions/SwipeActions.swift",
+        "Patterns/SplitView.swift"
+      ],
+      "kotlin": [
+        "blocks/InboxSupport.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Textarea.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt",
+        "interactions/SwipeActions.kt",
+        "patterns/SplitView.kt"
       ]
     },
     {
@@ -4272,6 +6638,47 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LogActivity.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Collapsible.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LogActivity.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Chip.kt",
+        "components/Collapsible.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt"
       ]
     },
     {
@@ -4317,6 +6724,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LogLive.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LogLive.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Screen.kt",
+        "components/TabBar.kt"
       ]
     },
     {
@@ -4362,6 +6799,45 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LogSecurity.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LogSecurity.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Chip.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt"
       ]
     },
     {
@@ -4410,6 +6886,34 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LoginAccount.swift",
+        "Components/Avatar.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Keypad.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/Spinner.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LoginAccount.kt",
+        "components/Avatar.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -4454,6 +6958,33 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LoginPasskey.swift",
+        "Components/Avatar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LoginPasskey.kt",
+        "components/Avatar.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Dialog.kt",
+        "components/Icon.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4492,6 +7023,46 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/LoginSheet.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/Drawer.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Label.swift",
+        "Components/Overlay.swift",
+        "Components/RadioGroup.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Spinner.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/LoginSheet.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Drawer.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/RadioGroup.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Spinner.kt"
       ]
     },
     {
@@ -4525,6 +7096,40 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/NavCategories.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/NavCategories.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Chip.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -4563,6 +7168,33 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/Onboarding.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Carousel.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/PageIndicator.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/Onboarding.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Carousel.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/PageIndicator.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4597,6 +7229,28 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/PermissionPrimer.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/PermissionPrimer.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4640,6 +7294,29 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/PriceBundle.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/PriceBundle.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -4679,6 +7356,46 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/PriceCare.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Label.swift",
+        "Components/Overlay.swift",
+        "Components/RadioGroup.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "blocks/PriceCare.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/RadioGroup.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Switch.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -4724,6 +7441,43 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/PriceStorage.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Label.swift",
+        "Components/Overlay.swift",
+        "Components/RadioGroup.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "blocks/PriceStorage.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -4768,6 +7522,44 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/RolesEditor.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Patterns/SplitView.swift"
+      ],
+      "kotlin": [
+        "blocks/RolesEditor.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Switch.kt",
+        "components/TabBar.kt",
+        "patterns/SplitView.kt"
       ]
     },
     {
@@ -4816,6 +7608,49 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/RolesRequests.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Interactions/SwipeActions.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/OptionPicker.swift"
+      ],
+      "kotlin": [
+        "blocks/RolesRequests.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Empty.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt",
+        "interactions/SwipeActions.kt",
+        "patterns/Picker.kt"
       ]
     },
     {
@@ -4863,6 +7698,42 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SettingsAccount.swift",
+        "Components/Avatar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Input.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/SettingsAccount.kt",
+        "components/Avatar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Input.kt",
+        "components/Item.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Switch.kt"
       ]
     },
     {
@@ -4902,6 +7773,41 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SettingsDevice.swift",
+        "Components/Avatar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/InputGroup.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/SettingsDevice.kt",
+        "components/Avatar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Switch.kt"
       ]
     },
     {
@@ -4948,6 +7854,49 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SettingsNotifications.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/OptionPicker.swift"
+      ],
+      "kotlin": [
+        "blocks/SettingsNotifications.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/Switch.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt",
+        "patterns/Picker.kt"
       ]
     },
     {
@@ -4994,6 +7943,48 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SignupForm.swift",
+        "Components/AlertDialog.swift",
+        "Components/AlertSheet.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Dialog.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Input.swift",
+        "Components/InputAccessoryBar.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/Confirm.swift",
+        "Patterns/OptionPicker.swift"
+      ],
+      "kotlin": [
+        "blocks/SignupForm.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Icon.kt",
+        "components/InputAccessoryBar.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "patterns/Picker.kt"
       ]
     },
     {
@@ -5039,6 +8030,32 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SignupSteps.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/SignupSteps.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Carousel.kt",
+        "components/Content.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/KeyboardScrollView.kt",
+        "components/PageIndicator.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -5086,6 +8103,37 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/SignupTrial.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputAccessoryBar.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/SignupTrial.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputAccessoryBar.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -5133,6 +8181,55 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/UsersDetail.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TabBar.swift",
+        "Components/Tabs.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/OptionPicker.swift",
+        "Patterns/SplitView.swift"
+      ],
+      "kotlin": [
+        "blocks/UsersDetail.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/Switch.kt",
+        "components/TabBar.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt",
+        "patterns/Picker.kt",
+        "patterns/SplitView.kt"
       ]
     },
     {
@@ -5182,6 +8279,55 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/UsersInvite.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/Switch.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Components/Toast.swift",
+        "Patterns/Adaptive.swift",
+        "Patterns/OptionPicker.swift"
+      ],
+      "kotlin": [
+        "blocks/UsersInvite.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Chip.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Label.kt",
+        "components/Overlay.kt",
+        "components/Screen.kt",
+        "components/Select.kt",
+        "components/Separator.kt",
+        "components/Switch.kt",
+        "components/TabBar.kt",
+        "components/Toast.kt",
+        "patterns/Picker.kt"
       ]
     },
     {
@@ -5224,6 +8370,51 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/UsersTable.swift",
+        "Components/Badge.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Chip.swift",
+        "Components/Combobox.swift",
+        "Components/DropdownMenu.swift",
+        "Components/Empty.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Header.swift",
+        "Components/InputGroup.swift",
+        "Components/Item.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Overlay.swift",
+        "Components/Screen.swift",
+        "Components/Select.swift",
+        "Components/Separator.swift",
+        "Components/TabBar.swift",
+        "Components/TextVariant.swift",
+        "Interactions/SelectionList.swift"
+      ],
+      "kotlin": [
+        "blocks/UsersTable.kt",
+        "components/Badge.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Checkbox.kt",
+        "components/Chip.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/InputGroup.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/TabBar.kt",
+        "interactions/FloatingBar.kt",
+        "interactions/SelectionList.kt"
       ]
     },
     {
@@ -5267,6 +8458,35 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/VerifyCode.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputOTP.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Keypad.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/VerifyCode.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputOTP.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Keypad.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "interactions/OtpAutofill.kt"
       ]
     },
     {
@@ -5311,6 +8531,37 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/VerifyDevice.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/InputOTP.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Keypad.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/Spinner.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/VerifyDevice.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/InputOTP.kt",
+        "components/KeyboardScrollView.kt",
+        "components/Keypad.kt",
+        "components/Label.kt",
+        "components/Screen.kt",
+        "components/Separator.kt",
+        "components/Spinner.kt",
+        "interactions/OtpAutofill.kt"
       ]
     },
     {
@@ -5352,6 +8603,28 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Blocks/VerifyEmail.swift",
+        "Components/BottomBar.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/KeyboardScrollView.swift",
+        "Components/Screen.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "blocks/VerifyEmail.kt",
+        "components/BottomBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt",
+        "components/Screen.kt"
       ]
     },
     {
@@ -5374,6 +8647,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartAxes.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartAxes.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5396,6 +8687,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5418,6 +8727,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartGradient.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartGradient.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5446,6 +8773,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartInteractive.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartInteractive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -5468,6 +8825,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartLinear.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartLinear.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5491,6 +8866,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartRange.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartRange.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5518,6 +8911,25 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartSparkline.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartSparkline.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Separator.kt"
       ]
     },
     {
@@ -5540,6 +8952,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartStackedExpand.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartStackedExpand.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5562,6 +8992,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartStacked.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartStacked.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5584,6 +9032,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/AreaChartStep.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/AreaChartStep.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5607,6 +9073,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartActive.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartActive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5629,6 +9113,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5651,6 +9153,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartHorizontal.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartHorizontal.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5674,6 +9194,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartHourly.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartHourly.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5702,6 +9240,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartInteractive.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartInteractive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -5724,6 +9292,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartLabeled.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartLabeled.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5746,6 +9332,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartMultiple.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartMultiple.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5768,6 +9372,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartNegative.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartNegative.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5791,6 +9413,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartRange.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartRange.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5813,6 +9453,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/BarChartStacked.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/BarChartStacked.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5835,6 +9493,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5858,6 +9534,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartDots.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartDots.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5880,6 +9574,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartForecast.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartForecast.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5903,6 +9615,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartGoalDots.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartGoalDots.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5926,6 +9656,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartGoal.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartGoal.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5955,6 +9703,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartInteractive.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartInteractive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -5977,6 +9755,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartLabeled.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartLabeled.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -5999,6 +9795,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartLinear.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartLinear.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6021,6 +9835,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartMultiple.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartMultiple.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6043,6 +9875,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/LineChartStep.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/LineChartStep.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6065,6 +9915,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartActive.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartActive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6087,6 +9955,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6110,6 +9996,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartDonutText.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartDonutText.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6132,6 +10036,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartDonut.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartDonut.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6155,6 +10077,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartHalf.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartHalf.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6183,6 +10123,36 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartInteractive.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift",
+        "Components/Toggle.swift",
+        "Components/ToggleGroup.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartInteractive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Checkbox.kt",
+        "components/Content.kt",
+        "components/Field.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt",
+        "components/Label.kt",
+        "components/Separator.kt",
+        "components/Toggle.kt",
+        "components/ToggleGroup.kt"
       ]
     },
     {
@@ -6205,6 +10175,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartLabel.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartLabel.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6227,6 +10215,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartLegend.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartLegend.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6249,6 +10255,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartNested.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartNested.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6271,6 +10295,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/PieChartSeparated.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/PieChartSeparated.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6293,6 +10335,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6315,6 +10375,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartDots.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartDots.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6337,6 +10415,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartGridCircle.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartGridCircle.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6359,6 +10455,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartGridFilled.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartGridFilled.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6381,6 +10497,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartGridNone.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartGridNone.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6409,6 +10543,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartInteractive.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartInteractive.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6431,6 +10585,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartLegend.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartLegend.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6453,6 +10625,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartLinesOnly.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartLinesOnly.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6475,6 +10665,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartMultiple.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartMultiple.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6497,6 +10705,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadarChartRadiusAxis.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadarChartRadiusAxis.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6520,6 +10746,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartBatteries.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartBatteries.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6542,6 +10786,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartDefault.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartDefault.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6565,6 +10829,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartGauge.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartGauge.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6597,6 +10879,19 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartInteractive.swift",
+        "Components/Card.swift",
+        "Components/Haptics.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartInteractive.kt",
+        "charts/RadialChartRings.kt",
+        "components/Card.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt"
       ]
     },
     {
@@ -6619,6 +10914,26 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartLabel.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartLabel.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6642,6 +10957,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartProgress.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartProgress.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6670,6 +11003,15 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartRings.swift",
+        "Components/Card.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartRings.kt",
+        "components/Card.kt",
+        "components/Content.kt"
       ]
     },
     {
@@ -6693,6 +11035,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartStacked.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartStacked.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6716,6 +11076,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartText.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartText.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {
@@ -6738,6 +11116,24 @@
         "uniwind",
         "nativewind",
         "stylesheet"
+      ],
+      "swift": [
+        "Charts/RadialChartTinted.swift",
+        "Components/Card.swift",
+        "Components/Chart.swift",
+        "Components/Haptics.swift",
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
+      ],
+      "kotlin": [
+        "charts/RadialChartTinted.kt",
+        "components/Card.kt",
+        "components/Chart.kt",
+        "components/Content.kt",
+        "components/FormSupport.kt",
+        "components/Haptics.kt",
+        "components/Icon.kt"
       ]
     },
     {

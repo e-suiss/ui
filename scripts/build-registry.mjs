@@ -2,6 +2,13 @@ import { existsSync } from "node:fs"
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
+import {
+  buildNativeGraph,
+  nativeFileOf,
+  nativeRequirements,
+  PLATFORMS,
+} from "./native-registry.mjs"
+
 const ROOT = process.cwd()
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLES = {
@@ -159,7 +166,31 @@ for (const file of (await readdir(path.join(ROOT, PRIMITIVES_DIR)))
   items.push(await buildPrimitive(file))
 }
 
+const platforms = {}
 const problems = validate(items)
+for (const [platform, config] of Object.entries(PLATFORMS)) {
+  const graph = await buildNativeGraph(ROOT, platform)
+  const used = new Set(graph.base)
+  for (const [name, file] of Object.entries(config.files)) {
+    if (!graph.files.includes(file))
+      problems.push(`missing ${config.source}/${file} for ${name}`)
+  }
+  for (const item of items) {
+    const file = nativeFileOf(platform, item, graph.files)
+    if (!file) continue
+    item[platform] = graph.filesFor(file)
+    for (const entry of item[platform]) used.add(entry)
+  }
+  for (const file of graph.files.filter((entry) => !used.has(entry))) {
+    problems.push(`${config.source}/${file} is not used by any item`)
+  }
+  platforms[platform] = {
+    directory: config.source,
+    base: graph.base,
+    requirements: await nativeRequirements(ROOT, platform),
+  }
+}
+
 if (problems.length) {
   console.error(problems.join("\n"))
   process.exit(1)
@@ -169,6 +200,7 @@ const registry = {
   name: "esuiss-uim",
   homepage: "https://github.com/e-suiss/uim",
   styles: STYLES,
+  platforms,
   items,
 }
 const output = `${JSON.stringify(registry, null, 2)}\n`

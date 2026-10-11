@@ -20,45 +20,39 @@ import {
 
 const CONCURRENCY = 8
 
-async function fetchFiles(registry, items, styling) {
-  const queue = items.flatMap((item) =>
-    item.files.map((file) => ({ item, file }))
-  )
-  const results = new Array(queue.length)
+export async function fetchFiles(entries) {
+  const results = new Array(entries.length)
   let next = 0
   const worker = async () => {
-    while (next < queue.length) {
+    while (next < entries.length) {
       const index = next++
-      const { item, file } = queue[index]
-      results[index] = {
-        file,
-        content: await fetchText(sourceOf(registry, item, file, styling)),
-      }
+      const { file, source } = entries[index]
+      results[index] = { file, content: await fetchText(source) }
     }
   }
   await Promise.all(
-    Array.from({ length: Math.min(CONCURRENCY, queue.length) }, worker)
+    Array.from({ length: Math.min(CONCURRENCY, entries.length) }, worker)
   )
   return results
 }
 
-export async function installItems(
-  project,
-  root,
-  registry,
-  names,
-  { overwrite = false, styling }
-) {
-  const items = resolveItems(registry, names)
-  const files = await fetchFiles(registry, items, styling)
+function itemEntries(registry, items, styling) {
+  return items.flatMap((item) =>
+    item.files.map((file) => ({
+      file,
+      source: sourceOf(registry, item, file, styling),
+    }))
+  )
+}
 
+export function writeFiles(cwd, root, files, overwrite) {
   const created = []
   const updated = []
   const skipped = []
 
   for (const { file, content } of files) {
     const target = path.join(root, file)
-    const relative = path.relative(project.cwd, target)
+    const relative = path.relative(cwd, target)
     if (!existsSync(target)) {
       mkdirSync(path.dirname(target), { recursive: true })
       writeFileSync(target, content)
@@ -72,24 +66,10 @@ export async function installItems(
       }
     }
   }
+  return { created, updated, skipped }
+}
 
-  const dependencies = items.flatMap((item) => item.dependencies[styling])
-  const installed = install(project, dependencies)
-  const manual = [
-    ...(dependencies.includes("react-native-reanimated") &&
-    styling !== "nativewind"
-      ? ensureBabelPlugin(
-          project,
-          "react-native-worklets/plugin",
-          '"react-native-worklets/plugin"',
-          { last: true }
-        )
-      : []),
-    ...(dependencies.includes("react-native-svg")
-      ? ensurePodDeploymentTarget(project)
-      : []),
-  ]
-
+export function reportFiles({ created, updated, skipped }, installed = []) {
   if (created.length) {
     step(`Created ${created.length} file${created.length === 1 ? "" : "s"}:`)
     list(created)
@@ -108,22 +88,14 @@ export async function installItems(
   if (!created.length && !updated.length && !skipped.length) {
     step("Already up to date.")
   }
-  for (const message of manual) note(message)
-  if (installed.length && project.framework === "react-native") {
-    note("Run `cd ios && pod install` before building for iOS.")
-  }
 }
 
-async function showDiff(project, root, registry, names, styling) {
-  const requested = new Set(names)
-  const items = resolveItems(registry, names).filter((item) =>
-    requested.has(item.name)
-  )
+export async function showDiff(cwd, root, entries) {
   let changes = 0
 
-  for (const { file, content } of await fetchFiles(registry, items, styling)) {
+  for (const { file, content } of await fetchFiles(entries)) {
     const target = path.join(root, file)
-    const relative = path.relative(project.cwd, target)
+    const relative = path.relative(cwd, target)
     if (!existsSync(target)) {
       note(`${relative} is not installed.`)
       continue
@@ -135,6 +107,45 @@ async function showDiff(project, root, registry, names, styling) {
   }
 
   if (!changes) step("No differences from the registry.")
+}
+
+export async function installItems(
+  project,
+  root,
+  registry,
+  names,
+  { overwrite = false, styling }
+) {
+  const items = resolveItems(registry, names)
+  const result = writeFiles(
+    project.cwd,
+    root,
+    await fetchFiles(itemEntries(registry, items, styling)),
+    overwrite
+  )
+
+  const dependencies = items.flatMap((item) => item.dependencies[styling])
+  const installed = install(project, dependencies)
+  const manual = [
+    ...(dependencies.includes("react-native-reanimated") &&
+    styling !== "nativewind"
+      ? ensureBabelPlugin(
+          project,
+          "react-native-worklets/plugin",
+          '"react-native-worklets/plugin"',
+          { last: true }
+        )
+      : []),
+    ...(dependencies.includes("react-native-svg")
+      ? ensurePodDeploymentTarget(project)
+      : []),
+  ]
+
+  reportFiles(result, installed)
+  for (const message of manual) note(message)
+  if (installed.length && project.framework === "react-native") {
+    note("Run `cd ios && pod install` before building for iOS.")
+  }
 }
 
 export async function add(names, options) {
@@ -165,10 +176,16 @@ export async function add(names, options) {
     )
   }
 
-  if (options.diff) await showDiff(project, root, registry, selected, styling)
-  else
+  if (options.diff) {
+    const requested = new Set(selected)
+    const items = resolveItems(registry, selected).filter((item) =>
+      requested.has(item.name)
+    )
+    await showDiff(project.cwd, root, itemEntries(registry, items, styling))
+  } else {
     await installItems(project, root, registry, selected, {
       overwrite: options.overwrite,
       styling,
     })
+  }
 }

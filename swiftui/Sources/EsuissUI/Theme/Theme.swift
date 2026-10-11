@@ -49,8 +49,8 @@ public struct TextStyle: Sendable, Hashable {
   }
 }
 
-extension Font {
-  public static func textStyle(_ style: EsuissUI.TextStyle, weight: Font.Weight = .regular) -> Font {
+extension Hashable where Self == Font {
+  public static func textStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> Font {
     style.font(weight: weight)
   }
 }

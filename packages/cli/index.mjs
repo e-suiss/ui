@@ -4,6 +4,7 @@ import path from "node:path"
 
 import { add } from "./lib/add.mjs"
 import { init } from "./lib/init.mjs"
+import { addNative, initNative } from "./lib/native.mjs"
 import { CliError, color } from "./lib/output.mjs"
 
 const { name, version } = JSON.parse(
@@ -23,11 +24,18 @@ Options:
   -y, --yes        skip confirmation prompts
   -s, --styling <uniwind|nativewind|stylesheet>
                    styling to use (detected from the project when omitted)
+  -p, --platform <rn|swift|kotlin>
+                   React Native (default), SwiftUI or Jetpack Compose sources
+  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
+                   (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)
   -c, --cwd <dir>  project directory (defaults to the current directory)
   -h, --help       show this help
   -v, --version    show the version
 
-Supports React Native and Expo projects with TypeScript.`
+Supports React Native and Expo projects with TypeScript, Xcode projects and
+Swift packages (--platform swift), and Android Gradle modules (--platform kotlin).`
+
+const PLATFORMS = ["rn", "swift", "kotlin"]
 
 function parseArgs(args) {
   const options = {
@@ -36,6 +44,7 @@ function parseArgs(args) {
     overwrite: false,
     diff: false,
     all: false,
+    platform: "rn",
   }
   const names = []
 
@@ -64,6 +73,21 @@ function parseArgs(args) {
         options.styling = styling
         break
       }
+      case "-p":
+      case "--platform": {
+        const platform = args[++index]
+        if (!PLATFORMS.includes(platform)) {
+          throw new CliError(`${arg} needs ${PLATFORMS.join(", ")}.`)
+        }
+        options.platform = platform
+        break
+      }
+      case "--path": {
+        const dir = args[++index]
+        if (!dir) throw new CliError(`${arg} needs a directory.`)
+        options.path = dir
+        break
+      }
       case "-c":
       case "--cwd": {
         const dir = args[++index]
@@ -77,6 +101,9 @@ function parseArgs(args) {
         names.push(arg)
     }
   }
+  if (options.path && options.platform === "rn") {
+    throw new CliError("--path works with --platform swift or kotlin.")
+  }
   return { options, names }
 }
 
@@ -84,12 +111,16 @@ async function main() {
   const [command, ...args] = process.argv.slice(2)
 
   switch (command) {
-    case "init":
-      await init(parseArgs(args).options)
+    case "init": {
+      const { options } = parseArgs(args)
+      await (options.platform === "rn" ? init(options) : initNative(options))
       break
+    }
     case "add": {
       const { options, names } = parseArgs(args)
-      await add(names, options)
+      await (options.platform === "rn"
+        ? add(names, options)
+        : addNative(names, options))
       break
     }
     case "-v":
