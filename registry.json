@@ -3679,6 +3679,51 @@
       ]
     },
     {
+      "name": "dash-health",
+      "type": "block",
+      "title": "Dash Health",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "header",
+        "icon",
+        "item",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/dash-health.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "empty-bag",
       "type": "block",
       "title": "Empty Bag",
@@ -3913,6 +3958,282 @@
       ],
       "files": [
         "components/blocks/grid-lineup.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "inbox-categories",
+      "type": "block",
+      "title": "Inbox Categories",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "icon",
+        "screen",
+        "split-view",
+        "swipe-actions",
+        "text",
+        "textarea",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/inbox-categories.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "inbox-mail",
+      "type": "block",
+      "title": "Inbox Mail",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "icon",
+        "input-group",
+        "screen",
+        "split-view",
+        "swipe-actions",
+        "text",
+        "textarea"
+      ],
+      "files": [
+        "components/blocks/inbox-mail.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "inbox-support",
+      "type": "block",
+      "title": "Inbox Support",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "icon",
+        "screen",
+        "split-view",
+        "text",
+        "textarea",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/inbox-support.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "log-activity",
+      "type": "block",
+      "title": "Log Activity",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "chip",
+        "collapsible",
+        "header",
+        "icon",
+        "screen",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/log-activity.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "log-live",
+      "type": "block",
+      "title": "Log Live",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "header",
+        "icon",
+        "screen",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/log-live.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "log-security",
+      "type": "block",
+      "title": "Log Security",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "chip",
+        "header",
+        "icon",
+        "screen",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/log-security.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -4283,6 +4604,98 @@
       ]
     },
     {
+      "name": "roles-editor",
+      "type": "block",
+      "title": "Roles Editor",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "item",
+        "screen",
+        "split-view",
+        "switch",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/roles-editor.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "roles-requests",
+      "type": "block",
+      "title": "Roles Requests",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "empty",
+        "header",
+        "icon",
+        "picker",
+        "screen",
+        "swipe-actions",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/roles-requests.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "settings-account",
       "type": "block",
       "title": "Settings Account",
@@ -4545,6 +4958,144 @@
       ],
       "files": [
         "components/blocks/signup-trial.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "users-detail",
+      "type": "block",
+      "title": "Users Detail",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "icon",
+        "item",
+        "picker",
+        "screen",
+        "split-view",
+        "switch",
+        "tab-bar",
+        "text",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/users-detail.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "users-invite",
+      "type": "block",
+      "title": "Users Invite",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "chip",
+        "header",
+        "icon",
+        "input",
+        "item",
+        "keyboard-scroll-view",
+        "picker",
+        "screen",
+        "switch",
+        "tab-bar",
+        "text",
+        "toast"
+      ],
+      "files": [
+        "components/blocks/users-invite.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "users-table",
+      "type": "block",
+      "title": "Users Table",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "avatar",
+        "badge",
+        "button",
+        "chip",
+        "header",
+        "icon",
+        "input-group",
+        "screen",
+        "selection-list",
+        "tab-bar",
+        "text"
+      ],
+      "files": [
+        "components/blocks/users-table.tsx"
       ],
       "overrides": [
         "uniwind",
