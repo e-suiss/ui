@@ -57,6 +57,7 @@ module.exports = {
         cyan: "var(--cyan)",
         brown: "var(--brown)",
         gray: "var(--gray)",
+        "control-selected-40": "var(--control-selected-40)",
         "danger-5": "var(--danger-5)",
         "danger-10": "var(--danger-10)",
         "danger-40": "var(--danger-40)",

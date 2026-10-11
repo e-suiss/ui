@@ -286,6 +286,43 @@
       ]
     },
     {
+      "name": "bottom-bar",
+      "type": "ui",
+      "title": "Bottom Bar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "primitives/keyboard",
+        "screen"
+      ],
+      "files": [
+        "components/ui/bottom-bar.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "button-group",
       "type": "ui",
       "title": "Button Group",
@@ -435,6 +472,44 @@
       ],
       "files": [
         "components/ui/checkbox.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "chip",
+      "type": "ui",
+      "title": "Chip",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/toggle",
+        "primitives/toggle-group",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/chip.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -726,6 +801,51 @@
       ]
     },
     {
+      "name": "fab",
+      "type": "ui",
+      "title": "Fab",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "primitives/hooks",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/ui/fab.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "field",
       "type": "ui",
       "title": "Field",
@@ -746,6 +866,46 @@
       ],
       "files": [
         "components/ui/field.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "header",
+      "type": "ui",
+      "title": "Header",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/header.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -780,6 +940,45 @@
       ],
       "files": [
         "components/ui/icon.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "input-accessory-bar",
+      "type": "ui",
+      "title": "Input Accessory Bar",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "button",
+        "icon",
+        "input",
+        "keyboard-scroll-view",
+        "primitives/hooks",
+        "primitives/keyboard",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/ui/input-accessory-bar.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -911,6 +1110,32 @@
       ],
       "files": [
         "components/ui/item.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "keyboard-scroll-view",
+      "type": "ui",
+      "title": "Keyboard Scroll View",
+      "dependencies": {
+        "uniwind": [
+          "cn"
+        ],
+        "nativewind": [
+          "cn"
+        ],
+        "stylesheet": []
+      },
+      "requires": [
+        "primitives/hooks",
+        "primitives/keyboard"
+      ],
+      "files": [
+        "components/ui/keyboard-scroll-view.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1066,6 +1291,35 @@
       ],
       "files": [
         "components/ui/radio-group.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "screen",
+      "type": "ui",
+      "title": "Screen",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "react-native-safe-area-context"
+        ],
+        "nativewind": [
+          "cn",
+          "react-native-safe-area-context"
+        ],
+        "stylesheet": [
+          "react-native-safe-area-context"
+        ]
+      },
+      "requires": [
+        "keyboard-scroll-view"
+      ],
+      "files": [
+        "components/ui/screen.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -1907,6 +2161,48 @@
       ]
     },
     {
+      "name": "reorder-list",
+      "type": "interaction",
+      "title": "Reorder List",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon"
+      ],
+      "files": [
+        "components/interactions/reorder-list.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "search-reveal",
       "type": "interaction",
       "title": "Search Reveal",
@@ -2104,6 +2400,54 @@
       ],
       "files": [
         "components/interactions/tip.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "top-banner",
+      "type": "interaction",
+      "title": "Top Banner",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-gesture-handler",
+          "react-native-reanimated",
+          "react-native-safe-area-context",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "icon",
+        "primitives/portal",
+        "text"
+      ],
+      "files": [
+        "components/interactions/top-banner.tsx"
       ],
       "overrides": [
         "uniwind",
@@ -2511,6 +2855,20 @@
       ],
       "files": [
         "components/primitives/input.tsx"
+      ]
+    },
+    {
+      "name": "primitives/keyboard",
+      "type": "primitive",
+      "title": "Keyboard",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/keyboard.ts"
       ]
     },
     {

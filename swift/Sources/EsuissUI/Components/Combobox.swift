@@ -250,7 +250,7 @@ private struct ChipRemoveStyle: ButtonStyle {
   }
 }
 
-private struct ComboboxFlowLayout: Layout {
+struct ComboboxFlowLayout: Layout {
   var spacing: CGFloat
 
   func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
