@@ -18,8 +18,6 @@ public struct Header<Title: View, Leading: View, Trailing: View>: View {
   let leading: Leading
   let trailing: Trailing
 
-  @State private var leadingWidth: CGFloat = 0
-  @State private var trailingWidth: CGFloat = 0
   @Environment(\.headerProgress) private var progress
   @Environment(\.screenBackground) private var background
 
@@ -34,18 +32,13 @@ public struct Header<Title: View, Leading: View, Trailing: View>: View {
   }
 
   public var body: some View {
-    ZStack {
-      HStack(spacing: 8) {
-        leading
-          .fixedSize()
-          .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { leadingWidth = $0 }
-        Spacer(minLength: 0)
-        trailing
-          .fixedSize()
-          .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { trailingWidth = $0 }
-      }
-      title
-        .padding(.horizontal, max(leadingWidth, trailingWidth) + 8)
+    HeaderLayout {
+      HStack(spacing: 0) { leading }
+        .frame(maxHeight: .infinity)
+      ZStack { title }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+      HStack(spacing: 0) { trailing }
+        .frame(maxHeight: .infinity)
     }
     .padding(.horizontal, 8)
     .frame(height: 44)
@@ -76,6 +69,47 @@ extension Header where Trailing == EmptyView {
 extension Header where Leading == EmptyView, Trailing == EmptyView {
   public init(@ViewBuilder title: () -> Title) {
     self.init(title: title, leading: { EmptyView() }, trailing: { EmptyView() })
+  }
+}
+
+struct HeaderLayout: Layout {
+  var spacing: CGFloat = 8
+  var minSide: CGFloat = 44
+
+  func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    let ideal = subviews.reduce(0) { $0 + $1.sizeThatFits(.unspecified).width }
+    return CGSize(width: proposal.width ?? ideal, height: proposal.height ?? 44)
+  }
+
+  func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    guard subviews.count == 3 else { return }
+    let leading = subviews[0]
+    let title = subviews[1]
+    let trailing = subviews[2]
+    let trailingWidth = trailing.sizeThatFits(.unspecified).width
+    let leadingIdeal = leading.sizeThatFits(.unspecified).width
+    let leadingMinimum = leading.sizeThatFits(ProposedViewSize(width: 0, height: nil)).width
+    let reserve = max(minSide, trailingWidth, leadingMinimum) + spacing
+    let titleWidth = max(0, min(title.sizeThatFits(.unspecified).width, bounds.width - reserve * 2))
+    let side = max(0, (bounds.width - titleWidth) / 2 - spacing)
+    let leadingProposal = ProposedViewSize(width: min(side, leadingIdeal), height: nil)
+    let leadingWidth = leading.sizeThatFits(leadingProposal).width
+    let titleInset = max(leadingWidth, trailingWidth) + spacing
+    leading.place(
+      at: CGPoint(x: bounds.minX, y: bounds.minY),
+      anchor: .topLeading,
+      proposal: ProposedViewSize(width: leadingProposal.width, height: bounds.height)
+    )
+    title.place(
+      at: CGPoint(x: bounds.minX + titleInset, y: bounds.minY),
+      anchor: .topLeading,
+      proposal: ProposedViewSize(width: max(0, bounds.width - titleInset * 2), height: bounds.height)
+    )
+    trailing.place(
+      at: CGPoint(x: bounds.maxX - trailingWidth, y: bounds.minY),
+      anchor: .topLeading,
+      proposal: ProposedViewSize(width: trailingWidth, height: bounds.height)
+    )
   }
 }
 

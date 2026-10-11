@@ -79,9 +79,7 @@ private struct FabSpeedDial: View {
 
   var body: some View {
     FabStage(log: log) {
-      Fab(isExpanded: $open) {
-        Ph.plus.bold
-      } actions: {
+      Fab(accessibilityLabel: "Create", isExpanded: $open) {
         FabAction("New note", action: { log = "New note" }) { Ph.notePencil.regular }
         FabAction("Take photo", action: { log = "Take photo" }) { Ph.camera.regular }
         FabAction("Add image", action: { log = "Add image" }) { Ph.image.regular }

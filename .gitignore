@@ -11,3 +11,4 @@ uniwind-types.d.ts
 .build/
 .swiftpm/
 Package.resolved
+xcuserdata/

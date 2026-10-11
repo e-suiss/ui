@@ -71,7 +71,7 @@ private struct TipNotesPage: View {
             }
             .buttonStyle(.variant(.plain, size: .iconLg))
             .accessibilityLabel(Text("New note"))
-            .tipPopover(side: .top) {
+            .tipPopover(side: .bottom) {
               TipIcon { Ph.notePencil.duotone }
               TipContent {
                 TipTitle("Start a note fast")

@@ -323,8 +323,6 @@ private struct FabGallery: View {
         ZStack {
           Placeholder(count: 7).padding(16)
           Fab(isExpanded: .constant(true)) {
-            Ph.plus.bold
-          } actions: {
             FabAction(verbatim: "Photo", action: {}) { Ph.camera.regular }
             FabAction(verbatim: "Document", action: {}) { Ph.fileText.regular }
             FabAction(verbatim: "Location", action: {}) { Ph.mapPin.regular }

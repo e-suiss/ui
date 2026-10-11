@@ -271,6 +271,15 @@ struct TipPopoverPresenter<Popover: View>: ViewModifier {
 
   @Environment(\.tip) private var tip
 
+  private var arrowEdge: Edge {
+    switch side {
+    case .top: .bottom
+    case .bottom: .top
+    case .leading: .trailing
+    case .trailing: .leading
+    }
+  }
+
   func body(content: Content) -> some View {
     let tip = tip
     let visible = tip?.visible ?? false
@@ -283,7 +292,7 @@ struct TipPopoverPresenter<Popover: View>: ViewModifier {
           get: { visible },
           set: { if !$0 { tip?.dismiss() } }
         ),
-        arrowEdge: side
+        arrowEdge: arrowEdge
       ) {
         TipPopoverSurface { popover() }
           .environment(\.tip, tip)

@@ -87,6 +87,7 @@ struct PopupLayout: Layout {
 
   func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
     guard let view = subviews.first else { return }
+    let anchor = anchor.offsetBy(dx: bounds.minX, dy: bounds.minY)
     let maxWidth = max(0, bounds.width - margin * 2)
     var width: CGFloat
     if matchWidth {

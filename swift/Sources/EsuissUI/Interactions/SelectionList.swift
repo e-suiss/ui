@@ -359,14 +359,13 @@ struct FloatingBar<Content: View>: View {
       }
       .frame(maxWidth: maxWidth)
       .padding(.horizontal, 16)
-      .padding(.bottom, bottomInset > 0 ? 0 : 16)
+      .padding(.bottom, 16)
+      .scaleEffect(visible || reduceMotion ? 1 : 0.95, anchor: .bottom)
+      .offset(y: min(16, bottomInset) + (visible || reduceMotion ? 0 : 52 + 16 + bottomInset))
       .background {
         Color.clear
-          .ignoresSafeArea(.container, edges: .bottom)
           .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.bottom } action: { bottomInset = $0 }
       }
-      .scaleEffect(visible || reduceMotion ? 1 : 0.95, anchor: .bottom)
-      .offset(y: visible || reduceMotion ? 0 : 52 + 16 + bottomInset)
       .opacity(visible ? 1 : 0)
       .allowsHitTesting(visible)
       .accessibilityHidden(!visible)

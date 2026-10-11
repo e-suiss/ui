@@ -66,7 +66,14 @@ private struct ChromeIcon<Icon: View>: View {
       .frame(width: 16, height: 16)
       .foregroundStyle(Color.label)
       .frame(width: 32, height: 32)
-      .background(Color.surfaceSecondary, in: Circle())
+      .background {
+        Circle()
+          .fill(Color.surfaceRaised)
+          .shadow(.md)
+      }
+      .overlay {
+        Circle().strokeBorder(Color.separator)
+      }
   }
 }
 

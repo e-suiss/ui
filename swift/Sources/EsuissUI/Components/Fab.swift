@@ -34,6 +34,7 @@ public struct Fab<Icon: View, Actions: View>: View {
   let size: FabSize
   let external: Binding<Bool>?
   let action: (() -> Void)?
+  let plus: Bool
   let icon: Icon
   let actions: Actions
 
@@ -52,6 +53,24 @@ public struct Fab<Icon: View, Actions: View>: View {
     self.size = size
     external = isExpanded
     action = nil
+    plus = false
+    self.icon = icon()
+    self.actions = actions()
+  }
+
+  public init(
+    accessibilityLabel: LocalizedStringKey,
+    size: FabSize = .default,
+    isExpanded: Binding<Bool>? = nil,
+    @ViewBuilder icon: () -> Icon,
+    @ViewBuilder actions: () -> Actions
+  ) {
+    label = nil
+    accessibility = Text(accessibilityLabel)
+    self.size = size
+    external = isExpanded
+    action = nil
+    plus = false
     self.icon = icon()
     self.actions = actions()
   }
@@ -110,7 +129,7 @@ public struct Fab<Icon: View, Actions: View>: View {
     } label: {
       EmptyView()
     }
-    .buttonStyle(FabButtonStyle(size: size, label: label, rotated: open) { icon })
+    .buttonStyle(FabButtonStyle(size: size, label: label, open: open, rotates: plus) { icon })
     .accessibilityLabel(label ?? accessibility ?? Text(open ? "Close actions" : "Show actions"))
     .accessibilityValue(action == nil ? Text(open ? "Expanded" : "Collapsed") : Text(verbatim: ""))
   }
@@ -128,6 +147,7 @@ extension Fab where Actions == EmptyView {
     self.size = size
     external = nil
     self.action = action
+    plus = false
     self.icon = icon()
     actions = EmptyView()
   }
@@ -143,15 +163,51 @@ extension Fab where Actions == EmptyView {
     self.size = size
     external = nil
     self.action = action
+    plus = false
     self.icon = icon()
     actions = EmptyView()
+  }
+}
+
+extension Fab where Icon == Image {
+  public init(
+    _ label: LocalizedStringKey? = nil,
+    size: FabSize = .default,
+    isExpanded: Binding<Bool>? = nil,
+    @ViewBuilder actions: () -> Actions
+  ) {
+    self.label = label.map { Text($0) }
+    accessibility = nil
+    self.size = size
+    external = isExpanded
+    action = nil
+    plus = true
+    icon = Ph.plus.bold
+    self.actions = actions()
+  }
+
+  public init(
+    accessibilityLabel: LocalizedStringKey,
+    size: FabSize = .default,
+    isExpanded: Binding<Bool>? = nil,
+    @ViewBuilder actions: () -> Actions
+  ) {
+    label = nil
+    accessibility = Text(accessibilityLabel)
+    self.size = size
+    external = isExpanded
+    action = nil
+    plus = true
+    icon = Ph.plus.bold
+    self.actions = actions()
   }
 }
 
 private struct FabButtonStyle<Icon: View>: ButtonStyle {
   let size: FabSize
   let label: Text?
-  let rotated: Bool
+  let open: Bool
+  let rotates: Bool
   @ViewBuilder let icon: () -> Icon
 
   @Environment(\.isEnabled) private var isEnabled
@@ -159,9 +215,15 @@ private struct FabButtonStyle<Icon: View>: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     let pressed = configuration.isPressed
     HStack(spacing: 8) {
-      icon()
-        .frame(width: size.iconSize, height: size.iconSize)
-        .rotationEffect(.degrees(rotated ? 45 : 0))
+      Group {
+        if open && !rotates {
+          Ph.x.bold
+        } else {
+          icon()
+        }
+      }
+      .frame(width: size.iconSize, height: size.iconSize)
+      .rotationEffect(.degrees(open && rotates ? 45 : 0))
       if let label {
         label
           .scaledFont(.base, weight: .semibold)
