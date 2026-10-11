@@ -3422,6 +3422,735 @@
       ]
     },
     {
+      "name": "empty-bag",
+      "type": "block",
+      "title": "Empty Bag",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "empty",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/empty-bag.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "empty-offline",
+      "type": "block",
+      "title": "Empty Offline",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "empty",
+        "icon",
+        "screen",
+        "spinner",
+        "text"
+      ],
+      "files": [
+        "components/blocks/empty-offline.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "empty-search",
+      "type": "block",
+      "title": "Empty Search",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "button",
+        "empty",
+        "icon",
+        "input",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/empty-search.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "login-account",
+      "type": "block",
+      "title": "Login Account",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "checkbox",
+        "icon",
+        "input",
+        "keyboard-scroll-view",
+        "label",
+        "screen",
+        "spinner",
+        "text"
+      ],
+      "files": [
+        "components/blocks/login-account.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "login-passkey",
+      "type": "block",
+      "title": "Login Passkey",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "dialog",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/login-passkey.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "login-sheet",
+      "type": "block",
+      "title": "Login Sheet",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "button",
+        "drawer",
+        "icon",
+        "radio-group",
+        "screen",
+        "spinner",
+        "text"
+      ],
+      "files": [
+        "components/blocks/login-sheet.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "onboarding",
+      "type": "block",
+      "title": "Onboarding",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "bottom-bar",
+        "button",
+        "carousel",
+        "icon",
+        "page-indicator",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/onboarding.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "permission-primer",
+      "type": "block",
+      "title": "Permission Primer",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "bottom-bar",
+        "button",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/permission-primer.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "settings-account",
+      "type": "block",
+      "title": "Settings Account",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "avatar",
+        "button",
+        "header",
+        "icon",
+        "input",
+        "item",
+        "screen",
+        "switch",
+        "text"
+      ],
+      "files": [
+        "components/blocks/settings-account.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "settings-device",
+      "type": "block",
+      "title": "Settings Device",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "avatar",
+        "header",
+        "icon",
+        "input-group",
+        "item",
+        "screen",
+        "switch",
+        "text"
+      ],
+      "files": [
+        "components/blocks/settings-device.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "settings-notifications",
+      "type": "block",
+      "title": "Settings Notifications",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "item",
+        "picker",
+        "screen",
+        "switch",
+        "text",
+        "toggle",
+        "toggle-group"
+      ],
+      "files": [
+        "components/blocks/settings-notifications.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "signup-form",
+      "type": "block",
+      "title": "Signup Form",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "icon",
+        "input-accessory-bar",
+        "keyboard-scroll-view",
+        "picker",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/signup-form.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "signup-steps",
+      "type": "block",
+      "title": "Signup Steps",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "icon",
+        "input",
+        "keyboard-scroll-view",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/signup-steps.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "signup-trial",
+      "type": "block",
+      "title": "Signup Trial",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "checkbox",
+        "icon",
+        "input-accessory-bar",
+        "keyboard-scroll-view",
+        "label",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/signup-trial.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "verify-code",
+      "type": "block",
+      "title": "Verify Code",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "input-otp",
+        "keyboard-scroll-view",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/verify-code.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "verify-device",
+      "type": "block",
+      "title": "Verify Device",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "icon",
+        "input-otp",
+        "keyboard-scroll-view",
+        "screen",
+        "spinner",
+        "text"
+      ],
+      "files": [
+        "components/blocks/verify-device.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
+      "name": "verify-email",
+      "type": "block",
+      "title": "Verify Email",
+      "dependencies": {
+        "uniwind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "animated-view",
+        "bottom-bar",
+        "button",
+        "icon",
+        "screen",
+        "text"
+      ],
+      "files": [
+        "components/blocks/verify-email.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ]
+    },
+    {
       "name": "primitives/accordion",
       "type": "primitive",
       "title": "Accordion",

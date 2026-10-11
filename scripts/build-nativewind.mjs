@@ -177,7 +177,11 @@ function applyColorClassProps(code) {
   const textInput =
     /(?:placeholderTextColor|cursorColor|selectionColor)ClassName=/.test(code)
   const activityIndicator = /<ActivityIndicator[^>]*colorClassName=/.test(code)
-  if (!textInput && !activityIndicator) return code
+  const spinner = /<Spinner[^>]*colorClassName=/.test(code)
+  if (!textInput && !activityIndicator && !spinner) return code
+  if (!textInput && !activityIndicator) {
+    return code.replace(/"accent-([\w-]+)"/g, '"text-$1"')
+  }
   let output = code
     .replace(/"accent-([\w-]+)"/g, '"text-$1"')
     .replace(/placeholderTextColorClassName=/g, "placeholderClassName=")

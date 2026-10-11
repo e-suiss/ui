@@ -55,6 +55,7 @@
     --gray: #8e8e93;
     --accent-12: rgba(0, 113, 227, 0.12);
     --accent-20: rgba(0, 113, 227, 0.2);
+    --accent-25: rgba(0, 113, 227, 0.25);
     --control-selected-40: rgba(29, 29, 31, 0.4);
     --danger-5: rgba(208, 0, 10, 0.05);
     --danger-10: rgba(208, 0, 10, 0.1);
@@ -64,6 +65,7 @@
     --label-15: rgba(29, 29, 31, 0.15);
     --label-20: rgba(29, 29, 31, 0.2);
     --label-25: rgba(29, 29, 31, 0.25);
+    --label-80: rgba(29, 29, 31, 0.8);
     --label-secondary-60: rgba(110, 110, 115, 0.6);
     --link-40: rgba(0, 102, 204, 0.4);
     --on-media-15: rgba(255, 255, 255, 0.15);
@@ -128,6 +130,7 @@
     --gray: #8e8e93;
     --accent-12: rgba(0, 113, 227, 0.12);
     --accent-20: rgba(0, 113, 227, 0.2);
+    --accent-25: rgba(0, 113, 227, 0.25);
     --control-selected-40: rgba(245, 245, 247, 0.4);
     --danger-5: rgba(255, 84, 71, 0.05);
     --danger-10: rgba(255, 84, 71, 0.1);
@@ -137,6 +140,7 @@
     --label-15: rgba(245, 245, 247, 0.15);
     --label-20: rgba(245, 245, 247, 0.2);
     --label-25: rgba(245, 245, 247, 0.25);
+    --label-80: rgba(245, 245, 247, 0.8);
     --label-secondary-60: rgba(161, 161, 166, 0.6);
     --link-40: rgba(41, 151, 255, 0.4);
     --on-media-15: rgba(255, 255, 255, 0.15);

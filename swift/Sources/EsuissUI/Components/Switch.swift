@@ -43,7 +43,7 @@ public struct SwitchStyle: ToggleStyle {
     HapticButton(style: PressReader { pressed in
       HStack(spacing: 12) {
         SwitchTrack(isOn: configuration.isOn, pressed: pressed, size: size)
-        configuration.label
+        SwitchLabel(label: configuration.label)
       }
       .contentShape(Rectangle().inset(by: -8))
     }) {
@@ -54,6 +54,31 @@ public struct SwitchStyle: ToggleStyle {
     .accessibilityRemoveTraits(.isButton)
     .accessibilityAddTraits(.isToggle)
     .accessibilityValue(configuration.isOn ? Text("On") : Text("Off"))
+  }
+}
+
+private struct SwitchLabel<Label: View>: View {
+  let label: Label
+
+  var body: some View {
+    if #available(iOS 18, *) {
+      SwitchLabelVisibility(label: label)
+    } else {
+      label
+    }
+  }
+}
+
+@available(iOS 18, *)
+private struct SwitchLabelVisibility<Label: View>: View {
+  let label: Label
+
+  @Environment(\.labelsVisibility) private var visibility
+
+  var body: some View {
+    if visibility != .hidden {
+      label
+    }
   }
 }
 

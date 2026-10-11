@@ -130,7 +130,7 @@ fun Select(
         text == null -> colors.labelSecondary
         else -> colors.label
     }
-    Box(modifier = modifier) {
+    Box(modifier = modifier, propagateMinConstraints = true) {
         Row(
             modifier = Modifier
                 .height(size.height)
