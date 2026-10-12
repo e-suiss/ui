@@ -8,7 +8,10 @@ enum IslandStories {
       IslandStage { IslandDownloads(initial: 0.42) }
     },
     Story("Expanded", fullScreen: true) {
-      IslandStage { IslandDownloads(initial: 0.42, expanded: true) }
+      IslandStage { IslandDownloads(initial: 0.42, start: .expanded) }
+    },
+    Story("Minimal", fullScreen: true) {
+      IslandStage { IslandDownloads(initial: 0.42, start: .minimal) }
     },
     Story("Notice", fullScreen: true) {
       IslandStage { IslandNoticeOnMount() }
@@ -18,8 +21,6 @@ enum IslandStories {
     },
   ])
 }
-
-private let islandSize = 120
 
 private struct IslandStage<Content: View>: View {
   @ViewBuilder let content: () -> Content
@@ -34,6 +35,8 @@ private struct IslandStage<Content: View>: View {
 }
 
 private struct IslandNotifyButtons: View {
+  var minimize = false
+
   @Environment(\.island) private var island
 
   var body: some View {
@@ -50,24 +53,37 @@ private struct IslandNotifyButtons: View {
         }
       }
       .buttonStyle(.variant(.secondary))
+      if minimize {
+        Button("Minimize") {
+          island.minimize()
+        }
+        .buttonStyle(.variant(.secondary))
+      }
     }
   }
 }
 
+private enum IslandStart {
+  case expanded, minimal
+}
+
 private struct IslandDownloads: View {
   var initial: Double?
-  var expanded = false
+  var start: IslandStart?
   var withNotifications = false
 
   @State private var progress: Double?
   @Environment(\.island) private var island
 
-  init(initial: Double? = nil, expanded: Bool = false, withNotifications: Bool = false) {
+  init(initial: Double? = nil, start: IslandStart? = nil, withNotifications: Bool = false) {
     self.initial = initial
-    self.expanded = expanded
+    self.start = start
     self.withNotifications = withNotifications
     _progress = State(initialValue: initial)
   }
+
+  private var done: Bool { (progress ?? 0) >= 1 }
+  private var percent: Int { Int(((progress ?? 0) * 100).rounded()) }
 
   var body: some View {
     ZStack(alignment: .top) {
@@ -87,23 +103,80 @@ private struct IslandDownloads: View {
           .disabled(progress != nil)
         }
         if withNotifications {
-          IslandNotifyButtons()
+          IslandNotifyButtons(minimize: true)
         }
       }
       .padding(16)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       Island {
-        if let progress {
-          IslandDownloadActivity(progress: progress) {
-            self.progress = nil
+        IslandExpandedRegion(.leading) {
+          Ph.fileZip.fill
+            .frame(width: 24, height: 24)
+            .foregroundStyle(Color.accent)
+            .frame(width: 40, height: 40)
+            .background(Color.onMedia.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+            .accessibilityHidden(true)
+        }
+        IslandExpandedRegion(.trailing) {
+          Text(verbatim: "\(percent)%")
+            .textStyle(.xl2, weight: .semibold)
+            .monospacedDigit()
+            .frame(height: 40)
+        }
+        IslandExpandedRegion(.center) {
+          VStack(spacing: 0) {
+            Text(done ? "Downloaded" : "Downloading")
+              .textStyle(.sm, weight: .semibold)
+            Text(verbatim: "Design-Kit.zip")
+              .textStyle(.sm)
+              .foregroundStyle(Color.labelSecondary)
+          }
+          .lineLimit(1)
+        }
+        IslandExpandedRegion(.bottom) {
+          IslandProgressBar(progress: progress ?? 0, percent: percent)
+          Button {
+            progress = nil
+          } label: {
+            Text("Cancel download")
+              .textStyle(.sm, weight: .semibold)
+              .frame(maxWidth: .infinity)
+              .frame(height: 44)
+              .background(Color.onMedia.opacity(0.15), in: Capsule())
+          }
+          .buttonStyle(.plain)
+          .disabled(done)
+          .opacity(done ? 0.5 : 1)
+        }
+      } compactLeading: {
+        if progress != nil {
+          Ph.downloadSimple.bold
+            .frame(width: 16, height: 16)
+            .foregroundStyle(Color.accent)
+            .accessibilityLabel(Text(verbatim: "Downloading Design-Kit.zip, \(percent)%"))
+        }
+      } compactTrailing: {
+        if progress != nil {
+          if done {
+            Ph.checkCircle.fill
+              .frame(width: 16, height: 16)
+              .foregroundStyle(Color.success)
+          } else {
+            IslandRing(value: progress ?? 0)
           }
         }
+      } minimal: {
+        IslandRing(value: progress ?? 0)
+          .accessibilityLabel(Text(verbatim: "Downloading Design-Kit.zip, \(percent)%"))
       }
     }
     .task {
-      guard expanded else { return }
+      guard let start else { return }
       try? await Task.sleep(for: .milliseconds(300))
-      island.setExpanded(true)
+      switch start {
+      case .expanded: island.expand()
+      case .minimal: island.minimize()
+      }
     }
     .task(id: progress) {
       guard initial == nil, let value = progress else { return }
@@ -123,74 +196,25 @@ private struct IslandDownloads: View {
   }
 }
 
-private struct IslandDownloadActivity: View {
+private struct IslandProgressBar: View {
   let progress: Double
-  let onCancel: () -> Void
-
-  private var done: Bool { progress >= 1 }
-  private var percent: Int { Int((progress * 100).rounded()) }
+  let percent: Int
 
   var body: some View {
-    IslandCompact {
-      Ph.downloadSimple.bold
-        .frame(width: 16, height: 16)
-        .foregroundStyle(Color.accent)
-      if done {
-        Ph.checkCircle.fill
-          .frame(width: 16, height: 16)
-          .foregroundStyle(Color.success)
-      } else {
-        IslandRing(value: progress)
-      }
-    }
-    .accessibilityLabel(Text(verbatim: "Downloading Design-Kit.zip, \(percent)%"))
-    IslandExpanded {
-      HStack(spacing: 12) {
-        Ph.fileZip.fill
-          .frame(width: 24, height: 24)
-          .foregroundStyle(Color.accent)
-          .frame(width: 40, height: 40)
-          .background(Color.label.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
-        VStack(alignment: .leading, spacing: 0) {
-          Text(verbatim: "Design-Kit.zip")
-            .textStyle(.sm, weight: .semibold)
-            .lineLimit(1)
-          Text(verbatim: done ? "Downloaded" : "\(Int((progress * Double(islandSize)).rounded())) MB of \(islandSize) MB")
-            .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
-            .monospacedDigit()
+    Capsule()
+      .fill(Color.onMedia.opacity(0.2))
+      .frame(height: 6)
+      .overlay(alignment: .leading) {
+        GeometryReader { proxy in
+          Capsule()
+            .fill(Color.accent)
+            .frame(width: proxy.size.width * min(max(progress, 0), 1))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        Text(verbatim: "\(percent)%")
-          .textStyle(.xl2, weight: .semibold)
-          .monospacedDigit()
       }
-      Capsule()
-        .fill(Color.label.opacity(0.2))
-        .frame(height: 6)
-        .overlay(alignment: .leading) {
-          GeometryReader { proxy in
-            Capsule()
-              .fill(Color.accent)
-              .frame(width: proxy.size.width * min(max(progress, 0), 1))
-          }
-        }
-        .clipShape(Capsule())
-        .accessibilityElement()
-        .accessibilityLabel(Text("Download progress"))
-        .accessibilityValue(Text(verbatim: "\(percent)%"))
-      Button(action: onCancel) {
-        Text("Cancel download")
-          .textStyle(.sm, weight: .semibold)
-          .frame(maxWidth: .infinity)
-          .frame(height: 44)
-          .background(Color.label.opacity(0.15), in: Capsule())
-      }
-      .buttonStyle(.plain)
-      .disabled(done)
-      .opacity(done ? 0.5 : 1)
-    }
-    .accessibilityLabel(Text("Download"))
+      .clipShape(Capsule())
+      .accessibilityElement()
+      .accessibilityLabel(Text("Download progress"))
+      .accessibilityValue(Text(verbatim: "\(percent)%"))
   }
 }
 
@@ -210,7 +234,7 @@ private struct IslandNoticeOnMount: View {
       }
       .padding(16)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      Island {}
+      Island()
     }
     .onAppear {
       guard !shown else { return }

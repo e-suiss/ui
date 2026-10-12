@@ -377,41 +377,52 @@ private struct WideWidgetGallery: View {
   }
 }
 
-private struct DownloadActivity: View {
+private struct DownloadIsland: View {
   let progress: Double
+  let active: Bool
 
   var body: some View {
-    IslandCompact {
-      Ph.downloadSimple.bold.frame(width: 20, height: 20).foregroundStyle(Color.accent)
-      IslandRing(value: progress)
-    }
-    IslandExpanded {
-      HStack(spacing: 12) {
+    Island {
+      IslandExpandedRegion(.leading) {
         Ph.fileZip.fill
           .frame(width: 24, height: 24)
           .foregroundStyle(Color.accent)
           .frame(width: 40, height: 40)
-          .background(Color.label.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
-        VStack(alignment: .leading, spacing: 0) {
-          Text(verbatim: "Design-Kit.zip").font(TextStyle.sm.font(weight: .semibold))
-          Text(verbatim: "\(Int(progress * 48)) MB of 48 MB")
-            .font(TextStyle.sm.font())
-            .foregroundStyle(Color.labelSecondary)
-            .monospacedDigit()
-        }
-        Spacer(minLength: 0)
+          .background(Color.onMedia.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      }
+      IslandExpandedRegion(.trailing) {
         Text(verbatim: "\(Int(progress * 100))%").font(TextStyle.xl2.font(weight: .semibold)).monospacedDigit()
       }
-      ProgressView(value: progress)
-        .progressViewStyle(.bar)
-      Button {} label: {
-        Text(verbatim: "Cancel download")
-          .font(TextStyle.sm.font(weight: .semibold))
-          .frame(maxWidth: .infinity)
-          .frame(height: 44)
-          .background(Color.label.opacity(0.15), in: Capsule())
+      IslandExpandedRegion(.center) {
+        VStack(spacing: 0) {
+          Text(verbatim: "Downloading").font(TextStyle.sm.font(weight: .semibold))
+          Text(verbatim: "Design-Kit.zip")
+            .font(TextStyle.sm.font())
+            .foregroundStyle(Color.labelSecondary)
+        }
       }
-      .buttonStyle(.plain)
+      IslandExpandedRegion(.bottom) {
+        ProgressView(value: progress)
+          .progressViewStyle(.bar)
+        Button {} label: {
+          Text(verbatim: "Cancel download")
+            .font(TextStyle.sm.font(weight: .semibold))
+            .frame(maxWidth: .infinity)
+            .frame(height: 44)
+            .background(Color.onMedia.opacity(0.15), in: Capsule())
+        }
+        .buttonStyle(.plain)
+      }
+    } compactLeading: {
+      if active {
+        Ph.downloadSimple.bold.frame(width: 20, height: 20).foregroundStyle(Color.accent)
+      }
+    } compactTrailing: {
+      if active {
+        IslandRing(value: progress)
+      }
+    } minimal: {
+      IslandRing(value: progress)
     }
   }
 }
@@ -436,12 +447,9 @@ private struct IslandScreen: View {
           }
           .padding(.bottom, 24)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
-          Island {
-            if activity {
-              DownloadActivity(progress: 0.62)
-            }
-          }
-          .padding(.top, 8)
+          DownloadIsland(progress: 0.62, active: activity)
+            .environment(\.islandInline, true)
+            .padding(.top, 8)
         }
         .frame(height: 260)
         .background(Color.surfaceSecondary)
@@ -452,12 +460,14 @@ private struct IslandScreen: View {
 
 private struct IslandGallery: View {
   let compact: IslandController
+  let minimal: IslandController
   let expanded: IslandController
   let notice: IslandController
 
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
       IslandScreen(caption: "Compact · live activity", controller: compact)
+      IslandScreen(caption: "Minimal", controller: minimal)
       IslandScreen(caption: "Expanded", controller: expanded)
       IslandScreen(caption: "Notice", controller: notice, activity: false)
     }
@@ -763,20 +773,21 @@ final class ExtrasGalleryTests: XCTestCase {
     try snapshot(
       {
         let compact = IslandController()
+        let minimal = IslandController()
+        minimal.minimize()
         let expanded = IslandController()
-        expanded.registerCompact()
-        expanded.setExpanded(true)
+        expanded.expand()
         let notice = IslandController()
         notice.notify("Jordan Lee", description: "Are we still on for Saturday?", duration: .seconds(60)) {
           Ph.chatCircle.fill.foregroundStyle(Color.success)
         }
-        controllers = [compact, expanded, notice]
-        return IslandGallery(compact: compact, expanded: expanded, notice: notice)
+        controllers = [compact, minimal, expanded, notice]
+        return IslandGallery(compact: compact, minimal: minimal, expanded: expanded, notice: notice)
       }(),
       name: "extras-island",
       wait: 1.2
     )
-    XCTAssertEqual(controllers.last?.view, .notice)
+    XCTAssertEqual(controllers.map(\.view), [.compact, .minimal, .expanded, .notice])
   }
 
   func testRendersQRScannerGallery() throws {
@@ -931,24 +942,38 @@ final class ExtrasGalleryTests: XCTestCase {
   }
 
   func testIslandStateMachine() async throws {
-    XCTAssertEqual(IslandMath.view(notice: false, expanded: false, compactCount: 0), .hidden)
-    XCTAssertEqual(IslandMath.view(notice: false, expanded: true, compactCount: 0), .hidden)
-    XCTAssertEqual(IslandMath.view(notice: false, expanded: false, compactCount: 1), .compact)
-    XCTAssertEqual(IslandMath.view(notice: false, expanded: true, compactCount: 1), .expanded)
-    XCTAssertEqual(IslandMath.view(notice: true, expanded: true, compactCount: 1), .notice)
+    XCTAssertEqual(IslandMath.view(notice: false, mode: .compact, compactCount: 0), .hidden)
+    XCTAssertEqual(IslandMath.view(notice: false, mode: .expanded, compactCount: 0), .hidden)
+    XCTAssertEqual(IslandMath.view(notice: false, mode: .compact, compactCount: 1), .compact)
+    XCTAssertEqual(IslandMath.view(notice: false, mode: .minimal, compactCount: 1), .minimal)
+    XCTAssertEqual(IslandMath.view(notice: false, mode: .expanded, compactCount: 1), .expanded)
+    XCTAssertEqual(IslandMath.view(notice: true, mode: .expanded, compactCount: 1), .notice)
     XCTAssertTrue(IslandMath.swipeCloses(translation: -20, predicted: -20))
     XCTAssertTrue(IslandMath.swipeCloses(translation: -4, predicted: -120))
     XCTAssertFalse(IslandMath.swipeCloses(translation: 30, predicted: 60))
     XCTAssertEqual(IslandMath.ringProgress(1.4), 1)
     XCTAssertEqual(IslandMath.ringProgress(-1), 0)
+    XCTAssertTrue(IslandMath.hardware(phone: true, safeTop: 62, globalTop: 0, size: CGSize(width: 440, height: 956)))
+    XCTAssertFalse(IslandMath.hardware(phone: true, safeTop: 47, globalTop: 0, size: CGSize(width: 390, height: 844)))
+    XCTAssertFalse(IslandMath.hardware(phone: true, safeTop: 62, globalTop: 120, size: CGSize(width: 440, height: 600)))
+    XCTAssertFalse(IslandMath.hardware(phone: false, safeTop: 62, globalTop: 0, size: CGSize(width: 440, height: 956)))
+    XCTAssertEqual(IslandMath.compactGap(hardware: true), 142)
+    XCTAssertEqual(IslandMath.compactGap(hardware: false), 24)
+    XCTAssertEqual(IslandMath.minimalOffset(hardware: false), 0)
 
     let island = IslandController()
     XCTAssertEqual(island.view, .hidden)
-    island.setExpanded(true)
-    XCTAssertFalse(island.isExpanded)
+    island.expand()
+    XCTAssertEqual(island.view, .hidden)
     island.registerCompact()
+    XCTAssertEqual(island.view, .expanded)
+    island.collapse()
     XCTAssertEqual(island.view, .compact)
-    island.setExpanded(true)
+    island.minimize()
+    XCTAssertEqual(island.view, .compact)
+    island.hasMinimal = true
+    XCTAssertEqual(island.view, .minimal)
+    island.expand()
     XCTAssertEqual(island.view, .expanded)
     island.notify("Saved", duration: .milliseconds(150))
     XCTAssertEqual(island.view, .notice)
@@ -965,7 +990,8 @@ final class ExtrasGalleryTests: XCTestCase {
     XCTAssertEqual(island.view, .expanded)
     island.unregisterCompact()
     XCTAssertEqual(island.view, .hidden)
-    XCTAssertFalse(island.isExpanded)
+    island.registerCompact()
+    XCTAssertEqual(island.view, .compact)
   }
 
   func testCardStackSwipeThresholds() {
