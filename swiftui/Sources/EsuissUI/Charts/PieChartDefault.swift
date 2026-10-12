@@ -24,23 +24,26 @@ public struct PieChartDefault: View {
       CardHeader("Pie chart", description: "Users by device · thousands")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartData, id: \.device) { item in
-              SectorMark(angle: .value("Users", item.users), outerRadius: .ratio(0.85), angularInset: 1)
-                .foregroundStyle(chartConfig.color(item.device))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(chartData, id: \.device) { item in
+                SectorMark(angle: .value("Users", item.users * progress), outerRadius: .ratio(0.85), angularInset: 1)
+                  .foregroundStyle(chartConfig.color(item.device))
+              }
+              ChartSectorRest(total: chartData.reduce(0) { $0 + $1.users }, progress: progress)
             }
+            .chartTooltip(
+              angle: chartData.map(\.users),
+              labels: chartData.map { chartConfig.label($0.device) },
+              outerRadius: 0.85,
+              selection: $selection,
+              accessibilityLabel: "Pie chart",
+              items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideLabel: true)
+            }
+            .padding(5)
           }
-          .chartTooltip(
-            angle: chartData.map(\.users),
-            labels: chartData.map { chartConfig.label($0.device) },
-            outerRadius: 0.85,
-            selection: $selection,
-            accessibilityLabel: "Pie chart",
-            items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideLabel: true)
-          }
-          .padding(5)
         }
         .frame(height: 208)
       }

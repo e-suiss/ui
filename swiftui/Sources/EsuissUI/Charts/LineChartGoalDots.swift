@@ -37,41 +37,45 @@ public struct LineChartGoalDots: View {
       .padding(.horizontal, 16)
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            RuleMark(y: .value("Goal", goal))
-              .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-              .foregroundStyle(Color.green)
-            ForEach(chartData.indices, id: \.self) { index in
-              LineMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
-                .interpolationMethod(.monotone)
-                .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                .foregroundStyle(chartConfig.color("hours"))
+          ChartAnimator { progress in
+            Chart {
+              RuleMark(y: .value("Goal", goal))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                .foregroundStyle(Color.green)
+              ForEach(chartData.indices, id: \.self) { index in
+                LineMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
+                  .interpolationMethod(.monotone)
+                  .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                  .foregroundStyle(chartConfig.color("hours"))
+              }
+              .chartReveal(progress, x: 0...(chartData.count - 1))
+              ForEach(chartData.indices, id: \.self) { index in
+                PointMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
+                  .symbol {
+                    Circle()
+                      .fill(chartData[index].hours >= goal ? Color.green : .orange)
+                      .stroke(Color.surfaceSecondary, lineWidth: 2)
+                      .frame(width: selection == index ? 13 : 11, height: selection == index ? 13 : 11)
+                  }
+              }
+              .chartReveal(progress, x: 0...(chartData.count - 1))
             }
-            ForEach(chartData.indices, id: \.self) { index in
-              PointMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
-                .symbol {
-                  Circle()
-                    .fill(chartData[index].hours >= goal ? Color.green : .orange)
-                    .stroke(Color.surfaceSecondary, lineWidth: 2)
-                    .frame(width: selection == index ? 13 : 11, height: selection == index ? 13 : 11)
-                }
-            }
-          }
-          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 16))
-          .chartYScale(domain: 5...9)
-          .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { chartData[$0].day } }
-          .chartYAxis { ChartAxis.y(values: [5.0, 7, 9]) { "\($0.formatted())h" } }
-          .chartTooltip(
-            x: Array(chartData.indices),
-            labels: chartData.map(\.day),
-            selection: $selection,
-            accessibilityLabel: "Sleep",
-            items: { [ChartTooltipItem("hours", value: chartData[$0].hours)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideIndicator: true) { item in
-              Text(verbatim: formatHours(item.value))
-                .font(TextStyle.xs.font(weight: .semibold))
-                .monospacedDigit()
+            .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 16))
+            .chartYScale(domain: 5...9)
+            .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { chartData[$0].day } }
+            .chartYAxis { ChartAxis.y(values: [5.0, 7, 9]) { "\($0.formatted())h" } }
+            .chartTooltip(
+              x: Array(chartData.indices),
+              labels: chartData.map(\.day),
+              selection: $selection,
+              accessibilityLabel: "Sleep",
+              items: { [ChartTooltipItem("hours", value: chartData[$0].hours)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideIndicator: true) { item in
+                Text(verbatim: formatHours(item.value))
+                  .font(TextStyle.xs.font(weight: .semibold))
+                  .monospacedDigit()
+              }
             }
           }
         }

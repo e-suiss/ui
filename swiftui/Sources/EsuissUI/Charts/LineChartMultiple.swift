@@ -29,32 +29,35 @@ public struct LineChartMultiple: View {
       CardHeader("Multiple series", description: "With a legend")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartConfig.keys, id: \.self) { key in
-              ForEach(chartData.indices, id: \.self) { index in
-                LineMark(x: .value("Month", index), y: .value("Visitors", value(key, index)), series: .value("Series", key))
-                  .interpolationMethod(.monotone)
-                  .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-                  .foregroundStyle(chartConfig.color(key))
-              }
-              if let selection {
-                PointMark(x: .value("Month", selection), y: .value("Visitors", value(key, selection)))
-                  .symbolSize(64)
-                  .foregroundStyle(chartConfig.color(key))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(chartConfig.keys, id: \.self) { key in
+                ForEach(chartData.indices, id: \.self) { index in
+                  LineMark(x: .value("Month", index), y: .value("Visitors", value(key, index)), series: .value("Series", key))
+                    .interpolationMethod(.monotone)
+                    .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+                    .foregroundStyle(chartConfig.color(key))
+                }
+                .chartReveal(progress, x: 0...(chartData.count - 1))
+                if let selection {
+                  PointMark(x: .value("Month", selection), y: .value("Visitors", value(key, selection)))
+                    .symbolSize(64)
+                    .foregroundStyle(chartConfig.color(key))
+                }
               }
             }
-          }
-          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
-          .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
-          .chartYAxis { ChartAxis.grid() }
-          .chartTooltip(
-            x: Array(chartData.indices),
-            labels: chartData.map(\.month),
-            selection: $selection,
-            accessibilityLabel: "Multiple series",
-            items: { index in chartConfig.keys.map { ChartTooltipItem($0, value: value($0, index)) } }
-          ) { payload in
-            ChartTooltipContent(payload)
+            .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
+            .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
+            .chartYAxis { ChartAxis.grid() }
+            .chartTooltip(
+              x: Array(chartData.indices),
+              labels: chartData.map(\.month),
+              selection: $selection,
+              accessibilityLabel: "Multiple series",
+              items: { index in chartConfig.keys.map { ChartTooltipItem($0, value: value($0, index)) } }
+            ) { payload in
+              ChartTooltipContent(payload)
+            }
           }
           ChartLegendContent()
         }

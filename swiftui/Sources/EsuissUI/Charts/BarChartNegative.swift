@@ -20,26 +20,29 @@ public struct BarChartNegative: View {
       CardHeader("Positive and negative", description: "Monthly cash flow · thousands")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            RuleMark(y: .value("Zero", 0))
-              .lineStyle(StrokeStyle(lineWidth: 1))
-              .foregroundStyle(Color.separatorStrong)
-            ForEach(chartData.indices, id: \.self) { index in
-              BarMark(x: .value("Month", chartData[index].month), y: .value("Flow", chartData[index].flow), width: .fixed(18))
-                .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                .foregroundStyle(chartData[index].flow >= 0 ? Color.green : .red)
+          ChartAnimator(animationDuration: 400) { progress in
+            Chart {
+              RuleMark(y: .value("Zero", 0))
+                .lineStyle(StrokeStyle(lineWidth: 1))
+                .foregroundStyle(Color.separatorStrong)
+              ForEach(chartData.indices, id: \.self) { index in
+                BarMark(x: .value("Month", chartData[index].month), y: .value("Flow", chartData[index].flow * progress), width: .fixed(18))
+                  .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                  .foregroundStyle(chartData[index].flow >= 0 ? Color.green : .red)
+                ChartAnchorMark(x: .value("Month", chartData[index].month), y: .value("Flow", chartData[index].flow))
+              }
             }
-          }
-          .chartXAxis { ChartAxis.x(values: chartData.indices.filter { $0.isMultiple(of: 2) }.map { chartData[$0].month }) { String($0.prefix(3)) } }
-          .chartYAxis { ChartAxis.grid() }
-          .chartTooltip(
-            x: chartData.map(\.month),
-            selection: $selection,
-            cursor: false,
-            accessibilityLabel: "Positive and negative",
-            items: { [ChartTooltipItem("flow", value: chartData[$0].flow)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideIndicator: true)
+            .chartXAxis { ChartAxis.x(values: chartData.indices.filter { $0.isMultiple(of: 2) }.map { chartData[$0].month }) { String($0.prefix(3)) } }
+            .chartYAxis { ChartAxis.grid() }
+            .chartTooltip(
+              x: chartData.map(\.month),
+              selection: $selection,
+              cursor: false,
+              accessibilityLabel: "Positive and negative",
+              items: { [ChartTooltipItem("flow", value: chartData[$0].flow)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideIndicator: true)
+            }
           }
         }
         .frame(height: 192)

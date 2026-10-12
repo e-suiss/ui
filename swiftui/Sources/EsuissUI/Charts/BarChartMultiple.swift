@@ -29,26 +29,29 @@ public struct BarChartMultiple: View {
       CardHeader("Multiple series", description: "Desktop and mobile side by side")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartConfig.keys, id: \.self) { key in
-              ForEach(chartData.indices, id: \.self) { index in
-                BarMark(x: .value("Month", chartData[index].month), y: .value("Visitors", value(key, index)))
-                  .position(by: .value("Series", key), span: .ratio(0.95))
-                  .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                  .foregroundStyle(chartConfig.color(key))
+          ChartAnimator(animationDuration: 400) { progress in
+            Chart {
+              ForEach(chartConfig.keys, id: \.self) { key in
+                ForEach(chartData.indices, id: \.self) { index in
+                  BarMark(x: .value("Month", chartData[index].month), y: .value("Visitors", value(key, index) * progress))
+                    .position(by: .value("Series", key), span: .ratio(0.95))
+                    .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                    .foregroundStyle(chartConfig.color(key))
+                  ChartAnchorMark(x: .value("Month", chartData[index].month), y: .value("Visitors", value(key, index)))
+                }
               }
             }
-          }
-          .chartXAxis { ChartAxis.x(values: chartData.map(\.month)) { String($0.prefix(3)) } }
-          .chartYAxis { ChartAxis.grid() }
-          .chartTooltip(
-            x: chartData.map(\.month),
-            selection: $selection,
-            cursor: false,
-            accessibilityLabel: "Multiple series",
-            items: { index in chartConfig.keys.map { ChartTooltipItem($0, value: value($0, index)) } }
-          ) { payload in
-            ChartTooltipContent(payload, indicator: .dashed)
+            .chartXAxis { ChartAxis.x(values: chartData.map(\.month)) { String($0.prefix(3)) } }
+            .chartYAxis { ChartAxis.grid() }
+            .chartTooltip(
+              x: chartData.map(\.month),
+              selection: $selection,
+              cursor: false,
+              accessibilityLabel: "Multiple series",
+              items: { index in chartConfig.keys.map { ChartTooltipItem($0, value: value($0, index)) } }
+            ) { payload in
+              ChartTooltipContent(payload, indicator: .dashed)
+            }
           }
         }
         .frame(height: 192)

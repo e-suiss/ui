@@ -56,7 +56,8 @@ final class AdminGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: Board(shots: shots)
         .frame(width: size.width, height: size.height, alignment: .topLeading)
         .background(Color.surface)
-        .environment(\.locale, Locale(identifier: "en_US")))
+        .environment(\.locale, Locale(identifier: "en_US"))
+        .environment(\.chartAnimationActive, false))
       host.safeAreaRegions = []
       let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
       let window = scene.map { UIWindow(windowScene: $0) } ?? UIWindow()

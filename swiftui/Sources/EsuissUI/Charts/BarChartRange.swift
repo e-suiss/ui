@@ -24,32 +24,34 @@ public struct BarChartRange: View {
       CardHeader("8-day forecast", description: "Each bar spans the low and high")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartData.indices, id: \.self) { index in
-              BarMark(xStart: .value("Low", 8), xEnd: .value("High", 27), y: .value("Day", chartData[index].day), height: .ratio(0.76))
-                .clipShape(Capsule())
-                .foregroundStyle(Color.control)
-              BarMark(xStart: .value("Low", chartData[index].low), xEnd: .value("High", chartData[index].high), y: .value("Day", chartData[index].day), height: .ratio(0.76))
-                .clipShape(Capsule())
-                .foregroundStyle(LinearGradient(colors: [.teal, .yellow, .orange], startPoint: .leading, endPoint: .trailing))
+          ChartAnimator(animationDuration: 400) { progress in
+            Chart {
+              ForEach(chartData.indices, id: \.self) { index in
+                BarMark(xStart: .value("Low", 8), xEnd: .value("High", 27), y: .value("Day", chartData[index].day), height: .ratio(0.76))
+                  .clipShape(Capsule())
+                  .foregroundStyle(Color.control)
+                BarMark(xStart: .value("Low", chartData[index].low), xEnd: .value("High", chartData[index].low + (chartData[index].high - chartData[index].low) * progress), y: .value("Day", chartData[index].day), height: .ratio(0.76))
+                  .clipShape(Capsule())
+                  .foregroundStyle(LinearGradient(colors: [.teal, .yellow, .orange], startPoint: .leading, endPoint: .trailing))
+              }
             }
-          }
-          .chartXScale(domain: 8...27)
-          .chartXAxis(.hidden)
-          .chartYAxis {
-            ChartAxis.y(values: chartData.map(\.day), edge: .leading, grid: false, emphasized: true) { $0 }
-            ChartAxis.y(values: chartData.map(\.day), edge: .trailing, grid: false, emphasized: true) { high($0) }
-          }
-          .chartTooltip(
-            y: chartData.map(\.day),
-            selection: $selection,
-            accessibilityLabel: "8-day forecast",
-            items: { [ChartTooltipItem("range", value: chartData[$0].high)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideIndicator: true) { (_: ChartTooltipItem) in
-              Text(verbatim: "\(Int(chartData[payload.index].low))° to \(Int(chartData[payload.index].high))°")
-                .font(TextStyle.xs.font(weight: .semibold))
-                .monospacedDigit()
+            .chartXScale(domain: 8...27)
+            .chartXAxis(.hidden)
+            .chartYAxis {
+              ChartAxis.y(values: chartData.map(\.day), edge: .leading, grid: false, emphasized: true) { $0 }
+              ChartAxis.y(values: chartData.map(\.day), edge: .trailing, grid: false, emphasized: true) { high($0) }
+            }
+            .chartTooltip(
+              y: chartData.map(\.day),
+              selection: $selection,
+              accessibilityLabel: "8-day forecast",
+              items: { [ChartTooltipItem("range", value: chartData[$0].high)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideIndicator: true) { (_: ChartTooltipItem) in
+                Text(verbatim: "\(Int(chartData[payload.index].low))° to \(Int(chartData[payload.index].high))°")
+                  .font(TextStyle.xs.font(weight: .semibold))
+                  .monospacedDigit()
+              }
             }
           }
         }

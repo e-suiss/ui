@@ -25,38 +25,41 @@ public struct LineChartForecast: View {
       CardHeader("Actual and forecast", description: "The dashed line is the forecast")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            RectangleMark(xStart: .value("Month", 8), xEnd: .value("Month", 11))
-              .foregroundStyle(Color.control.opacity(0.6))
-            ForEach(chartConfig.keys, id: \.self) { key in
-              ForEach(months.indices, id: \.self) { index in
-                if let point = value(key, index) {
-                  LineMark(x: .value("Month", index), y: .value("Value", point), series: .value("Series", key))
-                    .interpolationMethod(.monotone)
-                    .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round, dash: key == "forecast" ? [5, 5] : []))
+          ChartAnimator { progress in
+            Chart {
+              RectangleMark(xStart: .value("Month", 8), xEnd: .value("Month", 11))
+                .foregroundStyle(Color.control.opacity(0.6))
+              ForEach(chartConfig.keys, id: \.self) { key in
+                ForEach(months.indices, id: \.self) { index in
+                  if let point = value(key, index) {
+                    LineMark(x: .value("Month", index), y: .value("Value", point), series: .value("Series", key))
+                      .interpolationMethod(.monotone)
+                      .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round, dash: key == "forecast" ? [5, 5] : []))
+                      .foregroundStyle(chartConfig.color(key))
+                  }
+                }
+                if let selection, let point = value(key, selection) {
+                  PointMark(x: .value("Month", selection), y: .value("Value", point))
+                    .symbolSize(64)
                     .foregroundStyle(chartConfig.color(key))
                 }
               }
-              if let selection, let point = value(key, selection) {
-                PointMark(x: .value("Month", selection), y: .value("Value", point))
-                  .symbolSize(64)
-                  .foregroundStyle(chartConfig.color(key))
+              .chartReveal(progress, x: 0...11)
+            }
+            .chartXScale(domain: 0...11, range: .plotDimension(padding: 12))
+            .chartXAxis { ChartAxis.x(values: [0, 3, 6, 9]) { months[$0] } }
+            .chartYAxis { ChartAxis.grid() }
+            .chartTooltip(
+              x: Array(months.indices),
+              labels: months,
+              selection: $selection,
+              accessibilityLabel: "Actual and forecast",
+              items: { index in
+                chartConfig.keys.compactMap { key in value(key, index).map { ChartTooltipItem(key, value: $0) } }
               }
+            ) { payload in
+              ChartTooltipContent(payload, indicator: .line)
             }
-          }
-          .chartXScale(domain: 0...11, range: .plotDimension(padding: 12))
-          .chartXAxis { ChartAxis.x(values: [0, 3, 6, 9]) { months[$0] } }
-          .chartYAxis { ChartAxis.grid() }
-          .chartTooltip(
-            x: Array(months.indices),
-            labels: months,
-            selection: $selection,
-            accessibilityLabel: "Actual and forecast",
-            items: { index in
-              chartConfig.keys.compactMap { key in value(key, index).map { ChartTooltipItem(key, value: $0) } }
-            }
-          ) { payload in
-            ChartTooltipContent(payload, indicator: .line)
           }
         }
         .frame(height: 192)

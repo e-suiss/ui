@@ -35,32 +35,35 @@ public struct BarChartHourly: View {
       .padding(.horizontal, 16)
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(minutes.indices, id: \.self) { hour in
-              BarMark(x: .value("Hour", hours[hour]), y: .value("Minutes", minutes[hour]), width: .fixed(8))
-                .clipShape(UnevenRoundedRectangle(topLeadingRadius: 3, topTrailingRadius: 3, style: .continuous))
-                .foregroundStyle(chartConfig.color("minutes"))
+          ChartAnimator(animationDuration: 400) { progress in
+            Chart {
+              ForEach(minutes.indices, id: \.self) { hour in
+                BarMark(x: .value("Hour", hours[hour]), y: .value("Minutes", minutes[hour] * progress), width: .fixed(8))
+                  .clipShape(UnevenRoundedRectangle(topLeadingRadius: 3, topTrailingRadius: 3, style: .continuous))
+                  .foregroundStyle(chartConfig.color("minutes"))
+                ChartAnchorMark(x: .value("Hour", hours[hour]), y: .value("Minutes", minutes[hour]))
+              }
+              RuleMark(y: .value("Average", average))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                .foregroundStyle(Color.green)
             }
-            RuleMark(y: .value("Average", average))
-              .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-              .foregroundStyle(Color.green)
-          }
-          .chartXAxis { ChartAxis.x(values: ["0", "6", "12", "18"]) { "\($0):00" } }
-          .chartYAxis { ChartAxis.y(count: 3) { "\(Int($0)) min" } }
-          .chartTooltip(
-            x: hours,
-            labels: hours.map { "\($0):00" },
-            selection: $selection,
-            cursor: false,
-            accessibilityLabel: "Screen time",
-            items: { [ChartTooltipItem("minutes", value: minutes[$0])] }
-          ) { payload in
-            ChartTooltipContent(payload, hideIndicator: true) { payload in
-              Text(verbatim: payload.label)
-            } formatter: { item in
-              Text("\(Int(item.value)) min")
-                .font(TextStyle.xs.font(weight: .semibold))
-                .monospacedDigit()
+            .chartXAxis { ChartAxis.x(values: ["0", "6", "12", "18"]) { "\($0):00" } }
+            .chartYAxis { ChartAxis.y(count: 3) { "\(Int($0)) min" } }
+            .chartTooltip(
+              x: hours,
+              labels: hours.map { "\($0):00" },
+              selection: $selection,
+              cursor: false,
+              accessibilityLabel: "Screen time",
+              items: { [ChartTooltipItem("minutes", value: minutes[$0])] }
+            ) { payload in
+              ChartTooltipContent(payload, hideIndicator: true) { payload in
+                Text(verbatim: payload.label)
+              } formatter: { item in
+                Text("\(Int(item.value)) min")
+                  .font(TextStyle.xs.font(weight: .semibold))
+                  .monospacedDigit()
+              }
             }
           }
         }

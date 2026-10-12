@@ -120,7 +120,8 @@ public struct RadarChartInteractive: View {
                 models.filter(selected.contains).map { model in
                   ChartTooltipItem(model, value: scores[model]?[index] ?? 0)
                 }
-              }
+              },
+              isAnimationActive: false
             ) { payload in
               ChartTooltipContent(payload, indicator: .line) { item in
                 Capsule()

@@ -500,7 +500,8 @@ final class ChartsGalleryTests: XCTestCase {
         .padding(16)
         .background(Color.surface)
         .environment(\.colorScheme, scheme)
-        .environment(\.locale, Locale(identifier: "en_US")))
+        .environment(\.locale, Locale(identifier: "en_US"))
+        .environment(\.chartAnimationActive, false))
       renderer.scale = 2
       let data = try XCTUnwrap(renderer.uiImage?.pngData())
       let file = "\(name)-\(scheme == .dark ? "dark" : "light").png"

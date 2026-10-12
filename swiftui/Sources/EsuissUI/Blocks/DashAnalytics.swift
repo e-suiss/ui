@@ -83,7 +83,7 @@ public struct DashAnalytics: View {
       set: { value in
         guard let value, value != metric else { return }
         onMetricChange?(value)
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.5)) {
+        withAnimation(reduceMotion ? nil : ChartAnimationEasing.ease.animation(duration: 500)) {
           metric = value
         }
       }
@@ -96,7 +96,7 @@ public struct DashAnalytics: View {
       set: { value in
         guard value != app else { return }
         onAppChange?(value)
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.5)) {
+        withAnimation(reduceMotion ? nil : ChartAnimationEasing.ease.animation(duration: 500)) {
           app = value
           active = nil
         }
@@ -224,35 +224,39 @@ public struct DashAnalytics: View {
     let selection = Binding<Int?>(get: { active ?? data.count - 1 }, set: { active = $0 })
     let index = active ?? data.count - 1
     return ChartContainer(config: chartConfig) {
-      Chart {
-        ForEach(data.indices, id: \.self) { index in
-          AreaMark(x: .value("Week", index), y: .value("Value", data[index]))
-            .interpolationMethod(.linear)
-            .foregroundStyle(LinearGradient(colors: [color.opacity(0.22), color.opacity(0)], startPoint: .top, endPoint: .bottom))
-          LineMark(x: .value("Week", index), y: .value("Value", data[index]))
-            .interpolationMethod(.linear)
-            .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-            .foregroundStyle(color)
-        }
-        PointMark(x: .value("Week", index), y: .value("Value", data[index]))
-          .symbol {
-            Circle()
-              .fill(color)
-              .stroke(Color.surfaceSecondary, lineWidth: 2)
-              .frame(width: 12, height: 12)
+      ChartAnimator(animationDuration: 500) { progress in
+        Chart {
+          ForEach(data.indices, id: \.self) { index in
+            AreaMark(x: .value("Week", index), y: .value("Value", data[index]))
+              .interpolationMethod(.linear)
+              .foregroundStyle(LinearGradient(colors: [color.opacity(0.22), color.opacity(0)], startPoint: .top, endPoint: .bottom))
+            LineMark(x: .value("Week", index), y: .value("Value", data[index]))
+              .interpolationMethod(.linear)
+              .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+              .foregroundStyle(color)
           }
-      }
-      .chartXScale(domain: 0...(data.count - 1), range: .plotDimension(padding: 6))
-      .chartXAxis(.hidden)
-      .chartYAxis { ChartAxis.grid() }
-      .chartTooltip(
-        x: Array(data.indices),
-        labels: data.indices.map { "Week \($0 + 1)" },
-        selection: selection,
-        accessibilityLabel: current.label,
-        items: { [ChartTooltipItem("value", value: data[$0])] }
-      ) { _ in
-        EmptyView()
+          .chartReveal(progress, x: 0...(data.count - 1))
+          PointMark(x: .value("Week", index), y: .value("Value", data[index]))
+            .symbol {
+              Circle()
+                .fill(color)
+                .stroke(Color.surfaceSecondary, lineWidth: 2)
+                .frame(width: 12, height: 12)
+            }
+            .chartReveal(progress, x: 0...(data.count - 1))
+        }
+        .chartXScale(domain: 0...(data.count - 1), range: .plotDimension(padding: 6))
+        .chartXAxis(.hidden)
+        .chartYAxis { ChartAxis.grid() }
+        .chartTooltip(
+          x: Array(data.indices),
+          labels: data.indices.map { "Week \($0 + 1)" },
+          selection: selection,
+          accessibilityLabel: current.label,
+          items: { [ChartTooltipItem("value", value: data[$0])] }
+        ) { _ in
+          EmptyView()
+        }
       }
     }
     .frame(height: 176)

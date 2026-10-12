@@ -36,32 +36,35 @@ public struct LineChartDots: View {
       .padding(.horizontal, 16)
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartData.indices, id: \.self) { index in
-              LineMark(x: .value("Month", index), y: .value("Weight", chartData[index].weight))
-                .interpolationMethod(.linear)
-                .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                .foregroundStyle(chartConfig.color("weight"))
-              PointMark(x: .value("Month", index), y: .value("Weight", chartData[index].weight))
-                .symbolSize(selection == index ? 100 : 49)
-                .foregroundStyle(chartConfig.color("weight"))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(chartData.indices, id: \.self) { index in
+                LineMark(x: .value("Month", index), y: .value("Weight", chartData[index].weight))
+                  .interpolationMethod(.linear)
+                  .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                  .foregroundStyle(chartConfig.color("weight"))
+                PointMark(x: .value("Month", index), y: .value("Weight", chartData[index].weight))
+                  .symbolSize(selection == index ? 100 : 49)
+                  .foregroundStyle(chartConfig.color("weight"))
+              }
+              .chartReveal(progress, x: 0...(chartData.count - 1))
             }
-          }
-          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
-          .chartYScale(domain: 76...84)
-          .chartXAxis { ChartAxis.x(values: [0, 3, 6, 9]) { chartData[$0].month } }
-          .chartYAxis { ChartAxis.y(values: [76, 80, 84]) { (value: Double) in value.formatted() } }
-          .chartTooltip(
-            x: Array(chartData.indices),
-            labels: chartData.map(\.month),
-            selection: $selection,
-            accessibilityLabel: "Weight",
-            items: { [ChartTooltipItem("weight", value: chartData[$0].weight)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideIndicator: true) { item in
-              Text("\(item.value, format: .number) kg")
-                .font(TextStyle.xs.font(weight: .semibold))
-                .monospacedDigit()
+            .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
+            .chartYScale(domain: 76...84)
+            .chartXAxis { ChartAxis.x(values: [0, 3, 6, 9]) { chartData[$0].month } }
+            .chartYAxis { ChartAxis.y(values: [76, 80, 84]) { (value: Double) in value.formatted() } }
+            .chartTooltip(
+              x: Array(chartData.indices),
+              labels: chartData.map(\.month),
+              selection: $selection,
+              accessibilityLabel: "Weight",
+              items: { [ChartTooltipItem("weight", value: chartData[$0].weight)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideIndicator: true) { item in
+                Text("\(item.value, format: .number) kg")
+                  .font(TextStyle.xs.font(weight: .semibold))
+                  .monospacedDigit()
+              }
             }
           }
         }
