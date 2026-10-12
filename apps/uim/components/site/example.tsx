@@ -5,22 +5,58 @@ import * as React from "react";
 
 import { SourceCode } from "@/components/site/source-code";
 
+const KEY = "uim-platform";
+const listeners = new Set<() => void>();
+let current: string | null = null;
+
+function readPlatform() {
+  if (current === null) {
+    try {
+      current = window.localStorage.getItem(KEY) ?? "";
+    } catch {
+      current = "";
+    }
+  }
+  return current;
+}
+
+function setPlatform(value: string) {
+  current = value;
+  try {
+    window.localStorage.setItem(KEY, value);
+  } catch {}
+  for (const listener of listeners) listener();
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
 export function Example({
   id,
   width,
   height,
+  platforms = [],
   children,
 }: {
   id?: string;
   width?: number;
   height?: number;
+  platforms?: string[];
   children: React.ReactNode;
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">(id ? "preview" : "code");
+  const stored = React.useSyncExternalStore(subscribe, readPlatform, () => "");
+  const panels = React.Children.toArray(children).filter(React.isValidElement);
+  const labels = platforms.length === panels.length ? platforms : [];
+  const active = Math.max(0, labels.indexOf(stored));
 
   return (
     <div data-not-prose className="mt-[1.2em]">
-      <div role="tablist" className="flex gap-5 border-b border-label/12">
+      <div role="tablist" className="flex gap-4 border-b sm:gap-5 border-label/12">
         {(id ? (["preview", "code"] as const) : (["code"] as const)).map((item) => (
           <button
             key={item}
@@ -38,7 +74,26 @@ export function Example({
             {item}
           </button>
         ))}
-        {id && <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">iOS</span>}
+        {tab === "code" && labels.length > 1 ? (
+          <div className="ms-auto -me-2 flex min-w-0 items-center gap-0.5 self-center sm:me-0 sm:gap-1 overflow-x-auto [scrollbar-width:none]">
+            {labels.map((label, index) => (
+              <button
+                key={label}
+                type="button"
+                aria-pressed={index === active}
+                onClick={() => setPlatform(label)}
+                className={cn(
+                  "h-7 shrink-0 cursor-pointer rounded-full px-2 text-xs sm:px-3 font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
+                  index === active ? "bg-label/8 text-label" : "text-label/45 hover:text-label",
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          id && <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">iOS</span>
+        )}
       </div>
       {id && (
         <div hidden={tab !== "preview"}>
@@ -70,7 +125,15 @@ export function Example({
         </div>
       )}
       <div hidden={tab !== "code"}>
-        <SourceCode>{children}</SourceCode>
+        {labels.length > 1 ? (
+          panels.map((panel, index) => (
+            <div key={labels[index]} hidden={index !== active}>
+              <SourceCode>{panel}</SourceCode>
+            </div>
+          ))
+        ) : (
+          <SourceCode>{children}</SourceCode>
+        )}
       </div>
     </div>
   );

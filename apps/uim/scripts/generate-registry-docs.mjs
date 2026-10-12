@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } fr
 import path from "node:path";
 
 import { componentApi, storyExamples } from "./lib/extract.mjs";
+import { nativeStories } from "./lib/native.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const uimRepo = path.resolve(root, process.argv[2] ?? "../../../uim");
@@ -11,6 +12,7 @@ const registry = JSON.parse(readFileSync(path.join(uimRepo, "registry.json"), "u
 const previews = JSON.parse(readFileSync(path.join(root, "content/previews.json"), "utf8"));
 
 const MARKER = "generated: true";
+const native = nativeStories(uimRepo);
 
 const categories = {
   ui: { folder: "components", title: "Components", eyebrow: "React Native Component", story: "components" },
@@ -127,10 +129,21 @@ const labelOf = (key) => {
   return words.charAt(0).toUpperCase() + words.slice(1);
 };
 
-function example(id, body) {
+const switcher = { swift: "SwiftUI", kotlin: "Compose" };
+
+function example(id, body, others = {}) {
   const size = previews[id];
-  const attrs = size ? ` id="${id}" width={${size[0]}} height={${size[1]}}` : "";
-  return [`<Example${attrs}>`, "", body, "", "</Example>", ""];
+  const extra = Object.entries(switcher).filter(([platform]) => others[platform]);
+  const attrs = [
+    size ? ` id="${id}" width={${size[0]}} height={${size[1]}}` : "",
+    extra.length ? ` platforms={${JSON.stringify(["React Native", ...extra.map(([, label]) => label)])}}` : "",
+  ].join("");
+  return [`<Example${attrs}>`, "", body, "", ...extra.flatMap(([platform]) => [others[platform], ""]), "</Example>", ""];
+}
+
+function nativeExample(id) {
+  const code = native.get(id) ?? {};
+  return Object.fromEntries(Object.keys(switcher).filter((platform) => code[platform]).map((platform) => [platform, fence(code[platform], platforms[platform].lang)]));
 }
 
 function propsTable(part, text) {
@@ -168,11 +181,18 @@ function page(item) {
   const parts = visual || !uniwind ? [] : componentApi(file, readFileSync(path.join(sources, uniwind), "utf8"));
   const main = pascal(item.name);
 
+  const nativeFiles = Object.fromEntries(
+    Object.keys(platforms)
+      .map((platform) => [platform, item[platform]?.[0] && platformFile(platform, item[platform][0])])
+      .filter(([, copied]) => copied),
+  );
+
   if (visual) {
     const id = examples[0]?.id ?? `${category.story}-${item.name}--default`;
-    lines.push(...example(id, `<SourceFile path="${uniwind}" fold={false} />`));
+    const others = Object.fromEntries(Object.entries(nativeFiles).map(([platform, copied]) => [platform, `<SourceFile path="${copied}" fold={false} />`]));
+    lines.push(...example(id, `<SourceFile path="${uniwind}" fold={false} />`, others));
   } else if (examples[0]) {
-    lines.push(...example(examples[0].id, fence(examples[0].code)));
+    lines.push(...example(examples[0].id, fence(examples[0].code), nativeExample(examples[0].id)));
   }
   if (text.overview) lines.push(mdx(text.overview), "");
 
@@ -209,17 +229,15 @@ function page(item) {
   }
   lines.push("</Tabs>", "");
 
-  const native = Object.keys(platforms)
-    .map((platform) => [platform, item[platform]?.[0] && platformFile(platform, item[platform][0])])
-    .filter(([, copied]) => copied);
-  if (native.length) {
+  const nativeList = Object.entries(nativeFiles);
+  if (nativeList.length) {
     lines.push("### SwiftUI and Jetpack Compose", "");
     lines.push(
       `The same ${category.eyebrow === "React Native Component" ? "component" : category.eyebrow.toLowerCase()} is available as native source. The CLI copies it with every file it uses.`,
       "",
     );
-    lines.push(`<Tabs items={${JSON.stringify(native.map(([platform]) => platforms[platform].label))}}>`, "");
-    for (const [, copied] of native) lines.push(`<SourceFile path="${copied}" />`, "");
+    lines.push(`<Tabs items={${JSON.stringify(nativeList.map(([platform]) => platforms[platform].label))}}>`, "");
+    for (const [, copied] of nativeList) lines.push(`<SourceFile path="${copied}" />`, "");
     lines.push("</Tabs>", "");
   }
 
@@ -236,7 +254,7 @@ function page(item) {
     for (const other of examples.slice(1)) {
       lines.push(`### ${other.name ?? labelOf(other.key)}`, "");
       if (text.examples?.[other.key]) lines.push(mdx(text.examples[other.key]), "");
-      lines.push(...example(other.id, fence(other.code)));
+      lines.push(...example(other.id, fence(other.code), nativeExample(other.id)));
     }
   }
 
