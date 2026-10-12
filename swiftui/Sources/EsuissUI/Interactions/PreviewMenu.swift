@@ -10,23 +10,34 @@ let previewMenuExit = Animation.timingCurve(0.32, 0.72, 0, 1, duration: 0.3)
 enum PreviewMenuMath {
   static let edge: CGFloat = 16
   static let menuSpace: CGFloat = 260
+  static let menuMinHeight: CGFloat = 88
   static let maxWidth: CGFloat = 360
   static let menuWidth: CGFloat = 250
   static let menuGap: CGFloat = 12
 
-  static func frame(trigger: CGRect, viewport: CGSize, aspectRatio: CGFloat?) -> CGRect {
+  static func size(trigger: CGRect, viewport: CGSize, aspectRatio: CGFloat?, reserve: CGFloat) -> CGSize {
     let ratio = aspectRatio.map { 1 / max($0, 0.01) } ?? trigger.height / max(trigger.width, 1)
     var width = min(viewport.width - edge * 2, maxWidth)
     var height = width * ratio
-    let maxHeight = viewport.height - menuSpace - edge * 2
+    let maxHeight = viewport.height - reserve - edge * 2
     if height > maxHeight {
       height = max(maxHeight, trigger.height)
       width = height / max(ratio, 0.01)
     }
-    let left = (viewport.width - width) / 2
-    let centered = trigger.midY - height / 2
-    let top = min(max(centered, edge), max(edge, viewport.height - menuSpace - height))
-    return CGRect(x: left, y: top, width: width, height: height)
+    return CGSize(width: width, height: height)
+  }
+
+  static func menuMaxHeight(trigger: CGRect, viewport: CGSize, aspectRatio: CGFloat?) -> CGFloat {
+    let base = size(trigger: trigger, viewport: viewport, aspectRatio: aspectRatio, reserve: menuSpace)
+    return max(viewport.height - edge * 2 - base.height - menuGap, menuMinHeight)
+  }
+
+  static func frame(trigger: CGRect, viewport: CGSize, aspectRatio: CGFloat?, menuHeight: CGFloat) -> CGRect {
+    let menu = min(menuHeight, menuMaxHeight(trigger: trigger, viewport: viewport, aspectRatio: aspectRatio))
+    let size = size(trigger: trigger, viewport: viewport, aspectRatio: aspectRatio, reserve: menu + menuGap)
+    let left = (viewport.width - size.width) / 2
+    let top = edge + max(0, (viewport.height - edge * 2 - size.height - menuGap - menu) / 2)
+    return CGRect(x: left, y: top, width: size.width, height: size.height)
   }
 
   static func menuOrigin(preview: CGRect, menu: CGSize, viewport: CGSize) -> CGPoint {
@@ -98,15 +109,12 @@ struct PreviewMenuModifier<Trigger: View, Items: View, Preview: View>: ViewModif
       .accessibilityHint(Text("Long press to preview and show actions"))
       .hapticFeedback(.impact(weight: .medium), trigger: lifts)
       .onChange(of: open, initial: true) { _, value in
-        if value {
-          lifts += 1
-          lifted = true
-        }
+        if value { lifts += 1 }
       }
       .task(id: open) {
         guard !open else { return }
         if !reduceMotion {
-          try? await Task.sleep(for: .milliseconds(300))
+          try? await Task.sleep(for: .milliseconds(270))
         }
         if !Task.isCancelled { lifted = false }
       }
@@ -122,7 +130,8 @@ struct PreviewMenuModifier<Trigger: View, Items: View, Preview: View>: ViewModif
             visible: visible,
             trigger: trigger,
             items: items,
-            preview: preview
+            preview: preview,
+            onShow: { lifted = true }
           )
         }
       )
@@ -136,18 +145,25 @@ struct PreviewMenuCanvas<Trigger: View, Items: View, Preview: View>: View {
   @ViewBuilder let trigger: () -> Trigger
   @ViewBuilder let items: () -> Items
   let preview: (() -> Preview)?
+  var onShow: () -> Void = {}
 
-  @State private var menu: CGSize = CGSize(width: PreviewMenuMath.menuWidth, height: 0)
+  @State private var menu = CGSize(width: PreviewMenuMath.menuWidth, height: PreviewMenuMath.menuSpace - PreviewMenuMath.menuGap)
   @Environment(\.overlayDismiss) private var dismiss
 
   var body: some View {
     GeometryReader { proxy in
       let origin = proxy.frame(in: .global).origin
       let local = source.offsetBy(dx: -origin.x, dy: -origin.y)
-      let target = PreviewMenuMath.frame(trigger: local, viewport: proxy.size, aspectRatio: aspectRatio)
-      let scale = min(target.width / max(local.width, 1), target.height / max(local.height, 1))
-      let center = visible ? CGPoint(x: target.midX, y: target.midY) : CGPoint(x: local.midX, y: local.midY)
+      let target = PreviewMenuMath.frame(trigger: local, viewport: proxy.size, aspectRatio: aspectRatio, menuHeight: menu.height)
+      let current = visible ? target : local
       let menuOrigin = PreviewMenuMath.menuOrigin(preview: target, menu: menu, viewport: proxy.size)
+      let menuMax = PreviewMenuMath.menuMaxHeight(trigger: local, viewport: proxy.size, aspectRatio: aspectRatio)
+      let triggerZoom = max(target.width / max(local.width, 1), target.height / max(local.height, 1))
+      let previewZoom = max(local.width / max(target.width, 1), local.height / max(target.height, 1))
+      let anchor = UnitPoint(
+        x: min(max((target.midX - menuOrigin.x) / max(menu.width, 1), 0), 1),
+        y: min(max((target.maxY + PreviewMenuMath.menuGap - menuOrigin.y) / max(menu.height, 1), 0), 1)
+      )
       ZStack(alignment: .topLeading) {
         Rectangle()
           .fill(.ultraThinMaterial)
@@ -157,31 +173,36 @@ struct PreviewMenuCanvas<Trigger: View, Items: View, Preview: View>: View {
           .contentShape(Rectangle())
           .onTapGesture { dismiss?() }
           .accessibilityHidden(true)
-        Group {
+        ZStack {
+          trigger()
+            .frame(width: local.width, height: local.height)
+            .scaleEffect(visible ? triggerZoom : 1)
+            .opacity(preview == nil || !visible ? 1 : 0)
           if let preview {
             preview()
               .frame(width: target.width, height: target.height)
-              .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
-              .scaleEffect(visible ? 1 : 1 / max(scale, 0.01))
-          } else {
-            trigger()
-              .frame(width: local.width, height: local.height)
-              .clipShape(RoundedRectangle(cornerRadius: Radius.xl2 / max(scale, 0.01), style: .continuous))
-              .scaleEffect(visible ? scale : 1)
+              .scaleEffect(visible ? 1 : previewZoom)
+              .opacity(visible ? 1 : 0)
           }
         }
+        .frame(width: current.width, height: current.height)
+        .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
         .shadow(visible ? Shadow.lg : Shadow(color: .clear, radius: 0, x: 0, y: 0))
-        .position(center)
+        .position(x: current.midX, y: current.midY)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         PreviewMenuPanel(content: items)
           .onGeometryChange(for: CGSize.self) { $0.size } action: { menu = $0 }
-          .frame(maxHeight: max(proxy.size.height - menuOrigin.y - PreviewMenuMath.edge, 44), alignment: .top)
-          .scaleEffect(visible ? 1 : 0.9, anchor: .top)
+          .frame(maxHeight: menuMax, alignment: .top)
+          .scaleEffect(visible ? 1 : 0.4, anchor: anchor)
           .opacity(visible ? 1 : 0)
-          .offset(x: menuOrigin.x, y: menuOrigin.y)
+          .offset(
+            x: menuOrigin.x + (visible ? 0 : local.midX - target.midX),
+            y: menuOrigin.y + (visible ? 0 : local.maxY - target.maxY - PreviewMenuMath.menuGap)
+          )
       }
     }
+    .onAppear(perform: onShow)
     .accessibilityAddTraits(.isModal)
     .accessibilityAction(.escape) { dismiss?() }
   }

@@ -4543,6 +4543,7 @@
       "requires": [
         "animated-view",
         "icon",
+        "item",
         "primitives/haptics"
       ],
       "files": [
@@ -4556,14 +4557,20 @@
       "swift": [
         "Interactions/ReorderList.swift",
         "Components/Haptics.swift",
-        "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift"
+        "Components/Item.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
       ],
       "kotlin": [
         "interactions/ReorderList.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
         "components/Content.kt",
+        "components/FormSupport.kt",
         "components/Haptics.kt",
-        "components/Icon.kt"
+        "components/Header.kt",
+        "components/Icon.kt",
+        "components/Item.kt"
       ]
     },
     {

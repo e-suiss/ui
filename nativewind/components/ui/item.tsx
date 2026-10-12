@@ -240,6 +240,7 @@ export {
   ItemDescription,
   ItemFooter,
   ItemGroup,
+  ItemGroupContext,
   ItemHeader,
   ItemMedia,
   ItemSeparator,
