@@ -20,8 +20,8 @@ import {
 const styles = StyleSheet.create({
   trigger: {
     height: 44,
-    width: "100%",
     flexDirection: "row",
+    alignSelf: "flex-start",
     alignItems: "center",
     gap: 8,
     borderRadius: radius.lg,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   icon: { flexShrink: 0 },
-  label: { flex: 1, ...fontSize.base },
+  label: { flexShrink: 1, ...fontSize.base },
   docked: { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
   wheels: { margin: 16, gap: 24 },
   spaced: { marginTop: 48 },

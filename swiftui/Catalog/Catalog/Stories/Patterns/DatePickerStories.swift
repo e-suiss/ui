@@ -81,7 +81,7 @@ private struct DatePickerDemo: View {
       showCloseButton: showCloseButton,
       closeLabel: closeLabel
     )
-    .frame(width: 240)
+    .fixedSize()
     .accessibilityLabel(Text("Date"))
   }
 }
@@ -100,7 +100,7 @@ private struct DatePickerControlled: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       DatePickerField(selection: $value)
-        .frame(width: 240)
+        .fixedSize()
         .accessibilityLabel(Text("Date"))
       Text(verbatim: "Selected: \(selected)")
         .textStyle(.sm)

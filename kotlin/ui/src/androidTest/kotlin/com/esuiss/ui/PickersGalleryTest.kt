@@ -286,22 +286,21 @@ private fun Scene(scene: PickerScene) {
         PickerScene.DatePickerTriggers -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             var empty by remember { mutableStateOf<Date?>(null) }
             var value by remember { mutableStateOf<Date?>(Today) }
-            DatePicker(value = empty, onValueChange = { empty = it }, modifier = Modifier.width(240.dp))
-            DatePicker(value = value, onValueChange = { value = it }, modifier = Modifier.width(240.dp), locale = Locale.US)
-            DatePicker(value = Today, onValueChange = {}, modifier = Modifier.width(240.dp), locale = Locale.forLanguageTag("tr-TR"), placeholder = "Tarih seç")
-            DatePicker(value = null, onValueChange = {}, modifier = Modifier.width(240.dp), invalid = true)
-            DatePicker(value = null, onValueChange = {}, modifier = Modifier.width(240.dp), enabled = false)
+            DatePicker(value = empty, onValueChange = { empty = it })
+            DatePicker(value = value, onValueChange = { value = it }, locale = Locale.US)
+            DatePicker(value = Today, onValueChange = {}, locale = Locale.forLanguageTag("tr-TR"), placeholder = "Tarih seç")
+            DatePicker(value = null, onValueChange = {}, invalid = true)
+            DatePicker(value = null, onValueChange = {}, enabled = false)
         }
         PickerScene.DatePicker -> {
             var value by remember { mutableStateOf<Date?>(Today) }
-            DatePicker(value = value, onValueChange = { value = it }, modifier = Modifier.width(240.dp), locale = Locale.US, title = "Delivery date")
+            DatePicker(value = value, onValueChange = { value = it }, locale = Locale.US, title = "Delivery date")
         }
         PickerScene.DatePickerLocale -> {
             var value by remember { mutableStateOf<Date?>(Today) }
             DatePicker(
                 value = value,
                 onValueChange = { value = it },
-                modifier = Modifier.width(240.dp),
                 locale = Locale.forLanguageTag("tr-TR"),
                 placeholder = "Tarih seç",
                 showCloseButton = true,

@@ -2,7 +2,6 @@ package com.esuiss.catalog.stories.patterns
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,7 +78,7 @@ private fun DatePickerDemo(
     DatePicker(
         value = value?.let(::Date),
         onValueChange = { value = it.time },
-        modifier = Modifier.width(240.dp).semantics { contentDescription = "Date" },
+        modifier = Modifier.semantics { contentDescription = "Date" },
         placeholder = placeholder,
         locale = locale,
         fromYear = fromYear,
@@ -101,7 +100,7 @@ private fun DatePickerControlled() {
         DatePicker(
             value = value?.let(::Date),
             onValueChange = { value = it.time },
-            modifier = Modifier.width(240.dp).semantics { contentDescription = "Date" },
+            modifier = Modifier.semantics { contentDescription = "Date" },
         )
         Text(
             "Selected: ${value?.let { format.format(Date(it)) } ?: "none"}",

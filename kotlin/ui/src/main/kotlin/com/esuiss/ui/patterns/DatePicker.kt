@@ -76,6 +76,7 @@ fun DatePicker(
         enabled = enabled,
         invalid = invalid,
         onClick = { open = true },
+        fill = false,
         leading = { tint -> Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null, size = 16.dp, tint = tint) },
     )
     Drawer(
@@ -111,6 +112,7 @@ internal fun PickerTrigger(
     enabled: Boolean,
     invalid: Boolean?,
     onClick: () -> Unit,
+    fill: Boolean = true,
     leading: (@Composable (Color) -> Unit)? = null,
     trailing: (@Composable (Color) -> Unit)? = null,
 ) {
@@ -127,7 +129,7 @@ internal fun PickerTrigger(
     val iconTint = if (isEnabled) colors.labelSecondary else colors.labelQuaternary
     Row(
         modifier = modifier
-            .fillMaxWidth()
+            .then(if (fill) Modifier.fillMaxWidth() else Modifier)
             .height(44.dp)
             .clip(shape)
             .background(controlBackground(colors, isInvalid, isEnabled), shape)
@@ -145,7 +147,7 @@ internal fun PickerTrigger(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         leading?.invoke(iconTint)
-        Box(modifier = Modifier.weight(1f)) {
+        Box(modifier = Modifier.weight(1f, fill = fill)) {
             BasicText(
                 text ?: placeholder,
                 style = Typography.base.copy(color = foreground),

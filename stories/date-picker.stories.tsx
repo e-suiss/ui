@@ -9,7 +9,6 @@ const meta = {
   component: DatePicker,
   args: {
     accessibilityLabel: "Date",
-    className: "w-60",
   },
 } satisfies Meta<typeof DatePicker>
 
