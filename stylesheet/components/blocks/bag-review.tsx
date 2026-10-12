@@ -84,28 +84,34 @@ const styles = StyleSheet.create({
   center: { alignItems: "center" },
   row: {
     flexDirection: "row",
-    gap: 16,
+    gap: 12,
     borderTopWidth: 1,
-    paddingVertical: 22,
+    paddingVertical: 16,
   },
-  image: { width: 80, height: 80, borderRadius: radius.xl },
-  details: { minWidth: 0, flex: 1, gap: 12 },
-  info: { gap: 4 },
-  name: { ...fontSize.xl, fontWeight: "600" },
-  link: { marginTop: 6, alignSelf: "flex-start" },
-  stepper: { gap: 8 },
-  quantity: { width: 32, textAlign: "center" },
-  priceRow: {
+  image: { width: 64, height: 64, borderRadius: radius.lg },
+  details: { minWidth: 0, flex: 1 },
+  info: { gap: 2 },
+  nameRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
-    gap: 6,
+    gap: 12,
   },
+  nameLink: { minWidth: 0, flexShrink: 1 },
+  name: { ...fontSize.base, fontWeight: "600" },
   linePrice: {
-    ...fontSize.xl,
+    ...fontSize.base,
     fontWeight: "600",
     fontVariant: ["tabular-nums"],
   },
+  controls: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  stepper: { gap: 8 },
+  quantity: { width: 32, textAlign: "center" },
   remove: { height: "auto", paddingHorizontal: 0 },
   summary: { gap: 10, borderTopWidth: 1, paddingTop: 20 },
   line: { flexDirection: "row", justifyContent: "space-between" },
@@ -184,58 +190,67 @@ function BagReview({
             )}
             style={[styles.row, { borderColor: colors.separator }]}
           >
-            <Image
-              source={{ uri: item.image }}
-              resizeMode="cover"
-              accessibilityIgnoresInvertColors
-              style={[styles.image, { backgroundColor: colors.control }]}
-            />
+            <Pressable
+              role="link"
+              accessibilityLabel={`Show details for ${item.name}`}
+              onPress={() => onShowDetails?.(item.name)}
+              style={({ pressed }) => pressed && { opacity: 0.6 }}
+            >
+              <Image
+                source={{ uri: item.image }}
+                resizeMode="cover"
+                accessibilityIgnoresInvertColors
+                style={[styles.image, { backgroundColor: colors.control }]}
+              />
+            </Pressable>
             <View style={styles.details}>
               <View style={styles.info}>
-                <Text role="heading" style={styles.name}>
-                  {item.name}
-                </Text>
-                <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                <View style={styles.nameRow}>
+                  <Pressable
+                    role="link"
+                    accessibilityLabel={`Show details for ${item.name}`}
+                    onPress={() => onShowDetails?.(item.name)}
+                    style={({ pressed }) => [
+                      styles.nameLink,
+                      pressed && { opacity: 0.6 },
+                    ]}
+                  >
+                    <Text numberOfLines={1} style={styles.name}>
+                      {item.name}
+                    </Text>
+                  </Pressable>
+                  <Text style={styles.linePrice}>
+                    {money(item.price * item.quantity)}
+                  </Text>
+                </View>
+                <Text
+                  numberOfLines={1}
+                  style={[fontSize.sm, { color: colors.labelSecondary }]}
+                >
                   {item.variant}
                 </Text>
-                <Pressable
-                  role="link"
-                  hitSlop={6}
-                  onPress={() => onShowDetails?.(item.name)}
-                  style={({ pressed }) => [
-                    styles.link,
-                    pressed && { opacity: 0.6 },
-                  ]}
-                >
-                  <Text style={[fontSize.sm, { color: colors.link }]}>
-                    Show product details ›
-                  </Text>
-                </Pressable>
               </View>
-              <Stepper
-                value={item.quantity}
-                onValueChange={(value) => {
-                  onQuantityChange?.(item.name, value)
-                  setQuantity(item.name, value)
-                }}
-                min={1}
-                max={10}
-                style={styles.stepper}
-              >
-                <StepperInput
-                  accessibilityLabel={`${item.name} quantity`}
-                  style={styles.quantity}
-                />
-                <StepperGroup>
-                  <StepperDecrement />
-                  <StepperSeparator />
-                  <StepperIncrement />
-                </StepperGroup>
-              </Stepper>
-              <View style={styles.priceRow}>
-                <Text style={styles.linePrice}>
-                  {money(item.price * item.quantity)}
-                </Text>
+              <View style={styles.controls}>
+                <Stepper
+                  value={item.quantity}
+                  onValueChange={(value) => {
+                    onQuantityChange?.(item.name, value)
+                    setQuantity(item.name, value)
+                  }}
+                  min={1}
+                  max={10}
+                  style={styles.stepper}
+                >
+                  <StepperInput
+                    accessibilityLabel={`${item.name} quantity`}
+                    style={styles.quantity}
+                  />
+                  <StepperGroup>
+                    <StepperDecrement />
+                    <StepperSeparator />
+                    <StepperIncrement />
+                  </StepperGroup>
+                </Stepper>
                 <Button
                   variant="link"
                   size="sm"

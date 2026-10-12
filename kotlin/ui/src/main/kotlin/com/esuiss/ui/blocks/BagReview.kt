@@ -42,6 +42,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.adamglin.PhosphorIcons
@@ -211,52 +212,80 @@ private fun ReviewRow(item: ReviewItem, onQuantity: (Int) -> Unit, onShowDetails
                 .background(colors.separator),
         )
         Row(
-            modifier = Modifier.padding(vertical = 22.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Box(
                 Modifier
-                    .size(80.dp)
-                    .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))
-                    .clearAndSetSemantics {},
+                    .size(64.dp)
+                    .reviewDetailsLink(item.name, onShowDetails)
+                    .background(colors.control, RoundedCornerShape(Radius.lg)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(item.icon, contentDescription = null, size = 44.dp, tint = colors.labelSecondary)
+                Icon(item.icon, contentDescription = null, size = 36.dp, tint = colors.labelSecondary)
             }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    BasicText(
-                        item.name,
-                        modifier = Modifier.semantics { heading() },
-                        style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
-                    )
-                    BasicText(item.variant, style = Typography.sm.copy(color = colors.labelSecondary))
-                    ReviewLink("Show product details ›", Modifier.padding(top = 2.dp), onShowDetails)
-                }
-                Stepper(
-                    value = item.quantity.toDouble(),
-                    onValueChange = { onQuantity(it.toInt()) },
-                    min = 1.0,
-                    max = 10.0,
-                ) {
-                    StepperInput(contentDescription = "${item.name} quantity")
-                    StepperGroup {
-                        StepperDecrement()
-                        StepperSeparator()
-                        StepperIncrement()
+            Column(Modifier.weight(1f)) {
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Box(Modifier.weight(1f)) {
+                            BasicText(
+                                item.name,
+                                modifier = Modifier.reviewDetailsLink(item.name, onShowDetails),
+                                style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                        BasicText(
+                            reviewMoney(item.price * item.quantity),
+                            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        )
                     }
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
                     BasicText(
-                        reviewMoney(item.price * item.quantity),
-                        modifier = Modifier.weight(1f),
-                        style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        item.variant,
+                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
+                }
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Stepper(
+                        value = item.quantity.toDouble(),
+                        onValueChange = { onQuantity(it.toInt()) },
+                        min = 1.0,
+                        max = 10.0,
+                    ) {
+                        StepperInput(contentDescription = "${item.name} quantity")
+                        StepperGroup {
+                            StepperDecrement()
+                            StepperSeparator()
+                            StepperIncrement()
+                        }
+                    }
                     ReviewLink("Remove", Modifier.semantics { contentDescription = "Remove ${item.name}" }) { onQuantity(0) }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Modifier.reviewDetailsLink(name: String, onClick: () -> Unit): Modifier {
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    return this
+        .graphicsLayer { alpha = if (pressed) 0.6f else 1f }
+        .clickable(interactionSource = interaction, indication = null, onClick = onClick)
+        .clearAndSetSemantics {
+            role = Role.Button
+            contentDescription = "Show details for $name"
+        }
 }
 
 @Composable

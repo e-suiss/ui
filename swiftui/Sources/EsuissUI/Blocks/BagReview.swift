@@ -177,52 +177,65 @@ private struct BagReviewRow: View {
   let onRemove: () -> Void
 
   var body: some View {
-    HStack(alignment: .top, spacing: 16) {
-      Color.control
-        .overlay {
-          AsyncImage(url: item.image) { phase in
-            if let image = phase.image {
-              image.resizable().scaledToFill()
+    HStack(alignment: .top, spacing: 12) {
+      Button(action: onShowDetails) {
+        Color.control
+          .overlay {
+            AsyncImage(url: item.image) { phase in
+              if let image = phase.image {
+                image.resizable().scaledToFill()
+              }
             }
           }
-        }
-        .frame(width: 80, height: 80)
-        .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
-        .accessibilityHidden(true)
-      VStack(alignment: .leading, spacing: 12) {
-        VStack(alignment: .leading, spacing: 4) {
-          Text(verbatim: item.name)
-            .scaledFont(.xl, weight: .semibold)
-            .accessibilityAddTraits(.isHeader)
+          .frame(width: 64, height: 64)
+          .clipShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      }
+      .buttonStyle(BagReviewPressStyle())
+      .accessibilityLabel(Text("Show details for \(item.name)"))
+      .accessibilityAddTraits(.isLink)
+      VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 2) {
+          HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Button(action: onShowDetails) {
+              Text(verbatim: item.name)
+                .scaledFont(.base, weight: .semibold)
+                .lineLimit(1)
+                .truncationMode(.tail)
+            }
+            .buttonStyle(BagReviewPressStyle())
+            .accessibilityLabel(Text("Show details for \(item.name)"))
+            .accessibilityAddTraits(.isLink)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Text(verbatim: money(item.price * Double(item.quantity)))
+              .scaledFont(.base, weight: .semibold)
+              .monospacedDigit()
+              .contentTransition(.numericText())
+              .fixedSize()
+          }
           Text(verbatim: item.variant)
             .scaledFont(.sm)
             .foregroundStyle(Color.labelSecondary)
-          Button("Show product details ›", action: onShowDetails)
-            .buttonStyle(BagReviewLinkStyle())
-            .padding(.top, 2)
-        }
-        ValueStepper(value: $quantity, in: 1...10) {
-          StepperInput()
-            .accessibilityLabel(Text("\(item.name) quantity"))
-          StepperGroup {
-            StepperDecrement()
-            StepperSeparator()
-            StepperIncrement()
-          }
+            .lineLimit(1)
         }
         HStack {
-          Text(verbatim: money(item.price * Double(item.quantity)))
-            .scaledFont(.xl, weight: .semibold)
-            .monospacedDigit()
-            .contentTransition(.numericText())
-            .frame(maxWidth: .infinity, alignment: .leading)
+          ValueStepper(value: $quantity, in: 1...10) {
+            StepperInput()
+              .accessibilityLabel(Text("\(item.name) quantity"))
+            StepperGroup {
+              StepperDecrement()
+              StepperSeparator()
+              StepperIncrement()
+            }
+          }
+          .frame(maxWidth: .infinity, alignment: .leading)
           Button("Remove", action: onRemove)
             .buttonStyle(BagReviewLinkStyle())
             .accessibilityLabel(Text("Remove \(item.name)"))
         }
+        .padding(.top, 10)
       }
     }
-    .padding(.vertical, 22)
+    .padding(.vertical, 16)
     .overlay(alignment: .top) {
       Color.separator.frame(height: 1)
     }
@@ -252,6 +265,14 @@ private struct BagReviewLinkStyle: ButtonStyle {
       .foregroundStyle(Color.link)
       .opacity(configuration.isPressed ? 0.5 : 1)
       .frame(minHeight: 32)
+      .contentShape(Rectangle())
+  }
+}
+
+private struct BagReviewPressStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .opacity(configuration.isPressed ? 0.6 : 1)
       .contentShape(Rectangle())
   }
 }
