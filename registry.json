@@ -1903,6 +1903,8 @@
       ],
       "swift": [
         "Components/Input.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
@@ -3097,18 +3099,19 @@
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/KeyboardScrollView.swift",
         "Components/Overlay.swift",
-        "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
         "components/TabBar.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
         "components/Content.kt",
         "components/Haptics.kt",
-        "components/Icon.kt"
+        "components/Icon.kt",
+        "components/Overlay.kt"
       ]
     },
     {
@@ -3227,6 +3230,8 @@
       ],
       "swift": [
         "Components/Textarea.swift",
+        "Components/Button.swift",
+        "Components/ButtonGroup.swift",
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
@@ -3249,14 +3254,22 @@
       "title": "Theme",
       "dependencies": {
         "uniwind": [
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets",
           "uniwind"
         ],
         "nativewind": [
-          "nativewind"
+          "nativewind",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
         ],
         "stylesheet": []
       },
       "requires": [
+        "primitives/hooks",
+        "primitives/portal",
         "text",
         "toggle-group"
       ],
@@ -3275,6 +3288,8 @@
       ],
       "kotlin": [
         "components/Theme.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
         "components/Checkbox.kt",
         "components/Content.kt",
         "components/Field.kt",
@@ -3283,6 +3298,7 @@
         "components/Icon.kt",
         "components/Label.kt",
         "components/Separator.kt",
+        "components/SignaturePad.kt",
         "components/Toggle.kt",
         "components/ToggleGroup.kt"
       ]
@@ -6676,6 +6692,7 @@
         "components/Icon.kt",
         "components/Item.kt",
         "components/Label.kt",
+        "components/Overlay.kt",
         "components/Screen.kt",
         "components/Separator.kt",
         "components/TabBar.kt"
@@ -6752,6 +6769,7 @@
         "components/Header.kt",
         "components/Icon.kt",
         "components/Item.kt",
+        "components/Overlay.kt",
         "components/Screen.kt",
         "components/TabBar.kt"
       ]
@@ -6835,6 +6853,7 @@
         "components/Icon.kt",
         "components/Item.kt",
         "components/Label.kt",
+        "components/Overlay.kt",
         "components/Screen.kt",
         "components/Separator.kt",
         "components/TabBar.kt"
@@ -7555,6 +7574,7 @@
         "components/Icon.kt",
         "components/Item.kt",
         "components/Label.kt",
+        "components/Overlay.kt",
         "components/Screen.kt",
         "components/Separator.kt",
         "components/Switch.kt",
@@ -8410,6 +8430,7 @@
         "components/Icon.kt",
         "components/InputGroup.kt",
         "components/Label.kt",
+        "components/Overlay.kt",
         "components/Screen.kt",
         "components/Separator.kt",
         "components/TabBar.kt",
