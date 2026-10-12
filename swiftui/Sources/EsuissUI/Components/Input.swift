@@ -81,21 +81,22 @@ struct InputField: ViewModifier {
   }
 
   func body(content: Content) -> some View {
-    let shape = RoundedRectangle(cornerRadius: radius, style: .continuous)
-    content
-      .focused($focused)
-      .scaledFont(textStyle)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
-      .tint(Color.accent)
-      .padding(.horizontal, horizontalPadding)
-      .padding(.vertical, verticalPadding)
-      .frame(maxWidth: .infinity, minHeight: minHeight, alignment: alignment)
-      .background(background, in: shape)
-      .overlay {
-        shape.strokeBorder(border, lineWidth: 1)
-      }
-      .contentShape(shape)
-      .onTapGesture { focused = true }
+    ButtonGroupItem(radius: radius) { shape in
+      content
+        .focused($focused)
+        .scaledFont(textStyle)
+        .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+        .tint(Color.accent)
+        .padding(.horizontal, horizontalPadding)
+        .padding(.vertical, verticalPadding)
+        .frame(maxWidth: .infinity, minHeight: minHeight, alignment: alignment)
+        .background(background, in: shape)
+        .overlay {
+          shape.strokeBorder(border, lineWidth: 1)
+        }
+        .contentShape(shape)
+        .onTapGesture { focused = true }
+    }
   }
 
   private var background: Color {
