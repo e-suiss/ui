@@ -122,7 +122,7 @@ function DateTimeExample() {
           accessibilityLabel="Day"
           value={day}
           onValueChange={setDay}
-          className="grow"
+          className="grow-[1.6]"
         >
           {days.map(({ value, label }) => (
             <WheelPickerItem key={value} value={value} className="justify-end">

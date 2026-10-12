@@ -126,7 +126,7 @@ private fun WheelPickerDateTime() {
             WheelPickerColumn(
                 day,
                 { day = it },
-                Modifier.weight(1f),
+                Modifier.weight(1.6f),
                 label = "Day",
                 horizontalAlignment = Alignment.End,
             ) {

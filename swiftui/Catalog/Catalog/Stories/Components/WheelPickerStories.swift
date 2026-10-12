@@ -117,7 +117,7 @@ private struct DateTimeDemo: View {
             WheelPickerItem(verbatim: item.label, value: item.value)
           }
         }
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        .frame(minWidth: 150, maxWidth: .infinity, alignment: .trailing)
         .accessibilityLabel(Text("Day"))
         WheelPickerColumn(selection: $hour) {
           ForEach(wheelHours, id: \.self) { item in
