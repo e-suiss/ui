@@ -7,11 +7,26 @@
 	objects = {
 		C47A10000000000000000011 = {isa = PBXBuildFile; productRef = C47A10000000000000000021; };
 		C47A10000000000000000012 = {isa = PBXBuildFile; productRef = C47A10000000000000000022; };
+		C47A10000000000000000013 = {isa = PBXBuildFile; productRef = C47A10000000000000000023; };
+		C47A10000000000000000014 = {isa = PBXBuildFile; productRef = C47A10000000000000000024; };
+		C47A10000000000000000015 = {isa = PBXBuildFile; fileRef = C47A10000000000000000033; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C47A10000000000000000031 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C47A10000000000000000032 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C47A10000000000000000033 = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CatalogWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C47A10000000000000000034 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WidgetsInfo.plist; sourceTree = "<group>"; };
 		C47A10000000000000000041 = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Catalog;
+			sourceTree = "<group>";
+		};
+		C47A10000000000000000042 = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		C47A10000000000000000043 = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CatalogWidgets;
 			sourceTree = "<group>";
 		};
 		C47A10000000000000000051 = {
@@ -23,11 +38,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C47A10000000000000000055 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C47A10000000000000000013,
+				C47A10000000000000000014,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C47A10000000000000000057 = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C47A10000000000000000015,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C47A10000000000000000061 = {
 			isa = PBXGroup;
 			children = (
 				C47A10000000000000000041,
+				C47A10000000000000000042,
+				C47A10000000000000000043,
 				C47A10000000000000000032,
+				C47A10000000000000000034,
 				C47A10000000000000000062,
 			);
 			sourceTree = "<group>";
@@ -36,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				C47A10000000000000000031,
+				C47A10000000000000000033,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -47,13 +86,16 @@
 				C47A10000000000000000052,
 				C47A10000000000000000051,
 				C47A10000000000000000053,
+				C47A10000000000000000057,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C47A10000000000000000111,
 			);
 			fileSystemSynchronizedGroups = (
 				C47A10000000000000000041,
+				C47A10000000000000000042,
 			);
 			name = Catalog;
 			packageProductDependencies = (
@@ -64,6 +106,31 @@
 			productReference = C47A10000000000000000031;
 			productType = "com.apple.product-type.application";
 		};
+		C47A10000000000000000072 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C47A10000000000000000093;
+			buildPhases = (
+				C47A10000000000000000054,
+				C47A10000000000000000055,
+				C47A10000000000000000056,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C47A10000000000000000042,
+				C47A10000000000000000043,
+			);
+			name = CatalogWidgets;
+			packageProductDependencies = (
+				C47A10000000000000000023,
+				C47A10000000000000000024,
+			);
+			productName = CatalogWidgets;
+			productReference = C47A10000000000000000033;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C47A10000000000000000001 = {
 			isa = PBXProject;
 			attributes = {
@@ -72,6 +139,9 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					C47A10000000000000000071 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					C47A10000000000000000072 = {
 						CreatedOnToolsVersion = 26.0;
 					};
 				};
@@ -95,6 +165,7 @@
 			projectRoot = "";
 			targets = (
 				C47A10000000000000000071,
+				C47A10000000000000000072,
 			);
 		};
 		C47A10000000000000000053 = {
@@ -110,6 +181,32 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C47A10000000000000000054 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C47A10000000000000000056 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C47A10000000000000000111 = {
+			isa = PBXTargetDependency;
+			target = C47A10000000000000000072;
+			targetProxy = C47A10000000000000000112;
+		};
+		C47A10000000000000000112 = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C47A10000000000000000001;
+			proxyType = 1;
+			remoteGlobalIDString = C47A10000000000000000072;
+			remoteInfo = CatalogWidgets;
 		};
 		C47A10000000000000000101 = {
 			isa = XCBuildConfiguration;
@@ -167,6 +264,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Catalog;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -194,6 +292,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Catalog;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -212,11 +311,66 @@
 			};
 			name = Release;
 		};
+		C47A10000000000000000105 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetsInfo.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CatalogWidgets;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.esuiss.catalog.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C47A10000000000000000106 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetsInfo.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CatalogWidgets;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.esuiss.catalog.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C47A10000000000000000091 = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C47A10000000000000000103,
 				C47A10000000000000000104,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C47A10000000000000000093 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C47A10000000000000000105,
+				C47A10000000000000000106,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -248,6 +402,16 @@
 			productName = EsuissUI;
 		};
 		C47A10000000000000000022 = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47A10000000000000000082;
+			productName = PhosphorSwift;
+		};
+		C47A10000000000000000023 = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47A10000000000000000081;
+			productName = EsuissUI;
+		};
+		C47A10000000000000000024 = {
 			isa = XCSwiftPackageProductDependency;
 			package = C47A10000000000000000082;
 			productName = PhosphorSwift;

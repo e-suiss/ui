@@ -4332,8 +4332,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Interactions/Island.swift",
-        "Components/TextVariant.swift"
+        "Interactions/Island.swift"
       ],
       "kotlin": [
         "interactions/Island.kt",
