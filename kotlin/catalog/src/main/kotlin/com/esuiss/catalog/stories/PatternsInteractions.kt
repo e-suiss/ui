@@ -24,7 +24,6 @@ import com.esuiss.catalog.stories.patterns.pagedListStories
 import com.esuiss.catalog.stories.patterns.pickerStories
 import com.esuiss.catalog.stories.patterns.previewStories
 import com.esuiss.catalog.stories.patterns.searchPickerStories
-import com.esuiss.catalog.stories.patterns.segmentPickerStories
 import com.esuiss.catalog.stories.patterns.splitViewStories
 import com.esuiss.catalog.stories.patterns.tableListStories
 
@@ -37,7 +36,6 @@ val patternsInteractions: List<StoryGroup> = listOf(
     pickerStories,
     previewStories,
     searchPickerStories,
-    segmentPickerStories,
     splitViewStories,
     tableListStories,
     cardStackStories,

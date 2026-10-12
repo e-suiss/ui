@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 import XCTest
 
@@ -239,46 +238,6 @@ private struct DateGallery: View {
   }
 }
 
-private struct SegmentGallery: View {
-  @State private var period: String? = "week"
-  @State private var none: String? = nil
-  @State private var view: String? = "grid"
-
-  @ViewBuilder private var periods: some View {
-    SegmentPickerItem("Day", value: "day")
-    SegmentPickerItem("Week", value: "week")
-    SegmentPickerItem("Month", value: "month")
-    SegmentPickerItem("Year", value: "year")
-  }
-
-  var body: some View {
-    VStack(alignment: .leading, spacing: 12) {
-      Caption(text: "Compact")
-      SegmentPicker(selection: $period) { periods }
-      SegmentPicker(selection: $period, size: .sm) { periods }
-      SegmentPicker(selection: $none) { periods }
-      SegmentPicker(selection: $period) { periods }.disabled(true)
-      SegmentPicker(selection: $period) { periods }.invalid(true)
-      Caption(text: "Regular")
-      Group {
-        SegmentPicker(selection: $period) { periods }
-        SegmentPicker(selection: $none) { periods }
-        SegmentPicker(selection: $period, variant: .outline) { periods }
-        SegmentPicker(selection: $period, spacing: 2) { periods }
-        ForEach(ToggleSize.allCases, id: \.self) { size in
-          SegmentPicker(selection: $period, size: size) { periods }
-        }
-        SegmentPicker(selection: $view) {
-          SegmentPickerItem(value: "list", label: "List") { Ph.list.regular.frame(width: 16, height: 16) }
-          SegmentPickerItem(value: "grid", label: "Grid") { Ph.squaresFour.regular.frame(width: 16, height: 16) }
-          SegmentPickerItem(value: "table", label: "Table") { Ph.table.regular.frame(width: 16, height: 16) }
-        }
-      }
-      .environment(\.patternCompact, false)
-    }
-  }
-}
-
 private struct StepperGallery: View {
   @State private var quantity = 1
   @State private var copies = 1
@@ -470,10 +429,6 @@ final class PickersGalleryTests: XCTestCase {
 
   func testRendersDatePickerGallery() throws {
     try snapshot(DateGallery(), name: "pickers-date", padding: 0)
-  }
-
-  func testRendersSegmentPickerGallery() throws {
-    try snapshot(SegmentGallery(), name: "pickers-segment")
   }
 
   func testRendersStepperGallery() throws {

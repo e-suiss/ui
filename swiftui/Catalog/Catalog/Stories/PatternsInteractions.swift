@@ -8,7 +8,6 @@ enum PatternsInteractions {
     PickerStories.group,
     PreviewStories.group,
     SearchPickerStories.group,
-    SegmentPickerStories.group,
     SplitViewStories.group,
     TableListStories.group,
     CardStackStories.group,

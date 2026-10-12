@@ -52,8 +52,6 @@ import com.esuiss.ui.interactions.StepperSeparator
 import com.esuiss.ui.patterns.DatePicker
 import com.esuiss.ui.patterns.SearchPicker
 import com.esuiss.ui.patterns.SearchPickerItem
-import com.esuiss.ui.patterns.SegmentPicker
-import com.esuiss.ui.patterns.SegmentPickerSize
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
@@ -77,8 +75,6 @@ private enum class PickerScene {
     DatePickerTriggers,
     DatePicker,
     DatePickerLocale,
-    SegmentPicker,
-    SegmentPickerOpen,
     Stepper,
     SearchPicker,
     SearchPickerOpen,
@@ -308,32 +304,6 @@ private fun Scene(scene: PickerScene) {
                 floating = true,
             )
         }
-        PickerScene.SegmentPicker -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            SegmentPickerSize.entries.forEach { size ->
-                var period by remember { mutableStateOf<String?>("week") }
-                SegmentPicker(value = period, onValueChange = { period = it }, size = size) {
-                    SegmentPickerItem("day", "Day")
-                    SegmentPickerItem("week", "Week")
-                    SegmentPickerItem("month", "Month")
-                    SegmentPickerItem("year", "Year")
-                }
-            }
-            SegmentPicker(value = null, onValueChange = {}) {
-                SegmentPickerItem("day", "Day")
-            }
-            SegmentPicker(value = "week", onValueChange = {}, enabled = false) {
-                SegmentPickerItem("week", "Week")
-            }
-        }
-        PickerScene.SegmentPickerOpen -> {
-            var period by remember { mutableStateOf<String?>("week") }
-            SegmentPicker(value = period, onValueChange = { period = it }) {
-                SegmentPickerItem("day", "Day")
-                SegmentPickerItem("week", "Week")
-                SegmentPickerItem("month", "Month")
-                SegmentPickerItem("year", "Year", enabled = false)
-            }
-        }
         PickerScene.Stepper -> Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             var quantity by remember { mutableDoubleStateOf(1.0) }
             Stepper(value = quantity, onValueChange = { quantity = it }, min = 0.0, max = 10.0) {
@@ -431,7 +401,6 @@ class PickersGalleryTest {
                 when (current) {
                     PickerScene.DatePicker -> compose.onNodeWithText("2026", substring = true).performClick()
                     PickerScene.DatePickerLocale -> compose.onNodeWithText("2026", substring = true).performClick()
-                    PickerScene.SegmentPickerOpen -> compose.onNodeWithText("Week").performClick()
                     PickerScene.CalendarDropdown -> compose.onNodeWithContentDescription("Choose the Year").performClick()
                     PickerScene.SearchPickerOpen -> compose.onNodeWithText("Istanbul").performClick()
                     PickerScene.SearchPickerEmpty -> compose.onNodeWithText("Select a framework").performClick()
@@ -441,7 +410,6 @@ class PickersGalleryTest {
                 when (current) {
                     PickerScene.DatePicker, PickerScene.DatePickerLocale ->
                         compose.onNodeWithContentDescription("Year").assertExists()
-                    PickerScene.SegmentPickerOpen -> compose.onNodeWithText("Month").assertExists()
                     PickerScene.SearchPickerOpen -> compose.onNodeWithText("Search cities...").assertExists()
                     PickerScene.SearchPickerEmpty -> {
                         compose.onNode(hasSetTextAction()).performTextInput("zzz")

@@ -4055,54 +4055,6 @@
       ]
     },
     {
-      "name": "segment-picker",
-      "type": "pattern",
-      "title": "Segment Picker",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "select"
-      ],
-      "files": [
-        "components/patterns/segment-picker.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ],
-      "swift": [
-        "Patterns/SegmentPicker.swift",
-        "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift",
-        "Components/Toggle.swift",
-        "Components/ToggleGroup.swift",
-        "Patterns/Adaptive.swift"
-      ],
-      "kotlin": [
-        "patterns/SegmentPicker.kt",
-        "components/Button.kt",
-        "components/ButtonGroup.kt",
-        "components/Content.kt",
-        "components/Field.kt",
-        "components/FormSupport.kt",
-        "components/Icon.kt",
-        "components/Label.kt",
-        "components/Overlay.kt",
-        "components/Select.kt",
-        "components/Separator.kt",
-        "patterns/Picker.kt"
-      ]
-    },
-    {
       "name": "split-view",
       "type": "pattern",
       "title": "Split View",
