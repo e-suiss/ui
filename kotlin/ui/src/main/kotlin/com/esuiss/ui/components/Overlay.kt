@@ -4,7 +4,10 @@ import android.os.Build
 import android.view.Window
 import android.view.WindowManager
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -41,9 +44,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -239,8 +244,7 @@ internal fun AnchoredPopup(
         ) {
             AnimatedVisibility(
                 visibleState = transition,
-                enter = fadeIn(tween(enterMillis)) +
-                    scaleIn(tween(enterMillis), initialScale = 0.95f, transformOrigin = origin) +
+                enter = scaleIn(tween(enterMillis), initialScale = 0.95f, transformOrigin = origin) +
                     slideIn(tween(enterMillis)) {
                         when (side) {
                             PopupSide.Bottom -> IntOffset(0, -slide)
@@ -249,11 +253,12 @@ internal fun AnchoredPopup(
                             PopupSide.Right -> IntOffset(-slide, 0)
                         }
                     },
-                exit = fadeOut(tween(exitMillis)) +
-                    scaleOut(tween(exitMillis), targetScale = 0.95f, transformOrigin = origin),
+                exit = scaleOut(tween(exitMillis), targetScale = 0.95f, transformOrigin = origin),
             ) {
-                CompositionLocalProvider(LocalButtonGroup provides null) {
-                    content(placement)
+                Box(fadeWithShadow(enterMillis, exitMillis)) {
+                    CompositionLocalProvider(LocalButtonGroup provides null) {
+                        content(placement)
+                    }
                 }
             }
         }
@@ -309,6 +314,18 @@ private fun Window.clearSystemBarColors() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         isStatusBarContrastEnforced = false
         isNavigationBarContrastEnforced = false
+    }
+}
+
+@Composable
+internal fun AnimatedVisibilityScope.fadeWithShadow(enterMillis: Int, exitMillis: Int): Modifier {
+    val alpha by transition.animateFloat(
+        transitionSpec = { tween(if (targetState == EnterExitState.Visible) enterMillis else exitMillis) },
+        label = "alpha",
+    ) { if (it == EnterExitState.Visible) 1f else 0f }
+    return Modifier.graphicsLayer {
+        this.alpha = alpha
+        compositingStrategy = CompositingStrategy.ModulateAlpha
     }
 }
 
