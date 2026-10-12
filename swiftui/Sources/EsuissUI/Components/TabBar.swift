@@ -86,11 +86,11 @@ public struct TabBar<Content: View>: View {
     .padding(.top, 8)
     .padding(.bottom, max(12, bottomInset - 8))
     .frame(maxWidth: .infinity)
+    .ignoresSafeArea(.container, edges: .bottom)
     .background {
       Color.clear
-        .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.bottom } action: { bottomInset = $0 }
+        .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.bottom.rounded() } action: { bottomInset = $0 }
     }
-    .ignoresSafeArea(.container, edges: .bottom)
     .environment(\.tabBar, context)
     .hapticFeedback(.selection, trigger: binding.wrappedValue)
     .accessibilityElement(children: .contain)
