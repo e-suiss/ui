@@ -265,7 +265,7 @@ function BubbleTail({
       importantForAccessibility="no-hide-descendants"
       style={[
         styles.tail,
-        align === "end" ? { end: -7.9 } : { start: -7.9 },
+        align === "end" ? { end: -6.9 } : { start: -6.9 },
         mirrored ? { transform: [{ scaleX: -1 }] } : null,
       ]}
     >
