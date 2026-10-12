@@ -13,7 +13,7 @@ const RESET_AFTER = 1500;
 const STORAGE_KEY = "package-manager";
 const CHANGE_EVENT = "package-manager-change";
 
-const NPX = /^npx\s+/;
+const NPX = /^npx\s+(?!expo\s)/;
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/;
 
 function convertLine(line: string, manager: Manager) {

@@ -6,7 +6,8 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start --port 3001",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "registry": "node scripts/generate-registry-docs.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

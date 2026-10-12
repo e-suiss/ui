@@ -16,11 +16,14 @@ const decode = (text: string) =>
 async function toMarkdown(body: string) {
   const files = new Map<string, string>();
   for (const [, file] of body.matchAll(/<SourceFile path="([^"]+)"[^>]*\/>/g)) {
-    files.set(file, await readFile(path.join(process.cwd(), "components", path.relative("components", file)), "utf8").catch(() => ""));
+    files.set(file, await readFile(path.join(process.cwd(), "registry", file), "utf8").catch(() => ""));
   }
   return body
     .replace(/<Code lang="(\w+)"(?: title="([^"]*)")? code="([^"]*)" \/>/g, (_match, lang: string, title: string | undefined, code: string) =>
       fence(JSON.parse(decode(code)), lang, title),
+    )
+    .replace(/<Code lang="(\w+)"(?: title="([^"]*)")? code=\{("(?:[^"\\]|\\.)*")\} \/>/g, (_match, lang: string, title: string | undefined, code: string) =>
+      fence(JSON.parse(code), lang, title),
     )
     .replace(/<SourceFile path="([^"]+)"[^>]*\/>/g, (_match, file: string) =>
       fence(files.get(file) ?? "", path.extname(file).slice(1) || "tsx", file),
@@ -73,6 +76,7 @@ function cleanMarkdown(body: string) {
   const output: string[] = [];
   let fence = false;
   let indent = 0;
+  let labels: string[] = [];
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```");
     const line = (!fence || isFence) && indent > 0 && raw.startsWith(" ".repeat(indent)) ? raw.slice(indent) : raw;
@@ -84,13 +88,26 @@ function cleanMarkdown(body: string) {
     }
     const open = trimmed.match(/^<(Example|ApiPart|Callout)\b([^>]*)>$/);
     if (open) {
-      if (open[1] === "Example") output.push(`**Example${attr(open[2], "story") ? `: ${attr(open[2], "story")}` : ""}**`, "");
+      if (open[1] === "Example") {
+        const id = attr(open[2], "id");
+        output.push(id ? `![Preview](${absolute(`/previews/${id}.light.webp`)})` : "", "");
+      }
       if (open[1] === "Callout") output.push(`> **${(attr(open[2], "type") ?? "note").replace(/^./, (c) => c.toUpperCase())}:**`);
       indent += 2;
       continue;
     }
     if (/^<\/(Example|ApiPart|Callout)>$/.test(trimmed)) {
       indent = Math.max(0, indent - 2);
+      continue;
+    }
+    const tabs = trimmed.match(/^<Tabs\b(.*)>$/);
+    if (tabs) {
+      labels = [...tabs[1].matchAll(/&quot;([^&]*)&quot;|"([^"]*)"/g)].map((match) => decode(match[1] ?? match[2])).filter((label) => label !== "items");
+      continue;
+    }
+    if (trimmed === "</Tabs>" || trimmed === "</div>") continue;
+    if (trimmed === "<div>") {
+      if (labels.length) output.push(`**${labels.shift()}**`, "");
       continue;
     }
     if (trimmed.startsWith("<PropsTable")) output.push(propsTable(trimmed));
@@ -114,6 +131,8 @@ const groupTitles: Record<string, string> = {
   components: "Components",
   patterns: "Patterns",
   interactions: "Interactions",
+  charts: "Charts",
+  blocks: "Blocks",
 };
 
 function treeOrder() {
