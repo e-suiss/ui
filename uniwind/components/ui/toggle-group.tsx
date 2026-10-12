@@ -2,11 +2,20 @@ import type { VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 import { Pressable } from "react-native"
+import Animated, {
+  Easing,
+  LinearTransition,
+  ReduceMotion,
+} from "react-native-reanimated"
 import {
   Toggle as TogglePrimitive,
   type ToggleState,
 } from "@/components/primitives/toggle"
-import { ToggleGroup as ToggleGroupPrimitive } from "@/components/primitives/toggle-group"
+import {
+  ToggleGroupIndicator as ToggleGroupIndicatorPrimitive,
+  ToggleGroup as ToggleGroupPrimitive,
+  useToggleGroupContext,
+} from "@/components/primitives/toggle-group"
 import type { Orientation } from "@/components/primitives/types"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
@@ -31,6 +40,22 @@ const ToggleGroupContext = React.createContext<ToggleGroupContextValue>({
 
 const ItemPositionContext = React.createContext({ first: true, last: true })
 
+const INDICATOR_TRANSITION = LinearTransition.duration(300)
+  .easing(Easing.bezier(0.32, 0.72, 0, 1))
+  .reduceMotion(ReduceMotion.System)
+
+const SEGMENTED_SELECTED_CLASS_NAME =
+  "bg-surface-raised shadow-sm dark:bg-label-quaternary"
+
+function ToggleGroupIndicator() {
+  return (
+    <ToggleGroupIndicatorPrimitive
+      className={cn("rounded-md", SEGMENTED_SELECTED_CLASS_NAME)}
+      render={<Animated.View layout={INDICATOR_TRANSITION} />}
+    />
+  )
+}
+
 function ToggleGroup({
   className,
   style,
@@ -38,6 +63,7 @@ function ToggleGroup({
   size = "default",
   spacing = 2,
   orientation = "horizontal",
+  multiple,
   children,
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive> &
@@ -53,6 +79,7 @@ function ToggleGroup({
   return (
     <ToggleGroupPrimitive
       orientation={orientation}
+      multiple={multiple}
       className={(state) =>
         cn(
           "relative flex-row items-center self-start",
@@ -68,6 +95,7 @@ function ToggleGroup({
       ]}
       {...props}
     >
+      {segmented && !multiple ? <ToggleGroupIndicator /> : null}
       <ToggleGroupContext.Provider value={context}>
         {items.map((child, index) => (
           <ItemPositionContext.Provider
@@ -85,7 +113,8 @@ function ToggleGroup({
 function itemClassName(
   context: ToggleGroupContextValue,
   position: { first: boolean; last: boolean },
-  state: ToggleState
+  state: ToggleState,
+  multiple: boolean
 ) {
   const vertical = context.orientation === "vertical"
   if (context.spacing === 0 && context.variant === "default") {
@@ -94,7 +123,7 @@ function itemClassName(
       state.pressed &&
         (state.disabled
           ? "bg-control-disabled"
-          : "bg-surface-raised shadow-sm dark:bg-label-quaternary")
+          : multiple && SEGMENTED_SELECTED_CLASS_NAME)
     )
   }
   return cn(
@@ -145,6 +174,7 @@ function ToggleGroupItem({
   VariantProps<typeof toggleVariants>) {
   const context = React.useContext(ToggleGroupContext)
   const position = React.useContext(ItemPositionContext)
+  const multiple = useToggleGroupContext()?.multiple ?? false
   const resolved = {
     ...context,
     variant: context.variant || variant,
@@ -157,7 +187,7 @@ function ToggleGroupItem({
         cn(
           "shrink-0",
           toggleVariants({ variant: resolved.variant, size: resolved.size }),
-          itemClassName(resolved, position, state),
+          itemClassName(resolved, position, state, multiple),
           resolveClassName(className, state)
         )
       }

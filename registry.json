@@ -3377,13 +3377,20 @@
       "dependencies": {
         "uniwind": [
           "class-variance-authority",
-          "cn"
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
         ],
         "nativewind": [
           "class-variance-authority",
-          "cn"
+          "cn",
+          "react-native-reanimated",
+          "react-native-worklets"
         ],
-        "stylesheet": []
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
       },
       "requires": [
         "icon",

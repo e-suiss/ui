@@ -1,5 +1,11 @@
 import * as React from "react"
-import { type GestureResponderEvent, Pressable, type View } from "react-native"
+import {
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+  type LayoutRectangle,
+  Pressable,
+  type View,
+} from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
 import { useHaptics } from "./haptics"
 import { useToggleGroupContext } from "./toggle-group"
@@ -63,6 +69,32 @@ function Toggle({
   const disabled = disabledProp || (group?.disabled ?? false)
   const rootRef = React.useRef<View>(null)
   const haptics = useHaptics()
+  const [layout, setLayout] = React.useState<LayoutRectangle | null>(null)
+  const setItem = group?.setItem
+
+  React.useEffect(() => {
+    if (setItem && layout) setItem(itemValue, { layout, disabled })
+  }, [setItem, itemValue, layout, disabled])
+
+  React.useEffect(() => {
+    if (!setItem) return
+    return () => setItem(itemValue, null)
+  }, [setItem, itemValue])
+
+  const onLayout = group
+    ? (event: LayoutChangeEvent) => {
+        const next = event.nativeEvent.layout
+        setLayout((current) =>
+          current &&
+          current.x === next.x &&
+          current.y === next.y &&
+          current.width === next.width &&
+          current.height === next.height
+            ? current
+            : next
+        )
+      }
+    : undefined
 
   const state = React.useMemo<ToggleState>(
     () => ({ pressed, disabled }),
@@ -105,6 +137,7 @@ function Toggle({
         accessibilityState: { checked: pressed, disabled },
         disabled,
         onPress,
+        onLayout,
       },
       elementProps,
     ],
