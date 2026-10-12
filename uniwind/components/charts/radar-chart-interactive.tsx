@@ -158,6 +158,7 @@ export function RadarChartInteractive() {
             />
             {MODELS.filter((model) => selected.includes(model)).map((model) => (
               <Radar
+                isAnimationActive={false}
                 key={model}
                 dataKey={model}
                 strokeWidth={2}

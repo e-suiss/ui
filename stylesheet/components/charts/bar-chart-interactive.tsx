@@ -315,6 +315,7 @@ export function BarChartInteractive() {
             ) : null}
             {CATEGORIES.map((category, position) => (
               <Bar
+                isAnimationActive={false}
                 key={category}
                 dataKey={category}
                 stackId="a"

@@ -62,6 +62,7 @@ export function RadialChartTinted() {
               content={<ChartTooltipContent hideLabel nameKey="device" />}
             />
             <RadialBar
+              isAnimationActive={false}
               dataKey="users"
               cornerRadius={10}
               background={{ fillOpacity: 0.22 }}

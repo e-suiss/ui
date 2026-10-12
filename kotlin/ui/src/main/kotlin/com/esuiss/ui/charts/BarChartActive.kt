@@ -106,6 +106,7 @@ fun BarChartActive(modifier: Modifier = Modifier) {
                         radius = ChartRadius(5.dp),
                         maxBarSize = 28.dp,
                         cells = { index -> ChartCell(alpha = if (index == selected) 1f else 0.3f) },
+                        isAnimationActive = false,
                     )
                 }
             }

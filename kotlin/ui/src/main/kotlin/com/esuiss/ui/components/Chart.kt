@@ -2,6 +2,8 @@ package com.esuiss.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -33,6 +35,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -52,11 +55,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -156,6 +161,30 @@ enum class ChartAxisOrientation { Left, Right }
 enum class ChartTooltipIndicator { Dot, Line, Dashed }
 
 enum class ChartLabelPosition { Top, InsideStart }
+
+enum class ChartEasing { Ease, EaseIn, EaseOut, EaseInOut, Linear }
+
+internal class ChartAnimation(val active: Boolean, val duration: Int, val easing: ChartEasing)
+
+private fun ChartEasing.curve(): Easing = when (this) {
+    ChartEasing.Ease -> CubicBezierEasing(0.25f, 0.1f, 0.25f, 1f)
+    ChartEasing.EaseIn -> CubicBezierEasing(0.42f, 0f, 1f, 1f)
+    ChartEasing.EaseOut -> CubicBezierEasing(0f, 0f, 0.58f, 1f)
+    ChartEasing.EaseInOut -> CubicBezierEasing(0.42f, 0f, 0.58f, 1f)
+    ChartEasing.Linear -> LinearEasing
+}
+
+@Composable
+private fun rememberEntrance(animation: ChartAnimation): State<Float> {
+    val animated = animation.active && !formReducedMotion()
+    val progress = remember { Animatable(if (animated) 0f else 1f) }
+    val duration = animation.duration
+    val easing = animation.easing
+    LaunchedEffect(animated) {
+        if (animated) progress.animateTo(1f, tween(duration, easing = easing.curve())) else progress.snapTo(1f)
+    }
+    return progress.asState()
+}
 
 data class ChartMargin(
     val top: Dp = 5.dp,
@@ -411,6 +440,7 @@ internal class SeriesLayer<T>(
     val cells: ((Int) -> ChartCell)?,
     val background: Color?,
     val labelList: ChartLabelList?,
+    val animation: ChartAnimation,
 ) : CartesianLayer<T>()
 
 internal class ReferenceLineLayer<T>(
@@ -518,10 +548,14 @@ class CartesianChartScope<T> internal constructor() {
         dotColor: ((T) -> Color)? = null,
         activeDot: ChartDot? = ChartDot(4.dp),
         labelList: ChartLabelList? = null,
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 1500,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
         layers += SeriesLayer(
             SeriesKind.Line, dataKey, value, null, curve, stroke, strokeWidth, strokeDasharray, ChartFill.Solid(alpha = 0f),
             dot, dotColor, activeDot, null, ChartRadius(0.dp), null, null, null, null, null, labelList,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
         )
     }
 
@@ -536,10 +570,14 @@ class CartesianChartScope<T> internal constructor() {
         stackId: String? = null,
         dot: ChartDot? = null,
         activeDot: ChartDot? = ChartDot(4.dp),
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 1500,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
         layers += SeriesLayer(
             SeriesKind.Area, dataKey, value, base, curve, stroke, strokeWidth, null, fill,
             dot, null, activeDot, stackId, ChartRadius(0.dp), null, null, null, null, null, null,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
         )
     }
 
@@ -556,10 +594,14 @@ class CartesianChartScope<T> internal constructor() {
         cells: ((Int) -> ChartCell)? = null,
         background: Color? = null,
         labelList: ChartLabelList? = null,
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 400,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
         layers += SeriesLayer(
             SeriesKind.Bar, dataKey, value, base, ChartCurve.Linear, null, 0.dp, null, fill,
             null, null, null, stackId, radius, barSize, maxBarSize, nameKey, cells, background, labelList,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
         )
     }
 
@@ -664,9 +706,10 @@ private fun lerpList(from: List<Double>, to: List<Double>, t: Float): List<Doubl
         }
     }
 
-private fun blendFrames(from: ChartFrame, to: ChartFrame, t: Float): ChartFrame {
+private fun blendFrames(from: ChartFrame, to: ChartFrame, t: Float, still: Set<String>): ChartFrame {
     if (t >= 1f) return to
     val series = to.series.mapValues { (key, target) ->
+        if (key in still) return@mapValues target
         val origin = from.series[key] ?: return@mapValues target
         SeriesFrame(lerpList(origin.raw, target.raw, t), lerpList(origin.top, target.top, t), lerpList(origin.bottom, target.bottom, t))
     }
@@ -674,23 +717,26 @@ private fun blendFrames(from: ChartFrame, to: ChartFrame, t: Float): ChartFrame 
 }
 
 @Composable
-private fun rememberFrame(target: ChartFrame): ChartFrame {
+private fun rememberFrame(target: ChartFrame, transition: ChartAnimation?, still: Set<String>): ChartFrame {
     val reduced = formReducedMotion()
     val progress = remember { Animatable(1f) }
     var from by remember { mutableStateOf(target) }
     var to by remember { mutableStateOf(target) }
+    val current by rememberUpdatedState(transition)
+    val stillKeys by rememberUpdatedState(still)
     LaunchedEffect(target) {
         if (target == to) return@LaunchedEffect
-        from = blendFrames(from, to, progress.value)
+        from = blendFrames(from, to, progress.value, stillKeys)
         to = target
-        if (reduced) {
+        val spec = current
+        if (reduced || spec == null) {
             progress.snapTo(1f)
         } else {
             progress.snapTo(0f)
-            progress.animateTo(1f, tween(500, easing = CubicBezierEasing(0.45f, 0f, 0.2f, 1f)))
+            progress.animateTo(1f, tween(spec.duration, easing = spec.easing.curve()))
         }
     }
-    return blendFrames(from, to, progress.value)
+    return blendFrames(from, to, progress.value, still)
 }
 
 private fun formatStep(rough: Double, correction: Int): Double {
@@ -1035,7 +1081,13 @@ private fun <T> CartesianChart(
     val series = scope.layers.filterIsInstance<SeriesLayer<T>>()
     val band = series.any { it.kind == SeriesKind.Bar }
     val valueAxis = if (vertical) scope.xValue else scope.yValue
-    val frame = rememberFrame(cartesianFrame(data, series, stackOffset, valueAxis))
+    val frame = rememberFrame(
+        cartesianFrame(data, series, stackOffset, valueAxis),
+        series.firstOrNull { it.animation.active }?.animation,
+        series.filter { !it.animation.active }.map { it.dataKey }.toSet(),
+    )
+    val entrance = series.associate { s -> s.dataKey to key(s.dataKey) { rememberEntrance(s.animation) } }
+    fun grow(s: SeriesLayer<T>): Float = entrance[s.dataKey]?.value ?: 1f
     val tooltip = scope.tooltip
     val (selected, select) = rememberSelection(tooltip?.defaultIndex, selectedIndex, onSelectedIndexChange)
     val interactive = tooltip != null || onSelectedIndexChange != null
@@ -1166,8 +1218,10 @@ private fun <T> CartesianChart(
                 val bottom = f.bottom[i].let { if (it.isNaN()) baselineValue else it }
                 val g = groups.indexOf(s.stackId ?: "#${s.dataKey}")
                 val pos = catStart + bandSize * i + barStart + g * (barSizePx + gapPx)
-                val a = valuePx(top)
-                val b = valuePx(bottom)
+                val scale = grow(s)
+                val base = valuePx(baselineValue)
+                val a = base + (valuePx(top) - base) * scale
+                val b = base + (valuePx(bottom) - base) * scale
                 val rect = if (vertical) {
                     Rect(min(a, b), pos, max(a, b), pos + barSizePx)
                 } else {
@@ -1308,6 +1362,7 @@ private fun <T> CartesianChart(
                             drawLine(color, Offset(c, plot.top), Offset(c, plot.bottom), cursor.width.toPx())
                         }
                     }
+                    val reveals = mutableMapOf<SeriesLayer<T>, Float>()
                     for (layer in scope.layers) {
                         when (layer) {
                             is ReferenceAreaLayer -> {
@@ -1334,7 +1389,11 @@ private fun <T> CartesianChart(
                                     drawText(text, topLeft = Offset(plot.left + 5.dp.toPx(), y - 5.dp.toPx() - text.size.height))
                                 }
                             }
-                            is SeriesLayer -> drawSeries(data, layer, frame, ::points, ::barShape, ::seriesColor, valuePx(baselineValue), density)
+                            is SeriesLayer -> {
+                                val g = grow(layer)
+                                val reveal = if (layer.kind == SeriesKind.Area && g < 1f) plot.left + plot.width * g else null
+                                reveals[layer] = drawSeries(data, layer, frame, ::points, ::barShape, ::seriesColor, valuePx(baselineValue), density, g, reveal)
+                            }
                         }
                     }
                     if (selected != null && selected in 0 until n) {
@@ -1348,8 +1407,11 @@ private fun <T> CartesianChart(
                     for (s in series) {
                         val list = s.labelList ?: continue
                         val texts = labelTexts[s] ?: continue
+                        if (s.kind == SeriesKind.Bar && grow(s) < 1f) continue
+                        val reveal = reveals[s] ?: Float.MAX_VALUE
                         for (i in 0 until n) {
                             val text = texts.getOrNull(i) ?: continue
+                            if (center(i) > reveal + 0.5f) continue
                             val top = if (s.kind == SeriesKind.Bar) {
                                 barShape(s, i)?.rect?.top ?: continue
                             } else {
@@ -1392,9 +1454,12 @@ private fun <T> DrawScope.drawSeries(
     seriesColor: (SeriesLayer<T>, Int) -> Color,
     baseline: Float,
     density: Density,
-) {
-    val f = frame.series[s.dataKey] ?: return
+    grow: Float,
+    reveal: Float?,
+): Float {
+    val f = frame.series[s.dataKey] ?: return Float.MAX_VALUE
     val n = f.raw.size
+    var limit = Float.MAX_VALUE
     when (s.kind) {
         SeriesKind.Bar -> {
             for (i in 0 until n) {
@@ -1419,6 +1484,7 @@ private fun <T> DrawScope.drawSeries(
                 }
             }
             if (current.isNotEmpty()) segments += current
+            if (reveal != null) limit = reveal
             if (s.kind == SeriesKind.Area) {
                 val bottom = points(s, f.bottom)
                 for (segment in segments) {
@@ -1435,20 +1501,41 @@ private fun <T> DrawScope.drawSeries(
                     }
                     path.close()
                     val bounds = path.getBounds()
-                    drawPath(path, fillBrush(s.fill, color, Rect(bounds.left, upper.minOf { it.y }, bounds.right, bounds.bottom)))
+                    clipTo(reveal) {
+                        drawPath(path, fillBrush(s.fill, color, Rect(bounds.left, upper.minOf { it.y }, bounds.right, bounds.bottom)))
+                    }
                 }
             }
             if (s.strokeWidth > 0.dp) {
                 val effect = dashEffect(s.strokeDasharray, density)
-                for (segment in segments) {
-                    if (segment.size < 2) continue
-                    val path = Path()
-                    appendCurve(path, segment.map { top[it]!! }, s.curve, true)
-                    drawPath(
-                        path,
-                        s.stroke ?: color,
-                        style = Stroke(s.strokeWidth.toPx(), cap = if (effect == null) StrokeCap.Round else StrokeCap.Butt, join = StrokeJoin.Round, pathEffect = effect),
-                    )
+                val paths = segments.filter { it.size >= 2 }.map { segment ->
+                    Path().apply { appendCurve(this, segment.map { top[it]!! }, s.curve, true) }
+                }
+                val measure = PathMeasure()
+                val lengths = paths.map { measure.setPath(it, false); measure.length }
+                var remaining = if (s.kind == SeriesKind.Line && grow < 1f) lengths.sum() * grow else Float.MAX_VALUE
+                if (s.kind == SeriesKind.Line && grow < 1f) limit = Float.MIN_VALUE
+                paths.forEachIndexed { index, full ->
+                    if (remaining <= 0f) return@forEachIndexed
+                    val length = lengths[index]
+                    val path = if (remaining >= length) {
+                        full
+                    } else {
+                        measure.setPath(full, false)
+                        Path().also { measure.getSegment(0f, remaining, it, true) }
+                    }
+                    if (s.kind == SeriesKind.Line && grow < 1f) {
+                        measure.setPath(full, false)
+                        limit = measure.getPosition(min(remaining, length)).x
+                    }
+                    remaining -= length
+                    clipTo(reveal) {
+                        drawPath(
+                            path,
+                            s.stroke ?: color,
+                            style = Stroke(s.strokeWidth.toPx(), cap = if (effect == null) StrokeCap.Round else StrokeCap.Butt, join = StrokeJoin.Round, pathEffect = effect),
+                        )
+                    }
                 }
             }
             val dot = s.dot
@@ -1456,10 +1543,20 @@ private fun <T> DrawScope.drawSeries(
                 for (i in 0 until n) {
                     val p = top[i] ?: continue
                     if (f.raw[i].isNaN()) continue
+                    if (p.x > limit + 0.5f) continue
                     drawDot(dot, p, dot.color ?: s.dotColor?.invoke(data[i]) ?: s.stroke ?: color)
                 }
             }
         }
+    }
+    return limit
+}
+
+private inline fun DrawScope.clipTo(reveal: Float?, block: DrawScope.() -> Unit) {
+    if (reveal == null) {
+        block()
+    } else {
+        clipRect(-size.width, -size.height, reveal, size.height * 2, block = block)
     }
 }
 
@@ -1482,6 +1579,7 @@ internal class PieSpec(
     val sectors: ((Int) -> ChartSector)?,
     val label: ((Int) -> String)?,
     val labelLine: Color?,
+    val animation: ChartAnimation,
 )
 
 class PieChartScope internal constructor() {
@@ -1508,10 +1606,14 @@ class PieChartScope internal constructor() {
         sectors: ((Int) -> ChartSector)? = null,
         label: ((Int) -> String)? = null,
         labelLine: Color? = null,
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 1500,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
         pies += PieSpec(
             data.map(value), data.map(nameKey), data, innerRadius, outerRadius, cx, cy, startAngle, endAngle, paddingAngle,
             cornerRadius, stroke, strokeWidth, fillOpacity, cells, sectors, label, labelLine,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
         )
     }
 
@@ -1539,6 +1641,7 @@ internal class RadialBarSpec<T>(
     val strokeWidth: Dp,
     val cells: ((Int) -> ChartCell)?,
     val labelList: ChartLabelList?,
+    val animation: ChartAnimation,
 )
 
 class RadialBarChartScope<T> internal constructor() {
@@ -1563,8 +1666,14 @@ class RadialBarChartScope<T> internal constructor() {
         strokeWidth: Dp = 0.dp,
         cells: ((Int) -> ChartCell)? = null,
         labelList: ChartLabelList? = null,
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 1500,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
-        bars += RadialBarSpec(dataKey, value, nameKey, fill, cornerRadius, background, stackId, stroke, strokeWidth, cells, labelList)
+        bars += RadialBarSpec(
+            dataKey, value, nameKey, fill, cornerRadius, background, stackId, stroke, strokeWidth, cells, labelList,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
+        )
     }
 
     fun ChartTooltip(
@@ -1705,6 +1814,7 @@ fun PieChart(
     val description = listOfNotNull(accessibilityLabel, scope.pies.firstOrNull()?.keys?.joinToString(", ") { config[it]?.label ?: it }).joinToString(", ")
     val legendKeys = scope.pies.lastOrNull()?.keys ?: emptyList()
     val labelStyle = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold)
+    val entrance = scope.pies.mapIndexed { p, pie -> key(p) { rememberEntrance(pie.animation) } }
 
     Column(modifier.fillMaxSize()) {
         BoxWithConstraints(
@@ -1756,15 +1866,18 @@ fun PieChart(
                 Canvas(Modifier.fillMaxSize().clipToBounds()) {
                     for (slice in slices) {
                         val pie = scope.pies[slice.pie]
+                        val g = entrance[slice.pie].value
+                        val start = pie.startAngle + (slice.start - pie.startAngle) * g
+                        val end = pie.startAngle + (slice.end - pie.startAngle) * g
                         val sector = pie.sectors?.invoke(slice.index)
                         val cell = pie.cells?.invoke(slice.index)
                         val outer = slice.outer + (sector?.lift?.toPx() ?: 0f)
-                        val path = sectorPath(slice.center, slice.inner, outer, slice.start, slice.end, pie.cornerRadius.toPx())
+                        val path = sectorPath(slice.center, slice.inner, outer, start, end, pie.cornerRadius.toPx())
                         val alpha = pie.fillOpacity * (cell?.alpha ?: 1f)
                         drawPath(path, slice.color, alpha = alpha)
                         sector?.ring?.let { ring ->
                             val r0 = outer + ring.gap.toPx()
-                            drawPath(sectorPath(slice.center, r0, r0 + ring.width.toPx(), slice.start, slice.end, 0f), slice.color, alpha = alpha)
+                            drawPath(sectorPath(slice.center, r0, r0 + ring.width.toPx(), start, end, 0f), slice.color, alpha = alpha)
                         }
                         if (pie.stroke != null && pie.strokeWidth > 0.dp) {
                             drawPath(path, pie.stroke, style = Stroke(pie.strokeWidth.toPx(), join = StrokeJoin.Round))
@@ -1772,6 +1885,7 @@ fun PieChart(
                     }
                     for (slice in slices) {
                         val text = labels[slice] ?: continue
+                        if (entrance[slice.pie].value < 1f) continue
                         val pie = scope.pies[slice.pie]
                         val mid = (slice.start + slice.end) / 2f
                         val from = polar(slice.center, slice.outer, mid)
@@ -1846,6 +1960,7 @@ fun <T> RadialBarChart(
         niceTicks(0.0, max, 5).let { it.first()..it.last() }
     }
     val groups = scope.bars.map { it.stackId ?: "#${it.dataKey}" }.distinct()
+    val entrance = scope.bars.mapIndexed { b, bar -> key(b, bar.dataKey) { rememberEntrance(bar.animation) } }
 
     Column(modifier.fillMaxSize()) {
         BoxWithConstraints(
@@ -1895,7 +2010,8 @@ fun <T> RadialBarChart(
                                 drawPath(sectorPath(center, inner, outer, startAngle, endAngle, corner), it)
                             }
                             val (from, to) = stacks[i][b]
-                            val path = sectorPath(center, inner, outer, angle(from), angle(to), corner)
+                            val a0 = angle(from)
+                            val path = sectorPath(center, inner, outer, a0, a0 + (angle(to) - a0) * entrance[b].value, corner)
                             drawPath(path, color(bar, i), alpha = bar.cells?.invoke(i)?.alpha ?: 1f)
                             if (bar.stroke != null && bar.strokeWidth > 0.dp) {
                                 drawPath(path, bar.stroke, style = Stroke(bar.strokeWidth.toPx(), join = StrokeJoin.Round))
@@ -1905,6 +2021,7 @@ fun <T> RadialBarChart(
                     for (i in 0 until n) {
                         scope.bars.forEachIndexed { b, bar ->
                             val list = bar.labelList ?: return@forEachIndexed
+                            if (entrance[b].value < 1f) return@forEachIndexed
                             val (inner, outer) = ring(i, bar)
                             val (from, _) = stacks[i][b]
                             val raw = bar.value(data[i])
@@ -1971,6 +2088,7 @@ internal class RadarSpec<T>(
     val strokeOpacity: Float,
     val dot: ChartDot?,
     val activeDot: ChartDot?,
+    val animation: ChartAnimation,
 )
 
 class RadarChartScope<T> internal constructor() {
@@ -2019,8 +2137,14 @@ class RadarChartScope<T> internal constructor() {
         strokeOpacity: Float = 1f,
         dot: ChartDot? = null,
         activeDot: ChartDot? = ChartDot(4.dp),
+        isAnimationActive: Boolean = true,
+        animationDuration: Int = 1500,
+        animationEasing: ChartEasing = ChartEasing.Ease,
     ) {
-        radars += RadarSpec(dataKey, value, fill, fillOpacity, stroke, strokeWidth, strokeOpacity, dot, activeDot)
+        radars += RadarSpec(
+            dataKey, value, fill, fillOpacity, stroke, strokeWidth, strokeOpacity, dot, activeDot,
+            ChartAnimation(isAnimationActive, animationDuration, animationEasing),
+        )
     }
 
     fun ChartTooltip(
@@ -2089,6 +2213,7 @@ fun <T> RadarChart(
     val lo = radiusAxis?.domain?.start ?: ticks.first()
     val hi = radiusAxis?.domain?.endInclusive ?: ticks.last()
     val tickStyle = Typography.xs.copy(color = colors.labelSecondary)
+    val entrance = scope.radars.associateWith { radar -> key(radar.dataKey) { rememberEntrance(radar.animation) } }
 
     Column(modifier.fillMaxSize()) {
         BoxWithConstraints(
@@ -2106,7 +2231,7 @@ fun <T> RadarChart(
             val span = (hi - lo).takeIf { it != 0.0 } ?: 1.0
             fun radiusOf(v: Double) = (((v - lo) / span).toFloat() * radius).coerceAtLeast(0f)
             fun angleOf(i: Int) = 90f - 360f * i / n.coerceAtLeast(1)
-            fun vertex(radar: RadarSpec<T>, i: Int) = polar(center, radiusOf(radar.value(data[i])), angleOf(i))
+            fun vertex(radar: RadarSpec<T>, i: Int) = polar(center, radiusOf(radar.value(data[i])) * (entrance[radar]?.value ?: 1f), angleOf(i))
             val hit: (Offset) -> Int? = { offset ->
                 if (n == 0) {
                     null

@@ -256,6 +256,7 @@ export function PieChartInteractive() {
                 }
               >
                 <Pie
+                  isAnimationActive={false}
                   data={data}
                   dataKey="size"
                   nameKey="kind"

@@ -1,6 +1,8 @@
 package com.esuiss.ui.charts
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +38,7 @@ import com.esuiss.ui.components.Separator
 import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
+import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
@@ -62,6 +66,10 @@ private val ranges = linkedMapOf(
 private const val LAST_PRICE = 254.32
 
 private const val SAMPLES = 80
+
+private const val MORPH_DURATION = 520
+
+private val MorphEasing = Easing { 1f - (1f - it) * (1f - it) * (1f - it) }
 
 private fun end(): Calendar = Calendar.getInstance().apply {
     clear()
@@ -156,6 +164,26 @@ private fun twoDigits(): NumberFormat = NumberFormat.getNumberInstance(Locale.US
 }
 
 @Composable
+private fun rememberMorph(target: List<Double>): List<Double> {
+    val reduced = formReducedMotion()
+    var values by remember { mutableStateOf(target) }
+    LaunchedEffect(target) {
+        val from = values
+        if (reduced || from == target) {
+            values = target
+            return@LaunchedEffect
+        }
+        Animatable(0f).animateTo(1f, tween(MORPH_DURATION, easing = MorphEasing)) {
+            values = target.mapIndexed { index, price ->
+                val origin = from.getOrNull(index) ?: price
+                origin + (price - origin) * value
+            }
+        }
+    }
+    return values
+}
+
+@Composable
 fun AreaChartInteractive(modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
     var range by remember { mutableStateOf("1M") }
@@ -168,9 +196,13 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
     val change = current.price - first
     val rising = change >= 0
     val prices = points.map { it.price }
+    val animated = rememberMorph(prices)
+    val data = points.mapIndexed { index, point -> PricePoint(point.index, animated.getOrElse(index) { point.price }, point.label, point.tick) }
     val min = prices.min()
     val max = prices.max()
-    val padding = (max - min) * 0.12
+    val low = animated.min()
+    val high = animated.max()
+    val padding = (high - low) * 0.12
     val trend by animateColorAsState(if (rising) colors.success else colors.danger, tween(500), label = "trend")
     val chartConfig = ChartConfig("price" to ChartConfigItem("Price") { trend })
     val stats = listOf(
@@ -234,7 +266,7 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                 ) {
                     val tickByLabel = points.filter { it.index in ticks }.associate { it.label to it.tick }
                     AreaChart(
-                        points,
+                        data,
                         margin = ChartMargin(top = 10.dp, right = 0.dp, bottom = 0.dp, left = 0.dp),
                         accessibilityLabel = "ACME, ${ranges.getValue(range).caption}",
                         selectedIndex = active,
@@ -246,7 +278,7 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                             orientation = ChartAxisOrientation.Right,
                             tickMargin = 6.dp,
                             width = 40.dp,
-                            domain = (min - padding)..(max + padding),
+                            domain = (low - padding)..(high + padding),
                             tickFormatter = { it.roundToInt().toString() },
                         )
                         ReferenceLine(first, stroke = colors.labelTertiary, strokeDasharray = listOf(2f, 3f))
@@ -257,6 +289,7 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                             strokeWidth = 2.dp,
                             fill = ChartFill.VerticalGradient(topAlpha = 0.3f, bottomAlpha = 0.02f),
                             activeDot = ChartDot(5.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                            isAnimationActive = false,
                         )
                     }
                 }

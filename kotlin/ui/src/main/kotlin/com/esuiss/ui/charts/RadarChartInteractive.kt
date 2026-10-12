@@ -234,6 +234,7 @@ fun RadarChartInteractive(modifier: Modifier = Modifier) {
                                             strokeOpacity = min(1f, shown * 1.5f),
                                             fillOpacity = 0.14f * shown,
                                             dot = ChartDot((3f * min(1f, shown * 1.3f)).dp, strokeWidth = 2.dp),
+                                            isAnimationActive = false,
                                         )
                                     }
                                 }

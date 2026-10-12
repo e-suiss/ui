@@ -60,7 +60,7 @@ private fun Battery(device: RadialBatteriesDevice, modifier: Modifier = Modifier
                     barSize = 6.dp,
                 ) {
                     PolarAngleAxis(0.0..100.0)
-                    RadialBar("level", value = { it.level }, cornerRadius = 6.dp, background = color.copy(alpha = color.alpha * 0.22f))
+                    RadialBar("level", value = { it.level }, cornerRadius = 6.dp, background = color.copy(alpha = color.alpha * 0.22f), isAnimationActive = false)
                 }
             }
             BasicText(

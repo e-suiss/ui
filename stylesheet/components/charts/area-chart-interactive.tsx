@@ -384,6 +384,7 @@ export function AreaChartInteractive() {
               cursor={{ stroke: "label-tertiary", strokeWidth: 1 }}
             />
             <Area
+              isAnimationActive={false}
               dataKey="price"
               type="linear"
               strokeWidth={2}

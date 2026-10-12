@@ -90,7 +90,12 @@ export function BarChartActive() {
               interval={0}
               tickFormatter={(value: string) => value.slice(0, 3)}
             />
-            <Bar dataKey="steps" radius={5} maxBarSize={28}>
+            <Bar
+              dataKey="steps"
+              radius={5}
+              maxBarSize={28}
+              isAnimationActive={false}
+            >
               {chartData.map((item) => (
                 <Cell
                   key={item.day}

@@ -11037,9 +11037,18 @@
       "type": "primitive",
       "title": "Chart",
       "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
+        "uniwind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-worklets"
+        ]
       },
       "requires": [
         "primitives/haptics"

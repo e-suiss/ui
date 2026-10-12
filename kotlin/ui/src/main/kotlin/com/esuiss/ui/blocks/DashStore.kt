@@ -436,6 +436,7 @@ private fun WeeklySales(scale: Double) {
                         radius = ChartRadius(3.dp),
                         barSize = 12.dp,
                         cells = { index -> ChartCell(alpha = if (active == null || active == index) 1f else 0.35f) },
+                        isAnimationActive = false,
                     )
                 }
             }

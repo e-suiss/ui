@@ -265,6 +265,7 @@ function DashAnalytics({
                       defaultIndex={data.length - 1}
                     />
                     <Area
+                      animationDuration={500}
                       dataKey="value"
                       type="linear"
                       stroke="accent"

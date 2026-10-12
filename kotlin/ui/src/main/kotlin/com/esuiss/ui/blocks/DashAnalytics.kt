@@ -289,6 +289,7 @@ fun DashAnalytics(
                                     strokeWidth = 2.5.dp,
                                     fill = ChartFill.VerticalGradient(topAlpha = 0.22f, bottomAlpha = 0f),
                                     activeDot = ChartDot(6.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                                    animationDuration = 500,
                                 )
                             }
                         }

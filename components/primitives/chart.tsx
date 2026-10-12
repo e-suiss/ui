@@ -1,6 +1,7 @@
 import * as React from "react"
 import {
   type AccessibilityActionEvent,
+  Easing,
   type GestureResponderEvent,
   type LayoutChangeEvent,
   type StyleProp,
@@ -9,6 +10,7 @@ import {
   View,
   type ViewProps,
 } from "react-native"
+import { useReducedMotion } from "react-native-reanimated"
 import { useHaptics } from "./haptics"
 
 type ChartDatum = Record<string, unknown>
@@ -16,6 +18,14 @@ type ChartDatum = Record<string, unknown>
 type ChartValue = number | readonly [number, number]
 
 type ChartCurve = "linear" | "natural" | "monotone" | "step"
+
+type ChartEasing = "ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear"
+
+type ChartAnimation = {
+  isAnimationActive?: boolean
+  animationDuration?: number
+  animationEasing?: ChartEasing
+}
 
 type ChartMargin = {
   top?: number
@@ -92,7 +102,7 @@ type CellProps<C extends string = string> = {
   fillOpacity?: number
 }
 
-type LineProps<C extends string = string> = {
+type LineProps<C extends string = string> = ChartAnimation & {
   dataKey: string
   type?: ChartCurve
   stroke?: C | "none"
@@ -103,7 +113,7 @@ type LineProps<C extends string = string> = {
   children?: React.ReactNode
 }
 
-type AreaProps<C extends string = string> = {
+type AreaProps<C extends string = string> = ChartAnimation & {
   dataKey: string
   type?: ChartCurve
   stroke?: C | "none"
@@ -117,7 +127,7 @@ type AreaProps<C extends string = string> = {
 
 type BarRadius = number | readonly [number, number, number, number]
 
-type BarProps<C extends string = string> = {
+type BarProps<C extends string = string> = ChartAnimation & {
   dataKey: string
   fill?: C | ChartGradient<C>
   radius?: BarRadius
@@ -158,7 +168,7 @@ type SectorProps<C extends string = string> = {
 
 type PieLabelEntry = { name: string; value: ChartValue; payload: ChartDatum }
 
-type PieProps<C extends string = string> = {
+type PieProps<C extends string = string> = ChartAnimation & {
   data: readonly ChartDatum[]
   dataKey: string
   nameKey: string
@@ -182,7 +192,7 @@ type PieProps<C extends string = string> = {
   children?: React.ReactNode
 }
 
-type RadialBarProps<C extends string = string> = {
+type RadialBarProps<C extends string = string> = ChartAnimation & {
   dataKey: string
   fill?: C
   stroke?: C
@@ -217,7 +227,7 @@ type PolarGridProps<C extends string = string> = {
   fillOpacity?: number
 }
 
-type RadarProps<C extends string = string> = {
+type RadarProps<C extends string = string> = ChartAnimation & {
   dataKey: string
   fill?: C
   fillOpacity?: number
@@ -271,6 +281,7 @@ type Shape = {
   strokeWidth?: number
   strokeOpacity?: number
   strokeDasharray?: string
+  clip?: { x: number; y: number; width: number; height: number }
 }
 
 type TextItem = {
@@ -319,6 +330,29 @@ type Scene = {
   external: (index: number) => number
 }
 
+type Frames = (readonly number[] | null)[]
+
+type Tween = { progress: number; from: Frames | null }
+
+type Motion = {
+  track(
+    key: string,
+    signature: string,
+    animation: ChartAnimation,
+    duration: number
+  ): Tween | null
+  settle(key: string, frames: Frames): void
+}
+
+type Track = {
+  signature: string
+  start: number
+  duration: number
+  easing: ChartEasing
+  from: Frames | null
+  frames?: Frames
+}
+
 type BuildInput = {
   elements: React.ReactElement[]
   config: ChartConfigBase
@@ -326,6 +360,7 @@ type BuildInput = {
   width: number
   height: number
   props: RootProps
+  motion: Motion
 }
 
 type ContainerContextValue = {
@@ -374,6 +409,17 @@ const ANGLE_TICK_SIZE = 8
 const COS_45 = Math.SQRT1_2
 const TAP_SLOP = 10
 const RADIAN = Math.PI / 180
+const BAR_DURATION = 400
+const CURVE_DURATION = 1500
+const CURVE_SAMPLES = 24
+
+const EASINGS: Record<ChartEasing, (value: number) => number> = {
+  ease: Easing.bezier(0.25, 0.1, 0.25, 1),
+  "ease-in": Easing.bezier(0.42, 0, 1, 1),
+  "ease-out": Easing.bezier(0, 0, 0.58, 1),
+  "ease-in-out": Easing.bezier(0.42, 0, 0.58, 1),
+  linear: (value) => value,
+}
 
 const ContainerContext = React.createContext<ContainerContextValue | null>(null)
 
@@ -743,6 +789,127 @@ function areaPath(top: Point[], bottom: Point[], type: ChartCurve) {
   return `${upper}L${lower.slice(1)}Z`
 }
 
+function lerp(from: number, to: number, progress: number) {
+  return from + (to - from) * progress
+}
+
+function animate(
+  tween: Tween | null,
+  to: Frames,
+  enter: (target: readonly number[], index: number) => readonly number[]
+): Frames {
+  if (!tween) return to
+  const { from, progress } = tween
+  return to.map((target, index) => {
+    if (!target) return null
+    const source = from
+      ? from[
+          from.length === to.length
+            ? index
+            : Math.floor((index * from.length) / to.length)
+        ]
+      : null
+    const start = source ?? enter(target, index)
+    return target.map((value, part) =>
+      lerp(start[part] ?? value, value, progress)
+    )
+  })
+}
+
+function tracePath(d: string) {
+  const tokens = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/g) ?? []
+  const points: Point[] = []
+  let command = ""
+  let index = 0
+  const read = () => Number(tokens[index++])
+  while (index < tokens.length) {
+    const token = tokens[index] ?? ""
+    if (/[A-Za-z]/.test(token)) {
+      command = token
+      index++
+      continue
+    }
+    if (command === "M" || command === "L") {
+      points.push({ x: read(), y: read() })
+      continue
+    }
+    if (command === "C") {
+      const start = points[points.length - 1] ?? { x: 0, y: 0 }
+      const c1 = { x: read(), y: read() }
+      const c2 = { x: read(), y: read() }
+      const end = { x: read(), y: read() }
+      for (let step = 1; step <= CURVE_SAMPLES; step++) {
+        const t = step / CURVE_SAMPLES
+        const u = 1 - t
+        const a = u * u * u
+        const b = 3 * u * u * t
+        const c = 3 * u * t * t
+        const e = t * t * t
+        points.push({
+          x: a * start.x + b * c1.x + c * c2.x + e * end.x,
+          y: a * start.y + b * c1.y + c * c2.y + e * end.y,
+        })
+      }
+      continue
+    }
+    index++
+  }
+  return points
+}
+
+function traceLength(points: Point[]) {
+  let total = 0
+  for (let index = 1; index < points.length; index++) {
+    const from = points[index - 1] as Point
+    const to = points[index] as Point
+    total += Math.hypot(to.x - from.x, to.y - from.y)
+  }
+  return total
+}
+
+function traceX(points: Point[], length: number) {
+  let walked = 0
+  for (let index = 1; index < points.length; index++) {
+    const from = points[index - 1] as Point
+    const to = points[index] as Point
+    const step = Math.hypot(to.x - from.x, to.y - from.y)
+    if (walked + step >= length) {
+      return lerp(from.x, to.x, step ? (length - walked) / step : 1)
+    }
+    walked += step
+  }
+  return points[points.length - 1]?.x ?? 0
+}
+
+function revealDash(length: number, total: number, pattern?: string) {
+  const parsed = (pattern ?? "")
+    .split(/[\s,]+/)
+    .map(Number)
+    .filter((value) => Number.isFinite(value) && value >= 0)
+  const lines = parsed.length % 2 ? [...parsed, ...parsed] : parsed
+  const cycle = lines.reduce((sum, value) => sum + value, 0)
+  if (!cycle) return `${round(length)} ${round(total + 1)}`
+  const count = Math.floor(length / cycle)
+  const remain = length % cycle
+  let partial: number[] = []
+  for (let index = 0, sum = 0; index < lines.length; index++) {
+    const value = lines[index] ?? 0
+    if (sum + value > remain) {
+      partial = [...lines.slice(0, index), remain - sum]
+      break
+    }
+    sum += value
+  }
+  const tail = partial.length % 2 === 0 ? [0, total + 1] : [total + 1]
+  return [
+    ...Array.from({ length: count }, () => lines).flat(),
+    ...partial,
+    ...tail,
+  ]
+    .map(round)
+    .join(" ")
+}
+
 function polar(cx: number, cy: number, radius: number, angle: number) {
   return {
     x: cx + Math.cos(-RADIAN * angle) * radius,
@@ -945,6 +1112,7 @@ function emptyScene(): Scene {
 type SeriesKind = "line" | "area" | "bar"
 
 type Series = {
+  id: string
   kind: SeriesKind
   props: LineProps & AreaProps & BarProps
   cells: CellProps[]
@@ -1018,7 +1186,7 @@ function visibleTicks(
 }
 
 function buildCartesian(input: BuildInput): Scene {
-  const { elements, config, colors, width, height, props } = input
+  const { elements, config, colors, width, height, props, motion } = input
   const data = props.data ?? []
   const count = data.length
   if (count === 0 || width <= 0 || height <= 0) return emptyScene()
@@ -1040,7 +1208,7 @@ function buildCartesian(input: BuildInput): Scene {
       (element) =>
         element.type === Line || element.type === Area || element.type === Bar
     )
-    .map((element) => {
+    .map((element, index) => {
       const kind: SeriesKind =
         element.type === Line ? "line" : element.type === Area ? "area" : "bar"
       const seriesProps = element.props as LineProps & AreaProps & BarProps
@@ -1057,6 +1225,7 @@ function buildCartesian(input: BuildInput): Scene {
             ? seriesProps.stroke
             : colorOf(seriesProps.fill, fallback)
       return {
+        id: `${kind}-${element.key ?? index}`,
         kind,
         props: seriesProps,
         cells: propsOf(children, Cell),
@@ -1404,8 +1573,8 @@ function buildCartesian(input: BuildInput): Scene {
     const low = Math.min(from, to)
     const extent = Math.abs(to - from)
     return vertical
-      ? { x: low, y: start, width: extent, height: frame.size, end: to }
-      : { x: start, y: low, width: frame.size, height: extent, end: to }
+      ? { x: low, y: start, width: extent, height: frame.size, base: from }
+      : { x: start, y: low, width: frame.size, height: extent, base: from }
   }
   const strokes: Shape[] = []
   const dots: Shape[] = []
@@ -1439,27 +1608,42 @@ function buildCartesian(input: BuildInput): Scene {
           })
         }
       })
+      const rects = data.map((_, index) => barRect(seriesIndex, index))
+      const tween = motion.track(
+        item.id,
+        JSON.stringify(item.values),
+        item.props,
+        BAR_DURATION
+      )
+      const frames = animate(
+        tween,
+        rects.map((rect) =>
+          rect ? [rect.x, rect.y, rect.width, rect.height] : null
+        ),
+        ([x = 0, y = 0, w = 0, h = 0], index) => {
+          const base = rects[index]?.base ?? 0
+          return vertical ? [base, y, 0, h] : [x, base, w, 0]
+        }
+      )
+      motion.settle(item.id, frames)
       data.forEach((datum, index) => {
-        const rect = barRect(seriesIndex, index)
-        if (!rect || rect.width <= 0 || rect.height <= 0) return
+        const rect = rects[index]
+        const [x = 0, y = 0, w = 0, h = 0] = frames[index] ?? []
+        if (!rect) return
         const cell = item.cells[index]
         const color = cell?.fill ?? item.color
-        shapes.push({
-          key: `${key}-${index}`,
-          d: rectPath(
-            rect.x,
-            rect.y,
-            rect.width,
-            rect.height,
-            item.props.radius ?? 0
-          ),
-          fill: color,
-          fillOpacity: cell?.fillOpacity ?? 1,
-          gradient: cell?.fill
-            ? undefined
-            : gradientOf(item.props.fill, item.color),
-        })
-        if (item.labels) {
+        if (w > 0 && h > 0) {
+          shapes.push({
+            key: `${key}-${index}`,
+            d: rectPath(x, y, w, h, item.props.radius ?? 0),
+            fill: color,
+            fillOpacity: cell?.fillOpacity ?? 1,
+            gradient: cell?.fill
+              ? undefined
+              : gradientOf(item.props.fill, item.color),
+          })
+        }
+        if (item.labels && !tween && rect.width > 0 && rect.height > 0) {
           const raw = datum[item.labels.dataKey ?? item.props.dataKey]
           const text = item.labels.formatter
             ? item.labels.formatter(raw)
@@ -1484,11 +1668,30 @@ function buildCartesian(input: BuildInput): Scene {
       })
       continue
     }
+    const target: Frames = item.values.map((value, index) => {
+      if (!value) return null
+      const x = positions[index] ?? 0
+      return [
+        x,
+        valuePosition(value.to),
+        x,
+        valuePosition(value.from ?? baseline),
+      ]
+    })
+    const tween = motion.track(
+      item.id,
+      JSON.stringify(item.values),
+      item.props,
+      CURVE_DURATION
+    )
+    const entering = tween !== null && tween.from === null
+    const frames = entering ? target : animate(tween, target, (frame) => frame)
+    motion.settle(item.id, frames)
     const segments: { top: Point[]; bottom: Point[]; indexes: number[] }[] = []
     let current: { top: Point[]; bottom: Point[]; indexes: number[] } | null =
       null
-    item.values.forEach((value, index) => {
-      if (!value) {
+    frames.forEach((frame, index) => {
+      if (!frame) {
         current = null
         return
       }
@@ -1496,12 +1699,35 @@ function buildCartesian(input: BuildInput): Scene {
         current = { top: [], bottom: [], indexes: [] }
         segments.push(current)
       }
-      const x = positions[index] ?? 0
-      current.top.push({ x, y: valuePosition(value.to) })
-      current.bottom.push({ x, y: valuePosition(value.from ?? baseline) })
+      const [x = 0, y = 0, bx = 0, by = 0] = frame
+      current.top.push({ x, y })
+      current.bottom.push({ x: bx, y: by })
       current.indexes.push(index)
     })
     const type = item.props.type ?? "linear"
+    const clip =
+      entering && item.kind === "area"
+        ? { x: 0, y: 0, width: plot.left + plotWidth * tween.progress, height }
+        : undefined
+    const traces = segments.map((segment) =>
+      tracePath(curvePath(segment.top, type))
+    )
+    const lengths = traces.map(traceLength)
+    const total = lengths.reduce((sum, value) => sum + value, 0)
+    const revealed =
+      entering && item.kind === "line" ? total * tween.progress : total
+    let revealX = Number.POSITIVE_INFINITY
+    if (entering && item.kind === "line") {
+      let walked = 0
+      revealX = Number.NEGATIVE_INFINITY
+      traces.forEach((trace, index) => {
+        const length = lengths[index] ?? 0
+        if (revealed >= walked) {
+          revealX = traceX(trace, Math.min(length, revealed - walked))
+        }
+        walked += length
+      })
+    }
     const stroke =
       item.props.stroke === "none"
         ? undefined
@@ -1516,17 +1742,26 @@ function buildCartesian(input: BuildInput): Scene {
           fill: fillColor,
           fillOpacity: item.props.fillOpacity ?? 0.6,
           gradient: gradientOf(item.props.fill, fallback),
+          clip,
         })
       })
     }
     if (stroke) {
+      let walked = 0
       segments.forEach((segment, index) => {
+        const length = lengths[index] ?? 0
+        const visible = Math.max(0, Math.min(length, revealed - walked))
+        walked += length
         strokes.push({
           key: `${key}-stroke-${index}`,
           d: curvePath(segment.top, type),
           stroke,
           strokeWidth: item.props.strokeWidth ?? 1,
-          strokeDasharray: item.props.strokeDasharray,
+          strokeDasharray:
+            entering && item.kind === "line"
+              ? revealDash(visible, length, item.props.strokeDasharray)
+              : item.props.strokeDasharray,
+          clip,
         })
       })
     }
@@ -1536,7 +1771,7 @@ function buildCartesian(input: BuildInput): Scene {
         const point = segment.top[position]
         const value = toValue(data[index]?.[item.props.dataKey])
         if (!point || value === null) return
-        if (dot) {
+        if (dot && point.x <= revealX + 0.5) {
           const spec =
             typeof dot === "function"
               ? dot({ index, value, payload: data[index] ?? {} })
@@ -1548,10 +1783,11 @@ function buildCartesian(input: BuildInput): Scene {
               fill: spec.fill ?? item.color,
               stroke: spec.stroke,
               strokeWidth: spec.strokeWidth ?? (spec.stroke ? 1 : 0),
+              clip,
             })
           }
         }
-        if (item.labels) {
+        if (item.labels && !tween) {
           const raw = data[index]?.[item.labels.dataKey ?? item.props.dataKey]
           const text = item.labels.formatter
             ? item.labels.formatter(raw)
@@ -1745,7 +1981,7 @@ type PieSlice = {
 }
 
 function buildPie(input: BuildInput): Scene {
-  const { elements, config, colors, width, height, props } = input
+  const { elements, config, colors, width, height, props, motion } = input
   if (width <= 0 || height <= 0) return emptyScene()
   const margin = { ...DEFAULT_MARGIN, ...props.margin }
   const areaWidth = width - margin.left - margin.right
@@ -1777,16 +2013,41 @@ function buildPie(input: BuildInput): Scene {
       (Math.abs(delta) >= 360 ? nonZero : nonZero - 1) * padding
     const available = Math.abs(delta) - totalPadding
     const sum = values.reduce((total, value) => total + Math.abs(value), 0)
+    const gapOf = (value: number, index: number) =>
+      index === 0 ? 0 : direction * padding * (value !== 0 ? 1 : 0)
     let cursor = startAngle
-    values.forEach((value, index) => {
-      const datum = pie.data[index] ?? {}
-      const start =
-        index === 0
-          ? startAngle
-          : cursor + direction * padding * (value !== 0 ? 1 : 0)
+    const target: Frames = values.map((value, index) => {
+      const start = index === 0 ? startAngle : cursor + gapOf(value, index)
       const end =
         start + direction * (sum ? (Math.abs(value) / sum) * available : 0)
       cursor = end
+      return [start, end]
+    })
+    const id = `pie-${element.key ?? pieIndex}`
+    const tween = motion.track(
+      id,
+      JSON.stringify([values, startAngle, endAngle]),
+      pie,
+      CURVE_DURATION
+    )
+    let sweep = startAngle
+    const frames =
+      tween && !tween.from
+        ? target.map((frame, index) => {
+            const [from = 0, to = 0] = frame ?? []
+            const start =
+              index === 0
+                ? startAngle
+                : sweep + gapOf(values[index] ?? 0, index)
+            sweep = start + (to - from) * tween.progress
+            return [start, sweep]
+          })
+        : animate(tween, target, ([start = 0]) => [start, start])
+    motion.settle(id, frames)
+    values.forEach((value, index) => {
+      const datum = pie.data[index] ?? {}
+      const [start = 0, end = 0] = target[index] ?? []
+      const [shownStart = 0, shownEnd = 0] = frames[index] ?? []
       const name = String(datum[pie.nameKey] ?? "")
       const cell = cells[index]
       const fill =
@@ -1809,9 +2070,11 @@ function buildPie(input: BuildInput): Scene {
         stroke: pie.stroke === "none" ? undefined : pie.stroke,
         strokeWidth: pie.strokeWidth ?? 0,
       }
-      const shaped = pie.shape ? pie.shape(sector, index) : sector
+      const shown = { ...sector, startAngle: shownStart, endAngle: shownEnd }
+      const shaped = pie.shape ? pie.shape(shown, index) : shown
       const list = Array.isArray(shaped) ? shaped : [shaped]
       list.forEach((part, partIndex) => {
+        if (tween && Math.abs(part.endAngle - part.startAngle) < 0.01) return
         shapes.push({
           key: `pie-${pieIndex}-${index}-${partIndex}`,
           d: sectorPath(part),
@@ -1835,7 +2098,7 @@ function buildPie(input: BuildInput): Scene {
           payload: datum,
         },
       })
-      if (pie.label && value !== 0) {
+      if (pie.label && value !== 0 && !tween) {
         const text = pie.label({
           name,
           value: toValue(datum[pie.dataKey]) ?? 0,
@@ -1930,7 +2193,7 @@ function buildPie(input: BuildInput): Scene {
 }
 
 function buildRadial(input: BuildInput): Scene {
-  const { elements, config, colors, width, height, props } = input
+  const { elements, config, colors, width, height, props, motion } = input
   const data = props.data ?? []
   const count = data.length
   if (count === 0 || width <= 0 || height <= 0) return emptyScene()
@@ -1946,10 +2209,11 @@ function buildRadial(input: BuildInput): Scene {
   const endAngle = props.endAngle ?? 360
   const bars = elements
     .filter((element) => element.type === RadialBar)
-    .map((element) => {
+    .map((element, index) => {
       const bar = element.props as RadialBarProps
       const children = childrenOf(bar)
       return {
+        id: `radial-${element.key ?? index}`,
         props: bar,
         cells: propsOf(children, Cell),
         labels: propsOf(children, LabelList)[0],
@@ -1997,8 +2261,35 @@ function buildRadial(input: BuildInput): Scene {
   const texts: TextItem[] = []
   const ends: { x: number; y: number }[] = data.map(() => ({ x: cx, y: cy }))
   const direction = sign(endAngle - startAngle)
-  data.forEach((datum, row) => {
+  const targets: Frames[] = bars.map(() => [])
+  for (const datum of data) {
     const running: Record<string, number> = {}
+    bars.forEach((bar, barIndex) => {
+      const slotKey = bar.props.stackId ?? `bar-${barIndex}`
+      const value = toNumber(datum[bar.props.dataKey]) ?? 0
+      const base = running[slotKey] ?? domainLow
+      running[slotKey] = base + value
+      targets[barIndex]?.push([angleOf(base), angleOf(base + value)])
+    })
+  }
+  const tweens = bars.map((bar) =>
+    motion.track(
+      bar.id,
+      JSON.stringify(data.map((datum) => toNumber(datum[bar.props.dataKey]))),
+      bar.props,
+      CURVE_DURATION
+    )
+  )
+  const frames = bars.map((bar, barIndex) => {
+    const result = animate(
+      tweens[barIndex] ?? null,
+      targets[barIndex] ?? [],
+      ([start = 0]) => [start, start]
+    )
+    motion.settle(bar.id, result)
+    return result
+  })
+  data.forEach((datum, row) => {
     const drawn: string[] = []
     bars.forEach((bar, barIndex) => {
       const slotKey = bar.props.stackId ?? `bar-${barIndex}`
@@ -2027,12 +2318,10 @@ function buildRadial(input: BuildInput): Scene {
           fillOpacity: background.fillOpacity ?? 1,
         })
       }
-      const value = toNumber(datum[bar.props.dataKey]) ?? 0
-      const base = running[slotKey] ?? domainLow
-      running[slotKey] = base + value
-      const from = angleOf(base)
-      const to = angleOf(base + value)
-      if (from !== to) {
+      const [from = 0, to = 0] = targets[barIndex]?.[row] ?? []
+      const [shownFrom = 0, shownTo = 0] = frames[barIndex]?.[row] ?? []
+      const tween = tweens[barIndex] ?? null
+      if (from !== to && (!tween || Math.abs(shownTo - shownFrom) >= 0.01)) {
         shapes.push({
           key: `radial-${row}-${barIndex}`,
           d: sectorPath({
@@ -2040,8 +2329,8 @@ function buildRadial(input: BuildInput): Scene {
             cy,
             innerRadius: radii.inner,
             outerRadius: radii.outer,
-            startAngle: from,
-            endAngle: to,
+            startAngle: shownFrom,
+            endAngle: shownTo,
             cornerRadius: bar.props.cornerRadius ?? 0,
             fill: color,
             fillOpacity: cell?.fillOpacity ?? 1,
@@ -2054,7 +2343,7 @@ function buildRadial(input: BuildInput): Scene {
         })
       }
       ends[row] = polar(cx, cy, radii.outer, to)
-      if (bar.labels) {
+      if (bar.labels && !tween) {
         const raw = datum[bar.labels.dataKey ?? bar.props.dataKey]
         const text = bar.labels.formatter
           ? bar.labels.formatter(raw)
@@ -2131,7 +2420,7 @@ function polygonPath(points: Point[]) {
 }
 
 function buildRadar(input: BuildInput): Scene {
-  const { elements, config, colors, width, height, props } = input
+  const { elements, config, colors, width, height, props, motion } = input
   const data = props.data ?? []
   const count = data.length
   if (count === 0 || width <= 0 || height <= 0) return emptyScene()
@@ -2145,10 +2434,16 @@ function buildRadar(input: BuildInput): Scene {
   const angleAxis = propsOf(elements, PolarAngleAxis)[0]
   const radiusAxis = propsOf(elements, PolarRadiusAxis)[0]
   const grid = propsOf(elements, PolarGrid)[0]
-  const radars = propsOf(elements, Radar).map((radar) => ({
-    props: radar,
-    color: configColor(config, radar.dataKey, colors.fallback),
-  }))
+  const radars = elements
+    .filter((element) => element.type === Radar)
+    .map((element, index) => {
+      const radar = element.props as RadarProps
+      return {
+        id: `radar-${element.key ?? index}`,
+        props: radar,
+        color: configColor(config, radar.dataKey, colors.fallback),
+      }
+    })
   const angles = data.map((_, index) => 90 - (360 / count) * index)
   const values = radars.flatMap((radar) =>
     data.map((datum) => toNumber(datum[radar.props.dataKey]) ?? 0)
@@ -2200,9 +2495,22 @@ function buildRadar(input: BuildInput): Scene {
     })
   }
   radars.forEach((radar, radarIndex) => {
-    const points = data.map((datum, index) =>
-      pointAt(toNumber(datum[radar.props.dataKey]) ?? 0, index)
+    const target: Frames = data.map((datum, index) => {
+      const point = pointAt(toNumber(datum[radar.props.dataKey]) ?? 0, index)
+      return [point.x, point.y]
+    })
+    const tween = motion.track(
+      radar.id,
+      JSON.stringify(data.map((datum) => toNumber(datum[radar.props.dataKey]))),
+      radar.props,
+      CURVE_DURATION
     )
+    const frames = animate(tween, target, () => [cx, cy])
+    motion.settle(radar.id, frames)
+    const points = frames.map((frame) => ({
+      x: frame?.[0] ?? cx,
+      y: frame?.[1] ?? cy,
+    }))
     const strokeWidth = radar.props.strokeWidth ?? 1
     const stroke =
       radar.props.stroke === "none" || strokeWidth <= 0
@@ -2435,6 +2743,50 @@ function Root({
     height: number
   } | null>(null)
   const plotHeight = Math.max(0, container.height - (legend ? legendHeight : 0))
+  const reduced = useReducedMotion()
+  const tracks = React.useRef(new Map<string, Track>())
+  const [, setFrame] = React.useState(0)
+  const now = Date.now()
+  let running = false
+  const motion: Motion = {
+    track(key, signature, animation, duration) {
+      const current = tracks.current.get(key)
+      if (reduced || animation.isAnimationActive === false) {
+        tracks.current.set(key, {
+          signature,
+          start: 0,
+          duration: 0,
+          easing: "linear",
+          from: null,
+          frames: current?.frames,
+        })
+        return null
+      }
+      let track = current
+      if (!track || track.signature !== signature) {
+        track = {
+          signature,
+          start: now,
+          duration: animation.animationDuration ?? duration,
+          easing: animation.animationEasing ?? "ease",
+          from: track ? (track.frames ?? null) : null,
+        }
+        tracks.current.set(key, track)
+      }
+      const elapsed =
+        track.duration > 0 ? (now - track.start) / track.duration : 1
+      if (elapsed >= 1) return null
+      running = true
+      return {
+        progress: EASINGS[track.easing](Math.max(0, elapsed)),
+        from: track.from,
+      }
+    },
+    settle(key, frames) {
+      const track = tracks.current.get(key)
+      if (track) track.frames = frames
+    },
+  }
   const scene = build(kind, {
     elements,
     config: container.config,
@@ -2442,6 +2794,12 @@ function Root({
     width: container.width,
     height: plotHeight,
     props: { kind, colors, renderSurface, renderText, ...props },
+    motion,
+  })
+  React.useEffect(() => {
+    if (!running) return
+    const frame = requestAnimationFrame(() => setFrame((value) => value + 1))
+    return () => cancelAnimationFrame(frame)
   })
   const interactive = Boolean(tooltip || onActiveIndexChange)
   const [selected, setSelected] = React.useState<number | null>(
@@ -2656,10 +3014,12 @@ export type {
   BarRadius,
   CartesianGridProps,
   CellProps,
+  ChartAnimation,
   ChartConfigBase,
   ChartCurve,
   ChartDatum,
   ChartDot,
+  ChartEasing,
   ChartGradient,
   ChartKind,
   ChartMargin,
