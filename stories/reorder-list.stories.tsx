@@ -6,6 +6,7 @@ import {
   ReorderListHandle,
   ReorderListItem,
 } from "@/components/interactions/reorder-list"
+import { ItemGroup } from "@/components/ui/item"
 import { Text } from "@/components/ui/text"
 
 const tasks: Record<string, { title: string; detail?: string }> = {
@@ -42,17 +43,17 @@ function ReorderDemo({ inset = false }: { inset?: boolean }) {
   const [value, setValue] = React.useState(initialOrder)
   return (
     <View className="gap-3">
-      <ReorderList
-        value={value}
-        onValueChange={setValue}
-        className={
-          inset
-            ? "overflow-hidden rounded-2xl border border-separator"
-            : undefined
-        }
-      >
-        {renderRows(value)}
-      </ReorderList>
+      {inset ? (
+        <ItemGroup variant="inset">
+          <ReorderList value={value} onValueChange={setValue}>
+            {renderRows(value)}
+          </ReorderList>
+        </ItemGroup>
+      ) : (
+        <ReorderList value={value} onValueChange={setValue}>
+          {renderRows(value)}
+        </ReorderList>
+      )}
       <Text role="status" className="text-sm text-label-secondary">
         {value.map((key) => tasks[key].title).join(", ")}
       </Text>

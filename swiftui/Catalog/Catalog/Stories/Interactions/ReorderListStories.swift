@@ -44,11 +44,10 @@ private struct ReorderListDemo: View {
 
   @ViewBuilder
   private var list: some View {
-    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
     if inset {
-      rows
-        .clipShape(shape)
-        .overlay { shape.strokeBorder(Color.separator) }
+      ItemGroup(.inset) {
+        rows
+      }
     } else {
       rows
     }

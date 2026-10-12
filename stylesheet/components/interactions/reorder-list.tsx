@@ -3,17 +3,19 @@ import * as React from "react"
 import { StyleSheet, View, type ViewProps } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import {
-  Easing,
+  ReduceMotion,
   runOnJS,
   type SharedValue,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
-  withTiming,
+  withSpring,
 } from "react-native-reanimated"
 import { useHaptics } from "@/components/primitives/haptics"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
-import { shadow, useTheme } from "@/components/ui/theme"
+import { ItemGroupContext } from "@/components/ui/item"
+import { radius, shadow, useTheme } from "@/components/ui/theme"
 
 type ReorderListContextProps = {
   order: SharedValue<string[]>
@@ -22,6 +24,7 @@ type ReorderListContextProps = {
   start: SharedValue<number>
   target: SharedValue<number>
   dragY: SharedValue<number>
+  lift: SharedValue<number>
   activeKey: string | null
   setActiveKey: (key: string | null) => void
   commit: (next: string[]) => void
@@ -56,13 +59,31 @@ function useReorderList() {
   return context
 }
 
-const EASING = Easing.bezier(0.32, 0.72, 0, 1)
+const LIFT = {
+  stiffness: 1500,
+  damping: 78,
+  mass: 1,
+  reduceMotion: ReduceMotion.System,
+}
 
-const DURATION = 200
+const SETTLE = {
+  stiffness: 400,
+  damping: 40,
+  mass: 1,
+  reduceMotion: ReduceMotion.System,
+}
 
 const styles = StyleSheet.create({
   item: { flexDirection: "row", alignItems: "center", gap: 12 },
-  lifted: { ...shadow.lg },
+  raised: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...shadow.lg,
+  },
+  raisedInset: { borderRadius: radius["2xl"] },
   handle: {
     width: 44,
     height: 44,
@@ -145,6 +166,7 @@ function ReorderList({
   const start = useSharedValue(-1)
   const target = useSharedValue(-1)
   const dragY = useSharedValue(0)
+  const lift = useSharedValue(0)
   const [activeKey, setActiveKey] = React.useState<string | null>(null)
   const pendingRef = React.useRef(false)
 
@@ -207,6 +229,7 @@ function ReorderList({
       start,
       target,
       dragY,
+      lift,
       activeKey,
       setActiveKey,
       commit,
@@ -223,6 +246,7 @@ function ReorderList({
       start,
       target,
       dragY,
+      lift,
       activeKey,
       commit,
       move,
@@ -244,21 +268,40 @@ function ReorderListItem({
   value,
   style,
   onLayout,
+  children,
   ...props
 }: ViewProps & {
   value: string
 }) {
   const { colors } = useTheme()
-  const { order, heights, active, start, target, dragY, activeKey, setHeight } =
-    useReorderList()
+  const {
+    order,
+    heights,
+    active,
+    start,
+    target,
+    dragY,
+    lift,
+    activeKey,
+    setHeight,
+  } = useReorderList()
+  const { inset } = React.useContext(ItemGroupContext)
+  const reduced = useReducedMotion()
+  const scaled = !inset && !reduced
 
   const animatedStyle = useAnimatedStyle(() => {
     const current = active.value
     if (current === null) {
-      return { zIndex: 0, transform: [{ translateY: 0 }] }
+      return { zIndex: 0, transform: [{ translateY: 0 }, { scale: 1 }] }
     }
     if (current === value) {
-      return { zIndex: 10, transform: [{ translateY: dragY.value }] }
+      return {
+        zIndex: 10,
+        transform: [
+          { translateY: dragY.value },
+          { scale: scaled ? 1 + 0.02 * lift.value : 1 },
+        ],
+      }
     }
     const index = order.value.indexOf(value)
     const from = start.value
@@ -269,33 +312,37 @@ function ReorderListItem({
     else if (to <= index && index < from) shift = height
     return {
       zIndex: 0,
-      transform: [
-        {
-          translateY: withTiming(shift, { duration: DURATION, easing: EASING }),
-        },
-      ],
+      transform: [{ translateY: withSpring(shift, SETTLE) }, { scale: 1 }],
     }
   })
+
+  const raisedStyle = useAnimatedStyle(() => ({
+    opacity: active.value === value ? lift.value : 0,
+  }))
 
   return (
     <ReorderListItemContext.Provider value={value}>
       <AnimatedView
-        style={[
-          styles.item,
-          {
-            backgroundColor:
-              activeKey === value ? colors.surfaceRaised : colors.surface,
-          },
-          activeKey === value && styles.lifted,
-          animatedStyle,
-          style,
-        ]}
+        style={[styles.item, animatedStyle, style]}
         onLayout={(event) => {
           setHeight(value, event.nativeEvent.layout.height)
           onLayout?.(event)
         }}
         {...props}
-      />
+      >
+        {activeKey === value ? (
+          <AnimatedView
+            pointerEvents="none"
+            style={[
+              styles.raised,
+              { backgroundColor: colors.surfaceRaised },
+              inset && styles.raisedInset,
+              raisedStyle,
+            ]}
+          />
+        ) : null}
+        {children}
+      </AnimatedView>
     </ReorderListItemContext.Provider>
   )
 }
@@ -312,6 +359,7 @@ function ReorderListHandle({
     start,
     target,
     dragY,
+    lift,
     setActiveKey,
     commit,
     move,
@@ -332,7 +380,9 @@ function ReorderListHandle({
           start.value = index
           target.value = index
           dragY.value = 0
+          lift.value = 0
           active.value = key
+          lift.value = withSpring(1, LIFT)
           runOnJS(setActiveKey)(key)
           runOnJS(impact)("medium")
         })
@@ -353,26 +403,19 @@ function ReorderListHandle({
           runOnJS(impact)("light")
           const from = start.value
           const to = target.value
+          lift.value = withSpring(0, SETTLE)
           if (from === to || from < 0) {
-            dragY.value = withTiming(
-              0,
-              { duration: DURATION, easing: EASING },
-              () => {
-                active.value = null
-                runOnJS(setActiveKey)(null)
-              }
-            )
+            dragY.value = withSpring(0, SETTLE, () => {
+              active.value = null
+              runOnJS(setActiveKey)(null)
+            })
             return
           }
           const offset = dropOffset(order.value, heights.value, from, to)
           const next = moveItem(order.value, from, to)
-          dragY.value = withTiming(
-            offset,
-            { duration: DURATION, easing: EASING },
-            () => {
-              runOnJS(commit)(next)
-            }
-          )
+          dragY.value = withSpring(offset, SETTLE, () => {
+            runOnJS(commit)(next)
+          })
         }),
     [
       key,
@@ -382,6 +425,7 @@ function ReorderListHandle({
       start,
       target,
       dragY,
+      lift,
       setActiveKey,
       commit,
       impact,

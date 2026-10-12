@@ -48,9 +48,10 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
 
   @State private var heights: [Value: CGFloat] = [:]
   @State private var dragging: Value?
+  @State private var lifted: Value?
   @State private var translation: CGFloat = 0
   @State private var drops = 0
-  @Environment(\.screenBackground) private var background
+  @Environment(\.itemGroupInset) private var inset
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init(_ value: Binding<[Value]>, @ViewBuilder row: @escaping (Value) -> Row) {
@@ -73,7 +74,7 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
     if reduceMotion {
       value.wrappedValue = next
     } else {
-      withAnimation(.smooth(duration: 0.25)) { value.wrappedValue = next }
+      withAnimation(ReorderMotion.settle) { value.wrappedValue = next }
     }
     AccessibilityNotification.Announcement(String(localized: "Moved to position \(destination + 1) of \(items.count)")).post()
   }
@@ -89,7 +90,7 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
         } ?? 0
         rowView(item, index: index, active: active)
           .offset(y: active ? translation : shift)
-          .animation(active || reduceMotion ? nil : .smooth(duration: 0.2), value: shift)
+          .animation(active || reduceMotion ? nil : ReorderMotion.settle, value: shift)
           .zIndex(active ? 1 : 0)
       }
     }
@@ -100,18 +101,23 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
   }
 
   private func rowView(_ item: Value, index: Int, active: Bool) -> some View {
-    HStack(spacing: 12) {
+    let raised = lifted == item
+    let shape = RoundedRectangle(cornerRadius: inset ? Radius.xl2 : 0, style: .continuous)
+    return HStack(spacing: 12) {
       row(item)
         .frame(maxWidth: .infinity, alignment: .leading)
       Ph.dotsSixVertical.bold
         .frame(width: 20, height: 20)
-        .foregroundStyle(active ? Color.labelSecondary : .labelTertiary)
+        .foregroundStyle(raised ? Color.labelSecondary : .labelTertiary)
         .frame(width: 44, height: 44)
         .contentShape(Rectangle())
         .gesture(
           DragGesture(minimumDistance: 0, coordinateSpace: .named(ReorderSpace.name))
             .onChanged { gesture in
-              if dragging != item { dragging = item }
+              if dragging != item {
+                dragging = item
+                withAnimation(reduceMotion ? nil : ReorderMotion.lift) { lifted = item }
+              }
               translation = gesture.translation.height
             }
             .onEnded { gesture in
@@ -125,8 +131,9 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
                   translation = gesture.translation.height - travelled(from: index, to: destination)
                 }
               }
-              withAnimation(reduceMotion ? nil : .smooth(duration: 0.25)) {
+              withAnimation(reduceMotion ? nil : ReorderMotion.settle) {
                 translation = 0
+                lifted = nil
               } completion: {
                 dragging = nil
               }
@@ -137,15 +144,18 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
     .padding(.leading, 16)
     .padding(.trailing, 4)
     .frame(minHeight: 44)
-    .background(active ? Color.surfaceRaised : background)
+    .background {
+      shape
+        .fill(Color.surfaceRaised)
+        .shadow(.lg)
+        .opacity(raised ? 1 : 0)
+    }
     .overlay(alignment: .bottom) {
       if index < items.count - 1 && !active {
         Color.separator.frame(height: 1).padding(.leading, 16)
       }
     }
-    .shadow(active ? .lg : Shadow(color: .clear, radius: 0))
-    .scaleEffect(active && !reduceMotion ? 1.02 : 1)
-    .animation(.easeOut(duration: 0.15), value: active)
+    .scaleEffect(raised && !reduceMotion && !inset ? 1.02 : 1)
     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { heights[item] = $0 }
     .accessibilityElement(children: .combine)
     .accessibilityActions {
@@ -164,6 +174,11 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
     }
     return -sizes[destination..<source].reduce(0, +)
   }
+}
+
+enum ReorderMotion {
+  static let lift = Animation.smooth(duration: 0.16)
+  static let settle = Animation.smooth(duration: 0.3)
 }
 
 enum ReorderSpace {

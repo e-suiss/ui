@@ -79,7 +79,7 @@ private class ItemState(val size: ItemSize) {
 
 private val LocalItemState = staticCompositionLocalOf<ItemState?> { null }
 
-private val LocalItemGroupVariant = staticCompositionLocalOf<ItemGroupVariant?> { null }
+internal val LocalItemGroupVariant = staticCompositionLocalOf<ItemGroupVariant?> { null }
 
 @Composable
 fun ItemGroup(
