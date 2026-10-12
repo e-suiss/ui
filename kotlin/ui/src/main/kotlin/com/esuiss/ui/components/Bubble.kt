@@ -227,7 +227,7 @@ fun BubbleContent(
                 if (tailing && (slot?.tailed ?: true)) {
                     val unit = 1.dp.toPx()
                     val end = (align == BubbleAlign.End) != (layoutDirection == LayoutDirection.Rtl)
-                    val left = if (end) size.width + 7.9f * unit else -7.9f * unit
+                    val left = if (end) size.width + 6.9f * unit else -6.9f * unit
                     val top = size.height + unit - 20f * unit
                     withTransform({
                         translate(left, top)
