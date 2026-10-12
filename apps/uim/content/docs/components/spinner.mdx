@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-spinner--default" width={880} height={400}>
+<Example id="components-spinner--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerExample: View {\n  var body: some View {\n    Spinner()\n      .foregroundStyle(Color.labelSecondary)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Spinner\n\n@Composable\nfun SpinnerExample() {\n    Spinner()\n}"} />
 
 </Example>
 
@@ -95,9 +99,13 @@ Set `size` in points (default `16`) and `colorClassName` with an `accent-*` clas
 
 Spinners at 12, 16, 24 and 32 points.
 
-<Example id="components-spinner--sizes" width={880} height={400}>
+<Example id="components-spinner--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={12} />\n      <Spinner />\n      <Spinner size={24} />\n      <Spinner size={32} />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerSizesExample: View {\n  var body: some View {\n    HStack(spacing: 24) {\n      Spinner(.sm)\n      Spinner()\n      Spinner(.lg)\n      Spinner(.xl)\n    }\n    .foregroundStyle(Color.labelSecondary)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Spinner\n\n@Composable\nfun SpinnerRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun SpinnerSizes() {\n    SpinnerRow {\n        Spinner(size = 12.dp)\n        Spinner()\n        Spinner(size = 24.dp)\n        Spinner(size = 32.dp)\n    }\n}"} />
 
 </Example>
 
@@ -105,9 +113,13 @@ Spinners at 12, 16, 24 and 32 points.
 
 Spinners in the label, accent and danger colors.
 
-<Example id="components-spinner--colors" width={880} height={400}>
+<Example id="components-spinner--colors" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={24} colorClassName=\"accent-label\" />\n      <Spinner size={24} colorClassName=\"accent-accent\" />\n      <Spinner size={24} colorClassName=\"accent-danger\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerColorsExample: View {\n  var body: some View {\n    HStack(spacing: 24) {\n      Spinner(.lg).foregroundStyle(Color.label)\n      Spinner(.lg).foregroundStyle(Color.accent)\n      Spinner(.lg).foregroundStyle(Color.danger)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun SpinnerRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun SpinnerColors() {\n    val colors = EsuissTheme.colors\n    SpinnerRow {\n        Spinner(size = 24.dp, color = colors.label)\n        Spinner(size = 24.dp, color = colors.accent)\n        Spinner(size = 24.dp, color = colors.danger)\n    }\n}"} />
 
 </Example>
 
@@ -115,9 +127,13 @@ Spinners in the label, accent and danger colors.
 
 Spinners inside disabled buttons next to a label.
 
-<Example id="components-spinner--in-button" width={880} height={400}>
+<Example id="components-spinner--in-button" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Spinner colorClassName=\"accent-on-accent\" />\n        <Text>Saving</Text>\n      </Button>\n      <Button variant=\"secondary\" disabled>\n        <Spinner />\n        <Text>Loading</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerInButtonExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      Button {} label: {\n        HStack(spacing: 6) {\n          Spinner().foregroundStyle(Color.onAccent)\n          Text(\"Saving\")\n        }\n      }\n      .buttonStyle(.variant())\n      Button {} label: {\n        HStack(spacing: 6) {\n          Spinner().foregroundStyle(Color.labelSecondary)\n          Text(\"Loading\")\n        }\n      }\n      .buttonStyle(.variant(.secondary))\n    }\n    .disabled(true)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun SpinnerInButton() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(onClick = {}, enabled = false) {\n            Spinner(color = EsuissTheme.colors.onAccent)\n            Text(\"Saving\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Secondary, enabled = false) {\n            Spinner()\n            Text(\"Loading\")\n        }\n    }\n}"} />
 
 </Example>
 

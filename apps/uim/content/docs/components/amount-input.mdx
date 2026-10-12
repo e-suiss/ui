@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-amount-input--default" width={880} height={959}>
+<Example id="components-amount-input--default" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"USD\", locale: \"en-US\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputExample() {\n    AmountInputStory(\"USD\", \"en-US\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -113,9 +117,13 @@ Pass `deleteLabel` and `decimalLabel` to localize the keypad's spoken labels.
 
 Starts with a value through `defaultValue`.
 
-<Example id="components-amount-input--filled" width={880} height={959}>
+<Example id="components-amount-input--filled" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputFilledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"1250.5\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputFilledExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"USD\", locale: \"en-US\", initial: \"1250.5\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputFilledExample() {\n    AmountInputStory(\"USD\", \"en-US\", \"1250.5\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -123,9 +131,13 @@ Starts with a value through `defaultValue`.
 
 Controlled with `value` and `onValueChange`.
 
-<Example id="components-amount-input--controlled" width={880} height={1023}>
+<Example id="components-amount-input--controlled" width={880} height={1023} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { AmountInput } from \"@/components/ui/amount-input\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [amount, setAmount] = React.useState(0)\n  return (\n    <View className=\"items-center gap-4\">\n      <AmountInput\n        currency=\"USD\"\n        locale=\"en-US\"\n        value={value}\n        onValueChange={(next, nextAmount) => {\n          setValue(next)\n          setAmount(nextAmount)\n        }}\n      />\n      <Text className=\"text-sm text-label-secondary\">\n        {`value \"${value}\" · amount ${amount}`}\n      </Text>\n    </View>\n  )\n}\n\nexport function AmountInputControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputControlledDemo: View {\n  @State private var value = \"\"\n  @State private var amount: Double = 0\n\n  var body: some View {\n    VStack(spacing: 16) {\n      AmountInput(value: $value, currency: \"USD\") { _, next in\n        amount = next\n      }\n      .environment(\\.locale, Locale(identifier: \"en-US\"))\n      Text(verbatim: \"value \\\"\\(value)\\\" · amount \\(amountText)\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  var amountText: String {\n    amount.rounded() == amount && abs(amount) < 1e15 ? String(Int64(amount)) : String(amount)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableDoubleStateOf\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.AmountInput\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport java.util.Locale\n\n@Composable\nfun AmountInputControlled() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    var amount by rememberSaveable { mutableDoubleStateOf(0.0) }\n    Column(\n        Modifier.fillMaxWidth(),\n        verticalArrangement = Arrangement.spacedBy(16.dp),\n        horizontalAlignment = Alignment.CenterHorizontally,\n    ) {\n        AmountInput(\n            modifier = Modifier.fillMaxWidth(),\n            value = value,\n            onValueChange = { next, nextAmount ->\n                value = next\n                amount = nextAmount\n            },\n            currency = \"USD\",\n            locale = Locale.forLanguageTag(\"en-US\"),\n        )\n        val shown = if (amount % 1.0 == 0.0) amount.toLong().toString() else amount.toString()\n        Text(\n            \"value \\\"$value\\\" · amount $shown\",\n            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n        )\n    }\n}"} />
 
 </Example>
 
@@ -133,9 +145,13 @@ Controlled with `value` and `onValueChange`.
 
 A long amount that shrinks to fit.
 
-<Example id="components-amount-input--long-amount" width={880} height={959}>
+<Example id="components-amount-input--long-amount" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputLongAmountExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"98765432109.99\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputLongAmountExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"USD\", locale: \"en-US\", initial: \"98765432109.99\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputLongAmountExample() {\n    AmountInputStory(\"USD\", \"en-US\", \"98765432109.99\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -143,9 +159,13 @@ A long amount that shrinks to fit.
 
 EUR in the `de-DE` locale with a comma decimal separator.
 
-<Example id="components-amount-input--euro" width={880} height={959}>
+<Example id="components-amount-input--euro" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputEuroExample() {\n  return (\n    <AmountInput currency=\"EUR\" locale=\"de-DE\" defaultValue=\"1234.5\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputEuroExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"EUR\", locale: \"de-DE\", initial: \"1234.5\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputEuroExample() {\n    AmountInputStory(\"EUR\", \"de-DE\", \"1234.5\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -153,9 +173,13 @@ EUR in the `de-DE` locale with a comma decimal separator.
 
 TRY in the `tr-TR` locale.
 
-<Example id="components-amount-input--turkish-lira" width={880} height={959}>
+<Example id="components-amount-input--turkish-lira" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputTurkishLiraExample() {\n  return (\n    <AmountInput currency=\"TRY\" locale=\"tr-TR\" defaultValue=\"2500.75\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputTurkishLiraExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"TRY\", locale: \"tr-TR\", initial: \"2500.75\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputTurkishLiraExample() {\n    AmountInputStory(\"TRY\", \"tr-TR\", \"2500.75\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -163,9 +187,13 @@ TRY in the `tr-TR` locale.
 
 JPY, which has no decimal key.
 
-<Example id="components-amount-input--yen" width={880} height={959}>
+<Example id="components-amount-input--yen" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputYenExample() {\n  return (\n    <AmountInput currency=\"JPY\" locale=\"ja-JP\" defaultValue=\"15000\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputYenExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"JPY\", locale: \"ja-JP\", initial: \"15000\")\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputYenExample() {\n    AmountInputStory(\"JPY\", \"ja-JP\", \"15000\")\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -173,9 +201,13 @@ JPY, which has no decimal key.
 
 Capped at 500 with `max`; larger entries are rejected.
 
-<Example id="components-amount-input--with-max" width={880} height={959}>
+<Example id="components-amount-input--with-max" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputWithMaxExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" max={500} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputWithMaxExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"USD\", locale: \"en-US\", max: 500)\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputWithMaxExample() {\n    AmountInputStory(\"USD\", \"en-US\", max = 500.0)\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 
@@ -183,9 +215,13 @@ Capped at 500 with `max`; larger entries are rejected.
 
 A disabled input with a dimmed amount and keypad.
 
-<Example id="components-amount-input--disabled" width={880} height={959}>
+<Example id="components-amount-input--disabled" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputDisabledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"42\" disabled />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AmountInputDisabledExample: View {\n  var body: some View {\n    AmountInputDemo(currency: \"USD\", locale: \"en-US\", initial: \"42\")\n      .disabled(true)\n  }\n}\n\nstruct AmountInputDemo: View {\n  let currency: String\n  let locale: String\n  var max: Double?\n\n  @State private var value: String\n\n  init(currency: String, locale: String, initial: String = \"\", max: Double? = nil) {\n    self.currency = currency\n    self.locale = locale\n    self.max = max\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    AmountInput(value: $value, currency: currency, max: max)\n      .environment(\\.locale, Locale(identifier: locale))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.AmountInput\nimport java.util.Locale\n\n@Composable\nfun AmountInputDisabledExample() {\n    AmountInputStory(\"USD\", \"en-US\", \"42\", enabled = false)\n}\n\n@Composable\nfun AmountInputStory(\n    currency: String,\n    locale: String,\n    defaultValue: String = \"\",\n    max: Double? = null,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    AmountInput(\n        modifier = Modifier.fillMaxWidth(),\n        value = value,\n        onValueChange = { next, _ -> value = next },\n        currency = currency,\n        locale = Locale.forLanguageTag(locale),\n        max = max,\n        enabled = enabled,\n    )\n}"} />
 
 </Example>
 

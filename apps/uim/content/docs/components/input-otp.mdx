@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-inputotp--default" width={880} height={400}>
+<Example id="components-inputotp--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpExample() {\n  return (\n    <InputOTP length={6}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPDefaultDemo: View {\n  @State private var text = \"\"\n\n  var body: some View {\n    InputOTP(text: $text, length: 6) {\n      InputOTPGroup {\n        InputOTPSlot(index: 0)\n        InputOTPSlot(index: 1)\n        InputOTPSlot(index: 2)\n      }\n      InputOTPSeparator()\n      InputOTPGroup {\n        InputOTPSlot(index: 3)\n        InputOTPSlot(index: 4)\n        InputOTPSlot(index: 5)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.InputOTP\nimport com.esuiss.ui.components.InputOTPGroup\nimport com.esuiss.ui.components.InputOTPSeparator\nimport com.esuiss.ui.components.InputOTPSlot\n\n@Composable\nfun InputOTPDefault() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Column {\n        InputOTP(value, { value = it }, maxLength = 6) {\n            InputOTPGroup {\n                InputOTPSlot(0)\n                InputOTPSlot(1)\n                InputOTPSlot(2)\n            }\n            InputOTPSeparator()\n            InputOTPGroup {\n                InputOTPSlot(3)\n                InputOTPSlot(4)\n                InputOTPSlot(5)\n            }\n        }\n    }\n}"} />
 
 </Example>
 
@@ -113,9 +117,13 @@ Use `InputOTPSlotClassContext` to style every slot at once, or `className` on a 
 
 Controlled with `value` and `onValueChange`.
 
-<Example id="components-inputotp--controlled" width={880} height={400}>
+<Example id="components-inputotp--controlled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [completed, setCompleted] = React.useState<string | null>(null)\n  return (\n    <View className=\"gap-3\">\n      <InputOTP\n        length={4}\n        value={value}\n        onValueChange={setValue}\n        onValueComplete={setCompleted}\n      >\n        <InputOTPGroup>\n          {slotIndexes(4).map((index) => (\n            <InputOTPSlot key={index} index={index} />\n          ))}\n        </InputOTPGroup>\n      </InputOTP>\n      <Text variant=\"muted\">\n        {completed ? `Submitted ${completed}` : \"Enter the 4 digit code\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function InputOtpControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPControlledDemo: View {\n  @State private var value = \"\"\n  @State private var completed: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      InputOTP(text: $value, length: 4)\n      Text(completed.map { \"Submitted \\($0)\" } ?? \"Enter the 4 digit code\")\n        .textVariant(.muted)\n    }\n    .onChange(of: value) { _, next in\n      if next.count == 4 { completed = next }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.InputOTP\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun InputOTPControlled() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    var completed by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        InputOTP(value, { value = it }, maxLength = 4, onComplete = { completed = it })\n        Text(completed?.let { \"Submitted $it\" } ?: \"Enter the 4 digit code\", variant = TextVariant.Muted)\n    }\n}"} />
 
 </Example>
 
@@ -123,9 +131,13 @@ Controlled with `value` and `onValueChange`.
 
 Letters and numbers with `validationType="alphanumeric"`.
 
-<Example id="components-inputotp--alphanumeric" width={880} height={400}>
+<Example id="components-inputotp--alphanumeric" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nexport function InputOtpAlphanumericExample() {\n  return (\n    <InputOTP\n      length={6}\n      validationType=\"alphanumeric\"\n      normalizeValue={(value) => value.toUpperCase()}\n    >\n      <InputOTPGroup>\n        {slotIndexes(6).map((index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPAlphanumericDemo: View {\n  @State private var value = \"\"\n\n  var body: some View {\n    InputOTP(\n      text: Binding(get: { value }, set: { value = $0.uppercased() }),\n      length: 6,\n      allowed: .alphanumerics\n    )\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.InputOTP\n\n@Composable\nfun InputOTPAlphanumeric() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Column {\n        InputOTP(value, { value = it.uppercase() }, maxLength = 6, keyboardType = KeyboardType.Ascii)\n    }\n}"} />
 
 </Example>
 
@@ -143,9 +155,13 @@ A four-digit code with hidden characters.
 
 A disabled field with a partial value.
 
-<Example id="components-inputotp--disabled" width={880} height={400}>
+<Example id="components-inputotp--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nexport function InputOtpDisabledExample() {\n  return (\n    <InputOTP length={6} disabled defaultValue=\"123\">\n      <InputOTPGroup>\n        {slotIndexes(6).map((index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPDisabledExample: View {\n  var body: some View {\n    InputOTPDemo(length: 6, initial: \"123\")\n      .disabled(true)\n  }\n}\n\nstruct InputOTPDemo: View {\n  let length: Int\n\n  @State private var text: String\n\n  init(length: Int, initial: String = \"\") {\n    self.length = length\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    InputOTP(text: $text, length: length)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.InputOTP\n\n@Composable\nfun InputOTPDisabled() {\n    var value by rememberSaveable { mutableStateOf(\"123\") }\n    Column {\n        InputOTP(value, { value = it }, maxLength = 6, enabled = false)\n    }\n}"} />
 
 </Example>
 

@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-switch--default" width={880} height={400}>
+<Example id="components-switch--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction SwitchDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Switch checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function SwitchExample() {\n  return (\n    <SwitchDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SwitchExample: View {\n  var body: some View {\n    SwitchDemo(initial: false)\n  }\n}\n\nstruct SwitchDemo: View {\n  var size: SwitchStyle.Size = .default\n  var label: LocalizedStringKey?\n\n  @State private var checked: Bool\n\n  init(initial: Bool, size: SwitchStyle.Size = .default, label: LocalizedStringKey? = nil) {\n    self.size = size\n    self.label = label\n    _checked = State(initialValue: initial)\n  }\n\n  var body: some View {\n    if let label {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n        .accessibilityLabel(Text(label))\n    } else {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Switch\n\n@Composable\nfun SwitchExample() {\n    SwitchDemo(initial = false)\n}\n\n@Composable\nfun SwitchDemo(initial: Boolean) {\n    var checked by rememberSaveable { mutableStateOf(initial) }\n    Switch(checked, { checked = it })\n}"} />
 
 </Example>
 
@@ -111,9 +115,13 @@ The switch has a hit slop around it, so it is easier to press than its visual si
 
 A switch that starts on.
 
-<Example id="components-switch--checked" width={880} height={400}>
+<Example id="components-switch--checked" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction SwitchDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Switch checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function SwitchCheckedExample() {\n  return (\n    <SwitchDemo initial />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SwitchCheckedExample: View {\n  var body: some View {\n    SwitchDemo(initial: true)\n  }\n}\n\nstruct SwitchDemo: View {\n  var size: SwitchStyle.Size = .default\n  var label: LocalizedStringKey?\n\n  @State private var checked: Bool\n\n  init(initial: Bool, size: SwitchStyle.Size = .default, label: LocalizedStringKey? = nil) {\n    self.size = size\n    self.label = label\n    _checked = State(initialValue: initial)\n  }\n\n  var body: some View {\n    if let label {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n        .accessibilityLabel(Text(label))\n    } else {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Switch\n\n@Composable\nfun SwitchCheckedExample() {\n    SwitchDemo(initial = true)\n}\n\n@Composable\nfun SwitchDemo(initial: Boolean) {\n    var checked by rememberSaveable { mutableStateOf(initial) }\n    Switch(checked, { checked = it })\n}"} />
 
 </Example>
 
@@ -121,9 +129,13 @@ A switch that starts on.
 
 The `sm` and `default` sizes side by side.
 
-<Example id="components-switch--sizes" width={880} height={400}>
+<Example id="components-switch--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Switch size=\"sm\" defaultChecked accessibilityLabel=\"Wi-Fi\" />\n      <Switch defaultChecked accessibilityLabel=\"Bluetooth\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SwitchSizesExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      SwitchDemo(initial: true, size: .sm, label: \"Wi-Fi\")\n      SwitchDemo(initial: true, label: \"Bluetooth\")\n    }\n  }\n}\n\nstruct SwitchDemo: View {\n  var size: SwitchStyle.Size = .default\n  var label: LocalizedStringKey?\n\n  @State private var checked: Bool\n\n  init(initial: Bool, size: SwitchStyle.Size = .default, label: LocalizedStringKey? = nil) {\n    self.size = size\n    self.label = label\n    _checked = State(initialValue: initial)\n  }\n\n  var body: some View {\n    if let label {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n        .accessibilityLabel(Text(label))\n    } else {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: size))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Switch\nimport com.esuiss.ui.components.SwitchSize\n\nfun Modifier.label(text: String): Modifier = semantics { contentDescription = text }\n\n@Composable\nfun Modifier.toggles(onToggle: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    onClick = onToggle,\n)\n\n@Composable\nfun SwitchSizes() {\n    var wifi by rememberSaveable { mutableStateOf(true) }\n    var bluetooth by rememberSaveable { mutableStateOf(true) }\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        Switch(wifi, { wifi = it }, Modifier.label(\"Wi-Fi\"), size = SwitchSize.Sm)\n        Switch(bluetooth, { bluetooth = it }, Modifier.label(\"Bluetooth\"))\n    }\n}"} />
 
 </Example>
 
@@ -131,9 +143,13 @@ The `sm` and `default` sizes side by side.
 
 A controlled switch next to a pressable label.
 
-<Example id="components-switch--with-label" width={880} height={400}>
+<Example id="components-switch--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction WithLabelDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <Switch\n        accessibilityLabelledBy=\"airplane-mode\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label nativeID=\"airplane-mode\" onPress={() => setChecked((v) => !v)}>\n        Airplane mode\n      </Label>\n    </View>\n  )\n}\n\nexport function SwitchWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct WithLabelDemo: View {\n  @State private var checked = false\n\n  var body: some View {\n    Toggle(isOn: $checked) {\n      FieldLabel(\"Airplane mode\")\n    }\n    .toggleStyle(.switch(size: .default))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Switch\n\nfun Modifier.label(text: String): Modifier = semantics { contentDescription = text }\n\n@Composable\nfun Modifier.toggles(onToggle: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    onClick = onToggle,\n)\n\n@Composable\nfun SwitchWithLabel() {\n    var checked by rememberSaveable { mutableStateOf(false) }\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        Switch(checked, { checked = it }, Modifier.label(\"Airplane mode\"))\n        Label(\"Airplane mode\", Modifier.toggles { checked = !checked })\n    }\n}"} />
 
 </Example>
 
@@ -141,9 +157,13 @@ A controlled switch next to a pressable label.
 
 A switch with a label and a line of supporting text.
 
-<Example id="components-switch--with-description" width={880} height={400}>
+<Example id="components-switch--with-description" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction WithDescriptionDemo() {\n  const [checked, setChecked] = React.useState(true)\n  return (\n    <View className=\"flex-row items-center justify-between gap-4 rounded-2xl bg-surface-secondary p-4\">\n      <View className=\"flex-1 gap-1\">\n        <Label nativeID=\"marketing\" onPress={() => setChecked((v) => !v)}>\n          Marketing emails\n        </Label>\n        <Text className=\"text-sm text-label-secondary\">\n          Receive emails about new products.\n        </Text>\n      </View>\n      <Switch\n        accessibilityLabelledBy=\"marketing\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n    </View>\n  )\n}\n\nexport function SwitchWithDescriptionExample() {\n  return (\n    <WithDescriptionDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct WithDescriptionDemo: View {\n  @State private var checked = true\n\n  var body: some View {\n    HStack(spacing: 16) {\n      VStack(alignment: .leading, spacing: 4) {\n        FieldLabel(\"Marketing emails\")\n          .onTapGesture { checked.toggle() }\n        Text(\"Receive emails about new products.\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity, alignment: .leading)\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.switch(size: .default))\n        .accessibilityLabel(Text(\"Marketing emails\"))\n    }\n    .padding(16)\n    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Switch\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nfun Modifier.label(text: String): Modifier = semantics { contentDescription = text }\n\n@Composable\nfun Modifier.toggles(onToggle: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    onClick = onToggle,\n)\n\n@Composable\nfun SwitchWithDescription() {\n    var checked by rememberSaveable { mutableStateOf(true) }\n    val colors = EsuissTheme.colors\n    val shape = RoundedCornerShape(Radius.xl2)\n    Row(\n        modifier = Modifier\n            .fillMaxWidth()\n            .background(colors.surfaceSecondary, shape)\n            .padding(16.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {\n            Label(\"Marketing emails\", Modifier.toggles { checked = !checked })\n            Text(\"Receive emails about new products.\", style = Typography.sm.copy(color = colors.labelSecondary))\n        }\n        Switch(checked, { checked = it }, Modifier.label(\"Marketing emails\"))\n    }\n}"} />
 
 </Example>
 
@@ -151,9 +171,13 @@ A switch with a label and a line of supporting text.
 
 Disabled switches in the off and on states.
 
-<Example id="components-switch--disabled" width={880} height={400}>
+<Example id="components-switch--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <Switch disabled checked={false} onCheckedChange={() => {}} />\n      <Switch disabled checked onCheckedChange={() => {}} />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SwitchDisabledExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Toggle(isOn: .constant(false)) { EmptyView() }\n      Toggle(isOn: .constant(true)) { EmptyView() }\n    }\n    .toggleStyle(.switch(size: .default))\n    .disabled(true)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Switch\n\n@Composable\nfun SwitchDisabled() {\n    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Switch(false, {}, enabled = false)\n        Switch(true, {}, enabled = false)\n    }\n}"} />
 
 </Example>
 
@@ -161,9 +185,13 @@ Disabled switches in the off and on states.
 
 A switch with the `invalid` border next to its label.
 
-<Example id="components-switch--invalid" width={880} height={400}>
+<Example id="components-switch--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchInvalidExample() {\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <Switch invalid accessibilityLabelledBy=\"terms-switch\" />\n      <Label nativeID=\"terms-switch\">Accept terms</Label>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InvalidDemo: View {\n  @State private var checked = false\n\n  var body: some View {\n    Toggle(isOn: $checked) {\n      FieldLabel(\"Accept terms\")\n    }\n    .toggleStyle(.switch(size: .default))\n    .invalid()\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Switch\n\nfun Modifier.label(text: String): Modifier = semantics { contentDescription = text }\n\n@Composable\nfun Modifier.toggles(onToggle: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    onClick = onToggle,\n)\n\n@Composable\nfun SwitchInvalid() {\n    var checked by rememberSaveable { mutableStateOf(false) }\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        Switch(checked, { checked = it }, Modifier.label(\"Accept terms\"), invalid = true)\n        Label(\"Accept terms\")\n    }\n}"} />
 
 </Example>
 

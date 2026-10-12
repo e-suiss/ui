@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-input--default" width={880} height={400}>
+<Example id="components-input--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputExample() {\n  return (\n    <Input placeholder=\"Email\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputExample: View {\n  var body: some View {\n    InputDemo(placeholder: \"Email\")\n  }\n}\n\nstruct InputDemo: View {\n  let placeholder: LocalizedStringKey\n  var size: InputStyle.Size = .default\n\n  @State private var text: String\n\n  init(placeholder: LocalizedStringKey, size: InputStyle.Size = .default, initial: String = \"\") {\n    self.placeholder = placeholder\n    self.size = size\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text)\n      .textFieldStyle(.input(size: size))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun InputExample() {\n    InputSingle(initial = \"\", placeholder = \"Email\")\n}\n\n@Composable\nfun InputSingle(initial: String, placeholder: String, enabled: Boolean = true) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Input(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 
@@ -107,9 +111,13 @@ The value works controlled with `value` and `onValueChange(value, details)`, or 
 
 Text, email, password, number and search fields set through standard `TextInput` props.
 
-<Example id="components-input--types" width={880} height={615}>
+<Example id="components-input--types" width={880} height={615} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function InputTypesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Input placeholder=\"Text\" />\n      <Input\n        placeholder=\"Email\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n      <Input placeholder=\"Password\" secureTextEntry />\n      <Input placeholder=\"Number\" keyboardType=\"number-pad\" />\n      <Input placeholder=\"Search\" inputMode=\"search\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputTypesDemo: View {\n  @State private var text = \"\"\n  @State private var email = \"\"\n  @State private var password = \"\"\n  @State private var number = \"\"\n  @State private var search = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      TextField(\"Text\", text: $text)\n        .textFieldStyle(.input)\n      TextField(\"Email\", text: $email)\n        .textFieldStyle(.input)\n        .keyboardType(.emailAddress)\n        .textInputAutocapitalization(.never)\n      SecureField(\"Password\", text: $password)\n        .textFieldStyle(.input)\n      TextField(\"Number\", text: $number)\n        .textFieldStyle(.input)\n        .keyboardType(.numberPad)\n      TextField(\"Search\", text: $search)\n        .textFieldStyle(.input)\n        .submitLabel(.search)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.input.ImeAction\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport androidx.compose.ui.text.input.PasswordVisualTransformation\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Text\n\nval InputEmailKeyboard = KeyboardOptions(\n    capitalization = KeyboardCapitalization.None,\n    keyboardType = KeyboardType.Email,\n)\n\n@Composable\nfun InputTypes() {\n    var text by rememberSaveable { mutableStateOf(\"\") }\n    var email by rememberSaveable { mutableStateOf(\"\") }\n    var password by rememberSaveable { mutableStateOf(\"\") }\n    var number by rememberSaveable { mutableStateOf(\"\") }\n    var search by rememberSaveable { mutableStateOf(\"\") }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Input(text, { text = it }, placeholder = \"Text\")\n        Input(email, { email = it }, placeholder = \"Email\", keyboardOptions = InputEmailKeyboard)\n        Input(\n            password,\n            { password = it },\n            placeholder = \"Password\",\n            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),\n            visualTransformation = PasswordVisualTransformation(),\n        )\n        Input(number, { number = it }, placeholder = \"Number\", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))\n        Input(search, { search = it }, placeholder = \"Search\", keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search))\n    }\n}"} />
 
 </Example>
 
@@ -117,9 +125,13 @@ Text, email, password, number and search fields set through standard `TextInput`
 
 The `sm`, `md` and default sizes.
 
-<Example id="components-input--sizes" width={880} height={400}>
+<Example id="components-input--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputSizesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Input size=\"sm\" placeholder=\"Small\" />\n      <Input size=\"md\" placeholder=\"Medium\" />\n      <Input placeholder=\"Default\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      InputDemo(placeholder: \"Small\", size: .sm)\n      InputDemo(placeholder: \"Medium\", size: .md)\n      InputDemo(placeholder: \"Default\")\n    }\n  }\n}\n\nstruct InputDemo: View {\n  let placeholder: LocalizedStringKey\n  var size: InputStyle.Size = .default\n\n  @State private var text: String\n\n  init(placeholder: LocalizedStringKey, size: InputStyle.Size = .default, initial: String = \"\") {\n    self.placeholder = placeholder\n    self.size = size\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text)\n      .textFieldStyle(.input(size: size))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.InputSize\n\n@Composable\nfun InputSizes() {\n    var small by rememberSaveable { mutableStateOf(\"\") }\n    var medium by rememberSaveable { mutableStateOf(\"\") }\n    var default by rememberSaveable { mutableStateOf(\"\") }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Input(small, { small = it }, size = InputSize.Sm, placeholder = \"Small\")\n        Input(medium, { medium = it }, size = InputSize.Md, placeholder = \"Medium\")\n        Input(default, { default = it }, placeholder = \"Default\")\n    }\n}"} />
 
 </Example>
 
@@ -127,9 +139,13 @@ The `sm`, `md` and default sizes.
 
 An input that starts with a `defaultValue`.
 
-<Example id="components-input--with-value" width={880} height={400}>
+<Example id="components-input--with-value" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputWithValueExample() {\n  return (\n    <Input placeholder=\"Email\" defaultValue=\"hello@example.com\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputWithValueExample: View {\n  var body: some View {\n    InputDemo(placeholder: \"Email\", initial: \"hello@example.com\")\n  }\n}\n\nstruct InputDemo: View {\n  let placeholder: LocalizedStringKey\n  var size: InputStyle.Size = .default\n\n  @State private var text: String\n\n  init(placeholder: LocalizedStringKey, size: InputStyle.Size = .default, initial: String = \"\") {\n    self.placeholder = placeholder\n    self.size = size\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text)\n      .textFieldStyle(.input(size: size))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun InputWithValueExample() {\n    InputSingle(initial = \"hello@example.com\", placeholder = \"Email\")\n}\n\n@Composable\nfun InputSingle(initial: String, placeholder: String, enabled: Boolean = true) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Input(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 
@@ -137,9 +153,13 @@ An input that starts with a `defaultValue`.
 
 An input inside a `Field` with a label and description.
 
-<Example id="components-input--with-label" width={880} height={400}>
+<Example id="components-input--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputWithLabelExample() {\n  return (\n    <Field>\n      <FieldLabel>Email</FieldLabel>\n      <Input\n        placeholder=\"m@example.com\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n      <FieldDescription>We will never share your email.</FieldDescription>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputWithLabelDemo: View {\n  @State private var email = \"\"\n\n  var body: some View {\n    Field {\n      FieldLabel(\"Email\")\n        .accessibilityHidden(true)\n      TextField(text: $email, prompt: Text(verbatim: \"m@example.com\")) {\n        Text(\"Email\")\n      }\n        .textFieldStyle(.input)\n        .keyboardType(.emailAddress)\n        .textInputAutocapitalization(.never)\n        .accessibilityLabel(Text(\"Email\"))\n      FieldDescription(\"We will never share your email.\")\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\n\nval InputEmailKeyboard = KeyboardOptions(\n    capitalization = KeyboardCapitalization.None,\n    keyboardType = KeyboardType.Email,\n)\n\n@Composable\nfun InputWithLabel() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Field {\n        FieldLabel(\"Email\")\n        Input(value, { value = it }, placeholder = \"m@example.com\", keyboardOptions = InputEmailKeyboard)\n        FieldDescription(\"We will never share your email.\")\n    }\n}"} />
 
 </Example>
 
@@ -147,9 +167,13 @@ An input inside a `Field` with a label and description.
 
 An input inside an invalid `Field` with an error message.
 
-<Example id="components-input--invalid" width={880} height={400}>
+<Example id="components-input--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Username</FieldLabel>\n      <Input defaultValue=\"x\" />\n      <FieldError>Username must be at least 3 characters.</FieldError>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputInvalidDemo: View {\n  @State private var username = \"x\"\n\n  var body: some View {\n    Field(invalid: true) {\n      FieldLabel(\"Username\")\n        .accessibilityHidden(true)\n      TextField(\"\", text: $username)\n        .textFieldStyle(.input)\n        .accessibilityLabel(Text(\"Username\"))\n      FieldError(\"Username must be at least 3 characters.\")\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun InputInvalid() {\n    var value by rememberSaveable { mutableStateOf(\"x\") }\n    Field(invalid = true) {\n        FieldLabel(\"Username\")\n        Input(value, { value = it })\n        FieldError(\"Username must be at least 3 characters.\")\n    }\n}"} />
 
 </Example>
 
@@ -157,9 +181,13 @@ An input inside an invalid `Field` with an error message.
 
 A controlled input that mirrors its value below.
 
-<Example id="components-input--controlled" width={880} height={400}>
+<Example id="components-input--controlled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  return (\n    <View className=\"gap-2\">\n      <Input\n        placeholder=\"Lowercase only\"\n        autoCapitalize=\"none\"\n        value={value}\n        onValueChange={(next) => setValue(next.toLowerCase())}\n      />\n      <Text variant=\"muted\">Value: {value}</Text>\n    </View>\n  )\n}\n\nexport function InputControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputControlledDemo: View {\n  @State private var value = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      TextField(\n        \"Lowercase only\",\n        text: Binding(get: { value }, set: { value = $0.lowercased() })\n      )\n      .textFieldStyle(.input)\n      .textInputAutocapitalization(.never)\n      Text(verbatim: \"Value: \\(value)\")\n        .textVariant(.muted)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun InputControlled() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Input(\n            value,\n            { value = it.lowercase() },\n            placeholder = \"Lowercase only\",\n            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),\n        )\n        Text(\"Value: $value\", variant = TextVariant.Muted)\n    }\n}"} />
 
 </Example>
 
@@ -167,9 +195,13 @@ A controlled input that mirrors its value below.
 
 A disabled input.
 
-<Example id="components-input--disabled" width={880} height={400}>
+<Example id="components-input--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputDisabledExample() {\n  return (\n    <Input placeholder=\"Disabled\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputDisabledExample: View {\n  var body: some View {\n    InputDemo(placeholder: \"Disabled\")\n      .disabled(true)\n  }\n}\n\nstruct InputDemo: View {\n  let placeholder: LocalizedStringKey\n  var size: InputStyle.Size = .default\n\n  @State private var text: String\n\n  init(placeholder: LocalizedStringKey, size: InputStyle.Size = .default, initial: String = \"\") {\n    self.placeholder = placeholder\n    self.size = size\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text)\n      .textFieldStyle(.input(size: size))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun InputDisabledExample() {\n    InputSingle(initial = \"\", placeholder = \"Disabled\", enabled = false)\n}\n\n@Composable\nfun InputSingle(initial: String, placeholder: String, enabled: Boolean = true) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Input(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 

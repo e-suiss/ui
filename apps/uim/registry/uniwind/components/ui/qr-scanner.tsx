@@ -5,14 +5,17 @@ import {
 } from "phosphor-react-native"
 import * as React from "react"
 import { Pressable, View } from "react-native"
-import {
+import Animated, {
   cancelAnimation,
   Easing,
   ReduceMotion,
+  useAnimatedProps,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withRepeat,
   withSequence,
+  withSpring,
   withTiming,
 } from "react-native-reanimated"
 import Svg, { Path } from "react-native-svg"
@@ -24,30 +27,31 @@ import { Text } from "@/components/ui/text"
 
 type QRScannerState = "idle" | "success" | "error"
 
-const FRAME_RADIUS = 28
+const FRAME_RADIUS = 32
 
-const BRACKET = 32
+const FRAME_LIFT = 24
+
+const BRACKET_ARM = 48
+
+const BRACKET_WIDTH = 6
+
+const BRACKET_PAD = BRACKET_WIDTH
+
+const SUCCESS_SCALE = 0.94
 
 const SHAKE_DURATION = 400
 
+const LINE_INSET = 24
+
+const LINE_HEIGHT = 2
+
 const BRACKET_COLOR: Record<QRScannerState, string> = {
-  idle: "border-on-media",
-  success: "border-success",
-  error: "border-danger",
+  idle: "text-on-media",
+  success: "text-success",
+  error: "text-danger",
 }
 
-const CORNERS = [
-  { position: "top-0 left-0", border: "border-t-4 border-l-4 rounded-tl-3xl" },
-  { position: "top-0 right-0", border: "border-t-4 border-r-4 rounded-tr-3xl" },
-  {
-    position: "bottom-0 left-0",
-    border: "border-b-4 border-l-4 rounded-bl-3xl",
-  },
-  {
-    position: "bottom-0 right-0",
-    border: "border-b-4 border-r-4 rounded-br-3xl",
-  },
-]
+const AnimatedPath = Animated.createAnimatedComponent(Path)
 
 function surroundPath(
   width: number,
@@ -70,13 +74,53 @@ function surroundPath(
   ].join("")
 }
 
+function bracketPath(size: number, radius: number, arm: number, pad: number) {
+  const r = Math.min(radius, size / 2)
+  const a = Math.max(r, Math.min(arm, size / 2))
+  const s = size + pad
+  const p = pad
+  return [
+    `M${p} ${p + a}V${p + r}A${r} ${r} 0 0 1 ${p + r} ${p}H${p + a}`,
+    `M${s - a} ${p}H${s - r}A${r} ${r} 0 0 1 ${s} ${p + r}V${p + a}`,
+    `M${s} ${s - a}V${s - r}A${r} ${r} 0 0 1 ${s - r} ${s}H${s - a}`,
+    `M${p + a} ${s}H${p + r}A${r} ${r} 0 0 1 ${p} ${s - r}V${s - a}`,
+  ].join("")
+}
+
 const SurroundContext = React.createContext("")
+
+const BracketContext = React.createContext(0)
 
 function QRScannerSurround({ color }: PhosphorIconProps) {
   const path = React.useContext(SurroundContext)
   return (
     <Svg width="100%" height="100%">
       <Path d={path} fill={color} fillRule="evenodd" />
+    </Svg>
+  )
+}
+
+function QRScannerBrackets({ color = "transparent" }: PhosphorIconProps) {
+  const size = React.useContext(BracketContext)
+  const stroke = useSharedValue(color)
+  const box = size + BRACKET_PAD * 2
+
+  React.useEffect(() => {
+    stroke.value = withTiming(color, { duration: 250 })
+  }, [color, stroke])
+
+  const animatedProps = useAnimatedProps(() => ({ stroke: stroke.value }))
+
+  return (
+    <Svg width={box} height={box}>
+      <AnimatedPath
+        d={bracketPath(size, FRAME_RADIUS, BRACKET_ARM, BRACKET_PAD)}
+        fill="none"
+        strokeWidth={BRACKET_WIDTH}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        animatedProps={animatedProps}
+      />
     </Svg>
   )
 }
@@ -92,7 +136,7 @@ function QRScanner({
   state = "idle",
   title,
   description,
-  scanLine = true,
+  scanLine = false,
   torch = false,
   onTorchToggle,
   torchLabel = "Flashlight",
@@ -113,10 +157,14 @@ function QRScanner({
   const [layout, setLayout] = React.useState({ width: 0, height: 0 })
   const frameSize =
     frameSizeProp ??
-    Math.min(280, Math.round(Math.min(layout.width, layout.height) * 0.68))
-  const frameTop = Math.max(0, (layout.height - frameSize) / 2)
+    Math.min(260, Math.round(Math.min(layout.width, layout.height) * 0.66))
+  const frameTop = Math.max(0, (layout.height - frameSize) / 2 - FRAME_LIFT)
   const frameLeft = Math.max(0, (layout.width - frameSize) / 2)
+  const reduceMotion = useReducedMotion()
   const offset = useSharedValue(0)
+  const scale = useSharedValue(
+    state === "success" && !reduceMotion ? SUCCESS_SCALE : 1
+  )
   const line = useSharedValue(0)
   const previousState = React.useRef(state)
   const haptics = useHaptics()
@@ -150,6 +198,14 @@ function QRScanner({
   }, [state, onError, haptics])
 
   React.useEffect(() => {
+    const target = state === "success" && !reduceMotion ? SUCCESS_SCALE : 1
+    scale.value = withSpring(target, {
+      duration: 350,
+      dampingRatio: 0.6,
+    })
+  }, [state, reduceMotion, scale])
+
+  React.useEffect(() => {
     if (!scanning) {
       cancelAnimation(line)
       line.value = 0
@@ -169,11 +225,13 @@ function QRScanner({
   }, [scanning, line])
 
   const frameStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: offset.value }],
+    transform: [{ translateX: offset.value }, { scale: scale.value }],
   }))
 
+  const lineTravel = Math.max(0, frameSize - LINE_INSET * 2 - LINE_HEIGHT)
+
   const lineStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: line.value * (frameSize - 24) }],
+    transform: [{ translateY: line.value * lineTravel }],
   }))
 
   return (
@@ -232,22 +290,21 @@ function QRScanner({
               frameStyle,
             ]}
           >
-            {CORNERS.map((corner) => (
-              <View
-                key={corner.position}
-                className={cn(
-                  "absolute",
-                  corner.position,
-                  corner.border,
-                  BRACKET_COLOR[state]
-                )}
-                style={{ width: BRACKET, height: BRACKET }}
-              />
-            ))}
+            <View
+              className="absolute"
+              style={{ top: -BRACKET_PAD, left: -BRACKET_PAD }}
+            >
+              <BracketContext.Provider value={frameSize}>
+                <Icon as={QRScannerBrackets} className={BRACKET_COLOR[state]} />
+              </BracketContext.Provider>
+            </View>
             {scanning ? (
               <AnimatedView
-                className="absolute inset-x-4 top-3 h-0.5 rounded-full bg-accent"
-                style={lineStyle}
+                className="absolute h-0.5 rounded-full bg-accent"
+                style={[
+                  { top: LINE_INSET, left: LINE_INSET, right: LINE_INSET },
+                  lineStyle,
+                ]}
               />
             ) : null}
           </AnimatedView>
@@ -255,7 +312,7 @@ function QRScanner({
             <View
               pointerEvents="none"
               className="absolute inset-x-6 items-center"
-              style={{ bottom: layout.height - frameTop + 24 }}
+              style={{ bottom: layout.height - frameTop + 32 }}
             >
               {wrapText(
                 title,
@@ -263,15 +320,22 @@ function QRScanner({
               )}
             </View>
           ) : null}
-          <View
-            pointerEvents="box-none"
-            className="absolute inset-x-6 items-center gap-6"
-            style={{ top: frameTop + frameSize + 24 }}
-          >
-            {description !== undefined
-              ? wrapText(description, "text-center text-sm text-on-media")
-              : null}
-            {onTorchToggle ? (
+          {description !== undefined ? (
+            <View
+              pointerEvents="box-none"
+              className="absolute inset-x-6 items-center"
+              style={{ top: frameTop + frameSize + 20 }}
+            >
+              <View pointerEvents="box-none" className="max-w-[280px]">
+                {wrapText(description, "text-center text-sm text-on-media")}
+              </View>
+            </View>
+          ) : null}
+          {onTorchToggle ? (
+            <View
+              pointerEvents="box-none"
+              className="absolute inset-x-0 bottom-12 items-center"
+            >
               <Pressable
                 role="button"
                 accessibilityLabel={torchLabel}
@@ -293,8 +357,8 @@ function QRScanner({
                   )}
                 />
               </Pressable>
-            ) : null}
-          </View>
+            </View>
+          ) : null}
         </View>
       ) : null}
     </View>

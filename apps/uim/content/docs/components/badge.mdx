@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-badge--default" width={880} height={400}>
+<Example id="components-badge--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeExample() {\n  return (\n    <View className=\"flex-row\">\n      <Badge>\n        <Text>Badge</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BadgeExample: View {\n  var body: some View {\n    Badge(\"Badge\")\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Badge\n\n@Composable\nfun BadgeDefault() {\n    Row {\n        Badge(\"Badge\")\n    }\n}"} />
 
 </Example>
 
@@ -107,9 +111,13 @@ Put the label in a `Text` and icons in an `Icon`. Use `render` to render the bad
 
 All six variants side by side.
 
-<Example id="components-badge--variants" width={880} height={400}>
+<Example id="components-badge--variants" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeVariantsExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge>\n        <Text>Default</Text>\n      </Badge>\n      <Badge variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Badge>\n      <Badge variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Text>Outline</Text>\n      </Badge>\n      <Badge variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Badge>\n      <Badge variant=\"link\">\n        <Text>Link</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BadgeVariantsExample: View {\n  var body: some View {\n    FlowRow(spacing: 8) {\n      Badge(\"Default\")\n      Badge(\"Secondary\", variant: .secondary)\n      Badge(\"Destructive\", variant: .destructive)\n      Badge(\"Outline\", variant: .outline)\n      Badge(\"Ghost\", variant: .ghost)\n      Badge(\"Link\", variant: .link)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Badge\nimport com.esuiss.ui.components.BadgeVariant\n\n@Composable\nfun BadgeVariants() {\n    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Badge(\"Default\")\n        Badge(\"Secondary\", variant = BadgeVariant.Secondary)\n        Badge(\"Destructive\", variant = BadgeVariant.Destructive)\n        Badge(\"Outline\", variant = BadgeVariant.Outline)\n        Badge(\"Ghost\", variant = BadgeVariant.Ghost)\n        Badge(\"Link\", variant = BadgeVariant.Link)\n    }\n}"} />
 
 </Example>
 
@@ -117,9 +125,13 @@ All six variants side by side.
 
 Badges with a leading icon.
 
-<Example id="components-badge--with-icon" width={880} height={400}>
+<Example id="components-badge--with-icon" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SealCheckIcon, StarIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeWithIconExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge variant=\"secondary\">\n        <Icon as={SealCheckIcon} />\n        <Text>Verified</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Icon as={StarIcon} />\n        <Text>Featured</Text>\n      </Badge>\n      <Badge variant=\"outline\" className=\"min-w-5 px-1\">\n        <Text>8</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct BadgeWithIconExample: View {\n  var body: some View {\n    FlowRow(spacing: 8) {\n      Badge(.secondary) {\n        Label {\n          Text(\"Verified\")\n        } icon: {\n          Ph.sealCheck.regular\n        }\n      }\n      Badge(.outline) {\n        Label {\n          Text(\"Featured\")\n        } icon: {\n          Ph.star.regular\n        }\n      }\n      Badge(\"8\", variant: .outline)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.widthIn\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.SealCheck\nimport com.adamglin.phosphoricons.regular.Star\nimport com.esuiss.ui.components.Badge\nimport com.esuiss.ui.components.BadgeVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun BadgeWithIcon() {\n    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Badge(variant = BadgeVariant.Secondary) {\n            Icon(PhosphorIcons.Regular.SealCheck, contentDescription = null)\n            Text(\"Verified\")\n        }\n        Badge(variant = BadgeVariant.Outline) {\n            Icon(PhosphorIcons.Regular.Star, contentDescription = null)\n            Text(\"Featured\")\n        }\n        Badge(Modifier.widthIn(min = 20.dp), variant = BadgeVariant.Outline) {\n            Text(\"8\")\n        }\n    }\n}"} />
 
 </Example>
 

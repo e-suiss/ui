@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-textarea--default" width={880} height={400}>
+<Example id="components-textarea--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 
@@ -105,9 +109,13 @@ Override `numberOfLines` or set a height through `className` to change the visib
 
 A textarea that starts with a `defaultValue`.
 
-<Example id="components-textarea--with-value" width={880} height={400}>
+<Example id="components-textarea--with-value" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithValueExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" defaultValue=\"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaWithValueExample: View {\n  var body: some View {\n    TextareaDemo(initial: \"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\")\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaWithValueExample() {\n    TextareaDemo(\n        initial = \"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\",\n    )\n}\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 
@@ -115,9 +123,13 @@ A textarea that starts with a `defaultValue`.
 
 A textarea inside a `Field` with a label and description.
 
-<Example id="components-textarea--with-label" width={880} height={400}>
+<Example id="components-textarea--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithLabelExample() {\n  return (\n    <Field>\n      <FieldLabel>Your message</FieldLabel>\n      <Textarea placeholder=\"Type your message here.\" />\n      <FieldDescription>\n        Your message will be copied to the team.\n      </FieldDescription>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaWithLabelExample: View {\n  var body: some View {\n    Field {\n      FieldLabel(\"Your message\")\n      TextareaDemo()\n      FieldDescription(\"Your message will be copied to the team.\")\n    }\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}\n\n@Composable\nfun TextareaWithLabel() {\n    Field(Modifier.fillMaxWidth()) {\n        FieldLabel(\"Your message\")\n        TextareaDemo()\n        FieldDescription(\"Your message will be copied to the team.\")\n    }\n}"} />
 
 </Example>
 
@@ -125,9 +137,13 @@ A textarea inside a `Field` with a label and description.
 
 A disabled textarea.
 
-<Example id="components-textarea--disabled" width={880} height={400}>
+<Example id="components-textarea--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaDisabledExample() {\n  return (\n    <Textarea placeholder=\"Disabled\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaDisabledExample: View {\n  var body: some View {\n    TextareaDemo(placeholder: \"Disabled\")\n      .disabled(true)\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDisabledExample() {\n    TextareaDemo(placeholder = \"Disabled\", enabled = false)\n}\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
 
 </Example>
 
@@ -135,9 +151,13 @@ A disabled textarea.
 
 A textarea inside an invalid `Field` with an error message.
 
-<Example id="components-textarea--invalid" width={880} height={400}>
+<Example id="components-textarea--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Message</FieldLabel>\n      <Textarea defaultValue=\"Too short\" />\n      <FieldError>Message must be at least 20 characters.</FieldError>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaInvalidExample: View {\n  var body: some View {\n    Field(invalid: true) {\n      FieldLabel(\"Message\")\n      TextareaDemo(initial: \"Too short\")\n      FieldError(\"Message must be at least 20 characters.\")\n    }\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}\n\n@Composable\nfun TextareaInvalid() {\n    Field(Modifier.fillMaxWidth(), invalid = true) {\n        FieldLabel(\"Message\")\n        TextareaDemo(initial = \"Too short\")\n        FieldError(\"Message must be at least 20 characters.\")\n    }\n}"} />
 
 </Example>
 

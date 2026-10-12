@@ -58,7 +58,7 @@ fun Input(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val focused by source.collectIsFocusedAsState()
     val group = LocalButtonGroup.current
-    val shape = group.itemShape(RoundedCornerShape(size.radius))
+    val item = rememberButtonGroupItem(group, RoundedCornerShape(size.radius))
     val textStyle = (if (size == InputSize.Default) Typography.base else Typography.sm)
         .copy(color = if (enabled) colors.label else colors.labelQuaternary)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
@@ -67,9 +67,10 @@ fun Input(
             onValueChange = onValueChange,
             modifier = modifier
                 .then(if (group != null) Modifier.layoutId(ButtonGroupFill) else Modifier)
+                .then(item.modifier)
                 .fillMaxWidth()
                 .height(size.height)
-                .formInputSurface(colors, shape, focused, invalid, enabled)
+                .formInputSurface(colors, item.shape, focused, invalid, enabled)
                 .then(if (invalid) Modifier.semantics { error("Invalid") } else Modifier),
             enabled = enabled,
             readOnly = readOnly,

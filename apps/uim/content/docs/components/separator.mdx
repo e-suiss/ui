@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-separator--default" width={880} height={400}>
+<Example id="components-separator--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorExample() {\n  return (\n    <View>\n      <View className=\"gap-1\">\n        <Text className=\"text-sm font-medium\">esuiss</Text>\n        <Text variant=\"muted\">An open-source UI component library.</Text>\n      </View>\n      <Separator className=\"my-4\" />\n      <View className=\"h-5 flex-row items-center gap-4\">\n        <Text className=\"text-sm\">Blog</Text>\n        <Separator orientation=\"vertical\" />\n        <Text className=\"text-sm\">Docs</Text>\n        <Separator orientation=\"vertical\" />\n        <Text className=\"text-sm\">Source</Text>\n      </View>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      VStack(alignment: .leading, spacing: 4) {\n        Text(\"esuiss\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n        Text(\"An open-source UI component library.\")\n          .textVariant(.muted)\n      }\n      Separator()\n        .padding(.vertical, 16)\n      HStack(spacing: 16) {\n        SeparatorText(\"Blog\")\n        Separator(.vertical)\n        SeparatorText(\"Docs\")\n        Separator(.vertical)\n        SeparatorText(\"Source\")\n      }\n      .frame(height: 20)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorVerticalRow(labels: List<String>, height: Int) {\n    Row(\n        modifier = Modifier.height(height.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator(orientation = Orientation.Vertical)\n            Text(label, style = Typography.sm)\n        }\n    }\n}\n\n@Composable\nfun SeparatorDefault() {\n    Column(Modifier.fillMaxWidth()) {\n        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {\n            Text(\"esuiss\", style = Typography.sm.copy(fontWeight = FontWeight.Medium))\n            Text(\"An open-source UI component library.\", variant = TextVariant.Muted)\n        }\n        Separator(Modifier.padding(vertical = 16.dp))\n        SeparatorVerticalRow(listOf(\"Blog\", \"Docs\", \"Source\"), 20)\n    }\n}"} />
 
 </Example>
 
@@ -101,9 +105,13 @@ Use the default `horizontal` orientation between stacked blocks, and `orientatio
 
 A horizontal separator between two lines of text.
 
-<Example id="components-separator--horizontal" width={880} height={400}>
+<Example id="components-separator--horizontal" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorHorizontalExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text className=\"text-sm\">Above</Text>\n      <Separator />\n      <Text className=\"text-sm\">Below</Text>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorHorizontalExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      SeparatorText(\"Above\")\n      Separator()\n      SeparatorText(\"Below\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorHorizontal() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Text(\"Above\", style = Typography.sm)\n        Separator()\n        Text(\"Below\", style = Typography.sm)\n    }\n}"} />
 
 </Example>
 
@@ -111,9 +119,13 @@ A horizontal separator between two lines of text.
 
 A vertical separator between two items in a row.
 
-<Example id="components-separator--vertical" width={880} height={400}>
+<Example id="components-separator--vertical" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorVerticalExample() {\n  return (\n    <View className=\"h-6 flex-row items-center gap-4\">\n      <Text className=\"text-sm\">Left</Text>\n      <Separator orientation=\"vertical\" />\n      <Text className=\"text-sm\">Right</Text>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorVerticalExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      SeparatorText(\"Left\")\n      Separator(.vertical)\n      SeparatorText(\"Right\")\n    }\n    .frame(height: 24)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorVerticalExample() {\n    SeparatorVerticalRow(listOf(\"Left\", \"Right\"), 24)\n}\n\n@Composable\nfun SeparatorVerticalRow(labels: List<String>, height: Int) {\n    Row(\n        modifier = Modifier.height(height.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator(orientation = Orientation.Vertical)\n            Text(label, style = Typography.sm)\n        }\n    }\n}"} />
 
 </Example>
 

@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-progress--default" width={880} height={400}>
+<Example id="components-progress--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress } from \"@/components/ui/progress\"\n\nfunction ProgressDemo() {\n  const [value, setValue] = React.useState(13)\n  React.useEffect(() => {\n    const timer = setTimeout(() => setValue(66), 500)\n    return () => clearTimeout(timer)\n  }, [])\n  return <Progress value={value} />\n}\n\nexport function ProgressExample() {\n  return (\n    <ProgressDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressDelayed: View {\n  @State private var value = 13.0\n\n  var body: some View {\n    ProgressView(value: value, total: 100)\n      .progressViewStyle(.bar)\n      .task {\n        try? await Task.sleep(for: .milliseconds(500))\n        value = 66\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\nimport kotlinx.coroutines.delay\n\n@Composable\nfun ProgressDefault() {\n    var value by rememberSaveable { mutableFloatStateOf(13f) }\n    LaunchedEffect(Unit) {\n        delay(500)\n        value = 66f\n    }\n    Progress(value, Modifier.fillMaxWidth())\n}"} />
 
 </Example>
 
@@ -111,9 +115,13 @@ Style the bar with `trackClassName` and `indicatorClassName`. `ProgressTrack` an
 
 A bar with a label and a live percentage value.
 
-<Example id="components-progress--with-label" width={880} height={400}>
+<Example id="components-progress--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress, ProgressLabel, ProgressValue } from \"@/components/ui/progress\"\n\nfunction WithLabelDemo() {\n  const [value, setValue] = React.useState(0)\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setValue((current) => (current >= 100 ? 0 : current + 10))\n    }, 600)\n    return () => clearInterval(timer)\n  }, [])\n  return (\n    <Progress value={value}>\n      <ProgressLabel>Uploading</ProgressLabel>\n      <ProgressValue />\n    </Progress>\n  )\n}\n\nexport function ProgressWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressWithLabel: View {\n  @State private var value = 0\n\n  var body: some View {\n    ProgressView(value: Double(value), total: 100) {\n      Text(\"Uploading\")\n    } currentValueLabel: {\n      Text(verbatim: \"\\(value)%\")\n    }\n    .progressViewStyle(.bar)\n    .task {\n      while !Task.isCancelled {\n        try? await Task.sleep(for: .milliseconds(600))\n        value = value >= 100 ? 0 : value + 10\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\nimport kotlinx.coroutines.delay\n\n@Composable\nfun ProgressWithLabel() {\n    var value by rememberSaveable { mutableFloatStateOf(0f) }\n    LaunchedEffect(Unit) {\n        while (true) {\n            delay(600)\n            value = if (value >= 100f) 0f else value + 10f\n        }\n    }\n    Progress(value, Modifier.fillMaxWidth(), label = \"Uploading\", showValue = true)\n}"} />
 
 </Example>
 
@@ -121,9 +129,13 @@ A bar with a label and a live percentage value.
 
 A bar at 100 percent.
 
-<Example id="components-progress--complete" width={880} height={400}>
+<Example id="components-progress--complete" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressCompleteExample() {\n  return (\n    <Progress value={100} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressCompleteExample: View {\n  var body: some View {\n    ProgressView(value: 100, total: 100)\n      .progressViewStyle(.bar)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\n\n@Composable\nfun ProgressCompleteExample() {\n    Progress(100f, Modifier.fillMaxWidth())\n}"} />
 
 </Example>
 
@@ -131,9 +143,13 @@ A bar at 100 percent.
 
 Bars at 0, 25, 50, 75 and 100 percent, the last with a custom indicator color.
 
-<Example id="components-progress--values" width={880} height={400}>
+<Example id="components-progress--values" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressValuesExample() {\n  return (\n    <View className=\"w-full gap-4\">\n      <Progress value={0} />\n      <Progress value={25} />\n      <Progress value={50} />\n      <Progress value={75} />\n      <Progress value={100} indicatorClassName=\"bg-green\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressValuesExample: View {\n  var body: some View {\n    VStack(spacing: 16) {\n      ForEach([0.0, 25, 50, 75, 100], id: \\.self) { value in\n        ProgressView(value: value, total: 100)\n          .progressViewStyle(.bar)\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Progress\n\n@Composable\nfun ProgressValues() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        listOf(0f, 25f, 50f, 75f, 100f).forEach { Progress(it, Modifier.fillMaxWidth()) }\n    }\n}"} />
 
 </Example>
 

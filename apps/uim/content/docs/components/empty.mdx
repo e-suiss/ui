@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-empty--default" width={880} height={1121}>
+<Example id="components-empty--default" width={880} height={1121} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { FolderOpenIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function EmptyExample() {\n  return (\n    <Empty>\n      <EmptyHeader>\n        <EmptyMedia variant=\"icon\">\n          <Icon as={FolderOpenIcon} />\n        </EmptyMedia>\n        <EmptyTitle>No projects yet</EmptyTitle>\n        <EmptyDescription>\n          You haven't created any projects yet. Get started by creating your\n          first project.\n        </EmptyDescription>\n      </EmptyHeader>\n      <EmptyContent>\n        <Button>\n          <Text>Create project</Text>\n        </Button>\n        <Button variant=\"link\">\n          <Text>Import project</Text>\n        </Button>\n      </EmptyContent>\n    </Empty>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct EmptyExample: View {\n  var body: some View {\n    Empty {\n      EmptyHeader {\n        EmptyMedia(.icon) { Ph.folderOpen.regular }\n        EmptyTitle(\"No projects yet\")\n        EmptyDescription(\"You haven't created any projects yet. Get started by creating your first project.\")\n      }\n      EmptyContent {\n        Button(\"Create project\") {}\n          .buttonStyle(.variant())\n        Button(\"Import project\") {}\n          .buttonStyle(.variant(.link))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.FolderOpen\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Empty\nimport com.esuiss.ui.components.EmptyContent\nimport com.esuiss.ui.components.EmptyDescription\nimport com.esuiss.ui.components.EmptyHeader\nimport com.esuiss.ui.components.EmptyMedia\nimport com.esuiss.ui.components.EmptyMediaVariant\nimport com.esuiss.ui.components.EmptyTitle\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun EmptyDefault() {\n    Empty {\n        EmptyHeader {\n            EmptyMedia(variant = EmptyMediaVariant.Icon) {\n                Icon(PhosphorIcons.Regular.FolderOpen, contentDescription = null)\n            }\n            EmptyTitle(\"No projects yet\")\n            EmptyDescription(\"You haven't created any projects yet. Get started by creating your first project.\")\n        }\n        EmptyContent {\n            Button(\"Create project\", onClick = {})\n            Button(\"Import project\", onClick = {}, variant = ButtonVariant.Link)\n        }\n    }\n}"} />
 
 </Example>
 
@@ -107,9 +111,13 @@ Add a background class such as `bg-surface-secondary` to `Empty` for a filled pa
 
 A filled panel with only a title and description.
 
-<Example id="components-empty--muted" width={880} height={1720}>
+<Example id="components-empty--muted" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyMutedExample() {\n  return (\n    <Empty className=\"bg-surface-secondary\">\n      <EmptyHeader>\n        <EmptyTitle>No results</EmptyTitle>\n        <EmptyDescription>Try a different search.</EmptyDescription>\n      </EmptyHeader>\n    </Empty>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct EmptyMutedExample: View {\n  var body: some View {\n    Empty {\n      EmptyHeader {\n        EmptyTitle(\"No results\")\n        EmptyDescription(\"Try a different search.\")\n      }\n    }\n    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Empty\nimport com.esuiss.ui.components.EmptyDescription\nimport com.esuiss.ui.components.EmptyHeader\nimport com.esuiss.ui.components.EmptyTitle\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun EmptyMuted() {\n    Empty(Modifier.background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))) {\n        EmptyHeader {\n            EmptyTitle(\"No results\")\n            EmptyDescription(\"Try a different search.\")\n        }\n    }\n}"} />
 
 </Example>
 

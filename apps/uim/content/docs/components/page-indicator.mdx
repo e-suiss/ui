@@ -5,9 +5,13 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-page-indicator--default" width={880} height={400}>
+<Example id="components-page-indicator--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorExample() {\n  return (\n    <PageIndicator count={5} index={1} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorExample: View {\n  var body: some View {\n    PageIndicator(count: 5, index: 1)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.PageIndicator\n\n@Composable\nfun PageIndicatorExample() {\n    PageIndicator(count = 5, index = 1)\n}"} />
 
 </Example>
 
@@ -109,9 +113,13 @@ The `PageIndicatorSize` and `PageIndicatorVariant` types are also exported.
 
 The `sm` and `default` sizes.
 
-<Example id="components-page-indicator--sizes" width={880} height={400}>
+<Example id="components-page-indicator--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorSizesExample() {\n  return (\n    <View className=\"items-center gap-6\">\n      <PageIndicator count={5} index={1} size=\"sm\" />\n      <PageIndicator count={5} index={1} />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorSizesExample: View {\n  var body: some View {\n    VStack(spacing: 24) {\n      PageIndicator(count: 5, index: 1, size: .sm)\n      PageIndicator(count: 5, index: 1)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.PageIndicatorSize\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorSizes() {\n    PageIndicatorCentered(24) {\n        PageIndicator(count = 5, index = 1, size = PageIndicatorSize.Sm)\n        PageIndicator(count = 5, index = 1)\n    }\n}"} />
 
 </Example>
 
@@ -119,9 +127,13 @@ The `sm` and `default` sizes.
 
 The `accent` variant.
 
-<Example id="components-page-indicator--accent" width={880} height={400}>
+<Example id="components-page-indicator--accent" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorAccentExample() {\n  return (\n    <PageIndicator count={5} index={1} variant=\"accent\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorAccentExample: View {\n  var body: some View {\n    PageIndicator(count: 5, index: 1, variant: .accent)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.PageIndicatorVariant\n\n@Composable\nfun PageIndicatorAccentExample() {\n    PageIndicator(count = 5, index = 1, variant = PageIndicatorVariant.Accent)\n}"} />
 
 </Example>
 
@@ -129,9 +141,13 @@ The `accent` variant.
 
 Twelve pages shown in a sliding window at the start, middle and end.
 
-<Example id="components-page-indicator--many-pages" width={880} height={400}>
+<Example id="components-page-indicator--many-pages" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorManyPagesExample() {\n  return (\n    <View className=\"items-center gap-6\">\n      <PageIndicator count={12} index={0} />\n      <PageIndicator count={12} index={5} />\n      <PageIndicator count={12} index={11} />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorManyPagesExample: View {\n  var body: some View {\n    VStack(spacing: 24) {\n      PageIndicator(count: 12, index: 0)\n      PageIndicator(count: 12, index: 5)\n      PageIndicator(count: 12, index: 11)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorManyPages() {\n    PageIndicatorCentered(24) {\n        PageIndicator(count = 12, index = 0)\n        PageIndicator(count = 12, index = 5)\n        PageIndicator(count = 12, index = 11)\n    }\n}"} />
 
 </Example>
 
@@ -139,9 +155,13 @@ Twelve pages shown in a sliding window at the start, middle and end.
 
 Pressable dots that change the page through `onIndexChange`.
 
-<Example id="components-page-indicator--interactive" width={880} height={400}>
+<Example id="components-page-indicator--interactive" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction InteractiveIndicator({ count }: { count: number }) {\n  const [index, setIndex] = React.useState(0)\n  return (\n    <View className=\"items-center gap-3\">\n      <PageIndicator count={count} index={index} onIndexChange={setIndex} />\n      <Text variant=\"muted\">\n        Page {index + 1} of {count}\n      </Text>\n    </View>\n  )\n}\n\nexport function PageIndicatorInteractiveExample() {\n  return (\n    <InteractiveIndicator count={12} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorInteractiveExample: View {\n  var body: some View {\n    PageIndicatorInteractive(count: 12)\n  }\n}\n\nstruct PageIndicatorInteractive: View {\n  let count: Int\n\n  @State private var index = 0\n\n  var body: some View {\n    VStack(spacing: 12) {\n      PageIndicator(count: count, index: index) { index = $0 }\n      Text(verbatim: \"Page \\(index + 1) of \\(count)\")\n        .textVariant(.muted)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun PageIndicatorInteractiveExample() {\n    PageIndicatorInteractive(12)\n}\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorInteractive(count: Int) {\n    var index by rememberSaveable { mutableIntStateOf(0) }\n    PageIndicatorCentered(12) {\n        PageIndicator(count = count, index = index, onIndexChange = { index = it })\n        Text(\"Page ${index + 1} of $count\", variant = TextVariant.Muted)\n    }\n}"} />
 
 </Example>
 
