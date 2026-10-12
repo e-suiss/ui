@@ -15,7 +15,66 @@ enum ThemeStories {
     Story("WithStorage") {
       ThemeDemo(defaultTheme: .light, storage: SavedDarkThemeStorage.shared)
     },
+    Story("Circle") {
+      ThemeTransitionDemo(effect: .circle, origin: .center)
+    },
+    Story("CircleFromCorner") {
+      ThemeTransitionDemo(effect: .circle, origin: .topRight)
+    },
+    Story("CircleFromEdge") {
+      ThemeTransitionDemo(effect: .circle, origin: .bottomCenter)
+    },
+    Story("Rectangle") {
+      ThemeTransitionDemo(effect: .rectangle, origin: .bottomUp)
+    },
+    Story("RectangleSideways") {
+      ThemeTransitionDemo(effect: .rectangle, origin: .leftRight)
+    },
+    Story("Polygon") {
+      ThemeTransitionDemo(effect: .polygon, origin: .topLeft)
+    },
+    Story("CircleBlur") {
+      ThemeTransitionDemo(effect: .circleBlur, origin: .center)
+    },
+    Story("CircleBlurFromCorner") {
+      ThemeTransitionDemo(effect: .circleBlur, origin: .bottomRight)
+    },
+    Story("Blurred") {
+      ThemeTransitionDemo(effect: .circle, origin: .center, blur: true)
+    },
   ])
+}
+
+private struct ThemeTransitionDemo: View {
+  let effect: ThemeTransitionEffect
+  let origin: ThemeTransitionOrigin
+  var blur = false
+
+  @State private var storage: any ThemeStorage = InMemoryThemeStorage()
+
+  var body: some View {
+    ThemeProvider(defaultTheme: .light, storage: storage, storageKey: "theme-transition-story") {
+      VStack(alignment: .leading, spacing: 24) {
+        Card {
+          CardHeader("Evening mode", description: "Switch the theme and watch the new one open over the screen.")
+          CardContent {
+            Text("Every surface, label and accent follows the theme tokens.")
+              .textStyle(.sm)
+              .foregroundStyle(Color.labelSecondary)
+          }
+          CardFooter {
+            Button("Continue") {}
+              .buttonStyle(.variant(block: true))
+          }
+        }
+        ThemeToggle(effect: effect, origin: origin, blur: blur)
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .background {
+        Color.surface.padding(-16)
+      }
+    }
+  }
 }
 
 private actor SavedDarkThemeStorage: ThemeStorage {

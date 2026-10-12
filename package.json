@@ -58,6 +58,7 @@
     "lefthook": "2.1.15",
     "lint-staged": "17.6.0",
     "nativewind": "4.2.7",
+    "react-native-view-shot": "5.1.0",
     "storybook": "10.6.0",
     "typescript": "~6.0.3"
   },

@@ -30,7 +30,11 @@ const STYLING_SETUP = {
     metroMarker: "withUniwindConfig",
   },
   stylesheet: {
-    runtime: [],
+    runtime: [
+      "react-native-reanimated",
+      "react-native-worklets",
+      "react-native-svg",
+    ],
     tooling: [],
     tailwindMajor: null,
     metroImport: "",
@@ -344,6 +348,14 @@ export async function init(options) {
 
   install(project, setup.runtime)
   install(project, setup.tooling, { dev: true })
+  const worklets = setup.runtime.includes("react-native-reanimated")
+    ? ensureBabelPlugin(
+        project,
+        "react-native-worklets/plugin",
+        '"react-native-worklets/plugin"',
+        { last: true }
+      )
+    : []
   if (project.styling === "nativewind") {
     if (project.framework === "expo") {
       install(project, ["babel-preset-expo", "expo-system-ui"])
@@ -363,6 +375,7 @@ export async function init(options) {
   }
 
   const manual = [
+    ...worklets,
     ...configureMetro(project, stylesheet, typesFile),
     ...configureRoot(project, css ? stylesheet : null),
     ...configureAliasResolver(project, sourceRoot),
@@ -375,7 +388,9 @@ export async function init(options) {
     project,
     findAliasRoot(project.cwd) ?? sourceRoot,
     registry,
-    ["button", "primitives/portal"],
+    css
+      ? ["button", "primitives/portal"]
+      : ["button", "primitives/hooks", "primitives/portal"],
     { styling: project.styling }
   )
 
