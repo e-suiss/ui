@@ -1,7 +1,6 @@
 enum PatternsInteractions {
   static let groups: [StoryGroup] = [
     ActionBarStories.group,
-    ActionMenuStories.group,
     ConfirmStories.group,
     ContextActionsStories.group,
     DatePickerStories.group,

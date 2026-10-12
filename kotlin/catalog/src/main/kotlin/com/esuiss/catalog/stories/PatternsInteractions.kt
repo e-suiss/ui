@@ -17,7 +17,6 @@ import com.esuiss.catalog.stories.interactions.tipStories
 import com.esuiss.catalog.stories.interactions.topBannerStories
 import com.esuiss.catalog.stories.interactions.undoBarStories
 import com.esuiss.catalog.stories.patterns.actionBarStories
-import com.esuiss.catalog.stories.patterns.actionMenuStories
 import com.esuiss.catalog.stories.patterns.confirmStories
 import com.esuiss.catalog.stories.patterns.contextActionsStories
 import com.esuiss.catalog.stories.patterns.datePickerStories
@@ -34,7 +33,6 @@ import com.esuiss.catalog.stories.patterns.tableListStories
 
 val patternsInteractions: List<StoryGroup> = listOf(
     actionBarStories,
-    actionMenuStories,
     confirmStories,
     contextActionsStories,
     datePickerStories,

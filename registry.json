@@ -3648,7 +3648,7 @@
         "Components/Separator.swift",
         "Components/Sheet.swift",
         "Components/TextVariant.swift",
-        "Patterns/ActionMenu.swift",
+        "Patterns/ActionList.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -3667,61 +3667,7 @@
         "components/Label.kt",
         "components/Overlay.kt",
         "components/Separator.kt",
-        "patterns/ActionMenu.kt"
-      ]
-    },
-    {
-      "name": "action-menu",
-      "type": "pattern",
-      "title": "Action Menu",
-      "dependencies": {
-        "uniwind": [],
-        "nativewind": [],
-        "stylesheet": []
-      },
-      "requires": [
-        "alert-sheet"
-      ],
-      "files": [
-        "components/patterns/action-menu.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ],
-      "swift": [
-        "Patterns/ActionMenu.swift",
-        "Components/AlertSheet.swift",
-        "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Dialog.swift",
-        "Components/DropdownMenu.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Overlay.swift",
-        "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/Sheet.swift",
-        "Components/TextVariant.swift",
-        "Patterns/Adaptive.swift"
-      ],
-      "kotlin": [
-        "patterns/ActionMenu.kt",
-        "components/AlertSheet.kt",
-        "components/Button.kt",
-        "components/ButtonGroup.kt",
-        "components/Checkbox.kt",
-        "components/Content.kt",
-        "components/DropdownMenu.kt",
-        "components/Field.kt",
-        "components/FormSupport.kt",
-        "components/Haptics.kt",
-        "components/Icon.kt",
-        "components/Label.kt",
-        "components/Overlay.kt",
-        "components/Separator.kt"
+        "patterns/ActionList.kt"
       ]
     },
     {
@@ -3810,7 +3756,7 @@
         "Components/Separator.swift",
         "Components/Sheet.swift",
         "Components/TextVariant.swift",
-        "Patterns/ActionMenu.swift",
+        "Patterns/ActionList.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -3828,7 +3774,7 @@
         "components/Label.kt",
         "components/Overlay.kt",
         "components/Separator.kt",
-        "patterns/ActionMenu.kt"
+        "patterns/ActionList.kt"
       ]
     },
     {

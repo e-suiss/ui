@@ -116,11 +116,6 @@ import com.esuiss.ui.interactions.SwipeActionVariant
 import com.esuiss.ui.interactions.SwipeActions
 import com.esuiss.ui.interactions.SwipeActionsSide
 import com.esuiss.ui.interactions.rememberSwipeActionsState
-import com.esuiss.ui.patterns.ActionMenu
-import com.esuiss.ui.patterns.ActionMenuContent
-import com.esuiss.ui.patterns.ActionMenuItem
-import com.esuiss.ui.patterns.ActionMenuLabel
-import com.esuiss.ui.patterns.ActionMenuSeparator
 import com.esuiss.ui.patterns.Confirm
 import com.esuiss.ui.patterns.ConfirmAction
 import com.esuiss.ui.patterns.ConfirmCancel
@@ -180,7 +175,6 @@ private enum class ListScene {
     Pulling,
     AlertSheet,
     Confirm,
-    ActionMenu,
     ContextActions,
     Flyout,
     Modal,
@@ -483,16 +477,6 @@ private fun Scene(scene: ListScene) {
                 ConfirmAction("Delete account", onClick = {}, variant = AlertSheetActionVariant.Destructive)
             }
         }
-        ListScene.ActionMenu -> ActionMenu(open = true, onOpenChange = {}) {
-            Button("Open", onClick = {}, variant = ButtonVariant.Outline)
-            ActionMenuContent(modifier = Modifier.testTag(Overlay)) {
-                ActionMenuLabel("Photo actions")
-                ActionMenuItem("Copy", onClick = {}, icon = PhosphorIcons.Regular.Copy)
-                ActionMenuItem("Share", onClick = {}, icon = PhosphorIcons.Regular.ShareNetwork)
-                ActionMenuSeparator()
-                ActionMenuItem("Delete", onClick = {}, variant = MenuItemVariant.Destructive, icon = PhosphorIcons.Regular.Trash)
-            }
-        }
         ListScene.ContextActions -> ContextActions {
             ContextActionsTrigger(modifier = Modifier.testTag(Target)) {
                 Item(variant = ItemVariant.Outline) {
@@ -609,7 +593,7 @@ class ListsGalleryTest {
                 settle()
                 when (current) {
                     ListScene.Picker -> compose.onNodeWithText("Dark").assertExists()
-                    ListScene.AlertSheet, ListScene.Confirm, ListScene.ActionMenu, ListScene.ContextActions,
+                    ListScene.AlertSheet, ListScene.Confirm, ListScene.ContextActions,
                     ListScene.Flyout, ListScene.Modal, ListScene.Panel,
                     -> compose.onNode(hasTestTag(Overlay), useUnmergedTree = true).assertExists()
                     ListScene.SwipeActions -> compose.onAllNodesWithText("Delete").assertCountEquals(1)

@@ -209,17 +209,6 @@ private struct ConfirmGallery: View {
       .background(ListsBackdrop())
       .frame(height: 380)
       .clipped()
-      AlertSheetStage(visible: true, dismissible: true) {
-        ActionSheetBody(cancelLabel: "Cancel") {
-          ActionMenuLabel("Share")
-          ActionMenuItem("Copy Link", icon: Ph.link.regular) {}
-          ActionMenuSeparator()
-          ActionMenuItem("Remove", variant: .destructive) {}
-        }
-      }
-      .background(ListsBackdrop())
-      .frame(height: 360)
-      .clipped()
       CenteredStage(visible: true, dismissible: false) {
         ConfirmContent(size: .sm) {
           ConfirmHeader {
