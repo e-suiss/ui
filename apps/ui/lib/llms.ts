@@ -22,6 +22,9 @@ async function toMarkdown(body: string) {
     .replace(/<Code lang="(\w+)"(?: title="([^"]*)")? code="([^"]*)" \/>/g, (_match, lang: string, title: string | undefined, code: string) =>
       fence(JSON.parse(decode(code)), lang, title),
     )
+    .replace(/<Code lang="(\w+)"(?: title="([^"]*)")? code=\{("(?:[^"\\]|\\.)*")\} \/>/g, (_match, lang: string, title: string | undefined, code: string) =>
+      fence(JSON.parse(code), lang, title),
+    )
     .replace(/<SourceFile path="([^"]+)"[^>]*\/>/g, (_match, file: string) =>
       fence(files.get(file) ?? "", path.extname(file).slice(1) || "tsx", file),
     );
