@@ -81,25 +81,20 @@ struct ThemeMenu: View {
   var compact = false
 
   @Environment(CatalogModel.self) private var model
+  @Environment(\.colorScheme) private var colorScheme
 
   var body: some View {
-    @Bindable var model = model
-    Menu {
-      Picker(selection: $model.theme) {
-        ForEach(CatalogTheme.allCases) { theme in
-          Text(verbatim: theme.title).tag(theme)
-        }
-      } label: {
-        Text(verbatim: "Theme")
-      }
+    let dark = colorScheme == .dark
+    Button {
+      model.theme = dark ? .light : .dark
     } label: {
       if compact {
-        ChromeIcon { Ph.circleHalf.bold }
+        ChromeIcon { dark ? Ph.moon.bold : Ph.sun.bold }
       } else {
-        Ph.circleHalf.regular
+        (dark ? Ph.moon.regular : Ph.sun.regular)
           .frame(width: 22, height: 22)
       }
     }
-    .accessibilityLabel(Text(verbatim: "Theme"))
+    .accessibilityLabel(Text(verbatim: dark ? "Switch to light theme" : "Switch to dark theme"))
   }
 }
