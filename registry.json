@@ -2494,7 +2494,6 @@
         "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
-        "Patterns/Flyout.swift",
         "Patterns/Preview.swift"
       ],
       "kotlin": [
@@ -3587,7 +3586,6 @@
         "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
-        "Patterns/Flyout.swift",
         "Patterns/Preview.swift"
       ],
       "kotlin": [
@@ -3847,105 +3845,6 @@
       ]
     },
     {
-      "name": "flyout",
-      "type": "pattern",
-      "title": "Flyout",
-      "dependencies": {
-        "uniwind": [
-          "cn"
-        ],
-        "nativewind": [
-          "cn"
-        ],
-        "stylesheet": []
-      },
-      "requires": [
-        "drawer"
-      ],
-      "files": [
-        "components/patterns/flyout.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ],
-      "swift": [
-        "Patterns/Flyout.swift",
-        "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Dialog.swift",
-        "Components/Drawer.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Overlay.swift",
-        "Components/Popover.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift",
-        "Patterns/Adaptive.swift"
-      ],
-      "kotlin": [
-        "patterns/Flyout.kt",
-        "components/Button.kt",
-        "components/ButtonGroup.kt",
-        "components/Content.kt",
-        "components/Drawer.kt",
-        "components/Icon.kt",
-        "components/Overlay.kt",
-        "patterns/DrawerPatterns.kt"
-      ]
-    },
-    {
-      "name": "modal",
-      "type": "pattern",
-      "title": "Modal",
-      "dependencies": {
-        "uniwind": [
-          "cn"
-        ],
-        "nativewind": [
-          "cn"
-        ],
-        "stylesheet": []
-      },
-      "requires": [
-        "drawer"
-      ],
-      "files": [
-        "components/patterns/modal.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ],
-      "swift": [
-        "Patterns/Modal.swift",
-        "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Dialog.swift",
-        "Components/Drawer.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Overlay.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift",
-        "Patterns/Adaptive.swift"
-      ],
-      "kotlin": [
-        "patterns/Modal.kt",
-        "components/Button.kt",
-        "components/ButtonGroup.kt",
-        "components/Content.kt",
-        "components/Drawer.kt",
-        "components/Icon.kt",
-        "components/Overlay.kt",
-        "patterns/DrawerPatterns.kt"
-      ]
-    },
-    {
       "name": "paged-list",
       "type": "pattern",
       "title": "Paged List",
@@ -3987,56 +3886,6 @@
         "components/ButtonGroup.kt",
         "components/Content.kt",
         "components/Icon.kt"
-      ]
-    },
-    {
-      "name": "panel",
-      "type": "pattern",
-      "title": "Panel",
-      "dependencies": {
-        "uniwind": [
-          "cn"
-        ],
-        "nativewind": [
-          "cn"
-        ],
-        "stylesheet": []
-      },
-      "requires": [
-        "drawer"
-      ],
-      "files": [
-        "components/patterns/panel.tsx"
-      ],
-      "overrides": [
-        "uniwind",
-        "nativewind",
-        "stylesheet"
-      ],
-      "swift": [
-        "Patterns/Panel.swift",
-        "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Dialog.swift",
-        "Components/Drawer.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Overlay.swift",
-        "Components/Separator.swift",
-        "Components/Sheet.swift",
-        "Components/TextVariant.swift",
-        "Patterns/Adaptive.swift"
-      ],
-      "kotlin": [
-        "patterns/Panel.kt",
-        "components/Button.kt",
-        "components/ButtonGroup.kt",
-        "components/Content.kt",
-        "components/Drawer.kt",
-        "components/Icon.kt",
-        "components/Overlay.kt",
-        "patterns/DrawerPatterns.kt"
       ]
     },
     {
@@ -4126,8 +3975,7 @@
         "Components/Popover.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift",
-        "Patterns/Adaptive.swift",
-        "Patterns/Flyout.swift"
+        "Patterns/Adaptive.swift"
       ],
       "kotlin": [
         "patterns/Preview.kt",

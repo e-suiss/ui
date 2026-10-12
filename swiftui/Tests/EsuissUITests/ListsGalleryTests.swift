@@ -336,88 +336,6 @@ private struct ListsGallery: View {
   }
 }
 
-private struct AdaptiveGallery: View {
-  var body: some View {
-    VStack(spacing: 0) {
-      ZStack(alignment: .bottom) {
-        ListsBackdrop()
-        Color.scrim
-        ModalContent {
-          ModalHeader {
-            ModalTitle("Edit profile")
-            ModalDescription("Make changes to your profile here.")
-          }
-          ModalBody {
-            Text("Name: Pedro Duarte").font(TextStyle.sm.font()).foregroundStyle(Color.label)
-          }
-          ModalFooter {
-            Button {} label: { Text("Save").frame(maxWidth: .infinity) }.buttonStyle(.variant())
-            ModalClose { Text("Cancel").frame(maxWidth: .infinity) }.buttonStyle(.variant(.outline))
-          }
-        }
-        .environment(\.drawerFitsContent, true)
-        .clipShape(UnevenRoundedRectangle(topLeadingRadius: Radius.xl3, topTrailingRadius: Radius.xl3, style: .continuous))
-      }
-      .frame(height: 400)
-      .clipped()
-      CenteredStage(visible: true, dismissible: true) {
-        ModalContent {
-          ModalHeader {
-            ModalTitle("Edit profile")
-            ModalDescription("Make changes to your profile here.")
-          }
-          ModalBody {
-            Text("Name: Pedro Duarte").font(TextStyle.sm.font()).foregroundStyle(Color.label)
-          }
-          ModalFooter {
-            Button {} label: { Text("Save").frame(maxWidth: .infinity) }.buttonStyle(.variant())
-          }
-        }
-      }
-      .environment(\.patternCompact, false)
-      .background(ListsBackdrop())
-      .frame(height: 320)
-      .clipped()
-      SideSheetStage(side: .trailing, visible: true) {
-        PanelContent {
-          PanelHeader {
-            PanelTitle("Filters")
-            PanelDescription("Narrow down results.")
-          }
-          PanelBody {
-            Text("Content").font(TextStyle.sm.font()).foregroundStyle(Color.label)
-          }
-          PanelFooter {
-            Button {} label: { Text("Apply").frame(maxWidth: .infinity) }.buttonStyle(.variant())
-          }
-        }
-      }
-      .environment(\.patternCompact, false)
-      .background(ListsBackdrop())
-      .frame(height: 400)
-      .clipped()
-      ZStack(alignment: .bottom) {
-        ListsBackdrop()
-        Color.scrim
-        FlyoutContent(showCloseButton: true) {
-          FlyoutHeader {
-            FlyoutTitle("Dimensions")
-            FlyoutDescription("Set the dimensions for the layer.")
-          }
-          FlyoutBody {
-            Text("Width 100%").font(TextStyle.sm.font()).foregroundStyle(Color.label)
-          }
-        }
-        .environment(\.drawerFitsContent, true)
-        .clipShape(UnevenRoundedRectangle(topLeadingRadius: Radius.xl3, topTrailingRadius: Radius.xl3, style: .continuous))
-      }
-      .frame(height: 300)
-      .clipped()
-    }
-    .frame(width: 402)
-  }
-}
-
 @MainActor
 final class ListsGalleryTests: XCTestCase {
   private func render<V: View>(_ view: V, name: String) throws {
@@ -446,10 +364,6 @@ final class ListsGalleryTests: XCTestCase {
 
   func testRendersListsGallery() throws {
     try render(ListsGallery(), name: "lists-lists")
-  }
-
-  func testRendersAdaptiveGallery() throws {
-    try render(AdaptiveGallery(), name: "lists-adaptive")
   }
 
   func testRefreshTimingWaitsForMinimum() async {

@@ -8,7 +8,7 @@
 ## Features
 
 - **Components**: buttons, inputs, sheets, drawers, dialogs, menus, tabs, calendars, wheel pickers, toasts and more.
-- **Patterns and interactions**: pickers, confirmations, flyouts, swipe actions, pull to refresh, steppers and more.
+- **Patterns and interactions**: pickers, confirmations, previews, swipe actions, pull to refresh, steppers and more.
 - **Blocks and charts**: ready screens such as sign in, settings and dashboards, and line, area, bar, pie, radial and radar charts.
 - **Themeable**: one token source shared with every platform.
 - **Phosphor icons** throughout.

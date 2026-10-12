@@ -6,7 +6,28 @@ extension View {
     arrowEdge: Edge = .top,
     @ViewBuilder content: @escaping () -> Content
   ) -> some View {
-    modifier(FlyoutPresenter(isPresented: isPresented, arrowEdge: arrowEdge, content: content))
+    modifier(PreviewPresenter(isPresented: isPresented, arrowEdge: arrowEdge, content: content))
+  }
+}
+
+struct PreviewPresenter<Body: View>: ViewModifier {
+  let isPresented: Binding<Bool>
+  let arrowEdge: Edge
+  @ViewBuilder let content: () -> Body
+
+  @CompactLayout private var compact
+
+  func body(content host: Content) -> some View {
+    let binding = isPresented
+    host
+      .drawer(isPresented: binding.gated(compact)) {
+        content().environment(\.patternCompact, true)
+      }
+      .popover(isPresented: binding.gated(!compact), arrowEdge: arrowEdge) {
+        content()
+          .environment(\.patternCompact, false)
+          .environment(\.overlayDismiss, OverlayDismiss { binding.wrappedValue = false })
+      }
   }
 }
 

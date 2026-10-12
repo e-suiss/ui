@@ -128,28 +128,6 @@ import com.esuiss.ui.patterns.ContextActionsContent
 import com.esuiss.ui.patterns.ContextActionsItem
 import com.esuiss.ui.patterns.ContextActionsLabel
 import com.esuiss.ui.patterns.ContextActionsTrigger
-import com.esuiss.ui.patterns.Flyout
-import com.esuiss.ui.patterns.FlyoutBody
-import com.esuiss.ui.patterns.FlyoutContent
-import com.esuiss.ui.patterns.FlyoutDescription
-import com.esuiss.ui.patterns.FlyoutHeader
-import com.esuiss.ui.patterns.FlyoutTitle
-import com.esuiss.ui.patterns.Modal
-import com.esuiss.ui.patterns.ModalBody
-import com.esuiss.ui.patterns.ModalClose
-import com.esuiss.ui.patterns.ModalContent
-import com.esuiss.ui.patterns.ModalDescription
-import com.esuiss.ui.patterns.ModalFooter
-import com.esuiss.ui.patterns.ModalHeader
-import com.esuiss.ui.patterns.ModalTitle
-import com.esuiss.ui.patterns.Panel
-import com.esuiss.ui.patterns.PanelBody
-import com.esuiss.ui.patterns.PanelClose
-import com.esuiss.ui.patterns.PanelContent
-import com.esuiss.ui.patterns.PanelDescription
-import com.esuiss.ui.patterns.PanelFooter
-import com.esuiss.ui.patterns.PanelHeader
-import com.esuiss.ui.patterns.PanelTitle
 import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.patterns.TableList
@@ -176,9 +154,6 @@ private enum class ListScene {
     AlertSheet,
     Confirm,
     ContextActions,
-    Flyout,
-    Modal,
-    Panel,
     Picker,
 }
 
@@ -493,47 +468,6 @@ private fun Scene(scene: ListScene) {
                 ContextActionsItem("Delete", onClick = {}, variant = MenuItemVariant.Destructive)
             }
         }
-        ListScene.Flyout -> Flyout(open = true, onOpenChange = {}) {
-            FlyoutContent(modifier = Modifier.testTag(Overlay)) {
-                FlyoutHeader {
-                    FlyoutTitle("Dimensions")
-                    FlyoutDescription("Set the dimensions for the layer.")
-                }
-                FlyoutBody {
-                    BasicText("Width 100%  ·  Height 25px", style = LocalContentStyle.current)
-                }
-            }
-        }
-        ListScene.Modal -> Modal(open = true, onOpenChange = {}) {
-            ModalContent(modifier = Modifier.testTag(Overlay)) {
-                ModalHeader {
-                    ModalTitle("Edit profile")
-                    ModalDescription("Make changes to your profile here.")
-                }
-                ModalBody {
-                    BasicText("Name: Pedro Duarte", style = LocalContentStyle.current)
-                }
-                ModalFooter {
-                    Button("Save changes", onClick = {}, modifier = Modifier.fillMaxWidth())
-                    ModalClose("Cancel", modifier = Modifier.fillMaxWidth())
-                }
-            }
-        }
-        ListScene.Panel -> Panel(open = true, onOpenChange = {}, floating = true) {
-            PanelContent(modifier = Modifier.testTag(Overlay), showCloseButton = false) {
-                PanelHeader {
-                    PanelTitle("Filters")
-                    PanelDescription("Narrow down the results.")
-                }
-                PanelBody {
-                    BasicText("Status: Paid", style = LocalContentStyle.current)
-                }
-                PanelFooter {
-                    Button("Apply", onClick = {}, modifier = Modifier.fillMaxWidth())
-                    PanelClose("Reset", modifier = Modifier.fillMaxWidth())
-                }
-            }
-        }
         ListScene.Picker -> {
             var value by remember { mutableStateOf<String?>("system") }
             Picker(
@@ -594,7 +528,6 @@ class ListsGalleryTest {
                 when (current) {
                     ListScene.Picker -> compose.onNodeWithText("Dark").assertExists()
                     ListScene.AlertSheet, ListScene.Confirm, ListScene.ContextActions,
-                    ListScene.Flyout, ListScene.Modal, ListScene.Panel,
                     -> compose.onNode(hasTestTag(Overlay), useUnmergedTree = true).assertExists()
                     ListScene.SwipeActions -> compose.onAllNodesWithText("Delete").assertCountEquals(1)
                     else -> Unit

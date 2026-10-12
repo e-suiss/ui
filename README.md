@@ -12,7 +12,7 @@
 ## Features
 
 - **Components**: buttons, inputs, sheets, drawers, dialogs, menus, tabs, calendars, wheel pickers, toasts and more.
-- **Patterns and interactions**: pickers, confirmations, flyouts, swipe actions, pull to refresh and steppers built from the components.
+- **Patterns and interactions**: pickers, confirmations, previews, swipe actions, pull to refresh and steppers built from the components.
 - **Three styling options**: Uniwind, NativeWind or StyleSheet, detected from your project or chosen with `--styling`.
 - **Expo and bare React Native**: packages are installed with `expo install` in Expo projects, and Babel is configured for you in bare projects.
 - **Native feel**: animations with Reanimated, gestures with React Native Gesture Handler.
