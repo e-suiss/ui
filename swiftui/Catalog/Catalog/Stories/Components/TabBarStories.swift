@@ -48,6 +48,7 @@ private struct TabBarPage<Bar: View>: View {
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
       bar()
     }
+    .background(Color.surface.ignoresSafeArea())
   }
 }
 

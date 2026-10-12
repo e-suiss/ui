@@ -26,7 +26,7 @@ function Page({
   children: React.ReactNode
 }) {
   return (
-    <View className="-m-4 flex-1">
+    <View className="-m-4 flex-1 bg-surface">
       <View className="flex-1 gap-2 p-4">
         <Text variant="h3">{title}</Text>
         <Text variant="muted">Tap a tab to switch screens.</Text>

@@ -32,6 +32,7 @@ public enum TabBarBadge: Equatable, Sendable, ExpressibleByIntegerLiteral, Expre
 
 struct TabBarContext: @unchecked Sendable {
   var selected: AnyHashable?
+  var namespace: Namespace.ID?
   var select: @MainActor @Sendable (AnyHashable) -> Void = { _ in }
 }
 
@@ -41,14 +42,15 @@ extension EnvironmentValues {
 
 public struct TabBar<Content: View>: View {
   let selection: Binding<AnyHashable>
-  let separator: Bool
   let content: Content
 
-  @Environment(\.screenBackground) private var background
+  @Namespace private var namespace
+  @State private var bottomInset: CGFloat = 0
+  @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init<Value: Hashable & Sendable>(
     selection: Binding<Value>,
-    separator: Bool = true,
     @ViewBuilder content: () -> Content
   ) {
     self.selection = Binding(
@@ -59,26 +61,36 @@ public struct TabBar<Content: View>: View {
         }
       }
     )
-    self.separator = separator
     self.content = content()
   }
 
   public var body: some View {
     let binding = selection
-    let context = TabBarContext(selected: binding.wrappedValue) { value in
+    let context = TabBarContext(selected: binding.wrappedValue, namespace: namespace) { value in
       if binding.wrappedValue != value { binding.wrappedValue = value }
     }
     HStack(alignment: .top, spacing: 0) {
       content
     }
-    .padding(.horizontal, 8)
-    .frame(maxWidth: .infinity)
-    .background(background.ignoresSafeArea(.container, edges: .bottom))
-    .overlay(alignment: .top) {
-      if separator {
-        Color.separator.frame(height: 1)
-      }
+    .padding(4)
+    .background {
+      Capsule()
+        .fill(Color.surfaceRaised)
+        .shadow(.lg)
     }
+    .overlay {
+      Capsule().strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+    }
+    .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.15), value: binding.wrappedValue)
+    .padding(.horizontal, 16)
+    .padding(.top, 8)
+    .padding(.bottom, max(12, bottomInset - 8))
+    .frame(maxWidth: .infinity)
+    .background {
+      Color.clear
+        .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.bottom } action: { bottomInset = $0 }
+    }
+    .ignoresSafeArea(.container, edges: .bottom)
     .environment(\.tabBar, context)
     .hapticFeedback(.selection, trigger: binding.wrappedValue)
     .accessibilityElement(children: .contain)
@@ -145,12 +157,18 @@ public struct TabBarItem: View {
           .lineLimit(1)
       }
       .foregroundStyle(!isEnabled ? Color.labelQuaternary : active ? .accent : .labelSecondary)
-      .padding(.top, 6)
-      .padding(.bottom, 4)
-      .frame(maxWidth: .infinity, minHeight: 49, alignment: .top)
-      .contentShape(Rectangle())
+      .padding(.vertical, 6)
+      .frame(maxWidth: .infinity)
+      .contentShape(Capsule())
     }
     .buttonStyle(TabBarItemStyle())
+    .background {
+      if active, let namespace = tabBar.namespace {
+        Capsule()
+          .fill(Color.control)
+          .matchedGeometryEffect(id: "active", in: namespace)
+      }
+    }
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(title)
     .accessibilityValue(badgeValue)
@@ -170,14 +188,12 @@ public struct TabBarItem: View {
 private struct TabBarItemStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.6 : 1)
+      .background(configuration.isPressed ? Color.itemPressed : .clear, in: Capsule())
   }
 }
 
 private struct TabBarBadgeView: View {
   let badge: TabBarBadge
-
-  @Environment(\.screenBackground) private var background
 
   var body: some View {
     Group {
@@ -195,7 +211,7 @@ private struct TabBarBadgeView: View {
           .frame(width: 10, height: 10)
       }
     }
-    .background(Capsule().fill(background).padding(-2))
+    .background(Capsule().fill(Color.surfaceRaised).padding(-2))
     .fixedSize()
     .accessibilityHidden(true)
   }

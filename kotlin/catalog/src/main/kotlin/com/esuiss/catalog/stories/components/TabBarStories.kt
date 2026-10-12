@@ -14,7 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Fill
 import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.fill.ChatCircle
+import com.adamglin.phosphoricons.fill.GearSix
+import com.adamglin.phosphoricons.fill.House
+import com.adamglin.phosphoricons.fill.MagnifyingGlass
+import com.adamglin.phosphoricons.fill.User
 import com.adamglin.phosphoricons.regular.ChatCircle
 import com.adamglin.phosphoricons.regular.GearSix
 import com.adamglin.phosphoricons.regular.House
@@ -41,13 +47,13 @@ val tabBarStories = StoryGroup(
     ),
 )
 
-private class TabBarEntry(val value: String, val label: String, val icon: ImageVector, val badge: String? = null)
+private class TabBarEntry(val value: String, val label: String, val icon: ImageVector, val selectedIcon: ImageVector, val badge: String? = null)
 
 private val tabBarEntries = listOf(
-    TabBarEntry("home", "Home", PhosphorIcons.Regular.House),
-    TabBarEntry("search", "Search", PhosphorIcons.Regular.MagnifyingGlass),
-    TabBarEntry("messages", "Messages", PhosphorIcons.Regular.ChatCircle, "3"),
-    TabBarEntry("profile", "Profile", PhosphorIcons.Regular.User, ""),
+    TabBarEntry("home", "Home", PhosphorIcons.Regular.House, PhosphorIcons.Fill.House),
+    TabBarEntry("search", "Search", PhosphorIcons.Regular.MagnifyingGlass, PhosphorIcons.Fill.MagnifyingGlass),
+    TabBarEntry("messages", "Messages", PhosphorIcons.Regular.ChatCircle, PhosphorIcons.Fill.ChatCircle, "3"),
+    TabBarEntry("profile", "Profile", PhosphorIcons.Regular.User, PhosphorIcons.Fill.User, ""),
 )
 
 @Composable
@@ -77,6 +83,7 @@ private fun TabBarExample(badges: Boolean = true, disabled: String? = null) {
                     value = entry.value,
                     label = entry.label,
                     icon = entry.icon,
+                    selectedIcon = entry.selectedIcon,
                     badge = if (badges) entry.badge else null,
                     enabled = entry.value != disabled,
                 )
@@ -90,9 +97,9 @@ private fun TabBarLargeBadge() {
     var value by rememberSaveable { mutableStateOf("home") }
     TabBarPage("Home") {
         TabBar(value = value, onValueChange = { value = it }) {
-            TabBarItem(value = "home", label = "Home", icon = PhosphorIcons.Regular.House)
-            TabBarItem(value = "messages", label = "Messages", icon = PhosphorIcons.Regular.ChatCircle, badge = "128")
-            TabBarItem(value = "settings", label = "Settings", icon = PhosphorIcons.Regular.GearSix, badge = "New")
+            TabBarItem(value = "home", label = "Home", icon = PhosphorIcons.Regular.House, selectedIcon = PhosphorIcons.Fill.House)
+            TabBarItem(value = "messages", label = "Messages", icon = PhosphorIcons.Regular.ChatCircle, selectedIcon = PhosphorIcons.Fill.ChatCircle, badge = "128")
+            TabBarItem(value = "settings", label = "Settings", icon = PhosphorIcons.Regular.GearSix, selectedIcon = PhosphorIcons.Fill.GearSix, badge = "New")
         }
     }
 }

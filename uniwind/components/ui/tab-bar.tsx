@@ -31,15 +31,10 @@ function TabBar({
   const insets = useSafeAreaInsets()
   const screen = React.useContext(ScreenContext)
   const consumed = screen?.edges.includes("bottom") ? insets.bottom : 0
-  const paddingBottom = Math.max(0, insets.bottom - consumed)
+  const paddingBottom = Math.max(12, insets.bottom - consumed - 8)
   return (
     <TabsPrimitive.Root
-      className={(state) =>
-        cn(
-          "border-t border-separator bg-surface",
-          resolveClassName(className, state)
-        )
-      }
+      className={(state) => cn("px-4 pt-2", resolveClassName(className, state))}
       style={(state) => [
         { paddingBottom },
         typeof style === "function" ? style(state) : style,
@@ -60,7 +55,10 @@ function TabBarList({
   return (
     <TabsPrimitive.List
       className={(state) =>
-        cn("flex-row px-2 pt-1.5 pb-1", resolveClassName(className, state))
+        cn(
+          "flex-row rounded-full border border-label/5 bg-surface-raised p-1 shadow-lg dark:border-label/10",
+          resolveClassName(className, state)
+        )
       }
       {...props}
     />
@@ -71,12 +69,12 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
   const text = badgeText(badge)
   if (badge === true) {
     return (
-      <View className="absolute -top-0.5 -end-1 size-2.5 rounded-full border-2 border-surface bg-danger" />
+      <View className="absolute -top-0.5 -end-1 size-2.5 rounded-full border-2 border-surface-raised bg-danger" />
     )
   }
   if (text === undefined) return null
   return (
-    <View className="absolute -top-1.5 -end-3 h-4.5 min-w-4.5 items-center justify-center rounded-full border-2 border-surface bg-danger px-1">
+    <View className="absolute -top-1.5 -end-3 h-4.5 min-w-4.5 items-center justify-center rounded-full border-2 border-surface-raised bg-danger px-1">
       <Text className="text-3xs font-semibold text-on-accent" numberOfLines={1}>
         {text}
       </Text>
@@ -99,7 +97,8 @@ function TabBarItem({
     <TabsPrimitive.Tab
       className={(state) =>
         cn(
-          "flex-1 items-center justify-center gap-0.5 rounded-lg py-1 active:bg-item-pressed",
+          "flex-1 items-center justify-center gap-0.5 rounded-full py-1.5 active:bg-item-pressed",
+          state.active && "bg-control",
           resolveClassName(className, state)
         )
       }
