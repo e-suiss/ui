@@ -485,7 +485,7 @@ private struct QRScannerGallery: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
       GallerySection("Idle · scan line · flashlight") {
-        QRScanner(title: "Scan QR code", hint: "Point the camera at a code to pay.", onTorchToggle: {}) {
+        QRScanner(title: "Scan QR code", hint: "Point the camera at a code to pay.", scanLine: true, onTorchToggle: {}) {
           CameraPlaceholder()
         }
         .frame(height: 520)
@@ -1034,11 +1034,17 @@ final class ExtrasGalleryTests: XCTestCase {
 
   func testQRScannerFrameFitsTheViewport() {
     let frame = QRScannerMath.frame(in: CGSize(width: 402, height: 874))
-    XCTAssertEqual(frame.width, 280)
+    XCTAssertEqual(frame.width, 260)
     XCTAssertEqual(frame.midX, 201)
+    XCTAssertEqual(frame.minY, 283)
     let small = QRScannerMath.frame(in: CGSize(width: 300, height: 300))
-    XCTAssertEqual(small.width, 180, accuracy: 0.001)
-    let brackets = QRScannerMath.brackets(frame: CGRect(x: 0, y: 0, width: 200, height: 200), radius: 28, length: 44).boundingRect
-    XCTAssertEqual(brackets, CGRect(x: 0, y: 0, width: 200, height: 200))
+    XCTAssertEqual(small.width, 198, accuracy: 0.001)
+    XCTAssertEqual(small.minY, 27, accuracy: 0.001)
+    let fixed = QRScannerMath.frame(in: CGSize(width: 402, height: 874), frameSize: 200)
+    XCTAssertEqual(fixed.width, 200)
+    let brackets = QRScannerMath.brackets(side: 200).boundingRect
+    XCTAssertEqual(brackets.minX, 0, accuracy: 0.001)
+    XCTAssertEqual(brackets.maxX, 200, accuracy: 0.001)
+    XCTAssertEqual(brackets.maxY, 200, accuracy: 0.001)
   }
 }

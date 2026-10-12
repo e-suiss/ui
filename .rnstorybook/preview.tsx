@@ -3,8 +3,14 @@ import { View } from "react-native"
 
 const preview: Preview = {
   decorators: [
-    (Story) => (
-      <View className="flex-1 bg-surface p-4">
+    (Story, { parameters }) => (
+      <View
+        className={
+          parameters.layout === "fullscreen"
+            ? "flex-1 bg-surface"
+            : "flex-1 bg-surface p-4"
+        }
+      >
         <Story />
       </View>
     ),
