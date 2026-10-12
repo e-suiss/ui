@@ -264,7 +264,7 @@ private fun StepperButton(
     var pressed by remember { mutableStateOf(false) }
     val shape = RoundedCornerShape(Radius.md)
     val surface = when {
-        !stepper.enabled -> Modifier.background(colors.controlDisabled, shape)
+        !enabled -> Modifier.background(colors.controlDisabled, shape)
         pressed && enabled -> Modifier.background(colors.controlPressed, shape)
         colors.isDark -> Modifier.background(colors.labelQuaternary, shape)
         else -> Modifier.shadow(FormShadowSm, shape).background(colors.surfaceRaised, shape)

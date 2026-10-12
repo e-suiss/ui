@@ -154,7 +154,12 @@ function StepperDecrement({
           {...renderProps}
           style={({ pressed }) => [
             styles.button,
-            buttonStyle(colors, isDark, state.disabled, pressed),
+            buttonStyle(
+              colors,
+              isDark,
+              state.disabled || !canDecrement,
+              pressed
+            ),
             resolveStyle(style, state) as StyleProp<ViewStyle>,
           ]}
         />
@@ -188,7 +193,12 @@ function StepperIncrement({
           {...renderProps}
           style={({ pressed }) => [
             styles.button,
-            buttonStyle(colors, isDark, state.disabled, pressed),
+            buttonStyle(
+              colors,
+              isDark,
+              state.disabled || !canIncrement,
+              pressed
+            ),
             resolveStyle(style, state) as StyleProp<ViewStyle>,
           ]}
         />

@@ -115,7 +115,7 @@ function StepperDecrement({
       className={(state) =>
         cn(
           "relative h-full w-9 items-center justify-center rounded-md",
-          state.disabled
+          state.disabled || !canDecrement
             ? "bg-control-disabled"
             : "bg-surface-raised shadow active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
           resolveClassName(className, state)
@@ -149,7 +149,7 @@ function StepperIncrement({
       className={(state) =>
         cn(
           "relative h-full w-9 items-center justify-center rounded-md",
-          state.disabled
+          state.disabled || !canIncrement
             ? "bg-control-disabled"
             : "bg-surface-raised shadow active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
           resolveClassName(className, state)

@@ -262,7 +262,7 @@ private struct StepperButtonBody<Label: View>: View {
       .frame(width: 36)
       .frame(maxHeight: .infinity)
       .background {
-        if !(stepper?.enabled ?? true) {
+        if !isEnabled {
           shape.fill(Color.controlDisabled)
         } else if pressed && isEnabled {
           shape.fill(Color.controlPressed)
