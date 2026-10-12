@@ -1,4 +1,5 @@
 import PhosphorSwift
+import Observation
 import SwiftUI
 
 public enum PopupAlignment: Sendable, CaseIterable {
@@ -163,14 +164,14 @@ struct PopupPresenter<Popup: View>: ViewModifier {
   var maxHeight: CGFloat = .infinity
   @ViewBuilder let popup: () -> Popup
 
-  @State private var anchor: CGRect = .zero
+  @State private var anchor = PopupAnchor()
 
   func body(content: Content) -> some View {
     content
       .onGeometryChange(for: CGRect.self) { proxy in
         proxy.frame(in: .global)
       } action: { frame in
-        anchor = frame
+        anchor.frame = frame
       }
       .modifier(
         CoverPresenter(isPresented: $isPresented) { visible in
@@ -191,8 +192,13 @@ struct PopupPresenter<Popup: View>: ViewModifier {
   }
 }
 
+@Observable
+final class PopupAnchor {
+  var frame: CGRect = .zero
+}
+
 struct PopupCanvas<Popup: View>: View {
-  let anchor: CGRect
+  let anchor: PopupAnchor
   let side: Edge
   let align: PopupAlignment
   let sideOffset: CGFloat
@@ -210,7 +216,7 @@ struct PopupCanvas<Popup: View>: View {
     GeometryReader { proxy in
       let origin = proxy.frame(in: .global).origin
       PopupLayout(
-        anchor: anchor.offsetBy(dx: -origin.x, dy: -origin.y),
+        anchor: anchor.frame.offsetBy(dx: -origin.x, dy: -origin.y),
         side: side,
         align: align,
         sideOffset: sideOffset,
