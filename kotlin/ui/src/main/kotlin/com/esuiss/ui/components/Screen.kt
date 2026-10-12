@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -63,7 +65,7 @@ private fun Set<ScreenEdge>.sides(): WindowInsetsSides? = map {
     }
 }.reduceOrNull { sides, side -> sides + side }
 
-private tailrec fun Context.findActivity(): Activity? = when (this) {
+internal tailrec fun Context.findActivity(): Activity? = when (this) {
     is Activity -> this
     is ContextWrapper -> baseContext.findActivity()
     else -> null
@@ -84,6 +86,7 @@ private fun Window.applyLightBars(light: Boolean) {
     if (decorView.systemUiVisibility != flags) decorView.systemUiVisibility = flags
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Screen(
     modifier: Modifier = Modifier,
@@ -109,7 +112,7 @@ fun Screen(
             .background(fill)
             .then(
                 if (sides != null) {
-                    Modifier.windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout).only(sides))
+                    Modifier.windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout).union(WindowInsets.statusBarsIgnoringVisibility).only(sides))
                 } else {
                     Modifier
                 },

@@ -4338,7 +4338,8 @@
       "kotlin": [
         "interactions/Island.kt",
         "components/Content.kt",
-        "components/FormSupport.kt"
+        "components/FormSupport.kt",
+        "components/Screen.kt"
       ]
     },
     {

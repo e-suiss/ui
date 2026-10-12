@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,7 +43,6 @@ import com.adamglin.phosphoricons.bold.DownloadSimple
 import com.adamglin.phosphoricons.fill.Bell
 import com.adamglin.phosphoricons.fill.ChatCircle
 import com.adamglin.phosphoricons.fill.CheckCircle
-import com.adamglin.phosphoricons.fill.FileZip
 import com.esuiss.catalog.Section
 import com.esuiss.catalog.Story
 import com.esuiss.catalog.StoryGroup
@@ -53,9 +52,8 @@ import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentColor
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.interactions.Island
-import com.esuiss.ui.interactions.IslandCompact
-import com.esuiss.ui.interactions.IslandExpanded
 import com.esuiss.ui.interactions.IslandProvider
+import com.esuiss.ui.interactions.IslandRegion
 import com.esuiss.ui.interactions.IslandRing
 import com.esuiss.ui.interactions.useIsland
 import com.esuiss.ui.theme.EsuissTheme
@@ -69,16 +67,19 @@ val islandStories = StoryGroup(
     title = "Island",
     stories = listOf(
         Story("Compact") { IslandProvider { IslandDownloads(initial = 0.42f) } },
-        Story("Expanded") { IslandProvider { IslandDownloads(initial = 0.42f, expanded = true) } },
+        Story("Expanded") { IslandProvider { IslandDownloads(initial = 0.42f, start = IslandStart.Expanded) } },
+        Story("Minimal") { IslandProvider { IslandDownloads(initial = 0.42f, start = IslandStart.Minimal) } },
         Story("Notice") { IslandProvider { IslandNoticeOnMount() } },
         Story("LiveActivity") { IslandProvider { IslandDownloads(withNotifications = true) } },
     ),
 )
 
+private enum class IslandStart { Compact, Expanded, Minimal }
+
 private const val IslandSize = 120
 
 @Composable
-private fun IslandNotifyButtons() {
+private fun IslandNotifyButtons(extra: @Composable () -> Unit = {}) {
     val island = useIsland()
     val colors = EsuissTheme.colors
     FlowRow(
@@ -108,84 +109,104 @@ private fun IslandNotifyButtons() {
             },
             variant = ButtonVariant.Secondary,
         )
+        extra()
     }
 }
 
 @Composable
-private fun IslandDownloadActivity(progress: Float, onCancel: () -> Unit) {
+private fun IslandProgress(progress: Float) {
     val colors = EsuissTheme.colors
-    val done = progress >= 1f
-    val percent = (progress * 100).roundToInt()
-    IslandCompact(Modifier.semantics { contentDescription = "Downloading Design-Kit.zip, $percent%" }) {
-        Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, tint = colors.accent)
-        if (done) {
-            Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = colors.green)
-        } else {
-            IslandRing(progress)
-        }
+    if (progress >= 1f) {
+        Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = colors.green)
+    } else {
+        IslandRing(progress)
     }
-    IslandExpanded(Modifier.semantics { contentDescription = "Download" }) {
-        val foreground = LocalContentColor.current
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+}
+
+@Composable
+private fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
+    val colors = EsuissTheme.colors
+    val current = progress ?: 0f
+    val done = current >= 1f
+    val percent = (current * 100).roundToInt()
+    Island(
+        compactLeading = progress?.let {
+            { Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, tint = colors.accent) }
+        },
+        compactTrailing = progress?.let { value -> { IslandProgress(value) } },
+        minimal = progress?.let { value -> { IslandProgress(value) } },
+        modifier = Modifier.semantics { contentDescription = "Downloading Design-Kit.zip, $percent%" },
+    ) {
+        IslandExpandedRegion(IslandRegion.Leading) {
+            val foreground = LocalContentColor.current
             Box(
                 modifier = Modifier
                     .size(40.dp)
                     .background(foreground.copy(alpha = 0.15f), RoundedCornerShape(Radius.xl)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(PhosphorIcons.Fill.FileZip, contentDescription = null, size = 24.dp, tint = colors.accent)
+                Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, size = 24.dp, tint = colors.accent)
             }
-            Column(Modifier.weight(1f)) {
-                Text(
-                    "Design-Kit.zip",
-                    style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Text(
-                    if (done) "Downloaded" else "${(progress * IslandSize).roundToInt()} MB of $IslandSize MB",
-                    style = Typography.sm.copy(color = foreground.copy(alpha = 0.7f)),
-                )
-            }
-            Text("$percent%", style = Typography.xl2.copy(color = foreground, fontWeight = FontWeight.SemiBold))
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp)
-                .clip(CircleShape)
-                .background(foreground.copy(alpha = 0.2f))
-                .semantics {
-                    contentDescription = "Download progress"
-                    progressBarRangeInfo = ProgressBarRangeInfo(percent.toFloat(), 0f..100f)
-                },
-        ) {
-            Box(
-                Modifier
-                    .fillMaxWidth(progress.coerceIn(0f, 1f))
-                    .fillMaxHeight()
-                    .background(colors.accent, CircleShape),
+        IslandExpandedRegion(IslandRegion.Trailing) {
+            Text("$percent%", style = Typography.xl2.copy(color = LocalContentColor.current, fontWeight = FontWeight.SemiBold))
+        }
+        IslandExpandedRegion(IslandRegion.Center) {
+            val foreground = LocalContentColor.current
+            Text(
+                if (done) "Downloaded" else "Downloading",
+                style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                if (done) "Design-Kit.zip" else "Design-Kit.zip · ${(current * IslandSize).roundToInt()} of $IslandSize MB",
+                style = Typography.sm.copy(color = foreground.copy(alpha = 0.7f)),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
-        val interaction = remember { MutableInteractionSource() }
-        val pressed by interaction.collectIsPressedAsState()
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp)
-                .alpha(if (done) 0.5f else 1f)
-                .clip(CircleShape)
-                .background(foreground.copy(alpha = if (pressed) 0.25f else 0.15f))
-                .clickable(interactionSource = interaction, indication = null, enabled = !done, role = Role.Button, onClick = onCancel),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text("Cancel download", style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold))
+        IslandExpandedRegion(IslandRegion.Bottom) {
+            val foreground = LocalContentColor.current
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(6.dp)
+                    .clip(CircleShape)
+                    .background(foreground.copy(alpha = 0.2f))
+                    .semantics {
+                        contentDescription = "Download progress"
+                        progressBarRangeInfo = ProgressBarRangeInfo(percent.toFloat(), 0f..100f)
+                    },
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxWidth(current.coerceIn(0f, 1f))
+                        .fillMaxHeight()
+                        .background(colors.accent, CircleShape),
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+            val interaction = remember { MutableInteractionSource() }
+            val pressed by interaction.collectIsPressedAsState()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(44.dp)
+                    .alpha(if (done) 0.5f else 1f)
+                    .clip(CircleShape)
+                    .background(foreground.copy(alpha = if (pressed) 0.25f else 0.15f))
+                    .clickable(interactionSource = interaction, indication = null, enabled = !done, role = Role.Button, onClick = onCancel),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("Cancel download", style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold))
+            }
         }
     }
 }
 
 @Composable
-private fun IslandDownloads(initial: Float? = null, expanded: Boolean = false, withNotifications: Boolean = false) {
+private fun IslandDownloads(initial: Float? = null, start: IslandStart = IslandStart.Compact, withNotifications: Boolean = false) {
     val island = useIsland()
     val colors = EsuissTheme.colors
     var progress by rememberSaveable { mutableStateOf(initial) }
@@ -205,17 +226,19 @@ private fun IslandDownloads(initial: Float? = null, expanded: Boolean = false, w
             )
         }
     }
-    LaunchedEffect(expanded) {
-        if (expanded) island.setExpanded(true)
+    LaunchedEffect(start) {
+        when (start) {
+            IslandStart.Expanded -> island.expand()
+            IslandStart.Minimal -> island.minimize()
+            IslandStart.Compact -> Unit
+        }
     }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Island {
-            progress?.let { IslandDownloadActivity(it) { progress = null } }
-        }
+        IslandDownloadIsland(progress) { progress = null }
         Text(
             "Start a download, then tap the pill at the top to see the details. Swipe up on it to close.",
             modifier = Modifier.widthIn(max = 320.dp),
@@ -229,7 +252,16 @@ private fun IslandDownloads(initial: Float? = null, expanded: Boolean = false, w
                 enabled = progress == null,
             )
         }
-        if (withNotifications) IslandNotifyButtons()
+        if (withNotifications) {
+            IslandNotifyButtons {
+                Button(
+                    "Minimize",
+                    onClick = island::minimize,
+                    variant = ButtonVariant.Secondary,
+                    enabled = progress != null,
+                )
+            }
+        }
     }
 }
 
@@ -253,7 +285,7 @@ private fun IslandNoticeOnMount() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Island {}
+        Island()
         Text(
             "The pill grows to show the notification and shrinks back on its own.",
             modifier = Modifier.widthIn(max = 320.dp),

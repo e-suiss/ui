@@ -111,9 +111,8 @@ import com.esuiss.ui.components.useTheme
 import com.esuiss.ui.interactions.CardStack
 import com.esuiss.ui.interactions.CardStackDirection
 import com.esuiss.ui.interactions.Island
-import com.esuiss.ui.interactions.IslandCompact
-import com.esuiss.ui.interactions.IslandExpanded
 import com.esuiss.ui.interactions.IslandProvider
+import com.esuiss.ui.interactions.IslandRegion
 import com.esuiss.ui.interactions.IslandRing
 import com.esuiss.ui.interactions.rememberCardStackState
 import com.esuiss.ui.interactions.useIsland
@@ -347,6 +346,7 @@ private fun IslandControls() {
             },
             variant = ButtonVariant.Secondary,
         )
+        Button("Minimize", onClick = island::minimize, variant = ButtonVariant.Secondary)
     }
 }
 
@@ -355,22 +355,27 @@ private fun IslandPage() {
     val progress = 0.62f
     IslandProvider {
         IslandControls()
-        Island(modifier = Modifier.testTag("island")) {
-            IslandCompact(modifier = Modifier.testTag("island-compact")) {
+        Island(
+            compactLeading = {
                 Icon(PhosphorIcons.Fill.Timer, null, tint = EsuissTheme.colors.orange)
                 BasicText("12:48", style = Typography.sm.copy(color = EsuissTheme.colors.orange, fontWeight = FontWeight.SemiBold))
-                IslandRing(progress, color = EsuissTheme.colors.orange)
+            },
+            compactTrailing = { IslandRing(progress, color = EsuissTheme.colors.orange) },
+            minimal = { IslandRing(progress, color = EsuissTheme.colors.orange) },
+            modifier = Modifier.testTag("island"),
+        ) {
+            IslandExpandedRegion(IslandRegion.Leading) {
+                Icon(PhosphorIcons.Fill.Timer, null, size = 28.dp, tint = EsuissTheme.colors.orange)
             }
-            IslandExpanded {
+            IslandExpandedRegion(IslandRegion.Trailing) {
+                IslandRing(progress, modifier = Modifier.size(40.dp), color = EsuissTheme.colors.orange)
+            }
+            IslandExpandedRegion(IslandRegion.Center) {
                 val foreground = LocalContentColor.current
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Icon(PhosphorIcons.Fill.Timer, null, size = 28.dp, tint = EsuissTheme.colors.orange)
-                    Column(Modifier.weight(1f)) {
-                        BasicText("Focus timer", style = Typography.sm.copy(color = foreground.copy(alpha = 0.7f)))
-                        BasicText("12:48", style = Typography.xl2.copy(color = foreground, fontWeight = FontWeight.SemiBold))
-                    }
-                    IslandRing(progress, modifier = Modifier.size(40.dp), color = EsuissTheme.colors.orange)
-                }
+                BasicText("Focus timer", style = Typography.sm.copy(color = foreground.copy(alpha = 0.7f)))
+                BasicText("12:48", style = Typography.xl2.copy(color = foreground, fontWeight = FontWeight.SemiBold))
+            }
+            IslandExpandedRegion(IslandRegion.Bottom) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Sm) {
                         Icon(PhosphorIcons.Regular.Pause, null)
@@ -635,13 +640,16 @@ class ExtrasGalleryTest {
                     }
                     ExtrasScene.IslandCompact -> compose.onNodeWithText("View: compact").assertExists()
                     ExtrasScene.IslandExpanded -> {
-                        compose.onNodeWithTag("island-compact").performClick()
+                        compose.onNodeWithTag("island").performClick()
                         settle()
                         compose.onNodeWithText("View: expanded").assertExists()
                         compose.onNodeWithTag("island").performTouchInput { swipeUp(durationMillis = 300) }
                         settle()
                         compose.onNodeWithText("View: compact").assertExists()
-                        compose.onNodeWithTag("island-compact").performClick()
+                        compose.onNodeWithText("Minimize").performClick()
+                        settle()
+                        compose.onNodeWithText("View: minimal").assertExists()
+                        compose.onNodeWithTag("island").performClick()
                         settle()
                         compose.onNodeWithText("Focus timer").assertExists()
                     }

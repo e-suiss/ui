@@ -10,8 +10,7 @@ import * as React from "react"
 import { Pressable, View } from "react-native"
 import {
   Island,
-  IslandCompact,
-  IslandExpanded,
+  IslandExpandedRegion,
   IslandProvider,
   IslandRing,
   useIsland,
@@ -20,13 +19,12 @@ import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
-const SIZE = 120
-
-function NotifyButtons() {
+function NotifyButtons({ children }: { children?: React.ReactNode }) {
   const { notify } = useIsland()
 
   return (
     <View className="flex-row flex-wrap justify-center gap-3">
+      {children}
       <Button
         variant="secondary"
         onPress={() =>
@@ -92,54 +90,55 @@ function useDownload(initial: number | null = null) {
   }
 }
 
-function DownloadActivity({
+function DownloadIsland({
   progress,
   onCancel,
 }: {
-  progress: number
+  progress: number | null
   onCancel: () => void
 }) {
+  if (progress === null) return <Island />
+
   const done = progress >= 1
   const percent = Math.round(progress * 100)
 
   return (
-    <>
-      <IslandCompact
-        accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}
-      >
+    <Island
+      accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}
+      compactLeading={
         <Icon as={DownloadSimpleIcon} weight="bold" className="text-accent" />
-        {done ? (
+      }
+      compactTrailing={
+        done ? (
           <Icon as={CheckCircleIcon} weight="fill" className="text-green" />
         ) : (
           <IslandRing value={progress} />
-        )}
-      </IslandCompact>
-      <IslandExpanded accessibilityLabel="Download">
-        <View className="flex-row items-center gap-3">
-          <View className="size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15">
-            <Icon
-              as={FileZipIcon}
-              weight="fill"
-              className="size-6 text-accent"
-            />
-          </View>
-          <View className="min-w-0 flex-1">
-            <Text numberOfLines={1} className="text-sm font-semibold">
-              Design-Kit.zip
-            </Text>
-            <Text className="text-sm text-surface/70 dark:text-label-secondary">
-              {done
-                ? "Downloaded"
-                : `${Math.round(progress * SIZE)} MB of ${SIZE} MB`}
-            </Text>
-          </View>
-          <Text className="text-2xl font-semibold">{percent}%</Text>
+        )
+      }
+      minimal={<IslandRing value={progress} />}
+    >
+      <IslandExpandedRegion region="leading">
+        <View className="size-10 items-center justify-center rounded-xl bg-on-media/15">
+          <Icon as={FileZipIcon} weight="fill" className="size-6 text-accent" />
         </View>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="trailing">
+        <Text className="text-2xl font-semibold">{percent}%</Text>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="center">
+        <Text numberOfLines={1} className="text-sm font-semibold">
+          {done ? "Downloaded" : "Downloading"}
+        </Text>
+        <Text numberOfLines={1} className="text-sm text-on-media/70">
+          Design-Kit.zip
+        </Text>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="bottom">
         <View
           role="progressbar"
           accessibilityLabel="Download progress"
           accessibilityValue={{ min: 0, max: 100, now: percent }}
-          className="h-1.5 overflow-hidden rounded-full bg-surface/20 dark:bg-label/20"
+          className="h-1.5 overflow-hidden rounded-full bg-on-media/20"
         >
           <View
             className="h-full rounded-full bg-accent"
@@ -150,38 +149,35 @@ function DownloadActivity({
           role="button"
           disabled={done}
           onPress={onCancel}
-          className="h-11 items-center justify-center rounded-full bg-surface/15 active:bg-surface/25 disabled:opacity-50 dark:bg-label/15 dark:active:bg-label/25"
+          className="h-11 items-center justify-center rounded-full bg-on-media/15 active:bg-on-media/25 disabled:opacity-50"
         >
           <Text className="text-sm font-semibold">Cancel download</Text>
         </Pressable>
-      </IslandExpanded>
-    </>
+      </IslandExpandedRegion>
+    </Island>
   )
 }
 
 function DownloadsExample({
   initial = null,
-  expanded = false,
+  view = "compact",
   withNotifications = false,
 }: {
   initial?: number | null
-  expanded?: boolean
+  view?: "compact" | "expanded" | "minimal"
   withNotifications?: boolean
 }) {
   const { progress, start, cancel } = useDownload(initial)
-  const { setExpanded } = useIsland()
+  const { expand, minimize } = useIsland()
 
   React.useEffect(() => {
-    if (expanded) setExpanded(true)
-  }, [expanded, setExpanded])
+    if (view === "expanded") expand()
+    else if (view === "minimal") minimize()
+  }, [view, expand, minimize])
 
   return (
     <View className="flex-1 items-center justify-center gap-4">
-      <Island>
-        {progress !== null ? (
-          <DownloadActivity progress={progress} onCancel={cancel} />
-        ) : null}
-      </Island>
+      <DownloadIsland progress={progress} onCancel={cancel} />
       <Text className="max-w-xs text-center text-sm text-label-secondary">
         Start a download, then tap the pill at the top to see the details. Swipe
         up on it to close.
@@ -193,7 +189,17 @@ function DownloadsExample({
           </Text>
         </Button>
       ) : null}
-      {withNotifications ? <NotifyButtons /> : null}
+      {withNotifications ? (
+        <NotifyButtons>
+          <Button
+            variant="secondary"
+            disabled={progress === null}
+            onPress={minimize}
+          >
+            <Text>Minimize</Text>
+          </Button>
+        </NotifyButtons>
+      ) : null}
     </View>
   )
 }
@@ -245,7 +251,11 @@ export const Compact: Story = {
 }
 
 export const Expanded: Story = {
-  render: () => <DownloadsExample initial={0.42} expanded />,
+  render: () => <DownloadsExample initial={0.42} view="expanded" />,
+}
+
+export const Minimal: Story = {
+  render: () => <DownloadsExample initial={0.42} view="minimal" />,
 }
 
 export const Notice: Story = {
