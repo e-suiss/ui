@@ -12,7 +12,13 @@ import {
 import * as NumberFieldPrimitive from "@/components/primitives/number-field"
 import { resolveStyle } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  shadow,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 const styles = StyleSheet.create({
   root: { flexDirection: "row", alignItems: "center", gap: 12 },
@@ -33,25 +39,32 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexDirection: "row",
     alignItems: "center",
+    gap: 3,
     borderRadius: radius.lg,
+    padding: 3,
   },
   button: {
     position: "relative",
     height: "100%",
-    width: 48,
+    width: 36,
     alignItems: "center",
     justifyContent: "center",
-  },
-  decrement: {
-    borderTopLeftRadius: radius.lg,
-    borderBottomLeftRadius: radius.lg,
-  },
-  increment: {
-    borderTopRightRadius: radius.lg,
-    borderBottomRightRadius: radius.lg,
+    borderRadius: radius.md,
   },
   separator: { height: 18, width: 1, flexShrink: 0 },
 })
+
+function buttonStyle(
+  colors: ThemeColors,
+  isDark: boolean,
+  disabled: boolean,
+  pressed: boolean
+): StyleProp<ViewStyle> {
+  if (disabled) return { backgroundColor: colors.controlDisabled }
+  if (pressed) return { backgroundColor: colors.controlPressed }
+  if (isDark) return { backgroundColor: colors.labelQuaternary }
+  return [{ backgroundColor: colors.surfaceRaised }, shadow.sm]
+}
 
 function Stepper({
   value,
@@ -131,18 +144,17 @@ function StepperDecrement({
   children,
   ...props
 }: React.ComponentProps<typeof NumberFieldPrimitive.Decrement>) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const { canDecrement } = NumberFieldPrimitive.useRootContext()
   return (
     <NumberFieldPrimitive.Decrement
-      hitSlop={{ top: 6, bottom: 6 }}
+      hitSlop={{ top: 9, bottom: 9 }}
       render={(renderProps, state) => (
         <Pressable
           {...renderProps}
           style={({ pressed }) => [
             styles.button,
-            styles.decrement,
-            pressed && { backgroundColor: colors.controlPressed },
+            buttonStyle(colors, isDark, state.disabled, pressed),
             resolveStyle(style, state) as StyleProp<ViewStyle>,
           ]}
         />
@@ -166,18 +178,17 @@ function StepperIncrement({
   children,
   ...props
 }: React.ComponentProps<typeof NumberFieldPrimitive.Increment>) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const { canIncrement } = NumberFieldPrimitive.useRootContext()
   return (
     <NumberFieldPrimitive.Increment
-      hitSlop={{ top: 6, bottom: 6 }}
+      hitSlop={{ top: 9, bottom: 9 }}
       render={(renderProps, state) => (
         <Pressable
           {...renderProps}
           style={({ pressed }) => [
             styles.button,
-            styles.increment,
-            pressed && { backgroundColor: colors.controlPressed },
+            buttonStyle(colors, isDark, state.disabled, pressed),
             resolveStyle(style, state) as StyleProp<ViewStyle>,
           ]}
         />

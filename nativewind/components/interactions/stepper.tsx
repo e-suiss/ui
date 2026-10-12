@@ -94,7 +94,7 @@ function StepperGroup({
     <NumberFieldPrimitive.Group
       className={(state) =>
         cn(
-          "h-8 shrink-0 flex-row items-center rounded-lg bg-control",
+          "h-8 shrink-0 flex-row items-center gap-[3px] rounded-lg bg-control p-[3px]",
           resolveClassName(className, state)
         )
       }
@@ -111,10 +111,13 @@ function StepperDecrement({
   const { canDecrement } = NumberFieldPrimitive.useRootContext()
   return (
     <NumberFieldPrimitive.Decrement
-      hitSlop={{ top: 6, bottom: 6 }}
+      hitSlop={{ top: 9, bottom: 9 }}
       className={(state) =>
         cn(
-          "relative h-full w-12 items-center justify-center rounded-l-lg active:bg-control-pressed",
+          "relative h-full w-9 items-center justify-center rounded-md",
+          state.disabled
+            ? "bg-control-disabled"
+            : "bg-surface-raised shadow active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
           resolveClassName(className, state)
         )
       }
@@ -142,10 +145,13 @@ function StepperIncrement({
   const { canIncrement } = NumberFieldPrimitive.useRootContext()
   return (
     <NumberFieldPrimitive.Increment
-      hitSlop={{ top: 6, bottom: 6 }}
+      hitSlop={{ top: 9, bottom: 9 }}
       className={(state) =>
         cn(
-          "relative h-full w-12 items-center justify-center rounded-r-lg active:bg-control-pressed",
+          "relative h-full w-9 items-center justify-center rounded-md",
+          state.disabled
+            ? "bg-control-disabled"
+            : "bg-surface-raised shadow active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
           resolveClassName(className, state)
         )
       }

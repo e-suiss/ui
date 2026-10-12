@@ -4774,11 +4774,16 @@
       ],
       "swift": [
         "Interactions/Stepper.swift",
-        "Components/Haptics.swift"
+        "Components/Checkbox.swift",
+        "Components/Field.swift",
+        "Components/Haptics.swift",
+        "Components/Separator.swift",
+        "Components/TextVariant.swift"
       ],
       "kotlin": [
         "interactions/Stepper.kt",
         "components/Content.kt",
+        "components/FormSupport.kt",
         "components/Haptics.kt",
         "components/Icon.kt"
       ]
@@ -5212,6 +5217,7 @@
         "components/Button.kt",
         "components/ButtonGroup.kt",
         "components/Content.kt",
+        "components/FormSupport.kt",
         "components/Haptics.kt",
         "components/Icon.kt",
         "components/Screen.kt",

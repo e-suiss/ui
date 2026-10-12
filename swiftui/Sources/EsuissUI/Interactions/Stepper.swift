@@ -192,12 +192,12 @@ public struct StepperGroup<Content: View>: View {
 
   public var body: some View {
     let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-    HStack(spacing: 0) {
+    HStack(spacing: 3) {
       content
     }
+    .padding(3)
     .frame(height: 32)
     .background(Color.control, in: shape)
-    .clipShape(shape)
     .fixedSize()
     .accessibilityElement(children: .contain)
   }
@@ -252,15 +252,29 @@ private struct StepperButtonBody<Label: View>: View {
 
   @Environment(\.stepper) private var stepper
   @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.colorScheme) private var colorScheme
 
   var body: some View {
+    let shape = RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
     label
       .frame(width: 16, height: 16)
       .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
-      .frame(width: 48)
+      .frame(width: 36)
       .frame(maxHeight: .infinity)
-      .background(pressed && isEnabled ? Color.controlPressed : .clear)
-      .contentShape(Rectangle().inset(by: -6))
+      .background {
+        if !(stepper?.enabled ?? true) {
+          shape.fill(Color.controlDisabled)
+        } else if pressed && isEnabled {
+          shape.fill(Color.controlPressed)
+        } else if colorScheme == .dark {
+          shape.fill(Color.labelQuaternary)
+        } else {
+          shape.fill(Color.surfaceRaised).shadow(.thumb)
+        }
+      }
+      .padding(.vertical, 9)
+      .contentShape(Rectangle())
+      .padding(.vertical, -9)
       .onChange(of: pressed) { _, isPressed in
         press.repeating?.cancel()
         press.repeating = nil
