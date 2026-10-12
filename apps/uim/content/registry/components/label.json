@@ -1,0 +1,19 @@
+{
+  "description": "A text label for a form control that can be pressed to act on the control.",
+  "overview": "`Label` renders a `Text` inside a `Pressable` row. The pressable accepts `onPress`, `onLongPress`, `onPressIn` and `onPressOut`, so pressing the label can toggle or focus the control next to it. A disabled label uses a muted color.",
+  "usage": "Set a `nativeID` on the label and point the control's `accessibilityLabelledBy` at it, so screen readers read the label with the control.\n\nFor a checkbox or switch, pass an `onPress` that toggles the control, which gives a larger touch target. Inside a `Field`, use `FieldLabel` instead.",
+  "examples": {
+    "WithInput": "A label linked to an input through `nativeID` and `accessibilityLabelledBy`.",
+    "WithCheckbox": "A label next to a checkbox that toggles it when pressed.",
+    "Disabled": "A disabled label."
+  },
+  "props": {
+    "Label": {
+      "onPress": "Called when the label is pressed, for example to toggle the related control.",
+      "onLongPress": "Called on a long press.",
+      "disabled": "Disables pressing and shows the muted style."
+    }
+  },
+  "accessibility": "- The label text reports its `disabled` state in `accessibilityState`.\n- Link it to its control with `nativeID` on the label and `accessibilityLabelledBy` on the control.",
+  "notes": "- Text uses the `text-label` token, and `text-label-quaternary` when disabled.\n- Light and dark colors follow the system appearance."
+}

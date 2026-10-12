@@ -1,0 +1,5 @@
+{
+  "description": "A single smooth line showing desktop visitors across six months.",
+  "overview": "The baseline line chart inside a `Card`: one series drawn as a natural curve with a month axis, a dashed horizontal grid and a tooltip. There is no value axis.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`, and change the curve with the `type` prop on `Line`. The component takes no props."
+}

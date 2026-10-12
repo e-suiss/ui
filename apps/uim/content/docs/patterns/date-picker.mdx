@@ -1,0 +1,228 @@
+---
+title: Date Picker
+description: "A date field that opens a drawer with day, month and year wheels ordered for the locale."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-date-picker--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" />\n  )\n}"} />
+
+</Example>
+
+`DatePicker` renders a field-style `DrawerTrigger` with a calendar icon and the selected date formatted with `Intl.DateTimeFormat` in the `medium` date style. Pressing it opens a `Drawer` with three `WheelPicker` columns.
+
+The column order follows the locale's short date format, falling back to month, day, year. Month names come from the locale, and the day column shrinks or grows with the chosen month and year, clamping the day when needed.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add date-picker"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add date-picker --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add date-picker --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="uniwind/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="nativewind/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/DatePicker.swift" />
+
+<SourceFile path="kotlin/patterns/DatePicker.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\""} />
+
+<Code lang="tsx" code={"<DatePicker accessibilityLabel=\"Date\" className=\"w-60\" />"} />
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. The value is a `Date` or `null`; `onValueChange` fires on every wheel change, so there is no separate confirm step.
+
+When no value is set the wheels start at today and the field shows `placeholder`. Limit the year column with `fromYear` and `toYear`.
+
+## Examples
+
+### With value
+
+Starts with a preset date via `defaultValue`.
+
+<Example id="patterns-date-picker--with-value" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithValueExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+</Example>
+
+### Locale
+
+Uses `tr-TR`, which reorders the wheels and translates month names.
+
+<Example id="patterns-date-picker--locale" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerLocaleExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" locale=\"tr-TR\" placeholder=\"Tarih seç\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+</Example>
+
+### Year range
+
+A date-of-birth field limited to 1940 through 2010.
+
+<Example id="patterns-date-picker--year-range" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerYearRangeExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" placeholder=\"Date of birth\" fromYear={1940} toYear={2010} defaultValue={new Date(1990, 5, 15)} />\n  )\n}"} />
+
+</Example>
+
+### With title
+
+Adds a heading to the drawer with `title`.
+
+<Example id="patterns-date-picker--with-title" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithTitleExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" title=\"Delivery date\" />\n  )\n}"} />
+
+</Example>
+
+### With close button
+
+Shows a close button in the drawer.
+
+<Example id="patterns-date-picker--with-close-button" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseButtonExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" showCloseButton />\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Labels the close button `Done` with `closeLabel`.
+
+<Example id="patterns-date-picker--with-close-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseLabelExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" showCloseButton closeLabel=\"Done\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled field that cannot open the drawer.
+
+<Example id="patterns-date-picker--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerDisabledExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" disabled />\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Shows the error border and tint with `invalid`.
+
+<Example id="patterns-date-picker--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerInvalidExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" invalid />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Holds the date in state and prints the selection below.
+
+<Example id="patterns-date-picker--controlled" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { DatePicker } from \"@/components/patterns/date-picker\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledExample(args: React.ComponentProps<typeof DatePicker>) {\n  const [value, setValue] = React.useState<Date | null>(new Date(2026, 9, 4))\n\n  return (\n    <View className=\"items-start gap-2\">\n      <DatePicker {...args} value={value} onValueChange={setValue} />\n      <Text className=\"text-sm text-label-secondary\">\n        Selected: {value ? value.toDateString() : \"none\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function DatePickerControlledExample() {\n  return (\n    <ControlledExample accessibilityLabel=\"Date\" className=\"w-60\" />\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Detaches the drawer from the screen edges.
+
+<Example id="patterns-date-picker--floating" width={880} height={400}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerFloatingExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" className=\"w-60\" floating />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DatePicker
+
+<PropsTable props={[{"name":"value","type":"Date | null","description":"The selected date when controlled, or `null`."},{"name":"defaultValue","type":"Date | null","description":"The initial date when uncontrolled."},{"name":"onValueChange","type":"(value: Date | null) => void","description":"Called with the new `Date` on every wheel change."},{"name":"placeholder","type":"string","default":"\"Pick a date\"","description":"Text shown when no date is set. Defaults to `Pick a date`."},{"name":"locale","type":"string","description":"BCP 47 locale for formatting, month names and wheel order."},{"name":"fromYear","type":"number","default":"new Date().getFullYear() - 100","description":"First year in the year wheel. Defaults to 100 years ago."},{"name":"toYear","type":"number","default":"new Date().getFullYear() + 10","description":"Last year in the year wheel. Defaults to 10 years ahead."},{"name":"title","type":"string","description":"Heading shown at the top of the drawer."},{"name":"disabled","type":"boolean","description":"Prevents opening and dims the field."},{"name":"floating","type":"boolean","description":"Insets the drawer from the screen edges."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the drawer. Defaults to `false`."},{"name":"closeLabel","type":"string","description":"Label of the close button."},{"name":"invalid","type":"boolean","description":"Applies the error border and background."},{"name":"className","type":"string"},{"name":"accessibilityLabel","type":"string","description":"Label for the field, also used for the drawer when there is no `title`."},{"name":"accessibilityLabelledBy","type":"string","description":"Links the field to a visible label."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The wheels are labelled `Day`, `Month` and `Year`.
+- Without a `title`, the drawer is labelled by `accessibilityLabel` or the placeholder.
+
+## Notes
+
+- The field uses `bg-control`, `border-danger` with a `bg-danger` tint when invalid, and `bg-control-disabled` when disabled; the tint is stronger in dark mode.
+- Without `floating`, the drawer's top corners are square.

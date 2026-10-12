@@ -1,0 +1,90 @@
+---
+title: Line Chart Dots
+description: "A weight card with a straight-line trend, dots on each month and the latest value in the header."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--dots" width={880} height={665}>
+
+<SourceFile path="uniwind/components/charts/line-chart-dots.tsx" fold={false} />
+
+</Example>
+
+Ten monthly weights drawn with `type="linear"` and a dot on every reading, plus a larger dot for the touched point. A value axis on the right covers a fixed range, and the tooltip formats values in kilograms. The header shows the latest weight and the change since January as static text.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-dots"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-dots --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-dots --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartDots.swift" />
+
+<SourceFile path="kotlin/charts/LineChartDots.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartDots } from \"@/components/charts/line-chart-dots\""} />
+
+<Code lang="tsx" code={"<LineChartDots />"} />
+
+Replace the weight array in `chartData` and update the header text to match. Adjust the `YAxis` `domain` and `ticks` for your range. The component takes no props.

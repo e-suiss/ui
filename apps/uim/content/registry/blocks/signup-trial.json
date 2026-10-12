@@ -1,0 +1,5 @@
+{
+  "description": "A free trial sign-up screen with a hero image, email and password fields, and a terms checkbox.",
+  "overview": "A hero image sits above an `InputAccessoryBar` with email and password inputs; the password shows a five-level strength meter as you type. A `Checkbox` with a `Label` accepts the terms, and the Start free trial `Button` in the `BottomBar` stays disabled until the form is valid, then shows a welcome screen. A sign-in link sits below.",
+  "usage": "Replace `IMAGE` and the copy with your own. `onSubmit` receives the email and password, and `onSignIn` handles the sign-in link. The hero photo is an Unsplash placeholder."
+}

@@ -1,0 +1,90 @@
+---
+title: Area Chart Default
+description: "A single filled area with a smooth curve showing desktop visitors over six months."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-area--default" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/area-chart-default.tsx" fold={false} />
+
+</Example>
+
+The baseline area chart inside a `Card`: one series drawn as a natural curve with a light fill, a dashed horizontal grid, a month axis and a tooltip with a line indicator. There is no value axis. Press and drag across the plot to move the tooltip between months.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-default"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-default --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-default --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-default.tsx`:
+
+<SourceFile path="uniwind/components/charts/area-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-default.tsx`:
+
+<SourceFile path="nativewind/components/charts/area-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-default.tsx`:
+
+<SourceFile path="stylesheet/components/charts/area-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/AreaChartDefault.swift" />
+
+<SourceFile path="kotlin/charts/AreaChartDefault.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartDefault } from \"@/components/charts/area-chart-default\""} />
+
+<Code lang="tsx" code={"<AreaChartDefault />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Rename the series in `chartConfig` to set its label and color. The component takes no props.

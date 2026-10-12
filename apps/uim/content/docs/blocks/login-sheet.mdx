@@ -1,0 +1,102 @@
+---
+title: Login Sheet
+description: "A sign-in screen whose primary button opens a bottom sheet to share or hide your email."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-login-sheet--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/login-sheet.tsx" fold={false} />
+
+</Example>
+
+An app welcome screen with two buttons: Sign in with suiss and Continue with email. The first opens a `Drawer` that shows the account name and a `RadioGroup` to share the real email or use a hidden forwarding address, with a Continue `Button` that shows a `Spinner` before closing the sheet and showing a welcome message.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-sheet"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-sheet --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-sheet --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-sheet.tsx`:
+
+<SourceFile path="uniwind/components/blocks/login-sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-sheet.tsx`:
+
+<SourceFile path="nativewind/components/blocks/login-sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-sheet.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/login-sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/LoginSheet.swift" />
+
+<SourceFile path="kotlin/blocks/LoginSheet.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LoginSheet } from \"@/components/blocks/login-sheet\""} />
+
+<Code lang="tsx" code={"<LoginSheet />"} />
+
+Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen.

@@ -1,0 +1,30 @@
+{
+  "description": "A one-time code input that fills digit by digit from a suggestion above the keyboard, then verifies and shows the result.",
+  "overview": "`OtpAutofill` wraps an `InputOTP` and runs it through `idle`, `filling`, `verifying`, `verified` and `invalid` states. When the input is focused and empty, `OtpAutofillSuggestion` slides up above the keyboard with the incoming code; pressing it types the code one digit at a time.\n\nWhen all digits are entered, `onVerify` runs and the slots dim while it is pending. A valid code turns the slots green and locks the input. An invalid code turns them red and shakes the row, then clears the input and refocuses it. Pasting or a system autofill of several digits plays the same digit-by-digit fill.",
+  "usage": "Pass `maxLength` and `onVerify`, which returns a boolean or a promise of one. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.\n\nThe input sets `textContentType=\"oneTimeCode\"` and the platform's one-time code `autoComplete`, so the system can also offer the code. `useOtpAutofill` returns `state`, `value`, `fill` and `inputRef` for custom controls.",
+  "examples": {
+    "WrongCode": "An incoming code that fails verification, showing the shake and reset.",
+    "FourDigits": "A four-digit code with its own suggestion."
+  },
+  "parts": {
+    "OtpAutofill": "The root that holds the code and verification state.",
+    "OtpAutofillInput": "The `InputOTP` that shows each state and shakes on an invalid code.",
+    "OtpAutofillSuggestion": "A bar above the keyboard that fills the suggested code on press."
+  },
+  "props": {
+    "OtpAutofill": {
+      "maxLength": "Number of digits in the code.",
+      "onVerify": "Checks a complete code; return `true` when it is valid."
+    },
+    "OtpAutofillInput": {
+      "containerClassName": "Classes for the animated container around the input."
+    },
+    "OtpAutofillSuggestion": {
+      "code": "The code to suggest, or `null` to hide the bar.",
+      "source": "Label above the code. Defaults to `From Messages`.",
+      "portalHost": "Name of a portal host to render into."
+    }
+  },
+  "accessibility": "- `accessibilityLabel` on `OtpAutofillInput` is passed to the underlying text input.\n- The suggestion bar has the `button` role.\n- The input is read-only while filling, verifying and after a valid code.",
+  "notes": "- Invalid slots use `border-danger` with a `bg-danger` tint that is stronger in dark mode; verified slots use `border-success` and `bg-success-surface`.\n- The suggestion bar uses `bg-surface-raised`, or `bg-surface-secondary` in dark mode, and sits on the keyboard or above the bottom safe area.\n- Slide and shake animations respect the system reduce motion setting."
+}

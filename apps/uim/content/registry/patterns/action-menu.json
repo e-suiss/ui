@@ -1,0 +1,29 @@
+{
+  "description": "A list of actions in a bottom alert sheet, with a separate Cancel button, opened from a trigger.",
+  "overview": "`ActionMenu` is a thin layer over `AlertSheet`. `ActionMenuContent` groups its items into one rounded block and appends a separate Cancel button below it.\n\nUse it when a button should offer a short list of choices, such as share, duplicate or delete, without leaving the screen.",
+  "usage": "Wrap a pressable in `ActionMenuTrigger` and list `ActionMenuItem`s inside `ActionMenuContent`. Add an `ActionMenuLabel` first to show a title.\n\nThe menu can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. Set `variant=\"destructive\"` on an item for actions that delete or remove.",
+  "examples": {
+    "OpenByDefault": "Shows the sheet on first render with `defaultOpen`."
+  },
+  "parts": {
+    "ActionMenu": "The root that owns the open state.",
+    "ActionMenuTrigger": "The element that opens the sheet.",
+    "ActionMenuContent": "The sheet with the grouped items and a Cancel button.",
+    "ActionMenuLabel": "A title shown at the top of the group.",
+    "ActionMenuItem": "An actionable entry, rendered as an `AlertSheetAction`.",
+    "ActionMenuSeparator": "Kept for API parity; renders nothing."
+  },
+  "props": {
+    "ActionMenu": {
+      "open": "Controls whether the sheet is open.",
+      "defaultOpen": "Whether the sheet starts open when uncontrolled.",
+      "onOpenChange": "Called when the sheet opens or closes.",
+      "dismissible": "When `false`, the sheet ignores outside presses and closes only through an item or Cancel. Defaults to `true`."
+    },
+    "ActionMenuContent": {
+      "cancelLabel": "Text of the Cancel button. Defaults to `Cancel`."
+    }
+  },
+  "accessibility": "- When `dismissible` is `false`, the sheet uses the alert dialog primitive instead of the dialog primitive.\n- Disabled items are styled with `text-label-quaternary`.",
+  "notes": "- Item text uses `text-link`, or `text-danger` for the `destructive` variant.\n- On iOS the sheet renders in a full-window overlay so it appears above native screens."
+}

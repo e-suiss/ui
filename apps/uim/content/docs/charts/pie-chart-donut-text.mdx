@@ -1,0 +1,90 @@
+---
+title: Pie Chart Donut Text
+description: "A donut chart with the total user count shown in its center."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-pie--donut-text" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/pie-chart-donut-text.tsx" fold={false} />
+
+</Example>
+
+A `PieChart` donut with small gaps and rounded slice corners. `chartData` holds one record per device with a `users` count. The total is summed from `chartData` and drawn as `Text` layered over the ring. Pressing a slice shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-donut-text"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-donut-text --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-donut-text --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
+
+<SourceFile path="uniwind/components/charts/pie-chart-donut-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
+
+<SourceFile path="nativewind/components/charts/pie-chart-donut-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
+
+<SourceFile path="stylesheet/components/charts/pie-chart-donut-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/PieChartDonutText.swift" />
+
+<SourceFile path="kotlin/charts/PieChartDonutText.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartDonutText } from \"@/components/charts/pie-chart-donut-text\""} />
+
+<Code lang="tsx" code={"<PieChartDonutText />"} />
+
+Replace `chartData` with your records; the center total recalculates from it. Update the `users` caption and `chartConfig` labels and colors to match. The component takes no props.

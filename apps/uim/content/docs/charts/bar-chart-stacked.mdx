@@ -1,0 +1,90 @@
+---
+title: Bar Chart Stacked
+description: "Stacked bars combining desktop and mobile visitors per month, with a legend."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--stacked" width={880} height={719}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+Desktop and mobile bars share a `stackId`, so each column shows both parts and their total. Only the outer corners are rounded, and a legend below the plot names both series.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-stacked"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-stacked --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-stacked --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartStacked.swift" />
+
+<SourceFile path="kotlin/charts/BarChartStacked.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartStacked } from \"@/components/charts/bar-chart-stacked\""} />
+
+<Code lang="tsx" code={"<BarChartStacked />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props.

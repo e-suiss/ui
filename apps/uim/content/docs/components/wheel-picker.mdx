@@ -1,0 +1,171 @@
+---
+title: Wheel Picker
+description: "A scrolling wheel for picking one value per column, with items that curve away from the center."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-wheel-picker--default" width={880} height={597}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nconst fruits = [\n  \"Apple\",\n  \"Banana\",\n  \"Cherry\",\n  \"Grape\",\n  \"Lemon\",\n  \"Mango\",\n  \"Orange\",\n  \"Peach\",\n  \"Pear\",\n  \"Plum\",\n]\n\nexport function WheelPickerExample() {\n  return (\n    <View className=\"w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10\">\n      <WheelPicker>\n        <WheelPickerColumn accessibilityLabel=\"Fruit\" defaultValue=\"Lemon\">\n          {fruits.map((fruit) => (\n            <WheelPickerItem key={fruit} value={fruit}>\n              {fruit}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`WheelPicker` lays out one or more `WheelPickerColumn` components side by side behind a shared highlight band. Each column is a snapping `ScrollView`; items above and below the center are scaled, moved and faded with React Native `Animated` interpolations to look like a rotating wheel.
+
+Use it for times, dates and other values picked from a short, ordered list, often in a sheet or popover.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add wheel-picker"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add wheel-picker --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add wheel-picker --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`, `components/primitives/wheel-picker.tsx`.
+
+3. Copy the source into `components/ui/wheel-picker.tsx`:
+
+<SourceFile path="uniwind/components/ui/wheel-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`, `components/primitives/wheel-picker.tsx`.
+
+3. Copy the source into `components/ui/wheel-picker.tsx`:
+
+<SourceFile path="nativewind/components/ui/wheel-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`, `components/primitives/wheel-picker.tsx`.
+
+2. Copy the source into `components/ui/wheel-picker.tsx`:
+
+<SourceFile path="stylesheet/components/ui/wheel-picker.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/WheelPicker.swift" />
+
+<SourceFile path="kotlin/components/WheelPicker.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\""} />
+
+<Code lang="tsx" code={"<View className=\"w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10\">\n  <WheelPicker>\n    <WheelPickerColumn accessibilityLabel=\"Fruit\" defaultValue=\"Lemon\">\n      {fruits.map((fruit) => (\n        <WheelPickerItem key={fruit} value={fruit}>\n          {fruit}\n        </WheelPickerItem>\n      ))}\n    </WheelPickerColumn>\n  </WheelPicker>\n</View>"} />
+
+Give each column a `defaultValue`, or `value` with `onValueChange`, and fill it with `WheelPickerItem` components that each have a unique `value`. Plain string or number children are wrapped in single-line `Text`.
+
+The value is set when scrolling settles or when an item is pressed. Disabled items are skipped: if the wheel stops on one, it moves to the nearest enabled item.
+
+Combine several columns for compound values such as day, hour and minute, and use `className` on columns and items to control width and alignment. Set `itemHeight` on `WheelPicker` to change the row height.
+
+## Examples
+
+### Disabled items
+
+A time list where booked slots are disabled and skipped.
+
+<Example id="components-wheel-picker--disabled-items" width={880} height={597}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nconst slots = Array.from({ length: 11 }, (_, index) => {\n  const minutes = 18 * 60 + index * 30\n  return `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, \"0\")}`\n})\n\nconst booked = new Set([\"19:30\", \"20:00\", \"20:30\"])\n\nconst minutes = Array.from({ length: 12 }, (_, step) =>\n  String(step * 5).padStart(2, \"0\")\n)\n\nexport function WheelPickerDisabledItemsExample() {\n  return (\n    <View className=\"w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10\">\n      <WheelPicker>\n        <WheelPickerColumn\n          accessibilityLabel=\"Reservation time\"\n          defaultValue=\"19:00\"\n        >\n          {slots.map((slot) => (\n            <WheelPickerItem key={slot} value={slot} disabled={booked.has(slot)}>\n              {slot}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Date time
+
+Controlled day, hour and minute columns combined into one value.
+
+<Example id="components-wheel-picker--date-time" width={880} height={661}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\nimport { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nfunction toDayValue(date: Date) {\n  return [\n    date.getFullYear(),\n    String(date.getMonth() + 1).padStart(2, \"0\"),\n    String(date.getDate()).padStart(2, \"0\"),\n  ].join(\"-\")\n}\n\nconst today = new Date(2026, 9, 4)\n\nconst days = Array.from({ length: 15 }, (_, index) => {\n  const date = new Date(\n    today.getFullYear(),\n    today.getMonth(),\n    today.getDate() + index - 7\n  )\n  const label =\n    index === 7\n      ? \"Today\"\n      : date.toLocaleDateString(\"en-US\", {\n          weekday: \"short\",\n          month: \"short\",\n          day: \"numeric\",\n        })\n  return { value: toDayValue(date), label }\n})\n\nconst hours = Array.from({ length: 24 }, (_, hour) =>\n  String(hour).padStart(2, \"0\")\n)\n\nconst minutes = Array.from({ length: 12 }, (_, step) =>\n  String(step * 5).padStart(2, \"0\")\n)\n\nfunction DateTimeExample() {\n  const [day, setDay] = React.useState(toDayValue(today))\n  const [hour, setHour] = React.useState(\"19\")\n  const [minute, setMinute] = React.useState(\"30\")\n\n  return (\n    <View className=\"gap-3\">\n      <WheelPicker>\n        <WheelPickerColumn\n          accessibilityLabel=\"Day\"\n          value={day}\n          onValueChange={setDay}\n          className=\"grow\"\n        >\n          {days.map(({ value, label }) => (\n            <WheelPickerItem key={value} value={value} className=\"justify-end\">\n              {label}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n        <WheelPickerColumn\n          accessibilityLabel=\"Hour\"\n          value={hour}\n          onValueChange={setHour}\n        >\n          {hours.map((value) => (\n            <WheelPickerItem key={value} value={value}>\n              {value}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n        <WheelPickerColumn\n          accessibilityLabel=\"Minute\"\n          value={minute}\n          onValueChange={setMinute}\n          className=\"grow\"\n        >\n          {minutes.map((value) => (\n            <WheelPickerItem\n              key={value}\n              value={value}\n              className=\"justify-start\"\n            >\n              {value}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n      <Text className=\"text-center text-sm text-label-secondary tabular-nums\">\n        {day} {hour}:{minute}\n      </Text>\n    </View>\n  )\n}\n\nexport function WheelPickerDateTimeExample() {\n  return (\n    <View className=\"w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10\">\n      <DateTimeExample />\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+<PropsTable extends={["React.ComponentProps<typeof WheelPickerPrimitive.Root>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+<PropsTable extends={["React.ComponentProps<typeof WheelPickerPrimitive.Column>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WheelPickerItem
+
+Single row in a column.
+
+<PropsTable extends={["React.ComponentProps<typeof WheelPickerPrimitive.Item>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each column has the `adjustable` role and announces the selected item's label as its value.
+- VoiceOver and TalkBack users swipe up or down to move to the next or previous enabled item.
+- Give each column an `accessibilityLabel`, such as `Hour` or `Minute`.
+- The highlight band is hidden from screen readers.
+
+## Notes
+
+- A selection haptic plays when the value changes, if a haptics adapter is provided through the haptics context.
+- The highlight uses `bg-control`; items use `text-xl text-label` with tabular numbers and `text-label-tertiary` when disabled.
+- Light and dark colors follow the system appearance.

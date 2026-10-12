@@ -1,0 +1,5 @@
+{
+  "description": "A three-step checkout screen with delivery, payment and review steps, an order summary and a total in the bottom bar.",
+  "overview": "A checkout built from `Screen`, `Header` with a collapsing large title, `RadioGroup`, `Button`, `Icon` and `BottomBar`. Delivery and payment are chosen with radio options, finished steps collapse to a one-line summary with an Edit link, and the bottom bar button advances through the steps. The total updates when express delivery is picked, and placing the order shows a confirmation screen with a Start over link.",
+  "usage": "Replace `ITEMS`, `SHIPPING` and `PAYMENT` with your cart lines and options. Pass `onPlaceOrder` to receive the chosen shipping, payment and total, and `onStartOver` to react when the confirmation is dismissed."
+}

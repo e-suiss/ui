@@ -1,0 +1,295 @@
+---
+title: Widget
+description: "A rounded card for glanceable information in fixed widget sizes, with an optional drag handle to resize it."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-widget--default" width={880} height={415}>
+
+<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetExample() {\n  return (\n    <Widget size=\"small\" align=\"start\">\n      <Weather />\n    </Widget>\n  )\n}"} />
+
+</Example>
+
+`Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.
+
+With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap, and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add widget"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add widget --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add widget --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/widget.tsx`:
+
+<SourceFile path="uniwind/components/ui/widget.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/widget.tsx`:
+
+<SourceFile path="nativewind/components/ui/widget.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/widget.tsx`:
+
+<SourceFile path="stylesheet/components/ui/widget.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Widget.swift" />
+
+<SourceFile path="kotlin/components/Widget.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from \"@/components/ui/widget\""} />
+
+<Code lang="tsx" code={"<Widget size=\"small\" align=\"start\">\n  <Weather />\n</Widget>"} />
+
+Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
+
+The size is uncontrolled with `defaultSize`, or controlled with `size` and `onSizeChange`. Use `sizes` to limit which sizes the user can pick. A non-resizable widget defaults to `auto`; a resizable one defaults to `small`.
+
+`useWidget` returns the current `size` and `align` so custom content can adapt to the widget size.
+
+## Examples
+
+### Sizes
+
+The four fixed sizes side by side.
+
+<Example id="components-widget--sizes" width={880} height={415}>
+
+<Code lang="tsx" code={"import { ScrollView } from \"react-native\"\nimport { Widget, WidgetFooter, WidgetHeader, type WidgetSize, WidgetTitle } from \"@/components/ui/widget\"\n\nconst gridSpans: Record<WidgetSize, string> = {\n  small: \"1 × 1\",\n  medium: \"2 × 1\",\n  large: \"2 × 2\",\n  \"extra-large\": \"4 × 2\",\n}\n\nexport function WidgetSizesExample() {\n  return (\n    <ScrollView\n      horizontal\n      contentContainerClassName=\"items-start gap-4\"\n      showsHorizontalScrollIndicator={false}\n    >\n      {([\"small\", \"medium\", \"large\", \"extra-large\"] as const).map((size) => (\n        <Widget key={size} size={size}>\n          <WidgetHeader>\n            <WidgetTitle className=\"capitalize\">\n              {size.replace(\"-\", \" \")}\n            </WidgetTitle>\n          </WidgetHeader>\n          <WidgetFooter>{gridSpans[size]}</WidgetFooter>\n        </Widget>\n      ))}\n    </ScrollView>\n  )\n}"} />
+
+</Example>
+
+### Editing
+
+A resizable widget starting at `large`.
+
+<Example id="components-widget--editing" width={880} height={895}>
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14].map(\n  (value, hour) => ({ hour: hour + 10, value })\n)\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction SalesBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n          <Icon as={CashRegisterIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n      </WidgetHeader>\n      <View\n        className={\n          size === \"medium\"\n            ? \"min-h-0 grow flex-row items-end gap-3\"\n            : \"min-h-0 gap-3\"\n        }\n      >\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetDescription>Today's revenue</WidgetDescription>\n        </WidgetContent>\n        {size === \"small\" ? null : (\n          <View\n            className={\n              size === \"medium\"\n                ? \"h-full flex-1 flex-row items-end gap-1\"\n                : \"h-14 flex-row items-end gap-1\"\n            }\n          >\n            {hourly.map(({ hour, value }) => (\n              <View\n                key={hour}\n                className={\n                  value === 100\n                    ? \"flex-1 rounded-sm bg-warning\"\n                    : \"flex-1 rounded-sm bg-warning/40\"\n                }\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </View>\n        )}\n      </View>\n      {size === \"large\" || size === \"extra-large\" ? (\n        <View className=\"min-h-0 shrink overflow-hidden\">\n          {topItems.map((item) => (\n            <View\n              key={item.name}\n              className=\"flex-row items-center justify-between border-b border-separator py-1.5\"\n            >\n              <Text className=\"text-sm\">{item.name}</Text>\n              <Text className=\"text-sm text-label-secondary\">{item.count}</Text>\n            </View>\n          ))}\n        </View>\n      ) : null}\n      <WidgetFooter>42 orders · 18:42</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetEditingExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable defaultSize=\"large\">\n        <SalesBody />\n      </Widget>\n      <Hint>\n        Drag the corner handle to snap between sizes. Double tap it to reset.\n      </Hint>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Inside handle
+
+A resizable widget with the handle drawn inside the corner.
+
+<Example id="components-widget--inside-handle" width={880} height={491}>
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14].map(\n  (value, hour) => ({ hour: hour + 10, value })\n)\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction SalesBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n          <Icon as={CashRegisterIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n      </WidgetHeader>\n      <View\n        className={\n          size === \"medium\"\n            ? \"min-h-0 grow flex-row items-end gap-3\"\n            : \"min-h-0 gap-3\"\n        }\n      >\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetDescription>Today's revenue</WidgetDescription>\n        </WidgetContent>\n        {size === \"small\" ? null : (\n          <View\n            className={\n              size === \"medium\"\n                ? \"h-full flex-1 flex-row items-end gap-1\"\n                : \"h-14 flex-row items-end gap-1\"\n            }\n          >\n            {hourly.map(({ hour, value }) => (\n              <View\n                key={hour}\n                className={\n                  value === 100\n                    ? \"flex-1 rounded-sm bg-warning\"\n                    : \"flex-1 rounded-sm bg-warning/40\"\n                }\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </View>\n        )}\n      </View>\n      {size === \"large\" || size === \"extra-large\" ? (\n        <View className=\"min-h-0 shrink overflow-hidden\">\n          {topItems.map((item) => (\n            <View\n              key={item.name}\n              className=\"flex-row items-center justify-between border-b border-separator py-1.5\"\n            >\n              <Text className=\"text-sm\">{item.name}</Text>\n              <Text className=\"text-sm text-label-secondary\">{item.count}</Text>\n            </View>\n          ))}\n        </View>\n      ) : null}\n      <WidgetFooter>42 orders · 18:42</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetInsideHandleExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable handle=\"inside\" defaultSize=\"medium\">\n        <SalesBody />\n      </Widget>\n      <Hint>The handle sits inside the corner.</Hint>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Limited sizes
+
+Resizing limited to `small` and `medium`.
+
+<Example id="components-widget--limited-sizes" width={880} height={496}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst reservations = [\n  { time: \"18:00\", place: \"Table 4\" },\n  { time: \"19:00\", place: \"Garden 3\" },\n  { time: \"20:00\", place: \"Table 12\" },\n  { time: \"21:00\", place: \"Table 7\" },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction ReservationsBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-link\">\n          <Icon as={CalendarBlankIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-link\">Reservations</WidgetTitle>\n      </WidgetHeader>\n      <View className=\"min-h-0 grow flex-row items-end gap-4\">\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>12</WidgetValue>\n          <WidgetDescription>Tonight</WidgetDescription>\n        </WidgetContent>\n        {size === \"medium\" ? (\n          <View className=\"flex-1 gap-1\">\n            {reservations.slice(0, 3).map((item) => (\n              <View key={item.time} className=\"flex-row gap-3\">\n                <Text className=\"w-11 text-sm text-label-secondary\">\n                  {item.time}\n                </Text>\n                <Text className=\"flex-1 text-sm\" numberOfLines={1}>\n                  {item.place}\n                </Text>\n              </View>\n            ))}\n          </View>\n        ) : null}\n      </View>\n    </>\n  )\n}\n\nexport function WidgetLimitedSizesExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable defaultSize=\"medium\" sizes={[\"small\", \"medium\"]}>\n        <ReservationsBody />\n      </Widget>\n      <Hint>Only small and medium are offered.</Hint>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Controls the size with `size` and `onSizeChange`.
+
+<Example id="components-widget--controlled" width={880} height={491}>
+
+<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, type WidgetSize, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nfunction ControlledEditing() {\n  const [size, setSize] = React.useState<WidgetSize | \"auto\">(\"small\")\n  return (\n    <View className=\"w-full\">\n      <Widget resizable size={size} onSizeChange={setSize}>\n        <Weather />\n      </Widget>\n      <Hint>{`Size: ${size}`}</Hint>\n    </View>\n  )\n}\n\nexport function WidgetControlledExample() {\n  return (\n    <ControlledEditing />\n  )\n}"} />
+
+</Example>
+
+### Centered
+
+Centered content with `align="center"`.
+
+<Example id="components-widget--centered" width={880} height={415}>
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetCenteredExample() {\n  return (\n    <Widget size=\"small\" align=\"center\">\n      <WidgetHeader>\n        <WidgetIcon size=\"lg\">\n          <Icon as={CashRegisterIcon} />\n        </WidgetIcon>\n        <WidgetTitle>Point of sale</WidgetTitle>\n      </WidgetHeader>\n      <WidgetDescription>3 open orders</WidgetDescription>\n    </Widget>\n  )\n}"} />
+
+</Example>
+
+### Auto
+
+An `auto` widget that fills its parent.
+
+<Example id="components-widget--auto" width={880} height={463}>
+
+<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetAutoExample() {\n  return (\n    <View className=\"h-48 w-full\">\n      <Widget>\n        <Weather />\n      </Widget>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Dashboard
+
+Several auto-sized widgets arranged in a grid.
+
+<Example id="components-widget--dashboard" width={880} height={783}>
+
+<Code lang="tsx" code={"import { CashRegisterIcon, CookingPotIcon, SunIcon } from \"phosphor-react-native\"\nimport { ScrollView, View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nexport function WidgetDashboardExample() {\n  return (\n    <ScrollView contentContainerClassName=\"gap-4\">\n      <View className=\"h-42 flex-row gap-4\">\n        <View className=\"flex-1\">\n          <Widget>\n            <WidgetHeader>\n              <WidgetIcon>\n                <Icon as={SunIcon} weight=\"fill\" />\n              </WidgetIcon>\n              <WidgetTitle>Istanbul</WidgetTitle>\n            </WidgetHeader>\n            <WidgetValue>24°</WidgetValue>\n            <WidgetFooter>Partly cloudy</WidgetFooter>\n          </Widget>\n        </View>\n        <View className=\"flex-1\">\n          <Widget align=\"center\">\n            <WidgetHeader>\n              <WidgetIcon size=\"lg\">\n                <Icon as={CookingPotIcon} />\n              </WidgetIcon>\n              <WidgetTitle>Kitchen display</WidgetTitle>\n            </WidgetHeader>\n            <WidgetDescription>5 tickets</WidgetDescription>\n          </Widget>\n        </View>\n      </View>\n      <View className=\"h-42\">\n        <Widget>\n          <WidgetHeader className=\"gap-1.5\">\n            <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n              <Icon as={CashRegisterIcon} weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n          </WidgetHeader>\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>\n        </Widget>\n      </View>\n    </ScrollView>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Widget
+
+The card surface and optional resize handle.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"},{"name":"size","type":"WidgetSize | \"auto\"","description":"Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`."},{"name":"defaultSize","type":"WidgetSize | \"auto\"","description":"Initial size when uncontrolled."},{"name":"onSizeChange","type":"(size: WidgetSize | \"auto\") => void","description":"Called with the new size after a resize."},{"name":"sizes","type":"WidgetSize[]","default":"ALL_SIZES","description":"Sizes the user can resize to. Defaults to all four."},{"name":"resizable","type":"boolean","default":"false","description":"Shows a drag handle for resizing."},{"name":"handle","type":"WidgetHandlePlacement","default":"\"outside\"","description":"Handle placement: `outside` the corner or `inside` it. Defaults to `outside`."},{"name":"align","type":"WidgetAlign","default":"\"start\"","description":"`start` or `center` content alignment."},{"name":"resizeLabel","type":"string","default":"\"Resize widget\"","description":"Accessibility label for the handle. Defaults to \"Resize widget\"."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"},{"name":"iconClassName","type":"string","description":"Classes applied to the icon inside."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"`default`, `sm` or `lg`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### WidgetTitle
+
+Single-line heading.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### WidgetDescription
+
+Secondary text.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### WidgetValue
+
+Large number with tabular figures.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The resize handle has the `adjustable` role, its `resizeLabel` and the current size as its value; increment and decrement actions step through the available sizes, so VoiceOver and TalkBack users can resize without dragging.
+- `WidgetTitle` has the `heading` role.
+- `WidgetIcon` and the resize preview outline are hidden from assistive technology.
+- Size animations respect the system reduce motion setting.
+
+## Notes
+
+- Uses `bg-surface-secondary` for the surface, `bg-control` for icon frames, and `text-label-quaternary` for the handle, which turns `text-accent` while dragging.
+- The handle and drag direction mirror in right-to-left layouts.
+- Light and dark colors follow the system appearance.

@@ -29,6 +29,15 @@ Each component ships in three flavors with the same API:
 - **NativeWind** v4 with Tailwind CSS v3
 - **StyleSheet** with plain React Native styles and a `useTheme()` hook
 
+### Native platforms too
+
+The same components are available as SwiftUI and Jetpack Compose source, built from the same design tokens. Pass `--platform swift` or `--platform kotlin` to the CLI:
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add dialog --platform swift
+npx @esuiss/uim@latest add dialog --platform kotlin
+```
+
 ### Same names as the web
 
 Component names, parts and variants mirror suiss/ui, so moving between web and mobile feels familiar.

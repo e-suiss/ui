@@ -1,0 +1,90 @@
+---
+title: Radial Chart Text
+description: "A full circular ring showing 72% of cloud storage used, with the value in the center."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--text" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-text.tsx" fold={false} />
+
+</Example>
+
+A `RadialBarChart` drawn as a full circle, with a single value on a 0 to 100 `PolarAngleAxis` over a tinted track. The percentage and caption are `Text` layered in the middle. Nothing is interactive.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-text"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-text --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-text --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-text.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-text.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-text.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartText.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartText.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartText } from \"@/components/charts/radial-chart-text\""} />
+
+<Code lang="tsx" code={"<RadialChartText />"} />
+
+Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props.

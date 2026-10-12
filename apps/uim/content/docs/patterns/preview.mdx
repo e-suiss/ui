@@ -1,0 +1,182 @@
+---
+title: Preview
+description: "A link-styled trigger that opens a floating drawer with a quick preview, such as a profile card."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-preview--open-by-default" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ProfileCard() {\n  return (\n    <View className=\"flex-row gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage\n          alt=\"Ada Lovelace\"\n          source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n        />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <View className=\"flex-1 gap-1\">\n        <Text className=\"text-sm font-semibold\">@ada</Text>\n        <Text className=\"text-sm\">\n          Mathematician and writer, known for her work on the Analytical Engine.\n        </Text>\n        <View className=\"mt-1 flex-row items-center gap-1.5\">\n          <Icon\n            as={CalendarBlankIcon}\n            className=\"size-4 text-label-secondary\"\n          />\n          <Text className=\"text-xs text-label-secondary\">\n            Joined December 2021\n          </Text>\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction PreviewDemo({\n  defaultOpen,\n  floating,\n  showCloseButton,\n  closeLabel,\n}: {\n  defaultOpen?: boolean\n  floating?: boolean\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <View className=\"flex-1 items-center justify-center\">\n      <Preview defaultOpen={defaultOpen} floating={floating}>\n        <PreviewTrigger>@ada</PreviewTrigger>\n        <PreviewContent\n          showCloseButton={showCloseButton}\n          closeLabel={closeLabel}\n          accessibilityLabel=\"@ada\"\n        >\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </View>\n  )\n}\n\nexport function PreviewOpenByDefaultExample() {\n  return (\n    <PreviewDemo defaultOpen />\n  )\n}"} />
+
+</Example>
+
+`PreviewTrigger` renders inline in link color and dims when pressed. It opens a `Drawer` that floats above the screen edges by default and has a swipe handle.
+
+Use it to show a summary of a person, place or item from a mention or link without leaving the screen.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add preview"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add preview --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add preview --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/patterns/preview.tsx`:
+
+<SourceFile path="uniwind/components/patterns/preview.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/patterns/preview.tsx`:
+
+<SourceFile path="nativewind/components/patterns/preview.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Text](/docs/components/text), and the primitives `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/patterns/preview.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/preview.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/Preview.swift" />
+
+<SourceFile path="kotlin/patterns/Preview.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Preview, PreviewTrigger, PreviewContent } from \"@/components/patterns/preview\""} />
+
+<Code lang="tsx" code={"<PreviewDemo defaultOpen />"} />
+
+Put a `PreviewTrigger` and a `PreviewContent` inside `Preview`. A string or number child of the trigger is wrapped in `Text`.
+
+The preview can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. `PreviewContent` pads its children and adds end padding when a close button is shown, so content does not sit under it.
+
+## Examples
+
+### Default
+
+<Example id="patterns-preview--default" width={880} height={924}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ProfileCard() {\n  return (\n    <View className=\"flex-row gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage\n          alt=\"Ada Lovelace\"\n          source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n        />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <View className=\"flex-1 gap-1\">\n        <Text className=\"text-sm font-semibold\">@ada</Text>\n        <Text className=\"text-sm\">\n          Mathematician and writer, known for her work on the Analytical Engine.\n        </Text>\n        <View className=\"mt-1 flex-row items-center gap-1.5\">\n          <Icon\n            as={CalendarBlankIcon}\n            className=\"size-4 text-label-secondary\"\n          />\n          <Text className=\"text-xs text-label-secondary\">\n            Joined December 2021\n          </Text>\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction PreviewDemo({\n  defaultOpen,\n  floating,\n  showCloseButton,\n  closeLabel,\n}: {\n  defaultOpen?: boolean\n  floating?: boolean\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <View className=\"flex-1 items-center justify-center\">\n      <Preview defaultOpen={defaultOpen} floating={floating}>\n        <PreviewTrigger>@ada</PreviewTrigger>\n        <PreviewContent\n          showCloseButton={showCloseButton}\n          closeLabel={closeLabel}\n          accessibilityLabel=\"@ada\"\n        >\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </View>\n  )\n}\n\nexport function PreviewExample() {\n  return (\n    <PreviewDemo />\n  )\n}"} />
+
+</Example>
+
+### With close button
+
+Shows a close button with `showCloseButton`.
+
+<Example id="patterns-preview--with-close-button" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ProfileCard() {\n  return (\n    <View className=\"flex-row gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage\n          alt=\"Ada Lovelace\"\n          source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n        />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <View className=\"flex-1 gap-1\">\n        <Text className=\"text-sm font-semibold\">@ada</Text>\n        <Text className=\"text-sm\">\n          Mathematician and writer, known for her work on the Analytical Engine.\n        </Text>\n        <View className=\"mt-1 flex-row items-center gap-1.5\">\n          <Icon\n            as={CalendarBlankIcon}\n            className=\"size-4 text-label-secondary\"\n          />\n          <Text className=\"text-xs text-label-secondary\">\n            Joined December 2021\n          </Text>\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction PreviewDemo({\n  defaultOpen,\n  floating,\n  showCloseButton,\n  closeLabel,\n}: {\n  defaultOpen?: boolean\n  floating?: boolean\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <View className=\"flex-1 items-center justify-center\">\n      <Preview defaultOpen={defaultOpen} floating={floating}>\n        <PreviewTrigger>@ada</PreviewTrigger>\n        <PreviewContent\n          showCloseButton={showCloseButton}\n          closeLabel={closeLabel}\n          accessibilityLabel=\"@ada\"\n        >\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </View>\n  )\n}\n\nexport function PreviewWithCloseButtonExample() {\n  return (\n    <PreviewDemo defaultOpen showCloseButton />\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Labels the close button `Done` with `closeLabel`.
+
+<Example id="patterns-preview--with-close-label" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ProfileCard() {\n  return (\n    <View className=\"flex-row gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage\n          alt=\"Ada Lovelace\"\n          source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n        />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <View className=\"flex-1 gap-1\">\n        <Text className=\"text-sm font-semibold\">@ada</Text>\n        <Text className=\"text-sm\">\n          Mathematician and writer, known for her work on the Analytical Engine.\n        </Text>\n        <View className=\"mt-1 flex-row items-center gap-1.5\">\n          <Icon\n            as={CalendarBlankIcon}\n            className=\"size-4 text-label-secondary\"\n          />\n          <Text className=\"text-xs text-label-secondary\">\n            Joined December 2021\n          </Text>\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction PreviewDemo({\n  defaultOpen,\n  floating,\n  showCloseButton,\n  closeLabel,\n}: {\n  defaultOpen?: boolean\n  floating?: boolean\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <View className=\"flex-1 items-center justify-center\">\n      <Preview defaultOpen={defaultOpen} floating={floating}>\n        <PreviewTrigger>@ada</PreviewTrigger>\n        <PreviewContent\n          showCloseButton={showCloseButton}\n          closeLabel={closeLabel}\n          accessibilityLabel=\"@ada\"\n        >\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </View>\n  )\n}\n\nexport function PreviewWithCloseLabelExample() {\n  return (\n    <PreviewDemo defaultOpen showCloseButton closeLabel=\"Done\" />\n  )\n}"} />
+
+</Example>
+
+### Attached
+
+Sets `floating` to `false` so the drawer sits on the screen edges.
+
+<Example id="patterns-preview--attached" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ProfileCard() {\n  return (\n    <View className=\"flex-row gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage\n          alt=\"Ada Lovelace\"\n          source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n        />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <View className=\"flex-1 gap-1\">\n        <Text className=\"text-sm font-semibold\">@ada</Text>\n        <Text className=\"text-sm\">\n          Mathematician and writer, known for her work on the Analytical Engine.\n        </Text>\n        <View className=\"mt-1 flex-row items-center gap-1.5\">\n          <Icon\n            as={CalendarBlankIcon}\n            className=\"size-4 text-label-secondary\"\n          />\n          <Text className=\"text-xs text-label-secondary\">\n            Joined December 2021\n          </Text>\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction PreviewDemo({\n  defaultOpen,\n  floating,\n  showCloseButton,\n  closeLabel,\n}: {\n  defaultOpen?: boolean\n  floating?: boolean\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <View className=\"flex-1 items-center justify-center\">\n      <Preview defaultOpen={defaultOpen} floating={floating}>\n        <PreviewTrigger>@ada</PreviewTrigger>\n        <PreviewContent\n          showCloseButton={showCloseButton}\n          closeLabel={closeLabel}\n          accessibilityLabel=\"@ada\"\n        >\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </View>\n  )\n}\n\nexport function PreviewAttachedExample() {\n  return (\n    <PreviewDemo defaultOpen floating={false} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Preview
+
+The root drawer, floating by default.
+
+<PropsTable props={[{"name":"open","type":"boolean","description":"Controls whether the preview is open."},{"name":"defaultOpen","type":"boolean","description":"Whether the preview starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the preview opens or closes."},{"name":"floating","type":"boolean","default":"true","description":"Insets the drawer from the screen edges. Defaults to `true`."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewTrigger
+
+The link-styled element that opens the preview.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerTrigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewContent
+
+The drawer content with padding for the preview.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerContent>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Give `PreviewContent` an `accessibilityLabel` that names what is previewed.
+
+## Notes
+
+- The trigger uses the `text-link` color.

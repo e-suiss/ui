@@ -1,0 +1,146 @@
+---
+title: Skeleton
+description: "A pulsing placeholder shape shown while content loads."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-skeleton--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonExample() {\n  return (\n    <Skeleton className=\"h-4 w-48\" />\n  )\n}"} />
+
+</Example>
+
+`Skeleton` is a Reanimated `View` with a rounded background whose opacity pulses between 1 and 0.5 on a loop. It has no fixed size; you shape it with classes to match the content it stands in for.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add skeleton"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add skeleton --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add skeleton --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="uniwind/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="nativewind/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="stylesheet/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Skeleton.swift" />
+
+<SourceFile path="kotlin/components/Skeleton.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\""} />
+
+<Code lang="tsx" code={"<Skeleton className=\"h-4 w-48\" />"} />
+
+Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives.
+
+## Examples
+
+### Profile
+
+An avatar circle with two lines of text.
+
+<Example id="components-skeleton--profile" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonProfileExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Skeleton className=\"size-12 rounded-full\" />\n      <View className=\"gap-2\">\n        <Skeleton className=\"h-4 w-48\" />\n        <Skeleton className=\"h-4 w-36\" />\n      </View>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Card
+
+A media block with two lines of text below it.
+
+<Example id="components-skeleton--card" width={880} height={439}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonCardExample() {\n  return (\n    <View className=\"gap-3\">\n      <Skeleton className=\"h-32 w-full rounded-xl\" />\n      <View className=\"gap-2\">\n        <Skeleton className=\"h-4 w-3/4\" />\n        <Skeleton className=\"h-4 w-1/2\" />\n      </View>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### List
+
+Rows with a thumbnail and two lines of text.
+
+<Example id="components-skeleton--list" width={880} height={495}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonListExample() {\n  return (\n    <View className=\"gap-4\">\n      {[\"one\", \"two\", \"three\", \"four\"].map((key) => (\n        <View key={key} className=\"flex-row items-center gap-3\">\n          <Skeleton className=\"size-10 rounded-md\" />\n          <View className=\"flex-1 gap-2\">\n            <Skeleton className=\"h-4 w-2/3\" />\n            <Skeleton className=\"h-3 w-1/3\" />\n          </View>\n        </View>\n      ))}\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Skeleton
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The skeleton is a plain view with no role or label. If loading state matters to the user, announce it elsewhere, for example with a `Spinner` that has an `accessibilityLabel`.
+
+## Notes
+
+- Uses the `bg-surface-secondary` token.
+- The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.
+- Light and dark colors follow the system appearance.

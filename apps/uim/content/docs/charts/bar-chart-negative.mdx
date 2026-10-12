@@ -1,0 +1,90 @@
+---
+title: Bar Chart Negative
+description: "Monthly cash flow bars above and below a zero line, green for gains and red for losses."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--negative" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-negative.tsx" fold={false} />
+
+</Example>
+
+One bar per month, colored per value through a `Cell`: green when the flow is positive and red when it is negative. A `ReferenceLine` at zero anchors the bars, and the month axis shows every other label.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-negative"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-negative --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-negative --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-negative.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-negative.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-negative.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartNegative.swift" />
+
+<SourceFile path="kotlin/charts/BarChartNegative.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartNegative } from \"@/components/charts/bar-chart-negative\""} />
+
+<Code lang="tsx" code={"<BarChartNegative />"} />
+
+Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props.

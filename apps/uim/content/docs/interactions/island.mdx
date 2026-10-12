@@ -1,0 +1,204 @@
+---
+title: Island
+description: "A floating pill at the top of the screen that shows ongoing activity and short notices, and expands on press."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-island--compact" width={880} height={943}>
+
+<Code lang="tsx" code={"import { BellIcon, ChatCircleIcon, CheckCircleIcon, DownloadSimpleIcon, FileZipIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { Island, IslandCompact, IslandExpanded, IslandProvider, IslandRing, useIsland } from \"@/components/interactions/island\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst SIZE = 120\n\nfunction NotifyButtons() {\n  const { notify } = useIsland()\n\n  return (\n    <View className=\"flex-row flex-wrap justify-center gap-3\">\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: (\n              <Icon as={ChatCircleIcon} weight=\"fill\" className=\"text-green\" />\n            ),\n            title: \"Jordan Lee\",\n            description: \"Are we still on for Saturday?\",\n          })\n        }\n      >\n        <Text>New message</Text>\n      </Button>\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: <Icon as={BellIcon} weight=\"fill\" className=\"text-orange\" />,\n            title: \"Design review\",\n            description: \"Starts in 10 minutes\",\n          })\n        }\n      >\n        <Text>Reminder</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction useDownload(initial: number | null = null) {\n  const [progress, setProgress] = React.useState<number | null>(initial)\n  const { notify } = useIsland()\n\n  React.useEffect(() => {\n    if (initial !== null || progress === null || progress >= 1) return\n    const timer = setTimeout(\n      () => setProgress((value) => Math.min((value ?? 0) + 0.01, 1)),\n      150\n    )\n    return () => clearTimeout(timer)\n  }, [initial, progress])\n\n  React.useEffect(() => {\n    if (progress !== 1) return\n    const timer = setTimeout(() => {\n      setProgress(null)\n      notify({\n        icon: (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ),\n        title: \"Download complete\",\n        description: \"Design-Kit.zip\",\n      })\n    }, 1200)\n    return () => clearTimeout(timer)\n  }, [progress, notify])\n\n  return {\n    progress,\n    start: () => setProgress(0),\n    cancel: () => setProgress(null),\n  }\n}\n\nfunction DownloadActivity({\n  progress,\n  onCancel,\n}: {\n  progress: number\n  onCancel: () => void\n}) {\n  const done = progress >= 1\n  const percent = Math.round(progress * 100)\n\n  return (\n    <>\n      <IslandCompact\n        accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}\n      >\n        <Icon as={DownloadSimpleIcon} weight=\"bold\" className=\"text-accent\" />\n        {done ? (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ) : (\n          <IslandRing value={progress} />\n        )}\n      </IslandCompact>\n      <IslandExpanded accessibilityLabel=\"Download\">\n        <View className=\"flex-row items-center gap-3\">\n          <View className=\"size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15\">\n            <Icon\n              as={FileZipIcon}\n              weight=\"fill\"\n              className=\"size-6 text-accent\"\n            />\n          </View>\n          <View className=\"min-w-0 flex-1\">\n            <Text numberOfLines={1} className=\"text-sm font-semibold\">\n              Design-Kit.zip\n            </Text>\n            <Text className=\"text-sm text-surface/70 dark:text-label-secondary\">\n              {done\n                ? \"Downloaded\"\n                : `${Math.round(progress * SIZE)} MB of ${SIZE} MB`}\n            </Text>\n          </View>\n          <Text className=\"text-2xl font-semibold\">{percent}%</Text>\n        </View>\n        <View\n          role=\"progressbar\"\n          accessibilityLabel=\"Download progress\"\n          accessibilityValue={{ min: 0, max: 100, now: percent }}\n          className=\"h-1.5 overflow-hidden rounded-full bg-surface/20 dark:bg-label/20\"\n        >\n          <View\n            className=\"h-full rounded-full bg-accent\"\n            style={{ width: `${percent}%` }}\n          />\n        </View>\n        <Pressable\n          role=\"button\"\n          disabled={done}\n          onPress={onCancel}\n          className=\"h-11 items-center justify-center rounded-full bg-surface/15 active:bg-surface/25 disabled:opacity-50 dark:bg-label/15 dark:active:bg-label/25\"\n        >\n          <Text className=\"text-sm font-semibold\">Cancel download</Text>\n        </Pressable>\n      </IslandExpanded>\n    </>\n  )\n}\n\nfunction DownloadsExample({\n  initial = null,\n  expanded = false,\n  withNotifications = false,\n}: {\n  initial?: number | null\n  expanded?: boolean\n  withNotifications?: boolean\n}) {\n  const { progress, start, cancel } = useDownload(initial)\n  const { setExpanded } = useIsland()\n\n  React.useEffect(() => {\n    if (expanded) setExpanded(true)\n  }, [expanded, setExpanded])\n\n  return (\n    <View className=\"flex-1 items-center justify-center gap-4\">\n      <Island>\n        {progress !== null ? (\n          <DownloadActivity progress={progress} onCancel={cancel} />\n        ) : null}\n      </Island>\n      <Text className=\"max-w-xs text-center text-sm text-label-secondary\">\n        Start a download, then tap the pill at the top to see the details. Swipe\n        up on it to close.\n      </Text>\n      {initial === null ? (\n        <Button onPress={start} disabled={progress !== null}>\n          <Text>\n            {progress === null ? \"Download Design-Kit.zip\" : \"Downloading…\"}\n          </Text>\n        </Button>\n      ) : null}\n      {withNotifications ? <NotifyButtons /> : null}\n    </View>\n  )\n}\n\nexport function IslandCompactExample() {\n  return (\n    <IslandProvider>\n      <DownloadsExample initial={0.42} />\n    </IslandProvider>\n  )\n}"} />
+
+</Example>
+
+`Island` floats below the top safe area and morphs between views: `hidden`, `compact`, `expanded` and `notice`. Its width, height and corner radius spring to the measured size of the active view, and parts cross-fade as it changes.
+
+It appears in compact form while an `IslandCompact` is mounted. Pressing it expands to `IslandExpanded`; pressing outside, swiping up or the Android back button collapses it. `notify` shows a notice that replaces the current view and dismisses itself after 4 seconds, on press or on swipe up. Use it for ongoing activity such as a download, timer or call.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add island"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add island --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add island --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/island.tsx`:
+
+<SourceFile path="uniwind/components/interactions/island.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/island.tsx`:
+
+<SourceFile path="nativewind/components/interactions/island.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/island.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/island.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/Island.swift" />
+
+<SourceFile path="kotlin/interactions/Island.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { IslandProvider, Island, IslandCompact, IslandExpanded, IslandRing } from \"@/components/interactions/island\""} />
+
+<Code lang="tsx" code={"<IslandProvider>\n  <DownloadsExample initial={0.42} />\n</IslandProvider>"} />
+
+Wrap the app in `IslandProvider` and render one `Island` with an `IslandCompact` and an `IslandExpanded` as children. Mount the compact part only while there is activity to show.
+
+`useIsland` returns `view`, `expanded`, `setExpanded`, `notify` and `dismiss`. A notice is `{ icon?, title, description?, duration? }`; pass a `duration` of `0` or `Infinity` to keep it until dismissed. Dragging the island pauses the notice timer. Use `IslandRing` for circular progress. The `IslandNotice` and `IslandView` types are exported.
+
+## Examples
+
+### Expanded
+
+Starts with the island expanded to show download details.
+
+<Example id="interactions-island--expanded" width={880} height={943}>
+
+<Code lang="tsx" code={"import { BellIcon, ChatCircleIcon, CheckCircleIcon, DownloadSimpleIcon, FileZipIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { Island, IslandCompact, IslandExpanded, IslandProvider, IslandRing, useIsland } from \"@/components/interactions/island\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst SIZE = 120\n\nfunction NotifyButtons() {\n  const { notify } = useIsland()\n\n  return (\n    <View className=\"flex-row flex-wrap justify-center gap-3\">\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: (\n              <Icon as={ChatCircleIcon} weight=\"fill\" className=\"text-green\" />\n            ),\n            title: \"Jordan Lee\",\n            description: \"Are we still on for Saturday?\",\n          })\n        }\n      >\n        <Text>New message</Text>\n      </Button>\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: <Icon as={BellIcon} weight=\"fill\" className=\"text-orange\" />,\n            title: \"Design review\",\n            description: \"Starts in 10 minutes\",\n          })\n        }\n      >\n        <Text>Reminder</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction useDownload(initial: number | null = null) {\n  const [progress, setProgress] = React.useState<number | null>(initial)\n  const { notify } = useIsland()\n\n  React.useEffect(() => {\n    if (initial !== null || progress === null || progress >= 1) return\n    const timer = setTimeout(\n      () => setProgress((value) => Math.min((value ?? 0) + 0.01, 1)),\n      150\n    )\n    return () => clearTimeout(timer)\n  }, [initial, progress])\n\n  React.useEffect(() => {\n    if (progress !== 1) return\n    const timer = setTimeout(() => {\n      setProgress(null)\n      notify({\n        icon: (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ),\n        title: \"Download complete\",\n        description: \"Design-Kit.zip\",\n      })\n    }, 1200)\n    return () => clearTimeout(timer)\n  }, [progress, notify])\n\n  return {\n    progress,\n    start: () => setProgress(0),\n    cancel: () => setProgress(null),\n  }\n}\n\nfunction DownloadActivity({\n  progress,\n  onCancel,\n}: {\n  progress: number\n  onCancel: () => void\n}) {\n  const done = progress >= 1\n  const percent = Math.round(progress * 100)\n\n  return (\n    <>\n      <IslandCompact\n        accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}\n      >\n        <Icon as={DownloadSimpleIcon} weight=\"bold\" className=\"text-accent\" />\n        {done ? (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ) : (\n          <IslandRing value={progress} />\n        )}\n      </IslandCompact>\n      <IslandExpanded accessibilityLabel=\"Download\">\n        <View className=\"flex-row items-center gap-3\">\n          <View className=\"size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15\">\n            <Icon\n              as={FileZipIcon}\n              weight=\"fill\"\n              className=\"size-6 text-accent\"\n            />\n          </View>\n          <View className=\"min-w-0 flex-1\">\n            <Text numberOfLines={1} className=\"text-sm font-semibold\">\n              Design-Kit.zip\n            </Text>\n            <Text className=\"text-sm text-surface/70 dark:text-label-secondary\">\n              {done\n                ? \"Downloaded\"\n                : `${Math.round(progress * SIZE)} MB of ${SIZE} MB`}\n            </Text>\n          </View>\n          <Text className=\"text-2xl font-semibold\">{percent}%</Text>\n        </View>\n        <View\n          role=\"progressbar\"\n          accessibilityLabel=\"Download progress\"\n          accessibilityValue={{ min: 0, max: 100, now: percent }}\n          className=\"h-1.5 overflow-hidden rounded-full bg-surface/20 dark:bg-label/20\"\n        >\n          <View\n            className=\"h-full rounded-full bg-accent\"\n            style={{ width: `${percent}%` }}\n          />\n        </View>\n        <Pressable\n          role=\"button\"\n          disabled={done}\n          onPress={onCancel}\n          className=\"h-11 items-center justify-center rounded-full bg-surface/15 active:bg-surface/25 disabled:opacity-50 dark:bg-label/15 dark:active:bg-label/25\"\n        >\n          <Text className=\"text-sm font-semibold\">Cancel download</Text>\n        </Pressable>\n      </IslandExpanded>\n    </>\n  )\n}\n\nfunction DownloadsExample({\n  initial = null,\n  expanded = false,\n  withNotifications = false,\n}: {\n  initial?: number | null\n  expanded?: boolean\n  withNotifications?: boolean\n}) {\n  const { progress, start, cancel } = useDownload(initial)\n  const { setExpanded } = useIsland()\n\n  React.useEffect(() => {\n    if (expanded) setExpanded(true)\n  }, [expanded, setExpanded])\n\n  return (\n    <View className=\"flex-1 items-center justify-center gap-4\">\n      <Island>\n        {progress !== null ? (\n          <DownloadActivity progress={progress} onCancel={cancel} />\n        ) : null}\n      </Island>\n      <Text className=\"max-w-xs text-center text-sm text-label-secondary\">\n        Start a download, then tap the pill at the top to see the details. Swipe\n        up on it to close.\n      </Text>\n      {initial === null ? (\n        <Button onPress={start} disabled={progress !== null}>\n          <Text>\n            {progress === null ? \"Download Design-Kit.zip\" : \"Downloading…\"}\n          </Text>\n        </Button>\n      ) : null}\n      {withNotifications ? <NotifyButtons /> : null}\n    </View>\n  )\n}\n\nexport function IslandExpandedExample() {\n  return (\n    <IslandProvider>\n      <DownloadsExample initial={0.42} expanded />\n    </IslandProvider>\n  )\n}"} />
+
+</Example>
+
+### Notice
+
+Shows a notice on mount.
+
+<Example id="interactions-island--notice" width={880} height={999}>
+
+<Code lang="tsx" code={"import { BellIcon, ChatCircleIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Island, IslandProvider, useIsland } from \"@/components/interactions/island\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction NotifyButtons() {\n  const { notify } = useIsland()\n\n  return (\n    <View className=\"flex-row flex-wrap justify-center gap-3\">\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: (\n              <Icon as={ChatCircleIcon} weight=\"fill\" className=\"text-green\" />\n            ),\n            title: \"Jordan Lee\",\n            description: \"Are we still on for Saturday?\",\n          })\n        }\n      >\n        <Text>New message</Text>\n      </Button>\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: <Icon as={BellIcon} weight=\"fill\" className=\"text-orange\" />,\n            title: \"Design review\",\n            description: \"Starts in 10 minutes\",\n          })\n        }\n      >\n        <Text>Reminder</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction NoticeOnMount() {\n  const { notify } = useIsland()\n  const shownRef = React.useRef(false)\n\n  React.useEffect(() => {\n    if (shownRef.current) return\n    shownRef.current = true\n    notify({\n      icon: <Icon as={ChatCircleIcon} weight=\"fill\" className=\"text-green\" />,\n      title: \"Jordan Lee\",\n      description: \"Are we still on for Saturday?\",\n      duration: 600000,\n    })\n  }, [notify])\n\n  return (\n    <View className=\"flex-1 items-center justify-center gap-4\">\n      <Island />\n      <Text className=\"max-w-xs text-center text-sm text-label-secondary\">\n        The pill grows to show the notification and shrinks back on its own.\n      </Text>\n      <NotifyButtons />\n    </View>\n  )\n}\n\nexport function IslandNoticeExample() {\n  return (\n    <IslandProvider>\n      <NoticeOnMount />\n    </IslandProvider>\n  )\n}"} />
+
+</Example>
+
+### Live activity
+
+A download in progress with buttons that send notices over it.
+
+<Example id="interactions-island--live-activity" width={880} height={1051}>
+
+<Code lang="tsx" code={"import { BellIcon, ChatCircleIcon, CheckCircleIcon, DownloadSimpleIcon, FileZipIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { Island, IslandCompact, IslandExpanded, IslandProvider, IslandRing, useIsland } from \"@/components/interactions/island\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst SIZE = 120\n\nfunction NotifyButtons() {\n  const { notify } = useIsland()\n\n  return (\n    <View className=\"flex-row flex-wrap justify-center gap-3\">\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: (\n              <Icon as={ChatCircleIcon} weight=\"fill\" className=\"text-green\" />\n            ),\n            title: \"Jordan Lee\",\n            description: \"Are we still on for Saturday?\",\n          })\n        }\n      >\n        <Text>New message</Text>\n      </Button>\n      <Button\n        variant=\"secondary\"\n        onPress={() =>\n          notify({\n            icon: <Icon as={BellIcon} weight=\"fill\" className=\"text-orange\" />,\n            title: \"Design review\",\n            description: \"Starts in 10 minutes\",\n          })\n        }\n      >\n        <Text>Reminder</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction useDownload(initial: number | null = null) {\n  const [progress, setProgress] = React.useState<number | null>(initial)\n  const { notify } = useIsland()\n\n  React.useEffect(() => {\n    if (initial !== null || progress === null || progress >= 1) return\n    const timer = setTimeout(\n      () => setProgress((value) => Math.min((value ?? 0) + 0.01, 1)),\n      150\n    )\n    return () => clearTimeout(timer)\n  }, [initial, progress])\n\n  React.useEffect(() => {\n    if (progress !== 1) return\n    const timer = setTimeout(() => {\n      setProgress(null)\n      notify({\n        icon: (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ),\n        title: \"Download complete\",\n        description: \"Design-Kit.zip\",\n      })\n    }, 1200)\n    return () => clearTimeout(timer)\n  }, [progress, notify])\n\n  return {\n    progress,\n    start: () => setProgress(0),\n    cancel: () => setProgress(null),\n  }\n}\n\nfunction DownloadActivity({\n  progress,\n  onCancel,\n}: {\n  progress: number\n  onCancel: () => void\n}) {\n  const done = progress >= 1\n  const percent = Math.round(progress * 100)\n\n  return (\n    <>\n      <IslandCompact\n        accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}\n      >\n        <Icon as={DownloadSimpleIcon} weight=\"bold\" className=\"text-accent\" />\n        {done ? (\n          <Icon as={CheckCircleIcon} weight=\"fill\" className=\"text-green\" />\n        ) : (\n          <IslandRing value={progress} />\n        )}\n      </IslandCompact>\n      <IslandExpanded accessibilityLabel=\"Download\">\n        <View className=\"flex-row items-center gap-3\">\n          <View className=\"size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15\">\n            <Icon\n              as={FileZipIcon}\n              weight=\"fill\"\n              className=\"size-6 text-accent\"\n            />\n          </View>\n          <View className=\"min-w-0 flex-1\">\n            <Text numberOfLines={1} className=\"text-sm font-semibold\">\n              Design-Kit.zip\n            </Text>\n            <Text className=\"text-sm text-surface/70 dark:text-label-secondary\">\n              {done\n                ? \"Downloaded\"\n                : `${Math.round(progress * SIZE)} MB of ${SIZE} MB`}\n            </Text>\n          </View>\n          <Text className=\"text-2xl font-semibold\">{percent}%</Text>\n        </View>\n        <View\n          role=\"progressbar\"\n          accessibilityLabel=\"Download progress\"\n          accessibilityValue={{ min: 0, max: 100, now: percent }}\n          className=\"h-1.5 overflow-hidden rounded-full bg-surface/20 dark:bg-label/20\"\n        >\n          <View\n            className=\"h-full rounded-full bg-accent\"\n            style={{ width: `${percent}%` }}\n          />\n        </View>\n        <Pressable\n          role=\"button\"\n          disabled={done}\n          onPress={onCancel}\n          className=\"h-11 items-center justify-center rounded-full bg-surface/15 active:bg-surface/25 disabled:opacity-50 dark:bg-label/15 dark:active:bg-label/25\"\n        >\n          <Text className=\"text-sm font-semibold\">Cancel download</Text>\n        </Pressable>\n      </IslandExpanded>\n    </>\n  )\n}\n\nfunction DownloadsExample({\n  initial = null,\n  expanded = false,\n  withNotifications = false,\n}: {\n  initial?: number | null\n  expanded?: boolean\n  withNotifications?: boolean\n}) {\n  const { progress, start, cancel } = useDownload(initial)\n  const { setExpanded } = useIsland()\n\n  React.useEffect(() => {\n    if (expanded) setExpanded(true)\n  }, [expanded, setExpanded])\n\n  return (\n    <View className=\"flex-1 items-center justify-center gap-4\">\n      <Island>\n        {progress !== null ? (\n          <DownloadActivity progress={progress} onCancel={cancel} />\n        ) : null}\n      </Island>\n      <Text className=\"max-w-xs text-center text-sm text-label-secondary\">\n        Start a download, then tap the pill at the top to see the details. Swipe\n        up on it to close.\n      </Text>\n      {initial === null ? (\n        <Button onPress={start} disabled={progress !== null}>\n          <Text>\n            {progress === null ? \"Download Design-Kit.zip\" : \"Downloading…\"}\n          </Text>\n        </Button>\n      ) : null}\n      {withNotifications ? <NotifyButtons /> : null}\n    </View>\n  )\n}\n\nexport function IslandLiveActivityExample() {\n  return (\n    <IslandProvider>\n      <DownloadsExample withNotifications />\n    </IslandProvider>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### IslandProvider
+
+Holds the island state and the notice timer.
+
+<PropsTable props={[{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Island
+
+The floating pill, rendered in a portal.
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"className","type":"string"},{"name":"portalHost","type":"string","description":"Name of a portal host to render into."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### IslandCompact
+
+The pressable compact view; mounting it shows the island.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### IslandExpanded
+
+The expanded view with more detail and actions.
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### IslandRing
+
+A small circular progress ring.
+
+<PropsTable props={[{"name":"value","type":"number","required":true,"description":"Progress from `0` to `1`."},{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Notices are announced with their title and description when they are text.
+- The compact view is a button that exposes `expanded` and has an `expand` action.
+- The expanded view has the `group` role, a `collapse` action and closes on the escape gesture.
+- The notice has a `dismiss` action.
+- Inactive views and the progress ring are hidden from screen readers.
+
+## Notes
+
+- The island uses `bg-label` with `text-surface` in light mode, and `bg-surface` with a `border-separator` outline in dark mode.
+- Expanded and notice views are up to 384 points wide.
+- Size and fade animations respect the system reduce motion setting.

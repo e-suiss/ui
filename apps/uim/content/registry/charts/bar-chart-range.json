@@ -1,0 +1,5 @@
+{
+  "description": "An eight-day forecast where each bar spans the low and high temperature on a shared scale.",
+  "overview": "A horizontal `BarChart` whose `range` values are `[low, high]` pairs, so each bar floats between the two temperatures. Bars use a teal-to-orange gradient over a full-width track, day names sit on the left and highs on the right. The tooltip shows the range in degrees.",
+  "usage": "Replace `chartData` with your days and `low` and `high` values; the `range` pair is derived from them. Adjust the hidden `XAxis` `domain` to fit your temperature range. The component takes no props."
+}

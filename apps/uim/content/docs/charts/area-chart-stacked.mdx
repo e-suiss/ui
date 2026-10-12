@@ -1,0 +1,90 @@
+---
+title: Area Chart Stacked
+description: "Two stacked areas showing desktop and mobile visitors combined, with a legend."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-area--stacked" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/area-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+Desktop and mobile areas are stacked on top of each other with the same `stackId`, so the top edge shows the combined total. A legend below the plot names both series, and the tooltip lists each value with a dot indicator.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-stacked"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-stacked --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-stacked --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-stacked.tsx`:
+
+<SourceFile path="uniwind/components/charts/area-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-stacked.tsx`:
+
+<SourceFile path="nativewind/components/charts/area-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-stacked.tsx`:
+
+<SourceFile path="stylesheet/components/charts/area-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/AreaChartStacked.swift" />
+
+<SourceFile path="kotlin/charts/AreaChartStacked.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartStacked } from \"@/components/charts/area-chart-stacked\""} />
+
+<Code lang="tsx" code={"<AreaChartStacked />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig`; the legend picks the changes up. The component takes no props.

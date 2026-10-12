@@ -1,0 +1,90 @@
+---
+title: Pie Chart Half
+description: "A half-circle donut showing battery use by device, with a total under the arc."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-pie--half" width={880} height={623}>
+
+<SourceFile path="uniwind/components/charts/pie-chart-half.tsx" fold={false} />
+
+</Example>
+
+A `PieChart` drawn from 180 to 0 degrees, with rounded, spaced slices. `chartData` holds a percentage `share` per device. A centered `Text` shows the 100% total, and the tooltip uses a custom `formatter` to print each share as a percentage.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-half"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-half --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-half --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-half.tsx`:
+
+<SourceFile path="uniwind/components/charts/pie-chart-half.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-half.tsx`:
+
+<SourceFile path="nativewind/components/charts/pie-chart-half.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/pie-chart-half.tsx`:
+
+<SourceFile path="stylesheet/components/charts/pie-chart-half.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/PieChartHalf.swift" />
+
+<SourceFile path="kotlin/charts/PieChartHalf.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartHalf } from \"@/components/charts/pie-chart-half\""} />
+
+<Code lang="tsx" code={"<PieChartHalf />"} />
+
+Replace `chartData` with your shares and update `chartConfig` and the caption under the arc. The component takes no props.

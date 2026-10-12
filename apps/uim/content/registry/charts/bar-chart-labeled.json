@@ -1,0 +1,5 @@
+{
+  "description": "A single series of bars with each value printed above its bar.",
+  "overview": "One rounded bar per month with a `LabelList` placed at the top of each bar, so values are readable without touching the chart. There is no grid; a month axis and a tooltip remain.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Change `position` and `offset` on the `LabelList` to move the labels. The component takes no props."
+}

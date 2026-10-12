@@ -1,0 +1,98 @@
+---
+title: Bar Chart Interactive
+description: "A screen-time dashboard with stacked category bars, a week and day toggle, and a list of most used apps."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--interactive" width={880} height={1579}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+Bars stack social, productivity and entertainment time. A `ToggleGroup` switches between a weekly view and an hourly view of one day. In the week view, touching a bar selects that day through `onActiveIndexChange`, dims the other days and updates the headline, comparison text, category totals and the most used apps list below. A dashed line marks the weekly average.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/bar-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/bar-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/charts/bar-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartInteractive.swift" />
+
+<SourceFile path="kotlin/charts/BarChartInteractive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartInteractive } from \"@/components/charts/bar-chart-interactive\""} />
+
+<Code lang="tsx" code={"<BarChartInteractive />"} />
+
+Replace `USAGE` with daily minutes per category and `APPS` with your apps and their share of each category. The hourly view is generated from `PROFILE`, so swap `hourly()` for real data. The component takes no props.

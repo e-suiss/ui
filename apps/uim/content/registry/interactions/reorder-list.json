@@ -1,0 +1,30 @@
+{
+  "description": "A list whose rows are dragged by a handle to change their order, with haptics and move up and down actions.",
+  "overview": "`ReorderList` renders its `ReorderListItem`s in the order given by `value`. Dragging a row's `ReorderListHandle` lifts the row with a raised surface and shadow, and it follows the finger while the other rows slide out of the way.\n\nOn release the row settles into its new slot and `onValueChange` receives the new order. Rows can have different heights. Use it for ordering favorites, playlists or priorities.",
+  "usage": "`ReorderList` is controlled: pass `value` as an array of item keys and update it in `onValueChange`. Give each `ReorderListItem` a `value` matching its key, and place a `ReorderListHandle` anywhere inside it, at the start or end.\n\nOnly the handle starts a drag, so the rest of the row can still be pressed or scrolled.",
+  "examples": {
+    "Inset": "Rows inside an inset, rounded group.",
+    "LeadingHandle": "Places the handle at the start of each row."
+  },
+  "parts": {
+    "ReorderList": "The root that renders items in `value` order.",
+    "ReorderListItem": "One row, keyed by its `value`.",
+    "ReorderListHandle": "The grip that starts a drag."
+  },
+  "props": {
+    "ReorderList": {
+      "value": "Item keys in their current order.",
+      "onValueChange": "Called with the new order after a move.",
+      "moveUpLabel": "Label of the move up accessibility action. Defaults to `Move up`.",
+      "moveDownLabel": "Label of the move down accessibility action. Defaults to `Move down`."
+    },
+    "ReorderListItem": {
+      "value": "The key of this item."
+    },
+    "ReorderListHandle": {
+      "accessibilityLabel": "Label of the handle. Defaults to `Reorder`."
+    }
+  },
+  "accessibility": "- The handle has the `button` role and offers `moveUp` and `moveDown` accessibility actions, so screen reader users can reorder without dragging.\n- Move up is omitted on the first row and move down on the last.",
+  "notes": "- Haptics play when the drag starts (medium impact), each time the target slot changes (selection) and on release (light impact), if the app provides an adapter through `HapticsProvider`.\n- Rows use `bg-surface`; the dragged row uses `bg-surface-raised` with a shadow."
+}

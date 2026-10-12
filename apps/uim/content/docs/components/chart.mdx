@@ -1,0 +1,323 @@
+---
+title: Chart
+description: "Line, area, bar, pie, radial and radar charts drawn with SVG, with touch tooltips and legends."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-chart--tooltip-dot" width={880} height={687}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst deviceConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\" },\n  mobile: { label: \"Mobile\", color: \"teal\" },\n} satisfies ChartConfig\n\nfunction StackedTooltipChart({\n  title,\n  description,\n  defaultIndex,\n  content,\n}: {\n  title: string\n  description: string\n  defaultIndex: number\n  content: React.ReactElement\n}) {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={deviceConfig}\n          accessibilityLabel={title}\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={defaultIndex}\n              cursor={false}\n              content={content}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipDotExample() {\n  return (\n    <StackedTooltipChart\n      title=\"Dot indicator\"\n      description='indicator=\"dot\"'\n      defaultIndex={2}\n      content={<ChartTooltipContent indicator=\"dot\" />}\n    />\n  )\n}"} />
+
+</Example>
+
+Charts are composed declaratively: a chart root such as `LineChart`, `AreaChart`, `BarChart`, `ComposedChart`, `PieChart`, `RadialBarChart` or `RadarChart` goes inside a `ChartContainer`, and series and axes such as `Line`, `Area`, `Bar`, `XAxis`, `YAxis` and `CartesianGrid` are added as children. These child components render nothing themselves; the root reads them and draws everything with `react-native-svg`.
+
+Colors are theme tokens, not hex values. A series `color` such as `blue`, `teal` or `accent` resolves to the current token color, so charts follow light and dark mode automatically.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chart"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chart --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chart --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+
+3. Copy the source into `components/ui/chart.tsx`:
+
+<SourceFile path="uniwind/components/ui/chart.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+
+3. Copy the source into `components/ui/chart.tsx`:
+
+<SourceFile path="nativewind/components/ui/chart.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+
+3. Copy the source into `components/ui/chart.tsx`:
+
+<SourceFile path="stylesheet/components/ui/chart.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Chart.swift" />
+
+<SourceFile path="kotlin/components/Chart.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ChartPalette, ChartContainer, LineChart, AreaChart, BarChart, ComposedChart, PieChart, RadialBarChart, RadarChart, ChartTooltipContent, ChartLegendContent } from \"@/components/ui/chart\""} />
+
+<Code lang="tsx" code={"<StackedTooltipChart\n  title=\"Dot indicator\"\n  description='indicator=\"dot\"'\n  defaultIndex={2}\n  content={<ChartTooltipContent indicator=\"dot\" />}\n/>"} />
+
+Describe each series in a `ChartConfig` object with a `label`, a token `color` and an optional `icon`, and pass it to `ChartContainer` as `config`. The container is full width with a 16:9 aspect ratio unless you give it an `h-`, `size-` or `aspect-` class.
+
+Add `ChartTooltip` with `content={<ChartTooltipContent />}` to make the chart respond to touch: touching or dragging selects the nearest data point, draws a cursor and shows the tooltip, with a selection haptic. `ChartTooltipContent` supports `indicator` (`dot`, `line` or `dashed`), `hideLabel`, `hideIndicator`, `labelFormatter`, `formatter` and `nameKey`. Use `defaultIndex` on `ChartTooltip` to start with a point selected, or `onActiveIndexChange` on the chart to react to selection.
+
+Add `ChartLegend` with `content={<ChartLegendContent />}` for a legend in config order. `useChart()` returns the config inside a container, and `ChartPalette` resolves token colors for custom drawing.
+
+## Examples
+
+### Tooltip line
+
+Tooltip with a line indicator.
+
+<Example id="components-chart--tooltip-line" width={880} height={687}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst deviceConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\" },\n  mobile: { label: \"Mobile\", color: \"teal\" },\n} satisfies ChartConfig\n\nfunction StackedTooltipChart({\n  title,\n  description,\n  defaultIndex,\n  content,\n}: {\n  title: string\n  description: string\n  defaultIndex: number\n  content: React.ReactElement\n}) {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={deviceConfig}\n          accessibilityLabel={title}\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={defaultIndex}\n              cursor={false}\n              content={content}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipLineExample() {\n  return (\n    <StackedTooltipChart\n      title=\"Line indicator\"\n      description='indicator=\"line\"'\n      defaultIndex={2}\n      content={<ChartTooltipContent indicator=\"line\" />}\n    />\n  )\n}"} />
+
+</Example>
+
+### Tooltip dashed
+
+Tooltip with a dashed indicator.
+
+<Example id="components-chart--tooltip-dashed" width={880} height={687}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst deviceConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\" },\n  mobile: { label: \"Mobile\", color: \"teal\" },\n} satisfies ChartConfig\n\nfunction StackedTooltipChart({\n  title,\n  description,\n  defaultIndex,\n  content,\n}: {\n  title: string\n  description: string\n  defaultIndex: number\n  content: React.ReactElement\n}) {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={deviceConfig}\n          accessibilityLabel={title}\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={defaultIndex}\n              cursor={false}\n              content={content}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipDashedExample() {\n  return (\n    <StackedTooltipChart\n      title=\"Dashed indicator\"\n      description='indicator=\"dashed\"'\n      defaultIndex={2}\n      content={<ChartTooltipContent indicator=\"dashed\" />}\n    />\n  )\n}"} />
+
+</Example>
+
+### Tooltip no indicator
+
+Tooltip with only names and values.
+
+<Example id="components-chart--tooltip-no-indicator" width={880} height={687}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst deviceConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\" },\n  mobile: { label: \"Mobile\", color: \"teal\" },\n} satisfies ChartConfig\n\nfunction StackedTooltipChart({\n  title,\n  description,\n  defaultIndex,\n  content,\n}: {\n  title: string\n  description: string\n  defaultIndex: number\n  content: React.ReactElement\n}) {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={deviceConfig}\n          accessibilityLabel={title}\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={defaultIndex}\n              cursor={false}\n              content={content}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipNoIndicatorExample() {\n  return (\n    <StackedTooltipChart\n      title=\"No indicator\"\n      description=\"Just the name and value\"\n      defaultIndex={2}\n      content={<ChartTooltipContent hideIndicator />}\n    />\n  )\n}"} />
+
+</Example>
+
+### Tooltip no label
+
+Tooltip with the category label hidden.
+
+<Example id="components-chart--tooltip-no-label" width={880} height={687}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst deviceConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\" },\n  mobile: { label: \"Mobile\", color: \"teal\" },\n} satisfies ChartConfig\n\nfunction StackedTooltipChart({\n  title,\n  description,\n  defaultIndex,\n  content,\n}: {\n  title: string\n  description: string\n  defaultIndex: number\n  content: React.ReactElement\n}) {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>{title}</CardTitle>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={deviceConfig}\n          accessibilityLabel={title}\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={defaultIndex}\n              cursor={false}\n              content={content}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipNoLabelExample() {\n  return (\n    <StackedTooltipChart\n      title=\"No label\"\n      description=\"The month is hidden\"\n      defaultIndex={2}\n      content={<ChartTooltipContent hideLabel />}\n    />\n  )\n}"} />
+
+</Example>
+
+### Tooltip label formatter
+
+A formatted date as the tooltip label.
+
+<Example id="components-chart--tooltip-label-formatter" width={880} height={687}>
+
+<Code lang="tsx" code={"import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Area, AreaChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst MONTHS = [\n  \"January\",\n  \"February\",\n  \"March\",\n  \"April\",\n  \"May\",\n  \"June\",\n  \"July\",\n  \"August\",\n  \"September\",\n  \"October\",\n  \"November\",\n  \"December\",\n]\n\nconst WEEKDAYS = [\n  \"Sunday\",\n  \"Monday\",\n  \"Tuesday\",\n  \"Wednesday\",\n  \"Thursday\",\n  \"Friday\",\n  \"Saturday\",\n]\n\nfunction dayKey(date: Date) {\n  return [\n    date.getFullYear(),\n    String(date.getMonth() + 1).padStart(2, \"0\"),\n    String(date.getDate()).padStart(2, \"0\"),\n  ].join(\"-\")\n}\n\nfunction fromKey(key: string) {\n  const [year = 0, month = 1, day = 1] = key.split(\"-\").map(Number)\n  return new Date(year, month - 1, day)\n}\n\nconst energyConfig = {\n  energy: { label: \"Active energy\", color: \"red\" },\n} satisfies ChartConfig\n\nconst energyValues = [\n  512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558,\n]\n\nconst fortnight = energyValues.map((energy, index) => ({\n  date: dayKey(new Date(2026, 8, 23 + index)),\n  energy,\n}))\n\nfunction LabelFormatterDemo() {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>Custom label</CardTitle>\n        <CardDescription>The date written out in full</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={energyConfig}\n          accessibilityLabel=\"Custom label\"\n          className=\"h-52 w-full\"\n        >\n          <AreaChart\n            data={fortnight}\n            margin={{ top: 70, right: 12, left: 12, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"date\"\n              tickMargin={8}\n              interval={2}\n              tickFormatter={(value: string) => String(Number(value.slice(8)))}\n            />\n            <ChartTooltip\n              defaultIndex={8}\n              content={\n                <ChartTooltipContent\n                  indicator=\"line\"\n                  labelFormatter={(_, payload) => {\n                    const date = fromKey(String(payload[0]?.payload.date))\n                    return `${WEEKDAYS[date.getDay()]}, ${MONTHS[date.getMonth()]} ${date.getDate()}`\n                  }}\n                />\n              }\n            />\n            <Area\n              dataKey=\"energy\"\n              type=\"monotone\"\n              strokeWidth={2}\n              fill={{\n                stops: [\n                  { offset: 0, opacity: 0.38 },\n                  { offset: 1, opacity: 0.02 },\n                ],\n              }}\n            />\n          </AreaChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipLabelFormatterExample() {\n  return (\n    <LabelFormatterDemo />\n  )\n}"} />
+
+</Example>
+
+### Tooltip formatter
+
+Custom value formatting with `formatter`.
+
+<Example id="components-chart--tooltip-formatter" width={880} height={687}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\nimport { Text } from \"@/components/ui/text\"\n\nconst WEEKDAYS = [\n  \"Sunday\",\n  \"Monday\",\n  \"Tuesday\",\n  \"Wednesday\",\n  \"Thursday\",\n  \"Friday\",\n  \"Saturday\",\n]\n\nfunction formatNumber(value: number, digits = 0) {\n  try {\n    return new Intl.NumberFormat(\"en-US\", {\n      minimumFractionDigits: digits,\n      maximumFractionDigits: digits,\n    }).format(value)\n  } catch {\n    const [whole = \"0\", fraction] = value.toFixed(digits).split(\".\")\n    const grouped = whole.replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\")\n    return fraction ? `${grouped}.${fraction}` : grouped\n  }\n}\n\nfunction dayKey(date: Date) {\n  return [\n    date.getFullYear(),\n    String(date.getMonth() + 1).padStart(2, \"0\"),\n    String(date.getDate()).padStart(2, \"0\"),\n  ].join(\"-\")\n}\n\nfunction fromKey(key: string) {\n  const [year = 0, month = 1, day = 1] = key.split(\"-\").map(Number)\n  return new Date(year, month - 1, day)\n}\n\nconst energyConfig = {\n  energy: { label: \"Active energy\", color: \"red\" },\n} satisfies ChartConfig\n\nconst energyValues = [\n  512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558,\n]\n\nconst week = energyValues.slice(-7).map((energy, index) => ({\n  date: dayKey(new Date(2026, 9, index)),\n  energy,\n}))\n\nfunction FormatterDemo() {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>With units</CardTitle>\n        <CardDescription>A unit next to the value</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={energyConfig}\n          accessibilityLabel=\"With units\"\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={week}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"date\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) =>\n                (WEEKDAYS[fromKey(value).getDay()] ?? \"\").slice(0, 3)\n              }\n            />\n            <ChartTooltip\n              defaultIndex={3}\n              cursor={false}\n              content={\n                <ChartTooltipContent\n                  hideLabel\n                  formatter={(value) => (\n                    <View className=\"flex-row items-baseline gap-1.5\">\n                      <Text className=\"text-label-secondary\">\n                        Active energy\n                      </Text>\n                      <Text className=\"font-semibold text-label tabular-nums\">\n                        {formatNumber(Number(value))}\n                      </Text>\n                      <Text className=\"text-2xs text-label-secondary\">\n                        kcal\n                      </Text>\n                    </View>\n                  )}\n                />\n              }\n            />\n            <Bar dataKey=\"energy\" radius={4} maxBarSize={26} />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipFormatterExample() {\n  return (\n    <FormatterDemo />\n  )\n}"} />
+
+</Example>
+
+### Tooltip icons
+
+Config icons in place of color indicators.
+
+<Example id="components-chart--tooltip-icons" width={880} height={687}>
+
+<Code lang="tsx" code={"import { DesktopIcon, DeviceMobileIcon } from \"phosphor-react-native\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from \"@/components/ui/chart\"\n\nconst monthData = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 173, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 264, mobile: 140 },\n]\n\nconst iconConfig = {\n  desktop: { label: \"Desktop\", color: \"blue\", icon: DesktopIcon },\n  mobile: { label: \"Mobile\", color: \"teal\", icon: DeviceMobileIcon },\n} satisfies ChartConfig\n\nfunction IconsDemo() {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>With icons</CardTitle>\n        <CardDescription>An icon instead of a color</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={iconConfig}\n          accessibilityLabel=\"With icons\"\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={monthData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"month\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={3}\n              cursor={false}\n              content={<ChartTooltipContent />}\n            />\n            <Bar\n              dataKey=\"desktop\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={30}\n            />\n            <Bar\n              dataKey=\"mobile\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={30}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipIconsExample() {\n  return (\n    <IconsDemo />\n  )\n}"} />
+
+</Example>
+
+### Tooltip custom
+
+A fully custom tooltip rendered from a function.
+
+<Example id="components-chart--tooltip-custom" width={880} height={687}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, XAxis } from \"@/components/ui/chart\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction formatNumber(value: number, digits = 0) {\n  try {\n    return new Intl.NumberFormat(\"en-US\", {\n      minimumFractionDigits: digits,\n      maximumFractionDigits: digits,\n    }).format(value)\n  } catch {\n    const [whole = \"0\", fraction] = value.toFixed(digits).split(\".\")\n    const grouped = whole.replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\")\n    return fraction ? `${grouped}.${fraction}` : grouped\n  }\n}\n\nconst stepsData = [\n  { day: \"Monday\", steps: 8412 },\n  { day: \"Tuesday\", steps: 10230 },\n  { day: \"Wednesday\", steps: 6120 },\n  { day: \"Thursday\", steps: 12480 },\n  { day: \"Friday\", steps: 9050 },\n  { day: \"Saturday\", steps: 14320 },\n  { day: \"Sunday\", steps: 4870 },\n]\n\nconst stepsConfig = {\n  steps: { label: \"Steps\", color: \"orange\" },\n} satisfies ChartConfig\n\nfunction CustomDemo() {\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader>\n        <CardTitle>Custom content</CardTitle>\n        <CardDescription>A tooltip built from scratch</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <ChartContainer\n          config={stepsConfig}\n          accessibilityLabel=\"Custom content\"\n          className=\"h-52 w-full\"\n        >\n          <BarChart\n            data={stepsData}\n            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}\n          >\n            <XAxis\n              dataKey=\"day\"\n              tickMargin={8}\n              interval={0}\n              tickFormatter={(value: string) => value.slice(0, 3)}\n            />\n            <ChartTooltip\n              defaultIndex={5}\n              cursor={false}\n              content={({ active, payload, label }) => {\n                const entry = payload[0]\n                if (!active || !entry) return null\n                return (\n                  <View className=\"min-w-28 rounded-xl border border-label/5 bg-surface-raised px-3 py-2 shadow-lg dark:border-label/10\">\n                    <Text className=\"text-2xs font-semibold tracking-wide text-label-secondary uppercase\">\n                      Total\n                    </Text>\n                    <View className=\"flex-row items-baseline gap-1\">\n                      <Text className=\"text-2xl font-semibold tabular-nums\">\n                        {formatNumber(Number(entry.value))}\n                      </Text>\n                      <Text className=\"text-xs font-semibold text-label-secondary\">\n                        steps\n                      </Text>\n                    </View>\n                    <Text className=\"text-xs text-label-secondary\">\n                      {label}\n                    </Text>\n                  </View>\n                )\n              }}\n            />\n            <Bar dataKey=\"steps\" radius={4} maxBarSize={26} />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipCustomExample() {\n  return (\n    <CustomDemo />\n  )\n}"} />
+
+</Example>
+
+### Tooltip interactive
+
+Settings that change the tooltip on a stacked bar chart with a legend.
+
+<Example id="components-chart--tooltip-interactive" width={880} height={1193}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Card, CardContent, CardHeader } from \"@/components/ui/card\"\nimport { Bar, BarChart, CartesianGrid, type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, XAxis, YAxis } from \"@/components/ui/chart\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Text } from \"@/components/ui/text\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nfunction formatTotal(value: number) {\n  try {\n    return new Intl.NumberFormat(undefined, {\n      maximumFractionDigits: 1,\n    }).format(value)\n  } catch {\n    return String(Math.round(value * 10) / 10)\n  }\n}\n\ntype Indicator = \"dot\" | \"line\" | \"dashed\"\n\nconst INDICATORS: Record<Indicator, string> = {\n  dot: \"Dot\",\n  line: \"Line\",\n  dashed: \"Dashed\",\n}\n\nconst revenueData = [\n  [\"Q1 25\", 69.1, 9, 26.3],\n  [\"Q2 25\", 46.8, 8, 26.6],\n  [\"Q3 25\", 44.6, 8, 27.4],\n  [\"Q4 25\", 46.2, 8.7, 28.8],\n  [\"Q1 26\", 71, 9.5, 29.1],\n  [\"Q2 26\", 49.4, 8.6, 29.4],\n  [\"Q3 26\", 47.3, 8.9, 30.1],\n  [\"Q4 26\", 49, 9.3, 31.2],\n].map(([quarter, phones, laptops, services]) => ({\n  quarter: quarter as string,\n  phones: phones as number,\n  laptops: laptops as number,\n  services: services as number,\n}))\n\nconst revenueConfig = {\n  phones: { label: \"Phones\", color: \"blue\" },\n  laptops: { label: \"Laptops\", color: \"teal\" },\n  services: { label: \"Services\", color: \"purple\" },\n} satisfies ChartConfig\n\nfunction Setting({\n  id,\n  label,\n  checked,\n  onCheckedChange,\n}: {\n  id: string\n  label: string\n  checked: boolean\n  onCheckedChange: (checked: boolean) => void\n}) {\n  return (\n    <View className=\"flex-row items-center gap-2.5\">\n      <Switch\n        size=\"sm\"\n        checked={checked}\n        onCheckedChange={onCheckedChange}\n        accessibilityLabelledBy={id}\n      />\n      <Label nativeID={id} onPress={() => onCheckedChange(!checked)}>\n        <Text className=\"text-sm\">{label}</Text>\n      </Label>\n    </View>\n  )\n}\n\nfunction InteractiveDemo() {\n  const [indicator, setIndicator] = React.useState<Indicator>(\"dot\")\n  const [showTotal, setShowTotal] = React.useState(true)\n  const [hideLabel, setHideLabel] = React.useState(false)\n  const [hideIndicator, setHideIndicator] = React.useState(false)\n\n  return (\n    <Card variant=\"filled\" size=\"sm\">\n      <CardHeader className=\"gap-0.5\">\n        <Text className=\"text-lg font-semibold\">Tooltip settings</Text>\n        <Text className=\"text-sm text-label-secondary\">\n          Quarterly revenue · billions · sample data. Change the settings and\n          touch the bars.\n        </Text>\n      </CardHeader>\n      <CardContent className=\"gap-5\">\n        <View className=\"flex-row flex-wrap items-end gap-x-6 gap-y-3\">\n          <View className=\"gap-1.5\">\n            <Text className=\"text-xs font-semibold text-label-secondary\">\n              Indicator\n            </Text>\n            <ToggleGroup\n              spacing={0}\n              value={[indicator]}\n              onValueChange={(value) => {\n                if (value[0]) setIndicator(value[0] as Indicator)\n              }}\n              accessibilityLabel=\"Indicator\"\n            >\n              {(Object.keys(INDICATORS) as Indicator[]).map((key) => (\n                <ToggleGroupItem key={key} value={key} size=\"sm\">\n                  <Text>{INDICATORS[key]}</Text>\n                </ToggleGroupItem>\n              ))}\n            </ToggleGroup>\n          </View>\n          <View className=\"flex-row flex-wrap gap-x-5 gap-y-2.5 pb-1\">\n            <Setting\n              id=\"tooltip-total\"\n              label=\"Total in title\"\n              checked={showTotal}\n              onCheckedChange={setShowTotal}\n            />\n            <Setting\n              id=\"tooltip-hide-title\"\n              label=\"Hide title\"\n              checked={hideLabel}\n              onCheckedChange={setHideLabel}\n            />\n            <Setting\n              id=\"tooltip-hide-indicator\"\n              label=\"Hide indicator\"\n              checked={hideIndicator}\n              onCheckedChange={setHideIndicator}\n            />\n          </View>\n        </View>\n        <ChartContainer\n          config={revenueConfig}\n          accessibilityLabel=\"Quarterly revenue\"\n          className=\"h-72 w-full\"\n        >\n          <BarChart\n            data={revenueData}\n            margin={{ top: 10, right: 4, left: 12, bottom: 0 }}\n          >\n            <CartesianGrid vertical={false} strokeDasharray=\"2 4\" />\n            <XAxis dataKey=\"quarter\" tickMargin={8} minTickGap={8} />\n            <YAxis\n              orientation=\"right\"\n              tickMargin={6}\n              width=\"auto\"\n              tickFormatter={(value: number) => `${value}B`}\n            />\n            <ChartTooltip\n              defaultIndex={4}\n              cursor={false}\n              content={\n                <ChartTooltipContent\n                  indicator={indicator}\n                  hideLabel={hideLabel}\n                  hideIndicator={hideIndicator}\n                  labelFormatter={\n                    showTotal\n                      ? (label, payload) => (\n                          <View className=\"flex-row justify-between gap-4\">\n                            <Text>{label}</Text>\n                            <Text className=\"tabular-nums\">\n                              {formatTotal(\n                                payload.reduce(\n                                  (sum, item) => sum + Number(item.value),\n                                  0\n                                )\n                              )}\n                              B\n                            </Text>\n                          </View>\n                        )\n                      : undefined\n                  }\n                />\n              }\n            />\n            <ChartLegend content={<ChartLegendContent />} />\n            <Bar\n              dataKey=\"services\"\n              stackId=\"a\"\n              radius={[0, 0, 4, 4]}\n              maxBarSize={44}\n            />\n            <Bar dataKey=\"laptops\" stackId=\"a\" maxBarSize={44} />\n            <Bar\n              dataKey=\"phones\"\n              stackId=\"a\"\n              radius={[4, 4, 0, 0]}\n              maxBarSize={44}\n            />\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function ChartTooltipInteractiveExample() {\n  return (\n    <InteractiveDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ChartPalette
+
+Resolves token colors to concrete values.
+
+<PropsTable props={[{"name":"colors","type":"readonly ChartColor[]","required":true},{"name":"children","type":"(palette: Partial<Record<ChartColor, string>>) => React.ReactNode","required":true}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChartContainer
+
+Sizes the chart and provides the config.
+
+<PropsTable extends={["ChartPrimitive.ContainerProps"]} props={[{"name":"config","type":"ChartConfig","required":true,"description":"Series labels, token colors and icons keyed by data key."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### LineChart
+
+Cartesian chart for `Line` series.
+
+<PropsTable extends={["CartesianChartProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AreaChart
+
+Cartesian chart for `Area` series, with optional stacking.
+
+<PropsTable extends={["CartesianChartProps","ChartPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### BarChart
+
+Cartesian chart for `Bar` series, vertical or horizontal.
+
+<PropsTable extends={["CartesianChartProps","ChartPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ComposedChart
+
+Cartesian chart that mixes lines, areas and bars.
+
+<PropsTable extends={["CartesianChartProps"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### PieChart
+
+Pie and donut charts built from `Pie`.
+
+<PropsTable extends={["ChartRootProps","ChartPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### RadialBarChart
+
+Circular bars built from `RadialBar`.
+
+<PropsTable extends={["ChartRootProps","ChartPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### RadarChart
+
+Polar chart built from `Radar` and `PolarGrid`.
+
+<PropsTable extends={["ChartRootProps","ChartPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ChartTooltipContent
+
+Default tooltip card.
+
+<PropsTable props={[{"name":"className","type":"string"},{"name":"indicator","type":"\"line\" | \"dot\" | \"dashed\"","default":"\"dot\"","description":"`dot`, `line` or `dashed`. Defaults to `dot`."},{"name":"hideLabel","type":"boolean","default":"false","description":"Hides the category label."},{"name":"hideIndicator","type":"boolean","default":"false","description":"Hides the color indicator."},{"name":"nameKey","type":"string","description":"Data key used to look up series names in the config."},{"name":"labelFormatter","type":"( label: React.ReactNode, payload: ChartPrimitive.TooltipItem[] ) => React.ReactNode","description":"Formats the tooltip label."},{"name":"formatter","type":"( value: ChartPrimitive.ChartValue, name: string, item: ChartPrimitive.TooltipItem, index: number, payload: ChartPrimitive.ChartDatum ) => React.ReactNode","description":"Renders each row yourself."}]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ChartLegendContent
+
+Default legend with swatches or icons.
+
+<PropsTable props={[{"name":"className","type":"string"},{"name":"nameKey","type":"string","description":"Data key used to look up legend names in the config."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The chart is one accessible element labelled with its series names and data range; pass `accessibilityLabel` to `ChartContainer` to override the names.
+- With a tooltip it has the `adjustable` role: VoiceOver and TalkBack swipe actions step through data points, and the selected values are announced as the value text.
+- Without a tooltip it has the `image` role.
+
+## Notes
+
+- Series colors accept named tokens such as `blue`, `green`, `teal`, `accent`, `success`, `danger` and `label`; grid and cursor lines use `separator`.
+- Light and dark follow the system appearance.

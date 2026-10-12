@@ -1,0 +1,169 @@
+---
+title: Signature Pad
+description: "A drawing area that captures a handwritten signature as strokes and can export it as an SVG string."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-signature-pad--default" width={880} height={463}>
+
+<Code lang="tsx" code={"import { SignaturePad } from \"@/components/ui/signature-pad\"\n\nexport function SignaturePadExample() {\n  return (\n    <SignaturePad />\n  )\n}"} />
+
+</Example>
+
+`SignaturePad` is a `View` with a single-finger pan gesture from `react-native-gesture-handler`. Each touch records a stroke of points, and the strokes are drawn as smoothed paths with `react-native-svg`. A signature line with an `×` mark and a placeholder sits near the bottom, and a ghost Clear button appears in the top corner once something is drawn.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signature-pad"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signature-pad --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signature-pad --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/signature-pad.tsx`:
+
+<SourceFile path="uniwind/components/ui/signature-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/signature-pad.tsx`:
+
+<SourceFile path="nativewind/components/ui/signature-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-gesture-handler react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/signature-pad.tsx`:
+
+<SourceFile path="stylesheet/components/ui/signature-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/SignaturePad.swift" />
+
+<SourceFile path="kotlin/components/SignaturePad.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SignaturePad } from \"@/components/ui/signature-pad\""} />
+
+<Code lang="tsx" code={"<SignaturePad />"} />
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points.
+
+Pass a `ref` to get a `SignaturePadHandle` with `toSVG()`, `clear()` and `isEmpty()`. `toSVG` returns an SVG string sized to the pad and accepts an optional `color` (defaults to `currentColor`).
+
+The `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are also exported.
+
+## Examples
+
+### Signed
+
+A pad that starts with a saved signature.
+
+<Example id="components-signature-pad--signed" width={880} height={463}>
+
+<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadSignedExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} />\n  )\n}"} />
+
+</Example>
+
+### Thick stroke
+
+A signature drawn with `strokeWidth={5}`.
+
+<Example id="components-signature-pad--thick-stroke" width={880} height={463}>
+
+<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadThickStrokeExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} strokeWidth={5} />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled pad that ignores touches and hides the Clear button.
+
+<Example id="components-signature-pad--disabled" width={880} height={463}>
+
+<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadDisabledExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} disabled />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+A controlled pad that reads the signature through the ref and exports it with `toSVG`.
+
+<Example id="components-signature-pad--controlled" width={880} height={631}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { SignaturePad, type SignaturePadHandle, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nfunction ExportDemo() {\n  const ref = React.useRef<SignaturePadHandle>(null)\n  const [strokes, setStrokes] = React.useState<SignaturePadStroke[]>(SIGNATURE)\n  const [size, setSize] = React.useState(\"\")\n  return (\n    <View className=\"w-full gap-4\">\n      <SignaturePad ref={ref} value={strokes} onChange={setStrokes} />\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          setSize(`SVG: ${ref.current?.toSVG().length ?? 0} characters`)\n        }\n      >\n        <Text>Export SVG</Text>\n      </Button>\n      <Text role=\"status\" className=\"text-sm text-label-secondary\">\n        {`${strokes.length} strokes${size ? ` · ${size}` : \"\"}`}\n      </Text>\n    </View>\n  )\n}\n\nexport function SignaturePadControlledExample() {\n  return (\n    <ExportDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SignaturePad
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"value","type":"SignaturePadStroke[]","description":"Strokes for controlled use."},{"name":"defaultValue","type":"SignaturePadStroke[]","description":"Initial strokes for uncontrolled use."},{"name":"onChange","type":"(value: SignaturePadStroke[]) => void","description":"Called with the full list of strokes after each stroke ends or the pad is cleared."},{"name":"strokeWidth","type":"number","default":"2.5","description":"Line width of the strokes. Defaults to `2.5`."},{"name":"disabled","type":"boolean","default":"false","description":"Turns off drawing, hides the Clear button and dims the pad."},{"name":"placeholder","type":"React.ReactNode","default":"\"Sign here\"","description":"Content shown on the signature line while the pad is empty. Defaults to `\"Sign here\"`."},{"name":"clearLabel","type":"React.ReactNode","default":"\"Clear\"","description":"Label of the Clear button. Defaults to `\"Clear\"`."},{"name":"ref","type":"React.Ref<SignaturePadHandle>","description":"Receives a `SignaturePadHandle` with `toSVG`, `clear` and `isEmpty`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The pad is a single accessible element labeled by `accessibilityLabel`.
+- Its value is announced as "Empty" or "Signed", and `disabled` is reported in its state.
+- When it has a signature and is not disabled, it offers a `clear` accessibility action, so VoiceOver and TalkBack users can clear it without finding the button.
+
+## Notes
+
+- Uses `bg-surface-raised` in light mode and `bg-surface-secondary` in dark mode, with `border-separator` and `text-label` for the strokes.
+- Points closer than one point to the previous point are skipped while drawing.

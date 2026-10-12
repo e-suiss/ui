@@ -1,0 +1,5 @@
+{
+  "description": "A weekly sleep chart where each night's dot is green if it met the goal and orange if it did not.",
+  "overview": "Seven nights of sleep drawn as a monotone line. The `dot` prop is a function that colors each point by comparing it with `GOAL`, and a dashed green `ReferenceLine` marks the goal itself. The tooltip formats values as hours and minutes.",
+  "usage": "Replace `chartData` with your nightly hours and set `GOAL`. The header average is static text, so update it with your own value. The component takes no props."
+}

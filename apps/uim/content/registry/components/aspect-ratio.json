@@ -1,0 +1,16 @@
+{
+  "description": "A view that keeps its content at a fixed width-to-height ratio.",
+  "overview": "`AspectRatio` is a `View` that sets the `aspectRatio` style from its `ratio` prop. Its height follows from the width it is given, so the content keeps its shape at any screen size.\n\nUse it for images, video thumbnails and placeholders that must not stretch.",
+  "usage": "Pass `ratio` as width divided by height, such as `16 / 9`. It defaults to `1`. Size the content inside with `h-full w-full`, and put rounding or clipping on a parent view.",
+  "examples": {
+    "Square": "A square image with `ratio={1}`.",
+    "Portrait": "A tall image with `ratio={9 / 16}`.",
+    "Placeholder": "A placeholder surface with an icon instead of an image."
+  },
+  "props": {
+    "AspectRatio": {
+      "ratio": "Width divided by height. Defaults to `1`."
+    }
+  },
+  "accessibility": "- The view adds no role; give images their own `accessibilityLabel`."
+}

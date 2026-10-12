@@ -1,0 +1,124 @@
+---
+title: Aspect Ratio
+description: "A view that keeps its content at a fixed width-to-height ratio."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-aspect-ratio--default" width={880} height={539}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioExample() {\n  return (\n    <View className=\"w-full overflow-hidden rounded-lg\">\n      <AspectRatio ratio={16 / 9}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`AspectRatio` is a `View` that sets the `aspectRatio` style from its `ratio` prop. Its height follows from the width it is given, so the content keeps its shape at any screen size.
+
+Use it for images, video thumbnails and placeholders that must not stretch.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add aspect-ratio"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add aspect-ratio --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add aspect-ratio --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/aspect-ratio.tsx`.
+
+2. Copy the source into `components/ui/aspect-ratio.tsx`:
+
+<SourceFile path="uniwind/components/ui/aspect-ratio.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/aspect-ratio.tsx`.
+
+2. Copy the source into `components/ui/aspect-ratio.tsx`:
+
+<SourceFile path="nativewind/components/ui/aspect-ratio.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/aspect-ratio.tsx`.
+
+2. Copy the source into `components/ui/aspect-ratio.tsx`:
+
+<SourceFile path="stylesheet/components/ui/aspect-ratio.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/AspectRatio.swift" />
+
+<SourceFile path="kotlin/components/AspectRatio.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"<View className=\"w-full overflow-hidden rounded-lg\">\n  <AspectRatio ratio={16 / 9}>\n    <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n  </AspectRatio>\n</View>"} />
+
+Pass `ratio` as width divided by height, such as `16 / 9`. It defaults to `1`. Size the content inside with `h-full w-full`, and put rounding or clipping on a parent view.
+
+## Examples
+
+### Square
+
+A square image with `ratio={1}`.
+
+<Example id="components-aspect-ratio--square" width={880} height={463}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioSquareExample() {\n  return (\n    <View className=\"w-48 overflow-hidden rounded-lg\">\n      <AspectRatio ratio={1}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Portrait
+
+A tall image with `ratio={9 / 16}`.
+
+<Example id="components-aspect-ratio--portrait" width={880} height={648}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioPortraitExample() {\n  return (\n    <View className=\"w-40 overflow-hidden rounded-lg\">\n      <AspectRatio ratio={9 / 16}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Placeholder
+
+A placeholder surface with an icon instead of an image.
+
+<Example id="components-aspect-ratio--placeholder" width={880} height={539}>
+
+<Code lang="tsx" code={"import { ImageIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AspectRatioPlaceholderExample() {\n  return (\n    <View className=\"w-full\">\n      <AspectRatio ratio={16 / 9}>\n        <View className=\"bg-surface-secondary h-full w-full items-center justify-center gap-2 rounded-lg\">\n          <Icon as={ImageIcon} className=\"text-label-secondary size-8\" />\n          <Text variant=\"muted\">16 / 9</Text>\n        </View>\n      </AspectRatio>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## Accessibility
+
+- The view adds no role; give images their own `accessibilityLabel`.

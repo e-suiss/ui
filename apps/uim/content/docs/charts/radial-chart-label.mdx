@@ -1,0 +1,90 @@
+---
+title: Radial Chart Label
+description: "Radial bars for users by device, with each device name printed at the start of its bar."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--label" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-label.tsx" fold={false} />
+
+</Example>
+
+A `RadialBarChart` with one bar per record in `chartData`, sweeping from 90 to -200 degrees. Bars are colored through `Cell` and labeled with a `LabelList` that reads names from `chartConfig`. Pressing a bar shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-label"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-label --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-label --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-label.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-label.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-label.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-label.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-label.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-label.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartLabel.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartLabel.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartLabel } from \"@/components/charts/radial-chart-label\""} />
+
+<Code lang="tsx" code={"<RadialChartLabel />"} />
+
+Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.

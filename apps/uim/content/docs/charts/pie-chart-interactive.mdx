@@ -1,0 +1,98 @@
+---
+title: Pie Chart Interactive
+description: "A storage breakdown donut for phone and cloud, with a selectable list and a usage bar."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-pie--interactive" width={880} height={1537}>
+
+<SourceFile path="uniwind/components/charts/pie-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A `Card` with a `ToggleGroup` that switches between phone and cloud storage, a stacked usage bar, a `PieChart` donut and a list of categories. Sizes come from the `STORAGE` record, and free space is the total minus what is used. Pressing a slice or a list row selects that category: its slice lifts outward, other segments in the bar dim, and the center text shows its size and share. Pressing it again returns to total used.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/pie-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/pie-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/pie-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/pie-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/charts/pie-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/pie-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/PieChartInteractive.swift" />
+
+<SourceFile path="kotlin/charts/PieChartInteractive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartInteractive } from \"@/components/charts/pie-chart-interactive\""} />
+
+<Code lang="tsx" code={"<PieChartInteractive />"} />
+
+Replace `STORAGE` with your devices, totals and per-category sizes, and keep `KINDS`, `chartConfig` and `SWATCH` in sync when adding categories. The component takes no props.

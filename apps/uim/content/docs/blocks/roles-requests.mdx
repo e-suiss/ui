@@ -1,0 +1,102 @@
+---
+title: Roles Requests
+description: "An access request queue where admins approve or deny permission requests by button or swipe."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-roles-requests--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/roles-requests.tsx" fold={false} />
+
+</Example>
+
+Each request shows an `Avatar`, the requester, the permission and an optional reason, with Deny and Approve `Button`s. Rows use `SwipeActions`, so swiping from the leading edge approves and from the trailing edge denies, and decided rows collapse out of the list. A `Picker` sets the grant duration, and an `Empty` state with a reset link appears once the queue is clear. It uses a collapsing `Header` and the admin `TabBar`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-requests"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-requests --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-requests --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-requests.tsx`:
+
+<SourceFile path="uniwind/components/blocks/roles-requests.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-requests.tsx`:
+
+<SourceFile path="nativewind/components/blocks/roles-requests.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-requests.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/roles-requests.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/RolesRequests.swift" />
+
+<SourceFile path="kotlin/blocks/RolesRequests.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RolesRequests } from \"@/components/blocks/roles-requests\""} />
+
+<Code lang="tsx" code={"<RolesRequests />"} />
+
+Replace `INITIAL_REQUESTS` and `DURATIONS` with your data. Use `onApprove`, `onDeny`, `onDurationChange` and `onNavigate` to send decisions to your API and route between sections.

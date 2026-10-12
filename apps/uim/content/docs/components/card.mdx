@@ -1,0 +1,226 @@
+---
+title: Card
+description: "A container that groups related content and actions with a header, body and footer."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-card--default" width={880} height={877}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardExample() {\n  return (\n    <Card className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Login to your account</CardTitle>\n        <CardDescription>\n          Enter your email below to login to your account\n        </CardDescription>\n      </CardHeader>\n      <CardContent className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"card-email\">Email</Label>\n          <Input\n            accessibilityLabelledBy=\"card-email\"\n            placeholder=\"m@example.com\"\n            keyboardType=\"email-address\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"card-password\">Password</Label>\n          <Input accessibilityLabelledBy=\"card-password\" secureTextEntry />\n        </View>\n      </CardContent>\n      <CardFooter className=\"flex-col gap-2\">\n        <Button block>\n          <Text>Login</Text>\n        </Button>\n        <Button block variant=\"secondary\">\n          <Text>Login with Google</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+</Example>
+
+`Card` is a rounded `View` that stacks a `CardHeader`, `CardContent` and `CardFooter` with consistent spacing. The `default` variant is a raised surface with a hairline border and a shadow; the `filled` variant is a flat secondary surface.
+
+The `sm` size reduces the padding and gaps for dense layouts. All parts read the size from context, so their horizontal padding stays aligned.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="uniwind/components/ui/card.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="nativewind/components/ui/card.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Text](/docs/components/text).
+
+2. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="stylesheet/components/ui/card.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Card.swift" />
+
+<SourceFile path="kotlin/components/Card.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from \"@/components/ui/card\""} />
+
+<Code lang="tsx" code={"<Card className=\"w-full\">\n  <CardHeader>\n    <CardTitle>Login to your account</CardTitle>\n    <CardDescription>\n      Enter your email below to login to your account\n    </CardDescription>\n  </CardHeader>\n  <CardContent className=\"gap-4\">\n    <View className=\"gap-2\">\n      <Label nativeID=\"card-email\">Email</Label>\n      <Input\n        accessibilityLabelledBy=\"card-email\"\n        placeholder=\"m@example.com\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n    </View>\n    <View className=\"gap-2\">\n      <Label nativeID=\"card-password\">Password</Label>\n      <Input accessibilityLabelledBy=\"card-password\" secureTextEntry />\n    </View>\n  </CardContent>\n  <CardFooter className=\"flex-col gap-2\">\n    <Button block>\n      <Text>Login</Text>\n    </Button>\n    <Button block variant=\"secondary\">\n      <Text>Login with Google</Text>\n    </Button>\n  </CardFooter>\n</Card>"} />
+
+Put a `CardTitle` and `CardDescription` in `CardHeader`. Add a `CardAction` anywhere in the header and it is placed in the top-end corner beside the title.
+
+To show an image edge to edge, place it directly in the card before the header and add `pt-0` to the card; only the header, content and footer are padded horizontally.
+
+## Examples
+
+### Small
+
+The compact `sm` size.
+
+<Example id="components-card--small" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardSmallExample() {\n  return (\n    <Card size=\"sm\" className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Team plan</CardTitle>\n        <CardDescription>Up to 10 members</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm\">\n          Shared workspaces, unlimited projects and priority support.\n        </Text>\n      </CardContent>\n    </Card>\n  )\n}"} />
+
+</Example>
+
+### With action
+
+A `CardAction` button beside the title.
+
+<Example id="components-card--with-action" width={880} height={501}>
+
+<Code lang="tsx" code={"import { BellIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardWithActionExample() {\n  return (\n    <Card className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Notifications</CardTitle>\n        <CardDescription>You have 3 unread messages.</CardDescription>\n        <CardAction>\n          <Button size=\"icon\" variant=\"ghost\">\n            <Icon as={BellIcon} />\n          </Button>\n        </CardAction>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm\">\n          Your call has been confirmed for tomorrow at 10:00.\n        </Text>\n      </CardContent>\n      <CardFooter>\n        <Button block>\n          <Text>Mark all as read</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+</Example>
+
+### With image
+
+An edge-to-edge image above the header.
+
+<Example id="components-card--with-image" width={880} height={871}>
+
+<Code lang="tsx" code={"import { Image } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardWithImageExample() {\n  return (\n    <Card className=\"w-full pt-0\">\n      <Image\n        source={{\n          uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\",\n        }}\n        className=\"aspect-video w-full\"\n      />\n      <CardHeader>\n        <CardTitle>Mountain retreat</CardTitle>\n        <CardDescription>A quiet cabin with a view.</CardDescription>\n      </CardHeader>\n      <CardFooter>\n        <Button block variant=\"tinted\">\n          <Text>Book now</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+</Example>
+
+### Filled
+
+The flat `filled` variant.
+
+<Example id="components-card--filled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardFilledExample() {\n  return (\n    <Card variant=\"filled\" className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Storage</CardTitle>\n        <CardDescription>42 GB of 128 GB used</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm text-label-secondary\">\n          Photos and backups take up most of your space.\n        </Text>\n      </CardContent>\n    </Card>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Card
+
+Outer container that sets the size and variant.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"size","type":"CardSize","default":"\"default\"","description":"`default` or `sm`."},{"name":"variant","type":"CardVariant","default":"\"default\"","description":"`default` (raised) or `filled`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardTitle
+
+Bold heading.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardDescription
+
+Secondary text below the title.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardAction
+
+Slot for a button in the header.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardContent
+
+Padded body.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CardFooter
+
+Padded row for actions.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `CardTitle` has the `heading` role.
+- The card itself adds no role; actions inside provide their own.
+
+## Notes
+
+- Uses `bg-surface-raised` with a shadow, or `bg-surface-secondary` for `filled`; the border is stronger in dark mode.
+- Light and dark follow the system appearance.

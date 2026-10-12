@@ -1,0 +1,38 @@
+{
+  "description": "A date field that opens a drawer with day, month and year wheels ordered for the locale.",
+  "overview": "`DatePicker` renders a field-style `DrawerTrigger` with a calendar icon and the selected date formatted with `Intl.DateTimeFormat` in the `medium` date style. Pressing it opens a `Drawer` with three `WheelPicker` columns.\n\nThe column order follows the locale's short date format, falling back to month, day, year. Month names come from the locale, and the day column shrinks or grows with the chosen month and year, clamping the day when needed.",
+  "usage": "Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. The value is a `Date` or `null`; `onValueChange` fires on every wheel change, so there is no separate confirm step.\n\nWhen no value is set the wheels start at today and the field shows `placeholder`. Limit the year column with `fromYear` and `toYear`.",
+  "examples": {
+    "WithValue": "Starts with a preset date via `defaultValue`.",
+    "Locale": "Uses `tr-TR`, which reorders the wheels and translates month names.",
+    "YearRange": "A date-of-birth field limited to 1940 through 2010.",
+    "WithTitle": "Adds a heading to the drawer with `title`.",
+    "WithCloseButton": "Shows a close button in the drawer.",
+    "WithCloseLabel": "Labels the close button `Done` with `closeLabel`.",
+    "Disabled": "A disabled field that cannot open the drawer.",
+    "Invalid": "Shows the error border and tint with `invalid`.",
+    "Controlled": "Holds the date in state and prints the selection below.",
+    "Floating": "Detaches the drawer from the screen edges."
+  },
+  "props": {
+    "DatePicker": {
+      "value": "The selected date when controlled, or `null`.",
+      "defaultValue": "The initial date when uncontrolled.",
+      "onValueChange": "Called with the new `Date` on every wheel change.",
+      "placeholder": "Text shown when no date is set. Defaults to `Pick a date`.",
+      "locale": "BCP 47 locale for formatting, month names and wheel order.",
+      "fromYear": "First year in the year wheel. Defaults to 100 years ago.",
+      "toYear": "Last year in the year wheel. Defaults to 10 years ahead.",
+      "title": "Heading shown at the top of the drawer.",
+      "disabled": "Prevents opening and dims the field.",
+      "floating": "Insets the drawer from the screen edges.",
+      "showCloseButton": "Shows a close button in the drawer. Defaults to `false`.",
+      "closeLabel": "Label of the close button.",
+      "invalid": "Applies the error border and background.",
+      "accessibilityLabel": "Label for the field, also used for the drawer when there is no `title`.",
+      "accessibilityLabelledBy": "Links the field to a visible label."
+    }
+  },
+  "accessibility": "- The wheels are labelled `Day`, `Month` and `Year`.\n- Without a `title`, the drawer is labelled by `accessibilityLabel` or the placeholder.",
+  "notes": "- The field uses `bg-control`, `border-danger` with a `bg-danger` tint when invalid, and `bg-control-disabled` when disabled; the tint is stronger in dark mode.\n- Without `floating`, the drawer's top corners are square."
+}

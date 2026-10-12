@@ -1,0 +1,46 @@
+{
+  "description": "A modal dialog that interrupts the user with an important message and asks for a response.",
+  "overview": "`AlertDialog` is a modal that cannot be dismissed by tapping the scrim. `AlertDialogContent` renders through a portal (inside a full-window overlay on iOS) with a dimmed scrim and a centered card that scales and fades in.\n\nUse it for confirmations that need an explicit choice, such as deleting data. For less critical content that can be dismissed freely, use Dialog; for a list of choices anchored to the bottom of the screen, use Alert Sheet.",
+  "usage": "Compose `AlertDialogTrigger`, then `AlertDialogContent` with an `AlertDialogHeader` (`AlertDialogTitle`, `AlertDialogDescription`) and an `AlertDialogFooter` holding `AlertDialogCancel` and `AlertDialogAction`. Both footer buttons close the dialog and stretch to equal widths inside the footer.\n\n`AlertDialogAction` and `AlertDialogCancel` accept Button's `variant` and `size`; use `variant=\"destructive\"` for destructive confirmations. Add `AlertDialogMedia` above the title for an icon badge.\n\nUse `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. Pass `portalHost` to render into a named portal host.",
+  "examples": {
+    "OpenByDefault": "Starts open through `defaultOpen`.",
+    "Small": "The narrower `sm` content size.",
+    "WithMedia": "An icon badge above the title with `AlertDialogMedia`.",
+    "Destructive": "A destructive action button for an irreversible confirmation."
+  },
+  "parts": {
+    "AlertDialog": "Root that holds the open state.",
+    "AlertDialogTrigger": "Opens the dialog when pressed.",
+    "AlertDialogPortal": "Portal the content is rendered into.",
+    "AlertDialogOverlay": "Dimmed scrim behind the dialog.",
+    "AlertDialogContent": "Centered card with scale and fade transitions.",
+    "AlertDialogHeader": "Centered column for the title and description.",
+    "AlertDialogMedia": "Round badge for an icon above the title.",
+    "AlertDialogTitle": "Dialog heading.",
+    "AlertDialogDescription": "Supporting text below the title.",
+    "AlertDialogFooter": "Row of actions with equal-width buttons.",
+    "AlertDialogAction": "Button that confirms and closes the dialog.",
+    "AlertDialogCancel": "Secondary button that closes the dialog."
+  },
+  "props": {
+    "AlertDialog": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state when uncontrolled.",
+      "onOpenChange": "Called when the dialog opens or closes."
+    },
+    "AlertDialogContent": {
+      "size": "`default` or `sm` maximum width.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "AlertDialogAction": {
+      "variant": "Button variant. Defaults to `default`.",
+      "size": "Button size."
+    },
+    "AlertDialogCancel": {
+      "variant": "Button variant. Defaults to `secondary`.",
+      "size": "Button size."
+    }
+  },
+  "accessibility": "- The popup has the `alertdialog` role, is labelled by the title and is marked as modal for VoiceOver.\n- Focus moves to the title when the dialog opens.\n- Tapping the scrim does not close it; the Android back button and the VoiceOver escape gesture do.\n- The title has the `heading` role, and the action buttons have the `button` role.",
+  "notes": "- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.\n- Enter and exit animations respect the system Reduce Motion setting.\n- Uses `bg-surface-raised`, `bg-scrim` and label tokens; light and dark follow the system appearance."
+}

@@ -1,0 +1,98 @@
+---
+title: Area Chart Sparkline
+description: "A stock watchlist where each row has a small area chart next to its price and daily change."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-area--sparkline" width={880} height={781}>
+
+<SourceFile path="uniwind/components/charts/area-chart-sparkline.tsx" fold={false} />
+
+</Example>
+
+Each row shows a symbol and company name, a tiny area chart without axes, the price and a colored badge with the percentage change. The sparkline turns green when the change is positive and red when it is negative, using the `up` and `down` colors in `chartConfig`. The charts are hidden from screen readers because the row text already carries the values.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-sparkline"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-sparkline --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-sparkline --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+
+<SourceFile path="uniwind/components/charts/area-chart-sparkline.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+
+<SourceFile path="nativewind/components/charts/area-chart-sparkline.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+
+<SourceFile path="stylesheet/components/charts/area-chart-sparkline.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/AreaChartSparkline.swift" />
+
+<SourceFile path="kotlin/charts/AreaChartSparkline.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartSparkline } from \"@/components/charts/area-chart-sparkline\""} />
+
+<Code lang="tsx" code={"<AreaChartSparkline />"} />
+
+Replace the `stocks` array with your own symbols, prices and changes, and swap the generated `series` data for real price history. The component takes no props.

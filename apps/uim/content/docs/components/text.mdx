@@ -1,0 +1,144 @@
+---
+title: Text
+description: "Styled text with typography variants for headings, body copy, quotes, code and captions."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-text--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Text } from \"@/components/ui/text\"\n\nexport function TextExample() {\n  return (\n    <Text>The quick brown fox jumps over the lazy dog.</Text>\n  )\n}"} />
+
+</Example>
+
+`Text` renders a React Native `Text` with one of twelve typography variants: `default`, `h1`–`h4`, `p`, `blockquote`, `code`, `lead`, `large`, `small` and `muted`. Heading variants also set the `heading` role.
+
+It reads `TextClassContext`, so components such as `Button` can pass a text color and size down to any `Text` inside them.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add text"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add text --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add text --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="uniwind/components/ui/text.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="nativewind/components/ui/text.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="stylesheet/components/ui/text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="kotlin/components/Text.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Text } from \"@/components/ui/text\""} />
+
+<Code lang="tsx" code={"<Text>The quick brown fox jumps over the lazy dog.</Text>"} />
+
+Pick a `variant` for the role of the text, and add classes through `className` for one-off changes.
+
+Use the `render` prop to render a different component with the same classes. `TextClassContext` is exported so your own components can style nested `Text` the same way.
+
+## Examples
+
+### Typography
+
+Every variant in a sample article.
+
+<Example id="components-text--typography" width={880} height={1162}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function TextTypographyExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text variant=\"h1\">Taxing Laughter</Text>\n      <Text variant=\"h2\">The People of the Kingdom</Text>\n      <Text variant=\"h3\">The Joke Tax</Text>\n      <Text variant=\"h4\">People stopped telling jokes</Text>\n      <Text variant=\"p\">\n        The king, seeing how much happier his subjects were, realized the error\n        of his ways and repealed the joke tax.\n      </Text>\n      <Text variant=\"blockquote\">\n        &quot;After all,&quot; he said, &quot;everyone enjoys a good joke, so\n        it&apos;s only fair that they should pay for the privilege.&quot;\n      </Text>\n      <View className=\"flex-row\">\n        <Text variant=\"code\">npx @esuiss/uim add text</Text>\n      </View>\n      <Text variant=\"lead\">\n        A modal dialog that interrupts the user with important content.\n      </Text>\n      <Text variant=\"large\">Are you absolutely sure?</Text>\n      <Text variant=\"small\">Email address</Text>\n      <Text variant=\"muted\">Enter your email address.</Text>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Headings
+
+The four heading levels.
+
+<Example id="components-text--headings" width={880} height={429}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function TextHeadingsExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text variant=\"h1\">Heading 1</Text>\n      <Text variant=\"h2\">Heading 2</Text>\n      <Text variant=\"h3\">Heading 3</Text>\n      <Text variant=\"h4\">Heading 4</Text>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Text
+
+The text element with typography variants.
+
+<PropsTable extends={["React.ComponentProps<typeof RNText>","React.RefAttributes<typeof RNText>","TextVariantProps"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Renders another component in place of the default `Text`, with the same props."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `h1` to `h4` set `role="heading"`, so VoiceOver and TalkBack can navigate by heading.
+- Text scales with the system font size.
+
+## Notes
+
+- Colors use the `text-label` and `text-label-secondary` tokens; `code` uses `bg-surface-secondary` and `blockquote` a `border-separator` start border.
+- Light and dark colors follow the system appearance.

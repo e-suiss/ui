@@ -1,0 +1,90 @@
+---
+title: Bar Chart Multiple
+description: "Grouped bars comparing desktop and mobile visitors side by side for each month."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--multiple" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-multiple.tsx" fold={false} />
+
+</Example>
+
+Two `Bar` series sit next to each other in every month, separated by a small `barGap`. The tooltip lists both values with a dashed indicator.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-multiple"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-multiple --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-multiple --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-multiple.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-multiple.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-multiple.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartMultiple.swift" />
+
+<SourceFile path="kotlin/charts/BarChartMultiple.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartMultiple } from \"@/components/charts/bar-chart-multiple\""} />
+
+<Code lang="tsx" code={"<BarChartMultiple />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props.

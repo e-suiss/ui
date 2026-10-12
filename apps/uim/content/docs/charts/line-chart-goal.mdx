@@ -1,0 +1,90 @@
+---
+title: Line Chart Goal
+description: "A weekly step count line with a dashed reference line marking a 10,000-step goal."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--goal" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/line-chart-goal.tsx" fold={false} />
+
+</Example>
+
+Seven days of steps drawn as a monotone line with dots, a value axis in thousands on the right and a labeled dashed `ReferenceLine` at `GOAL`. The tooltip formats the count with thousands separators.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-goal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-goal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-goal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartGoal.swift" />
+
+<SourceFile path="kotlin/charts/LineChartGoal.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartGoal } from \"@/components/charts/line-chart-goal\""} />
+
+<Code lang="tsx" code={"<LineChartGoal />"} />
+
+Replace `chartData` with your daily values and set `GOAL`. The component takes no props.

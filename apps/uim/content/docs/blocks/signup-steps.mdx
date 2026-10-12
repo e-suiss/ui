@@ -1,0 +1,102 @@
+---
+title: Signup Steps
+description: "A three-step sign-up flow that asks for a name, email and password one screen at a time."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-signup-steps--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/signup-steps.tsx" fold={false} />
+
+</Example>
+
+A progress bar tracks the step, and each step slides in with a title, description and a single `Input`. The email step checks the format and the password step shows a live rule checklist. Back and Continue `Button`s sit in a `BottomBar`, and the last step creates the account and shows a confirmation.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-steps"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-steps --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-steps --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-steps.tsx`:
+
+<SourceFile path="uniwind/components/blocks/signup-steps.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-steps.tsx`:
+
+<SourceFile path="nativewind/components/blocks/signup-steps.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-steps.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/signup-steps.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/SignupSteps.swift" />
+
+<SourceFile path="kotlin/blocks/SignupSteps.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SignupSteps } from \"@/components/blocks/signup-steps\""} />
+
+<Code lang="tsx" code={"<SignupSteps />"} />
+
+Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed.

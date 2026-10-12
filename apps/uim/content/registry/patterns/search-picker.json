@@ -1,0 +1,37 @@
+{
+  "description": "A select field that opens a drawer with a search box and a filtered, optionally grouped list of options.",
+  "overview": "`SearchPicker` renders a field-style `DrawerTrigger` with the selected label and an up-down caret. Pressing it opens a `Drawer` with a search input and a scrollable list of options.\n\nTyping filters options by label, case-insensitively. Options with a `group` are shown under a group heading. Choosing an option selects it, closes the drawer and clears the search. Use it when the list is too long to scan, such as countries, cities or frameworks.",
+  "usage": "Pass `items` as an array of `{ value, label, group?, disabled? }`. The `SearchPickerItem` type is exported.\n\nUse it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`; the value is a string or `null`. `emptyText` shows when nothing matches.",
+  "examples": {
+    "WithValue": "Starts with a preset selection via `defaultValue`.",
+    "Grouped": "Cities grouped by country, with custom placeholders.",
+    "WithTitle": "Adds a heading to the drawer with `title`.",
+    "WithCloseButton": "Shows a close button in the drawer.",
+    "WithCloseLabel": "Labels the close button `Cancel` with `closeLabel`.",
+    "Disabled": "A disabled field that cannot open the drawer.",
+    "Invalid": "Shows the error border and tint with `invalid`.",
+    "Controlled": "Holds the value in state and prints the selection below.",
+    "Floating": "Detaches the drawer from the screen edges."
+  },
+  "props": {
+    "SearchPicker": {
+      "items": "The options, each with `value`, `label` and optional `group` and `disabled`.",
+      "value": "The selected value when controlled, or `null`.",
+      "defaultValue": "The initial value when uncontrolled.",
+      "onValueChange": "Called with the chosen value.",
+      "placeholder": "Text shown in the field when nothing is selected.",
+      "searchPlaceholder": "Placeholder and label of the search input. Defaults to `Search...`.",
+      "emptyText": "Text shown when no option matches. Defaults to `No results found.`.",
+      "title": "Heading shown at the top of the drawer.",
+      "disabled": "Prevents opening and dims the field.",
+      "floating": "Insets the drawer from the screen edges.",
+      "showCloseButton": "Shows a close button in the drawer. Defaults to `false`.",
+      "closeLabel": "Label of the close button.",
+      "invalid": "Applies the error border and background.",
+      "accessibilityLabel": "Label for the field.",
+      "accessibilityLabelledBy": "Links the field to a visible label."
+    }
+  },
+  "accessibility": "- Each option is a button that exposes `selected` and `disabled` states.\n- Each group has the `group` role and is labelled by its name.\n- The search input is labelled by `searchPlaceholder`.\n- Without a `title`, the drawer is labelled by the placeholder or `accessibilityLabel`.",
+  "notes": "- The list stays between 40% and 60% of the window height, and taps work while the keyboard is open.\n- The field uses `bg-control`, `border-danger` with a `bg-danger` tint when invalid, and `bg-control-disabled` when disabled; the tint is stronger in dark mode.\n- The search input disables autocorrect and autocapitalization."
+}

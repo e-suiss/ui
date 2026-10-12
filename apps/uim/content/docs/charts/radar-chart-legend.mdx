@@ -1,0 +1,90 @@
+---
+title: Radar Chart Legend
+description: "A radar chart comparing this month and last month, with a legend below."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radar--legend" width={880} height={751}>
+
+<SourceFile path="uniwind/components/charts/radar-chart-legend.tsx" fold={false} />
+
+</Example>
+
+A `RadarChart` with two filled `Radar` series and a `ChartLegend` that names them from `chartConfig`. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip with both values.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-legend"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-legend --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-legend --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-legend.tsx`:
+
+<SourceFile path="uniwind/components/charts/radar-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-legend.tsx`:
+
+<SourceFile path="nativewind/components/charts/radar-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-legend.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radar-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadarChartLegend.swift" />
+
+<SourceFile path="kotlin/charts/RadarChartLegend.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartLegend } from \"@/components/charts/radar-chart-legend\""} />
+
+<Code lang="tsx" code={"<RadarChartLegend />"} />
+
+Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.

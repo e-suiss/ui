@@ -1,0 +1,36 @@
+{
+  "description": "A deck of cards the user swipes left or right one at a time, with buttons, undo and an empty state.",
+  "overview": "`CardStack` shows the top card of `data` with up to `visibleCount` cards stacked behind it, each slightly smaller and lower. Dragging the top card sideways moves and tilts it, while the cards behind grow into place.\n\nReleasing past `threshold`, or flicking faster than 800 points per second, flies the card off in that direction and shows the next one; otherwise it springs back. Use it for one-at-a-time decisions such as keep or skip.",
+  "usage": "Pass `data` and `renderItem`, and handle `onSwipe(direction, item, index)`. Add children below the deck: `CardStackActions` with `CardStackSwipeButton`s and a `CardStackUndo`, and a `CardStackEmpty` shown once every card is swiped.\n\nUndo brings back the last card from the side it left and calls `onUndo`. `useCardStack` exposes `index`, `count`, `remaining`, `canUndo`, `swipe` and `undo` for custom controls. The `CardStackDirection` type is exported.",
+  "examples": {
+    "MidSwipe": "A static frame of the top card dragged to the right.",
+    "Empty": "An empty deck showing `CardStackEmpty`.",
+    "Disabled": "Turns off swiping and the buttons with `disabled`."
+  },
+  "parts": {
+    "CardStack": "The root that renders the deck and handles the drag gesture.",
+    "CardStackEmpty": "A dashed placeholder shown when no cards remain.",
+    "CardStackActions": "A centered row for the buttons.",
+    "CardStackSwipeButton": "A round button that swipes the top card left or right.",
+    "CardStackUndo": "A button that restores the last swiped card."
+  },
+  "props": {
+    "CardStack": {
+      "data": "The items to show as cards.",
+      "renderItem": "Renders one card from the item and its index.",
+      "keyExtractor": "Returns a key for a card. Defaults to its position.",
+      "onSwipe": "Called with the direction, item and index after a card leaves.",
+      "onUndo": "Called with the item and index after undo.",
+      "threshold": "Drag distance that commits a swipe. Defaults to `120`.",
+      "visibleCount": "Cards stacked behind the top card. Defaults to `3`.",
+      "disabled": "Turns off the gesture and the swipe buttons.",
+      "itemAccessibilityLabel": "Returns the label for the top card.",
+      "deckClassName": "Classes for the deck area, which is `h-96` by default."
+    },
+    "CardStackSwipeButton": {
+      "direction": "`left` shows an X icon, `right` shows a heart icon."
+    }
+  },
+  "accessibility": "- The top card has `Swipe left` and `Swipe right` accessibility actions.\n- Cards behind the top card are hidden from screen readers.\n- Swipe buttons are labelled `Swipe left` and `Swipe right`, and undo is labelled `Undo`, unless you pass `accessibilityLabel`.",
+  "notes": "- A medium impact haptic plays when a card is swiped by gesture, button or accessibility action, if the app provides an adapter through `HapticsProvider`.\n- Fly-out and spring animations respect the system reduce motion setting.\n- The left button icon uses `text-danger`; the right uses `text-accent`."
+}

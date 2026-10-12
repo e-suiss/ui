@@ -1,0 +1,102 @@
+---
+title: Inbox Mail
+description: "A mail app with a mailbox sidebar, a searchable message list, a reader and swipe actions on each row."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-inbox-mail--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/inbox-mail.tsx" fold={false} />
+
+</Example>
+
+A three-column mail screen built on `SplitView`: a sidebar of mailboxes (Inbox, Starred, Sent, Archive, Trash), a message list with a search field made from `InputGroup`, and a reader. On phones each column opens in turn. Rows use `Avatar` and support `SwipeActions` to archive or delete, and searching filters by sender, subject and body. The reader has Reply, Star, Archive and Delete buttons, and Reply opens a `Textarea`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-mail"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-mail --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-mail --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
+
+3. Copy the source into `components/blocks/inbox-mail.tsx`:
+
+<SourceFile path="uniwind/components/blocks/inbox-mail.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
+
+3. Copy the source into `components/blocks/inbox-mail.tsx`:
+
+<SourceFile path="nativewind/components/blocks/inbox-mail.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
+
+3. Copy the source into `components/blocks/inbox-mail.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/inbox-mail.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/InboxMail.swift" />
+
+<SourceFile path="kotlin/blocks/InboxMail.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { InboxMail } from \"@/components/blocks/inbox-mail\""} />
+
+<Code lang="tsx" code={"<InboxMail />"} />
+
+Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service.

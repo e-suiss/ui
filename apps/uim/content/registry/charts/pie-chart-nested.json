@@ -1,0 +1,5 @@
+{
+  "description": "Two concentric pie rings: summary groups in the center and per-device detail around them.",
+  "overview": "A `PieChart` with two `Pie` layers. The inner pie reads a `groups` array and is drawn at reduced opacity; the outer ring reads `chartData`, one record per device. Pressing a slice in either ring shows a tooltip.",
+  "usage": "Replace `groups` and `chartData` with your summary and detail records, and add each name to `chartConfig` with its label and color. The component takes no props."
+}

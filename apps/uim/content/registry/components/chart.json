@@ -1,0 +1,55 @@
+{
+  "description": "Line, area, bar, pie, radial and radar charts drawn with SVG, with touch tooltips and legends.",
+  "overview": "Charts are composed declaratively: a chart root such as `LineChart`, `AreaChart`, `BarChart`, `ComposedChart`, `PieChart`, `RadialBarChart` or `RadarChart` goes inside a `ChartContainer`, and series and axes such as `Line`, `Area`, `Bar`, `XAxis`, `YAxis` and `CartesianGrid` are added as children. These child components render nothing themselves; the root reads them and draws everything with `react-native-svg`.\n\nColors are theme tokens, not hex values. A series `color` such as `blue`, `teal` or `accent` resolves to the current token color, so charts follow light and dark mode automatically.",
+  "usage": "Describe each series in a `ChartConfig` object with a `label`, a token `color` and an optional `icon`, and pass it to `ChartContainer` as `config`. The container is full width with a 16:9 aspect ratio unless you give it an `h-`, `size-` or `aspect-` class.\n\nAdd `ChartTooltip` with `content={<ChartTooltipContent />}` to make the chart respond to touch: touching or dragging selects the nearest data point, draws a cursor and shows the tooltip, with a selection haptic. `ChartTooltipContent` supports `indicator` (`dot`, `line` or `dashed`), `hideLabel`, `hideIndicator`, `labelFormatter`, `formatter` and `nameKey`. Use `defaultIndex` on `ChartTooltip` to start with a point selected, or `onActiveIndexChange` on the chart to react to selection.\n\nAdd `ChartLegend` with `content={<ChartLegendContent />}` for a legend in config order. `useChart()` returns the config inside a container, and `ChartPalette` resolves token colors for custom drawing.",
+  "examples": {
+    "TooltipLine": "Tooltip with a line indicator.",
+    "TooltipDashed": "Tooltip with a dashed indicator.",
+    "TooltipNoIndicator": "Tooltip with only names and values.",
+    "TooltipNoLabel": "Tooltip with the category label hidden.",
+    "TooltipLabelFormatter": "A formatted date as the tooltip label.",
+    "TooltipFormatter": "Custom value formatting with `formatter`.",
+    "TooltipIcons": "Config icons in place of color indicators.",
+    "TooltipCustom": "A fully custom tooltip rendered from a function.",
+    "TooltipInteractive": "Settings that change the tooltip on a stacked bar chart with a legend."
+  },
+  "parts": {
+    "ChartContainer": "Sizes the chart and provides the config.",
+    "LineChart": "Cartesian chart for `Line` series.",
+    "AreaChart": "Cartesian chart for `Area` series, with optional stacking.",
+    "BarChart": "Cartesian chart for `Bar` series, vertical or horizontal.",
+    "ComposedChart": "Cartesian chart that mixes lines, areas and bars.",
+    "PieChart": "Pie and donut charts built from `Pie`.",
+    "RadialBarChart": "Circular bars built from `RadialBar`.",
+    "RadarChart": "Polar chart built from `Radar` and `PolarGrid`.",
+    "ChartTooltip": "Enables touch selection and the tooltip.",
+    "ChartTooltipContent": "Default tooltip card.",
+    "ChartLegend": "Adds a legend below the chart.",
+    "ChartLegendContent": "Default legend with swatches or icons.",
+    "ChartPalette": "Resolves token colors to concrete values.",
+    "useChart": "Returns the chart config."
+  },
+  "props": {
+    "ChartContainer": {
+      "config": "Series labels, token colors and icons keyed by data key."
+    },
+    "ChartTooltip": {
+      "content": "Tooltip element, or a function of the tooltip state.",
+      "cursor": "Shows a cursor at the selection, or sets its stroke.",
+      "defaultIndex": "Data index selected on first render."
+    },
+    "ChartTooltipContent": {
+      "indicator": "`dot`, `line` or `dashed`. Defaults to `dot`.",
+      "hideLabel": "Hides the category label.",
+      "hideIndicator": "Hides the color indicator.",
+      "labelFormatter": "Formats the tooltip label.",
+      "formatter": "Renders each row yourself.",
+      "nameKey": "Data key used to look up series names in the config."
+    },
+    "ChartLegendContent": {
+      "nameKey": "Data key used to look up legend names in the config."
+    }
+  },
+  "accessibility": "- The chart is one accessible element labelled with its series names and data range; pass `accessibilityLabel` to `ChartContainer` to override the names.\n- With a tooltip it has the `adjustable` role: VoiceOver and TalkBack swipe actions step through data points, and the selected values are announced as the value text.\n- Without a tooltip it has the `image` role.",
+  "notes": "- Series colors accept named tokens such as `blue`, `green`, `teal`, `accent`, `success`, `danger` and `label`; grid and cursor lines use `separator`.\n- Light and dark follow the system appearance."
+}

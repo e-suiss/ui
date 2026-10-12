@@ -1,0 +1,102 @@
+---
+title: Settings Notifications
+description: "A notification settings screen with a live preview of the lock screen banner above alert and appearance options."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-settings-notifications--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/settings-notifications.tsx" fold={false} />
+
+</Example>
+
+A wallpaper preview shows a sample notification that reflects the current settings: hidden previews, stacking when grouping is on, and banners that fade out when set to temporary. Below it, `Switch` rows control notifications, sounds and badges, `Toggle` tiles choose Lock Screen, Notification Center and Banners, a `ToggleGroup` picks the banner style, and `Picker` rows set previews and grouping.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-notifications"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-notifications --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-notifications --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/settings-notifications.tsx`:
+
+<SourceFile path="uniwind/components/blocks/settings-notifications.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/settings-notifications.tsx`:
+
+<SourceFile path="nativewind/components/blocks/settings-notifications.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/settings-notifications.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/settings-notifications.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/SettingsNotifications.swift" />
+
+<SourceFile path="kotlin/blocks/SettingsNotifications.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SettingsNotifications } from \"@/components/blocks/settings-notifications\""} />
+
+<Code lang="tsx" code={"<SettingsNotifications />"} />
+
+The settings live in local state and the component takes no props. Replace `WALLPAPER`, `PREVIEW_OPTIONS` and `GROUPING_OPTIONS` and wire each control's change handler to your preferences store.

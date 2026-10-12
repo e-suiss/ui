@@ -1,0 +1,50 @@
+{
+  "description": "A panel that slides in from any edge and can be swiped away, with snap points and a floating style.",
+  "overview": "`Drawer` presents content in a panel attached to an edge of the screen. It slides in from the bottom by default, or from the top, left or right with `swipeDirection`, and the user can drag it closed in that direction. The content renders through a portal (inside a full-window overlay on iOS) and respects the safe-area insets.\n\nSet `floating` to inset the panel from the screen edges with all corners rounded. Use `snapPoints` to let a bottom drawer rest at several heights. Wrap your app in `DrawerProvider` and its screen in `DrawerIndent` to scale the page back behind an open bottom drawer.",
+  "usage": "Compose `DrawerTrigger` and `DrawerContent` with a `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), your content and a `DrawerFooter`. Use `DrawerClose` to close it from a button.\n\nSet `showSwipeHandle` to show a grab handle, and `showCloseButton` on the content for a corner close button, with `closeLabel` for a text button. `snapPoints` accepts fractions of the screen such as `[0.4, 1]`; control the current one with `snapPoint` and `onSnapPointChange`.\n\nWith `modal={false}` there is no scrim. For the scaled background, render `DrawerIndentBackground` behind a `DrawerIndent` inside `DrawerProvider`.",
+  "examples": {
+    "OpenByDefault": "Starts open through `defaultOpen`.",
+    "SnapPoints": "A drawer that rests at 40% and full height.",
+    "Floating": "A floating drawer inset from the edges.",
+    "Sides": "Drawers from the top, bottom, left and right."
+  },
+  "parts": {
+    "Drawer": "Root that holds the open state, direction and snap points.",
+    "DrawerTrigger": "Opens the drawer when pressed.",
+    "DrawerPortal": "Portal the content is rendered into.",
+    "DrawerOverlay": "Dimmed scrim behind a modal drawer.",
+    "DrawerContent": "Sliding panel with optional handle and close button.",
+    "DrawerSwipeHandle": "Grab handle on the dragging edge.",
+    "DrawerHeader": "Area for the title and description.",
+    "DrawerTitle": "Drawer heading, centered for top and bottom drawers.",
+    "DrawerDescription": "Supporting text.",
+    "DrawerFooter": "Area for actions at the end of the panel.",
+    "DrawerClose": "Closes the drawer when pressed.",
+    "DrawerProvider": "Tracks open drawers for the indent effect.",
+    "DrawerIndent": "Screen wrapper that scales back while a bottom drawer is open.",
+    "DrawerIndentBackground": "Background shown behind the scaled screen."
+  },
+  "props": {
+    "Drawer": {
+      "swipeDirection": "`down`, `up`, `left` or `right`. Defaults to `down`.",
+      "floating": "Insets the panel from the edges.",
+      "showSwipeHandle": "Shows a grab handle.",
+      "snapPoints": "Heights the drawer can rest at.",
+      "snapPoint": "Controlled current snap point.",
+      "defaultSnapPoint": "Initial snap point.",
+      "onSnapPointChange": "Called when the snap point changes.",
+      "modal": "`true`, `false` or `trap-focus`. Defaults to `true`.",
+      "disablePointerDismissal": "Keeps the drawer open when the scrim is tapped.",
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state.",
+      "onOpenChange": "Called when the drawer opens or closes."
+    },
+    "DrawerContent": {
+      "showCloseButton": "Shows a corner close button.",
+      "closeLabel": "Text for the close button instead of the icon.",
+      "portalHost": "Name of the portal host to render into."
+    }
+  },
+  "accessibility": "- The popup has the `dialog` role and is labelled by the title.\n- The swipe handle and decorative edge fill are hidden from screen readers.\n- The icon close button is labelled \"Close\".",
+  "notes": "- Padding follows the safe-area insets, and a docked drawer extends its background past the screen edge so drag overshoot shows no gap.\n- Animations respect the system Reduce Motion setting.\n- Uses `bg-surface-raised`, `bg-scrim` and `bg-label-quaternary` tokens; light and dark follow the system appearance."
+}

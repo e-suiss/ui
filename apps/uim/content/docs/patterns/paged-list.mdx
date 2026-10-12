@@ -1,0 +1,153 @@
+---
+title: Paged List
+description: "A FlatList that shows items one page at a time and loads the next page on scroll or with a button."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-paged-list--default" width={880} height={1717}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => {}}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
+
+</Example>
+
+`PagedList` takes the full `items` array and renders only the first `pageSize` items. When the user scrolls near the end, or presses the Load more button in the footer, the next page is appended.
+
+The button disappears once every item is shown. Use it for long local lists where rendering everything at once is not needed.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add paged-list"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add paged-list --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add paged-list --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
+
+3. Copy the source into `components/patterns/paged-list.tsx`:
+
+<SourceFile path="uniwind/components/patterns/paged-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
+
+3. Copy the source into `components/patterns/paged-list.tsx`:
+
+<SourceFile path="nativewind/components/patterns/paged-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
+
+2. Copy the source into `components/patterns/paged-list.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/paged-list.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/PagedList.swift" />
+
+<SourceFile path="kotlin/patterns/PagedList.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PagedList } from \"@/components/patterns/paged-list\""} />
+
+<Code lang="tsx" code={"<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />"} />
+
+Pass `items`, `renderItem` and a `getKey` that returns a stable key for each item. `renderItem` receives the item and its index, not the `FlatList` info object.
+
+Other `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReached` and `ListFooterComponent`, which the list manages. Use `listClassName` to style the content container.
+
+## Examples
+
+### Small pages
+
+Uses a `pageSize` of 3 so pages load sooner.
+
+<Example id="patterns-paged-list--small-pages" width={880} height={1717}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => {}}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSmallPagesExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={3} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
+
+</Example>
+
+### Single page
+
+Fewer items than one page, so no Load more button appears.
+
+<Example id="patterns-paged-list--single-page" width={880} height={957}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => {}}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSinglePageExample() {\n  return (\n    <PagedList<Topic> items={topics.slice(0, 6)} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
+
+</Example>
+
+### Custom labels
+
+Renames the button with `loadMoreLabel`.
+
+<Example id="patterns-paged-list--custom-labels" width={880} height={1717}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => {}}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListCustomLabelsExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={3} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} loadMoreLabel=\"Show more topics\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### PagedList
+
+<PropsTable extends={["FlatListProps<T>"]} props={[{"name":"items","type":"T[]","required":true,"description":"The full array of items."},{"name":"pageSize","type":"number","default":"10","description":"Items added per page. Defaults to `10`."},{"name":"getKey","type":"(item: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns a unique key for an item. Defaults to the index."},{"name":"renderItem","type":"(item: T, index: number) => React.ReactNode","required":true,"description":"Renders one item from the item and its index."},{"name":"loadMoreLabel","type":"string","default":"\"Load more\"","description":"Text of the footer button. Defaults to `Load more`."},{"name":"className","type":"string","description":"Classes for the `FlatList`."},{"name":"listClassName","type":"string","description":"Classes for the list's content container."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The Load more button is a `Button`, so screen reader users can load the next page without scrolling to the end.
+
+## Notes
+
+- The next page loads when the scroll position is within half a screen of the end (`onEndReachedThreshold` of `0.5`).
+- The footer is a full-width `secondary` button.

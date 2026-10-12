@@ -1,0 +1,23 @@
+{
+  "description": "Adds pull to refresh to a scroll view or list, with a minimum spinner time and a light haptic.",
+  "overview": "`PullToRefresh` is a `ScrollView` with a native `RefreshControl`. Pulling down past the top starts a refresh: a light impact haptic plays, the spinner shows, and `onRefresh` runs.\n\nThe spinner stays for at least 600 ms, even when `onRefresh` resolves sooner, so it does not flicker. It also hides if `onRefresh` throws or rejects. Use `PullToRefreshControl` to add the same behavior to a `FlatList` or `SectionList`.",
+  "usage": "Pass an `onRefresh` that returns a promise, or nothing for synchronous work. All other `ScrollView` props pass through to `PullToRefresh`.\n\nFor lists, pass `<PullToRefreshControl onRefresh={...} />` as the list's `refreshControl`. It manages its own refreshing state; pass `refreshing` to override it. Other `RefreshControl` props pass through.",
+  "examples": {
+    "WithFlatList": "Uses `PullToRefreshControl` as the `refreshControl` of a `FlatList`."
+  },
+  "parts": {
+    "PullToRefresh": "A `ScrollView` with built-in pull to refresh.",
+    "PullToRefreshControl": "A `RefreshControl` for any list or scroll view."
+  },
+  "props": {
+    "PullToRefresh": {
+      "onRefresh": "Called when the user pulls to refresh; the spinner waits for the returned promise."
+    },
+    "PullToRefreshControl": {
+      "onRefresh": "Called when the user pulls to refresh; the spinner waits for the returned promise.",
+      "refreshing": "Overrides the internal refreshing state."
+    }
+  },
+  "accessibility": "- `PullToRefresh` exposes a `busy` state while refreshing.\n- `PullToRefreshControl` is labelled `Refreshing` while active.",
+  "notes": "- The haptic plays only if the app provides an adapter through `HapticsProvider`.\n- The spinner uses the `label-secondary` color, and on Android its background uses `surface-raised`, so both follow light and dark mode."
+}

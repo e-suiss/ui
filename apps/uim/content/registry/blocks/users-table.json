@@ -1,0 +1,5 @@
+{
+  "description": "A searchable user list with role filters, status badges and bulk actions for selected users.",
+  "overview": "A collapsing `Header` holds a search `InputGroup` and a `ChipGroup` that filters by role. Rows show an `Avatar`, role and a `Badge` for status. The `SelectionList` trigger enters select mode, and the `SelectionListBar` applies bulk actions: make Editor, activate or suspend. An invite `Button` sits in the header, and the admin `TabBar` switches sections.",
+  "usage": "Replace `INITIAL_USERS` and `ROLES` with your data. Use `onInvite`, `onFilterChange`, `onBulkUpdate` and `onNavigate` to connect the screen to your API."
+}

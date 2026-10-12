@@ -1,0 +1,102 @@
+---
+title: Grid Carousel
+description: "A horizontal carousel of large product cards with a page indicator."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-grid-carousel--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/grid-carousel.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Carousel` with `CarouselPageIndicator`, `Text` and product photos. Each card shows an optional kicker, name, tagline and starting price, and the whole card is pressable.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-carousel"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-carousel --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-carousel --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-carousel.tsx`:
+
+<SourceFile path="uniwind/components/blocks/grid-carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-carousel.tsx`:
+
+<SourceFile path="nativewind/components/blocks/grid-carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-carousel.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/grid-carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/GridCarousel.swift" />
+
+<SourceFile path="kotlin/blocks/GridCarousel.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { GridCarousel } from \"@/components/blocks/grid-carousel\""} />
+
+<Code lang="tsx" code={"<GridCarousel />"} />
+
+Replace `PRODUCTS` with your items. Pass `onSelectProduct` to receive the name of the pressed product.

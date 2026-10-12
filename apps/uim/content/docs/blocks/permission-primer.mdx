@@ -1,0 +1,102 @@
+---
+title: Permission Primer
+description: "A screen that explains why the app needs a permission before asking, with Allow and Not now buttons."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-permission-primer--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/permission-primer.tsx" fold={false} />
+
+</Example>
+
+A primer shown before a system permission prompt: a large icon, a title, a description and a list of benefits, each with its own icon. Allow and Not now buttons sit in a `BottomBar`. By default it asks for notifications.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add permission-primer"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add permission-primer --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add permission-primer --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/permission-primer.tsx`:
+
+<SourceFile path="uniwind/components/blocks/permission-primer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/permission-primer.tsx`:
+
+<SourceFile path="nativewind/components/blocks/permission-primer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/permission-primer.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/permission-primer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/PermissionPrimer.swift" />
+
+<SourceFile path="kotlin/blocks/PermissionPrimer.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PermissionPrimer } from \"@/components/blocks/permission-primer\""} />
+
+<Code lang="tsx" code={"<PermissionPrimer />"} />
+
+Every piece is a prop: `icon`, `title`, `description`, `benefits`, `allowLabel` and `dismissLabel`. Request the real permission in `onAllow` and close the screen in `onDismiss`.

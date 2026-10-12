@@ -1,0 +1,5 @@
+{
+  "description": "A single filled area with a smooth curve showing desktop visitors over six months.",
+  "overview": "The baseline area chart inside a `Card`: one series drawn as a natural curve with a light fill, a dashed horizontal grid, a month axis and a tooltip with a line indicator. There is no value axis. Press and drag across the plot to move the tooltip between months.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Rename the series in `chartConfig` to set its label and color. The component takes no props."
+}

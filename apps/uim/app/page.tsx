@@ -29,7 +29,17 @@ const collections = [
   {
     title: "Interactions",
     href: "/docs/interactions",
-    description: "Pull to refresh, swipe actions and steppers that feel native.",
+    description: "Swipe actions, pull to refresh, reorderable lists and card stacks that feel native.",
+  },
+  {
+    title: "Charts",
+    href: "/docs/charts",
+    description: "Area, bar, line, pie, radar and radial charts drawn with react-native-svg.",
+  },
+  {
+    title: "Blocks",
+    href: "/docs/blocks",
+    description: "Complete screens for sign-in, checkout, chat, settings, dashboards and more.",
   },
 ];
 
@@ -68,7 +78,7 @@ function Manifesto() {
           Copy them into your Expo or React Native app and change anything you like.
         </span>{" "}
         Uniwind, NativeWind or StyleSheet.{" "}
-        <span className="text-label-tertiary">Accessible, themeable and open source.</span>
+        <span className="text-label-tertiary">Also as SwiftUI and Jetpack Compose source. Accessible, themeable and open source.</span>
       </p>
     </section>
   );
@@ -89,7 +99,7 @@ function Library() {
       <div className={cn(frame, "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]")}>
         <Label index="03">Library</Label>
         <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
-          Three collections.{" "}
+          Five collections.{" "}
           <span className="text-label-tertiary">One design language.</span>
         </h2>
       </div>

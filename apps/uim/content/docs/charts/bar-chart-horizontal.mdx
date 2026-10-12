@@ -1,0 +1,90 @@
+---
+title: Bar Chart Horizontal
+description: "Horizontal bars ranking device types by users, each in its own color."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--horizontal" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-horizontal.tsx" fold={false} />
+
+</Example>
+
+A `BarChart` with `layout="vertical"`, so categories run down a `YAxis` and bars extend to the right, which leaves room for longer names. Each bar gets its color from `chartConfig` through a `Cell`, and the axis labels come from the same config.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-horizontal"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-horizontal --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-horizontal --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-horizontal.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-horizontal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-horizontal.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-horizontal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/bar-chart-horizontal.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-horizontal.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartHorizontal.swift" />
+
+<SourceFile path="kotlin/charts/BarChartHorizontal.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartHorizontal } from \"@/components/charts/bar-chart-horizontal\""} />
+
+<Code lang="tsx" code={"<BarChartHorizontal />"} />
+
+Replace `chartData` with your categories and values, and add a matching entry with a label and color to `chartConfig` for each category. The component takes no props.

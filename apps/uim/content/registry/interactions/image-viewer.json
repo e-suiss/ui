@@ -1,0 +1,34 @@
+{
+  "description": "A full-screen photo viewer with swipe paging, pinch and double-tap zoom, and swipe down to close.",
+  "overview": "`ImageViewer` opens a set of `images` full screen on a dark media background, starting at the pressed thumbnail. A counter such as `2 of 5` and a close button sit at the top, below the safe area.\n\nSwipe sideways to page between images, with resistance at the first and last image. Pinch to zoom between 1x and 4x around the fingers, double-tap to zoom to 2.5x at the tapped point or back to 1x, and drag to pan while zoomed. Swiping up or down far enough closes the viewer, and a single tap toggles the controls.",
+  "usage": "Pass `images` to `ImageViewer`, wrap each thumbnail in an `ImageViewerTrigger` with its `index`, and render one `ImageViewerContent`. Give each image an `accessibilityLabel`. The `ImageViewerImage` type is exported.\n\nOpen state and the current image can be uncontrolled with `defaultOpen` and `defaultIndex`, or controlled with `open`, `onOpenChange`, `index` and `onIndexChange`. `useImageViewer` returns `open`, `index`, `count` and `images`.",
+  "examples": {
+    "OpenByDefault": "Opens the viewer on the second image on first render."
+  },
+  "parts": {
+    "ImageViewer": "The root that holds the images, open state and current index.",
+    "ImageViewerTrigger": "A pressable thumbnail that opens the viewer at its `index`.",
+    "ImageViewerContent": "The full-screen viewer with the pages, counter and close button."
+  },
+  "props": {
+    "ImageViewer": {
+      "images": "The images to show.",
+      "open": "Controls whether the viewer is open.",
+      "defaultOpen": "Whether the viewer starts open when uncontrolled.",
+      "onOpenChange": "Called when the viewer opens or closes.",
+      "index": "The current image when controlled.",
+      "defaultIndex": "The initial image when uncontrolled. Defaults to `0`.",
+      "onIndexChange": "Called with the new index after paging."
+    },
+    "ImageViewerTrigger": {
+      "index": "The image this thumbnail opens. Defaults to `0`."
+    },
+    "ImageViewerContent": {
+      "closeLabel": "Accessibility label of the close button. Defaults to `Close`.",
+      "indexLabel": "Formats the counter from the index and count. Defaults to `n of count`.",
+      "portalHost": "Name of a portal host to render into."
+    }
+  },
+  "accessibility": "- The viewer is modal for screen readers, and the escape gesture closes it.\n- The current page is `adjustable`: swiping up or down with a screen reader moves between images. It is labelled by the image's `accessibilityLabel`, or `Image n`, with the counter as its value.\n- Triggers have the `button` role and expose their `expanded` state.",
+  "notes": "- The viewer fades in and out, and paging and zoom animations respect the system reduce motion setting.\n- Colors use the `bg-media` and `text-on-media` tokens, so the viewer stays dark in light mode.\n- On iOS the viewer renders in a full-window overlay so it appears above native screens."
+}

@@ -1,0 +1,156 @@
+---
+title: Icon
+description: "Renders a Phosphor icon with size and color set through class names."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-icon--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { StarIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconExample() {\n  return (\n    <Icon as={StarIcon} />\n  )\n}"} />
+
+</Example>
+
+`Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-label`.
+
+Icons inherit text and icon classes from their parent, so an `Icon` inside a `Button`, `Badge` or menu item picks up the right size and color without extra classes. Components provide these through `IconClassContext`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add icon"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add icon --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add icon --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg uniwind"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/icon.tsx`:
+
+<SourceFile path="uniwind/components/ui/icon.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/icon.tsx`:
+
+<SourceFile path="nativewind/components/ui/icon.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/icon.tsx`:
+
+<SourceFile path="stylesheet/components/ui/icon.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["Jetpack Compose"]}>
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Icon } from \"@/components/ui/icon\""} />
+
+<Code lang="tsx" code={"<Icon as={StarIcon} />"} />
+
+Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-danger`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
+
+Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
+
+## Examples
+
+### Sizes
+
+Icons at several `size-*` classes.
+
+<Example id="components-icon--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { BellIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={BellIcon} className=\"size-4\" />\n      <Icon as={BellIcon} />\n      <Icon as={BellIcon} className=\"size-6\" />\n      <Icon as={BellIcon} className=\"size-8\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Colors
+
+Icons in different color tokens.
+
+<Example id="components-icon--colors" width={880} height={400}>
+
+<Code lang="tsx" code={"import { GearIcon, HeartIcon, InfoIcon, WarningIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconColorsExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={InfoIcon} />\n      <Icon as={GearIcon} className=\"text-label-secondary\" />\n      <Icon as={HeartIcon} className=\"text-accent\" weight=\"fill\" />\n      <Icon as={WarningIcon} className=\"text-danger\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Weights
+
+The available Phosphor weights.
+
+<Example id="components-icon--weights" width={880} height={400}>
+
+<Code lang="tsx" code={"import { StarIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconWeightsExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={StarIcon} className=\"size-6\" weight=\"thin\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"light\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"regular\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"bold\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"fill\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"duotone\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Icon
+
+Styled Phosphor icon.
+
+<PropsTable extends={["IconProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Icons have no label of their own. When an icon is the only content of a pressable, give the pressable an `accessibilityLabel`.
+
+## Notes
+
+- The default color is the `text-label` token, so icons follow light and dark mode with the system appearance.

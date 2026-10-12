@@ -1,0 +1,191 @@
+---
+title: Switch
+description: "A toggle switch for turning a single setting on or off."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-switch--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction SwitchDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Switch checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function SwitchExample() {\n  return (\n    <SwitchDemo />\n  )\n}"} />
+
+</Example>
+
+`Switch` is a pressable track with a round thumb that slides between the off and on positions. The thumb animates with Reanimated and stretches slightly while pressed. It comes in two sizes, `default` and `sm`, and has an `invalid` state that adds a danger-colored border.
+
+Use a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add switch"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add switch --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add switch --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/switch.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/switch.tsx`:
+
+<SourceFile path="uniwind/components/ui/switch.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/switch.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/switch.tsx`:
+
+<SourceFile path="nativewind/components/ui/switch.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/switch.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/switch.tsx`:
+
+<SourceFile path="stylesheet/components/ui/switch.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Switch.swift" />
+
+<SourceFile path="kotlin/components/Switch.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\""} />
+
+<Code lang="tsx" code={"<SwitchDemo />"} />
+
+Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it.
+
+A switch has no visible text of its own. Pair it with a `Label` and link them with `accessibilityLabelledBy` and the label's `nativeID`, or set an `accessibilityLabel`. Give the `Label` an `onPress` that toggles the value if the label should be pressable too.
+
+The switch has a hit slop around it, so it is easier to press than its visual size.
+
+## Examples
+
+### Checked
+
+A switch that starts on.
+
+<Example id="components-switch--checked" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction SwitchDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Switch checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function SwitchCheckedExample() {\n  return (\n    <SwitchDemo initial />\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+The `sm` and `default` sizes side by side.
+
+<Example id="components-switch--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Switch size=\"sm\" defaultChecked accessibilityLabel=\"Wi-Fi\" />\n      <Switch defaultChecked accessibilityLabel=\"Bluetooth\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With label
+
+A controlled switch next to a pressable label.
+
+<Example id="components-switch--with-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nfunction WithLabelDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <Switch\n        accessibilityLabelledBy=\"airplane-mode\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label nativeID=\"airplane-mode\" onPress={() => setChecked((v) => !v)}>\n        Airplane mode\n      </Label>\n    </View>\n  )\n}\n\nexport function SwitchWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+</Example>
+
+### With description
+
+A switch with a label and a line of supporting text.
+
+<Example id="components-switch--with-description" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction WithDescriptionDemo() {\n  const [checked, setChecked] = React.useState(true)\n  return (\n    <View className=\"flex-row items-center justify-between gap-4 rounded-2xl bg-surface-secondary p-4\">\n      <View className=\"flex-1 gap-1\">\n        <Label nativeID=\"marketing\" onPress={() => setChecked((v) => !v)}>\n          Marketing emails\n        </Label>\n        <Text className=\"text-sm text-label-secondary\">\n          Receive emails about new products.\n        </Text>\n      </View>\n      <Switch\n        accessibilityLabelledBy=\"marketing\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n    </View>\n  )\n}\n\nexport function SwitchWithDescriptionExample() {\n  return (\n    <WithDescriptionDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled switches in the off and on states.
+
+<Example id="components-switch--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <Switch disabled checked={false} onCheckedChange={() => {}} />\n      <Switch disabled checked onCheckedChange={() => {}} />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+A switch with the `invalid` border next to its label.
+
+<Example id="components-switch--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchInvalidExample() {\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <Switch invalid accessibilityLabelledBy=\"terms-switch\" />\n      <Label nativeID=\"terms-switch\">Accept terms</Label>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Switch
+
+<PropsTable extends={["React.ComponentProps<typeof SwitchPrimitives.Root>"]} props={[{"name":"size","type":"SwitchSize","default":"\"default\"","description":"`default` or `sm`."},{"name":"invalid","type":"boolean","description":"Adds a danger-colored border when not disabled."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The root has the `switch` role and reports `checked` and `disabled` in its accessibility state, so VoiceOver and TalkBack announce whether it is on.
+- The thumb is hidden from the accessibility tree.
+- Label every switch with `accessibilityLabel` or `accessibilityLabelledBy`.
+- The thumb animation follows the system reduce motion setting.
+
+## Notes
+
+- The track uses `bg-accent` when on and `bg-label-quaternary` when off, with `bg-accent-disabled` and `bg-control-disabled` for the disabled states.
+- The thumb uses `bg-surface`, or `bg-label` in dark mode.
+- Light and dark colors follow the system appearance.

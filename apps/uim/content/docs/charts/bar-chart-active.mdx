@@ -1,0 +1,90 @@
+---
+title: Bar Chart Active
+description: "A weekly step count where tapping a bar selects that day and shows its total in the header."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--active" width={880} height={665}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-active.tsx" fold={false} />
+
+</Example>
+
+Seven bars, one per day, with the selected bar at full opacity and the others dimmed. The `BarChart` reports the touched bar through `onActiveIndexChange`, which updates local state and the header. The header is a live region, so screen readers announce the new step count.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-active"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-active --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-active --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-active.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-active.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-active.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-active.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-active.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-active.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartActive.swift" />
+
+<SourceFile path="kotlin/charts/BarChartActive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartActive } from \"@/components/charts/bar-chart-active\""} />
+
+<Code lang="tsx" code={"<BarChartActive />"} />
+
+Replace `chartData` with your daily values and update the `day` and `steps` keys to match. The initial selection is set by the `useState` default. The component takes no props.

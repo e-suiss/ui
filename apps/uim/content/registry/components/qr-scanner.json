@@ -1,0 +1,25 @@
+{
+  "description": "A camera overlay with a cut-out scan frame, corner brackets, a moving scan line and an optional flashlight toggle.",
+  "overview": "`QRScanner` is a `View` that draws an overlay on top of whatever you pass as `children`, usually a camera preview. It does not open the camera itself. The overlay dims everything outside a square frame (drawn with `react-native-svg`), marks the frame with four corner brackets and animates a scan line with Reanimated while the state is `idle`.\n\nThe frame size defaults to 68% of the shorter side, capped at 280 points, and is centered in the component. A `title` sits above the frame; a `description` and the flashlight button sit below it.",
+  "usage": "Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-media`.\n\nSet `state` to `success` or `error` after you read a code. The brackets change color, and `error` shakes the frame. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.\n\nThe `QRScannerState` type is also exported.",
+  "examples": {
+    "Success": "The `success` state with green brackets.",
+    "ErrorState": "The `error` state, which shakes the frame and turns the brackets red.",
+    "WithoutScanLine": "The scanner with `scanLine={false}`.",
+    "WithoutTorch": "A title and description with no flashlight button, because `onTorchToggle` is not passed."
+  },
+  "props": {
+    "QRScanner": {
+      "state": "`idle`, `success` or `error`. Sets the bracket color and triggers haptics and the shake animation. Defaults to `idle`.",
+      "title": "Content shown above the frame. Strings are wrapped in a `Text`.",
+      "description": "Content shown below the frame. Strings are wrapped in a `Text`.",
+      "scanLine": "Shows the animated scan line while the state is `idle`. Defaults to `true`.",
+      "torch": "Whether the flashlight is on. Controls the look of the flashlight button.",
+      "onTorchToggle": "Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set.",
+      "torchLabel": "Accessibility label for the flashlight button. Defaults to `\"Flashlight\"`.",
+      "frameSize": "Side length of the scan frame in points. Overrides the automatic size."
+    }
+  },
+  "accessibility": "- The dimmed surround and brackets are hidden from VoiceOver and TalkBack.\n- The overlay is a polite live region, so changes to the title and description are announced on Android.\n- The flashlight button has the `button` role, uses `torchLabel` as its label and reports `torch` as its selected state.\n- State changes to `success` and `error` play a matching haptic notification.\n- The shake and scan-line animations respect the system reduce motion setting.",
+  "notes": "- Uses the `bg-media`, `text-scrim`, `text-on-media`, `border-success`, `border-danger` and `bg-accent` tokens.\n- The scan line restarts whenever the state returns to `idle`."
+}

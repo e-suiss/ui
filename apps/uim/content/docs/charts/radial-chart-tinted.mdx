@@ -1,0 +1,90 @@
+---
+title: Radial Chart Tinted
+description: "Radial bars for users by device, where each track is a soft tint of its bar color."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--tinted" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-tinted.tsx" fold={false} />
+
+</Example>
+
+A `RadialBarChart` with one bar per record in `chartData`, measured against a shared `MAX` of 320. Each bar is colored through `Cell`, and its background track uses the same color at low opacity. Pressing a bar shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-tinted"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-tinted --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-tinted --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-tinted.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-tinted.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-tinted.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-tinted.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-tinted.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-tinted.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartTinted.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartTinted.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartTinted } from \"@/components/charts/radial-chart-tinted\""} />
+
+<Code lang="tsx" code={"<RadialChartTinted />"} />
+
+Replace `chartData` with your records, set `MAX` to the top of your range, and add a matching entry per item to `chartConfig`. The component takes no props.

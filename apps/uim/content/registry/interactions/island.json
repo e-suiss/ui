@@ -1,0 +1,27 @@
+{
+  "description": "A floating pill at the top of the screen that shows ongoing activity and short notices, and expands on press.",
+  "overview": "`Island` floats below the top safe area and morphs between views: `hidden`, `compact`, `expanded` and `notice`. Its width, height and corner radius spring to the measured size of the active view, and parts cross-fade as it changes.\n\nIt appears in compact form while an `IslandCompact` is mounted. Pressing it expands to `IslandExpanded`; pressing outside, swiping up or the Android back button collapses it. `notify` shows a notice that replaces the current view and dismisses itself after 4 seconds, on press or on swipe up. Use it for ongoing activity such as a download, timer or call.",
+  "usage": "Wrap the app in `IslandProvider` and render one `Island` with an `IslandCompact` and an `IslandExpanded` as children. Mount the compact part only while there is activity to show.\n\n`useIsland` returns `view`, `expanded`, `setExpanded`, `notify` and `dismiss`. A notice is `{ icon?, title, description?, duration? }`; pass a `duration` of `0` or `Infinity` to keep it until dismissed. Dragging the island pauses the notice timer. Use `IslandRing` for circular progress. The `IslandNotice` and `IslandView` types are exported.",
+  "examples": {
+    "Expanded": "Starts with the island expanded to show download details.",
+    "Notice": "Shows a notice on mount.",
+    "LiveActivity": "A download in progress with buttons that send notices over it."
+  },
+  "parts": {
+    "IslandProvider": "Holds the island state and the notice timer.",
+    "Island": "The floating pill, rendered in a portal.",
+    "IslandCompact": "The pressable compact view; mounting it shows the island.",
+    "IslandExpanded": "The expanded view with more detail and actions.",
+    "IslandRing": "A small circular progress ring."
+  },
+  "props": {
+    "Island": {
+      "portalHost": "Name of a portal host to render into."
+    },
+    "IslandRing": {
+      "value": "Progress from `0` to `1`."
+    }
+  },
+  "accessibility": "- Notices are announced with their title and description when they are text.\n- The compact view is a button that exposes `expanded` and has an `expand` action.\n- The expanded view has the `group` role, a `collapse` action and closes on the escape gesture.\n- The notice has a `dismiss` action.\n- Inactive views and the progress ring are hidden from screen readers.",
+  "notes": "- The island uses `bg-label` with `text-surface` in light mode, and `bg-surface` with a `border-separator` outline in dark mode.\n- Expanded and notice views are up to 384 points wide.\n- Size and fade animations respect the system reduce motion setting."
+}

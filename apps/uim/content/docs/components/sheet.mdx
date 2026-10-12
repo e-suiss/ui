@@ -1,0 +1,214 @@
+---
+title: Sheet
+description: "A panel that slides in from any edge of the screen, for secondary content and settings."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-sheet--open-by-default" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet defaultOpen>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open</Text>\n        </SheetTrigger>\n        <ProfileContent />\n      </Sheet>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Sheet` is built on the drawer primitive. `SheetContent` renders in a portal, above a dimmed overlay, as a rounded floating panel inset from the screen edges and the safe area. It enters and exits with a Reanimated fade-and-slide from its `side` and can be dismissed by swiping toward that edge.
+
+Use `right` or `left` for navigation and detail panels that span the screen height, and `top` or `bottom` for short panels that span the width. For snap points and a drag handle, use Drawer instead.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add sheet"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add sheet --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add sheet --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="uniwind/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="nativewind/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="stylesheet/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Sheet.swift" />
+
+<SourceFile path="kotlin/components/Sheet.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Sheet, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from \"@/components/ui/sheet\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Sheet defaultOpen>\n    <SheetTrigger render={<Button variant=\"outline\" />}>\n      <Text>Open</Text>\n    </SheetTrigger>\n    <ProfileContent />\n  </Sheet>\n</View>"} />
+
+Wrap a `SheetTrigger` and a `SheetContent` in `Sheet`. Inside the content, compose `SheetHeader` with `SheetTitle` and `SheetDescription`, your body, and a `SheetFooter`, which is pushed to the bottom. Use `SheetTrigger` and `SheetClose` with `render` to turn a `Button` into a trigger or close control.
+
+`Sheet` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use, plus `modal`, `disablePointerDismissal`, `onOpenChangeComplete` and `actionsRef`. The swipe direction follows the `side` of its content.
+
+A close button is shown in the top corner by default. Set `closeLabel` to show a text button instead of the X icon, or `showCloseButton={false}` to remove it. `SheetHeader` adds end padding so the title does not run under the button.
+
+## Examples
+
+### Default
+
+<Example id="components-sheet--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open</Text>\n        </SheetTrigger>\n        <ProfileContent />\n      </Sheet>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Sides
+
+One sheet for each side: `top`, `right`, `bottom` and `left`.
+
+<Example id="components-sheet--sides" width={880} height={439}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetSidesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Sheet key={side}>\n          <SheetTrigger render={<Button variant=\"outline\" />}>\n            <Text className=\"capitalize\">{side}</Text>\n          </SheetTrigger>\n          <ProfileContent side={side} />\n        </Sheet>\n      ))}\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+A bottom sheet whose close button reads "Done" instead of showing an icon.
+
+<Example id="components-sheet--with-close-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SheetWithCloseLabelExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open with label</Text>\n        </SheetTrigger>\n        <SheetContent side=\"bottom\" closeLabel=\"Done\">\n          <SheetHeader>\n            <SheetTitle>Notifications</SheetTitle>\n            <SheetDescription>\n              Choose what you want to be notified about.\n            </SheetDescription>\n          </SheetHeader>\n        </SheetContent>\n      </Sheet>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Sheet
+
+Root that holds the open state.
+
+<PropsTable extends={["DrawerPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SheetContent
+
+The panel, rendered in a portal with an overlay and an optional close button.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"side","type":"SheetSide","default":"\"right\"","description":"Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. Defaults to `right`."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the close button in the top corner. Defaults to `true`."},{"name":"closeLabel","type":"string","description":"Text for the close button. When omitted, an X icon is shown."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SheetHeader
+
+Column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SheetTitle
+
+Heading that labels the sheet.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SheetDescription
+
+Secondary text under the title.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Description>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The panel has the `dialog` role and is labeled by `SheetTitle` when one is present.
+- It is modal by default, so VoiceOver keeps focus inside the sheet.
+- The VoiceOver escape gesture and the Android back button close the sheet.
+- The icon-only close button has the accessibility label "Close".
+- Animations respect the system reduce motion setting.
+
+## Notes
+
+- Uses `bg-surface-raised` for the panel and `bg-scrim` for the overlay; colors follow the system appearance.
+- On iOS the sheet renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+- Side sheets are three quarters of the screen width, capped at `max-w-sm` on larger screens.

@@ -1,0 +1,98 @@
+---
+title: Radar Chart Interactive
+description: "A radar chart comparing up to three phone models across six scored attributes."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radar--interactive" width={880} height={1337}>
+
+<SourceFile path="uniwind/components/charts/radar-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A `Card` with a row of `Toggle` chips, a `RadarChart` and a summary card per model. Scores live in `SCORES`, one array per model, in the order of `AXES`. Up to three models can be selected; picking a fourth drops the oldest, and the last one cannot be cleared. Pressing an axis bolds its label and switches each summary from the overall average to that axis score; a tooltip lists the values.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
+
+3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/radar-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
+
+3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/radar-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
+
+2. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radar-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadarChartInteractive.swift" />
+
+<SourceFile path="kotlin/charts/RadarChartInteractive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartInteractive } from \"@/components/charts/radar-chart-interactive\""} />
+
+<Code lang="tsx" code={"<RadarChartInteractive />"} />
+
+Replace `AXES` and `SCORES` with your attributes and items, and add a matching entry to `chartConfig` and `SWATCH` for each. Change `MAX_SELECTED` to allow more series. The component takes no props.

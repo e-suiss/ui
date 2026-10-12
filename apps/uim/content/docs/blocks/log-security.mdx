@@ -1,0 +1,102 @@
+---
+title: Log Security
+description: "A security dashboard with a score ring, open alerts by severity, and alerts you can resolve or reopen."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-log-security--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/log-security.tsx" fold={false} />
+
+</Example>
+
+An admin screen with a collapsing `Header`, a ring that shows a security score, and counts of open High, Medium and Low alerts. A `ChipGroup` filters the list by Open, Resolved or All, and each alert has a Resolve or Reopen `Button`; the score and counts update as alerts change. A `TabBar` at the bottom switches between admin sections; only Activity has content in the sample.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-security"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-security --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-security --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-security.tsx`:
+
+<SourceFile path="uniwind/components/blocks/log-security.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-security.tsx`:
+
+<SourceFile path="nativewind/components/blocks/log-security.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-security.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/log-security.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/LogSecurity.swift" />
+
+<SourceFile path="kotlin/blocks/LogSecurity.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LogSecurity } from \"@/components/blocks/log-security\""} />
+
+<Code lang="tsx" code={"<LogSecurity />"} />
+
+Replace `INITIAL_ALERTS` with your alerts and tune the weights in `SEVERITY` to change how the score is computed. Wire `onFilterChange`, `onResolve` and `onNavigate` to your app.

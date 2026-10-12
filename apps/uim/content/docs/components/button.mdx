@@ -1,0 +1,177 @@
+---
+title: Button
+description: "A pill-shaped button that triggers an action, with variants for every level of emphasis."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-button--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonExample() {\n  return (\n    <View className=\"items-start\">\n      <Button>\n        <Text>Button</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Button` is a `Pressable` with the `button` role. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the width of its container.
+
+Use the `default` variant for the primary action on a screen, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="uniwind/components/ui/button.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="nativewind/components/ui/button.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+2. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="stylesheet/components/ui/button.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Button>\n    <Text>Button</Text>\n  </Button>\n</View>"} />
+
+Put the label in a `Text` and icons in an `Icon`. The button passes its text color and icon size down through context, so children pick them up without extra classes.
+
+Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `accessibilityLabel`.
+
+`buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element.
+
+## Examples
+
+### Variants
+
+All eight variants, plus an icon-only button.
+
+<Example id="components-button--variants" width={880} height={919}>
+
+<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonVariantsExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button>\n        <Text>Default</Text>\n      </Button>\n      <Button variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Button>\n      <Button variant=\"plain\">\n        <Text>Plain</Text>\n      </Button>\n      <Button variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n      <Button variant=\"link\">\n        <Text>Link</Text>\n      </Button>\n      <Button size=\"icon\" variant=\"outline\">\n        <Icon as={PlusIcon} />\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Compares the text and icon-only sizes.
+
+<Example id="components-button--sizes" width={880} height={439}>
+
+<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonSizesExample() {\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"xs\">\n          <Text>Extra small</Text>\n        </Button>\n        <Button size=\"sm\">\n          <Text>Small</Text>\n        </Button>\n        <Button>\n          <Text>Default</Text>\n        </Button>\n        <Button size=\"lg\">\n          <Text>Large</Text>\n        </Button>\n        <Button size=\"xl\">\n          <Text>Extra large</Text>\n        </Button>\n      </View>\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"icon-xs\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-sm\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-lg\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-xl\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </View>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With icon
+
+Leading and trailing icons, and an icon-only button.
+
+<Example id="components-button--with-icon" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArrowRightIcon, DownloadSimpleIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonWithIconExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button>\n        <Icon as={DownloadSimpleIcon} />\n        <Text>Download</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Continue</Text>\n        <Icon as={ArrowRightIcon} />\n      </Button>\n      <Button variant=\"destructive\">\n        <Icon as={TrashIcon} />\n        <Text>Delete</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled buttons in every variant.
+
+<Example id="components-button--disabled" width={880} height={535}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonDisabledExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Text>Default</Text>\n      </Button>\n      <Button disabled variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button disabled variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button disabled variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button disabled variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Block
+
+Full-width buttons at each size, whose corner radius scales with size.
+
+<Example id="components-button--block" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonBlockExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button block size=\"lg\">\n        <Text>Continue</Text>\n      </Button>\n      <Button block size=\"lg\" variant=\"secondary\">\n        <Text>Not now</Text>\n      </Button>\n      <Button block variant=\"tinted\">\n        <Text>Learn more</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Button
+
+<PropsTable extends={["ButtonProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders a `Pressable` with `role="button"`, so VoiceOver and TalkBack announce it as a button.
+- `disabled` is announced and blocks presses.
+- Icon-only buttons need an `accessibilityLabel`.
+
+## Notes
+
+- Colors come from semantic tokens such as `bg-accent`, `bg-control`, `bg-accent-surface` and `bg-danger-surface`, each with pressed and disabled states.
+- Light and dark colors follow the system appearance.

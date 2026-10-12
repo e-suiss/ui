@@ -1,0 +1,23 @@
+{
+  "description": "A multi-line text field for longer input, with focus, invalid and disabled states.",
+  "overview": "`Textarea` is the multi-line version of `Input`. It wraps a `TextInput` through the same field control primitive, defaults to `multiline` with `numberOfLines={8}`, aligns text to the top and has a minimum height. It shows a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.",
+  "usage": "Use it for comments, messages and other free-form text. Use `Input` for single-line values.\n\nThe value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state.\n\nOverride `numberOfLines` or set a height through `className` to change the visible size.",
+  "examples": {
+    "WithValue": "A textarea that starts with a `defaultValue`.",
+    "WithLabel": "A textarea inside a `Field` with a label and description.",
+    "Disabled": "A disabled textarea.",
+    "Invalid": "A textarea inside an invalid `Field` with an error message."
+  },
+  "props": {
+    "Textarea": {
+      "multiline": "Allows multiple lines. Defaults to `true`.",
+      "numberOfLines": "Number of visible lines. Defaults to `8`.",
+      "value": "The current text, for controlled use.",
+      "defaultValue": "The initial text, for uncontrolled use.",
+      "onValueChange": "Called with the new text and change details when the user types.",
+      "disabled": "Blocks editing and shows the disabled style."
+    }
+  },
+  "accessibility": "- Inside a `Field`, the textarea gets the field label as `accessibilityLabel` and the description as `accessibilityHint`.\n- `disabled` is set in `accessibilityState` and makes the textarea non-editable.\n- Outside a `Field`, give it an `accessibilityLabel`.",
+  "notes": "- Uses the `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens.\n- Placeholder, cursor and selection colors come from the `label-secondary` and `accent` tokens.\n- Light and dark colors follow the system appearance."
+}

@@ -1,0 +1,102 @@
+---
+title: Grid Accessories
+description: "A two-column accessories grid with category chips and add to bag buttons that update a bag count."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-grid-accessories--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/grid-accessories.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Chip` filters, `Button`, `Icon` and `Text`. Category chips filter the grid, and each card's plus button expands into an In bag state while a badge on the bag icon shows the item count.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-accessories"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-accessories --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add grid-accessories --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-accessories.tsx`:
+
+<SourceFile path="uniwind/components/blocks/grid-accessories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-accessories.tsx`:
+
+<SourceFile path="nativewind/components/blocks/grid-accessories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/grid-accessories.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/grid-accessories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/GridAccessories.swift" />
+
+<SourceFile path="kotlin/blocks/GridAccessories.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { GridAccessories } from \"@/components/blocks/grid-accessories\""} />
+
+<Code lang="tsx" code={"<GridAccessories />"} />
+
+Replace `ACCESSORIES` and `FILTERS` with your catalog. Pass `onAddToBag`, `onRemoveFromBag` and `onFilterChange` to sync with your cart.

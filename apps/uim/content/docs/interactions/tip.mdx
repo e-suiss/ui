@@ -1,0 +1,233 @@
+---
+title: Tip
+description: "One-time hints shown as an inline card or a popover pointing at a control, remembered once dismissed."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-tip--default" width={880} height={921}>
+
+<Code lang="tsx" code={"import { NotePencilIcon, PushPinIcon, ShareNetworkIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { resetTips, Tip, TipAnchor, TipCard, TipClose, TipContent, TipDescription, TipGroup, TipIcon, TipPopover, TipTitle } from \"@/components/interactions/tip\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst notes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n]\n\nconst TIP_IDS = [\"notes-pin\", \"notes-compose\"]\n\nfunction NotesPage() {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <TipGroup>\n      <View className=\"w-full gap-4\">\n        <View className=\"flex-row items-center justify-between\">\n          <Text variant=\"h1\">Notes</Text>\n          <View className=\"flex-row items-center\">\n            <Button\n              variant=\"plain\"\n              size=\"icon-lg\"\n              accessibilityLabel=\"Share folder\"\n              onPress={() => setLog(\"Shared the folder\")}\n            >\n              <Icon as={ShareNetworkIcon} className=\"size-5.5\" />\n            </Button>\n            <Tip id=\"notes-compose\" delay={600}>\n              <TipAnchor>\n                <Button\n                  variant=\"plain\"\n                  size=\"icon-lg\"\n                  accessibilityLabel=\"New note\"\n                  onPress={() => setLog(\"Started a new note\")}\n                >\n                  <Icon as={NotePencilIcon} className=\"size-5.5\" />\n                </Button>\n              </TipAnchor>\n              <TipPopover side=\"bottom\" align=\"end\">\n                <TipIcon>\n                  <Icon as={NotePencilIcon} weight=\"duotone\" />\n                </TipIcon>\n                <TipContent>\n                  <TipTitle>Start a note fast</TipTitle>\n                  <TipDescription>\n                    Tap here any time to begin a new note.\n                  </TipDescription>\n                </TipContent>\n                <TipClose />\n              </TipPopover>\n            </Tip>\n          </View>\n        </View>\n        <Tip id=\"notes-pin\">\n          <TipCard>\n            <TipIcon>\n              <Icon as={PushPinIcon} weight=\"duotone\" />\n            </TipIcon>\n            <TipContent>\n              <TipTitle>Pin your favorites</TipTitle>\n              <TipDescription>\n                Swipe right on a note to keep it at the top of the list.\n              </TipDescription>\n            </TipContent>\n            <TipClose />\n          </TipCard>\n        </Tip>\n        <View className=\"overflow-hidden rounded-2xl border border-separator\">\n          {notes.map((note, index) => (\n            <Pressable\n              key={note.id}\n              onPress={() => setLog(`Opened ${note.title}`)}\n              className={\n                index > 0\n                  ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                  : \"px-4 py-3 active:bg-item-pressed\"\n              }\n            >\n              <Text numberOfLines={1} className=\"font-semibold\">\n                {note.title}\n              </Text>\n              <Text numberOfLines={1} className=\"text-sm text-label-secondary\">\n                {note.preview}\n              </Text>\n            </Pressable>\n          ))}\n        </View>\n        <Text role=\"status\" className=\"min-h-5 text-sm text-label-secondary\">\n          {log}\n        </Text>\n      </View>\n    </TipGroup>\n  )\n}\n\nfunction TipsExample({ fresh = false }: { fresh?: boolean }) {\n  const [key, setKey] = React.useState(0)\n  const [ready, setReady] = React.useState(!fresh)\n\n  React.useEffect(() => {\n    if (!fresh) return\n    resetTips(TIP_IDS).then(() => setReady(true))\n  }, [fresh])\n\n  return (\n    <View className=\"gap-6\">\n      {ready ? <NotesPage key={key} /> : null}\n      <Button\n        variant=\"secondary\"\n        size=\"sm\"\n        className=\"self-center\"\n        onPress={() => {\n          resetTips(TIP_IDS).then(() => setKey((value) => value + 1))\n        }}\n      >\n        <Text>Show tips again</Text>\n      </Button>\n    </View>\n  )\n}\n\nexport function TipExample() {\n  return (\n    <TipsExample fresh />\n  )\n}"} />
+
+</Example>
+
+`Tip` shows a hint until the user dismisses it, then records the dismissal under its `id` so it does not return. It renders either as a `TipCard` placed in the layout, or as a `TipPopover` with an arrow pointing at a `TipAnchor`. Touching the anchor also dismisses the tip.
+
+`TipGroup` shows several tips one at a time in the order they mount, moving to the next when one is dismissed. Use tips to introduce a feature or gesture the user may not discover.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tip"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tip --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tip --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/tip.tsx`:
+
+<SourceFile path="uniwind/components/interactions/tip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/tip.tsx`:
+
+<SourceFile path="nativewind/components/interactions/tip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/tip.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/tip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/Tip.swift" />
+
+<SourceFile path="kotlin/interactions/Tip.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { TipGroup, Tip, TipCard, TipAnchor, TipPopover, TipIcon, TipContent, TipTitle, TipDescription, TipClose } from \"@/components/interactions/tip\""} />
+
+<Code lang="tsx" code={"<TipsExample fresh />"} />
+
+Give each `Tip` a stable `id`. Compose `TipIcon`, `TipContent` with `TipTitle` and `TipDescription`, and `TipClose` inside a `TipCard` or `TipPopover`. For a popover, wrap the target in `TipAnchor` inside the same `Tip`.
+
+By default dismissals are kept in memory and reset when the app restarts. To persist them, pass a `storage` adapter to `TipGroup` with `getItem` and `setItem`, sync or async, such as one backed by your app's key-value store. Keys are prefixed with `tip:`. `resetTips(ids, storage)` clears dismissals, and `useTip` returns `visible` and `dismiss`. The `TipStorage` type is exported.
+
+## Examples
+
+### Card
+
+An inline card tip with an icon, title, description and close button.
+
+<Example id="interactions-tip--card" width={880} height={400}>
+
+<Code lang="tsx" code={"import { PushPinIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { resetTips, Tip, TipCard, TipClose, TipContent, TipDescription, TipIcon, TipTitle } from \"@/components/interactions/tip\"\nimport { Icon } from \"@/components/ui/icon\"\n\nfunction CardExample() {\n  const [ready, setReady] = React.useState(false)\n\n  React.useEffect(() => {\n    resetTips([\"story-card\"]).then(() => setReady(true))\n  }, [])\n\n  if (!ready) return null\n\n  return (\n    <Tip id=\"story-card\">\n      <TipCard>\n        <TipIcon>\n          <Icon as={PushPinIcon} weight=\"duotone\" />\n        </TipIcon>\n        <TipContent>\n          <TipTitle>Pin your favorites</TipTitle>\n          <TipDescription>\n            Swipe right on a note to keep it at the top of the list.\n          </TipDescription>\n        </TipContent>\n        <TipClose />\n      </TipCard>\n    </Tip>\n  )\n}\n\nexport function TipCardExample() {\n  return (\n    <CardExample />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+<PropsTable props={[{"name":"storage","type":"TipStorage","default":"memoryStorage","description":"Adapter with `getItem` and `setItem` for remembering dismissals. Defaults to in-memory storage."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Tip
+
+One hint, identified by `id`.
+
+<PropsTable props={[{"name":"id","type":"string","required":true,"description":"Stable key used to remember the dismissal."},{"name":"delay","type":"number","default":"0","description":"Milliseconds to wait before showing. Defaults to `0`."},{"name":"onDismiss","type":"() => void","description":"Called when the tip is dismissed."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TipCard
+
+Renders the tip inline as a card.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TipAnchor
+
+The element the popover points at.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TipPopover
+
+Renders the tip as a popover next to the anchor.
+
+<PropsTable extends={["React.ComponentProps<typeof PopoverPrimitive.Popup>"]} props={[{"name":"side","type":"Side","default":"\"bottom\"","description":"Side of the anchor to show on. Defaults to `bottom`."},{"name":"align","type":"Align","default":"\"center\"","description":"Alignment against the anchor. Defaults to `center`."},{"name":"sideOffset","type":"number","default":"10","description":"Gap from the anchor. Defaults to `10`."},{"name":"portalHost","type":"string","description":"Name of a portal host to render into."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TipIcon
+
+A decorative icon slot.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TipContent
+
+Holds the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TipTitle
+
+The tip's heading.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TipDescription
+
+The tip's supporting text.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### TipClose
+
+A button that dismisses the tip.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `TipCard` has the `note` role.
+- `TipPopover` is non-modal, does not move focus, and is labelled by `TipTitle`.
+- `TipClose` is labelled `Dismiss tip`.
+- The icon is hidden from screen readers.
+
+## Notes
+
+- Cards use `bg-surface-secondary`; popovers use `bg-surface-raised` with a border that is stronger in dark mode, and are up to 320 points wide.
+- Animations respect the system reduce motion setting.
+- On iOS the popover renders in a full-window overlay so it appears above native screens.

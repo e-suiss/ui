@@ -1,0 +1,209 @@
+---
+title: Message
+description: "A chat message row that lays out an avatar, a group of bubbles, and an optional header and footer."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-message--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageExample() {\n  return (\n    <Message align=\"start\">\n      <MessageAvatar>\n        <Avatar>\n          <AvatarFallback>MK</AvatarFallback>\n        </Avatar>\n      </MessageAvatar>\n      <MessageContent>\n        <Bubble variant=\"muted\">\n          <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n        </Bubble>\n      </MessageContent>\n    </Message>\n  )\n}"} />
+
+</Example>
+
+`Message` is a horizontal `View` that places an avatar next to a column of bubbles. Its `align` prop puts the row on the leading (`start`) or trailing (`end`) side and passes the alignment to any `Bubble` inside through context.
+
+`MessageGroup` stacks several messages into a conversation. `MessageHeader` and `MessageFooter` hold small secondary text, such as a sender name or a timestamp.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/message.tsx`:
+
+<SourceFile path="uniwind/components/ui/message.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/message.tsx`:
+
+<SourceFile path="nativewind/components/ui/message.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+2. Copy the source into `components/ui/message.tsx`:
+
+<SourceFile path="stylesheet/components/ui/message.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Message.swift" />
+
+<SourceFile path="kotlin/components/Message.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from \"@/components/ui/message\""} />
+
+<Code lang="tsx" code={"<Message align=\"start\">\n  <MessageAvatar>\n    <Avatar>\n      <AvatarFallback>MK</AvatarFallback>\n    </Avatar>\n  </MessageAvatar>\n  <MessageContent>\n    <Bubble variant=\"muted\">\n      <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n    </Bubble>\n  </MessageContent>\n</Message>"} />
+
+Put a `MessageAvatar` and a `MessageContent` inside each `Message`, and place `Bubble` components, a `MessageHeader` and a `MessageFooter` in `MessageContent`.
+
+Plain strings in `MessageHeader` and `MessageFooter` are wrapped in `Text` for you, so you can pass text directly or mix it with an `Icon`.
+
+When `MessageContent` contains a `MessageFooter`, the avatar shifts up so it lines up with the last bubble instead of the footer.
+
+## Examples
+
+### Align end
+
+A message aligned to the trailing side, as for the current user.
+
+<Example id="components-message--align-end" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageAlignEndExample() {\n  return (\n    <Message align=\"end\">\n      <MessageContent>\n        <Bubble>\n          <BubbleContent>Yes, see you at noon.</BubbleContent>\n        </Bubble>\n      </MessageContent>\n    </Message>\n  )\n}"} />
+
+</Example>
+
+### With header and footer
+
+A message with a sender name above and a timestamp below.
+
+<Example id="components-message--with-header-and-footer" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\n\nexport function MessageWithHeaderAndFooterExample() {\n  return (\n    <Message align=\"start\">\n      <MessageAvatar>\n        <Avatar>\n          <AvatarFallback>JL</AvatarFallback>\n        </Avatar>\n      </MessageAvatar>\n      <MessageContent>\n        <MessageHeader>Jordan Lee</MessageHeader>\n        <Bubble variant=\"muted\">\n          <BubbleContent>\n            I pushed the updated designs to the shared folder.\n          </BubbleContent>\n        </Bubble>\n        <MessageFooter>9:41 AM</MessageFooter>\n      </MessageContent>\n    </Message>\n  )\n}"} />
+
+</Example>
+
+### Conversation
+
+A `MessageGroup` with an incoming and an outgoing message, including a read receipt footer.
+
+<Example id="components-message--conversation" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ChecksIcon } from \"phosphor-react-native\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup } from \"@/components/ui/message\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function MessageConversationExample() {\n  return (\n    <MessageGroup className=\"gap-4\">\n      <Message>\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>MK</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <Bubble variant=\"muted\">\n            <BubbleContent>Did the build pass?</BubbleContent>\n          </Bubble>\n          <Bubble variant=\"muted\">\n            <BubbleContent>I want to ship before the weekend.</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n      <Message align=\"end\">\n        <MessageContent>\n          <Bubble>\n            <BubbleContent>All green. Merging it now.</BubbleContent>\n          </Bubble>\n          <MessageFooter className=\"gap-1\">\n            <Icon as={ChecksIcon} className=\"text-accent\" />\n            <Text>Read 10:02 AM</Text>\n          </MessageFooter>\n        </MessageContent>\n      </Message>\n    </MessageGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### MessageGroup
+
+Vertical stack of messages.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"align","type":"MessageAlign","default":"\"start\"","description":"Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+<PropsTable extends={["React.ComponentProps<typeof BubbleGroup>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Messages are plain `View` and `Text` elements, so screen readers read the header, bubble text and footer in order.
+- Give avatars without visible text, such as images, an `accessibilityLabel`.
+
+## Notes
+
+- Header and footer text use `text-xs text-label-secondary`, with icons at `size-3.5`.
+- The avatar slot uses `bg-surface-secondary`.
+- Light and dark colors follow the system appearance.

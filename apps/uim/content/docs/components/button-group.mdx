@@ -1,0 +1,286 @@
+---
+title: Button Group
+description: "A row or column of related buttons joined into one control."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-button-group--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction MailMenuContent() {\n  return (\n    <DropdownMenuContent align=\"end\" className=\"w-52\">\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ListPlusIcon} className=\"size-4\" />\n          <Text>Mark as read</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={ArchiveIcon} className=\"size-4\" />\n          <Text>Archive</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ClockIcon} className=\"size-4\" />\n          <Text>Snooze</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CalendarPlusIcon} className=\"size-4\" />\n          <Text>Add to calendar</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={TagIcon} className=\"size-4\" />\n          <Text>Label as</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem variant=\"destructive\">\n          <Icon as={TrashIcon} className=\"size-4\" />\n          <Text>Trash</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n    </DropdownMenuContent>\n  )\n}\n\nexport function ButtonGroupExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Go back\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">\n          <Text>Archive</Text>\n        </Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">\n          <Text>Report</Text>\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">\n          <Text>Snooze</Text>\n        </Button>\n        <ButtonGroupSeparator />\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            accessibilityLabel=\"More options\"\n            render={<Button variant=\"secondary\" size=\"icon\" />}\n          >\n            <Icon as={DotsThreeIcon} />\n          </DropdownMenuTrigger>\n          <MailMenuContent />\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+`ButtonGroup` is a `View` with the `group` role that joins its children: only the outer ends keep their rounded corners and the shared borders collapse. It works with `Button` and with other controls such as inputs, selects and menu triggers. `ghost` and `plain` buttons are left unjoined.
+
+Nest groups to keep separate clusters in one row with a gap between them. `ButtonGroupSeparator` draws a divider between joined buttons, and `ButtonGroupText` shows a label or icon in the same pill shape.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button-group"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button-group --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add button-group --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/button-group.tsx`:
+
+<SourceFile path="uniwind/components/ui/button-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/button-group.tsx`:
+
+<SourceFile path="nativewind/components/ui/button-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/button-group.tsx`:
+
+<SourceFile path="stylesheet/components/ui/button-group.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from \"@/components/ui/button-group\""} />
+
+<Code lang="tsx" code={"<ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Go back\">\n      <Icon as={ArrowLeftIcon} />\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">\n      <Text>Archive</Text>\n    </Button>\n    <ButtonGroupSeparator />\n    <Button variant=\"secondary\">\n      <Text>Report</Text>\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">\n      <Text>Snooze</Text>\n    </Button>\n    <ButtonGroupSeparator />\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        accessibilityLabel=\"More options\"\n        render={<Button variant=\"secondary\" size=\"icon\" />}\n      >\n        <Icon as={DotsThreeIcon} />\n      </DropdownMenuTrigger>\n      <MailMenuContent />\n    </DropdownMenu>\n  </ButtonGroup>\n</ButtonGroup>"} />
+
+Set `orientation="vertical"` to stack the buttons. Use a separator between buttons of the same filled variant, such as in a split button, where there is no border to divide them.
+
+Give icon-only buttons an `accessibilityLabel`, and give the group one when its purpose is not clear from its contents.
+
+## Examples
+
+### Outline
+
+Nested groups of `outline` buttons.
+
+<Example id="components-button-group--outline" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction MailMenuContent() {\n  return (\n    <DropdownMenuContent align=\"end\" className=\"w-52\">\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ListPlusIcon} className=\"size-4\" />\n          <Text>Mark as read</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={ArchiveIcon} className=\"size-4\" />\n          <Text>Archive</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ClockIcon} className=\"size-4\" />\n          <Text>Snooze</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CalendarPlusIcon} className=\"size-4\" />\n          <Text>Add to calendar</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={TagIcon} className=\"size-4\" />\n          <Text>Label as</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem variant=\"destructive\">\n          <Icon as={TrashIcon} className=\"size-4\" />\n          <Text>Trash</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n    </DropdownMenuContent>\n  )\n}\n\nexport function ButtonGroupOutlineExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Go back\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Archive</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Report</Text>\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Snooze</Text>\n        </Button>\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            accessibilityLabel=\"More options\"\n            render={<Button variant=\"outline\" size=\"icon\" />}\n          >\n            <Icon as={DotsThreeIcon} />\n          </DropdownMenuTrigger>\n          <MailMenuContent />\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Orientation
+
+A vertical group of zoom buttons with a horizontal separator.
+
+<Example id="components-button-group--orientation" width={880} height={400}>
+
+<Code lang="tsx" code={"import { MinusIcon, PlusIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function ButtonGroupOrientationExample() {\n  return (\n    <ButtonGroup orientation=\"vertical\" accessibilityLabel=\"Media controls\">\n      <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Zoom in\">\n        <Icon as={PlusIcon} />\n      </Button>\n      <ButtonGroupSeparator orientation=\"horizontal\" />\n      <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Zoom out\">\n        <Icon as={MinusIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Groups at different button sizes.
+
+<Example id="components-button-group--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupSizesExample() {\n  return (\n    <View className=\"items-start gap-6\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Small</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Default</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Large</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Nested
+
+Groups inside a group, spaced apart.
+
+<Example id="components-button-group--nested" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupNestedExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        {[\"1\", \"2\", \"3\", \"4\", \"5\"].map((page) => (\n          <Button key={page} variant=\"outline\" size=\"sm\">\n            <Text>{page}</Text>\n          </Button>\n        ))}\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Previous\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Next\">\n          <Icon as={ArrowRightIcon} />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With separator
+
+Buttons divided by `ButtonGroupSeparator`.
+
+<Example id="components-button-group--with-separator" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CopyIcon, ShareIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithSeparatorExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"secondary\">\n        <Icon as={CopyIcon} />\n        <Text>Copy</Text>\n      </Button>\n      <ButtonGroupSeparator />\n      <Button variant=\"secondary\">\n        <Icon as={ShareIcon} />\n        <Text>Share</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Plain
+
+`plain` buttons, which stay unjoined.
+
+<Example id="components-button-group--plain" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon, ShareIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupPlainExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"plain\">\n        <Icon as={ArrowLeftIcon} />\n        <Text>Back</Text>\n      </Button>\n      <Button variant=\"plain\">\n        <Text>Forward</Text>\n        <Icon as={ArrowRightIcon} />\n      </Button>\n      <Button variant=\"plain\">\n        <Icon as={ShareIcon} />\n        <Text>Share</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Split button
+
+A main action with a joined icon button for more options.
+
+<Example id="components-button-group--split-button" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretDownIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupSplitButtonExample() {\n  return (\n    <ButtonGroup>\n      <Button>\n        <Text>Publish</Text>\n      </Button>\n      <ButtonGroupSeparator className=\"bg-on-accent/30\" />\n      <Button size=\"icon\" accessibilityLabel=\"More options\">\n        <Icon as={CaretDownIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With input
+
+An input joined to a search button.
+
+<Example id="components-button-group--with-input" width={880} height={400}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithInputExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <Input\n        accessibilityLabel=\"Search\"\n        placeholder=\"Search...\"\n        className=\"w-auto flex-1\"\n      />\n      <Button variant=\"secondary\" size=\"icon-lg\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With input group
+
+An input group joined with buttons.
+
+<Example id="components-button-group--with-input-group" width={880} height={400}>
+
+<Code lang="tsx" code={"import { MicrophoneIcon, PlusIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function ButtonGroupWithInputGroupExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup className=\"flex-1\">\n        <InputGroup className=\"flex-1\">\n          <InputGroupInput\n            accessibilityLabel=\"Message\"\n            placeholder=\"Send a message...\"\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton size=\"icon-xs\" accessibilityLabel=\"Voice mode\">\n              <Icon as={MicrophoneIcon} />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With text
+
+A `ButtonGroupText` URL prefix joined to an input and a save button.
+
+<Example id="components-button-group--with-text" width={880} height={400}>
+
+<Code lang="tsx" code={"import { LinkIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithTextExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroupText>\n        <Icon as={LinkIcon} />\n        <Text>https://</Text>\n      </ButtonGroupText>\n      <Input\n        accessibilityLabel=\"Website\"\n        placeholder=\"example.com\"\n        className=\"w-auto flex-1\"\n      />\n      <Button variant=\"secondary\" size=\"lg\">\n        <Text>Save</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With dropdown menu
+
+A button joined to a dropdown menu trigger.
+
+<Example id="components-button-group--with-dropdown-menu" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretDownIcon, CopyIcon, ShareIcon, UserCircleMinusIcon, WarningCircleIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithDropdownMenuExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">\n        <Text>Follow</Text>\n      </Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger\n          accessibilityLabel=\"More options\"\n          render={<Button variant=\"outline\" size=\"icon\" />}\n        >\n          <Icon as={CaretDownIcon} />\n        </DropdownMenuTrigger>\n        <DropdownMenuContent align=\"end\" className=\"w-56\">\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={WarningCircleIcon} className=\"size-4\" />\n              <Text>Mute conversation</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CopyIcon} className=\"size-4\" />\n              <Text>Copy link</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={ShareIcon} className=\"size-4\" />\n              <Text>Share conversation</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem variant=\"destructive\">\n              <Icon as={UserCircleMinusIcon} className=\"size-4\" />\n              <Text>Unfollow</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With select
+
+A select joined to an input for a currency amount.
+
+<Example id="components-button-group--with-select" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ArrowRightIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst currencies: Option[] = [\n  { value: \"usd\", label: \"$\" },\n  { value: \"eur\", label: \"€\" },\n  { value: \"gbp\", label: \"£\" },\n  { value: \"try\", label: \"₺\" },\n]\n\nfunction CurrencyExample() {\n  const [value, setValue] = React.useState<string | null>(\"usd\")\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroup className=\"flex-1\">\n        <Select items={currencies} value={value} onValueChange={setValue}>\n          <SelectTrigger accessibilityLabel=\"Currency\">\n            <SelectValue />\n          </SelectTrigger>\n          <SelectContent>\n            <SelectGroup>\n              {currencies.map((currency) => (\n                <SelectItem\n                  key={currency.value}\n                  value={currency.value}\n                  label={currency.label}\n                />\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <Input\n          accessibilityLabel=\"Amount\"\n          placeholder=\"10.00\"\n          inputMode=\"decimal\"\n          className=\"w-auto flex-1\"\n        />\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Send\">\n          <Icon as={ArrowRightIcon} />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}\n\nexport function ButtonGroupWithSelectExample() {\n  return (\n    <CurrencyExample />\n  )\n}"} />
+
+</Example>
+
+### With popover
+
+A button joined to a popover trigger.
+
+<Example id="components-button-group--with-popover" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretDownIcon, SparkleIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function ButtonGroupWithPopoverExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">\n        <Icon as={SparkleIcon} />\n        <Text>Assistant</Text>\n      </Button>\n      <Popover>\n        <PopoverTrigger\n          accessibilityLabel=\"Open popover\"\n          render={<Button variant=\"outline\" size=\"icon\" />}\n        >\n          <Icon as={CaretDownIcon} />\n        </PopoverTrigger>\n        <PopoverContent align=\"end\" className=\"w-80\">\n          <PopoverHeader>\n            <PopoverTitle>Start a new task</PopoverTitle>\n            <PopoverDescription>\n              Describe your task in natural language.\n            </PopoverDescription>\n          </PopoverHeader>\n          <Textarea\n            accessibilityLabel=\"Task description\"\n            placeholder=\"I need to...\"\n          />\n        </PopoverContent>\n      </Popover>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Pagination
+
+Page buttons with previous and next arrows.
+
+<Example id="components-button-group--pagination" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretLeftIcon, CaretRightIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupPaginationExample() {\n  return (\n    <ButtonGroup accessibilityLabel=\"Pagination\">\n      <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Previous page\">\n        <Icon as={CaretLeftIcon} />\n      </Button>\n      <Button variant=\"outline\">\n        <Text>1</Text>\n      </Button>\n      <Button variant=\"outline\" accessibilityState={{ selected: true }}>\n        <Text>2</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>3</Text>\n      </Button>\n      <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Next page\">\n        <Icon as={CaretRightIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ButtonGroup
+
+Container that joins its children.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"`horizontal` or `vertical`. Defaults to `horizontal`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Element to render instead of the default `View`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The container has the `group` role.
+- Each button keeps its own role and state.
+- Icon-only buttons need an `accessibilityLabel`.
+
+## Notes
+
+- Uses `bg-control` for `ButtonGroupText` and a translucent label color for separators; light and dark follow the system appearance.

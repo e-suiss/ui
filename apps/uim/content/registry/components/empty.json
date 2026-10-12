@@ -1,0 +1,23 @@
+{
+  "description": "A centered placeholder for screens and lists that have no content yet.",
+  "overview": "`Empty` is a centered column that fills the available space and holds an `EmptyHeader` with optional `EmptyMedia`, an `EmptyTitle` and an `EmptyDescription`, followed by `EmptyContent` for actions. Text is centered and the header and content are limited to a readable width.\n\nUse it for empty lists, search results with no matches and first-run screens.",
+  "usage": "`EmptyMedia` has two variants: `default` shows its child as is, such as an illustration, and `icon` puts an `Icon` in a small rounded tile. Put buttons or links in `EmptyContent`.\n\nAdd a background class such as `bg-surface-secondary` to `Empty` for a filled panel.",
+  "examples": {
+    "Muted": "A filled panel with only a title and description."
+  },
+  "parts": {
+    "Empty": "Centered container.",
+    "EmptyHeader": "Column for media, title and description.",
+    "EmptyMedia": "Decorative icon or illustration.",
+    "EmptyTitle": "Heading.",
+    "EmptyDescription": "Supporting text.",
+    "EmptyContent": "Area for actions."
+  },
+  "props": {
+    "EmptyMedia": {
+      "variant": "`default` or `icon`."
+    }
+  },
+  "accessibility": "- `EmptyTitle` has the `heading` role.\n- `EmptyMedia` is hidden from screen readers, so the title and description must carry the message.",
+  "notes": "- Uses `bg-surface-secondary`, `text-label` and `text-label-secondary` tokens; light and dark follow the system appearance."
+}

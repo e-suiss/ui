@@ -1,0 +1,102 @@
+---
+title: Dash Store
+description: "A store sales dashboard with a range switcher, stat tiles, a daily bar chart, filtered recent orders and a tab bar."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-dash-store--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/dash-store.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Header`, `DropdownMenu` for picking the store, `ToggleGroup`, the `BarChart` from `Chart`, `Chip` filters, `Avatar`, `Item` rows and `TabBar`. The bar chart compares online and in-store sales per day, and pressing a day highlights it and shows its total. Order status chips filter the list.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-store"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-store --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-store --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-store.tsx`:
+
+<SourceFile path="uniwind/components/blocks/dash-store.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-store.tsx`:
+
+<SourceFile path="nativewind/components/blocks/dash-store.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-store.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/dash-store.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/DashStore.swift" />
+
+<SourceFile path="kotlin/blocks/DashStore.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DashStore } from \"@/components/blocks/dash-store\""} />
+
+<Code lang="tsx" code={"<DashStore />"} />
+
+Replace `STORES`, `ranges`, `week`, `orders` and `filters` with your store data. Pass `onRangeChange`, `onFilterChange`, `onStoreChange`, `onOrderPress` and `onNavigate` to react to each control.

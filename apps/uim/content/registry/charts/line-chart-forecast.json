@@ -1,0 +1,5 @@
+{
+  "description": "A twelve-month line with actual values in solid and a forecast in dashed, over a shaded future range.",
+  "overview": "Two series share one axis: `actual` fills the first nine months and `forecast` continues from September, drawn with `strokeDasharray`. A `ReferenceArea` shades September to December to mark the forecast period. Missing values are `null`, so each line stops where its data ends.",
+  "usage": "Replace the `actual` and `forecast` arrays; the forecast starts at the index set in `chartData`. Move the `ReferenceArea` `x1` and `x2` to match your forecast range. The component takes no props."
+}

@@ -1,0 +1,192 @@
+---
+title: Accordion
+description: "A vertical stack of headings that each expand to reveal a section of content."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-accordion--open-by-default" width={880} height={421}>
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionOpenByDefaultExample() {\n  return (\n    <Accordion defaultValue={[\"item-2\"]}>\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
+
+</Example>
+
+`Accordion` groups `AccordionItem`s, each with an `AccordionTrigger` and an `AccordionContent` panel. The root and items are Reanimated views with a layout transition, so items below move smoothly as a panel opens or closes, and the trigger's caret rotates as it opens.
+
+The `default` variant draws items on the page background separated by hairlines. The `filled` variant puts the whole list on a rounded secondary surface, which suits grouped settings or FAQ cards.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add accordion"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add accordion --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add accordion --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/accordion.tsx`:
+
+<SourceFile path="uniwind/components/ui/accordion.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/accordion.tsx`:
+
+<SourceFile path="nativewind/components/ui/accordion.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/accordion.tsx`:
+
+<SourceFile path="stylesheet/components/ui/accordion.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Accordion.swift" />
+
+<SourceFile path="kotlin/components/Accordion.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\""} />
+
+<Code lang="tsx" code={"<Accordion defaultValue={[\"item-2\"]}>\n  <AccordionItems />\n</Accordion>"} />
+
+Give each `AccordionItem` a `value`. By default only one item is open at a time; set `multiple` to let several stay open.
+
+Use `defaultValue` (an array of item values) for uncontrolled state, or `value` with `onValueChange` to control it. Set `disabled` on the root or on a single item to block toggling, and `keepMounted` to keep closed panels mounted.
+
+`accordionVariants` is also exported if you need the classes elsewhere.
+
+## Examples
+
+### Default
+
+<Example id="components-accordion--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionExample() {\n  return (\n    <Accordion>\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
+
+</Example>
+
+### Filled
+
+The `filled` variant on a rounded secondary surface.
+
+<Example id="components-accordion--filled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionFilledExample() {\n  return (\n    <Accordion variant=\"filled\">\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
+
+</Example>
+
+### Multiple
+
+A controlled accordion with `multiple`, so several items stay open.
+
+<Example id="components-accordion--multiple" width={880} height={448}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nfunction MultipleDemo() {\n  const [value, setValue] = React.useState<string[]>([\"item-1\", \"item-3\"])\n  return (\n    <Accordion multiple value={value} onValueChange={setValue}>\n      <AccordionItems />\n    </Accordion>\n  )\n}\n\nexport function AccordionMultipleExample() {\n  return (\n    <MultipleDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Root>"]} props={[{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"`default` or `filled`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AccordionTrigger
+
+Pressable heading row with a rotating caret.
+
+<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Trigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AccordionContent
+
+Panel shown while the item is open; fades out upward on close.
+
+<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Panel>"]} props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The header row has the `header` role, and the trigger has the `button` role with `expanded` and `disabled` accessibility state.
+- Closed panels are hidden from VoiceOver and TalkBack.
+- A disabled trigger uses a dimmed label color.
+
+## Notes
+
+- The trigger label underlines while pressed.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-surface-secondary`, `border-separator` and `text-label` tokens; light and dark follow the system appearance.

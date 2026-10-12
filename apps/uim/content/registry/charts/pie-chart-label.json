@@ -1,0 +1,5 @@
+{
+  "description": "A pie chart with each device name drawn outside its slice on a connecting line.",
+  "overview": "A `PieChart` with a smaller radius to leave room for labels. `chartData` holds one record per device with a `users` count. The `label` callback reads each slice name from `chartConfig`, and `labelLine` draws the connector. Pressing a slice shows a tooltip.",
+  "usage": "Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props."
+}

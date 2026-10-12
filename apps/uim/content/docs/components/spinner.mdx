@@ -1,0 +1,142 @@
+---
+title: Spinner
+description: "A loading indicator built on the native activity indicator, at any size and color."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-spinner--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
+
+</Example>
+
+`Spinner` wraps the native `ActivityIndicator` in a square `View`. The indicator is scaled from its native small size to the `size` you pass, so it can match text and icon sizes. Its color is set through a class.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add spinner"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add spinner --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add spinner --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Copy the source into `components/ui/spinner.tsx`:
+
+<SourceFile path="uniwind/components/ui/spinner.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+
+2. Copy the source into `components/ui/spinner.tsx`:
+
+<SourceFile path="nativewind/components/ui/spinner.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Copy the source into `components/ui/spinner.tsx`:
+
+<SourceFile path="stylesheet/components/ui/spinner.tsx" />
+
+2. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Spinner.swift" />
+
+<SourceFile path="kotlin/components/Spinner.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\""} />
+
+<Code lang="tsx" code={"<Spinner />"} />
+
+Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-accent` or `accent-danger`. Inside a button, use `accent-on-accent` on the `default` variant so the spinner matches the label.
+
+## Examples
+
+### Sizes
+
+Spinners at 12, 16, 24 and 32 points.
+
+<Example id="components-spinner--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={12} />\n      <Spinner />\n      <Spinner size={24} />\n      <Spinner size={32} />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Colors
+
+Spinners in the label, accent and danger colors.
+
+<Example id="components-spinner--colors" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={24} colorClassName=\"accent-label\" />\n      <Spinner size={24} colorClassName=\"accent-accent\" />\n      <Spinner size={24} colorClassName=\"accent-danger\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### In button
+
+Spinners inside disabled buttons next to a label.
+
+<Example id="components-spinner--in-button" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Spinner colorClassName=\"accent-on-accent\" />\n        <Text>Saving</Text>\n      </Button>\n      <Button variant=\"secondary\" disabled>\n        <Spinner />\n        <Text>Loading</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Spinner
+
+<PropsTable extends={["React.ComponentProps<typeof ActivityIndicator>"]} props={[{"name":"size","type":"number","default":"16","description":"Width and height in points. Defaults to `16`."},{"name":"colorClassName","type":"string","default":"\"accent-label-secondary\"","description":"Class that sets the indicator color. Defaults to `accent-label-secondary`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The wrapper has `role="progressbar"`, is `accessible`, and sets `busy: true` in `accessibilityState`.
+- It is announced as `"Loading"` unless you pass another `accessibilityLabel`.
+
+## Notes
+
+- The default color uses the `label-secondary` token.
+- The look of the indicator comes from the platform's native activity indicator, so it differs between iOS and Android.

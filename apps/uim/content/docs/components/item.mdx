@@ -1,0 +1,230 @@
+---
+title: Item
+description: "A flexible row for lists and settings, with slots for media, a title, a description and trailing actions."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-item--default" width={880} height={599}>
+
+<Code lang="tsx" code={"import { CaretRightIcon, ShieldCheckIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemMedia, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ItemExample() {\n  return (\n    <View className=\"gap-4\">\n      <Item variant=\"outline\">\n        <ItemContent>\n          <ItemTitle>Basic item</ItemTitle>\n          <ItemDescription>\n            A simple item with a title and a description.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button variant=\"outline\" size=\"sm\">\n            <Text>Action</Text>\n          </Button>\n        </ItemActions>\n      </Item>\n      <Item variant=\"muted\" size=\"sm\" onPress={() => {}}>\n        <ItemMedia variant=\"icon\">\n          <Icon as={ShieldCheckIcon} />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Your profile has been verified.</ItemTitle>\n        </ItemContent>\n        <ItemActions>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n      <Item variant=\"outline\" size=\"xs\">\n        <ItemHeader>\n          <ItemTitle>Header</ItemTitle>\n          <Badge>\n            <Text>New</Text>\n          </Badge>\n        </ItemHeader>\n        <ItemContent>\n          <ItemDescription>\n            Items can carry a header and a footer.\n          </ItemDescription>\n        </ItemContent>\n        <ItemFooter>\n          <Text className=\"text-sm text-label-secondary\">Footer</Text>\n        </ItemFooter>\n      </Item>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Item` is a row that renders as a `Pressable` with the `button` role when it has `onPress` or `onLongPress`, and as a plain `View` with the `listitem` role otherwise. It has three variants (`default`, `outline`, `muted`) and three sizes (`default`, `sm`, `xs`).
+
+`ItemGroup` stacks items as a list. Its `inset` variant joins them into one rounded card with square inner corners, which suits settings screens; add `ItemSeparator` between rows to draw an inset divider.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add item"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add item --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add item --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/item.tsx`:
+
+<SourceFile path="uniwind/components/ui/item.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/item.tsx`:
+
+<SourceFile path="nativewind/components/ui/item.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/item.tsx`:
+
+<SourceFile path="stylesheet/components/ui/item.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Item.swift" />
+
+<SourceFile path="kotlin/components/Item.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from \"@/components/ui/item\""} />
+
+<Code lang="tsx" code={"<View className=\"gap-4\">\n  <Item variant=\"outline\">\n    <ItemContent>\n      <ItemTitle>Basic item</ItemTitle>\n      <ItemDescription>\n        A simple item with a title and a description.\n      </ItemDescription>\n    </ItemContent>\n    <ItemActions>\n      <Button variant=\"outline\" size=\"sm\">\n        <Text>Action</Text>\n      </Button>\n    </ItemActions>\n  </Item>\n  <Item variant=\"muted\" size=\"sm\" onPress={() => {}}>\n    <ItemMedia variant=\"icon\">\n      <Icon as={ShieldCheckIcon} />\n    </ItemMedia>\n    <ItemContent>\n      <ItemTitle>Your profile has been verified.</ItemTitle>\n    </ItemContent>\n    <ItemActions>\n      <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n    </ItemActions>\n  </Item>\n  <Item variant=\"outline\" size=\"xs\">\n    <ItemHeader>\n      <ItemTitle>Header</ItemTitle>\n      <Badge>\n        <Text>New</Text>\n      </Badge>\n    </ItemHeader>\n    <ItemContent>\n      <ItemDescription>\n        Items can carry a header and a footer.\n      </ItemDescription>\n    </ItemContent>\n    <ItemFooter>\n      <Text className=\"text-sm text-label-secondary\">Footer</Text>\n    </ItemFooter>\n  </Item>\n</View>"} />
+
+Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
+
+`ItemMedia` with `variant="icon"` sizes icons to 16 points; `variant="image"` makes a square thumbnail that shrinks with the item size. `ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`. Text inside `ItemActions` picks up a secondary color.
+
+Pass `render` to render the row as another component while keeping the item styles.
+
+## Examples
+
+### Inset group
+
+Pressable rows in an inset group, with colored icon tiles, separators and trailing chevrons.
+
+<Example id="components-item--inset-group" width={880} height={400}>
+
+<Code lang="tsx" code={"import { BellIcon, CaretRightIcon, WifiHighIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ItemInsetGroupExample() {\n  return (\n    <ItemGroup variant=\"inset\">\n      <Item onPress={() => {}}>\n        <ItemMedia\n          variant=\"image\"\n          className=\"bg-blue items-center justify-center\"\n        >\n          <Icon as={WifiHighIcon} className=\"size-5 text-on-accent\" />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Wi-Fi</ItemTitle>\n        </ItemContent>\n        <ItemActions>\n          <Text>Home</Text>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n      <ItemSeparator />\n      <Item onPress={() => {}}>\n        <ItemMedia\n          variant=\"image\"\n          className=\"bg-red items-center justify-center\"\n        >\n          <Icon as={BellIcon} className=\"size-5 text-on-accent\" />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Notifications</ItemTitle>\n          <ItemDescription>Banners, sounds, badges</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n    </ItemGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ItemGroup
+
+List container for items.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`default` stacks items with a gap; `inset` joins them into one rounded card."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+<PropsTable extends={["ItemProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"icon\" | \"image\"","default":"\"default\"","description":"`default`, `icon` for 16-point icons, or `image` for a square thumbnail."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ItemContent
+
+Flexible column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ItemTitle
+
+Single-line title.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ItemHeader
+
+Full-width row above the content.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ItemFooter
+
+Full-width row below the content.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `ItemGroup` has the `list` role.
+- A static `Item` has the `listitem` role; an item with `onPress` or `onLongPress` has the `button` role and shows a pressed background.
+- `disabled` dims the item and blocks presses.
+- `ItemSeparator` is hidden from VoiceOver and TalkBack.
+
+## Notes
+
+- Uses `bg-surface-secondary` for inset groups and the `muted` variant, `border-separator` for `outline`, and `bg-item-pressed` for the pressed state.
+- Colors follow the system appearance.

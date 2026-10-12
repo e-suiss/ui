@@ -1,0 +1,171 @@
+---
+title: Search Reveal
+description: "A search field hidden above a scrolling list that appears when the user pulls the list down."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-search-reveal--default" width={880} height={1720}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealExample() {\n  return (\n    <NotesExample count={12} />\n  )\n}"} />
+
+</Example>
+
+`SearchReveal` is a scroll view that starts scrolled just past its `SearchRevealField`, so the list shows first and the field is out of view. Pulling down reveals the field, which fades in as it appears, and the scroll snaps either fully open or fully hidden.
+
+Focusing the field scrolls it into view. While there is a query, snapping is turned off so the field stays visible. Use it for notes, mail or settings lists where search should be close but not take space.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add search-reveal"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add search-reveal --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add search-reveal --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="uniwind/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="nativewind/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/SearchReveal.swift" />
+
+<SourceFile path="kotlin/interactions/SearchReveal.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SearchReveal, SearchRevealField, SearchRevealContent } from \"@/components/interactions/search-reveal\""} />
+
+<Code lang="tsx" code={"<NotesExample count={12} />"} />
+
+Put a `SearchRevealField` first, then the list inside a `SearchRevealContent`, all inside `SearchReveal`. The field is controlled: pass `value` and update it in `onValueChange`, then filter your list with it.
+
+`SearchRevealContent` is at least as tall as the scroll view, so the field can be hidden even when the list is short. Other `ScrollView` props, except `onScroll`, pass through to `SearchReveal`, and other `TextInput` props pass through to the field.
+
+## Examples
+
+### Short list
+
+A three-item list that still hides the field.
+
+<Example id="interactions-search-reveal--short-list" width={880} height={1720}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealShortListExample() {\n  return (\n    <NotesExample count={3} />\n  )\n}"} />
+
+</Example>
+
+### With query
+
+Starts with a query, so the field is visible and the list is filtered.
+
+<Example id="interactions-search-reveal--with-query" width={880} height={1720}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealWithQueryExample() {\n  return (\n    <NotesExample count={12} defaultQuery=\"porto\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+<PropsTable extends={["ScrollViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchRevealField
+
+The search input with a clear button.
+
+<PropsTable extends={["React.ComponentProps<typeof TextInput>"]} props={[{"name":"value","type":"string","required":true,"description":"The current query."},{"name":"onValueChange","type":"(value: string) => void","required":true,"description":"Called with the new query."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The input has the `searchbox` role and is labelled by `placeholder`.
+- The clear button is labelled `Clear search` and returns focus to the input.
+
+## Notes
+
+- The field uses `bg-control` with `label-secondary` placeholder and icons.
+- Autocorrect and autocapitalization are off, and the return key reads `search`.
+- Taps on the list work while the keyboard is open.

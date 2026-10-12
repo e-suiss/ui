@@ -1,0 +1,102 @@
+---
+title: Log Activity
+description: "An admin activity log grouped by day, with type filters, expandable before and after values and an Export button."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-log-activity--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/log-activity.tsx" fold={false} />
+
+</Example>
+
+An admin screen with a collapsing `Header` and large title, a scrollable `ChipGroup` to filter by event type (Price, Content, Security, Order, User), and events grouped under day headings. Events that carry a change expand with `Collapsible` to show the before and after values. A `TabBar` at the bottom switches between Users, Roles, Activity and Settings; only Activity has content in the sample.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-activity"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-activity --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add log-activity --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-activity.tsx`:
+
+<SourceFile path="uniwind/components/blocks/log-activity.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-activity.tsx`:
+
+<SourceFile path="nativewind/components/blocks/log-activity.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/log-activity.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/log-activity.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/LogActivity.swift" />
+
+<SourceFile path="kotlin/blocks/LogActivity.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LogActivity } from \"@/components/blocks/log-activity\""} />
+
+<Code lang="tsx" code={"<LogActivity />"} />
+
+Replace `EVENTS` with your audit log and `KINDS` with your event types. Wire `onFilterChange`, `onExport` (receives the current filter) and `onNavigate` (receives the selected tab) to your app.

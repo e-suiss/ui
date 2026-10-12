@@ -1,0 +1,98 @@
+---
+title: Line Chart Interactive
+description: "A monthly temperature chart for several cities with city toggles and an average, high and low switch."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--interactive" width={880} height={1373}>
+
+<SourceFile path="uniwind/components/charts/line-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+One line per visible city across twelve months. A `ToggleGroup` switches between average, high and low temperatures, and a row of `Toggle` chips shows or hides each city, keeping at least one on. Touching the plot reports the month through `onActiveIndexChange`, and the summary under the chart switches from each city's range to its value for that month.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/charts/line-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartInteractive.swift" />
+
+<SourceFile path="kotlin/charts/LineChartInteractive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartInteractive } from \"@/components/charts/line-chart-interactive\""} />
+
+<Code lang="tsx" code={"<LineChartInteractive />"} />
+
+Replace `CITIES` with your series and monthly values, and add a matching entry to `chartConfig` and `SWATCH` for each. The high and low values are derived in `temperature()`, so replace that with real data. The component takes no props.

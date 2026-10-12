@@ -1,0 +1,5 @@
+{
+  "description": "A health summary with pinned metric cards, sparklines and drill-down sections for activity, heart, sleep and mobility.",
+  "overview": "Composes `Screen`, `Header` with a back button, `Avatar`, `Button`, `Icon` and `Item` groups, with sparklines drawn using `react-native-svg`. The list opens a section of metric cards, and the Summary section has an Edit mode for pinning and unpinning cards.",
+  "usage": "Replace `METRICS` and `CATEGORIES` with your own readings. Pass `onMetricPress` to open a metric and `onPinnedChange` to store the pinned list."
+}

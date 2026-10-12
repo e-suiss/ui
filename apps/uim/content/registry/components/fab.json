@@ -1,0 +1,33 @@
+{
+  "description": "A floating action button pinned to the bottom corner, with an optional label and speed-dial actions.",
+  "overview": "`Fab` is a round accent `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.\n\nWhen it has `FabAction` children, pressing it opens a speed dial: a scrim dims the screen and the actions rise above the button one after another. The plus icon rotates 45 degrees into a close mark; other icons swap to an X.",
+  "usage": "Use the default plus icon or pass any Phosphor icon to `icon`. Give an icon-only button an `accessibilityLabel`.\n\nFor a speed dial, add `FabAction` children with an `icon` and an optional text label. Pressing an action calls its `onPress` and closes the dial. Tapping the scrim or pressing the Android back button also closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it.\n\nPass `portalHost` to render into a named portal host.",
+  "examples": {
+    "Large": "The `lg` size with a custom icon.",
+    "Extended": "A label beside the icon.",
+    "LargeExtended": "A large extended button.",
+    "SpeedDialOpen": "A speed dial that starts open.",
+    "SpeedDialClosed": "A speed dial that opens on press.",
+    "Controlled": "A speed dial controlled with `open` and `onOpenChange`."
+  },
+  "parts": {
+    "Fab": "Floating button that also hosts the speed dial.",
+    "FabAction": "One action in the speed dial, with an icon and optional label."
+  },
+  "props": {
+    "Fab": {
+      "size": "`default` or `lg`.",
+      "icon": "Phosphor icon component. Defaults to a plus.",
+      "label": "Text or node shown beside the icon.",
+      "open": "Controlled speed dial state.",
+      "defaultOpen": "Initial speed dial state.",
+      "onOpenChange": "Called when the speed dial opens or closes.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "FabAction": {
+      "icon": "Phosphor icon component for the action."
+    }
+  },
+  "accessibility": "- The button and each action have the `button` role.\n- With actions, the button reports its `expanded` state.\n- The VoiceOver escape gesture and the Android back button close the speed dial.\n- The scrim is hidden from screen readers.",
+  "notes": "- Position follows the safe-area insets and flips sides in right-to-left layouts.\n- Animations respect the system Reduce Motion setting.\n- Uses `bg-accent`, `bg-surface-raised` and `bg-scrim` tokens; actions use a secondary surface in dark mode."
+}

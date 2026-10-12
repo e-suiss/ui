@@ -1,0 +1,188 @@
+---
+title: Checkbox
+description: "A small box that toggles an option on or off, with an indeterminate state."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-checkbox--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\n\nfunction CheckboxDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Checkbox checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function CheckboxExample() {\n  return (\n    <CheckboxDemo />\n  )\n}"} />
+
+</Example>
+
+`Checkbox` is a `Pressable` with the `checkbox` role that shows a check icon when checked and a minus icon when `indeterminate`. It has an enlarged hit area around the box so it is easy to tap.
+
+Use it for options that can be combined, such as terms acceptance or multi-select lists. For a single on/off setting that applies right away, use Switch.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add checkbox"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add checkbox --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add checkbox --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="uniwind/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="nativewind/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="stylesheet/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\""} />
+
+<Code lang="tsx" code={"<CheckboxDemo />"} />
+
+Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected.
+
+Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a danger border.
+
+## Examples
+
+### Checked
+
+Starts checked.
+
+<Example id="components-checkbox--checked" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\n\nfunction CheckboxDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Checkbox checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function CheckboxCheckedExample() {\n  return (\n    <CheckboxDemo initial />\n  )\n}"} />
+
+</Example>
+
+### With label
+
+Linked to a `Label` that also toggles it.
+
+<Example id="components-checkbox--with-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nfunction WithLabelDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        accessibilityLabelledBy=\"terms\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label nativeID=\"terms\" onPress={() => setChecked((value) => !value)}>\n        Accept terms and conditions\n      </Label>\n    </View>\n  )\n}\n\nexport function CheckboxWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+</Example>
+
+### With description
+
+A label with a supporting description.
+
+<Example id="components-checkbox--with-description" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction WithDescriptionDemo() {\n  const [checked, setChecked] = React.useState(true)\n  return (\n    <View className=\"flex-row items-start gap-3\">\n      <Checkbox\n        accessibilityLabelledBy=\"notifications\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <View className=\"flex-1 gap-1.5\">\n        <Label\n          nativeID=\"notifications\"\n          onPress={() => setChecked((value) => !value)}\n        >\n          Enable notifications\n        </Label>\n        <Text className=\"text-sm text-label-secondary\">\n          You can enable or disable notifications at any time.\n        </Text>\n      </View>\n    </View>\n  )\n}\n\nexport function CheckboxWithDescriptionExample() {\n  return (\n    <WithDescriptionDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled checkboxes in both states.
+
+<Example id="components-checkbox--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked={false} onCheckedChange={() => {}} />\n        <Label disabled>Unchecked</Label>\n      </View>\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked onCheckedChange={() => {}} />\n        <Label disabled>Checked</Label>\n      </View>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Indeterminate
+
+A select-all checkbox in the indeterminate state.
+
+<Example id="components-checkbox--indeterminate" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxIndeterminateExample() {\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        indeterminate\n        checked={false}\n        onCheckedChange={() => {}}\n        accessibilityLabelledBy=\"select-all\"\n      />\n      <Label nativeID=\"select-all\">Select all</Label>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+A required checkbox with the `invalid` border.
+
+<Example id="components-checkbox--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nfunction InvalidDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        invalid={!checked}\n        accessibilityLabelledBy=\"terms-invalid\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label\n        nativeID=\"terms-invalid\"\n        onPress={() => setChecked((value) => !value)}\n      >\n        Accept terms and conditions\n      </Label>\n    </View>\n  )\n}\n\nexport function CheckboxInvalidExample() {\n  return (\n    <InvalidDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Checkbox
+
+<PropsTable extends={["React.ComponentProps<typeof CheckboxPrimitive.Root>"]} props={[{"name":"iconClassName","type":"string","description":"Extra classes for the check icon."},{"name":"invalid","type":"boolean","description":"Shows a danger-colored border."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Has the `checkbox` role with `checked` (or `mixed` when indeterminate) and `disabled` state.
+- Link it to a visible label with `accessibilityLabelledBy`, or give it an `accessibilityLabel`.
+
+## Notes
+
+- Uses `bg-accent` when checked and `bg-surface` with a translucent border when unchecked; in dark mode the unchecked box is filled instead of outlined.
+- Light and dark follow the system appearance.

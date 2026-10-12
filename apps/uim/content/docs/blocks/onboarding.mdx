@@ -1,0 +1,102 @@
+---
+title: Onboarding
+description: "A paged onboarding flow with illustrations, a page indicator and Continue and Skip buttons."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-onboarding--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/onboarding.tsx" fold={false} />
+
+</Example>
+
+A `Carousel` of pages, each with an icon illustration, a title and a description. A `BottomBar` holds a `PageIndicator` you can tap to jump to a page, a Continue `Button` that moves to the next page and becomes Get started on the last, and a Skip button.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add onboarding"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add onboarding --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add onboarding --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Carousel](/docs/components/carousel), [Icon](/docs/components/icon), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Carousel](/docs/components/carousel), [Icon](/docs/components/icon), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/onboarding.tsx`:
+
+<SourceFile path="uniwind/components/blocks/onboarding.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Carousel](/docs/components/carousel), [Icon](/docs/components/icon), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/onboarding.tsx`:
+
+<SourceFile path="nativewind/components/blocks/onboarding.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Carousel](/docs/components/carousel), [Icon](/docs/components/icon), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/onboarding.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/onboarding.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/Onboarding.swift" />
+
+<SourceFile path="kotlin/blocks/Onboarding.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Onboarding } from \"@/components/blocks/onboarding\""} />
+
+<Code lang="tsx" code={"<Onboarding />"} />
+
+Pass your own `pages` (each with a `title`, `description` and optional `illustration`), or edit `DEFAULT_PAGES`. `onDone` is called from Get started and Skip.

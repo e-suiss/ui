@@ -1,0 +1,241 @@
+---
+title: Dropdown Menu
+description: "A menu of actions or options that opens from a trigger button."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-dropdown-menu--open-by-default" width={880} height={731}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu defaultOpen>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>My account</DropdownMenuLabel>\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={UserIcon} className=\"size-4\" />\n              <Text>Profile</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CreditCardIcon} className=\"size-4\" />\n              <Text>Billing</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={GearIcon} className=\"size-4\" />\n              <Text>Settings</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>\n              <View className=\"flex-row items-center gap-2\">\n                <Icon as={UserPlusIcon} className=\"size-4\" />\n                <Text>Invite users</Text>\n              </View>\n            </DropdownMenuSubTrigger>\n            <DropdownMenuSubContent>\n              <DropdownMenuItem>\n                <Icon as={EnvelopeIcon} className=\"size-4\" />\n                <Text>Email</Text>\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <Icon as={ChatCircleIcon} className=\"size-4\" />\n                <Text>Message</Text>\n              </DropdownMenuItem>\n            </DropdownMenuSubContent>\n          </DropdownMenuSub>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem variant=\"destructive\">\n            <Icon as={SignOutIcon} className=\"size-4\" />\n            <Text>Log out</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`DropdownMenu` opens `DropdownMenuContent` next to a `DropdownMenuTrigger` when it is pressed. The content renders through a portal (inside a full-window overlay on iOS) as a raised, rounded card positioned below the trigger by default.
+
+Items can be plain actions, checkbox items, radio items in a group, or a submenu. `DropdownMenuSubContent` expands in place under its trigger, and the caret turns to point down while it is open. For a menu that opens on long press at the touch point, use Context Menu.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dropdown-menu"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dropdown-menu --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dropdown-menu --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="uniwind/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="nativewind/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="stylesheet/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/DropdownMenu.swift" />
+
+<SourceFile path="kotlin/components/DropdownMenu.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DropdownMenuContent, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator } from \"@/components/ui/dropdown-menu\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <DropdownMenu defaultOpen>\n    <OpenButton />\n    <DropdownMenuContent className=\"w-56\" align=\"start\">\n      <DropdownMenuLabel>My account</DropdownMenuLabel>\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={UserIcon} className=\"size-4\" />\n          <Text>Profile</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CreditCardIcon} className=\"size-4\" />\n          <Text>Billing</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={GearIcon} className=\"size-4\" />\n          <Text>Settings</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuSub>\n        <DropdownMenuSubTrigger>\n          <View className=\"flex-row items-center gap-2\">\n            <Icon as={UserPlusIcon} className=\"size-4\" />\n            <Text>Invite users</Text>\n          </View>\n        </DropdownMenuSubTrigger>\n        <DropdownMenuSubContent>\n          <DropdownMenuItem>\n            <Icon as={EnvelopeIcon} className=\"size-4\" />\n            <Text>Email</Text>\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <Icon as={ChatCircleIcon} className=\"size-4\" />\n            <Text>Message</Text>\n          </DropdownMenuItem>\n        </DropdownMenuSubContent>\n      </DropdownMenuSub>\n      <DropdownMenuSeparator />\n      <DropdownMenuItem variant=\"destructive\">\n        <Icon as={SignOutIcon} className=\"size-4\" />\n        <Text>Log out</Text>\n      </DropdownMenuItem>\n    </DropdownMenuContent>\n  </DropdownMenu>\n</View>"} />
+
+Use `render` on `DropdownMenuTrigger` to render it as a `Button`. Items close the menu when pressed unless `closeOnPress={false}`.
+
+Use `DropdownMenuCheckboxItem` with `checked` and `onCheckedChange`, and `DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup` with `value` and `onValueChange`. Group items with `DropdownMenuGroup` and `DropdownMenuLabel`, and divide sections with `DropdownMenuSeparator`.
+
+Set `variant="destructive"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one. Position the content with `side`, `align`, `sideOffset` and `alignOffset`.
+
+## Examples
+
+### Default
+
+<Example id="components-dropdown-menu--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>My account</DropdownMenuLabel>\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={UserIcon} className=\"size-4\" />\n              <Text>Profile</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CreditCardIcon} className=\"size-4\" />\n              <Text>Billing</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={GearIcon} className=\"size-4\" />\n              <Text>Settings</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>\n              <View className=\"flex-row items-center gap-2\">\n                <Icon as={UserPlusIcon} className=\"size-4\" />\n                <Text>Invite users</Text>\n              </View>\n            </DropdownMenuSubTrigger>\n            <DropdownMenuSubContent>\n              <DropdownMenuItem>\n                <Icon as={EnvelopeIcon} className=\"size-4\" />\n                <Text>Email</Text>\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <Icon as={ChatCircleIcon} className=\"size-4\" />\n                <Text>Message</Text>\n              </DropdownMenuItem>\n            </DropdownMenuSubContent>\n          </DropdownMenuSub>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem variant=\"destructive\">\n            <Icon as={SignOutIcon} className=\"size-4\" />\n            <Text>Log out</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Checkboxes
+
+Checkbox items that toggle panels on and off.
+
+<Example id="components-dropdown-menu--checkboxes" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nfunction CheckboxesDemo() {\n  const [statusBar, setStatusBar] = React.useState(true)\n  const [activityBar, setActivityBar] = React.useState(false)\n  const [panel, setPanel] = React.useState(false)\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton label=\"View\" />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>Appearance</DropdownMenuLabel>\n          <DropdownMenuSeparator />\n          <DropdownMenuCheckboxItem\n            checked={statusBar}\n            onCheckedChange={setStatusBar}\n          >\n            <Text>Status bar</Text>\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={activityBar}\n            onCheckedChange={setActivityBar}\n            disabled\n          >\n            <Text>Activity bar</Text>\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem checked={panel} onCheckedChange={setPanel}>\n            <Text>Panel</Text>\n          </DropdownMenuCheckboxItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}\n\nexport function DropdownMenuCheckboxesExample() {\n  return (\n    <CheckboxesDemo />\n  )\n}"} />
+
+</Example>
+
+### Radio group
+
+Radio items that pick one value.
+
+<Example id="components-dropdown-menu--radio-group" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nfunction RadioGroupDemo() {\n  const [position, setPosition] = React.useState(\"bottom\")\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton label=\"Panel position\" />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>Panel position</DropdownMenuLabel>\n          <DropdownMenuSeparator />\n          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>\n            <DropdownMenuRadioItem value=\"top\">\n              <Text>Top</Text>\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"bottom\">\n              <Text>Bottom</Text>\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"right\">\n              <Text>Right</Text>\n            </DropdownMenuRadioItem>\n          </DropdownMenuRadioGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}\n\nexport function DropdownMenuRadioGroupExample() {\n  return (\n    <RadioGroupDemo />\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+Items aligned with `inset`.
+
+<Example id="components-dropdown-menu--inset" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuInsetExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel inset>Actions</DropdownMenuLabel>\n          <DropdownMenuItem inset>\n            <Text>Copy</Text>\n          </DropdownMenuItem>\n          <DropdownMenuItem inset>\n            <Text>Paste</Text>\n          </DropdownMenuItem>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem inset variant=\"destructive\">\n            <Text>Delete</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DropdownMenuContent
+
+Floating menu card.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Popup>","PositionerProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DropdownMenuSubTrigger
+
+Row that expands the submenu.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"iconClassName","type":"string","description":"Extra classes for the caret icon."},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DropdownMenuSubContent
+
+Items of the submenu.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Popup>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DropdownMenuItem
+
+Action row.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Item>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding to align with icon items."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`default` or `destructive`."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.CheckboxItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.RadioItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.GroupLabel>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Separator>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger has the `button` role.
+- The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.
+- Groups are labelled by their `DropdownMenuLabel`, and separators have the `separator` role.
+
+## Notes
+
+- Uses `bg-surface-raised`, `bg-item-pressed`, `bg-item-selected` and `bg-danger-surface-pressed` tokens; light and dark follow the system appearance.
+- The fade-in respects the system Reduce Motion setting.

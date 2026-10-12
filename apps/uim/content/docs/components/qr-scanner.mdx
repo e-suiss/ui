@@ -1,0 +1,173 @@
+---
+title: Qr Scanner
+description: "A camera overlay with a cut-out scan frame, corner brackets, a moving scan line and an optional flashlight toggle."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-qr-scanner--default" width={880} height={1199}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-surface-tertiary\">\n      <View className=\"absolute top-10 left-8 size-24 rounded-full bg-label-quaternary\" />\n      <View className=\"absolute right-6 bottom-16 h-32 w-40 rounded-3xl bg-label-tertiary\" />\n      <View className=\"size-36 rotate-6 rounded-xl bg-surface p-3\">\n        <View className=\"flex-1 flex-row flex-wrap gap-1.5\">\n          {Array.from({ length: 16 }, (_, index) => index).map((cell) => (\n            <View\n              key={cell}\n              className={\n                cell % 3 === 0\n                  ? \"size-6 rounded-xs bg-label\"\n                  : \"size-6 rounded-xs bg-surface\"\n              }\n            />\n          ))}\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"h-[560px] w-full rounded-3xl\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerExample() {\n  return (\n    <Scanner description=\"Point your camera at a code to pay or connect.\" />\n  )\n}"} />
+
+</Example>
+
+`QRScanner` is a `View` that draws an overlay on top of whatever you pass as `children`, usually a camera preview. It does not open the camera itself. The overlay dims everything outside a square frame (drawn with `react-native-svg`), marks the frame with four corner brackets and animates a scan line with Reanimated while the state is `idle`.
+
+The frame size defaults to 68% of the shorter side, capped at 280 points, and is centered in the component. A `title` sits above the frame; a `description` and the flashlight button sit below it.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add qr-scanner"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add qr-scanner --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add qr-scanner --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/qr-scanner.tsx`:
+
+<SourceFile path="uniwind/components/ui/qr-scanner.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/qr-scanner.tsx`:
+
+<SourceFile path="nativewind/components/ui/qr-scanner.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/qr-scanner.tsx`:
+
+<SourceFile path="stylesheet/components/ui/qr-scanner.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/QRScanner.swift" />
+
+<SourceFile path="kotlin/components/QrScanner.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { QRScanner } from \"@/components/ui/qr-scanner\""} />
+
+<Code lang="tsx" code={"<Scanner description=\"Point your camera at a code to pay or connect.\" />"} />
+
+Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-media`.
+
+Set `state` to `success` or `error` after you read a code. The brackets change color, and `error` shakes the frame. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.
+
+The `QRScannerState` type is also exported.
+
+## Examples
+
+### Success
+
+The `success` state with green brackets.
+
+<Example id="components-qr-scanner--success" width={880} height={1199}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-surface-tertiary\">\n      <View className=\"absolute top-10 left-8 size-24 rounded-full bg-label-quaternary\" />\n      <View className=\"absolute right-6 bottom-16 h-32 w-40 rounded-3xl bg-label-tertiary\" />\n      <View className=\"size-36 rotate-6 rounded-xl bg-surface p-3\">\n        <View className=\"flex-1 flex-row flex-wrap gap-1.5\">\n          {Array.from({ length: 16 }, (_, index) => index).map((cell) => (\n            <View\n              key={cell}\n              className={\n                cell % 3 === 0\n                  ? \"size-6 rounded-xs bg-label\"\n                  : \"size-6 rounded-xs bg-surface\"\n              }\n            />\n          ))}\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"h-[560px] w-full rounded-3xl\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerSuccessExample() {\n  return (\n    <Scanner state=\"success\" description=\"Code recognised\" />\n  )\n}"} />
+
+</Example>
+
+### Error
+
+The `error` state, which shakes the frame and turns the brackets red.
+
+<Example id="components-qr-scanner--error-state" width={880} height={1199}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-surface-tertiary\">\n      <View className=\"absolute top-10 left-8 size-24 rounded-full bg-label-quaternary\" />\n      <View className=\"absolute right-6 bottom-16 h-32 w-40 rounded-3xl bg-label-tertiary\" />\n      <View className=\"size-36 rotate-6 rounded-xl bg-surface p-3\">\n        <View className=\"flex-1 flex-row flex-wrap gap-1.5\">\n          {Array.from({ length: 16 }, (_, index) => index).map((cell) => (\n            <View\n              key={cell}\n              className={\n                cell % 3 === 0\n                  ? \"size-6 rounded-xs bg-label\"\n                  : \"size-6 rounded-xs bg-surface\"\n              }\n            />\n          ))}\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"h-[560px] w-full rounded-3xl\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerErrorStateExample() {\n  return (\n    <Scanner state=\"error\" description=\"This code is not supported.\" />\n  )\n}"} />
+
+</Example>
+
+### Without scan line
+
+The scanner with `scanLine={false}`.
+
+<Example id="components-qr-scanner--without-scan-line" width={880} height={1199}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-surface-tertiary\">\n      <View className=\"absolute top-10 left-8 size-24 rounded-full bg-label-quaternary\" />\n      <View className=\"absolute right-6 bottom-16 h-32 w-40 rounded-3xl bg-label-tertiary\" />\n      <View className=\"size-36 rotate-6 rounded-xl bg-surface p-3\">\n        <View className=\"flex-1 flex-row flex-wrap gap-1.5\">\n          {Array.from({ length: 16 }, (_, index) => index).map((cell) => (\n            <View\n              key={cell}\n              className={\n                cell % 3 === 0\n                  ? \"size-6 rounded-xs bg-label\"\n                  : \"size-6 rounded-xs bg-surface\"\n              }\n            />\n          ))}\n        </View>\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"h-[560px] w-full rounded-3xl\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerWithoutScanLineExample() {\n  return (\n    <Scanner scanLine={false} description=\"Hold steady over the code.\" />\n  )\n}"} />
+
+</Example>
+
+### Without torch
+
+A title and description with no flashlight button, because `onTorchToggle` is not passed.
+
+<Example id="components-qr-scanner--without-torch" width={880} height={1199}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { QRScanner } from \"@/components/ui/qr-scanner\"\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-surface-tertiary\">\n      <View className=\"absolute top-10 left-8 size-24 rounded-full bg-label-quaternary\" />\n      <View className=\"absolute right-6 bottom-16 h-32 w-40 rounded-3xl bg-label-tertiary\" />\n      <View className=\"size-36 rotate-6 rounded-xl bg-surface p-3\">\n        <View className=\"flex-1 flex-row flex-wrap gap-1.5\">\n          {Array.from({ length: 16 }, (_, index) => index).map((cell) => (\n            <View\n              key={cell}\n              className={\n                cell % 3 === 0\n                  ? \"size-6 rounded-xs bg-label\"\n                  : \"size-6 rounded-xs bg-surface\"\n              }\n            />\n          ))}\n        </View>\n      </View>\n    </View>\n  )\n}\n\nexport function QrScannerWithoutTorchExample() {\n  return (\n    <QRScanner\n      className=\"h-[560px] w-full rounded-3xl\"\n      title=\"Scan to sign in\"\n      description=\"Open Settings on your other device.\"\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### QRScanner
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"state","type":"QRScannerState","default":"\"idle\"","description":"`idle`, `success` or `error`. Sets the bracket color and triggers haptics and the shake animation. Defaults to `idle`."},{"name":"title","type":"React.ReactNode","description":"Content shown above the frame. Strings are wrapped in a `Text`."},{"name":"description","type":"React.ReactNode","description":"Content shown below the frame. Strings are wrapped in a `Text`."},{"name":"scanLine","type":"boolean","default":"true","description":"Shows the animated scan line while the state is `idle`. Defaults to `true`."},{"name":"torch","type":"boolean","default":"false","description":"Whether the flashlight is on. Controls the look of the flashlight button."},{"name":"onTorchToggle","type":"(torch: boolean) => void","description":"Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set."},{"name":"torchLabel","type":"string","default":"\"Flashlight\"","description":"Accessibility label for the flashlight button. Defaults to `\"Flashlight\"`."},{"name":"frameSize","type":"number","description":"Side length of the scan frame in points. Overrides the automatic size."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The dimmed surround and brackets are hidden from VoiceOver and TalkBack.
+- The overlay is a polite live region, so changes to the title and description are announced on Android.
+- The flashlight button has the `button` role, uses `torchLabel` as its label and reports `torch` as its selected state.
+- State changes to `success` and `error` play a matching haptic notification.
+- The shake and scan-line animations respect the system reduce motion setting.
+
+## Notes
+
+- Uses the `bg-media`, `text-scrim`, `text-on-media`, `border-success`, `border-danger` and `bg-accent` tokens.
+- The scan line restarts whenever the state returns to `idle`.

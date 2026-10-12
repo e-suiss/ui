@@ -1,0 +1,186 @@
+---
+title: Slider
+description: "A slider for picking a single value or a range by dragging one or more thumbs along a track."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-slider--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderExample() {\n  return (\n    <Slider defaultValue={50} max={100} step={1} accessibilityLabel=\"Volume\" />\n  )\n}"} />
+
+</Example>
+
+`Slider` renders a thin track, a filled indicator and one thumb per value. Pass a number for a single value, or an array for a range or several thumbs. The active thumb widens while it is dragged. It works horizontally or vertically.
+
+Thumbs are aligned to the edges of the track, so they stay within it at `min` and `max`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add slider"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add slider --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add slider --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="uniwind/components/ui/slider.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="nativewind/components/ui/slider.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="stylesheet/components/ui/slider.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Slider.swift" />
+
+<SourceFile path="kotlin/components/Slider.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\""} />
+
+<Code lang="tsx" code={"<Slider defaultValue={50} max={100} step={1} accessibilityLabel=\"Volume\" />"} />
+
+Use `defaultValue` for an uncontrolled slider, or `value` with `onValueChange` to control it. `onValueCommitted` runs when a drag or track press ends, which suits saving or fetching.
+
+Set `min`, `max` and `step` to define the range; `min` defaults to `0` and `max` to `100`. For ranges, `minStepsBetweenValues` keeps thumbs apart and `thumbCollisionBehavior` decides whether thumbs `push` each other, `swap`, or stop (`none`).
+
+The number of thumbs comes from the array length of `value` or `defaultValue`.
+
+## Examples
+
+### Controlled
+
+A controlled slider that shows the live and committed values.
+
+<Example id="components-slider--controlled" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(30)\n  const [committed, setCommitted] = React.useState(30)\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"flex-row items-center justify-between\">\n        <Text className=\"text-sm font-medium\">Brightness</Text>\n        <Text className=\"text-sm text-label-secondary\">\n          {value} / committed {committed}\n        </Text>\n      </View>\n      <Slider\n        value={value}\n        onValueChange={(next) => setValue(next)}\n        onValueCommitted={(next) => setCommitted(next)}\n        accessibilityLabel=\"Brightness\"\n      />\n    </View>\n  )\n}\n\nexport function SliderControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+</Example>
+
+### Range
+
+A two-thumb price range with a step and a minimum gap.
+
+<Example id="components-slider--range" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction RangeDemo() {\n  const [value, setValue] = React.useState<readonly number[]>([25, 75])\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"flex-row items-center justify-between\">\n        <Text className=\"text-sm font-medium\">Price</Text>\n        <Text className=\"text-sm text-label-secondary\">\n          ${value[0]} – ${value[1]}\n        </Text>\n      </View>\n      <Slider\n        value={value}\n        onValueChange={setValue}\n        step={5}\n        minStepsBetweenValues={2}\n        accessibilityLabel=\"Price\"\n      />\n    </View>\n  )\n}\n\nexport function SliderRangeExample() {\n  return (\n    <RangeDemo />\n  )\n}"} />
+
+</Example>
+
+### Multiple thumbs
+
+Three thumbs that swap when they cross.
+
+<Example id="components-slider--multiple-thumbs" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderMultipleThumbsExample() {\n  return (\n    <Slider defaultValue={[10, 40, 80]} max={100} step={1} accessibilityLabel=\"Volume\" thumbCollisionBehavior=\"swap\" />\n  )\n}"} />
+
+</Example>
+
+### Step
+
+A slider that moves in decimal steps.
+
+<Example id="components-slider--step" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderStepExample() {\n  return (\n    <Slider defaultValue={0.5} max={1} step={0.1} accessibilityLabel=\"Volume\" min={0} />\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+Single and range sliders in vertical orientation.
+
+<Example id="components-slider--vertical" width={880} height={463}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\n\nexport function SliderVerticalExample() {\n  return (\n    <View className=\"h-48 flex-row justify-center gap-8\">\n      <Slider defaultValue={40} orientation=\"vertical\" />\n      <Slider defaultValue={[20, 70]} orientation=\"vertical\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled slider with muted colors.
+
+<Example id="components-slider--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderDisabledExample() {\n  return (\n    <Slider defaultValue={40} max={100} step={1} accessibilityLabel=\"Volume\" disabled />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Slider
+
+<PropsTable extends={["SliderPrimitive.RootProps<Value>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each thumb has the `adjustable` role with its min, max and current value, so VoiceOver and TalkBack users can swipe up or down to change it.
+- `accessibilityLabel` on `Slider` is passed to every thumb; set it, since the slider has no visible label.
+- Disabled thumbs report `disabled` in their accessibility state.
+
+## Notes
+
+- The track uses `bg-label-quaternary` and the indicator `bg-accent`, with `bg-control-disabled` and `bg-accent-disabled` when disabled.
+- Thumbs use `bg-surface` with a shadow, or `bg-label` in dark mode.
+- Light and dark colors follow the system appearance.

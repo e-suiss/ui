@@ -1,0 +1,90 @@
+---
+title: Pie Chart Legend
+description: "A donut chart with a legend below it naming each device color."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-pie--legend" width={880} height={751}>
+
+<SourceFile path="uniwind/components/charts/pie-chart-legend.tsx" fold={false} />
+
+</Example>
+
+A `PieChart` donut with a `ChartLegend` that lists every slice from `chartConfig`. `chartData` holds one record per device with a `users` count. Pressing a slice shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-legend"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-legend --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-legend --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+
+<SourceFile path="uniwind/components/charts/pie-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+
+<SourceFile path="nativewind/components/charts/pie-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+
+<SourceFile path="stylesheet/components/charts/pie-chart-legend.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/PieChartLegend.swift" />
+
+<SourceFile path="kotlin/charts/PieChartLegend.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartLegend } from \"@/components/charts/pie-chart-legend\""} />
+
+<Code lang="tsx" code={"<PieChartLegend />"} />
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.

@@ -1,0 +1,102 @@
+---
+title: Users Table
+description: "A searchable user list with role filters, status badges and bulk actions for selected users."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-users-table--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/users-table.tsx" fold={false} />
+
+</Example>
+
+A collapsing `Header` holds a search `InputGroup` and a `ChipGroup` that filters by role. Rows show an `Avatar`, role and a `Badge` for status. The `SelectionList` trigger enters select mode, and the `SelectionListBar` applies bulk actions: make Editor, activate or suspend. An invite `Button` sits in the header, and the admin `TabBar` switches sections.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add users-table"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add users-table --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add users-table --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Badge](/docs/components/badge), [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Selection List](/docs/interactions/selection-list), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Badge](/docs/components/badge), [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Selection List](/docs/interactions/selection-list), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/users-table.tsx`:
+
+<SourceFile path="uniwind/components/blocks/users-table.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Badge](/docs/components/badge), [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Selection List](/docs/interactions/selection-list), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/users-table.tsx`:
+
+<SourceFile path="nativewind/components/blocks/users-table.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Badge](/docs/components/badge), [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Selection List](/docs/interactions/selection-list), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/users-table.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/users-table.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/UsersTable.swift" />
+
+<SourceFile path="kotlin/blocks/UsersTable.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { UsersTable } from \"@/components/blocks/users-table\""} />
+
+<Code lang="tsx" code={"<UsersTable />"} />
+
+Replace `INITIAL_USERS` and `ROLES` with your data. Use `onInvite`, `onFilterChange`, `onBulkUpdate` and `onNavigate` to connect the screen to your API.

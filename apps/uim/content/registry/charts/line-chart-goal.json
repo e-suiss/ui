@@ -1,0 +1,5 @@
+{
+  "description": "A weekly step count line with a dashed reference line marking a 10,000-step goal.",
+  "overview": "Seven days of steps drawn as a monotone line with dots, a value axis in thousands on the right and a labeled dashed `ReferenceLine` at `GOAL`. The tooltip formats the count with thousands separators.",
+  "usage": "Replace `chartData` with your daily values and set `GOAL`. The component takes no props."
+}

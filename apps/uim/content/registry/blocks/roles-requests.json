@@ -1,0 +1,5 @@
+{
+  "description": "An access request queue where admins approve or deny permission requests by button or swipe.",
+  "overview": "Each request shows an `Avatar`, the requester, the permission and an optional reason, with Deny and Approve `Button`s. Rows use `SwipeActions`, so swiping from the leading edge approves and from the trailing edge denies, and decided rows collapse out of the list. A `Picker` sets the grant duration, and an `Empty` state with a reset link appears once the queue is clear. It uses a collapsing `Header` and the admin `TabBar`.",
+  "usage": "Replace `INITIAL_REQUESTS` and `DURATIONS` with your data. Use `onApprove`, `onDeny`, `onDurationChange` and `onNavigate` to send decisions to your API and route between sections."
+}

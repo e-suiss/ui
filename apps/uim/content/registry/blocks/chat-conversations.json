@@ -1,0 +1,5 @@
+{
+  "description": "A messages screen with a conversation list that opens into a chat thread, with swipe to delete.",
+  "overview": "Composes `Screen`, `Header`, `SwipeActions` from the interactions, `Avatar`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button` and `BottomBar`. Tapping a row opens the thread with a back button, video call and details actions, and a composer. Sending a message shows a typing indicator followed by a sample reply. Swiping a row reveals a Delete action.",
+  "usage": "Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend."
+}

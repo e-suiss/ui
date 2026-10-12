@@ -1,0 +1,102 @@
+---
+title: Verify Email
+description: "A check-your-inbox screen after sign-up, with open mail, resend and change-address actions."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-verify-email--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/verify-email.tsx" fold={false} />
+
+</Example>
+
+The screen shows the address the link was sent to and a link to change it. The `BottomBar` has an Open Mail `Button` and a Resend `Button` that disables itself for a 45-second countdown. Opening mail shows a verified confirmation in this sample.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-email"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-email --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-email --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-email.tsx`:
+
+<SourceFile path="uniwind/components/blocks/verify-email.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-email.tsx`:
+
+<SourceFile path="nativewind/components/blocks/verify-email.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-email.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/verify-email.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/VerifyEmail.swift" />
+
+<SourceFile path="kotlin/blocks/VerifyEmail.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { VerifyEmail } from \"@/components/blocks/verify-email\""} />
+
+<Code lang="tsx" code={"<VerifyEmail />"} />
+
+Replace `EMAIL` with the user's address. Use `onOpenMail` to open the mail app and `onChangeAddress` to go back to the email field.

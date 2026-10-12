@@ -1,0 +1,68 @@
+import Charts
+import SwiftUI
+
+private let chartData: [(month: String, desktop: Double, mobile: Double)] = [
+  ("January", 186, 80),
+  ("February", 305, 200),
+  ("March", 237, 120),
+  ("April", 173, 190),
+  ("May", 209, 130),
+  ("June", 264, 140),
+]
+
+private let chartConfig: ChartConfig = [
+  "desktop": .init("Desktop", color: .blue),
+  "mobile": .init("Mobile", color: .teal),
+]
+
+private func value(_ key: String, _ index: Int) -> Double {
+  key == "desktop" ? chartData[index].desktop : chartData[index].mobile
+}
+
+public struct AreaChartGradient: View {
+  @State private var selection: Int?
+
+  public init() {}
+
+  public var body: some View {
+    Card(.filled, size: .sm) {
+      CardHeader("Gradient", description: "The fill fades out toward the bottom")
+      CardContent {
+        ChartContainer(config: chartConfig) {
+          Chart {
+            ForEach(["mobile", "desktop"], id: \.self) { key in
+              let color = chartConfig.color(key)
+              ForEach(chartData.indices, id: \.self) { index in
+                AreaMark(x: .value("Month", index), y: .value("Visitors", value(key, index)), series: .value("Series", key))
+                  .interpolationMethod(.catmullRom)
+                  .foregroundStyle(LinearGradient(colors: [color.opacity(0.38), color.opacity(0.02)], startPoint: .top, endPoint: .bottom))
+                LineMark(x: .value("Month", index), y: .value("Visitors", value(key, index)), series: .value("Series", key))
+                  .interpolationMethod(.catmullRom)
+                  .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                  .foregroundStyle(color)
+              }
+              if let selection {
+                PointMark(x: .value("Month", selection), y: .value("Visitors", value(key, selection)))
+                  .symbolSize(64)
+                  .foregroundStyle(color)
+              }
+            }
+          }
+          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
+          .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
+          .chartYAxis { ChartAxis.grid() }
+          .chartTooltip(
+            x: Array(chartData.indices),
+            labels: chartData.map(\.month),
+            selection: $selection,
+            accessibilityLabel: "Gradient",
+            items: { index in ["mobile", "desktop"].map { ChartTooltipItem($0, value: value($0, index)) } }
+          ) { payload in
+            ChartTooltipContent(payload)
+          }
+        }
+        .frame(height: 192)
+      }
+    }
+  }
+}

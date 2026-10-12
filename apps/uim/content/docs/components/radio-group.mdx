@@ -1,0 +1,174 @@
+---
+title: Radio Group
+description: "A set of radio buttons where only one option can be selected at a time."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-radio-group--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupExample() {\n  return (\n    <RadioGroupDemo />\n  )\n}"} />
+
+</Example>
+
+`RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the accent color and shows a dot. Items have an enlarged hit area so they are easy to press.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radio-group"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radio-group --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radio-group --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/radio.tsx`, `components/primitives/radio-group.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/radio-group.tsx`:
+
+<SourceFile path="uniwind/components/ui/radio-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/radio.tsx`, `components/primitives/radio-group.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/radio-group.tsx`:
+
+<SourceFile path="nativewind/components/ui/radio-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/radio.tsx`, `components/primitives/radio-group.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/radio-group.tsx`:
+
+<SourceFile path="stylesheet/components/ui/radio-group.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/RadioGroup.swift" />
+
+<SourceFile path="kotlin/components/RadioGroup.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\""} />
+
+<Code lang="tsx" code={"<RadioGroupDemo />"} />
+
+Give every `RadioGroupItem` a unique `value`. Control the group with `value` and `onValueChange(value, details)`, or leave it uncontrolled with `defaultValue`. Values are generic, so they can be strings or other types.
+
+Put a `Label` next to each item and link it through `nativeID` and `accessibilityLabelledBy`. Set `disabled` on the group to disable all items, or on a single item. Set `invalid` on items to show the danger border.
+
+## Examples
+
+### With descriptions
+
+Options with a label and a line of description each.
+
+<Example id="components-radio-group--with-descriptions" width={880} height={416}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\nimport { Text } from \"@/components/ui/text\"\n\nconst plans = [\n  {\n    value: \"starter\",\n    label: \"Starter\",\n    description: \"For individuals getting started.\",\n  },\n  {\n    value: \"pro\",\n    label: \"Pro\",\n    description: \"For growing teams that need more.\",\n  },\n  {\n    value: \"enterprise\",\n    label: \"Enterprise\",\n    description: \"For large organizations with custom needs.\",\n  },\n]\n\nfunction WithDescriptionsDemo() {\n  const [value, setValue] = React.useState(\"pro\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} className=\"gap-4\">\n      {plans.map((plan) => (\n        <View key={plan.value} className=\"flex-row items-start gap-3\">\n          <RadioGroupItem\n            value={plan.value}\n            accessibilityLabelledBy={`plan-${plan.value}`}\n          />\n          <View className=\"flex-1 gap-1\">\n            <Label\n              nativeID={`plan-${plan.value}`}\n              onPress={() => setValue(plan.value)}\n            >\n              {plan.label}\n            </Label>\n            <Text className=\"text-sm text-label-secondary\">\n              {plan.description}\n            </Text>\n          </View>\n        </View>\n      ))}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupWithDescriptionsExample() {\n  return (\n    <WithDescriptionsDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled item
+
+A group with one disabled option.
+
+<Example id="components-radio-group--disabled-item" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupDisabledItemExample() {\n  return (\n    <RadioGroupDemo disabledItem=\"compact\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A fully disabled group.
+
+<Example id="components-radio-group--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupDisabledExample() {\n  return (\n    <RadioGroupDemo disabled />\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Items with the `invalid` border.
+
+<Example id="components-radio-group--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nexport function RadioGroupInvalidExample() {\n  return (\n    <RadioGroup className=\"gap-3\">\n      {options.map((option) => (\n        <View key={option.value} className=\"flex-row items-center gap-3\">\n          <RadioGroupItem\n            invalid\n            value={option.value}\n            accessibilityLabelledBy={`radio-invalid-${option.value}`}\n          />\n          <Label nativeID={`radio-invalid-${option.value}`}>\n            {option.label}\n          </Label>\n        </View>\n      ))}\n    </RadioGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### RadioGroup
+
+The container that holds the selected value.
+
+<PropsTable extends={["RadioGroupProps<Value>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### RadioGroupItem
+
+A single radio button with its checked indicator.
+
+<PropsTable extends={["RadioPrimitive.RootProps<Value>"]} props={[{"name":"invalid","type":"boolean","description":"Shows a danger border while unchecked."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The group has the `radiogroup` role and reports `disabled` in `accessibilityState`.
+- Each item has the `radio` role and reports `checked` and `disabled` in `accessibilityState`.
+- The indicator is hidden from screen readers; label each item with a linked `Label` or an `accessibilityLabel`.
+
+## Notes
+
+- Selecting an item triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
+- Uses the `bg-accent`, `bg-accent-disabled`, `bg-control-disabled`, `bg-on-accent` and `border-danger` tokens.
+- Light and dark colors follow the system appearance; in dark mode unchecked items drop the border and shadow.

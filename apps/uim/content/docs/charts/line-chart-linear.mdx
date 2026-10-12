@@ -1,0 +1,90 @@
+---
+title: Line Chart Linear
+description: "A single line with straight segments between monthly readings."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--linear" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/line-chart-linear.tsx" fold={false} />
+
+</Example>
+
+One series with `type="linear"`, so each month connects to the next with a straight segment. It has a month axis, a dashed grid and a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-linear"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-linear --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-linear --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-linear.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-linear.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-linear.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-linear.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-linear.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-linear.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartLinear.swift" />
+
+<SourceFile path="kotlin/charts/LineChartLinear.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartLinear } from \"@/components/charts/line-chart-linear\""} />
+
+<Code lang="tsx" code={"<LineChartLinear />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.

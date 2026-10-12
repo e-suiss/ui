@@ -1,0 +1,90 @@
+---
+title: Radar Chart Radius Axis
+description: "A radar chart with a visible 0 to 100 value scale along one spoke."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radar--radius-axis" width={880} height={719}>
+
+<SourceFile path="uniwind/components/charts/radar-chart-radius-axis.tsx" fold={false} />
+
+</Example>
+
+A `RadarChart` that adds a `PolarRadiusAxis` with five ticks over a fixed 0 to 100 domain, plus one filled `Radar` series. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-radius-axis"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-radius-axis --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-radius-axis --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-radius-axis.tsx`:
+
+<SourceFile path="uniwind/components/charts/radar-chart-radius-axis.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-radius-axis.tsx`:
+
+<SourceFile path="nativewind/components/charts/radar-chart-radius-axis.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-radius-axis.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radar-chart-radius-axis.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadarChartRadiusAxis.swift" />
+
+<SourceFile path="kotlin/charts/RadarChartRadiusAxis.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartRadiusAxis } from \"@/components/charts/radar-chart-radius-axis\""} />
+
+<Code lang="tsx" code={"<RadarChartRadiusAxis />"} />
+
+Replace `chartData` with your records and set the `PolarRadiusAxis` `domain` to your value range. Rename the series in `chartConfig`. The component takes no props.

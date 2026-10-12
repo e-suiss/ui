@@ -1,0 +1,90 @@
+---
+title: Line Chart Default
+description: "A single smooth line showing desktop visitors across six months."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--default" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/line-chart-default.tsx" fold={false} />
+
+</Example>
+
+The baseline line chart inside a `Card`: one series drawn as a natural curve with a month axis, a dashed horizontal grid and a tooltip. There is no value axis.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-default"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-default --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-default --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-default.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-default.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-default.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartDefault.swift" />
+
+<SourceFile path="kotlin/charts/LineChartDefault.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartDefault } from \"@/components/charts/line-chart-default\""} />
+
+<Code lang="tsx" code={"<LineChartDefault />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`, and change the curve with the `type` prop on `Line`. The component takes no props.

@@ -1,0 +1,204 @@
+---
+title: Message Scroller
+description: "A chat-style message list that stays pinned to the newest message, tracks unread messages and loads older history."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-message-scroller--default" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { ArrowUpIcon, ChecksIcon, XIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport, useMessageScroller } from \"@/components/ui/message-scroller\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ChatMessage = {\n  id: string\n  from: \"me\" | \"them\"\n  texts: string[]\n  time?: string\n  status?: string\n  reaction?: string\n  attachment?: { name: string; size: string; progress?: number }\n}\n\nconst thread: ChatMessage[] = [\n  {\n    id: \"1\",\n    from: \"them\",\n    texts: [\"Hey, do you have a minute?\", \"The client moved the launch.\"],\n    time: \"9:12 AM\",\n  },\n  { id: \"2\", from: \"me\", texts: [\"Sure, what's up?\"] },\n  {\n    id: \"3\",\n    from: \"them\",\n    texts: [\"It's Thursday now. Two days earlier than planned.\"],\n    reaction: \"😬 1\",\n  },\n  {\n    id: \"4\",\n    from: \"me\",\n    texts: [\n      \"We could ship onboarding behind a flag.\",\n      \"Turn it on next week once QA is done.\",\n    ],\n    status: \"Read 9:15 AM\",\n  },\n  {\n    id: \"5\",\n    from: \"them\",\n    texts: [\"Here are the release notes.\"],\n    attachment: { name: \"Release notes.pdf\", size: \"1.2 MB\" },\n    time: \"9:18 AM\",\n  },\n  {\n    id: \"6\",\n    from: \"me\",\n    texts: [\"And the checklist with my comments.\"],\n    attachment: { name: \"Checklist.pdf\", size: \"Uploading\", progress: 64 },\n  },\n  {\n    id: \"7\",\n    from: \"them\",\n    texts: [\"Perfect. Let's sync tomorrow at ten.\"],\n    reaction: \"👍 2\",\n  },\n  {\n    id: \"8\",\n    from: \"me\",\n    texts: [\"Sounds good, see you then.\"],\n    status: \"Delivered\",\n  },\n]\n\nfunction ChatRow({ message }: { message: ChatMessage }) {\n  const mine = message.from === \"me\"\n  return (\n    <MessageScrollerItem>\n      <Message align={mine ? \"end\" : \"start\"}>\n        {mine ? null : (\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n        )}\n        <MessageContent>\n          {message.time && !mine ? (\n            <MessageHeader>Maya · {message.time}</MessageHeader>\n          ) : null}\n          {message.attachment ? (\n            <Attachment\n              state={message.attachment.progress ? \"uploading\" : \"done\"}\n              className=\"w-64\"\n            >\n              <AttachmentMedia variant=\"document\">\n                <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n              </AttachmentMedia>\n              <AttachmentContent>\n                <AttachmentTitle>{message.attachment.name}</AttachmentTitle>\n                {message.attachment.progress ? (\n                  <AttachmentProgress\n                    value={message.attachment.progress}\n                    accessibilityLabel=\"Uploading\"\n                  />\n                ) : (\n                  <AttachmentDescription>\n                    {message.attachment.size}\n                  </AttachmentDescription>\n                )}\n              </AttachmentContent>\n              {message.attachment.progress ? (\n                <AttachmentActions>\n                  <AttachmentAction accessibilityLabel=\"Cancel upload\">\n                    <Icon as={XIcon} />\n                  </AttachmentAction>\n                </AttachmentActions>\n              ) : null}\n            </Attachment>\n          ) : null}\n          {message.texts.map((text, index) => (\n            <Bubble key={text} variant={mine ? \"default\" : \"muted\"}>\n              <BubbleContent>{text}</BubbleContent>\n              {message.reaction && index === message.texts.length - 1 ? (\n                <BubbleReactions align={mine ? \"start\" : \"end\"}>\n                  {message.reaction}\n                </BubbleReactions>\n              ) : null}\n            </Bubble>\n          ))}\n          {message.status ? (\n            <MessageFooter className=\"gap-1\">\n              <Icon as={ChecksIcon} className=\"text-accent\" />\n              <Text>{message.status}</Text>\n            </MessageFooter>\n          ) : null}\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  )\n}\n\nfunction Composer({ onSend }: { onSend: (text: string) => void }) {\n  const [value, setValue] = React.useState(\"\")\n  const { scrollToEnd } = useMessageScroller()\n  const send = () => {\n    const text = value.trim()\n    if (!text) return\n    onSend(text)\n    setValue(\"\")\n    requestAnimationFrame(() => scrollToEnd())\n  }\n  return (\n    <BottomBar separator>\n      <BottomBarContent>\n        <InputGroup>\n          <InputGroupInput\n            placeholder=\"Message\"\n            value={value}\n            onValueChange={setValue}\n            returnKeyType=\"send\"\n            onSubmitEditing={send}\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton\n              variant=\"default\"\n              size=\"icon-xs\"\n              accessibilityLabel=\"Send\"\n              disabled={!value.trim()}\n              onPress={send}\n            >\n              <Icon as={ArrowUpIcon} />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </BottomBarContent>\n    </BottomBar>\n  )\n}\n\ntype ChatReady = (\n  append: (messages: ChatMessage[]) => void,\n  scroller: ReturnType<typeof useMessageScroller>\n) => void\n\nfunction ReadyEffect({\n  append,\n  onReady,\n}: {\n  append: (messages: ChatMessage[]) => void\n  onReady?: ChatReady\n}) {\n  const scroller = useMessageScroller()\n  const readyRef = React.useRef(onReady)\n  const scrollerRef = React.useRef(scroller)\n\n  React.useEffect(() => {\n    readyRef.current?.(append, scrollerRef.current)\n  }, [append])\n\n  return null\n}\n\nfunction Chat({\n  initial,\n  empty,\n  onReady,\n}: {\n  initial: ChatMessage[]\n  empty?: React.ReactElement\n  onReady?: ChatReady\n}) {\n  const [messages, setMessages] = React.useState(initial)\n  const append = React.useCallback((next: ChatMessage[]) => {\n    setMessages((current) => [...current, ...next])\n  }, [])\n\n  return (\n    <MessageScrollerProvider>\n      <ReadyEffect append={append} onReady={onReady} />\n      <View className=\"-m-4 flex-1\">\n        <MessageScroller>\n          <MessageScrollerViewport\n            data={messages}\n            keyExtractor={(message) => message.id}\n            renderItem={({ item }) => <ChatRow message={item} />}\n            contentContainerClassName=\"gap-4 py-4\"\n            ListEmptyComponent={empty}\n          />\n          <MessageScrollerButton />\n        </MessageScroller>\n        <Composer\n          onSend={(text) =>\n            append([{ id: `sent-${Date.now()}`, from: \"me\", texts: [text] }])\n          }\n        />\n      </View>\n    </MessageScrollerProvider>\n  )\n}\n\nexport function MessageScrollerExample() {\n  return (\n    <Chat initial={thread} />\n  )\n}"} />
+
+</Example>
+
+`MessageScroller` is a `View` that hosts a scroll controller. `MessageScrollerViewport` renders your messages in an inverted `FlatList`, so the newest message sits at the bottom and new messages keep the list anchored there through `maintainVisibleContentPosition`. You pass data in chronological order; the viewport reverses it internally and maps indexes back for `renderItem` and `keyExtractor`.
+
+`MessageScrollerButton` is a floating icon button that animates in with Reanimated when there is more content in its direction. When the user has scrolled up and new messages arrive, it shows an unread count badge.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message-scroller"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message-scroller --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add message-scroller --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/message-scroller.tsx`:
+
+<SourceFile path="uniwind/components/ui/message-scroller.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/message-scroller.tsx`:
+
+<SourceFile path="nativewind/components/ui/message-scroller.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/message-scroller.tsx`:
+
+<SourceFile path="stylesheet/components/ui/message-scroller.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/MessageScroller.swift" />
+
+<SourceFile path="kotlin/components/MessageScroller.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerItem, MessageScrollerButton } from \"@/components/ui/message-scroller\""} />
+
+<Code lang="tsx" code={"<Chat initial={thread} />"} />
+
+Place `MessageScrollerViewport` and `MessageScrollerButton` inside `MessageScroller`. Wrap everything in `MessageScrollerProvider` when components outside the scroller, such as a composer, need to call the scroll hooks.
+
+`useMessageScroller` returns `scrollToEnd`, `scrollToStart` and `scrollToMessage(id, { align, animated })`. `useMessageScrollerScrollable`, `useMessageScrollerUnreadCount` and `useMessageScrollerVisibility` read whether each edge is scrollable, the unread count, and the visible message ids.
+
+Set `onLoadOlder` to fetch older history when the user scrolls near the top. Other `FlatList` props such as `ListEmptyComponent` pass through.
+
+## Examples
+
+### Unread while scrolled up
+
+New messages arrive while scrolled up, so the button shows an unread count.
+
+<Example id="components-message-scroller--unread-while-scrolled-up" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { ArrowUpIcon, ChecksIcon, XIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport, useMessageScroller } from \"@/components/ui/message-scroller\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ChatMessage = {\n  id: string\n  from: \"me\" | \"them\"\n  texts: string[]\n  time?: string\n  status?: string\n  reaction?: string\n  attachment?: { name: string; size: string; progress?: number }\n}\n\nconst subjects = [\n  \"Did you see the latest build?\",\n  \"The onboarding copy needs one more pass.\",\n  \"I can take the release notes.\",\n  \"QA found two small issues on Android.\",\n  \"Both are fixed in the next build.\",\n  \"Can we move the review to the afternoon?\",\n]\n\nfunction longThread(count: number, offset = 0): ChatMessage[] {\n  return Array.from({ length: count }, (_, index) => {\n    const number = index + offset\n    return {\n      id: `m${number}`,\n      from: number % 3 === 0 ? \"me\" : \"them\",\n      texts: [subjects[number % subjects.length]],\n    }\n  })\n}\n\nfunction ChatRow({ message }: { message: ChatMessage }) {\n  const mine = message.from === \"me\"\n  return (\n    <MessageScrollerItem>\n      <Message align={mine ? \"end\" : \"start\"}>\n        {mine ? null : (\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n        )}\n        <MessageContent>\n          {message.time && !mine ? (\n            <MessageHeader>Maya · {message.time}</MessageHeader>\n          ) : null}\n          {message.attachment ? (\n            <Attachment\n              state={message.attachment.progress ? \"uploading\" : \"done\"}\n              className=\"w-64\"\n            >\n              <AttachmentMedia variant=\"document\">\n                <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n              </AttachmentMedia>\n              <AttachmentContent>\n                <AttachmentTitle>{message.attachment.name}</AttachmentTitle>\n                {message.attachment.progress ? (\n                  <AttachmentProgress\n                    value={message.attachment.progress}\n                    accessibilityLabel=\"Uploading\"\n                  />\n                ) : (\n                  <AttachmentDescription>\n                    {message.attachment.size}\n                  </AttachmentDescription>\n                )}\n              </AttachmentContent>\n              {message.attachment.progress ? (\n                <AttachmentActions>\n                  <AttachmentAction accessibilityLabel=\"Cancel upload\">\n                    <Icon as={XIcon} />\n                  </AttachmentAction>\n                </AttachmentActions>\n              ) : null}\n            </Attachment>\n          ) : null}\n          {message.texts.map((text, index) => (\n            <Bubble key={text} variant={mine ? \"default\" : \"muted\"}>\n              <BubbleContent>{text}</BubbleContent>\n              {message.reaction && index === message.texts.length - 1 ? (\n                <BubbleReactions align={mine ? \"start\" : \"end\"}>\n                  {message.reaction}\n                </BubbleReactions>\n              ) : null}\n            </Bubble>\n          ))}\n          {message.status ? (\n            <MessageFooter className=\"gap-1\">\n              <Icon as={ChecksIcon} className=\"text-accent\" />\n              <Text>{message.status}</Text>\n            </MessageFooter>\n          ) : null}\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  )\n}\n\nfunction Composer({ onSend }: { onSend: (text: string) => void }) {\n  const [value, setValue] = React.useState(\"\")\n  const { scrollToEnd } = useMessageScroller()\n  const send = () => {\n    const text = value.trim()\n    if (!text) return\n    onSend(text)\n    setValue(\"\")\n    requestAnimationFrame(() => scrollToEnd())\n  }\n  return (\n    <BottomBar separator>\n      <BottomBarContent>\n        <InputGroup>\n          <InputGroupInput\n            placeholder=\"Message\"\n            value={value}\n            onValueChange={setValue}\n            returnKeyType=\"send\"\n            onSubmitEditing={send}\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton\n              variant=\"default\"\n              size=\"icon-xs\"\n              accessibilityLabel=\"Send\"\n              disabled={!value.trim()}\n              onPress={send}\n            >\n              <Icon as={ArrowUpIcon} />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </BottomBarContent>\n    </BottomBar>\n  )\n}\n\ntype ChatReady = (\n  append: (messages: ChatMessage[]) => void,\n  scroller: ReturnType<typeof useMessageScroller>\n) => void\n\nfunction ReadyEffect({\n  append,\n  onReady,\n}: {\n  append: (messages: ChatMessage[]) => void\n  onReady?: ChatReady\n}) {\n  const scroller = useMessageScroller()\n  const readyRef = React.useRef(onReady)\n  const scrollerRef = React.useRef(scroller)\n\n  React.useEffect(() => {\n    readyRef.current?.(append, scrollerRef.current)\n  }, [append])\n\n  return null\n}\n\nfunction Chat({\n  initial,\n  empty,\n  onReady,\n}: {\n  initial: ChatMessage[]\n  empty?: React.ReactElement\n  onReady?: ChatReady\n}) {\n  const [messages, setMessages] = React.useState(initial)\n  const append = React.useCallback((next: ChatMessage[]) => {\n    setMessages((current) => [...current, ...next])\n  }, [])\n\n  return (\n    <MessageScrollerProvider>\n      <ReadyEffect append={append} onReady={onReady} />\n      <View className=\"-m-4 flex-1\">\n        <MessageScroller>\n          <MessageScrollerViewport\n            data={messages}\n            keyExtractor={(message) => message.id}\n            renderItem={({ item }) => <ChatRow message={item} />}\n            contentContainerClassName=\"gap-4 py-4\"\n            ListEmptyComponent={empty}\n          />\n          <MessageScrollerButton />\n        </MessageScroller>\n        <Composer\n          onSend={(text) =>\n            append([{ id: `sent-${Date.now()}`, from: \"me\", texts: [text] }])\n          }\n        />\n      </View>\n    </MessageScrollerProvider>\n  )\n}\n\nexport function MessageScrollerUnreadWhileScrolledUpExample() {\n  return (\n    <Chat\n      initial={longThread(40)}\n      onReady={(append, scroller) => {\n        setTimeout(() => scroller.scrollToStart({ animated: false }), 300)\n        setTimeout(\n          () =>\n            append([\n              { id: \"n1\", from: \"them\", texts: [\"Are you there?\"] },\n              { id: \"n2\", from: \"them\", texts: [\"The build is green.\"] },\n              { id: \"n3\", from: \"them\", texts: [\"Merging now.\"] },\n            ]),\n          900\n        )\n      }}\n    />\n  )\n}"} />
+
+</Example>
+
+### Empty thread
+
+An empty thread that renders an Empty state through `ListEmptyComponent`.
+
+<Example id="components-message-scroller--empty-thread" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { ArrowUpIcon, ChatsCircleIcon, ChecksIcon, XIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\"\nimport { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport, useMessageScroller } from \"@/components/ui/message-scroller\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ChatMessage = {\n  id: string\n  from: \"me\" | \"them\"\n  texts: string[]\n  time?: string\n  status?: string\n  reaction?: string\n  attachment?: { name: string; size: string; progress?: number }\n}\n\nfunction ChatRow({ message }: { message: ChatMessage }) {\n  const mine = message.from === \"me\"\n  return (\n    <MessageScrollerItem>\n      <Message align={mine ? \"end\" : \"start\"}>\n        {mine ? null : (\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n        )}\n        <MessageContent>\n          {message.time && !mine ? (\n            <MessageHeader>Maya · {message.time}</MessageHeader>\n          ) : null}\n          {message.attachment ? (\n            <Attachment\n              state={message.attachment.progress ? \"uploading\" : \"done\"}\n              className=\"w-64\"\n            >\n              <AttachmentMedia variant=\"document\">\n                <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n              </AttachmentMedia>\n              <AttachmentContent>\n                <AttachmentTitle>{message.attachment.name}</AttachmentTitle>\n                {message.attachment.progress ? (\n                  <AttachmentProgress\n                    value={message.attachment.progress}\n                    accessibilityLabel=\"Uploading\"\n                  />\n                ) : (\n                  <AttachmentDescription>\n                    {message.attachment.size}\n                  </AttachmentDescription>\n                )}\n              </AttachmentContent>\n              {message.attachment.progress ? (\n                <AttachmentActions>\n                  <AttachmentAction accessibilityLabel=\"Cancel upload\">\n                    <Icon as={XIcon} />\n                  </AttachmentAction>\n                </AttachmentActions>\n              ) : null}\n            </Attachment>\n          ) : null}\n          {message.texts.map((text, index) => (\n            <Bubble key={text} variant={mine ? \"default\" : \"muted\"}>\n              <BubbleContent>{text}</BubbleContent>\n              {message.reaction && index === message.texts.length - 1 ? (\n                <BubbleReactions align={mine ? \"start\" : \"end\"}>\n                  {message.reaction}\n                </BubbleReactions>\n              ) : null}\n            </Bubble>\n          ))}\n          {message.status ? (\n            <MessageFooter className=\"gap-1\">\n              <Icon as={ChecksIcon} className=\"text-accent\" />\n              <Text>{message.status}</Text>\n            </MessageFooter>\n          ) : null}\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  )\n}\n\nfunction Composer({ onSend }: { onSend: (text: string) => void }) {\n  const [value, setValue] = React.useState(\"\")\n  const { scrollToEnd } = useMessageScroller()\n  const send = () => {\n    const text = value.trim()\n    if (!text) return\n    onSend(text)\n    setValue(\"\")\n    requestAnimationFrame(() => scrollToEnd())\n  }\n  return (\n    <BottomBar separator>\n      <BottomBarContent>\n        <InputGroup>\n          <InputGroupInput\n            placeholder=\"Message\"\n            value={value}\n            onValueChange={setValue}\n            returnKeyType=\"send\"\n            onSubmitEditing={send}\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton\n              variant=\"default\"\n              size=\"icon-xs\"\n              accessibilityLabel=\"Send\"\n              disabled={!value.trim()}\n              onPress={send}\n            >\n              <Icon as={ArrowUpIcon} />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </BottomBarContent>\n    </BottomBar>\n  )\n}\n\ntype ChatReady = (\n  append: (messages: ChatMessage[]) => void,\n  scroller: ReturnType<typeof useMessageScroller>\n) => void\n\nfunction ReadyEffect({\n  append,\n  onReady,\n}: {\n  append: (messages: ChatMessage[]) => void\n  onReady?: ChatReady\n}) {\n  const scroller = useMessageScroller()\n  const readyRef = React.useRef(onReady)\n  const scrollerRef = React.useRef(scroller)\n\n  React.useEffect(() => {\n    readyRef.current?.(append, scrollerRef.current)\n  }, [append])\n\n  return null\n}\n\nfunction Chat({\n  initial,\n  empty,\n  onReady,\n}: {\n  initial: ChatMessage[]\n  empty?: React.ReactElement\n  onReady?: ChatReady\n}) {\n  const [messages, setMessages] = React.useState(initial)\n  const append = React.useCallback((next: ChatMessage[]) => {\n    setMessages((current) => [...current, ...next])\n  }, [])\n\n  return (\n    <MessageScrollerProvider>\n      <ReadyEffect append={append} onReady={onReady} />\n      <View className=\"-m-4 flex-1\">\n        <MessageScroller>\n          <MessageScrollerViewport\n            data={messages}\n            keyExtractor={(message) => message.id}\n            renderItem={({ item }) => <ChatRow message={item} />}\n            contentContainerClassName=\"gap-4 py-4\"\n            ListEmptyComponent={empty}\n          />\n          <MessageScrollerButton />\n        </MessageScroller>\n        <Composer\n          onSend={(text) =>\n            append([{ id: `sent-${Date.now()}`, from: \"me\", texts: [text] }])\n          }\n        />\n      </View>\n    </MessageScrollerProvider>\n  )\n}\n\nexport function MessageScrollerEmptyThreadExample() {\n  return (\n    <Chat\n      initial={[]}\n      empty={\n        <Empty>\n          <EmptyHeader>\n            <EmptyMedia variant=\"icon\">\n              <Icon as={ChatsCircleIcon} />\n            </EmptyMedia>\n            <EmptyTitle>No messages yet</EmptyTitle>\n            <EmptyDescription>\n              Say hello to start the conversation.\n            </EmptyDescription>\n          </EmptyHeader>\n        </Empty>\n      }\n    />\n  )\n}"} />
+
+</Example>
+
+### Load older
+
+Loads earlier messages with `onLoadOlder` when scrolling to the top.
+
+<Example id="components-message-scroller--load-older" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { ChecksIcon, XIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from \"@/components/ui/message-scroller\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ChatMessage = {\n  id: string\n  from: \"me\" | \"them\"\n  texts: string[]\n  time?: string\n  status?: string\n  reaction?: string\n  attachment?: { name: string; size: string; progress?: number }\n}\n\nconst subjects = [\n  \"Did you see the latest build?\",\n  \"The onboarding copy needs one more pass.\",\n  \"I can take the release notes.\",\n  \"QA found two small issues on Android.\",\n  \"Both are fixed in the next build.\",\n  \"Can we move the review to the afternoon?\",\n]\n\nfunction longThread(count: number, offset = 0): ChatMessage[] {\n  return Array.from({ length: count }, (_, index) => {\n    const number = index + offset\n    return {\n      id: `m${number}`,\n      from: number % 3 === 0 ? \"me\" : \"them\",\n      texts: [subjects[number % subjects.length]],\n    }\n  })\n}\n\nfunction ChatRow({ message }: { message: ChatMessage }) {\n  const mine = message.from === \"me\"\n  return (\n    <MessageScrollerItem>\n      <Message align={mine ? \"end\" : \"start\"}>\n        {mine ? null : (\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n        )}\n        <MessageContent>\n          {message.time && !mine ? (\n            <MessageHeader>Maya · {message.time}</MessageHeader>\n          ) : null}\n          {message.attachment ? (\n            <Attachment\n              state={message.attachment.progress ? \"uploading\" : \"done\"}\n              className=\"w-64\"\n            >\n              <AttachmentMedia variant=\"document\">\n                <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n              </AttachmentMedia>\n              <AttachmentContent>\n                <AttachmentTitle>{message.attachment.name}</AttachmentTitle>\n                {message.attachment.progress ? (\n                  <AttachmentProgress\n                    value={message.attachment.progress}\n                    accessibilityLabel=\"Uploading\"\n                  />\n                ) : (\n                  <AttachmentDescription>\n                    {message.attachment.size}\n                  </AttachmentDescription>\n                )}\n              </AttachmentContent>\n              {message.attachment.progress ? (\n                <AttachmentActions>\n                  <AttachmentAction accessibilityLabel=\"Cancel upload\">\n                    <Icon as={XIcon} />\n                  </AttachmentAction>\n                </AttachmentActions>\n              ) : null}\n            </Attachment>\n          ) : null}\n          {message.texts.map((text, index) => (\n            <Bubble key={text} variant={mine ? \"default\" : \"muted\"}>\n              <BubbleContent>{text}</BubbleContent>\n              {message.reaction && index === message.texts.length - 1 ? (\n                <BubbleReactions align={mine ? \"start\" : \"end\"}>\n                  {message.reaction}\n                </BubbleReactions>\n              ) : null}\n            </Bubble>\n          ))}\n          {message.status ? (\n            <MessageFooter className=\"gap-1\">\n              <Icon as={ChecksIcon} className=\"text-accent\" />\n              <Text>{message.status}</Text>\n            </MessageFooter>\n          ) : null}\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  )\n}\n\nfunction LoadOlderDemo() {\n  const [messages, setMessages] = React.useState(() => longThread(15, 45))\n  const [loading, setLoading] = React.useState(false)\n  const oldest = Number(messages[0]?.id.slice(1) ?? 0)\n  const loadOlder = () => {\n    if (loading || oldest <= 0) return\n    setLoading(true)\n    setTimeout(() => {\n      setMessages((current) => [\n        ...longThread(Math.min(15, oldest), Math.max(0, oldest - 15)),\n        ...current,\n      ])\n      setLoading(false)\n    }, 800)\n  }\n  return (\n    <MessageScrollerProvider>\n      <View className=\"-m-4 flex-1\">\n        <MessageScroller>\n          <MessageScrollerViewport\n            data={messages}\n            keyExtractor={(message) => message.id}\n            renderItem={({ item }) => <ChatRow message={item} />}\n            contentContainerClassName=\"gap-4 py-4\"\n            onLoadOlder={loadOlder}\n            ListFooterComponent={\n              loading ? (\n                <View className=\"items-center py-2\">\n                  <Spinner />\n                </View>\n              ) : null\n            }\n          />\n          <MessageScrollerButton />\n        </MessageScroller>\n      </View>\n    </MessageScrollerProvider>\n  )\n}\n\nexport function MessageScrollerLoadOlderExample() {\n  return (\n    <LoadOlderDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### MessageScrollerProvider
+
+Shares one scroll controller with components outside the scroller.
+
+<PropsTable extends={["MessageScrollerOptions"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MessageScroller
+
+Container that clips the list and positions the button.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageScrollerViewport
+
+Inverted `FlatList` that renders the messages.
+
+<PropsTable extends={["MessageScrollerViewportProps<T>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageScrollerItem
+
+Row wrapper with horizontal padding.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageScrollerButton
+
+Floating button that scrolls to the newest or oldest message.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"direction","type":"MessageScrollerScrollDirection","default":"\"end\"","description":"`end` scrolls to the newest message, `start` to the oldest. Defaults to `end`."},{"name":"animated","type":"boolean","default":"true","description":"Whether the scroll is animated. Defaults to `true`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The button has a default label, "Scroll to end" or "Scroll to start", and includes the number of new messages when there are any.
+- While the button is hidden it ignores touches and is hidden from VoiceOver and TalkBack.
+- The button animation respects the system reduce motion setting.
+
+## Notes
+
+- The keyboard dismisses interactively on iOS and on drag on Android, and taps on handled children keep it open.
+- The button uses `bg-surface-raised` with `border-separator`, and the badge uses `bg-accent` with `text-on-accent`.
+- Light and dark colors follow the system appearance.

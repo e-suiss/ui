@@ -1,0 +1,90 @@
+---
+title: Line Chart Step
+description: "A single line drawn as steps, holding each value until the next reading."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--step" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/line-chart-step.tsx" fold={false} />
+
+</Example>
+
+One series with `type="step"`, which draws flat runs and vertical jumps instead of slopes. Use it for values that change at discrete moments. It has a month axis, a dashed grid and a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-step"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-step --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-step --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-step.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-step.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-step.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-step.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-step.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-step.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartStep.swift" />
+
+<SourceFile path="kotlin/charts/LineChartStep.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartStep } from \"@/components/charts/line-chart-step\""} />
+
+<Code lang="tsx" code={"<LineChartStep />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.

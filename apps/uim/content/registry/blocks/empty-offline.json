@@ -1,0 +1,5 @@
+{
+  "description": "An offline state with a retry button that shows a spinner and then a sample album grid once connected.",
+  "overview": "Composes `Screen`, `Empty`, `Button`, `Spinner`, `Icon` and `Text`. Try Again shows a loading state for a moment and then switches to the online content, which has a Disconnect link back to the offline state.",
+  "usage": "Replace `ALBUMS` with your content and the timed retry with a real connectivity check. The component takes no props."
+}

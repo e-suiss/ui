@@ -1,0 +1,5 @@
+{
+  "description": "A storage breakdown donut for phone and cloud, with a selectable list and a usage bar.",
+  "overview": "A `Card` with a `ToggleGroup` that switches between phone and cloud storage, a stacked usage bar, a `PieChart` donut and a list of categories. Sizes come from the `STORAGE` record, and free space is the total minus what is used. Pressing a slice or a list row selects that category: its slice lifts outward, other segments in the bar dim, and the center text shows its size and share. Pressing it again returns to total used.",
+  "usage": "Replace `STORAGE` with your devices, totals and per-category sizes, and keep `KINDS`, `chartConfig` and `SWATCH` in sync when adding categories. The component takes no props."
+}

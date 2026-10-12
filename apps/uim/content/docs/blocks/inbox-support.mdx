@@ -1,0 +1,102 @@
+---
+title: Inbox Support
+description: "A support ticket inbox with Open, Pending, Solved and All queues, a ticket view and a reply box."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-inbox-support--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/inbox-support.tsx" fold={false} />
+
+</Example>
+
+A help desk screen built on `SplitView`, with a sidebar of queues, a list of tickets showing the requester `Avatar`, priority and device, and a detail view. In the detail view a `ToggleGroup` changes the ticket status, a `Textarea` takes a reply, Send and set pending sends it and moves the ticket to Pending, and Mark as solved closes it.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-support"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-support --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add inbox-support --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/inbox-support.tsx`:
+
+<SourceFile path="uniwind/components/blocks/inbox-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/inbox-support.tsx`:
+
+<SourceFile path="nativewind/components/blocks/inbox-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/inbox-support.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/inbox-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/InboxSupport.swift" />
+
+<SourceFile path="kotlin/blocks/InboxSupport.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { InboxSupport } from \"@/components/blocks/inbox-support\""} />
+
+<Code lang="tsx" code={"<InboxSupport />"} />
+
+Replace `INITIAL_TICKETS` with your tickets. Wire `onViewChange`, `onStatusChange` and `onReply` to your help desk backend; the screen also updates its own ticket list.

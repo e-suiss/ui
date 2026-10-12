@@ -1,0 +1,115 @@
+---
+title: Collapsible
+description: "A section that shows or hides its content when a trigger is pressed."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-collapsible--open-by-default" width={880} height={407}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleOpenByDefaultExample() {\n  return (\n    <CollapsibleDemo initialOpen />\n  )\n}"} />
+
+</Example>
+
+`Collapsible` is an unstyled root with a `CollapsibleTrigger` and a `CollapsibleContent` panel. It handles the open state and accessibility, and leaves the look to you.
+
+Use it for a single show-more section. For a list of sections where opening one can close another, use Accordion.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add collapsible"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add collapsible --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add collapsible --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="uniwind/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="nativewind/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="stylesheet/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Collapsible.swift" />
+
+<SourceFile path="kotlin/components/Collapsible.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"<CollapsibleDemo initialOpen />"} />
+
+Put any content in `CollapsibleTrigger`, for example a `Text` and a caret `Icon`, and use `render` to render it as a `Button`. Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
+
+Set `keepMounted` on `CollapsibleContent` to keep the content mounted while closed.
+
+## Examples
+
+### Default
+
+<Example id="components-collapsible--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleExample() {\n  return (\n    <CollapsibleDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled collapsible whose trigger cannot toggle it.
+
+<Example id="components-collapsible--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleDisabledExample() {\n  return (\n    <CollapsibleDemo disabled />\n  )\n}"} />
+
+</Example>
+
+## Accessibility
+
+- The trigger has the `button` role with `expanded` and `disabled` state.
+- Closed content is hidden from VoiceOver and TalkBack.

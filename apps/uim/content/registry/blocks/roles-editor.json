@@ -1,0 +1,5 @@
+{
+  "description": "An admin screen for editing role permissions, with a role list beside grouped permission switches.",
+  "overview": "A `SplitView` lists the Editor, Support and Viewer roles with their member counts, and the detail pane shows the selected role's permissions grouped into `ItemGroup` lists, each with a `Switch`. Revert and Save buttons appear once a switch changes, and a New Role `Button` sits under the list. An admin `TabBar` switches between Users, Roles, Activity and Settings; sections other than Roles show a placeholder. On wide screens the list and detail sit side by side.",
+  "usage": "Replace `GROUPS`, `ROLES`, `MEMBERS` and `DEFAULTS` with your permissions and grants. Use `onTogglePermission`, `onSave`, `onRevert`, `onNewRole` and `onNavigate` to persist changes and route between sections."
+}

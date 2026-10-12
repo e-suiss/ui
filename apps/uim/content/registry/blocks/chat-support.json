@@ -1,0 +1,5 @@
+{
+  "description": "A support page with a floating chat panel, quick question buttons and an assistant that answers them.",
+  "overview": "Composes `Screen`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button`, `Icon` and `BottomBar`. The chat panel opens and closes with a scale animation from a launcher button, quick questions disappear once asked, and each question gets a typed answer after a short typing indicator. The panel grows to the available height while the composer has focus.",
+  "usage": "Replace `ANSWERS` and `FALLBACK` with your own replies or a call to your support service. Pass `onSend`, `onAttach` and `onOpenChange` to handle messages, attachments and the open state."
+}

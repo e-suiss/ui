@@ -1,0 +1,212 @@
+---
+title: Amount Input
+description: "A large, locale-formatted money display with an on-screen keypad for entering an amount."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-amount-input--default" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" />\n  )\n}"} />
+
+</Example>
+
+`AmountInput` combines a big formatted amount with a `Keypad`. The amount is formatted with `Intl.NumberFormat` for the given `locale` and `currency`, the currency symbol is drawn smaller, and the font size steps down as the number gets longer.
+
+The decimal key appears only when the currency allows fractions, using the locale's decimal separator. A key that would exceed the limits is rejected with a shake and an error haptic; accepted keys play a selection haptic.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add amount-input"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add amount-input --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add amount-input --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/amount-input.tsx`:
+
+<SourceFile path="uniwind/components/ui/amount-input.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/amount-input.tsx`:
+
+<SourceFile path="nativewind/components/ui/amount-input.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/ui/amount-input.tsx`:
+
+<SourceFile path="stylesheet/components/ui/amount-input.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/AmountInput.swift" />
+
+<SourceFile path="kotlin/components/AmountInput.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\""} />
+
+<Code lang="tsx" code={"<AmountInput currency=\"USD\" locale=\"en-US\" />"} />
+
+The value is a plain numeric string such as `"1250.5"`. Use `defaultValue` for uncontrolled state, or `value` with `onValueChange`, which receives the string and the parsed number.
+
+Fraction digits default to the currency's own precision (for example 0 for JPY); override with `maxFractionDigits`. Use `max` to cap the amount. Input is limited to 15 digits.
+
+Pass `deleteLabel` and `decimalLabel` to localize the keypad's spoken labels.
+
+## Examples
+
+### Filled
+
+Starts with a value through `defaultValue`.
+
+<Example id="components-amount-input--filled" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputFilledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"1250.5\" />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Controlled with `value` and `onValueChange`.
+
+<Example id="components-amount-input--controlled" width={880} height={1023}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { AmountInput } from \"@/components/ui/amount-input\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [amount, setAmount] = React.useState(0)\n  return (\n    <View className=\"items-center gap-4\">\n      <AmountInput\n        currency=\"USD\"\n        locale=\"en-US\"\n        value={value}\n        onValueChange={(next, nextAmount) => {\n          setValue(next)\n          setAmount(nextAmount)\n        }}\n      />\n      <Text className=\"text-sm text-label-secondary\">\n        {`value \"${value}\" · amount ${amount}`}\n      </Text>\n    </View>\n  )\n}\n\nexport function AmountInputControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+</Example>
+
+### Long amount
+
+A long amount that shrinks to fit.
+
+<Example id="components-amount-input--long-amount" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputLongAmountExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"98765432109.99\" />\n  )\n}"} />
+
+</Example>
+
+### Euro
+
+EUR in the `de-DE` locale with a comma decimal separator.
+
+<Example id="components-amount-input--euro" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputEuroExample() {\n  return (\n    <AmountInput currency=\"EUR\" locale=\"de-DE\" defaultValue=\"1234.5\" />\n  )\n}"} />
+
+</Example>
+
+### Turkish lira
+
+TRY in the `tr-TR` locale.
+
+<Example id="components-amount-input--turkish-lira" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputTurkishLiraExample() {\n  return (\n    <AmountInput currency=\"TRY\" locale=\"tr-TR\" defaultValue=\"2500.75\" />\n  )\n}"} />
+
+</Example>
+
+### Yen
+
+JPY, which has no decimal key.
+
+<Example id="components-amount-input--yen" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputYenExample() {\n  return (\n    <AmountInput currency=\"JPY\" locale=\"ja-JP\" defaultValue=\"15000\" />\n  )\n}"} />
+
+</Example>
+
+### With max
+
+Capped at 500 with `max`; larger entries are rejected.
+
+<Example id="components-amount-input--with-max" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputWithMaxExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" max={500} />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled input with a dimmed amount and keypad.
+
+<Example id="components-amount-input--disabled" width={880} height={959}>
+
+<Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputDisabledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"42\" disabled />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### AmountInput
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"value","type":"string","description":"Controlled numeric string."},{"name":"defaultValue","type":"string","default":"\"\"","description":"Initial numeric string when uncontrolled."},{"name":"onValueChange","type":"(value: string, amount: number) => void","description":"Called with the new string and its numeric amount."},{"name":"currency","type":"string","description":"ISO currency code used for formatting."},{"name":"locale","type":"string","description":"Locale used for formatting and the decimal separator."},{"name":"maxFractionDigits","type":"number","description":"Maximum digits after the decimal separator."},{"name":"max","type":"number","description":"Largest allowed amount."},{"name":"placeholder","type":"string","default":"\"0\"","description":"Shown in place of the integer when empty. Defaults to `\"0\"`."},{"name":"disabled","type":"boolean","default":"false","description":"Dims the amount and disables the keypad."},{"name":"deleteLabel","type":"string","description":"Accessibility label for the delete key."},{"name":"decimalLabel","type":"string","description":"Accessibility label for the decimal key."},{"name":"amountClassName","type":"string","description":"Extra classes for the amount text."},{"name":"keypadClassName","type":"string","description":"Extra classes for the keypad."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The amount text is a polite live region, so changes are announced.
+- Its label is the formatted amount, prefixed with `accessibilityLabel` when given.
+- Keypad keys announce their digit; the delete key is disabled while the value is empty.
+
+## Notes
+
+- The shake animation respects the system Reduce Motion setting.
+- Uses tabular numerals so digits do not shift as they change.
+- Uses `text-label` and `text-label-tertiary` tokens; light and dark follow the system appearance.

@@ -1,0 +1,234 @@
+---
+title: Calendar
+description: "A month grid for picking a single date, several dates or a date range."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-calendar--default" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarExample() {\n  return (\n    <SingleCalendar />\n  )\n}"} />
+
+</Example>
+
+`Calendar` renders one or more month grids with a caption, previous and next buttons, weekday headers and pressable day cells. Selection mode is set with `mode`: `single`, `multiple` or `range`. Ranges are drawn as a continuous shaded band with filled start and end days.
+
+Three sizes are available: `sm`, `default` and `lg`. The caption can be a plain label or month and year dropdowns built on Select, which suits birth dates and other dates far from today.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add calendar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add calendar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add calendar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="uniwind/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="nativewind/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Calendar.swift" />
+
+<SourceFile path="kotlin/components/Calendar.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { CalendarDayButton, Calendar } from \"@/components/ui/calendar\""} />
+
+<Code lang="tsx" code={"<SingleCalendar />"} />
+
+Pass `mode`, `selected` and `onSelect` to control the selection; `selected` is a `Date`, a `Date[]` or a `{ from, to }` range depending on the mode. Use `month`, `defaultMonth` and `onMonthChange` to control the visible month, and `numberOfMonths` to show several months.
+
+Use `disabled` with date matchers, such as `{ dayOfWeek: [0, 6] }`, to block days. Limit navigation with `startMonth` and `endMonth`; with a year dropdown they default to the last 100 years.
+
+Set `locale` for month and weekday names, and `weekStartsOn` to change the first day of the week. `CalendarDayButton` is exported for custom day rendering.
+
+## Examples
+
+### Sizes
+
+The `sm`, `default` and `lg` sizes.
+
+<Example id="components-calendar--sizes" width={880} height={1720}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarSizesExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar size=\"sm\" />\n      <SingleCalendar size=\"default\" />\n      <SingleCalendar size=\"lg\" />\n    </ScrollView>\n  )\n}"} />
+
+</Example>
+
+### Range
+
+Range selection across two months.
+
+<Example id="components-calendar--range" width={880} height={1207}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { DateRange } from \"@/components/primitives/calendar\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction RangeCalendar() {\n  const today = new Date()\n  const [range, setRange] = React.useState<DateRange | undefined>({\n    from: today,\n    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),\n  })\n  return (\n    <ScrollView>\n      <Calendar\n        mode=\"range\"\n        selected={range}\n        onSelect={setRange}\n        numberOfMonths={2}\n        className=\"rounded-2xl border border-separator\"\n      />\n    </ScrollView>\n  )\n}\n\nexport function CalendarRangeExample() {\n  return (\n    <RangeCalendar />\n  )\n}"} />
+
+</Example>
+
+### Multiple
+
+Several separate dates selected with `mode="multiple"`.
+
+<Example id="components-calendar--multiple" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction MultipleCalendar() {\n  const today = new Date()\n  const [dates, setDates] = React.useState<Date[] | undefined>([\n    new Date(today.getFullYear(), today.getMonth(), 8),\n    new Date(today.getFullYear(), today.getMonth(), 15),\n    new Date(today.getFullYear(), today.getMonth(), 22),\n  ])\n  return (\n    <Calendar\n      mode=\"multiple\"\n      selected={dates}\n      onSelect={setDates}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarMultipleExample() {\n  return (\n    <MultipleCalendar />\n  )\n}"} />
+
+</Example>
+
+### Dropdown caption
+
+Month and year dropdowns in the caption.
+
+<Example id="components-calendar--dropdown-caption" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarDropdownCaptionExample() {\n  return (\n    <SingleCalendar captionLayout=\"dropdown\" />\n  )\n}"} />
+
+</Example>
+
+### Week numbers
+
+Week numbers in a leading column.
+
+<Example id="components-calendar--week-numbers" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarWeekNumbersExample() {\n  return (\n    <SingleCalendar showWeekNumber />\n  )\n}"} />
+
+</Example>
+
+### Disabled days
+
+Weekends disabled with a `dayOfWeek` matcher.
+
+<Example id="components-calendar--disabled-days" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarDisabledDaysExample() {\n  return (\n    <SingleCalendar disabled={{ dayOfWeek: [0, 6] }} />\n  )\n}"} />
+
+</Example>
+
+### Outside days
+
+Days from adjacent months shown with `showOutsideDays`.
+
+<Example id="components-calendar--outside-days" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarOutsideDaysExample() {\n  return (\n    <SingleCalendar showOutsideDays />\n  )\n}"} />
+
+</Example>
+
+### Button variants
+
+Navigation buttons in the `ghost`, `secondary` and `tinted` variants.
+
+<Example id="components-calendar--button-variants" width={880} height={1720}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarButtonVariantsExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar buttonVariant=\"ghost\" />\n      <SingleCalendar buttonVariant=\"secondary\" />\n      <SingleCalendar buttonVariant=\"tinted\" />\n    </ScrollView>\n  )\n}"} />
+
+</Example>
+
+### Locale
+
+Turkish month and weekday names with `locale="tr-TR"`.
+
+<Example id="components-calendar--locale" width={880} height={653}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarLocaleExample() {\n  return (\n    <SingleCalendar locale=\"tr-TR\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### CalendarDayButton
+
+Pressable day cell styled for each selection state.
+
+<PropsTable extends={["React.ComponentProps<typeof CalendarPrimitive.DayButton>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Calendar
+
+Month grids with caption and navigation.
+
+<PropsTable extends={["React.ComponentProps<typeof CalendarPrimitive.Root>"]} props={[{"name":"buttonVariant","type":"ButtonProps[\"variant\"]","default":"\"plain\"","description":"Button variant for the navigation buttons. Defaults to `plain`."},{"name":"size","type":"CalendarSize","default":"\"default\"","description":"`sm`, `default` or `lg`."},{"name":"captionLayout","type":"CaptionLayout","default":"\"label\"","description":"`label`, `dropdown`, `dropdown-months` or `dropdown-years`."},{"name":"showWeekNumber","type":"boolean","default":"false","description":"Shows week numbers."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each month is a `grid` labelled with its caption.
+- Day cells have the `button` role, a full date label, and `selected` and `disabled` state.
+- The previous and next buttons are labelled "Go to the Previous Month" and "Go to the Next Month".
+- Caption dropdowns are labelled "Choose the Month" and "Choose the Year".
+
+## Notes
+
+- Navigation arrows swap in right-to-left layouts.
+- Uses `bg-accent`, `bg-accent-surface`, `bg-surface-secondary` and `text-link` tokens; light and dark follow the system appearance.

@@ -1,0 +1,141 @@
+---
+title: Haptics
+description: "A provider that connects components to your haptics library, with a hook to trigger feedback."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-haptics--default" width={880} height={693}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { type HapticsAdapter, HapticsProvider } from \"@/components/ui/haptics\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction useLoggingAdapter() {\n  const [log, setLog] = React.useState({ last: \"None\", count: 0 })\n  const adapter = React.useMemo<HapticsAdapter>(() => {\n    const record = (event: string) =>\n      setLog((current) => ({ last: event, count: current.count + 1 }))\n    return {\n      impact: (style) => record(`impact ${style}`),\n      selection: () => record(\"selection\"),\n      notification: (type) => record(`notification ${type}`),\n    }\n  }, [])\n  return { adapter, log }\n}\n\nfunction HapticLog({ last, count }: { last: string; count: number }) {\n  return (\n    <View className=\"flex-row items-center justify-between rounded-xl bg-surface-secondary px-4 py-3\">\n      <Text className=\"text-sm text-label-secondary\">Last haptic</Text>\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm font-medium\"\n      >\n        {count > 0 ? `${last} (${count})` : last}\n      </Text>\n    </View>\n  )\n}\n\nfunction Row({\n  label,\n  children,\n}: {\n  label: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"min-h-11 flex-row items-center justify-between gap-4\">\n      <Text>{label}</Text>\n      {children}\n    </View>\n  )\n}\n\nfunction Controls() {\n  const [wifi, setWifi] = React.useState(true)\n  const [terms, setTerms] = React.useState(false)\n  const [volume, setVolume] = React.useState(40)\n  const [copies, setCopies] = React.useState(1)\n\n  return (\n    <View className=\"w-full gap-2\">\n      <Row label=\"Wi-Fi\">\n        <Switch\n          accessibilityLabel=\"Wi-Fi\"\n          checked={wifi}\n          onCheckedChange={setWifi}\n        />\n      </Row>\n      <Row label=\"Accept terms\">\n        <Checkbox\n          accessibilityLabel=\"Accept terms\"\n          checked={terms}\n          onCheckedChange={setTerms}\n        />\n      </Row>\n      <Row label=\"Copies\">\n        <Stepper value={copies} onValueChange={setCopies} min={1} max={9}>\n          <StepperInput accessibilityLabel=\"Copies\" />\n          <StepperGroup>\n            <StepperDecrement />\n            <StepperSeparator />\n            <StepperIncrement />\n          </StepperGroup>\n        </Stepper>\n      </Row>\n      <View className=\"flex-row gap-2 py-2\">\n        <Chip>Open now</Chip>\n        <Chip>Top rated</Chip>\n      </View>\n      <Slider\n        value={volume}\n        step={10}\n        onValueChange={(next) => setVolume(next)}\n        accessibilityLabel=\"Volume\"\n      />\n    </View>\n  )\n}\n\nfunction ControlsDemo({ enabled = true }: { enabled?: boolean }) {\n  const { adapter, log } = useLoggingAdapter()\n  return (\n    <HapticsProvider adapter={adapter} enabled={enabled}>\n      <View className=\"w-full gap-4\">\n        <HapticLog {...log} />\n        <Controls />\n      </View>\n    </HapticsProvider>\n  )\n}\n\nexport function HapticsExample() {\n  return (\n    <ControlsDemo />\n  )\n}"} />
+
+</Example>
+
+Components such as Amount Input, Chart and Context Menu play haptic feedback through `useHaptics()`. By default nothing happens: `HapticsProvider` lets you plug in an adapter that calls the haptics library of your choice, so the components stay free of a native dependency.
+
+The adapter has three methods: `impact(style)` with `light`, `medium`, `heavy`, `soft` or `rigid`; `selection()`; and `notification(type)` with `success`, `warning` or `error`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add haptics"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add haptics --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add haptics --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+2. Copy the source into `components/ui/haptics.tsx`:
+
+<SourceFile path="uniwind/components/ui/haptics.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+2. Copy the source into `components/ui/haptics.tsx`:
+
+<SourceFile path="nativewind/components/ui/haptics.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+2. Copy the source into `components/ui/haptics.tsx`:
+
+<SourceFile path="stylesheet/components/ui/haptics.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { HapticsProvider } from \"@/components/ui/haptics\""} />
+
+<Code lang="tsx" code={"<ControlsDemo />"} />
+
+Wrap your app in `HapticsProvider` and pass an `adapter` object that implements `impact`, `selection` and `notification`. Set `enabled={false}` to turn all feedback off, for example from a user setting.
+
+Call `useHaptics()` in your own components to get the same methods. Without a provider, or when disabled, they do nothing.
+
+## Examples
+
+### Feedback
+
+Buttons for each impact, selection and notification type.
+
+<Example id="components-haptics--feedback" width={880} height={631}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { type HapticsAdapter, HapticsProvider, useHaptics } from \"@/components/ui/haptics\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction useLoggingAdapter() {\n  const [log, setLog] = React.useState({ last: \"None\", count: 0 })\n  const adapter = React.useMemo<HapticsAdapter>(() => {\n    const record = (event: string) =>\n      setLog((current) => ({ last: event, count: current.count + 1 }))\n    return {\n      impact: (style) => record(`impact ${style}`),\n      selection: () => record(\"selection\"),\n      notification: (type) => record(`notification ${type}`),\n    }\n  }, [])\n  return { adapter, log }\n}\n\nfunction HapticLog({ last, count }: { last: string; count: number }) {\n  return (\n    <View className=\"flex-row items-center justify-between rounded-xl bg-surface-secondary px-4 py-3\">\n      <Text className=\"text-sm text-label-secondary\">Last haptic</Text>\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm font-medium\"\n      >\n        {count > 0 ? `${last} (${count})` : last}\n      </Text>\n    </View>\n  )\n}\n\nfunction FeedbackButtons() {\n  const haptics = useHaptics()\n  return (\n    <View className=\"w-full gap-3\">\n      <Text variant=\"muted\">Impact</Text>\n      <View className=\"flex-row flex-wrap gap-2\">\n        {([\"light\", \"medium\", \"heavy\", \"soft\", \"rigid\"] as const).map(\n          (style) => (\n            <Button\n              key={style}\n              size=\"sm\"\n              variant=\"secondary\"\n              onPress={() => haptics.impact(style)}\n            >\n              {style}\n            </Button>\n          )\n        )}\n      </View>\n      <Text variant=\"muted\">Selection</Text>\n      <View className=\"flex-row flex-wrap gap-2\">\n        <Button\n          size=\"sm\"\n          variant=\"secondary\"\n          onPress={() => haptics.selection()}\n        >\n          selection\n        </Button>\n      </View>\n      <Text variant=\"muted\">Notification</Text>\n      <View className=\"flex-row flex-wrap gap-2\">\n        {([\"success\", \"warning\", \"error\"] as const).map((type) => (\n          <Button\n            key={type}\n            size=\"sm\"\n            variant=\"secondary\"\n            onPress={() => haptics.notification(type)}\n          >\n            {type}\n          </Button>\n        ))}\n      </View>\n    </View>\n  )\n}\n\nfunction FeedbackDemo() {\n  const { adapter, log } = useLoggingAdapter()\n  return (\n    <HapticsProvider adapter={adapter}>\n      <View className=\"w-full gap-4\">\n        <HapticLog {...log} />\n        <FeedbackButtons />\n      </View>\n    </HapticsProvider>\n  )\n}\n\nexport function HapticsFeedbackExample() {\n  return (\n    <FeedbackDemo />\n  )\n}"} />
+
+</Example>
+
+### Reorder
+
+Feedback while dragging items in a reorder list.
+
+<Example id="components-haptics--reorder" width={880} height={571}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { ReorderList, ReorderListHandle, ReorderListItem } from \"@/components/interactions/reorder-list\"\nimport { type HapticsAdapter, HapticsProvider } from \"@/components/ui/haptics\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction useLoggingAdapter() {\n  const [log, setLog] = React.useState({ last: \"None\", count: 0 })\n  const adapter = React.useMemo<HapticsAdapter>(() => {\n    const record = (event: string) =>\n      setLog((current) => ({ last: event, count: current.count + 1 }))\n    return {\n      impact: (style) => record(`impact ${style}`),\n      selection: () => record(\"selection\"),\n      notification: (type) => record(`notification ${type}`),\n    }\n  }, [])\n  return { adapter, log }\n}\n\nfunction HapticLog({ last, count }: { last: string; count: number }) {\n  return (\n    <View className=\"flex-row items-center justify-between rounded-xl bg-surface-secondary px-4 py-3\">\n      <Text className=\"text-sm text-label-secondary\">Last haptic</Text>\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm font-medium\"\n      >\n        {count > 0 ? `${last} (${count})` : last}\n      </Text>\n    </View>\n  )\n}\n\nconst tasks = [\"Inbox\", \"Today\", \"Upcoming\", \"Someday\"]\n\nfunction ReorderDemo() {\n  const { adapter, log } = useLoggingAdapter()\n  const [value, setValue] = React.useState(tasks)\n  return (\n    <HapticsProvider adapter={adapter}>\n      <View className=\"w-full gap-4\">\n        <HapticLog {...log} />\n        <ReorderList\n          value={value}\n          onValueChange={setValue}\n          className=\"overflow-hidden rounded-2xl border border-separator\"\n        >\n          {value.map((task) => (\n            <ReorderListItem key={task} value={task} className=\"ps-4\">\n              <View className=\"min-w-0 grow py-3\">\n                <Text numberOfLines={1}>{task}</Text>\n              </View>\n              <ReorderListHandle accessibilityLabel={`Reorder ${task}`} />\n            </ReorderListItem>\n          ))}\n        </ReorderList>\n      </View>\n    </HapticsProvider>\n  )\n}\n\nexport function HapticsReorderExample() {\n  return (\n    <ReorderDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+The same controls with haptics turned off.
+
+<Example id="components-haptics--disabled" width={880} height={693}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { type HapticsAdapter, HapticsProvider } from \"@/components/ui/haptics\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction useLoggingAdapter() {\n  const [log, setLog] = React.useState({ last: \"None\", count: 0 })\n  const adapter = React.useMemo<HapticsAdapter>(() => {\n    const record = (event: string) =>\n      setLog((current) => ({ last: event, count: current.count + 1 }))\n    return {\n      impact: (style) => record(`impact ${style}`),\n      selection: () => record(\"selection\"),\n      notification: (type) => record(`notification ${type}`),\n    }\n  }, [])\n  return { adapter, log }\n}\n\nfunction HapticLog({ last, count }: { last: string; count: number }) {\n  return (\n    <View className=\"flex-row items-center justify-between rounded-xl bg-surface-secondary px-4 py-3\">\n      <Text className=\"text-sm text-label-secondary\">Last haptic</Text>\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm font-medium\"\n      >\n        {count > 0 ? `${last} (${count})` : last}\n      </Text>\n    </View>\n  )\n}\n\nfunction Row({\n  label,\n  children,\n}: {\n  label: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"min-h-11 flex-row items-center justify-between gap-4\">\n      <Text>{label}</Text>\n      {children}\n    </View>\n  )\n}\n\nfunction Controls() {\n  const [wifi, setWifi] = React.useState(true)\n  const [terms, setTerms] = React.useState(false)\n  const [volume, setVolume] = React.useState(40)\n  const [copies, setCopies] = React.useState(1)\n\n  return (\n    <View className=\"w-full gap-2\">\n      <Row label=\"Wi-Fi\">\n        <Switch\n          accessibilityLabel=\"Wi-Fi\"\n          checked={wifi}\n          onCheckedChange={setWifi}\n        />\n      </Row>\n      <Row label=\"Accept terms\">\n        <Checkbox\n          accessibilityLabel=\"Accept terms\"\n          checked={terms}\n          onCheckedChange={setTerms}\n        />\n      </Row>\n      <Row label=\"Copies\">\n        <Stepper value={copies} onValueChange={setCopies} min={1} max={9}>\n          <StepperInput accessibilityLabel=\"Copies\" />\n          <StepperGroup>\n            <StepperDecrement />\n            <StepperSeparator />\n            <StepperIncrement />\n          </StepperGroup>\n        </Stepper>\n      </Row>\n      <View className=\"flex-row gap-2 py-2\">\n        <Chip>Open now</Chip>\n        <Chip>Top rated</Chip>\n      </View>\n      <Slider\n        value={volume}\n        step={10}\n        onValueChange={(next) => setVolume(next)}\n        accessibilityLabel=\"Volume\"\n      />\n    </View>\n  )\n}\n\nfunction ControlsDemo({ enabled = true }: { enabled?: boolean }) {\n  const { adapter, log } = useLoggingAdapter()\n  return (\n    <HapticsProvider adapter={adapter} enabled={enabled}>\n      <View className=\"w-full gap-4\">\n        <HapticLog {...log} />\n        <Controls />\n      </View>\n    </HapticsProvider>\n  )\n}\n\nexport function HapticsDisabledExample() {\n  return (\n    <ControlsDemo enabled={false} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### HapticsProvider
+
+Supplies the adapter to every component below it.
+
+<PropsTable props={[{"name":"adapter","type":"HapticsAdapter | null","description":"Object with `impact`, `selection` and `notification` methods."},{"name":"enabled","type":"boolean","default":"true","description":"Turns feedback on or off. Defaults to `true`."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+## Notes
+
+- The types `HapticsAdapter`, `HapticsImpactStyle` and `HapticsNotificationType` are exported for typing your adapter.
+- Haptics have no visual output; pair important feedback with a visible change.

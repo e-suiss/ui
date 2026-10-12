@@ -1,0 +1,102 @@
+---
+title: Price Care
+description: "A device protection picker with device tabs, payment options, a theft add-on and a running total."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-price-care--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/price-care.tsx" fold={false} />
+
+</Example>
+
+A product screen with a hero photo per device, a `ToggleGroup` to pick the device, and a `RadioGroup` of payment options. For the phone, a `Switch` adds theft and loss protection. A `BottomBar` shows the total, which updates with each choice, and an Add to Bag `Button`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add price-care"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add price-care --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add price-care --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/price-care.tsx`:
+
+<SourceFile path="uniwind/components/blocks/price-care.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/price-care.tsx`:
+
+<SourceFile path="nativewind/components/blocks/price-care.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/price-care.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/price-care.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/PriceCare.swift" />
+
+<SourceFile path="kotlin/blocks/PriceCare.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PriceCare } from \"@/components/blocks/price-care\""} />
+
+<Code lang="tsx" code={"<PriceCare />"} />
+
+Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders.

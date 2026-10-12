@@ -1,0 +1,201 @@
+---
+title: Progress
+description: "A horizontal bar that shows how far a task has progressed, with an optional label and value."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-progress--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress } from \"@/components/ui/progress\"\n\nfunction ProgressDemo() {\n  const [value, setValue] = React.useState(13)\n  React.useEffect(() => {\n    const timer = setTimeout(() => setValue(66), 500)\n    return () => clearTimeout(timer)\n  }, [])\n  return <Progress value={value} />\n}\n\nexport function ProgressExample() {\n  return (\n    <ProgressDemo />\n  )\n}"} />
+
+</Example>
+
+`Progress` renders a thin track with an indicator whose width follows `value`. The width animates with a Reanimated spring, clamped between 0 and 100 percent. Any children, such as `ProgressLabel` and `ProgressValue`, are placed in a row above the bar.
+
+Use it for uploads, downloads and other tasks with a known amount of work.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add progress"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add progress --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add progress --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="uniwind/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="nativewind/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="stylesheet/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Progress.swift" />
+
+<SourceFile path="kotlin/components/Progress.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from \"@/components/ui/progress\""} />
+
+<Code lang="tsx" code={"<ProgressDemo />"} />
+
+Set `value` between `min` and `max` (0 and 100 by default). Pass `null` when the progress is unknown.
+
+Add a `ProgressLabel` and a `ProgressValue` as children to show a caption and the formatted value; the value is pushed to the end of the row. Format the value with `format` and `locale`.
+
+Style the bar with `trackClassName` and `indicatorClassName`. `ProgressTrack` and `ProgressIndicator` are also exported for custom layouts.
+
+## Examples
+
+### With label
+
+A bar with a label and a live percentage value.
+
+<Example id="components-progress--with-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress, ProgressLabel, ProgressValue } from \"@/components/ui/progress\"\n\nfunction WithLabelDemo() {\n  const [value, setValue] = React.useState(0)\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setValue((current) => (current >= 100 ? 0 : current + 10))\n    }, 600)\n    return () => clearInterval(timer)\n  }, [])\n  return (\n    <Progress value={value}>\n      <ProgressLabel>Uploading</ProgressLabel>\n      <ProgressValue />\n    </Progress>\n  )\n}\n\nexport function ProgressWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+</Example>
+
+### Complete
+
+A bar at 100 percent.
+
+<Example id="components-progress--complete" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressCompleteExample() {\n  return (\n    <Progress value={100} />\n  )\n}"} />
+
+</Example>
+
+### Values
+
+Bars at 0, 25, 50, 75 and 100 percent, the last with a custom indicator color.
+
+<Example id="components-progress--values" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressValuesExample() {\n  return (\n    <View className=\"w-full gap-4\">\n      <Progress value={0} />\n      <Progress value={25} />\n      <Progress value={50} />\n      <Progress value={75} />\n      <Progress value={100} indicatorClassName=\"bg-green\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Progress
+
+Root that holds the value and renders the track and indicator.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Root>"]} props={[{"name":"trackClassName","type":"string","description":"Extra classes for the track."},{"name":"indicatorClassName","type":"string","description":"Extra classes for the indicator."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ProgressTrack
+
+Background bar.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Track>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ProgressIndicator
+
+Animated fill that shows the current value.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Indicator>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ProgressLabel
+
+Caption text above the bar.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Label>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ProgressValue
+
+Formatted value text, aligned to the end.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Value>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The root has the `progressbar` role and reports `min`, `max`, the current value and a value text, so VoiceOver and TalkBack announce the progress.
+- Use `getAccessibilityValueText` to customize the announced text.
+
+## Notes
+
+- The track uses `bg-surface-secondary` and the indicator `bg-accent`.
+- Label and value text use `text-label` and `text-label-secondary`, with tabular numbers for the value.
+- Light and dark colors follow the system appearance.

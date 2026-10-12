@@ -1,0 +1,102 @@
+---
+title: Login Passkey
+description: "A passkey sign-in screen with a face scan dialog and a welcome view after verifying."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-login-passkey--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/login-passkey.tsx" fold={false} />
+
+</Example>
+
+A sign-in screen that shows the account with an `Avatar`, a Change link, a Continue with passkey `Button` and a link to sign in with a password. Continuing opens a `Dialog` with an animated scan glyph that turns into a verified state, then shows a welcome view with a Sign out link. The dialog can be cancelled during the scan.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-passkey"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-passkey --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add login-passkey --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-passkey.tsx`:
+
+<SourceFile path="uniwind/components/blocks/login-passkey.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-passkey.tsx`:
+
+<SourceFile path="nativewind/components/blocks/login-passkey.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/login-passkey.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/login-passkey.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/LoginPasskey.swift" />
+
+<SourceFile path="kotlin/blocks/LoginPasskey.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LoginPasskey } from \"@/components/blocks/login-passkey\""} />
+
+<Code lang="tsx" code={"<LoginPasskey />"} />
+
+Call your passkey API from `onContinue`, and wire `onChangeAccount` and `onUsePassword` to your navigation. The account details and the scan timing are sample values in the component.

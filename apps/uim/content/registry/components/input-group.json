@@ -1,0 +1,32 @@
+{
+  "description": "An input or textarea combined with prefix and suffix addons such as text, icons and buttons.",
+  "overview": "`InputGroup` draws one control-colored field and places an `InputGroupInput` or `InputGroupTextarea` inside it with addons around. Addons can sit on the start or end of the same line (`inline-start`, `inline-end`), or above or below the input (`block-start`, `block-end`), which turns the group into a column.\n\nThe group shows the focus border while its input is focused, and reads the disabled and invalid state from a surrounding Field. Pressing an addon focuses the input.",
+  "usage": "Add children in any order; the group sorts start addons before the input and end addons after it. Put short labels such as a URL prefix or a unit in `InputGroupText`, and actions in `InputGroupButton`, a small rounded `Button` that defaults to the `ghost` variant and `xs` size.\n\nUse a `block-end` addon with `InputGroupTextarea` for a footer row, for example a character count and a send button. Set `invalid` or `disabled` on the group, or let a Field provide them.",
+  "examples": {
+    "WithTextarea": "A textarea with a footer row holding a usage label and a button.",
+    "BlockStart": "A label addon above the input with `block-start`."
+  },
+  "parts": {
+    "InputGroup": "Field container that lays out the input and addons.",
+    "InputGroupAddon": "Slot for text, icons or buttons beside or around the input.",
+    "InputGroupText": "Text inside an addon.",
+    "InputGroupButton": "Compact button inside an addon.",
+    "InputGroupInput": "Single-line input without its own border.",
+    "InputGroupTextarea": "Multi-line input without its own border."
+  },
+  "props": {
+    "InputGroup": {
+      "disabled": "Disables the group and its input.",
+      "invalid": "Shows the danger border and tint."
+    },
+    "InputGroupAddon": {
+      "align": "`inline-start`, `inline-end`, `block-start` or `block-end`. Defaults to `inline-start`."
+    },
+    "InputGroupButton": {
+      "size": "`xs`, `sm`, `icon-xs` or `icon-sm`. Defaults to `xs`.",
+      "variant": "Button variant. Defaults to `ghost`."
+    }
+  },
+  "accessibility": "- The container has the `group` role.\n- Addons are not separate accessibility elements; their text is not announced with the input, so give the input an `accessibilityLabel` that includes needed context.\n- Icon-only buttons need an `accessibilityLabel`.",
+  "notes": "- Uses `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens; the invalid tint is stronger in dark mode.\n- Light and dark follow the system appearance."
+}

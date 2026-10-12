@@ -1,0 +1,102 @@
+---
+title: Roles Editor
+description: "An admin screen for editing role permissions, with a role list beside grouped permission switches."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-roles-editor--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/roles-editor.tsx" fold={false} />
+
+</Example>
+
+A `SplitView` lists the Editor, Support and Viewer roles with their member counts, and the detail pane shows the selected role's permissions grouped into `ItemGroup` lists, each with a `Switch`. Revert and Save buttons appear once a switch changes, and a New Role `Button` sits under the list. An admin `TabBar` switches between Users, Roles, Activity and Settings; sections other than Roles show a placeholder. On wide screens the list and detail sit side by side.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-editor"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-editor --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add roles-editor --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-editor.tsx`:
+
+<SourceFile path="uniwind/components/blocks/roles-editor.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-editor.tsx`:
+
+<SourceFile path="nativewind/components/blocks/roles-editor.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/roles-editor.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/roles-editor.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/RolesEditor.swift" />
+
+<SourceFile path="kotlin/blocks/RolesEditor.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RolesEditor } from \"@/components/blocks/roles-editor\""} />
+
+<Code lang="tsx" code={"<RolesEditor />"} />
+
+Replace `GROUPS`, `ROLES`, `MEMBERS` and `DEFAULTS` with your permissions and grants. Use `onTogglePermission`, `onSave`, `onRevert`, `onNewRole` and `onNavigate` to persist changes and route between sections.

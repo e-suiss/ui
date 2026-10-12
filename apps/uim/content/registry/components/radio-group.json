@@ -1,0 +1,33 @@
+{
+  "description": "A set of radio buttons where only one option can be selected at a time.",
+  "overview": "`RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the accent color and shows a dot. Items have an enlarged hit area so they are easy to press.",
+  "usage": "Give every `RadioGroupItem` a unique `value`. Control the group with `value` and `onValueChange(value, details)`, or leave it uncontrolled with `defaultValue`. Values are generic, so they can be strings or other types.\n\nPut a `Label` next to each item and link it through `nativeID` and `accessibilityLabelledBy`. Set `disabled` on the group to disable all items, or on a single item. Set `invalid` on items to show the danger border.",
+  "examples": {
+    "WithDescriptions": "Options with a label and a line of description each.",
+    "DisabledItem": "A group with one disabled option.",
+    "Disabled": "A fully disabled group.",
+    "Invalid": "Items with the `invalid` border."
+  },
+  "parts": {
+    "RadioGroup": "The container that holds the selected value.",
+    "RadioGroupItem": "A single radio button with its checked indicator."
+  },
+  "props": {
+    "RadioGroup": {
+      "value": "The selected value, for controlled use.",
+      "defaultValue": "The initially selected value, for uncontrolled use.",
+      "onValueChange": "Called with the new value and change details when an item is selected.",
+      "disabled": "Disables every item in the group.",
+      "readOnly": "Prevents changing the selection.",
+      "required": "Marks the group as required."
+    },
+    "RadioGroupItem": {
+      "value": "The value this item represents.",
+      "disabled": "Disables this item.",
+      "readOnly": "Prevents selecting this item.",
+      "invalid": "Shows a danger border while unchecked."
+    }
+  },
+  "accessibility": "- The group has the `radiogroup` role and reports `disabled` in `accessibilityState`.\n- Each item has the `radio` role and reports `checked` and `disabled` in `accessibilityState`.\n- The indicator is hidden from screen readers; label each item with a linked `Label` or an `accessibilityLabel`.",
+  "notes": "- Selecting an item triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.\n- Uses the `bg-accent`, `bg-accent-disabled`, `bg-control-disabled`, `bg-on-accent` and `border-danger` tokens.\n- Light and dark colors follow the system appearance; in dark mode unchecked items drop the border and shadow."
+}

@@ -1,0 +1,90 @@
+---
+title: Bar Chart Range
+description: "An eight-day forecast where each bar spans the low and high temperature on a shared scale."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-bar--range" width={880} height={751}>
+
+<SourceFile path="uniwind/components/charts/bar-chart-range.tsx" fold={false} />
+
+</Example>
+
+A horizontal `BarChart` whose `range` values are `[low, high]` pairs, so each bar floats between the two temperatures. Bars use a teal-to-orange gradient over a full-width track, day names sit on the left and highs on the right. The tooltip shows the range in degrees.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-range"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-range --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bar-chart-range --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-range.tsx`:
+
+<SourceFile path="uniwind/components/charts/bar-chart-range.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-range.tsx`:
+
+<SourceFile path="nativewind/components/charts/bar-chart-range.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/bar-chart-range.tsx`:
+
+<SourceFile path="stylesheet/components/charts/bar-chart-range.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/BarChartRange.swift" />
+
+<SourceFile path="kotlin/charts/BarChartRange.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartRange } from \"@/components/charts/bar-chart-range\""} />
+
+<Code lang="tsx" code={"<BarChartRange />"} />
+
+Replace `chartData` with your days and `low` and `high` values; the `range` pair is derived from them. Adjust the hidden `XAxis` `domain` to fit your temperature range. The component takes no props.

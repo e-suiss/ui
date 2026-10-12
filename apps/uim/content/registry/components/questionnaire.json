@@ -1,0 +1,58 @@
+{
+  "description": "A step-by-step form that shows one question at a time, with choices, text answers, validation, skipping and a submit step.",
+  "overview": "`Questionnaire` is a `View` that tracks which question is active, collects answers and validates them. Each `QuestionnaireItem` is one question; only the active item is shown, and moving between items slides the content horizontally with a Reanimated keyframe that follows the layout direction.\n\nItems hold `QuestionnaireChoice` rows, which are `Pressable` radios or, with `multiple`, checkboxes, or a `QuestionnaireInput` for a typed answer. `QuestionnaireActions` holds the Previous, Skip, Next and Submit buttons, each of which only appears when it applies.",
+  "usage": "Give every `QuestionnaireItem` a unique `name`; answers are collected under that name. Mark items `required` to block moving on without an answer; optional items show the Skip button. `QuestionnaireError` appears only when the item is invalid and has a default message you can replace.\n\nThe active item is uncontrolled through `defaultItem` or controlled with `item` and `onItemChange`. `onSubmit` receives the collected values: a string for single-answer items and a string array for `multiple` items.\n\n`QuestionnaireChoice` supports `defaultChecked`, or controlled `checked` with `onCheckedChange`. `QuestionnaireInput` takes a `type` that sets the keyboard, autocomplete and secure entry. `QuestionnaireProgress` shows \"Question 1 of 3\" by default and accepts a render function. Use `useQuestionnaireContext` to build custom controls, or `useQuestionnaire` for the underlying state.",
+  "examples": {
+    "MidFlow": "Starts on the second question with `defaultItem`.",
+    "Invalid": "A required question shown in its invalid state with an error message.",
+    "MultipleChoice": "A `multiple` item that accepts several checked choices.",
+    "WithChoiceDescriptions": "Choices with secondary text from `QuestionnaireChoiceDescription`.",
+    "TextInput": "A required question answered with `QuestionnaireInput`."
+  },
+  "parts": {
+    "Questionnaire": "Root that holds the state and the active question.",
+    "QuestionnaireProgress": "Shows the current question number and total.",
+    "QuestionnaireItem": "One question; shown only while active.",
+    "QuestionnaireTitle": "The question heading.",
+    "QuestionnaireDescription": "Secondary text under the title.",
+    "QuestionnaireChoices": "Stack of choice rows.",
+    "QuestionnaireChoice": "A selectable answer row.",
+    "QuestionnaireChoiceDescription": "Secondary text inside a choice.",
+    "QuestionnaireInput": "Text field for a typed answer.",
+    "QuestionnaireError": "Validation message shown when the item is invalid.",
+    "QuestionnaireActions": "Row for the navigation buttons.",
+    "QuestionnairePrevious": "Goes to the previous question.",
+    "QuestionnaireSkip": "Skips the active question when it is optional.",
+    "QuestionnaireNext": "Validates and moves to the next question.",
+    "QuestionnaireSubmit": "Validates all questions and calls `onSubmit` on the last step."
+  },
+  "props": {
+    "Questionnaire": {
+      "defaultItem": "Name of the question shown first.",
+      "item": "Controlled name of the active question.",
+      "items": "Optional list of item definitions that sets the order, `required` and `disabled`.",
+      "onItemChange": "Called with the name of the newly active question.",
+      "onSubmit": "Called with the collected values when every question passes validation."
+    },
+    "QuestionnaireItem": {
+      "name": "Unique key for the answer.",
+      "required": "Requires an answer before moving on and hides Skip.",
+      "disabled": "Removes the item from the sequence.",
+      "invalid": "Forces the invalid state.",
+      "multiple": "Allows more than one choice.",
+      "onStatusChange": "Called when the status changes to `unanswered`, `answered` or `skipped`."
+    },
+    "QuestionnaireChoice": {
+      "value": "Value stored when the choice is selected.",
+      "checked": "Controlled checked state.",
+      "defaultChecked": "Initial checked state.",
+      "disabled": "Disables the choice.",
+      "onCheckedChange": "Called with the next checked state."
+    },
+    "QuestionnaireInput": {
+      "type": "`text`, `email`, `number`, `tel`, `url`, `password` or `search`; sets keyboard and autofill props."
+    }
+  },
+  "accessibility": "- Each item has the `radiogroup` role, or `group` when `multiple`, and is labelled by its `QuestionnaireTitle`, which has the `heading` role.\n- Choices have the `radio` or `checkbox` role with checked and disabled states.\n- `QuestionnaireInput` is labelled by the title unless you pass an `accessibilityLabel`.\n- `QuestionnaireProgress` has the `progressbar` role, a value such as \"Question 2 of 3\" and a polite live region.\n- `QuestionnaireError` has the `alert` role with a polite live region.\n- Slide transitions respect the system reduce motion setting.",
+  "notes": "- Selecting a choice plays a selection haptic.\n- Selected choices use `border-accent` and `bg-accent`; invalid items use `border-danger`.\n- The slide direction flips for right-to-left layouts.\n- Light and dark colors follow the system appearance."
+}

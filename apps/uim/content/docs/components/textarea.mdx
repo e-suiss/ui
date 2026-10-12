@@ -1,0 +1,164 @@
+---
+title: Textarea
+description: "A multi-line text field for longer input, with focus, invalid and disabled states."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-textarea--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" />\n  )\n}"} />
+
+</Example>
+
+`Textarea` is the multi-line version of `Input`. It wraps a `TextInput` through the same field control primitive, defaults to `multiline` with `numberOfLines={8}`, aligns text to the top and has a minimum height. It shows a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add textarea"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add textarea --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add textarea --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="uniwind/components/ui/textarea.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="nativewind/components/ui/textarea.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="stylesheet/components/ui/textarea.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Textarea.swift" />
+
+<SourceFile path="kotlin/components/Textarea.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\""} />
+
+<Code lang="tsx" code={"<Textarea placeholder=\"Type your message here.\" />"} />
+
+Use it for comments, messages and other free-form text. Use `Input` for single-line values.
+
+The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state.
+
+Override `numberOfLines` or set a height through `className` to change the visible size.
+
+## Examples
+
+### With value
+
+A textarea that starts with a `defaultValue`.
+
+<Example id="components-textarea--with-value" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithValueExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" defaultValue=\"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\" />\n  )\n}"} />
+
+</Example>
+
+### With label
+
+A textarea inside a `Field` with a label and description.
+
+<Example id="components-textarea--with-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithLabelExample() {\n  return (\n    <Field>\n      <FieldLabel>Your message</FieldLabel>\n      <Textarea placeholder=\"Type your message here.\" />\n      <FieldDescription>\n        Your message will be copied to the team.\n      </FieldDescription>\n    </Field>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled textarea.
+
+<Example id="components-textarea--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaDisabledExample() {\n  return (\n    <Textarea placeholder=\"Disabled\" />\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+A textarea inside an invalid `Field` with an error message.
+
+<Example id="components-textarea--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Message</FieldLabel>\n      <Textarea defaultValue=\"Too short\" />\n      <FieldError>Message must be at least 20 characters.</FieldError>\n    </Field>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Textarea
+
+<PropsTable extends={["React.ComponentProps<typeof InputPrimitive.Root>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Inside a `Field`, the textarea gets the field label as `accessibilityLabel` and the description as `accessibilityHint`.
+- `disabled` is set in `accessibilityState` and makes the textarea non-editable.
+- Outside a `Field`, give it an `accessibilityLabel`.
+
+## Notes
+
+- Uses the `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens.
+- Placeholder, cursor and selection colors come from the `label-secondary` and `accent` tokens.
+- Light and dark colors follow the system appearance.

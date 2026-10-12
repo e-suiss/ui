@@ -1,0 +1,160 @@
+---
+title: Image Viewer
+description: "A full-screen photo viewer with swipe paging, pinch and double-tap zoom, and swipe down to close."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-image-viewer--open-by-default" width={880} height={1173}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { ImageViewer, ImageViewerContent, type ImageViewerImage, ImageViewerTrigger } from \"@/components/interactions/image-viewer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst images: ImageViewerImage[] = [\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Mountain lake at sunrise\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Valley with a river\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Lake between mountains\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Foggy hills\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Forest path\",\n  },\n]\n\nfunction Gallery({\n  defaultOpen,\n  defaultIndex,\n}: {\n  defaultOpen?: boolean\n  defaultIndex?: number\n}) {\n  return (\n    <ImageViewer\n      images={images}\n      defaultOpen={defaultOpen}\n      defaultIndex={defaultIndex}\n    >\n      <View className=\"gap-3\">\n        <View className=\"flex-row flex-wrap gap-2\">\n          {images.map((image, index) => (\n            <ImageViewerTrigger\n              key={image.accessibilityLabel}\n              index={index}\n              accessibilityLabel={image.accessibilityLabel}\n              className=\"aspect-square w-[31%] overflow-hidden rounded-xl bg-surface-secondary\"\n            >\n              <Image source={image.source} className=\"h-full w-full\" />\n            </ImageViewerTrigger>\n          ))}\n        </View>\n        <Text variant=\"muted\">\n          Tap a photo. Pinch or double-tap to zoom, swipe down to close.\n        </Text>\n      </View>\n      <ImageViewerContent />\n    </ImageViewer>\n  )\n}\n\nexport function ImageViewerOpenByDefaultExample() {\n  return (\n    <Gallery defaultOpen defaultIndex={1} />\n  )\n}"} />
+
+</Example>
+
+`ImageViewer` opens a set of `images` full screen on a dark media background, starting at the pressed thumbnail. A counter such as `2 of 5` and a close button sit at the top, below the safe area.
+
+Swipe sideways to page between images, with resistance at the first and last image. Pinch to zoom between 1x and 4x around the fingers, double-tap to zoom to 2.5x at the tapped point or back to 1x, and drag to pan while zoomed. Swiping up or down far enough closes the viewer, and a single tap toggles the controls.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add image-viewer"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add image-viewer --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add image-viewer --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="uniwind/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="nativewind/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/ImageViewer.swift" />
+
+<SourceFile path="kotlin/interactions/ImageViewer.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ImageViewer, ImageViewerTrigger, ImageViewerContent } from \"@/components/interactions/image-viewer\""} />
+
+<Code lang="tsx" code={"<Gallery defaultOpen defaultIndex={1} />"} />
+
+Pass `images` to `ImageViewer`, wrap each thumbnail in an `ImageViewerTrigger` with its `index`, and render one `ImageViewerContent`. Give each image an `accessibilityLabel`. The `ImageViewerImage` type is exported.
+
+Open state and the current image can be uncontrolled with `defaultOpen` and `defaultIndex`, or controlled with `open`, `onOpenChange`, `index` and `onIndexChange`. `useImageViewer` returns `open`, `index`, `count` and `images`.
+
+## Examples
+
+### Default
+
+<Example id="interactions-image-viewer--default" width={880} height={696}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { ImageViewer, ImageViewerContent, type ImageViewerImage, ImageViewerTrigger } from \"@/components/interactions/image-viewer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst images: ImageViewerImage[] = [\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Mountain lake at sunrise\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Valley with a river\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Lake between mountains\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Foggy hills\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Forest path\",\n  },\n]\n\nfunction Gallery({\n  defaultOpen,\n  defaultIndex,\n}: {\n  defaultOpen?: boolean\n  defaultIndex?: number\n}) {\n  return (\n    <ImageViewer\n      images={images}\n      defaultOpen={defaultOpen}\n      defaultIndex={defaultIndex}\n    >\n      <View className=\"gap-3\">\n        <View className=\"flex-row flex-wrap gap-2\">\n          {images.map((image, index) => (\n            <ImageViewerTrigger\n              key={image.accessibilityLabel}\n              index={index}\n              accessibilityLabel={image.accessibilityLabel}\n              className=\"aspect-square w-[31%] overflow-hidden rounded-xl bg-surface-secondary\"\n            >\n              <Image source={image.source} className=\"h-full w-full\" />\n            </ImageViewerTrigger>\n          ))}\n        </View>\n        <Text variant=\"muted\">\n          Tap a photo. Pinch or double-tap to zoom, swipe down to close.\n        </Text>\n      </View>\n      <ImageViewerContent />\n    </ImageViewer>\n  )\n}\n\nexport function ImageViewerExample() {\n  return (\n    <Gallery />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+<PropsTable extends={["React.ComponentProps<typeof ImageViewerPrimitive.Root>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the viewer opens or closes."},{"name":"onIndexChange","type":"(index: number) => void","description":"Called with the new index after paging."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ImageViewerTrigger
+
+A pressable thumbnail that opens the viewer at its `index`.
+
+<PropsTable extends={["React.ComponentProps<typeof ImageViewerPrimitive.Trigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ImageViewerContent
+
+The full-screen viewer with the pages, counter and close button.
+
+<PropsTable props={[{"name":"portalHost","type":"string","description":"Name of a portal host to render into."},{"name":"closeLabel","type":"string","default":"\"Close\"","description":"Accessibility label of the close button. Defaults to `Close`."},{"name":"indexLabel","type":"(index: number, count: number) => string","default":"defaultIndexLabel","description":"Formats the counter from the index and count. Defaults to `n of count`."},{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The viewer is modal for screen readers, and the escape gesture closes it.
+- The current page is `adjustable`: swiping up or down with a screen reader moves between images. It is labelled by the image's `accessibilityLabel`, or `Image n`, with the counter as its value.
+- Triggers have the `button` role and expose their `expanded` state.
+
+## Notes
+
+- The viewer fades in and out, and paging and zoom animations respect the system reduce motion setting.
+- Colors use the `bg-media` and `text-on-media` tokens, so the viewer stays dark in light mode.
+- On iOS the viewer renders in a full-window overlay so it appears above native screens.

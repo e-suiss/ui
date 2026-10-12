@@ -1,0 +1,42 @@
+{
+  "description": "A modal window centered over the screen for focused tasks and messages.",
+  "overview": "`Dialog` opens a centered card over a dimmed scrim. `DialogContent` renders through a portal (inside a full-window overlay on iOS), scales and fades in, and shows a round close button in the top-right corner by default. Tapping the scrim closes the dialog.\n\nUse it for short forms and information that the user can dismiss freely. When the user must make an explicit choice, use Alert Dialog instead.",
+  "usage": "Compose `DialogTrigger` and `DialogContent` with a `DialogHeader` (`DialogTitle`, `DialogDescription`), your content, and a `DialogFooter`. Footer buttons stack vertically with the first child at the bottom, and sit in a row aligned to the end on wider screens. Use `DialogClose` with `render` to turn any `Button` into a close button.\n\nSet `showCloseButton={false}` on the content to hide the corner button, or pass `closeLabel` to show a text button such as \"Done\" instead of the icon. The header adds end padding so the title does not run under it. `DialogFooter` takes `showCloseButton` to append a secondary Close button.\n\nUse `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.",
+  "examples": {
+    "OpenByDefault": "Starts open through `defaultOpen`.",
+    "Destructive": "A destructive action with a cancel button in the footer.",
+    "WithoutCloseButton": "No corner button, with a Close button in the footer.",
+    "WithCloseLabel": "A text close button through `closeLabel`."
+  },
+  "parts": {
+    "Dialog": "Root that holds the open state.",
+    "DialogTrigger": "Opens the dialog when pressed.",
+    "DialogPortal": "Portal the content is rendered into.",
+    "DialogOverlay": "Dimmed scrim that closes the dialog when tapped.",
+    "DialogContent": "Centered card with an optional close button.",
+    "DialogHeader": "Column for the title and description.",
+    "DialogTitle": "Dialog heading.",
+    "DialogDescription": "Supporting text.",
+    "DialogFooter": "Area for actions.",
+    "DialogClose": "Closes the dialog when pressed."
+  },
+  "props": {
+    "Dialog": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state when uncontrolled.",
+      "onOpenChange": "Called when the dialog opens or closes.",
+      "modal": "Whether the dialog is modal.",
+      "disablePointerDismissal": "Keeps the dialog open when the scrim is tapped."
+    },
+    "DialogContent": {
+      "showCloseButton": "Shows the corner close button. Defaults to `true`.",
+      "closeLabel": "Text for the close button instead of the icon.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "DialogFooter": {
+      "showCloseButton": "Appends a secondary Close button."
+    }
+  },
+  "accessibility": "- The popup has the `dialog` role, is labelled by the title and is marked as modal for VoiceOver.\n- Focus moves to the title when the dialog opens.\n- The Android back button and the VoiceOver escape gesture close it.\n- The icon close button is labelled \"Close\".",
+  "notes": "- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.\n- Animations respect the system Reduce Motion setting.\n- Uses `bg-surface-raised`, `bg-scrim` and `bg-surface-tertiary` tokens; light and dark follow the system appearance."
+}

@@ -1,0 +1,5 @@
+{
+  "description": "A row of small circular gauges showing the battery level of four devices.",
+  "overview": "A `Card` that renders one `RadialBarChart` ring per entry in `devices`, each with a level from 0 to 100. A ring turns red at or below `LOW` (20%) and is green otherwise, with the device initial in the center and its percentage and name below. Each gauge is a single accessible element labeled with name and level. Nothing is interactive.",
+  "usage": "Replace `devices` with your names and levels, and change `LOW` to move the warning threshold. The component takes no props."
+}

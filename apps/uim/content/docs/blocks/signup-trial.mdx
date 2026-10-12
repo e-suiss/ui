@@ -1,0 +1,102 @@
+---
+title: Signup Trial
+description: "A free trial sign-up screen with a hero image, email and password fields, and a terms checkbox."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-signup-trial--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/signup-trial.tsx" fold={false} />
+
+</Example>
+
+A hero image sits above an `InputAccessoryBar` with email and password inputs; the password shows a five-level strength meter as you type. A `Checkbox` with a `Label` accepts the terms, and the Start free trial `Button` in the `BottomBar` stays disabled until the form is valid, then shows a welcome screen. A sign-in link sits below.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-trial"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-trial --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add signup-trial --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-trial.tsx`:
+
+<SourceFile path="uniwind/components/blocks/signup-trial.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-trial.tsx`:
+
+<SourceFile path="nativewind/components/blocks/signup-trial.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/signup-trial.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/signup-trial.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/SignupTrial.swift" />
+
+<SourceFile path="kotlin/blocks/SignupTrial.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SignupTrial } from \"@/components/blocks/signup-trial\""} />
+
+<Code lang="tsx" code={"<SignupTrial />"} />
+
+Replace `IMAGE` and the copy with your own. `onSubmit` receives the email and password, and `onSignIn` handles the sign-in link. The hero photo is an Unsplash placeholder.

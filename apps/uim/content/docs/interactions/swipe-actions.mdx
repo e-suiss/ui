@@ -1,0 +1,159 @@
+---
+title: Swipe Actions
+description: "Swipe a list row sideways to reveal action buttons, with full swipe to run the main action."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-swipe-actions--default" width={880} height={539}>
+
+<Code lang="tsx" code={"import { ArchiveIcon, BellSlashIcon, EnvelopeOpenIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nconst MESSAGES = [\n  { id: \"1\", from: \"Olivia Martin\", subject: \"Quarterly report is ready\" },\n  { id: \"2\", from: \"Jackson Lee\", subject: \"Lunch on Friday?\" },\n  { id: \"3\", from: \"Isabella Nguyen\", subject: \"Design review notes\" },\n]\n\nfunction Inbox() {\n  const [messages, setMessages] = React.useState(MESSAGES)\n  const remove = (id: string) =>\n    setMessages((current) => current.filter((message) => message.id !== id))\n  return (\n    <ItemGroup variant=\"inset\">\n      {messages.map((message, index) => (\n        <React.Fragment key={message.id}>\n          {index > 0 ? <ItemSeparator /> : null}\n          <SwipeActions>\n            <SwipeActionsActions side=\"leading\">\n              <SwipeAction>\n                <Icon as={EnvelopeOpenIcon} />\n                <Text>Read</Text>\n              </SwipeAction>\n            </SwipeActionsActions>\n            <SwipeActionsContent className=\"bg-surface-secondary\">\n              <Item onPress={() => {}}>\n                <ItemContent>\n                  <ItemTitle>{message.from}</ItemTitle>\n                  <ItemDescription>{message.subject}</ItemDescription>\n                </ItemContent>\n              </Item>\n            </SwipeActionsContent>\n            <SwipeActionsActions side=\"trailing\">\n              <SwipeAction variant=\"neutral\">\n                <Icon as={BellSlashIcon} />\n                <Text>Mute</Text>\n              </SwipeAction>\n              <SwipeAction variant=\"archive\">\n                <Icon as={ArchiveIcon} />\n                <Text>Archive</Text>\n              </SwipeAction>\n              <SwipeAction\n                variant=\"destructive\"\n                fullSwipe\n                onPress={() => remove(message.id)}\n              >\n                <Icon as={TrashIcon} />\n                <Text>Delete</Text>\n              </SwipeAction>\n            </SwipeActionsActions>\n          </SwipeActions>\n        </React.Fragment>\n      ))}\n    </ItemGroup>\n  )\n}\n\nexport function SwipeActionsExample() {\n  return (\n    <View>\n      <Inbox />\n    </View>\n  )\n}"} />
+
+</Example>
+
+`SwipeActions` wraps a row so it can be dragged left or right to reveal `SwipeAction` buttons on the leading or trailing side. The buttons stretch to fill the revealed space, and opening one row closes any other open row.
+
+When an action has `fullSwipe`, dragging past 60% of the row width expands that action over the others with a medium impact haptic. Releasing there slides the row off, collapses its height, then runs the action, which suits delete or archive. Use it for mail, message or task lists.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add swipe-actions"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add swipe-actions --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add swipe-actions --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/swipe-actions.tsx`:
+
+<SourceFile path="uniwind/components/interactions/swipe-actions.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/swipe-actions.tsx`:
+
+<SourceFile path="nativewind/components/interactions/swipe-actions.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/swipe-actions.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/swipe-actions.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/SwipeActions.swift" />
+
+<SourceFile path="kotlin/interactions/SwipeActions.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from \"@/components/interactions/swipe-actions\""} />
+
+<Code lang="tsx" code={"<View>\n  <Inbox />\n</View>"} />
+
+Put the row in `SwipeActionsContent`, and the buttons in one `SwipeActionsActions` per side, with `side` set to `leading` or `trailing` (the default). Leading actions are on the left in left-to-right layouts and on the right in right-to-left layouts.
+
+Pressing an action runs `onPress` and closes the row. For a full-swipe action, `onPress` runs after the row collapses, so remove the item from your data there. `useSwipeActions` returns `close` for closing the row from inside it. `swipeActionVariants` is also exported.
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SwipeActions
+
+The root that handles the swipe gesture.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"onOpenChange","type":"(side: SwipeActionsSide | null) => void","description":"Called with `leading`, `trailing` or `null` when the row opens or closes."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SwipeActionsContent
+
+The row content that slides.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SwipeActionsActions
+
+The group of actions for one side.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"side","type":"SwipeActionsSide","description":"`leading` or `trailing`. Defaults to `trailing`."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SwipeAction
+
+One action button.
+
+<PropsTable extends={["SwipeActionProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Every action is offered as an accessibility action on `SwipeActionsContent`, labelled by its `accessibilityLabel` or text, so screen reader users can run it without swiping.
+- Hidden actions are removed from the accessibility tree until their side is open.
+- The row has the `group` role and each action the `button` role.
+
+## Notes
+
+- The full-swipe haptic plays only if the app provides an adapter through `HapticsProvider`.
+- Action colors use `bg-accent`, `bg-danger`, `bg-purple` and `bg-gray` with `text-on-accent` labels and icons; the content uses `bg-surface`.

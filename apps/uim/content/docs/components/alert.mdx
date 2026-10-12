@@ -1,0 +1,200 @@
+---
+title: Alert
+description: "A callout that shows a short message with an optional icon and action."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-alert--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CheckCircleIcon } from \"phosphor-react-native\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertExample() {\n  return (\n    <Alert icon={CheckCircleIcon}>\n      <AlertTitle>Payment successful</AlertTitle>\n      <AlertDescription>\n        Your payment of $29.99 has been processed. A receipt has been sent to\n        your email.\n      </AlertDescription>\n    </Alert>\n  )\n}"} />
+
+</Example>
+
+`Alert` is a `View` on a rounded secondary surface with an optional leading icon, a title and description column, and an optional action pinned to the top-end corner. It is static and stays in the layout; it is not a toast or a modal.
+
+Use the `default` variant for neutral information, where the icon uses the accent color, and `destructive` for errors, where the icon uses the danger color.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/alert.tsx`:
+
+<SourceFile path="uniwind/components/ui/alert.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/alert.tsx`:
+
+<SourceFile path="nativewind/components/ui/alert.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/alert.tsx`:
+
+<SourceFile path="stylesheet/components/ui/alert.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Alert.swift" />
+
+<SourceFile path="kotlin/components/Alert.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Alert, AlertTitle, AlertDescription, AlertAction } from \"@/components/ui/alert\""} />
+
+<Code lang="tsx" code={"<Alert icon={CheckCircleIcon}>\n  <AlertTitle>Payment successful</AlertTitle>\n  <AlertDescription>\n    Your payment of $29.99 has been processed. A receipt has been sent to\n    your email.\n  </AlertDescription>\n</Alert>"} />
+
+Pass a Phosphor icon component to `icon`, and compose `AlertTitle` and `AlertDescription` as children. Any `AlertAction` child is detected and placed in the corner, and extra end padding is added so the text does not run under it.
+
+Use `iconClassName` to adjust the icon's size or color.
+
+## Examples
+
+### Destructive
+
+The `destructive` variant with a danger-colored icon.
+
+<Example id="components-alert--destructive" width={880} height={400}>
+
+<Code lang="tsx" code={"import { WarningIcon } from \"phosphor-react-native\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertDestructiveExample() {\n  return (\n    <Alert icon={WarningIcon} variant=\"destructive\">\n      <AlertTitle>Unable to process payment</AlertTitle>\n      <AlertDescription>\n        Please verify your billing information and try again.\n      </AlertDescription>\n    </Alert>\n  )\n}"} />
+
+</Example>
+
+### Title only
+
+An alert with only a title.
+
+<Example id="components-alert--title-only" width={880} height={400}>
+
+<Code lang="tsx" code={"import { InfoIcon } from \"phosphor-react-native\"\nimport { Alert, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertTitleOnlyExample() {\n  return (\n    <Alert icon={InfoIcon}>\n      <AlertTitle>Your session will expire in 5 minutes.</AlertTitle>\n    </Alert>\n  )\n}"} />
+
+</Example>
+
+### With action
+
+An `AlertAction` button in the top-end corner.
+
+<Example id="components-alert--with-action" width={880} height={400}>
+
+<Code lang="tsx" code={"import { InfoIcon } from \"phosphor-react-native\"\nimport { Alert, AlertAction, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertWithActionExample() {\n  return (\n    <Alert icon={InfoIcon}>\n      <AlertTitle>New version available</AlertTitle>\n      <AlertDescription>\n        Update now to get the latest features and fixes.\n      </AlertDescription>\n      <AlertAction>\n        <Button size=\"sm\" variant=\"tinted\">\n          <Text>Update</Text>\n        </Button>\n      </AlertAction>\n    </Alert>\n  )\n}"} />
+
+</Example>
+
+### Without icon
+
+An alert with text only and no icon.
+
+<Example id="components-alert--without-icon" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertWithoutIconExample() {\n  return (\n    <Alert>\n      <AlertTitle>Heads up</AlertTitle>\n      <AlertDescription>\n        You can add components to your app using the registry.\n      </AlertDescription>\n    </Alert>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Alert
+
+Container with the icon, text column and action.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"icon","type":"PhosphorIcon","description":"Phosphor icon component shown before the text."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`default` or `destructive`; changes the icon color."},{"name":"iconClassName","type":"string","description":"Extra classes for the icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertTitle
+
+Bold first line.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertAction
+
+Slot positioned in the top-end corner.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The container has the `alert` role.
+- The icon is decorative; put the meaning in the title or description.
+
+## Notes
+
+- Uses `bg-surface-secondary`, `text-label`, `text-accent` and `text-danger` tokens; light and dark follow the system appearance.
+- The action is positioned with `end-4`, so it flips in right-to-left layouts.

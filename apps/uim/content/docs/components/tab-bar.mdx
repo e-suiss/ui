@@ -1,0 +1,182 @@
+---
+title: Tab Bar
+description: "A bottom navigation bar of icon and label tabs, with optional badges."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-tab-bar--default" width={880} height={1683}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, HouseIcon, MagnifyingGlassIcon, UserIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { TabBar, TabBarItem, TabBarList } from \"@/components/ui/tab-bar\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  { value: \"home\", label: \"Home\", icon: HouseIcon },\n  { value: \"search\", label: \"Search\", icon: MagnifyingGlassIcon },\n  { value: \"messages\", label: \"Messages\", icon: ChatCircleIcon, badge: 3 },\n  { value: \"profile\", label: \"Profile\", icon: UserIcon, badge: true },\n]\n\nfunction Page({\n  title,\n  children,\n}: {\n  title: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">{title}</Text>\n        <Text variant=\"muted\">Tap a tab to switch screens.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nfunction TabBarExample({\n  badges = true,\n  disabled,\n}: {\n  badges?: boolean\n  disabled?: string\n}) {\n  const [value, setValue] = React.useState(\"home\")\n  const current = items.find((item) => item.value === value)\n  return (\n    <Page title={current?.label ?? \"\"}>\n      <TabBar value={value} onValueChange={setValue}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item.value}\n              value={item.value}\n              icon={item.icon}\n              badge={badges ? item.badge : undefined}\n              disabled={item.value === disabled}\n            >\n              {item.label}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n      </TabBar>\n    </Page>\n  )\n}\n\nexport function TabBarExampleDemo() {\n  return (\n    <TabBarExample />\n  )\n}"} />
+
+</Example>
+
+`TabBar` is built on the tabs primitive and sits at the bottom of a screen. It adds bottom padding for the safe area, unless an enclosing `Screen` already handles the bottom edge. `TabBarItem` stacks an icon over a short label; the active tab uses the accent color and a filled icon weight.
+
+Use it for switching between the top-level sections of an app. For switching views within a screen, use Tabs.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tab-bar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tab-bar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tab-bar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-safe-area-context react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tab-bar.tsx`:
+
+<SourceFile path="uniwind/components/ui/tab-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-safe-area-context react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tab-bar.tsx`:
+
+<SourceFile path="nativewind/components/ui/tab-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-safe-area-context react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tab-bar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/tab-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/TabBar.swift" />
+
+<SourceFile path="kotlin/components/TabBar.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { TabBar, TabBarList, TabBarItem } from \"@/components/ui/tab-bar\""} />
+
+<Code lang="tsx" code={"<TabBarExample />"} />
+
+Put `TabBarItem` entries inside a `TabBarList`, inside `TabBar`. Give each item a `value`, an `icon` and a label as children. Control the active tab with `value` and `onValueChange`, or set `defaultValue`.
+
+The `badge` prop shows a count, text or a dot: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. A selection haptic plays whenever the tab changes.
+
+The `TabBarBadgeValue` type is also exported.
+
+## Examples
+
+### Without badges
+
+The tab bar without badges.
+
+<Example id="components-tab-bar--without-badges" width={880} height={1683}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, HouseIcon, MagnifyingGlassIcon, UserIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { TabBar, TabBarItem, TabBarList } from \"@/components/ui/tab-bar\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  { value: \"home\", label: \"Home\", icon: HouseIcon },\n  { value: \"search\", label: \"Search\", icon: MagnifyingGlassIcon },\n  { value: \"messages\", label: \"Messages\", icon: ChatCircleIcon, badge: 3 },\n  { value: \"profile\", label: \"Profile\", icon: UserIcon, badge: true },\n]\n\nfunction Page({\n  title,\n  children,\n}: {\n  title: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">{title}</Text>\n        <Text variant=\"muted\">Tap a tab to switch screens.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nfunction TabBarExample({\n  badges = true,\n  disabled,\n}: {\n  badges?: boolean\n  disabled?: string\n}) {\n  const [value, setValue] = React.useState(\"home\")\n  const current = items.find((item) => item.value === value)\n  return (\n    <Page title={current?.label ?? \"\"}>\n      <TabBar value={value} onValueChange={setValue}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item.value}\n              value={item.value}\n              icon={item.icon}\n              badge={badges ? item.badge : undefined}\n              disabled={item.value === disabled}\n            >\n              {item.label}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n      </TabBar>\n    </Page>\n  )\n}\n\nexport function TabBarWithoutBadgesExample() {\n  return (\n    <TabBarExample badges={false} />\n  )\n}"} />
+
+</Example>
+
+### Large badge
+
+A count above 99 shown as `99+` and a text badge.
+
+<Example id="components-tab-bar--large-badge" width={880} height={1683}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, GearSixIcon, HouseIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { TabBar, TabBarItem, TabBarList } from \"@/components/ui/tab-bar\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({\n  title,\n  children,\n}: {\n  title: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">{title}</Text>\n        <Text variant=\"muted\">Tap a tab to switch screens.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function TabBarLargeBadgeExample() {\n  return (\n    <Page title=\"Home\">\n      <TabBar defaultValue=\"home\">\n        <TabBarList>\n          <TabBarItem value=\"home\" icon={HouseIcon}>\n            Home\n          </TabBarItem>\n          <TabBarItem value=\"messages\" icon={ChatCircleIcon} badge={128}>\n            Messages\n          </TabBarItem>\n          <TabBarItem value=\"settings\" icon={GearSixIcon} badge=\"New\">\n            Settings\n          </TabBarItem>\n        </TabBarList>\n      </TabBar>\n    </Page>\n  )\n}"} />
+
+</Example>
+
+### Disabled item
+
+A tab bar with one disabled tab.
+
+<Example id="components-tab-bar--disabled-item" width={880} height={1683}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, HouseIcon, MagnifyingGlassIcon, UserIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { TabBar, TabBarItem, TabBarList } from \"@/components/ui/tab-bar\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  { value: \"home\", label: \"Home\", icon: HouseIcon },\n  { value: \"search\", label: \"Search\", icon: MagnifyingGlassIcon },\n  { value: \"messages\", label: \"Messages\", icon: ChatCircleIcon, badge: 3 },\n  { value: \"profile\", label: \"Profile\", icon: UserIcon, badge: true },\n]\n\nfunction Page({\n  title,\n  children,\n}: {\n  title: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">{title}</Text>\n        <Text variant=\"muted\">Tap a tab to switch screens.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nfunction TabBarExample({\n  badges = true,\n  disabled,\n}: {\n  badges?: boolean\n  disabled?: string\n}) {\n  const [value, setValue] = React.useState(\"home\")\n  const current = items.find((item) => item.value === value)\n  return (\n    <Page title={current?.label ?? \"\"}>\n      <TabBar value={value} onValueChange={setValue}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item.value}\n              value={item.value}\n              icon={item.icon}\n              badge={badges ? item.badge : undefined}\n              disabled={item.value === disabled}\n            >\n              {item.label}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n      </TabBar>\n    </Page>\n  )\n}\n\nexport function TabBarDisabledItemExample() {\n  return (\n    <TabBarExample disabled=\"search\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### TabBar
+
+Root that holds the active tab and the safe area padding.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.Root>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabBarList
+
+Row that holds the tabs.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.List>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabBarItem
+
+One tab with an icon, a label and an optional badge.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.Tab>"]} props={[{"name":"icon","type":"PhosphorIcon","description":"Phosphor icon shown above the label. Uses the fill weight when active."},{"name":"badge","type":"TabBarBadgeValue","description":"Number, text or `true` for a dot, shown on the icon's corner."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The list has the `tablist` role and each item has the `tab` role, with selected and disabled states.
+- A badge with a count or text is exposed as the tab's accessibility value, so VoiceOver and TalkBack read it after the label.
+- A dot badge is visual only and is not announced.
+
+## Notes
+
+- Uses `bg-surface` with a `border-separator` top border, `text-accent` for the active tab and `bg-danger` for badges; colors follow the system appearance.

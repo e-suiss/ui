@@ -1,0 +1,5 @@
+{
+  "description": "A subscription bundle picker with Individual and Family plans, each listing which services it includes.",
+  "overview": "A pricing screen with selectable plan cards that act as radio buttons. Each card shows the price, who it covers, and the bundled services with icons, striking through any that the plan leaves out. A `BottomBar` holds a Try it free `Button` and a link that shows how much the selected plan saves.",
+  "usage": "Replace `PLANS` and `SERVICES` with your offer. Wire `onSelectPlan` and `onCompare` (both receive the plan name) to your purchase flow."
+}

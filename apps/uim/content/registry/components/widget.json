@@ -1,0 +1,44 @@
+{
+  "description": "A rounded card for glanceable information in fixed widget sizes, with an optional drag handle to resize it.",
+  "overview": "`Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.\n\nWith `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap, and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align=\"center\"` to center the content, which also hides `WidgetAction`.",
+  "usage": "Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.\n\nThe size is uncontrolled with `defaultSize`, or controlled with `size` and `onSizeChange`. Use `sizes` to limit which sizes the user can pick. A non-resizable widget defaults to `auto`; a resizable one defaults to `small`.\n\n`useWidget` returns the current `size` and `align` so custom content can adapt to the widget size.",
+  "examples": {
+    "Sizes": "The four fixed sizes side by side.",
+    "Editing": "A resizable widget starting at `large`.",
+    "InsideHandle": "A resizable widget with the handle drawn inside the corner.",
+    "LimitedSizes": "Resizing limited to `small` and `medium`.",
+    "Controlled": "Controls the size with `size` and `onSizeChange`.",
+    "Centered": "Centered content with `align=\"center\"`.",
+    "Auto": "An `auto` widget that fills its parent.",
+    "Dashboard": "Several auto-sized widgets arranged in a grid."
+  },
+  "parts": {
+    "Widget": "The card surface and optional resize handle.",
+    "WidgetHeader": "Row for the icon, title and action.",
+    "WidgetIcon": "Icon frame in `default`, `sm` or `lg` size.",
+    "WidgetTitle": "Single-line heading.",
+    "WidgetAction": "Trailing slot in the header; hidden when centered.",
+    "WidgetValue": "Large number with tabular figures.",
+    "WidgetDescription": "Secondary text.",
+    "WidgetContent": "Flexible body area that clips overflow.",
+    "WidgetFooter": "Small secondary text and icons pinned to the bottom."
+  },
+  "props": {
+    "Widget": {
+      "size": "Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`.",
+      "defaultSize": "Initial size when uncontrolled.",
+      "onSizeChange": "Called with the new size after a resize.",
+      "sizes": "Sizes the user can resize to. Defaults to all four.",
+      "resizable": "Shows a drag handle for resizing.",
+      "handle": "Handle placement: `outside` the corner or `inside` it. Defaults to `outside`.",
+      "align": "`start` or `center` content alignment.",
+      "resizeLabel": "Accessibility label for the handle. Defaults to \"Resize widget\"."
+    },
+    "WidgetIcon": {
+      "size": "`default`, `sm` or `lg`.",
+      "iconClassName": "Classes applied to the icon inside."
+    }
+  },
+  "accessibility": "- The resize handle has the `adjustable` role, its `resizeLabel` and the current size as its value; increment and decrement actions step through the available sizes, so VoiceOver and TalkBack users can resize without dragging.\n- `WidgetTitle` has the `heading` role.\n- `WidgetIcon` and the resize preview outline are hidden from assistive technology.\n- Size animations respect the system reduce motion setting.",
+  "notes": "- Uses `bg-surface-secondary` for the surface, `bg-control` for icon frames, and `text-label-quaternary` for the handle, which turns `text-accent` while dragging.\n- The handle and drag direction mirror in right-to-left layouts.\n- Light and dark colors follow the system appearance."
+}

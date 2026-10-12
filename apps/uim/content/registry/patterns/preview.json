@@ -1,0 +1,30 @@
+{
+  "description": "A link-styled trigger that opens a floating drawer with a quick preview, such as a profile card.",
+  "overview": "`PreviewTrigger` renders inline in link color and dims when pressed. It opens a `Drawer` that floats above the screen edges by default and has a swipe handle.\n\nUse it to show a summary of a person, place or item from a mention or link without leaving the screen.",
+  "usage": "Put a `PreviewTrigger` and a `PreviewContent` inside `Preview`. A string or number child of the trigger is wrapped in `Text`.\n\nThe preview can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. `PreviewContent` pads its children and adds end padding when a close button is shown, so content does not sit under it.",
+  "examples": {
+    "OpenByDefault": "Opens the preview on first render.",
+    "WithCloseButton": "Shows a close button with `showCloseButton`.",
+    "WithCloseLabel": "Labels the close button `Done` with `closeLabel`.",
+    "Attached": "Sets `floating` to `false` so the drawer sits on the screen edges."
+  },
+  "parts": {
+    "Preview": "The root drawer, floating by default.",
+    "PreviewTrigger": "The link-styled element that opens the preview.",
+    "PreviewContent": "The drawer content with padding for the preview."
+  },
+  "props": {
+    "Preview": {
+      "open": "Controls whether the preview is open.",
+      "defaultOpen": "Whether the preview starts open when uncontrolled.",
+      "onOpenChange": "Called when the preview opens or closes.",
+      "floating": "Insets the drawer from the screen edges. Defaults to `true`."
+    },
+    "PreviewContent": {
+      "showCloseButton": "Shows a close button.",
+      "closeLabel": "Label of the close button; adds more end padding when set."
+    }
+  },
+  "accessibility": "- Give `PreviewContent` an `accessibilityLabel` that names what is previewed.",
+  "notes": "- The trigger uses the `text-link` color."
+}

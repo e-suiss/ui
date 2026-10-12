@@ -1,0 +1,213 @@
+---
+title: Bubble
+description: "A chat message bubble with a tail, alignment, variants and emoji reactions."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-bubble--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleExample() {\n  return (\n    <Bubble align=\"start\">\n      <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n    </Bubble>\n  )\n}"} />
+
+</Example>
+
+`Bubble` lays out one message aligned to the `start` or `end` of the conversation, and `BubbleContent` draws the rounded bubble with an SVG tail on the aligned side. Seven variants are available: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` and `destructive`; `outline` and `ghost` have no tail.
+
+`BubbleGroup` stacks messages and shows the tail only on the last bubble of each run from the same side, so consecutive messages read as one block. `BubbleReactions` pins a small reaction pill to the top or bottom edge of a bubble.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bubble"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bubble --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bubble --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="uniwind/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="nativewind/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="stylesheet/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Bubble.swift" />
+
+<SourceFile path="kotlin/components/Bubble.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\""} />
+
+<Code lang="tsx" code={"<Bubble align=\"start\">\n  <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n</Bubble>"} />
+
+Wrap each message in `Bubble` and put its text in `BubbleContent`; plain strings are wrapped in `Text`. Set `align="end"` for messages from the current user, or provide a default through `BubbleAlignContext`.
+
+`BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and its background darkens while pressed. Use `render` to attach it to a trigger such as a context menu.
+
+`BubbleReactions` takes `side` (`top` or `bottom`) and `align` (`start` or `end`), and the bubble adds margin so the pill does not overlap its neighbors.
+
+## Examples
+
+### Variants
+
+All seven variants.
+
+<Example id="components-bubble--variants" width={880} height={651}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nconst VARIANTS = [\n  \"default\",\n  \"secondary\",\n  \"muted\",\n  \"tinted\",\n  \"outline\",\n  \"ghost\",\n  \"destructive\",\n] as const\n\nexport function BubbleVariantsExample() {\n  return (\n    <BubbleGroup>\n      {VARIANTS.map((variant) => (\n        <Bubble key={variant} align=\"start\" variant={variant}>\n          <BubbleContent>This is a {variant} bubble.</BubbleContent>\n        </Bubble>\n      ))}\n    </BubbleGroup>\n  )\n}"} />
+
+</Example>
+
+### Conversation
+
+A `BubbleGroup` with messages from both sides and merged tails.
+
+<Example id="components-bubble--conversation" width={880} height={459}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleConversationExample() {\n  return (\n    <BubbleGroup>\n      <Bubble variant=\"muted\">\n        <BubbleContent>\n          Hey, did you get a chance to review the draft?\n        </BubbleContent>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>Yes, I left a few comments on the intro.</BubbleContent>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>Everything else looks great.</BubbleContent>\n      </Bubble>\n      <Bubble variant=\"muted\">\n        <BubbleContent>Thanks! I will update it this afternoon.</BubbleContent>\n      </Bubble>\n    </BubbleGroup>\n  )\n}"} />
+
+</Example>
+
+### With reactions
+
+Reaction pills on the bottom and top edges.
+
+<Example id="components-bubble--with-reactions" width={880} height={447}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@/components/ui/bubble\"\n\nexport function BubbleWithReactionsExample() {\n  return (\n    <BubbleGroup>\n      <Bubble align=\"start\" variant=\"muted\">\n        <BubbleContent>We just hit 10,000 users!</BubbleContent>\n        <BubbleReactions>🎉 3</BubbleReactions>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>That is amazing news.</BubbleContent>\n        <BubbleReactions align=\"start\">❤️</BubbleReactions>\n      </Bubble>\n      <Bubble align=\"start\" variant=\"secondary\">\n        <BubbleContent>Reactions can sit on top as well.</BubbleContent>\n        <BubbleReactions side=\"top\">👍 2</BubbleReactions>\n      </Bubble>\n    </BubbleGroup>\n  )\n}"} />
+
+</Example>
+
+### Interactive
+
+A pressable `outline` bubble with `onPress`.
+
+<Example id="components-bubble--interactive" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <Bubble variant=\"outline\" align=\"start\">\n      <BubbleContent onPress={() => {}}>\n        Show me the latest release notes\n      </BubbleContent>\n    </Bubble>\n  )\n}"} />
+
+</Example>
+
+### Long press actions
+
+A bubble that opens a context menu on long press.
+
+<Example id="components-bubble--long-press-actions" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleLongPressActionsExample() {\n  return (\n    <View>\n      <ContextActions>\n        <Bubble variant=\"muted\">\n          <BubbleContent\n            accessibilityLabel=\"Message from Maya\"\n            render={<ContextActionsTrigger />}\n          >\n            Hold this message to see its actions.\n          </BubbleContent>\n        </Bubble>\n        <ContextActionsContent>\n          <ContextActionsItem>Reply</ContextActionsItem>\n          <ContextActionsItem>Copy</ContextActionsItem>\n          <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Bubble
+
+One message, aligned to the start or end.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"BubbleVariant","default":"\"default\"","description":"`default`, `secondary`, `muted`, `tinted`, `outline`, `ghost` or `destructive`."},{"name":"align","type":"BubbleAlign","description":"`start` or `end`. Defaults to `start`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>","React.RefAttributes<View>"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Element to render instead of the default view or pressable."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BubbleReactions
+
+Reaction pill on the edge of a bubble.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"align","type":"BubbleAlign","default":"\"end\"","description":"`start` or `end` along the bubble. Defaults to `end`."},{"name":"side","type":"\"top\" | \"bottom\"","default":"\"bottom\"","description":"`top` or `bottom`. Defaults to `bottom`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `BubbleContent` gets the `button` role when it has `onPress` or `onLongPress`.
+- The tail is hidden from VoiceOver and TalkBack.
+- Give long-press bubbles an `accessibilityLabel` that says who sent the message.
+
+## Notes
+
+- The tail mirrors itself for `end` alignment and in right-to-left layouts.
+- Uses `bg-accent`, `bg-control`, `bg-surface-secondary` and `bg-danger-surface` tokens with pressed states; light and dark follow the system appearance.

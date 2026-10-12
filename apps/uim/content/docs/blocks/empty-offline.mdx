@@ -1,0 +1,102 @@
+---
+title: Empty Offline
+description: "An offline state with a retry button that shows a spinner and then a sample album grid once connected."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-empty-offline--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/empty-offline.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Empty`, `Button`, `Spinner`, `Icon` and `Text`. Try Again shows a loading state for a moment and then switches to the online content, which has a Disconnect link back to the offline state.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-offline"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-offline --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-offline --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-offline.tsx`:
+
+<SourceFile path="uniwind/components/blocks/empty-offline.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-offline.tsx`:
+
+<SourceFile path="nativewind/components/blocks/empty-offline.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-offline.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/empty-offline.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/EmptyOffline.swift" />
+
+<SourceFile path="kotlin/blocks/EmptyOffline.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { EmptyOffline } from \"@/components/blocks/empty-offline\""} />
+
+<Code lang="tsx" code={"<EmptyOffline />"} />
+
+Replace `ALBUMS` with your content and the timed retry with a real connectivity check. The component takes no props.

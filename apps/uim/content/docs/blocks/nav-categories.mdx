@@ -1,0 +1,102 @@
+---
+title: Nav Categories
+description: "A store landing screen with a heading, help links and a scrolling row of product categories with photos."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-nav-categories--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/nav-categories.tsx" fold={false} />
+
+</Example>
+
+A store screen with a large heading, links to ask a specialist or find a store, and a scrollable `ChipGroup` of categories, each `Chip` showing a photo and a label. Selecting a category updates the line below it.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add nav-categories"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add nav-categories --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add nav-categories --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/nav-categories.tsx`:
+
+<SourceFile path="uniwind/components/blocks/nav-categories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/nav-categories.tsx`:
+
+<SourceFile path="nativewind/components/blocks/nav-categories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/nav-categories.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/nav-categories.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/NavCategories.swift" />
+
+<SourceFile path="kotlin/blocks/NavCategories.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { NavCategories } from \"@/components/blocks/nav-categories\""} />
+
+<Code lang="tsx" code={"<NavCategories />"} />
+
+Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders.

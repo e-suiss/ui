@@ -1,0 +1,223 @@
+---
+title: Dialog
+description: "A modal window centered over the screen for focused tasks and messages."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-dialog--open-by-default" width={880} height={1289}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction EditProfileContent() {\n  return (\n    <DialogContent>\n      <DialogHeader>\n        <DialogTitle>Edit profile</DialogTitle>\n        <DialogDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </DialogDescription>\n      </DialogHeader>\n      <View className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <DialogFooter>\n        <DialogClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DialogClose>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n      </DialogFooter>\n    </DialogContent>\n  )\n}\n\nexport function DialogOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog defaultOpen>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Edit profile</Text>\n        </DialogTrigger>\n        <EditProfileContent />\n      </Dialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Dialog` opens a centered card over a dimmed scrim. `DialogContent` renders through a portal (inside a full-window overlay on iOS), scales and fades in, and shows a round close button in the top-right corner by default. Tapping the scrim closes the dialog.
+
+Use it for short forms and information that the user can dismiss freely. When the user must make an explicit choice, use Alert Dialog instead.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dialog"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dialog --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dialog --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="uniwind/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="nativewind/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="stylesheet/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="kotlin/components/Dialog.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from \"@/components/ui/dialog\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Dialog defaultOpen>\n    <DialogTrigger render={<Button variant=\"outline\" />}>\n      <Text>Edit profile</Text>\n    </DialogTrigger>\n    <EditProfileContent />\n  </Dialog>\n</View>"} />
+
+Compose `DialogTrigger` and `DialogContent` with a `DialogHeader` (`DialogTitle`, `DialogDescription`), your content, and a `DialogFooter`. Footer buttons stack vertically with the first child at the bottom, and sit in a row aligned to the end on wider screens. Use `DialogClose` with `render` to turn any `Button` into a close button.
+
+Set `showCloseButton={false}` on the content to hide the corner button, or pass `closeLabel` to show a text button such as "Done" instead of the icon. The header adds end padding so the title does not run under it. `DialogFooter` takes `showCloseButton` to append a secondary Close button.
+
+Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
+
+## Examples
+
+### Default
+
+<Example id="components-dialog--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction EditProfileContent() {\n  return (\n    <DialogContent>\n      <DialogHeader>\n        <DialogTitle>Edit profile</DialogTitle>\n        <DialogDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </DialogDescription>\n      </DialogHeader>\n      <View className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <DialogFooter>\n        <DialogClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DialogClose>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n      </DialogFooter>\n    </DialogContent>\n  )\n}\n\nexport function DialogExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Edit profile</Text>\n        </DialogTrigger>\n        <EditProfileContent />\n      </Dialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Destructive
+
+A destructive action with a cancel button in the footer.
+
+<Example id="components-dialog--destructive" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogDestructiveExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </DialogTrigger>\n        <DialogContent>\n          <DialogHeader>\n            <DialogTitle>Delete account</DialogTitle>\n            <DialogDescription>\n              This will permanently delete your account and all of its data.\n            </DialogDescription>\n          </DialogHeader>\n          <DialogFooter>\n            <DialogClose render={<Button variant=\"secondary\" />}>\n              <Text>Cancel</Text>\n            </DialogClose>\n            <DialogClose render={<Button variant=\"destructive\" />}>\n              <Text>Delete</Text>\n            </DialogClose>\n          </DialogFooter>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Without close button
+
+No corner button, with a Close button in the footer.
+
+<Example id="components-dialog--without-close-button" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogWithoutCloseButtonExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show terms</Text>\n        </DialogTrigger>\n        <DialogContent showCloseButton={false}>\n          <DialogHeader>\n            <DialogTitle>Terms updated</DialogTitle>\n            <DialogDescription>\n              We have updated our terms of service. Please review the changes\n              before continuing.\n            </DialogDescription>\n          </DialogHeader>\n          <DialogFooter showCloseButton>\n            <Button>\n              <Text>Accept</Text>\n            </Button>\n          </DialogFooter>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+A text close button through `closeLabel`.
+
+<Example id="components-dialog--with-close-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogWithCloseLabelExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open settings</Text>\n        </DialogTrigger>\n        <DialogContent closeLabel=\"Done\">\n          <DialogHeader>\n            <DialogTitle>Notification settings</DialogTitle>\n            <DialogDescription>\n              Choose how you want to be notified about activity in your\n              workspace.\n            </DialogDescription>\n          </DialogHeader>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DialogOverlay
+
+Dimmed scrim that closes the dialog when tapped.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Backdrop>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DialogContent
+
+Centered card with an optional close button.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the corner close button. Defaults to `true`."},{"name":"closeLabel","type":"string","description":"Text for the close button instead of the icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DialogHeader
+
+Column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DialogFooter
+
+Area for actions.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Appends a secondary Close button."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DialogTitle
+
+Dialog heading.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DialogDescription
+
+Supporting text.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Description>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `dialog` role, is labelled by the title and is marked as modal for VoiceOver.
+- Focus moves to the title when the dialog opens.
+- The Android back button and the VoiceOver escape gesture close it.
+- The icon close button is labelled "Close".
+
+## Notes
+
+- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-surface-raised`, `bg-scrim` and `bg-surface-tertiary` tokens; light and dark follow the system appearance.

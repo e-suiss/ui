@@ -1,0 +1,189 @@
+---
+title: Table List
+description: "Turns table-style rows and columns into a grouped list of rows with a title, description and trailing values."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-table-list--default" width={880} height={891}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Invoice = {\n  id: string\n  customer: string\n  status: string\n  method: string\n  amount: string\n}\n\nconst invoices: Invoice[] = [\n  {\n    id: \"INV001\",\n    customer: \"Olivia Martin\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$250.00\",\n  },\n  {\n    id: \"INV002\",\n    customer: \"Jackson Lee\",\n    status: \"Pending\",\n    method: \"PayPal\",\n    amount: \"$150.00\",\n  },\n  {\n    id: \"INV003\",\n    customer: \"Isabella Nguyen\",\n    status: \"Unpaid\",\n    method: \"Transfer\",\n    amount: \"$350.00\",\n  },\n  {\n    id: \"INV004\",\n    customer: \"William Kim\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$450.00\",\n  },\n]\n\nconst columns: TableListColumn<Invoice>[] = [\n  {\n    key: \"customer\",\n    header: \"Customer\",\n    cell: (row) => row.customer,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (row) => row.status,\n    slot: \"description\",\n  },\n  {\n    key: \"method\",\n    header: \"Method\",\n    cell: (row) => row.method,\n    slot: \"description\",\n  },\n  {\n    key: \"amount\",\n    header: \"Amount\",\n    cell: (row) => row.amount,\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListExample() {\n  return (\n    <View className=\"gap-8\">\n      <TableList\n        title=\"Invoices\"\n        rows={invoices}\n        columns={columns}\n        getKey={(row) => row.id}\n        onRowPress={() => {}}\n      />\n      <TableList rows={[]} columns={columns} emptyText=\"No invoices yet.\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+`TableList` takes `rows` and a `columns` definition, and renders each row as a `TableListRow` inside one rounded group. Each column has a `slot` that decides where its cell goes: the row title, the description line, the trailing side, or nowhere.
+
+The row parts are also exported, so you can build the same grouped look inside a `FlatList` for long or virtualized lists.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add table-list"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add table-list --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add table-list --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
+
+3. Copy the source into `components/patterns/table-list.tsx`:
+
+<SourceFile path="uniwind/components/patterns/table-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
+
+3. Copy the source into `components/patterns/table-list.tsx`:
+
+<SourceFile path="nativewind/components/patterns/table-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
+
+2. Copy the source into `components/patterns/table-list.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/table-list.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/TableList.swift" />
+
+<SourceFile path="kotlin/patterns/TableList.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, TableListRow, TableList } from \"@/components/patterns/table-list\""} />
+
+<Code lang="tsx" code={"<View className=\"gap-8\">\n  <TableList\n    title=\"Invoices\"\n    rows={invoices}\n    columns={columns}\n    getKey={(row) => row.id}\n    onRowPress={() => {}}\n  />\n  <TableList rows={[]} columns={columns} emptyText=\"No invoices yet.\" />\n</View>"} />
+
+Define columns with `key`, `header`, `cell` and `slot`. Several `description` columns are joined with ` · `, and several `trailing` columns are shown side by side. Use `mobileCell` to render a different value than `cell` in the list, such as a shorter date.
+
+Pass `onRowPress` to make rows pressable. When there are no rows, `emptyText` is shown in the group. The `TableListColumn` type is exported.
+
+With a `FlatList`, use `TableListRow` as the item, pass `first` and `last` to round the ends, `TableListSeparator` as `ItemSeparatorComponent`, and `TableListHeader` and `TableListFooter` around the list.
+
+## Examples
+
+### With flat list
+
+Builds the grouped list in a `FlatList` with a header, footer and separators.
+
+<Example id="patterns-table-list--with-flat-list" width={880} height={762}>
+
+<Code lang="tsx" code={"import { FlatList } from \"react-native\"\nimport { TableListFooter, TableListHeader, TableListRow, TableListSeparator } from \"@/components/patterns/table-list\"\n\ntype Invoice = {\n  id: string\n  customer: string\n  status: string\n  method: string\n  amount: string\n}\n\nconst invoices: Invoice[] = [\n  {\n    id: \"INV001\",\n    customer: \"Olivia Martin\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$250.00\",\n  },\n  {\n    id: \"INV002\",\n    customer: \"Jackson Lee\",\n    status: \"Pending\",\n    method: \"PayPal\",\n    amount: \"$150.00\",\n  },\n  {\n    id: \"INV003\",\n    customer: \"Isabella Nguyen\",\n    status: \"Unpaid\",\n    method: \"Transfer\",\n    amount: \"$350.00\",\n  },\n  {\n    id: \"INV004\",\n    customer: \"William Kim\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$450.00\",\n  },\n]\n\nexport function TableListWithFlatListExample() {\n  return (\n    <FlatList\n      data={invoices}\n      keyExtractor={(item) => item.id}\n      ListHeaderComponent={<TableListHeader>Recent</TableListHeader>}\n      ListFooterComponent={\n        <TableListFooter>Payments settle within two days.</TableListFooter>\n      }\n      ItemSeparatorComponent={TableListSeparator}\n      renderItem={({ item, index }) => (\n        <TableListRow\n          first={index === 0}\n          last={index === invoices.length - 1}\n          title={item.customer}\n          description={item.status}\n          trailing={item.amount}\n          onPress={() => {}}\n        />\n      )}\n    />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### TableListTitle
+
+A large heading above the list.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TableListHeader
+
+A small uppercase heading above a group.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TableListFooter
+
+A note below a group.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TableListSeparator
+
+An inset divider between rows.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+<PropsTable extends={["React.ComponentProps<typeof Item>"]} props={[{"name":"title","type":"React.ReactNode","description":"The row's main text."},{"name":"description","type":"React.ReactNode","description":"A single-line secondary text."},{"name":"trailing","type":"React.ReactNode","description":"Content on the end side; text is shown in secondary color with tabular numbers."},{"name":"first","type":"boolean","default":"false","description":"Rounds the top corners."},{"name":"last","type":"boolean","default":"false","description":"Rounds the bottom corners."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"rows","type":"T[]","required":true,"description":"The data to render."},{"name":"columns","type":"TableListColumn<T>[]","required":true,"description":"Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`."},{"name":"getKey","type":"(row: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns a unique key for a row. Defaults to the index."},{"name":"title","type":"React.ReactNode","description":"Heading shown above the list."},{"name":"emptyText","type":"React.ReactNode","default":"\"No results.\"","description":"Content shown when `rows` is empty. Defaults to `No results.`."},{"name":"onRowPress","type":"(row: T, index: number) => void","description":"Called with the row and index when a row is pressed."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The group has the `list` role; rows have the `listitem` role, or `button` when `onRowPress` is set.
+- `TableListTitle` and `TableListHeader` have the `heading` role.
+- Separators are hidden from screen readers.
+
+## Notes
+
+- Rows use `bg-surface-secondary` and `bg-surface-tertiary` when pressed.
+- The `header` and `align` column fields are not rendered by the list layout.

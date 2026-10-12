@@ -1,0 +1,202 @@
+---
+title: Card Stack
+description: "A deck of cards the user swipes left or right one at a time, with buttons, undo and an empty state."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-card-stack--default" width={880} height={1007}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { CardStack, CardStackActions, CardStackEmpty, CardStackSwipeButton, CardStackUndo } from \"@/components/interactions/card-stack\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Place = { id: string; name: string; city: string; detail: string }\n\nconst places: Place[] = [\n  {\n    id: \"harbor\",\n    name: \"Harbor Café\",\n    city: \"Lisbon\",\n    detail: \"Slow mornings, strong coffee and a view of the river.\",\n  },\n  {\n    id: \"garden\",\n    name: \"Garden Library\",\n    city: \"Kyoto\",\n    detail: \"Quiet reading rooms around a moss garden.\",\n  },\n  {\n    id: \"market\",\n    name: \"Night Market\",\n    city: \"Taipei\",\n    detail: \"Street food stalls open until two in the morning.\",\n  },\n]\n\nfunction PlaceCard({ place }: { place: Place }) {\n  return (\n    <Card className=\"h-full\">\n      <CardHeader>\n        <CardTitle>{place.name}</CardTitle>\n        <CardDescription>{place.city}</CardDescription>\n      </CardHeader>\n      <CardContent className=\"grow\">\n        <View className=\"grow rounded-xl bg-surface-secondary\" />\n      </CardContent>\n      <CardContent>\n        <Text className=\"text-sm text-label-secondary\">{place.detail}</Text>\n      </CardContent>\n    </Card>\n  )\n}\n\nfunction Demo({ disabled = false }: { disabled?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"gap-3\">\n      <CardStack\n        data={places}\n        keyExtractor={(place) => place.id}\n        renderItem={(place) => <PlaceCard place={place} />}\n        itemAccessibilityLabel={(place) => `${place.name}, ${place.city}`}\n        disabled={disabled}\n        onSwipe={(direction, place) =>\n          setLog(`${direction === \"left\" ? \"Skipped\" : \"Liked\"} ${place.name}`)\n        }\n        onUndo={(place) => setLog(`Restored ${place.name}`)}\n      >\n        <CardStackEmpty>You have seen every place.</CardStackEmpty>\n        <CardStackActions>\n          <CardStackSwipeButton direction=\"left\" />\n          <CardStackUndo />\n          <CardStackSwipeButton direction=\"right\" />\n        </CardStackActions>\n      </CardStack>\n      <Text role=\"status\" className=\"text-center text-sm text-label-secondary\">\n        {log}\n      </Text>\n    </View>\n  )\n}\n\nexport function CardStackExample() {\n  return (\n    <Demo />\n  )\n}"} />
+
+</Example>
+
+`CardStack` shows the top card of `data` with up to `visibleCount` cards stacked behind it, each slightly smaller and lower. Dragging the top card sideways moves and tilts it, while the cards behind grow into place.
+
+Releasing past `threshold`, or flicking faster than 800 points per second, flies the card off in that direction and shows the next one; otherwise it springs back. Use it for one-at-a-time decisions such as keep or skip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card-stack"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card-stack --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add card-stack --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/card-stack.tsx`:
+
+<SourceFile path="uniwind/components/interactions/card-stack.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/card-stack.tsx`:
+
+<SourceFile path="nativewind/components/interactions/card-stack.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/card-stack.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/card-stack.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/CardStack.swift" />
+
+<SourceFile path="kotlin/interactions/CardStack.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { CardStack, CardStackEmpty, CardStackActions, CardStackSwipeButton, CardStackUndo } from \"@/components/interactions/card-stack\""} />
+
+<Code lang="tsx" code={"<Demo />"} />
+
+Pass `data` and `renderItem`, and handle `onSwipe(direction, item, index)`. Add children below the deck: `CardStackActions` with `CardStackSwipeButton`s and a `CardStackUndo`, and a `CardStackEmpty` shown once every card is swiped.
+
+Undo brings back the last card from the side it left and calls `onUndo`. `useCardStack` exposes `index`, `count`, `remaining`, `canUndo`, `swipe` and `undo` for custom controls. The `CardStackDirection` type is exported.
+
+## Examples
+
+### Mid swipe
+
+A static frame of the top card dragged to the right.
+
+<Example id="interactions-card-stack--mid-swipe" width={880} height={904}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Place = { id: string; name: string; city: string; detail: string }\n\nconst places: Place[] = [\n  {\n    id: \"harbor\",\n    name: \"Harbor Café\",\n    city: \"Lisbon\",\n    detail: \"Slow mornings, strong coffee and a view of the river.\",\n  },\n  {\n    id: \"garden\",\n    name: \"Garden Library\",\n    city: \"Kyoto\",\n    detail: \"Quiet reading rooms around a moss garden.\",\n  },\n  {\n    id: \"market\",\n    name: \"Night Market\",\n    city: \"Taipei\",\n    detail: \"Street food stalls open until two in the morning.\",\n  },\n]\n\nfunction PlaceCard({ place }: { place: Place }) {\n  return (\n    <Card className=\"h-full\">\n      <CardHeader>\n        <CardTitle>{place.name}</CardTitle>\n        <CardDescription>{place.city}</CardDescription>\n      </CardHeader>\n      <CardContent className=\"grow\">\n        <View className=\"grow rounded-xl bg-surface-secondary\" />\n      </CardContent>\n      <CardContent>\n        <Text className=\"text-sm text-label-secondary\">{place.detail}</Text>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport function CardStackMidSwipeExample() {\n  return (\n    <View className=\"gap-6\">\n      <View className=\"h-96 w-full\">\n        <View\n          className=\"absolute inset-0\"\n          style={{ transform: [{ translateY: 14.4 }, { scale: 0.94 }] }}\n        >\n          <PlaceCard place={places[2]} />\n        </View>\n        <View\n          className=\"absolute inset-0\"\n          style={{ transform: [{ translateY: 2.4 }, { scale: 0.99 }] }}\n        >\n          <PlaceCard place={places[1]} />\n        </View>\n        <View\n          className=\"absolute inset-0\"\n          style={{\n            transform: [\n              { translateX: 96 },\n              { translateY: 12 },\n              { rotate: \"3deg\" },\n            ],\n          }}\n        >\n          <PlaceCard place={places[0]} />\n        </View>\n      </View>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Empty
+
+An empty deck showing `CardStackEmpty`.
+
+<Example id="interactions-card-stack--empty" width={880} height={1007}>
+
+<Code lang="tsx" code={"import { CardStack, CardStackActions, CardStackEmpty, CardStackSwipeButton, CardStackUndo } from \"@/components/interactions/card-stack\"\n\ntype Place = { id: string; name: string; city: string; detail: string }\n\nexport function CardStackEmptyExample() {\n  return (\n    <CardStack data={[] as Place[]} renderItem={() => null}>\n      <CardStackEmpty>You have seen every place.</CardStackEmpty>\n      <CardStackActions>\n        <CardStackSwipeButton direction=\"left\" />\n        <CardStackUndo />\n        <CardStackSwipeButton direction=\"right\" />\n      </CardStackActions>\n    </CardStack>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Turns off swiping and the buttons with `disabled`.
+
+<Example id="interactions-card-stack--disabled" width={880} height={1007}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { CardStack, CardStackActions, CardStackEmpty, CardStackSwipeButton, CardStackUndo } from \"@/components/interactions/card-stack\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Place = { id: string; name: string; city: string; detail: string }\n\nconst places: Place[] = [\n  {\n    id: \"harbor\",\n    name: \"Harbor Café\",\n    city: \"Lisbon\",\n    detail: \"Slow mornings, strong coffee and a view of the river.\",\n  },\n  {\n    id: \"garden\",\n    name: \"Garden Library\",\n    city: \"Kyoto\",\n    detail: \"Quiet reading rooms around a moss garden.\",\n  },\n  {\n    id: \"market\",\n    name: \"Night Market\",\n    city: \"Taipei\",\n    detail: \"Street food stalls open until two in the morning.\",\n  },\n]\n\nfunction PlaceCard({ place }: { place: Place }) {\n  return (\n    <Card className=\"h-full\">\n      <CardHeader>\n        <CardTitle>{place.name}</CardTitle>\n        <CardDescription>{place.city}</CardDescription>\n      </CardHeader>\n      <CardContent className=\"grow\">\n        <View className=\"grow rounded-xl bg-surface-secondary\" />\n      </CardContent>\n      <CardContent>\n        <Text className=\"text-sm text-label-secondary\">{place.detail}</Text>\n      </CardContent>\n    </Card>\n  )\n}\n\nfunction Demo({ disabled = false }: { disabled?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"gap-3\">\n      <CardStack\n        data={places}\n        keyExtractor={(place) => place.id}\n        renderItem={(place) => <PlaceCard place={place} />}\n        itemAccessibilityLabel={(place) => `${place.name}, ${place.city}`}\n        disabled={disabled}\n        onSwipe={(direction, place) =>\n          setLog(`${direction === \"left\" ? \"Skipped\" : \"Liked\"} ${place.name}`)\n        }\n        onUndo={(place) => setLog(`Restored ${place.name}`)}\n      >\n        <CardStackEmpty>You have seen every place.</CardStackEmpty>\n        <CardStackActions>\n          <CardStackSwipeButton direction=\"left\" />\n          <CardStackUndo />\n          <CardStackSwipeButton direction=\"right\" />\n        </CardStackActions>\n      </CardStack>\n      <Text role=\"status\" className=\"text-center text-sm text-label-secondary\">\n        {log}\n      </Text>\n    </View>\n  )\n}\n\nexport function CardStackDisabledExample() {\n  return (\n    <Demo disabled />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### CardStack
+
+The root that renders the deck and handles the drag gesture.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"data","type":"readonly T[]","required":true,"description":"The items to show as cards."},{"name":"renderItem","type":"(item: T, index: number) => React.ReactNode","required":true,"description":"Renders one card from the item and its index."},{"name":"keyExtractor","type":"(item: T, index: number) => string","description":"Returns a key for a card. Defaults to its position."},{"name":"onSwipe","type":"(direction: CardStackDirection, item: T, index: number) => void","description":"Called with the direction, item and index after a card leaves."},{"name":"onUndo","type":"(item: T, index: number) => void","description":"Called with the item and index after undo."},{"name":"threshold","type":"number","default":"120","description":"Drag distance that commits a swipe. Defaults to `120`."},{"name":"visibleCount","type":"number","default":"3","description":"Cards stacked behind the top card. Defaults to `3`."},{"name":"disabled","type":"boolean","default":"false","description":"Turns off the gesture and the swipe buttons."},{"name":"itemAccessibilityLabel","type":"(item: T, index: number) => string","description":"Returns the label for the top card."},{"name":"deckClassName","type":"string","description":"Classes for the deck area, which is `h-96` by default."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardStackEmpty
+
+A dashed placeholder shown when no cards remain.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardStackActions
+
+A centered row for the buttons.
+
+<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardStackSwipeButton
+
+A round button that swipes the top card left or right.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} props={[{"name":"direction","type":"CardStackDirection","required":true,"description":"`left` shows an X icon, `right` shows a heart icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardStackUndo
+
+A button that restores the last swiped card.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The top card has `Swipe left` and `Swipe right` accessibility actions.
+- Cards behind the top card are hidden from screen readers.
+- Swipe buttons are labelled `Swipe left` and `Swipe right`, and undo is labelled `Undo`, unless you pass `accessibilityLabel`.
+
+## Notes
+
+- A medium impact haptic plays when a card is swiped by gesture, button or accessibility action, if the app provides an adapter through `HapticsProvider`.
+- Fly-out and spring animations respect the system reduce motion setting.
+- The left button icon uses `text-danger`; the right uses `text-accent`.

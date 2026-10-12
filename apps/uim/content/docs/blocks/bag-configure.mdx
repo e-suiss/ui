@@ -1,0 +1,102 @@
+---
+title: Bag Configure
+description: "A product configuration screen for choosing a model, finish and storage, with a live price and an Add to Bag button."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-bag-configure--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/bag-configure.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `ToggleGroup` color swatches, `Button`, `Text` and `BottomBar`. Model and storage are radio-style options, the finish swatches cross-fade the product photo, and the bottom bar shows the price and a monthly amount that update as you choose. Add to Bag switches its label to Added to Bag.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bag-configure"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bag-configure --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bag-configure --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/bag-configure.tsx`:
+
+<SourceFile path="uniwind/components/blocks/bag-configure.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/bag-configure.tsx`:
+
+<SourceFile path="nativewind/components/blocks/bag-configure.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/bag-configure.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/bag-configure.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/BagConfigure.swift" />
+
+<SourceFile path="kotlin/blocks/BagConfigure.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BagConfigure } from \"@/components/blocks/bag-configure\""} />
+
+<Code lang="tsx" code={"<BagConfigure />"} />
+
+Replace `MODELS`, `FINISHES` and `STORAGE` with your catalog data. Pass `onAddToBag` to receive the selected model, finish, storage and price.

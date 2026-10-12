@@ -1,0 +1,102 @@
+---
+title: Verify Device
+description: "A sign-in approval flow where a trusted device shows an alert, then a code to enter on the new device."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-verify-device--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/verify-device.tsx" fold={false} />
+
+</Example>
+
+The screen shows a mock alert from the trusted device with Allow and Don't Allow. Allowing reveals a code and an `InputOTP` to enter it, with a `Spinner` while checking and an error for a wrong code; denying shows a blocked message with an option to show the request again. A correct code shows an approved screen.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-device"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-device --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add verify-device --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Input Otp](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Input Otp](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-device.tsx`:
+
+<SourceFile path="uniwind/components/blocks/verify-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Input Otp](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-device.tsx`:
+
+<SourceFile path="nativewind/components/blocks/verify-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Input Otp](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/verify-device.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/verify-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/VerifyDevice.swift" />
+
+<SourceFile path="kotlin/blocks/VerifyDevice.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { VerifyDevice } from \"@/components/blocks/verify-device\""} />
+
+<Code lang="tsx" code={"<VerifyDevice />"} />
+
+`onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. Edit `COPY` to change the text for each phase.

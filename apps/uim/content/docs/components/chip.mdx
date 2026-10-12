@@ -1,0 +1,242 @@
+---
+title: Chip
+description: "A compact, selectable pill for filters and tags, with an optional icon and remove button."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-chip--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Chip } from \"@/components/ui/chip\"\n\nexport function ChipExample() {\n  return (\n    <Chip>Open now</Chip>\n  )\n}"} />
+
+</Example>
+
+`Chip` is a toggle rendered as a rounded `Pressable`. It switches between an unselected control background and a selected fill, and shrinks slightly while pressed. It has `default` and `sm` sizes, an optional leading `icon`, and an optional trailing remove button when `onRemove` is set.
+
+`ChipGroup` manages selection for a set of chips: single selection by default, or several with `multiple`. It wraps chips onto new lines, or lays them out in a horizontal scroll view with `scrollable`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chip"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chip --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chip --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/chip.tsx`:
+
+<SourceFile path="uniwind/components/ui/chip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/chip.tsx`:
+
+<SourceFile path="nativewind/components/ui/chip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/chip.tsx`:
+
+<SourceFile path="stylesheet/components/ui/chip.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Chip.swift" />
+
+<SourceFile path="kotlin/components/Chip.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Chip, ChipGroup } from \"@/components/ui/chip\""} />
+
+<Code lang="tsx" code={"<Chip>Open now</Chip>"} />
+
+Use `selected` with `onSelectedChange`, or `defaultSelected`, on a standalone chip. Inside a `ChipGroup`, give each chip a `value` and control the group with `value`, `defaultValue` and `onValueChange` (arrays of values).
+
+The group's `size` is passed to every chip unless a chip sets its own. Use `removeLabel` to localize the remove button's label.
+
+`chipVariants` is also exported if you need the classes elsewhere.
+
+## Examples
+
+### States
+
+Unselected, selected and disabled chips.
+
+<Example id="components-chip--states" width={880} height={503}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Section({\n  label,\n  children,\n}: {\n  label: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"muted\">{label}</Text>\n      {children}\n    </View>\n  )\n}\n\nexport function ChipStatesExample() {\n  return (\n    <View className=\"gap-4\">\n      <Section label=\"Unselected\">\n        <Chip>Open now</Chip>\n      </Section>\n      <Section label=\"Selected\">\n        <Chip defaultSelected>Open now</Chip>\n      </Section>\n      <Section label=\"Disabled\">\n        <View className=\"flex-row gap-2\">\n          <Chip disabled>Open now</Chip>\n          <Chip disabled defaultSelected>\n            Open now\n          </Chip>\n        </View>\n      </Section>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+The `default` and `sm` sizes.
+
+<Example id="components-chip--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { StarIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Section({\n  label,\n  children,\n}: {\n  label: string\n  children: React.ReactNode\n}) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"muted\">{label}</Text>\n      {children}\n    </View>\n  )\n}\n\nexport function ChipSizesExample() {\n  return (\n    <View className=\"gap-4\">\n      <Section label=\"Default\">\n        <View className=\"flex-row gap-2\">\n          <Chip icon={StarIcon}>Top rated</Chip>\n          <Chip icon={StarIcon} defaultSelected>\n            Top rated\n          </Chip>\n          <Chip onRemove={() => {}}>Nearby</Chip>\n        </View>\n      </Section>\n      <Section label=\"Small\">\n        <View className=\"flex-row gap-2\">\n          <Chip size=\"sm\" icon={StarIcon}>\n            Top rated\n          </Chip>\n          <Chip size=\"sm\" icon={StarIcon} defaultSelected>\n            Top rated\n          </Chip>\n          <Chip size=\"sm\" onRemove={() => {}}>\n            Nearby\n          </Chip>\n        </View>\n      </Section>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With icon
+
+Chips with a leading icon.
+
+<Example id="components-chip--with-icon" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CoffeeIcon, ForkKnifeIcon, MapPinIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Chip } from \"@/components/ui/chip\"\n\nexport function ChipWithIconExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Chip icon={CoffeeIcon}>Coffee</Chip>\n      <Chip icon={ForkKnifeIcon} defaultSelected>\n        Restaurants\n      </Chip>\n      <Chip icon={MapPinIcon}>Nearby</Chip>\n      <Chip icon={CalendarBlankIcon} disabled>\n        Tonight\n      </Chip>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Removable
+
+Chips with a remove button through `onRemove`.
+
+<Example id="components-chip--removable" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction RemovableDemo() {\n  const [tags, setTags] = React.useState([\n    \"Design\",\n    \"Mobile\",\n    \"Accessibility\",\n    \"Motion\",\n  ])\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {tags.map((tag) => (\n          <Chip\n            key={tag}\n            onRemove={() =>\n              setTags((current) => current.filter((item) => item !== tag))\n            }\n            removeLabel={`Remove ${tag}`}\n          >\n            {tag}\n          </Chip>\n        ))}\n      </View>\n      <Text variant=\"muted\">{tags.length} tags</Text>\n    </View>\n  )\n}\n\nexport function ChipRemovableExample() {\n  return (\n    <RemovableDemo />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+A chip controlled with `selected` and `onSelectedChange`.
+
+<Example id="components-chip--controlled" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [selected, setSelected] = React.useState(true)\n  return (\n    <View className=\"gap-3\">\n      <Chip selected={selected} onSelectedChange={setSelected}>\n        Free delivery\n      </Chip>\n      <Text variant=\"muted\">{selected ? \"Selected\" : \"Not selected\"}</Text>\n    </View>\n  )\n}\n\nexport function ChipControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+</Example>
+
+### Group single
+
+A group that allows one selected chip.
+
+<Example id="components-chip--group-single" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip, ChipGroup } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nconst categories = [\n  { value: \"all\", label: \"All\" },\n  { value: \"coffee\", label: \"Coffee\" },\n  { value: \"lunch\", label: \"Lunch\" },\n  { value: \"dinner\", label: \"Dinner\" },\n  { value: \"bakery\", label: \"Bakery\" },\n  { value: \"bars\", label: \"Bars\" },\n  { value: \"desserts\", label: \"Desserts\" },\n]\n\nfunction SingleGroupDemo() {\n  const [value, setValue] = React.useState([\"all\"])\n  return (\n    <View className=\"gap-3\">\n      <ChipGroup value={value} onValueChange={setValue}>\n        {categories.slice(0, 4).map((category) => (\n          <Chip key={category.value} value={category.value}>\n            {category.label}\n          </Chip>\n        ))}\n      </ChipGroup>\n      <Text variant=\"muted\">Selected: {value.join(\", \") || \"none\"}</Text>\n    </View>\n  )\n}\n\nexport function ChipGroupSingleExample() {\n  return (\n    <SingleGroupDemo />\n  )\n}"} />
+
+</Example>
+
+### Group multiple
+
+A group with `multiple` selection.
+
+<Example id="components-chip--group-multiple" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Chip, ChipGroup } from \"@/components/ui/chip\"\nimport { Text } from \"@/components/ui/text\"\n\nconst categories = [\n  { value: \"all\", label: \"All\" },\n  { value: \"coffee\", label: \"Coffee\" },\n  { value: \"lunch\", label: \"Lunch\" },\n  { value: \"dinner\", label: \"Dinner\" },\n  { value: \"bakery\", label: \"Bakery\" },\n  { value: \"bars\", label: \"Bars\" },\n  { value: \"desserts\", label: \"Desserts\" },\n]\n\nfunction MultipleGroupDemo() {\n  const [value, setValue] = React.useState([\"coffee\", \"bakery\"])\n  return (\n    <View className=\"gap-3\">\n      <ChipGroup multiple value={value} onValueChange={setValue}>\n        {categories.slice(1).map((category) => (\n          <Chip key={category.value} value={category.value}>\n            {category.label}\n          </Chip>\n        ))}\n      </ChipGroup>\n      <Text variant=\"muted\">Selected: {value.join(\", \") || \"none\"}</Text>\n    </View>\n  )\n}\n\nexport function ChipGroupMultipleExample() {\n  return (\n    <MultipleGroupDemo />\n  )\n}"} />
+
+</Example>
+
+### Group uncontrolled
+
+A group using `defaultValue`.
+
+<Example id="components-chip--group-uncontrolled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Chip, ChipGroup } from \"@/components/ui/chip\"\n\nconst categories = [\n  { value: \"all\", label: \"All\" },\n  { value: \"coffee\", label: \"Coffee\" },\n  { value: \"lunch\", label: \"Lunch\" },\n  { value: \"dinner\", label: \"Dinner\" },\n  { value: \"bakery\", label: \"Bakery\" },\n  { value: \"bars\", label: \"Bars\" },\n  { value: \"desserts\", label: \"Desserts\" },\n]\n\nexport function ChipGroupUncontrolledExample() {\n  return (\n    <ChipGroup multiple defaultValue={[\"lunch\"]} size=\"sm\">\n      {categories.slice(1).map((category) => (\n        <Chip key={category.value} value={category.value}>\n          {category.label}\n        </Chip>\n      ))}\n    </ChipGroup>\n  )\n}"} />
+
+</Example>
+
+### Group scrollable
+
+A single scrolling row with `scrollable`.
+
+<Example id="components-chip--group-scrollable" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Chip, ChipGroup } from \"@/components/ui/chip\"\n\nconst categories = [\n  { value: \"all\", label: \"All\" },\n  { value: \"coffee\", label: \"Coffee\" },\n  { value: \"lunch\", label: \"Lunch\" },\n  { value: \"dinner\", label: \"Dinner\" },\n  { value: \"bakery\", label: \"Bakery\" },\n  { value: \"bars\", label: \"Bars\" },\n  { value: \"desserts\", label: \"Desserts\" },\n]\n\nexport function ChipGroupScrollableExample() {\n  return (\n    <View className=\"-mx-4\">\n      <ChipGroup scrollable defaultValue={[\"all\"]} className=\"px-4\">\n        {categories.map((category) => (\n          <Chip key={category.value} value={category.value}>\n            {category.label}\n          </Chip>\n        ))}\n      </ChipGroup>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Group disabled
+
+A disabled group.
+
+<Example id="components-chip--group-disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Chip, ChipGroup } from \"@/components/ui/chip\"\n\nconst categories = [\n  { value: \"all\", label: \"All\" },\n  { value: \"coffee\", label: \"Coffee\" },\n  { value: \"lunch\", label: \"Lunch\" },\n  { value: \"dinner\", label: \"Dinner\" },\n  { value: \"bakery\", label: \"Bakery\" },\n  { value: \"bars\", label: \"Bars\" },\n  { value: \"desserts\", label: \"Desserts\" },\n]\n\nexport function ChipGroupDisabledExample() {\n  return (\n    <ChipGroup disabled defaultValue={[\"coffee\"]}>\n      {categories.slice(1, 4).map((category) => (\n        <Chip key={category.value} value={category.value}>\n          {category.label}\n        </Chip>\n      ))}\n    </ChipGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Chip
+
+Selectable pill.
+
+<PropsTable extends={["ChipProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+<PropsTable extends={["React.ComponentProps<typeof ToggleGroupPrimitive>"]} props={[{"name":"size","type":"ChipSize","default":"\"default\"","description":"Size passed to every chip."},{"name":"scrollable","type":"boolean","default":"false","description":"Shows chips in a horizontal scroll view instead of wrapping."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- A chip has the `togglebutton` role with `checked` state, or the `radio` role in a single-selection group.
+- A group has the `radiogroup` role for single selection and `group` for multiple.
+- With `onRemove`, the chip exposes a `remove` accessibility action, and the remove button has its own `button` role and label.
+
+## Notes
+
+- Uses `bg-control`, `bg-control-selected` and `text-on-control-selected` tokens with pressed and disabled states; light and dark follow the system appearance.

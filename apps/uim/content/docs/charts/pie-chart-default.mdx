@@ -1,0 +1,90 @@
+---
+title: Pie Chart Default
+description: "A basic pie chart showing users by device, with a tooltip for each slice."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-pie--default" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/pie-chart-default.tsx" fold={false} />
+
+</Example>
+
+The simplest `PieChart`: one `Pie` inside a `Card`, with slices separated by a thin stroke in the card color. `chartData` holds one record per device with a `users` count. Pressing a slice shows a tooltip with its name and value.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-default"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-default --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add pie-chart-default --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-default.tsx`:
+
+<SourceFile path="uniwind/components/charts/pie-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-default.tsx`:
+
+<SourceFile path="nativewind/components/charts/pie-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/pie-chart-default.tsx`:
+
+<SourceFile path="stylesheet/components/charts/pie-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/PieChartDefault.swift" />
+
+<SourceFile path="kotlin/charts/PieChartDefault.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartDefault } from \"@/components/charts/pie-chart-default\""} />
+
+<Code lang="tsx" code={"<PieChartDefault />"} />
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.

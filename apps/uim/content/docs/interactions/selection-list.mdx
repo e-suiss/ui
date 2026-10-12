@@ -1,0 +1,193 @@
+---
+title: Selection List
+description: "An edit mode for lists where rows slide in check circles, toggle on press, and a floating bar shows bulk actions."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-selection-list--default" width={880} height={1079}>
+
+<Code lang="tsx" code={"import { CaretRightIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger, useSelectionList } from \"@/components/interactions/selection-list\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst initialNotes = [\n  { id: \"groceries\", title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: \"trip\", title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: \"books\", title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: \"meeting\", title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: \"gifts\", title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: \"recipes\", title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction NoteRows({\n  notes,\n  onOpen,\n}: {\n  notes: Note[]\n  onOpen: (note: Note) => void\n}) {\n  const { editing } = useSelectionList()\n  return (\n    <View className=\"overflow-hidden rounded-2xl border border-separator\">\n      {notes.map((note, index) => (\n        <SelectionListItem\n          key={note.id}\n          value={note.id}\n          className={index > 0 ? \"border-t border-separator\" : undefined}\n        >\n          <Pressable\n            onPress={() => onOpen(note)}\n            className=\"min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:bg-item-pressed\"\n          >\n            <View className=\"min-w-0 flex-1\">\n              <Text numberOfLines={1} className=\"font-semibold\">\n                {note.title}\n              </Text>\n              <Text numberOfLines={1} className=\"text-sm text-label-secondary\">\n                {note.preview}\n              </Text>\n            </View>\n            <Icon\n              as={CaretRightIcon}\n              className={\n                editing\n                  ? \"size-4 shrink-0 text-label-tertiary opacity-0\"\n                  : \"size-4 shrink-0 text-label-tertiary\"\n              }\n            />\n          </Pressable>\n        </SelectionListItem>\n      ))}\n    </View>\n  )\n}\n\nfunction SelectAllButton() {\n  const { selected, selectAll, clear } = useSelectionList()\n  const all = selected.length > 0\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4\"\n      onPress={all ? clear : selectAll}\n    >\n      <Text>{all ? \"Deselect All\" : \"Select All\"}</Text>\n    </Button>\n  )\n}\n\nfunction DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {\n  const { selected, setEditing } = useSelectionList()\n  const disabled = selected.length === 0\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4\"\n      disabled={disabled}\n      onPress={() => {\n        onDelete(selected)\n        setEditing(false)\n      }}\n    >\n      <Text className={disabled ? \"text-label-quaternary\" : \"text-danger\"}>\n        Delete\n      </Text>\n    </Button>\n  )\n}\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Tap Select to choose notes.\")\n  return {\n    notes,\n    log,\n    setLog,\n    remove: (ids: string[]) => {\n      setNotes((current) => current.filter((note) => !ids.includes(note.id)))\n      setLog(`Deleted ${ids.length} ${ids.length === 1 ? \"note\" : \"notes\"}`)\n    },\n    reset: () => {\n      setNotes(initialNotes)\n      setLog(\"Tap Select to choose notes.\")\n    },\n  }\n}\n\nfunction Footer({ log, onReset }: { log: string; onReset: () => void }) {\n  return (\n    <View className=\"flex-row items-center justify-between gap-3\">\n      <Text\n        role=\"status\"\n        className=\"min-w-0 flex-1 text-sm text-label-secondary\"\n      >\n        {log}\n      </Text>\n      <Button size=\"sm\" variant=\"secondary\" onPress={onReset}>\n        <Text>Reset</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction NotesExample({\n  defaultEditing,\n  defaultValue,\n}: {\n  defaultEditing?: boolean\n  defaultValue?: string[]\n}) {\n  const { notes, log, setLog, remove, reset } = useNotes()\n  return (\n    <SelectionList\n      defaultEditing={defaultEditing}\n      defaultValue={defaultValue}\n      className=\"w-full gap-3\"\n    >\n      <View className=\"flex-row items-center justify-between\">\n        <Text variant=\"h1\">Notes</Text>\n        <SelectionListTrigger />\n      </View>\n      <NoteRows\n        notes={notes}\n        onOpen={(note) => setLog(`Opened ${note.title}`)}\n      />\n      <Footer log={log} onReset={reset} />\n      <SelectionListBar accessibilityLabel=\"Selection actions\">\n        <SelectAllButton />\n        <SelectionListCount />\n        <DeleteButton onDelete={remove} />\n      </SelectionListBar>\n    </SelectionList>\n  )\n}\n\nexport function SelectionListExample() {\n  return (\n    <NotesExample />\n  )\n}"} />
+
+</Example>
+
+`SelectionList` switches a list between normal and editing modes. In editing mode each `SelectionListItem` slides in a check circle at its start, the whole row toggles on press, and selected rows are highlighted.
+
+`SelectionListBar` floats above the bottom safe area while editing, sliding up into view, for actions such as delete or move. Leaving editing mode clears the selection. On Android the hardware back button also leaves it. Use it for mail, notes or photo lists that need bulk actions.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add selection-list"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add selection-list --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add selection-list --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/selection-list.tsx`:
+
+<SourceFile path="uniwind/components/interactions/selection-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/selection-list.tsx`:
+
+<SourceFile path="nativewind/components/interactions/selection-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/interactions/selection-list.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/selection-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same interaction is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Interactions/SelectionList.swift" />
+
+<SourceFile path="kotlin/interactions/SelectionList.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBar, SelectionListCount } from \"@/components/interactions/selection-list\""} />
+
+<Code lang="tsx" code={"<NotesExample />"} />
+
+Wrap the list in `SelectionList`, add a `SelectionListTrigger` that toggles editing (it reads `Select` and `Done` by default), and give each `SelectionListItem` a unique `value`. Put your buttons and a `SelectionListCount` in `SelectionListBar`.
+
+Editing and the selection can be uncontrolled with `defaultEditing` and `defaultValue`, or controlled with `editing`, `onEditingChange`, `value` and `onValueChange`. `useSelectionList` returns `editing`, `selected`, `toggle`, `selectAll` and `clear` for custom actions. Outside editing mode, the row's children receive presses as usual.
+
+## Examples
+
+### Editing
+
+Starts in editing mode with two notes selected.
+
+<Example id="interactions-selection-list--editing" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CaretRightIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger, useSelectionList } from \"@/components/interactions/selection-list\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst initialNotes = [\n  { id: \"groceries\", title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: \"trip\", title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: \"books\", title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: \"meeting\", title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: \"gifts\", title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: \"recipes\", title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction NoteRows({\n  notes,\n  onOpen,\n}: {\n  notes: Note[]\n  onOpen: (note: Note) => void\n}) {\n  const { editing } = useSelectionList()\n  return (\n    <View className=\"overflow-hidden rounded-2xl border border-separator\">\n      {notes.map((note, index) => (\n        <SelectionListItem\n          key={note.id}\n          value={note.id}\n          className={index > 0 ? \"border-t border-separator\" : undefined}\n        >\n          <Pressable\n            onPress={() => onOpen(note)}\n            className=\"min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:bg-item-pressed\"\n          >\n            <View className=\"min-w-0 flex-1\">\n              <Text numberOfLines={1} className=\"font-semibold\">\n                {note.title}\n              </Text>\n              <Text numberOfLines={1} className=\"text-sm text-label-secondary\">\n                {note.preview}\n              </Text>\n            </View>\n            <Icon\n              as={CaretRightIcon}\n              className={\n                editing\n                  ? \"size-4 shrink-0 text-label-tertiary opacity-0\"\n                  : \"size-4 shrink-0 text-label-tertiary\"\n              }\n            />\n          </Pressable>\n        </SelectionListItem>\n      ))}\n    </View>\n  )\n}\n\nfunction SelectAllButton() {\n  const { selected, selectAll, clear } = useSelectionList()\n  const all = selected.length > 0\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4\"\n      onPress={all ? clear : selectAll}\n    >\n      <Text>{all ? \"Deselect All\" : \"Select All\"}</Text>\n    </Button>\n  )\n}\n\nfunction DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {\n  const { selected, setEditing } = useSelectionList()\n  const disabled = selected.length === 0\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4\"\n      disabled={disabled}\n      onPress={() => {\n        onDelete(selected)\n        setEditing(false)\n      }}\n    >\n      <Text className={disabled ? \"text-label-quaternary\" : \"text-danger\"}>\n        Delete\n      </Text>\n    </Button>\n  )\n}\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Tap Select to choose notes.\")\n  return {\n    notes,\n    log,\n    setLog,\n    remove: (ids: string[]) => {\n      setNotes((current) => current.filter((note) => !ids.includes(note.id)))\n      setLog(`Deleted ${ids.length} ${ids.length === 1 ? \"note\" : \"notes\"}`)\n    },\n    reset: () => {\n      setNotes(initialNotes)\n      setLog(\"Tap Select to choose notes.\")\n    },\n  }\n}\n\nfunction Footer({ log, onReset }: { log: string; onReset: () => void }) {\n  return (\n    <View className=\"flex-row items-center justify-between gap-3\">\n      <Text\n        role=\"status\"\n        className=\"min-w-0 flex-1 text-sm text-label-secondary\"\n      >\n        {log}\n      </Text>\n      <Button size=\"sm\" variant=\"secondary\" onPress={onReset}>\n        <Text>Reset</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction NotesExample({\n  defaultEditing,\n  defaultValue,\n}: {\n  defaultEditing?: boolean\n  defaultValue?: string[]\n}) {\n  const { notes, log, setLog, remove, reset } = useNotes()\n  return (\n    <SelectionList\n      defaultEditing={defaultEditing}\n      defaultValue={defaultValue}\n      className=\"w-full gap-3\"\n    >\n      <View className=\"flex-row items-center justify-between\">\n        <Text variant=\"h1\">Notes</Text>\n        <SelectionListTrigger />\n      </View>\n      <NoteRows\n        notes={notes}\n        onOpen={(note) => setLog(`Opened ${note.title}`)}\n      />\n      <Footer log={log} onReset={reset} />\n      <SelectionListBar accessibilityLabel=\"Selection actions\">\n        <SelectAllButton />\n        <SelectionListCount />\n        <DeleteButton onDelete={remove} />\n      </SelectionListBar>\n    </SelectionList>\n  )\n}\n\nexport function SelectionListEditingExample() {\n  return (\n    <NotesExample defaultEditing defaultValue={[\"trip\", \"meeting\"]} />\n  )\n}"} />
+
+</Example>
+
+### Icon actions
+
+A mail list whose bar holds icon-only actions.
+
+<Example id="interactions-selection-list--icon-actions" width={880} height={1079}>
+
+<Code lang="tsx" code={"import { ArchiveIcon, CaretRightIcon, FolderSimpleIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger, useSelectionList } from \"@/components/interactions/selection-list\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst initialNotes = [\n  { id: \"groceries\", title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: \"trip\", title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: \"books\", title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: \"meeting\", title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: \"gifts\", title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: \"recipes\", title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction NoteRows({\n  notes,\n  onOpen,\n}: {\n  notes: Note[]\n  onOpen: (note: Note) => void\n}) {\n  const { editing } = useSelectionList()\n  return (\n    <View className=\"overflow-hidden rounded-2xl border border-separator\">\n      {notes.map((note, index) => (\n        <SelectionListItem\n          key={note.id}\n          value={note.id}\n          className={index > 0 ? \"border-t border-separator\" : undefined}\n        >\n          <Pressable\n            onPress={() => onOpen(note)}\n            className=\"min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:bg-item-pressed\"\n          >\n            <View className=\"min-w-0 flex-1\">\n              <Text numberOfLines={1} className=\"font-semibold\">\n                {note.title}\n              </Text>\n              <Text numberOfLines={1} className=\"text-sm text-label-secondary\">\n                {note.preview}\n              </Text>\n            </View>\n            <Icon\n              as={CaretRightIcon}\n              className={\n                editing\n                  ? \"size-4 shrink-0 text-label-tertiary opacity-0\"\n                  : \"size-4 shrink-0 text-label-tertiary\"\n              }\n            />\n          </Pressable>\n        </SelectionListItem>\n      ))}\n    </View>\n  )\n}\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Tap Select to choose notes.\")\n  return {\n    notes,\n    log,\n    setLog,\n    remove: (ids: string[]) => {\n      setNotes((current) => current.filter((note) => !ids.includes(note.id)))\n      setLog(`Deleted ${ids.length} ${ids.length === 1 ? \"note\" : \"notes\"}`)\n    },\n    reset: () => {\n      setNotes(initialNotes)\n      setLog(\"Tap Select to choose notes.\")\n    },\n  }\n}\n\nfunction Footer({ log, onReset }: { log: string; onReset: () => void }) {\n  return (\n    <View className=\"flex-row items-center justify-between gap-3\">\n      <Text\n        role=\"status\"\n        className=\"min-w-0 flex-1 text-sm text-label-secondary\"\n      >\n        {log}\n      </Text>\n      <Button size=\"sm\" variant=\"secondary\" onPress={onReset}>\n        <Text>Reset</Text>\n      </Button>\n    </View>\n  )\n}\n\nfunction MailExample() {\n  const { notes, log, setLog, remove, reset } = useNotes()\n  const [selected, setSelected] = React.useState<string[]>([])\n  const disabled = selected.length === 0\n\n  const act = (verb: string) => setLog(`${verb} ${selected.join(\", \")}`)\n\n  return (\n    <SelectionList\n      value={selected}\n      onValueChange={setSelected}\n      className=\"w-full gap-3\"\n    >\n      <View className=\"flex-row items-center justify-between\">\n        <Text variant=\"h1\">Inbox</Text>\n        <SelectionListTrigger />\n      </View>\n      <NoteRows\n        notes={notes}\n        onOpen={(note) => setLog(`Opened ${note.title}`)}\n      />\n      <Footer log={log} onReset={reset} />\n      <SelectionListBar accessibilityLabel=\"Selection actions\">\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          accessibilityLabel=\"Archive\"\n          disabled={disabled}\n          onPress={() => act(\"Archived\")}\n        >\n          <Icon as={ArchiveIcon} className=\"size-5.5\" />\n        </Button>\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          accessibilityLabel=\"Move\"\n          disabled={disabled}\n          onPress={() => act(\"Moved\")}\n        >\n          <Icon as={FolderSimpleIcon} className=\"size-5.5\" />\n        </Button>\n        <SelectionListCount />\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          accessibilityLabel=\"Delete\"\n          disabled={disabled}\n          onPress={() => {\n            remove(selected)\n            setSelected([])\n          }}\n        >\n          <Icon\n            as={TrashIcon}\n            className={\n              disabled\n                ? \"size-5.5 text-label-quaternary\"\n                : \"size-5.5 text-danger\"\n            }\n          />\n        </Button>\n      </SelectionListBar>\n    </SelectionList>\n  )\n}\n\nexport function SelectionListIconActionsExample() {\n  return (\n    <MailExample />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"editing","type":"boolean","description":"Controls editing mode."},{"name":"defaultEditing","type":"boolean","default":"false","description":"Whether editing starts on when uncontrolled."},{"name":"onEditingChange","type":"(editing: boolean) => void","description":"Called when editing turns on or off."},{"name":"value","type":"string[]","description":"Selected item values when controlled."},{"name":"defaultValue","type":"string[]","default":"EMPTY","description":"Initially selected values when uncontrolled."},{"name":"onValueChange","type":"(value: string[]) => void","description":"Called with the new selection."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"value","type":"string","required":true,"description":"The value this row adds to the selection."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"portalHost","type":"string","description":"Name of a portal host to render into."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- While editing, rows have the `checkbox` role and expose their `checked` state; otherwise the row wrapper is not focusable and its children are.
+- The trigger exposes a `selected` state while editing.
+- The bar has the `toolbar` role.
+- `SelectionListCount` is a polite live region, reading `Select items` or `n selected` by default.
+
+## Notes
+
+- Selected rows use `bg-item-selected`; checked circles use `bg-accent` with an `on-accent` check.
+- The bar uses `bg-surface-raised`, or `bg-surface-secondary` in dark mode, and is up to `max-w-md` wide.
+- Animations respect the system reduce motion setting.

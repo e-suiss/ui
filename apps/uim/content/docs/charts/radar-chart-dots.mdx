@@ -1,0 +1,90 @@
+---
+title: Radar Chart Dots
+description: "A radar chart with a dot marking the score on every axis."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radar--dots" width={880} height={719}>
+
+<SourceFile path="uniwind/components/charts/radar-chart-dots.tsx" fold={false} />
+
+</Example>
+
+A `RadarChart` with one lightly filled `Radar` series and a `dot` on each point. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Only `thisMonth` is drawn. Pressing the chart shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-dots"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-dots --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radar-chart-dots --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+
+<SourceFile path="uniwind/components/charts/radar-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+
+<SourceFile path="nativewind/components/charts/radar-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radar-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadarChartDots.swift" />
+
+<SourceFile path="kotlin/charts/RadarChartDots.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartDots } from \"@/components/charts/radar-chart-dots\""} />
+
+<Code lang="tsx" code={"<RadarChartDots />"} />
+
+Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.

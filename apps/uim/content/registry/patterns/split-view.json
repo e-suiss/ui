@@ -1,0 +1,35 @@
+{
+  "description": "Sidebar, list and detail columns side by side on wide screens, shown one at a time with back navigation on phones.",
+  "overview": "`SplitView` lays out up to three panes: `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail`. When the window is at least `breakpoint` wide (768 by default), they sit side by side in a bordered row, sized 20, 32 and 48 parts.\n\nBelow the breakpoint only the current column is shown, full screen and scrollable, with a large title. Pressing a `SplitViewItem` moves to the next column, and a back button titled with the previous pane returns to it. On Android the hardware back button also goes back. Use it for mail, notes or settings screens that drill down.",
+  "usage": "Give each pane a `title`; the back button only appears when the previous pane exists and has a title. Put `SplitViewItem`s in the sidebar and list panes, and use their `onPress` to set the selection in your own state.\n\nThe current column is uncontrolled with `defaultColumn` (`list` by default) or controlled with `column` and `onColumnChange`. `useSplitView` returns `isCompact`, `column` and `setColumn` for custom navigation.",
+  "examples": {
+    "DetailColumn": "Starts on the detail column.",
+    "StartOnSidebar": "Starts on the sidebar column.",
+    "TwoColumns": "Only list and detail panes, without a sidebar.",
+    "Wide": "Sets `breakpoint` to `0` to always show the columns side by side.",
+    "WideTwoColumns": "Side-by-side list and detail panes without a sidebar."
+  },
+  "parts": {
+    "SplitView": "The root that tracks the current column and the layout mode.",
+    "SplitViewSidebar": "The first pane, for top-level sections.",
+    "SplitViewList": "The middle pane, for the items in a section.",
+    "SplitViewDetail": "The last pane, for the selected item.",
+    "SplitViewItem": "A pressable row that moves to the next column."
+  },
+  "props": {
+    "SplitView": {
+      "column": "The visible column on phones when controlled: `sidebar`, `list` or `detail`.",
+      "defaultColumn": "The initial column when uncontrolled. Defaults to `list`.",
+      "onColumnChange": "Called with the new column.",
+      "breakpoint": "Window width at which the panes sit side by side. Defaults to `768`."
+    },
+    "SplitViewSidebar": {
+      "title": "Pane heading, also used as the back button label in the next pane."
+    },
+    "SplitViewItem": {
+      "isActive": "Highlights the row and marks it as selected."
+    }
+  },
+  "accessibility": "- Pane titles have the `heading` role, and panes are labelled by string titles.\n- On phones, screen reader focus moves to the new pane's heading after navigating.\n- `SplitViewItem` exposes its `selected` state.\n- Back and row chevrons mirror in right-to-left layouts.",
+  "notes": "- On phones the new pane fades in, respecting the system reduce motion setting.\n- Active rows use `bg-surface-secondary`; panes are divided by `border-separator`."
+}

@@ -1,0 +1,188 @@
+---
+title: Toggle
+description: "A two-state button that can be turned on or off, for formatting and filter controls."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-toggle--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Toggle` is a `Pressable` with an on and off state. When on, it shows a selected background and its text turns to the link color; it scales down slightly while pressed. It has two variants, `default` and `outline`, and three sizes.
+
+`ToggleIcon` is an `Icon` sized for use inside a toggle.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add toggle"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add toggle --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add toggle --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="uniwind/components/ui/toggle.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="nativewind/components/ui/toggle.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="stylesheet/components/ui/toggle.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Toggle.swift" />
+
+<SourceFile path="kotlin/components/Toggle.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Toggle, ToggleIcon } from \"@/components/ui/toggle\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-row\">\n  <ToggleDemo accessibilityLabel=\"Toggle bold\">\n    <ToggleIcon as={TextBIcon} />\n  </ToggleDemo>\n</View>"} />
+
+Control the state with `pressed` and `onPressedChange(pressed, details)`, or leave it uncontrolled with `defaultPressed`. Put text in a `Text` and icons in `ToggleIcon`.
+
+Icon-only toggles need an `accessibilityLabel`. To group toggles with single or multiple selection, use Toggle Group. `toggleVariants`, `toggleStateClassName` and `toggleTextClassName` are exported for reuse in custom components.
+
+## Examples
+
+### Pressed
+
+An icon toggle that starts in the on state.
+
+<Example id="components-toggle--pressed" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function TogglePressedExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo initial accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Variants
+
+The `default` and `outline` variants.
+
+<Example id="components-toggle--variants" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TextItalicIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleVariantsExample() {\n  return (\n    <View className=\"flex-row gap-2\">\n      <ToggleDemo accessibilityLabel=\"Toggle italic\">\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Toggle italic\">\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Outline toggles in the `sm`, default and `lg` sizes.
+
+<Example id="components-toggle--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <ToggleDemo size=\"sm\" variant=\"outline\" accessibilityLabel=\"Small\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Default\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo size=\"lg\" variant=\"outline\" accessibilityLabel=\"Large\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With text
+
+An outline toggle with an icon and a text label.
+
+<Example id="components-toggle--with-text" width={880} height={400}>
+
+<Code lang="tsx" code={"import { BookmarkSimpleIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleWithTextExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Bookmark\">\n        <ToggleIcon as={BookmarkSimpleIcon} />\n        <Text>Bookmark</Text>\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled toggles in the off and on states.
+
+<Example id="components-toggle--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleDisabledExample() {\n  return (\n    <View className=\"flex-row gap-2\">\n      <ToggleDemo disabled accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo\n        disabled\n        initial\n        variant=\"outline\"\n        accessibilityLabel=\"Toggle italic\"\n      >\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Toggle
+
+The pressable two-state button.
+
+<PropsTable extends={["React.ComponentProps<typeof TogglePrimitive>"]} props={[{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"Visual style: `default` or `outline`."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Height and padding: `default`, `sm` or `lg`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleIcon
+
+An icon sized for a toggle.
+
+<PropsTable extends={["React.ComponentProps<typeof Icon>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Uses the `togglebutton` role and reports `checked` and `disabled` in `accessibilityState`.
+- Inside a single-select Toggle Group, it uses the `radio` role instead.
+- Icon-only toggles need an `accessibilityLabel`.
+
+## Notes
+
+- Changing the state triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
+- Uses the `bg-item-selected`, `bg-item-pressed`, `bg-control-disabled`, `text-link` and `border-separator` tokens.
+- Light and dark colors follow the system appearance.

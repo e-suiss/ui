@@ -1,0 +1,253 @@
+---
+title: Alert Dialog
+description: "A modal dialog that interrupts the user with an important message and asks for a response."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-alert-dialog--open-by-default" width={880} height={1124}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction AlertDialogBody() {\n  return (\n    <AlertDialogContent>\n      <AlertDialogHeader>\n        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\n        <AlertDialogDescription>\n          This action cannot be undone. This will permanently delete your\n          account and remove your data from our servers.\n        </AlertDialogDescription>\n      </AlertDialogHeader>\n      <AlertDialogFooter>\n        <AlertDialogCancel>\n          <Text>Cancel</Text>\n        </AlertDialogCancel>\n        <AlertDialogAction>\n          <Text>Continue</Text>\n        </AlertDialogAction>\n      </AlertDialogFooter>\n    </AlertDialogContent>\n  )\n}\n\nexport function AlertDialogOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog defaultOpen>\n        <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show dialog</Text>\n        </AlertDialogTrigger>\n        <AlertDialogBody />\n      </AlertDialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`AlertDialog` is a modal that cannot be dismissed by tapping the scrim. `AlertDialogContent` renders through a portal (inside a full-window overlay on iOS) with a dimmed scrim and a centered card that scales and fades in.
+
+Use it for confirmations that need an explicit choice, such as deleting data. For less critical content that can be dismissed freely, use Dialog; for a list of choices anchored to the bottom of the screen, use Alert Sheet.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert-dialog"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert-dialog --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add alert-dialog --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-screens react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/alert-dialog.tsx`:
+
+<SourceFile path="uniwind/components/ui/alert-dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-screens react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/alert-dialog.tsx`:
+
+<SourceFile path="nativewind/components/ui/alert-dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-screens react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/alert-dialog.tsx`:
+
+<SourceFile path="stylesheet/components/ui/alert-dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/AlertDialog.swift" />
+
+<SourceFile path="kotlin/components/AlertDialog.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from \"@/components/ui/alert-dialog\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <AlertDialog defaultOpen>\n    <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n      <Text>Show dialog</Text>\n    </AlertDialogTrigger>\n    <AlertDialogBody />\n  </AlertDialog>\n</View>"} />
+
+Compose `AlertDialogTrigger`, then `AlertDialogContent` with an `AlertDialogHeader` (`AlertDialogTitle`, `AlertDialogDescription`) and an `AlertDialogFooter` holding `AlertDialogCancel` and `AlertDialogAction`. Both footer buttons close the dialog and stretch to equal widths inside the footer.
+
+`AlertDialogAction` and `AlertDialogCancel` accept Button's `variant` and `size`; use `variant="destructive"` for destructive confirmations. Add `AlertDialogMedia` above the title for an icon badge.
+
+Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. Pass `portalHost` to render into a named portal host.
+
+## Examples
+
+### Default
+
+<Example id="components-alert-dialog--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction AlertDialogBody() {\n  return (\n    <AlertDialogContent>\n      <AlertDialogHeader>\n        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\n        <AlertDialogDescription>\n          This action cannot be undone. This will permanently delete your\n          account and remove your data from our servers.\n        </AlertDialogDescription>\n      </AlertDialogHeader>\n      <AlertDialogFooter>\n        <AlertDialogCancel>\n          <Text>Cancel</Text>\n        </AlertDialogCancel>\n        <AlertDialogAction>\n          <Text>Continue</Text>\n        </AlertDialogAction>\n      </AlertDialogFooter>\n    </AlertDialogContent>\n  )\n}\n\nexport function AlertDialogExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show dialog</Text>\n        </AlertDialogTrigger>\n        <AlertDialogBody />\n      </AlertDialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Small
+
+The narrower `sm` content size.
+
+<Example id="components-alert-dialog--small" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogSmallExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Discard draft</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent size=\"sm\">\n          <AlertDialogHeader>\n            <AlertDialogTitle>Discard draft?</AlertDialogTitle>\n            <AlertDialogDescription>\n              Your unsaved message will be lost.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Keep</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Discard</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With media
+
+An icon badge above the title with `AlertDialogMedia`.
+
+<Example id="components-alert-dialog--with-media" width={880} height={400}>
+
+<Code lang="tsx" code={"import { TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogMedia, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogWithMediaExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete project</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogMedia className=\"bg-danger/10\">\n              <Icon as={TrashIcon} className=\"text-danger\" />\n            </AlertDialogMedia>\n            <AlertDialogTitle>Delete this project?</AlertDialogTitle>\n            <AlertDialogDescription>\n              This permanently removes the project and all of its files. This\n              action cannot be undone.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Cancel</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Delete</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Destructive
+
+A destructive action button for an irreversible confirmation.
+
+<Example id="components-alert-dialog--destructive" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogDestructiveExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete project</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogTitle>Delete project?</AlertDialogTitle>\n            <AlertDialogDescription>\n              All deployments and settings for this project will be removed.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Cancel</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Delete</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### AlertDialogOverlay
+
+Dimmed scrim behind the dialog.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertDialogContent
+
+Centered card with scale and fade transitions.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"size","type":"\"default\" | \"sm\"","default":"\"default\"","description":"`default` or `sm` maximum width."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertDialogTitle
+
+Dialog heading.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Description>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Close>","React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Close>","React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `alertdialog` role, is labelled by the title and is marked as modal for VoiceOver.
+- Focus moves to the title when the dialog opens.
+- Tapping the scrim does not close it; the Android back button and the VoiceOver escape gesture do.
+- The title has the `heading` role, and the action buttons have the `button` role.
+
+## Notes
+
+- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.
+- Enter and exit animations respect the system Reduce Motion setting.
+- Uses `bg-surface-raised`, `bg-scrim` and label tokens; light and dark follow the system appearance.

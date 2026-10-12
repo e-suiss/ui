@@ -1,0 +1,102 @@
+---
+title: Chat Conversations
+description: "A messages screen with a conversation list that opens into a chat thread, with swipe to delete."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-chat-conversations--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/chat-conversations.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Header`, `SwipeActions` from the interactions, `Avatar`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button` and `BottomBar`. Tapping a row opens the thread with a back button, video call and details actions, and a composer. Sending a message shows a typing indicator followed by a sample reply. Swiping a row reveals a Delete action.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-conversations"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-conversations --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-conversations --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-conversations.tsx`:
+
+<SourceFile path="uniwind/components/blocks/chat-conversations.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-conversations.tsx`:
+
+<SourceFile path="nativewind/components/blocks/chat-conversations.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-conversations.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/chat-conversations.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/ChatConversations.swift" />
+
+<SourceFile path="kotlin/blocks/ChatConversations.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ChatConversations } from \"@/components/blocks/chat-conversations\""} />
+
+<Code lang="tsx" code={"<ChatConversations />"} />
+
+Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend.

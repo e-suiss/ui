@@ -1,0 +1,90 @@
+---
+title: Area Chart Axes
+description: "A single area with a gradient fill, dots on each point and a value axis on the right."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-area--axes" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/area-chart-axes.tsx" fold={false} />
+
+</Example>
+
+One series drawn as a monotone curve with a fill that fades from top to bottom, a dot on every month, a month axis below and a four-tick value axis on the right. The tooltip follows your finger across the plot.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-axes"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-axes --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add area-chart-axes --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-axes.tsx`:
+
+<SourceFile path="uniwind/components/charts/area-chart-axes.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-axes.tsx`:
+
+<SourceFile path="nativewind/components/charts/area-chart-axes.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/area-chart-axes.tsx`:
+
+<SourceFile path="stylesheet/components/charts/area-chart-axes.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/AreaChartAxes.swift" />
+
+<SourceFile path="kotlin/charts/AreaChartAxes.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartAxes } from \"@/components/charts/area-chart-axes\""} />
+
+<Code lang="tsx" code={"<AreaChartAxes />"} />
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`, and adjust `tickCount` on the `YAxis` to change how many values it shows. The component takes no props.

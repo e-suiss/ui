@@ -1,0 +1,90 @@
+---
+title: Line Chart Goal Dots
+description: "A weekly sleep chart where each night's dot is green if it met the goal and orange if it did not."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--goal-dots" width={880} height={665}>
+
+<SourceFile path="uniwind/components/charts/line-chart-goal-dots.tsx" fold={false} />
+
+</Example>
+
+Seven nights of sleep drawn as a monotone line. The `dot` prop is a function that colors each point by comparing it with `GOAL`, and a dashed green `ReferenceLine` marks the goal itself. The tooltip formats values as hours and minutes.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal-dots"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal-dots --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-goal-dots --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-goal-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-goal-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-goal-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartGoalDots.swift" />
+
+<SourceFile path="kotlin/charts/LineChartGoalDots.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartGoalDots } from \"@/components/charts/line-chart-goal-dots\""} />
+
+<Code lang="tsx" code={"<LineChartGoalDots />"} />
+
+Replace `chartData` with your nightly hours and set `GOAL`. The header average is static text, so update it with your own value. The component takes no props.

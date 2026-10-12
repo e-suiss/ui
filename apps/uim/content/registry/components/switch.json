@@ -1,0 +1,27 @@
+{
+  "description": "A toggle switch for turning a single setting on or off.",
+  "overview": "`Switch` is a pressable track with a round thumb that slides between the off and on positions. The thumb animates with Reanimated and stretches slightly while pressed. It comes in two sizes, `default` and `sm`, and has an `invalid` state that adds a danger-colored border.\n\nUse a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox.",
+  "usage": "Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it.\n\nA switch has no visible text of its own. Pair it with a `Label` and link them with `accessibilityLabelledBy` and the label's `nativeID`, or set an `accessibilityLabel`. Give the `Label` an `onPress` that toggles the value if the label should be pressable too.\n\nThe switch has a hit slop around it, so it is easier to press than its visual size.",
+  "examples": {
+    "Checked": "A switch that starts on.",
+    "Sizes": "The `sm` and `default` sizes side by side.",
+    "WithLabel": "A controlled switch next to a pressable label.",
+    "WithDescription": "A switch with a label and a line of supporting text.",
+    "Disabled": "Disabled switches in the off and on states.",
+    "Invalid": "A switch with the `invalid` border next to its label."
+  },
+  "props": {
+    "Switch": {
+      "checked": "Controlled on state.",
+      "defaultChecked": "Initial on state when uncontrolled.",
+      "onCheckedChange": "Called when the switch is toggled.",
+      "disabled": "Blocks interaction and uses muted colors.",
+      "readOnly": "Shows the state but ignores presses.",
+      "required": "Marks the switch as required.",
+      "size": "`default` or `sm`.",
+      "invalid": "Adds a danger-colored border when not disabled."
+    }
+  },
+  "accessibility": "- The root has the `switch` role and reports `checked` and `disabled` in its accessibility state, so VoiceOver and TalkBack announce whether it is on.\n- The thumb is hidden from the accessibility tree.\n- Label every switch with `accessibilityLabel` or `accessibilityLabelledBy`.\n- The thumb animation follows the system reduce motion setting.",
+  "notes": "- The track uses `bg-accent` when on and `bg-label-quaternary` when off, with `bg-accent-disabled` and `bg-control-disabled` for the disabled states.\n- The thumb uses `bg-surface`, or `bg-label` in dark mode.\n- Light and dark colors follow the system appearance."
+}

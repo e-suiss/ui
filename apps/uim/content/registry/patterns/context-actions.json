@@ -1,0 +1,30 @@
+{
+  "description": "Long press an element to open a bottom alert sheet with actions for it.",
+  "overview": "`ContextActions` turns any content into a long-press target. Holding `ContextActionsTrigger` for 500 ms opens an `AlertSheet` with the actions grouped in one block and a separate Cancel button below.\n\nUse it for secondary actions on photos, messages or list rows that should not take up space on screen.",
+  "usage": "Wrap the target in `ContextActionsTrigger` and list `ContextActionsItem`s in `ContextActionsContent`. Add a `ContextActionsLabel` first to show a title.\n\nThe open state is managed internally; use `onOpenChange` to react to it. `ContextActionsTrigger` accepts every `Pressable` prop, so `onPress` still works for a normal tap, and your own `onLongPress` runs before the sheet opens. Change the hold time with `delayLongPress`.",
+  "examples": {
+    "Inline": "A small message bubble as the trigger, with a custom `cancelLabel`."
+  },
+  "parts": {
+    "ContextActions": "The root that owns the open state.",
+    "ContextActionsTrigger": "A `Pressable` that opens the sheet on long press.",
+    "ContextActionsContent": "The sheet with the grouped items and a Cancel button.",
+    "ContextActionsLabel": "A title shown at the top of the group.",
+    "ContextActionsItem": "An actionable entry, rendered as an `AlertSheetAction`.",
+    "ContextActionsSeparator": "Kept for API parity; renders nothing."
+  },
+  "props": {
+    "ContextActions": {
+      "onOpenChange": "Called when the sheet opens or closes.",
+      "dismissible": "When `false`, the sheet ignores outside presses. Defaults to `true`."
+    },
+    "ContextActionsTrigger": {
+      "delayLongPress": "Hold time in milliseconds before the sheet opens. Defaults to `500`."
+    },
+    "ContextActionsContent": {
+      "cancelLabel": "Text of the Cancel button. Defaults to `Cancel`."
+    }
+  },
+  "accessibility": "- The trigger has the hint \"Long press for actions\".\n- It adds `longpress` and `showActions` (\"Show actions\") accessibility actions, so screen reader users can open the sheet without holding.\n- Your own `accessibilityActions` and `onAccessibilityAction` are kept.",
+  "notes": "- Item text uses `text-link`, or `text-danger` for the `destructive` variant.\n- On iOS the sheet renders in a full-window overlay so it appears above native screens."
+}

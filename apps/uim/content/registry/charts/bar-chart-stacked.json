@@ -1,0 +1,5 @@
+{
+  "description": "Stacked bars combining desktop and mobile visitors per month, with a legend.",
+  "overview": "Desktop and mobile bars share a `stackId`, so each column shows both parts and their total. Only the outer corners are rounded, and a legend below the plot names both series.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props."
+}

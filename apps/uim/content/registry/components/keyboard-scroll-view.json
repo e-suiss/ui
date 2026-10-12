@@ -1,0 +1,17 @@
+{
+  "description": "A scroll view that keeps the focused text field visible above the on-screen keyboard.",
+  "overview": "`KeyboardScrollView` wraps the React Native `ScrollView`. When the keyboard opens, it measures how much of the view the keyboard covers, adds matching space at the end of the content and scroll indicator, and scrolls just enough to bring the focused input above the keyboard.\n\nUse it for forms and other screens with text fields that would otherwise end up behind the keyboard.",
+  "usage": "Place inputs anywhere inside the view; no extra setup is needed. Set `bottomOffset` to leave more space between the focused field and the keyboard.\n\nAll `ScrollView` props are passed through. By default taps on the content are handled while the keyboard is open (`keyboardShouldPersistTaps=\"handled\"`), and dragging dismisses the keyboard.\n\n`KeyboardScrollViewContext` exposes `scrollToFocused`, which children can call to bring the focused input into view again, for example after their layout changes.",
+  "examples": {
+    "LargerBottomOffset": "Keeps the focused field 64 points above the keyboard.",
+    "Focused": "The last field is focused on mount and scrolled into view.",
+    "WithBottomBar": "A form above a bottom bar with a full-width button."
+  },
+  "props": {
+    "KeyboardScrollView": {
+      "bottomOffset": "Space kept between the focused input and the keyboard. Defaults to `16`."
+    }
+  },
+  "accessibility": "- The view is a standard `ScrollView`, so screen reader scrolling works as usual.",
+  "notes": "- `keyboardDismissMode` defaults to `interactive` on iOS and `on-drag` on Android.\n- After a touch while the keyboard is open, the view checks the focused input again after a short delay.\n- The view fills its parent with `flex-1`.\n- Only an input that is inside the visible frame of the scroll view is adjusted; inputs scrolled out of view are left alone."
+}

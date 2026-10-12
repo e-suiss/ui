@@ -1,0 +1,26 @@
+{
+  "description": "A section that shows or hides its content when a trigger is pressed.",
+  "overview": "`Collapsible` is an unstyled root with a `CollapsibleTrigger` and a `CollapsibleContent` panel. It handles the open state and accessibility, and leaves the look to you.\n\nUse it for a single show-more section. For a list of sections where opening one can close another, use Accordion.",
+  "usage": "Put any content in `CollapsibleTrigger`, for example a `Text` and a caret `Icon`, and use `render` to render it as a `Button`. Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.\n\nSet `keepMounted` on `CollapsibleContent` to keep the content mounted while closed.",
+  "examples": {
+    "OpenByDefault": "Starts in the open state.",
+    "Disabled": "A disabled collapsible whose trigger cannot toggle it."
+  },
+  "parts": {
+    "Collapsible": "Root that holds the open state.",
+    "CollapsibleTrigger": "Pressable that toggles the content.",
+    "CollapsibleContent": "Panel shown while open."
+  },
+  "props": {
+    "Collapsible": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state when uncontrolled.",
+      "onOpenChange": "Called with the new open value.",
+      "disabled": "Prevents toggling."
+    },
+    "CollapsibleContent": {
+      "keepMounted": "Keeps the content mounted while closed."
+    }
+  },
+  "accessibility": "- The trigger has the `button` role with `expanded` and `disabled` state.\n- Closed content is hidden from VoiceOver and TalkBack."
+}

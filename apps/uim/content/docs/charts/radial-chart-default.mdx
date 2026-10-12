@@ -1,0 +1,90 @@
+---
+title: Radial Chart Default
+description: "Concentric radial bars showing users by device, each on its own track."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--default" width={880} height={687}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-default.tsx" fold={false} />
+
+</Example>
+
+A `RadialBarChart` with one bar per record in `chartData` (a `device` and a `users` count). Each bar is colored through a `Cell` that reads `chartConfig`, over a track in the control color. Pressing a bar shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-default"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-default --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-default --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-default.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-default.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/radial-chart-default.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-default.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartDefault.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartDefault.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartDefault } from \"@/components/charts/radial-chart-default\""} />
+
+<Code lang="tsx" code={"<RadialChartDefault />"} />
+
+Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.

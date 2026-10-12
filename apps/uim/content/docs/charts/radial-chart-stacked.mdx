@@ -1,0 +1,90 @@
+---
+title: Radial Chart Stacked
+description: "A half-circle arc stacking desktop and mobile visitors, with the total below it."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--stacked" width={880} height={623}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+A `RadialBarChart` drawn from 180 to 0 degrees, with two `RadialBar` series sharing a `stackId` on a domain equal to their sum. `chartData` is a single record with `desktop` and `mobile` counts, and the total is `Text` under the arc. Pressing the arc shows a tooltip.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-stacked"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-stacked --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-stacked --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-stacked.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-stacked.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/radial-chart-stacked.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-stacked.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartStacked.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartStacked.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartStacked } from \"@/components/charts/radial-chart-stacked\""} />
+
+<Code lang="tsx" code={"<RadialChartStacked />"} />
+
+Replace the counts in `visitors`; the total and domain follow. Rename the series in `chartConfig` and in the `RadialBar` `dataKey` and `fill` props. The component takes no props.

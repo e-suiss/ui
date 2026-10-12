@@ -1,0 +1,208 @@
+---
+title: Panel
+description: "A bottom drawer with a header, body, footer and close button for secondary content or settings."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-panel--open-by-default" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction PanelDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Panel defaultOpen={defaultOpen}>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          <Text>Filters</Text>\n        </PanelTrigger>\n        <PanelContent>\n          <PanelHeader>\n            <PanelTitle>Filters</PanelTitle>\n            <PanelDescription>Narrow down the results.</PanelDescription>\n          </PanelHeader>\n          <PanelBody>\n            <Text className=\"text-sm text-label-secondary\">\n              Status, owner and date filters go here.\n            </Text>\n          </PanelBody>\n          <PanelFooter>\n            <Button>\n              <Text>Apply</Text>\n            </Button>\n            <PanelClose render={<Button variant=\"secondary\" />}>\n              <Text>Reset</Text>\n            </PanelClose>\n          </PanelFooter>\n        </PanelContent>\n      </Panel>\n    </View>\n  )\n}\n\nexport function PanelOpenByDefaultExample() {\n  return (\n    <PanelDemo defaultOpen />\n  )\n}"} />
+
+</Example>
+
+`Panel` wraps `Drawer` with the swipe handle turned on, and `PanelContent` shows a close button by default. It slides up from the bottom of the screen and can be swiped down or closed with the button.
+
+Use it for supporting content, such as details or settings, that sits alongside the current screen.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add panel"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add panel --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add panel --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Drawer](/docs/components/drawer).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer).
+
+3. Copy the source into `components/patterns/panel.tsx`:
+
+<SourceFile path="uniwind/components/patterns/panel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer).
+
+3. Copy the source into `components/patterns/panel.tsx`:
+
+<SourceFile path="nativewind/components/patterns/panel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Drawer](/docs/components/drawer).
+
+2. Copy the source into `components/patterns/panel.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/panel.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/Panel.swift" />
+
+<SourceFile path="kotlin/patterns/Panel.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescription, PanelBody, PanelFooter, PanelClose } from \"@/components/patterns/panel\""} />
+
+<Code lang="tsx" code={"<PanelDemo defaultOpen />"} />
+
+Wrap a button in `PanelTrigger`, then compose `PanelHeader`, `PanelBody` and `PanelFooter` inside `PanelContent`. Use `PanelClose` for a button that dismisses it.
+
+The panel can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. Pass `showCloseButton={false}` on `PanelContent` to hide the close button.
+
+## Examples
+
+### Default
+
+<Example id="patterns-panel--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction PanelDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Panel defaultOpen={defaultOpen}>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          <Text>Filters</Text>\n        </PanelTrigger>\n        <PanelContent>\n          <PanelHeader>\n            <PanelTitle>Filters</PanelTitle>\n            <PanelDescription>Narrow down the results.</PanelDescription>\n          </PanelHeader>\n          <PanelBody>\n            <Text className=\"text-sm text-label-secondary\">\n              Status, owner and date filters go here.\n            </Text>\n          </PanelBody>\n          <PanelFooter>\n            <Button>\n              <Text>Apply</Text>\n            </Button>\n            <PanelClose render={<Button variant=\"secondary\" />}>\n              <Text>Reset</Text>\n            </PanelClose>\n          </PanelFooter>\n        </PanelContent>\n      </Panel>\n    </View>\n  )\n}\n\nexport function PanelExample() {\n  return (\n    <PanelDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Panel
+
+The root drawer with a swipe handle.
+
+<PropsTable props={[{"name":"open","type":"boolean","description":"Controls whether the panel is open."},{"name":"defaultOpen","type":"boolean","description":"Whether the panel starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the panel opens or closes."},{"name":"floating","type":"boolean","description":"Insets the drawer from the screen edges."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PanelTrigger
+
+The element that opens the panel.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerTrigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PanelContent
+
+The sliding panel, with a close button by default.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PanelHeader
+
+Holds the title and description.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerHeader>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PanelTitle
+
+The panel's heading.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### PanelDescription
+
+Supporting text under the title.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerDescription>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### PanelBody
+
+A padded container for the main content.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### PanelFooter
+
+Holds the panel's buttons.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerFooter>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### PanelClose
+
+An element that closes the panel.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerClose>"]} />
+
+</ApiPart>
+
+## Notes
+
+- Content respects the safe area insets.

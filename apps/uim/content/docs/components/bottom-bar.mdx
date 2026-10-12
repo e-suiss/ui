@@ -1,0 +1,179 @@
+---
+title: Bottom Bar
+description: "A bar pinned to the bottom of a screen for primary actions, which rises above the keyboard."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-bottom-bar--default" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarExample() {\n  return (\n    <Page>\n      <BottomBar>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Continue</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
+
+</Example>
+
+`BottomBar` is an animated `View` that adds bottom padding equal to the safe-area inset, or to the keyboard height while the keyboard is open, and animates between them with the keyboard's own timing. `BottomBarContent` adds the standard padding and spacing for the buttons inside.
+
+Use it for the main call to action of a screen, such as checkout or a form submit button.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bottom-bar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bottom-bar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add bottom-bar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Screen](/docs/components/screen).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+
+2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
+
+3. Copy the source into `components/ui/bottom-bar.tsx`:
+
+<SourceFile path="uniwind/components/ui/bottom-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+
+2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
+
+3. Copy the source into `components/ui/bottom-bar.tsx`:
+
+<SourceFile path="nativewind/components/ui/bottom-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+
+2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
+
+3. Copy the source into `components/ui/bottom-bar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/bottom-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/BottomBar.swift" />
+
+<SourceFile path="kotlin/components/BottomBar.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\""} />
+
+<Code lang="tsx" code={"<Page>\n  <BottomBar>\n    <BottomBarContent>\n      <Button size=\"lg\" block>\n        <Text>Continue</Text>\n      </Button>\n    </BottomBarContent>\n  </BottomBar>\n</Page>"} />
+
+Place `BottomBar` as the last child of the screen so it sits below the scrolling content. Stack buttons in `BottomBarContent`, or add `flex-row` to place them side by side.
+
+Set `separator` to draw a hairline above the bar. Inside a `Screen` that already handles the bottom safe-area edge, the inset is not added twice.
+
+## Examples
+
+### With separator
+
+A hairline above the bar with `separator`.
+
+<Example id="components-bottom-bar--with-separator" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarWithSeparatorExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Place order</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
+
+</Example>
+
+### Two actions
+
+A primary and a plain button stacked.
+
+<Example id="components-bottom-bar--two-actions" width={880} height={1645}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarTwoActionsExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Place order</Text>\n          </Button>\n          <Button size=\"lg\" variant=\"plain\" block>\n            <Text>Save for later</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
+
+</Example>
+
+### Side by side
+
+Back and Next buttons in a row.
+
+<Example id="components-bottom-bar--side-by-side" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarSideBySideExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent className=\"flex-row\">\n          <Button size=\"lg\" variant=\"secondary\" block className=\"flex-1\">\n            <Text>Back</Text>\n          </Button>\n          <Button size=\"lg\" block className=\"flex-1\">\n            <Text>Next</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
+
+</Example>
+
+### Above keyboard
+
+The bar moving up with the keyboard while an input is focused.
+
+<Example id="components-bottom-bar--above-keyboard" width={880} height={1675}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BottomBarAboveKeyboardExample() {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-3 p-4\">\n        <Text variant=\"h3\">Promo code</Text>\n        <Input placeholder=\"Enter code\" autoFocus autoCapitalize=\"characters\" />\n      </View>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Apply</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"separator","type":"boolean","default":"false","description":"Draws a top border. Defaults to `false`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BottomBarContent
+
+Padded area for the actions.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The bar adds no role; each action inside provides its own.
+
+## Notes
+
+- The padding animation respects the system Reduce Motion setting.
+- Uses `bg-surface` and `border-separator` tokens; light and dark follow the system appearance.

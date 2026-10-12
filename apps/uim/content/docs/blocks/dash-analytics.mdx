@@ -1,0 +1,102 @@
+---
+title: Dash Analytics
+description: "An app analytics dashboard with a metric switcher, a weekly area chart, a regional breakdown and a tab bar."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-dash-analytics--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/dash-analytics.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Header`, `DropdownMenu` for picking the app, `ToggleGroup`, the `AreaChart` from `Chart`, `Item` rows and `TabBar`. Switching the metric or app redraws the chart, and dragging across the chart updates the headline value for that week. The other tabs show a placeholder section.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-analytics"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-analytics --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add dash-analytics --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-analytics.tsx`:
+
+<SourceFile path="uniwind/components/blocks/dash-analytics.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-analytics.tsx`:
+
+<SourceFile path="nativewind/components/blocks/dash-analytics.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-analytics.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/dash-analytics.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/DashAnalytics.swift" />
+
+<SourceFile path="kotlin/blocks/DashAnalytics.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DashAnalytics } from \"@/components/blocks/dash-analytics\""} />
+
+<Code lang="tsx" code={"<DashAnalytics />"} />
+
+Replace `apps`, `metrics` and `regions` with your analytics data. Pass `onAppChange`, `onMetricChange` and `onNavigate` to sync the selections with your app.

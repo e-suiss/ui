@@ -1,0 +1,217 @@
+---
+title: Avatar
+description: "A round image for a person or entity, with initials or an icon as a fallback."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-avatar--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AvatarExample() {\n  return (\n    <Avatar>\n      <AvatarImage\n        alt=\"Ada Lovelace\"\n        source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n      />\n      <AvatarFallback>\n        <Text>AL</Text>\n      </AvatarFallback>\n    </Avatar>\n  )\n}"} />
+
+</Example>
+
+`Avatar` is a round `View` that holds an `AvatarImage` and an `AvatarFallback`. The image stays hidden until it loads, and the fallback is shown while it loads or if it fails. Four sizes are available: `sm`, `default`, `lg` and `xl`; the fallback text, icons and badge scale with the size.
+
+`AvatarBadge` adds a small status dot in the bottom-end corner, and `AvatarGroup` overlaps several avatars with an outline between them, with `AvatarGroupCount` for the remaining number.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add avatar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add avatar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add avatar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/avatar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/avatar.tsx`:
+
+<SourceFile path="uniwind/components/ui/avatar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/avatar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/avatar.tsx`:
+
+<SourceFile path="nativewind/components/ui/avatar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/avatar.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/avatar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/avatar.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Avatar.swift" />
+
+<SourceFile path="kotlin/components/Avatar.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from \"@/components/ui/avatar\""} />
+
+<Code lang="tsx" code={"<Avatar>\n  <AvatarImage\n    alt=\"Ada Lovelace\"\n    source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n  />\n  <AvatarFallback>\n    <Text>AL</Text>\n  </AvatarFallback>\n</Avatar>"} />
+
+Give `AvatarImage` a `source` and an `alt`. Put initials or an `Icon` in `AvatarFallback`; plain strings are wrapped in `Text`. Use `delay` on the fallback to avoid a flash on fast connections, and `onLoadingStatusChange` on the image to react to loading.
+
+Set `size` on each `Avatar`, and pass the same `size` to `AvatarGroupCount`. On the `sm` size, the badge hides its children and shows a plain dot.
+
+## Examples
+
+### Fallback
+
+Initials shown when there is no image.
+
+<Example id="components-avatar--fallback" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AvatarFallbackExample() {\n  return (\n    <Avatar accessibilityLabel=\"Alan Turing\">\n      <AvatarFallback>\n        <Text>AT</Text>\n      </AvatarFallback>\n    </Avatar>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+The `sm`, `default`, `lg` and `xl` sizes.
+
+<Example id="components-avatar--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AvatarSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage\n            alt=\"Ada Lovelace\"\n            source={{ uri: \"https://i.pravatar.cc/150?img=5\" }}\n          />\n          <AvatarFallback>\n            <Text>AL</Text>\n          </AvatarFallback>\n        </Avatar>\n      ))}\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Group
+
+Overlapping avatars in an `AvatarGroup` with a count.
+
+<Example id="components-avatar--group" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\nimport { Text } from \"@/components/ui/text\"\n\nconst people = [\n  {\n    name: \"Ada Lovelace\",\n    initials: \"AL\",\n    uri: \"https://i.pravatar.cc/150?img=5\",\n  },\n  {\n    name: \"Alan Turing\",\n    initials: \"AT\",\n    uri: \"https://i.pravatar.cc/150?img=12\",\n  },\n  {\n    name: \"Grace Hopper\",\n    initials: \"GH\",\n    uri: \"https://i.pravatar.cc/150?img=47\",\n  },\n]\n\nexport function AvatarGroupExample() {\n  return (\n    <AvatarGroup>\n      {people.map((person) => (\n        <Avatar key={person.name}>\n          <AvatarImage alt={person.name} source={{ uri: person.uri }} />\n          <AvatarFallback>\n            <Text>{person.initials}</Text>\n          </AvatarFallback>\n        </Avatar>\n      ))}\n      <AvatarGroupCount accessibilityLabel=\"4 more\">\n        <Text>+4</Text>\n      </AvatarGroupCount>\n    </AvatarGroup>\n  )\n}"} />
+
+</Example>
+
+### With badge
+
+A check badge at each size.
+
+<Example id="components-avatar--with-badge" width={880} height={400}>
+
+<Code lang="tsx" code={"import { CheckIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AvatarWithBadgeExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage\n            alt=\"Alan Turing\"\n            source={{ uri: \"https://i.pravatar.cc/150?img=12\" }}\n          />\n          <AvatarFallback>\n            <Text>AT</Text>\n          </AvatarFallback>\n          <AvatarBadge>\n            <Icon as={CheckIcon} weight=\"bold\" />\n          </AvatarBadge>\n        </Avatar>\n      ))}\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Avatar
+
+Round container that sets the size.
+
+<PropsTable extends={["React.ComponentProps<typeof AvatarPrimitive.Root>"]} props={[{"name":"size","type":"AvatarSize","default":"\"default\"","description":"`sm`, `default`, `lg` or `xl`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AvatarImage
+
+Image that appears once it has loaded.
+
+<PropsTable extends={["React.ComponentProps<typeof AvatarPrimitive.Image>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+<PropsTable extends={["React.ComponentProps<typeof AvatarPrimitive.Fallback>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"size","type":"AvatarSize","default":"\"default\"","description":"Matches the size of the avatars in the group."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `AvatarImage` uses `alt` as its `accessibilityLabel`.
+- The image is hidden from screen readers until it has loaded.
+- The badge has no label; describe the status in nearby text if it matters.
+
+## Notes
+
+- Uses `bg-label-secondary`, `bg-accent`, `bg-surface-secondary` and `border-surface` tokens; the fallback is softer in dark mode.
+- Light and dark follow the system appearance.

@@ -1,0 +1,5 @@
+{
+  "description": "A single line drawn as steps, holding each value until the next reading.",
+  "overview": "One series with `type=\"step\"`, which draws flat runs and vertical jumps instead of slopes. Use it for values that change at discrete moments. It has a month axis, a dashed grid and a tooltip.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props."
+}

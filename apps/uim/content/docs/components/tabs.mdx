@@ -1,0 +1,235 @@
+---
+title: Tabs
+description: "A set of tabs that switch between panels of content shown in the same place."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-tabs--default" width={880} height={893}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction TabsDemo() {\n  const [value, setValue] = React.useState(\"account\")\n  return (\n    <Tabs value={value} onValueChange={setValue} className=\"w-full\">\n      <TabsList>\n        <TabsTrigger value=\"account\">\n          <Text>Account</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"password\">\n          <Text>Password</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"account\">\n        <Card>\n          <CardHeader>\n            <CardTitle>Account</CardTitle>\n            <CardDescription>\n              Make changes to your account here.\n            </CardDescription>\n          </CardHeader>\n          <CardContent className=\"gap-4\">\n            <View className=\"gap-2\">\n              <Label nativeID=\"tabs-name\">Name</Label>\n              <Input\n                accessibilityLabelledBy=\"tabs-name\"\n                defaultValue=\"Pedro Duarte\"\n              />\n            </View>\n            <View className=\"gap-2\">\n              <Label nativeID=\"tabs-username\">Username</Label>\n              <Input\n                accessibilityLabelledBy=\"tabs-username\"\n                defaultValue=\"@peduarte\"\n                autoCapitalize=\"none\"\n              />\n            </View>\n          </CardContent>\n          <CardFooter>\n            <Button>\n              <Text>Save changes</Text>\n            </Button>\n          </CardFooter>\n        </Card>\n      </TabsContent>\n      <TabsContent value=\"password\">\n        <Card>\n          <CardHeader>\n            <CardTitle>Password</CardTitle>\n            <CardDescription>\n              Change your password here. You will be logged out after saving.\n            </CardDescription>\n          </CardHeader>\n          <CardContent className=\"gap-4\">\n            <View className=\"gap-2\">\n              <Label nativeID=\"tabs-current\">Current password</Label>\n              <Input accessibilityLabelledBy=\"tabs-current\" secureTextEntry />\n            </View>\n            <View className=\"gap-2\">\n              <Label nativeID=\"tabs-new\">New password</Label>\n              <Input accessibilityLabelledBy=\"tabs-new\" secureTextEntry />\n            </View>\n          </CardContent>\n          <CardFooter>\n            <Button>\n              <Text>Save password</Text>\n            </Button>\n          </CardFooter>\n        </Card>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsExample() {\n  return (\n    <TabsDemo />\n  )\n}"} />
+
+</Example>
+
+`Tabs` groups a `TabsList` of `TabsTrigger` buttons with matching `TabsContent` panels. The active tab is marked by an indicator that slides between tabs with a Reanimated layout transition.
+
+`TabsList` has two variants: `default`, a segmented control with a raised indicator on a filled track, and `line`, a transparent list with a thin underline. Both work in horizontal and vertical orientation.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tabs"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tabs --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add tabs --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tabs.tsx`:
+
+<SourceFile path="uniwind/components/ui/tabs.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tabs.tsx`:
+
+<SourceFile path="nativewind/components/ui/tabs.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/tabs.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/tabs.tsx`:
+
+<SourceFile path="stylesheet/components/ui/tabs.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Tabs.swift" />
+
+<SourceFile path="kotlin/components/Tabs.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/ui/tabs\""} />
+
+<Code lang="tsx" code={"<TabsDemo />"} />
+
+Give each `TabsTrigger` and its `TabsContent` the same `value`. Use `defaultValue` for an uncontrolled tab set, or `value` with `onValueChange` to control it.
+
+Set `orientation="vertical"` on `Tabs` to stack the list beside the panels. Put an `Icon` next to the `Text` in a trigger for icon tabs.
+
+Inactive panels are unmounted unless you set `keepMounted` on `TabsContent`. `tabsListVariants` is exported for reuse.
+
+## Examples
+
+### With icons
+
+Tabs with an icon beside each label.
+
+<Example id="components-tabs--with-icons" width={880} height={400}>
+
+<Code lang="tsx" code={"import { GearIcon, UserIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction WithIconsDemo({ variant }: { variant?: ListVariant }) {\n  const [value, setValue] = React.useState(\"profile\")\n  return (\n    <Tabs value={value} onValueChange={setValue}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"profile\">\n          <Icon as={UserIcon} className=\"size-4\" />\n          <Text>Profile</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"settings\">\n          <Icon as={GearIcon} className=\"size-4\" />\n          <Text>Settings</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"profile\">\n        <Text className=\"text-sm text-label-secondary\">\n          Your public profile information.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"settings\">\n        <Text className=\"text-sm text-label-secondary\">\n          Manage your preferences.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsWithIconsExample() {\n  return (\n    <WithIconsDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled tab
+
+A tab set with one disabled tab.
+
+<Example id="components-tabs--disabled-tab" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction DisabledTabDemo({ variant }: { variant?: ListVariant }) {\n  const [value, setValue] = React.useState(\"overview\")\n  return (\n    <Tabs value={value} onValueChange={setValue}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"overview\">\n          <Text>Overview</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"analytics\">\n          <Text>Analytics</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"reports\" disabled>\n          <Text>Reports</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">\n        <Text className=\"text-sm text-label-secondary\">\n          A summary of your activity.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"analytics\">\n        <Text className=\"text-sm text-label-secondary\">\n          Detailed metrics and trends.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsDisabledTabExample() {\n  return (\n    <DisabledTabDemo />\n  )\n}"} />
+
+</Example>
+
+### Line
+
+The `line` variant with an underline indicator.
+
+<Example id="components-tabs--line" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction SectionsDemo({\n  variant,\n  orientation,\n}: {\n  variant?: ListVariant\n  orientation?: \"horizontal\" | \"vertical\"\n}) {\n  const [value, setValue] = React.useState(\"overview\")\n  return (\n    <Tabs value={value} onValueChange={setValue} orientation={orientation}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"overview\">\n          <Text>Overview</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"analytics\">\n          <Text>Analytics</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"reports\">\n          <Text>Reports</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">\n        <Text className=\"text-sm text-label-secondary\">\n          A summary of your activity.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"analytics\">\n        <Text className=\"text-sm text-label-secondary\">\n          Detailed metrics and trends.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"reports\">\n        <Text className=\"text-sm text-label-secondary\">\n          Exported reports and schedules.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsLineExample() {\n  return (\n    <SectionsDemo variant=\"line\" />\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+A vertical tab list next to its panels.
+
+<Example id="components-tabs--vertical" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction SectionsDemo({\n  variant,\n  orientation,\n}: {\n  variant?: ListVariant\n  orientation?: \"horizontal\" | \"vertical\"\n}) {\n  const [value, setValue] = React.useState(\"overview\")\n  return (\n    <Tabs value={value} onValueChange={setValue} orientation={orientation}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"overview\">\n          <Text>Overview</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"analytics\">\n          <Text>Analytics</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"reports\">\n          <Text>Reports</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">\n        <Text className=\"text-sm text-label-secondary\">\n          A summary of your activity.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"analytics\">\n        <Text className=\"text-sm text-label-secondary\">\n          Detailed metrics and trends.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"reports\">\n        <Text className=\"text-sm text-label-secondary\">\n          Exported reports and schedules.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsVerticalExample() {\n  return (\n    <SectionsDemo orientation=\"vertical\" />\n  )\n}"} />
+
+</Example>
+
+### Vertical line
+
+A vertical `line` list with a side indicator.
+
+<Example id="components-tabs--vertical-line" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction SectionsDemo({\n  variant,\n  orientation,\n}: {\n  variant?: ListVariant\n  orientation?: \"horizontal\" | \"vertical\"\n}) {\n  const [value, setValue] = React.useState(\"overview\")\n  return (\n    <Tabs value={value} onValueChange={setValue} orientation={orientation}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"overview\">\n          <Text>Overview</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"analytics\">\n          <Text>Analytics</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"reports\">\n          <Text>Reports</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">\n        <Text className=\"text-sm text-label-secondary\">\n          A summary of your activity.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"analytics\">\n        <Text className=\"text-sm text-label-secondary\">\n          Detailed metrics and trends.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"reports\">\n        <Text className=\"text-sm text-label-secondary\">\n          Exported reports and schedules.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsVerticalLineExample() {\n  return (\n    <SectionsDemo variant=\"line\" orientation=\"vertical\" />\n  )\n}"} />
+
+</Example>
+
+### With icons line
+
+Icon tabs in the `line` variant.
+
+<Example id="components-tabs--with-icons-line" width={880} height={400}>
+
+<Code lang="tsx" code={"import { GearIcon, UserIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction WithIconsDemo({ variant }: { variant?: ListVariant }) {\n  const [value, setValue] = React.useState(\"profile\")\n  return (\n    <Tabs value={value} onValueChange={setValue}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"profile\">\n          <Icon as={UserIcon} className=\"size-4\" />\n          <Text>Profile</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"settings\">\n          <Icon as={GearIcon} className=\"size-4\" />\n          <Text>Settings</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"profile\">\n        <Text className=\"text-sm text-label-secondary\">\n          Your public profile information.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"settings\">\n        <Text className=\"text-sm text-label-secondary\">\n          Manage your preferences.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsWithIconsLineExample() {\n  return (\n    <WithIconsDemo variant=\"line\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled tab line
+
+A disabled tab in the `line` variant.
+
+<Example id="components-tabs--disabled-tab-line" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\nimport { Text } from \"@/components/ui/text\"\n\ntype ListVariant = \"default\" | \"line\"\n\nfunction DisabledTabDemo({ variant }: { variant?: ListVariant }) {\n  const [value, setValue] = React.useState(\"overview\")\n  return (\n    <Tabs value={value} onValueChange={setValue}>\n      <TabsList variant={variant}>\n        <TabsTrigger value=\"overview\">\n          <Text>Overview</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"analytics\">\n          <Text>Analytics</Text>\n        </TabsTrigger>\n        <TabsTrigger value=\"reports\" disabled>\n          <Text>Reports</Text>\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">\n        <Text className=\"text-sm text-label-secondary\">\n          A summary of your activity.\n        </Text>\n      </TabsContent>\n      <TabsContent value=\"analytics\">\n        <Text className=\"text-sm text-label-secondary\">\n          Detailed metrics and trends.\n        </Text>\n      </TabsContent>\n    </Tabs>\n  )\n}\n\nexport function TabsDisabledTabLineExample() {\n  return (\n    <DisabledTabDemo variant=\"line\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.Root>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.List>"]} props={[{"name":"variant","type":"\"default\" | \"line\"","default":"\"default\"","description":"`default` for a filled segmented track, or `line` for an underline."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabsTrigger
+
+Pressable tab that activates its panel.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.Tab>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TabsContent
+
+Panel shown when its value is active.
+
+<PropsTable extends={["React.ComponentProps<typeof TabsPrimitive.Panel>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `TabsList` has the `tablist` role and each trigger has the `tab` role.
+- Triggers report `selected` and `disabled` in their accessibility state, so VoiceOver and TalkBack announce the current tab.
+- Hidden panels kept with `keepMounted` are removed from the accessibility tree.
+- The indicator animation follows the system reduce motion setting.
+
+## Notes
+
+- The `default` track uses `bg-control` with a `bg-surface-raised` indicator (`bg-label-quaternary` in dark mode); the `line` indicator uses `bg-label`.
+- Labels use `text-label` when active, `text-label-secondary` when inactive and `text-label-quaternary` when disabled.
+- Light and dark colors follow the system appearance.

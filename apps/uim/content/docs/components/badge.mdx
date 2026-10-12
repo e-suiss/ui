@@ -1,0 +1,143 @@
+---
+title: Badge
+description: "A small label for a status, count or category, with an optional icon."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-badge--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeExample() {\n  return (\n    <View className=\"flex-row\">\n      <Badge>\n        <Text>Badge</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Badge` is a compact pill `View` that passes a small, bold text style and a 12-point icon size to its children. Six variants are available. `default`, `secondary`, `destructive` and `link` show colored text with no background, while `outline` adds a hairline border and `ghost` adds horizontal padding.
+
+Use `default` for highlighted labels, `secondary` for neutral metadata, `destructive` for errors and `outline` when the badge needs a visible edge.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add badge"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add badge --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add badge --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="uniwind/components/ui/badge.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="nativewind/components/ui/badge.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="stylesheet/components/ui/badge.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Badge.swift" />
+
+<SourceFile path="kotlin/components/Badge.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-row\">\n  <Badge>\n    <Text>Badge</Text>\n  </Badge>\n</View>"} />
+
+Put the label in a `Text` and icons in an `Icon`. Use `render` to render the badge as a different component, such as a `Pressable`, while keeping its styles.
+
+`badgeVariants` and `badgeTextVariants` are also exported if you need the classes on another element.
+
+## Examples
+
+### Variants
+
+All six variants side by side.
+
+<Example id="components-badge--variants" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeVariantsExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge>\n        <Text>Default</Text>\n      </Badge>\n      <Badge variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Badge>\n      <Badge variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Text>Outline</Text>\n      </Badge>\n      <Badge variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Badge>\n      <Badge variant=\"link\">\n        <Text>Link</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With icon
+
+Badges with a leading icon.
+
+<Example id="components-badge--with-icon" width={880} height={400}>
+
+<Code lang="tsx" code={"import { SealCheckIcon, StarIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeWithIconExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge variant=\"secondary\">\n        <Icon as={SealCheckIcon} />\n        <Text>Verified</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Icon as={StarIcon} />\n        <Text>Featured</Text>\n      </Badge>\n      <Badge variant=\"outline\" className=\"min-w-5 px-1\">\n        <Text>8</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Badge
+
+<PropsTable extends={["BadgeProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The badge adds no role; it is read as plain text.
+- If you render it as a pressable element, give that element a role and label.
+
+## Notes
+
+- Text colors come from `text-link`, `text-label-secondary`, `text-danger` and `text-label`; light and dark follow the system appearance.

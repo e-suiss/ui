@@ -1,0 +1,174 @@
+---
+title: Keypad
+description: "A numeric keypad with round digit keys, a delete key and an optional decimal or biometric key."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-keypad--default" width={880} height={839}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadExample() {\n  return (\n    <KeyLog />\n  )\n}"} />
+
+</Example>
+
+`Keypad` lays out digits 1 to 9 in three rows and a bottom row with an accessory key, `0` and a delete key. Each key is a `KeypadKey`, a round `Pressable` with the `button` role. Digit keys have a filled background; the accessory and delete keys use the `plain` variant with no fill.
+
+Use it for PIN entry, amounts and other numeric input where the system keyboard is not wanted.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add keypad"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add keypad --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add keypad --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/keypad.tsx`:
+
+<SourceFile path="uniwind/components/ui/keypad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/keypad.tsx`:
+
+<SourceFile path="nativewind/components/ui/keypad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/keypad.tsx`:
+
+<SourceFile path="stylesheet/components/ui/keypad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Keypad.swift" />
+
+<SourceFile path="kotlin/components/Keypad.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { KeypadKey, Keypad } from \"@/components/ui/keypad\""} />
+
+<Code lang="tsx" code={"<KeyLog />"} />
+
+Handle input in `onKeyPress`, which receives a digit string (`"0"` to `"9"`), `"decimal"`, `"delete"` or `"biometric"`. The keypad holds no value of its own.
+
+Set `accessoryKey` to `decimal` or `biometric` to fill the bottom-left slot; otherwise it stays empty. Change the decimal character with `decimalSeparator` and the biometric icon with `biometricIcon`.
+
+Use `deleteDisabled` to turn off only the delete key, for example when the value is empty. `KeypadKey` is exported for custom layouts, along with the `KeypadDigit`, `KeypadKeyValue` and `KeypadAccessoryKey` types.
+
+## Examples
+
+### Decimal
+
+A keypad with a decimal separator key.
+
+<Example id="components-keypad--decimal" width={880} height={839}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadDecimalExample() {\n  return (\n    <KeyLog accessoryKey=\"decimal\" />\n  )\n}"} />
+
+</Example>
+
+### Biometric
+
+A keypad with a biometric key.
+
+<Example id="components-keypad--biometric" width={880} height={839}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadBiometricExample() {\n  return (\n    <KeyLog accessoryKey=\"biometric\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A fully disabled keypad.
+
+<Example id="components-keypad--disabled" width={880} height={839}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadDisabledExample() {\n  return (\n    <KeyLog accessoryKey=\"biometric\" disabled />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### KeypadKey
+
+A single round key that passes text and icon styles to its children.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"variant","type":"\"default\" | \"plain\"","default":"\"default\"","description":"`default` with a filled background, or `plain` without one."},{"name":"className","type":"string"},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Keypad
+
+The full grid of keys.
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"onKeyPress","type":"(key: KeypadKeyValue) => void","description":"Called with the pressed key value."},{"name":"accessoryKey","type":"KeypadAccessoryKey","description":"Bottom-left key: `decimal` or `biometric`."},{"name":"decimalSeparator","type":"string","default":"\".\"","description":"Character shown on the decimal key. Defaults to `.`."},{"name":"biometricIcon","type":"PhosphorIcon","default":"FingerprintIcon","description":"Phosphor icon for the biometric key. Defaults to `FingerprintIcon`."},{"name":"biometricLabel","type":"string","default":"\"Use biometrics\"","description":"Accessibility label for the biometric key."},{"name":"decimalLabel","type":"string","default":"\"Decimal separator\"","description":"Accessibility label for the decimal key."},{"name":"deleteLabel","type":"string","default":"\"Delete\"","description":"Accessibility label for the delete key."},{"name":"disabled","type":"boolean","default":"false","description":"Disables every key."},{"name":"deleteDisabled","type":"boolean","default":"false","description":"Disables only the delete key."},{"name":"keyClassName","type":"string","description":"Extra classes applied to each key."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Every key has the `button` role and an `accessibilityLabel`: the digit itself, or `decimalLabel`, `biometricLabel` and `deleteLabel` for the other keys.
+- Disabled keys set `disabled` in their accessibility state and block presses.
+- Translate the default labels (`Decimal separator`, `Use biometrics`, `Delete`) for localized apps.
+
+## Notes
+
+- Filled keys use `bg-control`, `bg-control-pressed` when pressed and `bg-control-disabled` when disabled.
+- Digits use `text-2xl` with tabular numbers.
+- Light and dark colors follow the system appearance.

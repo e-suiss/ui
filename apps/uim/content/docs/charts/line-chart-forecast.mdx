@@ -1,0 +1,90 @@
+---
+title: Line Chart Forecast
+description: "A twelve-month line with actual values in solid and a forecast in dashed, over a shaded future range."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-line--forecast" width={880} height={655}>
+
+<SourceFile path="uniwind/components/charts/line-chart-forecast.tsx" fold={false} />
+
+</Example>
+
+Two series share one axis: `actual` fills the first nine months and `forecast` continues from September, drawn with `strokeDasharray`. A `ReferenceArea` shades September to December to mark the forecast period. Missing values are `null`, so each line stops where its data ends.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-forecast"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-forecast --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add line-chart-forecast --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/LineChartForecast.swift" />
+
+<SourceFile path="kotlin/charts/LineChartForecast.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartForecast } from \"@/components/charts/line-chart-forecast\""} />
+
+<Code lang="tsx" code={"<LineChartForecast />"} />
+
+Replace the `actual` and `forecast` arrays; the forecast starts at the index set in `chartData`. Move the `ReferenceArea` `x1` and `x2` to match your forecast range. The component takes no props.

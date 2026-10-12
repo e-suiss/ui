@@ -1,0 +1,37 @@
+{
+  "description": "A select field that opens a list of options anchored below it, with optional groups and separators.",
+  "overview": "`Picker` composes `Select`: a `SelectTrigger` showing the current value and a `SelectContent` popup with the options. The selected option shows a check mark.\n\nUse it to choose one value from a short or grouped list in a form.",
+  "usage": "List `PickerItem`s as children, optionally inside `PickerGroup`s separated by `PickerSeparator`. The picker collects the items from its children to show the selected label, or you can pass `items` directly.\n\nUse it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `placeholder` shows while nothing is selected.",
+  "examples": {
+    "States": "A small picker with a value, an invalid picker and a disabled picker."
+  },
+  "parts": {
+    "Picker": "The root that renders the trigger and the options popup.",
+    "PickerGroup": "Groups options under an optional label.",
+    "PickerItem": "One selectable option.",
+    "PickerSeparator": "A divider between groups."
+  },
+  "props": {
+    "Picker": {
+      "value": "The selected value when controlled.",
+      "defaultValue": "The initial value when uncontrolled.",
+      "onValueChange": "Called with the new value when an option is chosen.",
+      "placeholder": "Text shown when no value is selected.",
+      "items": "`{ value, label }` pairs used to show the selected label; collected from children when omitted.",
+      "size": "Trigger height: `sm` or `default`.",
+      "disabled": "Prevents opening the list.",
+      "invalid": "Applies the error style to the trigger.",
+      "accessibilityLabel": "Label for the trigger.",
+      "accessibilityLabelledBy": "Links the trigger to a visible label."
+    },
+    "PickerGroup": {
+      "label": "Heading shown above the group."
+    },
+    "PickerItem": {
+      "value": "The value this option selects.",
+      "disabled": "Prevents choosing this option."
+    }
+  },
+  "accessibility": "- Give the picker an `accessibilityLabel` or `accessibilityLabelledBy`, since the trigger shows only the value.",
+  "notes": "- The popup uses `bg-surface-raised` with a subtle border that is stronger in dark mode.\n- The popup fades in and out, and respects the system reduce motion setting.\n- On iOS the popup renders in a full-window overlay so it appears above native screens."
+}

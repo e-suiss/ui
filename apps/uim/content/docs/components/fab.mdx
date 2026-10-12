@@ -1,0 +1,205 @@
+---
+title: Fab
+description: "A floating action button pinned to the bottom corner, with an optional label and speed-dial actions."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-fab--default" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab accessibilityLabel=\"New note\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Fab` is a round accent `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.
+
+When it has `FabAction` children, pressing it opens a speed dial: a scrim dims the screen and the actions rise above the button one after another. The plus icon rotates 45 degrees into a close mark; other icons swap to an X.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add fab"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add fab --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add fab --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="uniwind/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="nativewind/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="stylesheet/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Fab.swift" />
+
+<SourceFile path="kotlin/components/Fab.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Fab, FabAction } from \"@/components/ui/fab\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-1\">\n  <Page />\n  <Fab accessibilityLabel=\"New note\" />\n</View>"} />
+
+Use the default plus icon or pass any Phosphor icon to `icon`. Give an icon-only button an `accessibilityLabel`.
+
+For a speed dial, add `FabAction` children with an `icon` and an optional text label. Pressing an action calls its `onPress` and closes the dial. Tapping the scrim or pressing the Android back button also closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it.
+
+Pass `portalHost` to render into a named portal host.
+
+## Examples
+
+### Large
+
+The `lg` size with a custom icon.
+
+<Example id="components-fab--large" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { PencilSimpleIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabLargeExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab size=\"lg\" icon={PencilSimpleIcon} accessibilityLabel=\"Compose\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Extended
+
+A label beside the icon.
+
+<Example id="components-fab--extended" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { PencilSimpleIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabExtendedExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab icon={PencilSimpleIcon} label=\"Compose\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Large extended
+
+A large extended button.
+
+<Example id="components-fab--large-extended" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabLargeExtendedExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab size=\"lg\" label=\"New note\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Speed dial open
+
+A speed dial that starts open.
+
+<Example id="components-fab--speed-dial-open" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CameraIcon, FileTextIcon, ImageIcon, NotePencilIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction SpeedDial({ defaultOpen = false }: { defaultOpen?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"flex-1\">\n      <Page log={log} />\n      <Fab accessibilityLabel=\"Create\" defaultOpen={defaultOpen}>\n        <FabAction icon={NotePencilIcon} onPress={() => setLog(\"New note\")}>\n          New note\n        </FabAction>\n        <FabAction icon={CameraIcon} onPress={() => setLog(\"Take photo\")}>\n          Take photo\n        </FabAction>\n        <FabAction icon={ImageIcon} onPress={() => setLog(\"Add image\")}>\n          Add image\n        </FabAction>\n        <FabAction icon={FileTextIcon} onPress={() => setLog(\"Scan document\")}>\n          Scan document\n        </FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabSpeedDialOpenExample() {\n  return (\n    <SpeedDial defaultOpen />\n  )\n}"} />
+
+</Example>
+
+### Speed dial closed
+
+A speed dial that opens on press.
+
+<Example id="components-fab--speed-dial-closed" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CameraIcon, FileTextIcon, ImageIcon, NotePencilIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction SpeedDial({ defaultOpen = false }: { defaultOpen?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"flex-1\">\n      <Page log={log} />\n      <Fab accessibilityLabel=\"Create\" defaultOpen={defaultOpen}>\n        <FabAction icon={NotePencilIcon} onPress={() => setLog(\"New note\")}>\n          New note\n        </FabAction>\n        <FabAction icon={CameraIcon} onPress={() => setLog(\"Take photo\")}>\n          Take photo\n        </FabAction>\n        <FabAction icon={ImageIcon} onPress={() => setLog(\"Add image\")}>\n          Add image\n        </FabAction>\n        <FabAction icon={FileTextIcon} onPress={() => setLog(\"Scan document\")}>\n          Scan document\n        </FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabSpeedDialClosedExample() {\n  return (\n    <SpeedDial />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+A speed dial controlled with `open` and `onOpenChange`.
+
+<Example id="components-fab--controlled" width={880} height={1720}>
+
+<Code lang="tsx" code={"import { CameraIcon, NotePencilIcon, PencilSimpleIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction ControlledDemo() {\n  const [open, setOpen] = React.useState(true)\n  return (\n    <View className=\"flex-1\">\n      <Page log={open ? \"Open\" : \"Closed\"} />\n      <Fab\n        icon={PencilSimpleIcon}\n        label=\"Create\"\n        open={open}\n        onOpenChange={setOpen}\n      >\n        <FabAction icon={NotePencilIcon}>New note</FabAction>\n        <FabAction icon={CameraIcon}>Take photo</FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"size","type":"FabSize","default":"\"default\"","description":"`default` or `lg`."},{"name":"icon","type":"PhosphorIcon","default":"PlusIcon","description":"Phosphor icon component. Defaults to a plus."},{"name":"label","type":"React.ReactNode","description":"Text or node shown beside the icon."},{"name":"open","type":"boolean","description":"Controlled speed dial state."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Initial speed dial state."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the speed dial opens or closes."},{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"icon","type":"PhosphorIcon","required":true,"description":"Phosphor icon component for the action."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The button and each action have the `button` role.
+- With actions, the button reports its `expanded` state.
+- The VoiceOver escape gesture and the Android back button close the speed dial.
+- The scrim is hidden from screen readers.
+
+## Notes
+
+- Position follows the safe-area insets and flips sides in right-to-left layouts.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-accent`, `bg-surface-raised` and `bg-scrim` tokens; actions use a secondary surface in dark mode.

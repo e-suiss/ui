@@ -1,0 +1,5 @@
+{
+  "description": "A security dashboard with a score ring, open alerts by severity, and alerts you can resolve or reopen.",
+  "overview": "An admin screen with a collapsing `Header`, a ring that shows a security score, and counts of open High, Medium and Low alerts. A `ChipGroup` filters the list by Open, Resolved or All, and each alert has a Resolve or Reopen `Button`; the score and counts update as alerts change. A `TabBar` at the bottom switches between admin sections; only Activity has content in the sample.",
+  "usage": "Replace `INITIAL_ALERTS` with your alerts and tune the weights in `SEVERITY` to change how the score is computed. Wire `onFilterChange`, `onResolve` and `onNavigate` to your app."
+}

@@ -1,0 +1,102 @@
+---
+title: Radial Chart Interactive
+description: "Activity rings for each day of the week, with a day picker and per-ring totals against goals."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-radial--interactive" width={880} height={1635}>
+
+<SourceFile path="uniwind/components/charts/radial-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A `Card` with a `ToggleGroup` of seven days, each showing small rings, above a large ring view and per-ring totals. The rings are drawn with `Svg` circles colored through `ChartPalette`; `RINGS` sets each label, unit, goal and color, and `WEEK` holds three values per day. Picking a day updates the large rings and the totals, which show the value, goal and percentage, with a note when a goal is met.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add radial-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-svg"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/radial-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-svg"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/radial-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-svg"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/radial-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same chart is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Charts/RadialChartInteractive.swift" />
+
+<SourceFile path="kotlin/charts/RadialChartInteractive.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartInteractive } from \"@/components/charts/radial-chart-interactive\""} />
+
+<Code lang="tsx" code={"<RadialChartInteractive />"} />
+
+Replace `WEEK` with your daily values and adjust the goals, units and colors in `RINGS`. The component takes no props.

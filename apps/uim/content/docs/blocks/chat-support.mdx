@@ -1,0 +1,102 @@
+---
+title: Chat Support
+description: "A support page with a floating chat panel, quick question buttons and an assistant that answers them."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-chat-support--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/chat-support.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button`, `Icon` and `BottomBar`. The chat panel opens and closes with a scale animation from a launcher button, quick questions disappear once asked, and each question gets a typed answer after a short typing indicator. The panel grows to the available height while the composer has focus.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-support"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-support --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add chat-support --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-support.tsx`:
+
+<SourceFile path="uniwind/components/blocks/chat-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-support.tsx`:
+
+<SourceFile path="nativewind/components/blocks/chat-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/chat-support.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/chat-support.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/ChatSupport.swift" />
+
+<SourceFile path="kotlin/blocks/ChatSupport.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ChatSupport } from \"@/components/blocks/chat-support\""} />
+
+<Code lang="tsx" code={"<ChatSupport />"} />
+
+Replace `ANSWERS` and `FALLBACK` with your own replies or a call to your support service. Pass `onSend`, `onAttach` and `onOpenChange` to handle messages, attachments and the open state.

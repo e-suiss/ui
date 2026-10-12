@@ -1,0 +1,243 @@
+---
+title: Header
+description: "A navigation bar with a back button, a centered title, actions and an optional large title that collapses on scroll."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-header--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function HeaderExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack>Settings</HeaderBack>\n        <HeaderTitle>Profile</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"plain\" size=\"sm\">\n            <Text className=\"font-semibold\">Edit</Text>\n          </Button>\n        </HeaderActions>\n      </Header>\n    </View>\n  )\n}"} />
+
+</Example>
+
+`Header` is a 44-point bar that sorts its children into three slots: `HeaderBack` and leading `HeaderActions` on the start side, `HeaderTitle` in the center, and everything else on the end side. The side slots share the remaining width equally, so the title stays centered.
+
+For a large title, create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add header"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add header --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add header --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="uniwind/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="nativewind/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="stylesheet/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Header.swift" />
+
+<SourceFile path="kotlin/components/Header.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Header, HeaderTitle, HeaderLargeTitle, HeaderBack, HeaderActions, HeaderScrollView } from \"@/components/ui/header\""} />
+
+<Code lang="tsx" code={"<View className=\"-mx-4 -mt-4\">\n  <Header>\n    <HeaderBack>Settings</HeaderBack>\n    <HeaderTitle>Profile</HeaderTitle>\n    <HeaderActions>\n      <Button variant=\"plain\" size=\"sm\">\n        <Text className=\"font-semibold\">Edit</Text>\n      </Button>\n    </HeaderActions>\n  </Header>\n</View>"} />
+
+`HeaderBack` shows a caret and an optional text label such as the previous screen's name; wire `onPress` to your navigation. Group icon buttons in `HeaderActions`, and set `side="leading"` to place a group on the start side.
+
+Both `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.
+
+Without a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.
+
+## Examples
+
+### Large title
+
+A large title that collapses into the bar on scroll.
+
+<Example id="components-header--large-title" width={880} height={1619}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderLargeTitle, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nfunction LargeTitleDemo({ subtitle }: { subtitle?: string }) {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack>Mailboxes</HeaderBack>\n        <HeaderTitle>Inbox</HeaderTitle>\n        <TrailingActions />\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <HeaderLargeTitle subtitle={subtitle}>Inbox</HeaderLargeTitle>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderLargeTitleExample() {\n  return (\n    <LargeTitleDemo />\n  )\n}"} />
+
+</Example>
+
+### Large title with subtitle
+
+A large title with a subtitle.
+
+<Example id="components-header--large-title-with-subtitle" width={880} height={1663}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderLargeTitle, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nfunction LargeTitleDemo({ subtitle }: { subtitle?: string }) {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack>Mailboxes</HeaderBack>\n        <HeaderTitle>Inbox</HeaderTitle>\n        <TrailingActions />\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <HeaderLargeTitle subtitle={subtitle}>Inbox</HeaderLargeTitle>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderLargeTitleWithSubtitleExample() {\n  return (\n    <LargeTitleDemo subtitle=\"3 unread\" />\n  )\n}"} />
+
+</Example>
+
+### Compact with scroll
+
+A compact title whose hairline appears on scroll.
+
+<Example id="components-header--compact-with-scroll" width={880} height={1517}>
+
+<Code lang="tsx" code={"import { DotsThreeIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction CompactScrollDemo() {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack />\n        <HeaderTitle subtitle=\"15 messages\">Inbox</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"More\">\n            <Icon as={DotsThreeIcon} weight=\"bold\" className=\"size-5\" />\n          </Button>\n        </HeaderActions>\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderCompactWithScrollExample() {\n  return (\n    <CompactScrollDemo />\n  )\n}"} />
+
+</Example>
+
+### Subtitle
+
+A two-line title with a subtitle.
+
+<Example id="components-header--subtitle" width={880} height={400}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nexport function HeaderSubtitleExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack />\n        <HeaderTitle subtitle=\"Last seen today\">Alex Morgan</HeaderTitle>\n        <TrailingActions />\n      </Header>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Leading actions
+
+Actions on both sides of the title.
+
+<Example id="components-header--leading-actions" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ListIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderTitle } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function HeaderLeadingActionsExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderActions side=\"leading\">\n          <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Menu\">\n            <Icon as={ListIcon} className=\"size-5\" />\n          </Button>\n        </HeaderActions>\n        <HeaderTitle>Library</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"plain\" size=\"sm\">\n            <Text className=\"font-semibold\">Done</Text>\n          </Button>\n        </HeaderActions>\n      </Header>\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Back only
+
+A long back label that truncates.
+
+<Example id="components-header--back-only" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Header, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\n\nexport function HeaderBackOnlyExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack>A very long previous screen title</HeaderBack>\n        <HeaderTitle>Details</HeaderTitle>\n      </Header>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Header
+
+Bar that lays out the back button, title and actions.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"scroll","type":"HeaderScroll","description":"Scroll state from `useHeaderScroll()`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### HeaderTitle
+
+Centered title with optional subtitle.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"subtitle","type":"React.ReactNode","description":"Second line under the title."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### HeaderLargeTitle
+
+Large title at the top of the scroll content.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"subtitle","type":"React.ReactNode","description":"Line under the large title."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### HeaderBack
+
+Back button with a caret and optional label.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### HeaderActions
+
+Row of actions for either side.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"side","type":"\"leading\" | \"trailing\"","default":"\"trailing\"","description":"`leading` or `trailing`. Defaults to `trailing`."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### HeaderScrollView
+
+Scroll view that drives the header animations.
+
+<PropsTable extends={["ScrollViewProps"]} props={[{"name":"scroll","type":"HeaderScroll","required":true,"description":"Scroll state from `useHeaderScroll()`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.
+- `HeaderBack` has the `button` role and is labelled with its text, or "Back" when it has none.
+- Give icon-only actions an `accessibilityLabel`.
+
+## Notes
+
+- The back caret rotates and the large title scales from the correct edge in right-to-left layouts.
+- Uses `text-link`, `bg-separator` and `bg-item-pressed` tokens; light and dark follow the system appearance.

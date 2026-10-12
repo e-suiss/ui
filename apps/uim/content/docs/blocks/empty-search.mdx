@@ -1,0 +1,102 @@
+---
+title: Empty Search
+description: "A search screen with a field, live suggestions and a no-results state with suggested searches."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-empty-search--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/empty-search.tsx" fold={false} />
+
+</Example>
+
+Composes `Screen`, `Input`, `Empty`, `Button`, `Icon` and `Text`. Typing filters the suggestions list, the clear button empties the field and refocuses it, and when nothing matches the screen shows a no-results message with suggestion buttons that fill in the query.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-search"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-search --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add empty-search --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Input](/docs/components/input), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Input](/docs/components/input), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-search.tsx`:
+
+<SourceFile path="uniwind/components/blocks/empty-search.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Input](/docs/components/input), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-search.tsx`:
+
+<SourceFile path="nativewind/components/blocks/empty-search.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Input](/docs/components/input), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/empty-search.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/empty-search.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/EmptySearch.swift" />
+
+<SourceFile path="kotlin/blocks/EmptySearch.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { EmptySearch } from \"@/components/blocks/empty-search\""} />
+
+<Code lang="tsx" code={"<EmptySearch />"} />
+
+Replace `SUGGESTIONS` and the prefix matching with results from your search service. The component takes no props.

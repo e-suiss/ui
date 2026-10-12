@@ -1,0 +1,179 @@
+---
+title: Context Actions
+description: "Long press an element to open a bottom alert sheet with actions for it."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-context-actions--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { ImageIcon } from \"phosphor-react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsLabel, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsExample() {\n  return (\n    <ContextActions>\n      <ContextActionsTrigger\n        accessibilityLabel=\"Photo\"\n        className=\"h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80\"\n      >\n        <Icon as={ImageIcon} className=\"size-8 text-label-secondary\" />\n        <Text className=\"text-sm text-label-secondary\">Long press</Text>\n      </ContextActionsTrigger>\n      <ContextActionsContent>\n        <ContextActionsLabel>Photo</ContextActionsLabel>\n        <ContextActionsItem>Copy</ContextActionsItem>\n        <ContextActionsItem>Share</ContextActionsItem>\n        <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n      </ContextActionsContent>\n    </ContextActions>\n  )\n}"} />
+
+</Example>
+
+`ContextActions` turns any content into a long-press target. Holding `ContextActionsTrigger` for 500 ms opens an `AlertSheet` with the actions grouped in one block and a separate Cancel button below.
+
+Use it for secondary actions on photos, messages or list rows that should not take up space on screen.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add context-actions"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add context-actions --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add context-actions --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="uniwind/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="nativewind/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same pattern is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Patterns/ContextActions.swift" />
+
+<SourceFile path="kotlin/patterns/ContextActions.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextActionsLabel, ContextActionsItem, ContextActionsSeparator } from \"@/components/patterns/context-actions\""} />
+
+<Code lang="tsx" code={"<ContextActions>\n  <ContextActionsTrigger\n    accessibilityLabel=\"Photo\"\n    className=\"h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80\"\n  >\n    <Icon as={ImageIcon} className=\"size-8 text-label-secondary\" />\n    <Text className=\"text-sm text-label-secondary\">Long press</Text>\n  </ContextActionsTrigger>\n  <ContextActionsContent>\n    <ContextActionsLabel>Photo</ContextActionsLabel>\n    <ContextActionsItem>Copy</ContextActionsItem>\n    <ContextActionsItem>Share</ContextActionsItem>\n    <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n  </ContextActionsContent>\n</ContextActions>"} />
+
+Wrap the target in `ContextActionsTrigger` and list `ContextActionsItem`s in `ContextActionsContent`. Add a `ContextActionsLabel` first to show a title.
+
+The open state is managed internally; use `onOpenChange` to react to it. `ContextActionsTrigger` accepts every `Pressable` prop, so `onPress` still works for a normal tap, and your own `onLongPress` runs before the sheet opens. Change the hold time with `delayLongPress`.
+
+## Examples
+
+### Inline
+
+A small message bubble as the trigger, with a custom `cancelLabel`.
+
+<Example id="patterns-context-actions--inline" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsInlineExample() {\n  return (\n    <View className=\"items-start\">\n      <ContextActions>\n        <ContextActionsTrigger className=\"rounded-lg bg-control px-3 py-2\">\n          <Text>Hold this message</Text>\n        </ContextActionsTrigger>\n        <ContextActionsContent cancelLabel=\"Close\">\n          <ContextActionsItem>Reply</ContextActionsItem>\n          <ContextActionsItem>Forward</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </View>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ContextActions
+
+The root that owns the open state.
+
+<PropsTable props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `false`, the sheet ignores outside presses. Defaults to `true`."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ContextActionsTrigger
+
+A `Pressable` that opens the sheet on long press.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ContextActionsContent
+
+The sheet with the grouped items and a Cancel button.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetContent>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button. Defaults to `Cancel`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ContextActionsLabel
+
+A title shown at the top of the group.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ContextActionsItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ContextActionsSeparator
+
+Kept for API parity; renders nothing.
+
+<PropsTable props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger has the hint "Long press for actions".
+- It adds `longpress` and `showActions` ("Show actions") accessibility actions, so screen reader users can open the sheet without holding.
+- Your own `accessibilityActions` and `onAccessibilityAction` are kept.
+
+## Notes
+
+- Item text uses `text-link`, or `text-danger` for the `destructive` variant.
+- On iOS the sheet renders in a full-window overlay so it appears above native screens.

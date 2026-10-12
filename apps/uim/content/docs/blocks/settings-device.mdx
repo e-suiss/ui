@@ -1,0 +1,102 @@
+---
+title: Settings Device
+description: "A device settings home screen with search, an account row and grouped rows with icons, toggles and details."
+eyebrow: Block
+generated: true
+---
+
+<Example id="blocks-settings-device--default" width={880} height={1720}>
+
+<SourceFile path="uniwind/components/blocks/settings-device.tsx" fold={false} />
+
+</Example>
+
+A large-title `Header` sits over an `InputGroup` search field, an account `Item` with an `Avatar`, and inset `ItemGroup` lists of rows with tinted icons. Airplane Mode, Wi-Fi, Bluetooth and Focus use a `Switch`, and other rows show a detail value and a chevron. Typing filters the rows and shows a message when nothing matches.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-device"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-device --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add settings-device --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/settings-device.tsx`:
+
+<SourceFile path="uniwind/components/blocks/settings-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/settings-device.tsx`:
+
+<SourceFile path="nativewind/components/blocks/settings-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
+
+3. Copy the source into `components/blocks/settings-device.tsx`:
+
+<SourceFile path="stylesheet/components/blocks/settings-device.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same block is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Blocks/SettingsDevice.swift" />
+
+<SourceFile path="kotlin/blocks/SettingsDevice.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { SettingsDevice } from \"@/components/blocks/settings-device\""} />
+
+<Code lang="tsx" code={"<SettingsDevice />"} />
+
+Replace `GROUPS` with your rows and the account details with your user. Use `onAccountPress` and `onRowPress`, which receives the row label, to navigate.

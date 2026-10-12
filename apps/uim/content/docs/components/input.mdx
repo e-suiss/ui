@@ -1,0 +1,196 @@
+---
+title: Input
+description: "A single-line text field with focus, invalid and disabled states, in three heights."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-input--default" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputExample() {\n  return (\n    <Input placeholder=\"Email\" />\n  )\n}"} />
+
+</Example>
+
+`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.
+
+It comes in three sizes: `default` (44 pt), `md` and `sm`. Use the default size for forms on a full screen, and the smaller sizes inside dense layouts such as toolbars or sheets.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add input"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add input --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/uim@latest add input --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/input.tsx`:
+
+<SourceFile path="uniwind/components/ui/input.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/input.tsx`:
+
+<SourceFile path="nativewind/components/ui/input.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/input.tsx`:
+
+<SourceFile path="stylesheet/components/ui/input.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+### SwiftUI and Jetpack Compose
+
+The same component is available as native source. The CLI copies it with every file it uses.
+
+<Tabs items={["SwiftUI","Jetpack Compose"]}>
+
+<SourceFile path="swift/Components/Input.swift" />
+
+<SourceFile path="kotlin/components/Input.kt" />
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\""} />
+
+<Code lang="tsx" code={"<Input placeholder=\"Email\" />"} />
+
+Pass any `TextInput` prop, such as `placeholder`, `secureTextEntry`, `keyboardType` or `inputMode`, to get the matching field type.
+
+The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state, so you usually set `invalid` on the `Field` instead of on the input.
+
+`className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes.
+
+## Examples
+
+### Types
+
+Text, email, password, number and search fields set through standard `TextInput` props.
+
+<Example id="components-input--types" width={880} height={615}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function InputTypesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Input placeholder=\"Text\" />\n      <Input\n        placeholder=\"Email\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n      <Input placeholder=\"Password\" secureTextEntry />\n      <Input placeholder=\"Number\" keyboardType=\"number-pad\" />\n      <Input placeholder=\"Search\" inputMode=\"search\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+The `sm`, `md` and default sizes.
+
+<Example id="components-input--sizes" width={880} height={400}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputSizesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Input size=\"sm\" placeholder=\"Small\" />\n      <Input size=\"md\" placeholder=\"Medium\" />\n      <Input placeholder=\"Default\" />\n    </View>\n  )\n}"} />
+
+</Example>
+
+### With value
+
+An input that starts with a `defaultValue`.
+
+<Example id="components-input--with-value" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputWithValueExample() {\n  return (\n    <Input placeholder=\"Email\" defaultValue=\"hello@example.com\" />\n  )\n}"} />
+
+</Example>
+
+### With label
+
+An input inside a `Field` with a label and description.
+
+<Example id="components-input--with-label" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputWithLabelExample() {\n  return (\n    <Field>\n      <FieldLabel>Email</FieldLabel>\n      <Input\n        placeholder=\"m@example.com\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n      <FieldDescription>We will never share your email.</FieldDescription>\n    </Field>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+An input inside an invalid `Field` with an error message.
+
+<Example id="components-input--invalid" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Username</FieldLabel>\n      <Input defaultValue=\"x\" />\n      <FieldError>Username must be at least 3 characters.</FieldError>\n    </Field>\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+A controlled input that mirrors its value below.
+
+<Example id="components-input--controlled" width={880} height={400}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  return (\n    <View className=\"gap-2\">\n      <Input\n        placeholder=\"Lowercase only\"\n        autoCapitalize=\"none\"\n        value={value}\n        onValueChange={(next) => setValue(next.toLowerCase())}\n      />\n      <Text variant=\"muted\">Value: {value}</Text>\n    </View>\n  )\n}\n\nexport function InputControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled input.
+
+<Example id="components-input--disabled" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputDisabledExample() {\n  return (\n    <Input placeholder=\"Disabled\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Input
+
+<PropsTable extends={["React.ComponentProps<typeof InputPrimitive.Root>"]} props={[{"name":"size","type":"InputSize","default":"\"default\"","description":"Height and text size: `default`, `md` or `sm`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Inside a `Field`, the input is linked to the field label through `accessibilityLabelledBy` and gets the label as `accessibilityLabel` and the description as `accessibilityHint`.
+- `disabled` is set in `accessibilityState` and makes the input non-editable.
+- Outside a `Field`, give the input an `accessibilityLabel`; a placeholder alone is not a label.
+
+## Notes
+
+- Uses the `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens.
+- Placeholder, cursor and selection colors come from the `label-secondary` and `accent` tokens.
+- Light and dark colors follow the system appearance.

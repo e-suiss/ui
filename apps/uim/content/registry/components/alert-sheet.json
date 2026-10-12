@@ -1,0 +1,42 @@
+{
+  "description": "A sheet that slides up from the bottom with a short list of actions and a separate cancel button.",
+  "overview": "`AlertSheet` presents a set of choices related to the current context. `AlertSheetContent` renders through a portal (inside a full-window overlay on iOS), slides up from the bottom over a dimmed scrim, and respects the safe-area insets.\n\nActions sit in an `AlertSheetGroup`, a rounded card that draws a hairline between each child, and `AlertSheetCancel` sits below it as its own card with bold text. Use it for two to a few actions; for a single decision that needs confirmation, use Alert Dialog.",
+  "usage": "Compose `AlertSheetTrigger` and `AlertSheetContent`. Inside the content, put an `AlertSheetGroup` with an optional `AlertSheetHeader` (`AlertSheetTitle`, `AlertSheetDescription`) followed by `AlertSheetAction`s, then an `AlertSheetCancel`.\n\nEvery action closes the sheet when pressed. String children are wrapped in `Text` automatically. Use `variant=\"destructive\"` on an action that deletes or removes, and `disabled` to dim and block it.\n\nBy default the sheet is dismissible and a tap on the scrim closes it. Set `dismissible={false}` to require an explicit choice.",
+  "examples": {
+    "OpenByDefault": "Starts open through `defaultOpen`.",
+    "NotDismissible": "`dismissible={false}` with a destructive and a disabled action."
+  },
+  "parts": {
+    "AlertSheet": "Root that holds the open state.",
+    "AlertSheetTrigger": "Opens the sheet when pressed.",
+    "AlertSheetPortal": "Portal the content is rendered into.",
+    "AlertSheetOverlay": "Dimmed scrim behind the sheet.",
+    "AlertSheetContent": "Bottom-anchored container that slides in and out.",
+    "AlertSheetGroup": "Rounded card that separates its children with hairlines.",
+    "AlertSheetHeader": "Centered block for the title and description.",
+    "AlertSheetTitle": "Small, bold heading for the sheet.",
+    "AlertSheetDescription": "Supporting text below the title.",
+    "AlertSheetAction": "Full-width action row that closes the sheet.",
+    "AlertSheetCancel": "Separate cancel card with bold text."
+  },
+  "props": {
+    "AlertSheet": {
+      "dismissible": "When `false`, the scrim no longer closes the sheet. Defaults to `true`.",
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state when uncontrolled.",
+      "onOpenChange": "Called when the sheet opens or closes."
+    },
+    "AlertSheetContent": {
+      "portalHost": "Name of the portal host to render into."
+    },
+    "AlertSheetAction": {
+      "variant": "`default` (link color) or `destructive` (danger color).",
+      "disabled": "Dims the action and blocks presses."
+    },
+    "AlertSheetCancel": {
+      "disabled": "Dims the button and blocks presses."
+    }
+  },
+  "accessibility": "- When dismissible the popup has the `dialog` role, otherwise `alertdialog`; it is labelled by the title and marked as modal for VoiceOver.\n- Focus moves to the title when the sheet opens.\n- Actions have the `button` role with a `disabled` state.\n- Separators between actions are hidden from screen readers.",
+  "notes": "- Padding uses the bottom and side safe-area insets, with a minimum of 8 points.\n- On iOS the content is wrapped in a full-window overlay.\n- Animations respect the system Reduce Motion setting.\n- Uses `bg-surface-raised`, `bg-item-pressed`, `text-link` and `text-danger` tokens; light and dark follow the system appearance."
+}
