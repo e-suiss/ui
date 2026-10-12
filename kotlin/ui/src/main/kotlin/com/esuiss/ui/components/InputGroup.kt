@@ -89,7 +89,7 @@ fun InputGroup(
     state.enabled = enabled
     state.invalid = invalid
     val tall = state.blockStart > 0 || state.blockEnd > 0 || state.multiline > 0
-    val shape = RoundedCornerShape(if (tall) Radius.xl else Radius.lg)
+    val item = rememberButtonGroupItem(LocalButtonGroup.current, RoundedCornerShape(if (tall) Radius.xl else Radius.lg))
     CompositionLocalProvider(
         LocalInputGroup provides state,
         LocalTextSelectionColors provides formSelectionColors(colors),
@@ -97,8 +97,9 @@ fun InputGroup(
         Layout(
             content = content,
             modifier = modifier
+                .then(item.modifier)
                 .fillMaxWidth()
-                .formInputSurface(colors, shape, state.focused, invalid, enabled)
+                .formInputSurface(colors, item.shape, state.focused, invalid, enabled)
                 .semantics { isTraversalGroup = true },
         ) { measurables, constraints ->
             val width = if (constraints.hasBoundedWidth) constraints.maxWidth else 320.dp.roundToPx()

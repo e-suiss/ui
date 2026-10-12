@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
@@ -28,14 +30,16 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Constraints
@@ -62,6 +66,47 @@ internal object ButtonGroupFill
 private object ButtonGroupDivider
 
 internal fun ButtonGroupState?.itemShape(default: Shape): Shape = if (this == null) default else RectangleShape
+
+@Immutable
+internal class ButtonGroupItem(val shape: Shape, val modifier: Modifier)
+
+@Composable
+internal fun rememberButtonGroupItem(group: ButtonGroupState?, default: Shape): ButtonGroupItem {
+    var edges by remember { mutableIntStateOf(0) }
+    val horizontal = group?.orientation != ButtonGroupOrientation.Vertical
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val shape = remember(edges, horizontal) {
+        val round = if (horizontal) CornerSize(50) else CornerSize(Radius.xl2)
+        val square = CornerSize(0)
+        val start = if (edges and 1 != 0) round else square
+        val end = if (edges and 2 != 0) round else square
+        if (horizontal) {
+            RoundedCornerShape(topStart = start, topEnd = end, bottomEnd = end, bottomStart = start)
+        } else {
+            RoundedCornerShape(topStart = start, topEnd = start, bottomEnd = end, bottomStart = end)
+        }
+    }
+    if (group == null || group.nested > 0) return ButtonGroupItem(default, Modifier)
+    return ButtonGroupItem(
+        shape = shape,
+        modifier = Modifier.onPlaced { coordinates ->
+            val parent = coordinates.parentLayoutCoordinates ?: return@onPlaced
+            val bounds = parent.localBoundingBoxOf(coordinates, clipBounds = false)
+            val first: Boolean
+            val last: Boolean
+            if (horizontal) {
+                val left = bounds.left <= 0.5f
+                val right = bounds.right >= parent.size.width - 0.5f
+                first = if (rtl) right else left
+                last = if (rtl) left else right
+            } else {
+                first = bounds.top <= 0.5f
+                last = bounds.bottom >= parent.size.height - 0.5f
+            }
+            edges = (if (first) 1 else 0) or (if (last) 2 else 0)
+        },
+    )
+}
 
 internal fun Modifier.buttonGroupEdge(group: ButtonGroupState?, color: Color): Modifier {
     if (group == null) return this

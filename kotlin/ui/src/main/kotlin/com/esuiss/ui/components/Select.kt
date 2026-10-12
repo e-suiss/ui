@@ -129,7 +129,8 @@ fun Select(
     val isInvalid = invalid ?: field.invalid
     val isEnabled = enabled && field.enabled
     var expanded by remember { mutableStateOf(false) }
-    val shape = RoundedCornerShape(size.radius)
+    val item = rememberButtonGroupItem(LocalButtonGroup.current, RoundedCornerShape(size.radius))
+    val shape = item.shape
     val labels = remember { mutableStateMapOf<String, String>() }
     val text = displayValue ?: value?.let { labels[it] ?: it }
     val foreground = when {
@@ -137,7 +138,7 @@ fun Select(
         text == null -> colors.labelSecondary
         else -> colors.label
     }
-    Box(modifier = modifier, propagateMinConstraints = true) {
+    Box(modifier = modifier.then(item.modifier), propagateMinConstraints = true) {
         if (displayValue == null) {
             Layout(
                 content = {
