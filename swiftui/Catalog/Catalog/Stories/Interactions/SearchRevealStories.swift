@@ -3,13 +3,13 @@ import SwiftUI
 
 enum SearchRevealStories {
   static let group = StoryGroup(.interactions, "Search Reveal", stories: [
-    Story("Default") {
+    Story("Default", scrolls: false) {
       SearchRevealNotes(count: 12)
     },
-    Story("ShortList") {
+    Story("ShortList", scrolls: false) {
       SearchRevealNotes(count: 3)
     },
-    Story("WithQuery") {
+    Story("WithQuery", scrolls: false) {
       SearchRevealNotes(count: 12, query: "porto")
     },
   ])

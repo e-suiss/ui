@@ -9,10 +9,18 @@ struct StoryScreen: View {
     if entry.group.isFullScreen(entry.story) {
       FullScreenStory(entry: entry)
     } else {
-      ScrollView {
-        entry.story.content()
-          .padding(16)
-          .frame(maxWidth: .infinity, alignment: .topLeading)
+      Group {
+        if entry.story.scrolls {
+          ScrollView {
+            entry.story.content()
+              .padding(16)
+              .frame(maxWidth: .infinity, alignment: .topLeading)
+          }
+        } else {
+          entry.story.content()
+            .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
       }
       .background(Color.surface.ignoresSafeArea())
       .navigationTitle(Text(verbatim: entry.story.name))

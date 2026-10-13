@@ -4,13 +4,13 @@ import SwiftUI
 
 enum SelectionListStories {
   static let group = StoryGroup(.interactions, "Selection List", stories: [
-    Story("Default") {
+    Story("Default", scrolls: false) {
       SelectionListNotes()
     },
-    Story("Editing") {
+    Story("Editing", scrolls: false) {
       SelectionListNotes(editing: true, selection: ["trip", "meeting"])
     },
-    Story("IconActions") {
+    Story("IconActions", scrolls: false) {
       SelectionListMail()
     },
   ])

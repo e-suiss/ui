@@ -3,11 +3,10 @@ import SwiftUI
 
 enum PullToRefreshStories {
   static let group = StoryGroup(.interactions, "Pull To Refresh", stories: [
-    Story("Default") {
+    Story("Default", scrolls: false) {
       PullToRefreshFeed()
-        .containerRelativeFrame(.vertical) { height, _ in height - 32 }
     },
-    Story("WithFlatList") {
+    Story("WithFlatList", scrolls: false) {
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 0) {
           ForEach(["Inbox", "Drafts", "Sent", "Archive"], id: \.self) { item in
@@ -22,7 +21,6 @@ enum PullToRefreshStories {
       .pullToRefresh {
         try? await Task.sleep(for: .milliseconds(1000))
       }
-      .containerRelativeFrame(.vertical) { height, _ in height - 32 }
     },
   ])
 }

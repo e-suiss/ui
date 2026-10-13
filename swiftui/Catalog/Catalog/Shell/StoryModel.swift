@@ -14,6 +14,7 @@ struct Story: Identifiable {
   let exportName: String
   let name: String
   let fullScreen: Bool
+  let scrolls: Bool
   let content: () -> AnyView
 
   var id: String { exportName }
@@ -22,11 +23,13 @@ struct Story: Identifiable {
     _ exportName: String,
     name: String? = nil,
     fullScreen: Bool = false,
+    scrolls: Bool = true,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.exportName = exportName
     self.name = name ?? StoryID.startCase(exportName)
     self.fullScreen = fullScreen
+    self.scrolls = scrolls
     self.content = { AnyView(content()) }
   }
 }
