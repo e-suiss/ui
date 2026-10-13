@@ -1,10 +1,11 @@
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "cn";
 import type { Metadata } from "next";
 import type * as React from "react";
 
+import { Anchor } from "@/components/site/anchor";
 import { Gradient } from "@/components/site/gradient";
 import { InstallCommand } from "@/components/site/install-command";
-import { LibraryScroller } from "@/components/site/library-scroller";
 import { Bento } from "@/components/site/bento";
 import { Search } from "@/components/site/search";
 
@@ -13,6 +14,35 @@ export const metadata: Metadata = {
 };
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
+const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
+
+const collections = [
+  {
+    title: "Components",
+    href: "/docs/components",
+    description: "Accessible primitives on Base UI, from buttons and fields to sidebars and dialogs.",
+  },
+  {
+    title: "Patterns",
+    href: "/docs/patterns",
+    description: "Components composed into flows that adapt between desktop and mobile.",
+  },
+  {
+    title: "Interactions",
+    href: "/docs/interactions",
+    description: "Swipe actions, pull to refresh, undo and the small moments in between.",
+  },
+  {
+    title: "Charts",
+    href: "/docs/charts",
+    description: "Area, bar, line, pie, radar and radial charts styled by your theme.",
+  },
+  {
+    title: "Blocks",
+    href: "/docs/blocks",
+    description: "Complete screens, from checkout and inbox to dashboards and settings.",
+  },
+];
 
 function Label({ index, children }: { index: string; children: React.ReactNode }) {
   return (
@@ -89,17 +119,50 @@ function Interface() {
 
 function Library() {
   return (
-    <LibraryScroller
-      header={
-        <div className={cn(frame, "grid gap-6 md:grid-cols-[1fr_3fr]")}>
-          <Label index="03">Library</Label>
-          <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
-            Five collections.{" "}
-            <span className="text-label-tertiary">One design language.</span>
-          </h2>
-        </div>
-      }
-    />
+    <section className="pb-32 md:pb-48">
+      <div className={cn(frame, "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]")}>
+        <Label index="03">Library</Label>
+        <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
+          Five collections.{" "}
+          <span className="text-label-tertiary">One design language.</span>
+        </h2>
+      </div>
+      <ul className={cn(frame, "flex flex-col")}>
+        {collections.map((collection, index) => (
+          <li key={collection.href} className="border-t border-label/15 last:border-b">
+            <Anchor
+              href={collection.href}
+              className="group grid items-center gap-4 py-8 outline-none focus-visible:focus-ring md:grid-cols-[1fr_3fr] md:gap-6 md:py-10"
+            >
+              <span className="font-mono text-xs text-label-secondary">{String(index + 1).padStart(2, "0")}</span>
+              <span className="flex items-center justify-between gap-6">
+                <span className="flex flex-col gap-3">
+                  <span
+                    className={cn(
+                      "text-[clamp(2rem,4vw,3.5rem)] leading-none font-semibold tracking-[-0.045em] transition-transform duration-700 group-hover:translate-x-2",
+                      ease,
+                    )}
+                  >
+                    {collection.title}
+                  </span>
+                  <span className="max-w-xl text-[17px] leading-[1.4] tracking-[-0.02em] text-label-secondary">
+                    {collection.description}
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    "hidden size-12 items-center justify-center rounded-full border border-label/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-label group-hover:text-surface md:flex",
+                    ease,
+                  )}
+                >
+                  <ArrowUpRightIcon className="size-4" />
+                </span>
+              </span>
+            </Anchor>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
