@@ -104,6 +104,13 @@ function BottomBar() {
     <div className={cn(frame, "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary")}>
       <span>{strings.copyright}</span>
       <span>{strings.license}</span>
+      <span>
+        {strings.creditPrefix}{" "}
+        <Anchor href="https://github.com/ademceper" className="text-label/80 underline-offset-4 transition-colors hover:text-label hover:underline">
+          {strings.creditAuthor}
+        </Anchor>{" "}
+        {strings.creditSuffix}
+      </span>
       <div className="ms-auto flex items-center gap-3">
         <ThemeToggle effect="rectangle" origin="bottom-up" size="icon-sm" className="size-8" />
         <button

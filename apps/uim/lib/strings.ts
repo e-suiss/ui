@@ -12,6 +12,9 @@ export const strings = {
   github: "GitHub",
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
+  creditPrefix: "Built by",
+  creditAuthor: "ademceper",
+  creditSuffix: "for esuiss.",
   heroSubtitle:
     "Copy-paste React Native components, patterns and interactions for Expo and React Native, styled with Uniwind, NativeWind or StyleSheet.",
   menu: "Menu",
