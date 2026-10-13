@@ -1,4 +1,4 @@
 {
   "title": "Docs",
-  "pages": ["---Get Started---", "index", "installation", "cli", "components", "patterns", "interactions", "charts", "blocks"]
+  "pages": ["---Get Started---", "index", "installation", "cli", "swiftui", "jetpack-compose", "components", "patterns", "interactions", "charts", "blocks"]
 }
