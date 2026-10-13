@@ -707,6 +707,9 @@ final class NavigationGalleryTests: XCTestCase {
     XCTAssertEqual(SectionIndexMath.index(at: 12 * 16 + 8, height: height, count: 27), 12)
     XCTAssertEqual(SectionIndexMath.index(at: height, height: height, count: 27), 26)
     XCTAssertEqual(SectionIndexMath.index(at: height + 40, height: height, count: 27), 26)
+    XCTAssertEqual(SectionIndexMath.merge(["S", "Z"], ["A", "B", "S"]), ["A", "B", "S", "Z"])
+    XCTAssertEqual(SectionIndexMath.merge(["A", "B"], ["Y", "Z"]), ["A", "B", "Y", "Z"])
+    XCTAssertEqual(SectionIndexMath.target(sections: SectionIndexMath.merge(["A", "B"], ["S", "Z"]), letters: letters, index: 0), "A")
     let sections = ["A", "B", "M", "S"]
     XCTAssertEqual(SectionIndexMath.target(sections: sections, letters: letters, index: 0), "A")
     XCTAssertEqual(SectionIndexMath.target(sections: sections, letters: letters, index: 2), "M")
