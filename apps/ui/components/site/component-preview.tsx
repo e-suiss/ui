@@ -21,6 +21,7 @@ type Story = {
 type Meta = {
   component?: React.ComponentType<Args>;
   args?: Args;
+  render?: Story["render"];
   decorators?: Decorator[];
   parameters?: { layout?: Layout };
 };
@@ -96,8 +97,9 @@ function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?:
     globals: {},
   };
 
+  const render = story.render ?? meta.render;
   let Rendered: React.ComponentType = function Base() {
-    if (story.render) return <>{story.render(args, context)}</>;
+    if (render) return <>{render(args, context)}</>;
     const Component = meta.component;
     return Component ? <Component {...args} /> : null;
   };
