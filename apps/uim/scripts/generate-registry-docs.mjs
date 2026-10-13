@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { componentApi, storyExamples } from "./lib/extract.mjs";
@@ -161,6 +161,49 @@ function propsTable(part, text) {
   return `<PropsTable${attrs} />`;
 }
 
+function nativeManual(item, platform) {
+  const { requirements, base, directory } = registry.platforms[platform];
+  const files = item[platform];
+  const sources = files.map((name) => readFileSync(path.join(uimRepo, directory, name), "utf8")).join("\n");
+  const lines = [];
+  let step = 1;
+  if (platform === "swift") {
+    const packages = requirements.packages.filter((pkg) => pkg.products.some((product) => new RegExp(`^import ${product}$`, "m").test(sources)));
+    lines.push(`${step++}. Target iOS ${requirements.ios} or later.`, "");
+    if (packages.length) {
+      lines.push(
+        `${step++}. Add the Swift package${packages.length > 1 ? "s" : ""} to your app:`,
+        "",
+        fence(packages.map((pkg) => `.package(url: "${pkg.url}", from: "${pkg.from}")`).join("\n"), "swift", "Package.swift"),
+        "",
+      );
+    }
+  } else {
+    const dependencies = requirements.dependencies.filter((name) => !name.startsWith("com.adamglin:") || /phosphoricons/.test(sources));
+    lines.push(
+      `${step++}. Set \`minSdk\` to ${requirements.minSdk} or higher and add the dependencies:`,
+      "",
+      fence(
+        [`implementation(platform("${requirements.bom}"))`, ...dependencies.map((name) => `implementation("${name}")`)].join("\n"),
+        "kotlin",
+        "build.gradle.kts",
+      ),
+      "",
+    );
+  }
+  lines.push(`${step++}. Copy the theme files every view uses:`, "");
+  for (const name of base) lines.push(`<SourceFile path="${platformFile(platform, name)}" />`, "");
+  lines.push(`${step++}. Copy the source${files.length > 1 ? " and every file it uses" : ""}:`, "");
+  for (const name of files) lines.push(`<SourceFile path="${platformFile(platform, name)}" />`, "");
+  lines.push(
+    platform === "swift"
+      ? `${step}. Add the files to your app target.`
+      : `${step}. Update the \`com.esuiss.ui\` package names to match your project.`,
+    "",
+  );
+  return lines;
+}
+
 function page(item) {
   const category = categories[item.type];
   const text = prose(item);
@@ -215,7 +258,8 @@ function page(item) {
   const pieces = [required, primitives.length ? `the primitives ${primitives.join(", ")}` : ""].filter(Boolean).join(", and ");
 
   lines.push("### Manual", "");
-  lines.push(`<Tabs items={${JSON.stringify(Object.values(stylings))}}>`, "");
+  const nativeTabs = Object.keys(platforms).filter((platform) => item[platform]?.length);
+  lines.push(`<Tabs items={${JSON.stringify([...Object.values(stylings), ...nativeTabs.map((platform) => platforms[platform].label)])}}>`, "");
   for (const styling of Object.keys(stylings)) {
     const copied = stylingFile(item, styling, file);
     const dependencies = item.dependencies[styling] ?? [];
@@ -227,19 +271,8 @@ function page(item) {
     if (copied) lines.push(`<SourceFile path="${copied}" />`, "");
     lines.push(`${step}. Update the import paths to match your project.`, "", "</div>", "");
   }
+  for (const platform of nativeTabs) lines.push("<div>", "", ...nativeManual(item, platform), "</div>", "");
   lines.push("</Tabs>", "");
-
-  const nativeList = Object.entries(nativeFiles);
-  if (nativeList.length) {
-    lines.push("### SwiftUI and Jetpack Compose", "");
-    lines.push(
-      `The same ${category.eyebrow === "React Native Component" ? "component" : category.eyebrow.toLowerCase()} is available as native source. The CLI copies it with every file it uses.`,
-      "",
-    );
-    lines.push(`<Tabs items={${JSON.stringify(nativeList.map(([platform]) => platforms[platform].label))}}>`, "");
-    for (const [, copied] of nativeList) lines.push(`<SourceFile path="${copied}" />`, "");
-    lines.push("</Tabs>", "");
-  }
 
   lines.push("## Usage", "");
   const importPath = `@/${file.replace(/\.tsx$/, "")}`;
@@ -280,6 +313,16 @@ for (const [type, category] of Object.entries(categories)) {
   mkdirSync(folder, { recursive: true });
   const members = items.filter((item) => item.type === type && (!only || only.has(item.name)));
   index[category.folder] = members.map((item) => ({ name: item.name, title: item.title, group: groupOf(item) ?? null }));
+
+  if (!only) {
+    const names = new Set(members.map((item) => item.name));
+    for (const entry of readdirSync(folder)) {
+      const name = entry.replace(/\.mdx$/, "");
+      if (!entry.endsWith(".mdx") || name === "index" || names.has(name)) continue;
+      const stale = path.join(folder, entry);
+      if (/^generated: true$/m.test(readFileSync(stale, "utf8"))) rmSync(stale);
+    }
+  }
 
   for (const item of members) {
     const file = path.join(folder, `${item.name}.mdx`);
