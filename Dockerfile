@@ -12,8 +12,13 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && git config --global --add safe.directory /src
 RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/ui/package.json apps/ui/
+COPY apps/uim/package.json apps/uim/
+RUN corepack install
+RUN --mount=type=cache,id=docs-pnpm-store,target=/pnpm-store \
+    pnpm install --frozen-lockfile --store-dir /pnpm-store --os=linux --cpu=x64 --cpu=arm64 --libc=glibc
 COPY . .
-RUN pnpm install --frozen-lockfile --os=linux --cpu=x64 --cpu=arm64 --libc=glibc
 RUN pnpm exec turbo run build --filter="${APP}"
 RUN mkdir -p /out \
  && cp -r "apps/${APP}/.next/standalone/." /out/ \
