@@ -4,6 +4,7 @@ import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { cn } from "cn";
 import * as React from "react";
 
+import { CodeScroll } from "@/components/site/code-scroll";
 import { isPackageCommand, PackageCommand } from "@/components/site/package-command";
 import { strings } from "@/lib/strings";
 
@@ -78,9 +79,10 @@ export function CodeBlock({
     >
       <div
         className={cn(
-          "flex h-11 items-center gap-3 ps-4 pe-1.5",
-          caption && "border-b border-label/10",
-          !caption && "absolute inset-x-0 top-0 z-10 justify-end",
+          "flex h-11 items-center gap-3 pe-1.5",
+          caption
+            ? "border-b border-label/10 ps-4"
+            : "absolute end-0 top-0 z-10 bg-linear-to-r from-transparent to-surface-secondary to-40% ps-8",
         )}
       >
         {caption && (
@@ -97,16 +99,18 @@ export function CodeBlock({
           {copied ? <CheckIcon className="size-3.5" /> : <CopyIcon className="size-3.5" />}
         </button>
       </div>
-      <pre
-        ref={ref}
-        className={cn(
-          "overflow-x-auto py-3.5 ps-4 font-mono text-[15px] leading-[1.667] tracking-[-0.027em]",
-          caption ? "pe-4" : "pe-24",
-          className,
-        )}
-        {...rest}
-        {...(html === undefined ? { children } : { dangerouslySetInnerHTML: { __html: html } })}
-      />
+      <CodeScroll>
+        <pre
+          ref={ref}
+          className={cn(
+            "w-max min-w-full py-3.5 ps-4 font-mono text-[15px] leading-[1.667] tracking-[-0.027em]",
+            caption ? "pe-4" : "pe-24",
+            className,
+          )}
+          {...rest}
+          {...(html === undefined ? { children } : { dangerouslySetInnerHTML: { __html: html } })}
+        />
+      </CodeScroll>
     </figure>
   );
 }

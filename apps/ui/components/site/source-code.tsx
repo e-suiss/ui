@@ -30,7 +30,7 @@ export function SourceCode({ children, onExpand }: { children: React.ReactNode; 
         ref={ref}
         className={cn(
           long && "overflow-hidden rounded-[20px] transition-[max-height] duration-700 ease-[cubic-bezier(0.32,0.08,0.24,1)]",
-          folded ? "max-h-80" : long && "max-h-[40rem] [&_pre]:max-h-[32rem] [&_pre]:overflow-y-auto [&_pre]:overscroll-contain",
+          folded ? "max-h-80" : long && "max-h-[40rem] [&_[data-slot=code-viewport]]:max-h-[32rem] [&_[data-slot=code-viewport]]:overscroll-contain",
         )}
       >
         {children}

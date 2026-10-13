@@ -4,6 +4,7 @@ import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { cn } from "cn";
 import * as React from "react";
 
+import { CodeScroll } from "@/components/site/code-scroll";
 import { strings } from "@/lib/strings";
 
 const managers = ["pnpm", "npm", "yarn", "bun"] as const;
@@ -102,7 +103,9 @@ export function PackageCommand({ command }: { command: string }) {
   const lines = command
     .trim()
     .split("\n")
-    .map((line) => convertLine(line.trim(), manager));
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => convertLine(line, manager));
 
   return (
     <figure
@@ -139,14 +142,19 @@ export function PackageCommand({ command }: { command: string }) {
           );
         })}
       </div>
-      <pre className="col-span-2 row-start-2 min-w-0 self-stretch overflow-x-auto font-mono text-[15px] leading-[1.6] tracking-[-0.03em] sm:col-span-1 sm:row-start-auto sm:border-s sm:border-label/10 sm:ps-6 sm:text-[16px]">
-        <code className="flex h-full flex-col justify-center">
-          {lines.map((line, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: lines have no identity
-            <Line key={index} line={line} />
-          ))}
-        </code>
-      </pre>
+      <CodeScroll
+        className="col-span-2 row-start-2 self-stretch sm:col-span-1 sm:row-start-auto sm:border-s sm:border-label/10"
+        viewportClassName="h-full"
+      >
+        <pre className="h-full w-max min-w-full pb-2 font-mono text-[15px] leading-[1.6] tracking-[-0.03em] sm:ps-6 sm:text-[16px]">
+          <code className="flex h-full flex-col justify-center">
+            {lines.map((line, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: lines have no identity
+              <Line key={index} line={line} />
+            ))}
+          </code>
+        </pre>
+      </CodeScroll>
       <div className="col-start-2 row-start-1 sm:col-start-3">
         <CopyButton text={lines.join("\n")} />
       </div>
