@@ -6,10 +6,13 @@ Copy-paste React Native components with a clean, minimal design for Expo and Rea
 
 ```bash
 npx @esuiss/uim@latest init
+npx @esuiss/uim@latest add
 npx @esuiss/uim@latest add dialog
 npx @esuiss/uim@latest add button --diff
 npx @esuiss/uim@latest add button --overwrite
 ```
+
+Run `add` without names to pick from a list: choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. Outside an interactive terminal, `add` without names prints the available names instead.
 
 `init` sets up Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain StyleSheet, the `@/*` import alias, the theme stylesheet, the portal host, and the button. In React Native projects without Expo it also sets up the Babel alias resolver and the Reanimated plugin. Requires TypeScript. The styling library is detected from the project, or chosen with `--styling uniwind|nativewind|stylesheet`.
 

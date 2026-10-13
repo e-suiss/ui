@@ -11,6 +11,7 @@ import {
   findAliasRoot,
   install,
 } from "./project.mjs"
+import { choose, isInteractive } from "./prompt.mjs"
 import {
   fetchRegistry,
   fetchText,
@@ -148,6 +149,37 @@ export async function installItems(
   }
 }
 
+const GROUPS = {
+  ui: { kind: "component", label: "Components" },
+  pattern: { kind: "pattern", label: "Patterns" },
+  interaction: { kind: "interaction", label: "Interactions" },
+  chart: { kind: "chart", label: "Charts" },
+  block: { kind: "block", label: "Blocks" },
+}
+
+export async function pickNames(items) {
+  const choices = Object.entries(GROUPS).flatMap(([type, { label }]) => {
+    const count = items.filter((item) => item.type === type).length
+    return count ? [{ value: type, label, hint: String(count) }] : []
+  })
+  const type = await choose("What do you want to add?", choices)
+  return choose(
+    `Which ${GROUPS[type].kind}s?`,
+    items
+      .filter((item) => item.type === type)
+      .map((item) => ({ value: item.name, label: item.name }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
+    { multiple: true }
+  )
+}
+
+export function availableNames(items) {
+  return items
+    .filter((item) => GROUPS[item.type])
+    .map((item) => item.name)
+    .join(", ")
+}
+
 export async function add(names, options) {
   const project = detectProject(options.cwd)
   const root = findAliasRoot(project.cwd)
@@ -169,10 +201,14 @@ export async function add(names, options) {
   }
 
   const registry = await fetchRegistry()
-  const selected = options.all ? registry.items.map((item) => item.name) : names
+  const picking = !names.length && !options.all && isInteractive()
+  const chosen = picking ? await pickNames(registry.items) : names
+  const selected = options.all
+    ? registry.items.map((item) => item.name)
+    : chosen
   if (!selected.length) {
     throw new CliError(
-      "Name at least one component, e.g. npx @esuiss/uim add button"
+      `Name at least one component, e.g. npx @esuiss/uim add button\nAvailable: ${availableNames(registry.items)}`
     )
   }
 

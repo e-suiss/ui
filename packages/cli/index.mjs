@@ -15,6 +15,7 @@ const usage = `${name} ${version}
 
 Usage:
   npx ${name} init [options]              set up the styling, the theme, and the button
+  npx ${name} add [options]               pick what to add from a list
   npx ${name} add <component...> [options] add components, e.g. add button dialog
 
 Options:

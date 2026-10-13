@@ -1,8 +1,16 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 
-import { fetchFiles, reportFiles, showDiff, writeFiles } from "./add.mjs"
+import {
+  availableNames,
+  fetchFiles,
+  pickNames,
+  reportFiles,
+  showDiff,
+  writeFiles,
+} from "./add.mjs"
 import { CliError, list, note, step } from "./output.mjs"
+import { isInteractive } from "./prompt.mjs"
 import { fetchRegistry } from "./registry.mjs"
 
 const ANDROID_PLUGIN =
@@ -208,13 +216,14 @@ export async function addNative(names, options) {
   }
 
   const byName = new Map(registry.items.map((item) => [item.name, item]))
-  const available = registry.items
-    .filter((item) => item[options.platform])
-    .map((item) => item.name)
-  const selected = options.all ? available : names
+  const platformItems = registry.items.filter((item) => item[options.platform])
+  const available = platformItems.map((item) => item.name)
+  const picking = !names.length && !options.all && isInteractive()
+  const chosen = picking ? await pickNames(platformItems) : names
+  const selected = options.all ? available : chosen
   if (!selected.length) {
     throw new CliError(
-      `Name at least one component, e.g. npx @esuiss/uim add button --platform ${options.platform}`
+      `Name at least one component, e.g. npx @esuiss/uim add button --platform ${options.platform}\nAvailable: ${availableNames(platformItems)}`
     )
   }
   const unknown = selected.filter((name) => !byName.has(name))
