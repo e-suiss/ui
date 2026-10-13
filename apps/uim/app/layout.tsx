@@ -93,7 +93,7 @@ const structuredData = {
       description: site.summary,
       url: absolute("/"),
       codeRepository: site.repository,
-      programmingLanguage: "TypeScript",
+      programmingLanguage: site.languages,
       runtimePlatform: site.platform,
       license: "https://opensource.org/licenses/MIT",
       keywords: site.keywords.join(", "),
