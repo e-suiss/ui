@@ -183,6 +183,32 @@ export const States: Story = {
   },
 }
 
+export const DropZone: Story = {
+  render: (args) => (
+    <Attachment {...args} state="idle" className="w-96">
+      <AttachmentTrigger aria-label="Choose a file to upload" />
+      <AttachmentMedia>
+        <UploadSimpleIcon />
+      </AttachmentMedia>
+      <AttachmentContent>
+        <AttachmentTitle>Drop a file or click to choose</AttachmentTitle>
+        <AttachmentDescription>
+          PDF, PNG or JPG up to 10 MB
+        </AttachmentDescription>
+      </AttachmentContent>
+    </Attachment>
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    const zone = canvasElement.querySelector<HTMLElement>(
+      "[data-slot=attachment]"
+    )
+    await expect(zone).toHaveStyle({ backgroundColor: "rgba(0, 0, 0, 0)" })
+    await expect(
+      canvas.getByRole("button", { name: "Choose a file to upload" })
+    ).toBeEnabled()
+  },
+}
+
 export const Image: Story = {
   render: (args) => (
     <Attachment {...args}>
