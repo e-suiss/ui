@@ -15,6 +15,7 @@ import { contentDates } from "@/lib/dates";
 import { markdownUrl } from "@/lib/llms";
 import { absolute, site } from "@/lib/site";
 import { source } from "@/lib/source";
+import { pageSummary } from "@/lib/summary";
 import { strings } from "@/lib/strings";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
@@ -93,6 +94,7 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
       .filter((item) => item.url && item.url !== "/docs")
       .map((item) => ({ name: String(item.name), url: item.url as string })),
   ];
+  const summary = pageSummary(page.data.title, page.data.eyebrow);
   const { published, modified } = contentDates(page.path);
   const structuredData = {
     "@context": "https://schema.org",
@@ -102,6 +104,7 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
         "@id": `${absolute(page.url)}#article`,
         headline: page.data.title,
         description: page.data.description ?? site.description,
+        abstract: summary,
         url: absolute(page.url),
         image: absolute(`/og/docs/${[...page.slugs, "image.png"].join("/")}`),
         inLanguage: "en",
@@ -144,6 +147,11 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
           {page.data.description && (
             <p className="max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] leading-[1.38] tracking-[-0.02em] text-pretty text-label-secondary">
               {page.data.description}
+            </p>
+          )}
+          {summary && (
+            <p className="max-w-2xl text-[15px] leading-[1.5] tracking-[-0.01em] text-pretty text-label-tertiary">
+              {summary}
             </p>
           )}
         </header>

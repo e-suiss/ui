@@ -4,6 +4,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 
 import { absolute, site } from "@/lib/site";
 import { source } from "@/lib/source";
+import { pageSummary } from "@/lib/summary";
 
 type Page = NonNullable<ReturnType<typeof source.getPage>>;
 
@@ -108,7 +109,7 @@ export const markdownUrl = (url: string) => `/llms.mdx${url}`;
 
 export async function pageMarkdown(page: Page) {
   const body = cleanMarkdown(await toMarkdown(await page.data.getText("processed")));
-  return [`# ${page.data.title}`, page.data.description ?? "", `Source: ${absolute(page.url)}`, body]
+  return [`# ${page.data.title}`, page.data.description ?? "", pageSummary(page.data.title, page.data.eyebrow) ?? "", `Source: ${absolute(page.url)}`, body]
     .filter(Boolean)
     .join("\n\n");
 }
