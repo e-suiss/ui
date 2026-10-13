@@ -3,10 +3,10 @@ import SwiftUI
 
 enum SectionIndexStories {
   static let group = StoryGroup(.interactions, "Section Index", stories: [
-    Story("Default") {
+    Story("Default", scrolls: false) {
       SectionIndexContacts(height: 520)
     },
-    Story("Compact") {
+    Story("Compact", scrolls: false) {
       SectionIndexContacts(height: 256)
     },
   ])
