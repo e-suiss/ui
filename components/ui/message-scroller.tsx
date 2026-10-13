@@ -114,7 +114,7 @@ function MessageScrollerViewport({
         {...props}
         data-pending-scroll={isPendingScroll ? "" : undefined}
       />
-      <ScrollBar className="transition-opacity duration-200 group-has-data-autoscrolling/message-scroller:opacity-0 data-vertical:my-2 data-vertical:me-1 data-vertical:h-auto" />
+      <ScrollBar className="transition-opacity duration-200 group-has-data-autoscrolling/message-scroller:opacity-0" />
     </>
   )
 }
