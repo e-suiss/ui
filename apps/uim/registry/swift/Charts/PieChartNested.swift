@@ -26,32 +26,36 @@ public struct PieChartNested: View {
       CardHeader("Nested", description: "Groups inside, details outside")
       CardContent {
         ChartContainer(config: chartConfig) {
-          ZStack {
-            Chart {
-              ForEach(groups, id: \.device) { item in
-                SectorMark(angle: .value("Users", item.users), outerRadius: .ratio(0.52), angularInset: 1)
-                  .foregroundStyle(chartConfig.color(item.device).opacity(0.55))
+          ChartAnimator { progress in
+            ZStack {
+              Chart {
+                ForEach(groups, id: \.device) { item in
+                  SectorMark(angle: .value("Users", item.users * progress), outerRadius: .ratio(0.52), angularInset: 1)
+                    .foregroundStyle(chartConfig.color(item.device).opacity(0.55))
+                }
+                ChartSectorRest(total: groups.reduce(0) { $0 + $1.users }, progress: progress)
+              }
+              .accessibilityHidden(true)
+              Chart {
+                ForEach(chartData, id: \.device) { item in
+                  SectorMark(angle: .value("Users", item.users * progress), innerRadius: .ratio(0.6), outerRadius: .ratio(0.86), angularInset: 1)
+                    .foregroundStyle(chartConfig.color(item.device))
+                }
+                ChartSectorRest(total: chartData.reduce(0) { $0 + $1.users }, progress: progress)
+              }
+              .chartTooltip(
+                angle: chartData.map(\.users),
+                labels: chartData.map { chartConfig.label($0.device) },
+                outerRadius: 0.86,
+                selection: $selection,
+                accessibilityLabel: "Nested",
+                items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
+              ) { payload in
+                ChartTooltipContent(payload, hideLabel: true)
               }
             }
-            .accessibilityHidden(true)
-            Chart {
-              ForEach(chartData, id: \.device) { item in
-                SectorMark(angle: .value("Users", item.users), innerRadius: .ratio(0.6), outerRadius: .ratio(0.86), angularInset: 1)
-                  .foregroundStyle(chartConfig.color(item.device))
-              }
-            }
-            .chartTooltip(
-              angle: chartData.map(\.users),
-              labels: chartData.map { chartConfig.label($0.device) },
-              outerRadius: 0.86,
-              selection: $selection,
-              accessibilityLabel: "Nested",
-              items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
-            ) { payload in
-              ChartTooltipContent(payload, hideLabel: true)
-            }
+            .padding(5)
           }
-          .padding(5)
         }
         .frame(height: 208)
       }

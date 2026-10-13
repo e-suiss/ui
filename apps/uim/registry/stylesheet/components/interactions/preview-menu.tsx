@@ -1,12 +1,6 @@
 import * as React from "react"
 import { Platform, StyleSheet, View, type ViewStyle } from "react-native"
-import {
-  FadeIn,
-  FadeOut,
-  ReduceMotion,
-  ZoomIn,
-  ZoomOut,
-} from "react-native-reanimated"
+import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as PreviewMenuPrimitive from "@/components/primitives/preview-menu"
@@ -116,6 +110,26 @@ function PreviewMenuTrigger({
   )
 }
 
+function PreviewMenuLayer({
+  layer,
+  children,
+}: {
+  layer: PreviewMenuPrimitive.PreviewLayer
+  children?: React.ReactNode
+}) {
+  const motion = PreviewMenuPrimitive.useLayer(layer)
+  if (!motion) return null
+  return (
+    <AnimatedView
+      entering={motion.entering}
+      exiting={motion.exiting}
+      style={motion.style}
+    >
+      {children ?? motion.content}
+    </AnimatedView>
+  )
+}
+
 function PreviewMenuPreviewBody({
   style,
   children,
@@ -130,8 +144,32 @@ function PreviewMenuPreviewBody({
     <View
       style={[styles.previewBody, { backgroundColor: colors.surface }, style]}
     >
-      {children ?? contentRef.current}
+      {children ? (
+        <>
+          <PreviewMenuLayer layer="source" />
+          <PreviewMenuLayer layer="preview">{children}</PreviewMenuLayer>
+        </>
+      ) : (
+        contentRef.current
+      )}
     </View>
+  )
+}
+
+function PreviewMenuBackdrop() {
+  const { colors } = useTheme()
+  const { ready } = PreviewMenuPrimitive.useRootContext("PreviewMenuContent")
+  if (!ready) return null
+  return (
+    <AnimatedView
+      entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
+      exiting={FadeOut.duration(300).reduceMotion(ReduceMotion.System)}
+      style={styles.backdropFrame}
+    >
+      <PreviewMenuPrimitive.Backdrop
+        style={{ backgroundColor: colors.scrim }}
+      />
+    </AnimatedView>
   )
 }
 
@@ -151,26 +189,14 @@ function PreviewMenuContent({
   return (
     <PreviewMenuPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
-        <AnimatedView
-          entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
-          exiting={FadeOut.duration(300).reduceMotion(ReduceMotion.System)}
-          style={styles.backdropFrame}
-        >
-          <PreviewMenuPrimitive.Backdrop
-            style={{ backgroundColor: colors.scrim }}
-          />
-        </AnimatedView>
+        <PreviewMenuBackdrop />
         <PreviewMenuPrimitive.Preview style={styles.preview}>
           <PreviewMenuPreviewBody style={previewStyle}>
             {preview}
           </PreviewMenuPreviewBody>
         </PreviewMenuPrimitive.Preview>
         <PreviewMenuPrimitive.Positioner>
-          <AnimatedView
-            entering={ZoomIn.duration(300).reduceMotion(ReduceMotion.System)}
-            exiting={ZoomOut.duration(200).reduceMotion(ReduceMotion.System)}
-            style={styles.popupFrame}
-          >
+          <View style={styles.popupFrame}>
             <PreviewMenuPrimitive.Popup
               style={(state) => [
                 styles.popup,
@@ -184,7 +210,7 @@ function PreviewMenuContent({
             >
               <View style={styles.list}>{children}</View>
             </PreviewMenuPrimitive.Popup>
-          </AnimatedView>
+          </View>
         </PreviewMenuPrimitive.Positioner>
       </FullWindowOverlay>
     </PreviewMenuPrimitive.Portal>

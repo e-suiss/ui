@@ -1,13 +1,7 @@
 import { cn } from "cn"
 import * as React from "react"
 import { Platform, View } from "react-native"
-import {
-  FadeIn,
-  FadeOut,
-  ReduceMotion,
-  ZoomIn,
-  ZoomOut,
-} from "react-native-reanimated"
+import { FadeIn, FadeOut, ReduceMotion } from "react-native-reanimated"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { FullWindowOverlay as RNFullWindowOverlay } from "react-native-screens"
 import * as PreviewMenuPrimitive from "@/components/primitives/preview-menu"
@@ -69,6 +63,26 @@ function PreviewMenuTrigger({
   )
 }
 
+function PreviewMenuLayer({
+  layer,
+  children,
+}: {
+  layer: PreviewMenuPrimitive.PreviewLayer
+  children?: React.ReactNode
+}) {
+  const motion = PreviewMenuPrimitive.useLayer(layer)
+  if (!motion) return null
+  return (
+    <AnimatedView
+      entering={motion.entering}
+      exiting={motion.exiting}
+      style={motion.style}
+    >
+      {children ?? motion.content}
+    </AnimatedView>
+  )
+}
+
 function PreviewMenuPreviewBody({
   className,
   children,
@@ -85,8 +99,30 @@ function PreviewMenuPreviewBody({
         className
       )}
     >
-      {children ?? contentRef.current}
+      {children ? (
+        <>
+          <PreviewMenuLayer layer="source" />
+          <PreviewMenuLayer layer="preview">{children}</PreviewMenuLayer>
+        </>
+      ) : (
+        contentRef.current
+      )}
     </View>
+  )
+}
+
+function PreviewMenuBackdrop() {
+  const { ready } = PreviewMenuPrimitive.useRootContext("PreviewMenuContent")
+  if (!ready) return null
+  return (
+    <AnimatedView
+      entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
+      exiting={FadeOut.duration(300).reduceMotion(ReduceMotion.System)}
+      className="absolute top-0 right-0 bottom-0 left-0"
+      style={{ pointerEvents: "none" }}
+    >
+      <PreviewMenuPrimitive.Backdrop className="bg-scrim" />
+    </AnimatedView>
   )
 }
 
@@ -105,25 +141,14 @@ function PreviewMenuContent({
   return (
     <PreviewMenuPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
-        <AnimatedView
-          entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
-          exiting={FadeOut.duration(300).reduceMotion(ReduceMotion.System)}
-          className="absolute top-0 right-0 bottom-0 left-0"
-          style={{ pointerEvents: "none" }}
-        >
-          <PreviewMenuPrimitive.Backdrop className="bg-scrim" />
-        </AnimatedView>
+        <PreviewMenuBackdrop />
         <PreviewMenuPrimitive.Preview className="rounded-2xl shadow-xl">
           <PreviewMenuPreviewBody className={previewClassName}>
             {preview}
           </PreviewMenuPreviewBody>
         </PreviewMenuPrimitive.Preview>
         <PreviewMenuPrimitive.Positioner>
-          <AnimatedView
-            entering={ZoomIn.duration(300).reduceMotion(ReduceMotion.System)}
-            exiting={ZoomOut.duration(200).reduceMotion(ReduceMotion.System)}
-            className="rounded-2xl shadow-xl"
-          >
+          <View className="rounded-2xl shadow-xl">
             <PreviewMenuPrimitive.Popup
               className={(state) =>
                 cn(
@@ -135,7 +160,7 @@ function PreviewMenuContent({
             >
               <View className="-mt-px">{children}</View>
             </PreviewMenuPrimitive.Popup>
-          </AnimatedView>
+          </View>
         </PreviewMenuPrimitive.Positioner>
       </FullWindowOverlay>
     </PreviewMenuPrimitive.Portal>

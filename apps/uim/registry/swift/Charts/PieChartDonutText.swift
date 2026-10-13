@@ -26,36 +26,39 @@ public struct PieChartDonutText: View {
       CardHeader("Total in the middle", description: "A summary inside the ring")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartData, id: \.device) { item in
-              SectorMark(angle: .value("Users", item.users), innerRadius: .ratio(0.62), outerRadius: .ratio(0.88), angularInset: 0.75)
-                .cornerRadius(3)
-                .foregroundStyle(chartConfig.color(item.device))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(chartData, id: \.device) { item in
+                SectorMark(angle: .value("Users", item.users * progress), innerRadius: .ratio(0.62), outerRadius: .ratio(0.88), angularInset: 0.75)
+                  .cornerRadius(3)
+                  .foregroundStyle(chartConfig.color(item.device))
+              }
+              ChartSectorRest(total: total, progress: progress)
             }
-          }
-          .background {
-            VStack(spacing: 0) {
-              Text(total, format: .number)
-                .textStyle(.xl2, weight: .semibold)
-                .monospacedDigit()
-              Text("users")
-                .textStyle(.xs)
-                .foregroundStyle(Color.labelSecondary)
+            .background {
+              VStack(spacing: 0) {
+                Text(total, format: .number)
+                  .textStyle(.xl2, weight: .semibold)
+                  .monospacedDigit()
+                Text("users")
+                  .textStyle(.xs)
+                  .foregroundStyle(Color.labelSecondary)
+              }
+              .multilineTextAlignment(.center)
             }
-            .multilineTextAlignment(.center)
+            .chartTooltip(
+              angle: chartData.map(\.users),
+              labels: chartData.map { chartConfig.label($0.device) },
+              innerRadius: 0.62,
+              outerRadius: 0.88,
+              selection: $selection,
+              accessibilityLabel: "Total in the middle",
+              items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideLabel: true)
+            }
+            .padding(5)
           }
-          .chartTooltip(
-            angle: chartData.map(\.users),
-            labels: chartData.map { chartConfig.label($0.device) },
-            innerRadius: 0.62,
-            outerRadius: 0.88,
-            selection: $selection,
-            accessibilityLabel: "Total in the middle",
-            items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideLabel: true)
-          }
-          .padding(5)
         }
         .frame(height: 208)
       }

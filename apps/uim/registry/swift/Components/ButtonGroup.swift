@@ -2,6 +2,11 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry var buttonGroup: Axis? = nil
+  @Entry var buttonGroupSize: CGSize = .zero
+}
+
+enum ButtonGroupSpace: Hashable {
+  case group
 }
 
 struct ButtonGroupFrame {
@@ -30,6 +35,7 @@ public struct ButtonGroup<Content: View>: View {
   let content: Content
 
   @State private var nested = false
+  @State private var size: CGSize = .zero
 
   public init(orientation: Axis = .horizontal, @ViewBuilder content: () -> Content) {
     self.orientation = orientation
@@ -41,7 +47,10 @@ public struct ButtonGroup<Content: View>: View {
       ? AnyShape(Capsule())
       : AnyShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     stack
+      .coordinateSpace(.named(ButtonGroupSpace.group))
+      .onGeometryChange(for: CGSize.self) { $0.size } action: { size = $0 }
       .environment(\.buttonGroup, nested ? nil : orientation)
+      .environment(\.buttonGroupSize, size)
       .onPreferenceChange(ButtonGroupNestedKey.self) { nested = $0 }
       .modifier(ButtonGroupClip(shape: nested ? nil : shape))
       .overlayPreferenceValue(ButtonGroupFramesKey.self) { frames in
@@ -99,6 +108,49 @@ public struct ButtonGroup<Content: View>: View {
         x: horizontal ? rect.maxX - 0.5 : rect.midX,
         y: horizontal ? rect.midY : rect.maxY - 0.5
       )
+  }
+}
+
+struct ButtonGroupItem<Content: View>: View {
+  let radius: CGFloat
+  let content: (UnevenRoundedRectangle) -> Content
+
+  @State private var frame: CGRect = .zero
+  @Environment(\.buttonGroup) private var group
+  @Environment(\.buttonGroupSize) private var groupSize
+
+  init(radius: CGFloat, @ViewBuilder content: @escaping (UnevenRoundedRectangle) -> Content) {
+    self.radius = radius
+    self.content = content
+  }
+
+  var body: some View {
+    if let group {
+      content(shape(group))
+        .onGeometryChange(for: CGRect.self) { $0.frame(in: .named(ButtonGroupSpace.group)) } action: { frame = $0 }
+    } else {
+      content(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
+        topLeading: radius,
+        bottomLeading: radius,
+        bottomTrailing: radius,
+        topTrailing: radius
+      ), style: .continuous))
+    }
+  }
+
+  private func shape(_ group: Axis) -> UnevenRoundedRectangle {
+    let horizontal = group == .horizontal
+    let first = horizontal ? frame.minX <= 0.5 : frame.minY <= 0.5
+    let last = horizontal
+      ? frame.maxX >= groupSize.width - 0.5
+      : frame.maxY >= groupSize.height - 0.5
+    let round = horizontal ? frame.height / 2 : Radius.xl2
+    let start: CGFloat = first ? round : 0
+    let end: CGFloat = last ? round : 0
+    let radii = horizontal
+      ? RectangleCornerRadii(topLeading: start, bottomLeading: start, bottomTrailing: end, topTrailing: end)
+      : RectangleCornerRadii(topLeading: start, bottomLeading: end, bottomTrailing: end, topTrailing: start)
+    return UnevenRoundedRectangle(cornerRadii: radii, style: .continuous)
   }
 }
 

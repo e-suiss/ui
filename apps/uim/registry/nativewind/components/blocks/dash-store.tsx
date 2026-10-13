@@ -379,6 +379,7 @@ function DashStore({
                     <ChartTooltip content={() => null} cursor={false} />
                     {SERIES.map((series) => (
                       <Bar
+                        isAnimationActive={false}
                         key={series.key}
                         dataKey={series.key}
                         fill={chartConfig[series.key].color}

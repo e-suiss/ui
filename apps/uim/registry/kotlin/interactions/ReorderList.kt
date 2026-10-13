@@ -2,8 +2,10 @@ package com.esuiss.ui.interactions
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -37,7 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onPlaced
@@ -54,8 +56,11 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.DotsSixVertical
 import com.esuiss.ui.components.Haptics
 import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.ItemGroupVariant
+import com.esuiss.ui.components.LocalItemGroupVariant
 import com.esuiss.ui.components.LocalContentColor
 import com.esuiss.ui.components.LocalContentStyle
+import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
@@ -72,6 +77,10 @@ interface ReorderListScope {
     val dragging: Boolean
 }
 
+private val liftSpring = spring<Float>(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMedium)
+
+private val settleSpring = spring<Float>(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow)
+
 private class ReorderListItemScope(
     override val key: String,
     override val index: Int,
@@ -82,6 +91,9 @@ private class ReorderListItemScope(
 private class ReorderController {
     var order by mutableStateOf(emptyList<String>())
     var active by mutableStateOf<String?>(null)
+    var settling by mutableStateOf<String?>(null)
+    val raised: String? get() = active ?: settling
+    var reduced = false
     var offset by mutableFloatStateOf(0f)
     val heights = mutableStateMapOf<String, Int>()
     var onChange: (List<String>) -> Unit = {}
@@ -91,7 +103,7 @@ private class ReorderController {
 
     fun start(key: String) {
         active = key
-        offset = 0f
+        offset = placements[key]?.value ?: 0f
         haptics?.perform(HapticFeedbackType.LongPress)
     }
 
@@ -137,9 +149,14 @@ private class ReorderController {
         }
         launcher.launch {
             placement.snapTo(released)
+            settling = key
             active = null
             offset = 0f
-            placement.animateTo(0f, tween(200))
+            try {
+                if (reduced) placement.snapTo(0f) else placement.animateTo(0f, settleSpring)
+            } finally {
+                if (settling == key) settling = null
+            }
         }
     }
 }
@@ -148,7 +165,7 @@ private class ReorderHandleTarget(val controller: ReorderController, val key: St
 
 private val LocalReorderHandle = staticCompositionLocalOf<ReorderHandleTarget?> { null }
 
-private val LocalReorderDragging = staticCompositionLocalOf { false }
+private val LocalReorderLift = staticCompositionLocalOf { 0f }
 
 @Composable
 fun ReorderList(
@@ -166,21 +183,33 @@ fun ReorderList(
     controller.onChange = { if (it != value) change(it) }
     controller.scope = scope
     controller.haptics = rememberHaptics()
+    val reduced = formReducedMotion()
+    controller.reduced = reduced
+    val inset = LocalItemGroupVariant.current == ItemGroupVariant.Inset
     if (controller.active == null && controller.order != value) controller.order = value
     val order = controller.order
     Column(modifier = modifier) {
         order.forEachIndexed { index, itemKey ->
             key(itemKey) {
                 val dragging = controller.active == itemKey
+                val raised = controller.raised
                 val previous = order.getOrNull(index - 1)
-                val hideLine = index == 0 || dragging || previous == controller.active
+                val hideLine = index == 0 || itemKey == raised || previous == raised
                 val placement = remember { Animatable(0f) }
                 DisposableEffect(itemKey, placement) {
                     controller.placements[itemKey] = placement
                     onDispose { controller.placements.remove(itemKey) }
                 }
                 var placed by remember { mutableFloatStateOf(Float.NaN) }
-                val lift by animateFloatAsState(if (dragging) 1f else 0f, tween(150), label = "lift")
+                val lift by animateFloatAsState(
+                    targetValue = if (dragging) 1f else 0f,
+                    animationSpec = when {
+                        reduced -> snap()
+                        dragging -> liftSpring
+                        else -> settleSpring
+                    },
+                    label = "lift",
+                )
                 val actions = buildList {
                     if (index > 0) {
                         add(
@@ -201,7 +230,7 @@ fun ReorderList(
                 }
                 Box(
                     modifier = Modifier
-                        .zIndex(if (dragging || lift > 0f) 1f else 0f)
+                        .zIndex(if (itemKey == raised || lift > 0f) 1f else 0f)
                         .onSizeChanged { controller.heights[itemKey] = it.height }
                         .onPlaced { coordinates ->
                             val y = coordinates.parentCoordinates?.let { parent ->
@@ -209,16 +238,17 @@ fun ReorderList(
                             } ?: 0f
                             val old = placed
                             placed = y
-                            if (!old.isNaN() && old != y && controller.active != itemKey) {
+                            if (!old.isNaN() && old != y && controller.active != itemKey && !reduced) {
                                 scope.launch {
+                                    val velocity = placement.velocity
                                     placement.snapTo(placement.value + old - y)
-                                    placement.animateTo(0f, tween(200))
+                                    placement.animateTo(0f, settleSpring, velocity)
                                 }
                             }
                         }
                         .graphicsLayer {
                             translationY = if (dragging) controller.offset else placement.value
-                            val scale = 1f + 0.02f * lift
+                            val scale = if (reduced || inset) 1f else 1f + 0.02f * lift
                             scaleX = scale
                             scaleY = scale
                         }
@@ -234,7 +264,7 @@ fun ReorderList(
                 ) {
                     CompositionLocalProvider(
                         LocalReorderHandle provides ReorderHandleTarget(controller, itemKey),
-                        LocalReorderDragging provides (lift > 0f),
+                        LocalReorderLift provides lift,
                     ) {
                         ReorderListItemScope(itemKey, index, dragging).item(itemKey)
                     }
@@ -250,18 +280,19 @@ fun ReorderListItem(
     content: @Composable RowScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val lifted = LocalReorderDragging.current
-    val shape = RoundedCornerShape(Radius.lg)
+    val lift = LocalReorderLift.current
+    val shape = if (LocalItemGroupVariant.current == ItemGroupVariant.Inset) RoundedCornerShape(Radius.xl2) else RectangleShape
+    val shadow = Shadows.lg
     Row(
         modifier = modifier
             .fillMaxWidth()
             .then(
-                if (lifted) {
+                if (lift > 0f) {
                     Modifier
-                        .shadow(Shadows.lg, shape)
-                        .background(colors.surfaceRaised, shape)
+                        .shadow(shadow.copy(color = shadow.color.copy(alpha = shadow.color.alpha * lift)), shape)
+                        .background(colors.surfaceRaised.copy(alpha = lift), shape)
                 } else {
-                    Modifier.background(Color.Transparent)
+                    Modifier
                 },
             )
             .heightIn(min = 52.dp)

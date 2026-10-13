@@ -138,59 +138,62 @@ public struct LineChartInteractive: View {
 
   private var chart: some View {
     ChartContainer(config: chartConfig) {
-      Chart {
-        RuleMark(y: .value("Zero", 0))
-          .lineStyle(StrokeStyle(lineWidth: 1))
-          .foregroundStyle(Color.separatorStrong)
-        ForEach(shown, id: \.self) { city in
-          ForEach(0..<12, id: \.self) { month in
-            LineMark(
-              x: .value("Month", month),
-              y: .value("Temperature", temperature(city, month: month, mode: mode)),
-              series: .value("City", city.rawValue)
-            )
-            .interpolationMethod(.monotone)
-            .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-            .foregroundStyle(chartConfig.color(city.rawValue))
+      ChartAnimator(animationDuration: 650, animationEasing: .easeInOut) { progress in
+        Chart {
+          RuleMark(y: .value("Zero", 0))
+            .lineStyle(StrokeStyle(lineWidth: 1))
+            .foregroundStyle(Color.separatorStrong)
+          ForEach(shown, id: \.self) { city in
+            ForEach(0..<12, id: \.self) { month in
+              LineMark(
+                x: .value("Month", month),
+                y: .value("Temperature", temperature(city, month: month, mode: mode)),
+                series: .value("City", city.rawValue)
+              )
+              .interpolationMethod(.monotone)
+              .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+              .foregroundStyle(chartConfig.color(city.rawValue))
+            }
+            if let selection {
+              PointMark(x: .value("Month", selection), y: .value("Temperature", temperature(city, month: selection, mode: mode)))
+                .symbol {
+                  Circle()
+                    .fill(chartConfig.color(city.rawValue))
+                    .stroke(Color.surfaceSecondary, lineWidth: 2)
+                    .frame(width: 12, height: 12)
+                }
+            }
           }
-          if let selection {
-            PointMark(x: .value("Month", selection), y: .value("Temperature", temperature(city, month: selection, mode: mode)))
-              .symbol {
-                Circle()
-                  .fill(chartConfig.color(city.rawValue))
-                  .stroke(Color.surfaceSecondary, lineWidth: 2)
-                  .frame(width: 12, height: 12)
-              }
+          .chartReveal(progress, x: 0...11)
+        }
+        .chartXScale(domain: 0...11, range: .plotDimension(padding: 8))
+        .chartYScale(domain: -20...40)
+        .chartXAxis { ChartAxis.x(values: [0, 2, 4, 6, 8, 10]) { shortMonth($0) } }
+        .chartYAxis { ChartAxis.y(values: [-20.0, -10, 0, 10, 20, 30, 40]) { "\(Int($0))°" } }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.65), value: mode)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: visible)
+        .chartTooltip(
+          x: Array(0..<12),
+          labels: (0..<12).map(longMonth),
+          selection: $selection,
+          accessibilityLabel: "Monthly temperature",
+          items: { month in
+            shown.map { ChartTooltipItem($0.rawValue, value: temperature($0, month: month, mode: mode)) }
           }
-        }
-      }
-      .chartXScale(domain: 0...11, range: .plotDimension(padding: 8))
-      .chartYScale(domain: -20...40)
-      .chartXAxis { ChartAxis.x(values: [0, 2, 4, 6, 8, 10]) { shortMonth($0) } }
-      .chartYAxis { ChartAxis.y(values: [-20.0, -10, 0, 10, 20, 30, 40]) { "\(Int($0))°" } }
-      .animation(reduceMotion ? nil : .easeInOut(duration: 0.65), value: mode)
-      .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: visible)
-      .chartTooltip(
-        x: Array(0..<12),
-        labels: (0..<12).map(longMonth),
-        selection: $selection,
-        accessibilityLabel: "Monthly temperature",
-        items: { month in
-          shown.map { ChartTooltipItem($0.rawValue, value: temperature($0, month: month, mode: mode)) }
-        }
-      ) { payload in
-        ChartTooltipContent(payload, indicator: .line) { payload in
-          Text(verbatim: longMonth(payload.index))
-        } formatter: { item in
-          Capsule()
-            .fill(chartConfig.color(item.key))
-            .frame(width: 3, height: 12)
-          Text(LocalizedStringKey(chartConfig.label(item.key)))
-            .foregroundStyle(Color.labelSecondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-          Text("\(item.value, format: .number)°")
-            .font(TextStyle.xs.font(weight: .semibold))
-            .monospacedDigit()
+        ) { payload in
+          ChartTooltipContent(payload, indicator: .line) { payload in
+            Text(verbatim: longMonth(payload.index))
+          } formatter: { item in
+            Capsule()
+              .fill(chartConfig.color(item.key))
+              .frame(width: 3, height: 12)
+            Text(LocalizedStringKey(chartConfig.label(item.key)))
+              .foregroundStyle(Color.labelSecondary)
+              .frame(maxWidth: .infinity, alignment: .leading)
+            Text("\(item.value, format: .number)°")
+              .font(TextStyle.xs.font(weight: .semibold))
+              .monospacedDigit()
+          }
         }
       }
     }

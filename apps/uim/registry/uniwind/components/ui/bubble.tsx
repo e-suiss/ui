@@ -195,7 +195,7 @@ function BubbleTail({
           importantForAccessibility="no-hide-descendants"
           className="absolute -bottom-px size-5"
           style={[
-            align === "end" ? { end: -7.9 } : { start: -7.9 },
+            align === "end" ? { end: -6.9 } : { start: -6.9 },
             mirrored ? { transform: [{ scaleX: -1 }] } : null,
           ]}
         >

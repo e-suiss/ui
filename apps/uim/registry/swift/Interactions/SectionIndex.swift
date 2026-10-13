@@ -34,6 +34,16 @@ enum SectionIndexMath {
     return Int((fraction * CGFloat(count)).rounded(.down))
   }
 
+  static func merge(_ known: [String], _ seen: [String]) -> [String] {
+    var result = known
+    for value in seen where !result.contains(value) { result.append(value) }
+    return result.enumerated().sorted { lhs, rhs in
+      let left = letters.firstIndex(of: lhs.element) ?? letters.count
+      let right = letters.firstIndex(of: rhs.element) ?? letters.count
+      return left == right ? lhs.offset < rhs.offset : left < right
+    }.map(\.element)
+  }
+
   static func target(sections: [String], letters: [String], index: Int) -> String? {
     sections.first { value in
       guard let position = letters.firstIndex(of: value) else { return false }
@@ -80,7 +90,7 @@ public struct SectionIndex<Content: View>: View {
       }
       .environment(\.sectionIndex, context)
     }
-    .onPreferenceChange(SectionIndexSectionsKey.self) { value in sections = value }
+    .onPreferenceChange(SectionIndexSectionsKey.self) { value in sections = SectionIndexMath.merge(sections, value) }
   }
 }
 

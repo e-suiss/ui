@@ -33,7 +33,7 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
 
 <div>
 
@@ -71,17 +71,43 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Target iOS 17 or later.
 
-The same component is available as native source. The CLI copies it with every file it uses.
+2. Copy the theme files every view uses:
 
-<Tabs items={["SwiftUI","Jetpack Compose"]}>
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source:
 
 <SourceFile path="swift/Components/AspectRatio.swift" />
 
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source:
+
 <SourceFile path="kotlin/components/AspectRatio.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 

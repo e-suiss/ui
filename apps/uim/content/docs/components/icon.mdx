@@ -35,7 +35,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","Jetpack Compose"]}>
 
 <div>
 
@@ -85,15 +85,27 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Set `minSdk` to 24 or higher and add the dependencies:
 
-The same component is available as native source. The CLI copies it with every file it uses.
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
 
-<Tabs items={["Jetpack Compose"]}>
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
 
 <SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 

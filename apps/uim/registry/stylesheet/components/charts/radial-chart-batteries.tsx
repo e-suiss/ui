@@ -70,6 +70,7 @@ function Battery({ name, level }: { name: string; level: number }) {
           >
             <PolarAngleAxis domain={[0, 100]} />
             <RadialBar
+              isAnimationActive={false}
               dataKey="level"
               cornerRadius={6}
               background={{ fillOpacity: 0.22 }}

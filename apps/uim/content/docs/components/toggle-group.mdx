@@ -17,7 +17,7 @@ generated: true
 
 `ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.
 
-With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-control` track where the selected item is a raised segment, and the `outline` variant joins items into one bordered strip. Use the segmented style for switching views and the spaced style for toolbars.
+With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-control` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.
 
 ## Installation
 
@@ -35,13 +35,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
 
 <div>
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
@@ -57,7 +57,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
@@ -71,27 +71,95 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+1. Install the dependencies:
 
-2. Copy the source into `components/ui/toggle-group.tsx`:
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/toggle-group.tsx`:
 
 <SourceFile path="stylesheet/components/ui/toggle-group.tsx" />
 
-3. Update the import paths to match your project.
+4. Update the import paths to match your project.
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Target iOS 17 or later.
 
-The same component is available as native source. The CLI copies it with every file it uses.
+2. Add the Swift package to your app:
 
-<Tabs items={["SwiftUI","Jetpack Compose"]}>
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
 
 <SourceFile path="swift/Components/ToggleGroup.swift" />
 
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Components/Toggle.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
 <SourceFile path="kotlin/components/ToggleGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+<SourceFile path="kotlin/components/Toggle.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 
@@ -284,9 +352,11 @@ Icon sized for a toggle group item.
 - A single-selection group has the `radiogroup` role and its items have the `radio` role.
 - A `multiple` group has the `group` role and its items have the `togglebutton` role.
 - Items report checked and disabled states to VoiceOver and TalkBack.
+- The sliding segmented indicator is hidden from VoiceOver and TalkBack.
 - Icon-only items need an `accessibilityLabel`; label the group itself with `accessibilityLabel` when its purpose is not clear from context.
 
 ## Notes
 
-- Pressed items use `bg-item-selected` and `text-link`; segmented items use `bg-surface-raised` in light mode and `bg-label-quaternary` in dark mode.
+- Pressed items use `bg-item-selected` and `text-link`; the segmented indicator and pressed segmented items use `bg-surface-raised` with a small shadow in light mode and `bg-label-quaternary` in dark mode.
+- The indicator slides over 300 ms and respects the system reduce motion setting. It is hidden when the selected item is disabled.
 - Colors follow the system appearance.

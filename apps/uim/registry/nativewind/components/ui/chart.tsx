@@ -5,7 +5,15 @@ import type {
 } from "phosphor-react-native"
 import * as React from "react"
 import { View } from "react-native"
-import Svg, { Circle, Defs, LinearGradient, Path, Stop } from "react-native-svg"
+import Svg, {
+  Circle,
+  ClipPath,
+  Defs,
+  LinearGradient,
+  Path,
+  Rect,
+  Stop,
+} from "react-native-svg"
 import * as ChartPrimitive from "@/components/primitives/chart"
 import { Icon } from "@/components/ui/icon"
 import { Text, TextClassContext } from "@/components/ui/text"
@@ -175,15 +183,35 @@ function ChartSurface({ shapes, width, height }: ChartPrimitive.SurfaceProps) {
                     ))}
                   </LinearGradient>
                 ))}
+              {shapes.map((shape) =>
+                shape.clip ? (
+                  <ClipPath
+                    key={`${shape.key}-clip`}
+                    id={`${id}-${shape.key}-clip`}
+                  >
+                    <Rect
+                      x={shape.clip.x}
+                      y={shape.clip.y}
+                      width={shape.clip.width}
+                      height={shape.clip.height}
+                    />
+                  </ClipPath>
+                ) : null
+              )}
             </Defs>
             {shapes.map((shape) => {
               const fill = shape.gradient
                 ? `url(#${id}-${shape.key})`
                 : paint(shape.fill)
+              const key = shape.clip ? `${shape.key}-clipped` : shape.key
+              const clipPath = shape.clip
+                ? `url(#${id}-${shape.key}-clip)`
+                : undefined
               if (shape.circle) {
                 return (
                   <Circle
-                    key={shape.key}
+                    key={key}
+                    clipPath={clipPath}
                     cx={shape.circle.cx}
                     cy={shape.circle.cy}
                     r={shape.circle.r}
@@ -196,7 +224,8 @@ function ChartSurface({ shapes, width, height }: ChartPrimitive.SurfaceProps) {
               }
               return (
                 <Path
-                  key={shape.key}
+                  key={key}
+                  clipPath={clipPath}
                   d={shape.d}
                   fill={fill}
                   fillOpacity={shape.fillOpacity}

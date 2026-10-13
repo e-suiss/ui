@@ -203,7 +203,3 @@ extension ActionBarMenu where Label == Text {
     self.init(isPresented: isPresented, content: content) { Text(title) }
   }
 }
-
-public typealias ActionBarLabel = ActionMenuLabel
-public typealias ActionBarItem<Label: View> = ActionMenuItem<Label>
-public typealias ActionBarSeparator = ActionMenuSeparator

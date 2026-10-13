@@ -34,7 +34,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -53,6 +52,7 @@ import com.adamglin.PhosphorIcons
 import com.adamglin.phosphoricons.Bold
 import com.adamglin.phosphoricons.bold.Minus
 import com.adamglin.phosphoricons.bold.Plus
+import com.esuiss.ui.components.FormShadowSm
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentColor
 import com.esuiss.ui.components.LocalIconSize
@@ -60,6 +60,7 @@ import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
+import com.esuiss.ui.theme.shadow
 import java.text.NumberFormat
 import java.text.ParsePosition
 import kotlin.math.floor
@@ -211,7 +212,9 @@ fun StepperGroup(
     Row(
         modifier = modifier
             .height(32.dp)
-            .background(EsuissTheme.colors.control, RoundedCornerShape(Radius.lg)),
+            .background(EsuissTheme.colors.control, RoundedCornerShape(Radius.lg))
+            .padding(3.dp),
+        horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -259,16 +262,18 @@ private fun StepperButton(
     val currentStepper by rememberUpdatedState(stepper)
     val scope = rememberCoroutineScope()
     var pressed by remember { mutableStateOf(false) }
-    val shape = if (direction < 0) {
-        RoundedCornerShape(topStart = Radius.lg, bottomStart = Radius.lg)
-    } else {
-        RoundedCornerShape(topEnd = Radius.lg, bottomEnd = Radius.lg)
+    val shape = RoundedCornerShape(Radius.md)
+    val surface = when {
+        !enabled -> Modifier.background(colors.controlDisabled, shape)
+        pressed && enabled -> Modifier.background(colors.controlPressed, shape)
+        colors.isDark -> Modifier.background(colors.labelQuaternary, shape)
+        else -> Modifier.shadow(FormShadowSm, shape).background(colors.surfaceRaised, shape)
     }
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .width(48.dp)
-            .background(if (pressed && enabled) colors.controlPressed else Color.Transparent, shape)
+            .width(36.dp)
+            .then(surface)
             .semantics {
                 this.contentDescription = contentDescription
                 role = Role.Button

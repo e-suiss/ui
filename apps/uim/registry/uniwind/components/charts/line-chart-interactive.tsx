@@ -234,6 +234,8 @@ export function LineChartInteractive() {
             />
             {shown.map((city) => (
               <Line
+                animationDuration={650}
+                animationEasing="ease-in-out"
                 key={city}
                 dataKey={city}
                 type="monotone"

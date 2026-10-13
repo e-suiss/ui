@@ -190,6 +190,7 @@ fun PieChartInteractive(modifier: Modifier = Modifier) {
                                 strokeWidth = 3.dp,
                                 cornerRadius = 4.dp,
                                 sectors = { index -> ChartSector(lift = 7.dp * lifts[index].value) },
+                                isAnimationActive = false,
                             )
                         }
                     }

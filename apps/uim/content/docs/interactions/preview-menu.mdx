@@ -5,7 +5,7 @@ eyebrow: Interaction
 generated: true
 ---
 
-<Example id="interactions-preview-menu--open-by-default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="interactions-preview-menu--open-by-default" width={880} height={1510} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction PhotoGrid({\n  withDisabled = false,\n  openIndex,\n}: {\n  withDisabled?: boolean\n  openIndex?: number\n}) {\n  const [log, setLog] = React.useState(\"Touch and hold a photo.\")\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone} defaultOpen={index === openIndex}>\n              <PreviewMenuTrigger\n                accessibilityLabel={label}\n                className=\"aspect-square w-[31%] overflow-hidden rounded-2xl\"\n              >\n                <View className={`h-full w-full ${tone}`} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onPress={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <Icon as={CopyIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem onPress={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <Icon as={ShareNetworkIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onPress={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <Icon as={HeartIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onPress={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <Icon as={TrashIcon} />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </View>\n      <Text variant=\"muted\">{log}</Text>\n    </View>\n  )\n}\n\nexport function PreviewMenuOpenByDefaultExample() {\n  return (\n    <PhotoGrid openIndex={1} />\n  )\n}"} />
 
@@ -15,9 +15,9 @@ generated: true
 
 </Example>
 
-Long pressing a `PreviewMenuTrigger` measures it, then animates its content from its place on screen into a larger preview, up to 360 points wide. The rest of the screen fades behind a scrim, and a menu of actions zooms in below the preview.
+Long pressing a `PreviewMenuTrigger` measures it and the menu, then animates its content from its place on screen into a larger preview, up to 360 points wide. The preview and the menu below it are centered together between the top and bottom safe areas. The rest of the screen fades behind a scrim, and the menu grows out of the trigger into place.
 
-The original trigger is hidden while lifted, so the preview appears to rise out of it. Pressing outside closes the menu and the preview returns to the trigger. Use it for photos, messages or cards that benefit from a closer look before acting.
+The original trigger is hidden while lifted, so the preview appears to rise out of it. With custom `preview` content, the trigger's content cross-fades into it as it grows. Pressing outside closes the menu and the preview and menu shrink back into the trigger. Use it for photos, messages or cards that benefit from a closer look before acting.
 
 ## Installation
 
@@ -35,7 +35,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
 
 <div>
 
@@ -85,17 +85,87 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Target iOS 17 or later.
 
-The same interaction is available as native source. The CLI copies it with every file it uses.
+2. Add the Swift package to your app:
 
-<Tabs items={["SwiftUI","Jetpack Compose"]}>
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
 
 <SourceFile path="swift/Interactions/PreviewMenu.swift" />
 
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
 <SourceFile path="kotlin/interactions/PreviewMenu.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/DropdownMenu.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 
@@ -127,7 +197,7 @@ Set `aspectRatio` to size the preview, for example `4 / 3`. The menu can be unco
 
 Includes a disabled menu item.
 
-<Example id="interactions-preview-menu--disabled-item" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="interactions-preview-menu--disabled-item" width={880} height={1511} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction PhotoGrid({\n  withDisabled = false,\n  openIndex,\n}: {\n  withDisabled?: boolean\n  openIndex?: number\n}) {\n  const [log, setLog] = React.useState(\"Touch and hold a photo.\")\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone} defaultOpen={index === openIndex}>\n              <PreviewMenuTrigger\n                accessibilityLabel={label}\n                className=\"aspect-square w-[31%] overflow-hidden rounded-2xl\"\n              >\n                <View className={`h-full w-full ${tone}`} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onPress={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <Icon as={CopyIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem onPress={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <Icon as={ShareNetworkIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onPress={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <Icon as={HeartIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onPress={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <Icon as={TrashIcon} />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </View>\n      <Text variant=\"muted\">{log}</Text>\n    </View>\n  )\n}\n\nexport function PreviewMenuDisabledItemExample() {\n  return (\n    <PhotoGrid withDisabled openIndex={0} />\n  )\n}"} />
 
@@ -155,7 +225,7 @@ Shows custom `preview` content with a `4 / 3` aspect ratio.
 
 The custom preview, open on first render.
 
-<Example id="interactions-preview-menu--custom-preview-open" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="interactions-preview-menu--custom-preview-open" width={880} height={1323} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <PreviewMenu aspectRatio={4 / 3} defaultOpen={defaultOpen}>\n      <PreviewMenuTrigger className=\"flex-row items-center gap-3 rounded-xl bg-surface-secondary p-3\">\n        <View className=\"size-12 rounded-lg bg-blue\" />\n        <View>\n          <Text className=\"font-semibold\">Trip to the coast</Text>\n          <Text variant=\"muted\">48 photos</Text>\n        </View>\n      </PreviewMenuTrigger>\n      <PreviewMenuContent\n        preview={\n          <View className=\"h-full w-full justify-end bg-blue p-4\">\n            <Text className=\"text-lg font-semibold text-on-accent\">\n              Trip to the coast\n            </Text>\n            <Text className=\"text-sm text-on-accent\">\n              48 photos · Updated today\n            </Text>\n          </View>\n        }\n      >\n        <PreviewMenuItem>\n          Share album\n          <Icon as={ShareNetworkIcon} />\n        </PreviewMenuItem>\n        <PreviewMenuItem variant=\"destructive\">\n          Delete album\n          <Icon as={TrashIcon} />\n        </PreviewMenuItem>\n      </PreviewMenuContent>\n    </PreviewMenu>\n  )\n}\n\nexport function PreviewMenuCustomPreviewOpenExample() {\n  return (\n    <AlbumPreview defaultOpen />\n  )\n}"} />
 
@@ -227,6 +297,6 @@ A thick divider between groups of items.
 
 - A medium impact haptic plays when the menu opens, if the app provides an adapter through `HapticsProvider`.
 - The menu uses `bg-surface-raised` with a border that is stronger in dark mode, and the backdrop uses `bg-scrim`.
-- The preview stays within the top and bottom safe areas, leaving room for the menu.
+- The preview stays within the top and bottom safe areas and leaves room for the measured height of the menu.
 - Animations respect the system reduce motion setting.
 - On iOS the content renders in a full-window overlay so it appears above native screens.

@@ -33,7 +33,7 @@ Thumbs are aligned to the edges of the track, so they stay within it at `min` an
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
 
 <div>
 
@@ -79,17 +79,57 @@ Thumbs are aligned to the edges of the track, so they stay within it at `min` an
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Target iOS 17 or later.
 
-The same component is available as native source. The CLI copies it with every file it uses.
+2. Copy the theme files every view uses:
 
-<Tabs items={["SwiftUI","Jetpack Compose"]}>
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
 
 <SourceFile path="swift/Components/Slider.swift" />
 
+<SourceFile path="swift/Components/Haptics.swift" />
+
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
 <SourceFile path="kotlin/components/Slider.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 

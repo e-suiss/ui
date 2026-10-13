@@ -86,6 +86,7 @@ private fun Sparkline(seed: Long, rising: Boolean) {
                 strokeWidth = 1.5.dp,
                 fill = ChartFill.VerticalGradient(topAlpha = 0.25f, bottomAlpha = 0.02f),
                 activeDot = null,
+                isAnimationActive = false,
             )
         }
     }

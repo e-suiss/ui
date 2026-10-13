@@ -94,7 +94,7 @@ function DatePicker({
         accessibilityLabel={accessibilityLabel}
         accessibilityLabelledBy={accessibilityLabelledBy}
         className={cn(
-          "h-11 w-full flex-row items-center gap-2 rounded-lg border border-transparent bg-control px-3",
+          "h-11 flex-row items-center gap-2 self-start rounded-lg border border-transparent bg-control px-3",
           invalid && "border-danger bg-danger-5 dark:bg-danger-10",
           disabled && "bg-control-disabled",
           className
@@ -110,7 +110,7 @@ function DatePicker({
         <Text
           numberOfLines={1}
           className={cn(
-            "flex-1 text-base text-label",
+            "shrink text-base text-label",
             !value && "text-label-secondary",
             disabled && "text-label-quaternary"
           )}

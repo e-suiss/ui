@@ -252,6 +252,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                 } else {
                                     null
                                 },
+                                isAnimationActive = false,
                             )
                         }
                     }

@@ -343,11 +343,6 @@
       "group": null
     },
     {
-      "name": "action-menu",
-      "title": "Action Menu",
-      "group": null
-    },
-    {
       "name": "confirm",
       "title": "Confirm",
       "group": null
@@ -363,23 +358,8 @@
       "group": null
     },
     {
-      "name": "flyout",
-      "title": "Flyout",
-      "group": null
-    },
-    {
-      "name": "modal",
-      "title": "Modal",
-      "group": null
-    },
-    {
       "name": "paged-list",
       "title": "Paged List",
-      "group": null
-    },
-    {
-      "name": "panel",
-      "title": "Panel",
       "group": null
     },
     {
@@ -395,11 +375,6 @@
     {
       "name": "search-picker",
       "title": "Search Picker",
-      "group": null
-    },
-    {
-      "name": "segment-picker",
-      "title": "Segment Picker",
       "group": null
     },
     {

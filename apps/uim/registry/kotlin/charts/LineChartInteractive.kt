@@ -37,6 +37,7 @@ import com.esuiss.ui.components.ChartConfigItem
 import com.esuiss.ui.components.ChartContainer
 import com.esuiss.ui.components.ChartCurve
 import com.esuiss.ui.components.ChartDot
+import com.esuiss.ui.components.ChartEasing
 import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.ChartTooltipIndicator
@@ -230,6 +231,8 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                                 curve = ChartCurve.Monotone,
                                 strokeWidth = 2.5.dp,
                                 activeDot = ChartDot(5.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                                animationDuration = 650,
+                                animationEasing = ChartEasing.EaseInOut,
                             )
                         }
                     }

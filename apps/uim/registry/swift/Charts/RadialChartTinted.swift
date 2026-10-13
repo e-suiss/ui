@@ -31,7 +31,8 @@ public struct RadialChartTinted: View {
             rounded: true,
             track: .tint,
             selection: $selection,
-            accessibilityLabel: "Tinted track"
+            accessibilityLabel: "Tinted track",
+            isAnimationActive: false
           ) { payload in
             ChartTooltipContent(payload, hideLabel: true)
           }

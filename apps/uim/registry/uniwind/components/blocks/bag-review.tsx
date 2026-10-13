@@ -120,57 +120,66 @@ function BagReview({
             entering={FadeInDown.duration(700).reduceMotion(
               ReduceMotion.System
             )}
-            className="flex-row gap-4 border-t border-separator py-5.5"
+            className="flex-row gap-3 border-t border-separator py-4"
           >
-            <Image
-              source={{ uri: item.image }}
-              resizeMode="cover"
-              accessibilityIgnoresInvertColors
-              className="size-20 rounded-xl bg-control"
-            />
-            <View className="min-w-0 flex-1 gap-3">
-              <View className="gap-1">
-                <Text role="heading" className="text-xl font-semibold">
-                  {item.name}
-                </Text>
-                <Text className="text-sm text-label-secondary">
+            <Pressable
+              role="link"
+              accessibilityLabel={`Show details for ${item.name}`}
+              onPress={() => onShowDetails?.(item.name)}
+              className="active:opacity-60"
+            >
+              <Image
+                source={{ uri: item.image }}
+                resizeMode="cover"
+                accessibilityIgnoresInvertColors
+                className="size-16 rounded-lg bg-control"
+              />
+            </Pressable>
+            <View className="min-w-0 flex-1">
+              <View className="gap-0.5">
+                <View className="flex-row items-start justify-between gap-3">
+                  <Pressable
+                    role="link"
+                    accessibilityLabel={`Show details for ${item.name}`}
+                    onPress={() => onShowDetails?.(item.name)}
+                    className="min-w-0 shrink active:opacity-60"
+                  >
+                    <Text numberOfLines={1} className="text-base font-semibold">
+                      {item.name}
+                    </Text>
+                  </Pressable>
+                  <Text className="text-base font-semibold tabular-nums">
+                    {money(item.price * item.quantity)}
+                  </Text>
+                </View>
+                <Text
+                  numberOfLines={1}
+                  className="text-sm text-label-secondary"
+                >
                   {item.variant}
                 </Text>
-                <Pressable
-                  role="link"
-                  hitSlop={6}
-                  onPress={() => onShowDetails?.(item.name)}
-                  className="mt-1.5 self-start active:opacity-60"
-                >
-                  <Text className="text-sm text-link">
-                    Show product details ›
-                  </Text>
-                </Pressable>
               </View>
-              <Stepper
-                value={item.quantity}
-                onValueChange={(value) => {
-                  onQuantityChange?.(item.name, value)
-                  setQuantity(item.name, value)
-                }}
-                min={1}
-                max={10}
-                className="gap-2"
-              >
-                <StepperInput
-                  accessibilityLabel={`${item.name} quantity`}
-                  className="w-8 text-center"
-                />
-                <StepperGroup>
-                  <StepperDecrement />
-                  <StepperSeparator />
-                  <StepperIncrement />
-                </StepperGroup>
-              </Stepper>
-              <View className="flex-row items-center justify-between gap-1.5">
-                <Text className="text-xl font-semibold tabular-nums">
-                  {money(item.price * item.quantity)}
-                </Text>
+              <View className="mt-2.5 flex-row items-center justify-between">
+                <Stepper
+                  value={item.quantity}
+                  onValueChange={(value) => {
+                    onQuantityChange?.(item.name, value)
+                    setQuantity(item.name, value)
+                  }}
+                  min={1}
+                  max={10}
+                  className="gap-2"
+                >
+                  <StepperInput
+                    accessibilityLabel={`${item.name} quantity`}
+                    className="w-8 text-center"
+                  />
+                  <StepperGroup>
+                    <StepperDecrement />
+                    <StepperSeparator />
+                    <StepperIncrement />
+                  </StepperGroup>
+                </Stepper>
                 <Button
                   variant="link"
                   size="sm"

@@ -23,7 +23,8 @@ private struct Battery: View {
           startAngle: .zero,
           endAngle: .degrees(360),
           rounded: true,
-          track: .tint
+          track: .tint,
+          isAnimationActive: false
         )
         .overlay {
           Text(verbatim: String(name.prefix(1)))

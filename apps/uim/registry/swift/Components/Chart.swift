@@ -63,6 +63,181 @@ public struct ChartContainer<Content: View>: View {
   }
 }
 
+public enum ChartAnimationEasing: CaseIterable, Sendable {
+  case ease, easeIn, easeOut, easeInOut, linear
+
+  public func animation(duration: Double) -> Animation {
+    let seconds = duration / 1000
+    return switch self {
+    case .ease: .timingCurve(0.25, 0.1, 0.25, 1, duration: seconds)
+    case .easeIn: .timingCurve(0.42, 0, 1, 1, duration: seconds)
+    case .easeOut: .timingCurve(0, 0, 0.58, 1, duration: seconds)
+    case .easeInOut: .timingCurve(0.42, 0, 0.58, 1, duration: seconds)
+    case .linear: .linear(duration: seconds)
+    }
+  }
+
+  var curve: UnitCurve {
+    switch self {
+    case .ease: .bezier(startControlPoint: UnitPoint(x: 0.25, y: 0.1), endControlPoint: UnitPoint(x: 0.25, y: 1))
+    case .easeIn: .bezier(startControlPoint: UnitPoint(x: 0.42, y: 0), endControlPoint: UnitPoint(x: 1, y: 1))
+    case .easeOut: .bezier(startControlPoint: UnitPoint(x: 0, y: 0), endControlPoint: UnitPoint(x: 0.58, y: 1))
+    case .easeInOut: .bezier(startControlPoint: UnitPoint(x: 0.42, y: 0), endControlPoint: UnitPoint(x: 0.58, y: 1))
+    case .linear: .linear
+    }
+  }
+}
+
+extension EnvironmentValues {
+  @Entry var chartAnimationActive = true
+}
+
+public struct ChartAnimator<Content: View>: View {
+  let isAnimationActive: Bool
+  let animationDuration: Double
+  let animationEasing: ChartAnimationEasing
+  let content: (Double) -> Content
+
+  @State private var start: Date?
+  @State private var finished = false
+  @Environment(\.chartAnimationActive) private var allowed
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+  public init(
+    isAnimationActive: Bool = true,
+    animationDuration: Double = 1500,
+    animationEasing: ChartAnimationEasing = .ease,
+    @ViewBuilder content: @escaping (Double) -> Content
+  ) {
+    self.isAnimationActive = isAnimationActive
+    self.animationDuration = animationDuration
+    self.animationEasing = animationEasing
+    self.content = content
+  }
+
+  private var animates: Bool {
+    isAnimationActive && allowed && !reduceMotion && !finished
+  }
+
+  private var running: Bool {
+    animates && start != nil
+  }
+
+  public var body: some View {
+    TimelineView(.animation(minimumInterval: nil, paused: !running)) { context in
+      content(progress(at: context.date))
+    }
+    .onAppear {
+      if animates && start == nil {
+        start = .now
+      }
+    }
+    .task(id: running) {
+      guard running else { return }
+      do {
+        try await Task.sleep(for: .milliseconds(Int(animationDuration)))
+        finished = true
+      } catch {}
+    }
+  }
+
+  private func progress(at date: Date) -> Double {
+    guard animates else { return 1 }
+    guard let start else { return 0 }
+    let time = min(max(date.timeIntervalSince(start) * 1000 / max(animationDuration, 1), 0), 1)
+    return animationEasing.curve.value(at: time)
+  }
+}
+
+struct ChartDataAnimation<Value: Equatable>: ViewModifier {
+  let isAnimationActive: Bool
+  let animationDuration: Double
+  let animationEasing: ChartAnimationEasing
+  let value: Value
+
+  @Environment(\.chartAnimationActive) private var allowed
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+  func body(content: Content) -> some View {
+    if isAnimationActive && allowed && !reduceMotion {
+      content.animation(animationEasing.animation(duration: animationDuration), value: value)
+    } else {
+      content
+    }
+  }
+}
+
+struct ChartRevealContent<Content: ChartContent, X: Plottable>: ChartContent {
+  let content: Content
+  let progress: Double
+  let start: X
+  let end: X
+
+  var body: some ChartContent {
+    if progress < 1 {
+      content.mask {
+        RectangleMark(xStart: .value("Reveal", start), xEnd: .value("Reveal", end))
+          .offset(xStart: -16, yStart: -16, yEnd: 16)
+      }
+    } else {
+      content
+    }
+  }
+}
+
+extension ChartContent {
+  public func chartReveal(_ progress: Double, x domain: ClosedRange<Double>) -> some ChartContent {
+    ChartRevealContent(
+      content: self, progress: progress, start: domain.lowerBound,
+      end: domain.lowerBound + (domain.upperBound - domain.lowerBound) * min(max(progress, 0), 1)
+    )
+  }
+
+  public func chartReveal(_ progress: Double, x domain: ClosedRange<Int>) -> some ChartContent {
+    chartReveal(progress, x: Double(domain.lowerBound)...Double(domain.upperBound))
+  }
+
+  public func chartReveal(_ progress: Double, x domain: ClosedRange<Date>) -> some ChartContent {
+    ChartRevealContent(
+      content: self, progress: progress, start: domain.lowerBound,
+      end: domain.lowerBound.addingTimeInterval(
+        domain.upperBound.timeIntervalSince(domain.lowerBound) * min(max(progress, 0), 1)
+      )
+    )
+  }
+}
+
+public struct ChartAnchorMark<X: Plottable, Y: Plottable>: ChartContent {
+  let x: PlottableValue<X>
+  let y: PlottableValue<Y>
+
+  public init(x: PlottableValue<X>, y: PlottableValue<Y>) {
+    self.x = x
+    self.y = y
+  }
+
+  public var body: some ChartContent {
+    PointMark(x: x, y: y)
+      .symbolSize(0)
+      .opacity(0)
+  }
+}
+
+public struct ChartSectorRest: ChartContent {
+  let value: Double
+
+  public init(total: Double, progress: Double) {
+    value = total * (1 - min(max(progress, 0), 1))
+  }
+
+  public var body: some ChartContent {
+    if value > 0 {
+      SectorMark(angle: .value("Rest", value))
+        .foregroundStyle(Color.clear)
+    }
+  }
+}
+
 public enum ChartAxis {
   public static func x<Value: Plottable>(
     values: [Value],
@@ -899,6 +1074,9 @@ public struct RadialBarChart<Tooltip: View>: View {
   let defaultIndex: Int?
   let sticky: Bool
   let summary: String?
+  let isAnimationActive: Bool
+  let animationDuration: Double
+  let animationEasing: ChartAnimationEasing
   let tooltip: (ChartTooltipPayload) -> Tooltip
 
   @Environment(\.chartConfig) private var config
@@ -918,6 +1096,9 @@ public struct RadialBarChart<Tooltip: View>: View {
     defaultIndex: Int? = nil,
     sticky: Bool = true,
     accessibilityLabel: String? = nil,
+    isAnimationActive: Bool = true,
+    animationDuration: Double = 1500,
+    animationEasing: ChartAnimationEasing = .ease,
     @ViewBuilder tooltip: @escaping (ChartTooltipPayload) -> Tooltip
   ) {
     self.bars = bars
@@ -935,44 +1116,60 @@ public struct RadialBarChart<Tooltip: View>: View {
     self.defaultIndex = defaultIndex
     self.sticky = sticky
     summary = accessibilityLabel
+    self.isAnimationActive = isAnimationActive
+    self.animationDuration = animationDuration
+    self.animationEasing = animationEasing
     self.tooltip = tooltip
   }
 
   public var body: some View {
-    let canvas = GeometryReader { geometry in
-      let layout = RadialBarLayout(chart: self, size: geometry.size)
-      ZStack {
-        ForEach(bars.indices, id: \.self) { index in
-          let color = bars[index].color ?? config.color(bars[index].key)
-          let ring = layout.ring(index)
-          if track != .none {
-            ChartArc(
-              center: layout.center, radius: ring.middle, thickness: ring.thickness,
-              start: startAngle, end: endAngle, rounded: rounded
-            )
-            .fill(track == .tint ? color.opacity(0.22) : Color.control)
-          }
-          ChartArc(
-            center: layout.center, radius: ring.middle, thickness: ring.thickness,
-            start: startAngle, end: layout.angle(bars[index].value), rounded: rounded
-          )
-          .fill(color)
-        }
-        if showsLabels {
+    let canvas = ChartAnimator(
+      isAnimationActive: isAnimationActive, animationDuration: animationDuration, animationEasing: animationEasing
+    ) { progress in
+      GeometryReader { geometry in
+        let layout = RadialBarLayout(chart: self, size: geometry.size)
+        ZStack {
           ForEach(bars.indices, id: \.self) { index in
-            ForEach(layout.glyphs(String(localized: String.LocalizationValue(config.label(bars[index].key))), ring: index), id: \.offset) { glyph in
-              Text(verbatim: glyph.text)
-                .font(TextStyle.xs2.font(weight: .semibold))
-                .foregroundStyle(Color.onAccent)
-                .fixedSize()
-                .rotationEffect(glyph.rotation)
-                .position(glyph.point)
+            let color = bars[index].color ?? config.color(bars[index].key)
+            let ring = layout.ring(index)
+            if track != .none {
+              ChartArc(
+                center: layout.center, radius: ring.middle, thickness: ring.thickness,
+                start: startAngle, end: endAngle, rounded: rounded
+              )
+              .fill(track == .tint ? color.opacity(0.22) : Color.control)
             }
+            ChartSweep(
+              arc: ChartArc(
+                center: layout.center, radius: ring.middle, thickness: ring.thickness,
+                start: startAngle, end: layout.angle(layout.low + (bars[index].value - layout.low) * progress),
+                rounded: rounded
+              )
+            )
+            .fill(color)
           }
-          .allowsHitTesting(false)
+          if showsLabels && progress >= 1 {
+            ForEach(bars.indices, id: \.self) { index in
+              ForEach(layout.glyphs(String(localized: String.LocalizationValue(config.label(bars[index].key))), ring: index), id: \.offset) { glyph in
+                Text(verbatim: glyph.text)
+                  .font(TextStyle.xs2.font(weight: .semibold))
+                  .foregroundStyle(Color.onAccent)
+                  .fixedSize()
+                  .rotationEffect(glyph.rotation)
+                  .position(glyph.point)
+              }
+            }
+            .allowsHitTesting(false)
+          }
         }
       }
     }
+    .modifier(
+      ChartDataAnimation(
+        isAnimationActive: isAnimationActive, animationDuration: animationDuration, animationEasing: animationEasing,
+        value: bars.map(\.value)
+      )
+    )
     if interactive {
       canvas
         .modifier(
@@ -1001,7 +1198,10 @@ extension RadialBarChart where Tooltip == EmptyView {
     startAngle: Angle = .degrees(90),
     endAngle: Angle = .degrees(-270),
     rounded: Bool = false,
-    track: RadialBarTrack = .none
+    track: RadialBarTrack = .none,
+    isAnimationActive: Bool = true,
+    animationDuration: Double = 1500,
+    animationEasing: ChartAnimationEasing = .ease
   ) {
     self.bars = bars
     self.domain = domain
@@ -1018,6 +1218,9 @@ extension RadialBarChart where Tooltip == EmptyView {
     defaultIndex = nil
     sticky = true
     summary = nil
+    self.isAnimationActive = isAnimationActive
+    self.animationDuration = animationDuration
+    self.animationEasing = animationEasing
     tooltip = { _ in EmptyView() }
   }
 }
@@ -1110,6 +1313,22 @@ struct RadialBarLayout {
       correction += 1
     }
     return value
+  }
+}
+
+struct ChartSweep: Shape {
+  var arc: ChartArc
+
+  var animatableData: AnimatablePair<Double, Double> {
+    get { AnimatablePair(arc.start.radians, arc.end.radians) }
+    set {
+      arc.start = .radians(newValue.first)
+      arc.end = .radians(newValue.second)
+    }
+  }
+
+  func path(in rect: CGRect) -> Path {
+    arc.path(in: rect)
   }
 }
 
@@ -1245,6 +1464,9 @@ public struct RadarChart<Tooltip: View>: View {
   let sticky: Bool
   let summary: String?
   let items: ((Int) -> [ChartTooltipItem])?
+  let isAnimationActive: Bool
+  let animationDuration: Double
+  let animationEasing: ChartAnimationEasing
   let tooltip: (ChartTooltipPayload) -> Tooltip
 
   @State private var owned: Int?
@@ -1265,6 +1487,9 @@ public struct RadarChart<Tooltip: View>: View {
     sticky: Bool = true,
     accessibilityLabel: String? = nil,
     items: ((Int) -> [ChartTooltipItem])? = nil,
+    isAnimationActive: Bool = true,
+    animationDuration: Double = 1500,
+    animationEasing: ChartAnimationEasing = .ease,
     @ViewBuilder tooltip: @escaping (ChartTooltipPayload) -> Tooltip
   ) {
     self.series = series
@@ -1280,6 +1505,9 @@ public struct RadarChart<Tooltip: View>: View {
     self.sticky = sticky
     summary = accessibilityLabel
     self.items = items
+    self.isAnimationActive = isAnimationActive
+    self.animationDuration = animationDuration
+    self.animationEasing = animationEasing
     self.tooltip = tooltip
     _owned = State(initialValue: defaultIndex)
   }
@@ -1290,75 +1518,85 @@ public struct RadarChart<Tooltip: View>: View {
   }
 
   public var body: some View {
-    GeometryReader { geometry in
-      let layout = RadarLayout(chart: self, size: geometry.size)
-      ZStack(alignment: .topLeading) {
-        if let grid {
-          gridView(grid, layout: layout)
-        }
-        if let index = current {
-          ChartSpokes(center: layout.center, radius: layout.outer, angles: [layout.angle(index)])
-            .stroke(Color.separatorStrong, lineWidth: 1)
-        }
-        ForEach(series) { radar in
-          let color = radar.color ?? config.color(radar.key)
-          let ratios = ChartVector(values: radar.values.map(layout.ratio))
-          ZStack {
-            RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
-              .fill(color)
-              .opacity(radar.fillOpacity)
-            if radar.strokeWidth > 0 {
-              RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
-                .stroke(color, style: StrokeStyle(lineWidth: radar.strokeWidth, lineJoin: .round))
-                .opacity(radar.strokeOpacity)
-            }
+    ChartAnimator(
+      isAnimationActive: isAnimationActive, animationDuration: animationDuration, animationEasing: animationEasing
+    ) { progress in
+      GeometryReader { geometry in
+        let layout = RadarLayout(chart: self, size: geometry.size)
+        ZStack(alignment: .topLeading) {
+          if let grid {
+            gridView(grid, layout: layout)
           }
-        }
-        ForEach(series) { radar in
-          if let dot = radar.dot {
-            let color = radar.color ?? config.color(radar.key)
-            ForEach(radar.values.indices, id: \.self) { index in
-              Circle()
-                .fill(color)
-                .frame(width: (dot + radar.strokeWidth / 2) * 2, height: (dot + radar.strokeWidth / 2) * 2)
-                .position(layout.point(index, ratio: layout.ratio(radar.values[index])))
-                .opacity(radar.strokeOpacity)
-            }
+          if let index = current {
+            ChartSpokes(center: layout.center, radius: layout.outer, angles: [layout.angle(index)])
+              .stroke(Color.separatorStrong, lineWidth: 1)
           }
-        }
-        if let index = current {
           ForEach(series) { radar in
-            if radar.values.indices.contains(index) {
-              Circle()
-                .fill(radar.color ?? config.color(radar.key))
-                .frame(width: 8, height: 8)
-                .position(layout.point(index, ratio: layout.ratio(radar.values[index])))
-                .opacity(radar.strokeOpacity)
+            let color = radar.color ?? config.color(radar.key)
+            let ratios = ChartVector(values: radar.values.map { layout.ratio($0) * progress })
+            ZStack {
+              RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
+                .fill(color)
+                .opacity(radar.fillOpacity)
+              if radar.strokeWidth > 0 {
+                RadarPolygon(center: layout.center, radius: layout.outer, ratios: ratios)
+                  .stroke(color, style: StrokeStyle(lineWidth: radar.strokeWidth, lineJoin: .round))
+                  .opacity(radar.strokeOpacity)
+              }
             }
           }
-        }
-        if let radiusAxis {
-          ChartPointLayout(placements: layout.radiusTicks(radiusAxis)) {
-            ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
-              Text(verbatim: value.formatted())
-                .font(TextStyle.xs2.font())
-                .foregroundStyle(Color.labelTertiary)
+          ForEach(series) { radar in
+            if let dot = radar.dot {
+              let color = radar.color ?? config.color(radar.key)
+              ForEach(radar.values.indices, id: \.self) { index in
+                Circle()
+                  .fill(color)
+                  .frame(width: (dot + radar.strokeWidth / 2) * 2, height: (dot + radar.strokeWidth / 2) * 2)
+                  .position(layout.point(index, ratio: layout.ratio(radar.values[index]) * progress))
+                  .opacity(radar.strokeOpacity)
+              }
+            }
+          }
+          if let index = current {
+            ForEach(series) { radar in
+              if radar.values.indices.contains(index) {
+                Circle()
+                  .fill(radar.color ?? config.color(radar.key))
+                  .frame(width: 8, height: 8)
+                  .position(layout.point(index, ratio: layout.ratio(radar.values[index]) * progress))
+                  .opacity(radar.strokeOpacity)
+              }
+            }
+          }
+          if let radiusAxis {
+            ChartPointLayout(placements: layout.radiusTicks(radiusAxis)) {
+              ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
+                Text(verbatim: value.formatted())
+                  .font(TextStyle.xs2.font())
+                  .foregroundStyle(Color.labelTertiary)
+                  .fixedSize()
+              }
+            }
+          }
+          ChartPointLayout(placements: labels.indices.map(layout.labelPlacement)) {
+            ForEach(labels.indices, id: \.self) { index in
+              let active = angleAxis.highlightsSelection && current == index
+              Text(LocalizedStringKey(labels[index]))
+                .font(angleAxis.textStyle.font(weight: active ? .semibold : .regular))
+                .foregroundStyle(active ? Color.label : .labelSecondary)
                 .fixedSize()
             }
           }
         }
-        ChartPointLayout(placements: labels.indices.map(layout.labelPlacement)) {
-          ForEach(labels.indices, id: \.self) { index in
-            let active = angleAxis.highlightsSelection && current == index
-            Text(LocalizedStringKey(labels[index]))
-              .font(angleAxis.textStyle.font(weight: active ? .semibold : .regular))
-              .foregroundStyle(active ? Color.label : .labelSecondary)
-              .fixedSize()
-          }
-        }
+        .frame(width: geometry.size.width, height: geometry.size.height)
       }
-      .frame(width: geometry.size.width, height: geometry.size.height)
     }
+    .modifier(
+      ChartDataAnimation(
+        isAnimationActive: isAnimationActive, animationDuration: animationDuration, animationEasing: animationEasing,
+        value: series.map(\.values)
+      )
+    )
     .modifier(
       ChartTooltipModifier(
         axis: .spoke, values: labels.indices.map(Double.init), labels: labels,

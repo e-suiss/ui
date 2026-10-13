@@ -24,7 +24,7 @@ const collections = [
   {
     title: "Patterns",
     href: "/docs/patterns",
-    description: "Pickers, confirmations, flyouts and lists composed from components.",
+    description: "Pickers, confirmations, action bars and lists composed from components.",
   },
   {
     title: "Interactions",

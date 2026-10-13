@@ -37,35 +37,38 @@ public struct AreaChartStacked: View {
       CardHeader("Stacked", description: "Desktop and mobile combined")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(order, id: \.self) { key in
-              ForEach(chartData.indices, id: \.self) { index in
-                AreaMark(
-                  x: .value("Month", index),
-                  yStart: .value("Start", band(key, index).start),
-                  yEnd: .value("End", band(key, index).end),
-                  series: .value("Series", key)
-                )
-                .interpolationMethod(.catmullRom)
-                .foregroundStyle(chartConfig.color(key).opacity(0.2))
-                LineMark(x: .value("Month", index), y: .value("End", band(key, index).end), series: .value("Series", key))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(order, id: \.self) { key in
+                ForEach(chartData.indices, id: \.self) { index in
+                  AreaMark(
+                    x: .value("Month", index),
+                    yStart: .value("Start", band(key, index).start),
+                    yEnd: .value("End", band(key, index).end),
+                    series: .value("Series", key)
+                  )
                   .interpolationMethod(.catmullRom)
-                  .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                  .foregroundStyle(chartConfig.color(key))
+                  .foregroundStyle(chartConfig.color(key).opacity(0.2))
+                  LineMark(x: .value("Month", index), y: .value("End", band(key, index).end), series: .value("Series", key))
+                    .interpolationMethod(.catmullRom)
+                    .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                    .foregroundStyle(chartConfig.color(key))
+                }
               }
+              .chartReveal(progress, x: 0...(chartData.count - 1))
             }
-          }
-          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
-          .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
-          .chartYAxis { ChartAxis.grid() }
-          .chartTooltip(
-            x: Array(chartData.indices),
-            labels: chartData.map(\.month),
-            selection: $selection,
-            accessibilityLabel: "Stacked",
-            items: { index in order.map { ChartTooltipItem($0, value: value($0, index)) } }
-          ) { payload in
-            ChartTooltipContent(payload, indicator: .dot)
+            .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
+            .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
+            .chartYAxis { ChartAxis.grid() }
+            .chartTooltip(
+              x: Array(chartData.indices),
+              labels: chartData.map(\.month),
+              selection: $selection,
+              accessibilityLabel: "Stacked",
+              items: { index in order.map { ChartTooltipItem($0, value: value($0, index)) } }
+            ) { payload in
+              ChartTooltipContent(payload, indicator: .dot)
+            }
           }
           ChartLegendContent()
         }

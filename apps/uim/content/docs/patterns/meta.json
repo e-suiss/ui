@@ -3,18 +3,13 @@
   "pages": [
     "index",
     "action-bar",
-    "action-menu",
     "confirm",
     "context-actions",
     "date-picker",
-    "flyout",
-    "modal",
     "paged-list",
-    "panel",
     "picker",
     "preview",
     "search-picker",
-    "segment-picker",
     "split-view",
     "table-list"
   ]

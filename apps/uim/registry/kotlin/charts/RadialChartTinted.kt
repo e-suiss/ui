@@ -58,7 +58,7 @@ fun RadialChartTinted(modifier: Modifier = Modifier) {
                     val tints = chartData.map { chartColor(it.device).let { color -> color.copy(alpha = color.alpha * 0.22f) } }
                     RadialBarChart(chartData, innerRadius = 0.25f, outerRadius = 1f, barSize = 12.dp) {
                         PolarAngleAxis(0.0..MAX)
-                        RadialBar("users", value = { MAX }, nameKey = { it.device }, cornerRadius = 10.dp, cells = { index -> ChartCell(tints[index]) })
+                        RadialBar("users", value = { MAX }, nameKey = { it.device }, cornerRadius = 10.dp, cells = { index -> ChartCell(tints[index]) }, isAnimationActive = false)
                     }
                 }
                 ChartContainer(chartConfig, Modifier.matchParentSize()) {

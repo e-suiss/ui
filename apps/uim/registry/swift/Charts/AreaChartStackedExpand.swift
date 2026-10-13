@@ -38,36 +38,39 @@ public struct AreaChartStackedExpand: View {
       CardHeader("Stacked to 100%", description: "Each month adds up to 100%")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(order, id: \.self) { key in
-              ForEach(chartData.indices, id: \.self) { index in
-                AreaMark(
-                  x: .value("Month", index),
-                  yStart: .value("Start", band(key, index).start),
-                  yEnd: .value("End", band(key, index).end),
-                  series: .value("Series", key)
-                )
-                .interpolationMethod(.catmullRom)
-                .foregroundStyle(chartConfig.color(key).opacity(0.35))
-                LineMark(x: .value("Month", index), y: .value("End", band(key, index).end), series: .value("Series", key))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(order, id: \.self) { key in
+                ForEach(chartData.indices, id: \.self) { index in
+                  AreaMark(
+                    x: .value("Month", index),
+                    yStart: .value("Start", band(key, index).start),
+                    yEnd: .value("End", band(key, index).end),
+                    series: .value("Series", key)
+                  )
                   .interpolationMethod(.catmullRom)
-                  .lineStyle(StrokeStyle(lineWidth: 1, lineCap: .round, lineJoin: .round))
-                  .foregroundStyle(chartConfig.color(key))
+                  .foregroundStyle(chartConfig.color(key).opacity(0.35))
+                  LineMark(x: .value("Month", index), y: .value("End", band(key, index).end), series: .value("Series", key))
+                    .interpolationMethod(.catmullRom)
+                    .lineStyle(StrokeStyle(lineWidth: 1, lineCap: .round, lineJoin: .round))
+                    .foregroundStyle(chartConfig.color(key))
+                }
               }
+              .chartReveal(progress, x: 0...(chartData.count - 1))
             }
-          }
-          .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
-          .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
-          .chartYScale(domain: 0...1)
-          .chartYAxis { ChartAxis.y(values: [0.0, 0.5, 1]) { "\(Int(($0 * 100).rounded()))%" } }
-          .chartTooltip(
-            x: Array(chartData.indices),
-            labels: chartData.map(\.month),
-            selection: $selection,
-            accessibilityLabel: "Stacked to 100%",
-            items: { index in order.map { ChartTooltipItem($0, value: value($0, index)) } }
-          ) { payload in
-            ChartTooltipContent(payload, indicator: .line)
+            .chartXScale(domain: 0...(chartData.count - 1), range: .plotDimension(padding: 12))
+            .chartXAxis { ChartAxis.x(values: Array(chartData.indices)) { String(chartData[$0].month.prefix(3)) } }
+            .chartYScale(domain: 0...1)
+            .chartYAxis { ChartAxis.y(values: [0.0, 0.5, 1]) { "\(Int(($0 * 100).rounded()))%" } }
+            .chartTooltip(
+              x: Array(chartData.indices),
+              labels: chartData.map(\.month),
+              selection: $selection,
+              accessibilityLabel: "Stacked to 100%",
+              items: { index in order.map { ChartTooltipItem($0, value: value($0, index)) } }
+            ) { payload in
+              ChartTooltipContent(payload, indicator: .line)
+            }
           }
         }
         .frame(height: 192)

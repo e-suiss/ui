@@ -1,5 +1,5 @@
 {
   "description": "A screen-time dashboard with stacked category bars, a week and day toggle, and a list of most used apps.",
-  "overview": "Bars stack social, productivity and entertainment time. A `ToggleGroup` switches between a weekly view and an hourly view of one day. In the week view, touching a bar selects that day through `onActiveIndexChange`, dims the other days and updates the headline, comparison text, category totals and the most used apps list below. A dashed line marks the weekly average.",
+  "overview": "Bars stack social, productivity and entertainment time. A `ToggleGroup` switches between a weekly view and an hourly view of one day. In the week view, touching a bar selects that day through `onActiveIndexChange`, dims the other days and updates the headline, comparison text, category totals and the most used apps list below. A dashed line marks the weekly average. The bars set `isAnimationActive={false}`, so they draw without the enter animation and switch views instantly.",
   "usage": "Replace `USAGE` with daily minutes per category and `APPS` with your apps and their share of each category. The hourly view is generated from `PROFILE`, so swap `hourly()` for real data. The component takes no props."
 }

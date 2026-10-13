@@ -6,11 +6,20 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native"
+import Animated, {
+  Easing,
+  LinearTransition,
+  ReduceMotion,
+} from "react-native-reanimated"
 import {
   Toggle as TogglePrimitive,
   type ToggleState,
 } from "@/components/primitives/toggle"
-import { ToggleGroup as ToggleGroupPrimitive } from "@/components/primitives/toggle-group"
+import {
+  ToggleGroupIndicator as ToggleGroupIndicatorPrimitive,
+  ToggleGroup as ToggleGroupPrimitive,
+  useToggleGroupContext,
+} from "@/components/primitives/toggle-group"
 import type { Orientation } from "@/components/primitives/types"
 import { resolveStyle } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
@@ -42,6 +51,10 @@ const ToggleGroupContext = React.createContext<ToggleGroupContextValue>({
 
 const ItemPositionContext = React.createContext({ first: true, last: true })
 
+const INDICATOR_TRANSITION = LinearTransition.duration(300)
+  .easing(Easing.bezier(0.32, 0.72, 0, 1))
+  .reduceMotion(ReduceMotion.System)
+
 const styles = StyleSheet.create({
   root: {
     position: "relative",
@@ -53,8 +66,29 @@ const styles = StyleSheet.create({
   attached: { borderRadius: radius.lg },
   item: { flexShrink: 0 },
   segmentedItem: { borderRadius: radius.md, paddingHorizontal: 12 },
+  indicator: { borderRadius: radius.md },
   icon: { flexShrink: 0 },
 })
+
+function segmentedSelectedStyle(
+  colors: ThemeColors,
+  isDark: boolean
+): StyleProp<ViewStyle> {
+  return [
+    { backgroundColor: isDark ? colors.labelQuaternary : colors.surfaceRaised },
+    shadow.sm,
+  ]
+}
+
+function ToggleGroupIndicator() {
+  const { colors, isDark } = useTheme()
+  return (
+    <ToggleGroupIndicatorPrimitive
+      style={[styles.indicator, segmentedSelectedStyle(colors, isDark)]}
+      render={<Animated.View layout={INDICATOR_TRANSITION} />}
+    />
+  )
+}
 
 function ToggleGroup({
   style,
@@ -62,6 +96,7 @@ function ToggleGroup({
   size = "default",
   spacing = 2,
   orientation = "horizontal",
+  multiple,
   children,
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive> &
@@ -78,6 +113,7 @@ function ToggleGroup({
   return (
     <ToggleGroupPrimitive
       orientation={orientation}
+      multiple={multiple}
       style={(state) => [
         styles.root,
         orientation === "vertical" && styles.vertical,
@@ -92,6 +128,7 @@ function ToggleGroup({
       ]}
       {...props}
     >
+      {segmented && !multiple ? <ToggleGroupIndicator /> : null}
       <ToggleGroupContext.Provider value={context}>
         {items.map((child, index) => (
           <ItemPositionContext.Provider
@@ -145,7 +182,8 @@ function itemStyle(
   colors: ThemeColors,
   isDark: boolean,
   state: ToggleState,
-  pressing: boolean
+  pressing: boolean,
+  multiple: boolean
 ): StyleProp<ViewStyle> {
   if (context.spacing === 0 && context.variant === "default") {
     return [
@@ -154,14 +192,7 @@ function itemStyle(
       state.pressed &&
         (state.disabled
           ? { backgroundColor: colors.controlDisabled }
-          : [
-              {
-                backgroundColor: isDark
-                  ? colors.labelQuaternary
-                  : colors.surfaceRaised,
-              },
-              shadow.sm,
-            ]),
+          : multiple && segmentedSelectedStyle(colors, isDark)),
     ]
   }
   return [
@@ -198,6 +229,7 @@ function ToggleGroupItem({
   const context = React.useContext(ToggleGroupContext)
   const position = React.useContext(ItemPositionContext)
   const { colors, isDark } = useTheme()
+  const multiple = useToggleGroupContext()?.multiple ?? false
   const resolved = {
     ...context,
     variant: context.variant || variant,
@@ -214,7 +246,15 @@ function ToggleGroupItem({
           <Pressable
             {...renderProps}
             style={({ pressed }) => [
-              itemStyle(resolved, position, colors, isDark, state, pressed),
+              itemStyle(
+                resolved,
+                position,
+                colors,
+                isDark,
+                state,
+                pressed,
+                multiple
+              ),
               styles.item,
               resolveStyle(style, state) as StyleProp<ViewStyle>,
             ]}

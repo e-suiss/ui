@@ -8,25 +8,26 @@ import { resolveStyle } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { ScreenContext } from "@/components/ui/screen"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
 type TabBarBadgeValue = number | string | boolean
 
 const styles = StyleSheet.create({
-  root: { borderTopWidth: 1 },
+  root: { paddingHorizontal: 16, paddingTop: 8 },
   list: {
     flexDirection: "row",
-    paddingHorizontal: 8,
-    paddingTop: 6,
-    paddingBottom: 4,
+    borderRadius: radius.full,
+    borderWidth: 1,
+    padding: 4,
+    ...shadow.lg,
   },
   item: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     gap: 2,
-    borderRadius: radius.lg,
-    paddingVertical: 4,
+    borderRadius: radius.full,
+    paddingVertical: 6,
   },
   label: { ...fontSize["3xs"], fontWeight: "500" },
   iconWrap: { position: "relative" },
@@ -54,6 +55,11 @@ const styles = StyleSheet.create({
   badgeText: { ...fontSize["3xs"], fontWeight: "600" },
 })
 
+function withAlpha(hex: string, alpha: number) {
+  const value = Number.parseInt(hex.slice(1), 16)
+  return `rgba(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`
+}
+
 function badgeText(badge: TabBarBadgeValue | undefined) {
   if (badge === undefined || badge === false || badge === true) return undefined
   if (typeof badge === "number") {
@@ -68,21 +74,16 @@ function TabBar({
   style,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
-  const { colors } = useTheme()
   const haptics = useHaptics()
   const insets = useSafeAreaInsets()
   const screen = React.useContext(ScreenContext)
   const consumed = screen?.edges.includes("bottom") ? insets.bottom : 0
-  const paddingBottom = Math.max(0, insets.bottom - consumed)
+  const paddingBottom = Math.max(12, insets.bottom - consumed - 8)
   return (
     <TabsPrimitive.Root
       style={(state) => [
         styles.root,
-        {
-          paddingBottom,
-          backgroundColor: colors.surface,
-          borderColor: colors.separator,
-        },
+        { paddingBottom },
         resolveStyle(style, state) as ViewStyle,
       ]}
       onValueChange={(value, details) => {
@@ -98,9 +99,17 @@ function TabBarList({
   style,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) {
+  const { colors, isDark } = useTheme()
   return (
     <TabsPrimitive.List
-      style={(state) => [styles.list, resolveStyle(style, state) as ViewStyle]}
+      style={(state) => [
+        styles.list,
+        {
+          borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
+          backgroundColor: colors.surfaceRaised,
+        },
+        resolveStyle(style, state) as ViewStyle,
+      ]}
       {...props}
     />
   )
@@ -114,7 +123,7 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
       <View
         style={[
           styles.dot,
-          { backgroundColor: colors.danger, borderColor: colors.surface },
+          { backgroundColor: colors.danger, borderColor: colors.surfaceRaised },
         ]}
       />
     )
@@ -124,7 +133,7 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
     <View
       style={[
         styles.badge,
-        { backgroundColor: colors.danger, borderColor: colors.surface },
+        { backgroundColor: colors.danger, borderColor: colors.surfaceRaised },
       ]}
     >
       <Text
@@ -151,7 +160,11 @@ function TabBarItem({
   const text = badgeText(badge)
   return (
     <TabsPrimitive.Tab
-      style={(state) => [styles.item, resolveStyle(style, state) as ViewStyle]}
+      style={(state) => [
+        styles.item,
+        state.active && { backgroundColor: colors.control },
+        resolveStyle(style, state) as ViewStyle,
+      ]}
       accessibilityValue={text === undefined ? undefined : { text }}
       render={(renderProps, state) => {
         const color = state.active

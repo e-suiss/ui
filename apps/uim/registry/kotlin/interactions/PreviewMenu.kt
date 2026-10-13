@@ -17,12 +17,13 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -31,7 +32,6 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -39,12 +39,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -54,6 +56,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onPlaced
@@ -64,7 +67,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.compose.ui.window.DialogWindowProvider
@@ -84,33 +87,57 @@ import com.esuiss.ui.theme.shadow
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlinx.coroutines.flow.first
 
 private val Edge = 16.dp
+private val Gap = 12.dp
 private val MenuSpace = 260.dp
+private val MenuMinHeight = 88.dp
 private val MaxWidth = 360.dp
+private val Blur = 24.dp
 private val Easing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
-
-@Immutable
-private class PreviewFrame(val bounds: Rect, val scale: Float, val dx: Float, val dy: Float)
 
 private val LocalPreviewMenuClose = staticCompositionLocalOf<() -> Unit> { {} }
 
-private fun measureFrame(trigger: Rect, window: IntSize, aspectRatio: Float?, edge: Float, menuSpace: Float, maxWidth: Float): PreviewFrame {
+private class PreviewMenuGeometry {
+    var tile = Size.Zero
+    var frame = Rect.Zero
+}
+
+internal fun previewMenuSize(trigger: Size, aspectRatio: Float?, maxWidth: Float, maxHeight: Float): Size {
     val ratio = if (aspectRatio != null && aspectRatio > 0f) 1f / aspectRatio else trigger.height / max(trigger.width, 1f)
-    var width = min(window.width - edge * 2, maxWidth)
+    var width = maxWidth
     var height = width * ratio
-    val maxHeight = window.height - menuSpace - edge * 2
     if (height > maxHeight) {
         height = max(maxHeight, trigger.height)
         width = height / max(ratio, 0.01f)
     }
-    val left = (window.width - width) / 2f
-    val centered = trigger.center.y - height / 2f
-    val top = min(max(centered, edge), max(edge, window.height - menuSpace - height))
-    val scale = max(trigger.width / width, trigger.height / height)
-    val dx = trigger.center.x - (left + width * scale / 2f)
-    val dy = trigger.center.y - (top + height * scale / 2f)
-    return PreviewFrame(Rect(left, top, left + width, top + height), scale, dx, dy)
+    return Size(width, height)
+}
+
+internal fun previewMenuGroupTop(top: Float, bottom: Float, preview: Float, gap: Float, menu: Float): Float =
+    top + max(0f, (bottom - top - preview - gap - menu) / 2f)
+
+private fun lerpRect(from: Rect, to: Rect, amount: Float) = Rect(
+    lerp(from.left, to.left, amount),
+    lerp(from.top, to.top, amount),
+    lerp(from.right, to.right, amount),
+    lerp(from.bottom, to.bottom, amount),
+)
+
+private fun Modifier.coverLayer(size: () -> Size, alpha: () -> Float) = layout { measurable, constraints ->
+    val content = size()
+    val width = content.width.roundToInt().coerceAtLeast(1)
+    val height = content.height.roundToInt().coerceAtLeast(1)
+    val placeable = measurable.measure(Constraints.fixed(width, height))
+    layout(constraints.maxWidth, constraints.maxHeight) {
+        placeable.placeWithLayer((constraints.maxWidth - width) / 2, (constraints.maxHeight - height) / 2) {
+            val zoom = max(constraints.maxWidth / width.toFloat(), constraints.maxHeight / height.toFloat())
+            scaleX = zoom
+            scaleY = zoom
+            this.alpha = alpha()
+        }
+    }
 }
 
 @Composable
@@ -127,16 +154,22 @@ fun PreviewMenu(
     val haptics = rememberHaptics()
     val density = LocalDensity.current
     val change by rememberUpdatedState(onOpenChange)
+    val opening by rememberUpdatedState(open)
+    val safeTop = WindowInsets.safeDrawing.getTop(density)
+    val safeBottom = WindowInsets.safeDrawing.getBottom(density)
     var triggerBounds by remember { mutableStateOf(Rect.Zero) }
     var shown by remember { mutableStateOf(open) }
+    var drawn by remember { mutableStateOf(false) }
     val progress = remember { Animatable(if (open) 1f else 0f) }
     LaunchedEffect(open) {
         if (open) {
             shown = true
+            snapshotFlow { drawn }.first { it }
             progress.animateTo(1f, tween(400, easing = Easing))
         } else if (shown) {
             progress.animateTo(0f, tween(300, easing = Easing))
             shown = false
+            drawn = false
         }
     }
     Box(
@@ -158,7 +191,7 @@ fun PreviewMenu(
                     }
                 }
             }
-            .alpha(if (shown) 0f else 1f),
+            .alpha(if (drawn) 0f else 1f),
     ) {
         trigger()
     }
@@ -170,116 +203,120 @@ fun PreviewMenu(
     ) {
         val window = (LocalView.current.parent as? DialogWindowProvider)?.window
         SideEffect {
+            window?.setWindowAnimations(0)
+        }
+        LaunchedEffect(window) {
             if (window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 window.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-                val params = window.attributes
-                params.blurBehindRadius = with(density) { 24.dp.roundToPx() }
-                window.attributes = params
+                val blur = with(density) { Blur.toPx() }
+                snapshotFlow { (blur * progress.value).roundToInt() }.collect { radius ->
+                    val params = window.attributes
+                    params.blurBehindRadius = radius
+                    window.attributes = params
+                }
             }
         }
         val colors = EsuissTheme.colors
-        var origin by remember { mutableStateOf<Offset?>(null) }
-        var windowSize by remember { mutableStateOf(IntSize.Zero) }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned {
-                    origin = it.positionOnScreen()
-                    windowSize = it.size
-                }
-                .pointerInput(Unit) { detectTapGestures { change(false) } }
-                .drawBehind { drawRect(colors.scrim.copy(alpha = 0.4f * progress.value)) },
-        ) {
-            val start = origin
-            if (start != null && windowSize != IntSize.Zero) {
-                val local = triggerBounds.translate(-start)
-                val frame = remember(local, windowSize, aspectRatio) {
-                    with(density) {
-                        measureFrame(local, windowSize, aspectRatio, Edge.toPx(), MenuSpace.toPx(), MaxWidth.toPx())
-                    }
-                }
-                val shape = RoundedCornerShape(Radius.xl2)
-                Box(
-                    modifier = Modifier
-                        .layout { measurable, _ ->
-                            val width = frame.bounds.width.roundToInt()
-                            val height = frame.bounds.height.roundToInt()
-                            val placeable = measurable.measure(androidx.compose.ui.unit.Constraints.fixed(width, height))
-                            layout(width, height) { placeable.place(0, 0) }
-                        }
-                        .graphicsLayer {
-                            val p = progress.value
-                            val scale = lerp(frame.scale, 1f, p)
-                            transformOrigin = TransformOrigin(0f, 0f)
-                            scaleX = scale
-                            scaleY = scale
-                            translationX = frame.bounds.left + lerp(frame.dx, 0f, p)
-                            translationY = frame.bounds.top + lerp(frame.dy, 0f, p)
-                        }
-                        .shadow(Shadows.lg, shape)
-                        .clip(shape)
-                        .pointerInput(Unit) { detectTapGestures { } },
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (preview != null) {
-                        Box(modifier = Modifier.fillMaxSize()) { preview() }
-                    } else {
-                        val zoom = max(frame.bounds.width / max(local.width, 1f), frame.bounds.height / max(local.height, 1f))
+        val geometry = remember { PreviewMenuGeometry() }
+        val shape = RoundedCornerShape(Radius.xl2)
+        Layout(
+            contents = listOf(
+                {
+                    Box(
+                        modifier = Modifier
+                            .shadow(Shadows.lg, shape)
+                            .clip(shape)
+                            .pointerInput(Unit) { detectTapGestures { } }
+                            .drawWithContent {
+                                drawContent()
+                                if (!drawn && opening) drawn = true
+                            },
+                    ) {
                         Box(
-                            modifier = Modifier
-                                .requiredSize(with(density) { local.width.toDp() }, with(density) { local.height.toDp() })
-                                .graphicsLayer {
-                                    scaleX = zoom
-                                    scaleY = zoom
-                                },
+                            modifier = Modifier.coverLayer({ geometry.tile }) {
+                                if (preview == null) 1f else (1f - progress.value * 2f).coerceIn(0f, 1f)
+                            },
                         ) {
                             trigger()
                         }
+                        if (preview != null) {
+                            Box(modifier = Modifier.coverLayer({ geometry.frame.size }) { (progress.value * 2f).coerceIn(0f, 1f) }) {
+                                preview()
+                            }
+                        }
                     }
-                }
-                val gap = with(density) { 12.dp.toPx() }
-                val edge = with(density) { Edge.toPx() }
-                CompositionLocalProvider(
-                    LocalPreviewMenuClose provides { change(false) },
-                    LocalContentStyle provides Typography.base.copy(color = colors.label),
-                    LocalContentColor provides colors.label,
-                    LocalIconSize provides 20.dp,
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .layout { measurable, constraints ->
-                                val maxHeight = (windowSize.height - frame.bounds.bottom - gap - edge).roundToInt()
-                                val placeable = measurable.measure(
-                                    constraints.copy(
-                                        minWidth = 0,
-                                        minHeight = 0,
-                                        maxWidth = (windowSize.width - edge * 2).roundToInt(),
-                                        maxHeight = maxHeight.coerceAtLeast(with(density) { 88.dp.roundToPx() }),
-                                    ),
-                                )
-                                layout(constraints.maxWidth, constraints.maxHeight) {
-                                    val x = (frame.bounds.center.x - placeable.width / 2f)
-                                        .coerceIn(edge, max(edge, windowSize.width - edge - placeable.width))
-                                    val y = min(frame.bounds.bottom + gap, windowSize.height - edge - placeable.height)
-                                    placeable.place(x.roundToInt(), y.roundToInt())
-                                }
-                            }
-                            .graphicsLayer {
-                                val p = progress.value
-                                alpha = p
-                                val scale = lerp(0.9f, 1f, p)
-                                scaleX = scale
-                                scaleY = scale
-                                transformOrigin = TransformOrigin(0.5f, 0f)
-                            }
-                            .widthIn(min = 240.dp)
-                            .width(IntrinsicSize.Max)
-                            .shadow(Shadows.lg, RoundedCornerShape(Radius.xl2))
-                            .clip(RoundedCornerShape(Radius.xl2))
-                            .background(colors.surfaceRaised)
-                            .pointerInput(Unit) { detectTapGestures { } }
-                            .verticalScroll(rememberScrollState()),
-                        content = content,
+                },
+                {
+                    CompositionLocalProvider(
+                        LocalPreviewMenuClose provides { change(false) },
+                        LocalContentStyle provides Typography.base.copy(color = colors.label),
+                        LocalContentColor provides colors.label,
+                        LocalIconSize provides 20.dp,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .widthIn(min = 240.dp)
+                                .width(IntrinsicSize.Max)
+                                .shadow(Shadows.lg, shape)
+                                .clip(shape)
+                                .background(colors.surfaceRaised)
+                                .pointerInput(Unit) { detectTapGestures { } }
+                                .verticalScroll(rememberScrollState()),
+                            content = content,
+                        )
+                    }
+                },
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) { detectTapGestures { change(false) } }
+                .drawBehind { drawRect(colors.scrim.copy(alpha = 0.4f * progress.value)) },
+        ) { (previewMeasurables, menuMeasurables), constraints ->
+            val width = constraints.maxWidth.toFloat()
+            val height = constraints.maxHeight.toFloat()
+            val edge = Edge.toPx()
+            val gap = Gap.toPx()
+            val top = safeTop + edge
+            val bottom = height - safeBottom - edge
+            val tile = Size(max(triggerBounds.width, 1f), max(triggerBounds.height, 1f))
+            val maxWidth = min(width - edge * 2, MaxWidth.toPx())
+            val base = previewMenuSize(tile, aspectRatio, maxWidth, bottom - top - MenuSpace.toPx())
+            val menu = menuMeasurables.first().measure(
+                Constraints(
+                    maxWidth = (width - edge * 2).roundToInt().coerceAtLeast(0),
+                    maxHeight = max(bottom - top - base.height - gap, MenuMinHeight.toPx()).roundToInt(),
+                ),
+            )
+            val size = previewMenuSize(tile, aspectRatio, maxWidth, bottom - top - menu.height - gap)
+            val groupTop = previewMenuGroupTop(top, bottom, size.height, gap, menu.height.toFloat())
+            val frame = Rect(Offset((width - size.width) / 2f, groupTop), size)
+            geometry.tile = tile
+            geometry.frame = frame
+            val p = progress.value
+            val previewWidth = lerp(tile.width, frame.width, p).roundToInt().coerceAtLeast(1)
+            val previewHeight = lerp(tile.height, frame.height, p).roundToInt().coerceAtLeast(1)
+            val previewPlaceable = previewMeasurables.first().measure(Constraints.fixed(previewWidth, previewHeight))
+            val menuX = (frame.center.x - menu.width / 2f).coerceIn(edge, max(edge, width - edge - menu.width))
+            val menuY = min(frame.bottom + gap, bottom - menu.height)
+            layout(constraints.maxWidth, constraints.maxHeight) {
+                val origin = coordinates?.positionOnScreen() ?: Offset.Zero
+                val source = triggerBounds.translate(-origin)
+                val current = lerpRect(source, frame, p)
+                previewPlaceable.place(current.left.roundToInt(), current.top.roundToInt())
+                val anchorX = frame.center.x
+                val anchorY = frame.bottom + gap
+                menu.placeWithLayer(menuX.roundToInt(), menuY.roundToInt()) {
+                    val amount = progress.value
+                    val moving = lerpRect(source, frame, amount)
+                    translationX = moving.center.x - anchorX
+                    translationY = moving.bottom + gap * amount - anchorY
+                    val scale = lerp(0.4f, 1f, amount)
+                    scaleX = scale
+                    scaleY = scale
+                    alpha = amount
+                    transformOrigin = TransformOrigin(
+                        ((anchorX - menuX) / max(menu.width, 1)).coerceIn(0f, 1f),
+                        ((anchorY - menuY) / max(menu.height, 1)).coerceIn(0f, 1f),
                     )
                 }
             }

@@ -24,24 +24,27 @@ public struct PieChartLegend: View {
       CardHeader("With a legend", description: "What each color means")
       CardContent {
         ChartContainer(config: chartConfig) {
-          Chart {
-            ForEach(chartData, id: \.device) { item in
-              SectorMark(angle: .value("Users", item.users), innerRadius: .ratio(0.5), outerRadius: .ratio(0.78), angularInset: 0.75)
-                .foregroundStyle(chartConfig.color(item.device))
+          ChartAnimator { progress in
+            Chart {
+              ForEach(chartData, id: \.device) { item in
+                SectorMark(angle: .value("Users", item.users * progress), innerRadius: .ratio(0.5), outerRadius: .ratio(0.78), angularInset: 0.75)
+                  .foregroundStyle(chartConfig.color(item.device))
+              }
+              ChartSectorRest(total: chartData.reduce(0) { $0 + $1.users }, progress: progress)
             }
+            .chartTooltip(
+              angle: chartData.map(\.users),
+              labels: chartData.map { chartConfig.label($0.device) },
+              innerRadius: 0.5,
+              outerRadius: 0.78,
+              selection: $selection,
+              accessibilityLabel: "With a legend",
+              items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
+            ) { payload in
+              ChartTooltipContent(payload, hideLabel: true)
+            }
+            .padding(5)
           }
-          .chartTooltip(
-            angle: chartData.map(\.users),
-            labels: chartData.map { chartConfig.label($0.device) },
-            innerRadius: 0.5,
-            outerRadius: 0.78,
-            selection: $selection,
-            accessibilityLabel: "With a legend",
-            items: { [ChartTooltipItem(chartData[$0].device, value: chartData[$0].users)] }
-          ) { payload in
-            ChartTooltipContent(payload, hideLabel: true)
-          }
-          .padding(5)
           ChartLegendContent(keys: chartData.map(\.device))
         }
         .frame(height: 240)

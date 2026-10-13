@@ -1,11 +1,11 @@
 ---
 title: Qr Scanner
-description: "A camera overlay with a cut-out scan frame, corner brackets, a moving scan line and an optional flashlight toggle."
+description: "A camera overlay with a rounded cut-out scan frame, rounded corner brackets, an optional scan line and an optional flashlight toggle."
 eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-qr-scanner--default" width={880} height={1199} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-qr-scanner--default" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerExample() {\n  return (\n    <Scanner description=\"Point your camera at a code to pay or connect.\" />\n  )\n}"} />
 
@@ -15,9 +15,9 @@ generated: true
 
 </Example>
 
-`QRScanner` is a `View` that draws an overlay on top of whatever you pass as `children`, usually a camera preview. It does not open the camera itself. The overlay dims everything outside a square frame (drawn with `react-native-svg`), marks the frame with four corner brackets and animates a scan line with Reanimated while the state is `idle`.
+`QRScanner` is a `View` that draws an overlay on top of whatever you pass as `children`, usually a camera preview. It does not open the camera itself. The overlay dims everything outside a square frame with rounded corners (drawn with `react-native-svg`) and marks the frame with four rounded corner brackets. When `scanLine` is set, a line moves up and down inside the frame with Reanimated while the state is `idle`.
 
-The frame size defaults to 68% of the shorter side, capped at 280 points, and is centered in the component. A `title` sits above the frame; a `description` and the flashlight button sit below it.
+The frame size defaults to 66% of the shorter side, capped at 260 points. It is centered horizontally and sits slightly above the vertical center. A `title` sits above the frame and a `description` below it; the flashlight button sits near the bottom edge.
 
 ## Installation
 
@@ -35,7 +35,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ### Manual
 
-<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
 
 <div>
 
@@ -85,17 +85,97 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </div>
 
-</Tabs>
+<div>
 
-### SwiftUI and Jetpack Compose
+1. Target iOS 17 or later.
 
-The same component is available as native source. The CLI copies it with every file it uses.
+2. Add the Swift package to your app:
 
-<Tabs items={["SwiftUI","Jetpack Compose"]}>
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
 
 <SourceFile path="swift/Components/QRScanner.swift" />
 
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Drawer.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Keypad.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Popover.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Patterns/Adaptive.swift" />
+
+<SourceFile path="swift/Patterns/Preview.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
 <SourceFile path="kotlin/components/QrScanner.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Keypad.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+<SourceFile path="kotlin/components/Switch.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
 
 </Tabs>
 
@@ -107,7 +187,7 @@ The same component is available as native source. The CLI copies it with every f
 
 Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-media`.
 
-Set `state` to `success` or `error` after you read a code. The brackets change color, and `error` shakes the frame. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.
+Set `state` to `success` or `error` after you read a code. The brackets fade to a matching color, `success` springs the frame slightly smaller and `error` shakes it. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.
 
 The `QRScannerState` type is also exported.
 
@@ -115,9 +195,9 @@ The `QRScannerState` type is also exported.
 
 ### Success
 
-The `success` state with green brackets.
+The `success` state with green brackets and a slightly smaller frame.
 
-<Example id="components-qr-scanner--success" width={880} height={1199} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-qr-scanner--success" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerSuccessExample() {\n  return (\n    <Scanner state=\"success\" description=\"Code recognised\" />\n  )\n}"} />
 
@@ -131,7 +211,7 @@ The `success` state with green brackets.
 
 The `error` state, which shakes the frame and turns the brackets red.
 
-<Example id="components-qr-scanner--error-state" width={880} height={1199} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-qr-scanner--error-state" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerErrorStateExample() {\n  return (\n    <Scanner state=\"error\" description=\"This code is not supported.\" />\n  )\n}"} />
 
@@ -143,7 +223,9 @@ The `error` state, which shakes the frame and turns the brackets red.
 
 ### With scan line
 
-<Example platforms={["React Native","SwiftUI","Compose"]}>
+The scanner with `scanLine` turned on.
+
+<Example id="components-qr-scanner--with-scan-line" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerWithScanLineExample() {\n  return (\n    <Scanner scanLine description=\"Hold steady over the code.\" />\n  )\n}"} />
 
@@ -157,7 +239,7 @@ The `error` state, which shakes the frame and turns the brackets red.
 
 A title and description with no flashlight button, because `onTorchToggle` is not passed.
 
-<Example id="components-qr-scanner--without-torch" width={880} height={1199} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-qr-scanner--without-torch" width={880} height={1196} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nexport function QrScannerWithoutTorchExample() {\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      title=\"Scan to sign in\"\n      description=\"Open Settings on your other device.\"\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}"} />
 
@@ -173,7 +255,7 @@ A title and description with no flashlight button, because `onTorchToggle` is no
 
 ### QRScanner
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"state","type":"QRScannerState","default":"\"idle\"","description":"`idle`, `success` or `error`. Sets the bracket color and triggers haptics and the shake animation. Defaults to `idle`."},{"name":"title","type":"React.ReactNode","description":"Content shown above the frame. Strings are wrapped in a `Text`."},{"name":"description","type":"React.ReactNode","description":"Content shown below the frame. Strings are wrapped in a `Text`."},{"name":"scanLine","type":"boolean","default":"false","description":"Shows the animated scan line while the state is `idle`. Defaults to `true`."},{"name":"torch","type":"boolean","default":"false","description":"Whether the flashlight is on. Controls the look of the flashlight button."},{"name":"onTorchToggle","type":"(torch: boolean) => void","description":"Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set."},{"name":"torchLabel","type":"string","default":"\"Flashlight\"","description":"Accessibility label for the flashlight button. Defaults to `\"Flashlight\"`."},{"name":"frameSize","type":"number","description":"Side length of the scan frame in points. Overrides the automatic size."}]} />
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"state","type":"QRScannerState","default":"\"idle\"","description":"`idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. Defaults to `idle`."},{"name":"title","type":"React.ReactNode","description":"Content shown above the frame. Strings are wrapped in a `Text`."},{"name":"description","type":"React.ReactNode","description":"Content shown below the frame. Strings are wrapped in a `Text`."},{"name":"scanLine","type":"boolean","default":"false","description":"Shows the animated scan line while the state is `idle`. Defaults to `false`."},{"name":"torch","type":"boolean","default":"false","description":"Whether the flashlight is on. The button fills and the icon uses the fill weight when on. Defaults to `false`."},{"name":"onTorchToggle","type":"(torch: boolean) => void","description":"Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set."},{"name":"torchLabel","type":"string","default":"\"Flashlight\"","description":"Accessibility label for the flashlight button. Defaults to `\"Flashlight\"`."},{"name":"frameSize","type":"number","description":"Side length of the scan frame in points. Overrides the automatic size."}]} />
 
 </ApiPart>
 
@@ -183,9 +265,9 @@ A title and description with no flashlight button, because `onTorchToggle` is no
 - The overlay is a polite live region, so changes to the title and description are announced on Android.
 - The flashlight button has the `button` role, uses `torchLabel` as its label and reports `torch` as its selected state.
 - State changes to `success` and `error` play a matching haptic notification.
-- The shake and scan-line animations respect the system reduce motion setting.
+- The shake and scan-line animations respect the system reduce motion setting, and the success scale is skipped when reduce motion is on.
 
 ## Notes
 
-- Uses the `bg-media`, `text-scrim`, `text-on-media`, `border-success`, `border-danger` and `bg-accent` tokens.
+- Uses the `bg-media`, `text-scrim`, `text-on-media`, `text-success`, `text-danger` and `bg-accent` tokens; the flashlight button uses `bg-scrim` when off and `bg-on-media` with a `text-media` icon when on.
 - The scan line restarts whenever the state returns to `idle`.

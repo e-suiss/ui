@@ -1461,23 +1461,23 @@
   ],
   "components-qr-scanner--default": [
     880,
-    1199
+    1637
   ],
   "components-qr-scanner--error-state": [
     880,
-    1199
+    1637
   ],
   "components-qr-scanner--success": [
     880,
-    1199
+    1637
   ],
-  "components-qr-scanner--without-scan-line": [
+  "components-qr-scanner--with-scan-line": [
     880,
-    1199
+    1637
   ],
   "components-qr-scanner--without-torch": [
     880,
-    1199
+    1196
   ],
   "components-questionnaire--default": [
     880,
@@ -1713,19 +1713,19 @@
   ],
   "components-tab-bar--default": [
     880,
-    1683
+    1720
   ],
   "components-tab-bar--disabled-item": [
     880,
-    1683
+    1720
   ],
   "components-tab-bar--large-badge": [
     880,
-    1683
+    1720
   ],
   "components-tab-bar--without-badges": [
     880,
-    1683
+    1720
   ],
   "components-tabs--default": [
     880,
@@ -1791,6 +1791,30 @@
     880,
     400
   ],
+  "components-theme--blurred": [
+    880,
+    747
+  ],
+  "components-theme--circle": [
+    880,
+    747
+  ],
+  "components-theme--circle-blur": [
+    880,
+    747
+  ],
+  "components-theme--circle-blur-from-corner": [
+    880,
+    747
+  ],
+  "components-theme--circle-from-corner": [
+    880,
+    747
+  ],
+  "components-theme--circle-from-edge": [
+    880,
+    747
+  ],
   "components-theme--dark": [
     880,
     707
@@ -1798,6 +1822,18 @@
   "components-theme--light": [
     880,
     707
+  ],
+  "components-theme--polygon": [
+    880,
+    747
+  ],
+  "components-theme--rectangle": [
+    880,
+    747
+  ],
+  "components-theme--rectangle-sideways": [
+    880,
+    747
   ],
   "components-theme--system": [
     880,
@@ -1957,19 +1993,23 @@
   ],
   "interactions-island--compact": [
     880,
-    943
+    1067
   ],
   "interactions-island--expanded": [
     880,
-    943
+    1067
   ],
   "interactions-island--live-activity": [
     880,
-    1051
+    1175
+  ],
+  "interactions-island--minimal": [
+    880,
+    1067
   ],
   "interactions-island--notice": [
     880,
-    999
+    1123
   ],
   "interactions-otp-autofill--default": [
     880,
@@ -1989,7 +2029,7 @@
   ],
   "interactions-preview-menu--custom-preview-open": [
     880,
-    1720
+    1323
   ],
   "interactions-preview-menu--default": [
     880,
@@ -1997,11 +2037,11 @@
   ],
   "interactions-preview-menu--disabled-item": [
     880,
-    1720
+    1511
   ],
   "interactions-preview-menu--open-by-default": [
     880,
-    1720
+    1510
   ],
   "interactions-pull-to-refresh--default": [
     880,
@@ -2017,7 +2057,7 @@
   ],
   "interactions-reorder-list--inset": [
     880,
-    724
+    720
   ],
   "interactions-reorder-list--leading-handle": [
     880,
@@ -2139,14 +2179,6 @@
     880,
     400
   ],
-  "patterns-action-menu--default": [
-    880,
-    400
-  ],
-  "patterns-action-menu--open-by-default": [
-    880,
-    1720
-  ],
   "patterns-confirm--default": [
     880,
     400
@@ -2207,26 +2239,6 @@
     880,
     400
   ],
-  "patterns-flyout--default": [
-    880,
-    400
-  ],
-  "patterns-flyout--open-by-default": [
-    880,
-    1720
-  ],
-  "patterns-modal--default": [
-    880,
-    400
-  ],
-  "patterns-modal--floating": [
-    880,
-    400
-  ],
-  "patterns-modal--open-by-default": [
-    880,
-    1720
-  ],
   "patterns-paged-list--custom-labels": [
     880,
     1717
@@ -2242,14 +2254,6 @@
   "patterns-paged-list--small-pages": [
     880,
     1717
-  ],
-  "patterns-panel--default": [
-    880,
-    400
-  ],
-  "patterns-panel--open-by-default": [
-    880,
-    1720
   ],
   "patterns-picker--default": [
     880,
@@ -2316,38 +2320,6 @@
     400
   ],
   "patterns-search-picker--with-value": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--controlled": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--default": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--disabled": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--disabled-item": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--sizes": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--with-icons": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--with-icons-and-text": [
-    880,
-    400
-  ],
-  "patterns-segment-picker--without-value": [
     880,
     400
   ],

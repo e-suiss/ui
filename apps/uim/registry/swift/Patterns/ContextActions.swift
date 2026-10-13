@@ -64,6 +64,6 @@ extension View {
   }
 }
 
-public typealias ContextActionsItem<Label: View> = ActionMenuItem<Label>
-public typealias ContextActionsLabel = ActionMenuLabel
-public typealias ContextActionsSeparator = ActionMenuSeparator
+public typealias ContextActionsItem<Label: View> = ActionBarItem<Label>
+public typealias ContextActionsLabel = ActionBarLabel
+public typealias ContextActionsSeparator = ActionBarSeparator

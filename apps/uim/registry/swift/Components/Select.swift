@@ -53,39 +53,40 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
     let binding = selection
     let current = binding.wrappedValue.map { AnyHashable($0) }
     let valueText = current.flatMap { labels[$0] }
-    let shape = RoundedRectangle(cornerRadius: size == .sm ? Radius.md : Radius.lg, style: .continuous)
     let context = SelectContext(
       selected: current,
       select: { value in
         if let value = value.base as? Value { binding.wrappedValue = value }
       }
     )
-    Button {
-      open = true
-    } label: {
-      HStack(spacing: 6) {
-        (valueText ?? Text(placeholder))
-          .font(TextStyle.base.font())
-          .tracking(TextStyle.base.letterSpacing)
-          .lineLimit(1)
-          .foregroundStyle(!isEnabled ? Color.labelQuaternary : valueText == nil ? .labelSecondary : .label)
-          .frame(maxWidth: .infinity, alignment: .leading)
-        Ph.caretUpDown.regular
-          .frame(width: 16, height: 16)
-          .foregroundStyle(Color.labelSecondary)
-          .accessibilityHidden(true)
-      }
-      .padding(.horizontal, 12)
-      .frame(height: size == .sm ? 36 : 44)
-      .background(background, in: shape)
-      .overlay {
-        if invalid {
-          shape.strokeBorder(Color.danger)
+    ButtonGroupItem(radius: size == .sm ? Radius.md : Radius.lg) { shape in
+      Button {
+        open = true
+      } label: {
+        HStack(spacing: 6) {
+          (valueText ?? Text(placeholder))
+            .font(TextStyle.base.font())
+            .tracking(TextStyle.base.letterSpacing)
+            .lineLimit(1)
+            .foregroundStyle(!isEnabled ? Color.labelQuaternary : valueText == nil ? .labelSecondary : .label)
+            .frame(maxWidth: .infinity, alignment: .leading)
+          Ph.caretUpDown.regular
+            .frame(width: 16, height: 16)
+            .foregroundStyle(Color.labelSecondary)
+            .accessibilityHidden(true)
         }
+        .padding(.horizontal, 12)
+        .frame(height: size == .sm ? 36 : 44)
+        .background(background, in: shape)
+        .overlay {
+          if invalid {
+            shape.strokeBorder(Color.danger)
+          }
+        }
+        .contentShape(shape)
       }
-      .contentShape(shape)
+      .buttonStyle(SelectTriggerStyle())
     }
-    .buttonStyle(SelectTriggerStyle())
     .accessibilityHint(Text("Shows options"))
     .background {
       VStack(spacing: 0) { content() }

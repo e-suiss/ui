@@ -67,6 +67,7 @@ function Sparkline({ seed, rising }: { seed: number; rising: boolean }) {
       >
         <YAxis hide domain={["dataMin", "dataMax"]} />
         <Area
+          isAnimationActive={false}
           dataKey="value"
           type="linear"
           stroke={color}

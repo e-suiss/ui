@@ -1,6 +1,7 @@
 import type { IconProps as PhosphorIconProps } from "phosphor-react-native"
 import * as React from "react"
 import {
+  type AccessibilityActionEvent,
   AccessibilityInfo,
   Pressable,
   type StyleProp,
@@ -29,9 +30,13 @@ import { Icon, IconSizeContext } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
 import { fontSize, shadow, useTheme } from "@/components/ui/theme"
 
-type IslandView = "hidden" | "compact" | "expanded" | "notice"
+type IslandView = "hidden" | "compact" | "minimal" | "expanded" | "notice"
+
+type IslandMode = "compact" | "minimal" | "expanded"
 
 type IslandPartName = Exclude<IslandView, "hidden">
+
+type IslandRegion = "leading" | "trailing" | "center" | "bottom"
 
 type IslandNotice = {
   icon?: React.ReactNode
@@ -43,11 +48,12 @@ type IslandNotice = {
 type IslandContextProps = {
   view: IslandView
   notice: IslandNotice | null
-  expanded: boolean
-  setExpanded: (expanded: boolean) => void
+  expand: () => void
+  collapse: () => void
+  minimize: () => void
   notify: (notice: IslandNotice) => void
   dismiss: () => void
-  registerCompact: () => () => void
+  registerActivity: () => () => void
 }
 
 type IslandSize = { width: number; height: number }
@@ -94,18 +100,19 @@ const SPRING = {
 const RADIUS: Record<IslandView, number> = {
   hidden: 18,
   compact: 18,
+  minimal: 18,
   expanded: 28,
   notice: 28,
 }
 
 function islandView(
   notice: IslandNotice | null,
-  expanded: boolean,
-  compactCount: number
+  mode: IslandMode,
+  activityCount: number
 ): IslandView {
   if (notice) return "notice"
-  if (compactCount <= 0) return "hidden"
-  return expanded ? "expanded" : "compact"
+  if (activityCount <= 0) return "hidden"
+  return mode
 }
 
 const styles = StyleSheet.create({
@@ -147,7 +154,20 @@ const styles = StyleSheet.create({
     gap: 24,
     paddingHorizontal: 10,
   },
+  minimal: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   expanded: { width: "100%", flexDirection: "column", gap: 12, padding: 16 },
+  expandedTop: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  spacer: { flex: 1 },
 })
 
 function withAlpha(color: string, alpha: number) {
@@ -180,15 +200,21 @@ function wrapText(
 }
 
 function IslandProvider({ children }: { children?: React.ReactNode }) {
-  const [expanded, setExpanded] = React.useState(false)
+  const [mode, setMode] = React.useState<IslandMode>("compact")
   const [notice, setNotice] = React.useState<
     (IslandNotice & { id: number }) | null
   >(null)
-  const [compactCount, setCompactCount] = React.useState(0)
+  const [activityCount, setActivityCount] = React.useState(0)
   const [paused, setPaused] = React.useState(false)
   const idRef = React.useRef(0)
 
-  const view = islandView(notice, expanded, compactCount)
+  const view = islandView(notice, mode, activityCount)
+
+  const expand = React.useCallback(() => setMode("expanded"), [])
+
+  const collapse = React.useCallback(() => setMode("compact"), [])
+
+  const minimize = React.useCallback(() => setMode("minimal"), [])
 
   const dismiss = React.useCallback(() => {
     setNotice(null)
@@ -200,11 +226,11 @@ function IslandProvider({ children }: { children?: React.ReactNode }) {
     setNotice({ ...next, id: idRef.current })
   }, [])
 
-  const registerCompact = React.useCallback(() => {
-    setCompactCount((count) => count + 1)
+  const registerActivity = React.useCallback(() => {
+    setActivityCount((count) => count + 1)
     return () => {
-      setCompactCount((count) => count - 1)
-      setExpanded(false)
+      setActivityCount((count) => count - 1)
+      setMode("compact")
     }
   }, [])
 
@@ -228,13 +254,23 @@ function IslandProvider({ children }: { children?: React.ReactNode }) {
     () => ({
       view,
       notice,
-      expanded,
-      setExpanded,
+      expand,
+      collapse,
+      minimize,
       notify,
       dismiss,
-      registerCompact,
+      registerActivity,
     }),
-    [view, notice, expanded, notify, dismiss, registerCompact]
+    [
+      view,
+      notice,
+      expand,
+      collapse,
+      minimize,
+      notify,
+      dismiss,
+      registerActivity,
+    ]
   )
 
   return (
@@ -292,8 +328,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
   const lastRef = React.useRef(current)
   if (current) lastRef.current = current
   const notice = current ?? lastRef.current
-  const { colors, isDark } = useTheme()
-  const foreground = isDark ? colors.label : colors.surface
+  const { colors } = useTheme()
   const stage = React.useContext(IslandStageContext)
   const width = Math.min((stage?.stageWidth ?? MAX_WIDTH) - 24, MAX_WIDTH)
 
@@ -314,7 +349,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
             <View
               style={[
                 styles.noticeIcon,
-                { backgroundColor: withAlpha(foreground, 0.15) },
+                { backgroundColor: withAlpha(colors.onMedia, 0.15) },
               ]}
             >
               {notice.icon}
@@ -326,14 +361,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
           {notice?.description !== undefined
             ? wrapText(
                 notice.description,
-                [
-                  styles.description,
-                  {
-                    color: isDark
-                      ? colors.labelSecondary
-                      : withAlpha(colors.surface, 0.7),
-                  },
-                ],
+                [styles.description, { color: withAlpha(colors.onMedia, 0.7) }],
                 1
               )
             : null}
@@ -372,19 +400,115 @@ function IslandStage({
   )
 }
 
+type IslandExpandedRegionProps = React.ComponentProps<typeof View> & {
+  region: IslandRegion
+}
+
+const regionStyles = StyleSheet.create({
+  leading: { flexShrink: 0 },
+  trailing: { flexShrink: 0, alignItems: "flex-end" },
+  center: { minWidth: 0, flex: 1 },
+  bottom: { width: "100%", gap: 12 },
+})
+
+function IslandExpandedRegion({
+  region,
+  style,
+  ...props
+}: IslandExpandedRegionProps) {
+  return <View style={[regionStyles[region], style]} {...props} />
+}
+
+type IslandRegions = Record<IslandRegion, React.ReactElement[]>
+
+function collectRegions(
+  children: React.ReactNode,
+  regions: IslandRegions = {
+    leading: [],
+    trailing: [],
+    center: [],
+    bottom: [],
+  }
+) {
+  for (const child of React.Children.toArray(children)) {
+    if (!React.isValidElement(child)) continue
+    if (child.type === React.Fragment) {
+      collectRegions(
+        (child.props as { children?: React.ReactNode }).children,
+        regions
+      )
+    } else if (child.type === IslandExpandedRegion) {
+      const { region } = child.props as IslandExpandedRegionProps
+      regions[region].push(child)
+    }
+  }
+  return regions
+}
+
+function IslandExpandedView({
+  regions,
+  accessibilityLabel,
+}: {
+  regions: IslandRegions
+  accessibilityLabel?: string
+}) {
+  const { collapse } = useIsland()
+  const stage = React.useContext(IslandStageContext)
+  const width = Math.min((stage?.stageWidth ?? MAX_WIDTH) - 24, MAX_WIDTH)
+  const hasTop =
+    regions.leading.length > 0 ||
+    regions.center.length > 0 ||
+    regions.trailing.length > 0
+
+  return (
+    <IslandPart part="expanded" style={{ width }}>
+      <View
+        role="group"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityActions={[{ name: "escape" }, { name: "collapse" }]}
+        onAccessibilityAction={(event) => {
+          const action = event.nativeEvent.actionName
+          if (action === "escape" || action === "collapse") collapse()
+        }}
+        onAccessibilityEscape={collapse}
+        style={styles.expanded}
+      >
+        {hasTop ? (
+          <View style={styles.expandedTop}>
+            {regions.leading}
+            {regions.center.length > 0 ? (
+              regions.center
+            ) : (
+              <View style={styles.spacer} />
+            )}
+            {regions.trailing}
+          </View>
+        ) : null}
+        {regions.bottom}
+      </View>
+    </IslandPart>
+  )
+}
+
 function Island({
   style,
   children,
+  compactLeading,
+  compactTrailing,
+  minimal,
+  accessibilityLabel,
   portalHost,
   ...props
 }: React.ComponentProps<typeof View> & {
+  compactLeading?: React.ReactNode
+  compactTrailing?: React.ReactNode
+  minimal?: React.ReactNode
   portalHost?: string
 }) {
   const context = useIsland()
-  const { colors, isDark } = useTheme()
-  const foreground = isDark ? colors.label : colors.surface
+  const { colors } = useTheme()
   const setPaused = React.useContext(IslandPauseContext)
-  const { view, notice, setExpanded, dismiss } = context
+  const { notice, expand, collapse, dismiss, registerActivity } = context
   const insets = useSafeAreaInsets()
   const window = useWindowDimensions()
   const id = React.useId()
@@ -396,6 +520,24 @@ function Island({
   const radius = useSharedValue(RADIUS.hidden)
   const visible = useSharedValue(0)
   const translateY = useSharedValue(0)
+
+  const hasCompact = compactLeading != null || compactTrailing != null
+  const hasMinimal = minimal != null
+  const active = hasCompact || hasMinimal
+
+  React.useEffect(() => {
+    if (!active) return
+    return registerActivity()
+  }, [active, registerActivity])
+
+  const view: IslandView =
+    context.view === "minimal" && !hasMinimal
+      ? "compact"
+      : context.view === "compact" && !hasCompact
+        ? "minimal"
+        : context.view
+
+  const regions = collectRegions(children)
 
   const reportSize = React.useCallback(
     (part: IslandPartName, size: IslandSize) => {
@@ -426,12 +568,10 @@ function Island({
     })
   }, [target.width, target.height, view, width, height, radius, visible])
 
-  const collapse = React.useCallback(() => setExpanded(false), [setExpanded])
-
   const swipeUp = React.useCallback(() => {
     if (view === "notice") dismiss()
-    else if (view === "expanded") setExpanded(false)
-  }, [view, dismiss, setExpanded])
+    else if (view === "expanded") collapse()
+  }, [view, dismiss, collapse])
 
   useBackHandler(view === "expanded", collapse)
 
@@ -474,6 +614,13 @@ function Island({
     [view, window.width, reportSize]
   )
 
+  const expandActions = [{ name: "activate" }, { name: "expand" }]
+
+  const onExpandAction = (event: AccessibilityActionEvent) => {
+    const action = event.nativeEvent.actionName
+    if (action === "activate" || action === "expand") expand()
+  }
+
   return (
     <Portal name={`island-${id}`} hostName={portalHost}>
       <IslandContext.Provider value={context}>
@@ -498,17 +645,13 @@ function Island({
                 }
                 style={[
                   styles.island,
-                  {
-                    backgroundColor: isDark ? colors.surface : colors.label,
-                    borderWidth: isDark ? 1 : 0,
-                    borderColor: colors.separator,
-                  },
+                  { backgroundColor: colors.media },
                   style,
                   animatedStyle,
                 ]}
                 {...props}
               >
-                <TextStyleContext.Provider value={{ color: foreground }}>
+                <TextStyleContext.Provider value={{ color: colors.onMedia }}>
                   <IconSizeContext.Provider value={20}>
                     <IslandStageContext.Provider value={stage}>
                       <IslandStage
@@ -516,7 +659,41 @@ function Island({
                         stageWidth={window.width}
                         stageHeight={window.height}
                       >
-                        {children}
+                        {hasCompact ? (
+                          <IslandPart part="compact">
+                            <Pressable
+                              role="button"
+                              accessibilityLabel={accessibilityLabel}
+                              accessibilityState={{ expanded: false }}
+                              accessibilityActions={expandActions}
+                              onAccessibilityAction={onExpandAction}
+                              onPress={expand}
+                              style={styles.compact}
+                            >
+                              {compactLeading ?? <View />}
+                              {compactTrailing ?? <View />}
+                            </Pressable>
+                          </IslandPart>
+                        ) : null}
+                        {hasMinimal ? (
+                          <IslandPart part="minimal">
+                            <Pressable
+                              role="button"
+                              accessibilityLabel={accessibilityLabel}
+                              accessibilityState={{ expanded: false }}
+                              accessibilityActions={expandActions}
+                              onAccessibilityAction={onExpandAction}
+                              onPress={expand}
+                              style={styles.minimal}
+                            >
+                              {minimal}
+                            </Pressable>
+                          </IslandPart>
+                        ) : null}
+                        <IslandExpandedView
+                          regions={regions}
+                          accessibilityLabel={accessibilityLabel}
+                        />
                         <IslandNoticeView current={notice} />
                       </IslandStage>
                     </IslandStageContext.Provider>
@@ -528,67 +705,6 @@ function Island({
         </IslandPauseContext.Provider>
       </IslandContext.Provider>
     </Portal>
-  )
-}
-
-function IslandCompact({
-  style,
-  children,
-  onPress,
-  ...props
-}: React.ComponentProps<typeof Pressable>) {
-  const { view, setExpanded, registerCompact } = useIsland()
-
-  React.useEffect(() => registerCompact(), [registerCompact])
-
-  return (
-    <IslandPart part="compact">
-      <Pressable
-        role="button"
-        accessibilityState={{ expanded: view === "expanded" }}
-        accessibilityActions={[{ name: "activate" }, { name: "expand" }]}
-        onAccessibilityAction={(event) => {
-          const action = event.nativeEvent.actionName
-          if (action === "activate" || action === "expand") setExpanded(true)
-        }}
-        onPress={(event) => {
-          onPress?.(event)
-          setExpanded(true)
-        }}
-        style={(state) => [
-          styles.compact,
-          typeof style === "function" ? style(state) : style,
-        ]}
-        {...props}
-      >
-        {children}
-      </Pressable>
-    </IslandPart>
-  )
-}
-
-function IslandExpanded({
-  style,
-  ...props
-}: React.ComponentProps<typeof View>) {
-  const { setExpanded } = useIsland()
-  const stage = React.useContext(IslandStageContext)
-  const width = Math.min((stage?.stageWidth ?? MAX_WIDTH) - 24, MAX_WIDTH)
-
-  return (
-    <IslandPart part="expanded" style={{ width }}>
-      <View
-        role="group"
-        accessibilityActions={[{ name: "escape" }, { name: "collapse" }]}
-        onAccessibilityAction={(event) => {
-          const action = event.nativeEvent.actionName
-          if (action === "escape" || action === "collapse") setExpanded(false)
-        }}
-        onAccessibilityEscape={() => setExpanded(false)}
-        style={[styles.expanded, style]}
-        {...props}
-      />
-    </IslandPart>
   )
 }
 
@@ -655,12 +771,5 @@ function IslandRing({
   )
 }
 
-export type { IslandNotice, IslandView }
-export {
-  Island,
-  IslandCompact,
-  IslandExpanded,
-  IslandProvider,
-  IslandRing,
-  useIsland,
-}
+export type { IslandNotice, IslandRegion, IslandView }
+export { Island, IslandExpandedRegion, IslandProvider, IslandRing, useIsland }

@@ -77,27 +77,28 @@ public struct InputGroup<Content: View>: View {
   public var body: some View {
     let request = $focusRequest
     let rounded = multiline || addons.contains(.blockStart) || addons.contains(.blockEnd)
-    let shape = RoundedRectangle(cornerRadius: rounded ? Radius.xl : Radius.lg, style: .continuous)
-    InputGroupLayout {
-      content
-    }
-    .frame(maxWidth: .infinity, minHeight: 44)
-    .environment(
-      \.inputGroup,
-      InputGroupContext(
-        focusRequest: focusRequest,
-        addons: addons,
-        requestFocus: { request.wrappedValue += 1 }
+    ButtonGroupItem(radius: rounded ? Radius.xl : Radius.lg) { shape in
+      InputGroupLayout {
+        content
+      }
+      .frame(maxWidth: .infinity, minHeight: 44)
+      .environment(
+        \.inputGroup,
+        InputGroupContext(
+          focusRequest: focusRequest,
+          addons: addons,
+          requestFocus: { request.wrappedValue += 1 }
+        )
       )
-    )
-    .onPreferenceChange(InputGroupAddonsKey.self) { addons = $0 }
-    .onPreferenceChange(InputGroupFocusedKey.self) { focused = $0 }
-    .onPreferenceChange(InputGroupMultilineKey.self) { multiline = $0 }
-    .background(background, in: shape)
-    .overlay {
-      shape.strokeBorder(border, lineWidth: 1)
+      .onPreferenceChange(InputGroupAddonsKey.self) { addons = $0 }
+      .onPreferenceChange(InputGroupFocusedKey.self) { focused = $0 }
+      .onPreferenceChange(InputGroupMultilineKey.self) { multiline = $0 }
+      .background(background, in: shape)
+      .overlay {
+        shape.strokeBorder(border, lineWidth: 1)
+      }
+      .contentShape(shape)
     }
-    .contentShape(shape)
     .accessibilityElement(children: .contain)
   }
 

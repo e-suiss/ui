@@ -1,6 +1,6 @@
 {
   "description": "A number input with minus and plus buttons that step the value, repeat while held and play a selection haptic.",
-  "overview": "`Stepper` is a number field laid out as a right-aligned value followed by a grouped pair of minus and plus buttons. Each step snaps to `step` and stays within `min` and `max`, and a button dims when it can go no further.\n\nPressing and holding a button steps once, then repeats every 60 ms after 400 ms. The value can also be typed. Use it for quantities, copies or percentages in settings rows.",
+  "overview": "`Stepper` is a number field laid out as a right-aligned value followed by a field holding minus and plus buttons, inset from its edges. Each step snaps to `step` and stays within `min` and `max`, and a button that can go no further is shown as disabled.\n\nPressing and holding a button steps once, then repeats every 60 ms after 400 ms. The value can also be typed. Use it for quantities, copies or percentages in settings rows.",
   "usage": "Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`.\n\nUse it uncontrolled with `defaultValue` (`0` by default) or controlled with `value` and `onValueChange`. Clearing the field never reports `null`; the change is cancelled instead. `min`, `max`, `step`, `format` (`Intl.NumberFormatOptions`), `locale` and `disabled` are passed to the number field.",
   "examples": {
     "Print": "A print settings list with copies, a percentage scale stepping by 5, and a disabled row."
@@ -8,7 +8,7 @@
   "parts": {
     "Stepper": "The root that holds the value and limits.",
     "StepperInput": "The editable, right-aligned value.",
-    "StepperGroup": "The rounded container for the buttons.",
+    "StepperGroup": "The rounded field that holds the buttons.",
     "StepperDecrement": "The minus button.",
     "StepperIncrement": "The plus button.",
     "StepperSeparator": "A thin divider between the buttons."
@@ -21,5 +21,5 @@
     }
   },
   "accessibility": "- The minus and plus buttons have the `button` role.\n- Label the value with `accessibilityLabel` or `accessibilityLabelledBy` on `StepperInput`.\n- The separator is hidden from screen readers.",
-  "notes": "- A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.\n- The group uses `bg-control` and `bg-control-pressed`; disabled text uses `text-label-quaternary`."
+  "notes": "- A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.\n- The group uses `bg-control`. Buttons use `bg-surface-raised` with a small shadow (`bg-label-quaternary` in dark mode) and `bg-control-pressed` when pressed; a disabled button or one at its limit uses `bg-control-disabled` with a `text-label-quaternary` icon.\n- Disabled text uses `text-label-quaternary`."
 }
