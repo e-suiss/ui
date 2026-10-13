@@ -3,6 +3,7 @@ import { strings } from "@/lib/strings";
 
 export const site = {
   name: strings.brand,
+  alternateNames: ["suiss uim", "uim.suiss.app"],
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://uim.suiss.app").replace(/\/$/, ""),
   title: `${strings.brand} – Copy-paste React Native components for Expo`,
   description: strings.heroSubtitle,

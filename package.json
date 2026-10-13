@@ -5,7 +5,8 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
-    "registry": "turbo run registry --filter=ui"
+    "registry": "turbo run registry --filter=ui",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "devDependencies": {
     "turbo": "^2.11.7"

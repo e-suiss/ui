@@ -11,6 +11,7 @@ import { Anchor } from "@/components/site/anchor";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageActions } from "@/components/site/page-actions";
 import { Toc } from "@/components/site/toc";
+import { contentDates } from "@/lib/dates";
 import { markdownUrl } from "@/lib/llms";
 import { absolute, site } from "@/lib/site";
 import { source } from "@/lib/source";
@@ -68,26 +69,8 @@ function Neighbour({
   );
 }
 
-function PageSkeleton() {
-  return (
-    <div className="flex gap-12 px-5 pt-14 pb-24 md:px-10 md:pt-20 xl:pe-10">
-      <div className="mx-auto flex w-full max-w-205 min-w-0 animate-pulse flex-col gap-5">
-        <div className="h-3 w-32 rounded-full bg-label/8" />
-        <div className="h-16 w-2/3 rounded-2xl bg-label/8" />
-        <div className="h-5 w-full max-w-xl rounded-full bg-label/6" />
-        <div className="mt-12 h-72 rounded-[24px] bg-label/5" />
-      </div>
-      <div className="hidden w-52 shrink-0 xl:block" />
-    </div>
-  );
-}
-
 export default function Page(props: PageProps<"/docs/[[...slug]]">) {
-  return (
-    <React.Suspense fallback={<PageSkeleton />}>
-      <DocPage params={props.params} />
-    </React.Suspense>
-  );
+  return <DocPage params={props.params} />;
 }
 
 async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"] }) {
@@ -110,6 +93,7 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
       .filter((item) => item.url && item.url !== "/docs")
       .map((item) => ({ name: String(item.name), url: item.url as string })),
   ];
+  const { published, modified } = contentDates(page.path);
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -121,6 +105,8 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
         url: absolute(page.url),
         image: absolute(`/og/docs/${[...page.slugs, "image.png"].join("/")}`),
         inLanguage: "en",
+        datePublished: published?.toISOString(),
+        dateModified: modified?.toISOString(),
         isPartOf: { "@id": absolute("/#website") },
         about: { "@id": absolute("/#software") },
         author: { "@id": absolute("/#organization") },

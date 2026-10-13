@@ -7,6 +7,10 @@ ARG SITE_URL
 ENV NEXT_TELEMETRY_DISABLED=1 \
     NEXT_PUBLIC_SITE_URL=${SITE_URL}
 WORKDIR /src
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git ca-certificates \
+ && rm -rf /var/lib/apt/lists/* \
+ && git config --global --add safe.directory /src
 RUN corepack enable
 COPY . .
 RUN pnpm install --frozen-lockfile --os=linux --cpu=x64 --cpu=arm64 --libc=glibc

@@ -80,6 +80,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": absolute("/#website"),
       name: site.name,
+      alternateName: site.alternateNames,
       url: absolute("/"),
       description: site.description,
       inLanguage: "en",
