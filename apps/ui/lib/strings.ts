@@ -12,6 +12,8 @@ export const strings = {
   github: "GitHub",
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
+  heroLead:
+    "Accessible components, patterns, interactions, charts and blocks built on Base UI and Tailwind CSS. Open source and yours to change.",
   heroSubtitle:
     "Copy-paste React components, patterns, interactions, charts and blocks built on Base UI and Tailwind CSS.",
   menu: "Menu",

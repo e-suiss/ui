@@ -7,6 +7,7 @@ import { Anchor } from "@/components/site/anchor";
 import { Gradient } from "@/components/site/gradient";
 import { InstallCommand } from "@/components/site/install-command";
 import { Search } from "@/components/site/search";
+import { strings } from "@/lib/strings";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -56,9 +57,14 @@ function Hero() {
     <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
       <Gradient preset="Halo" />
       <div className={cn(frame, "relative flex flex-col gap-10 pt-60 pb-12 md:pt-[26rem] md:pb-16")}>
-        <h1 className="text-[clamp(3.5rem,9.5vw,9.5rem)] leading-[0.86] font-semibold tracking-[-0.055em]">
-          Build with suiss/uim.
-        </h1>
+        <div className="flex max-w-6xl flex-col gap-6">
+          <h1 className="text-[clamp(3rem,8vw,8rem)] leading-[0.88] font-semibold tracking-[-0.055em] text-balance">
+            Copy-paste mobile components.
+          </h1>
+          <p className="max-w-2xl text-[clamp(1.125rem,1.6vw,1.375rem)] leading-[1.38] tracking-[-0.02em] text-pretty text-[#1d1d1f]/70">
+            {strings.heroLead}
+          </p>
+        </div>
         <Search
           variant="field"
           className="h-14 w-full rounded-full bg-white/45 px-5 md:max-w-2xl text-[17px] tracking-[-0.02em] text-[#1d1d1f]/70 backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-300 hover:bg-white/60 md:h-16 md:px-6"

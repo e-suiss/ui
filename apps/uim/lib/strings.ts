@@ -15,8 +15,10 @@ export const strings = {
   creditPrefix: "Built by",
   creditAuthor: "ademceper",
   creditSuffix: "for esuiss.",
+  heroLead:
+    "The same components for React Native and Expo, SwiftUI and Jetpack Compose, built from one set of design tokens. Open source and yours to change.",
   heroSubtitle:
-    "Copy-paste React Native components, patterns and interactions for Expo and React Native, styled with Uniwind, NativeWind or StyleSheet.",
+    "Copy-paste mobile components, patterns and interactions for React Native and Expo, SwiftUI and Jetpack Compose. React Native components are styled with Uniwind, NativeWind or StyleSheet.",
   menu: "Menu",
   close: "Close",
   copy: "Copy",
