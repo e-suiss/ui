@@ -121,7 +121,7 @@ function StepperGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="group"
       data-slot="stepper-group"
       className={cn(
-        "inline-flex h-8 shrink-0 items-center rounded-lg bg-control",
+        "inline-flex h-8 shrink-0 items-center gap-[3px] rounded-lg bg-control p-[3px]",
         className
       )}
       {...props}
@@ -174,7 +174,7 @@ function StepperButton({
       }}
       onContextMenu={(event) => event.preventDefault()}
       className={cn(
-        "relative flex h-full w-12 touch-manipulation items-center justify-center text-label outline-none select-none first:rounded-s-lg last:rounded-e-lg after:absolute after:inset-x-0 after:-inset-y-1.5 after:content-[''] focus-visible:focus-ring active:bg-control-pressed disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "relative flex h-full w-9 touch-manipulation items-center justify-center rounded-md bg-surface-raised text-label shadow-sm outline-none select-none after:absolute after:inset-x-0 after:-inset-y-2.25 after:content-[''] focus-visible:focus-ring active:bg-control-pressed active:shadow-none disabled:bg-control-disabled disabled:text-label-quaternary disabled:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed dark:disabled:bg-control-disabled [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
