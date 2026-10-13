@@ -1,6 +1,12 @@
 "use client";
 
 import { type GradientT, presetsArray, ShaderGradient, ShaderGradientCanvas } from "@shadergradient/react";
+import { setConsoleFunction } from "three";
+
+setConsoleFunction((type, message, ...params) => {
+  if (type === "warn" && message.startsWith("THREE.Clock:")) return;
+  console[type](message, ...params);
+});
 
 export type GradientPreset =
   | "Halo"
