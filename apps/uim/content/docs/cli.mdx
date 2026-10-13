@@ -1,6 +1,6 @@
 ---
 title: CLI
-description: The @esuiss/uim command sets up your project and copies components, patterns and interactions into it.
+description: The @esuiss/uim command sets up your project and copies components, patterns, interactions, charts and blocks into it.
 eyebrow: suiss/uim
 ---
 
@@ -29,6 +29,7 @@ npx @esuiss/uim@latest init [options]
 Copies components into your project, together with the components and packages they depend on.
 
 ```bash title="Terminal"
+npx @esuiss/uim@latest add [options]
 npx @esuiss/uim@latest add <component...> [options]
 ```
 
@@ -39,6 +40,17 @@ npx @esuiss/uim@latest add <component...> [options]
 | `-o, --overwrite` | Replace local files that differ from the registry |
 | `-y, --yes` | Skip confirmation prompts |
 | `-c, --cwd <dir>` | Run in another project directory |
+
+### Pick from a list
+
+Run `add` without names to pick from a list. Choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. In SwiftUI and Jetpack Compose projects the list only shows what exists for that platform.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add
+npx @esuiss/uim@latest add --platform swift
+```
+
+Outside an interactive terminal, such as in CI, `add` without names prints the available names instead.
 
 ## Update a component
 

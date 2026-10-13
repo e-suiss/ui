@@ -28,6 +28,7 @@ npx @esuiss/ui@latest init [options]
 Copies components into your project, together with the components and npm packages they depend on.
 
 ```bash title="Terminal"
+npx @esuiss/ui@latest add
 npx @esuiss/ui@latest add <component...> [options]
 npx @esuiss/ui@latest add patterns <pattern...> [options]
 npx @esuiss/ui@latest add interactions <interaction...> [options]
@@ -44,6 +45,17 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |
+
+### Pick from a list
+
+Run `add` without names to pick from a list. Choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. `add patterns`, or another group, without names opens the list for that group.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add
+npx @esuiss/ui@latest add patterns
+```
+
+Outside an interactive terminal, such as in CI, `add` without names prints the available names instead.
 
 ### Patterns
 

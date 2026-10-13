@@ -47,4 +47,10 @@ cd ios && pod install
 npx @esuiss/uim@latest add dialog
 ```
 
+Run `add` without names to pick from a list instead. Choose a group, type to filter, select with space and press enter. See [CLI](/docs/cli#pick-from-a-list).
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add
+```
+
 Components are copied into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK.

@@ -37,6 +37,12 @@ Pass one or more component names to `add`.
 npx @esuiss/ui@latest add button dialog sidebar
 ```
 
+Run `add` without names to pick from a list instead. Choose a group, type to filter, select with space and press enter. See [CLI](/docs/cli#pick-from-a-list).
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add
+```
+
 Components are written to `components/ui/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.
 
 Then import and use them:
