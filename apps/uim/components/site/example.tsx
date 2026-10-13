@@ -75,7 +75,7 @@ export function Example({
           </button>
         ))}
         {tab === "code" && labels.length > 1 ? (
-          <div className="ms-auto -me-2 flex min-w-0 items-center gap-0.5 self-center sm:me-0 sm:gap-1 overflow-x-auto [scrollbar-width:none]">
+          <div className="ms-auto -me-2 flex min-w-0 items-center gap-0.5 self-center sm:me-0 sm:gap-1 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {labels.map((label, index) => (
               <button
                 key={label}
