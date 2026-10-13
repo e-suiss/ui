@@ -363,6 +363,25 @@ describe("Sidebar collapsing to icons", () => {
     await expect.poll(() => inset().getBoundingClientRect().left).toBe(8)
   })
 
+  it("tints the wrapper behind an inset sidebar only", async () => {
+    await render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarContent />
+        </Sidebar>
+        <SidebarInset>
+          <div data-variant="inset" />
+        </SidebarInset>
+      </SidebarProvider>
+    )
+    const wrapper = slot("sidebar-wrapper")
+    expect(getComputedStyle(wrapper).backgroundColor).toBe("rgba(0, 0, 0, 0)")
+    sidebar().dataset.variant = "inset"
+    await expect
+      .poll(() => getComputedStyle(wrapper).backgroundColor)
+      .not.toBe("rgba(0, 0, 0, 0)")
+  })
+
   it("floats the sidebar panel inside a padded frame", async () => {
     await render(<Shell variant="floating" />)
     await settled(container)
