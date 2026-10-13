@@ -21,7 +21,3 @@ export async function GET(_request: Request, context: RouteContext<"/source/[...
     { headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400", "X-Robots-Tag": "noindex" } },
   );
 }
-
-export async function generateStaticParams() {
-  return (await sourceFiles()).map((file) => ({ path: file.split("/") }));
-}
