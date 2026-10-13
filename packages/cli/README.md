@@ -64,12 +64,15 @@ npx @esuiss/ui@latest init [options]
 ### `add`
 
 ```bash
+npx @esuiss/ui@latest add
 npx @esuiss/ui@latest add <component...> [options]
 npx @esuiss/ui@latest add patterns <pattern...> [options]
 npx @esuiss/ui@latest add interactions <interaction...> [options]
 npx @esuiss/ui@latest add charts <chart...> [options]
 npx @esuiss/ui@latest add blocks <block...> [options]
 ```
+
+Run `add` without names to pick from a list: choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. `add patterns` (or another group) without names opens the list for that group. Outside an interactive terminal, `add` without names prints the available names instead.
 
 Components are written to `components/ui/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/`, blocks to `components/blocks/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
 

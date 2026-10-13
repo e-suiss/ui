@@ -4,6 +4,7 @@ import path from "node:path"
 import { formatDiff } from "./diff.mjs"
 import { CliError, color, list, note, step } from "./output.mjs"
 import { detectProject, findAliasRoot, install } from "./project.mjs"
+import { choose, isInteractive } from "./prompt.mjs"
 import {
   fetchRegistry,
   fetchText,
@@ -126,7 +127,7 @@ function selectNames(registry, names, { all, scope = "ui" }) {
 
   if (!names.length) {
     throw new CliError(
-      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${example}`
+      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${example}\nAvailable: ${scoped.map((entry) => entry.name).join(", ") || "none yet"}`
     )
   }
 
@@ -147,6 +148,29 @@ function selectNames(registry, names, { all, scope = "ui" }) {
   return names
 }
 
+function pickScope(registry) {
+  const choices = Object.entries(SCOPES).flatMap(([scope, { label }]) => {
+    const count = registry.items.filter(
+      (item) => scopeOf(item) === scope
+    ).length
+    return count ? [{ value: scope, label, hint: String(count) }] : []
+  })
+  return choose("What do you want to add?", choices)
+}
+
+function pickItems(registry, scope) {
+  const { kind } = SCOPES[scope]
+  const items = registry.items.filter((item) => scopeOf(item) === scope)
+  if (!items.length) throw new CliError(`No ${kind}s are available yet.`)
+  return choose(
+    `Which ${kind}s?`,
+    items
+      .map((item) => ({ value: item.name, label: item.name }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
+    { multiple: true }
+  )
+}
+
 export async function add(names, options) {
   const project = detectProject(options.cwd)
   const root = findAliasRoot(project.cwd)
@@ -157,7 +181,10 @@ export async function add(names, options) {
   }
 
   const registry = await fetchRegistry()
-  const selected = selectNames(registry, names, options)
+  const picking = !names.length && !options.all && isInteractive()
+  const scope = options.scope ?? (picking ? await pickScope(registry) : "ui")
+  const chosen = picking ? await pickItems(registry, scope) : names
+  const selected = selectNames(registry, chosen, { ...options, scope })
 
   if (options.diff) await showDiff(project, root, registry, selected)
   else await installItems(project, root, registry, selected, options)

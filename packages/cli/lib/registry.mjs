@@ -21,15 +21,36 @@ export async function fetchRegistry() {
 }
 
 export const SCOPES = {
-  ui: { kind: "component", command: "add", example: "button" },
-  pattern: { kind: "pattern", command: "add patterns", example: "<name>" },
+  ui: {
+    kind: "component",
+    label: "Components",
+    command: "add",
+    example: "button",
+  },
+  pattern: {
+    kind: "pattern",
+    label: "Patterns",
+    command: "add patterns",
+    example: "<name>",
+  },
   interaction: {
     kind: "interaction",
+    label: "Interactions",
     command: "add interactions",
     example: "<name>",
   },
-  chart: { kind: "chart", command: "add charts", example: "<name>" },
-  block: { kind: "block", command: "add blocks", example: "<name>" },
+  chart: {
+    kind: "chart",
+    label: "Charts",
+    command: "add charts",
+    example: "<name>",
+  },
+  block: {
+    kind: "block",
+    label: "Blocks",
+    command: "add blocks",
+    example: "<name>",
+  },
 }
 
 export function scopeOf(item) {

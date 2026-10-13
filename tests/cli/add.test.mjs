@@ -5,10 +5,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { add } from "../../packages/cli/lib/add.mjs"
 import { CliError } from "../../packages/cli/lib/output.mjs"
+import { choose, isInteractive } from "../../packages/cli/lib/prompt.mjs"
 import { read, serveRegistry, silenceOutput, viteProject } from "./helpers.mjs"
 
 vi.mock("node:child_process", () => ({
   spawnSync: vi.fn(() => ({ status: 0 })),
+}))
+
+vi.mock("../../packages/cli/lib/prompt.mjs", () => ({
+  isInteractive: vi.fn(() => false),
+  choose: vi.fn(),
 }))
 
 const registry = {
@@ -60,6 +66,8 @@ beforeEach(() => {
   serveRegistry(files)
   output = silenceOutput()
   vi.mocked(spawnSync).mockClear()
+  vi.mocked(choose).mockReset()
+  vi.mocked(isInteractive).mockReturnValue(false)
 })
 
 afterEach(() => {
@@ -160,11 +168,61 @@ describe("add", () => {
     )
   })
 
-  it("asks for at least one name", async () => {
+  it("asks for at least one name and lists the choices outside a terminal", async () => {
     const cwd = viteProject()
     await expect(add([], { cwd, scope: "ui" })).rejects.toThrow(
-      "Name at least one component, e.g. npx @esuiss/ui add button"
+      "Name at least one component, e.g. npx @esuiss/ui add button\nAvailable: button, dialog, theme"
     )
+    expect(choose).not.toHaveBeenCalled()
+  })
+
+  it("lets the user pick the group and the items in a terminal", async () => {
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose)
+      .mockResolvedValueOnce("pattern")
+      .mockResolvedValueOnce(["date-picker"])
+    await add([], { cwd })
+    expect(vi.mocked(choose).mock.calls[0][1]).toEqual([
+      { value: "ui", label: "Components", hint: "3" },
+      { value: "pattern", label: "Patterns", hint: "1" },
+    ])
+    expect(vi.mocked(choose).mock.calls[1][1]).toEqual([
+      { value: "date-picker", label: "date-picker" },
+    ])
+    expect(
+      existsSync(path.join(cwd, "src/components/patterns/date-picker.tsx"))
+    ).toBe(true)
+    expect(existsSync(path.join(cwd, "src/components/ui/dialog.tsx"))).toBe(
+      true
+    )
+  })
+
+  it("skips the group question when the group is given", async () => {
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose).mockResolvedValueOnce(["button"])
+    await add([], { cwd, scope: "ui" })
+    expect(choose).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(choose).mock.calls[0][2]).toEqual({ multiple: true })
+    expect(existsSync(path.join(cwd, "src/components/ui/button.tsx"))).toBe(
+      true
+    )
+  })
+
+  it("does not prompt when names are given", async () => {
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    await add(["button"], { cwd })
+    expect(choose).not.toHaveBeenCalled()
+  })
+
+  it("writes nothing when the picker is cancelled", async () => {
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose).mockRejectedValueOnce(new CliError("Cancelled."))
+    await expect(add([], { cwd })).rejects.toThrow("Cancelled.")
+    expect(existsSync(path.join(cwd, "src/components"))).toBe(false)
   })
 
   it("requires the @/* alias", async () => {
