@@ -145,7 +145,7 @@ export function Footer() {
         <div className="flex flex-col gap-6">
           <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">(04) Start</p>
           <h2 className="text-[clamp(3.5rem,8vw,8rem)] leading-[0.84] font-semibold tracking-[-0.065em]">
-            Start
+            Start{" "}
             <br />
             building.
           </h2>
