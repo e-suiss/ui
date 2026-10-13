@@ -3,7 +3,7 @@ const zone = process.env.CLOUDFLARE_ZONE_ID;
 const hosts = process.argv.slice(2).length > 0 ? process.argv.slice(2) : ["ui.suiss.app", "uim.suiss.app"];
 
 if (!token || !zone) {
-  console.error("Set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ZONE_ID.");
+  console.error("Set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ZONE_ID in .env.deploy or the environment.");
   process.exit(1);
 }
 

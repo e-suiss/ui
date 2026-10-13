@@ -7,8 +7,8 @@
     "typecheck": "turbo run typecheck",
     "registry": "turbo run registry --filter=ui",
     "indexnow": "node scripts/indexnow.mjs",
-    "purge-cache": "node scripts/purge-cache.mjs",
-    "postdeploy": "node scripts/purge-cache.mjs && node scripts/indexnow.mjs"
+    "purge-cache": "node --env-file-if-exists=.env.deploy scripts/purge-cache.mjs",
+    "postdeploy": "node --env-file-if-exists=.env.deploy scripts/purge-cache.mjs && node scripts/indexnow.mjs"
   },
   "devDependencies": {
     "turbo": "^2.11.7"
