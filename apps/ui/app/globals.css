@@ -353,6 +353,78 @@ body {
   color: var(--shiki-dark);
 }
 
+.shiki .l0 {
+  --shiki-light: #005cc5;
+}
+
+.shiki .l1 {
+  --shiki-light: #6f42c1;
+}
+
+.shiki .l2 {
+  --shiki-light: #22863a;
+}
+
+.shiki .l3 {
+  --shiki-light: #d73a49;
+}
+
+.shiki .l4 {
+  --shiki-light: #032f62;
+}
+
+.shiki .l5 {
+  --shiki-light: #e36209;
+}
+
+.shiki .l6 {
+  --shiki-light: #b31d28;
+}
+
+.shiki .l7 {
+  --shiki-light: #6a737d;
+}
+
+.shiki .l8 {
+  --shiki-light: #586069;
+}
+
+.shiki .d0 {
+  --shiki-dark: #79b8ff;
+}
+
+.shiki .d1 {
+  --shiki-dark: #b392f0;
+}
+
+.shiki .d2 {
+  --shiki-dark: #85e89d;
+}
+
+.shiki .d3 {
+  --shiki-dark: #f97583;
+}
+
+.shiki .d4 {
+  --shiki-dark: #9ecbff;
+}
+
+.shiki .d5 {
+  --shiki-dark: #ffab70;
+}
+
+.shiki .d6 {
+  --shiki-dark: #fdaeb7;
+}
+
+.shiki .d7 {
+  --shiki-dark: #6a737d;
+}
+
+.shiki .d8 {
+  --shiki-dark: #dbedff;
+}
+
 [data-slot="preview"]:has(+ [data-slot="code-block"]) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

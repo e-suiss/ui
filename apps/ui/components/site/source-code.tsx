@@ -5,7 +5,7 @@ import * as React from "react";
 
 const FOLDED = 320;
 
-export function SourceCode({ children }: { children: React.ReactNode }) {
+export function SourceCode({ children, onExpand }: { children: React.ReactNode; onExpand?: () => void }) {
   const [open, setOpen] = React.useState(false);
   const [long, setLong] = React.useState(true);
   const ref = React.useRef<HTMLDivElement>(null);
@@ -45,7 +45,10 @@ export function SourceCode({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             tabIndex={folded ? undefined : -1}
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setOpen(true);
+              onExpand?.();
+            }}
             className="h-8 cursor-pointer rounded-full bg-label px-4 text-[13px] font-medium text-surface outline-none focus-visible:focus-ring"
           >
             Expand

@@ -9,6 +9,23 @@ import { strings } from "@/lib/strings";
 
 const RESET_AFTER = 1500;
 
+export type Source = { className: string; style?: React.CSSProperties; html: string; raw: string };
+
+const sources = new Map<string, Promise<Source>>();
+
+export function fetchSource(src: string) {
+  let source = sources.get(src);
+  if (!source) {
+    source = fetch(src).then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+      return response.json() as Promise<Source>;
+    });
+    source.catch(() => sources.delete(src));
+    sources.set(src, source);
+  }
+  return source;
+}
+
 function isTerminal(title: string | undefined, icon: unknown) {
   return title === "Terminal" || (typeof icon === "string" && icon.includes("m 4,4 a 1,1"));
 }
@@ -28,8 +45,10 @@ export function CodeBlock({
   className,
   children,
   raw,
+  src,
+  html,
   ...props
-}: React.ComponentProps<"pre"> & { title?: string; icon?: unknown; raw?: string }) {
+}: React.ComponentProps<"pre"> & { title?: string; icon?: unknown; raw?: string; src?: string; html?: string }) {
   const { icon, ...rest } = props;
   const terminal = isTerminal(title, icon);
   const command = terminal ? (raw ?? textOf(children)).trim() : "";
@@ -44,7 +63,7 @@ export function CodeBlock({
   }, [copied]);
 
   const copy = async () => {
-    const text = ref.current?.textContent ?? "";
+    const text = src ? await fetchSource(src).then((source) => source.raw) : (ref.current?.textContent ?? "");
     await navigator.clipboard.writeText(text);
     setCopied(true);
   };
@@ -86,9 +105,8 @@ export function CodeBlock({
           className,
         )}
         {...rest}
-      >
-        {children}
-      </pre>
+        {...(html === undefined ? { children } : { dangerouslySetInnerHTML: { __html: html } })}
+      />
     </figure>
   );
 }

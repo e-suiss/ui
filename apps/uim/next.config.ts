@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   agentRules: false,
   cacheComponents: true,
+  cacheLife: {
+    default: { stale: 300, revalidate: 60 * 60 * 24 * 30, expire: 60 * 60 * 24 * 365 },
+  },
   partialPrefetching: true,
   async rewrites() {
     const markdown = [{ type: "header" as const, key: "accept", value: "(.*)text/markdown(.*)" }];

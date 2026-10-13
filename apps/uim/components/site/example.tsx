@@ -28,6 +28,14 @@ function setPlatform(value: string) {
   for (const listener of listeners) listener();
 }
 
+function previewAlt(id: string, scheme: string) {
+  const [component = "", story = ""] = id.split("--");
+  const words = (value: string) => value.split("-").filter(Boolean);
+  const name = words(component).slice(1).map((word) => word[0].toUpperCase() + word.slice(1)).join(" ");
+  const variant = words(story).join(" ");
+  return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} on iOS in ${scheme} mode`;
+}
+
 function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => {
@@ -106,7 +114,7 @@ export function Example({
                 src={`/previews/${id}.light.webp`}
                 width={width}
                 height={height}
-                alt=""
+                alt={previewAlt(id, "light")}
                 loading="lazy"
                 decoding="async"
                 className="block h-auto w-full dark:hidden"
@@ -115,7 +123,7 @@ export function Example({
                 src={`/previews/${id}.dark.webp`}
                 width={width}
                 height={height}
-                alt=""
+                alt={previewAlt(id, "dark")}
                 loading="lazy"
                 decoding="async"
                 className="hidden h-auto w-full dark:block"
