@@ -33,6 +33,8 @@ final class CatalogModel {
   private static let themeKey = "catalog.theme"
 
   var path: [Route] = []
+  var demo = false
+  var reveal = false
   var theme: CatalogTheme {
     didSet { UserDefaults.standard.set(theme.rawValue, forKey: Self.themeKey) }
   }
@@ -55,6 +57,13 @@ final class CatalogModel {
     guard let id = url.pathComponents.first(where: { $0 != "/" }),
       let entry = StoryCatalog.entriesByID[id]
     else { return }
+    demo = components?.queryItems?.contains(where: { $0.name == "demo" && $0.value == "1" }) == true
+    reveal = components?.queryItems?.contains(where: { $0.name == "open" && $0.value == "1" }) == true
+    if components?.queryItems?.contains(where: { $0.name == "snapshot" && $0.value == "1" }) == true {
+      let theme = theme
+      Task { @MainActor in await StorySnapshot.capture(entry, theme: theme) }
+      return
+    }
     path = [.group(entry.group.id), .story(entry.id)]
   }
 }

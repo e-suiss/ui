@@ -5,6 +5,8 @@ import SwiftUI
 struct StoryScreen: View {
   let entry: StoryEntry
 
+  @Environment(CatalogModel.self) private var model
+
   var body: some View {
     if entry.group.isFullScreen(entry.story) {
       FullScreenStory(entry: entry)
@@ -25,6 +27,9 @@ struct StoryScreen: View {
       .background(Color.surface.ignoresSafeArea())
       .navigationTitle(Text(verbatim: entry.story.name))
       .navigationBarTitleDisplayMode(.inline)
+      .toolbar(model.demo || model.reveal ? .hidden : .automatic, for: .navigationBar)
+      .task(id: model.demo) { if model.demo { await StoryDemo.run() } }
+      .task(id: model.reveal) { if model.reveal { await StoryDemo.reveal() } }
       .toolbar {
         ToolbarItem(placement: .topBarTrailing) {
           ThemeMenu()
