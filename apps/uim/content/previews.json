@@ -2153,11 +2153,11 @@
   ],
   "patterns-action-bar--custom-labels": [
     880,
-    400
+    1788
   ],
   "patterns-action-bar--default": [
     880,
-    400
+    1788
   ],
   "patterns-action-bar--floating": [
     880,
@@ -2165,43 +2165,43 @@
   ],
   "patterns-action-bar--not-dismissible": [
     880,
-    400
+    1788
   ],
   "patterns-action-bar--open-by-default": [
     880,
-    1720
+    1751
   ],
   "patterns-action-bar--overflow": [
     880,
-    1720
+    1751
   ],
   "patterns-action-bar--with-icons": [
     880,
-    400
+    1788
   ],
   "patterns-confirm--default": [
     880,
-    400
+    1751
   ],
   "patterns-confirm--open-by-default": [
     880,
-    1720
+    1751
   ],
   "patterns-context-actions--default": [
     880,
-    400
+    1751
   ],
   "patterns-context-actions--inline": [
     880,
-    400
+    1751
   ],
   "patterns-date-picker--controlled": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--default": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--disabled": [
     880,
@@ -2213,31 +2213,31 @@
   ],
   "patterns-date-picker--invalid": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--locale": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--with-close-button": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--with-close-label": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--with-title": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--with-value": [
     880,
-    400
+    1788
   ],
   "patterns-date-picker--year-range": [
     880,
-    400
+    1788
   ],
   "patterns-paged-list--custom-labels": [
     880,
@@ -2257,7 +2257,7 @@
   ],
   "patterns-picker--default": [
     880,
-    400
+    584
   ],
   "patterns-picker--states": [
     880,
@@ -2285,11 +2285,11 @@
   ],
   "patterns-search-picker--controlled": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--default": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--disabled": [
     880,
@@ -2301,27 +2301,27 @@
   ],
   "patterns-search-picker--grouped": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--invalid": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--with-close-button": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--with-close-label": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--with-title": [
     880,
-    400
+    1788
   ],
   "patterns-search-picker--with-value": [
     880,
-    400
+    1788
   ],
   "patterns-split-view--default": [
     880,
@@ -2338,14 +2338,6 @@
   "patterns-split-view--two-columns": [
     880,
     735
-  ],
-  "patterns-split-view--wide": [
-    880,
-    1720
-  ],
-  "patterns-split-view--wide-two-columns": [
-    880,
-    1720
   ],
   "patterns-table-list--default": [
     880,

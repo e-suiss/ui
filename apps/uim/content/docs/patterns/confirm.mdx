@@ -5,7 +5,7 @@ eyebrow: Pattern
 generated: true
 ---
 
-<Example id="patterns-confirm--open-by-default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-confirm--open-by-default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Confirm defaultOpen={defaultOpen}>\n        <ConfirmTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete your account?</ConfirmTitle>\n            <ConfirmDescription>\n              This permanently deletes your account and all of its data.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete Account</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </View>\n  )\n}\n\nexport function ConfirmOpenByDefaultExample() {\n  return (\n    <ConfirmDemo defaultOpen />\n  )\n}"} />
 
@@ -177,7 +177,7 @@ The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to
 
 ### Default
 
-<Example id="patterns-confirm--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-confirm--default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Confirm defaultOpen={defaultOpen}>\n        <ConfirmTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete your account?</ConfirmTitle>\n            <ConfirmDescription>\n              This permanently deletes your account and all of its data.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete Account</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </View>\n  )\n}\n\nexport function ConfirmExample() {\n  return (\n    <ConfirmDemo />\n  )\n}"} />
 

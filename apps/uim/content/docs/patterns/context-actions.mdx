@@ -5,7 +5,7 @@ eyebrow: Pattern
 generated: true
 ---
 
-<Example id="patterns-context-actions--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-context-actions--default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { ImageIcon } from \"phosphor-react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsLabel, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsExample() {\n  return (\n    <ContextActions>\n      <ContextActionsTrigger\n        accessibilityLabel=\"Photo\"\n        className=\"h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80\"\n      >\n        <Icon as={ImageIcon} className=\"size-8 text-label-secondary\" />\n        <Text className=\"text-sm text-label-secondary\">Long press</Text>\n      </ContextActionsTrigger>\n      <ContextActionsContent>\n        <ContextActionsLabel>Photo</ContextActionsLabel>\n        <ContextActionsItem>Copy</ContextActionsItem>\n        <ContextActionsItem>Share</ContextActionsItem>\n        <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n      </ContextActionsContent>\n    </ContextActions>\n  )\n}"} />
 
@@ -193,7 +193,7 @@ The open state is managed internally; use `onOpenChange` to react to it. `Contex
 
 A small message bubble as the trigger, with a custom `cancelLabel`.
 
-<Example id="patterns-context-actions--inline" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-context-actions--inline" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsInlineExample() {\n  return (\n    <View className=\"items-start\">\n      <ContextActions>\n        <ContextActionsTrigger className=\"rounded-lg bg-control px-3 py-2\">\n          <Text>Hold this message</Text>\n        </ContextActionsTrigger>\n        <ContextActionsContent cancelLabel=\"Close\">\n          <ContextActionsItem>Reply</ContextActionsItem>\n          <ContextActionsItem>Forward</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </View>\n  )\n}"} />
 

@@ -5,7 +5,7 @@ eyebrow: Pattern
 generated: true
 ---
 
-<Example id="patterns-search-picker--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" />\n  )\n}"} />
 
@@ -195,7 +195,7 @@ Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValue
 
 Starts with a preset selection via `defaultValue`.
 
-<Example id="patterns-search-picker--with-value" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--with-value" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithValueExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" defaultValue=\"astro\" />\n  )\n}"} />
 
@@ -209,7 +209,7 @@ Starts with a preset selection via `defaultValue`.
 
 Cities grouped by country, with custom placeholders.
 
-<Example id="patterns-search-picker--grouped" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--grouped" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst cities: SearchPickerItem[] = [\n  { value: \"nyc\", label: \"New York\", group: \"Americas\" },\n  { value: \"chi\", label: \"Chicago\", group: \"Americas\" },\n  { value: \"sao\", label: \"São Paulo\", group: \"Americas\" },\n  { value: \"lon\", label: \"London\", group: \"Europe\" },\n  { value: \"ber\", label: \"Berlin\", group: \"Europe\" },\n  { value: \"ist\", label: \"Istanbul\", group: \"Europe\" },\n  { value: \"tyo\", label: \"Tokyo\", group: \"Asia\" },\n  { value: \"sin\", label: \"Singapore\", group: \"Asia\" },\n]\n\nexport function SearchPickerGroupedExample() {\n  return (\n    <SearchPicker items={cities} placeholder=\"Select a city\" searchPlaceholder=\"Search cities...\" emptyText=\"No city found.\" accessibilityLabel=\"City\" className=\"w-56\" />\n  )\n}"} />
 
@@ -223,7 +223,7 @@ Cities grouped by country, with custom placeholders.
 
 Adds a heading to the drawer with `title`.
 
-<Example id="patterns-search-picker--with-title" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--with-title" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithTitleExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" title=\"Framework\" />\n  )\n}"} />
 
@@ -237,7 +237,7 @@ Adds a heading to the drawer with `title`.
 
 Shows a close button in the drawer.
 
-<Example id="patterns-search-picker--with-close-button" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--with-close-button" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseButtonExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" showCloseButton />\n  )\n}"} />
 
@@ -251,7 +251,7 @@ Shows a close button in the drawer.
 
 Labels the close button `Cancel` with `closeLabel`.
 
-<Example id="patterns-search-picker--with-close-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--with-close-label" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseLabelExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" showCloseButton closeLabel=\"Cancel\" />\n  )\n}"} />
 
@@ -279,7 +279,7 @@ A disabled field that cannot open the drawer.
 
 Shows the error border and tint with `invalid`.
 
-<Example id="patterns-search-picker--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--invalid" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerInvalidExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" invalid />\n  )\n}"} />
 
@@ -293,7 +293,7 @@ Shows the error border and tint with `invalid`.
 
 Holds the value in state and prints the selection below.
 
-<Example id="patterns-search-picker--controlled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-search-picker--controlled" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\nimport { Text } from \"@/components/ui/text\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nfunction ControlledExample(args: React.ComponentProps<typeof SearchPicker>) {\n  const [value, setValue] = React.useState<string | null>(\"next\")\n\n  return (\n    <View className=\"items-start gap-2\">\n      <SearchPicker {...args} value={value} onValueChange={setValue} />\n      <Text className=\"text-sm text-label-secondary\">\n        Selected: {value ?? \"none\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function SearchPickerControlledExample() {\n  return (\n    <ControlledExample items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" accessibilityLabel=\"Framework\" className=\"w-56\" />\n  )\n}"} />
 

@@ -5,7 +5,7 @@ eyebrow: Pattern
 generated: true
 ---
 
-<Example id="patterns-picker--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="patterns-picker--default" width={880} height={584} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction PickerDemo() {\n  const [value, setValue] = React.useState<string>()\n  return (\n    <View className=\"gap-2\">\n      <Picker\n        value={value}\n        onValueChange={setValue}\n        placeholder=\"Select a fruit\"\n        accessibilityLabel=\"Fruit\"\n        className=\"w-56\"\n      >\n        <PickerGroup label=\"Fruits\">\n          <PickerItem value=\"cherry\">Cherry</PickerItem>\n          <PickerItem value=\"banana\">Banana</PickerItem>\n          <PickerItem value=\"mango\">Mango</PickerItem>\n        </PickerGroup>\n        <PickerSeparator />\n        <PickerGroup label=\"Vegetables\">\n          <PickerItem value=\"carrot\">Carrot</PickerItem>\n          <PickerItem value=\"spinach\" disabled>\n            Spinach\n          </PickerItem>\n        </PickerGroup>\n      </Picker>\n      <Text className=\"text-sm text-label-secondary\">\n        Selected: {value ?? \"none\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function PickerExample() {\n  return (\n    <PickerDemo />\n  )\n}"} />
 
