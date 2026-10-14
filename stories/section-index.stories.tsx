@@ -80,7 +80,7 @@ function ContactsExample({ className }: { className: string }) {
   return (
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3">
       <SectionIndex className={className}>
-        <ScrollArea className="h-full rounded-2xl border">
+        <ScrollArea className="h-full rounded-2xl border [clip-path:inset(0_round_var(--radius-2xl))]">
           {groupByLetter().map(([letter, group]) => (
             <SectionIndexSection key={letter} value={letter}>
               <SectionIndexHeader>{letter}</SectionIndexHeader>
@@ -154,7 +154,7 @@ function tapLetter(bar: HTMLElement, fraction: number) {
 
 export const Default: Story = {
   render: () => (
-    <ContactsExample className="h-[min(36rem,calc(100dvh-6rem))]" />
+    <ContactsExample className="h-[min(36rem,calc(100dvh-7rem))]" />
   ),
   play: async ({ canvas, canvasElement, step }) => {
     const bar = canvas.getByRole("slider", { name: "Section index" })
