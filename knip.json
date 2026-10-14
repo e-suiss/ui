@@ -8,7 +8,8 @@
     ".rnstorybook/*.{ts,tsx}",
     "nativewind/components/**/*.tsx",
     "stylesheet/components/**/*.{ts,tsx}",
-    "components/primitives/*.{ts,tsx}"
+    "components/primitives/*.{ts,tsx}",
+    "App.web.tsx"
   ],
   "project": [
     "uniwind/**/*.{ts,tsx}",

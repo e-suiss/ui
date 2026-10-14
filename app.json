@@ -11,6 +11,9 @@
     },
     "android": {
       "package": "com.esuiss.uim"
+    },
+    "experiments": {
+      "baseUrl": "/live"
     }
   }
 }
