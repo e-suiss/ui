@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   outputFileTracingIncludes: {
-    "/**": ["./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff", "./components/**/*"],
+    "/**": ["./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff", "./components/**/*", "./registry/**/*"],
   },
   reactStrictMode: true,
   agentRules: false,

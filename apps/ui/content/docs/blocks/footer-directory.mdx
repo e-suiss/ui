@@ -2,8 +2,11 @@
 title: Footer Directory
 description: "A full site footer with footnotes, a breadcrumb, a five-column link directory, and legal links."
 eyebrow: Block
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="block" name="footer-directory">
 
@@ -36,3 +39,5 @@ A full site footer with numbered footnotes, a breadcrumb, a five-column link dir
 <Code lang="tsx" code={"<FooterDirectory />"} />
 
 Edit `sections` for the directory, `columns` for which sections share each desktop column, and `legal` for the bottom links. Links are hash anchors from the `slug` helper, so swap it for your routing. Footnotes, the breadcrumb, phone number and copyright are inline.
+
+</Only>

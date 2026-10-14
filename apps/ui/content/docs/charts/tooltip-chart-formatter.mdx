@@ -2,8 +2,11 @@
 title: Tooltip Chart Formatter
 description: "A bar chart of daily active energy whose tooltip shows a name, value and kcal unit through a custom formatter."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-formatter">
 
@@ -44,3 +47,5 @@ Pass a `formatter` to `ChartTooltipContent`; it receives each row's value and na
 ## Notes
 
 Dates are parsed at noon so the weekday labels don't shift a day in time zones behind UTC; keep that if you use date strings as categories.
+
+</Only>

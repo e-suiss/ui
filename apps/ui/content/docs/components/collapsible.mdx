@@ -1,9 +1,12 @@
 ---
 title: Collapsible
 description: "A section that people can expand and collapse to show or hide its content."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="collapsible" story="Default">
 
@@ -108,3 +111,176 @@ The panel that is shown when the collapsible is open.
 - Styling hooks: `data-slot="collapsible"`, `data-slot="collapsible-trigger"` and `data-slot="collapsible-content"`.
 - Base UI sets state attributes such as `data-open` and `data-closed` on the parts, which you can use for styling and animation.
 - No styles are applied by default.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-collapsible--open-by-default" width={880} height={407} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleOpenByDefaultExample() {\n  return (\n    <CollapsibleDemo initialOpen />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct CollapsibleOpenByDefaultExample: View {\n  var body: some View {\n    CollapsibleDemo(initialOpen: true)\n  }\n}\n\nlet collapsibleRepositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nstruct CollapsibleDemo: View {\n  var disabled = false\n\n  @State private var open: Bool\n\n  init(initialOpen: Bool = false, disabled: Bool = false) {\n    self.disabled = disabled\n    _open = State(initialValue: initialOpen)\n  }\n\n  var body: some View {\n    Collapsible(isExpanded: $open, spacing: 8) {\n      HStack(spacing: 16) {\n        Text(\"@ademceper starred 3 repositories\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n          .frame(maxWidth: .infinity, alignment: .leading)\n        CollapsibleTrigger {\n          Ph.caretUpDown.regular\n            .frame(width: 16, height: 16)\n        }\n        .buttonStyle(.variant(.ghost, size: .iconSm))\n        .disabled(disabled)\n      }\n      .padding(.horizontal, 12)\n      CollapsibleRepository(name: collapsibleRepositories[0])\n      CollapsibleContent {\n        VStack(spacing: 8) {\n          ForEach(collapsibleRepositories.dropFirst(), id: \\.self) { repository in\n            CollapsibleRepository(name: repository)\n          }\n        }\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct CollapsibleRepository: View {\n  let name: String\n\n  var body: some View {\n    Text(verbatim: name)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n      .padding(.horizontal, 16)\n      .padding(.vertical, 8)\n      .frame(maxWidth: .infinity, alignment: .leading)\n      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretUpDown\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Collapsible\nimport com.esuiss.ui.components.CollapsibleContent\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CollapsibleOpenByDefaultExample() {\n    CollapsibleDemo(initialOpen = true)\n}\n\nval CollapsibleRepositories = listOf(\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\")\n\n@Composable\nfun CollapsibleRepository(name: String) {\n    Text(\n        name,\n        modifier = Modifier\n            .fillMaxWidth()\n            .background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))\n            .padding(horizontal = 16.dp, vertical = 8.dp),\n        style = Typography.sm,\n    )\n}\n\n@Composable\nfun CollapsibleDemo(initialOpen: Boolean = false, disabled: Boolean = false) {\n    var open by rememberSaveable { mutableStateOf(initialOpen) }\n    Collapsible(\n        expanded = open,\n        onExpandedChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        enabled = !disabled,\n    ) {\n        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n            Row(\n                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),\n                horizontalArrangement = Arrangement.spacedBy(16.dp),\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                Text(\n                    \"@ademceper starred 3 repositories\",\n                    modifier = Modifier.weight(1f),\n                    style = Typography.sm.copy(fontWeight = FontWeight.Medium),\n                )\n                Button(\n                    onClick = { open = !open },\n                    variant = ButtonVariant.Ghost,\n                    size = ButtonSize.IconSm,\n                    enabled = !disabled,\n                ) {\n                    Icon(PhosphorIcons.Regular.CaretUpDown, contentDescription = \"Toggle\", size = 16.dp)\n                }\n            }\n            CollapsibleRepository(CollapsibleRepositories[0])\n            CollapsibleContent {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    CollapsibleRepositories.drop(1).forEach { CollapsibleRepository(it) }\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Collapsible` is an unstyled root with a `CollapsibleTrigger` and a `CollapsibleContent` panel. It handles the open state and accessibility, and leaves the look to you.
+
+Use it for a single show-more section. For a list of sections where opening one can close another, use Accordion.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add collapsible"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add collapsible --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add collapsible --platform kotlin"} />
+
+</Only>
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="uniwind/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="nativewind/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/collapsible.tsx`.
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="stylesheet/components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source:
+
+<SourceFile path="swift/Components/Collapsible.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Collapsible.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"<CollapsibleDemo initialOpen />"} />
+
+Put any content in `CollapsibleTrigger`, for example a `Text` and a caret `Icon`, and use `render` to render it as a `Button`. Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
+
+Set `keepMounted` on `CollapsibleContent` to keep the content mounted while closed.
+
+## Examples
+
+### Default
+
+<NativeExample id="components-collapsible--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleExample() {\n  return (\n    <CollapsibleDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nlet collapsibleRepositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nstruct CollapsibleDemo: View {\n  var disabled = false\n\n  @State private var open: Bool\n\n  init(initialOpen: Bool = false, disabled: Bool = false) {\n    self.disabled = disabled\n    _open = State(initialValue: initialOpen)\n  }\n\n  var body: some View {\n    Collapsible(isExpanded: $open, spacing: 8) {\n      HStack(spacing: 16) {\n        Text(\"@ademceper starred 3 repositories\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n          .frame(maxWidth: .infinity, alignment: .leading)\n        CollapsibleTrigger {\n          Ph.caretUpDown.regular\n            .frame(width: 16, height: 16)\n        }\n        .buttonStyle(.variant(.ghost, size: .iconSm))\n        .disabled(disabled)\n      }\n      .padding(.horizontal, 12)\n      CollapsibleRepository(name: collapsibleRepositories[0])\n      CollapsibleContent {\n        VStack(spacing: 8) {\n          ForEach(collapsibleRepositories.dropFirst(), id: \\.self) { repository in\n            CollapsibleRepository(name: repository)\n          }\n        }\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct CollapsibleRepository: View {\n  let name: String\n\n  var body: some View {\n    Text(verbatim: name)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n      .padding(.horizontal, 16)\n      .padding(.vertical, 8)\n      .frame(maxWidth: .infinity, alignment: .leading)\n      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretUpDown\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Collapsible\nimport com.esuiss.ui.components.CollapsibleContent\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nval CollapsibleRepositories = listOf(\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\")\n\n@Composable\nfun CollapsibleRepository(name: String) {\n    Text(\n        name,\n        modifier = Modifier\n            .fillMaxWidth()\n            .background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))\n            .padding(horizontal = 16.dp, vertical = 8.dp),\n        style = Typography.sm,\n    )\n}\n\n@Composable\nfun CollapsibleDemo(initialOpen: Boolean = false, disabled: Boolean = false) {\n    var open by rememberSaveable { mutableStateOf(initialOpen) }\n    Collapsible(\n        expanded = open,\n        onExpandedChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        enabled = !disabled,\n    ) {\n        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n            Row(\n                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),\n                horizontalArrangement = Arrangement.spacedBy(16.dp),\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                Text(\n                    \"@ademceper starred 3 repositories\",\n                    modifier = Modifier.weight(1f),\n                    style = Typography.sm.copy(fontWeight = FontWeight.Medium),\n                )\n                Button(\n                    onClick = { open = !open },\n                    variant = ButtonVariant.Ghost,\n                    size = ButtonSize.IconSm,\n                    enabled = !disabled,\n                ) {\n                    Icon(PhosphorIcons.Regular.CaretUpDown, contentDescription = \"Toggle\", size = 16.dp)\n                }\n            }\n            CollapsibleRepository(CollapsibleRepositories[0])\n            CollapsibleContent {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    CollapsibleRepositories.drop(1).forEach { CollapsibleRepository(it) }\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+A disabled collapsible whose trigger cannot toggle it.
+
+<NativeExample id="components-collapsible--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nfunction CollapsibleDemo({\n  initialOpen = false,\n  disabled = false,\n}: {\n  initialOpen?: boolean\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(initialOpen)\n  return (\n    <Collapsible\n      open={open}\n      onOpenChange={setOpen}\n      disabled={disabled}\n      className=\"w-full gap-2\"\n    >\n      <View className=\"flex-row items-center justify-between gap-4 px-3\">\n        <Text className=\"text-sm font-medium\">\n          @ademceper starred 3 repositories\n        </Text>\n        <CollapsibleTrigger\n          render={\n            <Button variant=\"ghost\" size=\"icon-sm\" disabled={disabled}>\n              <Icon as={CaretUpDownIcon} className=\"size-4\" />\n            </Button>\n          }\n        />\n      </View>\n      <View className=\"rounded-2xl bg-surface-secondary px-4 py-2\">\n        <Text className=\"text-sm\">{repositories[0]}</Text>\n      </View>\n      <CollapsibleContent className=\"gap-2\">\n        {repositories.slice(1).map((repository) => (\n          <View\n            key={repository}\n            className=\"rounded-2xl bg-surface-secondary px-4 py-2\"\n          >\n            <Text className=\"text-sm\">{repository}</Text>\n          </View>\n        ))}\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nexport function CollapsibleDisabledExample() {\n  return (\n    <CollapsibleDemo disabled />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct CollapsibleDisabledExample: View {\n  var body: some View {\n    CollapsibleDemo(disabled: true)\n  }\n}\n\nlet collapsibleRepositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nstruct CollapsibleDemo: View {\n  var disabled = false\n\n  @State private var open: Bool\n\n  init(initialOpen: Bool = false, disabled: Bool = false) {\n    self.disabled = disabled\n    _open = State(initialValue: initialOpen)\n  }\n\n  var body: some View {\n    Collapsible(isExpanded: $open, spacing: 8) {\n      HStack(spacing: 16) {\n        Text(\"@ademceper starred 3 repositories\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n          .frame(maxWidth: .infinity, alignment: .leading)\n        CollapsibleTrigger {\n          Ph.caretUpDown.regular\n            .frame(width: 16, height: 16)\n        }\n        .buttonStyle(.variant(.ghost, size: .iconSm))\n        .disabled(disabled)\n      }\n      .padding(.horizontal, 12)\n      CollapsibleRepository(name: collapsibleRepositories[0])\n      CollapsibleContent {\n        VStack(spacing: 8) {\n          ForEach(collapsibleRepositories.dropFirst(), id: \\.self) { repository in\n            CollapsibleRepository(name: repository)\n          }\n        }\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct CollapsibleRepository: View {\n  let name: String\n\n  var body: some View {\n    Text(verbatim: name)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n      .padding(.horizontal, 16)\n      .padding(.vertical, 8)\n      .frame(maxWidth: .infinity, alignment: .leading)\n      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretUpDown\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Collapsible\nimport com.esuiss.ui.components.CollapsibleContent\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CollapsibleDisabledExample() {\n    CollapsibleDemo(disabled = true)\n}\n\nval CollapsibleRepositories = listOf(\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\")\n\n@Composable\nfun CollapsibleRepository(name: String) {\n    Text(\n        name,\n        modifier = Modifier\n            .fillMaxWidth()\n            .background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))\n            .padding(horizontal = 16.dp, vertical = 8.dp),\n        style = Typography.sm,\n    )\n}\n\n@Composable\nfun CollapsibleDemo(initialOpen: Boolean = false, disabled: Boolean = false) {\n    var open by rememberSaveable { mutableStateOf(initialOpen) }\n    Collapsible(\n        expanded = open,\n        onExpandedChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        enabled = !disabled,\n    ) {\n        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n            Row(\n                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),\n                horizontalArrangement = Arrangement.spacedBy(16.dp),\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                Text(\n                    \"@ademceper starred 3 repositories\",\n                    modifier = Modifier.weight(1f),\n                    style = Typography.sm.copy(fontWeight = FontWeight.Medium),\n                )\n                Button(\n                    onClick = { open = !open },\n                    variant = ButtonVariant.Ghost,\n                    size = ButtonSize.IconSm,\n                    enabled = !disabled,\n                ) {\n                    Icon(PhosphorIcons.Regular.CaretUpDown, contentDescription = \"Toggle\", size = 16.dp)\n                }\n            }\n            CollapsibleRepository(CollapsibleRepositories[0])\n            CollapsibleContent {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    CollapsibleRepositories.drop(1).forEach { CollapsibleRepository(it) }\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## Accessibility
+
+- The trigger has the `button` role with `expanded` and `disabled` state.
+- Closed content is hidden from VoiceOver and TalkBack.
+
+</Only>

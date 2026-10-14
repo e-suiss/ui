@@ -15,7 +15,6 @@ RUN apt-get update \
 RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/ui/package.json apps/ui/
-COPY apps/uim/package.json apps/uim/
 COPY packages/web/package.json packages/web/
 COPY packages/mobile/package.json packages/mobile/
 COPY packages/cli/package.json packages/cli/

@@ -1,0 +1,243 @@
+---
+title: Image Viewer
+description: "A full-screen photo viewer with swipe paging, pinch and double-tap zoom, and swipe down to close."
+eyebrow: Interaction
+platforms: [rn, swift, kotlin]
+generated: true
+---
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="interactions-image-viewer--open-by-default" width={880} height={1173} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { ImageViewer, ImageViewerContent, type ImageViewerImage, ImageViewerTrigger } from \"@/components/interactions/image-viewer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst images: ImageViewerImage[] = [\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Mountain lake at sunrise\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Valley with a river\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Lake between mountains\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Foggy hills\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Forest path\",\n  },\n]\n\nfunction Gallery({\n  defaultOpen,\n  defaultIndex,\n}: {\n  defaultOpen?: boolean\n  defaultIndex?: number\n}) {\n  return (\n    <ImageViewer\n      images={images}\n      defaultOpen={defaultOpen}\n      defaultIndex={defaultIndex}\n    >\n      <View className=\"gap-3\">\n        <View className=\"flex-row flex-wrap gap-2\">\n          {images.map((image, index) => (\n            <ImageViewerTrigger\n              key={image.accessibilityLabel}\n              index={index}\n              accessibilityLabel={image.accessibilityLabel}\n              className=\"aspect-square w-[31%] overflow-hidden rounded-xl bg-surface-secondary\"\n            >\n              <Image source={image.source} className=\"h-full w-full\" />\n            </ImageViewerTrigger>\n          ))}\n        </View>\n        <Text variant=\"muted\">\n          Tap a photo. Pinch or double-tap to zoom, swipe down to close.\n        </Text>\n      </View>\n      <ImageViewerContent />\n    </ImageViewer>\n  )\n}\n\nexport function ImageViewerOpenByDefaultExample() {\n  return (\n    <Gallery defaultOpen defaultIndex={1} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\nimport UIKit\n\nstruct ImageViewerOpenByDefaultExample: View {\n  var body: some View {\n    ImageViewerGallery(open: true, index: 1)\n  }\n}\n\nstruct ImageViewerPhoto {\n  let url: URL\n  let label: String\n}\n\nlet imageViewerPhotos = [\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\")!, label: \"Mountain lake at sunrise\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\")!, label: \"Valley with a river\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\")!, label: \"Lake between mountains\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\")!, label: \"Foggy hills\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\")!, label: \"Forest path\"),\n]\n\nstruct ImageViewerGallery: View {\n  @State private var open: Bool\n  @State private var index: Int\n  @State private var loaded: [Int: UIImage] = [:]\n\n  init(open: Bool = false, index: Int = 0) {\n    _open = State(initialValue: open)\n    _index = State(initialValue: index)\n  }\n\n  var images: [Image] {\n    imageViewerPhotos.indices.map { page in\n      let photo = imageViewerPhotos[page]\n      if let cgImage = loaded[page]?.cgImage {\n        return Image(cgImage, scale: 1, orientation: .up, label: Text(verbatim: photo.label))\n      }\n      return Image(uiImage: UIImage())\n    }\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      GeometryReader { proxy in\n        let side = ((proxy.size.width - 16) / 3).rounded(.down)\n        FlowRow(spacing: 8) {\n          ForEach(imageViewerPhotos.indices, id: \\.self) { page in\n            Button {\n              index = page\n              open = true\n            } label: {\n              thumbnail(page)\n                .frame(width: side, height: side)\n                .background(Color.surfaceSecondary)\n                .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n            }\n            .buttonStyle(.plain)\n            .accessibilityLabel(Text(verbatim: imageViewerPhotos[page].label))\n          }\n        }\n      }\n      .aspectRatio(3 / 2, contentMode: .fit)\n      Text(\"Tap a photo. Pinch or double-tap to zoom, swipe down to close.\")\n        .textVariant(.muted)\n    }\n    .imageViewer(isPresented: $open, images: images, index: $index)\n    .task {\n      await load()\n    }\n  }\n\n  @ViewBuilder\n  func thumbnail(_ page: Int) -> some View {\n    if let image = loaded[page] {\n      Image(uiImage: image)\n        .resizable()\n        .scaledToFill()\n    } else {\n      Color.surfaceSecondary\n    }\n  }\n\n  func load() async {\n    await withTaskGroup(of: (Int, UIImage?).self) { group in\n      for (page, photo) in imageViewerPhotos.enumerated() {\n        group.addTask {\n          guard let (data, _) = try? await URLSession.shared.data(from: photo.url) else { return (page, nil) }\n          return (page, UIImage(data: data))\n        }\n      }\n      for await (page, image) in group {\n        if let image { loaded[page] = image }\n      }\n    }\n  }\n}\n\nlet group = StoryGroup(.interactions, \"Image Viewer\", stories: [\n  Story(\"Default\") {\n    ImageViewerGallery()\n  },\n  Story(\"OpenByDefault\") {\n    ImageViewerGallery(open: true, index: 1)\n  },\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.geometry.Size\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.drawscope.DrawScope\nimport androidx.compose.ui.graphics.painter.Painter\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.semantics.Role\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.ImageViewer\nimport com.esuiss.ui.interactions.ImageViewerImage\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ImageViewerOpenByDefaultExample() {\n    ImageViewerGallery(defaultOpen = true, defaultIndex = 1)\n}\n\nclass ImageViewerGradient(private val from: Color, private val to: Color, private val size: Size) : Painter() {\n    override val intrinsicSize: Size\n        get() = size\n\n    override fun DrawScope.onDraw() {\n        drawRect(Brush.linearGradient(listOf(from, to), start = Offset.Zero, end = Offset(this.size.width, this.size.height)))\n    }\n}\n\nval imageViewerLabels = listOf(\n    \"Mountain lake at sunrise\",\n    \"Valley with a river\",\n    \"Lake between mountains\",\n    \"Foggy hills\",\n    \"Forest path\",\n)\n\n@Composable\nfun ImageViewerGallery(defaultOpen: Boolean, defaultIndex: Int) {\n    val colors = EsuissTheme.colors\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var index by rememberSaveable { mutableIntStateOf(defaultIndex) }\n    val tones = listOf(\n        colors.orange to colors.pink,\n        colors.teal to colors.blue,\n        colors.indigo to colors.cyan,\n        colors.gray to colors.mint,\n        colors.green to colors.brown,\n    )\n    val images = remember(tones) {\n        imageViewerLabels.mapIndexed { position, label ->\n            val (from, to) = tones[position]\n            ImageViewerImage(ImageViewerGradient(from, to, Size(1200f, 800f)), contentDescription = label)\n        }\n    }\n    val shape = RoundedCornerShape(Radius.xl)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            modifier = Modifier.fillMaxWidth(),\n            horizontalArrangement = Arrangement.spacedBy(8.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            images.forEachIndexed { position, image ->\n                Image(\n                    painter = image.painter,\n                    contentDescription = null,\n                    contentScale = ContentScale.Crop,\n                    modifier = Modifier\n                        .fillMaxWidth(0.31f)\n                        .aspectRatio(1f)\n                        .clip(shape)\n                        .background(colors.surfaceSecondary, shape)\n                        .semantics { contentDescription = imageViewerLabels[position] }\n                        .clickable(role = Role.Button) {\n                            index = position\n                            open = true\n                        },\n                )\n            }\n        }\n        Text(\"Tap a photo. Pinch or double-tap to zoom, swipe down to close.\", variant = TextVariant.Muted)\n    }\n    ImageViewer(\n        open = open,\n        onOpenChange = { open = it },\n        images = images,\n        index = index,\n        onIndexChange = { index = it },\n    )\n}"} />
+
+</NativeExample>
+
+`ImageViewer` opens a set of `images` full screen on a dark media background, starting at the pressed thumbnail. A counter such as `2 of 5` and a close button sit at the top, below the safe area.
+
+Swipe sideways to page between images, with resistance at the first and last image. Pinch to zoom between 1x and 4x around the fingers, double-tap to zoom to 2.5x at the tapped point or back to 1x, and drag to pan while zoomed. Swiping up or down far enough closes the viewer, and a single tap toggles the controls.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add image-viewer"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add image-viewer --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add image-viewer --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="uniwind/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="nativewind/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/image-viewer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/image-viewer.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/image-viewer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Interactions/ImageViewer.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Carousel.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/interactions/ImageViewer.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { ImageViewer, ImageViewerTrigger, ImageViewerContent } from \"@/components/interactions/image-viewer\""} />
+
+<Code lang="tsx" code={"<Gallery defaultOpen defaultIndex={1} />"} />
+
+Pass `images` to `ImageViewer`, wrap each thumbnail in an `ImageViewerTrigger` with its `index`, and render one `ImageViewerContent`. Give each image an `accessibilityLabel`. The `ImageViewerImage` type is exported.
+
+Open state and the current image can be uncontrolled with `defaultOpen` and `defaultIndex`, or controlled with `open`, `onOpenChange`, `index` and `onIndexChange`. `useImageViewer` returns `open`, `index`, `count` and `images`.
+
+## Examples
+
+### Default
+
+<NativeExample id="interactions-image-viewer--default" width={880} height={696} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { ImageViewer, ImageViewerContent, type ImageViewerImage, ImageViewerTrigger } from \"@/components/interactions/image-viewer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst images: ImageViewerImage[] = [\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Mountain lake at sunrise\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Valley with a river\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Lake between mountains\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Foggy hills\",\n  },\n  {\n    source: {\n      uri: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\",\n    },\n    accessibilityLabel: \"Forest path\",\n  },\n]\n\nfunction Gallery({\n  defaultOpen,\n  defaultIndex,\n}: {\n  defaultOpen?: boolean\n  defaultIndex?: number\n}) {\n  return (\n    <ImageViewer\n      images={images}\n      defaultOpen={defaultOpen}\n      defaultIndex={defaultIndex}\n    >\n      <View className=\"gap-3\">\n        <View className=\"flex-row flex-wrap gap-2\">\n          {images.map((image, index) => (\n            <ImageViewerTrigger\n              key={image.accessibilityLabel}\n              index={index}\n              accessibilityLabel={image.accessibilityLabel}\n              className=\"aspect-square w-[31%] overflow-hidden rounded-xl bg-surface-secondary\"\n            >\n              <Image source={image.source} className=\"h-full w-full\" />\n            </ImageViewerTrigger>\n          ))}\n        </View>\n        <Text variant=\"muted\">\n          Tap a photo. Pinch or double-tap to zoom, swipe down to close.\n        </Text>\n      </View>\n      <ImageViewerContent />\n    </ImageViewer>\n  )\n}\n\nexport function ImageViewerExample() {\n  return (\n    <Gallery />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\nimport UIKit\n\nstruct ImageViewerPhoto {\n  let url: URL\n  let label: String\n}\n\nlet imageViewerPhotos = [\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80\")!, label: \"Mountain lake at sunrise\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80\")!, label: \"Valley with a river\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80\")!, label: \"Lake between mountains\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80\")!, label: \"Foggy hills\"),\n  ImageViewerPhoto(url: URL(string: \"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80\")!, label: \"Forest path\"),\n]\n\nstruct ImageViewerGallery: View {\n  @State private var open: Bool\n  @State private var index: Int\n  @State private var loaded: [Int: UIImage] = [:]\n\n  init(open: Bool = false, index: Int = 0) {\n    _open = State(initialValue: open)\n    _index = State(initialValue: index)\n  }\n\n  var images: [Image] {\n    imageViewerPhotos.indices.map { page in\n      let photo = imageViewerPhotos[page]\n      if let cgImage = loaded[page]?.cgImage {\n        return Image(cgImage, scale: 1, orientation: .up, label: Text(verbatim: photo.label))\n      }\n      return Image(uiImage: UIImage())\n    }\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      GeometryReader { proxy in\n        let side = ((proxy.size.width - 16) / 3).rounded(.down)\n        FlowRow(spacing: 8) {\n          ForEach(imageViewerPhotos.indices, id: \\.self) { page in\n            Button {\n              index = page\n              open = true\n            } label: {\n              thumbnail(page)\n                .frame(width: side, height: side)\n                .background(Color.surfaceSecondary)\n                .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n            }\n            .buttonStyle(.plain)\n            .accessibilityLabel(Text(verbatim: imageViewerPhotos[page].label))\n          }\n        }\n      }\n      .aspectRatio(3 / 2, contentMode: .fit)\n      Text(\"Tap a photo. Pinch or double-tap to zoom, swipe down to close.\")\n        .textVariant(.muted)\n    }\n    .imageViewer(isPresented: $open, images: images, index: $index)\n    .task {\n      await load()\n    }\n  }\n\n  @ViewBuilder\n  func thumbnail(_ page: Int) -> some View {\n    if let image = loaded[page] {\n      Image(uiImage: image)\n        .resizable()\n        .scaledToFill()\n    } else {\n      Color.surfaceSecondary\n    }\n  }\n\n  func load() async {\n    await withTaskGroup(of: (Int, UIImage?).self) { group in\n      for (page, photo) in imageViewerPhotos.enumerated() {\n        group.addTask {\n          guard let (data, _) = try? await URLSession.shared.data(from: photo.url) else { return (page, nil) }\n          return (page, UIImage(data: data))\n        }\n      }\n      for await (page, image) in group {\n        if let image { loaded[page] = image }\n      }\n    }\n  }\n}\n\nlet group = StoryGroup(.interactions, \"Image Viewer\", stories: [\n  Story(\"Default\") {\n    ImageViewerGallery()\n  },\n  Story(\"OpenByDefault\") {\n    ImageViewerGallery(open: true, index: 1)\n  },\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.geometry.Size\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.drawscope.DrawScope\nimport androidx.compose.ui.graphics.painter.Painter\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.semantics.Role\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.ImageViewer\nimport com.esuiss.ui.interactions.ImageViewerImage\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ImageViewerExample() {\n    ImageViewerGallery(defaultOpen = false, defaultIndex = 0)\n}\n\nclass ImageViewerGradient(private val from: Color, private val to: Color, private val size: Size) : Painter() {\n    override val intrinsicSize: Size\n        get() = size\n\n    override fun DrawScope.onDraw() {\n        drawRect(Brush.linearGradient(listOf(from, to), start = Offset.Zero, end = Offset(this.size.width, this.size.height)))\n    }\n}\n\nval imageViewerLabels = listOf(\n    \"Mountain lake at sunrise\",\n    \"Valley with a river\",\n    \"Lake between mountains\",\n    \"Foggy hills\",\n    \"Forest path\",\n)\n\n@Composable\nfun ImageViewerGallery(defaultOpen: Boolean, defaultIndex: Int) {\n    val colors = EsuissTheme.colors\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var index by rememberSaveable { mutableIntStateOf(defaultIndex) }\n    val tones = listOf(\n        colors.orange to colors.pink,\n        colors.teal to colors.blue,\n        colors.indigo to colors.cyan,\n        colors.gray to colors.mint,\n        colors.green to colors.brown,\n    )\n    val images = remember(tones) {\n        imageViewerLabels.mapIndexed { position, label ->\n            val (from, to) = tones[position]\n            ImageViewerImage(ImageViewerGradient(from, to, Size(1200f, 800f)), contentDescription = label)\n        }\n    }\n    val shape = RoundedCornerShape(Radius.xl)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            modifier = Modifier.fillMaxWidth(),\n            horizontalArrangement = Arrangement.spacedBy(8.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            images.forEachIndexed { position, image ->\n                Image(\n                    painter = image.painter,\n                    contentDescription = null,\n                    contentScale = ContentScale.Crop,\n                    modifier = Modifier\n                        .fillMaxWidth(0.31f)\n                        .aspectRatio(1f)\n                        .clip(shape)\n                        .background(colors.surfaceSecondary, shape)\n                        .semantics { contentDescription = imageViewerLabels[position] }\n                        .clickable(role = Role.Button) {\n                            index = position\n                            open = true\n                        },\n                )\n            }\n        }\n        Text(\"Tap a photo. Pinch or double-tap to zoom, swipe down to close.\", variant = TextVariant.Muted)\n    }\n    ImageViewer(\n        open = open,\n        onOpenChange = { open = it },\n        images = images,\n        index = index,\n        onIndexChange = { index = it },\n    )\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+<PropsTable extends={["React.ComponentProps<typeof ImageViewerPrimitive.Root>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the viewer opens or closes."},{"name":"onIndexChange","type":"(index: number) => void","description":"Called with the new index after paging."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ImageViewerTrigger
+
+A pressable thumbnail that opens the viewer at its `index`.
+
+<PropsTable extends={["React.ComponentProps<typeof ImageViewerPrimitive.Trigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ImageViewerContent
+
+The full-screen viewer with the pages, counter and close button.
+
+<PropsTable props={[{"name":"portalHost","type":"string","description":"Name of a portal host to render into."},{"name":"closeLabel","type":"string","default":"\"Close\"","description":"Accessibility label of the close button. Defaults to `Close`."},{"name":"indexLabel","type":"(index: number, count: number) => string","default":"defaultIndexLabel","description":"Formats the counter from the index and count. Defaults to `n of count`."},{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The viewer is modal for screen readers, and the escape gesture closes it.
+- The current page is `adjustable`: swiping up or down with a screen reader moves between images. It is labelled by the image's `accessibilityLabel`, or `Image n`, with the counter as its value.
+- Triggers have the `button` role and expose their `expanded` state.
+
+## Notes
+
+- The viewer fades in and out, and paging and zoom animations respect the system reduce motion setting.
+- Colors use the `bg-media` and `text-on-media` tokens, so the viewer stays dark in light mode.
+- On iOS the viewer renders in a full-window overlay so it appears above native screens.
+
+</Only>

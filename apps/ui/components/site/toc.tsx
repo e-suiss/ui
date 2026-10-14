@@ -101,8 +101,29 @@ function BackToTop() {
   );
 }
 
+function useShownHeadings(items: TableOfContents) {
+  const [hidden, setHidden] = React.useState<Set<string>>(() => new Set());
+
+  React.useEffect(() => {
+    const update = () => {
+      const next = new Set<string>();
+      for (const item of items) {
+        const heading = document.getElementById(idOf(item));
+        if (heading && heading.offsetParent === null) next.add(idOf(item));
+      }
+      setHidden(next);
+    };
+    update();
+    window.addEventListener("platformchange", update);
+    return () => window.removeEventListener("platformchange", update);
+  }, [items]);
+
+  return React.useMemo(() => items.filter((item) => !hidden.has(idOf(item))), [items, hidden]);
+}
+
 export function Toc({ items }: { items: TableOfContents }) {
-  const headings = React.useMemo(() => items.filter((item) => item.depth <= 3), [items]);
+  const shown = useShownHeadings(items);
+  const headings = React.useMemo(() => shown.filter((item) => item.depth <= 3), [shown]);
   const sections = React.useMemo(() => sectionsOf(headings), [headings]);
   const ids = React.useMemo(() => headings.map(idOf), [headings]);
   const active = useActiveHeading(ids);

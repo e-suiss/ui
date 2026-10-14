@@ -1,4 +1,0 @@
-{
-  "title": "Docs",
-  "pages": ["---Get Started---", "index", "installation", "cli", "swiftui", "jetpack-compose", "components", "patterns", "interactions", "charts", "blocks"]
-}

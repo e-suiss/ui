@@ -1,9 +1,12 @@
 ---
 title: Scroll Area
 description: "A scrollable region with slim, custom-styled scrollbars."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="scroll-area" story="Default">
 
@@ -88,3 +91,5 @@ A scrollbar track and thumb for one orientation, vertical by default.
 - Styling hooks: `data-slot` values `scroll-area`, `scroll-area-viewport`, `scroll-area-scrollbar` and `scroll-area-thumb`. Scrollbars expose `data-orientation`.
 - The thumb uses the `separator` token.
 - The viewport inherits the root's border radius, so rounded containers clip their content.
+
+</Only>

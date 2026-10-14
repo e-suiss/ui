@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type * as PageTree from "fumadocs-core/page-tree";
 
+import { sourcePath } from "@/lib/highlight";
 import { absolute, site } from "@/lib/site";
 import { source } from "@/lib/source";
 import { pageSummary } from "@/lib/summary";
@@ -17,7 +18,8 @@ const decode = (text: string) =>
 async function toMarkdown(body: string) {
   const files = new Map<string, string>();
   for (const [, file] of body.matchAll(/<SourceFile path="([^"]+)"[^>]*\/>/g)) {
-    files.set(file, await readFile(path.join(process.cwd(), "components", path.relative("components", file)), "utf8").catch(() => ""));
+    const resolved = sourcePath(file);
+    files.set(file, resolved ? await readFile(resolved, "utf8").catch(() => "") : "");
   }
   return body
     .replace(/<Code lang="(\w+)"(?: title="([^"]*)")? code="([^"]*)" \/>/g, (_match, lang: string, title: string | undefined, code: string) =>
@@ -30,6 +32,13 @@ async function toMarkdown(body: string) {
       fence(files.get(file) ?? "", path.extname(file).slice(1) || "tsx", file),
     );
 }
+
+const platformNames: Record<string, string> = {
+  web: "React",
+  rn: "React Native",
+  swift: "SwiftUI",
+  kotlin: "Jetpack Compose",
+};
 
 const attr = (tag: string, name: string) => {
   const match = tag.match(new RegExp(`${name}="([^"]*)"`));
@@ -77,6 +86,7 @@ function cleanMarkdown(body: string) {
   const output: string[] = [];
   let fence = false;
   let indent = 0;
+  let labels: string[] = [];
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```");
     const line = (!fence || isFence) && indent > 0 && raw.startsWith(" ".repeat(indent)) ? raw.slice(indent) : raw;
@@ -86,14 +96,34 @@ function cleanMarkdown(body: string) {
       output.push(line);
       continue;
     }
-    const open = trimmed.match(/^<(Example|ApiPart|Callout)\b([^>]*)>$/);
+    const only = trimmed.match(/^<Only platform="([^"]*)">$/);
+    if (only) {
+      output.push(`**${only[1].split(" ").map((platform) => platformNames[platform] ?? platform).join(", ")}**`, "");
+      continue;
+    }
+    if (trimmed === "</Only>") continue;
+    const tabs = trimmed.match(/^<Tabs\b(.*)>$/);
+    if (tabs) {
+      labels = [...tabs[1].matchAll(/&quot;([^&]*)&quot;|"([^"]*)"/g)].map((match) => decode(match[1] ?? match[2])).filter((label) => label !== "items");
+      continue;
+    }
+    if (trimmed === "</Tabs>" || trimmed === "</div>") continue;
+    if (trimmed === "<div>") {
+      if (labels.length) output.push(`**${labels.shift()}**`, "");
+      continue;
+    }
+    const open = trimmed.match(/^<(Example|NativeExample|ApiPart|Callout)\b([^>]*)>$/);
     if (open) {
       if (open[1] === "Example") output.push(`**Example${attr(open[2], "story") ? `: ${attr(open[2], "story")}` : ""}**`, "");
+      if (open[1] === "NativeExample") {
+        const id = attr(open[2], "id");
+        output.push(id ? `![Preview](${absolute(`/previews/${id}.light.webp`)})` : "", "");
+      }
       if (open[1] === "Callout") output.push(`> **${(attr(open[2], "type") ?? "note").replace(/^./, (c) => c.toUpperCase())}:**`);
       indent += 2;
       continue;
     }
-    if (/^<\/(Example|ApiPart|Callout)>$/.test(trimmed)) {
+    if (/^<\/(Example|NativeExample|ApiPart|Callout)>$/.test(trimmed)) {
       indent = Math.max(0, indent - 2);
       continue;
     }
@@ -109,7 +139,7 @@ export const markdownUrl = (url: string) => `/llms.mdx${url}`;
 
 export async function pageMarkdown(page: Page) {
   const body = cleanMarkdown(await toMarkdown(await page.data.getText("processed")));
-  return [`# ${page.data.title}`, page.data.description ?? "", pageSummary(page.data.title, page.data.eyebrow) ?? "", `Source: ${absolute(page.url)}`, body]
+  return [`# ${page.data.title}`, page.data.description ?? "", pageSummary(page.data.title, page.data.eyebrow, page.data.platforms) ?? "", `Source: ${absolute(page.url)}`, body]
     .filter(Boolean)
     .join("\n\n");
 }

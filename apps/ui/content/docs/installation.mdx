@@ -1,8 +1,11 @@
 ---
 title: Installation
-description: Set up a Next.js or Vite project once with init, then add the components you need.
+description: Set up a React, React Native, SwiftUI or Jetpack Compose project with init, then add the components you need.
 eyebrow: suiss/ui
+platforms: [web, rn, swift, kotlin]
 ---
+
+<Only platform="web">
 
 ## Requirements
 
@@ -73,3 +76,166 @@ Running `add` for a component you already have keeps your file and tells you whe
 | Tailwind CSS 4.2 or later is required | Upgrade with `npm install tailwindcss@latest` and run `init` again. |
 | No `@/*` import alias found | Run `init` first, or add `"paths": { "@/*": ["./src/*"] }` to `compilerOptions` in `tsconfig.json`. |
 | A newly published version is not found | npm can take a few minutes to make new versions available. Run `npx --prefer-online @esuiss/ui@latest ...`. |
+
+</Only>
+
+<Only platform="rn">
+
+## Requirements
+
+An Expo or React Native project with TypeScript.
+
+## Set up your project
+
+Run `init` once, in the root of your project.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init
+```
+
+`init` sets up:
+
+- the styling library: Uniwind, NativeWind or StyleSheet
+- the `@/*` import alias
+- the theme stylesheet
+- the Metro config
+- the portal host in the root layout
+- the `button` component
+
+The styling library is detected from your project. When neither Uniwind nor NativeWind is installed, `init` asks. Pass `--styling` to choose up front:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --styling uniwind
+npx @esuiss/ui@latest init --styling nativewind
+npx @esuiss/ui@latest init --styling stylesheet
+```
+
+StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
+
+### React Native without Expo
+
+`init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `pod install` after adding components:
+
+```bash title="Terminal"
+cd ios && pod install
+```
+
+## Add components
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add dialog
+```
+
+Run `add` without names to pick from a list instead. See [CLI](/docs/cli#pick-from-a-list).
+
+Components are copied into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK.
+
+</Only>
+
+<Only platform="swift">
+
+## Requirements
+
+- iOS 17 or later.
+- Components with icons use the [Phosphor](https://github.com/phosphor-icons/swift) Swift package.
+- Charts are drawn with Apple's Swift Charts framework, which ships with iOS.
+
+## Set up your project
+
+Run `init` in the folder that holds your Xcode project or `Package.swift`. It copies the theme files, `Theme.swift` and `Tokens.swift`, and the button.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --platform swift
+```
+
+## Add components
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --platform swift
+```
+
+Leave out the names to pick from a list that only shows what exists for SwiftUI. The CLI lists the Swift packages a component needs; add them to your app target in Xcode.
+
+### Manual setup
+
+1. Add the Phosphor package to your app:
+
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
+
+2. Copy the theme files, `Theme.swift` and `Tokens.swift`. Every view uses them.
+3. Copy the component and the files it uses, then add them to your app target.
+
+## Usage
+
+Components follow SwiftUI conventions. The button, for example, is a button style:
+
+```swift
+struct ContentView: View {
+  var body: some View {
+    Button("Continue") {}
+      .buttonStyle(.variant())
+  }
+}
+```
+
+Every color in `Tokens.swift` has a light and a dark value, so views follow the system appearance without extra setup.
+
+</Only>
+
+<Only platform="kotlin">
+
+## Requirements
+
+- `minSdk` 24 or higher.
+- Jetpack Compose Foundation and UI. The components do not depend on Material.
+- Components with icons use the Phosphor icons library for Android.
+
+## Set up your project
+
+Run `init` in the folder that holds your Android Gradle module. It copies the theme files, `Theme.kt` and `Tokens.kt`, and the button.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --platform kotlin
+```
+
+## Add components
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --platform kotlin
+```
+
+Leave out the names to pick from a list that only shows what exists for Jetpack Compose. The CLI lists the Gradle dependencies a component needs; it never edits your Gradle files.
+
+### Manual setup
+
+1. Add the dependencies:
+
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
+
+2. Copy the theme files, `Theme.kt` and `Tokens.kt`. Every composable uses them.
+3. Copy the component and the files it uses.
+4. Update the `com.esuiss.ui` package names to match your project.
+
+## Usage
+
+Wrap your content in `EsuissTheme`, then use the components:
+
+```kotlin
+@Composable
+fun App() {
+    EsuissTheme {
+        Button("Continue", onClick = {})
+    }
+}
+```
+
+`EsuissTheme` follows the system setting through `isSystemInDarkTheme()`. Pass `darkTheme` to choose a mode yourself.
+
+</Only>

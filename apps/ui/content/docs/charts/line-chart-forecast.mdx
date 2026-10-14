@@ -2,8 +2,11 @@
 title: Line Chart Forecast
 description: "A solid line for actual values that continues as a dashed forecast over a shaded future range."
 eyebrow: Chart
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="line-chart-forecast">
 
@@ -44,3 +47,159 @@ Fill the `actual` and `forecast` arrays; the forecast should start with the last
 ## Notes
 
 Since actual and forecast use the same color, the dash pattern and shading carry the distinction; the tooltip also names each series. At the handover point the tooltip lists both values.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="charts-line--forecast" width={880} height={655} platforms={["React Native","SwiftUI","Compose"]}>
+
+<SourceFile path="uniwind/components/charts/line-chart-forecast.tsx" fold={false} />
+
+<SourceFile path="swift/Charts/LineChartForecast.swift" fold={false} />
+
+<SourceFile path="kotlin/charts/LineChartForecast.kt" fold={false} />
+
+</NativeExample>
+
+Two series share one axis: `actual` fills the first nine months and `forecast` continues from September, drawn with `strokeDasharray`. A `ReferenceArea` shades September to December to mark the forecast period. Missing values are `null`, so each line stops where its data ends.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-forecast"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-forecast --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-forecast --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-forecast.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Charts/LineChartForecast.swift" />
+
+<SourceFile path="swift/Components/Card.swift" />
+
+<SourceFile path="swift/Components/Chart.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Item.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/charts/LineChartForecast.kt" />
+
+<SourceFile path="kotlin/components/Card.kt" />
+
+<SourceFile path="kotlin/components/Chart.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartForecast } from \"@/components/charts/line-chart-forecast\""} />
+
+<Code lang="tsx" code={"<LineChartForecast />"} />
+
+Replace the `actual` and `forecast` arrays; the forecast starts at the index set in `chartData`. Move the `ReferenceArea` `x1` and `x2` to match your forecast range. The component takes no props.
+
+</Only>

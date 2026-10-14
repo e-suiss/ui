@@ -1,9 +1,12 @@
 ---
 title: Drawer
 description: "A panel that slides in from an edge of the screen and can be dismissed with a swipe."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="drawer" story="Default">
 
@@ -278,3 +281,359 @@ Supporting text that describes the drawer for assistive technology.
 - Side drawers are `75%` wide, and `24rem` wide from the `sm` breakpoint. Top and bottom drawers are limited to the viewport height minus `6rem`.
 - Nested drawers stack, with the drawer behind scaled down slightly.
 - Uses the `surface-raised`, `scrim`, `surface` and `label-quaternary` tokens. Animations are disabled on `DrawerIndent` when reduced motion is preferred.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-drawer--open-by-default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer defaultOpen showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerOpenByDefaultExample: View {\n  var body: some View {\n    DrawerGoal(open: true)\n  }\n}\n\nstruct DrawerGoal: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open drawer\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open) {\n        DrawerGoalContent()\n      }\n  }\n}\n\nstruct DrawerGoalContent: View {\n  var body: some View {\n    DrawerContent {\n      DrawerHeader {\n        DrawerTitle(\"Move goal\")\n        DrawerDescription(\"Set your daily activity goal.\")\n      }\n      VStack(spacing: 4) {\n        Text(verbatim: \"350\")\n          .font(.system(size: 48, weight: .semibold))\n          .tracking(-1.2)\n          .foregroundStyle(Color.label)\n        Text(\"Calories/day\")\n          .textCase(.uppercase)\n          .textStyle(.xs)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity)\n      .padding(16)\n      DrawerFooter {\n        Button {} label: {\n          Text(\"Submit\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        DrawerClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerOpenByDefaultExample() {\n    DrawerGoal(defaultOpen = true, floating = false)\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Drawer` presents content in a panel attached to an edge of the screen. It slides in from the bottom by default, or from the top, left or right with `swipeDirection`, and the user can drag it closed in that direction. The content renders through a portal (inside a full-window overlay on iOS) and respects the safe-area insets.
+
+Set `floating` to inset the panel from the screen edges with all corners rounded. Use `snapPoints` to let a bottom drawer rest at several heights. Wrap your app in `DrawerProvider` and its screen in `DrawerIndent` to scale the page back behind an open bottom drawer.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/drawer.tsx`:
+
+<SourceFile path="uniwind/components/ui/drawer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/drawer.tsx`:
+
+<SourceFile path="nativewind/components/ui/drawer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/drawer.tsx`:
+
+<SourceFile path="stylesheet/components/ui/drawer.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Drawer.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Drawer.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from \"@/components/ui/drawer\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Drawer defaultOpen showSwipeHandle>\n    <DrawerTrigger render={<Button variant=\"outline\" />}>\n      <Text>Open drawer</Text>\n    </DrawerTrigger>\n    <GoalContent />\n  </Drawer>\n</View>"} />
+
+Compose `DrawerTrigger` and `DrawerContent` with a `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), your content and a `DrawerFooter`. Use `DrawerClose` to close it from a button.
+
+Set `showSwipeHandle` to show a grab handle, and `showCloseButton` on the content for a corner close button, with `closeLabel` for a text button. `snapPoints` accepts fractions of the screen such as `[0.4, 1]`; control the current one with `snapPoint` and `onSnapPointChange`.
+
+With `modal={false}` there is no scrim. For the scaled background, render `DrawerIndentBackground` behind a `DrawerIndent` inside `DrawerProvider`.
+
+## Examples
+
+### Default
+
+<NativeExample id="components-drawer--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerGoal: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open drawer\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open) {\n        DrawerGoalContent()\n      }\n  }\n}\n\nstruct DrawerGoalContent: View {\n  var body: some View {\n    DrawerContent {\n      DrawerHeader {\n        DrawerTitle(\"Move goal\")\n        DrawerDescription(\"Set your daily activity goal.\")\n      }\n      VStack(spacing: 4) {\n        Text(verbatim: \"350\")\n          .font(.system(size: 48, weight: .semibold))\n          .tracking(-1.2)\n          .foregroundStyle(Color.label)\n        Text(\"Calories/day\")\n          .textCase(.uppercase)\n          .textStyle(.xs)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity)\n      .padding(16)\n      DrawerFooter {\n        Button {} label: {\n          Text(\"Submit\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        DrawerClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerExample() {\n    DrawerGoal(defaultOpen = false, floating = false)\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Snap points
+
+A drawer that rests at 40% and full height.
+
+<NativeExample id="components-drawer--snap-points" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ScrollView, View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst ITEMS = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`)\n\nexport function DrawerSnapPointsExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer snapPoints={[0.4, 1]} showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open with snap points</Text>\n        </DrawerTrigger>\n        <DrawerContent showCloseButton>\n          <DrawerHeader>\n            <DrawerTitle>Snap points</DrawerTitle>\n            <DrawerDescription>\n              Drag up to expand, drag down to collapse or dismiss.\n            </DrawerDescription>\n          </DrawerHeader>\n          <ScrollView contentContainerClassName=\"gap-3 p-4\">\n            {ITEMS.map((item) => (\n              <View\n                key={item}\n                className=\"h-12 justify-center rounded-xl bg-surface-secondary px-4\"\n              >\n                <Text>{item}</Text>\n              </View>\n            ))}\n          </ScrollView>\n        </DrawerContent>\n      </Drawer>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerSnapPoints: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Open with snap points\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open, detents: [.fraction(0.4), .large]) {\n        DrawerContent(showCloseButton: true) {\n          DrawerHeader {\n            DrawerTitle(\"Snap points\")\n            DrawerDescription(\"Drag up to expand, drag down to collapse or dismiss.\")\n          }\n          ScrollView {\n            VStack(spacing: 12) {\n              ForEach(1...20, id: \\.self) { index in\n                Text(verbatim: \"Item \\(index)\")\n                  .textStyle(.base)\n                  .foregroundStyle(Color.label)\n                  .padding(.horizontal, 16)\n                  .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)\n                  .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n              }\n            }\n            .padding(16)\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\nimport com.esuiss.ui.components.DrawerDescription\nimport com.esuiss.ui.components.DrawerHeader\nimport com.esuiss.ui.components.DrawerTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\nval DrawerItems = List(20) { \"Item ${it + 1}\" }\n\n@Composable\nfun DrawerSnapPoints() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Open with snap points\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(\n            open = open,\n            onOpenChange = { open = it },\n            snapPoints = listOf(0.4f, 1f),\n            showSwipeHandle = true,\n            showCloseButton = true,\n        ) {\n            DrawerHeader {\n                DrawerTitle(\"Snap points\")\n                DrawerDescription(\"Drag up to expand, drag down to collapse or dismiss.\")\n            }\n            Column(\n                modifier = Modifier\n                    .weight(1f, fill = false)\n                    .verticalScroll(rememberScrollState())\n                    .padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(12.dp),\n            ) {\n                DrawerItems.forEach { item ->\n                    Box(\n                        modifier = Modifier\n                            .fillMaxWidth()\n                            .height(48.dp)\n                            .clip(RoundedCornerShape(Radius.xl))\n                            .background(EsuissTheme.colors.surfaceSecondary)\n                            .padding(horizontal = 16.dp),\n                        contentAlignment = Alignment.CenterStart,\n                    ) {\n                        Text(item)\n                    }\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Floating
+
+A floating drawer inset from the edges.
+
+<NativeExample id="components-drawer--floating" width={880} height={400} platforms={["React Native","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerFloatingExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer floating showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open floating drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerFloatingExample() {\n    DrawerGoal(defaultOpen = false, floating = true, label = \"Open floating drawer\")\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Sides
+
+Drawers from the top, bottom, left and right.
+
+<NativeExample id="components-drawer--sides" width={880} height={439}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DrawerSidesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {([\"up\", \"right\", \"down\", \"left\"] as const).map((direction) => (\n        <Drawer key={direction} swipeDirection={direction} showSwipeHandle>\n          <DrawerTrigger render={<Button variant=\"outline\" />}>\n            <Text>Swipe {direction}</Text>\n          </DrawerTrigger>\n          <DrawerContent showCloseButton closeLabel=\"Done\">\n            <DrawerHeader>\n              <DrawerTitle>Swipe {direction} to close</DrawerTitle>\n              <DrawerDescription>\n                This drawer is dismissed by swiping {direction}.\n              </DrawerDescription>\n            </DrawerHeader>\n            <View className=\"p-4\">\n              <Text className=\"text-sm text-label-secondary\">\n                Android back and the VoiceOver escape gesture also close it.\n              </Text>\n            </View>\n          </DrawerContent>\n        </Drawer>\n      ))}\n    </View>\n  )\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DrawerProvider
+
+Tracks open drawers for the indent effect.
+
+<PropsTable extends={["DrawerPrimitive.ProviderProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DrawerIndentBackground
+
+Background shown behind the scaled screen.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.IndentBackground>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DrawerIndent
+
+Screen wrapper that scales back while a bottom drawer is open.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Indent>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### Drawer
+
+Root that holds the open state, direction and snap points.
+
+<PropsTable extends={["DrawerPrimitive.RootProps"]} props={[{"name":"floating","type":"boolean","default":"false","description":"Insets the panel from the edges."},{"name":"showSwipeHandle","type":"boolean","default":"false","description":"Shows a grab handle."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DrawerOverlay
+
+Dimmed scrim behind a modal drawer.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Backdrop>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DrawerSwipeHandle
+
+Grab handle on the dragging edge.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DrawerContent
+
+Sliding panel with optional handle and close button.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a corner close button."},{"name":"closeLabel","type":"string","description":"Text for the close button instead of the icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DrawerHeader
+
+Area for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### DrawerTitle
+
+Drawer heading, centered for top and bottom drawers.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### DrawerDescription
+
+Supporting text.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Description>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `dialog` role and is labelled by the title.
+- The swipe handle and decorative edge fill are hidden from screen readers.
+- The icon close button is labelled "Close".
+
+## Notes
+
+- Padding follows the safe-area insets, and a docked drawer extends its background past the screen edge so drag overshoot shows no gap.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-surface-raised`, `bg-scrim` and `bg-label-quaternary` tokens; light and dark follow the system appearance.
+
+</Only>

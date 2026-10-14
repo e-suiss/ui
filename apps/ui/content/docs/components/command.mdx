@@ -1,9 +1,12 @@
 ---
 title: Command
 description: "A searchable menu of commands, used inline or as a command palette in a dialog."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="command" story="Default">
 
@@ -184,3 +187,5 @@ Displays a keyboard shortcut at the end of an item.
 - The highlighted item gets `data-selected` and is filled with the `accent` color. Disabled items get `data-disabled="true"`.
 - An item with `data-checked="true"` shows a check mark, unless it contains a `CommandShortcut`.
 - Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `surface-raised` background.
+
+</Only>

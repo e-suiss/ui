@@ -65,7 +65,7 @@ Next.js and React with Vite, using TypeScript and Tailwind CSS 4.2 or later.
 Yes. Every color has a light and a dark value, and components switch with the `.dark` class.
 
 **Is there a version for mobile apps?**
-Yes. [suiss/uim](packages/mobile) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them: run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
+Yes. suiss/ui also ships the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them (see [packages/mobile](packages/mobile)): run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
 
 **Is it free?**
 Yes, it is released under the [MIT License](LICENSE).
@@ -79,8 +79,8 @@ This repository is a pnpm workspace. One install at the root sets up everything:
 
 ```bash
 pnpm install
-pnpm dev             # both sites: ui.suiss.app on :3000, uim.suiss.app on :3001
-pnpm build           # build both sites
+pnpm dev             # the ui.suiss.app site on :3000
+pnpm build           # build the site
 pnpm typecheck       # every package and site
 pnpm test            # web component tests and CLI tests
 pnpm check           # Biome on the web library, the CLI and the mobile library
@@ -95,8 +95,7 @@ pnpm --filter @esuiss/mobile start      # the React Native Storybook app
 
 Layout:
 
-- `apps/ui`: the ui.suiss.app site.
-- `apps/uim`: the uim.suiss.app site.
+- `apps/ui`: the ui.suiss.app site, with a React, React Native, SwiftUI and Compose tab on every page.
 - `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `stories/` has one Storybook file per component, and `registry.json` lists everything.
 - `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
 - `packages/tokens`: the design tokens the mobile themes are generated from.

@@ -1,9 +1,12 @@
 ---
 title: Sidebar
 description: "A collapsible app sidebar for navigation, with icon, off-canvas and mobile sheet modes."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="sidebar" story="Default">
 
@@ -353,3 +356,5 @@ The clickable row of a sub-item, rendered as a link by default.
 - The sidebar element exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. Menu buttons set `data-active` and `data-size`.
 - `useSidebar` throws if it's used outside a `SidebarProvider`.
 - The panel uses `bg-surface-secondary`; active items use `bg-item-selected` with a `text-link` icon.
+
+</Only>

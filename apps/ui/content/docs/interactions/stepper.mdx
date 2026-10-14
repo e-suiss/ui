@@ -2,8 +2,11 @@
 title: Stepper
 description: "A numeric field with minus and plus buttons that step the value, accelerating while held."
 eyebrow: Interaction
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="interaction" name="stepper" story="Default">
 
@@ -132,3 +135,263 @@ A thin divider between the two buttons.
 - Parts use `data-slot` values `stepper`, `stepper-input`, `stepper-group`, `stepper-decrement`, `stepper-increment`, and `stepper-separator`.
 - Values are rounded to the precision of `step`, so decimal steps do not accumulate floating-point errors.
 - The buttons suppress the long-press context menu so holding them on touch devices keeps stepping.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="interactions-stepper--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\n\nexport function StepperExample() {\n  return (\n    <Stepper defaultValue={1} min={0} max={10}>\n      <StepperInput accessibilityLabel=\"Quantity\" />\n      <StepperGroup>\n        <StepperDecrement />\n        <StepperSeparator />\n        <StepperIncrement />\n      </StepperGroup>\n    </Stepper>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct StepperParts: View {\n  var body: some View {\n    StepperInput()\n    StepperGroup {\n      StepperDecrement()\n      StepperSeparator()\n      StepperIncrement()\n    }\n  }\n}\n\nstruct StepperQuantity: View {\n  @State private var value = 1\n\n  var body: some View {\n    ValueStepper(value: $value, in: 0...10) {\n      StepperParts()\n    }\n    .accessibilityLabel(Text(\"Quantity\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableDoubleStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.interactions.Stepper\nimport com.esuiss.ui.interactions.StepperDecrement\nimport com.esuiss.ui.interactions.StepperGroup\nimport com.esuiss.ui.interactions.StepperIncrement\nimport com.esuiss.ui.interactions.StepperInput\nimport com.esuiss.ui.interactions.StepperSeparator\n\n@Composable\nfun StepperControls() {\n    StepperGroup {\n        StepperDecrement()\n        StepperSeparator()\n        StepperIncrement()\n    }\n}\n\n@Composable\nfun StepperDefault() {\n    var value by rememberSaveable { mutableDoubleStateOf(1.0) }\n    Row {\n        Stepper(value = value, onValueChange = { value = it }, min = 0.0, max = 10.0) {\n            StepperInput(contentDescription = \"Quantity\")\n            StepperControls()\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Stepper` is a number field laid out as a right-aligned value followed by a field holding minus and plus buttons, inset from its edges. Each step snaps to `step` and stays within `min` and `max`, and a button that can go no further is shown as disabled.
+
+Pressing and holding a button steps once, then repeats every 60 ms after 400 ms. The value can also be typed. Use it for quantities, copies or percentages in settings rows.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/stepper.tsx`:
+
+<SourceFile path="uniwind/components/interactions/stepper.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/stepper.tsx`:
+
+<SourceFile path="nativewind/components/interactions/stepper.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/interactions/stepper.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/stepper.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Interactions/Stepper.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/interactions/Stepper.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from \"@/components/interactions/stepper\""} />
+
+<Code lang="tsx" code={"<Stepper defaultValue={1} min={0} max={10}>\n  <StepperInput accessibilityLabel=\"Quantity\" />\n  <StepperGroup>\n    <StepperDecrement />\n    <StepperSeparator />\n    <StepperIncrement />\n  </StepperGroup>\n</Stepper>"} />
+
+Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`.
+
+Use it uncontrolled with `defaultValue` (`0` by default) or controlled with `value` and `onValueChange`. Clearing the field never reports `null`; the change is cancelled instead. `min`, `max`, `step`, `format` (`Intl.NumberFormatOptions`), `locale` and `disabled` are passed to the number field.
+
+## Examples
+
+### Print
+
+A print settings list with copies, a percentage scale stepping by 5, and a disabled row.
+
+<NativeExample id="interactions-stepper--print" width={880} height={412} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction StepperRow({\n  label,\n  ...props\n}: React.ComponentProps<typeof Stepper> & { label: string }) {\n  const labelId = React.useId()\n\n  return (\n    <View className=\"min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5\">\n      <Text nativeID={labelId} className=\"text-base\">\n        {label}\n      </Text>\n      <Stepper {...props}>\n        <StepperInput accessibilityLabelledBy={labelId} />\n        <StepperGroup>\n          <StepperDecrement />\n          <StepperSeparator />\n          <StepperIncrement />\n        </StepperGroup>\n      </Stepper>\n    </View>\n  )\n}\n\nfunction PrintExample() {\n  const [copies, setCopies] = React.useState(1)\n  const [scale, setScale] = React.useState(100)\n\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"overflow-hidden rounded-2xl border border-separator\">\n        <StepperRow\n          label=\"Copies\"\n          value={copies}\n          onValueChange={setCopies}\n          min={1}\n          max={999}\n        />\n        <View className=\"h-px bg-separator\" />\n        <StepperRow\n          label=\"Scale\"\n          value={scale}\n          onValueChange={setScale}\n          min={25}\n          max={400}\n          step={5}\n          format={{ style: \"unit\", unit: \"percent\" }}\n        />\n        <View className=\"h-px bg-separator\" />\n        <StepperRow label=\"Pages per sheet\" defaultValue={1} disabled />\n      </View>\n      <Text\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {copies} {copies === 1 ? \"copy\" : \"copies\"} at {scale}%\n      </Text>\n    </View>\n  )\n}\n\nexport function StepperPrintExample() {\n  return (\n    <PrintExample />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct StepperParts: View {\n  var body: some View {\n    StepperInput()\n    StepperGroup {\n      StepperDecrement()\n      StepperSeparator()\n      StepperIncrement()\n    }\n  }\n}\n\nstruct StepperRow<Content: View>: View {\n  let label: LocalizedStringKey\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    HStack(spacing: 16) {\n      Text(label)\n        .textStyle(.base)\n        .foregroundStyle(Color.label)\n        .frame(maxWidth: .infinity, alignment: .leading)\n      content()\n        .accessibilityLabel(Text(label))\n    }\n    .padding(.horizontal, 16)\n    .padding(.vertical, 6)\n    .frame(minHeight: 44)\n  }\n}\n\nstruct StepperPrint: View {\n  @State private var copies = 1\n  @State private var scale = 100.0\n  @State private var pages = 1\n\n  var body: some View {\n    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n    VStack(alignment: .leading, spacing: 12) {\n      VStack(spacing: 0) {\n        StepperRow(label: \"Copies\") {\n          ValueStepper(value: $copies, in: 1...999) { StepperParts() }\n        }\n        Color.separator.frame(height: 1)\n        StepperRow(label: \"Scale\") {\n          ValueStepper(\n            value: $scale,\n            in: 25...400,\n            step: 5,\n            format: FloatingPointFormatStyle<Double>.Percent().scale(1)\n          ) { StepperParts() }\n        }\n        Color.separator.frame(height: 1)\n        StepperRow(label: \"Pages per sheet\") {\n          ValueStepper(value: $pages) { StepperParts() }\n            .disabled(true)\n        }\n      }\n      .clipShape(shape)\n      .overlay { shape.strokeBorder(Color.separator) }\n      Text(verbatim: \"\\(copies) \\(copies == 1 ? \"copy\" : \"copies\") at \\(Int(scale))%\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .accessibilityAddTraits(.updatesFrequently)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.heightIn\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableDoubleStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.Stepper\nimport com.esuiss.ui.interactions.StepperDecrement\nimport com.esuiss.ui.interactions.StepperGroup\nimport com.esuiss.ui.interactions.StepperIncrement\nimport com.esuiss.ui.interactions.StepperInput\nimport com.esuiss.ui.interactions.StepperSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\nimport java.text.DecimalFormat\nimport java.text.NumberFormat\n\n@Composable\nfun StepperControls() {\n    StepperGroup {\n        StepperDecrement()\n        StepperSeparator()\n        StepperIncrement()\n    }\n}\n\n@Composable\nfun StepperRow(\n    label: String,\n    value: Double,\n    onValueChange: (Double) -> Unit,\n    min: Double = Double.NEGATIVE_INFINITY,\n    max: Double = Double.POSITIVE_INFINITY,\n    step: Double = 1.0,\n    enabled: Boolean = true,\n    format: NumberFormat = remember { NumberFormat.getNumberInstance() },\n) {\n    Row(\n        modifier = Modifier\n            .fillMaxWidth()\n            .heightIn(min = 44.dp)\n            .padding(horizontal = 16.dp, vertical = 6.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        Text(label, modifier = Modifier.weight(1f), style = Typography.base)\n        Stepper(value = value, onValueChange = onValueChange, min = min, max = max, step = step, enabled = enabled, format = format) {\n            StepperInput(contentDescription = label)\n            StepperControls()\n        }\n    }\n}\n\n@Composable\nfun StepperPrint() {\n    val colors = EsuissTheme.colors\n    var copies by rememberSaveable { mutableDoubleStateOf(1.0) }\n    var scale by rememberSaveable { mutableDoubleStateOf(100.0) }\n    var pages by rememberSaveable { mutableDoubleStateOf(1.0) }\n    val percent = remember { DecimalFormat(\"0'%'\") }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Column(\n            Modifier\n                .fillMaxWidth()\n                .clip(shape)\n                .border(1.dp, colors.separator, shape),\n        ) {\n            StepperRow(\"Copies\", copies, { copies = it }, min = 1.0, max = 999.0)\n            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n            StepperRow(\"Scale\", scale, { scale = it }, min = 25.0, max = 400.0, step = 5.0, format = percent)\n            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n            StepperRow(\"Pages per sheet\", pages, { pages = it }, enabled = false)\n        }\n        Text(\n            \"${copies.toInt()} ${if (copies == 1.0) \"copy\" else \"copies\"} at ${scale.toInt()}%\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm.copy(color = colors.labelSecondary),\n        )\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Stepper
+
+The root that holds the value and limits.
+
+<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Root>"]} props={[{"name":"value","type":"number","description":"The current value when controlled."},{"name":"defaultValue","type":"number","default":"0","description":"The initial value when uncontrolled. Defaults to `0`."},{"name":"onValueChange","type":"( value: number, eventDetails: NumberFieldPrimitive.ChangeEventDetails ) => void","description":"Called with the new number and change details."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### StepperInput
+
+The editable, right-aligned value.
+
+<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Group>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### StepperDecrement
+
+The minus button.
+
+<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Decrement>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### StepperIncrement
+
+The plus button.
+
+<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Increment>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The minus and plus buttons have the `button` role.
+- Label the value with `accessibilityLabel` or `accessibilityLabelledBy` on `StepperInput`.
+- The separator is hidden from screen readers.
+
+## Notes
+
+- A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.
+- The group uses `bg-control`. Buttons use `bg-surface-raised` with a small shadow (`bg-label-quaternary` in dark mode) and `bg-control-pressed` when pressed; a disabled button or one at its limit uses `bg-control-disabled` with a `text-label-quaternary` icon.
+- Disabled text uses `text-label-quaternary`.
+
+</Only>

@@ -2,8 +2,11 @@
 title: Date Picker
 description: "A date field that opens a calendar popover on desktop and wheel pickers in a drawer on mobile."
 eyebrow: Pattern
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="date-picker" story="Default">
 
@@ -167,3 +170,371 @@ The field trigger with its desktop calendar popover and mobile wheel drawer.
 ## Notes
 
 The trigger carries `data-slot="date-picker-trigger"` and `data-placeholder` while empty; the popup carries `data-slot="date-picker-content"` and the wheels `data-slot="date-picker-wheels"`. When no value is set, the mobile wheels start at today's date. The open state is internal and cannot be controlled.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="patterns-date-picker--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+`DatePicker` renders a field-style `DrawerTrigger` with a calendar icon and the selected date formatted with `Intl.DateTimeFormat` in the `medium` date style. The trigger sizes itself to its content rather than filling the width; pass `className` to change that. Pressing it opens a `Drawer` with three `WheelPicker` columns.
+
+The column order follows the locale's short date format, falling back to month, day, year. Month names come from the locale, and the day column shrinks or grows with the chosen month and year, clamping the day when needed.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add date-picker"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add date-picker --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add date-picker --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="uniwind/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="nativewind/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Patterns/DatePicker.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Calendar.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Drawer.swift" />
+
+<SourceFile path="swift/Components/DropdownMenu.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Select.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Components/WheelPicker.swift" />
+
+<SourceFile path="swift/Patterns/Adaptive.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/patterns/DatePicker.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Drawer.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+<SourceFile path="kotlin/components/Select.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+<SourceFile path="kotlin/components/WheelPicker.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\""} />
+
+<Code lang="tsx" code={"<DatePicker accessibilityLabel=\"Date\" />"} />
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. The value is a `Date` or `null`; `onValueChange` fires on every wheel change, so there is no separate confirm step.
+
+When no value is set the wheels start at today and the field shows `placeholder`. Limit the year column with `fromYear` and `toYear`.
+
+## Examples
+
+### With value
+
+Starts with a preset date via `defaultValue`.
+
+<NativeExample id="patterns-date-picker--with-value" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithValueExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerWithValueExample: View {\n  var body: some View {\n    DatePickerDemo(value: datePickerDay(2026, 10, 4))\n  }\n}\n\nfunc datePickerDay(_ year: Int, _ month: Int, _ day: Int) -> Date? {\n  Foundation.Calendar.current.date(from: DateComponents(year: year, month: month, day: day))\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerWithValueExample() {\n    DatePickerDemo(initial = datePickerDate(2026, 9, 4))\n}\n\nfun datePickerDate(year: Int, month: Int, day: Int): Long =\n    Calendar.getInstance().apply {\n        clear()\n        set(year, month, day)\n    }.timeInMillis\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### Locale
+
+Uses `tr-TR`, which reorders the wheels and translates month names.
+
+<NativeExample id="patterns-date-picker--locale" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerLocaleExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" locale=\"tr-TR\" placeholder=\"Tarih seç\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerLocaleExample: View {\n  var body: some View {\n    DatePickerDemo(value: datePickerDay(2026, 10, 4), placeholder: \"Tarih seç\")\n      .environment(\\.locale, Locale(identifier: \"tr_TR\"))\n  }\n}\n\nfunc datePickerDay(_ year: Int, _ month: Int, _ day: Int) -> Date? {\n  Foundation.Calendar.current.date(from: DateComponents(year: year, month: month, day: day))\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerLocaleExample() {\n    DatePickerDemo(\n        initial = datePickerDate(2026, 9, 4),\n        locale = Locale.forLanguageTag(\"tr-TR\"),\n        placeholder = \"Tarih seç\",\n    )\n}\n\nfun datePickerDate(year: Int, month: Int, day: Int): Long =\n    Calendar.getInstance().apply {\n        clear()\n        set(year, month, day)\n    }.timeInMillis\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### Year range
+
+A date-of-birth field limited to 1940 through 2010.
+
+<NativeExample id="patterns-date-picker--year-range" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerYearRangeExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" placeholder=\"Date of birth\" fromYear={1940} toYear={2010} defaultValue={new Date(1990, 5, 15)} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerYearRangeExample: View {\n  var body: some View {\n    DatePickerDemo(value: datePickerDay(1990, 6, 15), placeholder: \"Date of birth\", fromYear: 1940, toYear: 2010)\n  }\n}\n\nfunc datePickerDay(_ year: Int, _ month: Int, _ day: Int) -> Date? {\n  Foundation.Calendar.current.date(from: DateComponents(year: year, month: month, day: day))\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerYearRangeExample() {\n    DatePickerDemo(\n        initial = datePickerDate(1990, 5, 15),\n        placeholder = \"Date of birth\",\n        fromYear = 1940,\n        toYear = 2010,\n    )\n}\n\nfun datePickerDate(year: Int, month: Int, day: Int): Long =\n    Calendar.getInstance().apply {\n        clear()\n        set(year, month, day)\n    }.timeInMillis\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### With title
+
+Adds a heading to the drawer with `title`.
+
+<NativeExample id="patterns-date-picker--with-title" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithTitleExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" title=\"Delivery date\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerWithTitleExample: View {\n  var body: some View {\n    DatePickerDemo(title: \"Delivery date\")\n  }\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerWithTitleExample() {\n    DatePickerDemo(title = \"Delivery date\")\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### With close button
+
+Shows a close button in the drawer.
+
+<NativeExample id="patterns-date-picker--with-close-button" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseButtonExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" showCloseButton />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerWithCloseButtonExample: View {\n  var body: some View {\n    DatePickerDemo(showCloseButton: true)\n  }\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerWithCloseButtonExample() {\n    DatePickerDemo(showCloseButton = true)\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### With close label
+
+Labels the close button `Done` with `closeLabel`.
+
+<NativeExample id="patterns-date-picker--with-close-label" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseLabelExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" showCloseButton closeLabel=\"Done\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerWithCloseLabelExample: View {\n  var body: some View {\n    DatePickerDemo(showCloseButton: true, closeLabel: \"Done\")\n  }\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerWithCloseLabelExample() {\n    DatePickerDemo(showCloseButton = true, closeLabel = \"Done\")\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+A disabled field that cannot open the drawer.
+
+<NativeExample id="patterns-date-picker--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerDisabledExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" disabled />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerDisabledExample: View {\n  var body: some View {\n    DatePickerDemo()\n      .disabled(true)\n  }\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerDisabledExample() {\n    DatePickerDemo(enabled = false)\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### Invalid
+
+Shows the error border and tint with `invalid`.
+
+<NativeExample id="patterns-date-picker--invalid" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerInvalidExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" invalid />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DatePickerInvalidExample: View {\n  var body: some View {\n    DatePickerDemo()\n      .invalid()\n  }\n}\n\nstruct DatePickerDemo: View {\n  var placeholder: LocalizedStringKey = \"Pick a date\"\n  var fromYear: Int?\n  var toYear: Int?\n  var title: LocalizedStringKey?\n  var showCloseButton = false\n  var closeLabel: LocalizedStringKey?\n\n  @State private var value: Date?\n\n  init(\n    value: Date? = nil,\n    placeholder: LocalizedStringKey = \"Pick a date\",\n    fromYear: Int? = nil,\n    toYear: Int? = nil,\n    title: LocalizedStringKey? = nil,\n    showCloseButton: Bool = false,\n    closeLabel: LocalizedStringKey? = nil\n  ) {\n    _value = State(initialValue: value)\n    self.placeholder = placeholder\n    self.fromYear = fromYear\n    self.toYear = toYear\n    self.title = title\n    self.showCloseButton = showCloseButton\n    self.closeLabel = closeLabel\n  }\n\n  var body: some View {\n    DatePickerField(\n      selection: $value,\n      placeholder: placeholder,\n      fromYear: fromYear,\n      toYear: toYear,\n      title: title,\n      showCloseButton: showCloseButton,\n      closeLabel: closeLabel\n    )\n    .fixedSize()\n    .accessibilityLabel(Text(\"Date\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerInvalidExample() {\n    DatePickerDemo(invalid = true)\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+### Controlled
+
+Holds the date in state and prints the selection below.
+
+<NativeExample id="patterns-date-picker--controlled" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { DatePicker } from \"@/components/patterns/date-picker\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledExample(args: React.ComponentProps<typeof DatePicker>) {\n  const [value, setValue] = React.useState<Date | null>(new Date(2026, 9, 4))\n\n  return (\n    <View className=\"items-start gap-2\">\n      <DatePicker {...args} value={value} onValueChange={setValue} />\n      <Text className=\"text-sm text-label-secondary\">\n        Selected: {value ? value.toDateString() : \"none\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function DatePickerControlledExample() {\n  return (\n    <ControlledExample accessibilityLabel=\"Date\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nfunc datePickerDay(_ year: Int, _ month: Int, _ day: Int) -> Date? {\n  Foundation.Calendar.current.date(from: DateComponents(year: year, month: month, day: day))\n}\n\nstruct DatePickerControlled: View {\n  @State private var value: Date? = datePickerDay(2026, 10, 4)\n\n  var selected: String {\n    guard let value else { return \"none\" }\n    let formatter = DateFormatter()\n    formatter.locale = Locale(identifier: \"en_US_POSIX\")\n    formatter.dateFormat = \"EEE MMM dd yyyy\"\n    return formatter.string(from: value)\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      DatePickerField(selection: $value)\n        .fixedSize()\n        .accessibilityLabel(Text(\"Date\"))\n      Text(verbatim: \"Selected: \\(selected)\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.patterns.DatePicker\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport java.text.SimpleDateFormat\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\nfun datePickerDate(year: Int, month: Int, day: Int): Long =\n    Calendar.getInstance().apply {\n        clear()\n        set(year, month, day)\n    }.timeInMillis\n\n@Composable\nfun DatePickerControlled() {\n    var value by rememberSaveable { mutableStateOf<Long?>(datePickerDate(2026, 9, 4)) }\n    val format = SimpleDateFormat(\"EEE MMM dd yyyy\", Locale.US)\n    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        DatePicker(\n            value = value?.let(::Date),\n            onValueChange = { value = it.time },\n            modifier = Modifier.semantics { contentDescription = \"Date\" },\n        )\n        Text(\n            \"Selected: ${value?.let { format.format(Date(it)) } ?: \"none\"}\",\n            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Floating
+
+Detaches the drawer from the screen edges.
+
+<NativeExample id="patterns-date-picker--floating" width={880} height={400} platforms={["React Native","Compose"]}>
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerFloatingExample() {\n  return (\n    <DatePicker accessibilityLabel=\"Date\" floating />\n  )\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.patterns.DatePicker\nimport java.util.Calendar\nimport java.util.Date\nimport java.util.Locale\n\n@Composable\nfun DatePickerFloatingExample() {\n    DatePickerDemo(floating = true)\n}\n\n@Composable\nfun DatePickerDemo(\n    initial: Long? = null,\n    locale: Locale = Locale.getDefault(),\n    placeholder: String = \"Pick a date\",\n    fromYear: Int = Calendar.getInstance().get(Calendar.YEAR) - 100,\n    toYear: Int = Calendar.getInstance().get(Calendar.YEAR) + 10,\n    title: String? = null,\n    enabled: Boolean = true,\n    invalid: Boolean? = null,\n    floating: Boolean = false,\n    showCloseButton: Boolean = false,\n    closeLabel: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    DatePicker(\n        value = value?.let(::Date),\n        onValueChange = { value = it.time },\n        modifier = Modifier.semantics { contentDescription = \"Date\" },\n        placeholder = placeholder,\n        locale = locale,\n        fromYear = fromYear,\n        toYear = toYear,\n        title = title,\n        enabled = enabled,\n        invalid = invalid,\n        floating = floating,\n        showCloseButton = showCloseButton,\n        closeLabel = closeLabel,\n    )\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DatePicker
+
+<PropsTable props={[{"name":"value","type":"Date | null","description":"The selected date when controlled, or `null`."},{"name":"defaultValue","type":"Date | null","description":"The initial date when uncontrolled."},{"name":"onValueChange","type":"(value: Date | null) => void","description":"Called with the new `Date` on every wheel change."},{"name":"placeholder","type":"string","default":"\"Pick a date\"","description":"Text shown when no date is set. Defaults to `Pick a date`."},{"name":"locale","type":"string","description":"BCP 47 locale for formatting, month names and wheel order."},{"name":"fromYear","type":"number","default":"new Date().getFullYear() - 100","description":"First year in the year wheel. Defaults to 100 years ago."},{"name":"toYear","type":"number","default":"new Date().getFullYear() + 10","description":"Last year in the year wheel. Defaults to 10 years ahead."},{"name":"title","type":"string","description":"Heading shown at the top of the drawer."},{"name":"disabled","type":"boolean","description":"Prevents opening and dims the field."},{"name":"floating","type":"boolean","description":"Insets the drawer from the screen edges."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the drawer. Defaults to `false`."},{"name":"closeLabel","type":"string","description":"Label of the close button."},{"name":"invalid","type":"boolean","description":"Applies the error border and background."},{"name":"className","type":"string","description":"Extra classes for the field, for example `w-full` to fill the width."},{"name":"accessibilityLabel","type":"string","description":"Label for the field, also used for the drawer when there is no `title`."},{"name":"accessibilityLabelledBy","type":"string","description":"Links the field to a visible label."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The wheels are labelled `Day`, `Month` and `Year`.
+- Without a `title`, the drawer is labelled by `accessibilityLabel` or the placeholder.
+
+## Notes
+
+- The field uses `bg-control`, `border-danger` with a `bg-danger` tint when invalid, and `bg-control-disabled` when disabled; the tint is stronger in dark mode.
+- Without `floating`, the drawer's top corners are square.
+
+</Only>

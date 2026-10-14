@@ -2,8 +2,11 @@
 title: Tooltip Chart Label Formatter
 description: "A gradient area chart whose tooltip heading shows a longer date than the axis ticks."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-label-formatter">
 
@@ -44,3 +47,5 @@ Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the 
 ## Notes
 
 The demo format shows the day number and weekday but not the month, which can be ambiguous across month boundaries.
+
+</Only>

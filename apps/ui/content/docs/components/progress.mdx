@@ -1,9 +1,12 @@
 ---
 title: Progress
 description: "A horizontal bar that shows the completion of a task."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="progress" story="Default">
 
@@ -139,3 +142,260 @@ The formatted current value, aligned to the end of the row.
 
 - Styling hooks: `data-slot` values `progress`, `progress-track`, `progress-indicator`, `progress-label` and `progress-value`. Base UI also sets status attributes such as `data-progressing`, `data-complete` and `data-indeterminate`.
 - The track uses `surface-secondary` and the indicator uses `accent`; the indicator animates width changes.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-progress--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress } from \"@/components/ui/progress\"\n\nfunction ProgressDemo() {\n  const [value, setValue] = React.useState(13)\n  React.useEffect(() => {\n    const timer = setTimeout(() => setValue(66), 500)\n    return () => clearTimeout(timer)\n  }, [])\n  return <Progress value={value} />\n}\n\nexport function ProgressExample() {\n  return (\n    <ProgressDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressDelayed: View {\n  @State private var value = 13.0\n\n  var body: some View {\n    ProgressView(value: value, total: 100)\n      .progressViewStyle(.bar)\n      .task {\n        try? await Task.sleep(for: .milliseconds(500))\n        value = 66\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\nimport kotlinx.coroutines.delay\n\n@Composable\nfun ProgressDefault() {\n    var value by rememberSaveable { mutableFloatStateOf(13f) }\n    LaunchedEffect(Unit) {\n        delay(500)\n        value = 66f\n    }\n    Progress(value, Modifier.fillMaxWidth())\n}"} />
+
+</NativeExample>
+
+`Progress` renders a thin track with an indicator whose width follows `value`. The width animates with a Reanimated spring, clamped between 0 and 100 percent. Any children, such as `ProgressLabel` and `ProgressValue`, are placed in a row above the bar.
+
+Use it for uploads, downloads and other tasks with a known amount of work.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add progress"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add progress --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add progress --platform kotlin"} />
+
+</Only>
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="uniwind/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="nativewind/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/progress.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/progress.tsx`:
+
+<SourceFile path="stylesheet/components/ui/progress.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Progress.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source:
+
+<SourceFile path="kotlin/components/Progress.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from \"@/components/ui/progress\""} />
+
+<Code lang="tsx" code={"<ProgressDemo />"} />
+
+Set `value` between `min` and `max` (0 and 100 by default). Pass `null` when the progress is unknown.
+
+Add a `ProgressLabel` and a `ProgressValue` as children to show a caption and the formatted value; the value is pushed to the end of the row. Format the value with `format` and `locale`.
+
+Style the bar with `trackClassName` and `indicatorClassName`. `ProgressTrack` and `ProgressIndicator` are also exported for custom layouts.
+
+## Examples
+
+### With label
+
+A bar with a label and a live percentage value.
+
+<NativeExample id="components-progress--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Progress, ProgressLabel, ProgressValue } from \"@/components/ui/progress\"\n\nfunction WithLabelDemo() {\n  const [value, setValue] = React.useState(0)\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setValue((current) => (current >= 100 ? 0 : current + 10))\n    }, 600)\n    return () => clearInterval(timer)\n  }, [])\n  return (\n    <Progress value={value}>\n      <ProgressLabel>Uploading</ProgressLabel>\n      <ProgressValue />\n    </Progress>\n  )\n}\n\nexport function ProgressWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressWithLabel: View {\n  @State private var value = 0\n\n  var body: some View {\n    ProgressView(value: Double(value), total: 100) {\n      Text(\"Uploading\")\n    } currentValueLabel: {\n      Text(verbatim: \"\\(value)%\")\n    }\n    .progressViewStyle(.bar)\n    .task {\n      while !Task.isCancelled {\n        try? await Task.sleep(for: .milliseconds(600))\n        value = value >= 100 ? 0 : value + 10\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\nimport kotlinx.coroutines.delay\n\n@Composable\nfun ProgressWithLabel() {\n    var value by rememberSaveable { mutableFloatStateOf(0f) }\n    LaunchedEffect(Unit) {\n        while (true) {\n            delay(600)\n            value = if (value >= 100f) 0f else value + 10f\n        }\n    }\n    Progress(value, Modifier.fillMaxWidth(), label = \"Uploading\", showValue = true)\n}"} />
+
+</NativeExample>
+
+### Complete
+
+A bar at 100 percent.
+
+<NativeExample id="components-progress--complete" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressCompleteExample() {\n  return (\n    <Progress value={100} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressCompleteExample: View {\n  var body: some View {\n    ProgressView(value: 100, total: 100)\n      .progressViewStyle(.bar)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Progress\n\n@Composable\nfun ProgressCompleteExample() {\n    Progress(100f, Modifier.fillMaxWidth())\n}"} />
+
+</NativeExample>
+
+### Values
+
+Bars at 0, 25, 50, 75 and 100 percent, the last with a custom indicator color.
+
+<NativeExample id="components-progress--values" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressValuesExample() {\n  return (\n    <View className=\"w-full gap-4\">\n      <Progress value={0} />\n      <Progress value={25} />\n      <Progress value={50} />\n      <Progress value={75} />\n      <Progress value={100} indicatorClassName=\"bg-green\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ProgressValuesExample: View {\n  var body: some View {\n    VStack(spacing: 16) {\n      ForEach([0.0, 25, 50, 75, 100], id: \\.self) { value in\n        ProgressView(value: value, total: 100)\n          .progressViewStyle(.bar)\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Progress\n\n@Composable\nfun ProgressValues() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        listOf(0f, 25f, 50f, 75f, 100f).forEach { Progress(it, Modifier.fillMaxWidth()) }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Progress
+
+Root that holds the value and renders the track and indicator.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Root>"]} props={[{"name":"trackClassName","type":"string","description":"Extra classes for the track."},{"name":"indicatorClassName","type":"string","description":"Extra classes for the indicator."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ProgressTrack
+
+Background bar.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Track>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ProgressIndicator
+
+Animated fill that shows the current value.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Indicator>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ProgressLabel
+
+Caption text above the bar.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Label>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ProgressValue
+
+Formatted value text, aligned to the end.
+
+<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Value>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The root has the `progressbar` role and reports `min`, `max`, the current value and a value text, so VoiceOver and TalkBack announce the progress.
+- Use `getAccessibilityValueText` to customize the announced text.
+
+## Notes
+
+- The track uses `bg-surface-secondary` and the indicator `bg-accent`.
+- Label and value text use `text-label` and `text-label-secondary`, with tabular numbers for the value.
+- Light and dark colors follow the system appearance.
+
+</Only>

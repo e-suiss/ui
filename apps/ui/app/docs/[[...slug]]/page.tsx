@@ -10,6 +10,7 @@ import { getMDXComponents } from "@/components/mdx";
 import { Anchor } from "@/components/site/anchor";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageActions } from "@/components/site/page-actions";
+import { PlatformScope, PlatformSwitcher } from "@/components/site/platform";
 import { Toc } from "@/components/site/toc";
 import { contentDates } from "@/lib/dates";
 import { markdownUrl } from "@/lib/llms";
@@ -98,7 +99,7 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
       .filter((item) => item.url && item.url !== "/docs")
       .map((item) => ({ name: String(item.name), url: item.url as string })),
   ];
-  const summary = pageSummary(page.data.title, page.data.eyebrow);
+  const summary = pageSummary(page.data.title, page.data.eyebrow, page.data.platforms);
   const { published, modified } = contentDates(page.path);
   const structuredData = {
     "@context": "https://schema.org",
@@ -133,7 +134,8 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
     ],
   };
 
-  return (
+  const platforms = page.data.platforms;
+  const content = (
     <div className="flex gap-12 px-5 pt-14 pb-24 md:px-10 md:pt-20 xl:pe-10">
       <JsonLd data={structuredData} />
       <article className={cn("mx-auto w-full min-w-0", wide ? "max-w-[72rem]" : "max-w-205")}>
@@ -158,6 +160,11 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
               {summary}
             </p>
           )}
+          {platforms && platforms.length > 1 && (
+            <div className="mt-4">
+              <PlatformSwitcher platforms={platforms} />
+            </div>
+          )}
         </header>
         <div className="prose">
           <MDX components={getMDXComponents()} />
@@ -174,6 +181,7 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
       </aside>
     </div>
   );
+  return platforms ? <PlatformScope platforms={platforms}>{content}</PlatformScope> : content;
 }
 
 export function generateStaticParams() {

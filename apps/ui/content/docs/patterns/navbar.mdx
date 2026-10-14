@@ -2,8 +2,11 @@
 title: Navbar
 description: "A site header that renders a navigation menu on wide screens and a fullscreen menu when space runs out."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="navbar" story="Default">
 
@@ -116,3 +119,5 @@ The header that renders the brand, navigation items and actions.
 ## Notes
 
 The header carries `data-slot="navbar"`, `data-layout`, and `data-compact` while the fullscreen menu is in use. The brand and actions wrappers use `data-slot="navbar-brand"` and `data-slot="navbar-actions"`, and mega columns use `data-slot="navbar-column"` with `data-featured`. With `layout="panel"` the header gains `relative` positioning and `z-50` so the panel can anchor to it.
+
+</Only>

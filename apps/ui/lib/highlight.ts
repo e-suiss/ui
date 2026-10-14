@@ -39,11 +39,14 @@ export const tokenClasses = {
   },
 };
 
-export const sourceRoot = path.join(process.cwd(), "components");
+const componentsRoot = path.join(process.cwd(), "components");
+const registryRoot = path.join(process.cwd(), "registry");
 
 export function sourcePath(file: string) {
-  const resolved = path.join(sourceRoot, path.relative("components", file));
-  return resolved.startsWith(`${sourceRoot}${path.sep}`) ? resolved : undefined;
+  const web = file.startsWith("components/");
+  const root = web ? componentsRoot : registryRoot;
+  const resolved = path.join(root, web ? path.relative("components", file) : file);
+  return resolved.startsWith(`${root}${path.sep}`) ? resolved : undefined;
 }
 
 export async function readSource(file: string) {

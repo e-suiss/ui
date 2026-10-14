@@ -1,12 +1,27 @@
 const kinds: Record<string, string> = {
-  "React Component": "an open-source React component from suiss/ui, built on Base UI and Tailwind CSS.",
-  Pattern: "an open-source React pattern from suiss/ui: components composed into a flow that adapts between desktop and mobile.",
-  Interaction: "an open-source React interaction from suiss/ui, styled with Tailwind CSS.",
-  Chart: "an open-source React chart from suiss/ui, built on Recharts and styled by your theme.",
-  Block: "an open-source React block from suiss/ui: a complete screen built from suiss/ui components.",
+  Component: "component",
+  Pattern: "pattern",
+  Interaction: "interaction",
+  Chart: "chart",
+  Block: "block",
 };
 
-export function pageSummary(title: string, eyebrow: string | undefined) {
+const platformNames: Record<string, string> = {
+  web: "React",
+  rn: "React Native",
+  swift: "SwiftUI",
+  kotlin: "Jetpack Compose",
+};
+
+function list(items: string[]) {
+  if (items.length < 2) return items.join("");
+  return `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+}
+
+export function pageSummary(title: string, eyebrow: string | undefined, platforms: string[] = []) {
   const kind = eyebrow ? kinds[eyebrow] : undefined;
-  return kind ? `${title} is ${kind} The @esuiss/ui CLI copies its source into your project, so you own the code.` : undefined;
+  if (!kind) return undefined;
+  const names = platforms.map((platform) => platformNames[platform]).filter(Boolean);
+  const target = names.length ? ` for ${list(names)}` : "";
+  return `${title} is an open-source ${kind} from suiss/ui${target}. The @esuiss/ui CLI copies its source into your project, so you own the code.`;
 }

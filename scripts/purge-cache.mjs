@@ -1,9 +1,7 @@
 const token = process.env.CLOUDFLARE_API_TOKEN
 const zone = process.env.CLOUDFLARE_ZONE_ID
 const hosts =
-  process.argv.slice(2).length > 0
-    ? process.argv.slice(2)
-    : ["ui.suiss.app", "uim.suiss.app"]
+  process.argv.slice(2).length > 0 ? process.argv.slice(2) : ["ui.suiss.app"]
 
 if (!token || !zone) {
   console.error(

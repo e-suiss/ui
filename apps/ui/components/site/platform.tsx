@@ -1,0 +1,101 @@
+"use client";
+
+import { cn } from "cn";
+import * as React from "react";
+
+import { isPlatform, KEY, PLATFORM_LABELS, type Platform } from "@/lib/platform";
+
+const listeners = new Set<() => void>();
+let current: Platform | null = null;
+
+function readStored(): Platform | null {
+  try {
+    const query = new URLSearchParams(window.location.search).get("platform");
+    if (isPlatform(query)) return query;
+    const stored = window.localStorage.getItem(KEY);
+    return isPlatform(stored) ? stored : null;
+  } catch {
+    return null;
+  }
+}
+
+function apply(platform: Platform) {
+  document.documentElement.dataset.platform = platform;
+  window.dispatchEvent(new Event("platformchange"));
+}
+
+function snapshot() {
+  if (current === null) current = readStored();
+  return current;
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+export function selectPlatform(platform: Platform) {
+  current = platform;
+  try {
+    window.localStorage.setItem(KEY, platform);
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("platform")) {
+      url.searchParams.set("platform", platform);
+      window.history.replaceState(window.history.state, "", url);
+    }
+  } catch {}
+  apply(platform);
+  for (const listener of listeners) listener();
+}
+
+export function useActivePlatform(available: Platform[]) {
+  const stored = React.useSyncExternalStore(subscribe, snapshot, () => null);
+  return stored && available.includes(stored) ? stored : available[0];
+}
+
+export function PlatformScope({ platforms, children }: { platforms: Platform[]; children: React.ReactNode }) {
+  return (
+    <div data-platform-scope="" data-platforms={platforms.join(" ")} data-first={platforms[0]} className="contents">
+      {children}
+    </div>
+  );
+}
+
+export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
+  const active = useActivePlatform(platforms);
+  return (
+    <div
+      role="tablist"
+      aria-label="Platform"
+      className="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-label/12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
+      {platforms.map((platform) => (
+        <button
+          key={platform}
+          type="button"
+          role="tab"
+          aria-selected={active === platform}
+          onClick={() => selectPlatform(platform)}
+          className={cn(
+            "relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
+            active === platform
+              ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-label"
+              : "text-label/45 hover:text-label",
+          )}
+        >
+          {PLATFORM_LABELS[platform]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function Only({ platform, children }: { platform: string; children: React.ReactNode }) {
+  return (
+    <div data-only={platform} className="contents">
+      {children}
+    </div>
+  );
+}

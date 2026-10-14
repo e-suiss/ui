@@ -2,8 +2,11 @@
 title: Tooltip Chart Custom
 description: "A bar chart whose tooltip is fully custom markup, showing a large total, a unit and the day."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-custom">
 
@@ -44,3 +47,5 @@ Pass your own render function to the `content` prop of `ChartTooltip`; it receiv
 ## Notes
 
 A custom tooltip skips the built-in one entirely, so labels and colors from the config only appear if you read them yourself. The tooltip opens on a preset bar when the chart loads; remove `defaultIndex` to start hidden.
+
+</Only>

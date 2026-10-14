@@ -1,9 +1,12 @@
 ---
 title: Kbd
 description: "Displays a keyboard key or shortcut, with a platform-aware modifier symbol."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="kbd" story="Default">
 
@@ -121,3 +124,5 @@ Groups several keys into a single inline key combination.
 - Platform detection reads `navigator` through `useSyncExternalStore`; during server rendering the non-Apple modifier is used.
 - Inside an input group or tooltip content, `Kbd` adapts its background and text colors automatically.
 - Uses the `surface-secondary`, `surface` and `label-secondary` tokens.
+
+</Only>

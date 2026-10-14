@@ -1,0 +1,252 @@
+---
+title: Reorder List
+description: "A list whose rows are dragged by a handle to change their order, with haptics and move up and down actions."
+eyebrow: Interaction
+platforms: [rn, swift, kotlin]
+generated: true
+---
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="interactions-reorder-list--default" width={880} height={720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { ReorderList, ReorderListHandle, ReorderListItem } from \"@/components/interactions/reorder-list\"\nimport { ItemGroup } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nconst tasks: Record<string, { title: string; detail?: string }> = {\n  inbox: { title: \"Inbox\", detail: \"12 messages\" },\n  today: { title: \"Today\" },\n  upcoming: { title: \"Upcoming\", detail: \"Next 7 days\" },\n  someday: { title: \"Someday\" },\n  archive: {\n    title: \"Archive\",\n    detail: \"Everything you finished, kept for later reference\",\n  },\n}\n\nconst initialOrder = Object.keys(tasks)\n\nfunction renderRows(value: string[]) {\n  return value.map((key) => {\n    const task = tasks[key]\n    return (\n      <ReorderListItem key={key} value={key} className=\"ps-4\">\n        <View className=\"min-w-0 flex-1 py-3\">\n          <Text numberOfLines={1}>{task.title}</Text>\n          {task.detail ? (\n            <Text className=\"text-sm text-label-secondary\">{task.detail}</Text>\n          ) : null}\n        </View>\n        <ReorderListHandle accessibilityLabel={`Reorder ${task.title}`} />\n      </ReorderListItem>\n    )\n  })\n}\n\nfunction ReorderDemo({ inset = false }: { inset?: boolean }) {\n  const [value, setValue] = React.useState(initialOrder)\n  return (\n    <View className=\"gap-3\">\n      {inset ? (\n        <ItemGroup variant=\"inset\">\n          <ReorderList value={value} onValueChange={setValue}>\n            {renderRows(value)}\n          </ReorderList>\n        </ItemGroup>\n      ) : (\n        <ReorderList value={value} onValueChange={setValue}>\n          {renderRows(value)}\n        </ReorderList>\n      )}\n      <Text role=\"status\" className=\"text-sm text-label-secondary\">\n        {value.map((key) => tasks[key].title).join(\", \")}\n      </Text>\n    </View>\n  )\n}\n\nexport function ReorderListExample() {\n  return (\n    <ReorderDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ReorderListTask {\n  let title: String\n  var detail: String?\n}\n\nlet reorderListTasks: [String: ReorderListTask] = [\n  \"inbox\": ReorderListTask(title: \"Inbox\", detail: \"12 messages\"),\n  \"today\": ReorderListTask(title: \"Today\"),\n  \"upcoming\": ReorderListTask(title: \"Upcoming\", detail: \"Next 7 days\"),\n  \"someday\": ReorderListTask(title: \"Someday\"),\n  \"archive\": ReorderListTask(title: \"Archive\", detail: \"Everything you finished, kept for later reference\"),\n]\n\nlet reorderListOrder = [\"inbox\", \"today\", \"upcoming\", \"someday\", \"archive\"]\n\nstruct ReorderListDemo: View {\n  var inset = false\n\n  @State private var value = reorderListOrder\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      list\n      Text(verbatim: value.compactMap { reorderListTasks[$0]?.title }.joined(separator: \", \"))\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .accessibilityAddTraits(.updatesFrequently)\n    }\n  }\n\n  @ViewBuilder\n  var list: some View {\n    if inset {\n      ItemGroup(.inset) {\n        rows\n      }\n    } else {\n      rows\n    }\n  }\n\n  var rows: some View {\n    ReorderList($value) { key in\n      if let task = reorderListTasks[key] {\n        VStack(alignment: .leading, spacing: 0) {\n          Text(verbatim: task.title)\n            .textStyle(.base)\n            .foregroundStyle(Color.label)\n            .lineLimit(1)\n          if let detail = task.detail {\n            Text(verbatim: detail)\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n          }\n        }\n        .padding(.vertical, 12)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ItemGroup\nimport com.esuiss.ui.components.ItemGroupVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.ReorderList\nimport com.esuiss.ui.interactions.ReorderListHandle\nimport com.esuiss.ui.interactions.ReorderListItem\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ReorderListExample() {\n    ReorderListDemo(inset = false)\n}\n\nclass ReorderListTask(val title: String, val detail: String? = null)\n\nval reorderListTasks = linkedMapOf(\n    \"inbox\" to ReorderListTask(\"Inbox\", \"12 messages\"),\n    \"today\" to ReorderListTask(\"Today\"),\n    \"upcoming\" to ReorderListTask(\"Upcoming\", \"Next 7 days\"),\n    \"someday\" to ReorderListTask(\"Someday\"),\n    \"archive\" to ReorderListTask(\"Archive\", \"Everything you finished, kept for later reference\"),\n)\n\nval reorderListInitial = reorderListTasks.keys.toList()\n\n@Composable\nfun ReorderListDemo(inset: Boolean) {\n    val colors = EsuissTheme.colors\n    var value by rememberSaveable { mutableStateOf(reorderListInitial) }\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        val list = @Composable {\n            ReorderList(\n                value = value,\n                onValueChange = { value = it },\n            ) { key ->\n                val task = reorderListTasks.getValue(key)\n                ReorderListItem {\n                    Column(Modifier.weight(1f).padding(vertical = 12.dp)) {\n                        Text(task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)\n                        if (task.detail != null) {\n                            Text(task.detail, style = Typography.sm.copy(color = colors.labelSecondary))\n                        }\n                    }\n                    ReorderListHandle(contentDescription = \"Reorder ${task.title}\")\n                }\n            }\n        }\n        if (inset) ItemGroup(variant = ItemGroupVariant.Inset) { list() } else list()\n        Text(\n            value.joinToString(\", \") { reorderListTasks.getValue(it).title },\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm.copy(color = colors.labelSecondary),\n        )\n    }\n}"} />
+
+</NativeExample>
+
+`ReorderList` renders its `ReorderListItem`s in the order given by `value`. Dragging a row's `ReorderListHandle` lifts the row: a raised surface with a shadow fades in behind it and, outside an inset group, the row grows slightly. It follows the finger while the other rows spring out of the way.
+
+On release the row springs into its new slot and `onValueChange` receives the new order. Rows can have different heights. Use it for ordering favorites, playlists or priorities.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add reorder-list"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add reorder-list --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add reorder-list --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/reorder-list.tsx`:
+
+<SourceFile path="uniwind/components/interactions/reorder-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/reorder-list.tsx`:
+
+<SourceFile path="nativewind/components/interactions/reorder-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/reorder-list.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/reorder-list.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Interactions/ReorderList.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Item.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/interactions/ReorderList.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Header.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Item.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { ReorderList, ReorderListItem, ReorderListHandle } from \"@/components/interactions/reorder-list\""} />
+
+<Code lang="tsx" code={"<ReorderDemo />"} />
+
+`ReorderList` is controlled: pass `value` as an array of item keys and update it in `onValueChange`. Give each `ReorderListItem` a `value` matching its key, and place a `ReorderListHandle` anywhere inside it, at the start or end. Place the list inside an `ItemGroup` with the `inset` variant for a rounded group; the lifted row then keeps the group's shape.
+
+Only the handle starts a drag, so the rest of the row can still be pressed or scrolled.
+
+## Examples
+
+### Inset
+
+Rows inside an inset `ItemGroup`.
+
+<NativeExample id="interactions-reorder-list--inset" width={880} height={720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { ReorderList, ReorderListHandle, ReorderListItem } from \"@/components/interactions/reorder-list\"\nimport { ItemGroup } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nconst tasks: Record<string, { title: string; detail?: string }> = {\n  inbox: { title: \"Inbox\", detail: \"12 messages\" },\n  today: { title: \"Today\" },\n  upcoming: { title: \"Upcoming\", detail: \"Next 7 days\" },\n  someday: { title: \"Someday\" },\n  archive: {\n    title: \"Archive\",\n    detail: \"Everything you finished, kept for later reference\",\n  },\n}\n\nconst initialOrder = Object.keys(tasks)\n\nfunction renderRows(value: string[]) {\n  return value.map((key) => {\n    const task = tasks[key]\n    return (\n      <ReorderListItem key={key} value={key} className=\"ps-4\">\n        <View className=\"min-w-0 flex-1 py-3\">\n          <Text numberOfLines={1}>{task.title}</Text>\n          {task.detail ? (\n            <Text className=\"text-sm text-label-secondary\">{task.detail}</Text>\n          ) : null}\n        </View>\n        <ReorderListHandle accessibilityLabel={`Reorder ${task.title}`} />\n      </ReorderListItem>\n    )\n  })\n}\n\nfunction ReorderDemo({ inset = false }: { inset?: boolean }) {\n  const [value, setValue] = React.useState(initialOrder)\n  return (\n    <View className=\"gap-3\">\n      {inset ? (\n        <ItemGroup variant=\"inset\">\n          <ReorderList value={value} onValueChange={setValue}>\n            {renderRows(value)}\n          </ReorderList>\n        </ItemGroup>\n      ) : (\n        <ReorderList value={value} onValueChange={setValue}>\n          {renderRows(value)}\n        </ReorderList>\n      )}\n      <Text role=\"status\" className=\"text-sm text-label-secondary\">\n        {value.map((key) => tasks[key].title).join(\", \")}\n      </Text>\n    </View>\n  )\n}\n\nexport function ReorderListInsetExample() {\n  return (\n    <ReorderDemo inset />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ReorderListInsetExample: View {\n  var body: some View {\n    ReorderListDemo(inset: true)\n  }\n}\n\nstruct ReorderListTask {\n  let title: String\n  var detail: String?\n}\n\nlet reorderListTasks: [String: ReorderListTask] = [\n  \"inbox\": ReorderListTask(title: \"Inbox\", detail: \"12 messages\"),\n  \"today\": ReorderListTask(title: \"Today\"),\n  \"upcoming\": ReorderListTask(title: \"Upcoming\", detail: \"Next 7 days\"),\n  \"someday\": ReorderListTask(title: \"Someday\"),\n  \"archive\": ReorderListTask(title: \"Archive\", detail: \"Everything you finished, kept for later reference\"),\n]\n\nlet reorderListOrder = [\"inbox\", \"today\", \"upcoming\", \"someday\", \"archive\"]\n\nstruct ReorderListDemo: View {\n  var inset = false\n\n  @State private var value = reorderListOrder\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      list\n      Text(verbatim: value.compactMap { reorderListTasks[$0]?.title }.joined(separator: \", \"))\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .accessibilityAddTraits(.updatesFrequently)\n    }\n  }\n\n  @ViewBuilder\n  var list: some View {\n    if inset {\n      ItemGroup(.inset) {\n        rows\n      }\n    } else {\n      rows\n    }\n  }\n\n  var rows: some View {\n    ReorderList($value) { key in\n      if let task = reorderListTasks[key] {\n        VStack(alignment: .leading, spacing: 0) {\n          Text(verbatim: task.title)\n            .textStyle(.base)\n            .foregroundStyle(Color.label)\n            .lineLimit(1)\n          if let detail = task.detail {\n            Text(verbatim: detail)\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n          }\n        }\n        .padding(.vertical, 12)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ItemGroup\nimport com.esuiss.ui.components.ItemGroupVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.ReorderList\nimport com.esuiss.ui.interactions.ReorderListHandle\nimport com.esuiss.ui.interactions.ReorderListItem\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ReorderListInsetExample() {\n    ReorderListDemo(inset = true)\n}\n\nclass ReorderListTask(val title: String, val detail: String? = null)\n\nval reorderListTasks = linkedMapOf(\n    \"inbox\" to ReorderListTask(\"Inbox\", \"12 messages\"),\n    \"today\" to ReorderListTask(\"Today\"),\n    \"upcoming\" to ReorderListTask(\"Upcoming\", \"Next 7 days\"),\n    \"someday\" to ReorderListTask(\"Someday\"),\n    \"archive\" to ReorderListTask(\"Archive\", \"Everything you finished, kept for later reference\"),\n)\n\nval reorderListInitial = reorderListTasks.keys.toList()\n\n@Composable\nfun ReorderListDemo(inset: Boolean) {\n    val colors = EsuissTheme.colors\n    var value by rememberSaveable { mutableStateOf(reorderListInitial) }\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        val list = @Composable {\n            ReorderList(\n                value = value,\n                onValueChange = { value = it },\n            ) { key ->\n                val task = reorderListTasks.getValue(key)\n                ReorderListItem {\n                    Column(Modifier.weight(1f).padding(vertical = 12.dp)) {\n                        Text(task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)\n                        if (task.detail != null) {\n                            Text(task.detail, style = Typography.sm.copy(color = colors.labelSecondary))\n                        }\n                    }\n                    ReorderListHandle(contentDescription = \"Reorder ${task.title}\")\n                }\n            }\n        }\n        if (inset) ItemGroup(variant = ItemGroupVariant.Inset) { list() } else list()\n        Text(\n            value.joinToString(\", \") { reorderListTasks.getValue(it).title },\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm.copy(color = colors.labelSecondary),\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Leading handle
+
+Places the handle at the start of each row.
+
+<NativeExample id="interactions-reorder-list--leading-handle" width={880} height={507} platforms={["React Native","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ReorderList, ReorderListHandle, ReorderListItem } from \"@/components/interactions/reorder-list\"\nimport { Text } from \"@/components/ui/text\"\n\nconst tasks: Record<string, { title: string; detail?: string }> = {\n  inbox: { title: \"Inbox\", detail: \"12 messages\" },\n  today: { title: \"Today\" },\n  upcoming: { title: \"Upcoming\", detail: \"Next 7 days\" },\n  someday: { title: \"Someday\" },\n  archive: {\n    title: \"Archive\",\n    detail: \"Everything you finished, kept for later reference\",\n  },\n}\n\nconst initialOrder = Object.keys(tasks)\n\nfunction LeadingHandleDemo() {\n  const [value, setValue] = React.useState(initialOrder)\n  return (\n    <ReorderList\n      value={value}\n      onValueChange={setValue}\n      moveUpLabel=\"Move earlier\"\n      moveDownLabel=\"Move later\"\n    >\n      {value.map((key) => (\n        <ReorderListItem key={key} value={key} className=\"pe-4\">\n          <ReorderListHandle\n            accessibilityLabel={`Reorder ${tasks[key].title}`}\n          />\n          <Text numberOfLines={1} className=\"flex-1 py-3\">\n            {tasks[key].title}\n          </Text>\n        </ReorderListItem>\n      ))}\n    </ReorderList>\n  )\n}\n\nexport function ReorderListLeadingHandleExample() {\n  return (\n    <LeadingHandleDemo />\n  )\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.ReorderList\nimport com.esuiss.ui.interactions.ReorderListHandle\nimport com.esuiss.ui.interactions.ReorderListItem\n\nclass ReorderListTask(val title: String, val detail: String? = null)\n\nval reorderListTasks = linkedMapOf(\n    \"inbox\" to ReorderListTask(\"Inbox\", \"12 messages\"),\n    \"today\" to ReorderListTask(\"Today\"),\n    \"upcoming\" to ReorderListTask(\"Upcoming\", \"Next 7 days\"),\n    \"someday\" to ReorderListTask(\"Someday\"),\n    \"archive\" to ReorderListTask(\"Archive\", \"Everything you finished, kept for later reference\"),\n)\n\nval reorderListInitial = reorderListTasks.keys.toList()\n\n@Composable\nfun ReorderListLeadingHandle() {\n    var value by rememberSaveable { mutableStateOf(reorderListInitial) }\n    ReorderList(\n        value = value,\n        onValueChange = { value = it },\n        moveUpLabel = \"Move earlier\",\n        moveDownLabel = \"Move later\",\n    ) { key ->\n        val task = reorderListTasks.getValue(key)\n        ReorderListItem(Modifier.padding(end = 12.dp)) {\n            ReorderListHandle(contentDescription = \"Reorder ${task.title}\")\n            Text(\n                task.title,\n                modifier = Modifier.weight(1f).padding(vertical = 12.dp),\n                maxLines = 1,\n                overflow = TextOverflow.Ellipsis,\n            )\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ReorderList
+
+The root that renders items in `value` order.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"value","type":"string[]","required":true,"description":"Item keys in their current order."},{"name":"onValueChange","type":"(value: string[]) => void","required":true,"description":"Called with the new order after a move."},{"name":"moveUpLabel","type":"string","default":"\"Move up\"","description":"Label of the move up accessibility action. Defaults to `Move up`."},{"name":"moveDownLabel","type":"string","default":"\"Move down\"","description":"Label of the move down accessibility action. Defaults to `Move down`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ReorderListItem
+
+One row, keyed by its `value`.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"value","type":"string","required":true,"description":"The key of this item."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ReorderListHandle
+
+The grip that starts a drag.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The handle has the `button` role and offers `moveUp` and `moveDown` accessibility actions, so screen reader users can reorder without dragging.
+- Move up is omitted on the first row and move down on the last.
+
+## Notes
+
+- Haptics play when the drag starts (medium impact), each time the target slot changes (selection) and on release (light impact), if the app provides an adapter through `HapticsProvider`.
+- The dragged row shows a `bg-surface-raised` layer with a shadow, rounded inside an inset group.
+- The lift scale is skipped inside an inset group and when reduce motion is on; springs respect the system reduce motion setting.
+
+</Only>

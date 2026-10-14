@@ -2,8 +2,11 @@
 title: Tooltip Chart No Label
 description: "A stacked bar chart whose tooltip omits the category heading and shows only the series rows."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-no-label">
 
@@ -44,3 +47,5 @@ Set `hideLabel` on `ChartTooltipContent`. Replace `chartData` and the series in 
 ## Notes
 
 The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.
+
+</Only>

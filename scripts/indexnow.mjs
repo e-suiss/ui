@@ -1,8 +1,6 @@
 const key = "d7238253730183adfa7e236e91fb09cb"
 const hosts =
-  process.argv.slice(2).length > 0
-    ? process.argv.slice(2)
-    : ["ui.suiss.app", "uim.suiss.app"]
+  process.argv.slice(2).length > 0 ? process.argv.slice(2) : ["ui.suiss.app"]
 
 for (const host of hosts) {
   const sitemap = await fetch(`https://${host}/sitemap.xml`).then((response) =>

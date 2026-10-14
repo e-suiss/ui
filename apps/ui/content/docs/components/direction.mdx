@@ -1,9 +1,12 @@
 ---
 title: Direction
 description: "A provider that sets the reading direction, left-to-right or right-to-left, for the components inside it."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="direction" story="Default">
 
@@ -55,3 +58,5 @@ The same card rendered with `direction` set to `rtl`, so its footer buttons appe
 
 - Pair directional icons with the `rtl:` Tailwind variant, for example `rtl:rotate-180`, so arrows point the right way.
 - Many components in the library use logical properties such as `ps-`, `pe-`, `ms-` and `me-`, which flip automatically under `dir="rtl"`.
+
+</Only>

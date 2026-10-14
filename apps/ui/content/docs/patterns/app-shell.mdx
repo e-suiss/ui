@@ -2,8 +2,11 @@
 title: App Shell
 description: "An application frame with a collapsible sidebar on desktop and a floating tab bar on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="app-shell" story="Default">
 
@@ -160,3 +163,5 @@ A `SidebarTrigger` that toggles the sidebar on desktop and renders nothing on mo
 ## Notes
 
 The sidebar exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. On mobile the wrapper carries `data-slot="app-shell"` and the content `data-slot="app-shell-content"`; `className` applies to the content area on both layouts. `rail` only renders when `collapsible` is not `none`.
+
+</Only>

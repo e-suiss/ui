@@ -2,8 +2,11 @@
 title: Segment Picker
 description: "A segmented control for one exclusive choice that becomes a native select on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="segment-picker" story="Default">
 
@@ -168,3 +171,5 @@ One option, rendered as a toggle on desktop and an `option` on mobile.
 ## Notes
 
 Styling hooks: `data-slot="segment-picker"` and `segment-picker-item`. `SegmentPickerItem` throws when used outside `SegmentPicker`.
+
+</Only>

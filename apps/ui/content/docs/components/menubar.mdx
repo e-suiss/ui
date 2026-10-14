@@ -1,9 +1,12 @@
 ---
 title: Menubar
 description: "A horizontal bar of menus, like a desktop application's menu bar."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="menubar" story="Default">
 
@@ -243,3 +246,5 @@ The popup that holds a submenu's items.
 - Checkbox and radio items always reserve leading space for their indicator.
 - `MenubarShortcut` is hidden below the `md` breakpoint.
 - Uses the `surface-raised`, `item-hover`, `item-selected`, `danger` and `separator` tokens.
+
+</Only>

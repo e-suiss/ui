@@ -1,9 +1,12 @@
 ---
 title: Textarea
 description: "A multi-line text field that grows with its content, with an optional resize handle."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="textarea" story="Default">
 
@@ -129,3 +132,255 @@ The multi-line text field, with an optional resize handle.
 - A resizable textarea starts at a minimum height of `6rem`, and dragging never shrinks it below its minimum height.
 - The handle is hidden while the textarea is disabled, and mirrors in right-to-left layouts.
 - The caret uses the `accent` color; invalid fields use the `danger` color.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-textarea--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
+
+</NativeExample>
+
+`Textarea` is the multi-line version of `Input`. It wraps a `TextInput` through the same field control primitive, defaults to `multiline` with `numberOfLines={8}`, aligns text to the top and has a minimum height. It shows a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add textarea"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add textarea --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add textarea --platform kotlin"} />
+
+</Only>
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="uniwind/components/ui/textarea.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="nativewind/components/ui/textarea.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/input.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="stylesheet/components/ui/textarea.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Textarea.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Input.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Textarea.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\""} />
+
+<Code lang="tsx" code={"<Textarea placeholder=\"Type your message here.\" />"} />
+
+Use it for comments, messages and other free-form text. Use `Input` for single-line values.
+
+The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state.
+
+Override `numberOfLines` or set a height through `className` to change the visible size.
+
+## Examples
+
+### With value
+
+A textarea that starts with a `defaultValue`.
+
+<NativeExample id="components-textarea--with-value" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithValueExample() {\n  return (\n    <Textarea placeholder=\"Type your message here.\" defaultValue=\"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaWithValueExample: View {\n  var body: some View {\n    TextareaDemo(initial: \"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\")\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaWithValueExample() {\n    TextareaDemo(\n        initial = \"The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.\",\n    )\n}\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
+
+</NativeExample>
+
+### With label
+
+A textarea inside a `Field` with a label and description.
+
+<NativeExample id="components-textarea--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithLabelExample() {\n  return (\n    <Field>\n      <FieldLabel>Your message</FieldLabel>\n      <Textarea placeholder=\"Type your message here.\" />\n      <FieldDescription>\n        Your message will be copied to the team.\n      </FieldDescription>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaWithLabelExample: View {\n  var body: some View {\n    Field {\n      FieldLabel(\"Your message\")\n      TextareaDemo()\n      FieldDescription(\"Your message will be copied to the team.\")\n    }\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}\n\n@Composable\nfun TextareaWithLabel() {\n    Field(Modifier.fillMaxWidth()) {\n        FieldLabel(\"Your message\")\n        TextareaDemo()\n        FieldDescription(\"Your message will be copied to the team.\")\n    }\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+A disabled textarea.
+
+<NativeExample id="components-textarea--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaDisabledExample() {\n  return (\n    <Textarea placeholder=\"Disabled\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaDisabledExample: View {\n  var body: some View {\n    TextareaDemo(placeholder: \"Disabled\")\n      .disabled(true)\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDisabledExample() {\n    TextareaDemo(placeholder = \"Disabled\", enabled = false)\n}\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}"} />
+
+</NativeExample>
+
+### Invalid
+
+A textarea inside an invalid `Field` with an error message.
+
+<NativeExample id="components-textarea--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Message</FieldLabel>\n      <Textarea defaultValue=\"Too short\" />\n      <FieldError>Message must be at least 20 characters.</FieldError>\n    </Field>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextareaInvalidExample: View {\n  var body: some View {\n    Field(invalid: true) {\n      FieldLabel(\"Message\")\n      TextareaDemo(initial: \"Too short\")\n      FieldError(\"Message must be at least 20 characters.\")\n    }\n  }\n}\n\nstruct TextareaDemo: View {\n  let placeholder: LocalizedStringKey\n\n  @State private var text: String\n\n  init(initial: String = \"\", placeholder: LocalizedStringKey = \"Type your message here.\") {\n    self.placeholder = placeholder\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    TextField(placeholder, text: $text, axis: .vertical)\n      .textFieldStyle(.textarea)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun TextareaDemo(\n    initial: String = \"\",\n    placeholder: String = \"Type your message here.\",\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)\n}\n\n@Composable\nfun TextareaInvalid() {\n    Field(Modifier.fillMaxWidth(), invalid = true) {\n        FieldLabel(\"Message\")\n        TextareaDemo(initial = \"Too short\")\n        FieldError(\"Message must be at least 20 characters.\")\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Textarea
+
+<PropsTable extends={["React.ComponentProps<typeof InputPrimitive.Root>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Inside a `Field`, the textarea gets the field label as `accessibilityLabel` and the description as `accessibilityHint`.
+- `disabled` is set in `accessibilityState` and makes the textarea non-editable.
+- Outside a `Field`, give it an `accessibilityLabel`.
+
+## Notes
+
+- Uses the `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens.
+- Placeholder, cursor and selection colors come from the `label-secondary` and `accent` tokens.
+- Light and dark colors follow the system appearance.
+
+</Only>

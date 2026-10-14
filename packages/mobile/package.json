@@ -19,7 +19,7 @@
     "nativewind:check": "node scripts/build-nativewind.mjs --check",
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:check": "node scripts/build-tokens.mjs --check",
-    "live": "expo export --platform web --output-dir ../../apps/uim/public/live"
+    "live": "expo export --platform web --output-dir ../../apps/ui/public/live"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

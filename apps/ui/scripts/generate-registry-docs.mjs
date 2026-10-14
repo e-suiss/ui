@@ -92,7 +92,7 @@ const index = Object.fromEntries(
 );
 writeFileSync(path.join(demos, "items.json"), `${JSON.stringify(index, null, 2)}\n`);
 
-const contentRoot = path.join(root, "content/docs");
+const contentRoot = path.join(root, ".generated/web");
 
 function requiresLinks(item) {
   return item.requires

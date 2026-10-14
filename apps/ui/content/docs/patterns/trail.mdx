@@ -2,8 +2,11 @@
 title: Trail
 description: "A navigation trail that shows breadcrumbs on desktop and a back link with history on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="trail" story="Default">
 
@@ -98,3 +101,5 @@ The navigation element that renders the breadcrumbs or the mobile back link.
 ## Notes
 
 Styling hooks: `data-slot="trail"`, `trail-back`, `trail-history` and `trail-history-item`. A long press opens the history only for touch and pen input, and cancels if the pointer moves more than 10 pixels; the press does not also follow the back link.
+
+</Only>

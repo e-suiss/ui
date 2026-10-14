@@ -1,9 +1,12 @@
 ---
 title: Table
 description: "Styled native table elements for displaying rows of structured data."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="table" story="Default">
 
@@ -149,3 +152,5 @@ A `caption` shown below the table that also names it.
 - Header and data cells that contain a `role="checkbox"` drop their end padding.
 - Parts carry `data-slot` attributes such as `table-container`, `table`, `table-row` and `table-cell`.
 - Hover and selection use the `item-hover` and `item-selected` tokens; the footer uses a tinted `surface-secondary`.
+
+</Only>

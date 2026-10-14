@@ -1,9 +1,12 @@
 ---
 title: Resizable
 description: "Panels separated by draggable handles that let users resize sections of a layout."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="resizable" story="Default">
 
@@ -141,3 +144,5 @@ The draggable divider between two panels.
 - A handle next to a collapsed panel gets `data-collapsed` set to `start` or `end`, and its grip appears on hover.
 - Large layout jumps, such as collapsing or expanding a panel, animate unless the user prefers reduced motion.
 - Uses the `separator`, `surface-secondary`, `label-quaternary` and `label-secondary` tokens.
+
+</Only>

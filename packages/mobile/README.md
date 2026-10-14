@@ -1,13 +1,13 @@
-# suiss/uim
+# suiss/ui for mobile
 
 [![npm version](https://img.shields.io/npm/v/@esuiss/ui?label=%40esuiss%2Fui)](https://www.npmjs.com/package/@esuiss/ui)
 [![npm downloads](https://img.shields.io/npm/dm/@esuiss/ui)](https://www.npmjs.com/package/@esuiss/ui)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-uim.suiss.app-black)](https://uim.suiss.app)
+[![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
 
-**suiss/uim is an open-source library of copy-paste mobile components with a clean, minimal design** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything. It is the mobile counterpart of [suiss/ui](https://github.com/e-suiss/ui).
+**This package holds the mobile side of suiss/ui, an open-source library of copy-paste components with a clean, minimal design,** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything.
 
-**[Documentation](https://uim.suiss.app/docs)** · [Components](https://uim.suiss.app/docs/components) · [Patterns](https://uim.suiss.app/docs/patterns) · [Interactions](https://uim.suiss.app/docs/interactions) · [CLI](https://uim.suiss.app/docs/cli)
+**[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [Patterns](https://ui.suiss.app/docs/patterns) · [Interactions](https://ui.suiss.app/docs/interactions) · [CLI](https://ui.suiss.app/docs/cli)
 
 ## Features
 
@@ -64,8 +64,8 @@ npx @esuiss/ui@latest add dialog --platform kotlin
 
 ## FAQ
 
-**What is suiss/uim?**
-An open-source collection of mobile components, patterns and interactions with a clean, minimal design, for React Native and Expo, distributed as source code through the `@esuiss/ui` CLI, with SwiftUI and Jetpack Compose versions.
+**What is in this package?**
+The mobile components, patterns and interactions of suiss/ui for React Native and Expo, with SwiftUI and Jetpack Compose versions, distributed as source code through the `@esuiss/ui` CLI.
 
 **Should I use Uniwind, NativeWind or StyleSheet?**
 Use the one your project already has; the CLI detects it. For a new project, Uniwind uses Tailwind CSS v4, NativeWind v4 uses Tailwind CSS v3, and StyleSheet needs no Tailwind at all.
@@ -83,7 +83,7 @@ Yes. [suiss/ui](https://github.com/e-suiss/ui) has the same components for React
 Yes, it is released under the [MIT License](LICENSE).
 
 **Is the documentation available for AI assistants?**
-Yes. [uim.suiss.app/llms.txt](https://uim.suiss.app/llms.txt) lists every page, [uim.suiss.app/llms-full.txt](https://uim.suiss.app/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
+Yes. [ui.suiss.app/llms.txt](https://ui.suiss.app/llms.txt) lists every page, [ui.suiss.app/llms-full.txt](https://ui.suiss.app/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
 
 ## Develop
 

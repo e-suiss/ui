@@ -2,8 +2,11 @@
 title: Search Reveal
 description: "A scrolling list with a search field tucked above it that appears when the user scrolls up."
 eyebrow: Interaction
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="interaction" name="search-reveal" story="Default">
 
@@ -98,3 +101,234 @@ The scrolling content below the field.
 
 - Parts use `data-slot` values `search-reveal`, `search-reveal-field`, `search-reveal-input`, and `search-reveal-content`.
 - The `--search-reveal` custom property runs from `0` to `1` as the field is revealed and drives its opacity.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="interactions-search-reveal--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealExample() {\n  return (\n    <NotesExample count={12} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SearchRevealExample: View {\n  var body: some View {\n    SearchRevealNotes(count: 12)\n  }\n}\n\nstruct SearchRevealNote: Identifiable {\n  let id: Int\n  let title: String\n  let preview: String\n}\n\nlet searchRevealNotes = [\n  SearchRevealNote(id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\"),\n  SearchRevealNote(id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\"),\n  SearchRevealNote(id: 3, title: \"Book list\", preview: \"Three novels for the summer\"),\n  SearchRevealNote(id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\"),\n  SearchRevealNote(id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\"),\n  SearchRevealNote(id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\"),\n  SearchRevealNote(id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\"),\n  SearchRevealNote(id: 8, title: \"Movies to watch\", preview: \"Two documentaries and a classic\"),\n  SearchRevealNote(id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\"),\n  SearchRevealNote(id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\"),\n  SearchRevealNote(id: 11, title: \"Podcast notes\", preview: \"Episode about city design\"),\n  SearchRevealNote(id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\"),\n]\n\nstruct SearchRevealNotes: View {\n  let count: Int\n\n  @State private var query: String\n\n  init(count: Int, query: String = \"\") {\n    self.count = count\n    _query = State(initialValue: query)\n  }\n\n  var notes: [SearchRevealNote] {\n    let needle = query.trimmingCharacters(in: .whitespaces).lowercased()\n    return searchRevealNotes.prefix(count).filter { note in\n      needle.isEmpty || \"\\(note.title) \\(note.preview)\".lowercased().contains(needle)\n    }\n  }\n\n  var body: some View {\n    let notes = notes\n    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n    VStack(alignment: .leading, spacing: 0) {\n      Text(\"Notes\")\n        .textVariant(.h1)\n        .padding(.horizontal, 16)\n        .padding(.top, 16)\n        .padding(.bottom, 8)\n      SearchReveal {\n        SearchRevealField(text: $query)\n        SearchRevealContent {\n          if notes.isEmpty {\n            Text(verbatim: \"No results for “\\(query)”\")\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n              .multilineTextAlignment(.center)\n              .padding(.horizontal, 16)\n              .padding(.vertical, 64)\n              .frame(maxWidth: .infinity)\n          } else {\n            VStack(spacing: 0) {\n              ForEach(Array(notes.enumerated()), id: \\.element.id) { index, note in\n                Button {} label: {\n                  VStack(alignment: .leading, spacing: 0) {\n                    Text(verbatim: note.title)\n                      .textStyle(.base, weight: .semibold)\n                      .foregroundStyle(Color.label)\n                      .lineLimit(1)\n                    Text(verbatim: note.preview)\n                      .textStyle(.sm)\n                      .foregroundStyle(Color.labelSecondary)\n                      .lineLimit(1)\n                  }\n                  .padding(.horizontal, 16)\n                  .padding(.vertical, 12)\n                  .frame(maxWidth: .infinity, alignment: .leading)\n                  .contentShape(Rectangle())\n                }\n                .buttonStyle(SearchRevealRowStyle())\n                .overlay(alignment: .top) {\n                  if index > 0 {\n                    Color.separator.frame(height: 1)\n                  }\n                }\n              }\n            }\n            .background(Color.surfaceSecondary)\n            .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n            .padding(.horizontal, 16)\n          }\n          Text(verbatim: \"\\(notes.count) \\(notes.count == 1 ? \"note\" : \"notes\")\")\n            .textStyle(.xs)\n            .foregroundStyle(Color.labelSecondary)\n            .multilineTextAlignment(.center)\n            .padding(.horizontal, 16)\n            .padding(.vertical, 12)\n            .frame(maxWidth: .infinity)\n        }\n      }\n    }\n    .clipShape(shape)\n    .overlay { shape.strokeBorder(Color.separator) }\n    .containerRelativeFrame(.vertical) { height, _ in height - 32 }\n  }\n}\n\nstruct SearchRevealRowStyle: ButtonStyle {\n  func makeBody(configuration: Configuration) -> some View {\n    configuration.label\n      .background(configuration.isPressed ? Color.itemPressed : .clear)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.border\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.interaction.collectIsPressedAsState\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.Role\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.SearchReveal\nimport com.esuiss.ui.interactions.SearchRevealContent\nimport com.esuiss.ui.interactions.SearchRevealField\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SearchRevealExample() {\n    SearchRevealNotes(count = 12)\n}\n\nclass SearchRevealNote(val id: Int, val title: String, val preview: String)\n\nval searchRevealAllNotes = listOf(\n    SearchRevealNote(1, \"Groceries\", \"Milk, eggs, bread, coffee\"),\n    SearchRevealNote(2, \"Trip ideas\", \"Lisbon, Porto, the coast road\"),\n    SearchRevealNote(3, \"Book list\", \"Three novels for the summer\"),\n    SearchRevealNote(4, \"Meeting notes\", \"Ship the beta on Friday\"),\n    SearchRevealNote(5, \"Gift ideas\", \"Headphones, a plant, a scarf\"),\n    SearchRevealNote(6, \"Recipes\", \"Lemon pasta and a quick curry\"),\n    SearchRevealNote(7, \"Workout plan\", \"Run on Monday, swim on Thursday\"),\n    SearchRevealNote(8, \"Movies to watch\", \"Two documentaries and a classic\"),\n    SearchRevealNote(9, \"Garden\", \"Plant tomatoes after the frost\"),\n    SearchRevealNote(10, \"Packing list\", \"Charger, passport, rain jacket\"),\n    SearchRevealNote(11, \"Podcast notes\", \"Episode about city design\"),\n    SearchRevealNote(12, \"Budget\", \"Rent, groceries, savings\"),\n)\n\n@Composable\nfun SearchRevealNotes(count: Int, defaultQuery: String = \"\") {\n    val colors = EsuissTheme.colors\n    var query by rememberSaveable { mutableStateOf(defaultQuery) }\n    val needle = query.trim().lowercase()\n    val notes = searchRevealAllNotes.take(count).filter { \"${it.title} ${it.preview}\".lowercase().contains(needle) }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .height(600.dp)\n            .clip(shape)\n            .border(1.dp, colors.separator, shape),\n    ) {\n        Text(\"Notes\", modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp), variant = TextVariant.H1)\n        SearchReveal(Modifier.weight(1f)) {\n            SearchRevealField(value = query, onValueChange = { query = it })\n            SearchRevealContent {\n                if (notes.isEmpty()) {\n                    Text(\n                        \"No results for “$query”\",\n                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 64.dp),\n                        style = Typography.sm.copy(color = colors.labelSecondary),\n                        textAlign = TextAlign.Center,\n                    )\n                } else {\n                    Column(\n                        Modifier\n                            .padding(horizontal = 16.dp)\n                            .fillMaxWidth()\n                            .clip(RoundedCornerShape(Radius.xl))\n                            .background(colors.surfaceSecondary),\n                    ) {\n                        notes.forEachIndexed { index, note ->\n                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n                            SearchRevealRow(note)\n                        }\n                    }\n                }\n                Text(\n                    \"${notes.size} ${if (notes.size == 1) \"note\" else \"notes\"}\",\n                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),\n                    style = Typography.xs.copy(color = colors.labelSecondary),\n                    textAlign = TextAlign.Center,\n                )\n            }\n        }\n    }\n}\n\n@Composable\nfun SearchRevealRow(note: SearchRevealNote) {\n    val colors = EsuissTheme.colors\n    val interaction = remember { MutableInteractionSource() }\n    val pressed by interaction.collectIsPressedAsState()\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .background(if (pressed) colors.itemPressed else Color.Transparent)\n            .clickable(interactionSource = interaction, indication = null, role = Role.Button) {}\n            .padding(horizontal = 16.dp, vertical = 12.dp),\n    ) {\n        Text(\n            note.title,\n            style = Typography.base.copy(fontWeight = FontWeight.SemiBold),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n        Text(\n            note.preview,\n            style = Typography.sm.copy(color = colors.labelSecondary),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n    }\n}"} />
+
+</NativeExample>
+
+`SearchReveal` is a scroll view that starts scrolled just past its `SearchRevealField`, so the list shows first and the field is out of view. Pulling down reveals the field, which fades in as it appears, and the scroll snaps either fully open or fully hidden.
+
+Focusing the field scrolls it into view. While there is a query, snapping is turned off so the field stays visible. Use it for notes, mail or settings lists where search should be close but not take space.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add search-reveal"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add search-reveal --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add search-reveal --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="uniwind/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="nativewind/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon).
+
+3. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/search-reveal.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Interactions/SearchReveal.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/interactions/SearchReveal.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { SearchReveal, SearchRevealField, SearchRevealContent } from \"@/components/interactions/search-reveal\""} />
+
+<Code lang="tsx" code={"<NotesExample count={12} />"} />
+
+Put a `SearchRevealField` first, then the list inside a `SearchRevealContent`, all inside `SearchReveal`. The field is controlled: pass `value` and update it in `onValueChange`, then filter your list with it.
+
+`SearchRevealContent` is at least as tall as the scroll view, so the field can be hidden even when the list is short. Other `ScrollView` props, except `onScroll`, pass through to `SearchReveal`, and other `TextInput` props pass through to the field.
+
+## Examples
+
+### Short list
+
+A three-item list that still hides the field.
+
+<NativeExample id="interactions-search-reveal--short-list" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealShortListExample() {\n  return (\n    <NotesExample count={3} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SearchRevealShortListExample: View {\n  var body: some View {\n    SearchRevealNotes(count: 3)\n  }\n}\n\nstruct SearchRevealNote: Identifiable {\n  let id: Int\n  let title: String\n  let preview: String\n}\n\nlet searchRevealNotes = [\n  SearchRevealNote(id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\"),\n  SearchRevealNote(id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\"),\n  SearchRevealNote(id: 3, title: \"Book list\", preview: \"Three novels for the summer\"),\n  SearchRevealNote(id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\"),\n  SearchRevealNote(id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\"),\n  SearchRevealNote(id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\"),\n  SearchRevealNote(id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\"),\n  SearchRevealNote(id: 8, title: \"Movies to watch\", preview: \"Two documentaries and a classic\"),\n  SearchRevealNote(id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\"),\n  SearchRevealNote(id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\"),\n  SearchRevealNote(id: 11, title: \"Podcast notes\", preview: \"Episode about city design\"),\n  SearchRevealNote(id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\"),\n]\n\nstruct SearchRevealNotes: View {\n  let count: Int\n\n  @State private var query: String\n\n  init(count: Int, query: String = \"\") {\n    self.count = count\n    _query = State(initialValue: query)\n  }\n\n  var notes: [SearchRevealNote] {\n    let needle = query.trimmingCharacters(in: .whitespaces).lowercased()\n    return searchRevealNotes.prefix(count).filter { note in\n      needle.isEmpty || \"\\(note.title) \\(note.preview)\".lowercased().contains(needle)\n    }\n  }\n\n  var body: some View {\n    let notes = notes\n    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n    VStack(alignment: .leading, spacing: 0) {\n      Text(\"Notes\")\n        .textVariant(.h1)\n        .padding(.horizontal, 16)\n        .padding(.top, 16)\n        .padding(.bottom, 8)\n      SearchReveal {\n        SearchRevealField(text: $query)\n        SearchRevealContent {\n          if notes.isEmpty {\n            Text(verbatim: \"No results for “\\(query)”\")\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n              .multilineTextAlignment(.center)\n              .padding(.horizontal, 16)\n              .padding(.vertical, 64)\n              .frame(maxWidth: .infinity)\n          } else {\n            VStack(spacing: 0) {\n              ForEach(Array(notes.enumerated()), id: \\.element.id) { index, note in\n                Button {} label: {\n                  VStack(alignment: .leading, spacing: 0) {\n                    Text(verbatim: note.title)\n                      .textStyle(.base, weight: .semibold)\n                      .foregroundStyle(Color.label)\n                      .lineLimit(1)\n                    Text(verbatim: note.preview)\n                      .textStyle(.sm)\n                      .foregroundStyle(Color.labelSecondary)\n                      .lineLimit(1)\n                  }\n                  .padding(.horizontal, 16)\n                  .padding(.vertical, 12)\n                  .frame(maxWidth: .infinity, alignment: .leading)\n                  .contentShape(Rectangle())\n                }\n                .buttonStyle(SearchRevealRowStyle())\n                .overlay(alignment: .top) {\n                  if index > 0 {\n                    Color.separator.frame(height: 1)\n                  }\n                }\n              }\n            }\n            .background(Color.surfaceSecondary)\n            .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n            .padding(.horizontal, 16)\n          }\n          Text(verbatim: \"\\(notes.count) \\(notes.count == 1 ? \"note\" : \"notes\")\")\n            .textStyle(.xs)\n            .foregroundStyle(Color.labelSecondary)\n            .multilineTextAlignment(.center)\n            .padding(.horizontal, 16)\n            .padding(.vertical, 12)\n            .frame(maxWidth: .infinity)\n        }\n      }\n    }\n    .clipShape(shape)\n    .overlay { shape.strokeBorder(Color.separator) }\n    .containerRelativeFrame(.vertical) { height, _ in height - 32 }\n  }\n}\n\nstruct SearchRevealRowStyle: ButtonStyle {\n  func makeBody(configuration: Configuration) -> some View {\n    configuration.label\n      .background(configuration.isPressed ? Color.itemPressed : .clear)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.border\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.interaction.collectIsPressedAsState\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.Role\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.SearchReveal\nimport com.esuiss.ui.interactions.SearchRevealContent\nimport com.esuiss.ui.interactions.SearchRevealField\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SearchRevealShortListExample() {\n    SearchRevealNotes(count = 3)\n}\n\nclass SearchRevealNote(val id: Int, val title: String, val preview: String)\n\nval searchRevealAllNotes = listOf(\n    SearchRevealNote(1, \"Groceries\", \"Milk, eggs, bread, coffee\"),\n    SearchRevealNote(2, \"Trip ideas\", \"Lisbon, Porto, the coast road\"),\n    SearchRevealNote(3, \"Book list\", \"Three novels for the summer\"),\n    SearchRevealNote(4, \"Meeting notes\", \"Ship the beta on Friday\"),\n    SearchRevealNote(5, \"Gift ideas\", \"Headphones, a plant, a scarf\"),\n    SearchRevealNote(6, \"Recipes\", \"Lemon pasta and a quick curry\"),\n    SearchRevealNote(7, \"Workout plan\", \"Run on Monday, swim on Thursday\"),\n    SearchRevealNote(8, \"Movies to watch\", \"Two documentaries and a classic\"),\n    SearchRevealNote(9, \"Garden\", \"Plant tomatoes after the frost\"),\n    SearchRevealNote(10, \"Packing list\", \"Charger, passport, rain jacket\"),\n    SearchRevealNote(11, \"Podcast notes\", \"Episode about city design\"),\n    SearchRevealNote(12, \"Budget\", \"Rent, groceries, savings\"),\n)\n\n@Composable\nfun SearchRevealNotes(count: Int, defaultQuery: String = \"\") {\n    val colors = EsuissTheme.colors\n    var query by rememberSaveable { mutableStateOf(defaultQuery) }\n    val needle = query.trim().lowercase()\n    val notes = searchRevealAllNotes.take(count).filter { \"${it.title} ${it.preview}\".lowercase().contains(needle) }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .height(600.dp)\n            .clip(shape)\n            .border(1.dp, colors.separator, shape),\n    ) {\n        Text(\"Notes\", modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp), variant = TextVariant.H1)\n        SearchReveal(Modifier.weight(1f)) {\n            SearchRevealField(value = query, onValueChange = { query = it })\n            SearchRevealContent {\n                if (notes.isEmpty()) {\n                    Text(\n                        \"No results for “$query”\",\n                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 64.dp),\n                        style = Typography.sm.copy(color = colors.labelSecondary),\n                        textAlign = TextAlign.Center,\n                    )\n                } else {\n                    Column(\n                        Modifier\n                            .padding(horizontal = 16.dp)\n                            .fillMaxWidth()\n                            .clip(RoundedCornerShape(Radius.xl))\n                            .background(colors.surfaceSecondary),\n                    ) {\n                        notes.forEachIndexed { index, note ->\n                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n                            SearchRevealRow(note)\n                        }\n                    }\n                }\n                Text(\n                    \"${notes.size} ${if (notes.size == 1) \"note\" else \"notes\"}\",\n                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),\n                    style = Typography.xs.copy(color = colors.labelSecondary),\n                    textAlign = TextAlign.Center,\n                )\n            }\n        }\n    }\n}\n\n@Composable\nfun SearchRevealRow(note: SearchRevealNote) {\n    val colors = EsuissTheme.colors\n    val interaction = remember { MutableInteractionSource() }\n    val pressed by interaction.collectIsPressedAsState()\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .background(if (pressed) colors.itemPressed else Color.Transparent)\n            .clickable(interactionSource = interaction, indication = null, role = Role.Button) {}\n            .padding(horizontal = 16.dp, vertical = 12.dp),\n    ) {\n        Text(\n            note.title,\n            style = Typography.base.copy(fontWeight = FontWeight.SemiBold),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n        Text(\n            note.preview,\n            style = Typography.sm.copy(color = colors.labelSecondary),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### With query
+
+Starts with a query, so the field is visible and the list is filtered.
+
+<NativeExample id="interactions-search-reveal--with-query" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pressable, View } from \"react-native\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\nimport { Text } from \"@/components/ui/text\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({\n  count,\n  defaultQuery = \"\",\n}: {\n  count: number\n  defaultQuery?: string\n}) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <View className=\"flex-1 overflow-hidden rounded-2xl border border-separator\">\n      <Text variant=\"h1\" className=\"px-4 pt-4 pb-2\">\n        Notes\n      </Text>\n      <SearchReveal>\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <Text className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </Text>\n          ) : (\n            <View className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note, index) => (\n                <Pressable\n                  key={note.id}\n                  className={\n                    index > 0\n                      ? \"border-t border-separator px-4 py-3 active:bg-item-pressed\"\n                      : \"px-4 py-3 active:bg-item-pressed\"\n                  }\n                >\n                  <Text numberOfLines={1} className=\"font-semibold\">\n                    {note.title}\n                  </Text>\n                  <Text\n                    numberOfLines={1}\n                    className=\"text-sm text-label-secondary\"\n                  >\n                    {note.preview}\n                  </Text>\n                </Pressable>\n              ))}\n            </View>\n          )}\n          <Text className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </Text>\n        </SearchRevealContent>\n      </SearchReveal>\n    </View>\n  )\n}\n\nexport function SearchRevealWithQueryExample() {\n  return (\n    <NotesExample count={12} defaultQuery=\"porto\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SearchRevealWithQueryExample: View {\n  var body: some View {\n    SearchRevealNotes(count: 12, query: \"porto\")\n  }\n}\n\nstruct SearchRevealNote: Identifiable {\n  let id: Int\n  let title: String\n  let preview: String\n}\n\nlet searchRevealNotes = [\n  SearchRevealNote(id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\"),\n  SearchRevealNote(id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\"),\n  SearchRevealNote(id: 3, title: \"Book list\", preview: \"Three novels for the summer\"),\n  SearchRevealNote(id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\"),\n  SearchRevealNote(id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\"),\n  SearchRevealNote(id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\"),\n  SearchRevealNote(id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\"),\n  SearchRevealNote(id: 8, title: \"Movies to watch\", preview: \"Two documentaries and a classic\"),\n  SearchRevealNote(id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\"),\n  SearchRevealNote(id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\"),\n  SearchRevealNote(id: 11, title: \"Podcast notes\", preview: \"Episode about city design\"),\n  SearchRevealNote(id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\"),\n]\n\nstruct SearchRevealNotes: View {\n  let count: Int\n\n  @State private var query: String\n\n  init(count: Int, query: String = \"\") {\n    self.count = count\n    _query = State(initialValue: query)\n  }\n\n  var notes: [SearchRevealNote] {\n    let needle = query.trimmingCharacters(in: .whitespaces).lowercased()\n    return searchRevealNotes.prefix(count).filter { note in\n      needle.isEmpty || \"\\(note.title) \\(note.preview)\".lowercased().contains(needle)\n    }\n  }\n\n  var body: some View {\n    let notes = notes\n    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n    VStack(alignment: .leading, spacing: 0) {\n      Text(\"Notes\")\n        .textVariant(.h1)\n        .padding(.horizontal, 16)\n        .padding(.top, 16)\n        .padding(.bottom, 8)\n      SearchReveal {\n        SearchRevealField(text: $query)\n        SearchRevealContent {\n          if notes.isEmpty {\n            Text(verbatim: \"No results for “\\(query)”\")\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n              .multilineTextAlignment(.center)\n              .padding(.horizontal, 16)\n              .padding(.vertical, 64)\n              .frame(maxWidth: .infinity)\n          } else {\n            VStack(spacing: 0) {\n              ForEach(Array(notes.enumerated()), id: \\.element.id) { index, note in\n                Button {} label: {\n                  VStack(alignment: .leading, spacing: 0) {\n                    Text(verbatim: note.title)\n                      .textStyle(.base, weight: .semibold)\n                      .foregroundStyle(Color.label)\n                      .lineLimit(1)\n                    Text(verbatim: note.preview)\n                      .textStyle(.sm)\n                      .foregroundStyle(Color.labelSecondary)\n                      .lineLimit(1)\n                  }\n                  .padding(.horizontal, 16)\n                  .padding(.vertical, 12)\n                  .frame(maxWidth: .infinity, alignment: .leading)\n                  .contentShape(Rectangle())\n                }\n                .buttonStyle(SearchRevealRowStyle())\n                .overlay(alignment: .top) {\n                  if index > 0 {\n                    Color.separator.frame(height: 1)\n                  }\n                }\n              }\n            }\n            .background(Color.surfaceSecondary)\n            .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n            .padding(.horizontal, 16)\n          }\n          Text(verbatim: \"\\(notes.count) \\(notes.count == 1 ? \"note\" : \"notes\")\")\n            .textStyle(.xs)\n            .foregroundStyle(Color.labelSecondary)\n            .multilineTextAlignment(.center)\n            .padding(.horizontal, 16)\n            .padding(.vertical, 12)\n            .frame(maxWidth: .infinity)\n        }\n      }\n    }\n    .clipShape(shape)\n    .overlay { shape.strokeBorder(Color.separator) }\n    .containerRelativeFrame(.vertical) { height, _ in height - 32 }\n  }\n}\n\nstruct SearchRevealRowStyle: ButtonStyle {\n  func makeBody(configuration: Configuration) -> some View {\n    configuration.label\n      .background(configuration.isPressed ? Color.itemPressed : .clear)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.border\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.interaction.collectIsPressedAsState\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.Role\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.SearchReveal\nimport com.esuiss.ui.interactions.SearchRevealContent\nimport com.esuiss.ui.interactions.SearchRevealField\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SearchRevealWithQueryExample() {\n    SearchRevealNotes(count = 12, defaultQuery = \"porto\")\n}\n\nclass SearchRevealNote(val id: Int, val title: String, val preview: String)\n\nval searchRevealAllNotes = listOf(\n    SearchRevealNote(1, \"Groceries\", \"Milk, eggs, bread, coffee\"),\n    SearchRevealNote(2, \"Trip ideas\", \"Lisbon, Porto, the coast road\"),\n    SearchRevealNote(3, \"Book list\", \"Three novels for the summer\"),\n    SearchRevealNote(4, \"Meeting notes\", \"Ship the beta on Friday\"),\n    SearchRevealNote(5, \"Gift ideas\", \"Headphones, a plant, a scarf\"),\n    SearchRevealNote(6, \"Recipes\", \"Lemon pasta and a quick curry\"),\n    SearchRevealNote(7, \"Workout plan\", \"Run on Monday, swim on Thursday\"),\n    SearchRevealNote(8, \"Movies to watch\", \"Two documentaries and a classic\"),\n    SearchRevealNote(9, \"Garden\", \"Plant tomatoes after the frost\"),\n    SearchRevealNote(10, \"Packing list\", \"Charger, passport, rain jacket\"),\n    SearchRevealNote(11, \"Podcast notes\", \"Episode about city design\"),\n    SearchRevealNote(12, \"Budget\", \"Rent, groceries, savings\"),\n)\n\n@Composable\nfun SearchRevealNotes(count: Int, defaultQuery: String = \"\") {\n    val colors = EsuissTheme.colors\n    var query by rememberSaveable { mutableStateOf(defaultQuery) }\n    val needle = query.trim().lowercase()\n    val notes = searchRevealAllNotes.take(count).filter { \"${it.title} ${it.preview}\".lowercase().contains(needle) }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .height(600.dp)\n            .clip(shape)\n            .border(1.dp, colors.separator, shape),\n    ) {\n        Text(\"Notes\", modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp), variant = TextVariant.H1)\n        SearchReveal(Modifier.weight(1f)) {\n            SearchRevealField(value = query, onValueChange = { query = it })\n            SearchRevealContent {\n                if (notes.isEmpty()) {\n                    Text(\n                        \"No results for “$query”\",\n                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 64.dp),\n                        style = Typography.sm.copy(color = colors.labelSecondary),\n                        textAlign = TextAlign.Center,\n                    )\n                } else {\n                    Column(\n                        Modifier\n                            .padding(horizontal = 16.dp)\n                            .fillMaxWidth()\n                            .clip(RoundedCornerShape(Radius.xl))\n                            .background(colors.surfaceSecondary),\n                    ) {\n                        notes.forEachIndexed { index, note ->\n                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n                            SearchRevealRow(note)\n                        }\n                    }\n                }\n                Text(\n                    \"${notes.size} ${if (notes.size == 1) \"note\" else \"notes\"}\",\n                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),\n                    style = Typography.xs.copy(color = colors.labelSecondary),\n                    textAlign = TextAlign.Center,\n                )\n            }\n        }\n    }\n}\n\n@Composable\nfun SearchRevealRow(note: SearchRevealNote) {\n    val colors = EsuissTheme.colors\n    val interaction = remember { MutableInteractionSource() }\n    val pressed by interaction.collectIsPressedAsState()\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .background(if (pressed) colors.itemPressed else Color.Transparent)\n            .clickable(interactionSource = interaction, indication = null, role = Role.Button) {}\n            .padding(horizontal = 16.dp, vertical = 12.dp),\n    ) {\n        Text(\n            note.title,\n            style = Typography.base.copy(fontWeight = FontWeight.SemiBold),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n        Text(\n            note.preview,\n            style = Typography.sm.copy(color = colors.labelSecondary),\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n        )\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+<PropsTable extends={["ScrollViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchRevealField
+
+The search input with a clear button.
+
+<PropsTable extends={["React.ComponentProps<typeof TextInput>"]} props={[{"name":"value","type":"string","required":true,"description":"The current query."},{"name":"onValueChange","type":"(value: string) => void","required":true,"description":"Called with the new query."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The input has the `searchbox` role and is labelled by `placeholder`.
+- The clear button is labelled `Clear search` and returns focus to the input.
+
+## Notes
+
+- The field uses `bg-control` with `label-secondary` placeholder and icons.
+- Autocorrect and autocapitalization are off, and the return key reads `search`.
+- Taps on the list work while the keyboard is open.
+
+</Only>

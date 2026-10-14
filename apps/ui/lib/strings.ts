@@ -19,7 +19,7 @@ export const strings = {
   heroLead:
     "Accessible components, patterns, interactions, charts and blocks built on Base UI and Tailwind CSS. Open source and yours to change.",
   heroSubtitle:
-    "Copy-paste React components, patterns, interactions, charts and blocks built on Base UI and Tailwind CSS.",
+    "Copy-paste components, patterns, interactions, charts and blocks for React, React Native, SwiftUI and Jetpack Compose.",
   menu: "Menu",
   close: "Close",
   copy: "Copy",

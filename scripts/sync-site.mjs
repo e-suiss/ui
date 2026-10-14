@@ -4,7 +4,7 @@ import path from "node:path"
 const root = path.resolve(import.meta.dirname, "..")
 const check = process.argv.includes("--check")
 const LIBRARY = path.join(root, "packages/web")
-const APPS = ["apps/ui", "apps/uim"]
+const APPS = ["apps/ui"]
 const FOLDERS = [
   "components/ui",
   "components/patterns",

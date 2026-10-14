@@ -1,9 +1,12 @@
 ---
 title: Fullscreen Menu
 description: "A navigation menu that covers the whole screen, for site links on small viewports."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="fullscreen-menu" story="Default">
 
@@ -164,3 +167,5 @@ A button that closes the menu from any element.
 - The stagger delay is computed from a link's position in its group, for up to 10 links, and the group's position in the menu, for up to 6 sections.
 - The content respects safe-area insets, and animations are disabled when reduced motion is preferred.
 - Uses the `surface`, `label`, `label-secondary` and `link` tokens.
+
+</Only>

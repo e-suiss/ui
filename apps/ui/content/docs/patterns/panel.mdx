@@ -2,8 +2,11 @@
 title: Panel
 description: "A side panel that renders as a Sheet on desktop and a swipeable Drawer on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="panel" story="Default">
 
@@ -201,3 +204,5 @@ A button that closes the panel.
 ## Notes
 
 Styling hooks: `data-slot="panel"`, `panel-trigger`, `panel-content`, `panel-header`, `panel-title`, `panel-description`, `panel-body`, `panel-footer` and `panel-close`. The presentation follows the viewport at render time, so a panel open while the viewport crosses `48rem` re-renders in the other presentation.
+
+</Only>

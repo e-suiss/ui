@@ -6,6 +6,9 @@ import { Callout } from "@/components/site/callout";
 import { CodeBlock } from "@/components/site/code-block";
 import { ComponentPreview } from "@/components/site/component-preview";
 import { Example } from "@/components/site/example";
+import { NativeExample } from "@/components/site/native-example";
+import { Only } from "@/components/site/platform";
+import { Tabs } from "@/components/site/tabs";
 import { Anatomy, ApiPart } from "@/components/site/api-reference";
 import { PropsTable } from "@/components/site/props-table";
 import { SourceCode } from "@/components/site/source-code";
@@ -41,6 +44,9 @@ export function getMDXComponents(components?: MDXComponents) {
     Callout,
     ComponentPreview,
     Example,
+    NativeExample,
+    Only,
+    Tabs,
     Anatomy,
     ApiPart,
     PropsTable,

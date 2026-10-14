@@ -1,9 +1,12 @@
 ---
 title: Carousel
 description: "A swipeable track of slides with buttons, dots and optional autoplay, built on Embla Carousel."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="carousel" story="Default">
 
@@ -269,3 +272,387 @@ Toggles autoplay between playing and paused.
 - The root sets `data-playing` while autoplay is running. Dots expose `data-active` on the current dot, and the dots container sets `data-variant` and `data-autoplay`.
 - `CarouselPrevious` and `CarouselNext` default to the `secondary` variant and `icon` size; `CarouselPlayButton` defaults to `secondary` and `icon-sm`.
 - In vertical carousels, standalone previous and next buttons are rotated 90 degrees; inside `CarouselControls` they are not.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-carousel--default" width={880} height={703} live="carousel/Default" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nfunction NumberSlides({ basis }: { basis?: number }) {\n  return (\n    <CarouselContent>\n      {slides.map((slide) => (\n        <CarouselItem key={slide} basis={basis}>\n          <Card size={basis ? \"sm\" : \"default\"}>\n            <CardContent className=\"aspect-square items-center justify-center\">\n              <Text className=\"text-4xl font-semibold\">{slide}</Text>\n            </CardContent>\n          </Card>\n        </CarouselItem>\n      ))}\n    </CarouselContent>\n  )\n}\n\nexport function CarouselExample() {\n  return (\n    <View className=\"mx-12\">\n      <Carousel>\n        <NumberSlides />\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselExample: View {\n  var body: some View {\n    Carousel {\n      HStack(spacing: 12) {\n        CarouselPrevious()\n        CarouselNumberSlides(basis: nil)\n        CarouselNext()\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselNumberSlides: View {\n  let basis: CGFloat?\n\n  var body: some View {\n    CarouselContent {\n      ForEach(CarouselData.slides, id: \\.self) { slide in\n        CarouselItem(basis: basis ?? 1) {\n          Card(size: basis == nil ? .default : .sm) {\n            CardContent {\n              Text(verbatim: \"\\(slide)\")\n                .textStyle(.xl3, weight: .semibold)\n                .frame(maxWidth: .infinity, maxHeight: .infinity)\n                .aspectRatio(1, contentMode: .fit)\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselNext\nimport com.esuiss.ui.components.CarouselPrevious\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CarouselExample() {\n    CarouselNumbers(basis = null, loop = false)\n}\n\nval carouselSlides = listOf(1, 2, 3, 4, 5)\n\nval carouselSpacing = 16.dp\n\nfun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {\n    if (basis == null) return PaddingValues(0.dp)\n    val page = (width + spacing) * basis - spacing\n    return PaddingValues(end = width - page)\n}\n\n@Composable\nfun CarouselNumbers(basis: Float?, loop: Boolean) {\n    val state = rememberCarouselState(pageCount = carouselSlides.size, loop = loop)\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val width = maxWidth\n        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n            CarouselContent(contentPadding = carouselPeek(width, basis)) { page ->\n                CarouselItem {\n                    Card(size = if (basis != null) CardSize.Sm else CardSize.Default) {\n                        CardContent {\n                            Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {\n                                Text(\n                                    carouselSlides[page].toString(),\n                                    style = Typography.xl3.copy(fontWeight = FontWeight.SemiBold),\n                                )\n                            }\n                        }\n                    }\n                }\n            }\n            Row(\n                Modifier.fillMaxWidth().padding(top = 12.dp),\n                horizontalArrangement = Arrangement.SpaceBetween,\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                CarouselPrevious()\n                CarouselNext()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Carousel` wraps a scroll view that snaps to each `CarouselItem`. It scrolls horizontally by default or vertically with `orientation="vertical"`. `CarouselPrevious` and `CarouselNext` are round `Button`s that sit outside the slides, or inline when placed in `CarouselControls`.
+
+`CarouselDots` shows one dot per snap point, with the active dot stretched into a pill; with autoplay on, the active dot fills up as a timer. `CarouselPlayButton` pauses and resumes autoplay.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add carousel"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add carousel --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add carousel --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/carousel.tsx`:
+
+<SourceFile path="uniwind/components/ui/carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/carousel.tsx`:
+
+<SourceFile path="nativewind/components/ui/carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/carousel.tsx`:
+
+<SourceFile path="stylesheet/components/ui/carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Carousel.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Carousel.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselControls, CarouselDots, CarouselPlayButton } from \"@/components/ui/carousel\""} />
+
+<Code lang="tsx" code={"<View className=\"mx-12\">\n  <Carousel>\n    <NumberSlides />\n    <CarouselPrevious />\n    <CarouselNext />\n  </Carousel>\n</View>"} />
+
+Set each slide's width with `basis` on `CarouselItem`, as a fraction of the viewport (for example `0.5` for two per view). Use `opts` for `loop`, `align` (`start` or `center`) and `dragFree` scrolling without snapping.
+
+Pass `autoplay` as `true` for the default 5-second delay, or as a number of milliseconds. Put `CarouselDots`, `CarouselPlayButton` and nav buttons inside `CarouselControls` to show them in a row below the slides; `CarouselDots` takes `variant="plain"` to drop its background.
+
+Use `setApi` to get a `CarouselApi` for scrolling from outside, or call `useCarousel()` inside the carousel to read the selected index and scroll state.
+
+## Examples
+
+### Multiple items
+
+Two slides per view with `basis={0.5}`.
+
+<NativeExample id="components-carousel--multiple-items" width={880} height={400} live="carousel/MultipleItems" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nfunction NumberSlides({ basis }: { basis?: number }) {\n  return (\n    <CarouselContent>\n      {slides.map((slide) => (\n        <CarouselItem key={slide} basis={basis}>\n          <Card size={basis ? \"sm\" : \"default\"}>\n            <CardContent className=\"aspect-square items-center justify-center\">\n              <Text className=\"text-4xl font-semibold\">{slide}</Text>\n            </CardContent>\n          </Card>\n        </CarouselItem>\n      ))}\n    </CarouselContent>\n  )\n}\n\nexport function CarouselMultipleItemsExample() {\n  return (\n    <View className=\"mx-12\">\n      <Carousel opts={{ align: \"start\" }}>\n        <NumberSlides basis={0.5} />\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselMultipleItemsExample: View {\n  var body: some View {\n    Carousel {\n      HStack(spacing: 12) {\n        CarouselPrevious()\n        CarouselNumberSlides(basis: 0.5)\n        CarouselNext()\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselNumberSlides: View {\n  let basis: CGFloat?\n\n  var body: some View {\n    CarouselContent {\n      ForEach(CarouselData.slides, id: \\.self) { slide in\n        CarouselItem(basis: basis ?? 1) {\n          Card(size: basis == nil ? .default : .sm) {\n            CardContent {\n              Text(verbatim: \"\\(slide)\")\n                .textStyle(.xl3, weight: .semibold)\n                .frame(maxWidth: .infinity, maxHeight: .infinity)\n                .aspectRatio(1, contentMode: .fit)\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselNext\nimport com.esuiss.ui.components.CarouselPrevious\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CarouselMultipleItemsExample() {\n    CarouselNumbers(basis = 0.5f, loop = false)\n}\n\nval carouselSlides = listOf(1, 2, 3, 4, 5)\n\nval carouselSpacing = 16.dp\n\nfun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {\n    if (basis == null) return PaddingValues(0.dp)\n    val page = (width + spacing) * basis - spacing\n    return PaddingValues(end = width - page)\n}\n\n@Composable\nfun CarouselNumbers(basis: Float?, loop: Boolean) {\n    val state = rememberCarouselState(pageCount = carouselSlides.size, loop = loop)\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val width = maxWidth\n        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n            CarouselContent(contentPadding = carouselPeek(width, basis)) { page ->\n                CarouselItem {\n                    Card(size = if (basis != null) CardSize.Sm else CardSize.Default) {\n                        CardContent {\n                            Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {\n                                Text(\n                                    carouselSlides[page].toString(),\n                                    style = Typography.xl3.copy(fontWeight = FontWeight.SemiBold),\n                                )\n                            }\n                        }\n                    }\n                }\n            }\n            Row(\n                Modifier.fillMaxWidth().padding(top = 12.dp),\n                horizontalArrangement = Arrangement.SpaceBetween,\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                CarouselPrevious()\n                CarouselNext()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Loop
+
+Wraps around from the last slide to the first.
+
+<NativeExample id="components-carousel--loop" width={880} height={703} live="carousel/Loop" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nfunction NumberSlides({ basis }: { basis?: number }) {\n  return (\n    <CarouselContent>\n      {slides.map((slide) => (\n        <CarouselItem key={slide} basis={basis}>\n          <Card size={basis ? \"sm\" : \"default\"}>\n            <CardContent className=\"aspect-square items-center justify-center\">\n              <Text className=\"text-4xl font-semibold\">{slide}</Text>\n            </CardContent>\n          </Card>\n        </CarouselItem>\n      ))}\n    </CarouselContent>\n  )\n}\n\nexport function CarouselLoopExample() {\n  return (\n    <View className=\"mx-12\">\n      <Carousel opts={{ loop: true }}>\n        <NumberSlides />\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselLoopExample: View {\n  var body: some View {\n    Carousel(loop: true) {\n      HStack(spacing: 12) {\n        CarouselPrevious()\n        CarouselNumberSlides(basis: nil)\n        CarouselNext()\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselNumberSlides: View {\n  let basis: CGFloat?\n\n  var body: some View {\n    CarouselContent {\n      ForEach(CarouselData.slides, id: \\.self) { slide in\n        CarouselItem(basis: basis ?? 1) {\n          Card(size: basis == nil ? .default : .sm) {\n            CardContent {\n              Text(verbatim: \"\\(slide)\")\n                .textStyle(.xl3, weight: .semibold)\n                .frame(maxWidth: .infinity, maxHeight: .infinity)\n                .aspectRatio(1, contentMode: .fit)\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselNext\nimport com.esuiss.ui.components.CarouselPrevious\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CarouselLoopExample() {\n    CarouselNumbers(basis = null, loop = true)\n}\n\nval carouselSlides = listOf(1, 2, 3, 4, 5)\n\nval carouselSpacing = 16.dp\n\nfun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {\n    if (basis == null) return PaddingValues(0.dp)\n    val page = (width + spacing) * basis - spacing\n    return PaddingValues(end = width - page)\n}\n\n@Composable\nfun CarouselNumbers(basis: Float?, loop: Boolean) {\n    val state = rememberCarouselState(pageCount = carouselSlides.size, loop = loop)\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val width = maxWidth\n        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n            CarouselContent(contentPadding = carouselPeek(width, basis)) { page ->\n                CarouselItem {\n                    Card(size = if (basis != null) CardSize.Sm else CardSize.Default) {\n                        CardContent {\n                            Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {\n                                Text(\n                                    carouselSlides[page].toString(),\n                                    style = Typography.xl3.copy(fontWeight = FontWeight.SemiBold),\n                                )\n                            }\n                        }\n                    }\n                }\n            }\n            Row(\n                Modifier.fillMaxWidth().padding(top = 12.dp),\n                horizontalArrangement = Arrangement.SpaceBetween,\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                CarouselPrevious()\n                CarouselNext()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Vertical
+
+A vertical carousel with arrows above and below.
+
+<NativeExample id="components-carousel--vertical" width={880} height={783} live="carousel/Vertical" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nexport function CarouselVerticalExample() {\n  return (\n    <View className=\"my-12\">\n      <Carousel orientation=\"vertical\" opts={{ align: \"start\" }}>\n        <CarouselContent className=\"h-64\">\n          {slides.map((slide) => (\n            <CarouselItem key={slide} basis={0.5}>\n              <Card size=\"sm\" className=\"h-full justify-center\">\n                <CardContent className=\"items-center justify-center\">\n                  <Text className=\"text-3xl font-semibold\">{slide}</Text>\n                </CardContent>\n              </Card>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselVerticalExample: View {\n  var body: some View {\n    Carousel(orientation: .vertical) {\n      VStack(spacing: 12) {\n        CarouselPrevious()\n        CarouselContent {\n          ForEach(CarouselData.slides, id: \\.self) { slide in\n            CarouselItem(basis: 0.5) {\n              Card(size: .sm) {\n                CardContent {\n                  Text(verbatim: \"\\(slide)\")\n                    .textStyle(.xl2, weight: .semibold)\n                    .frame(maxWidth: .infinity, maxHeight: .infinity)\n                }\n              }\n            }\n          }\n        }\n        .frame(height: 256)\n        CarouselNext()\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxHeight\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselNext\nimport com.esuiss.ui.components.CarouselOrientation\nimport com.esuiss.ui.components.CarouselPrevious\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Typography\n\nval carouselSlides = listOf(1, 2, 3, 4, 5)\n\nval carouselSpacing = 16.dp\n\n@Composable\nfun CarouselVertical() {\n    val state = rememberCarouselState(pageCount = carouselSlides.size)\n    val height = 256.dp\n    val spacing = carouselSpacing\n    Carousel(state = state, modifier = Modifier.fillMaxWidth(), orientation = CarouselOrientation.Vertical) {\n        CarouselContent(\n            modifier = Modifier.fillMaxWidth().height(height),\n            contentPadding = PaddingValues(bottom = height - ((height + spacing) * 0.5f - spacing)),\n        ) { page ->\n            CarouselItem(Modifier.fillMaxWidth().fillMaxHeight()) {\n                Card(modifier = Modifier.fillMaxHeight(), size = CardSize.Sm) {\n                    Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {\n                        Text(\n                            carouselSlides[page].toString(),\n                            style = Typography.xl3.copy(fontWeight = FontWeight.SemiBold),\n                        )\n                    }\n                }\n            }\n        }\n        Row(\n            Modifier.fillMaxWidth().padding(top = 12.dp),\n            horizontalArrangement = Arrangement.SpaceBetween,\n            verticalAlignment = Alignment.CenterVertically,\n        ) {\n            CarouselPrevious()\n            CarouselNext()\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### With page indicator
+
+Full-width cards with a page indicator below.
+
+<NativeExample id="components-carousel--with-page-indicator" width={880} height={1163} live="carousel/WithPageIndicator" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Carousel, CarouselContent, CarouselItem, useCarousel } from \"@/components/ui/carousel\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\nimport { Text } from \"@/components/ui/text\"\n\nconst picks = [\n  { eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: \"bg-orange\" },\n  { eyebrow: \"New\", title: \"Grilled meatballs\", tint: \"bg-red\" },\n  { eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: \"bg-teal\" },\n  { eyebrow: \"Dessert\", title: \"Künefe\", tint: \"bg-purple\" },\n]\n\nfunction CarouselPageIndicator() {\n  const { scrollSnaps, selectedIndex, scrollTo } = useCarousel()\n  return (\n    <PageIndicator\n      className=\"mt-4\"\n      count={scrollSnaps.length}\n      index={selectedIndex}\n      onIndexChange={(index) => scrollTo(index)}\n    />\n  )\n}\n\nexport function CarouselWithPageIndicatorExample() {\n  return (\n    <Carousel>\n      <CarouselContent>\n        {picks.map((pick) => (\n          <CarouselItem key={pick.title}>\n            <View\n              className={`aspect-[4/5] justify-end gap-1 rounded-3xl p-5 ${pick.tint}`}\n            >\n              <Text className=\"text-xs font-semibold text-on-accent uppercase\">\n                {pick.eyebrow}\n              </Text>\n              <Text className=\"text-2xl font-bold text-on-accent\">\n                {pick.title}\n              </Text>\n            </View>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPageIndicator />\n    </Carousel>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselPickCard: View {\n  let pick: CarouselPick\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 4) {\n      Text(verbatim: pick.eyebrow.uppercased())\n        .textStyle(.xs2, weight: .semibold)\n      Text(verbatim: pick.title)\n        .textStyle(.xl2, weight: .bold)\n    }\n    .foregroundStyle(Color.onAccent)\n    .padding(20)\n    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)\n    .aspectRatio(4.0 / 5.0, contentMode: .fit)\n    .background(pick.tint, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))\n  }\n}\n\nstruct CarouselPageIndicatorDemo: View {\n  @State private var controller = CarouselController()\n\n  var body: some View {\n    Carousel(controller: controller) {\n      CarouselContent {\n        ForEach(CarouselData.picks, id: \\.title) { pick in\n          CarouselItem {\n            CarouselPickCard(pick: pick)\n          }\n        }\n      }\n      PageIndicator(count: controller.count, index: controller.selectedIndex) { controller.scrollTo($0) }\n        .padding(.top, 16)\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Colors\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nclass CarouselPick(val eyebrow: String, val title: String, val tint: (Colors) -> Color)\n\nval carouselPicks = listOf(\n    CarouselPick(\"Today's pick\", \"Weekend breakfast\") { it.orange },\n    CarouselPick(\"New\", \"Grilled meatballs\") { it.red },\n    CarouselPick(\"Chef's special\", \"Lentil soup\") { it.teal },\n    CarouselPick(\"Dessert\", \"Künefe\") { it.purple },\n)\n\n@Composable\nfun CarouselPickCard(pick: CarouselPick) {\n    val colors = EsuissTheme.colors\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .aspectRatio(4f / 5f)\n            .clip(RoundedCornerShape(Radius.xl3))\n            .background(pick.tint(colors))\n            .padding(20.dp),\n        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom),\n    ) {\n        Text(\n            pick.eyebrow.uppercase(),\n            style = Typography.xs.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),\n        )\n        Text(\n            pick.title,\n            style = Typography.xl2.copy(color = colors.onAccent, fontWeight = FontWeight.Bold),\n        )\n    }\n}\n\n@Composable\nfun CarouselWithPageIndicator() {\n    val state = rememberCarouselState(pageCount = carouselPicks.size)\n    Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n        CarouselContent { page ->\n            CarouselItem { CarouselPickCard(carouselPicks[page]) }\n        }\n        PageIndicator(\n            count = state.pageCount,\n            index = state.selectedIndex,\n            modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally),\n            onIndexChange = { state.scrollTo(it) },\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Featured
+
+Peeking cards with plain dots and a play button.
+
+<NativeExample id="components-carousel--featured" width={880} height={1064} live="carousel/Featured" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselPlayButton } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst picks = [\n  { eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: \"bg-orange\" },\n  { eyebrow: \"New\", title: \"Grilled meatballs\", tint: \"bg-red\" },\n  { eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: \"bg-teal\" },\n  { eyebrow: \"Dessert\", title: \"Künefe\", tint: \"bg-purple\" },\n]\n\nexport function CarouselFeaturedExample() {\n  return (\n    <Carousel opts={{ align: \"start\" }}>\n      <CarouselContent>\n        {picks.map((pick) => (\n          <CarouselItem key={pick.title} basis={0.88}>\n            <View\n              className={`aspect-[4/5] justify-end gap-1 rounded-3xl p-5 ${pick.tint}`}\n            >\n              <Text className=\"text-xs font-semibold text-on-accent uppercase\">\n                {pick.eyebrow}\n              </Text>\n              <Text className=\"text-2xl font-bold text-on-accent\">\n                {pick.title}\n              </Text>\n            </View>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselControls className=\"mt-4 justify-center\">\n        <CarouselDots variant=\"plain\" />\n        <CarouselPlayButton variant=\"ghost\" />\n      </CarouselControls>\n    </Carousel>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselFeaturedExample: View {\n  var body: some View {\n    Carousel {\n      CarouselContent {\n        ForEach(CarouselData.picks, id: \\.title) { pick in\n          CarouselItem(basis: 0.88) {\n            CarouselPickCard(pick: pick)\n          }\n        }\n      }\n      CarouselControls {\n        CarouselDots(variant: .plain)\n        CarouselPlayButton(variant: .ghost)\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselPickCard: View {\n  let pick: CarouselPick\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 4) {\n      Text(verbatim: pick.eyebrow.uppercased())\n        .textStyle(.xs2, weight: .semibold)\n      Text(verbatim: pick.title)\n        .textStyle(.xl2, weight: .bold)\n    }\n    .foregroundStyle(Color.onAccent)\n    .padding(20)\n    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)\n    .aspectRatio(4.0 / 5.0, contentMode: .fit)\n    .background(pick.tint, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselControls\nimport com.esuiss.ui.components.CarouselDots\nimport com.esuiss.ui.components.CarouselDotsVariant\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselPlayButton\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Colors\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nclass CarouselPick(val eyebrow: String, val title: String, val tint: (Colors) -> Color)\n\nval carouselPicks = listOf(\n    CarouselPick(\"Today's pick\", \"Weekend breakfast\") { it.orange },\n    CarouselPick(\"New\", \"Grilled meatballs\") { it.red },\n    CarouselPick(\"Chef's special\", \"Lentil soup\") { it.teal },\n    CarouselPick(\"Dessert\", \"Künefe\") { it.purple },\n)\n\nval carouselSpacing = 16.dp\n\nfun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {\n    if (basis == null) return PaddingValues(0.dp)\n    val page = (width + spacing) * basis - spacing\n    return PaddingValues(end = width - page)\n}\n\n@Composable\nfun CarouselPickCard(pick: CarouselPick) {\n    val colors = EsuissTheme.colors\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .aspectRatio(4f / 5f)\n            .clip(RoundedCornerShape(Radius.xl3))\n            .background(pick.tint(colors))\n            .padding(20.dp),\n        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom),\n    ) {\n        Text(\n            pick.eyebrow.uppercase(),\n            style = Typography.xs.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),\n        )\n        Text(\n            pick.title,\n            style = Typography.xl2.copy(color = colors.onAccent, fontWeight = FontWeight.Bold),\n        )\n    }\n}\n\n@Composable\nfun CarouselFeatured() {\n    val state = rememberCarouselState(pageCount = carouselPicks.size)\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val width = maxWidth\n        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n            CarouselContent(contentPadding = carouselPeek(width, 0.88f)) { page ->\n                CarouselItem { CarouselPickCard(carouselPicks[page]) }\n            }\n            CarouselControls(Modifier.align(Alignment.CenterHorizontally)) {\n                CarouselDots(variant = CarouselDotsVariant.Plain)\n                CarouselPlayButton(variant = ButtonVariant.Ghost)\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Spotlight
+
+A looping showcase with dots and an inline next button.
+
+<NativeExample id="components-carousel--spotlight" width={880} height={771} live="carousel/Spotlight" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselNext } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst features = [\n  { title: \"Take orders at the table.\" },\n  { title: \"Every ticket, right on time.\" },\n  { title: \"A full room, every night.\" },\n]\n\nexport function CarouselSpotlightExample() {\n  return (\n    <Carousel opts={{ loop: true }}>\n      <CarouselContent>\n        {features.map((feature) => (\n          <CarouselItem key={feature.title}>\n            <View className=\"aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8\">\n              <Text className=\"text-3xl font-bold\">Hestia POS</Text>\n              <Text className=\"text-center text-label-secondary\">\n                {feature.title}\n              </Text>\n            </View>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselControls className=\"justify-center\">\n        <CarouselDots />\n        <CarouselNext size=\"icon-sm\" />\n      </CarouselControls>\n    </Carousel>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselSpotlightExample: View {\n  var body: some View {\n    Carousel(loop: true) {\n      CarouselFeatureSlides()\n      CarouselControls {\n        CarouselDots()\n        CarouselNext(size: .iconSm)\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselFeatureSlides: View {\n  var body: some View {\n    CarouselContent {\n      ForEach(CarouselData.features, id: \\.self) { feature in\n        CarouselItem {\n          VStack(spacing: 12) {\n            Text(verbatim: \"Hestia POS\")\n              .textStyle(.xl2, weight: .bold)\n              .foregroundStyle(Color.label)\n            Text(verbatim: feature)\n              .textStyle(.base)\n              .foregroundStyle(Color.labelSecondary)\n              .multilineTextAlignment(.center)\n          }\n          .padding(32)\n          .frame(maxWidth: .infinity, maxHeight: .infinity)\n          .aspectRatio(10.0 / 7.0, contentMode: .fit)\n          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))\n        }\n      }\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselControls\nimport com.esuiss.ui.components.CarouselDots\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselNext\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nval carouselFeatures = listOf(\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n)\n\n@Composable\nfun CarouselFeatureCard(title: String) {\n    val colors = EsuissTheme.colors\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .aspectRatio(10f / 7f)\n            .clip(RoundedCornerShape(Radius.xl3))\n            .background(colors.surfaceSecondary)\n            .padding(32.dp),\n        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),\n        horizontalAlignment = Alignment.CenterHorizontally,\n    ) {\n        Text(\"Hestia POS\", style = Typography.xl3.copy(fontWeight = FontWeight.Bold))\n        Text(title, style = Typography.base.copy(color = colors.labelSecondary), textAlign = TextAlign.Center)\n    }\n}\n\n@Composable\nfun CarouselSpotlight() {\n    val state = rememberCarouselState(pageCount = carouselFeatures.size, loop = true)\n    Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n        CarouselContent { page ->\n            CarouselItem { CarouselFeatureCard(carouselFeatures[page]) }\n        }\n        CarouselControls(Modifier.align(Alignment.CenterHorizontally)) {\n            CarouselDots()\n            CarouselNext(size = ButtonSize.IconSm)\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Autoplay
+
+Advances every four seconds, with progress dots and a play button.
+
+<NativeExample id="components-carousel--autoplay" width={880} height={771} live="carousel/Autoplay" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselPlayButton } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst features = [\n  { title: \"Take orders at the table.\" },\n  { title: \"Every ticket, right on time.\" },\n  { title: \"A full room, every night.\" },\n]\n\nexport function CarouselAutoplayExample() {\n  return (\n    <Carousel autoplay={4000} opts={{ loop: true }}>\n      <CarouselContent>\n        {features.map((feature) => (\n          <CarouselItem key={feature.title}>\n            <View className=\"aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8\">\n              <Text className=\"text-3xl font-bold\">Hestia POS</Text>\n              <Text className=\"text-center text-label-secondary\">\n                {feature.title}\n              </Text>\n            </View>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselControls className=\"justify-center\">\n        <CarouselDots />\n        <CarouselPlayButton />\n      </CarouselControls>\n    </Carousel>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselAutoplayExample: View {\n  var body: some View {\n    Carousel(loop: true, autoplay: .seconds(4)) {\n      CarouselFeatureSlides()\n      CarouselControls {\n        CarouselDots()\n        CarouselPlayButton()\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nstruct CarouselFeatureSlides: View {\n  var body: some View {\n    CarouselContent {\n      ForEach(CarouselData.features, id: \\.self) { feature in\n        CarouselItem {\n          VStack(spacing: 12) {\n            Text(verbatim: \"Hestia POS\")\n              .textStyle(.xl2, weight: .bold)\n              .foregroundStyle(Color.label)\n            Text(verbatim: feature)\n              .textStyle(.base)\n              .foregroundStyle(Color.labelSecondary)\n              .multilineTextAlignment(.center)\n          }\n          .padding(32)\n          .frame(maxWidth: .infinity, maxHeight: .infinity)\n          .aspectRatio(10.0 / 7.0, contentMode: .fit)\n          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))\n        }\n      }\n    }\n  }\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselControls\nimport com.esuiss.ui.components.CarouselDots\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.CarouselPlayButton\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nval carouselFeatures = listOf(\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n)\n\n@Composable\nfun CarouselFeatureCard(title: String) {\n    val colors = EsuissTheme.colors\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .aspectRatio(10f / 7f)\n            .clip(RoundedCornerShape(Radius.xl3))\n            .background(colors.surfaceSecondary)\n            .padding(32.dp),\n        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),\n        horizontalAlignment = Alignment.CenterHorizontally,\n    ) {\n        Text(\"Hestia POS\", style = Typography.xl3.copy(fontWeight = FontWeight.Bold))\n        Text(title, style = Typography.base.copy(color = colors.labelSecondary), textAlign = TextAlign.Center)\n    }\n}\n\n@Composable\nfun CarouselAutoplay() {\n    val state = rememberCarouselState(pageCount = carouselFeatures.size, loop = true)\n    Carousel(state = state, modifier = Modifier.fillMaxWidth(), autoplay = true, autoplayDelayMillis = 4000L) {\n        CarouselContent { page ->\n            CarouselItem { CarouselFeatureCard(carouselFeatures[page]) }\n        }\n        CarouselControls(Modifier.align(Alignment.CenterHorizontally)) {\n            CarouselDots()\n            CarouselPlayButton()\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Shelf
+
+A free-scrolling shelf of small cards with `dragFree`.
+
+<NativeExample id="components-carousel--shelf" width={880} height={523} live="carousel/Shelf" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Carousel, CarouselContent, CarouselItem } from \"@/components/ui/carousel\"\nimport { Text } from \"@/components/ui/text\"\n\nconst picks = [\n  { eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: \"bg-orange\" },\n  { eyebrow: \"New\", title: \"Grilled meatballs\", tint: \"bg-red\" },\n  { eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: \"bg-teal\" },\n  { eyebrow: \"Dessert\", title: \"Künefe\", tint: \"bg-purple\" },\n]\n\nexport function CarouselShelfExample() {\n  return (\n    <Carousel opts={{ align: \"start\", dragFree: true }}>\n      <Text className=\"mb-3 text-xl font-bold\">Popular</Text>\n      <CarouselContent className=\"-ms-3\">\n        {picks.map((pick) => (\n          <CarouselItem key={pick.title} basis={0.4} className=\"ps-3\">\n            <View className={`aspect-square rounded-2xl ${pick.tint}`} />\n            <Text className=\"mt-2 text-sm font-semibold\" numberOfLines={1}>\n              {pick.title}\n            </Text>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n    </Carousel>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CarouselShelfExample: View {\n  var body: some View {\n    Carousel {\n      Text(\"Popular\")\n        .textStyle(.xl, weight: .bold)\n        .foregroundStyle(Color.label)\n        .frame(maxWidth: .infinity, alignment: .leading)\n        .padding(.bottom, 12)\n      CarouselContent(spacing: 12) {\n        ForEach(CarouselData.picks, id: \\.title) { pick in\n          CarouselItem(basis: 0.4) {\n            VStack(alignment: .leading, spacing: 8) {\n              RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n                .fill(pick.tint)\n                .aspectRatio(1, contentMode: .fit)\n              Text(verbatim: pick.title)\n                .textStyle(.sm, weight: .semibold)\n                .foregroundStyle(Color.label)\n                .lineLimit(1)\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nstruct CarouselPick {\n  let eyebrow: String\n  let title: String\n  let tint: Color\n}\n\nenum CarouselData {\n  static let slides = [1, 2, 3, 4, 5]\n\n  static let picks = [\n    CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n    CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n    CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n    CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n  ]\n\n  static let features = [\n    \"Take orders at the table.\",\n    \"Every ticket, right on time.\",\n    \"A full room, every night.\",\n  ]\n}\n\nlet slides = [1, 2, 3, 4, 5]\n\nlet picks = [\n  CarouselPick(eyebrow: \"Today's pick\", title: \"Weekend breakfast\", tint: .warning),\n  CarouselPick(eyebrow: \"New\", title: \"Grilled meatballs\", tint: .danger),\n  CarouselPick(eyebrow: \"Chef's special\", title: \"Lentil soup\", tint: .success),\n  CarouselPick(eyebrow: \"Dessert\", title: \"Künefe\", tint: .accent),\n]\n\nlet features = [\n  \"Take orders at the table.\",\n  \"Every ticket, right on time.\",\n  \"A full room, every night.\",\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Carousel\nimport com.esuiss.ui.components.CarouselContent\nimport com.esuiss.ui.components.CarouselItem\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberCarouselState\nimport com.esuiss.ui.theme.Colors\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nclass CarouselPick(val eyebrow: String, val title: String, val tint: (Colors) -> Color)\n\nval carouselPicks = listOf(\n    CarouselPick(\"Today's pick\", \"Weekend breakfast\") { it.orange },\n    CarouselPick(\"New\", \"Grilled meatballs\") { it.red },\n    CarouselPick(\"Chef's special\", \"Lentil soup\") { it.teal },\n    CarouselPick(\"Dessert\", \"Künefe\") { it.purple },\n)\n\nval carouselSpacing = 16.dp\n\nfun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {\n    if (basis == null) return PaddingValues(0.dp)\n    val page = (width + spacing) * basis - spacing\n    return PaddingValues(end = width - page)\n}\n\n@Composable\nfun CarouselShelf() {\n    val state = rememberCarouselState(pageCount = carouselPicks.size)\n    val colors = EsuissTheme.colors\n    val spacing = 12.dp\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val width = maxWidth\n        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {\n            Text(\n                \"Popular\",\n                modifier = Modifier.padding(bottom = 12.dp),\n                style = Typography.xl.copy(fontWeight = FontWeight.Bold),\n            )\n            CarouselContent(contentPadding = carouselPeek(width, 0.4f, spacing), pageSpacing = spacing) { page ->\n                val pick = carouselPicks[page]\n                CarouselItem {\n                    Column(Modifier.fillMaxWidth()) {\n                        Box(\n                            Modifier\n                                .fillMaxWidth()\n                                .aspectRatio(1f)\n                                .clip(RoundedCornerShape(Radius.xl2))\n                                .background(pick.tint(colors)),\n                        )\n                        Text(\n                            pick.title,\n                            modifier = Modifier.padding(top = 8.dp),\n                            style = Typography.sm.copy(fontWeight = FontWeight.SemiBold),\n                            maxLines = 1,\n                            overflow = TextOverflow.Ellipsis,\n                        )\n                    }\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Carousel
+
+Root that holds the scroll state and options.
+
+<PropsTable extends={["React.ComponentProps<typeof CarouselPrimitive.Root>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CarouselContent
+
+Scrolling track for the slides.
+
+<PropsTable extends={["React.ComponentProps<typeof CarouselPrimitive.Content>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CarouselItem
+
+One slide.
+
+<PropsTable extends={["React.ComponentProps<typeof CarouselPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CarouselPrevious
+
+Button that scrolls to the previous slide.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CarouselNext
+
+Button that scrolls to the next slide.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CarouselControls
+
+Row that lays out dots and buttons below the slides.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CarouselDots
+
+One pressable dot per snap point.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"plain\"","default":"\"default\"","description":"`default` (on a control background) or `plain`."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CarouselPlayButton
+
+Toggles autoplay.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Previous and next buttons have the `button` role and are labelled "Previous slide" and "Next slide", with a disabled state at the ends.
+- Each dot is labelled "Go to slide N" and marks the current slide as selected.
+- The play button is labelled "Pause slideshow" or "Play slideshow".
+
+## Notes
+
+- Arrow icons are mirrored in right-to-left layouts.
+- Dot and progress animations respect the system Reduce Motion setting.
+- Uses `bg-control`, `bg-label` and `bg-label-tertiary` tokens; light and dark follow the system appearance.
+
+</Only>

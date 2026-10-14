@@ -1,9 +1,12 @@
 ---
 title: Tooltip
 description: "A small label that appears next to an element on hover or keyboard focus."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="tooltip" story="Default">
 
@@ -120,3 +123,5 @@ The positioned label with its arrow, rendered in a portal.
 - Parts carry `data-slot` attributes such as `tooltip-trigger` and `tooltip-content`; the popup and arrow set `data-side`.
 - The label uses `bg-label` with `text-surface`, so it inverts against the page in both light and dark appearances.
 - `TooltipContent` accepts the positioner props `side`, `sideOffset`, `align` and `alignOffset`.
+
+</Only>

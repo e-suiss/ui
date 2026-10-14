@@ -1,57 +1,55 @@
 ---
 title: Introduction
-description: Copy-paste React components with a clean, minimal design, built on Base UI and Tailwind CSS v4.
+description: Copy-paste components with a clean, minimal design for React, React Native, SwiftUI and Jetpack Compose.
 eyebrow: suiss/ui
 ---
 
 ## Overview
 
-suiss/ui is a set of React components for Next.js and React (Vite) projects with TypeScript. It ships 66 accessible components and 5 hooks, from buttons and dialogs to sidebars, charts and chat views.
+suiss/ui is a set of components for web and mobile apps: React for Next.js and Vite, React Native for Expo, SwiftUI for iOS and Jetpack Compose for Android. Every platform is built from the same design tokens and uses the same component names, parts and variants.
 
-The components reach your project through the `@esuiss/ui` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency.
+The components reach your project through the `@esuiss/ui` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency, and it detects which platform the project is for.
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init
-npx @esuiss/ui@latest add button dialog sidebar
+npx @esuiss/ui@latest add button dialog sheet
 ```
+
+## Platforms
+
+| Platform | Projects | Built with |
+| --- | --- | --- |
+| React | Next.js or React with Vite, TypeScript | [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) 4.2 or later |
+| React Native | Expo or React Native, TypeScript | Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain StyleSheet, with the same API |
+| SwiftUI | Xcode projects and Swift packages, iOS 17 or later | SwiftUI and Swift Charts |
+| Jetpack Compose | Android Gradle modules, `minSdk` 24 or higher | Compose Foundation and UI, without Material |
+
+Every component page has a tab for each platform it supports, with its own preview, installation steps, examples and API reference.
 
 ## Principles
 
 ### You own the code
 
-Components live in your repository, under `components/ui/`. Change them however you like. Updates never overwrite your changes silently: you review the difference first, then decide.
+Components live in your project, under `components/ui/` on React and React Native, `EsuissUI/` on SwiftUI and `com/esuiss/ui/` on Compose. Change them however you like. Updates never overwrite your changes silently: you review the difference first, then decide.
 
 The CLI is never installed in your project. It runs with `npx`, so there is no runtime dependency on it.
 
-### Base UI and Tailwind CSS v4
+### One design on every platform
 
-Components are built on [Base UI](https://base-ui.com) primitives and styled with [Tailwind CSS](https://tailwindcss.com) 4.2 or later. Variants, animations and utilities come from the `@esuiss/tailwind` package.
-
-### A palette for light and dark
-
-Colors are written in oklch and named by role, not by component: `surface`, `label`, `accent`, `separator` and so on. Every color has a light value under `:root` and a dark value under `.dark`. See [Theming](/docs/theming).
+Colors are named by role, not by component: `surface`, `label`, `accent`, `separator` and so on. Every color has a light and a dark value, and every platform reads the same tokens, so a web app, an Expo app and a native app look like one product. See [Theming](/docs/theming).
 
 ### Phosphor icons
 
-Components use [Phosphor](https://phosphoricons.com) icons.
-
-## Frameworks
-
-| Framework | Stylesheet written by `init` | Font |
-| --- | --- | --- |
-| Next.js | `app/globals.css` | Inter through `next/font/google` in the root layout |
-| React with Vite | `src/index.css` | Inter through `@fontsource-variable/inter` |
-
-On macOS, text uses the system font. Inter is used everywhere else.
+Components use [Phosphor](https://phosphoricons.com) icons on every platform.
 
 ## Beyond components
 
-Besides components and hooks, the CLI can add optional extras:
+Besides components, the CLI can add optional extras:
 
-- **Patterns** combine several components into one ready-made piece, such as a date and time picker.
+- **Patterns** combine several components into one ready-made piece, such as a date picker.
 - **Interactions** add a behavior to something you already have, such as swiping a row to reveal actions.
 - **Charts** are ready-made charts built on the `chart` component.
-- **Blocks** are ready-made sections of a page built from the components.
+- **Blocks** are ready-made screens and sections built from the components.
 
 See [CLI](/docs/cli) for how to add them.
 

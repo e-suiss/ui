@@ -1,9 +1,12 @@
 ---
 title: Navigation Menu
 description: "A site navigation bar whose items open popover or full-width panels of links."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="navigation-menu" story="Default">
 
@@ -194,3 +197,5 @@ A small arrow built on the Base UI `NavigationMenu.Icon` part that fades in whil
 - Triggers and links restyle themselves automatically in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.
 - `navigationMenuTriggerStyle` is exported for styling links as triggers.
 - Uses the `surface-raised`, `surface`, `item-hover`, `item-selected`, `scrim` and `link` tokens.
+
+</Only>

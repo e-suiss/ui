@@ -2,8 +2,11 @@
 title: Flyout
 description: "A non-modal panel anchored to a trigger on desktop that becomes a bottom drawer on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="flyout" story="Default">
 
@@ -178,3 +181,5 @@ A button that closes the flyout.
 ## Notes
 
 Parts carry `data-slot` values from `flyout` through `flyout-close`. `showCloseButton` and `closeLabel` only affect the mobile drawer; on desktop, add a `FlyoutClose` if the popover needs an explicit close control.
+
+</Only>

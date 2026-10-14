@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/site/footer";
 import { GlobalNav } from "@/components/site/global-nav";
 import { JsonLd } from "@/components/site/json-ld";
+import { platformScript } from "@/lib/platform";
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme";
 import { absolute, site } from "@/lib/site";
 import { strings } from "@/lib/strings";
@@ -93,7 +94,7 @@ const structuredData = {
       description: site.summary,
       url: absolute("/"),
       codeRepository: site.repository,
-      programmingLanguage: "TypeScript",
+      programmingLanguage: site.languages,
       runtimePlatform: site.platform,
       license: "https://opensource.org/licenses/MIT",
       keywords: site.keywords.join(", "),
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={fontInter.variable} suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <script dangerouslySetInnerHTML={{ __html: platformScript }} suppressHydrationWarning />
         <JsonLd data={structuredData} />
       </head>
       <body className="flex min-h-svh flex-col bg-surface text-label antialiased">

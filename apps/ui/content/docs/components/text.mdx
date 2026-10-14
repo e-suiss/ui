@@ -1,0 +1,201 @@
+---
+title: Text
+description: "Styled text with typography variants for headings, body copy, quotes, code and captions."
+eyebrow: Component
+platforms: [rn, swift, kotlin]
+generated: true
+---
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-text--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Text } from \"@/components/ui/text\"\n\nexport function TextExample() {\n  return (\n    <Text>The quick brown fox jumps over the lazy dog.</Text>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextExample: View {\n  var body: some View {\n    Text(\"The quick brown fox jumps over the lazy dog.\")\n      .textVariant(.default)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun TextExample() {\n    Text(\"The quick brown fox jumps over the lazy dog.\")\n}"} />
+
+</NativeExample>
+
+`Text` renders a React Native `Text` with one of twelve typography variants: `default`, `h1`–`h4`, `p`, `blockquote`, `code`, `lead`, `large`, `small` and `muted`. Heading variants also set the `heading` role.
+
+It reads `TextClassContext`, so components such as `Button` can pass a text color and size down to any `Text` inside them.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add text"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add text --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add text --platform kotlin"} />
+
+</Only>
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="uniwind/components/ui/text.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="nativewind/components/ui/text.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/text.tsx`:
+
+<SourceFile path="stylesheet/components/ui/text.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source:
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Text.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Text } from \"@/components/ui/text\""} />
+
+<Code lang="tsx" code={"<Text>The quick brown fox jumps over the lazy dog.</Text>"} />
+
+Pick a `variant` for the role of the text, and add classes through `className` for one-off changes.
+
+Use the `render` prop to render a different component with the same classes. `TextClassContext` is exported so your own components can style nested `Text` the same way.
+
+## Examples
+
+### Typography
+
+Every variant in a sample article.
+
+<NativeExample id="components-text--typography" width={880} height={1162} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function TextTypographyExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text variant=\"h1\">Taxing Laughter</Text>\n      <Text variant=\"h2\">The People of the Kingdom</Text>\n      <Text variant=\"h3\">The Joke Tax</Text>\n      <Text variant=\"h4\">People stopped telling jokes</Text>\n      <Text variant=\"p\">\n        The king, seeing how much happier his subjects were, realized the error\n        of his ways and repealed the joke tax.\n      </Text>\n      <Text variant=\"blockquote\">\n        &quot;After all,&quot; he said, &quot;everyone enjoys a good joke, so\n        it&apos;s only fair that they should pay for the privilege.&quot;\n      </Text>\n      <View className=\"flex-row\">\n        <Text variant=\"code\">npx @esuiss/ui add text</Text>\n      </View>\n      <Text variant=\"lead\">\n        A modal dialog that interrupts the user with important content.\n      </Text>\n      <Text variant=\"large\">Are you absolutely sure?</Text>\n      <Text variant=\"small\">Email address</Text>\n      <Text variant=\"muted\">Enter your email address.</Text>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextTypographyExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Text(\"Taxing Laughter\").textVariant(.h1)\n      Text(\"The People of the Kingdom\").textVariant(.h2)\n      Text(\"The Joke Tax\").textVariant(.h3)\n      Text(\"People stopped telling jokes\").textVariant(.h4)\n      Text(\"The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.\")\n        .textVariant(.p)\n      Text(\"\\\"After all,\\\" he said, \\\"everyone enjoys a good joke, so it's only fair that they should pay for the privilege.\\\"\")\n        .textVariant(.blockquote)\n      Text(verbatim: \"npx @esuiss/ui add text\").textVariant(.code)\n      Text(\"A modal dialog that interrupts the user with important content.\").textVariant(.lead)\n      Text(\"Are you absolutely sure?\").textVariant(.large)\n      Text(\"Email address\").textVariant(.small)\n      Text(\"Enter your email address.\").textVariant(.muted)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun TextTypography() {\n    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Text(\"Taxing Laughter\", variant = TextVariant.H1)\n        Text(\"The People of the Kingdom\", variant = TextVariant.H2)\n        Text(\"The Joke Tax\", variant = TextVariant.H3)\n        Text(\"People stopped telling jokes\", variant = TextVariant.H4)\n        Text(\n            \"The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.\",\n            variant = TextVariant.P,\n        )\n        Text(\n            \"\\\"After all,\\\" he said, \\\"everyone enjoys a good joke, so it's only fair that they should pay for the privilege.\\\"\",\n            variant = TextVariant.Blockquote,\n        )\n        Row {\n            Text(\"npx @esuiss/ui add text\", variant = TextVariant.Code)\n        }\n        Text(\"A modal dialog that interrupts the user with important content.\", variant = TextVariant.Lead)\n        Text(\"Are you absolutely sure?\", variant = TextVariant.Large)\n        Text(\"Email address\", variant = TextVariant.Small)\n        Text(\"Enter your email address.\", variant = TextVariant.Muted)\n    }\n}"} />
+
+</NativeExample>
+
+### Headings
+
+The four heading levels.
+
+<NativeExample id="components-text--headings" width={880} height={429} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function TextHeadingsExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text variant=\"h1\">Heading 1</Text>\n      <Text variant=\"h2\">Heading 2</Text>\n      <Text variant=\"h3\">Heading 3</Text>\n      <Text variant=\"h4\">Heading 4</Text>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TextHeadingsExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Text(\"Heading 1\").textVariant(.h1)\n      Text(\"Heading 2\").textVariant(.h2)\n      Text(\"Heading 3\").textVariant(.h3)\n      Text(\"Heading 4\").textVariant(.h4)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun TextHeadings() {\n    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Text(\"Heading 1\", variant = TextVariant.H1)\n        Text(\"Heading 2\", variant = TextVariant.H2)\n        Text(\"Heading 3\", variant = TextVariant.H3)\n        Text(\"Heading 4\", variant = TextVariant.H4)\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Text
+
+The text element with typography variants.
+
+<PropsTable extends={["React.ComponentProps<typeof RNText>","React.RefAttributes<typeof RNText>","TextVariantProps"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Renders another component in place of the default `Text`, with the same props."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `h1` to `h4` set `role="heading"`, so VoiceOver and TalkBack can navigate by heading.
+- Text scales with the system font size.
+
+## Notes
+
+- Colors use the `text-label` and `text-label-secondary` tokens; `code` uses `bg-surface-secondary` and `blockquote` a `border-separator` start border.
+- Light and dark colors follow the system appearance.
+
+</Only>

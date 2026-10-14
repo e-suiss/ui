@@ -2,8 +2,11 @@
 title: Confirm
 description: "A confirmation prompt that opens as an alert dialog on desktop and an action sheet on mobile."
 eyebrow: Pattern
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="confirm" story="Default">
 
@@ -154,3 +157,304 @@ A button that closes the prompt without acting; shown separately below the actio
 ## Notes
 
 Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `variant="destructive"` to `ConfirmAction` for destructive actions. The `size` prop of `ConfirmContent` applies to the desktop `AlertDialogContent` only.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="patterns-confirm--open-by-default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Confirm defaultOpen={defaultOpen}>\n        <ConfirmTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete your account?</ConfirmTitle>\n            <ConfirmDescription>\n              This permanently deletes your account and all of its data.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete Account</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </View>\n  )\n}\n\nexport function ConfirmOpenByDefaultExample() {\n  return (\n    <ConfirmDemo defaultOpen />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ConfirmOpenByDefaultExample: View {\n  var body: some View {\n    ConfirmDemo(open: true)\n  }\n}\n\nstruct ConfirmDemo: View {\n  @State private var open: Bool\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Delete account\") { open = true }\n      .buttonStyle(.variant(.destructive))\n      .confirm(isPresented: $open) {\n        ConfirmContent {\n          ConfirmHeader {\n            ConfirmTitle(\"Delete your account?\")\n            ConfirmDescription(\"This permanently deletes your account and all of its data.\")\n          }\n          ConfirmFooter {\n            ConfirmCancel(\"Cancel\")\n            ConfirmAction(\"Delete Account\", variant: .destructive)\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.AlertSheetActionVariant\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.patterns.Confirm\nimport com.esuiss.ui.patterns.ConfirmAction\nimport com.esuiss.ui.patterns.ConfirmCancel\nimport com.esuiss.ui.patterns.ConfirmDescription\nimport com.esuiss.ui.patterns.ConfirmFooter\nimport com.esuiss.ui.patterns.ConfirmHeader\nimport com.esuiss.ui.patterns.ConfirmTitle\n\n@Composable\nfun ConfirmOpenByDefaultExample() {\n    ConfirmDemo(defaultOpen = true)\n}\n\n@Composable\nfun ConfirmDemo(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Delete account\", onClick = { open = true }, variant = ButtonVariant.Destructive)\n        Confirm(open = open, onOpenChange = { open = it }) {\n            ConfirmHeader {\n                ConfirmTitle(\"Delete your account?\")\n                ConfirmDescription(\"This permanently deletes your account and all of its data.\")\n            }\n            ConfirmFooter {\n                ConfirmCancel(\"Cancel\")\n                ConfirmAction(\"Delete Account\", onClick = {}, variant = AlertSheetActionVariant.Destructive)\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Confirm` wraps `AlertSheet` with `dismissible` set to `false` by default, so the sheet closes only through one of its buttons.
+
+`ConfirmContent` rearranges its children: the header and every non-cancel button from `ConfirmFooter` go into one rounded group, and `ConfirmCancel` is placed below it as a separate button. Use it before destructive or irreversible actions.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add confirm"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add confirm --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add confirm --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+3. Copy the source into `components/patterns/confirm.tsx`:
+
+<SourceFile path="uniwind/components/patterns/confirm.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+3. Copy the source into `components/patterns/confirm.tsx`:
+
+<SourceFile path="nativewind/components/patterns/confirm.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/confirm.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/confirm.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Patterns/Confirm.swift" />
+
+<SourceFile path="swift/Components/AlertDialog.swift" />
+
+<SourceFile path="swift/Components/AlertSheet.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Patterns/Adaptive.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/patterns/Confirm.kt" />
+
+<SourceFile path="kotlin/components/AlertSheet.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from \"@/components/patterns/confirm\""} />
+
+<Code lang="tsx" code={"<ConfirmDemo defaultOpen />"} />
+
+Put `ConfirmTitle` and `ConfirmDescription` in a `ConfirmHeader`, and the buttons in a `ConfirmFooter` inside `ConfirmContent`. Any `ConfirmAction` goes into the group; `ConfirmCancel` is moved out of it.
+
+The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to let outside presses close it. Set `variant="destructive"` on `ConfirmAction` for delete-style actions.
+
+## Examples
+
+### Default
+
+<NativeExample id="patterns-confirm--default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <View className=\"items-start\">\n      <Confirm defaultOpen={defaultOpen}>\n        <ConfirmTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete your account?</ConfirmTitle>\n            <ConfirmDescription>\n              This permanently deletes your account and all of its data.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete Account</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </View>\n  )\n}\n\nexport function ConfirmExample() {\n  return (\n    <ConfirmDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ConfirmExample: View {\n  var body: some View {\n    ConfirmDemo(open: false)\n  }\n}\n\nstruct ConfirmDemo: View {\n  @State private var open: Bool\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Delete account\") { open = true }\n      .buttonStyle(.variant(.destructive))\n      .confirm(isPresented: $open) {\n        ConfirmContent {\n          ConfirmHeader {\n            ConfirmTitle(\"Delete your account?\")\n            ConfirmDescription(\"This permanently deletes your account and all of its data.\")\n          }\n          ConfirmFooter {\n            ConfirmCancel(\"Cancel\")\n            ConfirmAction(\"Delete Account\", variant: .destructive)\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.AlertSheetActionVariant\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.patterns.Confirm\nimport com.esuiss.ui.patterns.ConfirmAction\nimport com.esuiss.ui.patterns.ConfirmCancel\nimport com.esuiss.ui.patterns.ConfirmDescription\nimport com.esuiss.ui.patterns.ConfirmFooter\nimport com.esuiss.ui.patterns.ConfirmHeader\nimport com.esuiss.ui.patterns.ConfirmTitle\n\n@Composable\nfun ConfirmExample() {\n    ConfirmDemo(defaultOpen = false)\n}\n\n@Composable\nfun ConfirmDemo(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Delete account\", onClick = { open = true }, variant = ButtonVariant.Destructive)\n        Confirm(open = open, onOpenChange = { open = it }) {\n            ConfirmHeader {\n                ConfirmTitle(\"Delete your account?\")\n                ConfirmDescription(\"This permanently deletes your account and all of its data.\")\n            }\n            ConfirmFooter {\n                ConfirmCancel(\"Cancel\")\n                ConfirmAction(\"Delete Account\", onClick = {}, variant = AlertSheetActionVariant.Destructive)\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Confirm
+
+The root that owns the open state.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheet>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ConfirmTrigger
+
+The element that opens the sheet.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetTrigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ConfirmContent
+
+The sheet that groups the header and actions and places Cancel below.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ConfirmHeader
+
+Holds the title and description.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetHeader>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ConfirmTitle
+
+The question being asked.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetDescription>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetCancel>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- With the default `dismissible={false}`, the sheet uses the alert dialog primitive, so it closes only through its buttons.
+
+## Notes
+
+- Action text uses `text-link`, or `text-danger` for the `destructive` variant.
+- On iOS the sheet renders in a full-window overlay so it appears above native screens.
+
+</Only>

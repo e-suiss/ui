@@ -454,3 +454,26 @@ body {
 [data-slot="preview"] :is(.h-svh, .h-dvh, .h-screen) {
   height: 32rem;
 }
+
+html[data-platform="web"] [data-platforms~="web"] [data-only]:not([data-only~="web"]),
+html[data-platform="rn"] [data-platforms~="rn"] [data-only]:not([data-only~="rn"]),
+html[data-platform="swift"] [data-platforms~="swift"] [data-only]:not([data-only~="swift"]),
+html[data-platform="kotlin"] [data-platforms~="kotlin"] [data-only]:not([data-only~="kotlin"]),
+html[data-platform="web"] [data-first="rn"]:not([data-platforms~="web"]) [data-only]:not([data-only~="rn"]),
+html[data-platform="web"] [data-first="swift"]:not([data-platforms~="web"]) [data-only]:not([data-only~="swift"]),
+html[data-platform="web"] [data-first="kotlin"]:not([data-platforms~="web"]) [data-only]:not([data-only~="kotlin"]),
+html[data-platform="rn"] [data-first="web"]:not([data-platforms~="rn"]) [data-only]:not([data-only~="web"]),
+html[data-platform="rn"] [data-first="swift"]:not([data-platforms~="rn"]) [data-only]:not([data-only~="swift"]),
+html[data-platform="rn"] [data-first="kotlin"]:not([data-platforms~="rn"]) [data-only]:not([data-only~="kotlin"]),
+html[data-platform="swift"] [data-first="web"]:not([data-platforms~="swift"]) [data-only]:not([data-only~="web"]),
+html[data-platform="swift"] [data-first="rn"]:not([data-platforms~="swift"]) [data-only]:not([data-only~="rn"]),
+html[data-platform="swift"] [data-first="kotlin"]:not([data-platforms~="swift"]) [data-only]:not([data-only~="kotlin"]),
+html[data-platform="kotlin"] [data-first="web"]:not([data-platforms~="kotlin"]) [data-only]:not([data-only~="web"]),
+html[data-platform="kotlin"] [data-first="rn"]:not([data-platforms~="kotlin"]) [data-only]:not([data-only~="rn"]),
+html[data-platform="kotlin"] [data-first="swift"]:not([data-platforms~="kotlin"]) [data-only]:not([data-only~="swift"]),
+html:not([data-platform]) [data-first="web"] [data-only]:not([data-only~="web"]),
+html:not([data-platform]) [data-first="rn"] [data-only]:not([data-only~="rn"]),
+html:not([data-platform]) [data-first="swift"] [data-only]:not([data-only~="swift"]),
+html:not([data-platform]) [data-first="kotlin"] [data-only]:not([data-only~="kotlin"]) {
+  display: none;
+}

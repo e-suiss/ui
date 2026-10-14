@@ -1,9 +1,12 @@
 ---
 title: Hover Card
 description: "A card that previews content behind a link when people hover over or focus it."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="hover-card" story="Default">
 
@@ -99,3 +102,5 @@ The floating card, rendered in a portal and positioned relative to the trigger.
 - `HoverCardContent` receives `data-side` from Base UI, which drives the slide-in direction, along with `data-open` and `data-closed` for the fade and zoom animation.
 - The card is `w-72` by default; override it with `className`.
 - Uses the `surface-raised` and `label` tokens.
+
+</Only>

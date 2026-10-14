@@ -1,9 +1,12 @@
 ---
 title: Slider
 description: "A track with one or more draggable thumbs for choosing a value or range."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="slider" story="Default">
 
@@ -109,3 +112,261 @@ The complete slider: track, filled range and thumbs.
 - Parts carry `data-slot` attributes: `slider`, `slider-track`, `slider-range` and `slider-thumb`.
 - The range uses `bg-accent`, the track uses `bg-label-quaternary`, and disabled sliders switch to `accent-disabled` and `control-disabled`.
 - Thumbs use `thumbAlignment="edge"`, so they stay inside the track at both ends.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-slider--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderExample() {\n  return (\n    <Slider defaultValue={50} max={100} step={1} accessibilityLabel=\"Volume\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SliderExample: View {\n  var body: some View {\n    SliderDemo(initial: 50)\n  }\n}\n\nstruct SliderDemo: View {\n  var bounds: ClosedRange<Double> = 0...100\n  var step: Double = 1\n\n  @State private var value: Double\n\n  init(initial: Double, bounds: ClosedRange<Double> = 0...100, step: Double = 1) {\n    self.bounds = bounds\n    self.step = step\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ValueSlider(value: $value, in: bounds, step: step)\n      .accessibilityLabel(Text(\"Volume\"))\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Slider\n\n@Composable\nfun SliderExample() {\n    SliderUncontrolled(50f)\n}\n\n@Composable\nfun SliderUncontrolled(\n    initial: Float,\n    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,\n    step: Float = 1f,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableFloatStateOf(initial) }\n    Slider(\n        value,\n        { value = it },\n        Modifier.fillMaxWidth(),\n        enabled = enabled,\n        valueRange = valueRange,\n        step = step,\n        contentDescription = \"Volume\",\n    )\n}"} />
+
+</NativeExample>
+
+`Slider` renders a thin track, a filled indicator and one thumb per value. Pass a number for a single value, or an array for a range or several thumbs. The active thumb widens while it is dragged. It works horizontally or vertically.
+
+Thumbs are aligned to the edges of the track, so they stay within it at `min` and `max`.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add slider"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add slider --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add slider --platform kotlin"} />
+
+</Only>
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="uniwind/components/ui/slider.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="nativewind/components/ui/slider.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/slider.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/slider.tsx`:
+
+<SourceFile path="stylesheet/components/ui/slider.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Slider.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Slider.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\""} />
+
+<Code lang="tsx" code={"<Slider defaultValue={50} max={100} step={1} accessibilityLabel=\"Volume\" />"} />
+
+Use `defaultValue` for an uncontrolled slider, or `value` with `onValueChange` to control it. `onValueCommitted` runs when a drag or track press ends, which suits saving or fetching.
+
+Set `min`, `max` and `step` to define the range; `min` defaults to `0` and `max` to `100`. For ranges, `minStepsBetweenValues` keeps thumbs apart and `thumbCollisionBehavior` decides whether thumbs `push` each other, `swap`, or stop (`none`).
+
+The number of thumbs comes from the array length of `value` or `defaultValue`.
+
+## Examples
+
+### Controlled
+
+A controlled slider that shows the live and committed values.
+
+<NativeExample id="components-slider--controlled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(30)\n  const [committed, setCommitted] = React.useState(30)\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"flex-row items-center justify-between\">\n        <Text className=\"text-sm font-medium\">Brightness</Text>\n        <Text className=\"text-sm text-label-secondary\">\n          {value} / committed {committed}\n        </Text>\n      </View>\n      <Slider\n        value={value}\n        onValueChange={(next) => setValue(next)}\n        onValueCommitted={(next) => setCommitted(next)}\n        accessibilityLabel=\"Brightness\"\n      />\n    </View>\n  )\n}\n\nexport function SliderControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SliderControlledDemo: View {\n  @State private var value: Double = 30\n  @State private var committed: Double = 30\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      HStack {\n        Text(\"Brightness\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n        Spacer()\n        Text(verbatim: \"\\(Int(value)) / committed \\(Int(committed))\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      ValueSlider(value: $value, in: 0...100, step: 1) { editing in\n        if !editing { committed = value }\n      }\n      .accessibilityLabel(Text(\"Brightness\"))\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Slider\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlin.math.roundToInt\n\n@Composable\nfun SliderHeader(title: String, detail: String) {\n    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {\n        Text(title, style = Typography.sm.copy(fontWeight = FontWeight.Medium))\n        Text(detail, style = Typography.sm, color = EsuissTheme.colors.labelSecondary)\n    }\n}\n\n@Composable\nfun SliderControlled() {\n    var value by rememberSaveable { mutableFloatStateOf(30f) }\n    var committed by rememberSaveable { mutableFloatStateOf(30f) }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        SliderHeader(\"Brightness\", \"${value.roundToInt()} / committed ${committed.roundToInt()}\")\n        Slider(\n            value,\n            { value = it },\n            Modifier.fillMaxWidth(),\n            onValueChangeFinished = { committed = value },\n            contentDescription = \"Brightness\",\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Range
+
+A two-thumb price range with a step and a minimum gap.
+
+<NativeExample id="components-slider--range" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction RangeDemo() {\n  const [value, setValue] = React.useState<readonly number[]>([25, 75])\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"flex-row items-center justify-between\">\n        <Text className=\"text-sm font-medium\">Price</Text>\n        <Text className=\"text-sm text-label-secondary\">\n          ${value[0]} – ${value[1]}\n        </Text>\n      </View>\n      <Slider\n        value={value}\n        onValueChange={setValue}\n        step={5}\n        minStepsBetweenValues={2}\n        accessibilityLabel=\"Price\"\n      />\n    </View>\n  )\n}\n\nexport function SliderRangeExample() {\n  return (\n    <RangeDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SliderRangeDemo: View {\n  @State private var value: ClosedRange<Double> = 25...75\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      HStack {\n        Text(\"Price\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n        Spacer()\n        Text(verbatim: \"$\\(Int(value.lowerBound)) – $\\(Int(value.upperBound))\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      RangeSlider(value: $value, in: 0...100, step: 5)\n        .accessibilityLabel(Text(\"Price\"))\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.RangeSlider\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlin.math.roundToInt\n\n@Composable\nfun SliderHeader(title: String, detail: String) {\n    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {\n        Text(title, style = Typography.sm.copy(fontWeight = FontWeight.Medium))\n        Text(detail, style = Typography.sm, color = EsuissTheme.colors.labelSecondary)\n    }\n}\n\n@Composable\nfun SliderRange() {\n    var start by rememberSaveable { mutableFloatStateOf(25f) }\n    var end by rememberSaveable { mutableFloatStateOf(75f) }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        SliderHeader(\"Price\", \"$${start.roundToInt()} – $${end.roundToInt()}\")\n        RangeSlider(\n            start..end,\n            {\n                start = it.start\n                end = it.endInclusive\n            },\n            Modifier.fillMaxWidth(),\n            step = 5f,\n            contentDescription = \"Price\",\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Multiple thumbs
+
+Three thumbs that swap when they cross.
+
+<NativeExample id="components-slider--multiple-thumbs" width={880} height={400}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderMultipleThumbsExample() {\n  return (\n    <Slider defaultValue={[10, 40, 80]} max={100} step={1} accessibilityLabel=\"Volume\" thumbCollisionBehavior=\"swap\" />\n  )\n}"} />
+
+</NativeExample>
+
+### Step
+
+A slider that moves in decimal steps.
+
+<NativeExample id="components-slider--step" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderStepExample() {\n  return (\n    <Slider defaultValue={0.5} max={1} step={0.1} accessibilityLabel=\"Volume\" min={0} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SliderStepExample: View {\n  var body: some View {\n    SliderDemo(initial: 0.5, bounds: 0...1, step: 0.1)\n  }\n}\n\nstruct SliderDemo: View {\n  var bounds: ClosedRange<Double> = 0...100\n  var step: Double = 1\n\n  @State private var value: Double\n\n  init(initial: Double, bounds: ClosedRange<Double> = 0...100, step: Double = 1) {\n    self.bounds = bounds\n    self.step = step\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ValueSlider(value: $value, in: bounds, step: step)\n      .accessibilityLabel(Text(\"Volume\"))\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Slider\n\n@Composable\nfun SliderStepExample() {\n    SliderUncontrolled(0.5f, valueRange = 0f..1f, step = 0.1f)\n}\n\n@Composable\nfun SliderUncontrolled(\n    initial: Float,\n    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,\n    step: Float = 1f,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableFloatStateOf(initial) }\n    Slider(\n        value,\n        { value = it },\n        Modifier.fillMaxWidth(),\n        enabled = enabled,\n        valueRange = valueRange,\n        step = step,\n        contentDescription = \"Volume\",\n    )\n}"} />
+
+</NativeExample>
+
+### Vertical
+
+Single and range sliders in vertical orientation.
+
+<NativeExample id="components-slider--vertical" width={880} height={463}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Slider } from \"@/components/ui/slider\"\n\nexport function SliderVerticalExample() {\n  return (\n    <View className=\"h-48 flex-row justify-center gap-8\">\n      <Slider defaultValue={40} orientation=\"vertical\" />\n      <Slider defaultValue={[20, 70]} orientation=\"vertical\" />\n    </View>\n  )\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+A disabled slider with muted colors.
+
+<NativeExample id="components-slider--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Slider } from \"@/components/ui/slider\"\n\nexport function SliderDisabledExample() {\n  return (\n    <Slider defaultValue={40} max={100} step={1} accessibilityLabel=\"Volume\" disabled />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SliderDisabledExample: View {\n  var body: some View {\n    SliderDemo(initial: 40)\n      .disabled(true)\n  }\n}\n\nstruct SliderDemo: View {\n  var bounds: ClosedRange<Double> = 0...100\n  var step: Double = 1\n\n  @State private var value: Double\n\n  init(initial: Double, bounds: ClosedRange<Double> = 0...100, step: Double = 1) {\n    self.bounds = bounds\n    self.step = step\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ValueSlider(value: $value, in: bounds, step: step)\n      .accessibilityLabel(Text(\"Volume\"))\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableFloatStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Slider\n\n@Composable\nfun SliderDisabledExample() {\n    SliderUncontrolled(40f, enabled = false)\n}\n\n@Composable\nfun SliderUncontrolled(\n    initial: Float,\n    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,\n    step: Float = 1f,\n    enabled: Boolean = true,\n) {\n    var value by rememberSaveable { mutableFloatStateOf(initial) }\n    Slider(\n        value,\n        { value = it },\n        Modifier.fillMaxWidth(),\n        enabled = enabled,\n        valueRange = valueRange,\n        step = step,\n        contentDescription = \"Volume\",\n    )\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Slider
+
+<PropsTable extends={["SliderPrimitive.RootProps<Value>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each thumb has the `adjustable` role with its min, max and current value, so VoiceOver and TalkBack users can swipe up or down to change it.
+- `accessibilityLabel` on `Slider` is passed to every thumb; set it, since the slider has no visible label.
+- Disabled thumbs report `disabled` in their accessibility state.
+
+## Notes
+
+- The track uses `bg-label-quaternary` and the indicator `bg-accent`, with `bg-control-disabled` and `bg-accent-disabled` when disabled.
+- Thumbs use `bg-surface` with a shadow, or `bg-label` in dark mode.
+- Light and dark colors follow the system appearance.
+
+</Only>

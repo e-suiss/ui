@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { Anchor } from "@/components/site/anchor";
-import items from "@/demos/items.json";
+import items from "@/content/items.json";
 
 type Item = { name: string; title: string; group: string | null };
 

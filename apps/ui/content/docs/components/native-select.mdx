@@ -1,9 +1,12 @@
 ---
 title: Native Select
 description: "A styled native select element for choosing one option from a list."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="native-select" story="Default">
 
@@ -133,3 +136,5 @@ A labelled group of options, rendered as an `optgroup` element.
 - The `size` prop accepts `default` (44px tall) or `sm` (36px tall) and replaces the native `size` attribute.
 - Options and groups use the `Canvas` and `CanvasText` system colors so the native popup stays legible in light and dark modes.
 - Uses the `control`, `control-disabled`, `danger` and `label-secondary` tokens.
+
+</Only>

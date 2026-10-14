@@ -1,0 +1,304 @@
+---
+title: Pin Pad
+description: "A passcode entry screen element with a row of dots and a numeric keypad."
+eyebrow: Component
+platforms: [rn, swift, kotlin]
+generated: true
+---
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-pin-pad--default" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadExample() {\n  return (\n    <PinPad />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\n\n@Composable\nfun PinPadExample() {\n    PinPadCentered { PinPad() }\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}"} />
+
+</NativeExample>
+
+`PinPad` combines a row of dots that fill as digits are entered with a `Keypad` for input. The length is between 4 and 8 digits. Each key press plays a selection haptic, and switching to the error state turns the dots red, plays an error haptic and shakes the row with Reanimated.
+
+An optional biometric key appears in the bottom-left corner of the keypad when `onBiometric` is set, and the delete key is disabled while nothing is entered.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pin-pad"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pin-pad --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pin-pad --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Keypad](/docs/components/keypad).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/pin-pad.tsx`:
+
+<SourceFile path="uniwind/components/ui/pin-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/pin-pad.tsx`:
+
+<SourceFile path="nativewind/components/ui/pin-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Keypad](/docs/components/keypad), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+
+3. Copy the source into `components/ui/pin-pad.tsx`:
+
+<SourceFile path="stylesheet/components/ui/pin-pad.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/PinPad.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Keypad.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/PinPad.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Keypad.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\""} />
+
+<Code lang="tsx" code={"<PinPad />"} />
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `onComplete` fires with the full code once the last digit is entered; check the code there, set `error` when it is wrong and clear the value to let the user try again.
+
+Pass `onBiometric` to show the biometric key, with `biometricIcon` and `biometricLabel` to match the method in use. Style the dots and keypad separately with `dotsClassName` and `keypadClassName`.
+
+## Examples
+
+### Filled
+
+A pin pad with four of six digits entered.
+
+<NativeExample id="components-pin-pad--filled" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadFilledExample() {\n  return (\n    <PinPad defaultValue=\"1234\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadFilledExample: View {\n  var body: some View {\n    PinPadDemo(value: \"1234\")\n  }\n}\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\n\n@Composable\nfun PinPadFilledExample() {\n    PinPadCentered { PinPad(defaultValue = \"1234\") }\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}"} />
+
+</NativeExample>
+
+### Error
+
+The error state with red dots.
+
+<NativeExample id="components-pin-pad--error-state" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadErrorStateExample() {\n  return (\n    <PinPad defaultValue=\"654321\" error />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadErrorStateExample: View {\n  var body: some View {\n    PinPadDemo(value: \"654321\", error: true)\n  }\n}\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\n\n@Composable\nfun PinPadErrorStateExample() {\n    PinPadCentered { PinPad(defaultValue = \"654321\", error = true) }\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}"} />
+
+</NativeExample>
+
+### Verify
+
+Checks the code on completion, shows an error for a wrong code and clears it.
+
+<NativeExample id="components-pin-pad--verify" width={880} height={947} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PinPad } from \"@/components/ui/pin-pad\"\nimport { Text } from \"@/components/ui/text\"\n\nconst PASSCODE = \"123456\"\n\nfunction VerifyDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [error, setError] = React.useState(false)\n  const [status, setStatus] = React.useState(\"Enter 123456\")\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className={\n          error ? \"text-sm text-danger\" : \"text-sm text-label-secondary\"\n        }\n      >\n        {status}\n      </Text>\n      <PinPad\n        value={value}\n        error={error}\n        onValueChange={(next) => {\n          setValue(next)\n          if (next.length > 0) setError(false)\n        }}\n        onComplete={(code) => {\n          if (code === PASSCODE) {\n            setStatus(\"Unlocked\")\n          } else {\n            setError(true)\n            setStatus(\"Wrong passcode. Try again.\")\n            setTimeout(() => setValue(\"\"), 600)\n          }\n        }}\n      />\n    </View>\n  )\n}\n\nexport function PinPadVerifyExample() {\n  return (\n    <VerifyDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadVerify: View {\n  private static let passcode = \"123456\"\n\n  @State private var value = \"\"\n  @State private var error = false\n  @State private var status = \"Enter 123456\"\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Text(verbatim: status)\n        .textStyle(.sm)\n        .foregroundStyle(error ? Color.danger : .labelSecondary)\n        .accessibilityAddTraits(.updatesFrequently)\n      PinPad(value: $value, error: error, onComplete: complete)\n      .onChange(of: value) { _, next in\n        if !next.isEmpty { error = false }\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  func complete(_ code: String) {\n    if code == Self.passcode {\n      status = \"Unlocked\"\n    } else {\n      error = true\n      status = \"Wrong passcode. Try again.\"\n      Task {\n        try? await Task.sleep(for: .milliseconds(600))\n        value = \"\"\n      }\n    }\n  }\n}\n\nlet passcode = \"123456\""} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.rememberCoroutineScope\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlinx.coroutines.delay\nimport kotlinx.coroutines.launch\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PinPadVerify() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    var error by rememberSaveable { mutableStateOf(false) }\n    var status by rememberSaveable { mutableStateOf(\"Enter 123456\") }\n    val scope = rememberCoroutineScope()\n    val colors = EsuissTheme.colors\n    PinPadCentered {\n        Text(\n            status,\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = if (error) colors.danger else colors.labelSecondary,\n        )\n        PinPad(\n            value = value,\n            error = error,\n            onValueChange = { next ->\n                value = next\n                if (next.isNotEmpty()) error = false\n            },\n            onComplete = { code ->\n                if (code == PinPadPasscode) {\n                    status = \"Unlocked\"\n                } else {\n                    error = true\n                    status = \"Wrong passcode. Try again.\"\n                    scope.launch {\n                        delay(600)\n                        value = \"\"\n                    }\n                }\n            },\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+A disabled pin pad with a biometric key.
+
+<NativeExample id="components-pin-pad--disabled" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadDisabledExample() {\n  return (\n    <PinPad defaultValue=\"12\" disabled onBiometric={() => {}} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadDisabledExample: View {\n  var body: some View {\n    PinPadDemo(value: \"12\", biometric: true)\n      .disabled(true)\n  }\n}\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\n\n@Composable\nfun PinPadDisabledExample() {\n    PinPadCentered { PinPad(defaultValue = \"12\", enabled = false, onBiometric = {}) }\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}"} />
+
+</NativeExample>
+
+### Biometric
+
+A biometric key with the default fingerprint icon.
+
+<NativeExample id="components-pin-pad--biometric" width={880} height={947} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ScanSmileyIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PinPad } from \"@/components/ui/pin-pad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction BiometricDemo({ faceId = false }: { faceId?: boolean }) {\n  const [log, setLog] = React.useState(0)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text className=\"text-sm text-label-secondary\">\n        {log > 0 ? `Biometric requested (${log})` : \"Biometric key\"}\n      </Text>\n      <PinPad\n        biometricIcon={faceId ? ScanSmileyIcon : undefined}\n        biometricLabel={faceId ? \"Use Face ID\" : \"Use Touch ID\"}\n        onBiometric={() => setLog((count) => count + 1)}\n      />\n    </View>\n  )\n}\n\nexport function PinPadBiometricExample() {\n  return (\n    <BiometricDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PinPadBiometricExample: View {\n  var body: some View {\n    PinPadBiometric(faceID: false)\n  }\n}\n\nstruct PinPadBiometric: View {\n  let faceID: Bool\n\n  @State private var value = \"\"\n  @State private var log = 0\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if log > 0 {\n          Text(verbatim: \"Biometric requested (\\(log))\")\n        } else {\n          Text(\"Biometric key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      PinPad(\n        value: $value,\n        biometricIcon: faceID ? Ph.scanSmiley.regular : Ph.fingerprint.regular,\n        biometricLabel: faceID ? \"Use Face ID\" : \"Use Touch ID\",\n        onBiometric: { log += 1 }\n      )\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Fingerprint\nimport com.adamglin.phosphoricons.regular.ScanSmiley\nimport com.esuiss.ui.components.PinPad\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PinPadBiometricExample() {\n    PinPadBiometric(faceId = false)\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PinPadBiometric(faceId: Boolean) {\n    var log by rememberSaveable { mutableIntStateOf(0) }\n    PinPadCentered {\n        Text(\n            if (log > 0) \"Biometric requested ($log)\" else \"Biometric key\",\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        PinPad(\n            biometricIcon = if (faceId) PhosphorIcons.Regular.ScanSmiley else PhosphorIcons.Regular.Fingerprint,\n            biometricLabel = if (faceId) \"Use Face ID\" else \"Use Touch ID\",\n            onBiometric = { log += 1 },\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Face biometric
+
+A biometric key with a face icon and a matching label.
+
+<NativeExample id="components-pin-pad--face-biometric" width={880} height={947} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ScanSmileyIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PinPad } from \"@/components/ui/pin-pad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction BiometricDemo({ faceId = false }: { faceId?: boolean }) {\n  const [log, setLog] = React.useState(0)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text className=\"text-sm text-label-secondary\">\n        {log > 0 ? `Biometric requested (${log})` : \"Biometric key\"}\n      </Text>\n      <PinPad\n        biometricIcon={faceId ? ScanSmileyIcon : undefined}\n        biometricLabel={faceId ? \"Use Face ID\" : \"Use Touch ID\"}\n        onBiometric={() => setLog((count) => count + 1)}\n      />\n    </View>\n  )\n}\n\nexport function PinPadFaceBiometricExample() {\n  return (\n    <BiometricDemo faceId />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PinPadFaceBiometricExample: View {\n  var body: some View {\n    PinPadBiometric(faceID: true)\n  }\n}\n\nstruct PinPadBiometric: View {\n  let faceID: Bool\n\n  @State private var value = \"\"\n  @State private var log = 0\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if log > 0 {\n          Text(verbatim: \"Biometric requested (\\(log))\")\n        } else {\n          Text(\"Biometric key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      PinPad(\n        value: $value,\n        biometricIcon: faceID ? Ph.scanSmiley.regular : Ph.fingerprint.regular,\n        biometricLabel: faceID ? \"Use Face ID\" : \"Use Touch ID\",\n        onBiometric: { log += 1 }\n      )\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Fingerprint\nimport com.adamglin.phosphoricons.regular.ScanSmiley\nimport com.esuiss.ui.components.PinPad\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PinPadFaceBiometricExample() {\n    PinPadBiometric(faceId = true)\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PinPadBiometric(faceId: Boolean) {\n    var log by rememberSaveable { mutableIntStateOf(0) }\n    PinPadCentered {\n        Text(\n            if (log > 0) \"Biometric requested ($log)\" else \"Biometric key\",\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        PinPad(\n            biometricIcon = if (faceId) PhosphorIcons.Regular.ScanSmiley else PhosphorIcons.Regular.Fingerprint,\n            biometricLabel = if (faceId) \"Use Face ID\" else \"Use Touch ID\",\n            onBiometric = { log += 1 },\n        )\n    }\n}"} />
+
+</NativeExample>
+
+### Four digits
+
+A four-digit code with `length={4}`.
+
+<NativeExample id="components-pin-pad--four-digits" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadFourDigitsExample() {\n  return (\n    <PinPad length={4} defaultValue=\"1\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadFourDigitsExample: View {\n  var body: some View {\n    PinPadDemo(value: \"1\", length: 4)\n  }\n}\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PinPad\n\n@Composable\nfun PinPadFourDigitsExample() {\n    PinPadCentered { PinPad(defaultValue = \"1\", length = 4) }\n}\n\n@Composable\nfun PinPadCentered(content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        content()\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### PinPad
+
+<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"length","type":"number","default":"6","description":"Number of digits, clamped between 4 and 8. Defaults to `6`."},{"name":"value","type":"string","description":"Entered digits for controlled use."},{"name":"defaultValue","type":"string","default":"\"\"","description":"Initial digits for uncontrolled use. Non-digits are removed."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value after each digit or deletion."},{"name":"onComplete","type":"(value: string) => void","description":"Called with the full code when the last digit is entered."},{"name":"error","type":"boolean","default":"false","description":"Shows the error state. Turning it on shakes the dots and plays an error haptic."},{"name":"disabled","type":"boolean","default":"false","description":"Turns off the keypad and dims the dots."},{"name":"onBiometric","type":"() => void","description":"Called when the biometric key is pressed. The key is shown only when this is set."},{"name":"biometricIcon","type":"PhosphorIcon","description":"Icon for the biometric key."},{"name":"biometricLabel","type":"string","description":"Accessibility label for the biometric key."},{"name":"deleteLabel","type":"string","description":"Accessibility label for the delete key."},{"name":"dotsLabel","type":"(entered: number, length: number) => string","default":"defaultDotsLabel","description":"Builds the dots label from the entered count and the length. Defaults to \"3 of 6 entered\"."},{"name":"dotsClassName","type":"string","description":"Classes for the dots row."},{"name":"keypadClassName","type":"string","description":"Classes for the keypad."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The dots row is a single element labeled by `dotsLabel`, so screen readers hear progress without the digits.
+- The row is a polite live region, so TalkBack announces progress as it changes.
+- Keypad keys are buttons labeled with their digit; the delete and biometric keys use `deleteLabel` and `biometricLabel`.
+- The shake animation respects the system reduce motion setting.
+
+## Notes
+
+- Uses `bg-label` for filled dots, `border-separator-strong` for empty ones and `bg-danger` in the error state; colors follow the system appearance.
+
+</Only>

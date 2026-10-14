@@ -2,8 +2,11 @@
 title: Tooltip Chart Icons
 description: "A stacked bar chart whose tooltip shows an icon for each series in place of a color swatch."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-icons">
 
@@ -44,3 +47,5 @@ Add an `icon` component to each series entry in `chartConfig`; the tooltip picks
 ## Notes
 
 Icons replace the color indicator in every tooltip and legend that uses this config, so add them only where you want them everywhere. The tooltip opens on a preset month when the chart loads.
+
+</Only>

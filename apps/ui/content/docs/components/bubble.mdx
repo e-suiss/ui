@@ -1,9 +1,12 @@
 ---
 title: Bubble
 description: "A chat-style message bubble with variants, alignment, a tail and optional reactions."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="bubble" story="Default">
 
@@ -143,3 +146,314 @@ A small pill for reactions, overlapping the bubble's edge.
 - The background is set through the `--bubble-bg` custom property. Set `--bubble-surface` when bubbles sit on a surface other than `--surface`, so the tail and reaction ring blend in.
 - Bubbles are capped at 80% of the container width, except the `ghost` variant.
 - Bubbles also align to `end` when inside a `message` slot with `data-align="end"`.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-bubble--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleExample() {\n  return (\n    <Bubble align=\"start\">\n      <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n    </Bubble>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleExample: View {\n  var body: some View {\n    Bubble {\n      BubbleContent(\"Are we still on for lunch tomorrow?\")\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\n\n@Composable\nfun BubbleDefault() {\n    Bubble {\n        BubbleContent(\"Are we still on for lunch tomorrow?\")\n    }\n}"} />
+
+</NativeExample>
+
+`Bubble` lays out one message aligned to the `start` or `end` of the conversation, and `BubbleContent` draws the rounded bubble with an SVG tail on the aligned side. Seven variants are available: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` and `destructive`; `outline` and `ghost` have no tail.
+
+`BubbleGroup` stacks messages and shows the tail only on the last bubble of each run from the same side, so consecutive messages read as one block. `BubbleReactions` pins a small reaction pill to the top or bottom edge of a bubble.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bubble"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bubble --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bubble --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="uniwind/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="nativewind/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="stylesheet/components/ui/bubble.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Bubble.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+
+<SourceFile path="swift/Components/Message.swift" />
+
+<SourceFile path="swift/Components/Screen.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Bubble.kt" />
+
+<SourceFile path="kotlin/components/Avatar.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Message.kt" />
+
+<SourceFile path="kotlin/components/SignaturePad.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\""} />
+
+<Code lang="tsx" code={"<Bubble align=\"start\">\n  <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n</Bubble>"} />
+
+Wrap each message in `Bubble` and put its text in `BubbleContent`; plain strings are wrapped in `Text`. Set `align="end"` for messages from the current user, or provide a default through `BubbleAlignContext`.
+
+`BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and its background darkens while pressed. Use `render` to attach it to a trigger such as a context menu.
+
+`BubbleReactions` takes `side` (`top` or `bottom`) and `align` (`start` or `end`), and the bubble adds margin so the pill does not overlap its neighbors.
+
+## Examples
+
+### Variants
+
+All seven variants.
+
+<NativeExample id="components-bubble--variants" width={880} height={654} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nconst VARIANTS = [\n  \"default\",\n  \"secondary\",\n  \"muted\",\n  \"tinted\",\n  \"outline\",\n  \"ghost\",\n  \"destructive\",\n] as const\n\nexport function BubbleVariantsExample() {\n  return (\n    <BubbleGroup>\n      {VARIANTS.map((variant) => (\n        <Bubble key={variant} align=\"start\" variant={variant}>\n          <BubbleContent>This is a {variant} bubble.</BubbleContent>\n        </Bubble>\n      ))}\n    </BubbleGroup>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleVariantsExample: View {\n  var body: some View {\n    BubbleGroup {\n      ForEach(BubbleVariantSample.all, id: \\.name) { sample in\n        Bubble(variant: sample.variant) {\n          BubbleContent(verbatim: \"This is a \\(sample.name) bubble.\")\n        }\n      }\n    }\n  }\n}\n\nstruct BubbleVariantSample {\n  let variant: BubbleVariant\n  let name: String\n\n  static let all: [BubbleVariantSample] = [\n    BubbleVariantSample(variant: .default, name: \"default\"),\n    BubbleVariantSample(variant: .secondary, name: \"secondary\"),\n    BubbleVariantSample(variant: .muted, name: \"muted\"),\n    BubbleVariantSample(variant: .tinted, name: \"tinted\"),\n    BubbleVariantSample(variant: .outline, name: \"outline\"),\n    BubbleVariantSample(variant: .ghost, name: \"ghost\"),\n    BubbleVariantSample(variant: .destructive, name: \"destructive\"),\n  ]\n}\n\nlet all: [BubbleVariantSample] = [\n  BubbleVariantSample(variant: .default, name: \"default\"),\n  BubbleVariantSample(variant: .secondary, name: \"secondary\"),\n  BubbleVariantSample(variant: .muted, name: \"muted\"),\n  BubbleVariantSample(variant: .tinted, name: \"tinted\"),\n  BubbleVariantSample(variant: .outline, name: \"outline\"),\n  BubbleVariantSample(variant: .ghost, name: \"ghost\"),\n  BubbleVariantSample(variant: .destructive, name: \"destructive\"),\n]"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleGroup\nimport com.esuiss.ui.components.BubbleVariant\n\n@Composable\nfun BubbleVariants() {\n    BubbleGroup {\n        BubbleVariant.entries.forEach { variant ->\n            Bubble(variant = variant) {\n                BubbleContent(\"This is a ${variant.name.lowercase()} bubble.\")\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Conversation
+
+A `BubbleGroup` with messages from both sides and merged tails.
+
+<NativeExample id="components-bubble--conversation" width={880} height={462} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleConversationExample() {\n  return (\n    <BubbleGroup>\n      <Bubble variant=\"muted\">\n        <BubbleContent>\n          Hey, did you get a chance to review the draft?\n        </BubbleContent>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>Yes, I left a few comments on the intro.</BubbleContent>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>Everything else looks great.</BubbleContent>\n      </Bubble>\n      <Bubble variant=\"muted\">\n        <BubbleContent>Thanks! I will update it this afternoon.</BubbleContent>\n      </Bubble>\n    </BubbleGroup>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleConversationExample: View {\n  var body: some View {\n    BubbleGroup {\n      Bubble(variant: .muted) {\n        BubbleContent(\"Hey, did you get a chance to review the draft?\")\n      }\n      Bubble(align: .end) {\n        BubbleContent(\"Yes, I left a few comments on the intro.\")\n      }\n      Bubble(align: .end) {\n        BubbleContent(\"Everything else looks great.\")\n      }\n      Bubble(variant: .muted) {\n        BubbleContent(\"Thanks! I will update it this afternoon.\")\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleAlign\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleGroup\nimport com.esuiss.ui.components.BubbleVariant\n\n@Composable\nfun BubbleConversation() {\n    BubbleGroup {\n        Bubble(variant = BubbleVariant.Muted) {\n            BubbleContent(\"Hey, did you get a chance to review the draft?\")\n        }\n        Bubble(align = BubbleAlign.End) {\n            BubbleContent(\"Yes, I left a few comments on the intro.\")\n        }\n        Bubble(align = BubbleAlign.End) {\n            BubbleContent(\"Everything else looks great.\")\n        }\n        Bubble(variant = BubbleVariant.Muted) {\n            BubbleContent(\"Thanks! I will update it this afternoon.\")\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### With reactions
+
+Reaction pills on the bottom and top edges.
+
+<NativeExample id="components-bubble--with-reactions" width={880} height={449} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@/components/ui/bubble\"\n\nexport function BubbleWithReactionsExample() {\n  return (\n    <BubbleGroup>\n      <Bubble align=\"start\" variant=\"muted\">\n        <BubbleContent>We just hit 10,000 users!</BubbleContent>\n        <BubbleReactions>🎉 3</BubbleReactions>\n      </Bubble>\n      <Bubble align=\"end\">\n        <BubbleContent>That is amazing news.</BubbleContent>\n        <BubbleReactions align=\"start\">❤️</BubbleReactions>\n      </Bubble>\n      <Bubble align=\"start\" variant=\"secondary\">\n        <BubbleContent>Reactions can sit on top as well.</BubbleContent>\n        <BubbleReactions side=\"top\">👍 2</BubbleReactions>\n      </Bubble>\n    </BubbleGroup>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleWithReactionsExample: View {\n  var body: some View {\n    BubbleGroup {\n      Bubble(variant: .muted) {\n        BubbleContent(\"We just hit 10,000 users!\")\n        BubbleReactions(verbatim: \"🎉 3\")\n      }\n      Bubble(align: .end) {\n        BubbleContent(\"That is amazing news.\")\n        BubbleReactions(verbatim: \"❤️\", align: .start)\n      }\n      Bubble(variant: .secondary) {\n        BubbleContent(\"Reactions can sit on top as well.\")\n        BubbleReactions(verbatim: \"👍 2\", side: .top)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleAlign\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleGroup\nimport com.esuiss.ui.components.BubbleReactions\nimport com.esuiss.ui.components.BubbleReactionsSide\nimport com.esuiss.ui.components.BubbleVariant\n\n@Composable\nfun BubbleWithReactions() {\n    BubbleGroup {\n        Bubble(variant = BubbleVariant.Muted) {\n            BubbleContent(\"We just hit 10,000 users!\")\n            BubbleReactions(\"🎉 3\")\n        }\n        Bubble(align = BubbleAlign.End) {\n            BubbleContent(\"That is amazing news.\")\n            BubbleReactions(\"❤️\", align = BubbleAlign.Start)\n        }\n        Bubble(variant = BubbleVariant.Secondary) {\n            BubbleContent(\"Reactions can sit on top as well.\")\n            BubbleReactions(\"👍 2\", side = BubbleReactionsSide.Top)\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Interactive
+
+A pressable `outline` bubble with `onPress`.
+
+<NativeExample id="components-bubble--interactive" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <Bubble variant=\"outline\" align=\"start\">\n      <BubbleContent onPress={() => {}}>\n        Show me the latest release notes\n      </BubbleContent>\n    </Bubble>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleInteractiveExample: View {\n  var body: some View {\n    Bubble(variant: .outline) {\n      BubbleContent(action: {}) {\n        Text(\"Show me the latest release notes\")\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleVariant\n\n@Composable\nfun BubbleInteractive() {\n    Bubble(variant = BubbleVariant.Outline) {\n        BubbleContent(\"Show me the latest release notes\", onClick = {})\n    }\n}"} />
+
+</NativeExample>
+
+### Long press actions
+
+A bubble that opens a context menu on long press.
+
+<NativeExample id="components-bubble--long-press-actions" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleLongPressActionsExample() {\n  return (\n    <View>\n      <ContextActions>\n        <Bubble variant=\"muted\">\n          <BubbleContent\n            accessibilityLabel=\"Message from Maya\"\n            render={<ContextActionsTrigger />}\n          >\n            Hold this message to see its actions.\n          </BubbleContent>\n        </Bubble>\n        <ContextActionsContent>\n          <ContextActionsItem>Reply</ContextActionsItem>\n          <ContextActionsItem>Copy</ContextActionsItem>\n          <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleLongPressActionsExample: View {\n  var body: some View {\n    Bubble(variant: .muted) {\n      BubbleContent(\"Hold this message to see its actions.\")\n        .accessibilityLabel(Text(\"Message from Maya\"))\n        .contextActions {\n          ContextActionsItem(\"Reply\") {}\n          ContextActionsItem(\"Copy\") {}\n          ContextActionsItem(\"Delete\", variant: .destructive) {}\n        }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleVariant\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.patterns.ContextActions\nimport com.esuiss.ui.patterns.ContextActionsContent\nimport com.esuiss.ui.patterns.ContextActionsItem\nimport com.esuiss.ui.patterns.ContextActionsTrigger\n\n@Composable\nfun BubbleLongPressActions() {\n    Column {\n        ContextActions {\n            ContextActionsTrigger(Modifier.semantics { contentDescription = \"Message from Maya\" }) {\n                Bubble(variant = BubbleVariant.Muted) {\n                    BubbleContent(\"Hold this message to see its actions.\")\n                }\n            }\n            ContextActionsContent {\n                ContextActionsItem(\"Reply\", onClick = {})\n                ContextActionsItem(\"Copy\", onClick = {})\n                ContextActionsItem(\"Delete\", onClick = {}, variant = MenuItemVariant.Destructive)\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Bubble
+
+One message, aligned to the start or end.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"BubbleVariant","default":"\"default\"","description":"`default`, `secondary`, `muted`, `tinted`, `outline`, `ghost` or `destructive`."},{"name":"align","type":"BubbleAlign","description":"`start` or `end`. Defaults to `start`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>","React.RefAttributes<View>"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Element to render instead of the default view or pressable."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BubbleReactions
+
+Reaction pill on the edge of a bubble.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"align","type":"BubbleAlign","default":"\"end\"","description":"`start` or `end` along the bubble. Defaults to `end`."},{"name":"side","type":"\"top\" | \"bottom\"","default":"\"bottom\"","description":"`top` or `bottom`. Defaults to `bottom`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `BubbleContent` gets the `button` role when it has `onPress` or `onLongPress`.
+- The tail is hidden from VoiceOver and TalkBack.
+- Give long-press bubbles an `accessibilityLabel` that says who sent the message.
+
+## Notes
+
+- The tail mirrors itself for `end` alignment and in right-to-left layouts.
+- Uses `bg-accent`, `bg-control`, `bg-surface-secondary` and `bg-danger-surface` tokens with pressed states; light and dark follow the system appearance.
+
+</Only>

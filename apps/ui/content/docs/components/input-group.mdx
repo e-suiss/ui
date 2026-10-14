@@ -1,9 +1,12 @@
 ---
 title: Input Group
 description: "A text field with icons, text, buttons or keyboard hints attached inside its border."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="input-group" story="Default">
 
@@ -214,3 +217,284 @@ The multi-line text control of the group.
 - Styling hooks: `data-slot` values `input-group`, `input-group-addon` and `input-group-control` (on the input or textarea). Addons set `data-align`, and buttons set `data-size`.
 - The group's rounded corners grow when it contains a textarea or a block addon.
 - Uses the `control`, `control-disabled`, `label-secondary`, `label-quaternary` and `danger` tokens.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-input-group--default" width={880} height={767} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CopyIcon, MagnifyingGlassIcon, XIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from \"@/components/ui/input-group\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nfunction SearchDemo() {\n  const [value, setValue] = React.useState(\"\")\n  return (\n    <InputGroup>\n      <InputGroupInput\n        placeholder=\"Search\"\n        value={value}\n        onValueChange={setValue}\n      />\n      <InputGroupAddon>\n        <Icon as={MagnifyingGlassIcon} />\n      </InputGroupAddon>\n      {value ? (\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupButton\n            size=\"icon-xs\"\n            accessibilityLabel=\"Clear\"\n            onPress={() => setValue(\"\")}\n          >\n            <Icon as={XIcon} />\n          </InputGroupButton>\n        </InputGroupAddon>\n      ) : null}\n    </InputGroup>\n  )\n}\n\nexport function InputGroupExample() {\n  return (\n    <View className=\"gap-4\">\n      <SearchDemo />\n      <InputGroup>\n        <InputGroupAddon>\n          <InputGroupText>https://</InputGroupText>\n        </InputGroupAddon>\n        <InputGroupInput placeholder=\"example.com\" autoCapitalize=\"none\" />\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupText>.com</InputGroupText>\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup>\n        <InputGroupInput defaultValue=\"sk_live_51H8\" />\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupButton size=\"icon-xs\" accessibilityLabel=\"Copy\">\n            <Icon as={CopyIcon} />\n          </InputGroupButton>\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup>\n        <InputGroupInput placeholder=\"Searching...\" />\n        <InputGroupAddon align=\"inline-end\">\n          <Spinner />\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup invalid>\n        <InputGroupInput defaultValue=\"not-an-email\" />\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupText>Invalid</InputGroupText>\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup disabled>\n        <InputGroupInput placeholder=\"Disabled\" />\n        <InputGroupAddon>\n          <Icon as={MagnifyingGlassIcon} />\n        </InputGroupAddon>\n      </InputGroup>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct InputGroupIcon: View {\n  let image: Image\n\n  var body: some View {\n    image.frame(width: 16, height: 16)\n  }\n}\n\nstruct InputGroupSearchDemo: View {\n  @State private var value = \"\"\n\n  var body: some View {\n    InputGroup {\n      InputGroupInput(\"Search\", text: $value)\n      InputGroupAddon {\n        InputGroupIcon(image: Ph.magnifyingGlass.regular)\n      }\n      if !value.isEmpty {\n        InputGroupAddon(align: .inlineEnd) {\n          InputGroupButton(size: .iconXs) {\n            value = \"\"\n          } label: {\n            InputGroupIcon(image: Ph.x.regular)\n          }\n          .accessibilityLabel(Text(\"Clear\"))\n        }\n      }\n    }\n  }\n}\n\nstruct InputGroupDefaultDemo: View {\n  @State private var domain = \"\"\n  @State private var key = \"sk_live_51H8\"\n  @State private var searching = \"\"\n  @State private var email = \"not-an-email\"\n  @State private var disabled = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      InputGroupSearchDemo()\n      InputGroup {\n        InputGroupAddon {\n          InputGroupText(\"https://\")\n        }\n        InputGroupInput(\"example.com\", text: $domain)\n          .textInputAutocapitalization(.never)\n        InputGroupAddon(align: .inlineEnd) {\n          InputGroupText(\".com\")\n        }\n      }\n      InputGroup {\n        InputGroupInput(\"\", text: $key)\n        InputGroupAddon(align: .inlineEnd) {\n          InputGroupButton(size: .iconXs) {} label: {\n            InputGroupIcon(image: Ph.copy.regular)\n          }\n          .accessibilityLabel(Text(\"Copy\"))\n        }\n      }\n      InputGroup {\n        InputGroupInput(\"Searching...\", text: $searching)\n        InputGroupAddon(align: .inlineEnd) {\n          Spinner()\n        }\n      }\n      InputGroup {\n        InputGroupInput(\"\", text: $email)\n        InputGroupAddon(align: .inlineEnd) {\n          InputGroupText(\"Invalid\")\n        }\n      }\n      .invalid()\n      InputGroup {\n        InputGroupInput(\"Disabled\", text: $disabled)\n        InputGroupAddon {\n          InputGroupIcon(image: Ph.magnifyingGlass.regular)\n        }\n      }\n      .disabled(true)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.MagnifyingGlass\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.InputGroup\nimport com.esuiss.ui.components.InputGroupAddon\nimport com.esuiss.ui.components.InputGroupAddonAlign\nimport com.esuiss.ui.components.InputGroupButton\nimport com.esuiss.ui.components.InputGroupButtonSize\nimport com.esuiss.ui.components.InputGroupInput\nimport com.esuiss.ui.components.InputGroupText\nimport com.esuiss.ui.components.Spinner\n\n@Composable\nfun InputGroupSearch() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    InputGroup {\n        InputGroupInput(value, { value = it }, placeholder = \"Search\")\n        InputGroupAddon {\n            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null)\n        }\n        if (value.isNotEmpty()) {\n            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {\n                InputGroupButton(onClick = { value = \"\" }, size = InputGroupButtonSize.IconXs) {\n                    Icon(PhosphorIcons.Regular.X, contentDescription = \"Clear\")\n                }\n            }\n        }\n    }\n}\n\n@Composable\nfun InputGroupDefault() {\n    var domain by rememberSaveable { mutableStateOf(\"\") }\n    var key by rememberSaveable { mutableStateOf(\"sk_live_51H8\") }\n    var searching by rememberSaveable { mutableStateOf(\"\") }\n    var email by rememberSaveable { mutableStateOf(\"not-an-email\") }\n    var disabled by rememberSaveable { mutableStateOf(\"\") }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        InputGroupSearch()\n        InputGroup {\n            InputGroupAddon { InputGroupText(\"https://\") }\n            InputGroupInput(\n                domain,\n                { domain = it },\n                placeholder = \"example.com\",\n                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),\n            )\n            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { InputGroupText(\".com\") }\n        }\n        InputGroup {\n            InputGroupInput(key, { key = it })\n            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {\n                InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs) {\n                    Icon(PhosphorIcons.Regular.Copy, contentDescription = \"Copy\")\n                }\n            }\n        }\n        InputGroup {\n            InputGroupInput(searching, { searching = it }, placeholder = \"Searching...\")\n            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Spinner() }\n        }\n        InputGroup(invalid = true) {\n            InputGroupInput(email, { email = it })\n            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { InputGroupText(\"Invalid\") }\n        }\n        InputGroup(enabled = false) {\n            InputGroupInput(disabled, { disabled = it }, placeholder = \"Disabled\")\n            InputGroupAddon {\n                Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null)\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`InputGroup` draws one control-colored field and places an `InputGroupInput` or `InputGroupTextarea` inside it with addons around. Addons can sit on the start or end of the same line (`inline-start`, `inline-end`), or above or below the input (`block-start`, `block-end`), which turns the group into a column.
+
+The group shows the focus border while its input is focused, and reads the disabled and invalid state from a surrounding Field. Pressing an addon focuses the input.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-group"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-group --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-group --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), [Textarea](/docs/components/textarea), and the primitives `components/primitives/field.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/input-group.tsx`:
+
+<SourceFile path="uniwind/components/ui/input-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), [Textarea](/docs/components/textarea), and the primitives `components/primitives/field.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/input-group.tsx`:
+
+<SourceFile path="nativewind/components/ui/input-group.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), [Textarea](/docs/components/textarea), and the primitives `components/primitives/field.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/input-group.tsx`:
+
+<SourceFile path="stylesheet/components/ui/input-group.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/InputGroup.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/InputGroup.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea } from \"@/components/ui/input-group\""} />
+
+<Code lang="tsx" code={"<View className=\"gap-4\">\n  <SearchDemo />\n  <InputGroup>\n    <InputGroupAddon>\n      <InputGroupText>https://</InputGroupText>\n    </InputGroupAddon>\n    <InputGroupInput placeholder=\"example.com\" autoCapitalize=\"none\" />\n    <InputGroupAddon align=\"inline-end\">\n      <InputGroupText>.com</InputGroupText>\n    </InputGroupAddon>\n  </InputGroup>\n  <InputGroup>\n    <InputGroupInput defaultValue=\"sk_live_51H8\" />\n    <InputGroupAddon align=\"inline-end\">\n      <InputGroupButton size=\"icon-xs\" accessibilityLabel=\"Copy\">\n        <Icon as={CopyIcon} />\n      </InputGroupButton>\n    </InputGroupAddon>\n  </InputGroup>\n  <InputGroup>\n    <InputGroupInput placeholder=\"Searching...\" />\n    <InputGroupAddon align=\"inline-end\">\n      <Spinner />\n    </InputGroupAddon>\n  </InputGroup>\n  <InputGroup invalid>\n    <InputGroupInput defaultValue=\"not-an-email\" />\n    <InputGroupAddon align=\"inline-end\">\n      <InputGroupText>Invalid</InputGroupText>\n    </InputGroupAddon>\n  </InputGroup>\n  <InputGroup disabled>\n    <InputGroupInput placeholder=\"Disabled\" />\n    <InputGroupAddon>\n      <Icon as={MagnifyingGlassIcon} />\n    </InputGroupAddon>\n  </InputGroup>\n</View>"} />
+
+Add children in any order; the group sorts start addons before the input and end addons after it. Put short labels such as a URL prefix or a unit in `InputGroupText`, and actions in `InputGroupButton`, a small rounded `Button` that defaults to the `ghost` variant and `xs` size.
+
+Use a `block-end` addon with `InputGroupTextarea` for a footer row, for example a character count and a send button. Set `invalid` or `disabled` on the group, or let a Field provide them.
+
+## Examples
+
+### With textarea
+
+A textarea with a footer row holding a usage label and a button.
+
+<NativeExample id="components-input-group--with-textarea" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ArrowUpIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from \"@/components/ui/input-group\"\n\nexport function InputGroupWithTextareaExample() {\n  return (\n    <InputGroup>\n      <InputGroupTextarea\n        placeholder=\"Ask, search or chat...\"\n        numberOfLines={3}\n      />\n      <InputGroupAddon align=\"block-end\" className=\"justify-between\">\n        <InputGroupText>52% used</InputGroupText>\n        <InputGroupButton\n          variant=\"default\"\n          size=\"icon-xs\"\n          accessibilityLabel=\"Send\"\n        >\n          <Icon as={ArrowUpIcon} />\n        </InputGroupButton>\n      </InputGroupAddon>\n    </InputGroup>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct InputGroupIcon: View {\n  let image: Image\n\n  var body: some View {\n    image.frame(width: 16, height: 16)\n  }\n}\n\nstruct InputGroupTextareaDemo: View {\n  @State private var message = \"\"\n\n  var body: some View {\n    InputGroup {\n      InputGroupTextarea(\"Ask, search or chat...\", text: $message, lineLimit: 3...8)\n      InputGroupAddon(align: .blockEnd) {\n        InputGroupText(\"52% used\")\n        Spacer(minLength: 0)\n        InputGroupButton(variant: .default, size: .iconXs) {} label: {\n          InputGroupIcon(image: Ph.arrowUp.regular)\n        }\n        .accessibilityLabel(Text(\"Send\"))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Spacer\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ArrowUp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.InputGroup\nimport com.esuiss.ui.components.InputGroupAddon\nimport com.esuiss.ui.components.InputGroupAddonAlign\nimport com.esuiss.ui.components.InputGroupButton\nimport com.esuiss.ui.components.InputGroupButtonSize\nimport com.esuiss.ui.components.InputGroupText\nimport com.esuiss.ui.components.InputGroupTextarea\n\n@Composable\nfun InputGroupWithTextarea() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    InputGroup {\n        InputGroupTextarea(value, { value = it }, placeholder = \"Ask, search or chat...\", minLines = 3)\n        InputGroupAddon(Modifier.fillMaxWidth(), align = InputGroupAddonAlign.BlockEnd) {\n            InputGroupText(\"52% used\")\n            Spacer(Modifier.weight(1f))\n            InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, variant = ButtonVariant.Default) {\n                Icon(PhosphorIcons.Regular.ArrowUp, contentDescription = \"Send\")\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Block start
+
+A label addon above the input with `block-start`.
+
+<NativeExample id="components-input-group--block-start" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function InputGroupBlockStartExample() {\n  return (\n    <InputGroup>\n      <InputGroupInput placeholder=\"Enter your name\" />\n      <InputGroupAddon align=\"block-start\">\n        <Text className=\"text-sm font-medium text-label\">Full name</Text>\n      </InputGroupAddon>\n    </InputGroup>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputGroupBlockStartDemo: View {\n  @State private var name = \"\"\n\n  var body: some View {\n    InputGroup {\n      InputGroupInput(\"Enter your name\", text: $name)\n      InputGroupAddon(align: .blockStart) {\n        Text(\"Full name\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.text.font.FontWeight\nimport com.esuiss.ui.components.InputGroup\nimport com.esuiss.ui.components.InputGroupAddon\nimport com.esuiss.ui.components.InputGroupAddonAlign\nimport com.esuiss.ui.components.InputGroupInput\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun InputGroupBlockStart() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    InputGroup {\n        InputGroupInput(value, { value = it }, placeholder = \"Enter your name\")\n        InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {\n            Text(\"Full name\", style = Typography.sm.copy(fontWeight = FontWeight.Medium, color = EsuissTheme.colors.label))\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"disabled","type":"boolean","default":"false","description":"Disables the group and its input."},{"name":"invalid","type":"boolean","description":"Shows the danger border and tint."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"align","type":"\"inline-start\" | \"inline-end\" | \"block-start\" | \"block-end\"","default":"\"inline-start\"","description":"`inline-start`, `inline-end`, `block-start` or `block-end`. Defaults to `inline-start`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} props={[{"name":"size","type":"keyof typeof BUTTON_SIZE","default":"\"xs\"","description":"`xs`, `sm`, `icon-xs` or `icon-sm`. Defaults to `xs`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputGroupText
+
+Text inside an addon.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+<PropsTable extends={["React.ComponentProps<typeof Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+<PropsTable extends={["React.ComponentProps<typeof Textarea>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The container has the `group` role.
+- Addons are not separate accessibility elements; their text is not announced with the input, so give the input an `accessibilityLabel` that includes needed context.
+- Icon-only buttons need an `accessibilityLabel`.
+
+## Notes
+
+- Uses `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens; the invalid tint is stronger in dark mode.
+- Light and dark follow the system appearance.
+
+</Only>

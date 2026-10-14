@@ -1,9 +1,12 @@
 ---
 title: Sheet
 description: "A panel that slides in from an edge of the screen over the page."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="sheet" story="Default">
 
@@ -193,3 +196,303 @@ Supporting text, which describes the dialog.
 - Parts carry `data-slot` attributes such as `sheet-content`, `sheet-overlay` and `sheet-close`; the panel also sets `data-side`.
 - Left and right sheets are 3/4 of the screen wide, up to `max-w-sm` from the `sm` breakpoint. Slide directions flip in right-to-left layouts.
 - The panel uses `bg-surface-raised` and the backdrop uses `bg-scrim`.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-sheet--open-by-default" width={880} height={1775} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet defaultOpen>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open</Text>\n        </SheetTrigger>\n        <ProfileContent />\n      </Sheet>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SheetOpenByDefaultExample: View {\n  var body: some View {\n    ProfileSheet(title: \"Open\", side: .trailing, open: true)\n  }\n}\n\nstruct ProfileSheet: View {\n  let title: LocalizedStringKey\n  let side: Edge\n\n  @State private var open: Bool\n\n  init(title: LocalizedStringKey, side: Edge, open: Bool = false) {\n    self.title = title\n    self.side = side\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .sheet(isPresented: $open, side: side) {\n        ProfileContent()\n      }\n  }\n}\n\nstruct ProfileContent: View {\n  @State private var name = \"Pedro Duarte\"\n  @State private var username = \"@peduarte\"\n\n  var body: some View {\n    SheetContent {\n      SheetHeader {\n        SheetTitle(\"Edit profile\")\n        SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n      }\n      VStack(alignment: .leading, spacing: 16) {\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Name\")\n            .accessibilityHidden(true)\n          TextField(\"Name\", text: $name)\n            .textFieldStyle(.input)\n        }\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Username\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n        }\n      }\n      .padding(.horizontal, 24)\n      SheetFooter {\n        Button {} label: {\n          Text(\"Save changes\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        SheetClose {\n          Text(\"Close\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Sheet\nimport com.esuiss.ui.components.SheetDescription\nimport com.esuiss.ui.components.SheetFooter\nimport com.esuiss.ui.components.SheetHeader\nimport com.esuiss.ui.components.SheetSide\nimport com.esuiss.ui.components.SheetTitle\n\n@Composable\nfun SheetOpenByDefaultExample() {\n    SheetDefault(defaultOpen = true)\n}\n\n@Composable\nfun ProfileSheet(open: Boolean, onOpenChange: (Boolean) -> Unit, side: SheetSide = SheetSide.Right) {\n    var name by rememberSaveable { mutableStateOf(\"Pedro Duarte\") }\n    var username by rememberSaveable { mutableStateOf(\"@peduarte\") }\n    Sheet(open = open, onOpenChange = onOpenChange, side = side) {\n        SheetHeader {\n            SheetTitle(\"Edit profile\")\n            SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n        }\n        Column(Modifier.padding(horizontal = 24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Name\")\n                Input(name, { name = it }, Modifier.semantics { contentDescription = \"Name\" })\n            }\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Username\")\n                Input(\n                    username,\n                    { username = it },\n                    Modifier.semantics { contentDescription = \"Username\" },\n                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false),\n                )\n            }\n        }\n        SheetFooter {\n            Button(\"Save changes\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            Button(\"Close\", onClick = { onOpenChange(false) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n        }\n    }\n}\n\n@Composable\nfun SheetDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Open\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        ProfileSheet(open, { open = it })\n    }\n}"} />
+
+</NativeExample>
+
+`Sheet` is built on the drawer primitive. `SheetContent` renders in a portal, above a dimmed overlay, as a rounded floating panel inset from the screen edges and the safe area. It enters and exits with a Reanimated fade-and-slide from its `side` and can be dismissed by swiping toward that edge.
+
+Use `right` or `left` for navigation and detail panels that span the screen height, and `top` or `bottom` for short panels that span the width. For snap points and a drag handle, use Drawer instead.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add sheet"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add sheet --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add sheet --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="uniwind/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="nativewind/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="stylesheet/components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Sheet.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Sheet.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Sheet, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from \"@/components/ui/sheet\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Sheet defaultOpen>\n    <SheetTrigger render={<Button variant=\"outline\" />}>\n      <Text>Open</Text>\n    </SheetTrigger>\n    <ProfileContent />\n  </Sheet>\n</View>"} />
+
+Wrap a `SheetTrigger` and a `SheetContent` in `Sheet`. Inside the content, compose `SheetHeader` with `SheetTitle` and `SheetDescription`, your body, and a `SheetFooter`, which is pushed to the bottom. Use `SheetTrigger` and `SheetClose` with `render` to turn a `Button` into a trigger or close control.
+
+`Sheet` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use, plus `modal`, `disablePointerDismissal`, `onOpenChangeComplete` and `actionsRef`. The swipe direction follows the `side` of its content.
+
+A close button is shown in the top corner by default. Set `closeLabel` to show a text button instead of the X icon, or `showCloseButton={false}` to remove it. `SheetHeader` adds end padding so the title does not run under the button.
+
+## Examples
+
+### Default
+
+<NativeExample id="components-sheet--default" width={880} height={1775} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open</Text>\n        </SheetTrigger>\n        <ProfileContent />\n      </Sheet>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SheetExample: View {\n  var body: some View {\n    ProfileSheet(title: \"Open\", side: .trailing)\n  }\n}\n\nstruct ProfileSheet: View {\n  let title: LocalizedStringKey\n  let side: Edge\n\n  @State private var open: Bool\n\n  init(title: LocalizedStringKey, side: Edge, open: Bool = false) {\n    self.title = title\n    self.side = side\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .sheet(isPresented: $open, side: side) {\n        ProfileContent()\n      }\n  }\n}\n\nstruct ProfileContent: View {\n  @State private var name = \"Pedro Duarte\"\n  @State private var username = \"@peduarte\"\n\n  var body: some View {\n    SheetContent {\n      SheetHeader {\n        SheetTitle(\"Edit profile\")\n        SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n      }\n      VStack(alignment: .leading, spacing: 16) {\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Name\")\n            .accessibilityHidden(true)\n          TextField(\"Name\", text: $name)\n            .textFieldStyle(.input)\n        }\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Username\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n        }\n      }\n      .padding(.horizontal, 24)\n      SheetFooter {\n        Button {} label: {\n          Text(\"Save changes\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        SheetClose {\n          Text(\"Close\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Sheet\nimport com.esuiss.ui.components.SheetDescription\nimport com.esuiss.ui.components.SheetFooter\nimport com.esuiss.ui.components.SheetHeader\nimport com.esuiss.ui.components.SheetSide\nimport com.esuiss.ui.components.SheetTitle\n\n@Composable\nfun SheetExample() {\n    SheetDefault(defaultOpen = false)\n}\n\n@Composable\nfun ProfileSheet(open: Boolean, onOpenChange: (Boolean) -> Unit, side: SheetSide = SheetSide.Right) {\n    var name by rememberSaveable { mutableStateOf(\"Pedro Duarte\") }\n    var username by rememberSaveable { mutableStateOf(\"@peduarte\") }\n    Sheet(open = open, onOpenChange = onOpenChange, side = side) {\n        SheetHeader {\n            SheetTitle(\"Edit profile\")\n            SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n        }\n        Column(Modifier.padding(horizontal = 24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Name\")\n                Input(name, { name = it }, Modifier.semantics { contentDescription = \"Name\" })\n            }\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Username\")\n                Input(\n                    username,\n                    { username = it },\n                    Modifier.semantics { contentDescription = \"Username\" },\n                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false),\n                )\n            }\n        }\n        SheetFooter {\n            Button(\"Save changes\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            Button(\"Close\", onClick = { onOpenChange(false) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n        }\n    }\n}\n\n@Composable\nfun SheetDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Open\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        ProfileSheet(open, { open = it })\n    }\n}"} />
+
+</NativeExample>
+
+### Sides
+
+One sheet for each side: `top`, `right`, `bottom` and `left`.
+
+<NativeExample id="components-sheet--sides" width={880} height={904} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileContent({ side }: { side?: Side }) {\n  return (\n    <SheetContent side={side}>\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </SheetDescription>\n      </SheetHeader>\n      <View className=\"gap-4 px-6\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"sheet-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"sheet-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <SheetFooter>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>\n          <Text>Close</Text>\n        </SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetSidesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Sheet key={side}>\n          <SheetTrigger render={<Button variant=\"outline\" />}>\n            <Text className=\"capitalize\">{side}</Text>\n          </SheetTrigger>\n          <ProfileContent side={side} />\n        </Sheet>\n      ))}\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SheetSidesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      ProfileSheet(title: \"Top\", side: .top)\n      ProfileSheet(title: \"Right\", side: .trailing)\n      ProfileSheet(title: \"Bottom\", side: .bottom)\n      ProfileSheet(title: \"Left\", side: .leading)\n    }\n  }\n}\n\nstruct ProfileSheet: View {\n  let title: LocalizedStringKey\n  let side: Edge\n\n  @State private var open: Bool\n\n  init(title: LocalizedStringKey, side: Edge, open: Bool = false) {\n    self.title = title\n    self.side = side\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .sheet(isPresented: $open, side: side) {\n        ProfileContent()\n      }\n  }\n}\n\nstruct ProfileContent: View {\n  @State private var name = \"Pedro Duarte\"\n  @State private var username = \"@peduarte\"\n\n  var body: some View {\n    SheetContent {\n      SheetHeader {\n        SheetTitle(\"Edit profile\")\n        SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n      }\n      VStack(alignment: .leading, spacing: 16) {\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Name\")\n            .accessibilityHidden(true)\n          TextField(\"Name\", text: $name)\n            .textFieldStyle(.input)\n        }\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Username\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n        }\n      }\n      .padding(.horizontal, 24)\n      SheetFooter {\n        Button {} label: {\n          Text(\"Save changes\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        SheetClose {\n          Text(\"Close\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Sheet\nimport com.esuiss.ui.components.SheetDescription\nimport com.esuiss.ui.components.SheetFooter\nimport com.esuiss.ui.components.SheetHeader\nimport com.esuiss.ui.components.SheetSide\nimport com.esuiss.ui.components.SheetTitle\n\n@Composable\nfun ProfileSheet(open: Boolean, onOpenChange: (Boolean) -> Unit, side: SheetSide = SheetSide.Right) {\n    var name by rememberSaveable { mutableStateOf(\"Pedro Duarte\") }\n    var username by rememberSaveable { mutableStateOf(\"@peduarte\") }\n    Sheet(open = open, onOpenChange = onOpenChange, side = side) {\n        SheetHeader {\n            SheetTitle(\"Edit profile\")\n            SheetDescription(\"Make changes to your profile here. Tap save when you're done.\")\n        }\n        Column(Modifier.padding(horizontal = 24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Name\")\n                Input(name, { name = it }, Modifier.semantics { contentDescription = \"Name\" })\n            }\n            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Label(\"Username\")\n                Input(\n                    username,\n                    { username = it },\n                    Modifier.semantics { contentDescription = \"Username\" },\n                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false),\n                )\n            }\n        }\n        SheetFooter {\n            Button(\"Save changes\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            Button(\"Close\", onClick = { onOpenChange(false) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n        }\n    }\n}\n\n@Composable\nfun SheetSides() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        SheetSide.entries.forEach { side ->\n            var open by rememberSaveable(side.name) { mutableStateOf(false) }\n            Button(side.name, onClick = { open = true }, variant = ButtonVariant.Outline)\n            ProfileSheet(open, { open = it }, side)\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### With close label
+
+A bottom sheet whose close button reads "Done" instead of showing an icon.
+
+<NativeExample id="components-sheet--with-close-label" width={880} height={1775} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SheetWithCloseLabelExample() {\n  return (\n    <View className=\"items-start\">\n      <Sheet>\n        <SheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open with label</Text>\n        </SheetTrigger>\n        <SheetContent side=\"bottom\" closeLabel=\"Done\">\n          <SheetHeader>\n            <SheetTitle>Notifications</SheetTitle>\n            <SheetDescription>\n              Choose what you want to be notified about.\n            </SheetDescription>\n          </SheetHeader>\n        </SheetContent>\n      </Sheet>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CloseLabelSheet: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Open with label\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .sheet(isPresented: $open, side: .bottom) {\n        SheetContent(closeLabel: \"Done\") {\n          SheetHeader {\n            SheetTitle(\"Notifications\")\n            SheetDescription(\"Choose what you want to be notified about.\")\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Sheet\nimport com.esuiss.ui.components.SheetDescription\nimport com.esuiss.ui.components.SheetHeader\nimport com.esuiss.ui.components.SheetSide\nimport com.esuiss.ui.components.SheetTitle\n\n@Composable\nfun SheetWithCloseLabel() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Open with label\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Sheet(open = open, onOpenChange = { open = it }, side = SheetSide.Bottom, closeLabel = \"Done\") {\n            SheetHeader {\n                SheetTitle(\"Notifications\")\n                SheetDescription(\"Choose what you want to be notified about.\")\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Sheet
+
+Root that holds the open state.
+
+<PropsTable extends={["DrawerPrimitive.RootProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SheetContent
+
+The panel, rendered in a portal with an overlay and an optional close button.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"side","type":"SheetSide","default":"\"right\"","description":"Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. Defaults to `right`."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the close button in the top corner. Defaults to `true`."},{"name":"closeLabel","type":"string","description":"Text for the close button. When omitted, an X icon is shown."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SheetHeader
+
+Column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SheetTitle
+
+Heading that labels the sheet.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SheetDescription
+
+Secondary text under the title.
+
+<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Description>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The panel has the `dialog` role and is labeled by `SheetTitle` when one is present.
+- It is modal by default, so VoiceOver keeps focus inside the sheet.
+- The VoiceOver escape gesture and the Android back button close the sheet.
+- The icon-only close button has the accessibility label "Close".
+- Animations respect the system reduce motion setting.
+
+## Notes
+
+- Uses `bg-surface-raised` for the panel and `bg-scrim` for the overlay; colors follow the system appearance.
+- On iOS the sheet renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+- Side sheets are three quarters of the screen width, capped at `max-w-sm` on larger screens.
+
+</Only>

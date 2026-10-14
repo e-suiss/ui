@@ -2,8 +2,11 @@
 title: Action Menu
 description: "A list of actions that opens as a dropdown menu on desktop and an action sheet on mobile."
 eyebrow: Pattern
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="pattern" name="action-menu" story="Default">
 
@@ -134,3 +137,5 @@ A divider between groups of items, rendered on desktop only.
 ## Notes
 
 Parts carry `data-slot` values `action-menu`, `action-menu-trigger`, `action-menu-content`, `action-menu-label`, `action-menu-item` and `action-menu-separator`. `ActionMenuSeparator` renders nothing on mobile; the sheet groups items in a single card instead.
+
+</Only>

@@ -1,9 +1,12 @@
 ---
 title: Questionnaire
 description: "A step-by-step form that shows one question at a time, with validation, skipping and keyboard shortcuts."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="questionnaire" story="Default">
 
@@ -280,3 +283,433 @@ Submits the form; shown only on the last question.
 - Shortcut badges are hidden below the `md` breakpoint.
 - The default error text is `Choose an answer to continue.` for required items; pass children to customize it.
 - Uses the `accent`, `separator`, `control`, `danger` and `item-hover` tokens.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-questionnaire--default" width={880} height={891} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle, type QuestionnaireValues } from \"@/components/ui/questionnaire\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nfunction Result({ values }: { values: QuestionnaireValues | null }) {\n  if (!values) return null\n  return (\n    <Text role=\"status\" className=\"text-sm text-label-secondary\">\n      {`Submitted: ${JSON.stringify(values)}`}\n    </Text>\n  )\n}\n\nfunction Onboarding({\n  defaultItem,\n  attempted = false,\n}: {\n  defaultItem?: string\n  attempted?: boolean\n}) {\n  const [values, setValues] = React.useState<QuestionnaireValues | null>(null)\n  return (\n    <View className=\"w-full gap-4\">\n      <Questionnaire defaultItem={defaultItem} onSubmit={setValues}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required invalid={attempted}>\n          <QuestionnaireTitle>\n            What best describes your role?\n          </QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\" defaultChecked>\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n      <Result values={values} />\n    </View>\n  )\n}\n\nexport function QuestionnaireExample() {\n  return (\n    <Onboarding />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireOnboarding: View {\n  var attempted = false\n\n  @State private var controller: QuestionnaireController\n  @State private var submitted: String?\n\n  init(defaultItem: String? = nil, attempted: Bool = false) {\n    self.attempted = attempted\n    _controller = State(initialValue: QuestionnaireController(\n      defaultItem: defaultItem,\n      defaultValues: [\"team-size\": [\"small\"]]\n    ))\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Questionnaire(controller: controller) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name: \"role\", required: true, invalid: attempted) {\n          QuestionnaireTitle(\"What best describes your role?\")\n          QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Engineering\", value: \"engineering\")\n            QuestionnaireChoice(\"Design\", value: \"design\")\n            QuestionnaireChoice(\"Product\", value: \"product\")\n            QuestionnaireChoice(\"Something else\", value: \"other\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"team-size\") {\n          QuestionnaireTitle(\"How large is your team?\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Just me\", value: \"solo\")\n            QuestionnaireChoice(\"2 to 10 people\", value: \"small\")\n            QuestionnaireChoice(\"11 to 50 people\", value: \"medium\")\n            QuestionnaireChoice(\"More than 50 people\", value: \"large\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"company\", required: true) {\n          QuestionnaireTitle(\"What is your company called?\")\n          QuestionnaireInput(\"Acme Inc.\")\n          QuestionnaireError(\"Enter a company name to continue.\")\n        }\n        QuestionnaireStoryActions()\n      }\n      if let submitted {\n        Text(verbatim: submitted)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n    .onAppear {\n      let controller = controller\n      controller.onSubmit = { answers in\n        let fields = controller.sequence.compactMap { name -> String? in\n          guard let value = answers[name]?.first else { return nil }\n          return \"\\\"\\(name)\\\":\\\"\\(value)\\\"\"\n        }\n        submitted = \"Submitted: {\\(fields.joined(separator: \",\"))}\"\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireChoice\nimport com.esuiss.ui.components.QuestionnaireChoices\nimport com.esuiss.ui.components.QuestionnaireDescription\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireInput\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberQuestionnaireState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nfun questionnaireJson(values: Map<String, List<String>>): String =\n    values.entries.joinToString(\",\", \"{\", \"}\") { (key, list) ->\n        \"\\\"$key\\\":\" + list.joinToString(\",\", \"[\", \"]\") { \"\\\"$it\\\"\" }\n    }\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireResult(values: String?) {\n    if (values == null) return\n    Text(\n        \"Submitted: $values\",\n        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n        style = Typography.sm,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun QuestionnaireOnboarding(defaultItem: String? = null, attempted: Boolean = false) {\n    var values by rememberSaveable { mutableStateOf<String?>(null) }\n    val state = rememberQuestionnaireState(defaultItem = defaultItem)\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Questionnaire(state = state, onSubmit = { values = questionnaireJson(it) }) {\n            QuestionnaireProgress()\n            QuestionnaireItem(name = \"role\", required = true, invalid = attempted) {\n                QuestionnaireTitle(\"What best describes your role?\")\n                QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Engineering\", value = \"engineering\")\n                    QuestionnaireChoice(\"Design\", value = \"design\")\n                    QuestionnaireChoice(\"Product\", value = \"product\")\n                    QuestionnaireChoice(\"Something else\", value = \"other\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"team-size\") {\n                QuestionnaireTitle(\"How large is your team?\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Just me\", value = \"solo\")\n                    QuestionnaireChoice(\"2 to 10 people\", value = \"small\", defaultChecked = true)\n                    QuestionnaireChoice(\"11 to 50 people\", value = \"medium\")\n                    QuestionnaireChoice(\"More than 50 people\", value = \"large\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"company\", required = true) {\n                QuestionnaireTitle(\"What is your company called?\")\n                QuestionnaireInput(placeholder = \"Acme Inc.\")\n                QuestionnaireError(\"Enter a company name to continue.\")\n            }\n            QuestionnaireActionsRow()\n        }\n        QuestionnaireResult(values)\n    }\n}"} />
+
+</NativeExample>
+
+`Questionnaire` is a `View` that tracks which question is active, collects answers and validates them. Each `QuestionnaireItem` is one question; only the active item is shown, and moving between items slides the content horizontally with a Reanimated keyframe that follows the layout direction.
+
+Items hold `QuestionnaireChoice` rows, which are `Pressable` radios or, with `multiple`, checkboxes, or a `QuestionnaireInput` for a typed answer. `QuestionnaireActions` holds the Previous, Skip, Next and Submit buttons, each of which only appears when it applies.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add questionnaire"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add questionnaire --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add questionnaire --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/questionnaire.tsx`:
+
+<SourceFile path="uniwind/components/ui/questionnaire.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/questionnaire.tsx`:
+
+<SourceFile path="nativewind/components/ui/questionnaire.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/questionnaire.tsx`:
+
+<SourceFile path="stylesheet/components/ui/questionnaire.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Questionnaire.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Questionnaire.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Input.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit } from \"@/components/ui/questionnaire\""} />
+
+<Code lang="tsx" code={"<Onboarding />"} />
+
+Give every `QuestionnaireItem` a unique `name`; answers are collected under that name. Mark items `required` to block moving on without an answer; optional items show the Skip button. `QuestionnaireError` appears only when the item is invalid and has a default message you can replace.
+
+The active item is uncontrolled through `defaultItem` or controlled with `item` and `onItemChange`. `onSubmit` receives the collected values: a string for single-answer items and a string array for `multiple` items.
+
+`QuestionnaireChoice` supports `defaultChecked`, or controlled `checked` with `onCheckedChange`. `QuestionnaireInput` takes a `type` that sets the keyboard, autocomplete and secure entry. `QuestionnaireProgress` shows "Question 1 of 3" by default and accepts a render function. Use `useQuestionnaireContext` to build custom controls, or `useQuestionnaire` for the underlying state.
+
+## Examples
+
+### Mid flow
+
+Starts on the second question with `defaultItem`.
+
+<NativeExample id="components-questionnaire--mid-flow" width={880} height={839} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle, type QuestionnaireValues } from \"@/components/ui/questionnaire\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nfunction Result({ values }: { values: QuestionnaireValues | null }) {\n  if (!values) return null\n  return (\n    <Text role=\"status\" className=\"text-sm text-label-secondary\">\n      {`Submitted: ${JSON.stringify(values)}`}\n    </Text>\n  )\n}\n\nfunction Onboarding({\n  defaultItem,\n  attempted = false,\n}: {\n  defaultItem?: string\n  attempted?: boolean\n}) {\n  const [values, setValues] = React.useState<QuestionnaireValues | null>(null)\n  return (\n    <View className=\"w-full gap-4\">\n      <Questionnaire defaultItem={defaultItem} onSubmit={setValues}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required invalid={attempted}>\n          <QuestionnaireTitle>\n            What best describes your role?\n          </QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\" defaultChecked>\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n      <Result values={values} />\n    </View>\n  )\n}\n\nexport function QuestionnaireMidFlowExample() {\n  return (\n    <Onboarding defaultItem=\"team-size\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireMidFlowExample: View {\n  var body: some View {\n    QuestionnaireOnboarding(defaultItem: \"team-size\")\n  }\n}\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireOnboarding: View {\n  var attempted = false\n\n  @State private var controller: QuestionnaireController\n  @State private var submitted: String?\n\n  init(defaultItem: String? = nil, attempted: Bool = false) {\n    self.attempted = attempted\n    _controller = State(initialValue: QuestionnaireController(\n      defaultItem: defaultItem,\n      defaultValues: [\"team-size\": [\"small\"]]\n    ))\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Questionnaire(controller: controller) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name: \"role\", required: true, invalid: attempted) {\n          QuestionnaireTitle(\"What best describes your role?\")\n          QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Engineering\", value: \"engineering\")\n            QuestionnaireChoice(\"Design\", value: \"design\")\n            QuestionnaireChoice(\"Product\", value: \"product\")\n            QuestionnaireChoice(\"Something else\", value: \"other\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"team-size\") {\n          QuestionnaireTitle(\"How large is your team?\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Just me\", value: \"solo\")\n            QuestionnaireChoice(\"2 to 10 people\", value: \"small\")\n            QuestionnaireChoice(\"11 to 50 people\", value: \"medium\")\n            QuestionnaireChoice(\"More than 50 people\", value: \"large\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"company\", required: true) {\n          QuestionnaireTitle(\"What is your company called?\")\n          QuestionnaireInput(\"Acme Inc.\")\n          QuestionnaireError(\"Enter a company name to continue.\")\n        }\n        QuestionnaireStoryActions()\n      }\n      if let submitted {\n        Text(verbatim: submitted)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n    .onAppear {\n      let controller = controller\n      controller.onSubmit = { answers in\n        let fields = controller.sequence.compactMap { name -> String? in\n          guard let value = answers[name]?.first else { return nil }\n          return \"\\\"\\(name)\\\":\\\"\\(value)\\\"\"\n        }\n        submitted = \"Submitted: {\\(fields.joined(separator: \",\"))}\"\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireChoice\nimport com.esuiss.ui.components.QuestionnaireChoices\nimport com.esuiss.ui.components.QuestionnaireDescription\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireInput\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberQuestionnaireState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun QuestionnaireMidFlowExample() {\n    QuestionnaireOnboarding(defaultItem = \"team-size\")\n}\n\nfun questionnaireJson(values: Map<String, List<String>>): String =\n    values.entries.joinToString(\",\", \"{\", \"}\") { (key, list) ->\n        \"\\\"$key\\\":\" + list.joinToString(\",\", \"[\", \"]\") { \"\\\"$it\\\"\" }\n    }\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireResult(values: String?) {\n    if (values == null) return\n    Text(\n        \"Submitted: $values\",\n        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n        style = Typography.sm,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun QuestionnaireOnboarding(defaultItem: String? = null, attempted: Boolean = false) {\n    var values by rememberSaveable { mutableStateOf<String?>(null) }\n    val state = rememberQuestionnaireState(defaultItem = defaultItem)\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Questionnaire(state = state, onSubmit = { values = questionnaireJson(it) }) {\n            QuestionnaireProgress()\n            QuestionnaireItem(name = \"role\", required = true, invalid = attempted) {\n                QuestionnaireTitle(\"What best describes your role?\")\n                QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Engineering\", value = \"engineering\")\n                    QuestionnaireChoice(\"Design\", value = \"design\")\n                    QuestionnaireChoice(\"Product\", value = \"product\")\n                    QuestionnaireChoice(\"Something else\", value = \"other\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"team-size\") {\n                QuestionnaireTitle(\"How large is your team?\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Just me\", value = \"solo\")\n                    QuestionnaireChoice(\"2 to 10 people\", value = \"small\", defaultChecked = true)\n                    QuestionnaireChoice(\"11 to 50 people\", value = \"medium\")\n                    QuestionnaireChoice(\"More than 50 people\", value = \"large\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"company\", required = true) {\n                QuestionnaireTitle(\"What is your company called?\")\n                QuestionnaireInput(placeholder = \"Acme Inc.\")\n                QuestionnaireError(\"Enter a company name to continue.\")\n            }\n            QuestionnaireActionsRow()\n        }\n        QuestionnaireResult(values)\n    }\n}"} />
+
+</NativeExample>
+
+### Invalid
+
+A required question shown in its invalid state with an error message.
+
+<NativeExample id="components-questionnaire--invalid" width={880} height={971} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle, type QuestionnaireValues } from \"@/components/ui/questionnaire\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nfunction Result({ values }: { values: QuestionnaireValues | null }) {\n  if (!values) return null\n  return (\n    <Text role=\"status\" className=\"text-sm text-label-secondary\">\n      {`Submitted: ${JSON.stringify(values)}`}\n    </Text>\n  )\n}\n\nfunction Onboarding({\n  defaultItem,\n  attempted = false,\n}: {\n  defaultItem?: string\n  attempted?: boolean\n}) {\n  const [values, setValues] = React.useState<QuestionnaireValues | null>(null)\n  return (\n    <View className=\"w-full gap-4\">\n      <Questionnaire defaultItem={defaultItem} onSubmit={setValues}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required invalid={attempted}>\n          <QuestionnaireTitle>\n            What best describes your role?\n          </QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\" defaultChecked>\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n      <Result values={values} />\n    </View>\n  )\n}\n\nexport function QuestionnaireInvalidExample() {\n  return (\n    <Onboarding attempted />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireInvalidExample: View {\n  var body: some View {\n    QuestionnaireOnboarding(attempted: true)\n  }\n}\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireOnboarding: View {\n  var attempted = false\n\n  @State private var controller: QuestionnaireController\n  @State private var submitted: String?\n\n  init(defaultItem: String? = nil, attempted: Bool = false) {\n    self.attempted = attempted\n    _controller = State(initialValue: QuestionnaireController(\n      defaultItem: defaultItem,\n      defaultValues: [\"team-size\": [\"small\"]]\n    ))\n  }\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Questionnaire(controller: controller) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name: \"role\", required: true, invalid: attempted) {\n          QuestionnaireTitle(\"What best describes your role?\")\n          QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Engineering\", value: \"engineering\")\n            QuestionnaireChoice(\"Design\", value: \"design\")\n            QuestionnaireChoice(\"Product\", value: \"product\")\n            QuestionnaireChoice(\"Something else\", value: \"other\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"team-size\") {\n          QuestionnaireTitle(\"How large is your team?\")\n          QuestionnaireChoices {\n            QuestionnaireChoice(\"Just me\", value: \"solo\")\n            QuestionnaireChoice(\"2 to 10 people\", value: \"small\")\n            QuestionnaireChoice(\"11 to 50 people\", value: \"medium\")\n            QuestionnaireChoice(\"More than 50 people\", value: \"large\")\n          }\n          QuestionnaireError()\n        }\n        QuestionnaireItem(name: \"company\", required: true) {\n          QuestionnaireTitle(\"What is your company called?\")\n          QuestionnaireInput(\"Acme Inc.\")\n          QuestionnaireError(\"Enter a company name to continue.\")\n        }\n        QuestionnaireStoryActions()\n      }\n      if let submitted {\n        Text(verbatim: submitted)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n    .onAppear {\n      let controller = controller\n      controller.onSubmit = { answers in\n        let fields = controller.sequence.compactMap { name -> String? in\n          guard let value = answers[name]?.first else { return nil }\n          return \"\\\"\\(name)\\\":\\\"\\(value)\\\"\"\n        }\n        submitted = \"Submitted: {\\(fields.joined(separator: \",\"))}\"\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireChoice\nimport com.esuiss.ui.components.QuestionnaireChoices\nimport com.esuiss.ui.components.QuestionnaireDescription\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireInput\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberQuestionnaireState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun QuestionnaireInvalidExample() {\n    QuestionnaireOnboarding(attempted = true)\n}\n\nfun questionnaireJson(values: Map<String, List<String>>): String =\n    values.entries.joinToString(\",\", \"{\", \"}\") { (key, list) ->\n        \"\\\"$key\\\":\" + list.joinToString(\",\", \"[\", \"]\") { \"\\\"$it\\\"\" }\n    }\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireResult(values: String?) {\n    if (values == null) return\n    Text(\n        \"Submitted: $values\",\n        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n        style = Typography.sm,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun QuestionnaireOnboarding(defaultItem: String? = null, attempted: Boolean = false) {\n    var values by rememberSaveable { mutableStateOf<String?>(null) }\n    val state = rememberQuestionnaireState(defaultItem = defaultItem)\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Questionnaire(state = state, onSubmit = { values = questionnaireJson(it) }) {\n            QuestionnaireProgress()\n            QuestionnaireItem(name = \"role\", required = true, invalid = attempted) {\n                QuestionnaireTitle(\"What best describes your role?\")\n                QuestionnaireDescription(\"This helps us tailor the setup to your team.\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Engineering\", value = \"engineering\")\n                    QuestionnaireChoice(\"Design\", value = \"design\")\n                    QuestionnaireChoice(\"Product\", value = \"product\")\n                    QuestionnaireChoice(\"Something else\", value = \"other\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"team-size\") {\n                QuestionnaireTitle(\"How large is your team?\")\n                QuestionnaireChoices {\n                    QuestionnaireChoice(\"Just me\", value = \"solo\")\n                    QuestionnaireChoice(\"2 to 10 people\", value = \"small\", defaultChecked = true)\n                    QuestionnaireChoice(\"11 to 50 people\", value = \"medium\")\n                    QuestionnaireChoice(\"More than 50 people\", value = \"large\")\n                }\n                QuestionnaireError()\n            }\n            QuestionnaireItem(name = \"company\", required = true) {\n                QuestionnaireTitle(\"What is your company called?\")\n                QuestionnaireInput(placeholder = \"Acme Inc.\")\n                QuestionnaireError(\"Enter a company name to continue.\")\n            }\n            QuestionnaireActionsRow()\n        }\n        QuestionnaireResult(values)\n    }\n}"} />
+
+</NativeExample>
+
+### Multiple choice
+
+A `multiple` item that accepts several checked choices.
+
+<NativeExample id="components-questionnaire--multiple-choice" width={880} height={891} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireMultipleChoiceExample() {\n  return (\n    <Questionnaire>\n      <QuestionnaireProgress />\n      <QuestionnaireItem name=\"features\" multiple required>\n        <QuestionnaireTitle>\n          Which features do you plan to use?\n        </QuestionnaireTitle>\n        <QuestionnaireDescription>\n          Select all that apply.\n        </QuestionnaireDescription>\n        <QuestionnaireChoices>\n          <QuestionnaireChoice value=\"analytics\" defaultChecked>\n            Analytics\n          </QuestionnaireChoice>\n          <QuestionnaireChoice value=\"billing\" defaultChecked>\n            Billing\n          </QuestionnaireChoice>\n          <QuestionnaireChoice value=\"automations\">\n            Automations\n          </QuestionnaireChoice>\n          <QuestionnaireChoice value=\"integrations\" disabled>\n            Integrations\n          </QuestionnaireChoice>\n        </QuestionnaireChoices>\n        <QuestionnaireError>Choose at least one feature.</QuestionnaireError>\n      </QuestionnaireItem>\n      <Actions />\n    </Questionnaire>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireMultipleChoice: View {\n  @State private var controller = QuestionnaireController(defaultValues: [\"features\": [\"analytics\", \"billing\"]])\n\n  var body: some View {\n    Questionnaire(controller: controller) {\n      QuestionnaireProgress()\n      QuestionnaireItem(name: \"features\", required: true, multiple: true) {\n        QuestionnaireTitle(\"Which features do you plan to use?\")\n        QuestionnaireDescription(\"Select all that apply.\")\n        QuestionnaireChoices {\n          QuestionnaireChoice(\"Analytics\", value: \"analytics\")\n          QuestionnaireChoice(\"Billing\", value: \"billing\")\n          QuestionnaireChoice(\"Automations\", value: \"automations\")\n          QuestionnaireChoice(\"Integrations\", value: \"integrations\", disabled: true)\n        }\n        QuestionnaireError(\"Choose at least one feature.\")\n      }\n      QuestionnaireStoryActions()\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireChoice\nimport com.esuiss.ui.components.QuestionnaireChoices\nimport com.esuiss.ui.components.QuestionnaireDescription\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireMultipleChoice() {\n    Questionnaire(Modifier.fillMaxWidth()) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name = \"features\", multiple = true, required = true) {\n            QuestionnaireTitle(\"Which features do you plan to use?\")\n            QuestionnaireDescription(\"Select all that apply.\")\n            QuestionnaireChoices {\n                QuestionnaireChoice(\"Analytics\", value = \"analytics\", defaultChecked = true)\n                QuestionnaireChoice(\"Billing\", value = \"billing\", defaultChecked = true)\n                QuestionnaireChoice(\"Automations\", value = \"automations\")\n                QuestionnaireChoice(\"Integrations\", value = \"integrations\", enabled = false)\n            }\n            QuestionnaireError(\"Choose at least one feature.\")\n        }\n        QuestionnaireActionsRow()\n    }\n}"} />
+
+</NativeExample>
+
+### With choice descriptions
+
+Choices with secondary text from `QuestionnaireChoiceDescription`.
+
+<NativeExample id="components-questionnaire--with-choice-descriptions" width={880} height={919} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireChoices, QuestionnaireError, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireWithChoiceDescriptionsExample() {\n  return (\n    <Questionnaire>\n      <QuestionnaireProgress />\n      <QuestionnaireItem name=\"plan\" required>\n        <QuestionnaireTitle>Which plan fits you best?</QuestionnaireTitle>\n        <QuestionnaireChoices>\n          <QuestionnaireChoice value=\"starter\">\n            Starter\n            <QuestionnaireChoiceDescription>\n              For individuals trying things out.\n            </QuestionnaireChoiceDescription>\n          </QuestionnaireChoice>\n          <QuestionnaireChoice value=\"team\" defaultChecked>\n            Team\n            <QuestionnaireChoiceDescription>\n              Shared workspaces and roles for growing teams.\n            </QuestionnaireChoiceDescription>\n          </QuestionnaireChoice>\n          <QuestionnaireChoice value=\"enterprise\">\n            Enterprise\n            <QuestionnaireChoiceDescription>\n              Single sign-on, audit logs, and priority support.\n            </QuestionnaireChoiceDescription>\n          </QuestionnaireChoice>\n        </QuestionnaireChoices>\n        <QuestionnaireError />\n      </QuestionnaireItem>\n      <Actions />\n    </Questionnaire>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireChoiceDescriptions: View {\n  @State private var controller = QuestionnaireController(defaultValues: [\"plan\": [\"team\"]])\n\n  var body: some View {\n    Questionnaire(controller: controller) {\n      QuestionnaireProgress()\n      QuestionnaireItem(name: \"plan\", required: true) {\n        QuestionnaireTitle(\"Which plan fits you best?\")\n        QuestionnaireChoices {\n          QuestionnaireChoice(value: \"starter\") {\n            Text(\"Starter\")\n            QuestionnaireChoiceDescription(\"For individuals trying things out.\")\n          }\n          QuestionnaireChoice(value: \"team\") {\n            Text(\"Team\")\n            QuestionnaireChoiceDescription(\"Shared workspaces and roles for growing teams.\")\n          }\n          QuestionnaireChoice(value: \"enterprise\") {\n            Text(\"Enterprise\")\n            QuestionnaireChoiceDescription(\"Single sign-on, audit logs, and priority support.\")\n          }\n        }\n        QuestionnaireError()\n      }\n      QuestionnaireStoryActions()\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireChoice\nimport com.esuiss.ui.components.QuestionnaireChoiceDescription\nimport com.esuiss.ui.components.QuestionnaireChoices\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireWithChoiceDescriptions() {\n    Questionnaire(Modifier.fillMaxWidth()) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name = \"plan\", required = true) {\n            QuestionnaireTitle(\"Which plan fits you best?\")\n            QuestionnaireChoices {\n                QuestionnaireChoice(value = \"starter\") {\n                    Text(\"Starter\")\n                    QuestionnaireChoiceDescription(\"For individuals trying things out.\")\n                }\n                QuestionnaireChoice(value = \"team\", defaultChecked = true) {\n                    Text(\"Team\")\n                    QuestionnaireChoiceDescription(\"Shared workspaces and roles for growing teams.\")\n                }\n                QuestionnaireChoice(value = \"enterprise\") {\n                    Text(\"Enterprise\")\n                    QuestionnaireChoiceDescription(\"Single sign-on, audit logs, and priority support.\")\n                }\n            }\n            QuestionnaireError()\n        }\n        QuestionnaireActionsRow()\n    }\n}"} />
+
+</NativeExample>
+
+### Text input
+
+A required question answered with `QuestionnaireInput`.
+
+<NativeExample id="components-questionnaire--text-input" width={880} height={523} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireTextInputExample() {\n  return (\n    <Questionnaire>\n      <QuestionnaireProgress />\n      <QuestionnaireItem name=\"email\" required>\n        <QuestionnaireTitle>\n          Where should we send your results?\n        </QuestionnaireTitle>\n        <QuestionnaireDescription>\n          We only use your email to share the report.\n        </QuestionnaireDescription>\n        <QuestionnaireInput type=\"email\" placeholder=\"you@example.com\" />\n        <QuestionnaireError>\n          Enter an email address to continue.\n        </QuestionnaireError>\n      </QuestionnaireItem>\n      <Actions />\n    </Questionnaire>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QuestionnaireStoryActions: View {\n  var body: some View {\n    QuestionnaireActions {\n      QuestionnairePrevious()\n      QuestionnaireSkip()\n      QuestionnaireNext()\n      QuestionnaireSubmit()\n    }\n  }\n}\n\nstruct QuestionnaireTextInput: View {\n  @State private var controller = QuestionnaireController()\n\n  var body: some View {\n    Questionnaire(controller: controller) {\n      QuestionnaireProgress()\n      QuestionnaireItem(name: \"email\", required: true) {\n        QuestionnaireTitle(\"Where should we send your results?\")\n        QuestionnaireDescription(\"We only use your email to share the report.\")\n        QuestionnaireInput(\"you@example.com\", keyboard: .emailAddress, contentType: .emailAddress)\n        QuestionnaireError(\"Enter an email address to continue.\")\n      }\n      QuestionnaireStoryActions()\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.Questionnaire\nimport com.esuiss.ui.components.QuestionnaireActions\nimport com.esuiss.ui.components.QuestionnaireDescription\nimport com.esuiss.ui.components.QuestionnaireError\nimport com.esuiss.ui.components.QuestionnaireInput\nimport com.esuiss.ui.components.QuestionnaireItem\nimport com.esuiss.ui.components.QuestionnaireNext\nimport com.esuiss.ui.components.QuestionnairePrevious\nimport com.esuiss.ui.components.QuestionnaireProgress\nimport com.esuiss.ui.components.QuestionnaireSkip\nimport com.esuiss.ui.components.QuestionnaireSubmit\nimport com.esuiss.ui.components.QuestionnaireTitle\n\n@Composable\nfun QuestionnaireActionsRow() {\n    QuestionnaireActions {\n        QuestionnairePrevious()\n        QuestionnaireSkip()\n        QuestionnaireNext()\n        QuestionnaireSubmit()\n    }\n}\n\n@Composable\nfun QuestionnaireTextInput() {\n    Questionnaire(Modifier.fillMaxWidth()) {\n        QuestionnaireProgress()\n        QuestionnaireItem(name = \"email\", required = true) {\n            QuestionnaireTitle(\"Where should we send your results?\")\n            QuestionnaireDescription(\"We only use your email to share the report.\")\n            QuestionnaireInput(\n                placeholder = \"you@example.com\",\n                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),\n            )\n            QuestionnaireError(\"Enter an email address to continue.\")\n        }\n        QuestionnaireActionsRow()\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Questionnaire
+
+Root that holds the state and the active question.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>","UseQuestionnaireParameters"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QuestionnaireProgress
+
+Shows the current question number and total.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"children","type":"| React.ReactNode | ((state: QuestionnaireState) => React.ReactNode)"}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### QuestionnaireItem
+
+One question; shown only while active.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"name","type":"string","required":true,"description":"Unique key for the answer."},{"name":"required","type":"boolean","default":"false","description":"Requires an answer before moving on and hides Skip."},{"name":"disabled","type":"boolean","default":"false","description":"Removes the item from the sequence."},{"name":"invalid","type":"boolean","default":"false","description":"Forces the invalid state."},{"name":"multiple","type":"boolean","default":"false","description":"Allows more than one choice."},{"name":"onStatusChange","type":"(status: QuestionnaireItemStatus) => void","description":"Called when the status changes to `unanswered`, `answered` or `skipped`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### QuestionnaireTitle
+
+The question heading.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### QuestionnaireDescription
+
+Secondary text under the title.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### QuestionnaireChoices
+
+Stack of choice rows.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### QuestionnaireChoice
+
+A selectable answer row.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>","React.RefAttributes<View>"]} props={[{"name":"value","type":"string","required":true,"description":"Value stored when the choice is selected."},{"name":"checked","type":"boolean","description":"Controlled checked state."},{"name":"defaultChecked","type":"boolean","default":"false","description":"Initial checked state."},{"name":"disabled","type":"boolean","default":"false","description":"Disables the choice."},{"name":"onCheckedChange","type":"(checked: boolean) => void","description":"Called with the next checked state."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### QuestionnaireChoiceDescription
+
+Secondary text inside a choice.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### QuestionnaireInput
+
+Text field for a typed answer.
+
+<PropsTable extends={["React.ComponentProps<typeof Input>"]} props={[{"name":"type","type":"QuestionnaireInputType","default":"\"text\"","description":"`text`, `email`, `number`, `tel`, `url`, `password` or `search`; sets keyboard and autofill props."}]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### QuestionnaireError
+
+Validation message shown when the item is invalid.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### QuestionnaireActions
+
+Row for the navigation buttons.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### QuestionnairePrevious
+
+Goes to the previous question.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### QuestionnaireSkip
+
+Skips the active question when it is optional.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### QuestionnaireNext
+
+Validates and moves to the next question.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### QuestionnaireSubmit
+
+Validates all questions and calls `onSubmit` on the last step.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each item has the `radiogroup` role, or `group` when `multiple`, and is labelled by its `QuestionnaireTitle`, which has the `heading` role.
+- Choices have the `radio` or `checkbox` role with checked and disabled states.
+- `QuestionnaireInput` is labelled by the title unless you pass an `accessibilityLabel`.
+- `QuestionnaireProgress` has the `progressbar` role, a value such as "Question 2 of 3" and a polite live region.
+- `QuestionnaireError` has the `alert` role with a polite live region.
+- Slide transitions respect the system reduce motion setting.
+
+## Notes
+
+- Selecting a choice plays a selection haptic.
+- Selected choices use `border-accent` and `bg-accent`; invalid items use `border-danger`.
+- The slide direction flips for right-to-left layouts.
+- Light and dark colors follow the system appearance.
+
+</Only>

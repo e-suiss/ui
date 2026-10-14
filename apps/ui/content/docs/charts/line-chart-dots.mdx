@@ -2,8 +2,11 @@
 title: Line Chart Dots
 description: "A weight trend with a dot at every monthly reading and a fixed value axis on the right."
 eyebrow: Chart
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="line-chart-dots">
 
@@ -44,3 +47,159 @@ Replace the list of readings in `chartData` and rename `weight` in the data, the
 ## Notes
 
 The headline value and the change below it are hard-coded text, so update them along with the data or compute them from it.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="charts-line--dots" width={880} height={665} platforms={["React Native","SwiftUI","Compose"]}>
+
+<SourceFile path="uniwind/components/charts/line-chart-dots.tsx" fold={false} />
+
+<SourceFile path="swift/Charts/LineChartDots.swift" fold={false} />
+
+<SourceFile path="kotlin/charts/LineChartDots.kt" fold={false} />
+
+</NativeExample>
+
+Ten monthly weights drawn with `type="linear"` and a dot on every reading, plus a larger dot for the touched point. A value axis on the right covers a fixed range, and the tooltip formats values in kilograms. The header shows the latest weight and the change since January as static text.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-dots"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-dots --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-dots --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="uniwind/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="nativewind/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+2. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="stylesheet/components/charts/line-chart-dots.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Charts/LineChartDots.swift" />
+
+<SourceFile path="swift/Components/Card.swift" />
+
+<SourceFile path="swift/Components/Chart.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Item.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/charts/LineChartDots.kt" />
+
+<SourceFile path="kotlin/components/Card.kt" />
+
+<SourceFile path="kotlin/components/Chart.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartDots } from \"@/components/charts/line-chart-dots\""} />
+
+<Code lang="tsx" code={"<LineChartDots />"} />
+
+Replace the weight array in `chartData` and update the header text to match. Adjust the `YAxis` `domain` and `ticks` for your range. The component takes no props.
+
+</Only>

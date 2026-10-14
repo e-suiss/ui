@@ -9,6 +9,7 @@ const docs = defineDocs({
     async: true,
     schema: pageSchema.extend({
       eyebrow: z.string().optional(),
+      platforms: z.array(z.enum(["web", "rn", "swift", "kotlin"])).optional(),
     }),
     postprocess: { includeProcessedMarkdown: true },
   },

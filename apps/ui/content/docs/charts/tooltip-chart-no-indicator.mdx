@@ -2,8 +2,11 @@
 title: Tooltip Chart No Indicator
 description: "A stacked bar chart whose tooltip lists series names and values without color indicators."
 eyebrow: Chart
+platforms: [web]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="chart" name="tooltip-chart-no-indicator">
 
@@ -44,3 +47,5 @@ Set `hideIndicator` on `ChartTooltipContent`. Replace `chartData` and the series
 ## Notes
 
 With several series and no color marker, readers can't match a row to a bar by color, so this suits one or two clearly named series best.
+
+</Only>

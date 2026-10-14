@@ -1,9 +1,12 @@
 ---
 title: Button
 description: "A pill-shaped button that triggers an action, with variants for every level of emphasis."
-eyebrow: React Component
+eyebrow: Component
+platforms: [web, rn, swift, kotlin]
 generated: true
 ---
+
+<Only platform="web">
 
 <Example kind="ui" name="button" story="Default">
 
@@ -122,3 +125,264 @@ The interactive button element.
 - Styling hook: `data-slot="button"`.
 - Colors come from semantic tokens such as `bg-accent`, `bg-control`, `bg-accent-surface` and `bg-danger-surface`, each with hover, pressed and disabled states.
 - The focus ring offset is set with `--focus-ring-offset`; groups and other containers override it.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-button--default" width={880} height={400} live="button/Default" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonExample() {\n  return (\n    <View className=\"items-start\">\n      <Button>\n        <Text>Button</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ButtonExample: View {\n  var body: some View {\n    Button(\"Button\") {}\n      .buttonStyle(.variant())\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Button\n\n@Composable\nfun ButtonDefault() {\n    Column {\n        Button(\"Button\", onClick = {})\n    }\n}"} />
+
+</NativeExample>
+
+`Button` is a `Pressable` with the `button` role. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the width of its container.
+
+Use the `default` variant for the primary action on a screen, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="uniwind/components/ui/button.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="nativewind/components/ui/button.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+2. Copy the source into `components/ui/button.tsx`:
+
+<SourceFile path="stylesheet/components/ui/button.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Button>\n    <Text>Button</Text>\n  </Button>\n</View>"} />
+
+Put the label in a `Text` and icons in an `Icon`. The button passes its text color and icon size down through context, so children pick them up without extra classes.
+
+Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `accessibilityLabel`.
+
+`buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element.
+
+## Examples
+
+### Variants
+
+All eight variants, plus an icon-only button.
+
+<NativeExample id="components-button--variants" width={880} height={919} live="button/Variants" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonVariantsExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button>\n        <Text>Default</Text>\n      </Button>\n      <Button variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Button>\n      <Button variant=\"plain\">\n        <Text>Plain</Text>\n      </Button>\n      <Button variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n      <Button variant=\"link\">\n        <Text>Link</Text>\n      </Button>\n      <Button size=\"icon\" variant=\"outline\">\n        <Icon as={PlusIcon} />\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonVariantsExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      WideButton(title: \"Default\", variant: .default)\n      WideButton(title: \"Secondary\", variant: .secondary)\n      WideButton(title: \"Tinted\", variant: .tinted)\n      WideButton(title: \"Outline\", variant: .outline)\n      WideButton(title: \"Ghost\", variant: .ghost)\n      WideButton(title: \"Plain\", variant: .plain)\n      WideButton(title: \"Destructive\", variant: .destructive)\n      WideButton(title: \"Link\", variant: .link)\n      IconButton(icon: Ph.plus.regular, size: .icon, variant: .outline)\n    }\n  }\n}\n\nstruct WideButton: View {\n  let title: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n\n  var body: some View {\n    Button {} label: {\n      Text(title).frame(maxWidth: .infinity)\n    }\n    .buttonStyle(.variant(variant))\n  }\n}\n\nstruct IconButton<Icon: View>: View {\n  let icon: Icon\n  let size: VariantButtonStyle.Size\n  let variant: VariantButtonStyle.Variant\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: size.iconSize, height: size.iconSize)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(\"Add\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonVariants() {\n    val fill = Modifier.fillMaxWidth()\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(\"Default\", onClick = {}, modifier = fill)\n        Button(\"Secondary\", onClick = {}, modifier = fill, variant = ButtonVariant.Secondary)\n        Button(\"Tinted\", onClick = {}, modifier = fill, variant = ButtonVariant.Tinted)\n        Button(\"Outline\", onClick = {}, modifier = fill, variant = ButtonVariant.Outline)\n        Button(\"Ghost\", onClick = {}, modifier = fill, variant = ButtonVariant.Ghost)\n        Button(\"Plain\", onClick = {}, modifier = fill, variant = ButtonVariant.Plain)\n        Button(\"Destructive\", onClick = {}, modifier = fill, variant = ButtonVariant.Destructive)\n        Button(\"Link\", onClick = {}, modifier = fill, variant = ButtonVariant.Link)\n        Button(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.Plus, contentDescription = \"Add\")\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Sizes
+
+Compares the text and icon-only sizes.
+
+<NativeExample id="components-button--sizes" width={880} height={439} live="button/Sizes" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonSizesExample() {\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"xs\">\n          <Text>Extra small</Text>\n        </Button>\n        <Button size=\"sm\">\n          <Text>Small</Text>\n        </Button>\n        <Button>\n          <Text>Default</Text>\n        </Button>\n        <Button size=\"lg\">\n          <Text>Large</Text>\n        </Button>\n        <Button size=\"xl\">\n          <Text>Extra large</Text>\n        </Button>\n      </View>\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"icon-xs\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-sm\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-lg\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-xl\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </View>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      FlowRow {\n        Button(\"Extra small\") {}.buttonStyle(.variant(size: .xs))\n        Button(\"Small\") {}.buttonStyle(.variant(size: .sm))\n        Button(\"Default\") {}.buttonStyle(.variant())\n        Button(\"Large\") {}.buttonStyle(.variant(size: .lg))\n        Button(\"Extra large\") {}.buttonStyle(.variant(size: .xl))\n      }\n      FlowRow {\n        IconButton(icon: Ph.plus.regular, size: .iconXs, variant: .secondary)\n        IconButton(icon: Ph.plus.regular, size: .iconSm, variant: .secondary)\n        IconButton(icon: Ph.plus.regular, size: .icon, variant: .secondary)\n        IconButton(icon: Ph.plus.regular, size: .iconLg, variant: .secondary)\n        IconButton(icon: Ph.plus.regular, size: .iconXl, variant: .secondary)\n      }\n    }\n  }\n}\n\nstruct IconButton<Icon: View>: View {\n  let icon: Icon\n  let size: VariantButtonStyle.Size\n  let variant: VariantButtonStyle.Variant\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: size.iconSize, height: size.iconSize)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(\"Add\"))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonSizes() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            horizontalArrangement = Arrangement.spacedBy(12.dp),\n            verticalArrangement = Arrangement.spacedBy(12.dp),\n            itemVerticalAlignment = Alignment.CenterVertically,\n        ) {\n            Button(\"Extra small\", onClick = {}, size = ButtonSize.Xs)\n            Button(\"Small\", onClick = {}, size = ButtonSize.Sm)\n            Button(\"Default\", onClick = {})\n            Button(\"Large\", onClick = {}, size = ButtonSize.Lg)\n            Button(\"Extra large\", onClick = {}, size = ButtonSize.Xl)\n        }\n        FlowRow(\n            horizontalArrangement = Arrangement.spacedBy(12.dp),\n            verticalArrangement = Arrangement.spacedBy(12.dp),\n            itemVerticalAlignment = Alignment.CenterVertically,\n        ) {\n            listOf(ButtonSize.IconXs, ButtonSize.IconSm, ButtonSize.Icon, ButtonSize.IconLg, ButtonSize.IconXl).forEach { size ->\n                Button(onClick = {}, variant = ButtonVariant.Secondary, size = size) {\n                    Icon(PhosphorIcons.Regular.Plus, contentDescription = \"Add\")\n                }\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### With icon
+
+Leading and trailing icons, and an icon-only button.
+
+<NativeExample id="components-button--with-icon" width={880} height={400} live="button/WithIcon" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ArrowRightIcon, DownloadSimpleIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonWithIconExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button>\n        <Icon as={DownloadSimpleIcon} />\n        <Text>Download</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Continue</Text>\n        <Icon as={ArrowRightIcon} />\n      </Button>\n      <Button variant=\"destructive\">\n        <Icon as={TrashIcon} />\n        <Text>Delete</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonWithIconExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      Button {} label: {\n        Label {\n          Text(\"Download\")\n        } icon: {\n          Ph.downloadSimple.regular\n        }\n      }\n      .buttonStyle(.variant())\n      Button {} label: {\n        HStack(spacing: 6) {\n          Text(\"Continue\")\n          Ph.arrowRight.regular\n            .frame(width: VariantButtonStyle.Size.default.iconSize, height: VariantButtonStyle.Size.default.iconSize)\n        }\n      }\n      .buttonStyle(.variant(.outline))\n      Button {} label: {\n        Label {\n          Text(\"Delete\")\n        } icon: {\n          Ph.trash.regular\n        }\n      }\n      .buttonStyle(.variant(.destructive))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ArrowRight\nimport com.adamglin.phosphoricons.regular.DownloadSimple\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun ButtonWithIcon() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(onClick = {}) {\n            Icon(PhosphorIcons.Regular.DownloadSimple, contentDescription = null)\n            Text(\"Download\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Outline) {\n            Text(\"Continue\")\n            Icon(PhosphorIcons.Regular.ArrowRight, contentDescription = null)\n        }\n        Button(onClick = {}, variant = ButtonVariant.Destructive) {\n            Icon(PhosphorIcons.Regular.Trash, contentDescription = null)\n            Text(\"Delete\")\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Disabled
+
+Disabled buttons in every variant.
+
+<NativeExample id="components-button--disabled" width={880} height={535} live="button/Disabled" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonDisabledExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Text>Default</Text>\n      </Button>\n      <Button disabled variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button disabled variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button disabled variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button disabled variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ButtonDisabledExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      Button(\"Default\") {}.buttonStyle(.variant())\n      Button(\"Secondary\") {}.buttonStyle(.variant(.secondary))\n      Button(\"Tinted\") {}.buttonStyle(.variant(.tinted))\n      Button(\"Outline\") {}.buttonStyle(.variant(.outline))\n      Button(\"Destructive\") {}.buttonStyle(.variant(.destructive))\n    }\n    .disabled(true)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\n\n@Composable\nfun ButtonDisabled() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(\"Default\", onClick = {}, enabled = false)\n        Button(\"Secondary\", onClick = {}, variant = ButtonVariant.Secondary, enabled = false)\n        Button(\"Tinted\", onClick = {}, variant = ButtonVariant.Tinted, enabled = false)\n        Button(\"Outline\", onClick = {}, variant = ButtonVariant.Outline, enabled = false)\n        Button(\"Destructive\", onClick = {}, variant = ButtonVariant.Destructive, enabled = false)\n    }\n}"} />
+
+</NativeExample>
+
+### Block
+
+Full-width buttons at each size, whose corner radius scales with size.
+
+<NativeExample id="components-button--block" width={880} height={400} live="button/Block" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonBlockExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button block size=\"lg\">\n        <Text>Continue</Text>\n      </Button>\n      <Button block size=\"lg\" variant=\"secondary\">\n        <Text>Not now</Text>\n      </Button>\n      <Button block variant=\"tinted\">\n        <Text>Learn more</Text>\n      </Button>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ButtonBlockExample: View {\n  var body: some View {\n    VStack(spacing: 12) {\n      Button(\"Continue\") {}.buttonStyle(.variant(size: .lg, block: true))\n      Button(\"Not now\") {}.buttonStyle(.variant(.secondary, size: .lg, block: true))\n      Button(\"Learn more\") {}.buttonStyle(.variant(.tinted, block: true))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\n\n@Composable\nfun ButtonBlock() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(\"Continue\", onClick = {}, size = ButtonSize.Lg, block = true)\n        Button(\"Not now\", onClick = {}, size = ButtonSize.Lg, variant = ButtonVariant.Secondary, block = true)\n        Button(\"Learn more\", onClick = {}, variant = ButtonVariant.Tinted, block = true)\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Button
+
+<PropsTable extends={["ButtonProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders a `Pressable` with `role="button"`, so VoiceOver and TalkBack announce it as a button.
+- `disabled` is announced and blocks presses.
+- Icon-only buttons need an `accessibilityLabel`.
+
+## Notes
+
+- Colors come from semantic tokens such as `bg-accent`, `bg-control`, `bg-accent-surface` and `bg-danger-surface`, each with pressed and disabled states.
+- Light and dark colors follow the system appearance.
+
+</Only>

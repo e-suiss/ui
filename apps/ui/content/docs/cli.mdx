@@ -1,12 +1,12 @@
 ---
 title: CLI
-description: The @esuiss/ui command sets up your project and copies components, patterns, interactions, charts and blocks into it.
+description: The @esuiss/ui command sets up your project and copies components, patterns, interactions, charts and blocks into it, for React, React Native, SwiftUI and Jetpack Compose.
 eyebrow: suiss/ui
 ---
 
 ## Overview
 
-`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. The same command also adds the mobile components of [suiss/uim](https://uim.suiss.app): in an Expo or React Native app, an Xcode project or an Android Gradle module it adds React Native, SwiftUI or Jetpack Compose sources instead.
+`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. It detects the project in the current folder: a Next.js or Vite app gets React components, an Expo or React Native app gets React Native components, an Xcode project or Swift package gets SwiftUI views and an Android Gradle module gets Jetpack Compose composables.
 
 ## init
 
@@ -20,6 +20,8 @@ npx @esuiss/ui@latest init [options]
 | --- | --- |
 | `-y, --yes` | Skip confirmation prompts |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
+| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |
@@ -44,6 +46,8 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
+| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |
@@ -55,6 +59,12 @@ Run `add` without names to pick from a list. Choose components, patterns, intera
 ```bash title="Terminal"
 npx @esuiss/ui@latest add
 npx @esuiss/ui@latest add patterns
+```
+
+In SwiftUI and Jetpack Compose projects the list only shows what exists for that platform:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add --platform swift
 ```
 
 Outside an interactive terminal, such as in CI, `add` without names prints the available names instead.
@@ -112,4 +122,6 @@ Paths are relative to your `@/*` alias root.
 | Charts | `components/charts/` |
 | Blocks | `components/blocks/` |
 
-Missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.
+In React Native projects the same folders are used. SwiftUI files go to `EsuissUI/`, or to `Sources/<Target>/EsuissUI/` in a Swift package, and Compose files go to `src/main/kotlin/com/esuiss/ui/` in your app module. Pass `--path` to choose another folder.
+
+Missing npm packages are installed with your package manager: npm, pnpm, yarn or bun. In Expo projects they are installed with `expo install`, so native modules match the Expo SDK. The CLI never edits Xcode or Gradle files: it lists the Swift packages and Gradle dependencies a SwiftUI or Compose component needs.

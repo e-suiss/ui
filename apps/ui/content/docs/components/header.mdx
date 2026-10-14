@@ -1,0 +1,344 @@
+---
+title: Header
+description: "A navigation bar with a back button, a centered title, actions and an optional large title that collapses on scroll."
+eyebrow: Component
+platforms: [rn, swift, kotlin]
+generated: true
+---
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-header--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function HeaderExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack>Settings</HeaderBack>\n        <HeaderTitle>Profile</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"plain\" size=\"sm\">\n            <Text className=\"font-semibold\">Edit</Text>\n          </Button>\n        </HeaderActions>\n      </Header>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct HeaderExample: View {\n  var body: some View {\n    Header {\n      HeaderTitle(\"Profile\")\n    } leading: {\n      HeaderBack(\"Settings\")\n    } trailing: {\n      HeaderActions {\n        Button {} label: {\n          Text(\"Edit\").fontWeight(.semibold)\n        }\n        .buttonStyle(.variant(.plain, size: .sm))\n      }\n    }\n    .headerStoryBleed()\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.text.TextStyle\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Text\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderPlainAction(text: String) {\n    Button(onClick = {}, variant = ButtonVariant.Plain, size = ButtonSize.Sm) {\n        Text(text, style = TextStyle(fontWeight = FontWeight.SemiBold))\n    }\n}\n\n@Composable\nfun HeaderDefault() {\n    Column(Modifier.headerBleed()) {\n        Header {\n            HeaderBack(onClick = {}, text = \"Settings\")\n            HeaderTitle(\"Profile\")\n            HeaderActions { HeaderPlainAction(\"Edit\") }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+`Header` is a 44-point bar that sorts its children into three slots: `HeaderBack` and leading `HeaderActions` on the start side, `HeaderTitle` in the center, and everything else on the end side. The side slots share the remaining width equally, so the title stays centered.
+
+For a large title, create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.
+
+## Installation
+
+<Only platform="rn">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add header"} />
+
+</Only>
+
+<Only platform="swift">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add header --platform swift"} />
+
+</Only>
+
+<Only platform="kotlin">
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add header --platform kotlin"} />
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="uniwind/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="nativewind/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/header.tsx`:
+
+<SourceFile path="stylesheet/components/ui/header.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Header.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+
+<SourceFile path="swift/Components/Screen.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Header.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+## Usage
+
+<Code lang="tsx" code={"import { Header, HeaderTitle, HeaderLargeTitle, HeaderBack, HeaderActions, HeaderScrollView } from \"@/components/ui/header\""} />
+
+<Code lang="tsx" code={"<View className=\"-mx-4 -mt-4\">\n  <Header>\n    <HeaderBack>Settings</HeaderBack>\n    <HeaderTitle>Profile</HeaderTitle>\n    <HeaderActions>\n      <Button variant=\"plain\" size=\"sm\">\n        <Text className=\"font-semibold\">Edit</Text>\n      </Button>\n    </HeaderActions>\n  </Header>\n</View>"} />
+
+`HeaderBack` shows a caret and an optional text label such as the previous screen's name; wire `onPress` to your navigation. Group icon buttons in `HeaderActions`, and set `side="leading"` to place a group on the start side.
+
+Both `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.
+
+Without a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.
+
+## Examples
+
+### Large title
+
+A large title that collapses into the bar on scroll.
+
+<NativeExample id="components-header--large-title" width={880} height={1619} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderLargeTitle, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nfunction LargeTitleDemo({ subtitle }: { subtitle?: string }) {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack>Mailboxes</HeaderBack>\n        <HeaderTitle>Inbox</HeaderTitle>\n        <TrailingActions />\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <HeaderLargeTitle subtitle={subtitle}>Inbox</HeaderLargeTitle>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderLargeTitleExample() {\n  return (\n    <LargeTitleDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nlet headerMessages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nextension View {\n  func headerStoryBleed() -> some View {\n    padding(.horizontal, -16).padding(.top, -16)\n  }\n}\n\nstruct HeaderMessageRows: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      ForEach(Array(headerMessages.enumerated()), id: \\.offset) { index, message in\n        Text(LocalizedStringKey(message))\n          .textStyle(.base)\n          .foregroundStyle(Color.label)\n          .lineLimit(1)\n          .padding(.vertical, 12)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .padding(.horizontal, 16)\n  }\n}\n\nstruct HeaderIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: 20, height: 20)\n    }\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct HeaderTrailingActions: View {\n  var body: some View {\n    HeaderActions {\n      HeaderIconButton(icon: Ph.magnifyingGlass.regular, label: \"Search\")\n      HeaderIconButton(icon: Ph.plus.regular, label: \"New message\")\n    }\n  }\n}\n\nstruct HeaderLargeTitleDemo: View {\n  var subtitle: LocalizedStringKey?\n\n  var body: some View {\n    HeaderScrollView {\n      HeaderLargeTitle(\"Inbox\", subtitle: subtitle)\n      HeaderMessageRows()\n    } header: {\n      Header {\n        HeaderTitle(\"Inbox\")\n      } leading: {\n        HeaderBack(\"Mailboxes\")\n      } trailing: {\n        HeaderTrailingActions()\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.input.nestedscroll.nestedScroll\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.MagnifyingGlass\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderLargeTitle\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberHeaderState\n\n@Composable\nfun HeaderLargeTitleExample() {\n    HeaderLargeTitleDemo(subtitle = null)\n}\n\nval HeaderMessages = listOf(\n    \"Lunch on Friday?\",\n    \"The draft is ready for review\",\n    \"Photos from the trip\",\n    \"Invoice for September\",\n    \"Your order has shipped\",\n    \"Team sync moved to 3 PM\",\n    \"Weekend plans\",\n    \"Book club picks\",\n    \"Flight confirmation\",\n    \"New comment on your post\",\n    \"Reminder: dentist at 10\",\n    \"Quarterly report\",\n    \"Welcome to the beta\",\n    \"Parking update\",\n    \"Recipe you asked for\",\n)\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderMessageRows() {\n    Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {\n        HeaderMessages.forEachIndexed { index, message ->\n            if (index > 0) Separator()\n            Text(\n                message,\n                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),\n                maxLines = 1,\n                overflow = TextOverflow.Ellipsis,\n            )\n        }\n    }\n}\n\n@Composable\nfun HeaderTrailingActions() {\n    HeaderActions {\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = \"Search\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.Plus, contentDescription = \"New message\")\n        }\n    }\n}\n\n@Composable\nfun HeaderLargeTitleDemo(subtitle: String?) {\n    val state = rememberHeaderState()\n    Screen {\n        Column(Modifier.fillMaxSize().nestedScroll(state.nestedScrollConnection)) {\n            Header(state = state) {\n                HeaderBack(onClick = {}, text = \"Mailboxes\")\n                HeaderTitle(\"Inbox\")\n                HeaderLargeTitle(\"Inbox\", subtitle = subtitle)\n                HeaderTrailingActions()\n            }\n            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {\n                HeaderMessageRows()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Large title with subtitle
+
+A large title with a subtitle.
+
+<NativeExample id="components-header--large-title-with-subtitle" width={880} height={1663} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderLargeTitle, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nfunction LargeTitleDemo({ subtitle }: { subtitle?: string }) {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack>Mailboxes</HeaderBack>\n        <HeaderTitle>Inbox</HeaderTitle>\n        <TrailingActions />\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <HeaderLargeTitle subtitle={subtitle}>Inbox</HeaderLargeTitle>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderLargeTitleWithSubtitleExample() {\n  return (\n    <LargeTitleDemo subtitle=\"3 unread\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct HeaderLargeTitleWithSubtitleExample: View {\n  var body: some View {\n    HeaderLargeTitleDemo(subtitle: \"3 unread\")\n  }\n}\n\nlet headerMessages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nextension View {\n  func headerStoryBleed() -> some View {\n    padding(.horizontal, -16).padding(.top, -16)\n  }\n}\n\nstruct HeaderMessageRows: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      ForEach(Array(headerMessages.enumerated()), id: \\.offset) { index, message in\n        Text(LocalizedStringKey(message))\n          .textStyle(.base)\n          .foregroundStyle(Color.label)\n          .lineLimit(1)\n          .padding(.vertical, 12)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .padding(.horizontal, 16)\n  }\n}\n\nstruct HeaderIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: 20, height: 20)\n    }\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct HeaderTrailingActions: View {\n  var body: some View {\n    HeaderActions {\n      HeaderIconButton(icon: Ph.magnifyingGlass.regular, label: \"Search\")\n      HeaderIconButton(icon: Ph.plus.regular, label: \"New message\")\n    }\n  }\n}\n\nstruct HeaderLargeTitleDemo: View {\n  var subtitle: LocalizedStringKey?\n\n  var body: some View {\n    HeaderScrollView {\n      HeaderLargeTitle(\"Inbox\", subtitle: subtitle)\n      HeaderMessageRows()\n    } header: {\n      Header {\n        HeaderTitle(\"Inbox\")\n      } leading: {\n        HeaderBack(\"Mailboxes\")\n      } trailing: {\n        HeaderTrailingActions()\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.input.nestedscroll.nestedScroll\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.MagnifyingGlass\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderLargeTitle\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.rememberHeaderState\n\n@Composable\nfun HeaderLargeTitleWithSubtitleExample() {\n    HeaderLargeTitleDemo(subtitle = \"3 unread\")\n}\n\nval HeaderMessages = listOf(\n    \"Lunch on Friday?\",\n    \"The draft is ready for review\",\n    \"Photos from the trip\",\n    \"Invoice for September\",\n    \"Your order has shipped\",\n    \"Team sync moved to 3 PM\",\n    \"Weekend plans\",\n    \"Book club picks\",\n    \"Flight confirmation\",\n    \"New comment on your post\",\n    \"Reminder: dentist at 10\",\n    \"Quarterly report\",\n    \"Welcome to the beta\",\n    \"Parking update\",\n    \"Recipe you asked for\",\n)\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderMessageRows() {\n    Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {\n        HeaderMessages.forEachIndexed { index, message ->\n            if (index > 0) Separator()\n            Text(\n                message,\n                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),\n                maxLines = 1,\n                overflow = TextOverflow.Ellipsis,\n            )\n        }\n    }\n}\n\n@Composable\nfun HeaderTrailingActions() {\n    HeaderActions {\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = \"Search\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.Plus, contentDescription = \"New message\")\n        }\n    }\n}\n\n@Composable\nfun HeaderLargeTitleDemo(subtitle: String?) {\n    val state = rememberHeaderState()\n    Screen {\n        Column(Modifier.fillMaxSize().nestedScroll(state.nestedScrollConnection)) {\n            Header(state = state) {\n                HeaderBack(onClick = {}, text = \"Mailboxes\")\n                HeaderTitle(\"Inbox\")\n                HeaderLargeTitle(\"Inbox\", subtitle = subtitle)\n                HeaderTrailingActions()\n            }\n            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {\n                HeaderMessageRows()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Compact with scroll
+
+A compact title whose hairline appears on scroll.
+
+<NativeExample id="components-header--compact-with-scroll" width={880} height={1517} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { DotsThreeIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderScrollView, HeaderTitle, useHeaderScroll } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst messages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nfunction MessageRows() {\n  return (\n    <View className=\"px-4\">\n      {messages.map((message, index) => (\n        <View\n          key={message}\n          className={index > 0 ? \"border-t border-separator py-3\" : \"py-3\"}\n        >\n          <Text numberOfLines={1}>{message}</Text>\n        </View>\n      ))}\n    </View>\n  )\n}\n\nfunction CompactScrollDemo() {\n  const scroll = useHeaderScroll()\n  return (\n    <View className=\"-m-4 flex-1\">\n      <Header scroll={scroll}>\n        <HeaderBack />\n        <HeaderTitle subtitle=\"15 messages\">Inbox</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"More\">\n            <Icon as={DotsThreeIcon} weight=\"bold\" className=\"size-5\" />\n          </Button>\n        </HeaderActions>\n      </Header>\n      <HeaderScrollView scroll={scroll}>\n        <MessageRows />\n      </HeaderScrollView>\n    </View>\n  )\n}\n\nexport function HeaderCompactWithScrollExample() {\n  return (\n    <CompactScrollDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct HeaderCompactWithScrollExample: View {\n  var body: some View {\n    HeaderScrollView {\n      HeaderMessageRows()\n    } header: {\n      Header {\n        HeaderTitle(\"Inbox\", subtitle: \"15 messages\")\n      } leading: {\n        HeaderBack()\n      } trailing: {\n        HeaderActions {\n          HeaderIconButton(icon: Ph.dotsThree.bold, label: \"More\")\n        }\n      }\n    }\n  }\n}\n\nlet headerMessages = [\n  \"Lunch on Friday?\",\n  \"The draft is ready for review\",\n  \"Photos from the trip\",\n  \"Invoice for September\",\n  \"Your order has shipped\",\n  \"Team sync moved to 3 PM\",\n  \"Weekend plans\",\n  \"Book club picks\",\n  \"Flight confirmation\",\n  \"New comment on your post\",\n  \"Reminder: dentist at 10\",\n  \"Quarterly report\",\n  \"Welcome to the beta\",\n  \"Parking update\",\n  \"Recipe you asked for\",\n]\n\nextension View {\n  func headerStoryBleed() -> some View {\n    padding(.horizontal, -16).padding(.top, -16)\n  }\n}\n\nstruct HeaderMessageRows: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      ForEach(Array(headerMessages.enumerated()), id: \\.offset) { index, message in\n        Text(LocalizedStringKey(message))\n          .textStyle(.base)\n          .foregroundStyle(Color.label)\n          .lineLimit(1)\n          .padding(.vertical, 12)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .padding(.horizontal, 16)\n  }\n}\n\nstruct HeaderIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: 20, height: 20)\n    }\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Bold\nimport com.adamglin.phosphoricons.bold.DotsThree\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\n\nval HeaderMessages = listOf(\n    \"Lunch on Friday?\",\n    \"The draft is ready for review\",\n    \"Photos from the trip\",\n    \"Invoice for September\",\n    \"Your order has shipped\",\n    \"Team sync moved to 3 PM\",\n    \"Weekend plans\",\n    \"Book club picks\",\n    \"Flight confirmation\",\n    \"New comment on your post\",\n    \"Reminder: dentist at 10\",\n    \"Quarterly report\",\n    \"Welcome to the beta\",\n    \"Parking update\",\n    \"Recipe you asked for\",\n)\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderMessageRows() {\n    Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {\n        HeaderMessages.forEachIndexed { index, message ->\n            if (index > 0) Separator()\n            Text(\n                message,\n                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),\n                maxLines = 1,\n                overflow = TextOverflow.Ellipsis,\n            )\n        }\n    }\n}\n\n@Composable\nfun HeaderCompactScroll() {\n    Screen {\n        Column(Modifier.fillMaxSize()) {\n            Header {\n                HeaderBack(onClick = {}, text = null)\n                HeaderTitle(\"Inbox\", subtitle = \"15 messages\")\n                HeaderActions {\n                    Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n                        Icon(PhosphorIcons.Bold.DotsThree, contentDescription = \"More\")\n                    }\n                }\n            }\n            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {\n                HeaderMessageRows()\n            }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Subtitle
+
+A two-line title with a subtitle.
+
+<NativeExample id="components-header--subtitle" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\n\nfunction TrailingActions() {\n  return (\n    <HeaderActions>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} className=\"size-5\" />\n      </Button>\n      <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"New message\">\n        <Icon as={PlusIcon} className=\"size-5\" />\n      </Button>\n    </HeaderActions>\n  )\n}\n\nexport function HeaderSubtitleExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack />\n        <HeaderTitle subtitle=\"Last seen today\">Alex Morgan</HeaderTitle>\n        <TrailingActions />\n      </Header>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct HeaderSubtitleExample: View {\n  var body: some View {\n    Header {\n      HeaderTitle(\"Alex Morgan\", subtitle: \"Last seen today\")\n    } leading: {\n      HeaderBack()\n    } trailing: {\n      HeaderTrailingActions()\n    }\n    .headerStoryBleed()\n  }\n}\n\nextension View {\n  func headerStoryBleed() -> some View {\n    padding(.horizontal, -16).padding(.top, -16)\n  }\n}\n\nstruct HeaderIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: 20, height: 20)\n    }\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct HeaderTrailingActions: View {\n  var body: some View {\n    HeaderActions {\n      HeaderIconButton(icon: Ph.magnifyingGlass.regular, label: \"Search\")\n      HeaderIconButton(icon: Ph.plus.regular, label: \"New message\")\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.MagnifyingGlass\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Icon\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderTrailingActions() {\n    HeaderActions {\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = \"Search\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n            Icon(PhosphorIcons.Regular.Plus, contentDescription = \"New message\")\n        }\n    }\n}\n\n@Composable\nfun HeaderSubtitle() {\n    Column(Modifier.headerBleed()) {\n        Header {\n            HeaderBack(onClick = {}, text = null)\n            HeaderTitle(\"Alex Morgan\", subtitle = \"Last seen today\")\n            HeaderTrailingActions()\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Leading actions
+
+Actions on both sides of the title.
+
+<NativeExample id="components-header--leading-actions" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ListIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Header, HeaderActions, HeaderTitle } from \"@/components/ui/header\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function HeaderLeadingActionsExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderActions side=\"leading\">\n          <Button variant=\"ghost\" size=\"icon\" accessibilityLabel=\"Menu\">\n            <Icon as={ListIcon} className=\"size-5\" />\n          </Button>\n        </HeaderActions>\n        <HeaderTitle>Library</HeaderTitle>\n        <HeaderActions>\n          <Button variant=\"plain\" size=\"sm\">\n            <Text className=\"font-semibold\">Done</Text>\n          </Button>\n        </HeaderActions>\n      </Header>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct HeaderLeadingActionsExample: View {\n  var body: some View {\n    Header {\n      HeaderTitle(\"Library\")\n    } leading: {\n      HeaderActions {\n        HeaderIconButton(icon: Ph.list.regular, label: \"Menu\")\n      }\n    } trailing: {\n      HeaderActions {\n        Button {} label: {\n          Text(\"Done\").fontWeight(.semibold)\n        }\n        .buttonStyle(.variant(.plain, size: .sm))\n      }\n    }\n    .headerStoryBleed()\n  }\n}\n\nextension View {\n  func headerStoryBleed() -> some View {\n    padding(.horizontal, -16).padding(.top, -16)\n  }\n}\n\nstruct HeaderIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n\n  var body: some View {\n    Button {} label: {\n      icon.frame(width: 20, height: 20)\n    }\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.text.TextStyle\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.List\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderActions\nimport com.esuiss.ui.components.HeaderActionsSide\nimport com.esuiss.ui.components.HeaderTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderPlainAction(text: String) {\n    Button(onClick = {}, variant = ButtonVariant.Plain, size = ButtonSize.Sm) {\n        Text(text, style = TextStyle(fontWeight = FontWeight.SemiBold))\n    }\n}\n\n@Composable\nfun HeaderLeadingActions() {\n    Column(Modifier.headerBleed()) {\n        Header {\n            HeaderActions(side = HeaderActionsSide.Leading) {\n                Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n                    Icon(PhosphorIcons.Regular.List, contentDescription = \"Menu\")\n                }\n            }\n            HeaderTitle(\"Library\")\n            HeaderActions { HeaderPlainAction(\"Done\") }\n        }\n    }\n}"} />
+
+</NativeExample>
+
+### Back only
+
+A long back label that truncates.
+
+<NativeExample id="components-header--back-only" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Header, HeaderBack, HeaderTitle } from \"@/components/ui/header\"\n\nexport function HeaderBackOnlyExample() {\n  return (\n    <View className=\"-mx-4 -mt-4\">\n      <Header>\n        <HeaderBack>A very long previous screen title</HeaderBack>\n        <HeaderTitle>Details</HeaderTitle>\n      </Header>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct HeaderBackOnlyExample: View {\n  var body: some View {\n    Header {\n      HeaderTitle(\"Details\")\n    } leading: {\n      HeaderBack(\"A very long previous screen title\")\n    }\n    .headerStoryBleed()\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.layout.layout\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Header\nimport com.esuiss.ui.components.HeaderBack\nimport com.esuiss.ui.components.HeaderTitle\n\nfun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->\n    val inset = 16.dp.roundToPx()\n    val width = constraints.maxWidth + inset * 2\n    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))\n    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {\n        placeable.place(-inset, -inset)\n    }\n}\n\n@Composable\nfun HeaderBackOnly() {\n    Column(Modifier.headerBleed()) {\n        Header {\n            HeaderBack(onClick = {}, text = \"A very long previous screen title\")\n            HeaderTitle(\"Details\")\n        }\n    }\n}"} />
+
+</NativeExample>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Header
+
+Bar that lays out the back button, title and actions.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"scroll","type":"HeaderScroll","description":"Scroll state from `useHeaderScroll()`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### HeaderTitle
+
+Centered title with optional subtitle.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"subtitle","type":"React.ReactNode","description":"Second line under the title."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### HeaderLargeTitle
+
+Large title at the top of the scroll content.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"subtitle","type":"React.ReactNode","description":"Line under the large title."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### HeaderBack
+
+Back button with a caret and optional label.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### HeaderActions
+
+Row of actions for either side.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"side","type":"\"leading\" | \"trailing\"","default":"\"trailing\"","description":"`leading` or `trailing`. Defaults to `trailing`."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### HeaderScrollView
+
+Scroll view that drives the header animations.
+
+<PropsTable extends={["ScrollViewProps"]} props={[{"name":"scroll","type":"HeaderScroll","required":true,"description":"Scroll state from `useHeaderScroll()`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.
+- `HeaderBack` has the `button` role and is labelled with its text, or "Back" when it has none.
+- Give icon-only actions an `accessibilityLabel`.
+
+## Notes
+
+- The back caret rotates and the large title scales from the correct edge in right-to-left layouts.
+- Uses `text-link`, `bg-separator` and `bg-item-pressed` tokens; light and dark follow the system appearance.
+
+</Only>
