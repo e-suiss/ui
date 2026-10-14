@@ -58,6 +58,7 @@ function TabBar({
   const triggerRef = React.useRef<HTMLButtonElement>(null)
   const contentId = React.useId()
   const [closedWidth, setClosedWidth] = React.useState<number>()
+  const [innerWidth, setInnerWidth] = React.useState<number>()
   const [overflow, setOverflow] = React.useState<React.ReactElement[]>([])
   const [hasSections, setHasSections] = React.useState(false)
   const [present, setPresent] = React.useState(open)
@@ -81,7 +82,10 @@ function TabBar({
   React.useLayoutEffect(() => {
     const nav = ref.current
     if (!nav || ((open || present) && closedWidth !== undefined)) return
-    const measure = () => setClosedWidth(nav.offsetWidth)
+    const measure = () => {
+      setClosedWidth(nav.offsetWidth)
+      setInnerWidth(nav.clientWidth)
+    }
     measure()
     const observer = new ResizeObserver(measure)
     observer.observe(nav)
@@ -138,13 +142,13 @@ function TabBar({
         data-overflowing={overflow.length > 0 ? "" : undefined}
         data-sections={hasSections ? "" : undefined}
         className={cn(
-          "group/tab-bar fixed inset-x-0 [--tab-bar-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] bottom-[max(--spacing(4),env(safe-area-inset-bottom))] z-20 mx-auto grid max-h-[calc(100%-(--spacing(8)))] w-fit max-w-[calc(100%-(--spacing(8)))] grid-cols-[minmax(0,1fr)_auto] grid-rows-[minmax(0,1fr)_auto] rounded-xl bg-surface-secondary/75 p-1 transition-[border-radius] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:rounded-2xl data-open:duration-650 data-open:ease-(--tab-bar-spring) shadow-xl ring-1 ring-separator backdrop-blur-3xl backdrop-saturate-180 data-overflowing:w-full dark:bg-surface-tertiary/60",
+          "group/tab-bar fixed inset-x-0 [--tab-bar-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] bottom-[max(--spacing(4),env(safe-area-inset-bottom))] z-20 mx-auto grid max-h-[calc(100%-(--spacing(8)))] w-fit max-w-[calc(100%-(--spacing(8)))] grid-cols-[minmax(0,1fr)_auto] grid-rows-[minmax(0,1fr)_auto] rounded-3xl border border-label/5 bg-surface-raised p-1 shadow-lg data-overflowing:w-full dark:border-label/10",
           className
         )}
         style={
           {
             width: open || present ? closedWidth : undefined,
-            "--tab-bar-width": closedWidth ? `${closedWidth}px` : undefined,
+            "--tab-bar-width": innerWidth ? `${innerWidth}px` : undefined,
             ...style,
           } as React.CSSProperties
         }
@@ -230,7 +234,7 @@ function TabBarList({
       data-slot="tab-bar-list"
       inert={open || undefined}
       className={cn(
-        "relative col-start-1 row-start-2 flex min-w-0 gap-1 overflow-hidden rounded-md transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-100 group-data-open/tab-bar:pointer-events-none group-data-open/tab-bar:invisible group-data-open/tab-bar:opacity-0 group-has-[[data-slot=tab-bar-trigger]:not([data-idle])]/tab-bar:me-1 motion-reduce:transition-none",
+        "relative col-start-1 row-start-2 flex min-w-0 gap-1 overflow-hidden rounded-full transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-100 group-data-open/tab-bar:pointer-events-none group-data-open/tab-bar:invisible group-data-open/tab-bar:opacity-0 group-has-[[data-slot=tab-bar-trigger]:not([data-idle])]/tab-bar:me-1 motion-reduce:transition-none",
         className
       )}
       {...props}
@@ -274,8 +278,8 @@ function TabBarItem({
           inOverflow
             ? cn(tabBarLinkClassName, "text-start")
             : cn(
-                buttonVariants({ variant: "outline" }),
-                "shrink-0 rounded-md border-separator bg-transparent text-label-secondary transition-[color,border-color] duration-200 hover:border-separator-strong hover:bg-transparent hover:text-label active:bg-transparent data-active:border-separator-strong data-active:text-label data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 dark:bg-transparent dark:hover:bg-transparent dark:active:bg-transparent"
+                buttonVariants({ variant: "ghost" }),
+                "shrink-0 font-medium text-label-secondary transition-[color,background-color] duration-200 active:bg-item-pressed disabled:text-label-quaternary data-active:bg-control data-active:text-link data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1"
               ),
           className
         ),
@@ -312,7 +316,7 @@ function TabBarTrigger({
       aria-controls={contentId}
       variant="secondary"
       className={cn(
-        "col-start-2 row-start-2 w-auto justify-self-end gap-2 data-idle:pointer-events-none data-idle:invisible data-idle:absolute rounded-md bg-surface/70 transition-[width,color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-650 group-data-open/tab-bar:ease-(--tab-bar-spring) [interpolate-size:allow-keywords] group-data-open/tab-bar:w-[calc(var(--tab-bar-width,auto)-(--spacing(2)))] max-w-[calc(var(--tab-bar-width,100vw)-(--spacing(2)))] motion-reduce:transition-none text-label-secondary hover:bg-surface/70 hover:text-label active:bg-surface/70 dark:bg-surface-secondary/70 dark:hover:bg-surface-secondary/70 dark:active:bg-surface-secondary/70",
+        "col-start-2 row-start-2 w-auto justify-self-end gap-2 data-idle:pointer-events-none data-idle:invisible data-idle:absolute transition-[width,color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-650 group-data-open/tab-bar:ease-(--tab-bar-spring) [interpolate-size:allow-keywords] group-data-open/tab-bar:w-[calc(var(--tab-bar-width,auto)-(--spacing(2)))] max-w-[calc(var(--tab-bar-width,100vw)-(--spacing(2)))] motion-reduce:transition-none text-label-secondary hover:text-label",
         className
       )}
       onClick={(event) => {
