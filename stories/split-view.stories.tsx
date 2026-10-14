@@ -40,18 +40,16 @@ const messages = [
 function MailExample({
   withSidebar = true,
   defaultColumn,
-  breakpoint,
 }: {
   withSidebar?: boolean
   defaultColumn?: SplitViewColumn
-  breakpoint?: number
 }) {
   const [mailbox, setMailbox] = React.useState("Inbox")
   const [messageId, setMessageId] = React.useState<string>("order")
   const message = messages.find((item) => item.id === messageId) ?? messages[0]
 
   return (
-    <SplitView defaultColumn={defaultColumn} breakpoint={breakpoint}>
+    <SplitView defaultColumn={defaultColumn}>
       {withSidebar ? (
         <SplitViewSidebar title="Mailboxes">
           {mailboxes.map((name) => (
@@ -118,12 +116,4 @@ export const StartOnSidebar: Story = {
 
 export const TwoColumns: Story = {
   render: () => <MailExample withSidebar={false} />,
-}
-
-export const Wide: Story = {
-  render: () => <MailExample breakpoint={0} />,
-}
-
-export const WideTwoColumns: Story = {
-  render: () => <MailExample withSidebar={false} breakpoint={0} />,
 }
