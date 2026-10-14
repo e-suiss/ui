@@ -1,11 +1,11 @@
 # suiss/uim
 
-[![npm version](https://img.shields.io/npm/v/@esuiss/uim?label=%40esuiss%2Fuim)](https://www.npmjs.com/package/@esuiss/uim)
-[![npm downloads](https://img.shields.io/npm/dm/@esuiss/uim)](https://www.npmjs.com/package/@esuiss/uim)
+[![npm version](https://img.shields.io/npm/v/@esuiss/ui?label=%40esuiss%2Fui)](https://www.npmjs.com/package/@esuiss/ui)
+[![npm downloads](https://img.shields.io/npm/dm/@esuiss/ui)](https://www.npmjs.com/package/@esuiss/ui)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-uim.suiss.app-black)](https://uim.suiss.app)
 
-**suiss/uim is an open-source library of copy-paste mobile components with a clean, minimal design** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/uim` command-line tool copies each component's source into your app, so you own the code and can change anything. It is the mobile counterpart of [suiss/ui](https://github.com/e-suiss/ui).
+**suiss/uim is an open-source library of copy-paste mobile components with a clean, minimal design** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything. It is the mobile counterpart of [suiss/ui](https://github.com/e-suiss/ui).
 
 **[Documentation](https://uim.suiss.app/docs)** · [Components](https://uim.suiss.app/docs/components) · [Patterns](https://uim.suiss.app/docs/patterns) · [Interactions](https://uim.suiss.app/docs/interactions) · [CLI](https://uim.suiss.app/docs/cli)
 
@@ -23,8 +23,8 @@
 ## Quick start
 
 ```bash
-npx @esuiss/uim@latest init
-npx @esuiss/uim@latest add dialog
+npx @esuiss/ui@latest init
+npx @esuiss/ui@latest add dialog
 ```
 
 ```tsx
@@ -47,17 +47,17 @@ The styling library is detected from the project. When neither is installed, `in
 Update a component later:
 
 ```bash
-npx @esuiss/uim@latest add button --diff
-npx @esuiss/uim@latest add button --overwrite
+npx @esuiss/ui@latest add button --diff
+npx @esuiss/ui@latest add button --overwrite
 ```
 
 SwiftUI and Jetpack Compose components are copied the same way:
 
 ```bash
-npx @esuiss/uim@latest init --platform swift    # Xcode project or Swift package
-npx @esuiss/uim@latest add dialog --platform swift
-npx @esuiss/uim@latest init --platform kotlin   # Android Gradle module
-npx @esuiss/uim@latest add dialog --platform kotlin
+npx @esuiss/ui@latest init --platform swift    # Xcode project or Swift package
+npx @esuiss/ui@latest add dialog --platform swift
+npx @esuiss/ui@latest init --platform kotlin   # Android Gradle module
+npx @esuiss/ui@latest add dialog --platform kotlin
 ```
 
 `add` copies the component and every file it uses into `EsuissUI/` or `src/main/kotlin/com/esuiss/ui/` (change it with `--path`) and prints the packages to add. You can also use the SwiftUI library as a Swift package from [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift).
@@ -65,7 +65,7 @@ npx @esuiss/uim@latest add dialog --platform kotlin
 ## FAQ
 
 **What is suiss/uim?**
-An open-source collection of mobile components, patterns and interactions with a clean, minimal design, for React Native and Expo, distributed as source code through the `@esuiss/uim` CLI, with SwiftUI and Jetpack Compose versions.
+An open-source collection of mobile components, patterns and interactions with a clean, minimal design, for React Native and Expo, distributed as source code through the `@esuiss/ui` CLI, with SwiftUI and Jetpack Compose versions.
 
 **Should I use Uniwind, NativeWind or StyleSheet?**
 Use the one your project already has; the CLI detects it. For a new project, Uniwind uses Tailwind CSS v4, NativeWind v4 uses Tailwind CSS v3, and StyleSheet needs no Tailwind at all.
@@ -114,14 +114,13 @@ Git hooks are installed by `pnpm install`:
 - `swiftui/`: the SwiftUI package `EsuissUI` and its catalog app, published to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) on every release.
 - `kotlin/`: the Jetpack Compose library and its catalog app, published to [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) on every release.
 - `stories/`: one Storybook file per component, rendered on the device. Light and dark mode follow the system appearance.
-- `packages/cli/`: the `@esuiss/uim` command.
 
 ## Release
 
-Component and stylesheet changes reach users as soon as they are pushed to `main`. Releasing is only needed when `packages/cli` changes:
+Component and stylesheet changes reach users as soon as they are pushed to `main`, because the `@esuiss/ui` CLI in [e-suiss/ui](https://github.com/e-suiss/ui) always reads this repository's `main` branch. Release when the SwiftUI and Compose libraries should get a new version tag:
 
 ```bash
 pnpm release patch   # or minor, major, or an exact version like 1.0.0
 ```
 
-This bumps `packages/cli/package.json`, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes the package to npm and creates the GitHub release.
+This bumps the version in `package.json`, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes `swiftui/` and `kotlin/` to their repositories with the same tag and creates the GitHub release.

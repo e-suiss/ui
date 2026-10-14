@@ -3,7 +3,6 @@
   "entry": [
     "uniwind/components/**/*.tsx",
     "scripts/*.mjs",
-    "packages/cli/index.mjs",
     "stories/**/*.stories.tsx",
     ".rnstorybook/*.{ts,tsx}",
     "nativewind/components/**/*.tsx",
@@ -14,7 +13,6 @@
   "project": [
     "uniwind/**/*.{ts,tsx}",
     "scripts/**/*.mjs",
-    "packages/cli/**/*.mjs",
     ".rnstorybook/**/*.{ts,tsx}",
     "stories/**/*.tsx",
     "*.{ts,tsx}",

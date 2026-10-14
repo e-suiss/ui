@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process"
 import { readFileSync, writeFileSync } from "node:fs"
 
-const MANIFEST = "packages/cli/package.json"
+const MANIFEST = "package.json"
 const BRANCH = "main"
 const USAGE = "Usage: pnpm release <patch|minor|major|x.y.z>"
 
@@ -71,5 +71,5 @@ git("tag", "-a", tag, "-m", tag)
 execFileSync("git", ["push", "origin", BRANCH, tag], { stdio: "inherit" })
 
 console.log(
-  `Pushed ${tag}. GitHub Actions publishes it to npm and creates the release.`
+  `Pushed ${tag}. GitHub Actions updates the Swift and Kotlin repositories and creates the release.`
 )

@@ -37,7 +37,7 @@ private fun TextTypography() {
             variant = TextVariant.Blockquote,
         )
         Row {
-            Text("npx @esuiss/uim add text", variant = TextVariant.Code)
+            Text("npx @esuiss/ui add text", variant = TextVariant.Code)
         }
         Text("A modal dialog that interrupts the user with important content.", variant = TextVariant.Lead)
         Text("Are you absolutely sure?", variant = TextVariant.Large)

@@ -17,7 +17,7 @@ enum TextStories {
           .textVariant(.p)
         Text("\"After all,\" he said, \"everyone enjoys a good joke, so it's only fair that they should pay for the privilege.\"")
           .textVariant(.blockquote)
-        Text(verbatim: "npx @esuiss/uim add text").textVariant(.code)
+        Text(verbatim: "npx @esuiss/ui add text").textVariant(.code)
         Text("A modal dialog that interrupts the user with important content.").textVariant(.lead)
         Text("Are you absolutely sure?").textVariant(.large)
         Text("Email address").textVariant(.small)

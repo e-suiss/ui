@@ -32,7 +32,7 @@ export const Typography: Story = {
         it&apos;s only fair that they should pay for the privilege.&quot;
       </Text>
       <View className="flex-row">
-        <Text variant="code">npx @esuiss/uim add text</Text>
+        <Text variant="code">npx @esuiss/ui add text</Text>
       </View>
       <Text variant="lead">
         A modal dialog that interrupts the user with important content.
