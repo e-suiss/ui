@@ -2631,9 +2631,9 @@
         "recharts"
       ],
       "requires": [
-        "app-shell",
         "chart",
         "item",
+        "sidebar",
         "toggle-group"
       ],
       "files": [
@@ -2648,9 +2648,9 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
-        "button"
+        "button",
+        "sidebar"
       ],
       "files": [
         "components/blocks/dash-health.tsx"
@@ -2665,10 +2665,10 @@
         "recharts"
       ],
       "requires": [
-        "app-shell",
         "avatar",
         "chart",
         "item",
+        "sidebar",
         "toggle-group"
       ],
       "files": [
@@ -2902,10 +2902,10 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "button",
         "collapsible",
-        "select"
+        "select",
+        "sidebar"
       ],
       "files": [
         "components/blocks/log-activity.tsx"
@@ -2919,9 +2919,9 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
-        "button"
+        "button",
+        "sidebar"
       ],
       "files": [
         "components/blocks/log-live.tsx"
@@ -2935,8 +2935,8 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "button",
+        "sidebar",
         "toggle-group"
       ],
       "files": [
@@ -3094,9 +3094,9 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "button",
         "item",
+        "sidebar",
         "split-view",
         "switch"
       ],
@@ -3112,9 +3112,9 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "button",
-        "checkbox"
+        "checkbox",
+        "sidebar"
       ],
       "files": [
         "components/blocks/roles-matrix.tsx"
@@ -3128,11 +3128,11 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
         "button",
         "empty",
-        "select"
+        "select",
+        "sidebar"
       ],
       "files": [
         "components/blocks/roles-requests.tsx"
@@ -3146,10 +3146,10 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
         "button",
         "input",
+        "sidebar",
         "switch"
       ],
       "files": [
@@ -3247,11 +3247,11 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
         "button",
         "item",
         "select",
+        "sidebar",
         "split-view",
         "switch",
         "toggle-group"
@@ -3268,10 +3268,10 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "button",
         "item",
         "select",
+        "sidebar",
         "switch",
         "toast"
       ],
@@ -3287,11 +3287,11 @@
         "@phosphor-icons/react"
       ],
       "requires": [
-        "app-shell",
         "avatar",
         "button",
         "checkbox",
         "input-group",
+        "sidebar",
         "table",
         "toggle-group"
       ],

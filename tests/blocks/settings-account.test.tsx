@@ -113,8 +113,9 @@ describe("SettingsAccount", () => {
     await page.viewport(390, 844)
     await render(<SettingsAccount />)
     await expect.element(heading()).toHaveTextContent("Sign-In & Security")
+    expect(document.querySelector("[data-slot=tab-bar]")).toBeNull()
     await expect
-      .element(page.getByRole("navigation", { name: "More" }))
+      .element(page.getByRole("button", { name: "Toggle Sidebar" }))
       .toBeVisible()
     await editEmail().click()
     await emailInput().fill("jr@suiss.com")

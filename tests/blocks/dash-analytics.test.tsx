@@ -105,23 +105,18 @@ describe("DashAnalytics", () => {
     await expect.poll(headline).toBe("This week · Revenue21.0 K $")
   })
 
-  it("moves the sections to a tab bar on a phone", async () => {
+  it("opens the sections from the sidebar trigger on a phone", async () => {
     await page.viewport(390, 844)
     await render(<DashAnalytics />)
-    await expect
-      .poll(() => document.querySelector("[data-slot=tab-bar]"))
-      .not.toBeNull()
-    const tabs = Array.from(
-      document.querySelectorAll<HTMLElement>(
-        "[data-slot=tab-bar-item]:not([data-overflow])"
-      ),
-      (tab) => tab.textContent
-    )
-    expect(tabs.slice(0, 2)).toEqual(["Route", "Notebook"])
+    expect(document.querySelector("[data-slot=tab-bar]")).toBeNull()
+    await page.getByRole("button", { name: "Toggle Sidebar" }).click()
     await page.getByRole("button", { name: "Notebook", exact: true }).click()
     await expect
       .element(page.getByRole("heading", { level: 1 }))
       .toHaveTextContent("Notebook")
     await expect.poll(headline).toBe("This week · Downloads4.0 K")
+    await expect
+      .poll(() => document.querySelector("[data-slot=sidebar][data-mobile]"))
+      .toBeNull()
   })
 })

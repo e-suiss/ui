@@ -135,13 +135,10 @@ describe("RolesEditor", () => {
     await roleButton("Support").click()
     await expect.element(toggle("Customer data")).toBeVisible()
     await expect.poll(checked).toEqual([false, false, false, true, false])
+    expect(document.querySelector("[data-slot=tab-bar]")).toBeNull()
     await expect
-      .element(
-        page
-          .getByRole("navigation", { name: "More" })
-          .getByRole("button", { name: "Roles" })
-      )
-      .toHaveAttribute("aria-current", "page")
+      .element(page.getByRole("button", { name: "Toggle Sidebar" }))
+      .toBeVisible()
     await page
       .getByRole("region", { name: "Support" })
       .getByRole("button", { name: "Roles" })
