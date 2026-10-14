@@ -1,0 +1,35 @@
+{
+  "name": "radio-group",
+  "type": "ui",
+  "files": [
+    "components/ui/radio-group.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithDescriptions",
+    "DisabledItem",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "RadioGroup",
+      "extends": [
+        "RadioGroupPrimitive.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "RadioGroupItem",
+      "extends": [
+        "RadioPrimitive.Root.Props"
+      ],
+      "props": []
+    }
+  ]
+}

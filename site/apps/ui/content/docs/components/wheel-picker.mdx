@@ -1,0 +1,114 @@
+---
+title: Wheel Picker
+description: "A scrolling, 3D-curved wheel of options, like the iOS picker, for choosing values such as dates and times."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="wheel-picker" story="Default">
+
+<Code lang="tsx" code={"import { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nconst fruits = [\n  \"Apple\",\n  \"Banana\",\n  \"Cherry\",\n  \"Grape\",\n  \"Lemon\",\n  \"Mango\",\n  \"Orange\",\n  \"Peach\",\n  \"Pear\",\n  \"Plum\",\n]\n\nexport function WheelPickerExample() {\n  return (\n    <div className=\"w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10\">\n      <WheelPicker>\n        <WheelPickerColumn aria-label=\"Fruit\" defaultValue=\"Lemon\">\n          {fruits.map((fruit) => (\n            <WheelPickerItem key={fruit} value={fruit}>\n              {fruit}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`WheelPicker` is the frame: it draws the highlighted selection band across the middle and lays out one or more `WheelPickerColumn` wheels side by side. Each column is a scrolling list of `WheelPickerItem` options that snap to the center, and rows curve away and fade as they move from the middle.
+
+A column selects the item that comes to rest in the center after scrolling, or the item that's clicked. Use a wheel picker for touch-friendly choices from ordered lists, especially several related columns such as day, hour and minute. For a compact dropdown, use `Select`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add wheel-picker"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/wheel-picker.tsx`:
+
+<SourceFile path="components/ui/wheel-picker.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\""} />
+
+<Code lang="tsx" code={"<div className=\"w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10\">\n  <WheelPicker>\n    <WheelPickerColumn aria-label=\"Fruit\" defaultValue=\"Lemon\">\n      {fruits.map((fruit) => (\n        <WheelPickerItem key={fruit} value={fruit}>\n          {fruit}\n        </WheelPickerItem>\n      ))}\n    </WheelPickerColumn>\n  </WheelPicker>\n</div>"} />
+
+Each column manages its own value. Use `defaultValue` on `WheelPickerColumn` for an uncontrolled column, or `value` with `onValueChange` to control it. Give every `WheelPickerItem` a unique string `value`; its children are the visible label.
+
+Set `disabled` on items that can't be chosen. Scrolling skips past them to the nearest enabled item, and the keyboard steps over them.
+
+## Examples
+
+### Disabled items
+
+Disables booked time slots so scrolling, keys and clicks skip them.
+
+<Example kind="ui" name="wheel-picker" story="DisabledItems">
+
+<Code lang="tsx" code={"import { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nconst slots = Array.from({ length: 11 }, (_, index) => {\n  const minutes = 18 * 60 + index * 30\n  return `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, \"0\")}`\n})\n\nconst booked = new Set([\"19:30\", \"20:00\", \"20:30\"])\n\nconst minutes = Array.from({ length: 12 }, (_, step) =>\n  String(step * 5).padStart(2, \"0\")\n)\n\nexport function WheelPickerDisabledItemsExample() {\n  return (\n    <div className=\"w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10\">\n      <WheelPicker>\n        <WheelPickerColumn aria-label=\"Reservation time\" defaultValue=\"19:00\">\n          {slots.map((slot) => (\n            <WheelPickerItem key={slot} value={slot} disabled={booked.has(slot)}>\n              {slot}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Date time
+
+Combines controlled day, hour and minute columns into a date and time picker.
+
+<Example kind="ui" name="wheel-picker" story="DateTime">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { WheelPicker, WheelPickerColumn, WheelPickerItem } from \"@/components/ui/wheel-picker\"\n\nfunction toDayValue(date: Date) {\n  return [\n    date.getFullYear(),\n    String(date.getMonth() + 1).padStart(2, \"0\"),\n    String(date.getDate()).padStart(2, \"0\"),\n  ].join(\"-\")\n}\n\nconst today = new Date(2026, 9, 4)\n\nconst days = Array.from({ length: 15 }, (_, index) => {\n  const date = new Date(\n    today.getFullYear(),\n    today.getMonth(),\n    today.getDate() + index - 7\n  )\n  const label =\n    index === 7\n      ? \"Today\"\n      : date.toLocaleDateString(\"en-US\", {\n          weekday: \"short\",\n          month: \"short\",\n          day: \"numeric\",\n        })\n  return { value: toDayValue(date), label }\n})\n\nconst hours = Array.from({ length: 24 }, (_, hour) =>\n  String(hour).padStart(2, \"0\")\n)\n\nconst minutes = Array.from({ length: 12 }, (_, step) =>\n  String(step * 5).padStart(2, \"0\")\n)\n\nfunction DateTimeExample(args: React.ComponentProps<typeof WheelPicker>) {\n  const [day, setDay] = React.useState(toDayValue(today))\n  const [hour, setHour] = React.useState(\"19\")\n  const [minute, setMinute] = React.useState(\"30\")\n\n  return (\n    <div className=\"flex flex-col gap-3\">\n      <WheelPicker {...args}>\n        <WheelPickerColumn\n          aria-label=\"Day\"\n          value={day}\n          onValueChange={setDay}\n          className=\"flex-1 *:justify-end\"\n        >\n          {days.map(({ value, label }) => (\n            <WheelPickerItem key={value} value={value}>\n              {label}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n        <WheelPickerColumn\n          aria-label=\"Hour\"\n          value={hour}\n          onValueChange={setHour}\n        >\n          {hours.map((value) => (\n            <WheelPickerItem key={value} value={value}>\n              {value}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n        <WheelPickerColumn\n          aria-label=\"Minute\"\n          value={minute}\n          onValueChange={setMinute}\n          className=\"flex-1 *:justify-start\"\n        >\n          {minutes.map((value) => (\n            <WheelPickerItem key={value} value={value}>\n              {value}\n            </WheelPickerItem>\n          ))}\n        </WheelPickerColumn>\n      </WheelPicker>\n      <p className=\"text-center text-sm text-label-secondary tabular-nums\">\n        {day} {hour}:{minute}\n      </p>\n    </div>\n  )\n}\n\nexport function WheelPickerDateTimeExample() {\n  return (\n    <div className=\"w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10\">\n      <DateTimeExample />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"WheelPicker","href":"#wheelpicker","children":[{"name":"WheelPickerColumn","href":"#wheelpickercolumn","children":[{"name":"WheelPickerItem","href":"#wheelpickeritem","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### WheelPicker
+
+The frame that holds the columns and draws the selection band.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WheelPickerColumn
+
+A scrolling, snapping wheel that holds one selected value.
+
+<PropsTable extends={["React.ComponentProps<\"div\">","WheelPickerColumnProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WheelPickerItem
+
+A single option in a column.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"value","type":"string","required":true,"description":"The string value this item selects; it must be unique in its column."},{"name":"disabled","type":"boolean","default":"false","description":"Prevents the item from being selected."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each column has the `listbox` role and is focusable; name it with `aria-label`. Items are `option` elements with `aria-selected`, and the column points to the selected item with `aria-activedescendant`.
+- With a column focused, the up and down arrow keys move to the previous or next enabled item, `Page Up` and `Page Down` move by five, and `Home` and `End` jump to the first and last enabled items.
+- Disabled items set `aria-disabled` and ignore clicks.
+- When reduced motion is preferred, the column scrolls to new values without smooth scrolling.
+
+## Notes
+
+- Row height comes from `--wheel-picker-item-height` (`--spacing(8)` by default), set on `WheelPicker`; the column shows about seven rows.
+- The curve is driven by scroll-driven animations where `ViewTimeline` is supported, and by a scroll handler elsewhere.
+- Parts carry `data-slot` attributes: `wheel-picker`, `wheel-picker-column` and `wheel-picker-item`. Items set `data-value`, `data-selected` and `data-disabled`.
+- The selection band uses `bg-control`.

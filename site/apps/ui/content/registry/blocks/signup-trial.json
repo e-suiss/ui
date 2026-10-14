@@ -1,0 +1,6 @@
+{
+  "description": "A free trial signup split between a promotional image panel and a short form with a password strength meter.",
+  "overview": "A free trial signup that pairs a promotional image panel with a short form: email, password with a strength meter, and a terms checkbox. The submit button stays disabled until the form is valid. The panel sits beside the form on desktop and above it on mobile. Use it for trial, waitlist or account signups that need a sales pitch alongside.",
+  "usage": "Replace the promotional copy, the `image` constant and the success branch with your trial signup call. `strength` scores length, mixed case, a digit and a symbol, and the form needs 3 of 4, so tune it to your password policy. Point `#sign-in` at your sign-in page.",
+  "notes": "The strength meter exposes its level to screen readers. The promo panel is a CSS background image from Unsplash with no text alternative, so keep its copy meaningful."
+}

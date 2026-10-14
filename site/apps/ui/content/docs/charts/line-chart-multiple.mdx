@@ -1,0 +1,46 @@
+---
+title: Line Chart Multiple
+description: "Two lines compared on the same axes, with a legend identifying each series."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-multiple">
+
+<SourceFile path="components/charts/line-chart-multiple.tsx" fold={false} />
+
+</Example>
+
+Two series as smooth lines on shared axes, with a legend below. Use it to compare how two metrics move over the same period.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-multiple"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-multiple.tsx`:
+
+<SourceFile path="components/charts/line-chart-multiple.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartMultiple } from \"@/components/charts/line-chart-multiple\""} />
+
+<Code lang="tsx" code={"<LineChartMultiple />"} />
+
+Replace `chartData` and rename the series keys in the data, both `Line` elements and `chartConfig`. Add another `Line` with its own config entry for more series; the legend and tooltip pick them up automatically.
+
+## Notes
+
+Beyond four or five lines the chart gets hard to read; consider the interactive variant that lets readers toggle series.

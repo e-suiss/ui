@@ -1,0 +1,46 @@
+---
+title: Verify Code
+description: "A two-factor authentication screen with a six-digit code entry, error feedback, and a resend countdown."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="verify-code">
+
+<SourceFile path="components/blocks/verify-code.tsx" fold={false} />
+
+</Example>
+
+A two-factor screen with a six-digit code field that turns red on a wrong code and green on success, plus a resend countdown and a help link. A wrong code shakes the field and clears it. Use it for 2FA, phone verification or any one-time code step.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks verify-code"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp).
+
+3. Copy the source into `components/blocks/verify-code.tsx`:
+
+<SourceFile path="components/blocks/verify-code.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { VerifyCode } from \"@/components/blocks/verify-code\""} />
+
+<Code lang="tsx" code={"<VerifyCode />"} />
+
+Replace the comparison with `DEMO_CODE` in `complete` with your verification API, and remove the demo code hint. Resend only restarts the 30-second timer, so connect it to your code delivery service. Point `#help` at your support page.
+
+## Notes
+
+The code field receives focus on load, and errors are announced.

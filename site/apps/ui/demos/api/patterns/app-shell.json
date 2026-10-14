@@ -1,0 +1,41 @@
+{
+  "name": "app-shell",
+  "type": "pattern",
+  "files": [
+    "components/patterns/app-shell.tsx"
+  ],
+  "requires": [
+    "sidebar",
+    "tab-bar"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithHeaderAndFooter",
+    "Grouped",
+    "MoreTab",
+    "Links",
+    "Floating",
+    "Inset",
+    "Offcanvas",
+    "RightSide"
+  ],
+  "parts": [
+    {
+      "name": "AppShell",
+      "extends": [
+        "React.ComponentProps<typeof AppShellLayout>"
+      ],
+      "props": []
+    },
+    {
+      "name": "AppShellTrigger",
+      "extends": [
+        "React.ComponentProps<typeof SidebarTrigger>"
+      ],
+      "props": []
+    }
+  ]
+}

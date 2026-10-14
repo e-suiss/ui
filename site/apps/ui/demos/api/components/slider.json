@@ -1,0 +1,28 @@
+{
+  "name": "slider",
+  "type": "ui",
+  "files": [
+    "components/ui/slider.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Range",
+    "Steps",
+    "Vertical",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Slider",
+      "extends": [
+        "SliderPrimitive.Root.Props"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "name": "context-actions",
+  "type": "pattern",
+  "files": [
+    "components/patterns/context-actions.tsx"
+  ],
+  "requires": [
+    "alert-sheet",
+    "context-menu",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithIcons",
+    "NotDismissible"
+  ],
+  "parts": [
+    {
+      "name": "ContextActions",
+      "extends": [
+        "React.ComponentProps<typeof ContextMenu>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "ContextActionsTrigger",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextActionsContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "cancelLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Cancel\""
+        }
+      ]
+    },
+    {
+      "name": "ContextActionsLabel",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextActionsItem",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ContextActionsSeparator",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    }
+  ]
+}

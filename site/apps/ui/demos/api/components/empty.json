@@ -1,0 +1,69 @@
+{
+  "name": "empty",
+  "type": "ui",
+  "files": [
+    "components/ui/empty.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Outline",
+    "DefaultMedia",
+    "WithSearch"
+  ],
+  "parts": [
+    {
+      "name": "Empty",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "EmptyHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "EmptyMedia",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"icon\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "EmptyTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "EmptyDescription",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "EmptyContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

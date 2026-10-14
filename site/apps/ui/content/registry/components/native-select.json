@@ -1,0 +1,18 @@
+{
+  "description": "A styled native select element for choosing one option from a list.",
+  "overview": "`NativeSelect` wraps the browser's `select` element with the library's control styling and a trailing up-down caret. Add choices with `NativeSelectOption`, and group them under headings with `NativeSelectOptGroup`.\n\nBecause it uses the platform picker, it works well on touch devices and in plain HTML forms. Use Select when you need a custom-styled popup, rich option content or a searchable list.",
+  "usage": "All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.\n\nTo show a placeholder, add a first option with `value=\"\"` and `disabled`; while it is selected, the text uses the secondary label color.",
+  "examples": {
+    "Sizes": "The `sm` and `default` sizes side by side.",
+    "WithGroups": "Options organized under labelled `NativeSelectOptGroup` headings.",
+    "Disabled": "A select with `disabled` set, shown with the disabled control colors.",
+    "Invalid": "A select with `aria-invalid` set, shown with the danger border and tint."
+  },
+  "parts": {
+    "NativeSelect": "The wrapper and native `select` element, with a decorative caret icon.",
+    "NativeSelectOption": "A single choice, rendered as an `option` element.",
+    "NativeSelectOptGroup": "A labelled group of options, rendered as an `optgroup` element."
+  },
+  "accessibility": "- Renders a native `select`, exposed as a `combobox` with native keyboard and picker behavior.\n- Provide an accessible name with a `Label` linked through `htmlFor`, or with `aria-label`.\n- `NativeSelectOptGroup` exposes its `label` as a named `group`.\n- Set `aria-invalid` to communicate a validation error; it also applies the invalid styling.\n- The caret icon is `aria-hidden`.",
+  "notes": "- Styling hooks: `data-slot` values `native-select-wrapper`, `native-select`, `native-select-icon`, `native-select-option` and `native-select-optgroup`. The wrapper and `select` both expose `data-size`.\n- The `size` prop accepts `default` (44px tall) or `sm` (36px tall) and replaces the native `size` attribute.\n- Options and groups use the `Canvas` and `CanvasText` system colors so the native popup stays legible in light and dark modes.\n- Uses the `control`, `control-disabled`, `danger` and `label-secondary` tokens."
+}

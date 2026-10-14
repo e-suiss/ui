@@ -1,0 +1,24 @@
+{
+  "description": "A static callout that draws attention to an important message without interrupting the user.",
+  "overview": "An `Alert` is a rounded container with an optional leading icon, an `AlertTitle`, an optional `AlertDescription` and an optional `AlertAction`. Place the icon as a direct child; the layout switches to a two-column grid so the title and description align beside it.\n\nUse an alert for inline, persistent messages such as updates, warnings or errors. To interrupt the user and require a decision, use Alert Dialog instead; for short-lived notifications, use Toast.",
+  "usage": "Put a Phosphor icon (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.\n\n`AlertAction` is positioned in the top-end corner, and the alert reserves end padding for it automatically.",
+  "examples": {
+    "Destructive": "Tints the icon with the danger color for errors.",
+    "WithoutIcon": "A title and description with no leading icon.",
+    "TitleOnly": "An icon with a single line of text and no description.",
+    "WithAction": "Places a small button in the top-end corner with `AlertAction`."
+  },
+  "parts": {
+    "Alert": "The container that lays out the icon, text and action.",
+    "AlertTitle": "The bold headline of the message.",
+    "AlertDescription": "Secondary text that explains the message.",
+    "AlertAction": "An absolutely positioned slot for a button or link in the top-end corner."
+  },
+  "props": {
+    "Alert": {
+      "variant": "Icon color. `default` uses the accent color; `destructive` uses the danger color."
+    }
+  },
+  "accessibility": "- `Alert` renders with `role=\"alert\"`, so assistive technology announces its content when it appears.\n- Interactive content in `AlertAction` stays in the normal tab order.\n- Decorative icons should not need a label; put the meaning in the title text.",
+  "notes": "- Styling hooks: `data-slot=\"alert\"`, `\"alert-title\"`, `\"alert-description\"` and `\"alert-action\"`.\n- Both variants use `bg-surface-secondary`; they differ only in icon color (`text-accent` or `text-danger`).\n- Links inside the title or description are underlined automatically."
+}

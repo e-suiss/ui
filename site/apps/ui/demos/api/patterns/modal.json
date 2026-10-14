@@ -1,0 +1,114 @@
+{
+  "name": "modal",
+  "type": "pattern",
+  "files": [
+    "components/patterns/modal.tsx"
+  ],
+  "requires": [
+    "dialog",
+    "drawer",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "Modal",
+      "extends": [
+        "React.ComponentProps<typeof Dialog>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ModalTrigger",
+      "extends": [
+        "React.ComponentProps<typeof DialogTrigger>"
+      ],
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ModalContent",
+      "extends": [
+        "React.ComponentProps<typeof DialogContent>"
+      ],
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "style",
+          "type": "React.CSSProperties",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ModalHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ModalBody",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ModalFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ModalTitle",
+      "extends": [
+        "React.ComponentProps<typeof DialogTitle>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ModalDescription",
+      "extends": [
+        "React.ComponentProps<typeof DialogDescription>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ModalClose",
+      "extends": [
+        "React.ComponentProps<typeof DialogClose>"
+      ],
+      "props": []
+    }
+  ]
+}

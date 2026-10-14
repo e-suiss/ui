@@ -1,0 +1,23 @@
+{
+  "description": "A single-line text field for entering and editing short values.",
+  "overview": "`Input` wraps the Base UI `Input` primitive and renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.\n\nUse it for short, free-form values. For multi-line text use a textarea, for icons, buttons or text attached to the field use `InputGroup`, and for one-time codes use `InputOTP`.",
+  "usage": "Use `defaultValue` for an uncontrolled field, or `value` with `onChange` to control it. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. Choose a `size` that matches neighboring controls such as a `Button`.",
+  "examples": {
+    "Sizes": "The `sm`, `md` and `default` sizes, each next to a button of matching height.",
+    "Types": "Inputs with `email`, `password`, `number` and `search` types.",
+    "WithValue": "An input that starts with a `defaultValue`.",
+    "File": "A file input with an accessible name that accepts a chosen file.",
+    "Invalid": "An input marked with `aria-invalid`, showing the error style.",
+    "Disabled": "A disabled input that ignores typing."
+  },
+  "parts": {
+    "Input": "The text field."
+  },
+  "props": {
+    "Input": {
+      "size": "Sets the height and text size: `default` is the tallest, `md` is medium and `sm` is the most compact with a smaller radius."
+    }
+  },
+  "accessibility": "- Renders a native `input`, so the role follows its `type`: `textbox` by default, `spinbutton` for `number` and `searchbox` for `search`.\n- Needs an accessible name from an associated label or `aria-label`.\n- Set `aria-invalid` to communicate a validation error.\n- A disabled input cannot be focused or edited.",
+  "notes": "- Styling hooks: `data-slot=\"input\"` and `data-size`.\n- Uses the `control`, `control-disabled`, `accent` (caret), `label-secondary` (placeholder) and `danger` tokens.\n- The native `size` attribute is replaced by the `size` prop."
+}

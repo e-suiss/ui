@@ -1,0 +1,181 @@
+---
+title: Card
+description: "A raised container that groups related content and actions about a single subject."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="card" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+A `Card` stacks a `CardHeader`, `CardContent` and `CardFooter` with consistent spacing. The header holds a `CardTitle`, an optional `CardDescription`, and an optional `CardAction` that sits in the top-end corner. An `img` placed as the first child runs edge to edge, with rounded top corners and no top padding.
+
+Use a card to present a self-contained summary, such as a plan, a metric or a place. For dense lists of rows, use Item or a table instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add card"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="components/ui/card.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from \"@/components/ui/card\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Card>\n    <CardHeader>\n      <CardTitle>Team plan</CardTitle>\n      <CardDescription>\n        Everything your team needs to ship faster.\n      </CardDescription>\n    </CardHeader>\n    <CardContent>\n      <p>\n        Unlimited projects, shared workspaces, and priority support for up to\n        ten members.\n      </p>\n    </CardContent>\n    <CardFooter className=\"gap-2\">\n      <Button>Upgrade</Button>\n      <Button variant=\"ghost\">Learn more</Button>\n    </CardFooter>\n  </Card>\n</div>"} />
+
+All parts are plain `div` elements, so you can omit any of them. Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to draw a divider; the card adds matching padding on that side.
+
+Spacing is controlled by the `--card-spacing` custom property, which the `sm` size reduces.
+
+## Examples
+
+### Small
+
+The `sm` size with tighter spacing.
+
+<Example kind="ui" name="card" story="Small">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardSmallExample() {\n  return (\n    <div className=\"w-96\">\n      <Card size=\"sm\">\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Filled
+
+The `filled` variant on a flat secondary surface with no shadow.
+
+<Example kind="ui" name="card" story="Filled">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardFilledExample() {\n  return (\n    <div className=\"w-96\">\n      <Card variant=\"filled\">\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With action
+
+Places an icon button in the header with `CardAction`.
+
+<Example kind="ui" name="card" story="WithAction">
+
+<Code lang="tsx" code={"import { DotsThreeIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithActionExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader>\n          <CardTitle>Monthly revenue</CardTitle>\n          <CardDescription>Updated five minutes ago</CardDescription>\n          <CardAction>\n            <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"More options\">\n              <DotsThreeIcon />\n            </Button>\n          </CardAction>\n        </CardHeader>\n        <CardContent>\n          <p className=\"text-3xl font-semibold tabular-nums\">$24,380</p>\n        </CardContent>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With borders
+
+Separates the header and footer with borders.
+
+<Example kind="ui" name="card" story="WithBorders">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithBordersExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader className=\"border-b\">\n          <CardTitle>Notifications</CardTitle>\n          <CardDescription>Choose what you want to hear about.</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>You have three unread messages and one pending invite.</p>\n        </CardContent>\n        <CardFooter className=\"justify-end border-t\">\n          <Button variant=\"outline\">Mark all as read</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With image
+
+Leads with a full-bleed image above the header.
+
+<Example kind="ui" name="card" story="WithImage">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithImageExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"aspect-video w-full object-cover\"\n        />\n        <CardHeader>\n          <CardTitle>Lake Louise</CardTitle>\n          <CardDescription>Banff National Park, Canada</CardDescription>\n        </CardHeader>\n        <CardFooter>\n          <Button className=\"w-full\">Book a stay</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Card","href":"#card","children":[{"name":"CardHeader","href":"#cardheader","children":[{"name":"CardTitle","href":"#cardtitle","children":[]},{"name":"CardDescription","href":"#carddescription","children":[]},{"name":"CardAction","href":"#cardaction","children":[]}]},{"name":"CardContent","href":"#cardcontent","children":[]},{"name":"CardFooter","href":"#cardfooter","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Card
+
+The rounded container that sets size and surface.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"\"default\" | \"sm\"","default":"\"default\"","description":"Inner spacing: `default` or the more compact `sm`."},{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"Surface style. `default` is raised with a shadow and ring; `filled` uses `bg-surface-secondary` with no shadow."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardHeader
+
+Lays out the title, description and action.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardTitle
+
+The card's heading text.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardDescription
+
+Secondary text below the title.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardAction
+
+A slot in the header's top-end corner for a button or menu.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardContent
+
+The main body, padded to the card's spacing.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CardFooter
+
+A row for actions or summary at the bottom.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Card parts are non-semantic `div` elements, and `CardTitle` is not a heading. If the title belongs in the document outline, place a heading element such as `h2` inside it.
+- Icon-only buttons in `CardAction` need an `aria-label`.
+
+## Notes
+
+- Styling hooks: `data-slot` values `card`, `card-header`, `card-title`, `card-description`, `card-action`, `card-content` and `card-footer`, plus `data-size` and `data-variant` on the root.
+- The header switches to a two-column grid when it contains a `CardAction`.
+- Calendar detects `data-slot="card-content"` and drops its own background inside a card.

@@ -1,0 +1,48 @@
+{
+  "description": "A menu of actions that opens at the pointer when people right-click an area.",
+  "overview": "Context menu wraps the Base UI Context Menu. The `ContextMenu` root manages the open state and `ContextMenuTrigger` defines the area that opens the menu. `ContextMenuContent` renders the menu in a portal at the pointer position. Inside it, use `ContextMenuItem` for actions, `ContextMenuCheckboxItem` for toggles, and `ContextMenuRadioGroup` with `ContextMenuRadioItem` for a single choice. Organize items with `ContextMenuGroup`, `ContextMenuLabel` and `ContextMenuSeparator`, and nest a submenu with `ContextMenuSub`, `ContextMenuSubTrigger` and `ContextMenuSubContent`. `ContextMenuShortcut` displays a keyboard shortcut at the end of an item.\n\nUse a context menu for secondary actions on an object. Because it is hidden until a right-click or long press, make the same actions available elsewhere. For a menu opened from a visible button, use a dropdown menu.",
+  "usage": "Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Respond to an action with the item's `onClick`. Selecting an item closes the menu.\n\nSet `inset` on items and labels that have no icon so their text aligns with items that do, or with the indicators of checkbox and radio items. Set `variant=\"destructive\"` on items that delete or remove something.",
+  "examples": {
+    "Inset": "A file menu where `inset` aligns a label and items without icons, ending with a destructive item."
+  },
+  "parts": {
+    "ContextMenu": "The root that manages the menu's open state.",
+    "ContextMenuPortal": "Renders its children into a portal outside the current DOM hierarchy.",
+    "ContextMenuTrigger": "The area that opens the menu on right-click.",
+    "ContextMenuContent": "The menu panel, rendered in a portal at the pointer position.",
+    "ContextMenuGroup": "Groups related items.",
+    "ContextMenuLabel": "A heading for a group of items.",
+    "ContextMenuItem": "An action in the menu.",
+    "ContextMenuSub": "The root of a nested submenu.",
+    "ContextMenuSubTrigger": "The item that opens a submenu, shown with a trailing caret.",
+    "ContextMenuSubContent": "The panel of a submenu, opened beside its trigger.",
+    "ContextMenuCheckboxItem": "An item that toggles a setting on or off and shows a check mark when on.",
+    "ContextMenuRadioGroup": "Groups radio items so that only one can be selected.",
+    "ContextMenuRadioItem": "An item in a radio group that shows a check mark when selected.",
+    "ContextMenuSeparator": "A divider between groups of items.",
+    "ContextMenuShortcut": "Displays a keyboard shortcut at the end of an item."
+  },
+  "props": {
+    "ContextMenuLabel": {
+      "inset": "Adds leading padding so the label aligns with items that have an icon or indicator."
+    },
+    "ContextMenuItem": {
+      "inset": "Adds leading padding so the item aligns with items that have an icon or indicator.",
+      "variant": "`destructive` colors the item and its icon with the `danger` color."
+    },
+    "ContextMenuSubTrigger": {
+      "inset": "Adds leading padding so the trigger aligns with items that have an icon or indicator."
+    },
+    "ContextMenuCheckboxItem": {
+      "inset": "Adds leading padding so the item aligns with other inset items."
+    },
+    "ContextMenuRadioItem": {
+      "inset": "Adds leading padding so the item aligns with other inset items."
+    },
+    "ContextMenuShortcut": {
+      "mod": "Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."
+    }
+  },
+  "accessibility": "- The menu has the `menu` role. Items have the `menuitem`, `menuitemcheckbox` or `menuitemradio` role, and checkbox and radio items set `aria-checked`.\n- Disabled items set `aria-disabled` and cannot be chosen.\n- Arrow keys move between items. On a submenu trigger, the Right Arrow opens the submenu and moves focus into it, and the Left Arrow returns to the trigger. The arrow directions follow the reading direction.\n- Escape closes the menu, and choosing an item closes it.\n- `ContextMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.",
+  "notes": "- Styling hooks: `data-slot` values such as `context-menu-content`, `context-menu-item`, `context-menu-checkbox-item`, `context-menu-radio-item`, `context-menu-sub-trigger`, `context-menu-label`, `context-menu-separator` and `context-menu-shortcut`.\n- Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.\n- By default the menu opens on the `inline-end` side of the pointer, aligned to `start`.\n- The trigger sets `select-none` so long-pressing does not select its text.\n- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger`, `danger-surface` and `separator` tokens."
+}

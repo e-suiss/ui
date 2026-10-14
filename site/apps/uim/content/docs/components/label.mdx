@@ -1,0 +1,200 @@
+---
+title: Label
+description: "A text label for a form control that can be pressed to act on the control."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-label--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\n\nexport function LabelExample() {\n  return (\n    <Label>Your email address</Label>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct LabelExample: View {\n  var body: some View {\n    FieldLabel(\"Your email address\")\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun LabelExample() {\n    Label(\"Your email address\")\n}"} />
+
+</Example>
+
+`Label` renders a `Text` inside a `Pressable` row. The pressable accepts `onPress`, `onLongPress`, `onPressIn` and `onPressOut`, so pressing the label can toggle or focus the control next to it. A disabled label uses a muted color.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add label"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add label --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add label --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/label.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/label.tsx`:
+
+<SourceFile path="uniwind/components/ui/label.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/label.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/label.tsx`:
+
+<SourceFile path="nativewind/components/ui/label.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/label.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/label.tsx`:
+
+<SourceFile path="stylesheet/components/ui/label.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Label.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\""} />
+
+<Code lang="tsx" code={"<Label>Your email address</Label>"} />
+
+Set a `nativeID` on the label and point the control's `accessibilityLabelledBy` at it, so screen readers read the label with the control.
+
+For a checkbox or switch, pass an `onPress` that toggles the control, which gives a larger touch target. Inside a `Field`, use `FieldLabel` instead.
+
+## Examples
+
+### With input
+
+A label linked to an input through `nativeID` and `accessibilityLabelledBy`.
+
+<Example id="components-label--with-input" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelWithInputExample() {\n  return (\n    <View className=\"gap-2\">\n      <Label nativeID=\"label-email\">Email</Label>\n      <Input\n        accessibilityLabelledBy=\"label-email\"\n        placeholder=\"m@example.com\"\n      />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct LabelWithInput: View {\n  @State private var email = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      FieldLabel(\"Email\")\n        .accessibilityHidden(true)\n      TextField(String(\"m@example.com\"), text: $email)\n        .textFieldStyle(.input)\n        .keyboardType(.emailAddress)\n        .textInputAutocapitalization(.never)\n        .accessibilityLabel(Text(\"Email\"))\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun LabelWithInput() {\n    var email by rememberSaveable { mutableStateOf(\"\") }\n    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Label(\"Email\")\n        Input(email, { email = it }, Modifier.semantics { contentDescription = \"Email\" }, placeholder = \"m@example.com\")\n    }\n}"} />
+
+</Example>
+
+### With checkbox
+
+A label next to a checkbox that toggles it when pressed.
+
+<Example id="components-label--with-checkbox" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nfunction WithCheckboxDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        accessibilityLabelledBy=\"label-terms\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label nativeID=\"label-terms\" onPress={() => setChecked((v) => !v)}>\n        Accept terms and conditions\n      </Label>\n    </View>\n  )\n}\n\nexport function LabelWithCheckboxExample() {\n  return (\n    <WithCheckboxDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct LabelWithCheckbox: View {\n  @State private var checked = false\n\n  var body: some View {\n    Toggle(isOn: $checked) {\n      FieldLabel(\"Accept terms and conditions\")\n    }\n    .toggleStyle(.checkbox)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun LabelWithCheckbox() {\n    var checked by rememberSaveable { mutableStateOf(false) }\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n        Checkbox(checked, { checked = it }, Modifier.semantics { contentDescription = \"Accept terms and conditions\" })\n        Label(\n            \"Accept terms and conditions\",\n            Modifier.clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { checked = !checked },\n        )\n    }\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled label.
+
+<Example id="components-label--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\n\nexport function LabelDisabledExample() {\n  return (\n    <Label disabled>Disabled label</Label>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct LabelDisabledExample: View {\n  var body: some View {\n    FieldLabel(\"Disabled label\")\n      .disabled(true)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun LabelDisabledExample() {\n    Label(\"Disabled label\", enabled = false)\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Label
+
+<PropsTable extends={["React.ComponentProps<typeof LabelPrimitive.Text>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The label text reports its `disabled` state in `accessibilityState`.
+- Link it to its control with `nativeID` on the label and `accessibilityLabelledBy` on the control.
+
+## Notes
+
+- Text uses the `text-label` token, and `text-label-quaternary` when disabled.
+- Light and dark colors follow the system appearance.

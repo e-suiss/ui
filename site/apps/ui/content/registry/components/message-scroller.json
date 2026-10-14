@@ -1,0 +1,37 @@
+{
+  "description": "A scroll container for chat transcripts that opens at the latest message and keeps scroll position stable.",
+  "overview": "Message Scroller manages scrolling for conversation views. `MessageScrollerProvider` creates the scroll controller and holds options such as the initial position and auto-scroll. Inside it, `MessageScroller` is the root, `MessageScrollerViewport` is the scrollable region, and `MessageScrollerContent` lists one `MessageScrollerItem` per message. `MessageScrollerButton` sits inside the root and jumps to the start or end.\n\nThe scroller opens at the end by default, preserves the reading position when older messages are prepended, and can anchor a newly added message to the top of the viewport. Use it for chat and activity feeds; use Scroll Area for general scrollable content.",
+  "usage": "Place every part inside `MessageScrollerProvider`; the components and hooks throw outside of it. Provider options:\n\n- `defaultScrollPosition`: `\"end\"` (default), `\"start\"`, or `\"last-anchor\"` to open at the last item marked with `scrollAnchor`.\n- `autoScroll`: when `true`, follows new content at the bottom until the user scrolls away. Defaults to `false`.\n- `scrollEdgeThreshold`, `scrollPreviousItemPeek` and `scrollMargin`: pixel values that tune edge detection and anchoring (defaults `8`, `64` and `0`).\n\nGive each item a stable `messageId` so it can be targeted programmatically. The exported `useMessageScroller` hook returns `scrollToEnd`, `scrollToStart` and `scrollToMessage`; `useMessageScrollerScrollable` reports whether each edge can scroll, and `useMessageScrollerVisibility` reports the visible message IDs.",
+  "examples": {
+    "StartAtTop": "A scroller that opens at the first message with `defaultScrollPosition=\"start\"`, with buttons for both directions."
+  },
+  "parts": {
+    "MessageScrollerProvider": "Creates the scroll controller and provides it to the parts and hooks inside.",
+    "MessageScroller": "The root container, built on the Base UI Scroll Area root.",
+    "MessageScrollerViewport": "The focusable scrollable region, rendered with a vertical scrollbar.",
+    "MessageScrollerContent": "The live log that holds the message items.",
+    "MessageScrollerItem": "Wraps one message and registers it with the controller.",
+    "MessageScrollerButton": "A floating button that appears when the scroller can move toward its direction and jumps there on click."
+  },
+  "props": {
+    "MessageScrollerProvider": {
+      "children": "The scroller parts and any components that use the message scroller hooks."
+    },
+    "MessageScrollerViewport": {
+      "preserveScrollOnPrepend": "Keeps the visible messages in place when items are inserted before the first one, such as when loading history."
+    },
+    "MessageScrollerContent": {
+      "spacerClassName": "Class name for the hidden spacer element the scroller appends after the items."
+    },
+    "MessageScrollerItem": {
+      "messageId": "A stable ID used for `scrollToMessage`, visibility tracking and the `data-message-id` attribute.",
+      "scrollAnchor": "Marks the item as an anchor; when it is added, the scroller aligns it to the top of the viewport instead of the bottom."
+    },
+    "MessageScrollerButton": {
+      "behavior": "The scroll behavior used when jumping, such as `smooth` or `auto`.",
+      "direction": "Which edge the button scrolls to: `end` or `start`. It also sets the button's position and icon rotation."
+    }
+  },
+  "accessibility": "- The viewport has `role=\"region\"`, an `aria-label` of `Messages` by default, and `tabIndex={0}` so it can be scrolled with the keyboard.\n- The content has `role=\"log\"` with `aria-relevant=\"additions\"`, so assistive technology can announce new messages.\n- `MessageScrollerButton` includes a visually hidden label, `Scroll to end` or `Scroll to start`. While it cannot scroll, the button is `inert` and removed from the tab order.\n- Wheel, touch and scrolling keys stop auto-follow so the user's reading position is respected.",
+  "notes": "- Styling hooks: `data-slot` values `message-scroller`, `message-scroller-viewport`, `message-scroller-content`, `message-scroller-item` and `message-scroller-button`.\n- The root and viewport receive `data-pending-scroll` until the initial position is applied; the viewport is invisible during that time. They also get `data-scrollable` with the scrollable edges and `data-autoscrolling` while a programmatic scroll is running.\n- The button exposes `data-active`, `data-direction`, `data-variant` and `data-size`. It defaults to the `secondary` variant and `icon-sm` size of `Button`.\n- Items set `data-scroll-anchor` and use `content-visibility: auto` to keep long transcripts fast."
+}

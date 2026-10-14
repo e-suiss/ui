@@ -1,0 +1,199 @@
+---
+title: Tab Bar
+description: "A floating bottom navigation bar whose overflow and extra sections expand from a More button."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="tab-bar" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { TabBar, TabBarContent, TabBarItem, TabBarLink, TabBarList, TabBarSection, TabBarSectionTitle, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nconst defaultItems = [\"Home\", \"Nominees\", \"Directory\", \"Collections\"]\n\nconst sections = [\n  { title: \"Awards\", links: [\"Winners\", \"Site of the Day\", \"Nominees\"] },\n  { title: \"Inspiration\", links: [\"Collections\", \"Elements\", \"Resources\"] },\n  { title: \"Directory\", links: [\"Professionals\", \"Agencies\", \"Freelancers\"] },\n  { title: \"Market\", links: [\"Jobs\", \"New Events\", \"Products\"] },\n]\n\nfunction TabBarExample({\n  defaultOpen,\n  items = defaultItems,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  items?: string[]\n  withSections?: boolean\n}) {\n  const [value, setValue] = React.useState(\"Home\")\n\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\" defaultOpen={defaultOpen}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item}\n              isActive={value === item}\n              onClick={() => setValue(item)}\n            >\n              {item}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n        <TabBarContent>\n          {withSections &&\n            sections.map((section) => (\n              <TabBarSection key={section.title}>\n                <TabBarSectionTitle>{section.title}</TabBarSectionTitle>\n                {section.links.map((link) => (\n                  <TabBarLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                    isActive={value === link}\n                    onClick={() => setValue(link)}\n                  >\n                    {link}\n                  </TabBarLink>\n                ))}\n              </TabBarSection>\n            ))}\n        </TabBarContent>\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarExampleDemo() {\n  return (\n    <TabBarExample />\n  )\n}"} />
+
+</Example>
+
+`TabBar` renders a fixed `nav` centered at the bottom of the screen. `TabBarList` holds the primary `TabBarItem` buttons. `TabBarTrigger` is the More button: pressing it expands `TabBarContent` above the list, with a spring animation, to show `TabBarSection` columns. Each section has a `TabBarSectionTitle` and a set of `TabBarLink` entries.
+
+The list measures itself and moves items that don't fit into the expanded content, where they appear as links. When every item fits and there are no sections, the More button is hidden. Use `TabBar` for top-level navigation on any screen size; for in-page panels, use `Tabs`, and for an app's side navigation, use `Sidebar`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add tab-bar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/ui/tab-bar.tsx`:
+
+<SourceFile path="components/ui/tab-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TabBar, TabBarList, TabBarItem, TabBarTrigger, TabBarContent, TabBarSection, TabBarSectionTitle, TabBarLink } from \"@/components/ui/tab-bar\""} />
+
+<Code lang="tsx" code={"<TabBarExample />"} />
+
+Use `defaultOpen` on `TabBar` for an uncontrolled bar, or `open` with `onOpenChange` to control it. Give the `nav` a name with `aria-label`.
+
+Mark the current destination with `isActive` on a `TabBarItem` or `TabBarLink`. Use the `render` prop to render a `TabBarItem` as a link or router link. Choosing a `TabBarLink` or an overflowed item closes the bar. Child components can read the bar's state with the `useTabBar` hook.
+
+## Examples
+
+### Open
+
+Renders with the sections expanded on mount; an outside click closes them.
+
+<Example kind="ui" name="tab-bar" story="Open">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { TabBar, TabBarContent, TabBarItem, TabBarLink, TabBarList, TabBarSection, TabBarSectionTitle, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nconst defaultItems = [\"Home\", \"Nominees\", \"Directory\", \"Collections\"]\n\nconst sections = [\n  { title: \"Awards\", links: [\"Winners\", \"Site of the Day\", \"Nominees\"] },\n  { title: \"Inspiration\", links: [\"Collections\", \"Elements\", \"Resources\"] },\n  { title: \"Directory\", links: [\"Professionals\", \"Agencies\", \"Freelancers\"] },\n  { title: \"Market\", links: [\"Jobs\", \"New Events\", \"Products\"] },\n]\n\nfunction TabBarExample({\n  defaultOpen,\n  items = defaultItems,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  items?: string[]\n  withSections?: boolean\n}) {\n  const [value, setValue] = React.useState(\"Home\")\n\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\" defaultOpen={defaultOpen}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item}\n              isActive={value === item}\n              onClick={() => setValue(item)}\n            >\n              {item}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n        <TabBarContent>\n          {withSections &&\n            sections.map((section) => (\n              <TabBarSection key={section.title}>\n                <TabBarSectionTitle>{section.title}</TabBarSectionTitle>\n                {section.links.map((link) => (\n                  <TabBarLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                    isActive={value === link}\n                    onClick={() => setValue(link)}\n                  >\n                    {link}\n                  </TabBarLink>\n                ))}\n              </TabBarSection>\n            ))}\n        </TabBarContent>\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarOpenExample() {\n  return (\n    <TabBarExample defaultOpen />\n  )\n}"} />
+
+</Example>
+
+### Fits without more
+
+Hides the More button because every item fits and there are no sections.
+
+<Example kind="ui" name="tab-bar" story="FitsWithoutMore">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { TabBar, TabBarContent, TabBarItem, TabBarLink, TabBarList, TabBarSection, TabBarSectionTitle, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nconst defaultItems = [\"Home\", \"Nominees\", \"Directory\", \"Collections\"]\n\nconst sections = [\n  { title: \"Awards\", links: [\"Winners\", \"Site of the Day\", \"Nominees\"] },\n  { title: \"Inspiration\", links: [\"Collections\", \"Elements\", \"Resources\"] },\n  { title: \"Directory\", links: [\"Professionals\", \"Agencies\", \"Freelancers\"] },\n  { title: \"Market\", links: [\"Jobs\", \"New Events\", \"Products\"] },\n]\n\nfunction TabBarExample({\n  defaultOpen,\n  items = defaultItems,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  items?: string[]\n  withSections?: boolean\n}) {\n  const [value, setValue] = React.useState(\"Home\")\n\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\" defaultOpen={defaultOpen}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item}\n              isActive={value === item}\n              onClick={() => setValue(item)}\n            >\n              {item}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n        <TabBarContent>\n          {withSections &&\n            sections.map((section) => (\n              <TabBarSection key={section.title}>\n                <TabBarSectionTitle>{section.title}</TabBarSectionTitle>\n                {section.links.map((link) => (\n                  <TabBarLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                    isActive={value === link}\n                    onClick={() => setValue(link)}\n                  >\n                    {link}\n                  </TabBarLink>\n                ))}\n              </TabBarSection>\n            ))}\n        </TabBarContent>\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarFitsWithoutMoreExample() {\n  return (\n    <TabBarExample items={defaultItems.slice(0, 3)} withSections={false} />\n  )\n}"} />
+
+</Example>
+
+### Overflow into more
+
+Holds more items than fit, so the extra items move behind More.
+
+<Example kind="ui" name="tab-bar" story="OverflowIntoMore">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { TabBar, TabBarContent, TabBarItem, TabBarLink, TabBarList, TabBarSection, TabBarSectionTitle, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nconst defaultItems = [\"Home\", \"Nominees\", \"Directory\", \"Collections\"]\n\nconst manyItems = [...defaultItems, \"Market\", \"Academy\", \"Conferences\"]\n\nconst sections = [\n  { title: \"Awards\", links: [\"Winners\", \"Site of the Day\", \"Nominees\"] },\n  { title: \"Inspiration\", links: [\"Collections\", \"Elements\", \"Resources\"] },\n  { title: \"Directory\", links: [\"Professionals\", \"Agencies\", \"Freelancers\"] },\n  { title: \"Market\", links: [\"Jobs\", \"New Events\", \"Products\"] },\n]\n\nfunction TabBarExample({\n  defaultOpen,\n  items = defaultItems,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  items?: string[]\n  withSections?: boolean\n}) {\n  const [value, setValue] = React.useState(\"Home\")\n\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\" defaultOpen={defaultOpen}>\n        <TabBarList>\n          {items.map((item) => (\n            <TabBarItem\n              key={item}\n              isActive={value === item}\n              onClick={() => setValue(item)}\n            >\n              {item}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n        <TabBarContent>\n          {withSections &&\n            sections.map((section) => (\n              <TabBarSection key={section.title}>\n                <TabBarSectionTitle>{section.title}</TabBarSectionTitle>\n                {section.links.map((link) => (\n                  <TabBarLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                    isActive={value === link}\n                    onClick={() => setValue(link)}\n                  >\n                    {link}\n                  </TabBarLink>\n                ))}\n              </TabBarSection>\n            ))}\n        </TabBarContent>\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarOverflowIntoMoreExample() {\n  return (\n    <TabBarExample items={manyItems} withSections={false} />\n  )\n}"} />
+
+</Example>
+
+### Links
+
+Renders each item as a link, with the active one marked as the current page.
+
+<Example kind="ui" name="tab-bar" story="Links">
+
+<Code lang="tsx" code={"import { TabBar, TabBarContent, TabBarItem, TabBarList, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nconst defaultItems = [\"Home\", \"Nominees\", \"Directory\", \"Collections\"]\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarLinksExample() {\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\">\n        <TabBarList>\n          {defaultItems.map((item, index) => (\n            <TabBarItem\n              key={item}\n              isActive={index === 0}\n              render={<a href={`#${item.toLowerCase()}`} />}\n            >\n              {item}\n            </TabBarItem>\n          ))}\n        </TabBarList>\n        <TabBarContent />\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled item
+
+Disables one item in the list.
+
+<Example kind="ui" name="tab-bar" story="DisabledItem">
+
+<Code lang="tsx" code={"import { TabBar, TabBarContent, TabBarItem, TabBarList, TabBarTrigger } from \"@/components/ui/tab-bar\"\n\nfunction Backdrop() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3 p-4 md:grid-cols-4\">\n      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(\n        (card) => (\n          <div\n            key={card}\n            className=\"flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label\"\n          >\n            {card}\n          </div>\n        )\n      )}\n    </div>\n  )\n}\n\nexport function TabBarDisabledItemExample() {\n  return (\n    <div className=\"h-full min-h-svh bg-surface\">\n      <Backdrop />\n      <TabBar aria-label=\"Main\">\n        <TabBarList>\n          <TabBarItem isActive>Home</TabBarItem>\n          <TabBarItem>Nominees</TabBarItem>\n          <TabBarItem disabled>Directory</TabBarItem>\n        </TabBarList>\n        <TabBarContent />\n        <TabBarTrigger>More</TabBarTrigger>\n      </TabBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"TabBar","href":"#tabbar","children":[{"name":"TabBarList","href":"#tabbarlist","children":[{"name":"TabBarItem","href":"#tabbaritem","children":[]}]},{"name":"TabBarContent","href":"#tabbarcontent","children":[]},{"name":"TabBarTrigger","href":"#tabbartrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### TabBar
+
+The floating `nav` container that holds the open state.
+
+<PropsTable extends={["React.ComponentProps<\"nav\">","TabBarProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabBarList
+
+The row of primary items; items that don't fit move into the content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabBarItem
+
+A primary destination in the list, rendered as a button by default.
+
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the item as the current page with `aria-current=\"page\"`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TabBarTrigger
+
+The More button that expands and collapses the content.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TabBarContent
+
+The expandable area above the list that holds overflowed items and sections.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TabBarSection
+
+A column of related links in the content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TabBarSectionTitle
+
+The heading of a section, marked with a small dot.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TabBarLink
+
+A link inside a section that closes the bar when chosen.
+
+<PropsTable extends={["useRender.ComponentProps<\"a\">","React.ComponentProps<\"a\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the link as the current page with `aria-current=\"page\"`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `TabBar` is a `navigation` landmark; name it with `aria-label`.
+- Active items and links set `aria-current="page"`.
+- The More button sets `aria-expanded` and `aria-controls` to point to the content.
+- `Escape` closes the open bar and returns focus to the More button. A pointer press outside the bar also closes it.
+- While open, the list is `inert`. Items moved into the overflow are hidden from assistive technologies and removed from the tab order in the list, and appear as links in the content instead.
+- When the More button isn't needed, it's hidden and removed from the tab order.
+
+## Notes
+
+- `TabBar` sets `data-open`, `data-overflowing` and `data-sections` for styling. The trigger sets `data-idle` when it's hidden, and items and links set `data-active`.
+- Parts carry `data-slot` attributes such as `tab-bar`, `tab-bar-list`, `tab-bar-item`, `tab-bar-trigger` and `tab-bar-content`.
+- The bar sits above the safe-area inset at the bottom of the screen and uses a `surface-raised` background with a thin border and a shadow. The active item gets a `control` fill and `link` text.
+- Animations are removed when reduced motion is preferred.
+- `useTabBar` throws if it's used outside a `TabBar`.

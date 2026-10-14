@@ -1,0 +1,42 @@
+{
+  "description": "A searchable single-choice picker that renders a Combobox on desktop and a search drawer on mobile.",
+  "overview": "`SearchPicker` lets the user find and choose one item from a long list. On desktop it renders a suiss/ui `Combobox`: the field itself is the search input, and the list filters as the user types. On mobile (below `48rem`, via `useIsMobile`) it renders a field-style button that shows the selected label. Tapping it opens a `Drawer` with a swipe handle and a `Command` menu whose search input receives focus. Choosing an item closes the drawer.\n\nItems are passed as data. When any item has a `group`, items are listed under group headings in both presentations. Use it for countries, cities, users and other lists too long to scan; for short lists, use `Picker`.",
+  "usage": "- Each item in `items` has a `value`, a `label`, and an optional `group` and `disabled` flag. The `SearchPickerItem` type is exported.\n- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. The value is `null` when nothing is selected.\n- `searchPlaceholder`, `title`, `floating`, `showCloseButton` and `closeLabel` affect only the mobile drawer. On desktop the field shows `placeholder`.\n- Mobile search matches against each item's label.",
+  "examples": {
+    "WithValue": "Starts with a selected item through `defaultValue`.",
+    "Grouped": "Lists cities under group headings and filters across groups.",
+    "WithTitle": "Shows a visible title at the top of the mobile drawer.",
+    "WithCloseButton": "Adds a close button to the mobile drawer.",
+    "WithCloseLabel": "Uses a Cancel text button for the mobile close button.",
+    "Disabled": "Disables the field.",
+    "Invalid": "Shows the invalid style through `aria-invalid`.",
+    "Controlled": "Owns the value in state with `value` and `onValueChange`.",
+    "Floating": "Insets the mobile drawer from the screen edges."
+  },
+  "parts": {
+    "SearchPicker": "The complete searchable picker, rendered from the `items` array."
+  },
+  "props": {
+    "SearchPicker": {
+      "items": "The items to choose from, each with a `value`, `label`, and optional `group` and `disabled`.",
+      "value": "The selected value when controlled, or `null` for no selection.",
+      "defaultValue": "The initially selected value when uncontrolled.",
+      "onValueChange": "Called with the new value, or `null`, when the selection changes.",
+      "placeholder": "Text shown when nothing is selected.",
+      "searchPlaceholder": "Placeholder of the search input in the mobile drawer.",
+      "emptyText": "Text shown when no item matches the search.",
+      "title": "A visible heading for the mobile drawer. When omitted, the drawer title is visually hidden and falls back to `placeholder` or `aria-label`.",
+      "disabled": "Disables the field.",
+      "floating": "Insets the mobile drawer from the screen edges.",
+      "showCloseButton": "Shows a close button in the mobile drawer.",
+      "closeLabel": "Text for the mobile close button in place of the icon.",
+      "id": "The ID of the input on desktop or the trigger button on mobile.",
+      "className": "Classes applied to the input on desktop or the trigger button on mobile.",
+      "aria-invalid": "Marks the field as invalid and applies the error style.",
+      "aria-label": "The accessible name of the field.",
+      "aria-describedby": "The ID of an element that describes the field."
+    }
+  },
+  "accessibility": "- On desktop the field has the `combobox` role and controls a `listbox`. The selected option has `aria-selected`, disabled options have `aria-disabled`, and groups are exposed as `group` elements named by their heading.\n- Escape closes the desktop list.\n- On mobile, the drawer is titled by `title`, `placeholder` or `aria-label`, and focus moves to the search input when it opens.",
+  "notes": "Styling hooks: `data-slot=\"search-picker\"`, `search-picker-trigger` (mobile) and `search-picker-content`. The mobile trigger has `data-placeholder` while nothing is selected, and the selected command item has `data-checked`."
+}

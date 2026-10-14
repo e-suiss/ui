@@ -1,0 +1,46 @@
+---
+title: Inbox Categories
+description: "A mail inbox sorted into Primary, Transactions, Updates, and Promotions, with a message reader and inline reply."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="inbox-categories">
+
+<SourceFile path="components/blocks/inbox-categories.tsx" fold={false} />
+
+</Example>
+
+A mail inbox that sorts messages into Primary, Transactions, Updates and Promotions, switched with icon chips that show a dot when they hold unread mail. Selecting a message opens a reader with reply, star, archive and delete actions and an inline reply box. On mobile the list and reader show one at a time with a back button. Use it for notification centers, categorized inboxes or any feed that needs tabs.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks inbox-categories"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/inbox-categories.tsx`:
+
+<SourceFile path="components/blocks/inbox-categories.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { InboxCategories } from \"@/components/blocks/inbox-categories\""} />
+
+<Code lang="tsx" code={"<InboxCategories />"} />
+
+Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue, category and unread and starred flags; `categories` sets each chip's icon and tint. Archive and Delete both just remove the message, and the reply form only clears on submit, so connect them to your mail API. The To: Jamie Rivera recipient line is hard-coded.
+
+## Notes
+
+The reply box receives focus when it opens, and unread dots include hidden Unread text for screen readers.

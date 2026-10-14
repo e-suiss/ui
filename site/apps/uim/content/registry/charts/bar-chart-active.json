@@ -1,0 +1,5 @@
+{
+  "description": "A weekly step count where tapping a bar selects that day and shows its total in the header.",
+  "overview": "Seven bars, one per day, with the selected bar at full opacity and the others dimmed. The `BarChart` reports the touched bar through `onActiveIndexChange`, which updates local state and the header. The header is a live region, so screen readers announce the new step count. The bars set `isAnimationActive={false}` and draw without the enter animation.",
+  "usage": "Replace `chartData` with your daily values and update the `day` and `steps` keys to match. The initial selection is set by the `useState` default. The component takes no props."
+}

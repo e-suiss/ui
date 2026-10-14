@@ -1,0 +1,6 @@
+{
+  "description": "An invite form that collects several email addresses as chips, assigns a role, and lists pending invitations.",
+  "overview": "An invite form that turns typed email addresses into removable chips, assigns a role and optionally sends a welcome email, with pending invitations listed below. Sending shows a toast and moves the addresses to the pending list, where each can be resent or cancelled. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for team invites or sharing access with several people at once.",
+  "usage": "Replace the initial `pending` list with invitations from your API, and edit `roles`. Addresses are committed on Enter, comma, space or blur, and only valid, unique ones are added. Call your invitation API in place of the local send, resend and cancel handlers.",
+  "notes": "Each chip's remove button names its address, and the summary line is announced as chips change."
+}

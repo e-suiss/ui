@@ -1,0 +1,28 @@
+{
+  "description": "A site header that renders a navigation menu on wide screens and a fullscreen menu when space runs out.",
+  "overview": "`Navbar` builds a `header` from an `items` array. On wide screens it renders a `NavigationMenu`: plain links appear inline, groups open a dropdown of links with optional icons and descriptions, and mega items open multi-column panels. The `brand` sits at the start and `actions` at the end.\n\nThe navbar switches to a compact layout below the `48rem` breakpoint, and also on wider screens whenever its contents overflow the header; it measures itself with a `ResizeObserver` and returns to the full menu once there is room again. In the compact layout the items move into a `FullscreenMenu` opened by a menu button, with plain links in the first group and each group or mega column as a labelled section. Use it as the primary navigation of a marketing site or documentation site.",
+  "usage": "Each `NavbarItem` is one of three shapes: a link with `label` and `href` (plus optional `description`, `icon` and `active`), a group with `label` and `items`, or a mega item with `label` and `columns`. Each column has a `label`, `links` and an optional `featured` flag that sets its links in a large type size. Pass `render` to route links through your framework's link component; it receives `href` and the link content.",
+  "examples": {
+    "WithActions": "Adds a Sign in button at the end of the header with `actions`.",
+    "LinksOnly": "Uses only plain links and marks the current page with `active`.",
+    "Crowded": "Shows nine links in a narrow frame, folding them into the menu until the frame is wide enough.",
+    "WithCloseLabel": "Labels the fullscreen menu's close button Done with `closeLabel`.",
+    "MegaPanel": "Uses `layout=\"panel\"` with a mega item whose columns open in a full-width panel."
+  },
+  "parts": {
+    "Navbar": "The header that renders the brand, navigation items and actions."
+  },
+  "props": {
+    "Navbar": {
+      "items": "The navigation items: links, groups of links, or mega items with columns.",
+      "brand": "Content shown at the start of the header, such as a logo.",
+      "actions": "Content shown at the end of the header, such as a sign-in button; it stays visible in the compact layout.",
+      "menuLabel": "Accessible label of the compact menu button and title of the fullscreen menu.",
+      "closeLabel": "Text for the fullscreen menu's close button.",
+      "layout": "With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header.",
+      "render": "The element used for every link, defaulting to a plain anchor; replace it with your router's link component."
+    }
+  },
+  "accessibility": "- Group and mega triggers are buttons with `aria-expanded` reflecting their state, and `Escape` closes an open dropdown.\n- Links marked `active` have `aria-current=\"page\"`.\n- In the compact layout, the menu button is labelled by `menuLabel`.",
+  "notes": "The header carries `data-slot=\"navbar\"`, `data-layout`, and `data-compact` while the fullscreen menu is in use. The brand and actions wrappers use `data-slot=\"navbar-brand\"` and `data-slot=\"navbar-actions\"`, and mega columns use `data-slot=\"navbar-column\"` with `data-featured`. With `layout=\"panel\"` the header gains `relative` positioning and `z-50` so the panel can anchor to it."
+}

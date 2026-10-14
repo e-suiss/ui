@@ -1,0 +1,73 @@
+{
+  "name": "table",
+  "type": "ui",
+  "files": [
+    "components/ui/table.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "SelectedRow"
+  ],
+  "parts": [
+    {
+      "name": "Table",
+      "extends": [
+        "React.ComponentProps<\"table\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableHeader",
+      "extends": [
+        "React.ComponentProps<\"thead\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableBody",
+      "extends": [
+        "React.ComponentProps<\"tbody\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableFooter",
+      "extends": [
+        "React.ComponentProps<\"tfoot\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableRow",
+      "extends": [
+        "React.ComponentProps<\"tr\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableHead",
+      "extends": [
+        "React.ComponentProps<\"th\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableCell",
+      "extends": [
+        "React.ComponentProps<\"td\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TableCaption",
+      "extends": [
+        "React.ComponentProps<\"caption\">"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-gradient",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-gradient.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

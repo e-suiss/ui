@@ -1,0 +1,30 @@
+{
+  "name": "checkbox",
+  "type": "ui",
+  "files": [
+    "components/ui/checkbox.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Checked",
+    "WithLabel",
+    "WithDescription",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "Checkbox",
+      "extends": [
+        "CheckboxPrimitive.Root.Props"
+      ],
+      "props": []
+    }
+  ]
+}

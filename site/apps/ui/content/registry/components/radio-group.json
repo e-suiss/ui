@@ -1,0 +1,17 @@
+{
+  "description": "A set of radio buttons where only one option can be selected at a time.",
+  "overview": "Radio Group wraps Base UI's Radio Group and Radio. `RadioGroup` holds the selected value and contains one `RadioGroupItem` per option. Each item renders a round control with an indicator dot when checked; pair it with a `Label` to give it visible text.\n\nUse a radio group for a small set of mutually exclusive options that should all stay visible. Use Select or Native Select for longer lists, and Checkbox when several options can be selected.",
+  "usage": "Give each `RadioGroupItem` a unique `value`. The group is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Set `disabled` on the group to disable every item, or on a single item.\n\nWrap each item and its text in a `Label` so clicking the text selects the option. The label switches to regular weight automatically next to a radio item.",
+  "examples": {
+    "WithDescriptions": "Options with a title and a secondary description, linked with `aria-labelledby` and `aria-describedby`.",
+    "DisabledItem": "A group where one option is disabled and skipped by arrow-key navigation.",
+    "Disabled": "A fully disabled group that ignores clicks.",
+    "Invalid": "Items marked with `aria-invalid` and shown with a danger border."
+  },
+  "parts": {
+    "RadioGroup": "The container that manages the selected value and keyboard navigation.",
+    "RadioGroupItem": "A single radio button with a checked indicator."
+  },
+  "accessibility": "- The group has the `radiogroup` role and each item the `radio` role with `aria-checked`.\n- Name the group with `aria-label` or `aria-labelledby`, and name each item with a wrapping `Label` or `aria-labelledby`.\n- Arrow keys move focus and selection between items, skipping disabled ones.\n- Set `aria-invalid` on items to communicate a validation error.\n- Each item has an enlarged invisible hit area for easier pointer targeting.",
+  "notes": "- Styling hooks: `data-slot` values `radio-group`, `radio-group-item` and `radio-group-indicator`. Base UI sets `data-checked`, `data-unchecked` and `data-disabled` on items.\n- Items carry the `peer` class, so a following `Label` can react to their state.\n- Uses the `accent`, `accent-pressed`, `accent-disabled`, `on-accent`, `control-disabled` and `danger` tokens."
+}

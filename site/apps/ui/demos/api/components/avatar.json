@@ -1,0 +1,73 @@
+{
+  "name": "avatar",
+  "type": "ui",
+  "files": [
+    "components/ui/avatar.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Fallback",
+    "FallbackSizes",
+    "Placeholder",
+    "Sizes",
+    "WithBadge",
+    "Group",
+    "GroupWithIconCount"
+  ],
+  "parts": [
+    {
+      "name": "Avatar",
+      "extends": [
+        "AvatarPrimitive.Root.Props"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\" | \"xl\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "AvatarImage",
+      "extends": [
+        "AvatarPrimitive.Image.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AvatarFallback",
+      "extends": [
+        "AvatarPrimitive.Fallback.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AvatarBadge",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AvatarGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AvatarGroupCount",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

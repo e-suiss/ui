@@ -1,0 +1,16 @@
+{
+  "name": "signup-steps",
+  "type": "block",
+  "files": [
+    "components/blocks/signup-steps.tsx"
+  ],
+  "requires": [
+    "button",
+    "input"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

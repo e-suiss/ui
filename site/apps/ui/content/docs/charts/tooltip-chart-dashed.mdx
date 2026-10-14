@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Dashed
+description: "A stacked bar chart whose tooltip marks each series with a dashed outline indicator."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-dashed">
+
+<SourceFile path="components/charts/tooltip-chart-dashed.tsx" fold={false} />
+
+</Example>
+
+A stacked bar chart that shows the dashed tooltip indicator, which marks each series with a dashed outline in its color. Compare it with the dot and line variants to pick the indicator that fits your design.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-dashed"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-dashed.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-dashed.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartDashed } from \"@/components/charts/tooltip-chart-dashed\""} />
+
+<Code lang="tsx" code={"<TooltipChartDashed />"} />
+
+Set `indicator` on `ChartTooltipContent` to `dashed`; the same setting works on any chart. Replace `chartData` and the series in `chartConfig` to use your own data.
+
+## Notes
+
+The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.

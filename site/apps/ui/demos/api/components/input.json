@@ -1,0 +1,37 @@
+{
+  "name": "input",
+  "type": "ui",
+  "files": [
+    "components/ui/input.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sizes",
+    "Types",
+    "WithValue",
+    "File",
+    "Invalid",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Input",
+      "extends": [
+        "React.ComponentProps<\"input\">"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"default\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    }
+  ]
+}

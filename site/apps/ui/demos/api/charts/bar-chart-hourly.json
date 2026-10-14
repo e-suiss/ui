@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-hourly",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-hourly.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

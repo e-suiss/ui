@@ -1,0 +1,13 @@
+{
+  "name": "bento-features",
+  "type": "block",
+  "files": [
+    "components/blocks/bento-features.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,18 @@
+{
+  "name": "line-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart",
+    "toggle",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

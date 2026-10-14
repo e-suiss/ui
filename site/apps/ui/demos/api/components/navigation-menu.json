@@ -1,0 +1,107 @@
+{
+  "name": "navigation-menu",
+  "type": "ui",
+  "files": [
+    "components/ui/navigation-menu.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "OpenByDefault",
+    "LinksOnly",
+    "Panel"
+  ],
+  "parts": [
+    {
+      "name": "NavigationMenu",
+      "extends": [
+        "NavigationMenuPrimitive.Root.Props",
+        "NavigationMenuPrimitive.Positioner.Props"
+      ],
+      "props": [
+        {
+          "name": "layout",
+          "type": "\"popover\" | \"panel\"",
+          "required": false,
+          "default": "\"popover\""
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenuList",
+      "extends": [
+        "React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuItem",
+      "extends": [
+        "React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuTrigger",
+      "extends": [
+        "NavigationMenuPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuContent",
+      "extends": [
+        "NavigationMenuPrimitive.Content.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuPositioner",
+      "extends": [
+        "NavigationMenuPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuPanel",
+      "extends": [
+        "NavigationMenuPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuLink",
+      "extends": [
+        "NavigationMenuPrimitive.Link.Props"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"lg\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenuLabel",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "NavigationMenuIndicator",
+      "extends": [
+        "React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>"
+      ],
+      "props": []
+    }
+  ]
+}

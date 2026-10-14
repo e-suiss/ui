@@ -1,0 +1,145 @@
+---
+title: Chart
+description: "Themed building blocks for Recharts charts, with a shared color config, tooltip and legend."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="chart" story="Default">
+
+<Code lang="tsx" code={"import { Bar, BarChart, CartesianGrid, XAxis } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst visitorsConfig = {\n  desktop: { label: \"Desktop\", color: \"var(--blue)\" },\n  mobile: { label: \"Mobile\", color: \"var(--green)\" },\n} satisfies ChartConfig\n\nconst shortMonth = (value: string) => value.slice(0, 3)\n\nexport function ChartExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n            <BarChart accessibilityLayer data={visitors}>\n              <CartesianGrid vertical={false} />\n              <XAxis\n                dataKey=\"month\"\n                tickLine={false}\n                tickMargin={10}\n                axisLine={false}\n                tickFormatter={shortMonth}\n              />\n              <ChartTooltip content={<ChartTooltipContent />} />\n              <Bar dataKey=\"desktop\" fill=\"var(--color-desktop)\" radius={8} />\n            </BarChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Chart does not draw charts itself; it styles charts you compose with `recharts`. A `ChartContainer` takes a `config` that maps each data key to a label, an optional icon and a color, and wraps your Recharts chart in a `ResponsiveContainer`. Inside the chart, use `ChartTooltip` with `content={<ChartTooltipContent />}` and `ChartLegend` with `content={<ChartLegendContent />}` to render a tooltip and legend that read labels and colors from the config.
+
+Use it for bar, line, area and pie charts in dashboards and reports. Because you work with Recharts directly, every Recharts chart type and prop remains available.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add chart"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn recharts"} />
+
+2. Copy the source into `components/ui/chart.tsx`:
+
+<SourceFile path="components/ui/chart.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ChartContainer, ChartTooltipContent, ChartLegendContent } from \"@/components/ui/chart\""} />
+
+<Code lang="tsx" code={"<div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n  <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n        <BarChart accessibilityLayer data={visitors}>\n          <CartesianGrid vertical={false} />\n          <XAxis\n            dataKey=\"month\"\n            tickLine={false}\n            tickMargin={10}\n            axisLine={false}\n            tickFormatter={shortMonth}\n          />\n          <ChartTooltip content={<ChartTooltipContent />} />\n          <Bar dataKey=\"desktop\" fill=\"var(--color-desktop)\" radius={8} />\n        </BarChart>\n      )}</ChartContainer>\n</div>"} />
+
+Each key in `config` becomes a CSS custom property scoped to the chart, such as `--color-desktop`. Reference it from your series, as in `fill="var(--color-desktop)"`. Set `color` for a single value, or `theme` with `light` and `dark` values to switch colors with the `.dark` class.
+
+For data where each row is its own category, such as a pie chart, put the color in the row (for example `fill: "var(--color-safari)"`) and pass `nameKey` to `ChartLegendContent` so labels are looked up by that field.
+
+The container is `aspect-video` by default; override its size with `className`, for example `aspect-square max-w-72`. Enable `accessibilityLayer` on the Recharts chart to support keyboard navigation.
+
+`ChartTooltip`, `ChartLegend` and `ChartStyle` are also exported; the first two are the Recharts `Tooltip` and `Legend` components.
+
+## Examples
+
+### Multiple series
+
+Two bar series with a legend and a `dashed` tooltip indicator.
+
+<Example kind="ui" name="chart" story="MultipleSeries">
+
+<Code lang="tsx" code={"import { Bar, BarChart, CartesianGrid, XAxis } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst visitorsConfig = {\n  desktop: { label: \"Desktop\", color: \"var(--blue)\" },\n  mobile: { label: \"Mobile\", color: \"var(--green)\" },\n} satisfies ChartConfig\n\nconst shortMonth = (value: string) => value.slice(0, 3)\n\nexport function ChartMultipleSeriesExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n            <BarChart accessibilityLayer data={visitors}>\n              <CartesianGrid vertical={false} />\n              <XAxis\n                dataKey=\"month\"\n                tickLine={false}\n                tickMargin={10}\n                axisLine={false}\n                tickFormatter={shortMonth}\n              />\n              <ChartTooltip content={<ChartTooltipContent indicator=\"dashed\" />} />\n              <ChartLegend content={<ChartLegendContent />} />\n              <Bar dataKey=\"desktop\" fill=\"var(--color-desktop)\" radius={6} />\n              <Bar dataKey=\"mobile\" fill=\"var(--color-mobile)\" radius={6} />\n            </BarChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Stacked
+
+Stacks two bar series and hides the tooltip label.
+
+<Example kind="ui" name="chart" story="Stacked">
+
+<Code lang="tsx" code={"import { Bar, BarChart, CartesianGrid, XAxis } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst visitorsConfig = {\n  desktop: { label: \"Desktop\", color: \"var(--blue)\" },\n  mobile: { label: \"Mobile\", color: \"var(--green)\" },\n} satisfies ChartConfig\n\nconst shortMonth = (value: string) => value.slice(0, 3)\n\nexport function ChartStackedExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n            <BarChart accessibilityLayer data={visitors}>\n              <CartesianGrid vertical={false} />\n              <XAxis\n                dataKey=\"month\"\n                tickLine={false}\n                tickMargin={10}\n                axisLine={false}\n                tickFormatter={shortMonth}\n              />\n              <ChartTooltip content={<ChartTooltipContent hideLabel />} />\n              <ChartLegend content={<ChartLegendContent />} />\n              <Bar\n                dataKey=\"desktop\"\n                stackId=\"a\"\n                fill=\"var(--color-desktop)\"\n                radius={[0, 0, 6, 6]}\n              />\n              <Bar\n                dataKey=\"mobile\"\n                stackId=\"a\"\n                fill=\"var(--color-mobile)\"\n                radius={[6, 6, 0, 0]}\n              />\n            </BarChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Line series
+
+Two smooth lines with a `line` tooltip indicator.
+
+<Example kind="ui" name="chart" story="LineSeries">
+
+<Code lang="tsx" code={"import { CartesianGrid, Line, LineChart, XAxis } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst visitorsConfig = {\n  desktop: { label: \"Desktop\", color: \"var(--blue)\" },\n  mobile: { label: \"Mobile\", color: \"var(--green)\" },\n} satisfies ChartConfig\n\nconst shortMonth = (value: string) => value.slice(0, 3)\n\nexport function ChartLineSeriesExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n            <LineChart\n              accessibilityLayer\n              data={visitors}\n              margin={{ left: 12, right: 12 }}\n            >\n              <CartesianGrid vertical={false} />\n              <XAxis\n                dataKey=\"month\"\n                tickLine={false}\n                tickMargin={10}\n                axisLine={false}\n                tickFormatter={shortMonth}\n              />\n              <ChartTooltip content={<ChartTooltipContent indicator=\"line\" />} />\n              <Line\n                dataKey=\"desktop\"\n                type=\"monotone\"\n                stroke=\"var(--color-desktop)\"\n                strokeWidth={2}\n                dot={false}\n              />\n              <Line\n                dataKey=\"mobile\"\n                type=\"monotone\"\n                stroke=\"var(--color-mobile)\"\n                strokeWidth={2}\n                dot={false}\n              />\n            </LineChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Area series
+
+Two stacked, semi-transparent areas.
+
+<Example kind="ui" name="chart" story="AreaSeries">
+
+<Code lang="tsx" code={"import { Area, AreaChart, CartesianGrid, XAxis } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst visitorsConfig = {\n  desktop: { label: \"Desktop\", color: \"var(--blue)\" },\n  mobile: { label: \"Mobile\", color: \"var(--green)\" },\n} satisfies ChartConfig\n\nconst shortMonth = (value: string) => value.slice(0, 3)\n\nexport function ChartAreaSeriesExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={visitorsConfig} className=\"w-full\">{(\n            <AreaChart\n              accessibilityLayer\n              data={visitors}\n              margin={{ left: 12, right: 12 }}\n            >\n              <CartesianGrid vertical={false} />\n              <XAxis\n                dataKey=\"month\"\n                tickLine={false}\n                tickMargin={10}\n                axisLine={false}\n                tickFormatter={shortMonth}\n              />\n              <ChartTooltip content={<ChartTooltipContent indicator=\"dot\" />} />\n              <Area\n                dataKey=\"mobile\"\n                type=\"natural\"\n                stackId=\"a\"\n                fill=\"var(--color-mobile)\"\n                fillOpacity={0.4}\n                stroke=\"var(--color-mobile)\"\n              />\n              <Area\n                dataKey=\"desktop\"\n                type=\"natural\"\n                stackId=\"a\"\n                fill=\"var(--color-desktop)\"\n                fillOpacity={0.4}\n                stroke=\"var(--color-desktop)\"\n              />\n            </AreaChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Donut
+
+A pie chart with an inner radius, colored per row and labelled through `nameKey`.
+
+<Example kind="ui" name="chart" story="Donut">
+
+<Code lang="tsx" code={"import { Pie, PieChart } from \"recharts\"\nimport { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from \"@/components/ui/chart\"\n\nconst visitors = [\n  { month: \"January\", desktop: 186, mobile: 80 },\n  { month: \"February\", desktop: 305, mobile: 200 },\n  { month: \"March\", desktop: 237, mobile: 120 },\n  { month: \"April\", desktop: 73, mobile: 190 },\n  { month: \"May\", desktop: 209, mobile: 130 },\n  { month: \"June\", desktop: 214, mobile: 140 },\n]\n\nconst browsers = [\n  { browser: \"safari\", visitors: 275, fill: \"var(--color-safari)\" },\n  { browser: \"chrome\", visitors: 200, fill: \"var(--color-chrome)\" },\n  { browser: \"firefox\", visitors: 187, fill: \"var(--color-firefox)\" },\n  { browser: \"edge\", visitors: 173, fill: \"var(--color-edge)\" },\n  { browser: \"other\", visitors: 90, fill: \"var(--color-other)\" },\n]\n\nconst browsersConfig = {\n  visitors: { label: \"Visitors\" },\n  safari: { label: \"Safari\", color: \"var(--blue)\" },\n  chrome: { label: \"Chrome\", color: \"var(--green)\" },\n  firefox: { label: \"Firefox\", color: \"var(--orange)\" },\n  edge: { label: \"Edge\", color: \"var(--purple)\" },\n  other: { label: \"Other\", color: \"var(--red)\" },\n} satisfies ChartConfig\n\nexport function ChartDonutExample() {\n  return (\n    <div className=\"w-[min(32rem,calc(100vw-2rem))]\">\n      <ChartContainer config={browsersConfig} className=\"mx-auto aspect-square w-full max-w-72\">{(\n            <PieChart>\n              <ChartTooltip content={<ChartTooltipContent hideLabel />} />\n              <Pie\n                data={browsers}\n                dataKey=\"visitors\"\n                nameKey=\"browser\"\n                innerRadius={60}\n                strokeWidth={4}\n              />\n              <ChartLegend content={<ChartLegendContent nameKey=\"browser\" />} />\n            </PieChart>\n          )}</ChartContainer>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ChartContainer
+
+Provides the config, injects the color variables and makes the chart responsive.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"config","type":"ChartConfig","required":true,"description":"Maps data keys to a `label`, optional `icon`, and a `color` or per-theme `theme` colors."},{"name":"children","type":"React.ComponentProps< typeof RechartsPrimitive.ResponsiveContainer >[\"children\"]","required":true,"description":"The Recharts chart element to render responsively."},{"name":"initialDimension","type":"{ width: number height: number }","default":"INITIAL_DIMENSION","description":"Width and height used before the container is measured. Defaults to 320 by 200."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChartTooltipContent
+
+A styled tooltip body that lists each series with its indicator, label and value.
+
+<PropsTable extends={["React.ComponentProps<typeof RechartsPrimitive.Tooltip>","React.ComponentProps<\"div\">","RechartsPrimitive.DefaultTooltipContentProps< TooltipValueType, TooltipNameType >"]} props={[{"name":"hideLabel","type":"boolean","default":"false","description":"Hides the tooltip's heading label."},{"name":"hideIndicator","type":"boolean","default":"false","description":"Hides the color indicator next to each series."},{"name":"indicator","type":"\"line\" | \"dot\" | \"dashed\"","default":"\"dot\"","description":"Shape of the series indicator: `dot`, `line` or `dashed`."},{"name":"nameKey","type":"string","description":"Field used to look up each item's config entry instead of its name or data key."},{"name":"labelKey","type":"string","description":"Field used to look up the heading label in the config."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ChartLegendContent
+
+A styled legend that lists series in config order with a swatch or icon.
+
+<PropsTable extends={["React.ComponentProps<\"div\">","RechartsPrimitive.DefaultLegendContentProps"]} props={[{"name":"hideIcon","type":"boolean","default":"false","description":"Shows a color swatch even when the config entry has an `icon`."},{"name":"nameKey","type":"string","description":"Field used to look up each legend item's config entry instead of its data key."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- With `accessibilityLayer` on the Recharts chart, the chart is focusable and arrow keys move between data points, showing the tooltip for each.
+- Charts are visual; provide a nearby summary or table when the exact values matter.
+- Do not rely on color alone to tell series apart; the legend and tooltip pair each color with its label.
+
+## Notes
+
+- Styling hooks: `data-slot="chart"` and a unique `data-chart` id on the container, which scopes the generated `--color-*` variables.
+- Config keys and color values containing unsafe characters are skipped when generating CSS.
+- The container restyles Recharts defaults, such as grid lines, axis ticks and the tooltip cursor, with `separator`, `label-secondary` and `surface-secondary` tokens.
+- Tooltip values that are numbers are formatted with `toLocaleString()`.

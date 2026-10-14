@@ -1,0 +1,42 @@
+---
+title: Radial Chart Rings
+description: "Three nested activity rings for move, exercise and stand, drawn as plain SVG circles."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-rings">
+
+<SourceFile path="components/charts/radial-chart-rings.tsx" fold={false} />
+
+</Example>
+
+Three nested activity rings for move, exercise and stand, each filling toward its own goal. They are drawn as plain SVG circles, so this is the lightest option when you just need static progress rings.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-rings"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Card](/docs/components/card).
+
+2. Copy the source into `components/charts/radial-chart-rings.tsx`:
+
+<SourceFile path="components/charts/radial-chart-rings.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartRings } from \"@/components/charts/radial-chart-rings\""} />
+
+<Code lang="tsx" code={"<RadialChartRings />"} />
+
+Edit the `rings` array with your labels, values, goals and colors; each ring fills by value divided by goal. Change `SIZE` and `BAR` for the overall size and ring thickness.
+
+## Notes
+
+The graphic is exposed as an image with a label listing each ring's value and goal. A value above its goal just shows a closed ring, with no second lap.

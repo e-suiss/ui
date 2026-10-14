@@ -1,0 +1,116 @@
+{
+  "name": "flyout",
+  "type": "pattern",
+  "files": [
+    "components/patterns/flyout.tsx"
+  ],
+  "requires": [
+    "drawer",
+    "popover",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "WithClose",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "Flyout",
+      "extends": [
+        "React.ComponentProps<typeof Popover>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FlyoutTrigger",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FlyoutContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>",
+        "React.ComponentProps<typeof PopoverContent>"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FlyoutHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FlyoutTitle",
+      "extends": [
+        "React.HTMLAttributes<HTMLHeadingElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "FlyoutDescription",
+      "extends": [
+        "React.HTMLAttributes<HTMLParagraphElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "FlyoutBody",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FlyoutClose",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

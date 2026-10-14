@@ -1,0 +1,43 @@
+{
+  "description": "A rounded card in the style of home screen widgets, with fixed sizes and optional drag-to-resize.",
+  "overview": "`Widget` is a rounded `surface-secondary` card that comes in four sizes: `small` (168 × 168), `medium` (352 × 168), `large` (352 × 352) and `extra-large` (720 × 352), or `auto` to fill its parent. Compose it from `WidgetHeader`, which holds a `WidgetIcon`, `WidgetTitle` and an optional `WidgetAction`, followed by `WidgetValue`, `WidgetDescription`, `WidgetContent` and a `WidgetFooter` pinned to the bottom.\n\nWith `resizable`, a corner handle lets people drag the widget to another size. While dragging, a dashed outline previews the size it will snap to on release. Use widgets for glanceable summaries on a dashboard; for general grouped content, use `Card`.",
+  "usage": "Use `size` with `onSizeChange` to control the size, or `defaultSize` to set where an uncontrolled widget starts. Without either, a resizable widget starts `small` and a fixed widget is `auto`. Limit the sizes a drag can snap to with `sizes`.\n\nSet `resizable=\"free\"` to follow the pointer without snapping; the widget stays between the smallest size and the largest allowed size. Double-click the handle to return to the starting size.\n\nAdapt the content to the current size with the `group/widget` group and `data-size`, for example `group-data-[size=small]/widget:hidden`.",
+  "examples": {
+    "Sales": "Shows a resizable widget whose chart and list adapt to each size.",
+    "Kitchen": "Places the resize handle inside the widget's corner.",
+    "Reservations": "Limits resizing to the `small` and `medium` sizes.",
+    "WeeklyReport": "Starts at `extra-large` and reveals extra content only at that size.",
+    "FreeResize": "Resizes freely with the pointer instead of snapping to sizes.",
+    "AutoResize": "Fills its parent with `auto`, and snaps to fixed sizes when dragged.",
+    "Centered": "Centers the icon, title and description with `align=\"center\"`.",
+    "Sizes": "Shows each fixed size side by side.",
+    "Dashboard": "Arranges fixed widgets in a grid as a dashboard."
+  },
+  "parts": {
+    "Widget": "The rounded card that sets the size, alignment and resize behavior.",
+    "WidgetHeader": "A row that holds the icon, title and action.",
+    "WidgetIcon": "A decorative icon, shown on a tile in the `default` and `lg` sizes.",
+    "WidgetTitle": "The widget's title, truncated to one line.",
+    "WidgetAction": "A slot at the end of the header for a control; hidden when centered.",
+    "WidgetDescription": "Secondary text that explains the content.",
+    "WidgetValue": "A large figure in tabular numbers, such as a total or temperature.",
+    "WidgetContent": "A flexible column that fills the remaining space.",
+    "WidgetFooter": "Small secondary text pinned to the bottom of the widget."
+  },
+  "props": {
+    "Widget": {
+      "size": "Controls the current size, or `auto` to fill the parent.",
+      "defaultSize": "Sets the starting size when uncontrolled; double-clicking the handle also returns to it.",
+      "onSizeChange": "Called with the new size when a drag snaps to a different size or the size is reset.",
+      "sizes": "Lists the sizes a drag can snap to; the largest also caps free resizing.",
+      "resizable": "Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer.",
+      "handle": "Places the resize handle `inside` or `outside` the bottom corner.",
+      "align": "Centers the content horizontally and vertically when set to `center`."
+    },
+    "WidgetIcon": {
+      "size": "Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile."
+    }
+  },
+  "accessibility": "- `WidgetIcon` is hidden from assistive technologies, so make sure the title conveys its meaning.\n- The resize handle is hidden from assistive technologies and works with a pointer only. Offer another way to change the size, such as a control that sets `size`, if it matters.",
+  "notes": "- `Widget` sets `data-size` and `data-align`, and `data-resizing` while dragging. It's also a `@container/widget` container for container queries.\n- Parts carry `data-slot` attributes such as `widget`, `widget-container`, `widget-handle`, `widget-preview` and `widget-header`.\n- The handle is visible on hover and always visible on touch screens. It mirrors in right-to-left layouts.\n- Size changes animate over `500ms`, and the animation is removed when reduced motion is preferred."
+}

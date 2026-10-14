@@ -1,0 +1,16 @@
+{
+  "name": "direction",
+  "type": "ui",
+  "files": [
+    "components/ui/direction.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "examples": [
+    "Default",
+    "RightToLeft"
+  ],
+  "parts": []
+}

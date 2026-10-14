@@ -1,0 +1,16 @@
+{
+  "name": "verify-device",
+  "type": "block",
+  "files": [
+    "components/blocks/verify-device.tsx"
+  ],
+  "requires": [
+    "input-otp",
+    "spinner"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

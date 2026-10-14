@@ -1,0 +1,13 @@
+{
+  "name": "radial-chart-rings",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-rings.tsx"
+  ],
+  "requires": [
+    "card"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

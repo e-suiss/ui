@@ -1,0 +1,36 @@
+{
+  "name": "switch",
+  "type": "ui",
+  "files": [
+    "components/ui/switch.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Checked",
+    "Sizes",
+    "WithLabel",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "Switch",
+      "extends": [
+        "SwitchPrimitive.Root.Props"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    }
+  ]
+}

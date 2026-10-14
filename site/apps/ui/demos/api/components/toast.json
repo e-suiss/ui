@@ -1,0 +1,96 @@
+{
+  "name": "toast",
+  "type": "ui",
+  "files": [
+    "components/ui/toast.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Types",
+    "TitleOnly",
+    "WithAction",
+    "Timeout",
+    "PromiseToast",
+    "PromiseRejected"
+  ],
+  "parts": [
+    {
+      "name": "ToastProvider",
+      "extends": [
+        "ToastPrimitive.Provider.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastPortal",
+      "extends": [
+        "ToastPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastViewport",
+      "extends": [
+        "ToastPrimitive.Viewport.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "Toast",
+      "extends": [
+        "ToastPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastContent",
+      "extends": [
+        "ToastPrimitive.Content.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastTitle",
+      "extends": [
+        "ToastPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastDescription",
+      "extends": [
+        "ToastPrimitive.Description.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastAction",
+      "extends": [
+        "ToastPrimitive.Action.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ToastClose",
+      "extends": [
+        "ToastPrimitive.Close.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "Toaster",
+      "extends": [
+        "ToastPrimitive.Provider.Props"
+      ],
+      "props": []
+    }
+  ]
+}

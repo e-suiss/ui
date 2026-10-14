@@ -1,0 +1,259 @@
+---
+title: Combobox
+description: "A text input with a filterable list of options, for choosing one or more values by typing."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="combobox" story="Default">
+
+<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={frameworks}>\n        <ComboboxInput\n          placeholder=\"Select a framework\"\n          disabled={false}\n        />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Combobox is built on the Base UI Combobox. The `Combobox` root takes the `items` to choose from and holds the value. `ComboboxInput` renders the text field inside an `InputGroup`, with an optional button that opens the list and an optional clear button. `ComboboxContent` renders the popup in a portal; inside it, `ComboboxList` renders each item through a render function, `ComboboxEmpty` appears when nothing matches, and `ComboboxItem` shows a check mark when selected. Group related items with `ComboboxGroup`, `ComboboxLabel`, `ComboboxCollection` and `ComboboxSeparator`.
+
+For multiple selection, replace `ComboboxInput` with `ComboboxChips`, which shows each selected value as a `ComboboxChip` next to a `ComboboxChipsInput`. Use a combobox when the list is long enough that typing to filter helps. For a short, fixed list without filtering, use a select; for a list of actions rather than values, use a command menu.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add combobox"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Input Group](/docs/components/input-group).
+
+3. Copy the source into `components/ui/combobox.tsx`:
+
+<SourceFile path="components/ui/combobox.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from \"@/components/ui/combobox\""} />
+
+<Code lang="tsx" code={"<div className=\"w-72\">\n  <Combobox items={frameworks}>\n    <ComboboxInput\n      placeholder=\"Select a framework\"\n      disabled={false}\n    />\n    <ComboboxContent>\n      <ComboboxEmpty>No framework found.</ComboboxEmpty>\n      <ComboboxList>\n        {(item: string) => (\n          <ComboboxItem key={item} value={item}>\n            {item}\n          </ComboboxItem>\n        )}\n      </ComboboxList>\n    </ComboboxContent>\n  </Combobox>\n</div>"} />
+
+Pass `items` to the root and a function as the child of `ComboboxList`, which receives each item and returns a `ComboboxItem` with a matching `value`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. To read or control the typed text, use `inputValue` and `onInputValueChange`.
+
+For grouped data, pass groups as `items`, render a `ComboboxGroup` with its own `items` for each one, and render its items with `ComboboxCollection`. For multiple selection, set `multiple` on the root, create a ref with `useComboboxAnchor`, attach it to `ComboboxChips`, and pass it as `anchor` to `ComboboxContent` so the popup aligns to the chips field. Use `ComboboxValue` with a render function to map the selected values to chips.
+
+## Examples
+
+### With clear button
+
+A combobox with a starting value and a clear button, enabled with `showClear`.
+
+<Example kind="ui" name="combobox" story="WithClearButton">
+
+<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxWithClearButtonExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={frameworks} defaultValue=\"Astro\">\n        <ComboboxInput placeholder=\"Select a framework\" showClear />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled combobox whose input and toggle button cannot be focused or used.
+
+<Example kind="ui" name="combobox" story="Disabled">
+
+<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxDisabledExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox disabled items={frameworks}>\n        <ComboboxInput\n          placeholder=\"Select a framework\"\n          disabled={true}\n        />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Grouped
+
+Options grouped by region with labels and separators between groups.
+
+<Example kind="ui" name="combobox" story="Grouped">
+
+<Code lang="tsx" code={"import { Combobox, ComboboxCollection, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxLabel, ComboboxList, ComboboxSeparator } from \"@/components/ui/combobox\"\n\nconst timezones = [\n  {\n    value: \"Americas\",\n    items: [\"New York\", \"Chicago\", \"Los Angeles\", \"São Paulo\"],\n  },\n  {\n    value: \"Europe\",\n    items: [\"London\", \"Berlin\", \"Istanbul\", \"Madrid\"],\n  },\n  {\n    value: \"Asia\",\n    items: [\"Tokyo\", \"Singapore\", \"Dubai\"],\n  },\n]\n\nexport function ComboboxGroupedExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={timezones}>\n        <ComboboxInput placeholder=\"Select a city\" />\n        <ComboboxContent>\n          <ComboboxEmpty>No city found.</ComboboxEmpty>\n          <ComboboxList>\n            {(group: (typeof timezones)[number], index: number) => (\n              <ComboboxGroup key={group.value} items={group.items}>\n                {index > 0 && <ComboboxSeparator />}\n                <ComboboxLabel>{group.value}</ComboboxLabel>\n                <ComboboxCollection>\n                  {(item: string) => (\n                    <ComboboxItem key={item} value={item}>\n                      {item}\n                    </ComboboxItem>\n                  )}\n                </ComboboxCollection>\n              </ComboboxGroup>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Highlight match
+
+A controlled `inputValue` used to emphasize the matching part of each option.
+
+<Example kind="ui" name="combobox" story="HighlightMatch">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nfunction HighlightedMatch({ text, query }: { text: string; query: string }) {\n  const start = query ? text.toLowerCase().indexOf(query.toLowerCase()) : -1\n  if (start < 0) return text\n  return (\n    <span>\n      {text.slice(0, start)}\n      <span className=\"font-semibold\">\n        {text.slice(start, start + query.length)}\n      </span>\n      {text.slice(start + query.length)}\n    </span>\n  )\n}\n\nfunction HighlightMatchCombobox() {\n  const [query, setQuery] = React.useState(\"\")\n  return (\n    <Combobox\n      items={frameworks}\n      inputValue={query}\n      onInputValueChange={setQuery}\n    >\n      <ComboboxInput placeholder=\"Type to filter\" />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              <HighlightedMatch text={item} query={query} />\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxHighlightMatchExample() {\n  return (\n    <div className=\"w-72\">\n      <HighlightMatchCombobox />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Multiple
+
+Multiple selection shown as removable chips, with Backspace removing the last chip.
+
+<Example kind="ui" name="combobox" story="Multiple">
+
+<Code lang="tsx" code={"import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxEmpty, ComboboxItem, ComboboxList, ComboboxValue, useComboboxAnchor } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nfunction MultipleCombobox({ disabled }: { disabled?: boolean }) {\n  const anchor = useComboboxAnchor()\n\n  return (\n    <Combobox\n      disabled={disabled}\n      multiple\n      items={frameworks}\n      defaultValue={[\"Next.js\", \"Astro\"]}\n    >\n      <ComboboxChips ref={anchor}>\n        <ComboboxValue>\n          {(values: string[]) => (\n            <>\n              {values.map((value) => (\n                <ComboboxChip key={value}>{value}</ComboboxChip>\n              ))}\n              <ComboboxChipsInput placeholder=\"Add framework\" />\n            </>\n          )}\n        </ComboboxValue>\n      </ComboboxChips>\n      <ComboboxContent anchor={anchor}>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxMultipleExample() {\n  return (\n    <div className=\"w-72\">\n      <MultipleCombobox disabled={false} />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"ComboboxInput","href":"#comboboxinput","children":[]},{"name":"ComboboxContent","href":"#comboboxcontent","children":[{"name":"ComboboxEmpty","href":"#comboboxempty","children":[]},{"name":"ComboboxList","href":"#comboboxlist","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]},{"name":"ComboboxGroup","href":"#comboboxgroup","children":[{"name":"ComboboxSeparator","href":"#comboboxseparator","children":[]},{"name":"ComboboxLabel","href":"#comboboxlabel","children":[]},{"name":"ComboboxCollection","href":"#comboboxcollection","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]}]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### ComboboxValue
+
+Renders the current value, or passes it to a render function, for example to draw chips.
+
+<PropsTable extends={["ComboboxPrimitive.Value.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ComboboxTrigger
+
+A button that opens the list, with a caret icon.
+
+<PropsTable extends={["ComboboxPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ComboboxInput
+
+The text field, rendered inside an `InputGroup` with optional open and clear buttons.
+
+<PropsTable extends={["ComboboxPrimitive.Input.Props"]} props={[{"name":"showTrigger","type":"boolean","default":"true","description":"Shows the button at the end of the field that opens the list."},{"name":"showClear","type":"boolean","default":"false","description":"Shows a clear button at the end of the field. When shown, it hides the open button."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ComboboxContent
+
+The popup, rendered in a portal and positioned below the input.
+
+<PropsTable extends={["ComboboxPrimitive.Popup.Props","ComboboxPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ComboboxList
+
+The scrollable list that renders items through a render function.
+
+<PropsTable extends={["ComboboxPrimitive.List.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ComboboxItem
+
+A selectable option that shows a check mark when selected.
+
+<PropsTable extends={["ComboboxPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ComboboxGroup
+
+Groups related options and takes its own `items`.
+
+<PropsTable extends={["ComboboxPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ComboboxLabel
+
+The visible label of a group.
+
+<PropsTable extends={["ComboboxPrimitive.GroupLabel.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ComboboxCollection
+
+Renders the items of a group through a render function.
+
+<PropsTable extends={["ComboboxPrimitive.Collection.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ComboboxEmpty
+
+Content shown when no options match the typed text.
+
+<PropsTable extends={["ComboboxPrimitive.Empty.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ComboboxSeparator
+
+A divider between groups.
+
+<PropsTable extends={["ComboboxPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ComboboxChips
+
+The field that holds selected values as chips in multiple selection.
+
+<PropsTable extends={["React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>","ComboboxPrimitive.Chips.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ComboboxChip
+
+A selected value shown as a chip, with an optional remove button.
+
+<PropsTable extends={["ComboboxPrimitive.Chip.Props"]} props={[{"name":"showRemove","type":"boolean","default":"true","description":"Shows a button inside the chip that removes the value."}]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### ComboboxChipsInput
+
+The text field placed after the chips in multiple selection.
+
+<PropsTable extends={["ComboboxPrimitive.Input.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The input has the `combobox` role and sets `aria-expanded` to reflect whether the list is open.
+- The popup has the `listbox` role, options have the `option` role and selected options set `aria-selected`; groups have the `group` role and take their name from `ComboboxLabel`.
+- Typing filters the options. Arrow keys move the highlight, Enter selects the highlighted option, and Escape closes the list.
+- In multiple selection, Backspace in the empty input removes the last chip.
+- The open button is labelled `Show options` and the clear button is labelled `Clear`.
+- When disabled, the input and the open button are disabled and removed from the Tab order.
+- Give the input an accessible name with a visible label or `aria-label`.
+
+## Notes
+
+- Styling hooks: `data-slot` values such as `combobox-content`, `combobox-list`, `combobox-item`, `combobox-label`, `combobox-empty`, `combobox-chips`, `combobox-chip`, `combobox-chip-remove` and `combobox-chip-input`.
+- Highlighted items get `data-highlighted` and disabled items get `data-disabled`.
+- The popup matches the width of its anchor through `--anchor-width` and limits its height to the available space.
+- Uses the `surface-raised`, `item-hover`, `link`, `accent-surface`, `control` and `separator` tokens.

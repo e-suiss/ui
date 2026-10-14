@@ -1,0 +1,20 @@
+{
+  "name": "login-account",
+  "type": "block",
+  "files": [
+    "components/blocks/login-account.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "checkbox",
+    "input",
+    "label",
+    "spinner"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,46 @@
+---
+title: Empty Bag
+description: "An empty shopping bag state with sign-in and shopping actions above a row of recommended products."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="empty-bag">
+
+<SourceFile path="components/blocks/empty-bag.tsx" fold={false} />
+
+</Example>
+
+An empty shopping bag state with a short message, Sign In and Continue Shopping buttons and a row of recommended products. Adding a recommendation updates the bag icon's count and switches the message and primary action to a checkout state. Recommendations sit in one column on mobile and three on larger screens. Use it for empty carts, wish lists or saved-items screens.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks empty-bag"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty).
+
+3. Copy the source into `components/blocks/empty-bag.tsx`:
+
+<SourceFile path="components/blocks/empty-bag.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { EmptyBag } from \"@/components/blocks/empty-bag\""} />
+
+<Code lang="tsx" code={"<EmptyBag />"} />
+
+Replace `recommended` with products from your recommendation service, each with a name, formatted price and image. Swap the local add toggle for your cart logic, and connect Sign In, Check Out and Continue Shopping to your routes.
+
+## Notes
+
+Add buttons expose their pressed state and name the product. Product photos are Unsplash placeholders.

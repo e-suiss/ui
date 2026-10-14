@@ -1,0 +1,17 @@
+{
+  "title": "Interactions",
+  "pages": [
+    "index",
+    "island",
+    "otp-autofill",
+    "preview-menu",
+    "pull-to-refresh",
+    "search-reveal",
+    "section-index",
+    "selection-list",
+    "stepper",
+    "swipe-actions",
+    "tip",
+    "undo-bar"
+  ]
+}

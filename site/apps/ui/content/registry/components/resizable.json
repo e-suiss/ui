@@ -1,0 +1,27 @@
+{
+  "description": "Panels separated by draggable handles that let users resize sections of a layout.",
+  "overview": "Resizable wraps react-resizable-panels. `ResizablePanelGroup` lays out its children in a row or column, alternating `ResizablePanel` and `ResizableHandle`. Drag a handle, or focus it and use the keyboard, to change the size of the panels on either side. Groups can be nested to build multi-pane layouts such as an editor with a sidebar and a terminal.\n\nThe `cards` variant renders each panel as a rounded card with a pill-shaped grip between them. Use Resizable for user-adjustable layouts; use Sidebar for a standard collapsible app navigation.",
+  "usage": "Set `orientation` on the group to `horizontal` (default) or `vertical`. Size panels with `defaultSize`, `minSize` and `maxSize`, for example `\"30%\"`. Make a panel `collapsible` with a `collapsedSize` to let it collapse when dragged past its minimum.\n\nUse `onLayoutChange` on the group to read the current sizes, keyed by each panel's `id`.",
+  "examples": {
+    "WithHandle": "A sidebar and content split with a visible grip and a minimum sidebar size.",
+    "Vertical": "Panels stacked vertically and resized with the up and down arrow keys.",
+    "Nested": "A vertical group nested inside a horizontal group to create three panes.",
+    "Cards": "The `cards` variant with two collapsible panels that report their share of the space.",
+    "CardsVertical": "The `cards` variant in a vertical orientation."
+  },
+  "parts": {
+    "ResizablePanelGroup": "The container that arranges panels and handles and tracks the layout.",
+    "ResizablePanel": "One resizable section of the layout.",
+    "ResizableHandle": "The draggable divider between two panels."
+  },
+  "props": {
+    "ResizablePanelGroup": {
+      "variant": "Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips."
+    },
+    "ResizableHandle": {
+      "withHandle": "Shows a visible grip on the divider."
+    }
+  },
+  "accessibility": "- Each handle has the `separator` role with `aria-valuenow` and `aria-orientation`, and is focusable with Tab.\n- Arrow keys resize the adjacent panels; Home and End move the handle to its minimum and maximum.\n- A panel that collapses to zero width or height becomes `inert`, so its content leaves the tab order.",
+  "notes": "- Styling hooks: `data-slot` values `resizable-panel-group`, `resizable-panel` and `resizable-handle`. The group exposes `data-variant`, and collapsed panels expose `data-empty`.\n- A handle next to a collapsed panel gets `data-collapsed` set to `start` or `end`, and its grip appears on hover.\n- Large layout jumps, such as collapsing or expanding a panel, animate unless the user prefers reduced motion.\n- Uses the `separator`, `surface-secondary`, `label-quaternary` and `label-secondary` tokens."
+}

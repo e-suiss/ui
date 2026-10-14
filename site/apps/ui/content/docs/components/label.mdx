@@ -1,0 +1,97 @@
+---
+title: Label
+description: "An accessible text label that names a form control."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="label" story="Default">
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\n\nexport function LabelExample() {\n  return (\n    <Label>Email address</Label>\n  )\n}"} />
+
+</Example>
+
+`Label` renders a native `label` element with the library's form typography. Associate it with a control through `htmlFor`, or nest the control inside it, so clicking the label focuses or toggles the control.
+
+Use `Label` for standalone controls. Inside a `Field` layout, prefer the field's own label part when one is provided.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add label"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/label.tsx`:
+
+<SourceFile path="components/ui/label.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\""} />
+
+<Code lang="tsx" code={"<Label>Email address</Label>"} />
+
+Give the control an `id` and pass the same value to `htmlFor`. Next to a checkbox, radio item or switch, the label automatically switches to regular weight.
+
+## Examples
+
+### With input
+
+A label linked to a text input; clicking the label focuses the input.
+
+<Example kind="ui" name="label" story="WithInput">
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelWithInputExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-2\">\n      <Label htmlFor=\"label-email\" />\n      <Input id=\"label-email\" type=\"email\" placeholder=\"you@example.com\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With checkbox
+
+A label placed after a checkbox; clicking the label toggles it.
+
+<Example kind="ui" name="label" story="WithCheckbox">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelWithCheckboxExample() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Checkbox id=\"label-terms\" />\n      <Label htmlFor=\"label-terms\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A label shown in its dimmed style inside a disabled group, above a disabled input.
+
+<Example kind="ui" name="label" story="Disabled">
+
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelDisabledExample() {\n  return (\n    <div className=\"group flex w-72 flex-col gap-2\" data-disabled=\"true\">\n      <Label htmlFor=\"label-disabled\" />\n      <Input\n        id=\"label-disabled\"\n        type=\"email\"\n        placeholder=\"you@example.com\"\n        disabled\n      />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Label
+
+Renders a `label` element that names and activates its associated control.
+
+<PropsTable extends={["React.ComponentProps<\"label\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The label text becomes the control's accessible name when linked with `htmlFor` or by nesting.
+- Clicking the label focuses a text input or toggles a checkbox, matching native `label` behavior.
+
+## Notes
+
+- Styling hook: `data-slot="label"`.
+- The label dims to `label-quaternary` when it follows a disabled peer control, or when an ancestor with the `group` class has `data-disabled="true"`.
+- Font weight drops to normal when the label contains, or follows, a `checkbox`, `radio-group-item` or `switch` slot.

@@ -1,0 +1,46 @@
+---
+title: Area Chart Step
+description: "A single filled area drawn as steps, holding each value flat until the next reading."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-step">
+
+<SourceFile path="components/charts/area-chart-step.tsx" fold={false} />
+
+</Example>
+
+A single filled area drawn as steps that hold each value flat until the next reading. It suits values that change in discrete jumps, like prices, plan tiers or inventory counts.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-step"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-step.tsx`:
+
+<SourceFile path="components/charts/area-chart-step.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartStep } from \"@/components/charts/area-chart-step\""} />
+
+<Code lang="tsx" code={"<AreaChartStep />"} />
+
+Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Switch the curve type to `stepAfter` or `stepBefore` if you want the jump on a different side of each point.
+
+## Notes
+
+The plot supports keyboard navigation: focus it and use the arrow keys to move between months.

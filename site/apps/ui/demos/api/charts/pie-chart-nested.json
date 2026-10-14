@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-nested",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-nested.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

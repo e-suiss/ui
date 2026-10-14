@@ -1,0 +1,17 @@
+{
+  "name": "bag-checkout",
+  "type": "block",
+  "files": [
+    "components/blocks/bag-checkout.tsx"
+  ],
+  "requires": [
+    "button",
+    "label",
+    "radio-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-horizontal",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-horizontal.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

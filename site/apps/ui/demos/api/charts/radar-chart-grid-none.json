@@ -1,0 +1,16 @@
+{
+  "name": "radar-chart-grid-none",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-grid-none.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

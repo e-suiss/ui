@@ -1,0 +1,26 @@
+{
+  "description": "A numeric field with minus and plus buttons that step the value, accelerating while held.",
+  "overview": "`Stepper` recreates the iOS stepper on top of the Base UI Number Field. It pairs an editable `StepperInput` with a segmented `StepperGroup` of `StepperDecrement` and `StepperIncrement` buttons. Each press changes the value by `step`; holding a button repeats the change after a short delay and speeds up over time. Each button disables itself when the value reaches `min` or `max`.\n\nUse it for small, bounded quantities such as copies, servings, or scale, where people usually adjust a value by a few steps.",
+  "usage": "- Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator`, and `StepperIncrement` inside `Stepper`.\n- The value is uncontrolled by default; pass `value` and `onValueChange` to control it.\n- Other Base UI Number Field props, such as `min`, `max`, `disabled`, and `format`, pass through to the root.\n- The buttons render minus and plus icons by default; pass children to replace them.",
+  "examples": {
+    "Print": "A print settings list with labelled steppers, a percent format with a step of `5`, and a disabled row."
+  },
+  "parts": {
+    "Stepper": "The Number Field root that holds the value and its limits.",
+    "StepperInput": "The editable text field that shows the value.",
+    "StepperGroup": "The segmented container for the decrement and increment buttons.",
+    "StepperDecrement": "The button that decreases the value by one step.",
+    "StepperIncrement": "The button that increases the value by one step.",
+    "StepperSeparator": "A thin divider between the two buttons."
+  },
+  "props": {
+    "Stepper": {
+      "step": "The amount each press adds or subtracts.",
+      "value": "The current value, for controlled use.",
+      "defaultValue": "The initial value when uncontrolled.",
+      "onValueChange": "Called with the new value when it changes."
+    }
+  },
+  "accessibility": "- Label `StepperInput` with `aria-label` or `aria-labelledby`.\n- The arrow keys step the value from the input, as provided by Base UI Number Field.\n- The buttons are labelled `Decrease` and `Increase`, and are disabled at the limits or when the stepper is disabled.\n- `StepperGroup` has `role=\"group\"`, and `StepperSeparator` is `aria-hidden`.",
+  "notes": "- Parts use `data-slot` values `stepper`, `stepper-input`, `stepper-group`, `stepper-decrement`, `stepper-increment`, and `stepper-separator`.\n- Values are rounded to the precision of `step`, so decimal steps do not accumulate floating-point errors.\n- The buttons suppress the long-press context menu so holding them on touch devices keeps stepping."
+}

@@ -1,0 +1,40 @@
+{
+  "description": "A flexible row that pairs media, a title, a description and actions, for lists and settings.",
+  "overview": "`Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. Use the `render` prop to turn the whole item into a link or button.\n\n`ItemGroup` stacks items as a list, and its `inset` variant groups them into a rounded list on a secondary surface, like iOS Settings. Place an `ItemSeparator` between items to divide them. Use items to display content; for form controls with labels and validation, use `Field`.",
+  "usage": "`ItemGroup` has the `list` role, so set `role=\"listitem\"` on each `Item` inside it. Choose a `variant` for the item's border and background, and a `size` for its padding. Items inside a group with `sm` or `xs` items are spaced more tightly.\n\nWhen `ItemDescription` is present, the media aligns to the top of the item instead of its center. The title is limited to one line and the description to two.",
+  "examples": {
+    "Variants": "The `default`, `outline` and `muted` item variants.",
+    "Sizes": "The `default`, `sm` and `xs` item sizes.",
+    "AsLink": "An item rendered as a link, so the whole row is one focusable target.",
+    "WithImage": "A list of people with image media, separators and an invite button on each row.",
+    "Inset": "The same list in an `inset` item group, forming a rounded list with inset separators.",
+    "WithAvatar": "An item with an `Avatar` as media and a Message button.",
+    "WithHeaderAndFooter": "A plan summary with a price in the header and a renewal date and action in the footer."
+  },
+  "parts": {
+    "ItemGroup": "Stacks items as a list, or groups them into an inset list.",
+    "ItemSeparator": "A divider between items.",
+    "Item": "The row container for media, content and actions.",
+    "ItemMedia": "Holds an icon, image or avatar at the start of the item.",
+    "ItemContent": "Stacks the title and description.",
+    "ItemTitle": "The item's title, limited to one line.",
+    "ItemDescription": "Supporting text, limited to two lines.",
+    "ItemActions": "Holds buttons or indicators at the end of the item.",
+    "ItemHeader": "A full-width row above the item's content.",
+    "ItemFooter": "A full-width row below the item's content."
+  },
+  "props": {
+    "ItemGroup": {
+      "variant": "`inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start."
+    },
+    "Item": {
+      "variant": "`default` has no border or background, `outline` adds a border, and `muted` adds a subtle background.",
+      "size": "Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`."
+    },
+    "ItemMedia": {
+      "variant": "`icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is."
+    }
+  },
+  "accessibility": "- `ItemGroup` has the `list` role; give each `Item` in it the `listitem` role.\n- `ItemSeparator` has the `none` role, so it is ignored by assistive technology.\n- An item rendered as a link or button is a single focusable element and shows a focus ring.\n- Give icon-only action buttons an accessible name with `aria-label`.",
+  "notes": "- Styling hooks: `data-slot` values `item-group`, `item-separator`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header` and `item-footer`.\n- `Item` sets `data-variant` and `data-size`; `ItemGroup` and `ItemMedia` set `data-variant`.\n- An item rendered as an anchor gets the `item-hover` background on hover.\n- Uses the `separator`, `surface-secondary`, `item-hover`, `label-secondary` and `link` tokens."
+}

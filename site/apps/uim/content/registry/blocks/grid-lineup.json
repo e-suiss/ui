@@ -1,0 +1,5 @@
+{
+  "description": "A product lineup in two columns, each model with finish swatches, a tagline, a price and Buy and Learn more actions.",
+  "overview": "Composes `Screen`, `ToggleGroup` color swatches, `Button` and `Text`. Each model keeps its own selected finish, which is passed along when Buy is pressed.",
+  "usage": "Replace `MODELS` with your lineup. Pass `onBuy` to receive the model name and finish, and `onLearnMore` for the Learn more link."
+}

@@ -1,0 +1,5 @@
+{
+  "description": "A full circular ring showing 72% of cloud storage used, with the value in the center.",
+  "overview": "A `RadialBarChart` drawn as a full circle, with a single value on a 0 to 100 `PolarAngleAxis` over a tinted track. The percentage and caption are `Text` layered in the middle. Nothing is interactive.",
+  "usage": "Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props."
+}

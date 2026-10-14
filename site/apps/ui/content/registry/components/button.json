@@ -1,0 +1,24 @@
+{
+  "description": "A pill-shaped button that triggers an action, with variants for every level of emphasis.",
+  "overview": "`Button` wraps the Base UI Button primitive and renders a native `button` by default. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the container width.\n\nUse the `default` variant for the primary action in a view, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.",
+  "usage": "Mark icons with `data-icon=\"inline-start\"` or `data-icon=\"inline-end\"` to tighten the padding on that side. Icons without a size class are sized automatically.\n\nUse an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `aria-label`.\n\nTo render a link or a router component with button styling, use the `render` prop from Base UI. `buttonVariants` is also exported if you need the classes on another element.",
+  "examples": {
+    "Variants": "Shows all eight variants side by side.",
+    "Sizes": "Compares the `xs`, `sm`, `default` and `lg` sizes.",
+    "WithIcon": "Adds leading and trailing icons, and an icon-only button.",
+    "Disabled": "A disabled button that is skipped in the tab order.",
+    "Block": "Full-width buttons at each size, whose corner radius scales with size."
+  },
+  "parts": {
+    "Button": "The interactive button element."
+  },
+  "props": {
+    "Button": {
+      "variant": "Visual style: `default`, `outline`, `secondary`, `tinted`, `ghost`, `plain`, `destructive` or `link`.",
+      "size": "Height and padding. `xs` to `xl` for text buttons; `icon-xs` to `icon-xl` for square icon-only buttons.",
+      "block": "When `true`, the button fills the container width and uses rounded corners instead of a pill shape."
+    }
+  },
+  "accessibility": "- Renders a native `button`, so `Enter` and `Space` activate it.\n- A disabled button is removed from the tab order.\n- Icon-only buttons need an `aria-label`.\n- Keyboard focus shows a focus ring; the `destructive` variant uses the danger color for it.\n- `aria-invalid` adds a danger-colored border, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.",
+  "notes": "- Styling hook: `data-slot=\"button\"`.\n- Colors come from semantic tokens such as `bg-accent`, `bg-control`, `bg-accent-surface` and `bg-danger-surface`, each with hover, pressed and disabled states.\n- The focus ring offset is set with `--focus-ring-offset`; groups and other containers override it."
+}

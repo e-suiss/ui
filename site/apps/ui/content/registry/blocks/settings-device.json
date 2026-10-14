@@ -1,0 +1,5 @@
+{
+  "description": "A phone-style Settings screen with a search field, an account row, and grouped rows with switches.",
+  "overview": "A phone-style Settings screen with a search field, an account row and grouped rows that either open a detail page or hold a switch. Search filters rows by label, and turning on Airplane Mode also turns off Wi-Fi and Bluetooth. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the width. Use it for mobile app settings or any grouped preferences list.",
+  "usage": "Edit `groups`; each row has a label, icon, tint and either a `toggle` key or a `detail` function that derives its status text from the toggles. Persist the toggles to your settings store, and remove the Airplane Mode coupling if it doesn't apply. Row links point to hash anchors, so swap in your routes."
+}

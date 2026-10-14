@@ -1,0 +1,32 @@
+{
+  "description": "Actions for an element that open as a context menu on right click, or an action sheet on long press on mobile.",
+  "overview": "`ContextActions` attaches a set of actions to an area of the page. On desktop it renders a `ContextMenu` that opens at the pointer on right click. Below the `48rem` breakpoint it renders an `AlertSheet` instead, opened by a 500 ms long press on touch, by the context menu event, or by the `ContextMenu` key or `Shift+F10`; the sheet groups the items in a card and appends a Cancel button.\n\nUse it for secondary actions on content such as photos, files or list rows, where actions should stay out of the way until requested.",
+  "usage": "Wrap the target area in `ContextActionsTrigger` and list the actions in `ContextActionsContent`. The open state is internal; use `onOpenChange` to react to it. A long press is cancelled if the finger moves more than 10 pixels, so scrolling over the trigger does not open the sheet.",
+  "examples": {
+    "WithIcons": "Places an icon before every action, including a destructive Delete item.",
+    "NotDismissible": "Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel."
+  },
+  "parts": {
+    "ContextActions": "The root that renders a `ContextMenu` on desktop and an `AlertSheet` on mobile.",
+    "ContextActionsTrigger": "The area that opens the actions on right click, or on long press and keyboard on mobile.",
+    "ContextActionsContent": "The popup holding the actions; on mobile it adds a Cancel button below them.",
+    "ContextActionsLabel": "A non-interactive heading; a menu label on desktop and the sheet title on mobile.",
+    "ContextActionsItem": "An actionable entry that closes the actions when chosen.",
+    "ContextActionsSeparator": "A divider between groups of items, rendered on desktop only."
+  },
+  "props": {
+    "ContextActions": {
+      "onOpenChange": "Called when the menu or sheet opens or closes.",
+      "dismissible": "When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."
+    },
+    "ContextActionsContent": {
+      "cancelLabel": "Text of the Cancel button shown below the actions on mobile."
+    },
+    "ContextActionsItem": {
+      "variant": "Use `destructive` to style the item as a destructive action.",
+      "disabled": "Prevents the item from being chosen."
+    }
+  },
+  "accessibility": "- On desktop the popup has the `menu` role and receives focus when opened; arrow keys move between `menuitem`s and `Enter` runs the focused one.\n- `Escape` closes the menu.\n- On mobile the trigger has `role=\"button\"`, `tabIndex={0}` and `aria-haspopup=\"dialog\"`, and opens with the `ContextMenu` key or `Shift+F10`.",
+  "notes": "Parts carry `data-slot` values `context-actions`, `context-actions-trigger`, `context-actions-content`, `context-actions-label`, `context-actions-item` and `context-actions-separator`. On mobile the trigger disables text selection and the iOS touch callout so a long press does not select text."
+}

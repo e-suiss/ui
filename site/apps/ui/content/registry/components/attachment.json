@@ -1,0 +1,41 @@
+{
+  "description": "A compact file card that shows a document or image with its name, details, upload state and actions.",
+  "overview": "An `Attachment` typically contains an `AttachmentMedia` thumbnail, an `AttachmentContent` block with `AttachmentTitle` and `AttachmentDescription`, and an `AttachmentActions` slot holding one or more `AttachmentAction` buttons. `AttachmentMedia` can hold an icon, an `img`, or an `AttachmentLabel` file-type tag. During an upload, put an `AttachmentProgress` bar inside the content. Add an `AttachmentTrigger` to make the whole card clickable.\n\nWrap several attachments in an `AttachmentGroup` to render them as a single list with inset dividers. Use attachments for files in composers, chat messages and upload forms.",
+  "usage": "Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with the danger color. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.\n\n`AttachmentAction` renders a `Button` with the `secondary` variant and an icon size by default. Pass `variant=\"link\"` for a text action such as \"Try Again\". Icon-only actions need an `aria-label`.\n\n`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `render` to turn it into a link. Actions sit above it, so they remain separately clickable.",
+  "examples": {
+    "Sizes": "Compares the `default`, `sm` and `xs` sizes.",
+    "States": "Shows the `idle`, `uploading`, `processing`, `error` and `done` states.",
+    "Image": "Uses an image thumbnail with the `image` media variant.",
+    "Vertical": "Stacks the media above the content with `orientation=\"vertical\"`.",
+    "Clickable": "Makes the whole card a button with `AttachmentTrigger`, alongside a separate download action.",
+    "Group": "Combines several attachments in one `AttachmentGroup` list.",
+    "FileTypes": "Uses colored `AttachmentLabel` tags to indicate file extensions.",
+    "FileList": "A full-width list of separate attachment cards.",
+    "Uploaded": "Marks completed uploads with a check icon in the actions slot."
+  },
+  "parts": {
+    "Attachment": "The card container that sets size, orientation and state.",
+    "AttachmentLabel": "A small uppercase tag, usually the file extension, shown inside the media.",
+    "AttachmentMedia": "The thumbnail area for an icon, document tag or image.",
+    "AttachmentContent": "Wraps the title, description and progress bar.",
+    "AttachmentTitle": "The file name, truncated to one line.",
+    "AttachmentDescription": "Secondary details such as file size or an error message.",
+    "AttachmentProgress": "A progress bar with a value readout for uploads.",
+    "AttachmentActions": "The slot for action buttons or status indicators.",
+    "AttachmentAction": "A compact button for actions such as remove, cancel or download.",
+    "AttachmentTrigger": "An invisible button covering the card to make it clickable.",
+    "AttachmentGroup": "Stacks attachments into one rounded list with dividers."
+  },
+  "props": {
+    "Attachment": {
+      "size": "Overall density: `default`, `sm` or `xs`.",
+      "orientation": "`horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media.",
+      "state": "Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red."
+    },
+    "AttachmentMedia": {
+      "variant": "Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image."
+    }
+  },
+  "accessibility": "- `AttachmentProgress` wraps the Base UI Progress primitive and exposes the `progressbar` role with `aria-valuenow`; give it an `aria-label`.\n- `AttachmentTrigger` renders a `button` with `type=\"button\"` by default; give it an `aria-label` that names the file.\n- The trigger and each `AttachmentAction` are separate tab stops, in that order.\n- The card shows a focus ring when its trigger has keyboard focus.",
+  "notes": "- Styling hooks: `data-slot` values such as `attachment`, `attachment-media`, `attachment-content` and `attachment-action`, plus `data-state`, `data-size` and `data-orientation` on the root and `data-variant` on the media.\n- Inside `AttachmentGroup`, attachments fill the width, lose their own rounding and get inset top dividers.\n- `AttachmentLabel` uses `bg-accent` by default; override it with a color class per file type."
+}

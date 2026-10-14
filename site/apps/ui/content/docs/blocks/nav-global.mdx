@@ -1,0 +1,46 @@
+---
+title: Nav Global
+description: "A sticky global navigation bar with mega-menu panels, search and bag actions, above a sample product hero."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="nav-global">
+
+<SourceFile path="components/blocks/nav-global.tsx" fold={false} />
+
+</Example>
+
+A sticky top navigation bar with mega-menu panels, a brand link and search and bag buttons, shown above a sample hero. The bar is translucent and blurred, turns solid while a panel is open, and collapses into a full-screen menu on mobile or whenever the links don't fit. Built on the `Navbar` pattern, it suits sites with a deep catalog or many sections.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks nav-global"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Navbar](/docs/patterns/navbar).
+
+3. Copy the source into `components/blocks/nav-global.tsx`:
+
+<SourceFile path="components/blocks/nav-global.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { NavGlobal } from \"@/components/blocks/nav-global\""} />
+
+<Code lang="tsx" code={"<NavGlobal />"} />
+
+Edit `items`: plain entries take a label and `href`, and mega-menu entries take `columns`, each with a label, an optional featured flag and a list of links. Replace the brand link and hash URLs, and give the search and bag buttons handlers. Remove the sample hero below the bar.
+
+## Notes
+
+The hero image is an Unsplash placeholder.

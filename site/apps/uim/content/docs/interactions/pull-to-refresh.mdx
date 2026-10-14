@@ -1,0 +1,188 @@
+---
+title: Pull To Refresh
+description: "Adds pull to refresh to a scroll view or list, with a minimum spinner time and a light haptic."
+eyebrow: Interaction
+generated: true
+---
+
+<Example id="interactions-pull-to-refresh--default" width={880} height={603} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PullToRefresh } from \"@/components/interactions/pull-to-refresh\"\nimport { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nconst wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))\n\nfunction Feed() {\n  const [count, setCount] = React.useState(3)\n  return (\n    <PullToRefresh\n      onRefresh={async () => {\n        await wait(1200)\n        setCount((current) => current + 1)\n      }}\n      contentContainerClassName=\"gap-3\"\n    >\n      <Text className=\"text-sm text-label-secondary\">Pull down to refresh</Text>\n      <ItemGroup variant=\"inset\">\n        {Array.from({ length: count }, (_, index) => count - index).map(\n          (update, index) => (\n            <React.Fragment key={update}>\n              {index > 0 ? <ItemSeparator /> : null}\n              <Item>\n                <ItemContent>\n                  <ItemTitle>Update {update}</ItemTitle>\n                  <ItemDescription>Fetched from the server</ItemDescription>\n                </ItemContent>\n              </Item>\n            </React.Fragment>\n          )\n        )}\n      </ItemGroup>\n    </PullToRefresh>\n  )\n}\n\nexport function PullToRefreshExample() {\n  return (\n    <View className=\"flex-1\">\n      <Feed />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PullToRefreshFeed: View {\n  @State private var count = 3\n\n  var body: some View {\n    PullToRefresh {\n      try? await Task.sleep(for: .milliseconds(1200))\n      count += 1\n    } content: {\n      VStack(alignment: .leading, spacing: 12) {\n        Text(\"Pull down to refresh\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n        ItemGroup(.inset) {\n          ForEach(Array((1...count).reversed()), id: \\.self) { update in\n            if update != count {\n              ItemSeparator()\n            }\n            Item {\n              ItemContent {\n                ItemTitle(verbatim: \"Update \\(update)\")\n                ItemDescription(\"Fetched from the server\")\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.key\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemGroup\nimport com.esuiss.ui.components.ItemGroupVariant\nimport com.esuiss.ui.components.ItemSeparator\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.PullToRefresh\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlinx.coroutines.delay\n\nval pullToRefreshViewport = Modifier.fillMaxWidth().height(600.dp)\n\n@Composable\nfun PullToRefreshFeed() {\n    var count by rememberSaveable { mutableIntStateOf(3) }\n    PullToRefresh(\n        onRefresh = {\n            delay(1200)\n            count += 1\n        },\n        modifier = pullToRefreshViewport,\n    ) {\n        Column(\n            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),\n            verticalArrangement = Arrangement.spacedBy(12.dp),\n        ) {\n            Text(\"Pull down to refresh\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n            ItemGroup(variant = ItemGroupVariant.Inset) {\n                (count downTo 1).forEachIndexed { index, update ->\n                    key(update) {\n                        if (index > 0) ItemSeparator()\n                        Item {\n                            ItemContent {\n                                ItemTitle(\"Update $update\")\n                                ItemDescription(\"Fetched from the server\")\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+`PullToRefresh` is a `ScrollView` with a native `RefreshControl`. Pulling down past the top starts a refresh: a light impact haptic plays, the spinner shows, and `onRefresh` runs.
+
+The spinner stays for at least 600 ms, even when `onRefresh` resolves sooner, so it does not flicker. It also hides if `onRefresh` throws or rejects. Use `PullToRefreshControl` to add the same behavior to a `FlatList` or `SectionList`.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pull-to-refresh"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pull-to-refresh --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pull-to-refresh --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn uniwind"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+
+<SourceFile path="uniwind/components/interactions/pull-to-refresh.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+
+2. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+
+<SourceFile path="nativewind/components/interactions/pull-to-refresh.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
+
+2. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+
+<SourceFile path="stylesheet/components/interactions/pull-to-refresh.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="swift/Interactions/PullToRefresh.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/interactions/PullToRefresh.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Spinner.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { PullToRefreshControl, PullToRefresh } from \"@/components/interactions/pull-to-refresh\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-1\">\n  <Feed />\n</View>"} />
+
+Pass an `onRefresh` that returns a promise, or nothing for synchronous work. All other `ScrollView` props pass through to `PullToRefresh`.
+
+For lists, pass `<PullToRefreshControl onRefresh={...} />` as the list's `refreshControl`. It manages its own refreshing state; pass `refreshing` to override it. Other `RefreshControl` props pass through.
+
+## Examples
+
+### With flat list
+
+Uses `PullToRefreshControl` as the `refreshControl` of a `FlatList`.
+
+<Example id="interactions-pull-to-refresh--with-flat-list" width={880} height={415} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { FlatList } from \"react-native\"\nimport { PullToRefreshControl } from \"@/components/interactions/pull-to-refresh\"\nimport { Text } from \"@/components/ui/text\"\n\nconst wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))\n\nexport function PullToRefreshWithFlatListExample() {\n  return (\n    <FlatList\n      data={[\"Inbox\", \"Drafts\", \"Sent\", \"Archive\"]}\n      keyExtractor={(item) => item}\n      refreshControl={<PullToRefreshControl onRefresh={() => wait(1000)} />}\n      renderItem={({ item }) => <Text className=\"py-3 text-base\">{item}</Text>}\n    />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PullToRefreshWithFlatListExample: View {\n  var body: some View {\n    ScrollView {\n      LazyVStack(alignment: .leading, spacing: 0) {\n        ForEach([\"Inbox\", \"Drafts\", \"Sent\", \"Archive\"], id: \\.self) { item in\n          Text(verbatim: item)\n            .textStyle(.base)\n            .foregroundStyle(Color.label)\n            .padding(.vertical, 12)\n            .frame(maxWidth: .infinity, alignment: .leading)\n        }\n      }\n    }\n    .pullToRefresh {\n      try? await Task.sleep(for: .milliseconds(1000))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.lazy.LazyColumn\nimport androidx.compose.foundation.lazy.items\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.key\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.PullToRefresh\nimport com.esuiss.ui.theme.Typography\nimport kotlinx.coroutines.delay\n\nval pullToRefreshViewport = Modifier.fillMaxWidth().height(600.dp)\n\n@Composable\nfun PullToRefreshFlatList() {\n    PullToRefresh(onRefresh = { delay(1000) }, modifier = pullToRefreshViewport) {\n        LazyColumn(Modifier.fillMaxSize()) {\n            items(listOf(\"Inbox\", \"Drafts\", \"Sent\", \"Archive\"), key = { it }) { item ->\n                Text(item, modifier = Modifier.padding(vertical = 12.dp), style = Typography.base)\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### PullToRefreshControl
+
+A `RefreshControl` for any list or scroll view.
+
+<PropsTable extends={["RefreshControlProps"]} props={[{"name":"onRefresh","type":"RefreshHandler","required":true,"description":"Called when the user pulls to refresh; the spinner waits for the returned promise."},{"name":"refreshing","type":"boolean","description":"Overrides the internal refreshing state."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+<PropsTable extends={["React.ComponentProps<typeof ScrollView>"]} props={[{"name":"onRefresh","type":"RefreshHandler","required":true,"description":"Called when the user pulls to refresh; the spinner waits for the returned promise."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `PullToRefresh` exposes a `busy` state while refreshing.
+- `PullToRefreshControl` is labelled `Refreshing` while active.
+
+## Notes
+
+- The haptic plays only if the app provides an adapter through `HapticsProvider`.
+- The spinner uses the `label-secondary` color, and on Android its background uses `surface-raised`, so both follow light and dark mode.

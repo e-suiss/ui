@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-multiple",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-multiple.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

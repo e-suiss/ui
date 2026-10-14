@@ -1,0 +1,16 @@
+{
+  "name": "empty-bag",
+  "type": "block",
+  "files": [
+    "components/blocks/empty-bag.tsx"
+  ],
+  "requires": [
+    "button",
+    "empty"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

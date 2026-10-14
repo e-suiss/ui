@@ -1,0 +1,239 @@
+---
+title: Button Group
+description: "A container that joins related buttons, inputs and menus into a single connected control."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="button-group" story="Default">
+
+<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"secondary\" size=\"icon\" aria-label=\"Go back\">\n          <ArrowLeftIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Archive</Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">Report</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Snooze</Button>\n        <ButtonGroupSeparator />\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            render={\n              <Button\n                variant=\"secondary\"\n                size=\"icon\"\n                aria-label=\"More options\"\n              />\n            }\n          >\n            <DotsThreeIcon />\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-52\">\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ListPlusIcon />\n                Mark as read\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <ArchiveIcon />\n                Archive\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ClockIcon />\n                Snooze\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <CalendarPlusIcon />\n                Add to calendar\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <TagIcon />\n                Label as\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem variant=\"destructive\">\n                <TrashIcon />\n                Trash\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+A `ButtonGroup` lays out its children in a row or column and joins them visually: only the outer corners stay rounded, and borders between neighbors collapse. Use `ButtonGroupSeparator` to draw a divider between filled buttons, and `ButtonGroupText` to add a static label or prefix such as `https://`.
+
+Groups can contain buttons, `Input`, `InputGroup`, `Select` triggers, and the triggers of dropdown menus and popovers. Nest `ButtonGroup` parts to create clusters with a gap between them. Use a button group for closely related actions, split buttons, or input-and-button combinations; for a set of toggleable options, use Toggle Group instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button-group"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Separator](/docs/components/separator).
+
+3. Copy the source into `components/ui/button-group.tsx`:
+
+<SourceFile path="components/ui/button-group.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from \"@/components/ui/button-group\""} />
+
+<Code lang="tsx" code={"<ButtonGroup orientation=\"horizontal\">\n  <ButtonGroup>\n    <Button variant=\"secondary\" size=\"icon\" aria-label=\"Go back\">\n      <ArrowLeftIcon />\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">Archive</Button>\n    <ButtonGroupSeparator />\n    <Button variant=\"secondary\">Report</Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">Snooze</Button>\n    <ButtonGroupSeparator />\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={\n          <Button\n            variant=\"secondary\"\n            size=\"icon\"\n            aria-label=\"More options\"\n          />\n        }\n      >\n        <DotsThreeIcon />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"end\" className=\"w-52\">\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <ListPlusIcon />\n            Mark as read\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <ArchiveIcon />\n            Archive\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <ClockIcon />\n            Snooze\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <CalendarPlusIcon />\n            Add to calendar\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <TagIcon />\n            Label as\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem variant=\"destructive\">\n            <TrashIcon />\n            Trash\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  </ButtonGroup>\n</ButtonGroup>"} />
+
+Elements are joined only when they expose a `data-slot` attribute, as the library's components do.
+
+When a group contains other `ButtonGroup` parts, the outer group adds a gap between them instead of joining them.
+
+`ButtonGroupSeparator` is vertical by default. In a vertical group, pass `orientation="horizontal"`. Separators are most useful between `secondary` or `default` buttons; `outline` buttons already show their borders.
+
+Give the group an `aria-label` when its purpose is not clear from its contents, as in the pagination and media control examples.
+
+## Examples
+
+### Outline
+
+The same toolbar built with `outline` buttons and no separators.
+
+<Example kind="ui" name="button-group" story="Outline">
+
+<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupOutlineExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon\" aria-label=\"Go back\">\n          <ArrowLeftIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">Archive</Button>\n        <Button variant=\"outline\">Report</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">Snooze</Button>\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            render={\n              <Button variant=\"outline\" size=\"icon\" aria-label=\"More options\" />\n            }\n          >\n            <DotsThreeIcon />\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-52\">\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ListPlusIcon />\n                Mark as read\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <ArchiveIcon />\n                Archive\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ClockIcon />\n                Snooze\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <CalendarPlusIcon />\n                Add to calendar\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <TagIcon />\n                Label as\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem variant=\"destructive\">\n                <TrashIcon />\n                Trash\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Orientation
+
+Stacks zoom buttons vertically with `orientation="vertical"`.
+
+<Example kind="ui" name="button-group" story="Orientation">
+
+<Code lang="tsx" code={"import { MinusIcon, PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupOrientationExample() {\n  return (\n    <ButtonGroup orientation=\"vertical\" aria-label=\"Media controls\">\n      <Button variant=\"secondary\" size=\"icon\" aria-label=\"Zoom in\">\n        <PlusIcon />\n      </Button>\n      <ButtonGroupSeparator orientation=\"horizontal\" />\n      <Button variant=\"secondary\" size=\"icon\" aria-label=\"Zoom out\">\n        <MinusIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Groups of `sm`, `default` and `lg` buttons.
+
+<Example kind="ui" name="button-group" story="Sizes">
+
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-6\">\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\" size=\"sm\">\n          Small\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          Button\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          Group\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\">Default</Button>\n        <Button variant=\"outline\">Button</Button>\n        <Button variant=\"outline\">Group</Button>\n        <Button variant=\"outline\" size=\"icon\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\" size=\"lg\">\n          Large\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          Button\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          Group\n        </Button>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Nested
+
+Nests groups to separate page numbers from previous and next buttons.
+
+<Example kind="ui" name="button-group" story="Nested">
+
+<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupNestedExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"sm\">\n          1\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          2\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          3\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          4\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          5\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Previous\">\n          <ArrowLeftIcon />\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Next\">\n          <ArrowRightIcon />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With separator
+
+Divides two `secondary` buttons with `ButtonGroupSeparator`.
+
+<Example kind="ui" name="button-group" story="WithSeparator">
+
+<Code lang="tsx" code={"import { CopyIcon, ShareIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupWithSeparatorExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"secondary\">\n        <CopyIcon data-icon=\"inline-start\" />\n        Copy\n      </Button>\n      <ButtonGroupSeparator />\n      <Button variant=\"secondary\">\n        <ShareIcon data-icon=\"inline-start\" />\n        Share\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Plain
+
+Groups `plain` buttons with leading and trailing icons.
+
+<Example kind="ui" name="button-group" story="Plain">
+
+<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon, ShareIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupPlainExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"plain\">\n        <ArrowLeftIcon data-icon=\"inline-start\" />\n        Back\n      </Button>\n      <Button variant=\"plain\">\n        Forward\n        <ArrowRightIcon data-icon=\"inline-end\" />\n      </Button>\n      <Button variant=\"plain\">\n        <ShareIcon data-icon=\"inline-start\" />\n        Share\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Split button
+
+Pairs a primary action with an icon button for more options.
+
+<Example kind="ui" name="button-group" story="SplitButton">
+
+<Code lang="tsx" code={"import { CaretDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupSplitButtonExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button>Publish</Button>\n      <ButtonGroupSeparator className=\"bg-on-accent/30\" />\n      <Button size=\"icon\" aria-label=\"More options\">\n        <CaretDownIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With input
+
+Attaches a search button to an `Input`.
+
+<Example kind="ui" name="button-group" story="WithInput">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithInputExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Input aria-label=\"Search\" placeholder=\"Search...\" />\n      <Button variant=\"secondary\" size=\"icon-lg\" aria-label=\"Search\">\n        <MagnifyingGlassIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With input group
+
+Combines an add button with an `InputGroup` that has an inline voice button.
+
+<Example kind="ui" name="button-group" story="WithInputGroup">
+
+<Code lang="tsx" code={"import { MicrophoneIcon, PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Tooltip, TooltipContent, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function ButtonGroupWithInputGroupExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\" className=\"w-96\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup className=\"flex-1\">\n        <InputGroup>\n          <InputGroupInput\n            aria-label=\"Message\"\n            placeholder=\"Send a message...\"\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <Tooltip>\n              <TooltipTrigger\n                render={\n                  <InputGroupButton size=\"icon-xs\" aria-label=\"Voice mode\" />\n                }\n              >\n                <MicrophoneIcon />\n              </TooltipTrigger>\n              <TooltipContent>Voice mode</TooltipContent>\n            </Tooltip>\n          </InputGroupAddon>\n        </InputGroup>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With text
+
+Prefixes an input with a `ButtonGroupText` label and ends with a save button.
+
+<Example kind="ui" name="button-group" story="WithText">
+
+<Code lang="tsx" code={"import { LinkIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithTextExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroupText>\n        <LinkIcon />\n        https://\n      </ButtonGroupText>\n      <Input aria-label=\"Website\" placeholder=\"example.com\" />\n      <Button variant=\"secondary\" size=\"lg\">\n        Save\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With dropdown menu
+
+Opens a dropdown menu from the second half of a split button.
+
+<Example kind="ui" name="button-group" story="WithDropdownMenu">
+
+<Code lang="tsx" code={"import { CaretDownIcon, CopyIcon, ShareIcon, UserCircleMinusIcon, WarningCircleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupWithDropdownMenuExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"outline\">Follow</Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger\n          render={\n            <Button variant=\"outline\" size=\"icon\" aria-label=\"More options\" />\n          }\n        >\n          <CaretDownIcon />\n        </DropdownMenuTrigger>\n        <DropdownMenuContent align=\"end\" className=\"w-56\">\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <WarningCircleIcon />\n              Mute conversation\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <CopyIcon />\n              Copy link\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <ShareIcon />\n              Share conversation\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem variant=\"destructive\">\n              <UserCircleMinusIcon />\n              Unfollow\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With select
+
+Joins a currency `Select` to an amount input.
+
+<Example kind="ui" name="button-group" story="WithSelect">
+
+<Code lang="tsx" code={"import { ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\nimport { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst currencies = [\n  { value: \"usd\", label: \"$\" },\n  { value: \"eur\", label: \"€\" },\n  { value: \"gbp\", label: \"£\" },\n  { value: \"try\", label: \"₺\" },\n]\n\nexport function ButtonGroupWithSelectExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Select defaultValue=\"usd\" items={currencies}>\n          <SelectTrigger aria-label=\"Currency\" className=\"font-mono\">\n            <SelectValue />\n          </SelectTrigger>\n          <SelectContent>\n            <SelectGroup>\n              {currencies.map((currency) => (\n                <SelectItem key={currency.value} value={currency.value}>\n                  {currency.label}\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <Input aria-label=\"Amount\" placeholder=\"10.00\" inputMode=\"decimal\" />\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Send\">\n          <ArrowRightIcon />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### With popover
+
+Opens a popover from the second half of a split button.
+
+<Example kind="ui" name="button-group" story="WithPopover">
+
+<Code lang="tsx" code={"import { CaretDownIcon, SparkleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function ButtonGroupWithPopoverExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"outline\">\n        <SparkleIcon data-icon=\"inline-start\" />\n        Assistant\n      </Button>\n      <Popover>\n        <PopoverTrigger\n          render={\n            <Button variant=\"outline\" size=\"icon\" aria-label=\"Open popover\" />\n          }\n        >\n          <CaretDownIcon />\n        </PopoverTrigger>\n        <PopoverContent align=\"end\" className=\"w-80\">\n          <PopoverHeader>\n            <PopoverTitle>Start a new task</PopoverTitle>\n            <PopoverDescription>\n              Describe your task in natural language.\n            </PopoverDescription>\n          </PopoverHeader>\n          <Textarea\n            aria-label=\"Task description\"\n            placeholder=\"I need to...\"\n            className=\"resize-none\"\n          />\n        </PopoverContent>\n      </Popover>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+### Pagination
+
+A labelled group of page buttons that marks the current page with `aria-current`.
+
+<Example kind="ui" name="button-group" story="Pagination">
+
+<Code lang="tsx" code={"import { CaretLeftIcon, CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupPaginationExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\" aria-label=\"Pagination\">\n      <Button variant=\"outline\" size=\"icon\" aria-label=\"Previous page\">\n        <CaretLeftIcon />\n      </Button>\n      <Button variant=\"outline\">1</Button>\n      <Button variant=\"outline\" aria-current=\"page\">\n        2\n      </Button>\n      <Button variant=\"outline\">3</Button>\n      <Button variant=\"outline\" size=\"icon\" aria-label=\"Next page\">\n        <CaretRightIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"ButtonGroup","href":"#buttongroup","children":[{"name":"ButtonGroupSeparator","href":"#buttongroupseparator","children":[]},{"name":"ButtonGroupText","href":"#buttongrouptext","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### ButtonGroup
+
+The container that joins its children and sets the orientation.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ButtonGroupText
+
+A static, button-shaped label for text or icons.
+
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ButtonGroupSeparator
+
+A thin divider between adjacent items.
+
+<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `ButtonGroup` renders with `role="group"`; add an `aria-label` to name it.
+- Each button, input and trigger remains a separate tab stop in document order.
+- Icon-only buttons inside a group need an `aria-label`.
+- `ButtonGroupText` renders a `div` and is not focusable; use `render` to render a `label` element if it labels an input.
+
+## Notes
+
+- Styling hooks: `data-slot="button-group"`, `"button-group-text"` and `"button-group-separator"`, plus `data-orientation` on the group.
+- Focused items are raised with `z-10` so their focus ring is not clipped by neighbors.
+- In groups containing `outline` buttons, inputs, input groups and select triggers also get the `border-separator` color.

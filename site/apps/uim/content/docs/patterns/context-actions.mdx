@@ -1,0 +1,277 @@
+---
+title: Context Actions
+description: "Long press an element to open a bottom alert sheet with actions for it."
+eyebrow: Pattern
+generated: true
+---
+
+<Example id="patterns-context-actions--default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ImageIcon } from \"phosphor-react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsLabel, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsExample() {\n  return (\n    <ContextActions>\n      <ContextActionsTrigger\n        accessibilityLabel=\"Photo\"\n        className=\"h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80\"\n      >\n        <Icon as={ImageIcon} className=\"size-8 text-label-secondary\" />\n        <Text className=\"text-sm text-label-secondary\">Long press</Text>\n      </ContextActionsTrigger>\n      <ContextActionsContent>\n        <ContextActionsLabel>Photo</ContextActionsLabel>\n        <ContextActionsItem>Copy</ContextActionsItem>\n        <ContextActionsItem>Share</ContextActionsItem>\n        <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n      </ContextActionsContent>\n    </ContextActions>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ContextActionsExample: View {\n  var body: some View {\n    ContextActions {\n      ContextActionsLabel(\"Photo\")\n      ContextActionsItem(\"Copy\") {}\n      ContextActionsItem(\"Share\") {}\n      ContextActionsItem(\"Delete\", variant: .destructive) {}\n    } label: {\n      VStack(spacing: 8) {\n        Ph.image.regular\n          .frame(width: 32, height: 32)\n        Text(\"Long press\")\n          .textStyle(.sm)\n      }\n      .foregroundStyle(Color.labelSecondary)\n      .frame(maxWidth: .infinity)\n      .frame(height: 160)\n      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .accessibilityElement(children: .ignore)\n      .accessibilityLabel(Text(\"Photo\"))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Image\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.patterns.ContextActions\nimport com.esuiss.ui.patterns.ContextActionsContent\nimport com.esuiss.ui.patterns.ContextActionsItem\nimport com.esuiss.ui.patterns.ContextActionsLabel\nimport com.esuiss.ui.patterns.ContextActionsTrigger\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ContextActionsDefault() {\n    val colors = EsuissTheme.colors\n    val shape = RoundedCornerShape(Radius.xl2)\n    ContextActions {\n        ContextActionsTrigger(\n            modifier = Modifier\n                .fillMaxWidth()\n                .height(160.dp)\n                .clip(shape)\n                .background(colors.surfaceSecondary, shape),\n            label = \"Photo\",\n        ) {\n            Column(\n                modifier = Modifier.align(Alignment.Center),\n                horizontalAlignment = Alignment.CenterHorizontally,\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n            ) {\n                Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.labelSecondary)\n                Text(\"Long press\", style = Typography.sm.copy(color = colors.labelSecondary))\n            }\n        }\n        ContextActionsContent {\n            ContextActionsLabel(\"Photo\")\n            ContextActionsItem(\"Copy\", onClick = {})\n            ContextActionsItem(\"Share\", onClick = {})\n            ContextActionsItem(\"Delete\", onClick = {}, variant = MenuItemVariant.Destructive)\n        }\n    }\n}"} />
+
+</Example>
+
+`ContextActions` turns any content into a long-press target. Holding `ContextActionsTrigger` for 500 ms opens an `AlertSheet` with the actions grouped in one block and a separate Cancel button below.
+
+Use it for secondary actions on photos, messages or list rows that should not take up space on screen.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-actions"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-actions --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-actions --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="uniwind/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="nativewind/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+2. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="stylesheet/components/patterns/context-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Patterns/ContextActions.swift" />
+
+<SourceFile path="swift/Components/AlertSheet.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/ContextMenu.swift" />
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/DropdownMenu.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Select.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/Sheet.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Patterns/ActionList.swift" />
+
+<SourceFile path="swift/Patterns/Adaptive.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/patterns/ContextActions.kt" />
+
+<SourceFile path="kotlin/components/AlertSheet.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/DropdownMenu.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+<SourceFile path="kotlin/patterns/ActionList.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextActionsLabel, ContextActionsItem, ContextActionsSeparator } from \"@/components/patterns/context-actions\""} />
+
+<Code lang="tsx" code={"<ContextActions>\n  <ContextActionsTrigger\n    accessibilityLabel=\"Photo\"\n    className=\"h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80\"\n  >\n    <Icon as={ImageIcon} className=\"size-8 text-label-secondary\" />\n    <Text className=\"text-sm text-label-secondary\">Long press</Text>\n  </ContextActionsTrigger>\n  <ContextActionsContent>\n    <ContextActionsLabel>Photo</ContextActionsLabel>\n    <ContextActionsItem>Copy</ContextActionsItem>\n    <ContextActionsItem>Share</ContextActionsItem>\n    <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n  </ContextActionsContent>\n</ContextActions>"} />
+
+Wrap the target in `ContextActionsTrigger` and list `ContextActionsItem`s in `ContextActionsContent`. Add a `ContextActionsLabel` first to show a title.
+
+The open state is managed internally; use `onOpenChange` to react to it. `ContextActionsTrigger` accepts every `Pressable` prop, so `onPress` still works for a normal tap, and your own `onLongPress` runs before the sheet opens. Change the hold time with `delayLongPress`.
+
+## Examples
+
+### Inline
+
+A small message bubble as the trigger, with a custom `cancelLabel`.
+
+<Example id="patterns-context-actions--inline" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ContextActionsInlineExample() {\n  return (\n    <View className=\"items-start\">\n      <ContextActions>\n        <ContextActionsTrigger className=\"rounded-lg bg-control px-3 py-2\">\n          <Text>Hold this message</Text>\n        </ContextActionsTrigger>\n        <ContextActionsContent cancelLabel=\"Close\">\n          <ContextActionsItem>Reply</ContextActionsItem>\n          <ContextActionsItem>Forward</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ContextActionsInlineExample: View {\n  var body: some View {\n    ContextActions(cancelLabel: \"Close\") {\n      ContextActionsItem(\"Reply\") {}\n      ContextActionsItem(\"Forward\") {}\n    } label: {\n      Text(\"Hold this message\")\n        .textStyle(.base)\n        .foregroundStyle(Color.label)\n        .padding(.horizontal, 12)\n        .padding(.vertical, 8)\n        .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.patterns.ContextActions\nimport com.esuiss.ui.patterns.ContextActionsContent\nimport com.esuiss.ui.patterns.ContextActionsItem\nimport com.esuiss.ui.patterns.ContextActionsTrigger\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ContextActionsInline() {\n    val shape = RoundedCornerShape(Radius.lg)\n    Column {\n        ContextActions {\n            ContextActionsTrigger(\n                modifier = Modifier\n                    .clip(shape)\n                    .background(EsuissTheme.colors.control, shape)\n                    .padding(horizontal = 12.dp, vertical = 8.dp),\n            ) {\n                Text(\"Hold this message\")\n            }\n            ContextActionsContent(cancelLabel = \"Close\") {\n                ContextActionsItem(\"Reply\", onClick = {})\n                ContextActionsItem(\"Forward\", onClick = {})\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ContextActions
+
+The root that owns the open state.
+
+<PropsTable props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `false`, the sheet ignores outside presses. Defaults to `true`."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ContextActionsTrigger
+
+A `Pressable` that opens the sheet on long press.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ContextActionsContent
+
+The sheet with the grouped items and a Cancel button.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetContent>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button. Defaults to `Cancel`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ContextActionsLabel
+
+A title shown at the top of the group.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ContextActionsItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ContextActionsSeparator
+
+Kept for API parity; renders nothing.
+
+<PropsTable props={[{"name":"className","type":"string"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger has the hint "Long press for actions".
+- It adds `longpress` and `showActions` ("Show actions") accessibility actions, so screen reader users can open the sheet without holding.
+- Your own `accessibilityActions` and `onAccessibilityAction` are kept.
+
+## Notes
+
+- Item text uses `text-link`, or `text-danger` for the `destructive` variant.
+- On iOS the sheet renders in a full-window overlay so it appears above native screens.

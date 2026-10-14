@@ -1,0 +1,16 @@
+{
+  "description": "A track with one or more draggable thumbs for choosing a value or range.",
+  "overview": "`Slider` wraps the Base UI Slider primitive in a single component. It renders the track, the filled range and one thumb per value. The thumb is a wide capsule that stretches while it's dragged or pressed.\n\nUse a slider when an approximate value within a range matters more than a precise number, such as volume or brightness. For exact numbers, use a number field or `Input`.",
+  "usage": "Pass `defaultValue` or `value` as an array: one number for a single thumb, two for a range. `min` defaults to `0` and `max` to `100`; use `step` to snap to increments. Use `onValueChange` with `value` to control it, and set `orientation=\"vertical\"` for a vertical slider.",
+  "examples": {
+    "Range": "Uses two values to select a range with two thumbs.",
+    "Steps": "Moves in increments of 10.",
+    "Vertical": "Runs vertically.",
+    "Disabled": "Disables interaction and removes the thumb from the tab order."
+  },
+  "parts": {
+    "Slider": "The complete slider: track, filled range and thumbs."
+  },
+  "accessibility": "- Each thumb has the `slider` role with `aria-valuenow` and `aria-orientation`.\n- `aria-label` and `aria-labelledby` on `Slider` are passed to every thumb, so each thumb is named.\n- Arrow keys move the focused thumb by one step; `Home` and `End` jump to the minimum and maximum. Vertical sliders use the up and down arrow keys.\n- In a range, `Tab` moves between thumbs, and each thumb moves independently.\n- A disabled slider can't be focused.",
+  "notes": "- If neither `value` nor `defaultValue` is an array, the slider renders two thumbs. Always pass an array.\n- Parts carry `data-slot` attributes: `slider`, `slider-track`, `slider-range` and `slider-thumb`.\n- The range uses `bg-accent`, the track uses `bg-label-quaternary`, and disabled sliders switch to `accent-disabled` and `control-disabled`.\n- Thumbs use `thumbAlignment=\"edge\"`, so they stay inside the track at both ends."
+}

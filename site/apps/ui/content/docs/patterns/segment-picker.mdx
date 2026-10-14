@@ -1,0 +1,170 @@
+---
+title: Segment Picker
+description: "A segmented control for one exclusive choice that becomes a native select on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="segment-picker" story="Default">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerExample() {\n  return (\n    <SegmentPicker defaultValue=\"week\" aria-label=\"Period\">{periods}</SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+`SegmentPicker` presents a small set of mutually exclusive options, such as a time period or a view mode. On desktop it renders a suiss/ui `ToggleGroup` in which exactly one segment stays pressed; clicking the pressed segment keeps it selected. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect` so the choice fits narrow screens and uses the platform picker.
+
+Each `SegmentPickerItem` becomes a toggle on desktop and an `option` on mobile. Use it for two to five short options that change how content is displayed.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns segment-picker"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Native Select](/docs/components/native-select), [Toggle Group](/docs/components/toggle-group), `use-mobile`.
+
+2. Copy the source into `components/patterns/segment-picker.tsx`:
+
+<SourceFile path="components/patterns/segment-picker.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\""} />
+
+<Code lang="tsx" code={"<SegmentPicker defaultValue=\"week\" aria-label=\"Period\">{periods}</SegmentPicker>"} />
+
+- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. `onValueChange` fires only when the selection changes.
+- Without a value, no segment is pressed and the mobile select shows an empty disabled option.
+- On mobile each option shows `label`, then `aria-label`, then string children, then `value`. Give icon-only segments an `aria-label`, and segments with mixed content a `label`.
+- `variant` and `spacing` apply only on desktop. On mobile, `lg` falls back to the default size.
+- With `name`, desktop renders a hidden input so the value is submitted with a form.
+
+## Examples
+
+### Without value
+
+Starts with no segment pressed.
+
+<Example kind="pattern" name="segment-picker" story="WithoutValue">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerWithoutValueExample() {\n  return (\n    <SegmentPicker defaultValue={undefined} aria-label=\"Period\">{periods}</SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Outline
+
+Uses the `outline` variant.
+
+<Example kind="pattern" name="segment-picker" story="Outline">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerOutlineExample() {\n  return (\n    <SegmentPicker defaultValue=\"week\" aria-label=\"Period\" variant=\"outline\">{periods}</SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Spaced
+
+Separates the segments with `spacing`.
+
+<Example kind="pattern" name="segment-picker" story="Spaced">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerSpacedExample() {\n  return (\n    <SegmentPicker defaultValue=\"week\" aria-label=\"Period\" spacing={2}>{periods}</SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Shows the `sm`, `default` and `lg` sizes.
+
+<Example kind="pattern" name="segment-picker" story="Sizes">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"sm\", \"default\", \"lg\"] as const).map((size) => (\n        <SegmentPicker key={size} defaultValue=\"week\" aria-label=\"Period\" size={size}>\n          {periods}\n        </SegmentPicker>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With icons
+
+Uses icon-only segments named by `aria-label`.
+
+<Example kind="pattern" name="segment-picker" story="WithIcons">
+
+<Code lang="tsx" code={"import { ListIcon, SquaresFourIcon, TableIcon } from \"@phosphor-icons/react\"\nimport { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nexport function SegmentPickerWithIconsExample() {\n  return (\n    <SegmentPicker defaultValue=\"grid\" aria-label=\"View\">\n      <SegmentPickerItem value=\"list\" aria-label=\"List\">\n        <ListIcon />\n      </SegmentPickerItem>\n      <SegmentPickerItem value=\"grid\" aria-label=\"Grid\">\n        <SquaresFourIcon />\n      </SegmentPickerItem>\n      <SegmentPickerItem value=\"table\" aria-label=\"Table\">\n        <TableIcon />\n      </SegmentPickerItem>\n    </SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### With icons and text
+
+Combines icons and text, with `label` for the mobile option text.
+
+<Example kind="pattern" name="segment-picker" story="WithIconsAndText">
+
+<Code lang="tsx" code={"import { ListIcon, SquaresFourIcon, TableIcon } from \"@phosphor-icons/react\"\nimport { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nexport function SegmentPickerWithIconsAndTextExample() {\n  return (\n    <SegmentPicker defaultValue=\"grid\" aria-label=\"View\">\n      <SegmentPickerItem value=\"list\" label=\"List\">\n        <ListIcon data-icon=\"inline-start\" />\n        List\n      </SegmentPickerItem>\n      <SegmentPickerItem value=\"grid\" label=\"Grid\">\n        <SquaresFourIcon data-icon=\"inline-start\" />\n        Grid\n      </SegmentPickerItem>\n      <SegmentPickerItem value=\"table\" label=\"Table\">\n        <TableIcon data-icon=\"inline-start\" />\n        Table\n      </SegmentPickerItem>\n    </SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Disabled item
+
+Disables a single segment.
+
+<Example kind="pattern" name="segment-picker" story="DisabledItem">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nexport function SegmentPickerDisabledItemExample() {\n  return (\n    <SegmentPicker defaultValue=\"week\" aria-label=\"Period\">\n      <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n      <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n      <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n      <SegmentPickerItem value=\"year\" disabled>\n        Year\n      </SegmentPickerItem>\n    </SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables every segment.
+
+<Example kind="pattern" name="segment-picker" story="Disabled">
+
+<Code lang="tsx" code={"import { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nexport function SegmentPickerDisabledExample() {\n  return (\n    <SegmentPicker defaultValue=\"week\" aria-label=\"Period\" disabled>{periods}</SegmentPicker>\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Owns the value in state with `value` and `onValueChange`.
+
+<Example kind="pattern" name="segment-picker" story="Controlled">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SegmentPicker, SegmentPickerItem } from \"@/components/patterns/segment-picker\"\n\nconst periods = (\n  <>\n    <SegmentPickerItem value=\"day\">Day</SegmentPickerItem>\n    <SegmentPickerItem value=\"week\">Week</SegmentPickerItem>\n    <SegmentPickerItem value=\"month\">Month</SegmentPickerItem>\n    <SegmentPickerItem value=\"year\">Year</SegmentPickerItem>\n  </>\n)\n\nfunction ControlledExample(args: React.ComponentProps<typeof SegmentPicker>) {\n  const [value, setValue] = React.useState(\"month\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <SegmentPicker {...args} value={value} onValueChange={setValue}>\n        {periods}\n      </SegmentPicker>\n      <p className=\"text-sm text-label-secondary\">Selected: {value}</p>\n    </div>\n  )\n}\n\nexport function SegmentPickerControlledExample() {\n  return (\n    <ControlledExample defaultValue=\"week\" aria-label=\"Period\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"SegmentPicker","href":"#segmentpicker","children":[{"name":"SegmentPickerItem","href":"#segmentpickeritem","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### SegmentPicker
+
+The root that renders the toggle group or native select and holds the value.
+
+<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when the user selects a different segment."},{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"The visual style of the desktop segments."},{"name":"size","type":"\"sm\" | \"default\" | \"lg\"","default":"\"default\"","description":"The control size; `lg` maps to the default size on mobile."},{"name":"spacing","type":"number","default":"0","description":"The gap between desktop segments; `0` joins them."},{"name":"id","type":"string","description":"The ID of the group on desktop or the select on mobile."},{"name":"name","type":"string","description":"The field name submitted with a form."},{"name":"disabled","type":"boolean","description":"Disables every segment."},{"name":"className","type":"string","description":"Classes applied to the group on desktop or the select on mobile."},{"name":"children","type":"React.ReactNode","description":"The `SegmentPickerItem` elements."},{"name":"aria-label","type":"string","description":"The accessible name of the control."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the control."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SegmentPickerItem
+
+One option, rendered as a toggle on desktop and an `option` on mobile.
+
+<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value selected by this segment."},{"name":"label","type":"string","description":"Text for the mobile option, and the desktop content when there are no children."},{"name":"disabled","type":"boolean","description":"Prevents selecting this segment."},{"name":"className","type":"string","description":"Classes applied to the desktop toggle."},{"name":"children","type":"React.ReactNode","description":"The desktop segment content, such as text or an icon."},{"name":"aria-label","type":"string","description":"The accessible name of the segment, also used as mobile option text."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the root is a `group` named by `aria-label`, and each segment is a button with `aria-pressed`.
+- Disabled segments are disabled buttons and cannot be selected.
+- On mobile the control is a native `select`.
+
+## Notes
+
+Styling hooks: `data-slot="segment-picker"` and `segment-picker-item`. `SegmentPickerItem` throws when used outside `SegmentPicker`.

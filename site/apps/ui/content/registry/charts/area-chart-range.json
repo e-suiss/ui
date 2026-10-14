@@ -1,0 +1,6 @@
+{
+  "description": "A heart-rate band showing each hour's low-to-high range as a shaded area with an average line through it.",
+  "overview": "A health-style heart-rate card that shades each hour's low-to-high range and draws the average as a line through the band. Use it for any metric where the spread matters as much as the typical value, such as temperatures or response times.",
+  "usage": "Feed in one record per period with a two-number `range` array and an `average` value; the header's overall low and high are derived from the data. Adjust the value axis `domain` and `ticks` to fit your range, and change the unit text in the tooltip and header. Set both colors in `chartConfig`.",
+  "notes": "The value axis has a fixed domain, so readings outside it get clipped until you widen it. Focus the plot and use the arrow keys to move the tooltip between hours."
+}

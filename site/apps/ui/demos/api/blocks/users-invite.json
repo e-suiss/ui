@@ -1,0 +1,20 @@
+{
+  "name": "users-invite",
+  "type": "block",
+  "files": [
+    "components/blocks/users-invite.tsx"
+  ],
+  "requires": [
+    "button",
+    "item",
+    "select",
+    "sidebar",
+    "switch",
+    "toast"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

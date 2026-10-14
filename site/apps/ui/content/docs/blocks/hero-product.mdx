@@ -1,0 +1,42 @@
+---
+title: Hero Product
+description: "A centered product launch hero with an eyebrow, headline, two actions, a wide image, and a pricing line."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="hero-product">
+
+<SourceFile path="components/blocks/hero-product.tsx" fold={false} />
+
+</Example>
+
+A centered launch hero with an eyebrow, a large product name and tagline, Learn more and Buy buttons, a wide product image and a pricing line. Elements fade and rise in with a slight stagger on load. It is a static server component, ready for a product or feature launch page.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks hero-product"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button).
+
+2. Copy the source into `components/blocks/hero-product.tsx`:
+
+<SourceFile path="components/blocks/hero-product.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { HeroProduct } from \"@/components/blocks/hero-product\""} />
+
+<Code lang="tsx" code={"<HeroProduct />"} />
+
+Replace the copy inline and the image URL in the `image` constant. The buttons have no handlers, so wrap them in links to your learn-more and purchase pages, and update the pricing line.
+
+## Notes
+
+The image is an Unsplash placeholder. Entry animations are skipped when reduced motion is on.

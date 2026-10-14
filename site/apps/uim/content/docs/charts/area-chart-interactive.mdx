@@ -1,0 +1,180 @@
+---
+title: Area Chart Interactive
+description: "A stock price card with a gradient area, a range switcher from one day to five years and key stats."
+eyebrow: Chart
+generated: true
+---
+
+<Example id="charts-area--interactive" width={880} height={1241} platforms={["React Native","SwiftUI","Compose"]}>
+
+<SourceFile path="uniwind/components/charts/area-chart-interactive.tsx" fold={false} />
+
+<SourceFile path="swift/Charts/AreaChartInteractive.swift" fold={false} />
+
+<SourceFile path="kotlin/charts/AreaChartInteractive.kt" fold={false} />
+
+</Example>
+
+One price series drawn as a linear area with a fading gradient, a value axis on the right and a dashed `ReferenceLine` at the opening price. A `ToggleGroup` switches between 1D, 1W, 1M, 3M, 1Y and 5Y. Touching the plot reports the point through `onActiveIndexChange`, and the header updates the price, change and date for that point. The area turns green or red depending on whether the price is up or down, and open, high, low and volume sit below the chart. The area sets `isAnimationActive={false}`, so it draws without the enter animation and switches ranges instantly.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+
+<SourceFile path="uniwind/components/charts/area-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+
+<SourceFile path="nativewind/components/charts/area-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/charts/area-chart-interactive.tsx`:
+
+<SourceFile path="stylesheet/components/charts/area-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Charts/AreaChartInteractive.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Card.swift" />
+
+<SourceFile path="swift/Components/Chart.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Item.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+<SourceFile path="swift/Components/Toggle.swift" />
+
+<SourceFile path="swift/Components/ToggleGroup.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/charts/AreaChartInteractive.kt" />
+
+<SourceFile path="kotlin/components/Card.kt" />
+
+<SourceFile path="kotlin/components/Chart.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+<SourceFile path="kotlin/components/Toggle.kt" />
+
+<SourceFile path="kotlin/components/ToggleGroup.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartInteractive } from \"@/components/charts/area-chart-interactive\""} />
+
+<Code lang="tsx" code={"<AreaChartInteractive />"} />
+
+Replace `generate()` with your price history for each range, and set the symbol, company name and `LAST_PRICE`. Volume values are hard-coded in `stats`. The component takes no props.

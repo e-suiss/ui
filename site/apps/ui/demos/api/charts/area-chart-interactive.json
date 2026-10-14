@@ -1,0 +1,17 @@
+{
+  "name": "area-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,226 @@
+---
+title: Toast
+description: "Brief, stacked notifications that appear at the bottom of the screen and dismiss themselves."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="toast" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction DefaultExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast.add({\n          title: \"Event created\",\n          description: \"Friday, October 3 at 9:00 AM\",\n        })\n      }\n    >\n      Show toast\n    </Button>\n  )\n}\n\nexport function ToastExample() {\n  return (\n    <DefaultExample />\n  )\n}"} />
+
+</Example>
+
+Toasts are built on the Base UI Toast primitive. `Toaster` is the ready-made setup: it combines `ToastProvider`, `ToastPortal` and `ToastViewport`, and renders each queued toast as a `Toast` with a `ToastContent` row holding a status icon, `ToastTitle`, `ToastDescription`, `ToastAction` and `ToastClose`.
+
+New toasts stack at the bottom of the screen, with older ones scaled down behind, and expand into a list on hover or focus. A toast's `type` adds a colored icon: `success`, `info`, `warning` or `error`, or a progress ring for `loading`. Use toasts for short confirmations and background results; for messages that need a decision, use `AlertDialog`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/ui/toast.tsx`:
+
+<SourceFile path="components/ui/toast.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from \"@/components/ui/toast\""} />
+
+<Code lang="tsx" code={"<DefaultExample />"} />
+
+Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
+
+Pass `actionProps` to show a `ToastAction` button, and `timeout` in milliseconds to change how long a toast stays; `0` keeps it until it's closed. `toast.promise(promise, { loading, success, error })` shows a loading toast that turns into the success or error toast when the promise settles.
+
+`Toaster` uses the shared `toast` manager by default. Pass `toastManager` to use one created with `createToastManager()` instead. Use the individual parts only to build a custom toast list.
+
+## Examples
+
+### Types
+
+Shows each toast `type` with its icon and color.
+
+<Example kind="ui" name="toast" story="Types">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TypesExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"success\",\n            title: \"Changes saved\",\n            description: \"Your profile has been updated.\",\n          })\n        }\n      >\n        Success\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"info\",\n            title: \"New version available\",\n            description: \"Refresh the page to get the latest features.\",\n          })\n        }\n      >\n        Info\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Storage almost full\",\n            description: \"You have used 90% of your storage.\",\n          })\n        }\n      >\n        Warning\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"error\",\n            title: \"Upload failed\",\n            description: \"The file is larger than 10 MB.\",\n          })\n        }\n      >\n        Error\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"loading\",\n            title: \"Uploading file\",\n            description: \"This may take a few seconds.\",\n          })\n        }\n      >\n        Loading\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTypesExample() {\n  return (\n    <TypesExample />\n  )\n}"} />
+
+</Example>
+
+### Title only
+
+Shows a toast with a title and no description.
+
+<Example kind="ui" name="toast" story="TitleOnly">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TitleOnlyExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => toast.add({ type: \"success\", title: \"8 photos uploaded\" })}\n    >\n      Upload photos\n    </Button>\n  )\n}\n\nexport function ToastTitleOnlyExample() {\n  return (\n    <TitleOnlyExample />\n  )\n}"} />
+
+</Example>
+
+### With action
+
+Adds an `Undo` action button that closes the toast.
+
+<Example kind="ui" name="toast" story="WithAction">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction WithActionExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => {\n        const id = toast.add({\n          title: \"Message archived\",\n          description: \"The conversation was moved to your archive.\",\n          actionProps: {\n            children: \"Undo\",\n            onClick: () => toast.close(id),\n          },\n        })\n      }}\n    >\n      Archive message\n    </Button>\n  )\n}\n\nexport function ToastWithActionExample() {\n  return (\n    <WithActionExample />\n  )\n}"} />
+
+</Example>
+
+### Timeout
+
+Compares a short `timeout` with a persistent toast that stays until closed.
+
+<Example kind="ui" name="toast" story="Timeout">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TimeoutExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() => toast.add({ title: \"Link copied\", timeout: 1500 })}\n      >\n        Short\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Connection lost\",\n            description: \"Stays until you close it.\",\n            timeout: 0,\n          })\n        }\n      >\n        Persistent\n      </Button>\n      <Button variant=\"outline\" onClick={() => toast.close()}>\n        Close all\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTimeoutExample() {\n  return (\n    <TimeoutExample />\n  )\n}"} />
+
+</Example>
+
+### Promise toast
+
+Uses `toast.promise` to move from loading to success.
+
+<Example kind="ui" name="toast" story="PromiseToast">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseToastExample() {\n  return (\n    <PromiseExample />\n  )\n}"} />
+
+</Example>
+
+### Promise rejected
+
+Uses `toast.promise` to move from loading to an error when the promise rejects.
+
+<Example kind="ui" name="toast" story="PromiseRejected">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseRejectedExample() {\n  return (\n    <PromiseExample fail />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ToastProvider
+
+Provides a toast manager to the parts inside it.
+
+<PropsTable extends={["ToastPrimitive.Provider.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToastPortal
+
+Renders the viewport into a portal.
+
+<PropsTable extends={["ToastPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ToastViewport
+
+The fixed region at the bottom of the screen that holds the stack.
+
+<PropsTable extends={["ToastPrimitive.Viewport.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### Toast
+
+A single toast in the stack, positioned and animated by its index.
+
+<PropsTable extends={["ToastPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ToastContent
+
+The row that lays out a toast's icon, text and buttons.
+
+<PropsTable extends={["ToastPrimitive.Content.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ToastTitle
+
+The toast's title, which names it.
+
+<PropsTable extends={["ToastPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ToastDescription
+
+Supporting text, which describes the toast.
+
+<PropsTable extends={["ToastPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ToastAction
+
+An optional action button, rendered as a small outline `Button`.
+
+<PropsTable extends={["ToastPrimitive.Action.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ToastClose
+
+An icon button that dismisses the toast.
+
+<PropsTable extends={["ToastPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### Toaster
+
+The complete setup: provider, portal, viewport and the rendered toasts.
+
+<PropsTable extends={["ToastPrimitive.Provider.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The viewport is a `region` landmark named `Notifications`.
+- Each toast has the `dialog` role, named by its title and described by its description.
+- `ToastClose` has the accessible name `Close toast`.
+- Prefer an action that can also be reached elsewhere, since toasts dismiss themselves after their timeout.
+
+## Notes
+
+- On small screens the stack spans the bottom of the screen; from the `sm` breakpoint it sits in the bottom end corner, up to `max-w-sm` wide.
+- Toasts can be swiped away; the exit animation follows the swipe direction.
+- Parts carry `data-slot` attributes such as `toast-viewport`, `toast`, `toast-content`, `toast-icon` and `toast-close`.
+- Icons are filled Phosphor icons in `text-green`, `text-accent`, `text-orange` and `text-danger`; the loading ring uses `stroke-accent`. The ring's progress animation is removed when reduced motion is preferred.

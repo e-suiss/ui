@@ -1,0 +1,35 @@
+{
+  "description": "A searchable menu of commands, used inline or as a command palette in a dialog.",
+  "overview": "Command is built on cmdk. The `Command` root filters and orders its items as people type into `CommandInput`. `CommandList` holds the results: `CommandGroup` sections with a `heading`, `CommandItem` rows, `CommandSeparator` dividers, and a `CommandEmpty` message shown when nothing matches. `CommandShortcut` displays a keyboard shortcut at the end of an item.\n\n`CommandDialog` places a `Command` in a modal dialog for a command palette. Use a command menu for actions and navigation that people search by name. To pick a value for a form field, use a combobox instead.",
+  "usage": "Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `open` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.\n\nSet `mod` on `CommandShortcut` to prefix the shortcut with the platform modifier key: `⌘` on Apple platforms and `Ctrl+` elsewhere.",
+  "examples": {
+    "Empty": "A command menu with no items that always shows its empty message.",
+    "Dialog": "A command palette in a dialog, opened from a button, that closes with Escape and returns focus to the button.",
+    "DialogOpen": "A command palette that is open when the page loads."
+  },
+  "parts": {
+    "Command": "The root that filters and manages the items.",
+    "CommandDialog": "A modal dialog that presents a command menu as a palette.",
+    "CommandInput": "The search field, shown with a magnifying glass icon.",
+    "CommandList": "The scrollable container for results.",
+    "CommandEmpty": "Content shown when no items match the search.",
+    "CommandGroup": "A section of related items with an optional heading.",
+    "CommandSeparator": "A divider between groups.",
+    "CommandItem": "A selectable command.",
+    "CommandShortcut": "Displays a keyboard shortcut at the end of an item."
+  },
+  "props": {
+    "CommandDialog": {
+      "title": "The dialog's accessible title. It is visually hidden.",
+      "description": "The dialog's accessible description. It is visually hidden.",
+      "className": "Classes applied to the dialog's content panel.",
+      "showCloseButton": "Shows the dialog's close button.",
+      "children": "The dialog's content, typically a `Command`."
+    },
+    "CommandShortcut": {
+      "mod": "Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."
+    }
+  },
+  "accessibility": "- The input has the `combobox` role and items have the `option` role. The highlighted item sets `aria-selected` and disabled items set `aria-disabled`.\n- The first item is highlighted by default. Arrow keys move the highlight and skip disabled items; Enter selects the highlighted item.\n- `CommandDialog` renders a `dialog` named by its `title`, moves focus inside when it opens, closes with Escape, and returns focus to the element that opened it.\n- `CommandShortcut` is hidden on small screens.",
+  "notes": "- Styling hooks: `data-slot` values `command`, `command-input-wrapper`, `command-input`, `command-list`, `command-empty`, `command-group`, `command-separator`, `command-item` and `command-shortcut`.\n- The highlighted item gets `data-selected` and is filled with the `accent` color. Disabled items get `data-disabled=\"true\"`.\n- An item with `data-checked=\"true\"` shows a check mark, unless it contains a `CommandShortcut`.\n- Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `surface-raised` background."
+}

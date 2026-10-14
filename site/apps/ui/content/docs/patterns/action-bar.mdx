@@ -1,0 +1,189 @@
+---
+title: Action Bar
+description: "A row of menus that renders as a menubar on desktop and a single More actions sheet on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="action-bar" story="Default">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar>\n        <FileMenu />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`ActionBar` groups several `ActionBarMenu`s, each with a `ActionBarTrigger` and `ActionBarContent`. On desktop it renders a `Menubar`: each menu is a `MenubarMenu`, and hovering another trigger while a menu is open switches menus.
+
+Below the `48rem` breakpoint (`useIsMobile`), the bar collapses into a ghost icon `Button` that opens a `Drawer`. The drawer lists every menu's trigger as a row; choosing a row closes the drawer and opens that menu's items in an `AlertSheet`, with a Cancel button appended. Use it for toolbar-style command groups, such as File, Edit and View, that need to fit on small screens.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns action-bar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Menubar](/docs/components/menubar), `use-mobile`.
+
+3. Copy the source into `components/patterns/action-bar.tsx`:
+
+<SourceFile path="components/patterns/action-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator, ActionBarShortcut } from \"@/components/patterns/action-bar\""} />
+
+<Code lang="tsx" code={"<div className=\"min-h-96\">\n  <ActionBar>\n    <FileMenu />\n    <EditMenu />\n    <ViewMenu />\n  </ActionBar>\n</div>"} />
+
+Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the mobile More actions drawer only; on desktop they have no effect. `ActionBarMenu` accepts its own `open`, `defaultOpen` and `onOpenChange` for an individual menu, which apply on desktop and to the mobile sheet. Use `ActionBarShortcut` with `mod` to prefix the platform modifier key.
+
+## Examples
+
+### With icons
+
+Places an icon before each item in the Edit menu, including a destructive Delete item.
+
+<Example kind="pattern" name="action-bar" story="WithIcons">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarWithIconsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar>\n        <FileMenu />\n        <EditMenu withIcons />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### By default
+
+Opens the File menu on first render using `defaultOpen` on the bar and the menu.
+
+<Example kind="pattern" name="action-bar" story="OpenByDefault">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarOpenByDefaultExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar defaultOpen>\n        <FileMenu defaultOpen />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Not dismissible
+
+Sets `dismissible` to `false` so mobile sheets close only through an action or Cancel.
+
+<Example kind="pattern" name="action-bar" story="NotDismissible">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarNotDismissibleExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar dismissible={false}>\n        <FileMenu />\n        <EditMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Custom labels
+
+Renames the mobile More actions button and the sheet's Cancel button with `moreLabel` and `cancelLabel`.
+
+<Example kind="pattern" name="action-bar" story="CustomLabels">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarCustomLabelsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar moreLabel=\"Document actions\" cancelLabel=\"Close\">\n        <FileMenu />\n        <EditMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Detaches the mobile More actions drawer from the screen edges with `floating`.
+
+<Example kind="pattern" name="action-bar" story="Floating">
+
+<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarFloatingExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar floating>\n        <FileMenu />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### ActionBar
+
+The root that renders a `Menubar` on desktop and a More actions button with a `Drawer` on mobile.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"open","type":"boolean","description":"Controls whether the mobile More actions drawer is open."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the mobile More actions drawer starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the mobile More actions drawer opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."},{"name":"moreLabel","type":"string","default":"\"More actions\"","description":"Accessible label of the mobile More actions button and title of its drawer."},{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button appended to each mobile sheet."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ActionBarMenu
+
+One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof MenubarMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when this menu opens or closes."},{"name":"children","type":"React.ReactNode","description":"The menu's `ActionBarTrigger` and `ActionBarContent`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ActionBarTrigger
+
+The menu's button; a menubar trigger on desktop and a drawer row with a chevron on mobile.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ActionBarContent
+
+The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent` with a Cancel button on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof MenubarContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ActionBarLabel
+
+A non-interactive heading; a menu label on desktop and the sheet title on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ActionBarItem
+
+An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ActionBarSeparator
+
+A divider between item groups, rendered on desktop only.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ActionBarShortcut
+
+A keyboard shortcut hint aligned to the end of an item, rendered on desktop only.
+
+<PropsTable extends={["React.ComponentProps<typeof MenubarShortcut>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the bar has the `menubar` role and each trigger and item has the `menuitem` role.
+- Disabled items expose `aria-disabled="true"`.
+- `Escape` closes an open menu and returns focus to its trigger.
+- On mobile the More actions button is labelled by `moreLabel`, and each drawer row has `aria-haspopup="dialog"`.
+
+## Notes
+
+Parts carry `data-slot` values such as `action-bar`, `action-bar-menu`, `action-bar-trigger`, `action-bar-content`, `action-bar-item`, `action-bar-more`, `action-bar-label`, `action-bar-separator` and `action-bar-shortcut`. `ActionBarSeparator` and `ActionBarShortcut` render nothing on mobile.

@@ -1,0 +1,46 @@
+---
+title: Area Chart Range
+description: "A heart-rate band showing each hour's low-to-high range as a shaded area with an average line through it."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-range">
+
+<SourceFile path="components/charts/area-chart-range.tsx" fold={false} />
+
+</Example>
+
+A health-style heart-rate card that shades each hour's low-to-high range and draws the average as a line through the band. Use it for any metric where the spread matters as much as the typical value, such as temperatures or response times.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-range"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-range.tsx`:
+
+<SourceFile path="components/charts/area-chart-range.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartRange } from \"@/components/charts/area-chart-range\""} />
+
+<Code lang="tsx" code={"<AreaChartRange />"} />
+
+Feed in one record per period with a two-number `range` array and an `average` value; the header's overall low and high are derived from the data. Adjust the value axis `domain` and `ticks` to fit your range, and change the unit text in the tooltip and header. Set both colors in `chartConfig`.
+
+## Notes
+
+The value axis has a fixed domain, so readings outside it get clipped until you widen it. Focus the plot and use the arrow keys to move the tooltip between hours.

@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Line
+description: "A stacked bar chart whose tooltip marks each series with a thin vertical color bar."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-line">
+
+<SourceFile path="components/charts/tooltip-chart-line.tsx" fold={false} />
+
+</Example>
+
+A stacked bar chart that shows the line tooltip indicator, a thin vertical bar in each series' color. It reads cleanly in dense tooltips and pairs well with line and area charts.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-line"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-line.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-line.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartLine } from \"@/components/charts/tooltip-chart-line\""} />
+
+<Code lang="tsx" code={"<TooltipChartLine />"} />
+
+Set `indicator` on `ChartTooltipContent` to `line`. Replace `chartData` and the series in `chartConfig` with your own.
+
+## Notes
+
+The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.

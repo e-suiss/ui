@@ -1,0 +1,148 @@
+{
+  "name": "action-bar",
+  "type": "pattern",
+  "files": [
+    "components/patterns/action-bar.tsx"
+  ],
+  "requires": [
+    "alert-sheet",
+    "button",
+    "drawer",
+    "menubar",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithIcons",
+    "OpenByDefault",
+    "NotDismissible",
+    "CustomLabels",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "ActionBar",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "moreLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"More actions\""
+        },
+        {
+          "name": "cancelLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Cancel\""
+        }
+      ]
+    },
+    {
+      "name": "ActionBarMenu",
+      "extends": [
+        "React.ComponentProps<typeof MenubarMenu>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ActionBarTrigger",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ActionBarContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>",
+        "React.ComponentProps<typeof MenubarContent>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ActionBarLabel",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ActionBarItem",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ActionBarSeparator",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ActionBarShortcut",
+      "extends": [
+        "React.ComponentProps<typeof MenubarShortcut>"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "inbox-categories",
+  "type": "block",
+  "files": [
+    "components/blocks/inbox-categories.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "split-view",
+    "textarea",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

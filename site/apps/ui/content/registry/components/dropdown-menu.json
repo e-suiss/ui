@@ -1,0 +1,50 @@
+{
+  "description": "A menu of actions or options that opens from a button.",
+  "overview": "Dropdown menu wraps the Base UI Menu. The `DropdownMenu` root manages the open state and `DropdownMenuTrigger` opens it. `DropdownMenuContent` renders the menu in a portal, positioned below the trigger. Inside it, use `DropdownMenuItem` for actions, `DropdownMenuCheckboxItem` for toggles, and `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` for a single choice. Organize items with `DropdownMenuGroup`, `DropdownMenuLabel` and `DropdownMenuSeparator`, and nest a submenu with `DropdownMenuSub`, `DropdownMenuSubTrigger` and `DropdownMenuSubContent`. `DropdownMenuShortcut` displays a keyboard shortcut at the end of an item.\n\nUse a dropdown menu for actions and settings behind a visible button. For actions on an object opened with a right-click, use a context menu; to choose a value for a form field, use a select.",
+  "usage": "The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Selecting an item closes the menu.\n\nCheckbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant=\"destructive\"` on items that delete or remove something.",
+  "examples": {
+    "Checkboxes": "Controlled checkbox items that toggle interface elements, including a disabled item.",
+    "RadioGroup": "A controlled radio group for choosing a single panel position.",
+    "Inset": "A labelled group of inset items without icons, each with a keyboard shortcut."
+  },
+  "parts": {
+    "DropdownMenu": "The root that manages the menu's open state.",
+    "DropdownMenuPortal": "Renders its children into a portal outside the current DOM hierarchy.",
+    "DropdownMenuTrigger": "The button that opens the menu.",
+    "DropdownMenuContent": "The menu panel, rendered in a portal and positioned relative to the trigger.",
+    "DropdownMenuGroup": "Groups related items.",
+    "DropdownMenuLabel": "A heading for a group of items.",
+    "DropdownMenuItem": "An action in the menu.",
+    "DropdownMenuSub": "The root of a nested submenu.",
+    "DropdownMenuSubTrigger": "The item that opens a submenu, shown with a trailing caret.",
+    "DropdownMenuSubContent": "The panel of a submenu, opened beside its trigger.",
+    "DropdownMenuCheckboxItem": "An item that toggles a setting on or off and shows a check mark when on.",
+    "DropdownMenuRadioGroup": "Groups radio items so that only one can be selected.",
+    "DropdownMenuRadioItem": "An item in a radio group that shows a check mark when selected.",
+    "DropdownMenuSeparator": "A divider between groups of items.",
+    "DropdownMenuShortcut": "Displays a keyboard shortcut at the end of an item."
+  },
+  "props": {
+    "DropdownMenuLabel": {
+      "inset": "Adds leading padding so the label aligns with items that have an icon or indicator."
+    },
+    "DropdownMenuItem": {
+      "inset": "Adds leading padding so the item aligns with items that have an icon or indicator.",
+      "variant": "`destructive` colors the item and its icon with the `danger` color."
+    },
+    "DropdownMenuSubTrigger": {
+      "inset": "Adds leading padding so the trigger aligns with items that have an icon or indicator."
+    },
+    "DropdownMenuCheckboxItem": {
+      "inset": "Adds leading padding so the item aligns with other inset items."
+    },
+    "DropdownMenuRadioItem": {
+      "inset": "Adds leading padding so the item aligns with other inset items."
+    },
+    "DropdownMenuShortcut": {
+      "mod": "Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."
+    }
+  },
+  "accessibility": "- The trigger sets `aria-expanded`. The menu has the `menu` role; items have the `menuitem`, `menuitemcheckbox` or `menuitemradio` role, and checkbox and radio items set `aria-checked`.\n- Groups have the `group` role and take their name from `DropdownMenuLabel`.\n- Opening the menu from the keyboard focuses the first item. Arrow keys move between items, and disabled items set `aria-disabled`.\n- On a submenu trigger, the Right Arrow opens the submenu and moves focus into it, and the Left Arrow returns to the trigger. The arrow directions follow the reading direction.\n- Escape closes the menu and returns focus to the trigger.\n- `DropdownMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.",
+  "notes": "- Styling hooks: `data-slot` values such as `dropdown-menu-content`, `dropdown-menu-item`, `dropdown-menu-checkbox-item`, `dropdown-menu-checkbox-item-indicator`, `dropdown-menu-radio-item`, `dropdown-menu-radio-item-indicator`, `dropdown-menu-sub-trigger`, `dropdown-menu-label`, `dropdown-menu-separator` and `dropdown-menu-shortcut`.\n- Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.\n- By default the menu opens below the trigger, aligned to `start`, and matches the trigger's width with a minimum of `12rem`. Override the width with `className`.\n- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger`, `danger-surface` and `separator` tokens."
+}

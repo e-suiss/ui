@@ -1,0 +1,42 @@
+---
+title: Radar Chart Grid Circle
+description: "A single radar shape drawn over circular rings instead of polygonal grid lines."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-grid-circle">
+
+<SourceFile path="components/charts/radar-chart-grid-circle.tsx" fold={false} />
+
+</Example>
+
+The default radar shape drawn over concentric circles instead of polygon rings. Circles look softer and avoid suggesting straight edges between axes that the data doesn't have.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-grid-circle"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-grid-circle.tsx`:
+
+<SourceFile path="components/charts/radar-chart-grid-circle.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartGridCircle } from \"@/components/charts/radar-chart-grid-circle\""} />
+
+<Code lang="tsx" code={"<RadarChartGridCircle />"} />
+
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Switch back to polygon rings by removing `gridType` from `PolarGrid`.

@@ -1,0 +1,216 @@
+---
+title: Input Group
+description: "A text field with icons, text, buttons or keyboard hints attached inside its border."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="input-group" story="Default">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function InputGroupExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Search...\" />\n        <InputGroupAddon>\n          <MagnifyingGlassIcon />\n        </InputGroupAddon>\n        <InputGroupAddon align=\"inline-end\">12 results</InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`InputGroup` is the container that draws the field's background, border and focus ring. Inside it, place one control, either `InputGroupInput` or `InputGroupTextarea`, and one or more `InputGroupAddon` elements. An addon can hold icons, `InputGroupText`, `InputGroupButton` or a `Kbd`, and is placed before, after, above or below the control with its `align` prop.
+
+Use an input group when supporting content belongs inside the field, such as a search icon, a currency symbol, a clear button or a send button. For a plain field, use `Input`; for a field with a filterable list of options, use `Combobox`, which is built on this component.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-group"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input), [Textarea](/docs/components/textarea).
+
+3. Copy the source into `components/ui/input-group.tsx`:
+
+<SourceFile path="components/ui/input-group.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea } from \"@/components/ui/input-group\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <InputGroup>\n    <InputGroupInput placeholder=\"Search...\" />\n    <InputGroupAddon>\n      <MagnifyingGlassIcon />\n    </InputGroupAddon>\n    <InputGroupAddon align=\"inline-end\">12 results</InputGroupAddon>\n  </InputGroup>\n</div>"} />
+
+Addons are positioned with CSS order, so you can place them before or after the control in your markup. `inline-start` and `inline-end` sit beside the control; `block-start` and `block-end` sit above or below it and make the group grow to fit. Clicking an addon outside its buttons focuses the group's `input`.
+
+`InputGroupButton` defaults to `type="button"`, so it does not submit a surrounding form unless you set `type="submit"`. Set `aria-invalid` on the control to show the error style on the whole group. To dim a disabled group's addons, disable the control and set `data-disabled="true"` on `InputGroup`.
+
+## Examples
+
+### Search
+
+A search field with a clear button that appears only when there is text.
+
+<Example kind="ui" name="input-group" story="Search">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon, XCircleIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\n\nfunction SearchField() {\n  const [query, setQuery] = React.useState(\"MacBook\")\n  return (\n    <InputGroup>\n      <InputGroupInput\n        aria-label=\"Search\"\n        placeholder=\"Search\"\n        value={query}\n        onChange={(event) => setQuery(event.target.value)}\n      />\n      <InputGroupAddon>\n        <MagnifyingGlassIcon />\n      </InputGroupAddon>\n      {query && (\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupButton\n            size=\"icon-xs\"\n            aria-label=\"Clear search\"\n            className=\"text-label-secondary\"\n            onClick={() => setQuery(\"\")}\n          >\n            <XCircleIcon weight=\"fill\" />\n          </InputGroupButton>\n        </InputGroupAddon>\n      )}\n    </InputGroup>\n  )\n}\n\nexport function InputGroupSearchExample() {\n  return (\n    <div className=\"w-96\">\n      <SearchField />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With text
+
+Text addons for a currency symbol and code, and for a URL prefix and suffix.
+
+<Example kind="ui" name="input-group" story="WithText">
+
+<Code lang="tsx" code={"import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from \"@/components/ui/input-group\"\n\nexport function InputGroupWithTextExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        <InputGroup>\n          <InputGroupAddon>\n            <InputGroupText>$</InputGroupText>\n          </InputGroupAddon>\n          <InputGroupInput placeholder=\"0.00\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupText>USD</InputGroupText>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupAddon>\n            <InputGroupText>https://</InputGroupText>\n          </InputGroupAddon>\n          <InputGroupInput placeholder=\"example.com\" className=\"ps-0.5\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupText>.com</InputGroupText>\n          </InputGroupAddon>\n        </InputGroup>\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With buttons
+
+Buttons inside the field for copying a link, subscribing, and showing information.
+
+<Example kind="ui" name="input-group" story="WithButtons">
+
+<Code lang="tsx" code={"import { CheckIcon, CopyIcon, InfoIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function InputGroupWithButtonsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        <InputGroup>\n          <InputGroupInput\n            defaultValue=\"https://esuiss.dev/invite/x7k2\"\n            aria-label=\"Invite link\"\n            readOnly\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton size=\"icon-xs\" aria-label=\"Copy\">\n              <CopyIcon />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput placeholder=\"Enter your email\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton variant=\"secondary\">Subscribe</InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput placeholder=\"Username\" defaultValue=\"janedoe\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton size=\"icon-xs\" aria-label=\"Info\">\n              <InfoIcon />\n            </InputGroupButton>\n            <CheckIcon className=\"text-green-600\" />\n          </InputGroupAddon>\n        </InputGroup>\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Button sizes
+
+The `xs`, `icon-xs` and `icon-sm` button sizes in one addon.
+
+<Example kind="ui" name="input-group" story="ButtonSizes">
+
+<Code lang="tsx" code={"import { CopyIcon, PaperclipIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function InputGroupButtonSizesExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Type a command...\" />\n        <InputGroupAddon align=\"inline-end\">\n          <InputGroupButton size=\"xs\">Extra small</InputGroupButton>\n          <InputGroupButton size=\"icon-xs\" aria-label=\"Copy\">\n            <CopyIcon />\n          </InputGroupButton>\n          <InputGroupButton size=\"icon-sm\" aria-label=\"Attach\">\n            <PaperclipIcon />\n          </InputGroupButton>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With kbd
+
+A search field with a keyboard shortcut hint at the end.
+
+<Example kind="ui" name="input-group" story="WithKbd">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Kbd } from \"@/components/ui/kbd\"\n\nexport function InputGroupWithKbdExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Search documentation...\" />\n        <InputGroupAddon>\n          <MagnifyingGlassIcon />\n        </InputGroupAddon>\n        <InputGroupAddon align=\"inline-end\">\n          <Kbd mod>K</Kbd>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Block addons
+
+Addons placed above and below the input with `block-start` and `block-end`.
+
+<Example kind="ui" name="input-group" story="BlockAddons">
+
+<Code lang="tsx" code={"import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from \"@/components/ui/input-group\"\n\nexport function InputGroupBlockAddonsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        <InputGroup>\n          <InputGroupInput placeholder=\"Enter a title\" />\n          <InputGroupAddon align=\"block-start\">\n            <InputGroupText>Title</InputGroupText>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput placeholder=\"Enter an amount\" />\n          <InputGroupAddon align=\"block-end\">\n            <InputGroupText>Minimum payment is $5.00</InputGroupText>\n          </InputGroupAddon>\n        </InputGroup>\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With textarea
+
+A chat-style textarea with attach and send buttons and usage text in a bottom addon.
+
+<Example kind="ui" name="input-group" story="WithTextarea">
+
+<Code lang="tsx" code={"import { ArrowUpIcon, PaperclipIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from \"@/components/ui/input-group\"\n\nexport function InputGroupWithTextareaExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup>\n        <InputGroupTextarea placeholder=\"Ask, search, or chat...\" />\n        <InputGroupAddon align=\"block-end\">\n          <InputGroupButton size=\"icon-xs\" aria-label=\"Attach file\">\n            <PaperclipIcon />\n          </InputGroupButton>\n          <InputGroupText className=\"ms-auto\">52% used</InputGroupText>\n          <InputGroupButton\n            variant=\"default\"\n            size=\"icon-xs\"\n            className=\"rounded-full\"\n            aria-label=\"Send\"\n          >\n            <ArrowUpIcon />\n          </InputGroupButton>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+An invalid input that shows the error style on the whole group.
+
+<Example kind="ui" name="input-group" story="Invalid">
+
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function InputGroupInvalidExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup>\n        <InputGroupInput defaultValue=\"jane@\" aria-label=\"Email\" aria-invalid />\n        <InputGroupAddon align=\"inline-end\">\n          <InfoIcon className=\"text-danger\" />\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled group with a dimmed background and addon.
+
+<Example kind="ui" name="input-group" story="Disabled">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function InputGroupDisabledExample() {\n  return (\n    <div className=\"w-96\">\n      <InputGroup data-disabled=\"true\">\n        <InputGroupInput placeholder=\"Search...\" disabled />\n        <InputGroupAddon>\n          <MagnifyingGlassIcon />\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"InputGroup","href":"#inputgroup","children":[{"name":"InputGroupInput","href":"#inputgroupinput","children":[]},{"name":"InputGroupAddon","href":"#inputgroupaddon","children":[{"name":"InputGroupText","href":"#inputgrouptext","children":[]},{"name":"InputGroupButton","href":"#inputgroupbutton","children":[]}]},{"name":"InputGroupTextarea","href":"#inputgrouptextarea","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### InputGroup
+
+The container that draws the field and holds the control and addons.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputGroupAddon
+
+Holds icons, text or buttons beside, above or below the control.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"inline-start\" | \"inline-end\" | \"block-start\" | \"block-end\"","default":"\"inline-start\"","description":"Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputGroupButton
+
+A compact button sized to fit inside the field.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} props={[{"name":"size","type":"\"xs\" | \"sm\" | \"icon-xs\" | \"icon-sm\"","default":"\"xs\"","description":"`xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size."},{"name":"type","type":"\"button\" | \"submit\" | \"reset\"","default":"\"button\"","description":"The native button type. Defaults to `button` so the button does not submit forms."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputGroupText
+
+Static text or an icon with text, such as a unit or prefix.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### InputGroupInput
+
+The single-line text control of the group.
+
+<PropsTable extends={["React.ComponentProps<\"input\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### InputGroupTextarea
+
+The multi-line text control of the group.
+
+<PropsTable extends={["React.ComponentProps<\"textarea\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `InputGroup` and `InputGroupAddon` have the `group` role.
+- Give the control an accessible name with a label or `aria-label`; placeholder text and addon text do not name it.
+- Give icon-only buttons an accessible name with `aria-label`.
+- Buttons in addons are reachable with Tab after the control.
+- Set `aria-invalid` on the control to communicate a validation error.
+
+## Notes
+
+- Styling hooks: `data-slot` values `input-group`, `input-group-addon` and `input-group-control` (on the input or textarea). Addons set `data-align`, and buttons set `data-size`.
+- The group's rounded corners grow when it contains a textarea or a block addon.
+- Uses the `control`, `control-disabled`, `label-secondary`, `label-quaternary` and `danger` tokens.

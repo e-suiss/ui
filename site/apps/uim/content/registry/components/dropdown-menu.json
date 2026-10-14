@@ -1,0 +1,70 @@
+{
+  "description": "A menu of actions or options that opens from a trigger button.",
+  "overview": "`DropdownMenu` opens `DropdownMenuContent` next to a `DropdownMenuTrigger` when it is pressed. The content renders through a portal (inside a full-window overlay on iOS) as a raised, rounded card positioned below the trigger by default.\n\nItems can be plain actions, checkbox items, radio items in a group, or a submenu. `DropdownMenuSubContent` expands in place under its trigger, and the caret turns to point down while it is open. For a menu that opens on long press at the touch point, use Context Menu.",
+  "usage": "Use `render` on `DropdownMenuTrigger` to render it as a `Button`. Items close the menu when pressed unless `closeOnPress={false}`.\n\nUse `DropdownMenuCheckboxItem` with `checked` and `onCheckedChange`, and `DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup` with `value` and `onValueChange`. Group items with `DropdownMenuGroup` and `DropdownMenuLabel`, and divide sections with `DropdownMenuSeparator`.\n\nSet `variant=\"destructive\"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one. Position the content with `side`, `align`, `sideOffset` and `alignOffset`.",
+  "examples": {
+    "Checkboxes": "Checkbox items that toggle panels on and off.",
+    "RadioGroup": "Radio items that pick one value.",
+    "Inset": "Items aligned with `inset`.",
+    "OpenByDefault": "Starts open through `defaultOpen`."
+  },
+  "parts": {
+    "DropdownMenu": "Root that holds the open state.",
+    "DropdownMenuTrigger": "Opens the menu when pressed.",
+    "DropdownMenuPortal": "Portal the content is rendered into.",
+    "DropdownMenuContent": "Floating menu card.",
+    "DropdownMenuItem": "Action row.",
+    "DropdownMenuCheckboxItem": "Row with a check mark that toggles.",
+    "DropdownMenuRadioGroup": "Group of radio items with one value.",
+    "DropdownMenuRadioItem": "Row that selects one value in its group.",
+    "DropdownMenuGroup": "Group of related items.",
+    "DropdownMenuLabel": "Heading for a group.",
+    "DropdownMenuSeparator": "Line between sections.",
+    "DropdownMenuSub": "Root of a nested submenu.",
+    "DropdownMenuSubTrigger": "Row that expands the submenu.",
+    "DropdownMenuSubContent": "Items of the submenu."
+  },
+  "props": {
+    "DropdownMenu": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state.",
+      "onOpenChange": "Called when the menu opens or closes."
+    },
+    "DropdownMenuContent": {
+      "side": "Side of the trigger to open on. Defaults to `bottom`.",
+      "align": "Alignment against the trigger. Defaults to `start`.",
+      "sideOffset": "Gap from the trigger. Defaults to `4`.",
+      "alignOffset": "Offset along the alignment axis.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "DropdownMenuItem": {
+      "variant": "`default` or `destructive`.",
+      "inset": "Adds start padding to align with icon items.",
+      "closeOnPress": "Closes the menu on press. Defaults to `true`.",
+      "disabled": "Dims the item and blocks presses."
+    },
+    "DropdownMenuCheckboxItem": {
+      "checked": "Controlled checked state.",
+      "defaultChecked": "Initial checked state.",
+      "onCheckedChange": "Called with the new checked value.",
+      "inset": "Adds start padding."
+    },
+    "DropdownMenuRadioGroup": {
+      "value": "Controlled selected value.",
+      "onValueChange": "Called with the new value."
+    },
+    "DropdownMenuRadioItem": {
+      "value": "Value selected by this item.",
+      "inset": "Adds start padding."
+    },
+    "DropdownMenuSubTrigger": {
+      "inset": "Adds start padding.",
+      "iconClassName": "Extra classes for the caret icon."
+    },
+    "DropdownMenuLabel": {
+      "inset": "Adds start padding."
+    }
+  },
+  "accessibility": "- The trigger has the `button` role.\n- The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.\n- Groups are labelled by their `DropdownMenuLabel`, and separators have the `separator` role.",
+  "notes": "- Uses `bg-surface-raised`, `bg-item-pressed`, `bg-item-selected` and `bg-danger-surface-pressed` tokens; light and dark follow the system appearance.\n- The fade-in respects the system Reduce Motion setting."
+}

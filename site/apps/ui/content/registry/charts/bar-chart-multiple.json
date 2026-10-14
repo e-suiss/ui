@@ -1,0 +1,6 @@
+{
+  "description": "Two series drawn as grouped bars side by side for each month.",
+  "overview": "Two series drawn as grouped bars side by side for each month. Pick it over the stacked variant when readers need to compare the series directly rather than see their total.",
+  "usage": "Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`. Add a third `Bar` for another series. Tune `barGap` to control the space between bars in a group.",
+  "notes": "Grouped bars get thin quickly; beyond three series or a dozen categories, consider stacked bars or a line chart. The arrow keys move the tooltip between months once the chart has focus."
+}

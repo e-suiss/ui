@@ -1,0 +1,23 @@
+{
+  "description": "A two-state button that stays pressed until it's pressed again.",
+  "overview": "`Toggle` wraps the Base UI Toggle primitive. When pressed, it shows a tinted background and `link`-colored content, and it scales down slightly while being pressed.\n\nUse a toggle for a single on-off option such as bold text or a bookmark. To choose among related options, use `ToggleGroup`; for a setting that takes effect immediately, use `Switch`.",
+  "usage": "Use `defaultPressed` for an uncontrolled toggle, or `pressed` with `onPressedChange` to control it. Mark an icon beside a label with `data-icon=\"inline-start\"` or `data-icon=\"inline-end\"` to tighten the padding on that side.",
+  "examples": {
+    "Pressed": "Starts in the pressed state.",
+    "Variants": "Compares the `default` and `outline` variants.",
+    "Sizes": "Compares the `sm`, `default` and `lg` sizes.",
+    "WithText": "Pairs an icon with a text label.",
+    "Disabled": "Disables the toggle so it ignores clicks."
+  },
+  "parts": {
+    "Toggle": "The pressable two-state button."
+  },
+  "props": {
+    "Toggle": {
+      "variant": "Uses a borderless `default` style or an `outline` style with a border.",
+      "size": "Sets the height and padding: `sm`, `default` or `lg`."
+    }
+  },
+  "accessibility": "- Renders a `button` with `aria-pressed` reflecting its state.\n- `Enter` and `Space` toggle the focused button.\n- An icon-only toggle needs an `aria-label`.",
+  "notes": "- Uses `data-slot=\"toggle\"`. Pressed styles key off `aria-pressed`.\n- `toggleVariants` is exported so other components, such as `ToggleGroupItem`, can share the styles.\n- The press animation is removed when reduced motion is preferred."
+}

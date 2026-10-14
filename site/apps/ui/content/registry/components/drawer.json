@@ -1,0 +1,42 @@
+{
+  "description": "A panel that slides in from an edge of the screen and can be dismissed with a swipe.",
+  "overview": "Drawer wraps the Base UI Drawer. The `Drawer` root manages the open state and the swipe direction, and `DrawerTrigger` opens it. `DrawerContent` renders the panel in a portal, over a dimmed `DrawerOverlay` when modal, with an optional swipe handle and close button. Inside it, `DrawerHeader` holds the `DrawerTitle` and `DrawerDescription`, and `DrawerFooter` holds the actions. `DrawerClose` closes the drawer from any element.\n\nThe drawer opens from the bottom by default and can also open from the top, left or right. It supports snap points, a floating style inset from the screen edges, and a non-modal mode. To get the iOS sheet effect, where the page behind scales down as a bottom drawer opens, wrap the page in `DrawerProvider` with `DrawerIndentBackground` and `DrawerIndent`. Use a drawer for touch-friendly, swipeable panels; for a centered window, use a dialog.",
+  "usage": "The drawer is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `swipeDirection` to `down`, `up`, `left` or `right` to choose the edge it opens from and the direction it is swiped to close.\n\nPass `snapPoints`, such as `[0.5, 1]`, to let people drag the drawer between heights; it opens at the first snap point unless you set `defaultSnapPoint`, or control it with `snapPoint` and `onSnapPointChange`. Set `modal={false}` to keep the rest of the page interactive; no overlay is rendered in that case.\n\nFor the indented page effect, place `DrawerIndentBackground` and `DrawerIndent` inside `DrawerProvider` and put the page content in `DrawerIndent`. The page is scaled while a non-floating drawer that opens from the bottom is open, and, with snap points, only at the last snap point.",
+  "examples": {
+    "Directions": "Four drawers that open from the bottom, top, left and right edges.",
+    "WithCloseButton": "A drawer with an icon close button in the top corner.",
+    "WithCloseLabel": "A drawer whose close button shows a text label instead of an icon.",
+    "Floating": "A floating drawer, inset from the screen edges with rounded corners on all sides.",
+    "WithSnapPoints": "A drawer that opens at half height and expands when dragged up.",
+    "NonModal": "A non-modal drawer that leaves the rest of the page interactive.",
+    "SheetWithDetents": "An iOS-style event sheet with snap points that scales the page behind it using `DrawerIndent`."
+  },
+  "parts": {
+    "DrawerProvider": "Coordinates drawers with `DrawerIndent` so the page can react when a drawer opens.",
+    "DrawerIndentBackground": "The dark layer shown behind the page when it scales down.",
+    "DrawerIndent": "Wraps the page content and scales it down while a bottom drawer is open.",
+    "Drawer": "The root that manages the open state, swipe direction and snap points.",
+    "DrawerTrigger": "The button that opens the drawer.",
+    "DrawerPortal": "Renders its children into a portal outside the current DOM hierarchy.",
+    "DrawerClose": "A button that closes the drawer.",
+    "DrawerOverlay": "The dimmed layer behind a modal drawer, which fades as the drawer is swiped away.",
+    "DrawerSwipeHandle": "The grab bar people drag to move or dismiss the drawer.",
+    "DrawerContent": "The drawer panel, rendered in a portal with an optional overlay, swipe handle and close button.",
+    "DrawerHeader": "Groups the title and description.",
+    "DrawerFooter": "Holds the drawer's actions at the bottom of the panel.",
+    "DrawerTitle": "The drawer's title, which also names it for assistive technology.",
+    "DrawerDescription": "Supporting text that describes the drawer for assistive technology."
+  },
+  "props": {
+    "Drawer": {
+      "floating": "Insets the drawer from the screen edges and rounds all of its corners.",
+      "showSwipeHandle": "Shows a grab bar on the edge of the panel that faces the screen center."
+    },
+    "DrawerContent": {
+      "showCloseButton": "Shows a close button in the top corner.",
+      "closeLabel": "Replaces the close button's icon with this text."
+    }
+  },
+  "accessibility": "- The panel has the `dialog` role. `DrawerTitle` provides its accessible name and `DrawerDescription` its accessible description.\n- Opening the drawer moves focus inside it. Escape closes it and returns focus to the trigger.\n- A non-modal drawer does not set `aria-modal`.\n- The swipe handle is hidden from assistive technology, so always provide another way to close the drawer, such as a `DrawerClose` button.\n- The icon-only close button has a visually hidden `Close` label.",
+  "notes": "- Styling hooks: `data-slot` values such as `drawer-popup`, `drawer-content`, `drawer-overlay`, `drawer-swipe-handle`, `drawer-close-button`, `drawer-header`, `drawer-footer` and `drawer-indent`.\n- The panel sets `data-swipe-direction`, `data-swipe-axis`, and, when applicable, `data-floating` and `data-snap-points`. A drawer at its last snap point gets `data-expanded`. `DrawerIndent` gets `data-raised` while the page is scaled.\n- Side drawers are `75%` wide, and `24rem` wide from the `sm` breakpoint. Top and bottom drawers are limited to the viewport height minus `6rem`.\n- Nested drawers stack, with the drawer behind scaled down slightly.\n- Uses the `surface-raised`, `scrim`, `surface` and `label-quaternary` tokens. Animations are disabled on `DrawerIndent` when reduced motion is preferred."
+}

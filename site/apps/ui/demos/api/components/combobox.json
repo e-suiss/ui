@@ -1,0 +1,146 @@
+{
+  "name": "combobox",
+  "type": "ui",
+  "files": [
+    "components/ui/combobox.tsx"
+  ],
+  "requires": [
+    "button",
+    "input-group"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithClearButton",
+    "Disabled",
+    "Grouped",
+    "HighlightMatch",
+    "Multiple"
+  ],
+  "parts": [
+    {
+      "name": "ComboboxValue",
+      "extends": [
+        "ComboboxPrimitive.Value.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxTrigger",
+      "extends": [
+        "ComboboxPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxInput",
+      "extends": [
+        "ComboboxPrimitive.Input.Props"
+      ],
+      "props": [
+        {
+          "name": "showTrigger",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "showClear",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "ComboboxContent",
+      "extends": [
+        "ComboboxPrimitive.Popup.Props",
+        "ComboboxPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxList",
+      "extends": [
+        "ComboboxPrimitive.List.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxItem",
+      "extends": [
+        "ComboboxPrimitive.Item.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxGroup",
+      "extends": [
+        "ComboboxPrimitive.Group.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxLabel",
+      "extends": [
+        "ComboboxPrimitive.GroupLabel.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxCollection",
+      "extends": [
+        "ComboboxPrimitive.Collection.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxEmpty",
+      "extends": [
+        "ComboboxPrimitive.Empty.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxSeparator",
+      "extends": [
+        "ComboboxPrimitive.Separator.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxChips",
+      "extends": [
+        "React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>",
+        "ComboboxPrimitive.Chips.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ComboboxChip",
+      "extends": [
+        "ComboboxPrimitive.Chip.Props"
+      ],
+      "props": [
+        {
+          "name": "showRemove",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "ComboboxChipsInput",
+      "extends": [
+        "ComboboxPrimitive.Input.Props"
+      ],
+      "props": []
+    }
+  ]
+}

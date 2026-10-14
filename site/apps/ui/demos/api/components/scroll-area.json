@@ -1,0 +1,32 @@
+{
+  "name": "scroll-area",
+  "type": "ui",
+  "files": [
+    "components/ui/scroll-area.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Horizontal"
+  ],
+  "parts": [
+    {
+      "name": "ScrollArea",
+      "extends": [
+        "ScrollAreaPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ScrollBar",
+      "extends": [
+        "ScrollAreaPrimitive.Scrollbar.Props"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "settings-notifications",
+  "type": "block",
+  "files": [
+    "components/blocks/settings-notifications.tsx"
+  ],
+  "requires": [
+    "item",
+    "select",
+    "switch",
+    "toggle",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

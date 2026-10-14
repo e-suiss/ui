@@ -1,0 +1,16 @@
+{
+  "name": "line-chart-labeled",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-labeled.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

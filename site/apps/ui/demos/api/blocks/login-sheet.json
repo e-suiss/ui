@@ -1,0 +1,18 @@
+{
+  "name": "login-sheet",
+  "type": "block",
+  "files": [
+    "components/blocks/login-sheet.tsx"
+  ],
+  "requires": [
+    "button",
+    "label",
+    "radio-group",
+    "spinner"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

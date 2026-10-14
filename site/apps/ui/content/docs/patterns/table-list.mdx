@@ -1,0 +1,91 @@
+---
+title: Table List
+description: "Tabular data that renders as a table on desktop and a grouped list on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="table-list" story="Default">
+
+<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListExample() {\n  return (\n    <TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" />\n  )\n}"} />
+
+</Example>
+
+`TableList` displays rows of data from a column definition. On desktop it renders a suiss/ui `Table` inside a bordered section, with a header row and one cell per column. On mobile (below `48rem`, via `useIsMobile`), where wide tables do not fit, it renders an inset grouped list: each row shows a title line, a secondary line that joins description columns with a middle dot, and trailing values on the end.
+
+Each column chooses its place in the mobile row through `slot`, and can provide a simpler `mobileCell`. Use it for orders, invoices, transactions and other records that people compare in columns on large screens.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns table-list"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Table](/docs/components/table), `use-mobile`.
+
+3. Copy the source into `components/patterns/table-list.tsx`:
+
+<SourceFile path="components/patterns/table-list.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TableList } from \"@/components/patterns/table-list\""} />
+
+<Code lang="tsx" code={"<TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" />"} />
+
+- Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`).
+- On mobile, the first `title` column becomes the primary line, `description` columns form the secondary line, and `trailing` columns appear at the end. Columns without a slot, or with `hidden`, are left out on mobile.
+- `mobileCell` replaces `cell` on mobile, for example to drop styling that does not fit the list.
+- `align: "end"` right-aligns the desktop header and cells.
+
+## Examples
+
+### Without title
+
+Renders the table without a heading or region.
+
+<Example kind="pattern" name="table-list" story="WithoutTitle">
+
+<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListWithoutTitleExample() {\n  return (\n    <TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title={undefined} className=\"mx-auto w-full max-w-3xl\" />\n  )\n}"} />
+
+</Example>
+
+### Empty
+
+Shows custom `emptyText` when there are no rows.
+
+<Example kind="pattern" name="table-list" story="Empty">
+
+<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListEmptyExample() {\n  return (\n    <TableList<Order> rows={[]} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" emptyText=\"No orders yet.\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### TableList
+
+The section that renders the rows as a table or a grouped list.
+
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"rows","type":"T[]","required":true,"description":"The data rows to display."},{"name":"columns","type":"TableListColumn<T>[]","required":true,"description":"The column definitions that render each row."},{"name":"getKey","type":"(row: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns the React key for a row."},{"name":"title","type":"React.ReactNode","description":"A heading above the data that also names the section."},{"name":"emptyText","type":"React.ReactNode","default":"\"No results.\"","description":"Content shown when `rows` is empty."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- With a `title`, the section is labelled by its heading and exposed as a region.
+- On desktop the data is a real table with column headers; an empty state is a single cell that spans every column.
+- On mobile the rows are list items in a `ul`.
+
+## Notes
+
+Styling hooks: `data-slot="table-list"` and `table-list-title`; on mobile also `table-list-items` and `table-list-item`. The `TableListColumn` type is exported.

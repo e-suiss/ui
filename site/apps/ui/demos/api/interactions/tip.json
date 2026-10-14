@@ -1,0 +1,113 @@
+{
+  "name": "tip",
+  "type": "interaction",
+  "files": [
+    "components/interactions/tip.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default"
+  ],
+  "parts": [
+    {
+      "name": "TipGroup",
+      "extends": [],
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "Tip",
+      "extends": [],
+      "props": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "delay",
+          "type": "number",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "onDismiss",
+          "type": "() => void",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "TipCard",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipAnchor",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipPopover",
+      "extends": [
+        "PopoverPrimitive.Popup.Props",
+        "PopoverPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipIcon",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipTitle",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipDescription",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TipClose",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    }
+  ]
+}

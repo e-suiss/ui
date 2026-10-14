@@ -1,0 +1,135 @@
+---
+title: Native Select
+description: "A styled native select element for choosing one option from a list."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="native-select" story="Default">
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
+
+</Example>
+
+`NativeSelect` wraps the browser's `select` element with the library's control styling and a trailing up-down caret. Add choices with `NativeSelectOption`, and group them under headings with `NativeSelectOptGroup`.
+
+Because it uses the platform picker, it works well on touch devices and in plain HTML forms. Use Select when you need a custom-styled popup, rich option content or a searchable list.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add native-select"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/ui/native-select.tsx`:
+
+<SourceFile path="components/ui/native-select.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from \"@/components/ui/native-select\""} />
+
+<Code lang="tsx" code={"<NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n  <NativeSelectOption value=\"\" disabled>\n    Select a fruit\n  </NativeSelectOption>\n  <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n  <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n  <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n  <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n</NativeSelect>"} />
+
+All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.
+
+To show a placeholder, add a first option with `value=""` and `disabled`; while it is selected, the text uses the secondary label color.
+
+## Examples
+
+### Sizes
+
+The `sm` and `default` sizes side by side.
+
+<Example kind="ui" name="native-select" story="Sizes">
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <NativeSelect defaultValue=\"weekly\" size=\"sm\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n      <NativeSelect defaultValue=\"weekly\" size=\"default\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With groups
+
+Options organized under labelled `NativeSelectOptGroup` headings.
+
+<Example kind="ui" name="native-select" story="WithGroups">
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOptGroup, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectWithGroupsExample() {\n  return (\n    <NativeSelect defaultValue=\"berlin\" aria-label=\"City\">\n      <NativeSelectOptGroup label=\"Europe\">\n        <NativeSelectOption value=\"berlin\">Berlin</NativeSelectOption>\n        <NativeSelectOption value=\"lisbon\">Lisbon</NativeSelectOption>\n        <NativeSelectOption value=\"zurich\">Zurich</NativeSelectOption>\n      </NativeSelectOptGroup>\n      <NativeSelectOptGroup label=\"Asia\">\n        <NativeSelectOption value=\"seoul\">Seoul</NativeSelectOption>\n        <NativeSelectOption value=\"singapore\">Singapore</NativeSelectOption>\n        <NativeSelectOption value=\"tokyo\">Tokyo</NativeSelectOption>\n      </NativeSelectOptGroup>\n    </NativeSelect>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A select with `disabled` set, shown with the disabled control colors.
+
+<Example kind="ui" name="native-select" story="Disabled">
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectDisabledExample() {\n  return (\n    <NativeSelect disabled defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+A select with `aria-invalid` set, shown with the danger border and tint.
+
+<Example kind="ui" name="native-select" story="Invalid">
+
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectInvalidExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-invalid aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"NativeSelect","href":"#nativeselect","children":[{"name":"NativeSelectOption","href":"#nativeselectoption","children":[]},{"name":"NativeSelectOptGroup","href":"#nativeselectoptgroup","children":[{"name":"NativeSelectOption","href":"#nativeselectoption","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### NativeSelect
+
+The wrapper and native `select` element, with a decorative caret icon.
+
+<PropsTable extends={["NativeSelectProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### NativeSelectOption
+
+A single choice, rendered as an `option` element.
+
+<PropsTable extends={["React.ComponentProps<\"option\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### NativeSelectOptGroup
+
+A labelled group of options, rendered as an `optgroup` element.
+
+<PropsTable extends={["React.ComponentProps<\"optgroup\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders a native `select`, exposed as a `combobox` with native keyboard and picker behavior.
+- Provide an accessible name with a `Label` linked through `htmlFor`, or with `aria-label`.
+- `NativeSelectOptGroup` exposes its `label` as a named `group`.
+- Set `aria-invalid` to communicate a validation error; it also applies the invalid styling.
+- The caret icon is `aria-hidden`.
+
+## Notes
+
+- Styling hooks: `data-slot` values `native-select-wrapper`, `native-select`, `native-select-icon`, `native-select-option` and `native-select-optgroup`. The wrapper and `select` both expose `data-size`.
+- The `size` prop accepts `default` (44px tall) or `sm` (36px tall) and replaces the native `size` attribute.
+- Options and groups use the `Canvas` and `CanvasText` system colors so the native popup stays legible in light and dark modes.
+- Uses the `control`, `control-disabled`, `danger` and `label-secondary` tokens.

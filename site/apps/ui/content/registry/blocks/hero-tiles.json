@@ -1,0 +1,6 @@
+{
+  "description": "A pair of promotional hero tiles, each with a title, tagline, two actions, and a product image.",
+  "overview": "Two promotional tiles, each with a title, tagline, Learn more and Buy buttons and a product image, one of them rendered in the dark palette. The tiles stack on mobile and sit side by side on desktop. It is a static server component for promoting two products or offers on a home page.",
+  "usage": "Edit the `tiles` array; each tile has a title, text, image, alt text and a `dark` flag. Dark tiles prefix their title with suiss, so remove that span if it doesn't fit your brand. Connect the buttons to your product pages.",
+  "notes": "Images are Unsplash placeholders."
+}

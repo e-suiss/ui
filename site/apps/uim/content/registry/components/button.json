@@ -1,0 +1,21 @@
+{
+  "description": "A pill-shaped button that triggers an action, with variants for every level of emphasis.",
+  "overview": "`Button` is a `Pressable` with the `button` role. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the width of its container.\n\nUse the `default` variant for the primary action on a screen, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.",
+  "usage": "Put the label in a `Text` and icons in an `Icon`. The button passes its text color and icon size down through context, so children pick them up without extra classes.\n\nUse an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `accessibilityLabel`.\n\n`buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element.",
+  "examples": {
+    "Variants": "All eight variants, plus an icon-only button.",
+    "Sizes": "Compares the text and icon-only sizes.",
+    "WithIcon": "Leading and trailing icons, and an icon-only button.",
+    "Disabled": "Disabled buttons in every variant.",
+    "Block": "Full-width buttons at each size, whose corner radius scales with size."
+  },
+  "props": {
+    "Button": {
+      "variant": "Visual style: `default`, `outline`, `secondary`, `tinted`, `ghost`, `plain`, `destructive` or `link`.",
+      "size": "Height and padding. `xs` to `xl` for text buttons; `icon-xs` to `icon-xl` for square icon-only buttons.",
+      "block": "When `true`, the button fills the container width and uses rounded corners instead of a pill shape."
+    }
+  },
+  "accessibility": "- Renders a `Pressable` with `role=\"button\"`, so VoiceOver and TalkBack announce it as a button.\n- `disabled` is announced and blocks presses.\n- Icon-only buttons need an `accessibilityLabel`.",
+  "notes": "- Colors come from semantic tokens such as `bg-accent`, `bg-control`, `bg-accent-surface` and `bg-danger-surface`, each with pressed and disabled states.\n- Light and dark colors follow the system appearance."
+}

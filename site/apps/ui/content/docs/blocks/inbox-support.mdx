@@ -1,0 +1,42 @@
+---
+title: Inbox Support
+description: "A support ticket inbox with status views, a ticket list with priorities, and a detail pane for replying and resolving."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="inbox-support">
+
+<SourceFile path="components/blocks/inbox-support.tsx" fold={false} />
+
+</Example>
+
+A help desk inbox with Open, Pending, Solved and All views and live counts, a ticket list with priority badges and a detail pane for replying or marking a ticket solved. Sending a reply moves the ticket to Pending. On mobile the panes show one at a time with a back button. A good base for support queues, moderation queues or any triage workflow.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks inbox-support"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/inbox-support.tsx`:
+
+<SourceFile path="components/blocks/inbox-support.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { InboxSupport } from \"@/components/blocks/inbox-support\""} />
+
+<Code lang="tsx" code={"<InboxSupport />"} />
+
+Replace `initialTickets` with your tickets, each with an id, title, device, status, priority, requester and avatar hue; `priorityClass` maps priorities to badge colors. Connect the reply and Mark as solved actions to your help desk API. Every ticket shows the same hard-coded customer message and timestamp, so load the real conversation.

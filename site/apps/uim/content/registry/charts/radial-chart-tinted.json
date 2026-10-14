@@ -1,0 +1,5 @@
+{
+  "description": "Radial bars for users by device, where each track is a soft tint of its bar color.",
+  "overview": "A `RadialBarChart` with one bar per record in `chartData`, measured against a shared `MAX` of 320. Each bar is colored through `Cell`, and its background track uses the same color at low opacity. Pressing a bar shows a tooltip. The bars set `isAnimationActive={false}` and draw without the enter animation.",
+  "usage": "Replace `chartData` with your records, set `MAX` to the top of your range, and add a matching entry per item to `chartConfig`. The component takes no props."
+}

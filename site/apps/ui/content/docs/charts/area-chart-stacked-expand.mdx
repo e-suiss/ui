@@ -1,0 +1,46 @@
+---
+title: Area Chart Stacked Expand
+description: "Two stacked areas normalized so every month fills 100%, showing each series' share rather than its value."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-stacked-expand">
+
+<SourceFile path="components/charts/area-chart-stacked-expand.tsx" fold={false} />
+
+</Example>
+
+Two stacked areas stretched so every month fills the full height, turning absolute numbers into shares. Pick it over the regular stacked chart when the split between series matters more than the total.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-stacked-expand"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-stacked-expand.tsx`:
+
+<SourceFile path="components/charts/area-chart-stacked-expand.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartStackedExpand } from \"@/components/charts/area-chart-stacked-expand\""} />
+
+<Code lang="tsx" code={"<AreaChartStackedExpand />"} />
+
+Replace `chartData` and rename the series keys consistently in the data, the areas and `chartConfig`. Every series must share the same `stackId` to be normalized together. The right-hand axis is already formatted as percentages.
+
+## Notes
+
+The tooltip shows the original values, not percentages; add a tooltip formatter if readers need the share. Focus the plot and use the arrow keys to move the tooltip between months.

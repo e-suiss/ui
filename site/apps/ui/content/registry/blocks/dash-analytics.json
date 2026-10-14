@@ -1,0 +1,6 @@
+{
+  "description": "An app analytics dashboard with a metric switcher, an interactive area chart, and a regional breakdown.",
+  "overview": "An analytics dashboard for apps: pick a metric, read its current value and growth, and hover the 12-week area chart to see any week's figure in the headline. A By region list below breaks the metric down by share. The app list sits in a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Start here for product analytics, traffic or revenue reports.",
+  "usage": "Replace `metrics` with your series; each metric has a label, unit, current value and 12 weekly data points. `regions` holds each region's share, and `apps` and `items` fill the navigation. The sample fakes per-app numbers by scaling the first app's data and computes growth on the fly, so load real figures per app from your analytics source.",
+  "notes": "The headline value is announced as you move through the chart, and the chart supports keyboard navigation."
+}

@@ -1,0 +1,32 @@
+{
+  "description": "A site navigation bar whose items open popover or full-width panels of links.",
+  "overview": "Navigation Menu wraps Base UI's Navigation Menu. `NavigationMenu` is the root; inside it, `NavigationMenuList` holds `NavigationMenuItem` entries. An item contains either a `NavigationMenuTrigger` with `NavigationMenuContent`, or a single `NavigationMenuLink`. Inside content, use `NavigationMenuLabel` for column headings and `NavigationMenuLink` for destinations.\n\nThe root renders the popup for you. With `layout=\"popover\"` it adds a `NavigationMenuPositioner`, a floating card that resizes and slides between items. With `layout=\"panel\"` it adds a `NavigationMenuPanel`, a full-width sheet under the bar with a blurred backdrop, like a store's global navigation. Use Navigation Menu for site navigation links; use Menubar or Dropdown Menu for commands.",
+  "usage": "Give each item with content a `value` so the menu can be opened by default or controlled with `value`, `defaultValue` and `onValueChange` on the root. The root also accepts `align` for the popover and `anchor` for either layout; in `panel` layout, pass a ref to the full-width bar as `anchor` so the panel spans its width.\n\nTo style a top-level link like a trigger, pass `navigationMenuTriggerStyle()` as its `className`. Set `active` on a link to mark the current page.",
+  "examples": {
+    "OpenByDefault": "A menu that opens the Products item on mount with `defaultValue`.",
+    "LinksOnly": "A bar of plain links styled like triggers, with the first marked `active`.",
+    "Panel": "The `panel` layout anchored to a sticky header, with columns of labelled links and large primary links."
+  },
+  "parts": {
+    "NavigationMenu": "The root that manages open state and renders the popover or panel popup.",
+    "NavigationMenuList": "The horizontal list of top-level items.",
+    "NavigationMenuItem": "One top-level entry, holding a trigger with content or a single link.",
+    "NavigationMenuTrigger": "The button that opens its item's content, with a caret in the popover layout.",
+    "NavigationMenuContent": "The content shown in the popup when its item is open.",
+    "NavigationMenuPositioner": "The floating popover card used by the `popover` layout.",
+    "NavigationMenuPanel": "The full-width sheet and backdrop used by the `panel` layout.",
+    "NavigationMenuLink": "A navigation link, either in the bar or inside content.",
+    "NavigationMenuLabel": "A small secondary heading above a group of links.",
+    "NavigationMenuIndicator": "A small arrow built on the Base UI `NavigationMenu.Icon` part that fades in while its menu is open."
+  },
+  "props": {
+    "NavigationMenu": {
+      "layout": "Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop."
+    },
+    "NavigationMenuLink": {
+      "size": "Sets the link size; `lg` uses large, semibold text for primary destinations."
+    }
+  },
+  "accessibility": "- Triggers are buttons with `aria-expanded` reflecting whether their content is open.\n- Enter opens a focused trigger, and Tab moves focus into the open content.\n- Escape closes the open content and returns focus to its trigger.\n- Hovering another trigger switches the open content.\n- A link with `active` set receives `aria-current=\"page\"`.\n- The trigger's caret icon is `aria-hidden`.",
+  "notes": "- Styling hooks: `data-slot` values such as `navigation-menu`, `navigation-menu-trigger`, `navigation-menu-content`, `navigation-menu-popup`, `navigation-menu-panel`, `navigation-menu-backdrop` and `navigation-menu-link`. The root exposes `data-layout`; links expose `data-size` and `data-active`.\n- Triggers and links restyle themselves automatically in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.\n- `navigationMenuTriggerStyle` is exported for styling links as triggers.\n- Uses the `surface-raised`, `surface`, `item-hover`, `item-selected`, `scrim` and `link` tokens."
+}

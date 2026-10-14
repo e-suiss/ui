@@ -1,0 +1,19 @@
+{
+  "name": "settings-account",
+  "type": "block",
+  "files": [
+    "components/blocks/settings-account.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "input",
+    "sidebar",
+    "switch"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

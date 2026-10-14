@@ -1,0 +1,5 @@
+{
+  "description": "A half-circle donut showing battery use by device, with a total under the arc.",
+  "overview": "A `PieChart` drawn from 180 to 0 degrees, with rounded, spaced slices. `chartData` holds a percentage `share` per device. A centered `Text` shows the 100% total, and the tooltip uses a custom `formatter` to print each share as a percentage.",
+  "usage": "Replace `chartData` with your shares and update `chartConfig` and the caption under the arc. The component takes no props."
+}

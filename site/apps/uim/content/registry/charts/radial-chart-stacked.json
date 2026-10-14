@@ -1,0 +1,5 @@
+{
+  "description": "A half-circle arc stacking desktop and mobile visitors, with the total below it.",
+  "overview": "A `RadialBarChart` drawn from 180 to 0 degrees, with two `RadialBar` series sharing a `stackId` on a domain equal to their sum. `chartData` is a single record with `desktop` and `mobile` counts, and the total is `Text` under the arc. Pressing the arc shows a tooltip.",
+  "usage": "Replace the counts in `visitors`; the total and domain follow. Rename the series in `chartConfig` and in the `RadialBar` `dataKey` and `fill` props. The component takes no props."
+}

@@ -1,0 +1,23 @@
+{
+  "description": "A multi-line text field that grows with its content, with an optional resize handle.",
+  "overview": "`Textarea` renders a native `textarea` styled to match the other form controls. By default it uses `field-sizing: content`, so it grows as people type, starting at a minimum height of `4rem`.\n\nSet `resizable` to give it a fixed height and a custom handle that people drag to resize it vertically. Use `Textarea` for free-form text such as messages or notes; for a single line, use `Input`.",
+  "usage": "`Textarea` passes its props to the native element, so use `value` with `onChange` to control it, or `defaultValue` for an uncontrolled field. Pair it with a `Label` through `htmlFor` and `id`, and link hint text with `aria-describedby`.\n\nWith `resizable`, the textarea and its handle are wrapped in a relative container. Double-click the handle to reset the height.",
+  "examples": {
+    "WithValue": "Starts with a default value.",
+    "WithLabel": "Names the textarea with a `Label`.",
+    "Resizable": "Adds a resize handle inside the bottom corner of the field.",
+    "ResizableOutside": "Places the resize handle just outside the bottom corner of the field.",
+    "Disabled": "Disables the textarea so it can't be edited.",
+    "Invalid": "Marks the textarea with `aria-invalid` to show an error state."
+  },
+  "parts": {
+    "Textarea": "The multi-line text field, with an optional resize handle."
+  },
+  "props": {
+    "Textarea": {
+      "resizable": "Adds a vertical resize handle, placed `inside` or `outside` the field's bottom corner, and turns off automatic growth."
+    }
+  },
+  "accessibility": "- Renders a native `textarea` with the `textbox` role. Name it with a `Label` or `aria-label`.\n- The resize handle is hidden from assistive technologies and works with a pointer only.\n- An invalid field is exposed through `aria-invalid`.",
+  "notes": "- Uses `data-slot=\"textarea\"` and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.\n- A resizable textarea starts at a minimum height of `6rem`, and dragging never shrinks it below its minimum height.\n- The handle is hidden while the textarea is disabled, and mirrors in right-to-left layouts.\n- The caret uses the `accent` color; invalid fields use the `danger` color."
+}

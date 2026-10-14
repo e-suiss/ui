@@ -1,0 +1,46 @@
+---
+title: Radar Chart Grid None
+description: "A single solid radar shape with no grid and no outline, leaving only the shape and axis labels."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-grid-none">
+
+<SourceFile path="components/charts/radar-chart-grid-none.tsx" fold={false} />
+
+</Example>
+
+A solid radar shape with no grid and no outline, leaving only the shape and the axis labels. Use it as a compact, decorative profile where exact values come from the tooltip.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-grid-none"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-grid-none.tsx`:
+
+<SourceFile path="components/charts/radar-chart-grid-none.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartGridNone } from \"@/components/charts/radar-chart-grid-none\""} />
+
+<Code lang="tsx" code={"<RadarChartGridNone />"} />
+
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Change the shape's intensity with `fillOpacity` on `Radar`.
+
+## Notes
+
+With no grid, readers can't estimate values from the chart itself, so keep the tooltip or show the numbers elsewhere.

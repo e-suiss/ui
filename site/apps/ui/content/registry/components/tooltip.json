@@ -1,0 +1,17 @@
+{
+  "description": "A small label that appears next to an element on hover or keyboard focus.",
+  "overview": "`Tooltip` wraps the Base UI Tooltip primitive. `TooltipTrigger` is the element that shows the tooltip, and `TooltipContent` renders the dark label with an arrow in a portal, positioned beside the trigger. `TooltipProvider` shares open delays across a group of tooltips.\n\nUse tooltips to name icon-only buttons or show a keyboard shortcut. Keep the text short and don't put essential information or interactive content in a tooltip; use `Popover` for that.",
+  "usage": "Use the `render` prop on `TooltipTrigger` to render it as a `Button`. Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.\n\nWrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delay` to `0`, so tooltips open without waiting.",
+  "examples": {
+    "Sides": "Places tooltips on each of the four sides of their triggers.",
+    "WithShortcut": "Names an icon button and shows its keyboard shortcut with `Kbd`."
+  },
+  "parts": {
+    "TooltipProvider": "Shares delay timing across the tooltips inside it.",
+    "Tooltip": "The root that holds a tooltip's open state.",
+    "TooltipTrigger": "The element that shows the tooltip on hover or focus.",
+    "TooltipContent": "The positioned label with its arrow, rendered in a portal."
+  },
+  "accessibility": "- Tooltips open when the trigger is hovered or receives keyboard focus, and close when the pointer leaves.\n- `Escape` closes an open tooltip while focus stays on the trigger.\n- A tooltip doesn't name its trigger. Give icon-only triggers their own `aria-label`.",
+  "notes": "- Parts carry `data-slot` attributes such as `tooltip-trigger` and `tooltip-content`; the popup and arrow set `data-side`.\n- The label uses `bg-label` with `text-surface`, so it inverts against the page in both light and dark appearances.\n- `TooltipContent` accepts the positioner props `side`, `sideOffset`, `align` and `alignOffset`."
+}

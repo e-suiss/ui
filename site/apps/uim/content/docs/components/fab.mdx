@@ -1,0 +1,283 @@
+---
+title: Fab
+description: "A floating action button pinned to the bottom corner, with an optional label and speed-dial actions."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-fab--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab accessibilityLabel=\"New note\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabExample: View {\n  var body: some View {\n    FabStage {\n      Fab(accessibilityLabel: \"New note\", action: {}) { Ph.plus.bold }\n    }\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabExample() {\n    FabPage {\n        Fab(PhosphorIcons.Regular.Plus, contentDescription = \"New note\", onClick = {})\n    }\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}"} />
+
+</Example>
+
+`Fab` is a round accent `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.
+
+When it has `FabAction` children, pressing it opens a speed dial: a scrim dims the screen and the actions rise above the button one after another. The plus icon rotates 45 degrees into a close mark; other icons swap to an X.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add fab"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add fab --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add fab --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="uniwind/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="nativewind/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/fab.tsx`:
+
+<SourceFile path="stylesheet/components/ui/fab.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Fab.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Fab.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Fab, FabAction } from \"@/components/ui/fab\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-1\">\n  <Page />\n  <Fab accessibilityLabel=\"New note\" />\n</View>"} />
+
+Use the default plus icon or pass any Phosphor icon to `icon`. Give an icon-only button an `accessibilityLabel`.
+
+For a speed dial, add `FabAction` children with an `icon` and an optional text label. Pressing an action calls its `onPress` and closes the dial. Tapping the scrim or pressing the Android back button also closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it.
+
+Pass `portalHost` to render into a named portal host.
+
+## Examples
+
+### Large
+
+The `lg` size with a custom icon.
+
+<Example id="components-fab--large" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PencilSimpleIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabLargeExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab size=\"lg\" icon={PencilSimpleIcon} accessibilityLabel=\"Compose\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabLargeExample: View {\n  var body: some View {\n    FabStage {\n      Fab(accessibilityLabel: \"Compose\", size: .lg, action: {}) { Ph.pencilSimple.bold }\n    }\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.PencilSimple\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.FabSize\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabLargeExample() {\n    FabPage {\n        Fab(PhosphorIcons.Regular.PencilSimple, contentDescription = \"Compose\", onClick = {}, size = FabSize.Lg)\n    }\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}"} />
+
+</Example>
+
+### Extended
+
+A label beside the icon.
+
+<Example id="components-fab--extended" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { PencilSimpleIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabExtendedExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab icon={PencilSimpleIcon} label=\"Compose\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabExtendedExample: View {\n  var body: some View {\n    FabStage {\n      Fab(\"Compose\", action: {}) { Ph.pencilSimple.bold }\n    }\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.PencilSimple\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabExtendedExample() {\n    FabPage {\n        Fab(PhosphorIcons.Regular.PencilSimple, contentDescription = \"Compose\", onClick = {}, label = \"Compose\")\n    }\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}"} />
+
+</Example>
+
+### Large extended
+
+A large extended button.
+
+<Example id="components-fab--large-extended" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Fab } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nexport function FabLargeExtendedExample() {\n  return (\n    <View className=\"flex-1\">\n      <Page />\n      <Fab size=\"lg\" label=\"New note\" />\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabLargeExtendedExample: View {\n  var body: some View {\n    FabStage {\n      Fab(\"New note\", size: .lg, action: {}) { Ph.plus.bold }\n    }\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.FabSize\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabLargeExtendedExample() {\n    FabPage {\n        Fab(PhosphorIcons.Regular.Plus, contentDescription = \"New note\", onClick = {}, size = FabSize.Lg, label = \"New note\")\n    }\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}"} />
+
+</Example>
+
+### Speed dial open
+
+A speed dial that starts open.
+
+<Example id="components-fab--speed-dial-open" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CameraIcon, FileTextIcon, ImageIcon, NotePencilIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction SpeedDial({ defaultOpen = false }: { defaultOpen?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"flex-1\">\n      <Page log={log} />\n      <Fab accessibilityLabel=\"Create\" defaultOpen={defaultOpen}>\n        <FabAction icon={NotePencilIcon} onPress={() => setLog(\"New note\")}>\n          New note\n        </FabAction>\n        <FabAction icon={CameraIcon} onPress={() => setLog(\"Take photo\")}>\n          Take photo\n        </FabAction>\n        <FabAction icon={ImageIcon} onPress={() => setLog(\"Add image\")}>\n          Add image\n        </FabAction>\n        <FabAction icon={FileTextIcon} onPress={() => setLog(\"Scan document\")}>\n          Scan document\n        </FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabSpeedDialOpenExample() {\n  return (\n    <SpeedDial defaultOpen />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabSpeedDialOpenExample: View {\n  var body: some View {\n    FabSpeedDial(open: true)\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}\n\nstruct FabSpeedDial: View {\n  @State private var open: Bool\n  @State private var log = \"\"\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    FabStage(log: log) {\n      Fab(accessibilityLabel: \"Create\", isExpanded: $open) {\n        FabAction(\"New note\", action: { log = \"New note\" }) { Ph.notePencil.regular }\n        FabAction(\"Take photo\", action: { log = \"Take photo\" }) { Ph.camera.regular }\n        FabAction(\"Add image\", action: { log = \"Add image\" }) { Ph.image.regular }\n        FabAction(\"Scan document\", action: { log = \"Scan document\" }) { Ph.fileText.regular }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Camera\nimport com.adamglin.phosphoricons.regular.FileText\nimport com.adamglin.phosphoricons.regular.Image\nimport com.adamglin.phosphoricons.regular.NotePencil\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.FabAction\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabSpeedDialOpenExample() {\n    FabSpeedDial(defaultOpen = true)\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}\n\n@Composable\nfun FabSpeedDial(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var log by rememberSaveable { mutableStateOf(\"\") }\n    FabPage(log) {\n        Fab(PhosphorIcons.Regular.Plus, contentDescription = \"Create\", open = open, onOpenChange = { open = it }) {\n            FabAction(PhosphorIcons.Regular.NotePencil, \"New note\", { log = \"New note\" })\n            FabAction(PhosphorIcons.Regular.Camera, \"Take photo\", { log = \"Take photo\" })\n            FabAction(PhosphorIcons.Regular.Image, \"Add image\", { log = \"Add image\" })\n            FabAction(PhosphorIcons.Regular.FileText, \"Scan document\", { log = \"Scan document\" })\n        }\n    }\n}"} />
+
+</Example>
+
+### Speed dial closed
+
+A speed dial that opens on press.
+
+<Example id="components-fab--speed-dial-closed" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CameraIcon, FileTextIcon, ImageIcon, NotePencilIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction SpeedDial({ defaultOpen = false }: { defaultOpen?: boolean }) {\n  const [log, setLog] = React.useState(\"\")\n  return (\n    <View className=\"flex-1\">\n      <Page log={log} />\n      <Fab accessibilityLabel=\"Create\" defaultOpen={defaultOpen}>\n        <FabAction icon={NotePencilIcon} onPress={() => setLog(\"New note\")}>\n          New note\n        </FabAction>\n        <FabAction icon={CameraIcon} onPress={() => setLog(\"Take photo\")}>\n          Take photo\n        </FabAction>\n        <FabAction icon={ImageIcon} onPress={() => setLog(\"Add image\")}>\n          Add image\n        </FabAction>\n        <FabAction icon={FileTextIcon} onPress={() => setLog(\"Scan document\")}>\n          Scan document\n        </FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabSpeedDialClosedExample() {\n  return (\n    <SpeedDial />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabSpeedDialClosedExample: View {\n  var body: some View {\n    FabSpeedDial(open: false)\n  }\n}\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}\n\nstruct FabSpeedDial: View {\n  @State private var open: Bool\n  @State private var log = \"\"\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    FabStage(log: log) {\n      Fab(accessibilityLabel: \"Create\", isExpanded: $open) {\n        FabAction(\"New note\", action: { log = \"New note\" }) { Ph.notePencil.regular }\n        FabAction(\"Take photo\", action: { log = \"Take photo\" }) { Ph.camera.regular }\n        FabAction(\"Add image\", action: { log = \"Add image\" }) { Ph.image.regular }\n        FabAction(\"Scan document\", action: { log = \"Scan document\" }) { Ph.fileText.regular }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Camera\nimport com.adamglin.phosphoricons.regular.FileText\nimport com.adamglin.phosphoricons.regular.Image\nimport com.adamglin.phosphoricons.regular.NotePencil\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.FabAction\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabSpeedDialClosedExample() {\n    FabSpeedDial(defaultOpen = false)\n}\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}\n\n@Composable\nfun FabSpeedDial(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var log by rememberSaveable { mutableStateOf(\"\") }\n    FabPage(log) {\n        Fab(PhosphorIcons.Regular.Plus, contentDescription = \"Create\", open = open, onOpenChange = { open = it }) {\n            FabAction(PhosphorIcons.Regular.NotePencil, \"New note\", { log = \"New note\" })\n            FabAction(PhosphorIcons.Regular.Camera, \"Take photo\", { log = \"Take photo\" })\n            FabAction(PhosphorIcons.Regular.Image, \"Add image\", { log = \"Add image\" })\n            FabAction(PhosphorIcons.Regular.FileText, \"Scan document\", { log = \"Scan document\" })\n        }\n    }\n}"} />
+
+</Example>
+
+### Controlled
+
+A speed dial controlled with `open` and `onOpenChange`.
+
+<Example id="components-fab--controlled" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { CameraIcon, NotePencilIcon, PencilSimpleIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Fab, FabAction } from \"@/components/ui/fab\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ log }: { log?: string }) {\n  return (\n    <View className=\"gap-2\">\n      <Text variant=\"h3\">Notes</Text>\n      <Text variant=\"muted\">\n        The button floats at the bottom end of the screen.\n      </Text>\n      {log ? (\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      ) : null}\n    </View>\n  )\n}\n\nfunction ControlledDemo() {\n  const [open, setOpen] = React.useState(true)\n  return (\n    <View className=\"flex-1\">\n      <Page log={open ? \"Open\" : \"Closed\"} />\n      <Fab\n        icon={PencilSimpleIcon}\n        label=\"Create\"\n        open={open}\n        onOpenChange={setOpen}\n      >\n        <FabAction icon={NotePencilIcon}>New note</FabAction>\n        <FabAction icon={CameraIcon}>Take photo</FabAction>\n      </Fab>\n    </View>\n  )\n}\n\nexport function FabControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FabPage: View {\n  var log: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      Text(\"Notes\")\n        .textVariant(.h3)\n      Text(\"The button floats at the bottom end of the screen.\")\n        .textVariant(.muted)\n      if let log, !log.isEmpty {\n        Text(verbatim: log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n          .accessibilityAddTraits(.updatesFrequently)\n      }\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct FabStage<Content: View>: View {\n  var log: String?\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    ZStack(alignment: .topLeading) {\n      FabPage(log: log)\n      content()\n    }\n    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }\n  }\n}\n\nstruct FabControlled: View {\n  @State private var open = true\n\n  var body: some View {\n    FabStage(log: open ? \"Open\" : \"Closed\") {\n      Fab(\"Create\", isExpanded: $open) {\n        Ph.pencilSimple.bold\n      } actions: {\n        FabAction(\"New note\", action: {}) { Ph.notePencil.regular }\n        FabAction(\"Take photo\", action: {}) { Ph.camera.regular }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.WindowInsets\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.safeDrawing\nimport androidx.compose.foundation.layout.windowInsetsPadding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Camera\nimport com.adamglin.phosphoricons.regular.NotePencil\nimport com.adamglin.phosphoricons.regular.PencilSimple\nimport com.esuiss.ui.components.Fab\nimport com.esuiss.ui.components.FabAction\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FabPage(log: String? = null, fab: @Composable () -> Unit) {\n    Box(Modifier.fillMaxSize()) {\n        Column(\n            modifier = Modifier\n                .fillMaxWidth()\n                .windowInsetsPadding(WindowInsets.safeDrawing)\n                .padding(16.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            Text(\"Notes\", variant = TextVariant.H3)\n            Text(\"The button floats at the bottom end of the screen.\", variant = TextVariant.Muted)\n            if (!log.isNullOrEmpty()) {\n                Text(\n                    log,\n                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n                )\n            }\n        }\n        fab()\n    }\n}\n\n@Composable\nfun FabControlled() {\n    var open by rememberSaveable { mutableStateOf(true) }\n    FabPage(if (open) \"Open\" else \"Closed\") {\n        Fab(\n            PhosphorIcons.Regular.PencilSimple,\n            contentDescription = \"Create\",\n            open = open,\n            onOpenChange = { open = it },\n            label = \"Create\",\n        ) {\n            FabAction(PhosphorIcons.Regular.NotePencil, \"New note\", {})\n            FabAction(PhosphorIcons.Regular.Camera, \"Take photo\", {})\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"size","type":"FabSize","default":"\"default\"","description":"`default` or `lg`."},{"name":"icon","type":"PhosphorIcon","default":"PlusIcon","description":"Phosphor icon component. Defaults to a plus."},{"name":"label","type":"React.ReactNode","description":"Text or node shown beside the icon."},{"name":"open","type":"boolean","description":"Controlled speed dial state."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Initial speed dial state."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the speed dial opens or closes."},{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"icon","type":"PhosphorIcon","required":true,"description":"Phosphor icon component for the action."},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The button and each action have the `button` role.
+- With actions, the button reports its `expanded` state.
+- The VoiceOver escape gesture and the Android back button close the speed dial.
+- The scrim is hidden from screen readers.
+
+## Notes
+
+- Position follows the safe-area insets and flips sides in right-to-left layouts.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-accent`, `bg-surface-raised` and `bg-scrim` tokens; actions use a secondary surface in dark mode.

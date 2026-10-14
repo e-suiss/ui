@@ -1,0 +1,134 @@
+---
+title: Preview Menu
+description: "A context menu that lifts the pressed item into an enlarged preview above its actions, like iOS context menus."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="preview-menu" story="Default">
+
+<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { cn } from \"cn\"\nimport * as React from \"react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nfunction Photo({ tone, label }: { tone: string; label: string }) {\n  return (\n    <div\n      role=\"img\"\n      aria-label={label}\n      className={cn(\"aspect-square size-full bg-linear-to-br\", tone)}\n    />\n  )\n}\n\nfunction PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {\n  const [log, setLog] = React.useState(\n    \"Touch and hold a photo, or right-click it.\"\n  )\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <div className=\"grid grid-cols-3 gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone}>\n              <PreviewMenuTrigger className=\"aspect-square overflow-hidden rounded-2xl\">\n                <Photo tone={tone} label={label} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <CopyIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem onClick={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <ShareNetworkIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onClick={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <HeartIcon />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onClick={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <TrashIcon />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </div>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PreviewMenuExample() {\n  return (\n    <PhotoGrid />\n  )\n}"} />
+
+</Example>
+
+`PreviewMenu` builds on the Base UI Context Menu. Touching and holding the trigger, or right-clicking it, blurs the page and animates the trigger from its position into a centered preview up to `360px` wide, morphing its corner radius along the way. The menu of actions opens below the preview and the trigger stays hidden until the menu finishes closing, so the preview appears to return to its place.
+
+By default, the preview shows the trigger's own content. Pass `preview` to `PreviewMenuContent` to show richer content instead; the trigger's snapshot crossfades into it. Use it for items that benefit from a quick look before acting, such as photos, documents, or messages.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions preview-menu"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/interactions/preview-menu.tsx`:
+
+<SourceFile path="components/interactions/preview-menu.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from \"@/components/interactions/preview-menu\""} />
+
+<Code lang="tsx" code={"<PhotoGrid />"} />
+
+- Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content.
+- The menu is uncontrolled by default; pass `open` and `onOpenChange` to control it.
+- Set `aspectRatio` when a custom `preview` has a different shape than the trigger; otherwise the preview keeps the trigger's proportions.
+- Handle actions with `onClick` on each item. Items close the menu when chosen.
+
+## Examples
+
+### Disabled item
+
+A disabled item is announced as unavailable and does not act, while the other items still work.
+
+<Example kind="interaction" name="preview-menu" story="DisabledItem">
+
+<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { cn } from \"cn\"\nimport * as React from \"react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nfunction Photo({ tone, label }: { tone: string; label: string }) {\n  return (\n    <div\n      role=\"img\"\n      aria-label={label}\n      className={cn(\"aspect-square size-full bg-linear-to-br\", tone)}\n    />\n  )\n}\n\nfunction PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {\n  const [log, setLog] = React.useState(\n    \"Touch and hold a photo, or right-click it.\"\n  )\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <div className=\"grid grid-cols-3 gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone}>\n              <PreviewMenuTrigger className=\"aspect-square overflow-hidden rounded-2xl\">\n                <Photo tone={tone} label={label} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <CopyIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem onClick={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <ShareNetworkIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onClick={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <HeartIcon />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onClick={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <TrashIcon />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </div>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PreviewMenuDisabledItemExample() {\n  return (\n    <PhotoGrid withDisabled />\n  )\n}"} />
+
+</Example>
+
+### Custom preview
+
+A compact album row opens a larger custom preview through the `preview` prop and `aspectRatio`.
+
+<Example kind="interaction" name="preview-menu" story="CustomPreview">
+
+<Code lang="tsx" code={"import { ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nexport function PreviewMenuCustomPreviewExample() {\n  return (\n    <div className=\"mx-auto w-full max-w-md\">\n      <PreviewMenu aspectRatio={4 / 3}>\n        <PreviewMenuTrigger className=\"flex items-center gap-3 rounded-xl bg-surface-secondary p-3\">\n          <div className=\"size-12 shrink-0 rounded-lg bg-linear-to-br from-blue to-purple\" />\n          <div className=\"flex flex-col\">\n            <span className=\"font-semibold\">Trip to the coast</span>\n            <span className=\"text-sm text-label-secondary\">48 photos</span>\n          </div>\n        </PreviewMenuTrigger>\n        <PreviewMenuContent\n          preview={\n            <div className=\"flex flex-col justify-end bg-linear-to-br from-blue to-purple p-4 text-on-accent\">\n              <span className=\"text-lg font-semibold\">Trip to the coast</span>\n              <span className=\"text-sm\">48 photos · Updated today</span>\n            </div>\n          }\n        >\n          <PreviewMenuItem>\n            Share album\n            <ShareNetworkIcon />\n          </PreviewMenuItem>\n          <PreviewMenuItem variant=\"destructive\">\n            Delete album\n            <TrashIcon />\n          </PreviewMenuItem>\n        </PreviewMenuContent>\n      </PreviewMenu>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"PreviewMenu","href":"#previewmenu","children":[{"name":"PreviewMenuTrigger","href":"#previewmenutrigger","children":[]},{"name":"PreviewMenuContent","href":"#previewmenucontent","children":[{"name":"PreviewMenuItem","href":"#previewmenuitem","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### PreviewMenu
+
+The root that manages open state and measures the preview frame.
+
+<PropsTable props={[{"name":"open","type":"boolean","description":"Whether the menu is open, for controlled use."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the menu starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu opens or closes."},{"name":"aspectRatio","type":"number","description":"The width-to-height ratio of the preview; defaults to the trigger's ratio."},{"name":"children","type":"React.ReactNode","description":"The trigger and content."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewMenuTrigger
+
+The element that opens the menu on touch and hold or right-click.
+
+<PropsTable extends={["ContextMenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewMenuContent
+
+The backdrop, lifted preview, and popup that holds the menu items.
+
+<PropsTable extends={["ContextMenuPrimitive.Popup.Props"]} props={[{"name":"preview","type":"React.ReactNode","description":"Custom content to show in the preview instead of the trigger's content."},{"name":"previewClassName","type":"string","description":"Classes for the clipped preview container."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PreviewMenuItem
+
+An action in the menu.
+
+<PropsTable extends={["ContextMenuPrimitive.Item.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"The item style; `destructive` renders the label in the danger color."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+<PropsTable extends={["ContextMenuPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has `role="menu"` and items have `role="menuitem"`, with keyboard navigation from Base UI Context Menu.
+- `Escape` closes the menu without running an action.
+- Disabled items set `aria-disabled` and cannot be chosen.
+- The lifted preview is `aria-hidden`, so assistive technologies read the trigger and menu only.
+
+## Notes
+
+- Parts use `data-slot` values `preview-menu-trigger`, `preview-menu-backdrop`, `preview-menu-preview`, `preview-menu-content`, `preview-menu-item`, and `preview-menu-separator`. Items set `data-variant`.
+- The trigger carries `data-previewing` while open and `data-lifted` until the closing animation ends, and is invisible during that time.
+- The trigger disables text selection and the iOS touch callout so long presses open the menu.

@@ -1,0 +1,48 @@
+{
+  "description": "Building blocks for form fields that pair controls with labels, descriptions and error messages.",
+  "overview": "A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDescription` and an optional `FieldError`. It automatically adds the ids of its descriptions and errors to the control's `aria-describedby`, so supporting text is announced with the control. Use `FieldContent` to stack a label and description beside a control in a horizontal field, and `FieldTitle` for a non-label heading inside a field.\n\n`FieldGroup` stacks fields with consistent spacing, and its `inset` variant groups them into a rounded list, like iOS Settings. `FieldSet` and `FieldLegend` group related fields under a caption, and `FieldSeparator` divides sections, optionally with text. Use these parts with any control in the library, such as `Input`, `Textarea`, `Checkbox`, `Switch` or `RadioGroup`.",
+  "usage": "Connect each `FieldLabel` to its control with `htmlFor` and `id`. Set `orientation=\"horizontal\"` to place the label beside the control, for example for a checkbox or switch, or `responsive` to switch from vertical to horizontal when the surrounding `FieldGroup` is wide enough.\n\nTo show an error, set `aria-invalid` on the control and render a `FieldError` with children or an `errors` array. Pass `data-disabled` on a `Field` to dim its label when the control is disabled.\n\nTo build selectable cards, place a horizontal `Field` inside a `FieldLabel`; the label gets a border, and a highlighted ring when the control inside it is checked.",
+  "examples": {
+    "WithHelpLink": "A description that contains a link, styled with the link color and an underline.",
+    "Inset": "Horizontal fields in an `inset` field group, forming a rounded settings list with separators.",
+    "WithTextarea": "A field that labels and describes a `Textarea`.",
+    "Invalid": "An invalid field with an error message announced as an alert.",
+    "MultipleErrors": "A `FieldError` that renders an `errors` array as a bulleted list.",
+    "Disabled": "A disabled field with a dimmed label and a disabled input.",
+    "Horizontal": "Horizontal fields with a checkbox and a switch, one with a description in `FieldContent`.",
+    "ChoiceCards": "Radio options presented as selectable cards by nesting a `Field` inside a `FieldLabel`.",
+    "Form": "A complete payment form built from field sets, groups, a separator and actions.",
+    "SeparatorWithText": "A `FieldSeparator` with text between a sign-in button and an email field."
+  },
+  "parts": {
+    "FieldSet": "Groups related fields in a native `fieldset`.",
+    "FieldLegend": "The caption of a field set.",
+    "FieldGroup": "Stacks fields with consistent spacing, or groups them into an inset list.",
+    "Field": "Wraps a single control with its label, description and error.",
+    "FieldContent": "Stacks a label and description next to a control in a horizontal field.",
+    "FieldLabel": "The label of a field's control.",
+    "FieldTitle": "A heading inside a field that is not a label, such as the title of a choice card.",
+    "FieldDescription": "Supporting text that describes the control.",
+    "FieldSeparator": "A divider between sections, with optional centered text.",
+    "FieldError": "An error message for the field."
+  },
+  "props": {
+    "FieldLegend": {
+      "variant": "Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label."
+    },
+    "FieldGroup": {
+      "variant": "`inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end."
+    },
+    "Field": {
+      "orientation": "`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough."
+    },
+    "FieldSeparator": {
+      "children": "Optional text centered on the separator line."
+    },
+    "FieldError": {
+      "errors": "A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided."
+    }
+  },
+  "accessibility": "- `Field` has the `group` role and links its descriptions and errors to its first control through `aria-describedby`, updating the link when they change.\n- `FieldSet` renders a native `fieldset`, which takes its accessible name from `FieldLegend`.\n- `FieldError` has the `alert` role, so assistive technology announces it when it appears. It renders nothing when it has no children and no errors.\n- Set `aria-invalid` on the control to mark it invalid; `FieldError` does not set it for you.\n- Clicking a `FieldLabel` focuses or toggles its associated control.",
+  "notes": "- Styling hooks: `data-slot` values `field-set`, `field-legend`, `field-group`, `field`, `field-content`, `field-label` (used by both `FieldLabel` and `FieldTitle`), `field-description`, `field-separator` and `field-error`.\n- `Field` sets `data-orientation`, and `FieldGroup` and `FieldLegend` set `data-variant`.\n- `FieldGroup` is a container query context named `field-group`, which drives the `responsive` orientation.\n- Uses the `surface-secondary`, `separator`, `label-secondary`, `link`, `danger`, `accent` and `item-hover` tokens."
+}

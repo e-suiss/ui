@@ -1,0 +1,98 @@
+{
+  "name": "fullscreen-menu",
+  "type": "ui",
+  "files": [
+    "components/ui/fullscreen-menu.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "LinksOnly",
+    "WithCloseLabel"
+  ],
+  "parts": [
+    {
+      "name": "FullscreenMenu",
+      "extends": [
+        "DialogPrimitive.Root.Props",
+        "FullscreenMenuProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "FullscreenMenuTrigger",
+      "extends": [
+        "DialogPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "FullscreenMenuContent",
+      "extends": [
+        "DialogPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FullscreenMenuTitle",
+      "extends": [
+        "DialogPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "FullscreenMenuGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FullscreenMenuLabel",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FullscreenMenuLink",
+      "extends": [
+        "useRender.ComponentProps<\"a\">",
+        "React.ComponentProps<\"a\">"
+      ],
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "FullscreenMenuClose",
+      "extends": [
+        "DialogPrimitive.Close.Props"
+      ],
+      "props": []
+    }
+  ]
+}

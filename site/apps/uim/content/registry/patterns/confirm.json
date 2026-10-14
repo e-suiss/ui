@@ -1,0 +1,26 @@
+{
+  "description": "A bottom alert sheet that asks the user to confirm or cancel an action.",
+  "overview": "`Confirm` wraps `AlertSheet` with `dismissible` set to `false` by default, so the sheet closes only through one of its buttons.\n\n`ConfirmContent` rearranges its children: the header and every non-cancel button from `ConfirmFooter` go into one rounded group, and `ConfirmCancel` is placed below it as a separate button. Use it before destructive or irreversible actions.",
+  "usage": "Put `ConfirmTitle` and `ConfirmDescription` in a `ConfirmHeader`, and the buttons in a `ConfirmFooter` inside `ConfirmContent`. Any `ConfirmAction` goes into the group; `ConfirmCancel` is moved out of it.\n\nThe root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to let outside presses close it. Set `variant=\"destructive\"` on `ConfirmAction` for delete-style actions.",
+  "examples": {
+    "OpenByDefault": "Shows the sheet on first render with `defaultOpen`."
+  },
+  "parts": {
+    "Confirm": "The root that owns the open state.",
+    "ConfirmTrigger": "The element that opens the sheet.",
+    "ConfirmContent": "The sheet that groups the header and actions and places Cancel below.",
+    "ConfirmHeader": "Holds the title and description.",
+    "ConfirmTitle": "The question being asked.",
+    "ConfirmDescription": "Supporting text about the consequences.",
+    "ConfirmFooter": "Holds the action and cancel buttons.",
+    "ConfirmAction": "A confirming action, rendered as an `AlertSheetAction`.",
+    "ConfirmCancel": "The cancel button, shown separately below the group."
+  },
+  "props": {
+    "Confirm": {
+      "dismissible": "When `true`, an outside press closes the sheet. Defaults to `false`."
+    }
+  },
+  "accessibility": "- With the default `dismissible={false}`, the sheet uses the alert dialog primitive, so it closes only through its buttons.",
+  "notes": "- Action text uses `text-link`, or `text-danger` for the `destructive` variant.\n- On iOS the sheet renders in a full-window overlay so it appears above native screens."
+}

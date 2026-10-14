@@ -1,0 +1,180 @@
+---
+title: Flyout
+description: "A non-modal panel anchored to a trigger on desktop that becomes a bottom drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="flyout" story="Default">
+
+<Code lang="tsx" code={"import { Flyout, FlyoutBody, FlyoutContent, FlyoutDescription, FlyoutHeader, FlyoutTitle, FlyoutTrigger } from \"@/components/patterns/flyout\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function FlyoutExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Flyout>\n        <FlyoutTrigger render={<Button variant=\"outline\" />}>\n          Dimensions\n        </FlyoutTrigger>\n        <FlyoutContent>\n          <FlyoutHeader>\n            <FlyoutTitle>Dimensions</FlyoutTitle>\n            <FlyoutDescription>\n              Set the dimensions for the layer.\n            </FlyoutDescription>\n          </FlyoutHeader>\n          <FlyoutBody className=\"grid gap-3\">\n            <div className=\"grid grid-cols-3 items-center gap-3\">\n              <Label htmlFor=\"flyout-width\">Width</Label>\n              <Input\n                id=\"flyout-width\"\n                defaultValue=\"100%\"\n                className=\"col-span-2\"\n              />\n            </div>\n            <div className=\"grid grid-cols-3 items-center gap-3\">\n              <Label htmlFor=\"flyout-height\">Height</Label>\n              <Input\n                id=\"flyout-height\"\n                defaultValue=\"25px\"\n                className=\"col-span-2\"\n              />\n            </div>\n          </FlyoutBody>\n        </FlyoutContent>\n      </Flyout>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Flyout` shows supplementary content, such as a small form or a share link, next to the control that opened it. On desktop it renders a `Popover` positioned against the trigger. Below the `48rem` breakpoint it renders a bottom `Drawer` with a swipe handle, and each part switches to its drawer counterpart: `FlyoutHeader`, `FlyoutTitle` and `FlyoutDescription` map to the drawer's header, title and description, and `FlyoutBody` gains padding.
+
+Use it for quick settings or filters that do not need a full modal.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns flyout"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Popover](/docs/components/popover), `use-mobile`.
+
+3. Copy the source into `components/patterns/flyout.tsx`:
+
+<SourceFile path="components/patterns/flyout.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Flyout, FlyoutTrigger, FlyoutContent, FlyoutHeader, FlyoutTitle, FlyoutDescription, FlyoutBody, FlyoutClose } from \"@/components/patterns/flyout\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Flyout>\n    <FlyoutTrigger render={<Button variant=\"outline\" />}>\n      Dimensions\n    </FlyoutTrigger>\n    <FlyoutContent>\n      <FlyoutHeader>\n        <FlyoutTitle>Dimensions</FlyoutTitle>\n        <FlyoutDescription>\n          Set the dimensions for the layer.\n        </FlyoutDescription>\n      </FlyoutHeader>\n      <FlyoutBody className=\"grid gap-3\">\n        <div className=\"grid grid-cols-3 items-center gap-3\">\n          <Label htmlFor=\"flyout-width\">Width</Label>\n          <Input\n            id=\"flyout-width\"\n            defaultValue=\"100%\"\n            className=\"col-span-2\"\n          />\n        </div>\n        <div className=\"grid grid-cols-3 items-center gap-3\">\n          <Label htmlFor=\"flyout-height\">Height</Label>\n          <Input\n            id=\"flyout-height\"\n            defaultValue=\"25px\"\n            className=\"col-span-2\"\n          />\n        </div>\n      </FlyoutBody>\n    </FlyoutContent>\n  </Flyout>\n</div>"} />
+
+The flyout can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. `align`, `alignOffset`, `side` and `sideOffset` on `FlyoutContent` position the desktop popover and are ignored on mobile. Put interactive content in `FlyoutBody`, and use `FlyoutClose` for a button that closes the flyout after an action.
+
+## Examples
+
+### With close button
+
+Adds an icon close button to the mobile drawer with `showCloseButton`.
+
+<Example kind="pattern" name="flyout" story="WithCloseButton">
+
+<Code lang="tsx" code={"import { Flyout, FlyoutBody, FlyoutContent, FlyoutDescription, FlyoutHeader, FlyoutTitle, FlyoutTrigger } from \"@/components/patterns/flyout\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function FlyoutWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Flyout>\n        <FlyoutTrigger render={<Button variant=\"outline\" />}>\n          Filters\n        </FlyoutTrigger>\n        <FlyoutContent showCloseButton>\n          <FlyoutHeader>\n            <FlyoutTitle>Filters</FlyoutTitle>\n            <FlyoutDescription>Narrow down the orders list.</FlyoutDescription>\n          </FlyoutHeader>\n          <FlyoutBody className=\"grid gap-2\">\n            <Label htmlFor=\"flyout-search\">Customer</Label>\n            <Input id=\"flyout-search\" placeholder=\"Search by name\" />\n          </FlyoutBody>\n        </FlyoutContent>\n      </Flyout>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Adds a text close button labelled Done to the mobile drawer with `closeLabel`.
+
+<Example kind="pattern" name="flyout" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { Flyout, FlyoutBody, FlyoutContent, FlyoutDescription, FlyoutHeader, FlyoutTitle, FlyoutTrigger } from \"@/components/patterns/flyout\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function FlyoutWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Flyout>\n        <FlyoutTrigger render={<Button variant=\"outline\" />}>\n          Filters\n        </FlyoutTrigger>\n        <FlyoutContent showCloseButton closeLabel=\"Done\">\n          <FlyoutHeader>\n            <FlyoutTitle>Filters</FlyoutTitle>\n            <FlyoutDescription>Narrow down the orders list.</FlyoutDescription>\n          </FlyoutHeader>\n          <FlyoutBody className=\"grid gap-2\">\n            <Label htmlFor=\"flyout-search\">Customer</Label>\n            <Input id=\"flyout-search\" placeholder=\"Search by name\" />\n          </FlyoutBody>\n        </FlyoutContent>\n      </Flyout>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close
+
+Uses `FlyoutClose` on a Copy link button so the action also closes the flyout.
+
+<Example kind="pattern" name="flyout" story="WithClose">
+
+<Code lang="tsx" code={"import { Flyout, FlyoutBody, FlyoutClose, FlyoutContent, FlyoutDescription, FlyoutHeader, FlyoutTitle, FlyoutTrigger } from \"@/components/patterns/flyout\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FlyoutWithCloseExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Flyout>\n        <FlyoutTrigger render={<Button variant=\"outline\" />}>Share</FlyoutTrigger>\n        <FlyoutContent>\n          <FlyoutHeader>\n            <FlyoutTitle>Share link</FlyoutTitle>\n            <FlyoutDescription>\n              Anyone with the link can view this project.\n            </FlyoutDescription>\n          </FlyoutHeader>\n          <FlyoutBody className=\"grid gap-3\">\n            <Input\n              readOnly\n              aria-label=\"Project link\"\n              defaultValue=\"https://esuiss.dev/p/1042\"\n            />\n            <FlyoutClose render={<Button />}>Copy link</FlyoutClose>\n          </FlyoutBody>\n        </FlyoutContent>\n      </Flyout>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Insets the mobile drawer from the screen edges with `floating`.
+
+<Example kind="pattern" name="flyout" story="Floating">
+
+<Code lang="tsx" code={"import { Flyout } from \"@/components/patterns/flyout\"\n\nexport function FlyoutFloatingExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Flyout floating />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Flyout","href":"#flyout","children":[{"name":"FlyoutTrigger","href":"#flyouttrigger","children":[]},{"name":"FlyoutContent","href":"#flyoutcontent","children":[{"name":"FlyoutHeader","href":"#flyoutheader","children":[{"name":"FlyoutTitle","href":"#flyouttitle","children":[]},{"name":"FlyoutDescription","href":"#flyoutdescription","children":[]}]},{"name":"FlyoutBody","href":"#flyoutbody","children":[{"name":"FlyoutClose","href":"#flyoutclose","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Flyout
+
+The root that renders a `Popover` on desktop and a `Drawer` on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof Popover>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the flyout opens or closes."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FlyoutTrigger
+
+The button that opens the flyout.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### FlyoutContent
+
+The popup; a `PopoverContent` on desktop and a `DrawerContent` on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof PopoverContent>"]} props={[{"name":"showCloseButton","type":"boolean","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Replaces the drawer's close icon with this text; requires `showCloseButton`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### FlyoutHeader
+
+Groups the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### FlyoutTitle
+
+The flyout's title, used as its accessible name.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLHeadingElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### FlyoutDescription
+
+Supporting text, used as the flyout's accessible description.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLParagraphElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### FlyoutBody
+
+The main content area, padded on mobile.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### FlyoutClose
+
+A button that closes the flyout.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `dialog` role, named by `FlyoutTitle` and described by `FlyoutDescription`.
+- Opening moves focus into the flyout.
+- `Escape` closes it and returns focus to the trigger; pressing outside also closes it.
+
+## Notes
+
+Parts carry `data-slot` values from `flyout` through `flyout-close`. `showCloseButton` and `closeLabel` only affect the mobile drawer; on desktop, add a `FlyoutClose` if the popover needs an explicit close control.

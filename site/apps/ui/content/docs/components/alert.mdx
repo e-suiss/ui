@@ -1,0 +1,142 @@
+---
+title: Alert
+description: "A static callout that draws attention to an important message without interrupting the user."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="alert" story="Default">
+
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Update available</AlertTitle>\n        <AlertDescription>\n          A new version is ready to install. Restart the app to apply it.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
+
+</Example>
+
+An `Alert` is a rounded container with an optional leading icon, an `AlertTitle`, an optional `AlertDescription` and an optional `AlertAction`. Place the icon as a direct child; the layout switches to a two-column grid so the title and description align beside it.
+
+Use an alert for inline, persistent messages such as updates, warnings or errors. To interrupt the user and require a decision, use Alert Dialog instead; for short-lived notifications, use Toast.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/alert.tsx`:
+
+<SourceFile path="components/ui/alert.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Alert, AlertTitle, AlertDescription, AlertAction } from \"@/components/ui/alert\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Alert>\n    <InfoIcon weight=\"fill\" />\n    <AlertTitle>Update available</AlertTitle>\n    <AlertDescription>\n      A new version is ready to install. Restart the app to apply it.\n    </AlertDescription>\n  </Alert>\n</div>"} />
+
+Put a Phosphor icon (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.
+
+`AlertAction` is positioned in the top-end corner, and the alert reserves end padding for it automatically.
+
+## Examples
+
+### Destructive
+
+Tints the icon with the danger color for errors.
+
+<Example kind="ui" name="alert" story="Destructive">
+
+<Code lang="tsx" code={"import { WarningCircleIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertDestructiveExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert variant=\"destructive\">\n        <WarningCircleIcon weight=\"fill\" />\n        <AlertTitle>Payment failed</AlertTitle>\n        <AlertDescription>\n          Your card was declined. Update your billing details to continue.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Without icon
+
+A title and description with no leading icon.
+
+<Example kind="ui" name="alert" story="WithoutIcon">
+
+<Code lang="tsx" code={"import { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertWithoutIconExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <AlertTitle>Scheduled maintenance</AlertTitle>\n        <AlertDescription>\n          The service will be unavailable on Sunday from 2:00 to 4:00 AM.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Title only
+
+An icon with a single line of text and no description.
+
+<Example kind="ui" name="alert" story="TitleOnly">
+
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertTitleOnlyExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Your changes have been saved.</AlertTitle>\n      </Alert>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With action
+
+Places a small button in the top-end corner with `AlertAction`.
+
+<Example kind="ui" name="alert" story="WithAction">
+
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertAction, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertWithActionExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Storage almost full</AlertTitle>\n        <AlertDescription>\n          You have used 90% of your storage. Upgrade for more space.\n        </AlertDescription>\n        <AlertAction>\n          <Button size=\"xs\">Upgrade</Button>\n        </AlertAction>\n      </Alert>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Alert","href":"#alert","children":[{"name":"AlertTitle","href":"#alerttitle","children":[]},{"name":"AlertDescription","href":"#alertdescription","children":[]},{"name":"AlertAction","href":"#alertaction","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Alert
+
+The container that lays out the icon, text and action.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"Icon color. `default` uses the accent color; `destructive` uses the danger color."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertTitle
+
+The bold headline of the message.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDescription
+
+Secondary text that explains the message.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertAction
+
+An absolutely positioned slot for a button or link in the top-end corner.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `Alert` renders with `role="alert"`, so assistive technology announces its content when it appears.
+- Interactive content in `AlertAction` stays in the normal tab order.
+- Decorative icons should not need a label; put the meaning in the title text.
+
+## Notes
+
+- Styling hooks: `data-slot="alert"`, `"alert-title"`, `"alert-description"` and `"alert-action"`.
+- Both variants use `bg-surface-secondary`; they differ only in icon color (`text-accent` or `text-danger`).
+- Links inside the title or description are underlined automatically.

@@ -1,0 +1,97 @@
+{
+  "name": "carousel",
+  "type": "ui",
+  "files": [
+    "components/ui/carousel.tsx"
+  ],
+  "requires": [
+    "button",
+    "direction"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn",
+    "embla-carousel-react"
+  ],
+  "examples": [
+    "Default",
+    "MultipleItems",
+    "Loop",
+    "Vertical",
+    "Featured",
+    "Spotlight",
+    "Shelf",
+    "Testimonials",
+    "Gallery",
+    "FeaturedAutoplay",
+    "SpotlightAutoplay",
+    "ShelfAutoplay",
+    "TestimonialsAutoplay"
+  ],
+  "parts": [
+    {
+      "name": "Carousel",
+      "extends": [
+        "React.ComponentProps<\"div\">",
+        "CarouselProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselItem",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselPrevious",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselNext",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselControls",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CarouselDots",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"plain\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "CarouselPlayButton",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "collapsible",
+  "type": "ui",
+  "files": [
+    "components/ui/collapsible.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "examples": [
+    "Default",
+    "OpenByDefault",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Collapsible",
+      "extends": [
+        "CollapsiblePrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "CollapsibleTrigger",
+      "extends": [
+        "CollapsiblePrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "CollapsibleContent",
+      "extends": [
+        "CollapsiblePrimitive.Panel.Props"
+      ],
+      "props": []
+    }
+  ]
+}

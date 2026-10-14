@@ -1,0 +1,5 @@
+{
+  "description": "A sign-in approval flow where a trusted device shows an alert, then a code to enter on the new device.",
+  "overview": "The screen shows a mock alert from the trusted device with Allow and Don't Allow. Allowing reveals a code and an `InputOTP` to enter it, with a `Spinner` while checking and an error for a wrong code; denying shows a blocked message with an option to show the request again. A correct code shows an approved screen.",
+  "usage": "`onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. Edit `COPY` to change the text for each phase."
+}

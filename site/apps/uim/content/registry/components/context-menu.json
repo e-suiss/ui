@@ -1,0 +1,67 @@
+{
+  "description": "A menu that opens at the touch point when an area is long-pressed.",
+  "overview": "`ContextMenu` attaches a menu to a `ContextMenuTrigger` area. A long press opens `ContextMenuContent` at the position of the finger with a medium impact haptic. The content renders through a portal (inside a full-window overlay on iOS) as a raised, rounded card.\n\nItems can be plain actions, checkbox items, radio items in a group, or a submenu. `ContextMenuSubContent` expands in place under its trigger, and the caret turns to point down while it is open.",
+  "usage": "Wrap the long-pressable area in `ContextMenuTrigger` and list `ContextMenuItem`s in `ContextMenuContent`. Items close the menu when pressed unless `closeOnPress={false}`.\n\nUse `ContextMenuCheckboxItem` with `checked` and `onCheckedChange`, and `ContextMenuRadioItem` inside a `ContextMenuRadioGroup` with `value` and `onValueChange`. Group items with `ContextMenuGroup` and `ContextMenuLabel`, and divide sections with `ContextMenuSeparator`.\n\nSet `variant=\"destructive\"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one.",
+  "examples": {
+    "Simple": "A short list of plain items.",
+    "OpenByDefault": "Starts open through `defaultOpen`."
+  },
+  "parts": {
+    "ContextMenu": "Root that holds the open state.",
+    "ContextMenuTrigger": "Area that opens the menu on long press.",
+    "ContextMenuContent": "Floating menu card.",
+    "ContextMenuItem": "Action row.",
+    "ContextMenuCheckboxItem": "Row with a check mark that toggles.",
+    "ContextMenuRadioGroup": "Group of radio items with one value.",
+    "ContextMenuRadioItem": "Row that selects one value in its group.",
+    "ContextMenuGroup": "Group of related items.",
+    "ContextMenuLabel": "Heading for a group.",
+    "ContextMenuSeparator": "Line between sections.",
+    "ContextMenuSub": "Root of a nested submenu.",
+    "ContextMenuSubTrigger": "Row that expands the submenu.",
+    "ContextMenuSubContent": "Items of the submenu."
+  },
+  "props": {
+    "ContextMenu": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state.",
+      "onOpenChange": "Called when the menu opens or closes."
+    },
+    "ContextMenuContent": {
+      "side": "Side to open on. Defaults to `bottom`.",
+      "align": "Alignment. Defaults to `start`.",
+      "sideOffset": "Gap from the touch point.",
+      "alignOffset": "Offset along the alignment axis.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "ContextMenuItem": {
+      "variant": "`default` or `destructive`.",
+      "inset": "Adds start padding to align with icon items.",
+      "closeOnPress": "Closes the menu on press. Defaults to `true`.",
+      "disabled": "Dims the item and blocks presses."
+    },
+    "ContextMenuCheckboxItem": {
+      "checked": "Controlled checked state.",
+      "defaultChecked": "Initial checked state.",
+      "onCheckedChange": "Called with the new checked value.",
+      "inset": "Adds start padding."
+    },
+    "ContextMenuRadioGroup": {
+      "value": "Controlled selected value.",
+      "onValueChange": "Called with the new value."
+    },
+    "ContextMenuRadioItem": {
+      "value": "Value selected by this item.",
+      "inset": "Adds start padding."
+    },
+    "ContextMenuSubTrigger": {
+      "inset": "Adds start padding.",
+      "iconClassName": "Extra classes for the caret icon."
+    },
+    "ContextMenuLabel": {
+      "inset": "Adds start padding."
+    }
+  },
+  "accessibility": "- The trigger exposes a `longpress` accessibility action, so VoiceOver and TalkBack users can open the menu, and reports its `expanded` state.\n- The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.\n- Separators have the `separator` role.",
+  "notes": "- Uses `bg-surface-raised`, `bg-item-pressed` and `bg-danger-surface-pressed` tokens; light and dark follow the system appearance.\n- The fade-in respects the system Reduce Motion setting."
+}

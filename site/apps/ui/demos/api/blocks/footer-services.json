@@ -1,0 +1,15 @@
+{
+  "name": "footer-services",
+  "type": "block",
+  "files": [
+    "components/blocks/footer-services.tsx"
+  ],
+  "requires": [
+    "input-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

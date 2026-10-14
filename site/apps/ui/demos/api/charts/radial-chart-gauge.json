@@ -1,0 +1,16 @@
+{
+  "name": "radial-chart-gauge",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-gauge.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

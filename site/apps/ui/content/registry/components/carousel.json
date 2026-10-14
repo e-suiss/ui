@@ -1,0 +1,36 @@
+{
+  "description": "A swipeable track of slides with buttons, dots and optional autoplay, built on Embla Carousel.",
+  "overview": "Carousel is built on `embla-carousel-react`. A `Carousel` root holds a `CarouselContent` track whose children are `CarouselItem` slides. Add `CarouselPrevious` and `CarouselNext` to page through slides; on their own they float outside the track's edges. To lay controls out in a row below the track instead, place them in a `CarouselControls` container, along with `CarouselDots` for per-slide indicators and `CarouselPlayButton` for autoplay.\n\nUse a carousel for featured content, product shelves, testimonials and galleries where people browse a set of peers one at a time. For content everyone must see, prefer a static layout.",
+  "usage": "`Carousel` accepts `opts` (Embla options such as `align`, `loop` and `dragFree`), `plugins`, `orientation` (`horizontal` or `vertical`) and `setApi`, which receives the Embla API so you can read or drive the carousel from outside. The scroll direction follows the surrounding `DirectionProvider`.\n\nSet the width of each slide with a `basis-*` class on `CarouselItem`, for example `basis-1/2` to show two at a time. The track uses negative margin and slides use start padding for gutters; adjust both together, as in `-ms-3` with `ps-3`.\n\nSet `autoplay` to `true` for a 5-second interval, or to a number of milliseconds. Autoplay pauses while the pointer hovers the carousel, while it has keyboard focus, and while the page is hidden, and starts paused when the user prefers reduced motion. `CarouselPlayButton` renders only when autoplay is enabled, and the active dot fills as a progress bar.\n\nUse the `useCarousel` hook inside a `Carousel` to build custom controls.",
+  "examples": {
+    "MultipleItems": "Shows two slides at a time with `basis-1/2`.",
+    "Loop": "Wraps from the last slide back to the first with `opts={{ loop: true }}`.",
+    "Vertical": "Scrolls vertically, with the buttons above and below the track.",
+    "Featured": "Large cards that peek at the next slide, with plain dots below.",
+    "Spotlight": "A looping hero with dots and a next button in a centered control bar.",
+    "Shelf": "A drag-free product shelf with no visible buttons.",
+    "Testimonials": "Quotes with dots and large previous and next buttons in a control row.",
+    "Gallery": "Tall cards with controls aligned to the end below the track.",
+    "FeaturedAutoplay": "The featured layout advancing every four seconds.",
+    "SpotlightAutoplay": "The spotlight layout with autoplay and a pause button in place of the next button.",
+    "ShelfAutoplay": "The shelf advancing every three seconds and looping.",
+    "TestimonialsAutoplay": "Testimonials advancing every six seconds."
+  },
+  "parts": {
+    "Carousel": "The root region that owns the Embla instance, keyboard handling and autoplay state.",
+    "CarouselContent": "The clipping viewport and the flex track that holds the slides.",
+    "CarouselItem": "A single slide.",
+    "CarouselPrevious": "A button that scrolls to the previous slide, disabled at the start.",
+    "CarouselNext": "A button that scrolls to the next slide, disabled at the end.",
+    "CarouselControls": "A row that lays out buttons, dots and the play button below the track.",
+    "CarouselDots": "One button per snap point that jumps to that slide and marks the current one.",
+    "CarouselPlayButton": "Toggles autoplay between playing and paused."
+  },
+  "props": {
+    "CarouselDots": {
+      "variant": "`default` places the dots on a blurred pill background; `plain` removes the background and padding."
+    }
+  },
+  "accessibility": "- The root renders with `role=\"region\"` and `aria-roledescription=\"carousel\"`; each `CarouselItem` has `role=\"group\"` and `aria-roledescription=\"slide\"`. Add an `aria-label` to the root to name it.\n- Arrow keys move between slides while focus is inside the carousel: left and right for horizontal (reversed in right-to-left layouts), up and down for vertical.\n- `CarouselPrevious` and `CarouselNext` include visually hidden labels, `Previous slide` and `Next slide`. When one becomes disabled while focused, focus moves to the other.\n- Each dot is labelled `Go to slide N`, and the current dot has `aria-current=\"true\"`.\n- `CarouselPlayButton` is labelled `Pause slideshow` or `Play slideshow` to match its state.",
+  "notes": "- Styling hooks: `data-slot` values `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-controls`, `carousel-dots` and `carousel-play-button`.\n- The root sets `data-playing` while autoplay is running. Dots expose `data-active` on the current dot, and the dots container sets `data-variant` and `data-autoplay`.\n- `CarouselPrevious` and `CarouselNext` default to the `secondary` variant and `icon` size; `CarouselPlayButton` defaults to `secondary` and `icon-sm`.\n- In vertical carousels, standalone previous and next buttons are rotated 90 degrees; inside `CarouselControls` they are not."
+}

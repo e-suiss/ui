@@ -1,0 +1,36 @@
+{
+  "description": "Navigation links for moving between pages of content, such as table results.",
+  "overview": "Pagination is a set of link primitives you compose around your own page state. `Pagination` is the `nav` landmark. Inside it, `PaginationContent` is a list of `PaginationItem` entries, each holding a `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationFirst`, `PaginationLast` or `PaginationEllipsis`.\n\nFor compact toolbars, `PaginationGroup` joins arrow links into one segmented control, `PaginationInput` lets the user type a page number, and `PaginationSummary` shows a range such as `6–10 / 62`. The component does not calculate page ranges; you decide which links to render.",
+  "usage": "Links render as `a` elements, so pass `href` for real routes, or `href=\"#\"` with an `onClick` that calls `preventDefault()` for client-side state. Mark the current page with `isActive` on `PaginationLink`. To disable an edge link, set `aria-disabled` on it; it becomes non-interactive and dimmed.\n\n`PaginationLink` takes a `size` from the Button sizes and defaults to `icon-sm`. Set `text=\"\"` on `PaginationPrevious` or `PaginationNext` for icon-only arrows.",
+  "examples": {
+    "Compact": "A page number input with joined previous and next arrows in a `PaginationGroup`, clamping typed values to the valid range.",
+    "RowsPerPage": "A rows-per-page select, a range summary, and first, previous, next and last arrows.",
+    "WithEllipsis": "A long page range shortened with ellipses on both sides of the current page.",
+    "CustomLabels": "Previous and next links relabelled `Newer` and `Older`.",
+    "LargeLinks": "Page links using the larger `icon` button size."
+  },
+  "parts": {
+    "Pagination": "The `nav` landmark that contains the pagination controls.",
+    "PaginationContent": "The list that holds the pagination items.",
+    "PaginationItem": "A list item wrapper for one link or ellipsis.",
+    "PaginationLink": "A page link styled as a button, highlighted when active.",
+    "PaginationPrevious": "A link to the previous page with a leading caret.",
+    "PaginationNext": "A link to the next page with a trailing caret.",
+    "PaginationFirst": "An icon link to the first page.",
+    "PaginationLast": "An icon link to the last page.",
+    "PaginationEllipsis": "A placeholder that indicates skipped pages.",
+    "PaginationSummary": "Secondary text that summarizes the current range.",
+    "PaginationGroup": "Joins several links into one segmented control.",
+    "PaginationInput": "A numeric text field for jumping to a page."
+  },
+  "props": {
+    "PaginationPrevious": {
+      "text": "The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link."
+    },
+    "PaginationNext": {
+      "text": "The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link."
+    }
+  },
+  "accessibility": "- `Pagination` renders a `nav` with `aria-label=\"pagination\"`.\n- The active `PaginationLink` gets `aria-current=\"page\"`.\n- Arrow links have built-in accessible names: `Go to previous page`, `Go to next page`, `Go to first page` and `Go to last page`. Custom `text` on previous or next replaces the name.\n- `PaginationEllipsis` is hidden from assistive technology.\n- `PaginationGroup` has `role=\"group\"`.\n- `PaginationInput` has no built-in label; associate one with `htmlFor` or `aria-label`.",
+  "notes": "- Styling hooks: `data-slot` values `pagination`, `pagination-content`, `pagination-item`, `pagination-link`, `pagination-ellipsis`, `pagination-summary`, `pagination-group` and `pagination-input`. Active links expose `data-active`.\n- Active links use the `secondary` button variant and others use `ghost`.\n- Previous and next text is hidden below the `sm` breakpoint, and the carets flip in right-to-left layouts.\n- `PaginationInput` uses `inputMode=\"numeric\"` to show a number keypad on touch devices."
+}

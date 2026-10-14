@@ -1,0 +1,118 @@
+---
+title: Toggle
+description: "A two-state button that stays pressed until it's pressed again."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="toggle" story="Default">
+
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleExample() {\n  return (\n    <Toggle aria-label=\"Toggle bold\"><TextBIcon /></Toggle>\n  )\n}"} />
+
+</Example>
+
+`Toggle` wraps the Base UI Toggle primitive. When pressed, it shows a tinted background and `link`-colored content, and it scales down slightly while being pressed.
+
+Use a toggle for a single on-off option such as bold text or a bookmark. To choose among related options, use `ToggleGroup`; for a setting that takes effect immediately, use `Switch`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="components/ui/toggle.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\""} />
+
+<Code lang="tsx" code={"<Toggle aria-label=\"Toggle bold\"><TextBIcon /></Toggle>"} />
+
+Use `defaultPressed` for an uncontrolled toggle, or `pressed` with `onPressedChange` to control it. Mark an icon beside a label with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side.
+
+## Examples
+
+### Pressed
+
+Starts in the pressed state.
+
+<Example kind="ui" name="toggle" story="Pressed">
+
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function TogglePressedExample() {\n  return (\n    <Toggle aria-label=\"Toggle bold\" defaultPressed><TextBIcon /></Toggle>\n  )\n}"} />
+
+</Example>
+
+### Variants
+
+Compares the `default` and `outline` variants.
+
+<Example kind="ui" name="toggle" story="Variants">
+
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleVariantsExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle bold\" variant=\"default\" />\n      <Toggle aria-label=\"Toggle bold\" variant=\"outline\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Compares the `sm`, `default` and `lg` sizes.
+
+<Example kind="ui" name="toggle" story="Sizes">
+
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle bold\" size=\"sm\" />\n      <Toggle aria-label=\"Toggle bold\" size=\"default\" />\n      <Toggle aria-label=\"Toggle bold\" size=\"lg\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With text
+
+Pairs an icon with a text label.
+
+<Example kind="ui" name="toggle" story="WithText">
+
+<Code lang="tsx" code={"import { BookmarkSimpleIcon, TextItalicIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleWithTextExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle italic\">\n        <TextItalicIcon data-icon=\"inline-start\" />\n        Italic\n      </Toggle>\n      <Toggle variant=\"outline\" aria-label=\"Save for later\">\n        <BookmarkSimpleIcon data-icon=\"inline-start\" />\n        Save\n      </Toggle>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables the toggle so it ignores clicks.
+
+<Example kind="ui" name="toggle" story="Disabled">
+
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleDisabledExample() {\n  return (\n    <Toggle disabled aria-label=\"Toggle bold\"><TextBIcon /></Toggle>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Toggle
+
+The pressable two-state button.
+
+<PropsTable extends={["TogglePrimitive.Props"]} props={[{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"Uses a borderless `default` style or an `outline` style with a border."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the height and padding: `sm`, `default` or `lg`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders a `button` with `aria-pressed` reflecting its state.
+- `Enter` and `Space` toggle the focused button.
+- An icon-only toggle needs an `aria-label`.
+
+## Notes
+
+- Uses `data-slot="toggle"`. Pressed styles key off `aria-pressed`.
+- `toggleVariants` is exported so other components, such as `ToggleGroupItem`, can share the styles.
+- The press animation is removed when reduced motion is preferred.

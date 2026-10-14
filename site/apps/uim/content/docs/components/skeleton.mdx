@@ -1,0 +1,190 @@
+---
+title: Skeleton
+description: "A pulsing placeholder shape shown while content loads."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-skeleton--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonExample() {\n  return (\n    <Skeleton className=\"h-4 w-48\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SkeletonExample: View {\n  var body: some View {\n    Skeleton()\n      .frame(width: 192, height: 16)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Skeleton\n\n@Composable\nfun SkeletonExample() {\n    Skeleton(Modifier.width(192.dp).height(16.dp))\n}"} />
+
+</Example>
+
+`Skeleton` is a Reanimated `View` with a rounded background whose opacity pulses between 1 and 0.5 on a loop. It has no fixed size; you shape it with classes to match the content it stands in for.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add skeleton"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add skeleton --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add skeleton --platform kotlin"} />
+
+</Tabs>
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="uniwind/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="nativewind/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="stylesheet/components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source:
+
+<SourceFile path="swift/Components/Skeleton.swift" />
+
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Skeleton.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\""} />
+
+<Code lang="tsx" code={"<Skeleton className=\"h-4 w-48\" />"} />
+
+Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives.
+
+## Examples
+
+### Profile
+
+An avatar circle with two lines of text.
+
+<Example id="components-skeleton--profile" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonProfileExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Skeleton className=\"size-12 rounded-full\" />\n      <View className=\"gap-2\">\n        <Skeleton className=\"h-4 w-48\" />\n        <Skeleton className=\"h-4 w-36\" />\n      </View>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SkeletonProfileExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      Skeleton(cornerRadius: Radius.full)\n        .frame(width: 48, height: 48)\n      VStack(alignment: .leading, spacing: 8) {\n        Skeleton().frame(width: 192, height: 16)\n        Skeleton().frame(width: 144, height: 16)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.size\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.foundation.shape.CircleShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Skeleton\n\n@Composable\nfun SkeletonProfile() {\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        Skeleton(Modifier.size(48.dp), shape = CircleShape)\n        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n            Skeleton(Modifier.width(192.dp).height(16.dp))\n            Skeleton(Modifier.width(144.dp).height(16.dp))\n        }\n    }\n}"} />
+
+</Example>
+
+### Card
+
+A media block with two lines of text below it.
+
+<Example id="components-skeleton--card" width={880} height={439} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonCardExample() {\n  return (\n    <View className=\"gap-3\">\n      <Skeleton className=\"h-32 w-full rounded-xl\" />\n      <View className=\"gap-2\">\n        <Skeleton className=\"h-4 w-3/4\" />\n        <Skeleton className=\"h-4 w-1/2\" />\n      </View>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SkeletonCardExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      Skeleton(cornerRadius: Radius.xl)\n        .frame(height: 128)\n        .frame(maxWidth: .infinity)\n      GeometryReader { proxy in\n        VStack(alignment: .leading, spacing: 8) {\n          Skeleton().frame(width: proxy.size.width * 0.75, height: 16)\n          Skeleton().frame(width: proxy.size.width * 0.5, height: 16)\n        }\n      }\n      .frame(height: 40)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Skeleton\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun SkeletonCard() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Skeleton(Modifier.fillMaxWidth().height(128.dp), shape = RoundedCornerShape(Radius.xl))\n        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n            Skeleton(Modifier.fillMaxWidth(0.75f).height(16.dp))\n            Skeleton(Modifier.fillMaxWidth(0.5f).height(16.dp))\n        }\n    }\n}"} />
+
+</Example>
+
+### List
+
+Rows with a thumbnail and two lines of text.
+
+<Example id="components-skeleton--list" width={880} height={495} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonListExample() {\n  return (\n    <View className=\"gap-4\">\n      {[\"one\", \"two\", \"three\", \"four\"].map((key) => (\n        <View key={key} className=\"flex-row items-center gap-3\">\n          <Skeleton className=\"size-10 rounded-md\" />\n          <View className=\"flex-1 gap-2\">\n            <Skeleton className=\"h-4 w-2/3\" />\n            <Skeleton className=\"h-3 w-1/3\" />\n          </View>\n        </View>\n      ))}\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SkeletonListExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      ForEach([\"one\", \"two\", \"three\", \"four\"], id: \\.self) { _ in\n        HStack(spacing: 12) {\n          Skeleton(cornerRadius: Radius.md)\n            .frame(width: 40, height: 40)\n          GeometryReader { proxy in\n            VStack(alignment: .leading, spacing: 8) {\n              Skeleton().frame(width: proxy.size.width * 2 / 3, height: 16)\n              Skeleton().frame(width: proxy.size.width / 3, height: 12)\n            }\n            .frame(maxHeight: .infinity)\n          }\n          .frame(height: 40)\n        }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.size\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Skeleton\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun SkeletonList() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        repeat(4) {\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                Skeleton(Modifier.size(40.dp), shape = RoundedCornerShape(Radius.md))\n                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Skeleton(Modifier.fillMaxWidth(2f / 3f).height(16.dp))\n                    Skeleton(Modifier.fillMaxWidth(1f / 3f).height(12.dp))\n                }\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Skeleton
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The skeleton is a plain view with no role or label. If loading state matters to the user, announce it elsewhere, for example with a `Spinner` that has an `accessibilityLabel`.
+
+## Notes
+
+- Uses the `bg-surface-secondary` token.
+- The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.
+- Light and dark colors follow the system appearance.

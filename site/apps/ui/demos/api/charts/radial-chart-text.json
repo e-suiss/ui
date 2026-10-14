@@ -1,0 +1,16 @@
+{
+  "name": "radial-chart-text",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-text.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

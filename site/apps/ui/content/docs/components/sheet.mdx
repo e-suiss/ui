@@ -1,0 +1,195 @@
+---
+title: Sheet
+description: "A panel that slides in from an edge of the screen over the page."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="sheet" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetExample() {\n  return (\n    <Sheet>\n      <SheetTrigger render={<Button variant=\"outline\" />}>\n        Open sheet\n      </SheetTrigger>\n      <ProfileSheet />\n    </Sheet>\n  )\n}"} />
+
+</Example>
+
+`Sheet` is built on the Base UI Dialog primitive. `SheetTrigger` opens it, and `SheetContent` renders the panel in a portal over a dimming backdrop. Inside, `SheetHeader` holds a `SheetTitle` and `SheetDescription`, and `SheetFooter` holds actions. `SheetClose` closes the sheet from any element.
+
+The panel floats inset from the screen edge with rounded corners and slides in from its `side`. Use a sheet for supporting tasks, such as editing details or showing navigation, that should keep the page in context. For short, centered confirmations, use `Dialog` or `AlertDialog`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add sheet"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
+
+3. Copy the source into `components/ui/sheet.tsx`:
+
+<SourceFile path="components/ui/sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from \"@/components/ui/sheet\""} />
+
+<Code lang="tsx" code={"<Sheet>\n  <SheetTrigger render={<Button variant=\"outline\" />}>\n    Open sheet\n  </SheetTrigger>\n  <ProfileSheet />\n</Sheet>"} />
+
+Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Use the `render` prop on `SheetTrigger` and `SheetClose` to render them as a `Button`.
+
+`SheetFooter` sits at the bottom of the panel with `mt-auto`. By default `SheetContent` adds an icon close button in the top corner; set `closeLabel` to show a text button instead, or `showCloseButton={false}` to remove it.
+
+## Examples
+
+### Sides
+
+Opens a sheet from each of the four edges.
+
+<Example kind="ui" name="sheet" story="Sides">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetSidesExample() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Sheet key={side}>\n          <SheetTrigger render={<Button variant=\"outline\" />}>\n            {side.charAt(0).toUpperCase() + side.slice(1)}\n          </SheetTrigger>\n          <ProfileSheet side={side} />\n        </Sheet>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Left
+
+Renders a sheet open on the left side.
+
+<Example kind="ui" name="sheet" story="OpenLeft">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetOpenLeftExample() {\n  return (\n    <Sheet>\n      <SheetTrigger render={<Button variant=\"outline\" />}>\n        Open sheet\n      </SheetTrigger>\n      <ProfileSheet side=\"left\" />\n    </Sheet>\n  )\n}"} />
+
+</Example>
+
+### Bottom
+
+Renders a sheet open along the bottom edge.
+
+<Example kind="ui" name="sheet" story="OpenBottom">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetOpenBottomExample() {\n  return (\n    <Sheet>\n      <SheetTrigger render={<Button variant=\"outline\" />}>\n        Open sheet\n      </SheetTrigger>\n      <ProfileSheet side=\"bottom\" />\n    </Sheet>\n  )\n}"} />
+
+</Example>
+
+### Without close button
+
+Removes the built-in close button.
+
+<Example kind="ui" name="sheet" story="WithoutCloseButton">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetWithoutCloseButtonExample() {\n  return (\n    <Sheet>\n      <SheetTrigger render={<Button variant=\"outline\" />}>\n        Open sheet\n      </SheetTrigger>\n      <ProfileSheet showCloseButton={false} />\n    </Sheet>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Replaces the icon close button with a text button labelled `Done`.
+
+<Example kind="ui" name="sheet" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from \"@/components/ui/sheet\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfileSheet({\n  side = \"right\",\n  showCloseButton = true,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <SheetContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <SheetHeader>\n        <SheetTitle>Edit profile</SheetTitle>\n        <SheetDescription>\n          Update your details and save when you are done.\n        </SheetDescription>\n      </SheetHeader>\n      <div className=\"grid gap-4 px-6\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-name\">Name</Label>\n          <Input id=\"sheet-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"sheet-username\">Username</Label>\n          <Input id=\"sheet-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </div>\n      <SheetFooter>\n        <Button type=\"submit\">Save changes</Button>\n        <SheetClose render={<Button variant=\"secondary\" />}>Cancel</SheetClose>\n      </SheetFooter>\n    </SheetContent>\n  )\n}\n\nexport function SheetWithCloseLabelExample() {\n  return (\n    <Sheet>\n      <SheetTrigger render={<Button variant=\"outline\" />}>\n        Open sheet\n      </SheetTrigger>\n      <ProfileSheet closeLabel=\"Done\" />\n    </Sheet>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Sheet","href":"#sheet","children":[{"name":"SheetTrigger","href":"#sheettrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Sheet
+
+The root that holds the open state.
+
+<PropsTable extends={["SheetPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SheetTrigger
+
+The element that opens the sheet.
+
+<PropsTable extends={["SheetPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SheetClose
+
+An element that closes the sheet when pressed.
+
+<PropsTable extends={["SheetPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SheetContent
+
+The sliding panel, rendered in a portal with a backdrop.
+
+<PropsTable extends={["SheetPrimitive.Popup.Props"]} props={[{"name":"side","type":"\"top\" | \"right\" | \"bottom\" | \"left\"","default":"\"right\"","description":"Chooses the edge the sheet slides in from."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the built-in close button in the top corner."},{"name":"closeLabel","type":"string","description":"Shows this text in the close button instead of an icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SheetHeader
+
+A padded stack for the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SheetFooter
+
+A padded stack for actions, pushed to the bottom of the panel.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SheetTitle
+
+The sheet's title, which names the dialog.
+
+<PropsTable extends={["SheetPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SheetDescription
+
+Supporting text, which describes the dialog.
+
+<PropsTable extends={["SheetPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The panel has the `dialog` role. `SheetTitle` gives it an accessible name and `SheetDescription` an accessible description.
+- Opening the sheet moves focus inside it.
+- `Escape` closes the sheet, and focus returns to the trigger.
+- The icon close button has the hidden label `Close`.
+
+## Notes
+
+- Parts carry `data-slot` attributes such as `sheet-content`, `sheet-overlay` and `sheet-close`; the panel also sets `data-side`.
+- Left and right sheets are 3/4 of the screen wide, up to `max-w-sm` from the `sm` breakpoint. Slide directions flip in right-to-left layouts.
+- The panel uses `bg-surface-raised` and the backdrop uses `bg-scrim`.

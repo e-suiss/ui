@@ -1,0 +1,271 @@
+---
+title: Carousel
+description: "A swipeable track of slides with buttons, dots and optional autoplay, built on Embla Carousel."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="carousel" story="Default">
+
+<Code lang="tsx" code={"import { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nexport function CarouselExample() {\n  return (\n    <Carousel orientation=\"horizontal\">\n      <CarouselContent>\n        {slides.map((slide) => (\n          <CarouselItem key={slide}>\n            <Card>\n              <CardContent className=\"flex aspect-square items-center justify-center\">\n                <span className=\"text-4xl font-semibold\">{slide}</span>\n              </CardContent>\n            </Card>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPrevious />\n      <CarouselNext />\n    </Carousel>\n  )\n}"} />
+
+</Example>
+
+Carousel is built on `embla-carousel-react`. A `Carousel` root holds a `CarouselContent` track whose children are `CarouselItem` slides. Add `CarouselPrevious` and `CarouselNext` to page through slides; on their own they float outside the track's edges. To lay controls out in a row below the track instead, place them in a `CarouselControls` container, along with `CarouselDots` for per-slide indicators and `CarouselPlayButton` for autoplay.
+
+Use a carousel for featured content, product shelves, testimonials and galleries where people browse a set of peers one at a time. For content everyone must see, prefer a static layout.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add carousel"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn embla-carousel-react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Direction](/docs/components/direction).
+
+3. Copy the source into `components/ui/carousel.tsx`:
+
+<SourceFile path="components/ui/carousel.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselControls, CarouselDots, CarouselPlayButton } from \"@/components/ui/carousel\""} />
+
+<Code lang="tsx" code={"<Carousel orientation=\"horizontal\">\n  <CarouselContent>\n    {slides.map((slide) => (\n      <CarouselItem key={slide}>\n        <Card>\n          <CardContent className=\"flex aspect-square items-center justify-center\">\n            <span className=\"text-4xl font-semibold\">{slide}</span>\n          </CardContent>\n        </Card>\n      </CarouselItem>\n    ))}\n  </CarouselContent>\n  <CarouselPrevious />\n  <CarouselNext />\n</Carousel>"} />
+
+`Carousel` accepts `opts` (Embla options such as `align`, `loop` and `dragFree`), `plugins`, `orientation` (`horizontal` or `vertical`) and `setApi`, which receives the Embla API so you can read or drive the carousel from outside. The scroll direction follows the surrounding `DirectionProvider`.
+
+Set the width of each slide with a `basis-*` class on `CarouselItem`, for example `basis-1/2` to show two at a time. The track uses negative margin and slides use start padding for gutters; adjust both together, as in `-ms-3` with `ps-3`.
+
+Set `autoplay` to `true` for a 5-second interval, or to a number of milliseconds. Autoplay pauses while the pointer hovers the carousel, while it has keyboard focus, and while the page is hidden, and starts paused when the user prefers reduced motion. `CarouselPlayButton` renders only when autoplay is enabled, and the active dot fills as a progress bar.
+
+Use the `useCarousel` hook inside a `Carousel` to build custom controls.
+
+## Examples
+
+### Multiple items
+
+Shows two slides at a time with `basis-1/2`.
+
+<Example kind="ui" name="carousel" story="MultipleItems">
+
+<Code lang="tsx" code={"import { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nexport function CarouselMultipleItemsExample() {\n  return (\n    <Carousel orientation=\"horizontal\" opts={{ align: \"start\" }}>\n      <CarouselContent>\n        {slides.map((slide) => (\n          <CarouselItem key={slide} className=\"basis-1/2\">\n            <Card size=\"sm\">\n              <CardContent className=\"flex aspect-square items-center justify-center\">\n                <span className=\"text-3xl font-semibold\">{slide}</span>\n              </CardContent>\n            </Card>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPrevious />\n      <CarouselNext />\n    </Carousel>\n  )\n}"} />
+
+</Example>
+
+### Loop
+
+Wraps from the last slide back to the first with `opts={{ loop: true }}`.
+
+<Example kind="ui" name="carousel" story="Loop">
+
+<Code lang="tsx" code={"import { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nexport function CarouselLoopExample() {\n  return (\n    <Carousel orientation=\"horizontal\" opts={{ loop: true }}>\n      <CarouselContent>\n        {slides.map((slide) => (\n          <CarouselItem key={slide}>\n            <Card>\n              <CardContent className=\"flex aspect-square items-center justify-center\">\n                <span className=\"text-4xl font-semibold\">{slide}</span>\n              </CardContent>\n            </Card>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPrevious />\n      <CarouselNext />\n    </Carousel>\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+Scrolls vertically, with the buttons above and below the track.
+
+<Example kind="ui" name="carousel" story="Vertical">
+
+<Code lang="tsx" code={"import { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst slides = [1, 2, 3, 4, 5]\n\nexport function CarouselVerticalExample() {\n  return (\n    <div className=\"my-12\">\n      <Carousel orientation=\"vertical\" opts={{ align: \"start\" }}>\n        <CarouselContent className=\"h-64\">\n          {slides.map((slide) => (\n            <CarouselItem key={slide} className=\"basis-1/2\">\n              <Card size=\"sm\" className=\"h-full justify-center\">\n                <CardContent className=\"flex items-center justify-center\">\n                  <span className=\"text-3xl font-semibold\">{slide}</span>\n                </CardContent>\n              </Card>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Featured
+
+Large cards that peek at the next slide, with plain dots below.
+
+<Example kind="ui" name="carousel" story="Featured">
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselPlayButton } from \"@/components/ui/carousel\"\n\nconst picks = [\n  {\n    eyebrow: \"Today's pick\",\n    title: \"Weekend breakfast\",\n    tint: \"from-orange to-red\",\n  },\n  { eyebrow: \"New\", title: \"Grilled meatballs\", tint: \"from-red to-pink\" },\n  {\n    eyebrow: \"Chef's special\",\n    title: \"Lentil soup\",\n    tint: \"from-green to-teal\",\n  },\n  { eyebrow: \"Dessert\", title: \"Künefe\", tint: \"from-purple to-indigo\" },\n]\n\nexport function CarouselFeaturedExample() {\n  return (\n    <div className=\"max-w-sm\">\n      <Carousel orientation=\"horizontal\" opts={{ align: \"start\" }}>\n        <CarouselContent>\n          {picks.map((pick) => (\n            <CarouselItem key={pick.title} className=\"basis-[88%]\">\n              <div\n                className={`relative isolate flex aspect-4/5 flex-col gap-1 overflow-hidden rounded-3xl bg-linear-to-br p-5 text-white before:absolute before:inset-0 before:-z-10 before:bg-linear-to-b before:from-black/45 before:to-black/10 ${pick.tint}`}\n              >\n                <p className=\"text-xs font-semibold uppercase\">\n                  {pick.eyebrow}\n                </p>\n                <p className=\"text-2xl font-bold tracking-tight\">\n                  {pick.title}\n                </p>\n              </div>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselControls className=\"mt-4 justify-center\">\n          <CarouselDots variant=\"plain\" />\n          <CarouselPlayButton variant=\"ghost\" />\n        </CarouselControls>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Spotlight
+
+A looping hero with dots and a next button in a centered control bar.
+
+<Example kind="ui" name="carousel" story="Spotlight">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselNext, CarouselPlayButton } from \"@/components/ui/carousel\"\n\nconst features = [\n  {\n    eyebrow: \"Point of sale\",\n    title: \"Take orders at the table.\",\n    tint: \"from-blue to-indigo\",\n  },\n  {\n    eyebrow: \"Kitchen\",\n    title: \"Every ticket, right on time.\",\n    tint: \"from-orange to-red\",\n  },\n  {\n    eyebrow: \"Reservations\",\n    title: \"A full room, every night.\",\n    tint: \"from-green to-teal\",\n  },\n  {\n    eyebrow: \"Analytics\",\n    title: \"Know what sells.\",\n    tint: \"from-purple to-pink\",\n  },\n  {\n    eyebrow: \"Payments\",\n    title: \"Split the bill in seconds.\",\n    tint: \"from-cyan to-blue\",\n  },\n]\n\nexport function CarouselSpotlightExample() {\n  return (\n    <div className=\"max-w-md\">\n      <Carousel orientation=\"horizontal\" opts={{ loop: true }}>\n        <CarouselContent>\n          {features.slice(0, 3).map((feature) => (\n            <CarouselItem key={feature.title}>\n              <div className=\"flex aspect-10/7 flex-col items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8 text-center\">\n                <p className=\"text-3xl font-bold tracking-tight\">Hestia POS</p>\n                <p className=\"text-label-secondary\">{feature.title}</p>\n                <Button\n                  size=\"sm\"\n                  className=\"mt-2 bg-label text-surface hover:bg-label/85\"\n                >\n                  Learn more\n                </Button>\n              </div>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselControls className=\"justify-center\">\n          <CarouselDots />\n          <CarouselPlayButton />\n          {<CarouselNext size=\"icon-sm\" />}\n        </CarouselControls>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Shelf
+
+A drag-free product shelf with no visible buttons.
+
+<Example kind="ui" name="carousel" story="Shelf">
+
+<Code lang="tsx" code={"import { CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Carousel, CarouselContent, CarouselItem, CarouselPlayButton } from \"@/components/ui/carousel\"\n\nconst popular = [\n  { name: \"Breakfast platter\", price: \"₺620\", tint: \"from-orange to-red\" },\n  { name: \"Grilled meatballs\", price: \"₺280\", tint: \"from-red to-pink\" },\n  { name: \"Menemen\", price: \"₺160\", tint: \"from-yellow to-orange\" },\n  { name: \"Lentil soup\", price: \"₺90\", tint: \"from-green to-teal\" },\n  { name: \"Künefe\", price: \"₺160\", tint: \"from-purple to-indigo\" },\n]\n\nexport function CarouselShelfExample() {\n  return (\n    <div className=\"max-w-md\">\n      <Carousel orientation=\"horizontal\" opts={{ align: \"start\", dragFree: true }}>\n        <div className=\"mb-3 flex items-center justify-between\">\n          <a\n            href=\"#popular\"\n            className=\"flex items-center gap-1 text-xl font-bold tracking-tight\"\n          >\n            Popular\n            <CaretRightIcon weight=\"bold\" className=\"size-4\" />\n          </a>\n          <div className=\"flex items-center gap-3\">\n            <CarouselPlayButton variant=\"ghost\" />\n            <a href=\"#popular-all\" className=\"text-link\">\n              See all\n            </a>\n          </div>\n        </div>\n        <CarouselContent className=\"-ms-3\">\n          {popular.map((item) => (\n            <CarouselItem key={item.name} className=\"basis-2/5 ps-3\">\n              <div\n                className={`aspect-square rounded-2xl bg-linear-to-br ${item.tint}`}\n              />\n              <p className=\"mt-2 truncate text-sm font-semibold\">{item.name}</p>\n              <p className=\"text-xs text-label-secondary tabular-nums\">\n                {item.price}\n              </p>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Testimonials
+
+Quotes with dots and large previous and next buttons in a control row.
+
+<Example kind="ui" name="carousel" story="Testimonials">
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselNext, CarouselPlayButton, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst quotes = [\n  { quote: \"The checkout line is half as long.\", author: \"Ayşe Y. · Kadıköy\" },\n  {\n    quote: \"The kitchen finally keeps up on Fridays.\",\n    author: \"Mert K. · Beşiktaş\",\n  },\n  { quote: \"Splitting the bill takes seconds now.\", author: \"Deniz A. · Moda\" },\n]\n\nexport function CarouselTestimonialsExample() {\n  return (\n    <div className=\"max-w-md rounded-3xl bg-surface-secondary p-8\">\n      <Carousel orientation=\"horizontal\">\n        <CarouselContent>\n          {quotes.map((item) => (\n            <CarouselItem key={item.quote}>\n              <blockquote className=\"flex min-h-28 flex-col gap-3\">\n                <p className=\"text-2xl font-bold tracking-tight\">\n                  “{item.quote}”\n                </p>\n                <footer className=\"text-label-secondary\">{item.author}</footer>\n              </blockquote>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselControls className=\"justify-between\">\n          <div className=\"flex items-center gap-2\">\n            <CarouselPlayButton variant=\"ghost\" />\n            <CarouselDots variant=\"plain\" />\n          </div>\n          <div className=\"flex gap-3\">\n            <CarouselPrevious size=\"icon-lg\" />\n            <CarouselNext size=\"icon-lg\" />\n          </div>\n        </CarouselControls>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Gallery
+
+Tall cards with controls aligned to the end below the track.
+
+<Example kind="ui" name="carousel" story="Gallery">
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselControls, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst features = [\n  {\n    eyebrow: \"Point of sale\",\n    title: \"Take orders at the table.\",\n    tint: \"from-blue to-indigo\",\n  },\n  {\n    eyebrow: \"Kitchen\",\n    title: \"Every ticket, right on time.\",\n    tint: \"from-orange to-red\",\n  },\n  {\n    eyebrow: \"Reservations\",\n    title: \"A full room, every night.\",\n    tint: \"from-green to-teal\",\n  },\n  {\n    eyebrow: \"Analytics\",\n    title: \"Know what sells.\",\n    tint: \"from-purple to-pink\",\n  },\n  {\n    eyebrow: \"Payments\",\n    title: \"Split the bill in seconds.\",\n    tint: \"from-cyan to-blue\",\n  },\n]\n\nexport function CarouselGalleryExample() {\n  return (\n    <Carousel orientation=\"horizontal\" opts={{ align: \"start\" }}>\n      <CarouselContent>\n        {features.map((feature) => (\n          <CarouselItem key={feature.title} className=\"basis-4/5 sm:basis-2/5\">\n            <div\n              className={`relative isolate flex aspect-3/4 flex-col gap-2 overflow-hidden rounded-3xl bg-linear-to-b p-7 text-white before:absolute before:inset-0 before:-z-10 before:bg-black/35 ${feature.tint}`}\n            >\n              <p className=\"text-sm font-semibold\">{feature.eyebrow}</p>\n              <p className=\"text-2xl font-semibold\">{feature.title}</p>\n            </div>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselControls className=\"justify-end\">\n        <CarouselPrevious />\n        <CarouselNext />\n      </CarouselControls>\n    </Carousel>\n  )\n}"} />
+
+</Example>
+
+### Featured autoplay
+
+The featured layout advancing every four seconds.
+
+<Example kind="ui" name="carousel" story="FeaturedAutoplay">
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselPlayButton } from \"@/components/ui/carousel\"\n\nconst picks = [\n  {\n    eyebrow: \"Today's pick\",\n    title: \"Weekend breakfast\",\n    tint: \"from-orange to-red\",\n  },\n  { eyebrow: \"New\", title: \"Grilled meatballs\", tint: \"from-red to-pink\" },\n  {\n    eyebrow: \"Chef's special\",\n    title: \"Lentil soup\",\n    tint: \"from-green to-teal\",\n  },\n  { eyebrow: \"Dessert\", title: \"Künefe\", tint: \"from-purple to-indigo\" },\n]\n\nexport function CarouselFeaturedAutoplayExample() {\n  return (\n    <div className=\"max-w-sm\">\n      <Carousel orientation=\"horizontal\" autoplay={4000} opts={{ align: \"start\", loop: true }}>\n        <CarouselContent>\n          {picks.map((pick) => (\n            <CarouselItem key={pick.title} className=\"basis-[88%]\">\n              <div\n                className={`relative isolate flex aspect-4/5 flex-col gap-1 overflow-hidden rounded-3xl bg-linear-to-br p-5 text-white before:absolute before:inset-0 before:-z-10 before:bg-linear-to-b before:from-black/45 before:to-black/10 ${pick.tint}`}\n              >\n                <p className=\"text-xs font-semibold uppercase\">\n                  {pick.eyebrow}\n                </p>\n                <p className=\"text-2xl font-bold tracking-tight\">\n                  {pick.title}\n                </p>\n              </div>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselControls className=\"mt-4 justify-center\">\n          <CarouselDots variant=\"plain\" />\n          <CarouselPlayButton variant=\"ghost\" />\n        </CarouselControls>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Spotlight autoplay
+
+The spotlight layout with autoplay and a pause button in place of the next button.
+
+<Example kind="ui" name="carousel" story="SpotlightAutoplay">
+
+<Code lang="tsx" code={"import { Carousel } from \"@/components/ui/carousel\"\n\nexport function CarouselSpotlightAutoplayExample() {\n  return (\n    <Carousel orientation=\"horizontal\" autoplay />\n  )\n}"} />
+
+</Example>
+
+### Shelf autoplay
+
+The shelf advancing every three seconds and looping.
+
+<Example kind="ui" name="carousel" story="ShelfAutoplay">
+
+<Code lang="tsx" code={"import { Carousel } from \"@/components/ui/carousel\"\n\nexport function CarouselShelfAutoplayExample() {\n  return (\n    <Carousel orientation=\"horizontal\" autoplay={3000} opts={{ align: \"start\", loop: true }} />\n  )\n}"} />
+
+</Example>
+
+### Testimonials autoplay
+
+Testimonials advancing every six seconds.
+
+<Example kind="ui" name="carousel" story="TestimonialsAutoplay">
+
+<Code lang="tsx" code={"import { Carousel, CarouselContent, CarouselControls, CarouselDots, CarouselItem, CarouselNext, CarouselPlayButton, CarouselPrevious } from \"@/components/ui/carousel\"\n\nconst quotes = [\n  { quote: \"The checkout line is half as long.\", author: \"Ayşe Y. · Kadıköy\" },\n  {\n    quote: \"The kitchen finally keeps up on Fridays.\",\n    author: \"Mert K. · Beşiktaş\",\n  },\n  { quote: \"Splitting the bill takes seconds now.\", author: \"Deniz A. · Moda\" },\n]\n\nexport function CarouselTestimonialsAutoplayExample() {\n  return (\n    <div className=\"max-w-md rounded-3xl bg-surface-secondary p-8\">\n      <Carousel orientation=\"horizontal\" autoplay={6000} opts={{ loop: true }}>\n        <CarouselContent>\n          {quotes.map((item) => (\n            <CarouselItem key={item.quote}>\n              <blockquote className=\"flex min-h-28 flex-col gap-3\">\n                <p className=\"text-2xl font-bold tracking-tight\">\n                  “{item.quote}”\n                </p>\n                <footer className=\"text-label-secondary\">{item.author}</footer>\n              </blockquote>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselControls className=\"justify-between\">\n          <div className=\"flex items-center gap-2\">\n            <CarouselPlayButton variant=\"ghost\" />\n            <CarouselDots variant=\"plain\" />\n          </div>\n          <div className=\"flex gap-3\">\n            <CarouselPrevious size=\"icon-lg\" />\n            <CarouselNext size=\"icon-lg\" />\n          </div>\n        </CarouselControls>\n      </Carousel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Carousel","href":"#carousel","children":[{"name":"CarouselContent","href":"#carouselcontent","children":[{"name":"CarouselItem","href":"#carouselitem","children":[]}]},{"name":"CarouselPrevious","href":"#carouselprevious","children":[]},{"name":"CarouselNext","href":"#carouselnext","children":[]},{"name":"CarouselControls","href":"#carouselcontrols","children":[{"name":"CarouselDots","href":"#carouseldots","children":[]},{"name":"CarouselPlayButton","href":"#carouselplaybutton","children":[]},{"name":"CarouselNext","href":"#carouselnext","children":[]},{"name":"CarouselPrevious","href":"#carouselprevious","children":[]}]},{"name":"CarouselPlayButton","href":"#carouselplaybutton","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Carousel
+
+The root region that owns the Embla instance, keyboard handling and autoplay state.
+
+<PropsTable extends={["React.ComponentProps<\"div\">","CarouselProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CarouselContent
+
+The clipping viewport and the flex track that holds the slides.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CarouselItem
+
+A single slide.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CarouselPrevious
+
+A button that scrolls to the previous slide, disabled at the start.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CarouselNext
+
+A button that scrolls to the next slide, disabled at the end.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CarouselControls
+
+A row that lays out buttons, dots and the play button below the track.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CarouselDots
+
+One button per snap point that jumps to that slide and marks the current one.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"plain\"","default":"\"default\"","description":"`default` places the dots on a blurred pill background; `plain` removes the background and padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CarouselPlayButton
+
+Toggles autoplay between playing and paused.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The root renders with `role="region"` and `aria-roledescription="carousel"`; each `CarouselItem` has `role="group"` and `aria-roledescription="slide"`. Add an `aria-label` to the root to name it.
+- Arrow keys move between slides while focus is inside the carousel: left and right for horizontal (reversed in right-to-left layouts), up and down for vertical.
+- `CarouselPrevious` and `CarouselNext` include visually hidden labels, `Previous slide` and `Next slide`. When one becomes disabled while focused, focus moves to the other.
+- Each dot is labelled `Go to slide N`, and the current dot has `aria-current="true"`.
+- `CarouselPlayButton` is labelled `Pause slideshow` or `Play slideshow` to match its state.
+
+## Notes
+
+- Styling hooks: `data-slot` values `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-controls`, `carousel-dots` and `carousel-play-button`.
+- The root sets `data-playing` while autoplay is running. Dots expose `data-active` on the current dot, and the dots container sets `data-variant` and `data-autoplay`.
+- `CarouselPrevious` and `CarouselNext` default to the `secondary` variant and `icon` size; `CarouselPlayButton` defaults to `secondary` and `icon-sm`.
+- In vertical carousels, standalone previous and next buttons are rotated 90 degrees; inside `CarouselControls` they are not.

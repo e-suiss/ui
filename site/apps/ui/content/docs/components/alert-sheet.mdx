@@ -1,0 +1,197 @@
+---
+title: Alert Sheet
+description: "An action sheet that slides up from the bottom of the screen to confirm or choose an action."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="alert-sheet" story="Default">
+
+<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle className=\"sr-only\">Delete order</AlertSheetTitle>\n              <AlertSheetDescription>\n                Order #1042 will be permanently deleted. This action cannot be\n                undone.\n              </AlertSheetDescription>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">\n              Delete Order\n            </AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Alert Sheet is an iOS-style action sheet built on Base UI's dialog primitives. An `AlertSheet` root contains an `AlertSheetTrigger` and an `AlertSheetContent`, which renders its own portal and scrim overlay. Inside, an `AlertSheetGroup` holds an optional `AlertSheetHeader` (with `AlertSheetTitle` and `AlertSheetDescription`) and one or more `AlertSheetAction` rows. A separate `AlertSheetCancel` sits below the group.
+
+Use it to offer a short list of actions tied to the current context, especially on touch devices. For a centered confirmation, use Alert Dialog.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-sheet"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Add the pieces it builds on: `use-scrollbar-gap`.
+
+3. Copy the source into `components/ui/alert-sheet.tsx`:
+
+<SourceFile path="components/ui/alert-sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from \"@/components/ui/alert-sheet\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <AlertSheet>\n    <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n      Delete order\n    </AlertSheetTrigger>\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle className=\"sr-only\">Delete order</AlertSheetTitle>\n          <AlertSheetDescription>\n            Order #1042 will be permanently deleted. This action cannot be\n            undone.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction variant=\"destructive\">\n          Delete Order\n        </AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  </AlertSheet>\n</div>"} />
+
+Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className="sr-only"`.
+
+By default the sheet is `dismissible` and behaves like a regular dialog. Set `dismissible={false}` to render it as an alert dialog instead.
+
+When the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own `initialFocus` to `AlertSheetContent`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
+
+## Examples
+
+### With title
+
+Shows a visible title above the description.
+
+<Example kind="ui" name="alert-sheet" story="WithTitle">
+
+<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetWithTitleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Sign out\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Sign out of your account?</AlertSheetTitle>\n              <AlertSheetDescription>\n                You will need to sign in again to access your projects.\n              </AlertSheetDescription>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">Sign Out</AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Multiple actions
+
+Offers a default and a destructive action in one group.
+
+<Example kind="ui" name="alert-sheet" story="MultipleActions">
+
+<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetMultipleActionsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Close draft\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Save changes to this draft?</AlertSheetTitle>\n            </AlertSheetHeader>\n            <AlertSheetAction>Save Draft</AlertSheetAction>\n            <AlertSheetAction variant=\"destructive\">\n              Delete Draft\n            </AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"AlertSheet","href":"#alertsheet","children":[{"name":"AlertSheetTrigger","href":"#alertsheettrigger","children":[]},{"name":"AlertSheetContent","href":"#alertsheetcontent","children":[{"name":"AlertSheetGroup","href":"#alertsheetgroup","children":[{"name":"AlertSheetHeader","href":"#alertsheetheader","children":[{"name":"AlertSheetTitle","href":"#alertsheettitle","children":[]},{"name":"AlertSheetDescription","href":"#alertsheetdescription","children":[]}]},{"name":"AlertSheetAction","href":"#alertsheetaction","children":[]}]},{"name":"AlertSheetCancel","href":"#alertsheetcancel","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### AlertSheet
+
+The root that manages the open state and dismissal behavior.
+
+<PropsTable extends={["AlertSheetPrimitive.Root.Props"]} props={[{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, renders as a dialog; when `false`, renders as an alert dialog."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertSheetTrigger
+
+The control that opens the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertSheetPortal
+
+Renders the sheet into a portal outside the DOM hierarchy.
+
+<PropsTable extends={["AlertSheetPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertSheetOverlay
+
+The full-screen scrim behind the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertSheetContent
+
+The bottom-anchored container, rendered with its own portal and overlay.
+
+<PropsTable extends={["AlertSheetPrimitive.Popup.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertSheetGroup
+
+A rounded surface that stacks the header and actions with dividers.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertSheetHeader
+
+A padded wrapper for the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertSheetTitle
+
+The heading that names the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AlertSheetDescription
+
+Supporting text that describes the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### AlertSheetAction
+
+A full-width row button that performs an action and closes the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"Text color of the action. `default` uses the link color; `destructive` uses the danger color."}]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### AlertSheetCancel
+
+A separate, bold button that dismisses the sheet.
+
+<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- With `dismissible` (the default) the popup has the `dialog` role; with `dismissible={false}` it has the `alertdialog` role.
+- The popup is named by `AlertSheetTitle` and described by `AlertSheetDescription`.
+- Focus moves to the cancel button on open and returns to the trigger on close.
+- `Escape` closes the sheet.
+
+## Notes
+
+- Styling hooks: `data-slot` values from `alert-sheet` through `alert-sheet-cancel`.
+- The sheet slides with `translate-y-full` on `data-starting-style` and `data-ending-style`, and its bottom padding respects `env(safe-area-inset-bottom)`.
+- When an action contains an icon, the group switches to a grid so icons and labels align across rows.

@@ -1,0 +1,24 @@
+{
+  "description": "A month-grid date picker for selecting a single date, several dates or a date range.",
+  "overview": "`Calendar` is a styled wrapper around `DayPicker` from `react-day-picker`, so it accepts the full `DayPicker` API, including `mode`, `selected`, `onSelect`, `numberOfMonths`, `captionLayout`, `disabled` and `showWeekNumber`. It replaces the day cells with `CalendarDayButton`, which renders each day as a `Button` and styles today, single selections and range start, middle and end.\n\nUse a calendar when people need to see dates in context, such as availability or a stay range. Place it inside a Popover to build a compact date picker; the calendar's background becomes transparent inside popover and card content.",
+  "usage": "Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. For ranges, `numberOfMonths={2}` shows two months side by side on wider screens.\n\nSet `captionLayout` to `dropdown`, `dropdown-months` or `dropdown-years` to let people jump to a month or year directly; the default is `label`.\n\nUnlike the `DayPicker` default, outside days are hidden unless you pass `showOutsideDays`. The default `locale` is `enUS`. Pass `disabled` with a matcher, such as `{ dayOfWeek: [0, 6] }`, to block days.\n\nUse `CalendarDayButton` when you supply your own `components` and still want the library's day styling.",
+  "examples": {
+    "Sizes": "Compares the `sm`, `default` and `lg` sizes.",
+    "Range": "Selects a seven-day range across two months with `mode=\"range\"`.",
+    "DropdownCaption": "Replaces the month label with month and year dropdowns.",
+    "WeekNumbers": "Shows the week number at the start of each row.",
+    "DisabledDays": "Disables weekends with a `dayOfWeek` matcher."
+  },
+  "parts": {
+    "Calendar": "The date grid, with month navigation and caption.",
+    "CalendarDayButton": "The button rendered for each day, styled by its selection state."
+  },
+  "props": {
+    "Calendar": {
+      "buttonVariant": "`Button` variant used for the previous and next month buttons. Defaults to `plain`.",
+      "size": "Cell size and type scale: `sm`, `default` or `lg`."
+    }
+  },
+  "accessibility": "- Each month renders as a `grid` labelled with its month and year; selected days set `aria-selected` on their cell.\n- Arrow keys move focus between days, and clicking or pressing a day selects it.\n- The navigation buttons are labelled for the next and previous month.\n- Disabled days render disabled buttons.\n- Caption dropdowns are native `select` elements labelled for month and year.",
+  "notes": "- Styling hooks: `data-slot=\"calendar\"` and `data-size` on the root; day buttons expose `data-day`, `data-today`, `data-selected-single`, `data-range-start`, `data-range-middle` and `data-range-end`.\n- Cell size and radius come from the `--cell-size` and `--cell-radius` custom properties, which `size` adjusts.\n- Pass `classNames` to override any `react-day-picker` class key; your values replace the defaults for that key.\n- Navigation chevrons flip in right-to-left layouts."
+}

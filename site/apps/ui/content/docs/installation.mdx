@@ -1,0 +1,75 @@
+---
+title: Installation
+description: Set up a Next.js or Vite project once with init, then add the components you need.
+eyebrow: suiss/ui
+---
+
+## Requirements
+
+- Next.js, or React with Vite
+- TypeScript
+- Tailwind CSS 4.2 or later (installed for you if missing)
+- Node.js 18 or later
+
+## Set up your project
+
+Run `init` once, in the root of your project.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init
+```
+
+### What init does
+
+1. Detects Next.js or Vite and checks for TypeScript and Tailwind CSS 4.2 or later.
+2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
+3. Installs and wires up Tailwind CSS if needed: `postcss.config.mjs` for Next.js, `vite.config.ts` for Vite.
+4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
+5. Sets up the font. Text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
+6. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations and utilities the components rely on.
+7. Adds the `button` component.
+
+## Add components
+
+Pass one or more component names to `add`.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button dialog sidebar
+```
+
+Run `add` without names to pick from a list instead. Choose a group, type to filter, select with space and press enter. See [CLI](/docs/cli#pick-from-a-list).
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add
+```
+
+Components are written to `components/ui/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.
+
+Then import and use them:
+
+```tsx title="components/example.tsx"
+import { Button } from "@/components/ui/button"
+
+export function Example() {
+  return <Button>Continue</Button>
+}
+```
+
+## Update components
+
+Components are your code, so updates never overwrite your changes silently. Review the latest version first, then replace your copy if you want it.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --diff
+npx @esuiss/ui@latest add button --overwrite
+```
+
+Running `add` for a component you already have keeps your file and tells you when it differs from the registry.
+
+## Troubleshooting
+
+| Message | Fix |
+| --- | --- |
+| Tailwind CSS 4.2 or later is required | Upgrade with `npm install tailwindcss@latest` and run `init` again. |
+| No `@/*` import alias found | Run `init` first, or add `"paths": { "@/*": ["./src/*"] }` to `compilerOptions` in `tsconfig.json`. |
+| A newly published version is not found | npm can take a few minutes to make new versions available. Run `npx --prefer-online @esuiss/ui@latest ...`. |

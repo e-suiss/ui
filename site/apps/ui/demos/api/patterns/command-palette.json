@@ -1,0 +1,93 @@
+{
+  "name": "command-palette",
+  "type": "pattern",
+  "files": [
+    "components/patterns/command-palette.tsx"
+  ],
+  "requires": [
+    "command",
+    "dialog",
+    "drawer",
+    "use-mobile",
+    "use-platform"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "CommandPalette",
+      "extends": [
+        "React.ComponentProps<typeof Dialog>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "hotkey",
+          "type": "string | false",
+          "required": false,
+          "default": "\"k\""
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "CommandPaletteTrigger",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "CommandPaletteContent",
+      "extends": [
+        "React.ComponentProps<typeof Command>"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "default": "\"Command Palette\""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": "\"Search for a command to run...\""
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

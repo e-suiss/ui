@@ -1,0 +1,16 @@
+{
+  "name": "radar-chart-grid-circle",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-grid-circle.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

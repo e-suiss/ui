@@ -1,0 +1,19 @@
+{
+  "name": "dash-analytics",
+  "type": "block",
+  "files": [
+    "components/blocks/dash-analytics.tsx"
+  ],
+  "requires": [
+    "chart",
+    "item",
+    "sidebar",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

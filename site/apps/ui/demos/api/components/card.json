@@ -1,0 +1,83 @@
+{
+  "name": "card",
+  "type": "ui",
+  "files": [
+    "components/ui/card.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Small",
+    "Filled",
+    "WithAction",
+    "WithBorders",
+    "WithImage"
+  ],
+  "parts": [
+    {
+      "name": "Card",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\"",
+          "required": false,
+          "default": "\"default\""
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"filled\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "CardHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CardTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CardDescription",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CardAction",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CardContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "CardFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

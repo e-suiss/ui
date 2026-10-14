@@ -1,0 +1,140 @@
+---
+title: Context Actions
+description: "Actions for an element that open as a context menu on right click, or an action sheet on long press on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="context-actions" story="Default">
+
+<Code lang="tsx" code={"import { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsLabel, ContextActionsSeparator, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\n\nexport function ContextActionsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <ContextActions>\n        <ContextActionsTrigger className=\"flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-label-secondary\">\n          Right click or long press\n        </ContextActionsTrigger>\n        <ContextActionsContent>\n          <ContextActionsLabel>Photo.jpg</ContextActionsLabel>\n          <ContextActionsItem>Edit</ContextActionsItem>\n          <ContextActionsItem>Duplicate</ContextActionsItem>\n          <ContextActionsItem>Share</ContextActionsItem>\n          <ContextActionsSeparator />\n          <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`ContextActions` attaches a set of actions to an area of the page. On desktop it renders a `ContextMenu` that opens at the pointer on right click. Below the `48rem` breakpoint it renders an `AlertSheet` instead, opened by a 500 ms long press on touch, by the context menu event, or by the `ContextMenu` key or `Shift+F10`; the sheet groups the items in a card and appends a Cancel button.
+
+Use it for secondary actions on content such as photos, files or list rows, where actions should stay out of the way until requested.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns context-actions"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Context Menu](/docs/components/context-menu), `use-mobile`.
+
+3. Copy the source into `components/patterns/context-actions.tsx`:
+
+<SourceFile path="components/patterns/context-actions.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextActionsLabel, ContextActionsItem, ContextActionsSeparator } from \"@/components/patterns/context-actions\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center p-4\">\n  <ContextActions>\n    <ContextActionsTrigger className=\"flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-label-secondary\">\n      Right click or long press\n    </ContextActionsTrigger>\n    <ContextActionsContent>\n      <ContextActionsLabel>Photo.jpg</ContextActionsLabel>\n      <ContextActionsItem>Edit</ContextActionsItem>\n      <ContextActionsItem>Duplicate</ContextActionsItem>\n      <ContextActionsItem>Share</ContextActionsItem>\n      <ContextActionsSeparator />\n      <ContextActionsItem variant=\"destructive\">Delete</ContextActionsItem>\n    </ContextActionsContent>\n  </ContextActions>\n</div>"} />
+
+Wrap the target area in `ContextActionsTrigger` and list the actions in `ContextActionsContent`. The open state is internal; use `onOpenChange` to react to it. A long press is cancelled if the finger moves more than 10 pixels, so scrolling over the trigger does not open the sheet.
+
+## Examples
+
+### With icons
+
+Places an icon before every action, including a destructive Delete item.
+
+<Example kind="pattern" name="context-actions" story="WithIcons">
+
+<Code lang="tsx" code={"import { CopyIcon, PencilSimpleIcon, ShareIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ContextActions, ContextActionsContent, ContextActionsItem, ContextActionsSeparator, ContextActionsTrigger } from \"@/components/patterns/context-actions\"\n\nexport function ContextActionsWithIconsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <ContextActions>\n        <ContextActionsTrigger className=\"flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-label-secondary\">\n          Right click or long press\n        </ContextActionsTrigger>\n        <ContextActionsContent>\n          <ContextActionsItem>\n            <PencilSimpleIcon />\n            Edit\n          </ContextActionsItem>\n          <ContextActionsItem>\n            <CopyIcon />\n            Duplicate\n          </ContextActionsItem>\n          <ContextActionsItem>\n            <ShareIcon />\n            Share\n          </ContextActionsItem>\n          <ContextActionsSeparator />\n          <ContextActionsItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </ContextActionsItem>\n        </ContextActionsContent>\n      </ContextActions>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Not dismissible
+
+Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel.
+
+<Example kind="pattern" name="context-actions" story="NotDismissible">
+
+<Code lang="tsx" code={"import { ContextActions } from \"@/components/patterns/context-actions\"\n\nexport function ContextActionsNotDismissibleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <ContextActions />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"ContextActions","href":"#contextactions","children":[{"name":"ContextActionsTrigger","href":"#contextactionstrigger","children":[]},{"name":"ContextActionsContent","href":"#contextactionscontent","children":[{"name":"ContextActionsLabel","href":"#contextactionslabel","children":[]},{"name":"ContextActionsItem","href":"#contextactionsitem","children":[]},{"name":"ContextActionsSeparator","href":"#contextactionsseparator","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### ContextActions
+
+The root that renders a `ContextMenu` on desktop and an `AlertSheet` on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof ContextMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu or sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ContextActionsTrigger
+
+The area that opens the actions on right click, or on long press and keyboard on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ContextActionsContent
+
+The popup holding the actions; on mobile it adds a Cancel button below them.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button shown below the actions on mobile."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ContextActionsLabel
+
+A non-interactive heading; a menu label on desktop and the sheet title on mobile.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ContextActionsItem
+
+An actionable entry that closes the actions when chosen.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ContextActionsSeparator
+
+A divider between groups of items, rendered on desktop only.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the popup has the `menu` role and receives focus when opened; arrow keys move between `menuitem`s and `Enter` runs the focused one.
+- `Escape` closes the menu.
+- On mobile the trigger has `role="button"`, `tabIndex={0}` and `aria-haspopup="dialog"`, and opens with the `ContextMenu` key or `Shift+F10`.
+
+## Notes
+
+Parts carry `data-slot` values `context-actions`, `context-actions-trigger`, `context-actions-content`, `context-actions-label`, `context-actions-item` and `context-actions-separator`. On mobile the trigger disables text selection and the iOS touch callout so a long press does not select text.

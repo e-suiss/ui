@@ -1,0 +1,42 @@
+---
+title: Price Storage
+description: "A cloud storage plan picker with a monthly or yearly toggle, four plan cards, and a switch action."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="price-storage">
+
+<SourceFile path="components/blocks/price-storage.tsx" fold={false} />
+
+</Example>
+
+A cloud storage plan picker with a monthly or yearly switch, four plan cards with feature lists and a button that names the selected plan. One card carries a Most popular badge. Cards show one column on mobile, two on tablets and four on large screens. Use it for storage, seat or usage-based pricing.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks price-storage"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/price-storage.tsx`:
+
+<SourceFile path="components/blocks/price-storage.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PriceStorage } from \"@/components/blocks/price-storage\""} />
+
+<Code lang="tsx" code={"<PriceStorage />"} />
+
+Edit `plans`; each has a size, monthly price, a list of features and an optional popular flag. Yearly prices are ten times the monthly price to match the 2 months free label, so change both together. Replace the button handler, which only shows a confirmation, with your billing call.

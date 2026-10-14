@@ -1,0 +1,262 @@
+---
+title: Theming
+description: Colors named by role, written in oklch for light and dark, and exposed as Tailwind classes such as bg-surface and text-label.
+eyebrow: suiss/ui
+---
+
+## How the theme works
+
+Your stylesheet holds the whole theme. `init` writes it to `app/globals.css` (Next.js) or `src/index.css` (Vite). It has four parts:
+
+- Color values under `:root` (light) and `.dark` (dark).
+- The base `--radius`.
+- The font, set as `--font-sans`.
+- An `@theme inline` block that maps each value to a Tailwind name, such as `--color-surface: var(--surface);`.
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@esuiss/tailwind";
+@import "@fontsource-variable/inter";
+
+:root {
+  --surface: oklch(1 0 0);
+  --label: oklch(0.2316 0.0038 286.09);
+  --accent: oklch(0.5629 0.1933 256.16);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --surface: oklch(0 0 0);
+  --label: oklch(0.9707 0.0026 286.29);
+  --accent: oklch(0.5629 0.1933 256.16);
+}
+
+@theme inline {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
+  --color-surface: var(--surface);
+  --color-label: var(--label);
+  --color-accent: var(--accent);
+}
+```
+
+## Using tokens
+
+Every color becomes a Tailwind color. Use it with any color utility.
+
+```tsx
+<div className="rounded-lg border border-separator bg-surface-secondary p-4">
+  <p className="text-label">Title</p>
+  <p className="text-label-secondary">Supporting text</p>
+</div>
+```
+
+Colors are named by role, not by component. Pick the role that describes what the element is, and it will look right in both appearances.
+
+## Interaction states
+
+Interactive roles come in a family of tokens, one per state:
+
+| Suffix | Used for |
+| --- | --- |
+| *(none)* | The resting state |
+| `-hover` | The pointer is over the element |
+| `-pressed` | The element is being pressed |
+| `-selected` | The element is selected or expanded |
+| `-disabled` | The element is disabled |
+
+The `button` component uses them this way:
+
+```tsx
+"bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-pressed disabled:bg-accent-disabled"
+```
+
+## Color roles
+
+Values are from the default stylesheet.
+
+### Surface
+
+Backgrounds. `surface-raised` is for menus, dialogs and cards.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `surface` | `oklch(1 0 0)` | `oklch(0 0 0)` |
+| `surface-secondary` | `oklch(0.9707 0.0026 286.29)` | `oklch(0.2006 0.002 286.21)` |
+| `surface-tertiary` | `oklch(0.9324 0.0067 286.25)` | `oklch(0.2939 0.0036 286.16)` |
+| `surface-raised` | `oklch(1 0 0)` | `oklch(0.2316 0.0038 286.09)` |
+
+### Label
+
+Text, from most to least prominent.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `label` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
+| `label-secondary` | `oklch(0.5399 0.0077 286.13)` | `oklch(0.7105 0.0072 286.2)` |
+| `label-tertiary` | `oklch(0.6217 0.0074 286.17)` | `oklch(0.6217 0.0074 286.17)` |
+| `label-quaternary` | `oklch(0.8652 0.0068 286.24)` | `oklch(0.3802 0.005 286.15)` |
+
+### Control
+
+Fills for controls such as secondary buttons. `on-control-selected` is the text on a selected control.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `control` | `oklch(0 0 0 / 4%)` | `oklch(1 0 0 / 10%)` |
+| `control-hover` | `oklch(0 0 0 / 8%)` | `oklch(1 0 0 / 16%)` |
+| `control-pressed` | `oklch(0 0 0 / 12%)` | `oklch(1 0 0 / 22%)` |
+| `control-selected` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
+| `control-disabled` | `oklch(0 0 0 / 3%)` | `oklch(1 0 0 / 5%)` |
+| `on-control-selected` | `oklch(1 0 0)` | `oklch(0 0 0)` |
+
+### Item
+
+State layers for rows, menu items and other transparent elements.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `item-hover` | `oklch(0 0 0 / 5%)` | `oklch(1 0 0 / 8%)` |
+| `item-pressed` | `oklch(0 0 0 / 8%)` | `oklch(1 0 0 / 12%)` |
+| `item-selected` | `oklch(0 0 0 / 6%)` | `oklch(1 0 0 / 10%)` |
+
+### Separator
+
+Lines and borders.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `separator` | `oklch(0.8652 0.0068 286.24)` | `oklch(0.3802 0.005 286.15)` |
+| `separator-strong` | `oklch(0.6217 0.0074 286.17)` | `oklch(0.5399 0.0077 286.13)` |
+
+### Accent
+
+The brand color. `on-accent` is the text on the accent. The `accent-surface` tokens are tinted backgrounds.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `accent` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.5629 0.1933 256.16)` |
+| `accent-hover` | `oklch(0.5301 0.1811 256.02)` | `oklch(0.4925 0.1691 256)` |
+| `accent-pressed` | `oklch(0.4825 0.1644 255.94)` | `oklch(0.43 0.1477 256)` |
+| `accent-selected` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.5629 0.1933 256.16)` |
+| `accent-disabled` | `oklch(0.5629 0.1933 256.16 / 40%)` | `oklch(0.5629 0.1933 256.16 / 40%)` |
+| `on-accent` | `oklch(1 0 0)` | `oklch(1 0 0)` |
+| `accent-surface` | `oklch(0.5629 0.1933 256.16 / 9%)` | `oklch(0.5629 0.1933 256.16 / 18%)` |
+| `accent-surface-hover` | `oklch(0.5629 0.1933 256.16 / 14%)` | `oklch(0.5629 0.1933 256.16 / 24%)` |
+| `accent-surface-pressed` | `oklch(0.5629 0.1933 256.16 / 18%)` | `oklch(0.5629 0.1933 256.16 / 30%)` |
+
+### Link, focus and scrim
+
+`scrim` is the dimmed layer behind dialogs, sheets and drawers.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `link` | `oklch(0.522 0.1771 255.83)` | `oklch(0.669 0.1808 251.84)` |
+| `focus` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.5629 0.1933 256.16)` |
+| `scrim` | `oklch(0 0 0 / 48%)` | `oklch(0 0 0 / 48%)` |
+
+### Danger, success and warning
+
+Status colors, each with a `-surface` tint.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `danger` | `oklch(0.5329 0.2255 27.27)` | `oklch(0.7033 0.2236 28.29)` |
+| `danger-surface` | `oklch(0.5529 0.2255 27.27 / 8%)` | `oklch(0.6633 0.2236 28.29 / 20%)` |
+| `danger-surface-hover` | `oklch(0.5529 0.2255 27.27 / 12%)` | `oklch(0.6633 0.2236 28.29 / 30%)` |
+| `danger-surface-pressed` | `oklch(0.5529 0.2255 27.27 / 16%)` | `oklch(0.6633 0.2236 28.29 / 36%)` |
+| `success` | `oklch(0.5201 0.1743 142.96)` | `oklch(0.7556 0.2082 146.98)` |
+| `success-surface` | `oklch(0.9744 0.0166 151.11)` | `oklch(0.7556 0.2082 146.98 / 16%)` |
+| `warning` | `oklch(0.5368 0.1606 42.44)` | `oklch(0.7824 0.1711 67.22)` |
+| `warning-surface` | `oklch(0.975 0.0181 70.25)` | `oklch(0.7824 0.1711 67.22 / 16%)` |
+
+### System colors
+
+A palette used by charts.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `blue` | `oklch(0.6028 0.2177 257.42)` | `oklch(0.6243 0.2056 255.49)` |
+| `green` | `oklch(0.7303 0.1944 147.44)` | `oklch(0.7556 0.2082 146.98)` |
+| `orange` | `oklch(0.7652 0.1752 62.57)` | `oklch(0.7824 0.1711 67.22)` |
+| `red` | `oklch(0.6542 0.2321 28.66)` | `oklch(0.6633 0.2236 28.29)` |
+| `yellow` | `oklch(0.8652 0.1768 90.38)` | `oklch(0.8849 0.1805 94.79)` |
+| `purple` | `oklch(0.6149 0.2129 312.41)` | `oklch(0.656 0.2274 312.42)` |
+| `pink` | `oklch(0.6497 0.2383 17.9)` | `oklch(0.6577 0.2317 16.02)` |
+| `indigo` | `oklch(0.5295 0.191 278.34)` | `oklch(0.5564 0.2032 278.15)` |
+| `teal` | `oklch(0.6998 0.1109 212.72)` | `oklch(0.7706 0.1181 211.98)` |
+| `mint` | `oklch(0.7481 0.1296 189.03)` | `oklch(0.8042 0.1013 191.35)` |
+| `cyan` | `oklch(0.7068 0.1327 233.88)` | `oklch(0.8166 0.1185 227.75)` |
+| `brown` | `oklch(0.6322 0.0643 72.82)` | `oklch(0.665 0.0637 72.96)` |
+| `gray` | `oklch(0.6483 0.0073 286.18)` | `oklch(0.6483 0.0073 286.18)` |
+
+## Radius
+
+`--radius` is `0.625rem` by default. Every rounded component scales from it.
+
+| Class | Value |
+| --- | --- |
+| `rounded-xs` | `calc(var(--radius) * 0.3)` |
+| `rounded-sm` | `calc(var(--radius) * 0.5)` |
+| `rounded-md` | `calc(var(--radius) * 0.8)` |
+| `rounded-lg` | `var(--radius)` |
+| `rounded-xl` | `calc(var(--radius) * 1.2)` |
+| `rounded-2xl` | `calc(var(--radius) * 1.8)` |
+| `rounded-3xl` | `calc(var(--radius) * 2.8)` |
+
+## Customize
+
+- **Change a color.** Edit its value under `:root` (light) and `.dark` (dark).
+- **Add a color.** Define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
+- **Change the font.** Set `--font-sans` in `@theme inline`.
+- **Change the corner radius.** Set `--radius` under `:root`.
+
+## Dark mode
+
+Dark mode is enabled by the `dark` class on `<html>`. Every token switches with it.
+
+For a theme switch, add the `theme` component. It is not added by `add --all`, so projects that stay in one appearance never get it.
+
+```bash title="Terminal"
+npx @esuiss/ui add theme
+```
+
+It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+With Vite, wrap your app in `ThemeProvider` and put the same script in `index.html`, before your app script:
+
+```html title="index.html"
+<script>
+  (()=>{try{var t=localStorage.getItem("theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()
+</script>
+```
+
+`ThemeToggle` switches with an animated reveal built on the View Transitions API. Choose the `effect` (`circle`, `rectangle`, `polygon` or `circle-blur`), where it starts with `origin`, and add `blur` for a softer edge.
+
+```tsx
+<ThemeToggle effect="circle" origin="top-right" />
+<ThemeToggle effect="rectangle" origin="bottom-up" blur />
+```
+
+To build your own control, use `setTheme` from `useTheme`. Pass a transition as the second argument to animate it, or leave it out to switch instantly. Browsers without View Transitions, and visitors who prefer reduced motion, switch instantly either way.
+
+```tsx
+const { theme, setTheme } = useTheme()
+setTheme("system", { effect: "circle", origin: "top-center" })
+```

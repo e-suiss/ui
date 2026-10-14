@@ -1,0 +1,42 @@
+---
+title: Bag Configure
+description: "A product configurator for choosing a model, finish, and storage, with a live price and Add to Bag button."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="bag-configure">
+
+<SourceFile path="components/blocks/bag-configure.tsx" fold={false} />
+
+</Example>
+
+A buy page where shoppers pick a model, a finish and a storage size while the product photo and price update to match. On desktop the photo sits beside the options; on mobile it shrinks to a panel above them, and a sticky footer keeps the price and Add to Bag button in reach. Good for any configurable product, such as hardware, tiered subscriptions or made-to-order goods.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bag-configure"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/blocks/bag-configure.tsx`:
+
+<SourceFile path="components/blocks/bag-configure.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BagConfigure } from \"@/components/blocks/bag-configure\""} />
+
+<Code lang="tsx" code={"<BagConfigure />"} />
+
+Edit the `models`, `finishes` and `storage` lists: models carry a base price, finishes a swatch color and photo, and storage options a surcharge. The price is the model price plus the storage surcharge, with a 12-month estimate below it. Replace the Add to Bag handler, which only flips a local flag, with your cart call, and update the heading copy.
+
+## Notes
+
+Price changes are announced to screen readers, and each swatch is labeled with its finish name. Photos are Unsplash placeholders.

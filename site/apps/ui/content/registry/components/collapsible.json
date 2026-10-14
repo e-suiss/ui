@@ -1,0 +1,16 @@
+{
+  "description": "A section that people can expand and collapse to show or hide its content.",
+  "overview": "`Collapsible` wraps the Base UI Collapsible primitive. The `Collapsible` root holds the open state, a `CollapsibleTrigger` toggles it, and `CollapsibleContent` holds the content that is shown or hidden. The parts are unstyled, so you control layout and appearance with `className`, or render the trigger as another component such as `Button` with the `render` prop.\n\nUse a collapsible for a single disclosure region. For a set of related, stacked sections, use an accordion instead.",
+  "usage": "The root is uncontrolled by default; set `defaultOpen` to start expanded. To control it, pass `open` and `onOpenChange`. Set `disabled` on the root to prevent toggling. While collapsed, the content is removed from the page.",
+  "examples": {
+    "OpenByDefault": "A collapsible that starts expanded using `defaultOpen`.",
+    "Disabled": "A disabled collapsible whose trigger does not toggle the content."
+  },
+  "parts": {
+    "Collapsible": "The root that holds the open state and groups the trigger and content.",
+    "CollapsibleTrigger": "The button that toggles the content open and closed.",
+    "CollapsibleContent": "The panel that is shown when the collapsible is open."
+  },
+  "accessibility": "- The trigger renders as a button and sets `aria-expanded` to reflect the open state.\n- The trigger toggles on click, and with Enter or Space when focused.\n- Give an icon-only trigger an accessible name with `aria-label`.",
+  "notes": "- Styling hooks: `data-slot=\"collapsible\"`, `data-slot=\"collapsible-trigger\"` and `data-slot=\"collapsible-content\"`.\n- Base UI sets state attributes such as `data-open` and `data-closed` on the parts, which you can use for styling and animation.\n- No styles are applied by default."
+}

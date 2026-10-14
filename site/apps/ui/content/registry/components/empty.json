@@ -1,0 +1,25 @@
+{
+  "description": "A placeholder that explains why a view has no content and what people can do next.",
+  "overview": "`Empty` is a centered container for empty states. Inside it, `EmptyHeader` groups an optional `EmptyMedia` with an `EmptyTitle` and `EmptyDescription`, and `EmptyContent` holds the actions, such as buttons, a search field or a help link. All parts are plain, styled elements with no interactive behavior of their own.\n\nUse it when a list, folder, search or page has nothing to show. Keep the title short and use the description to suggest a next step.",
+  "usage": "`Empty` has a dashed border style but no border width by default; add `border` through `className` to show an outline. Set `EmptyMedia` to `variant=\"icon\"` for a small icon in a tinted tile, or keep the default to render media such as a large icon or illustration as is. Links placed directly inside `EmptyDescription` are underlined.",
+  "examples": {
+    "Outline": "An empty state with a visible dashed outline, added through `className=\"border\"`.",
+    "DefaultMedia": "An empty state with a large icon in `EmptyMedia` using the default variant.",
+    "WithSearch": "A not-found state with an `InputGroup` search field and a support link in `EmptyContent`."
+  },
+  "parts": {
+    "Empty": "The centered container for the empty state.",
+    "EmptyHeader": "Groups the media, title and description.",
+    "EmptyMedia": "Holds an icon or image above the title.",
+    "EmptyTitle": "The short heading of the empty state.",
+    "EmptyDescription": "Supporting text that explains the state or suggests a next step.",
+    "EmptyContent": "Holds actions such as buttons, inputs or links."
+  },
+  "props": {
+    "EmptyMedia": {
+      "variant": "`icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background."
+    }
+  },
+  "accessibility": "- `EmptyTitle` renders a `div`, not a heading. If the empty state should appear in the document outline, render a heading element inside it or pass the appropriate role and level.\n- Give interactive elements in `EmptyContent` clear accessible names.",
+  "notes": "- Styling hooks: `data-slot` values `empty`, `empty-header`, `empty-icon` (on `EmptyMedia`), `empty-title`, `empty-description` and `empty-content`.\n- `EmptyMedia` also sets `data-variant`.\n- `EmptyDescription` renders a `div` element even though it accepts paragraph props.\n- Uses the `surface-secondary`, `label`, `label-secondary` and `link` tokens."
+}

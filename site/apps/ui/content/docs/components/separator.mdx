@@ -1,0 +1,85 @@
+---
+title: Separator
+description: "A thin line that visually divides content, horizontally or vertically."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="separator" story="Default">
+
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorExample() {\n  return (\n    <div className=\"w-72\">\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-medium\">Account settings</h4>\n        <p className=\"text-label-secondary text-sm\">\n          Manage your profile and preferences.\n        </p>\n      </div>\n      <Separator orientation=\"horizontal\" className=\"my-4\" />\n      <div className=\"flex h-5 items-center gap-4 text-sm\">\n        <span>Profile</span>\n        <Separator orientation=\"vertical\" />\n        <span>Billing</span>\n        <Separator orientation=\"vertical\" />\n        <span>Security</span>\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Separator` wraps the Base UI Separator primitive. It draws a 1px line in the `separator` color: full width when horizontal, and stretched to the container's height when vertical.
+
+Use it between groups of content or between inline items. Inside menus and selects, use the dedicated separator part of that component instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/separator.tsx`:
+
+<SourceFile path="components/ui/separator.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\""} />
+
+<Code lang="tsx" code={"<div className=\"w-72\">\n  <div className=\"flex flex-col gap-1\">\n    <h4 className=\"text-sm font-medium\">Account settings</h4>\n    <p className=\"text-label-secondary text-sm\">\n      Manage your profile and preferences.\n    </p>\n  </div>\n  <Separator orientation=\"horizontal\" className=\"my-4\" />\n  <div className=\"flex h-5 items-center gap-4 text-sm\">\n    <span>Profile</span>\n    <Separator orientation=\"vertical\" />\n    <span>Billing</span>\n    <Separator orientation=\"vertical\" />\n    <span>Security</span>\n  </div>\n</div>"} />
+
+`orientation` defaults to `horizontal`. Set `orientation="vertical"` inside a flex row; the line stretches to the row's height, so give the row a height.
+
+## Examples
+
+### Horizontal
+
+Divides two stacked lines of text.
+
+<Example kind="ui" name="separator" story="Horizontal">
+
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorHorizontalExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-3 text-sm\">\n      <span>Recent activity</span>\n      <Separator orientation=\"horizontal\" />\n      <span>Archived items</span>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+Divides inline links in a row.
+
+<Example kind="ui" name="separator" story="Vertical">
+
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorVerticalExample() {\n  return (\n    <div className=\"flex h-6 items-center gap-4 text-sm\">\n      <span>Docs</span>\n      <Separator orientation=\"vertical\" />\n      <span>Blog</span>\n      <Separator orientation=\"vertical\" />\n      <span>Changelog</span>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Separator
+
+Draws the dividing line.
+
+<PropsTable extends={["SeparatorPrimitive.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders with the `separator` role and an `aria-orientation` that matches `orientation`.
+
+## Notes
+
+- Uses `data-slot="separator"` and Base UI's `data-horizontal` and `data-vertical` attributes for sizing.
+- The color comes from the `bg-separator` token.

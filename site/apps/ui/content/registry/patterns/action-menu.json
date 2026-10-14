@@ -1,0 +1,35 @@
+{
+  "description": "A list of actions that opens as a dropdown menu on desktop and an action sheet on mobile.",
+  "overview": "`ActionMenu` renders a `DropdownMenu` on desktop and an `AlertSheet` below the `48rem` breakpoint (`useIsMobile`). Each part switches to its matching component: items become `DropdownMenuItem`s or `AlertSheetAction`s, and the label becomes a menu label or the sheet title. On mobile, the content wraps the items in a grouped card and appends a Cancel button.\n\nUse it for a short set of actions on a single object, such as editing, sharing or deleting a record, where an iOS-style action sheet suits touch screens.",
+  "usage": "Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant=\"outline\"`. `open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.",
+  "examples": {
+    "WithIcons": "Places an icon before every action, including a destructive Delete item.",
+    "NotDismissible": "Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel."
+  },
+  "parts": {
+    "ActionMenu": "The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.",
+    "ActionMenuTrigger": "The button that opens the menu or sheet.",
+    "ActionMenuContent": "The popup holding the actions; on mobile it adds a Cancel button below them.",
+    "ActionMenuLabel": "A non-interactive heading; a menu label on desktop and the sheet title on mobile.",
+    "ActionMenuItem": "An actionable entry that closes the menu when chosen.",
+    "ActionMenuSeparator": "A divider between groups of items, rendered on desktop only."
+  },
+  "props": {
+    "ActionMenu": {
+      "onOpenChange": "Called when the menu or sheet opens or closes.",
+      "dismissible": "When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."
+    },
+    "ActionMenuTrigger": {
+      "render": "Replaces the default button element with your own element, such as a `Button`."
+    },
+    "ActionMenuContent": {
+      "cancelLabel": "Text of the Cancel button shown below the actions on mobile."
+    },
+    "ActionMenuItem": {
+      "variant": "Use `destructive` to style the item as a destructive action.",
+      "disabled": "Prevents the item from being chosen."
+    }
+  },
+  "accessibility": "- On desktop the popup has the `menu` role and each item has the `menuitem` role.\n- `ArrowDown` from the trigger opens the menu and focuses the first item; arrow keys move between items and `Enter` runs the focused one.\n- `Escape` closes the menu and returns focus to the trigger.",
+  "notes": "Parts carry `data-slot` values `action-menu`, `action-menu-trigger`, `action-menu-content`, `action-menu-label`, `action-menu-item` and `action-menu-separator`. `ActionMenuSeparator` renders nothing on mobile; the sheet groups items in a single card instead."
+}

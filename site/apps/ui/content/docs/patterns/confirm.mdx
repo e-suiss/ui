@@ -1,0 +1,156 @@
+---
+title: Confirm
+description: "A confirmation prompt that opens as an alert dialog on desktop and an action sheet on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="confirm" story="Default">
+
+<Code lang="tsx" code={"import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ConfirmExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Confirm>\n        <ConfirmTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete order?</ConfirmTitle>\n            <ConfirmDescription>\n              Order #1042 will be permanently deleted. This action cannot be\n              undone.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Confirm` asks the user to confirm or cancel an action. On desktop it renders an `AlertDialog` with a header and a footer of buttons. Below the `48rem` breakpoint it renders an `AlertSheet`: `ConfirmContent` lifts the buttons out of `ConfirmFooter`, places the title, description and actions in one grouped card, and moves `ConfirmCancel` into its own button below the card.
+
+Use it before destructive or irreversible actions, such as deleting a record, where the user must make an explicit choice.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns confirm"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Alert Dialog](/docs/components/alert-dialog), [Alert Sheet](/docs/components/alert-sheet), `use-mobile`.
+
+2. Copy the source into `components/patterns/confirm.tsx`:
+
+<SourceFile path="components/patterns/confirm.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from \"@/components/patterns/confirm\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Confirm>\n    <ConfirmTrigger render={<Button variant=\"outline\" />}>\n      Delete order\n    </ConfirmTrigger>\n    <ConfirmContent>\n      <ConfirmHeader>\n        <ConfirmTitle>Delete order?</ConfirmTitle>\n        <ConfirmDescription>\n          Order #1042 will be permanently deleted. This action cannot be\n          undone.\n        </ConfirmDescription>\n      </ConfirmHeader>\n      <ConfirmFooter>\n        <ConfirmCancel>Cancel</ConfirmCancel>\n        <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n      </ConfirmFooter>\n    </ConfirmContent>\n  </Confirm>\n</div>"} />
+
+Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. `Confirm` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.
+
+## Examples
+
+### Dismissible
+
+Sets `dismissible` so the mobile sheet also closes when the user presses outside it.
+
+<Example kind="pattern" name="confirm" story="Dismissible">
+
+<Code lang="tsx" code={"import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ConfirmDismissibleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Confirm dismissible>\n        <ConfirmTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete order?</ConfirmTitle>\n            <ConfirmDescription>\n              Order #1042 will be permanently deleted. This action cannot be\n              undone.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Confirm","href":"#confirm","children":[{"name":"ConfirmTrigger","href":"#confirmtrigger","children":[]},{"name":"ConfirmContent","href":"#confirmcontent","children":[{"name":"ConfirmHeader","href":"#confirmheader","children":[{"name":"ConfirmTitle","href":"#confirmtitle","children":[]},{"name":"ConfirmDescription","href":"#confirmdescription","children":[]}]},{"name":"ConfirmFooter","href":"#confirmfooter","children":[{"name":"ConfirmCancel","href":"#confirmcancel","children":[]},{"name":"ConfirmAction","href":"#confirmaction","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Confirm
+
+The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheet>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ConfirmTrigger
+
+The button that opens the confirmation.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogTrigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ConfirmContent
+
+The popup; on mobile it regroups the footer buttons into the sheet layout.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ConfirmHeader
+
+Groups the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ConfirmFooter
+
+Holds the cancel and action buttons on desktop; on mobile its buttons are moved into the sheet.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ConfirmTitle
+
+The prompt's title, used as the dialog's accessible name.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ConfirmDescription
+
+Supporting text, used as the dialog's accessible description.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogDescription>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ConfirmAction
+
+A button that performs the action and closes the prompt.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ConfirmCancel
+
+A button that closes the prompt without acting; shown separately below the actions on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetCancel>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`.
+- Opening moves focus into the dialog, and closing returns it to the trigger.
+- On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.
+
+## Notes
+
+Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `variant="destructive"` to `ConfirmAction` for destructive actions. The `size` prop of `ConfirmContent` applies to the desktop `AlertDialogContent` only.

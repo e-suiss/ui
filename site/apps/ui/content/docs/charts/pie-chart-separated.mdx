@@ -1,0 +1,46 @@
+---
+title: Pie Chart Separated
+description: "A donut whose slices are pulled apart with wide gaps and rounded corners."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-separated">
+
+<SourceFile path="components/charts/pie-chart-separated.tsx" fold={false} />
+
+</Example>
+
+A donut whose slices are pushed apart with wide gaps and rounded corners, giving each segment a tile-like look. Choose it for a softer, more decorative style than the standard donut.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-separated"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-separated.tsx`:
+
+<SourceFile path="components/charts/pie-chart-separated.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartSeparated } from \"@/components/charts/pie-chart-separated\""} />
+
+<Code lang="tsx" code={"<PieChartSeparated />"} />
+
+Replace `chartData` and add each category to `chartConfig`. Tune the spacing with `paddingAngle` and the rounding with `cornerRadius`; large values for either make small slices hard to see.
+
+## Notes
+
+The wide gaps and rounded corners squeeze very thin slices, so this style suits data without tiny values.

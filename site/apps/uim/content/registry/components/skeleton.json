@@ -1,0 +1,12 @@
+{
+  "description": "A pulsing placeholder shape shown while content loads.",
+  "overview": "`Skeleton` is a Reanimated `View` with a rounded background whose opacity pulses between 1 and 0.5 on a loop. It has no fixed size; you shape it with classes to match the content it stands in for.",
+  "usage": "Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives.",
+  "examples": {
+    "Profile": "An avatar circle with two lines of text.",
+    "Card": "A media block with two lines of text below it.",
+    "List": "Rows with a thumbnail and two lines of text."
+  },
+  "accessibility": "- The skeleton is a plain view with no role or label. If loading state matters to the user, announce it elsewhere, for example with a `Spinner` that has an `accessibilityLabel`.",
+  "notes": "- Uses the `bg-surface-secondary` token.\n- The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.\n- Light and dark colors follow the system appearance."
+}

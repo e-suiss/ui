@@ -1,0 +1,129 @@
+{
+  "name": "panel",
+  "type": "pattern",
+  "files": [
+    "components/patterns/panel.tsx"
+  ],
+  "requires": [
+    "drawer",
+    "sheet",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "OpenByDefault",
+    "Sides",
+    "WithCloseLabel",
+    "WithoutCloseButton",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "Panel",
+      "extends": [
+        "React.ComponentProps<typeof Sheet>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PanelTrigger",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PanelContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "side",
+          "type": "\"top\" | \"right\" | \"bottom\" | \"left\"",
+          "required": false,
+          "default": "\"right\""
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PanelHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PanelTitle",
+      "extends": [
+        "React.HTMLAttributes<HTMLHeadingElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "PanelDescription",
+      "extends": [
+        "React.HTMLAttributes<HTMLParagraphElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "PanelBody",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PanelFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PanelClose",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

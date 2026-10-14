@@ -1,0 +1,112 @@
+{
+  "name": "dialog",
+  "type": "ui",
+  "files": [
+    "components/ui/dialog.tsx"
+  ],
+  "requires": [
+    "button",
+    "use-scrollbar-gap"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithoutCloseButton",
+    "Destructive"
+  ],
+  "parts": [
+    {
+      "name": "Dialog",
+      "extends": [
+        "DialogPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogTrigger",
+      "extends": [
+        "DialogPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogPortal",
+      "extends": [
+        "DialogPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogClose",
+      "extends": [
+        "DialogPrimitive.Close.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogOverlay",
+      "extends": [
+        "DialogPrimitive.Backdrop.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogContent",
+      "extends": [
+        "DialogPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DialogHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "DialogTitle",
+      "extends": [
+        "DialogPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DialogDescription",
+      "extends": [
+        "DialogPrimitive.Description.Props"
+      ],
+      "props": []
+    }
+  ]
+}

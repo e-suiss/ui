@@ -1,0 +1,92 @@
+{
+  "name": "input-group",
+  "type": "ui",
+  "files": [
+    "components/ui/input-group.tsx"
+  ],
+  "requires": [
+    "button",
+    "input",
+    "textarea"
+  ],
+  "dependencies": [
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Search",
+    "WithText",
+    "WithButtons",
+    "ButtonSizes",
+    "WithKbd",
+    "BlockAddons",
+    "WithTextarea",
+    "Invalid",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "InputGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "InputGroupAddon",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "align",
+          "type": "\"inline-start\" | \"inline-end\" | \"block-start\" | \"block-end\"",
+          "default": "\"inline-start\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "InputGroupButton",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"xs\" | \"sm\" | \"icon-xs\" | \"icon-sm\"",
+          "default": "\"xs\"",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\"",
+          "required": false,
+          "default": "\"button\""
+        }
+      ]
+    },
+    {
+      "name": "InputGroupText",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "InputGroupInput",
+      "extends": [
+        "React.ComponentProps<\"input\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "InputGroupTextarea",
+      "extends": [
+        "React.ComponentProps<\"textarea\">"
+      ],
+      "props": []
+    }
+  ]
+}

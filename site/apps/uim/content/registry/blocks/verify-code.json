@@ -1,0 +1,5 @@
+{
+  "description": "A two-factor screen with a six-digit code input, a resend timer and a confirmation once verified.",
+  "overview": "An `InputOTP` with six slots checks the code when the last digit is entered; a wrong code shakes the input and shows an error, and a correct one shows a verified screen. A resend link counts down from 30 seconds, and a help link sits below.",
+  "usage": "`onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. `onHelp` handles the help link."
+}

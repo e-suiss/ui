@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-legend",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-legend.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

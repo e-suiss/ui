@@ -1,0 +1,46 @@
+---
+title: Area Chart Stacked
+description: "Two areas stacked on top of each other so the top edge shows the combined total, with a legend."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-stacked">
+
+<SourceFile path="components/charts/area-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+Two series stacked so the top edge shows the combined total, with a legend underneath. Use it when both the total and each part's contribution matter, as in desktop plus mobile traffic.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-stacked"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-stacked.tsx`:
+
+<SourceFile path="components/charts/area-chart-stacked.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartStacked } from \"@/components/charts/area-chart-stacked\""} />
+
+<Code lang="tsx" code={"<AreaChartStacked />"} />
+
+Replace `chartData` and rename the series keys in the data, both areas and `chartConfig`. Give every series the same `stackId` to stack them; the first one declared sits at the bottom. The legend picks up labels and colors from the config automatically.
+
+## Notes
+
+The tooltip follows the cursor or the arrow keys once the plot has focus.

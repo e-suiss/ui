@@ -1,0 +1,32 @@
+{
+  "description": "A floating bottom navigation bar whose overflow and extra sections expand from a More button.",
+  "overview": "`TabBar` renders a fixed `nav` centered at the bottom of the screen. `TabBarList` holds the primary `TabBarItem` buttons. `TabBarTrigger` is the More button: pressing it expands `TabBarContent` above the list, with a spring animation, to show `TabBarSection` columns. Each section has a `TabBarSectionTitle` and a set of `TabBarLink` entries.\n\nThe list measures itself and moves items that don't fit into the expanded content, where they appear as links. When every item fits and there are no sections, the More button is hidden. Use `TabBar` for top-level navigation on any screen size; for in-page panels, use `Tabs`, and for an app's side navigation, use `Sidebar`.",
+  "usage": "Use `defaultOpen` on `TabBar` for an uncontrolled bar, or `open` with `onOpenChange` to control it. Give the `nav` a name with `aria-label`.\n\nMark the current destination with `isActive` on a `TabBarItem` or `TabBarLink`. Use the `render` prop to render a `TabBarItem` as a link or router link. Choosing a `TabBarLink` or an overflowed item closes the bar. Child components can read the bar's state with the `useTabBar` hook.",
+  "examples": {
+    "Open": "Renders with the sections expanded on mount; an outside click closes them.",
+    "FitsWithoutMore": "Hides the More button because every item fits and there are no sections.",
+    "OverflowIntoMore": "Holds more items than fit, so the extra items move behind More.",
+    "Links": "Renders each item as a link, with the active one marked as the current page.",
+    "DisabledItem": "Disables one item in the list."
+  },
+  "parts": {
+    "TabBar": "The floating `nav` container that holds the open state.",
+    "TabBarList": "The row of primary items; items that don't fit move into the content.",
+    "TabBarItem": "A primary destination in the list, rendered as a button by default.",
+    "TabBarTrigger": "The More button that expands and collapses the content.",
+    "TabBarContent": "The expandable area above the list that holds overflowed items and sections.",
+    "TabBarSection": "A column of related links in the content.",
+    "TabBarSectionTitle": "The heading of a section, marked with a small dot.",
+    "TabBarLink": "A link inside a section that closes the bar when chosen."
+  },
+  "props": {
+    "TabBarItem": {
+      "isActive": "Marks the item as the current page with `aria-current=\"page\"`."
+    },
+    "TabBarLink": {
+      "isActive": "Marks the link as the current page with `aria-current=\"page\"`."
+    }
+  },
+  "accessibility": "- `TabBar` is a `navigation` landmark; name it with `aria-label`.\n- Active items and links set `aria-current=\"page\"`.\n- The More button sets `aria-expanded` and `aria-controls` to point to the content.\n- `Escape` closes the open bar and returns focus to the More button. A pointer press outside the bar also closes it.\n- While open, the list is `inert`. Items moved into the overflow are hidden from assistive technologies and removed from the tab order in the list, and appear as links in the content instead.\n- When the More button isn't needed, it's hidden and removed from the tab order.",
+  "notes": "- `TabBar` sets `data-open`, `data-overflowing` and `data-sections` for styling. The trigger sets `data-idle` when it's hidden, and items and links set `data-active`.\n- Parts carry `data-slot` attributes such as `tab-bar`, `tab-bar-list`, `tab-bar-item`, `tab-bar-trigger` and `tab-bar-content`.\n- The bar sits above the safe-area inset at the bottom of the screen and uses a `surface-raised` background with a thin border and a shadow. The active item gets a `control` fill and `link` text.\n- Animations are removed when reduced motion is preferred.\n- `useTabBar` throws if it's used outside a `TabBar`."
+}

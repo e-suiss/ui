@@ -1,0 +1,6 @@
+{
+  "description": "A single filled area drawn as steps, holding each value flat until the next reading.",
+  "overview": "A single filled area drawn as steps that hold each value flat until the next reading. It suits values that change in discrete jumps, like prices, plan tiers or inventory counts.",
+  "usage": "Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Switch the curve type to `stepAfter` or `stepBefore` if you want the jump on a different side of each point.",
+  "notes": "The plot supports keyboard navigation: focus it and use the arrow keys to move between months."
+}

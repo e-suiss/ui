@@ -1,0 +1,32 @@
+{
+  "description": "An action sheet that slides up from the bottom of the screen to confirm or choose an action.",
+  "overview": "Alert Sheet is an iOS-style action sheet built on Base UI's dialog primitives. An `AlertSheet` root contains an `AlertSheetTrigger` and an `AlertSheetContent`, which renders its own portal and scrim overlay. Inside, an `AlertSheetGroup` holds an optional `AlertSheetHeader` (with `AlertSheetTitle` and `AlertSheetDescription`) and one or more `AlertSheetAction` rows. A separate `AlertSheetCancel` sits below the group.\n\nUse it to offer a short list of actions tied to the current context, especially on touch devices. For a centered confirmation, use Alert Dialog.",
+  "usage": "Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className=\"sr-only\"`.\n\nBy default the sheet is `dismissible` and behaves like a regular dialog. Set `dismissible={false}` to render it as an alert dialog instead.\n\nWhen the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own `initialFocus` to `AlertSheetContent`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.",
+  "examples": {
+    "WithTitle": "Shows a visible title above the description.",
+    "MultipleActions": "Offers a default and a destructive action in one group."
+  },
+  "parts": {
+    "AlertSheet": "The root that manages the open state and dismissal behavior.",
+    "AlertSheetTrigger": "The control that opens the sheet.",
+    "AlertSheetPortal": "Renders the sheet into a portal outside the DOM hierarchy.",
+    "AlertSheetOverlay": "The full-screen scrim behind the sheet.",
+    "AlertSheetContent": "The bottom-anchored container, rendered with its own portal and overlay.",
+    "AlertSheetGroup": "A rounded surface that stacks the header and actions with dividers.",
+    "AlertSheetHeader": "A padded wrapper for the title and description.",
+    "AlertSheetTitle": "The heading that names the sheet.",
+    "AlertSheetDescription": "Supporting text that describes the sheet.",
+    "AlertSheetAction": "A full-width row button that performs an action and closes the sheet.",
+    "AlertSheetCancel": "A separate, bold button that dismisses the sheet."
+  },
+  "props": {
+    "AlertSheet": {
+      "dismissible": "When `true`, renders as a dialog; when `false`, renders as an alert dialog."
+    },
+    "AlertSheetAction": {
+      "variant": "Text color of the action. `default` uses the link color; `destructive` uses the danger color."
+    }
+  },
+  "accessibility": "- With `dismissible` (the default) the popup has the `dialog` role; with `dismissible={false}` it has the `alertdialog` role.\n- The popup is named by `AlertSheetTitle` and described by `AlertSheetDescription`.\n- Focus moves to the cancel button on open and returns to the trigger on close.\n- `Escape` closes the sheet.",
+  "notes": "- Styling hooks: `data-slot` values from `alert-sheet` through `alert-sheet-cancel`.\n- The sheet slides with `translate-y-full` on `data-starting-style` and `data-ending-style`, and its bottom padding respects `env(safe-area-inset-bottom)`.\n- When an action contains an icon, the group switches to a grid so icons and labels align across rows."
+}

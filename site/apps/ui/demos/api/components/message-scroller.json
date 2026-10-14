@@ -1,0 +1,110 @@
+{
+  "name": "message-scroller",
+  "type": "ui",
+  "files": [
+    "components/ui/message-scroller.tsx"
+  ],
+  "requires": [
+    "button",
+    "scroll-area",
+    "use-message-scroller"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "StartAtTop"
+  ],
+  "parts": [
+    {
+      "name": "MessageScrollerProvider",
+      "extends": [
+        "MessageScrollerOptions"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MessageScroller",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "MessageScrollerViewport",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "preserveScrollOnPrepend",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "MessageScrollerContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "spacerClassName",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MessageScrollerItem",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "messageId",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "scrollAnchor",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "MessageScrollerButton",
+      "extends": [
+        "useRender.ComponentProps<\"button\", MessageScrollerButtonState>",
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": [
+        {
+          "name": "behavior",
+          "type": "ScrollBehavior",
+          "required": false,
+          "default": "\"smooth\""
+        },
+        {
+          "name": "direction",
+          "type": "MessageScrollerScrollDirection",
+          "required": false,
+          "default": "\"end\""
+        }
+      ]
+    }
+  ]
+}

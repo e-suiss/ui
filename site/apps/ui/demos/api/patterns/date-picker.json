@@ -1,0 +1,128 @@
+{
+  "name": "date-picker",
+  "type": "pattern",
+  "files": [
+    "components/patterns/date-picker.tsx"
+  ],
+  "requires": [
+    "calendar",
+    "drawer",
+    "popover",
+    "use-mobile",
+    "wheel-picker"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithValue",
+    "Locale",
+    "YearRange",
+    "WithTitle",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "Disabled",
+    "Invalid",
+    "Controlled",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "DatePicker",
+      "extends": [],
+      "props": [
+        {
+          "name": "value",
+          "type": "Date | null",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Date | null",
+          "required": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: Date | null) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "default": "\"Pick a date\""
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "fromYear",
+          "type": "number",
+          "required": false,
+          "default": "new Date().getFullYear() - 100"
+        },
+        {
+          "name": "toYear",
+          "type": "number",
+          "required": false,
+          "default": "new Date().getFullYear() + 10"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-invalid",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

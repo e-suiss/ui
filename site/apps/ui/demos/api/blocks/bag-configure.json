@@ -1,0 +1,16 @@
+{
+  "name": "bag-configure",
+  "type": "block",
+  "files": [
+    "components/blocks/bag-configure.tsx"
+  ],
+  "requires": [
+    "button",
+    "label",
+    "radio-group",
+    "toggle-group"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

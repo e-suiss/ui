@@ -1,0 +1,23 @@
+{
+  "description": "An inline annotation for timelines and conversations, such as a date divider or system event.",
+  "overview": "`Marker` displays a short line of secondary text, typically between messages or list entries. Put the text in `MarkerContent` and, optionally, a leading `MarkerIcon`.\n\nThe `variant` prop changes the treatment: plain text, text centered between two separator rules, or text above a bottom border. Use `Marker` for annotations within content; use `Separator` for a purely visual rule with no text.",
+  "usage": "`Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element. Links inside the marker or its content are underlined automatically.",
+  "examples": {
+    "Variants": "The `default`, `separator` and `border` variants stacked for comparison.",
+    "Separator": "Text centered between two horizontal rules, as used for a date divider.",
+    "WithIcon": "Markers with a leading decorative icon in the default and separator variants.",
+    "WithLink": "A marker whose content includes an inline link."
+  },
+  "parts": {
+    "Marker": "The container row that applies the variant styling.",
+    "MarkerIcon": "A decorative icon slot shown before the content and hidden from assistive technology.",
+    "MarkerContent": "Holds the marker text and any inline links."
+  },
+  "props": {
+    "Marker": {
+      "variant": "Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border."
+    }
+  },
+  "accessibility": "- `MarkerIcon` sets `aria-hidden=\"true\"`, so icons must be decorative; put meaningful text in `MarkerContent`.\n- Links inside the content remain in the normal tab order.",
+  "notes": "- Styling hooks: `data-slot=\"marker\"`, `data-slot=\"marker-icon\"` and `data-slot=\"marker-content\"`. The root also exposes `data-variant`.\n- Rules and borders use the `separator` token; text uses `label-secondary` and links hover to `label`."
+}

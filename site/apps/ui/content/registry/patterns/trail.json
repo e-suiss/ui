@@ -1,0 +1,24 @@
+{
+  "description": "A navigation trail that shows breadcrumbs on desktop and a back link with history on mobile.",
+  "overview": "`Trail` shows where the current page sits in a hierarchy. On desktop it renders a suiss/ui `Breadcrumb` that links every ancestor and marks the last item as the current page; with `maxItems`, it keeps the root and the nearest ancestors and folds the rest into an ellipsis.\n\nOn mobile (below `48rem`, via `useIsMobile`) it renders a single back link to the parent page, like an iOS navigation bar. When there is more than one ancestor, a long press, right-click, the Context Menu key or Shift+F10 opens a menu of all ancestors, nearest first. Use it on documentation, support and settings pages with nested structure.",
+  "usage": "- Pass `items` in order from the root to the current page. Each `TrailItem` has a `label` and an optional `href`; the last item is the current page.\n- On mobile, nothing renders when there is only one item.\n- Use `render` to output links through your router, for example a framework `Link` element. It applies to breadcrumb links, the mobile back link and the history menu items.",
+  "examples": {
+    "Collapsed": "Folds the middle of a deep trail into an ellipsis with `maxItems`.",
+    "BackLabel": "Labels the mobile back link Back instead of the parent's name.",
+    "TwoLevels": "Shows a trail with one parent and the current page."
+  },
+  "parts": {
+    "Trail": "The navigation element that renders the breadcrumbs or the mobile back link."
+  },
+  "props": {
+    "Trail": {
+      "items": "The pages from the root to the current page.",
+      "maxItems": "The maximum number of items shown on desktop before the middle collapses into an ellipsis.",
+      "backLabel": "Text for the mobile back link; defaults to the parent's label.",
+      "ellipsisLabel": "The accessible label of the collapsed ellipsis.",
+      "render": "The element used to render links."
+    }
+  },
+  "accessibility": "- On desktop the trail is a navigation landmark named breadcrumb, and the current page has `aria-current=\"page\"`.\n- On mobile it is a navigation landmark named Back. When a history menu is available, the back link has `aria-haspopup=\"menu\"` and `aria-expanded`.\n- The history menu opens from the keyboard with the Context Menu key or Shift+F10.",
+  "notes": "Styling hooks: `data-slot=\"trail\"`, `trail-back`, `trail-history` and `trail-history-item`. A long press opens the history only for touch and pen input, and cancels if the pointer moves more than 10 pixels; the press does not also follow the back link."
+}

@@ -1,0 +1,46 @@
+---
+title: Price Bundle
+description: "A dark subscription bundle picker comparing three plans and the services each one includes."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="price-bundle">
+
+<SourceFile path="components/blocks/price-bundle.tsx" fold={false} />
+
+</Example>
+
+A dark plan picker comparing three subscription bundles, each with its audience, monthly price and the services it includes, with excluded services struck through. Cards stack on mobile and sit in three columns on desktop, and the selected one gains an accent outline. A Try it free button and a savings link that follows the selection close the section. Use it for bundle, tier or membership pricing.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks price-bundle"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group).
+
+3. Copy the source into `components/blocks/price-bundle.tsx`:
+
+<SourceFile path="components/blocks/price-bundle.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PriceBundle } from \"@/components/blocks/price-bundle\""} />
+
+<Code lang="tsx" code={"<PriceBundle />"} />
+
+Edit `services` and `plans`. Each plan includes the first services in order, up to its `included` count, and the fourth service shows the plan's storage, so order `services` from most basic to most premium. Give Try it free a handler and point `#compare` at your comparison page.
+
+## Notes
+
+Excluded services include hidden not-included text, so the strike-through is not the only cue.

@@ -1,0 +1,46 @@
+---
+title: Bar Chart Horizontal
+description: "Horizontal bars with category names on the left and a distinct color for each category."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-horizontal">
+
+<SourceFile path="components/charts/bar-chart-horizontal.tsx" fold={false} />
+
+</Example>
+
+Horizontal bars with category names down the left and a different color per category. Choose it over vertical bars when labels are long or when you are ranking items.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-horizontal"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-horizontal.tsx`:
+
+<SourceFile path="components/charts/bar-chart-horizontal.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartHorizontal } from \"@/components/charts/bar-chart-horizontal\""} />
+
+<Code lang="tsx" code={"<BarChartHorizontal />"} />
+
+Give each record a category key, a value and a `fill` that points at its color variable, then add a matching entry with label and color to `chartConfig`. The left axis reads its text from those config labels. Change `barSize` to make the bars thicker or thinner.
+
+## Notes
+
+The label column sizes itself to the longest name. Keyboard users can focus the chart and step through the bars with the arrow keys.

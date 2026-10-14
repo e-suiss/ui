@@ -1,0 +1,64 @@
+{
+  "name": "input-otp",
+  "type": "ui",
+  "files": [
+    "components/ui/input-otp.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn",
+    "input-otp"
+  ],
+  "examples": [
+    "Default",
+    "Filled",
+    "SingleGroup",
+    "FourDigits",
+    "Alphanumeric",
+    "Invalid",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "InputOTP",
+      "extends": [
+        "React.ComponentProps<typeof OTPInput>"
+      ],
+      "props": [
+        {
+          "name": "containerClassName",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "InputOTPGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "InputOTPSlot",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "InputOTPSeparator",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

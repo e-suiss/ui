@@ -1,0 +1,103 @@
+---
+title: Otp Autofill
+description: "A one-time code field that offers an incoming code, fills it digit by digit, and verifies it automatically."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="otp-autofill" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <p\n      role=\"status\"\n      className=\"min-h-5 text-sm text-label-secondary data-[state=invalid]:text-danger data-[state=verified]:text-success\"\n      data-state={state}\n    >\n      {state === \"verifying\" && \"Verifying…\"}\n      {state === \"verified\" && \"Verified\"}\n      {state === \"invalid\" && \"That code didn't work. Try again.\"}\n    </p>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col items-center gap-2 text-center\">\n      <h2 className=\"text-2xl font-bold tracking-tight\">Enter the code</h2>\n      <p className=\"text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </p>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus aria-label=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onClick={send} disabled={sending}>\n        {sending ? \"Sending…\" : \"Resend code\"}\n      </Button>\n    </div>\n  )\n}\n\nexport function OtpAutofillExample() {\n  return (\n    <VerificationExample incoming={CODE} />\n  )\n}"} />
+
+</Example>
+
+`OtpAutofill` builds on the suiss/ui `InputOTP` component to recreate the iOS security code autofill flow. When the field is focused and empty, `OtpAutofillSuggestion` offers the received code; choosing it types the digits in with a short pop animation and calls `onVerify` once all slots are filled. A valid code turns the slots green and locks the field; an invalid one shakes the slots, marks them red, then clears the field and refocuses it.
+
+The suggestion adapts to the device through `useIsMobile`. Below `48rem` it docks above the on-screen keyboard like the QuickType bar, tracking the visual viewport; on wider screens it appears as an inline pill under the field. In supporting browsers, the WebOTP API also reads codes from SMS and fills them automatically.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions otp-autofill"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), `use-mobile`.
+
+3. Copy the source into `components/interactions/otp-autofill.tsx`:
+
+<SourceFile path="components/interactions/otp-autofill.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from \"@/components/interactions/otp-autofill\""} />
+
+<Code lang="tsx" code={"<VerificationExample incoming={CODE} />"} />
+
+- Place `OtpAutofillInput` and `OtpAutofillSuggestion` inside `OtpAutofill`. Pass `InputOTPGroup`, `InputOTPSlot`, and `InputOTPSeparator` from `input-otp` as the input's children.
+- The value is managed internally. Typing or pasting also verifies automatically once the code reaches `maxLength`; a paste of several characters fills with the same animation.
+- `onVerify` may be async. Use `useOtpAutofill` to read `state` (`idle`, `filling`, `verifying`, `verified`, `invalid`) for status text or other UI.
+- Set `code` on the suggestion to `null` until a code arrives; the suggestion stays hidden without one.
+
+## Examples
+
+### Wrong code
+
+A rejected code shakes the field, shows an error, clears, and accepts a code typed by hand.
+
+<Example kind="interaction" name="otp-autofill" story="WrongCode">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <p\n      role=\"status\"\n      className=\"min-h-5 text-sm text-label-secondary data-[state=invalid]:text-danger data-[state=verified]:text-success\"\n      data-state={state}\n    >\n      {state === \"verifying\" && \"Verifying…\"}\n      {state === \"verified\" && \"Verified\"}\n      {state === \"invalid\" && \"That code didn't work. Try again.\"}\n    </p>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col items-center gap-2 text-center\">\n      <h2 className=\"text-2xl font-bold tracking-tight\">Enter the code</h2>\n      <p className=\"text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </p>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus aria-label=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onClick={send} disabled={sending}>\n        {sending ? \"Sending…\" : \"Resend code\"}\n      </Button>\n    </div>\n  )\n}\n\nexport function OtpAutofillWrongCodeExample() {\n  return (\n    <VerificationExample incoming=\"113355\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### OtpAutofill
+
+The root that holds the code value and verification state.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"maxLength","type":"number","required":true,"description":"The number of characters in the code; verification runs once it is reached."},{"name":"onVerify","type":"(code: string) => Promise<boolean> | boolean","required":true,"description":"Called with the complete code; return or resolve `true` to accept it or `false` to reject it."},{"name":"webOtp","type":"boolean","default":"true","description":"Listens for SMS codes through the WebOTP API, where supported."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### OtpAutofillInput
+
+The `InputOTP` field wired to the autofill state.
+
+<PropsTable extends={["React.ComponentProps<\"input\">"]} props={[{"name":"containerClassName","type":"string","description":"Classes for the slot container, merged with the state styles."},{"name":"children","type":"React.ReactNode","required":true,"description":"The slot groups and separators that make up the field."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### OtpAutofillSuggestion
+
+The button that offers the received code and fills it when pressed.
+
+<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"code","type":"string | null | undefined","required":true,"description":"The received code to offer; the suggestion is hidden while it is empty."},{"name":"source","type":"React.ReactNode","default":"\"From Messages\"","description":"The label that names where the code came from."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Label the field with `aria-label` on `OtpAutofillInput`, which renders a single text input.
+- The input is read-only while filling, verifying, or verified, and sets `aria-invalid` when the code is rejected.
+- The suggestion is a native button that is `inert` while hidden, and it prevents focus from leaving the field on press.
+- After a rejected code, focus returns to the field. Pair the root with a `role="status"` element to announce the result.
+
+## Notes
+
+- The root exposes `data-slot="otp-autofill"` and `data-state`. The suggestion uses `data-slot="otp-autofill-suggestion"`, `data-placement` (`keyboard` or `inline`), and `data-closed` while hidden.
+- The pop and shake animations are skipped under `prefers-reduced-motion`.

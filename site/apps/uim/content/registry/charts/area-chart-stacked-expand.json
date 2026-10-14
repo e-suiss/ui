@@ -1,0 +1,5 @@
+{
+  "description": "Two stacked areas normalized so every month adds up to 100%, showing each series' share.",
+  "overview": "Desktop and mobile areas share one stack with `stackOffset=\"expand\"`, so the chart shows the proportion of each series rather than raw totals. A value axis on the right reads 0%, 50% and 100%, and the tooltip lists both series.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Rename the series or change their colors in `chartConfig`. The component takes no props."
+}

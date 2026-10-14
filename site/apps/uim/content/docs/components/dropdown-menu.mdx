@@ -1,0 +1,331 @@
+---
+title: Dropdown Menu
+description: "A menu of actions or options that opens from a trigger button."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-dropdown-menu--open-by-default" width={880} height={706} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu defaultOpen>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>My account</DropdownMenuLabel>\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={UserIcon} className=\"size-4\" />\n              <Text>Profile</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CreditCardIcon} className=\"size-4\" />\n              <Text>Billing</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={GearIcon} className=\"size-4\" />\n              <Text>Settings</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>\n              <View className=\"flex-row items-center gap-2\">\n                <Icon as={UserPlusIcon} className=\"size-4\" />\n                <Text>Invite users</Text>\n              </View>\n            </DropdownMenuSubTrigger>\n            <DropdownMenuSubContent>\n              <DropdownMenuItem>\n                <Icon as={EnvelopeIcon} className=\"size-4\" />\n                <Text>Email</Text>\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <Icon as={ChatCircleIcon} className=\"size-4\" />\n                <Text>Message</Text>\n              </DropdownMenuItem>\n            </DropdownMenuSubContent>\n          </DropdownMenuSub>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem variant=\"destructive\">\n            <Icon as={SignOutIcon} className=\"size-4\" />\n            <Text>Log out</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct DropdownMenuOpenByDefaultExample: View {\n  var body: some View {\n    DropdownMenuAccount(open: true)\n  }\n}\n\nstruct DropdownMenuAccount: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    DropdownMenu(isPresented: $open) {\n      DropdownMenuLabel(\"My account\")\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Profile\", icon: Ph.user.regular) {}\n        DropdownMenuItem(\"Billing\", icon: Ph.creditCard.regular) {}\n        DropdownMenuItem(\"Settings\", icon: Ph.gear.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuSub(\"Invite users\", icon: Ph.userPlus.regular) {\n        DropdownMenuItem(\"Email\", icon: Ph.envelope.regular) {}\n        DropdownMenuItem(\"Message\", icon: Ph.chatCircle.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuItem(\"Log out\", icon: Ph.signOut.regular, variant: .destructive) {}\n    } label: {\n      Text(\"Open menu\")\n    }\n    .buttonStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.adamglin.phosphoricons.regular.CreditCard\nimport com.adamglin.phosphoricons.regular.Envelope\nimport com.adamglin.phosphoricons.regular.Gear\nimport com.adamglin.phosphoricons.regular.SignOut\nimport com.adamglin.phosphoricons.regular.User\nimport com.adamglin.phosphoricons.regular.UserPlus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuGroup\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.DropdownMenuSub\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun DropdownMenuOpenByDefaultExample() {\n    DropdownMenuAccount(defaultOpen = true)\n}\n\n@Composable\nfun DropdownMenuDemo(\n    label: String,\n    defaultOpen: Boolean = false,\n    content: @Composable () -> Unit,\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { Button(label, onClick = { open = !open }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(224.dp),\n            align = PopupAlign.Start,\n        ) {\n            content()\n        }\n    }\n}\n\n@Composable\nfun DropdownMenuAccount(defaultOpen: Boolean) {\n    DropdownMenuDemo(\"Open menu\", defaultOpen) {\n        DropdownMenuLabel(\"My account\")\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Profile\", onClick = {}, icon = PhosphorIcons.Regular.User)\n            DropdownMenuItem(\"Billing\", onClick = {}, icon = PhosphorIcons.Regular.CreditCard)\n            DropdownMenuItem(\"Settings\", onClick = {}, icon = PhosphorIcons.Regular.Gear)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuSub(\"Invite users\", icon = PhosphorIcons.Regular.UserPlus) {\n            DropdownMenuItem(\"Email\", onClick = {}, icon = PhosphorIcons.Regular.Envelope)\n            DropdownMenuItem(\"Message\", onClick = {}, icon = PhosphorIcons.Regular.ChatCircle)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuItem(\"Log out\", onClick = {}, icon = PhosphorIcons.Regular.SignOut, variant = MenuItemVariant.Destructive)\n    }\n}"} />
+
+</Example>
+
+`DropdownMenu` opens `DropdownMenuContent` next to a `DropdownMenuTrigger` when it is pressed. The content renders through a portal (inside a full-window overlay on iOS) as a raised, rounded card positioned below the trigger by default.
+
+Items can be plain actions, checkbox items, radio items in a group, or a submenu. `DropdownMenuSubContent` expands in place under its trigger, and the caret turns to point down while it is open. For a menu that opens on long press at the touch point, use Context Menu.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dropdown-menu"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dropdown-menu --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dropdown-menu --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="uniwind/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="nativewind/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="stylesheet/components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/DropdownMenu.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Select.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/DropdownMenu.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DropdownMenuContent, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator } from \"@/components/ui/dropdown-menu\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <DropdownMenu defaultOpen>\n    <OpenButton />\n    <DropdownMenuContent className=\"w-56\" align=\"start\">\n      <DropdownMenuLabel>My account</DropdownMenuLabel>\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={UserIcon} className=\"size-4\" />\n          <Text>Profile</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CreditCardIcon} className=\"size-4\" />\n          <Text>Billing</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={GearIcon} className=\"size-4\" />\n          <Text>Settings</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuSub>\n        <DropdownMenuSubTrigger>\n          <View className=\"flex-row items-center gap-2\">\n            <Icon as={UserPlusIcon} className=\"size-4\" />\n            <Text>Invite users</Text>\n          </View>\n        </DropdownMenuSubTrigger>\n        <DropdownMenuSubContent>\n          <DropdownMenuItem>\n            <Icon as={EnvelopeIcon} className=\"size-4\" />\n            <Text>Email</Text>\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <Icon as={ChatCircleIcon} className=\"size-4\" />\n            <Text>Message</Text>\n          </DropdownMenuItem>\n        </DropdownMenuSubContent>\n      </DropdownMenuSub>\n      <DropdownMenuSeparator />\n      <DropdownMenuItem variant=\"destructive\">\n        <Icon as={SignOutIcon} className=\"size-4\" />\n        <Text>Log out</Text>\n      </DropdownMenuItem>\n    </DropdownMenuContent>\n  </DropdownMenu>\n</View>"} />
+
+Use `render` on `DropdownMenuTrigger` to render it as a `Button`. Items close the menu when pressed unless `closeOnPress={false}`.
+
+Use `DropdownMenuCheckboxItem` with `checked` and `onCheckedChange`, and `DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup` with `value` and `onValueChange`. Group items with `DropdownMenuGroup` and `DropdownMenuLabel`, and divide sections with `DropdownMenuSeparator`.
+
+Set `variant="destructive"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one. Position the content with `side`, `align`, `sideOffset` and `alignOffset`.
+
+## Examples
+
+### Default
+
+<Example id="components-dropdown-menu--default" width={880} height={706} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>My account</DropdownMenuLabel>\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={UserIcon} className=\"size-4\" />\n              <Text>Profile</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CreditCardIcon} className=\"size-4\" />\n              <Text>Billing</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={GearIcon} className=\"size-4\" />\n              <Text>Settings</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>\n              <View className=\"flex-row items-center gap-2\">\n                <Icon as={UserPlusIcon} className=\"size-4\" />\n                <Text>Invite users</Text>\n              </View>\n            </DropdownMenuSubTrigger>\n            <DropdownMenuSubContent>\n              <DropdownMenuItem>\n                <Icon as={EnvelopeIcon} className=\"size-4\" />\n                <Text>Email</Text>\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <Icon as={ChatCircleIcon} className=\"size-4\" />\n                <Text>Message</Text>\n              </DropdownMenuItem>\n            </DropdownMenuSubContent>\n          </DropdownMenuSub>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem variant=\"destructive\">\n            <Icon as={SignOutIcon} className=\"size-4\" />\n            <Text>Log out</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct DropdownMenuAccount: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    DropdownMenu(isPresented: $open) {\n      DropdownMenuLabel(\"My account\")\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Profile\", icon: Ph.user.regular) {}\n        DropdownMenuItem(\"Billing\", icon: Ph.creditCard.regular) {}\n        DropdownMenuItem(\"Settings\", icon: Ph.gear.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuSub(\"Invite users\", icon: Ph.userPlus.regular) {\n        DropdownMenuItem(\"Email\", icon: Ph.envelope.regular) {}\n        DropdownMenuItem(\"Message\", icon: Ph.chatCircle.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuItem(\"Log out\", icon: Ph.signOut.regular, variant: .destructive) {}\n    } label: {\n      Text(\"Open menu\")\n    }\n    .buttonStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.adamglin.phosphoricons.regular.CreditCard\nimport com.adamglin.phosphoricons.regular.Envelope\nimport com.adamglin.phosphoricons.regular.Gear\nimport com.adamglin.phosphoricons.regular.SignOut\nimport com.adamglin.phosphoricons.regular.User\nimport com.adamglin.phosphoricons.regular.UserPlus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuGroup\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.DropdownMenuSub\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun DropdownMenuExample() {\n    DropdownMenuAccount(defaultOpen = false)\n}\n\n@Composable\nfun DropdownMenuDemo(\n    label: String,\n    defaultOpen: Boolean = false,\n    content: @Composable () -> Unit,\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { Button(label, onClick = { open = !open }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(224.dp),\n            align = PopupAlign.Start,\n        ) {\n            content()\n        }\n    }\n}\n\n@Composable\nfun DropdownMenuAccount(defaultOpen: Boolean) {\n    DropdownMenuDemo(\"Open menu\", defaultOpen) {\n        DropdownMenuLabel(\"My account\")\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Profile\", onClick = {}, icon = PhosphorIcons.Regular.User)\n            DropdownMenuItem(\"Billing\", onClick = {}, icon = PhosphorIcons.Regular.CreditCard)\n            DropdownMenuItem(\"Settings\", onClick = {}, icon = PhosphorIcons.Regular.Gear)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuSub(\"Invite users\", icon = PhosphorIcons.Regular.UserPlus) {\n            DropdownMenuItem(\"Email\", onClick = {}, icon = PhosphorIcons.Regular.Envelope)\n            DropdownMenuItem(\"Message\", onClick = {}, icon = PhosphorIcons.Regular.ChatCircle)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuItem(\"Log out\", onClick = {}, icon = PhosphorIcons.Regular.SignOut, variant = MenuItemVariant.Destructive)\n    }\n}"} />
+
+</Example>
+
+### Checkboxes
+
+Checkbox items that toggle panels on and off.
+
+<Example id="components-dropdown-menu--checkboxes" width={880} height={533} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nfunction CheckboxesDemo() {\n  const [statusBar, setStatusBar] = React.useState(true)\n  const [activityBar, setActivityBar] = React.useState(false)\n  const [panel, setPanel] = React.useState(false)\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton label=\"View\" />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>Appearance</DropdownMenuLabel>\n          <DropdownMenuSeparator />\n          <DropdownMenuCheckboxItem\n            checked={statusBar}\n            onCheckedChange={setStatusBar}\n          >\n            <Text>Status bar</Text>\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={activityBar}\n            onCheckedChange={setActivityBar}\n            disabled\n          >\n            <Text>Activity bar</Text>\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem checked={panel} onCheckedChange={setPanel}>\n            <Text>Panel</Text>\n          </DropdownMenuCheckboxItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}\n\nexport function DropdownMenuCheckboxesExample() {\n  return (\n    <CheckboxesDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DropdownMenuCheckboxesDemo: View {\n  @State private var statusBar = true\n  @State private var activityBar = false\n  @State private var panel = false\n\n  var body: some View {\n    DropdownMenu {\n      DropdownMenuLabel(\"Appearance\")\n      DropdownMenuSeparator()\n      DropdownMenuCheckboxItem(\"Status bar\", isOn: $statusBar)\n      DropdownMenuCheckboxItem(\"Activity bar\", isOn: $activityBar)\n        .disabled(true)\n      DropdownMenuCheckboxItem(\"Panel\", isOn: $panel)\n    } label: {\n      Text(\"View\")\n    }\n    .buttonStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuCheckboxItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun DropdownMenuDemo(\n    label: String,\n    defaultOpen: Boolean = false,\n    content: @Composable () -> Unit,\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { Button(label, onClick = { open = !open }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(224.dp),\n            align = PopupAlign.Start,\n        ) {\n            content()\n        }\n    }\n}\n\n@Composable\nfun DropdownMenuCheckboxes() {\n    var statusBar by rememberSaveable { mutableStateOf(true) }\n    var activityBar by rememberSaveable { mutableStateOf(false) }\n    var panel by rememberSaveable { mutableStateOf(false) }\n    DropdownMenuDemo(\"View\") {\n        DropdownMenuLabel(\"Appearance\")\n        DropdownMenuSeparator()\n        DropdownMenuCheckboxItem(\"Status bar\", checked = statusBar, onCheckedChange = { statusBar = it })\n        DropdownMenuCheckboxItem(\"Activity bar\", checked = activityBar, onCheckedChange = { activityBar = it }, enabled = false)\n        DropdownMenuCheckboxItem(\"Panel\", checked = panel, onCheckedChange = { panel = it })\n    }\n}"} />
+
+</Example>
+
+### Radio group
+
+Radio items that pick one value.
+
+<Example id="components-dropdown-menu--radio-group" width={880} height={533} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nfunction RadioGroupDemo() {\n  const [position, setPosition] = React.useState(\"bottom\")\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton label=\"Panel position\" />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel>Panel position</DropdownMenuLabel>\n          <DropdownMenuSeparator />\n          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>\n            <DropdownMenuRadioItem value=\"top\">\n              <Text>Top</Text>\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"bottom\">\n              <Text>Bottom</Text>\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"right\">\n              <Text>Right</Text>\n            </DropdownMenuRadioItem>\n          </DropdownMenuRadioGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}\n\nexport function DropdownMenuRadioGroupExample() {\n  return (\n    <RadioGroupDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DropdownMenuRadioGroupDemo: View {\n  @State private var position = \"bottom\"\n\n  var body: some View {\n    DropdownMenu {\n      DropdownMenuLabel(\"Panel position\")\n      DropdownMenuSeparator()\n      DropdownMenuRadioGroup(selection: $position) {\n        DropdownMenuRadioItem(\"Top\", value: \"top\")\n        DropdownMenuRadioItem(\"Bottom\", value: \"bottom\")\n        DropdownMenuRadioItem(\"Right\", value: \"right\")\n      }\n    } label: {\n      Text(\"Panel position\")\n    }\n    .buttonStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuRadioGroup\nimport com.esuiss.ui.components.DropdownMenuRadioItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun DropdownMenuDemo(\n    label: String,\n    defaultOpen: Boolean = false,\n    content: @Composable () -> Unit,\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { Button(label, onClick = { open = !open }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(224.dp),\n            align = PopupAlign.Start,\n        ) {\n            content()\n        }\n    }\n}\n\n@Composable\nfun DropdownMenuRadio() {\n    var position by rememberSaveable { mutableStateOf(\"bottom\") }\n    DropdownMenuDemo(\"Panel position\") {\n        DropdownMenuLabel(\"Panel position\")\n        DropdownMenuSeparator()\n        DropdownMenuRadioGroup(value = position, onValueChange = { position = it }) {\n            DropdownMenuRadioItem(\"top\", \"Top\")\n            DropdownMenuRadioItem(\"bottom\", \"Bottom\")\n            DropdownMenuRadioItem(\"right\", \"Right\")\n        }\n    }\n}"} />
+
+</Example>
+
+### Inset
+
+Items aligned with `inset`.
+
+<Example id="components-dropdown-menu--inset" width={880} height={533} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction OpenButton({ label = \"Open menu\" }: { label?: string }) {\n  return (\n    <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n      <Text>{label}</Text>\n    </DropdownMenuTrigger>\n  )\n}\n\nexport function DropdownMenuInsetExample() {\n  return (\n    <View className=\"items-start\">\n      <DropdownMenu>\n        <OpenButton />\n        <DropdownMenuContent className=\"w-56\" align=\"start\">\n          <DropdownMenuLabel inset>Actions</DropdownMenuLabel>\n          <DropdownMenuItem inset>\n            <Text>Copy</Text>\n          </DropdownMenuItem>\n          <DropdownMenuItem inset>\n            <Text>Paste</Text>\n          </DropdownMenuItem>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem inset variant=\"destructive\">\n            <Text>Delete</Text>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DropdownMenuInsetExample: View {\n  var body: some View {\n    DropdownMenu {\n      DropdownMenuLabel(\"Actions\", inset: true)\n      DropdownMenuItem(\"Copy\", inset: true) {}\n      DropdownMenuItem(\"Paste\", inset: true) {}\n      DropdownMenuSeparator()\n      DropdownMenuItem(\"Delete\", variant: .destructive, inset: true) {}\n    } label: {\n      Text(\"Open menu\")\n    }\n    .buttonStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun DropdownMenuDemo(\n    label: String,\n    defaultOpen: Boolean = false,\n    content: @Composable () -> Unit,\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { Button(label, onClick = { open = !open }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(224.dp),\n            align = PopupAlign.Start,\n        ) {\n            content()\n        }\n    }\n}\n\n@Composable\nfun DropdownMenuInset() {\n    DropdownMenuDemo(\"Open menu\") {\n        DropdownMenuLabel(\"Actions\", inset = true)\n        DropdownMenuItem(\"Copy\", onClick = {}, inset = true)\n        DropdownMenuItem(\"Paste\", onClick = {}, inset = true)\n        DropdownMenuSeparator()\n        DropdownMenuItem(\"Delete\", onClick = {}, inset = true, variant = MenuItemVariant.Destructive)\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DropdownMenuContent
+
+Floating menu card.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Popup>","PositionerProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DropdownMenuSubTrigger
+
+Row that expands the submenu.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"iconClassName","type":"string","description":"Extra classes for the caret icon."},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DropdownMenuSubContent
+
+Items of the submenu.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Popup>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DropdownMenuItem
+
+Action row.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Item>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding to align with icon items."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`default` or `destructive`."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.CheckboxItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.RadioItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.GroupLabel>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+<PropsTable extends={["React.ComponentProps<typeof MenuPrimitive.Separator>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger has the `button` role.
+- The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.
+- Groups are labelled by their `DropdownMenuLabel`, and separators have the `separator` role.
+
+## Notes
+
+- Uses `bg-surface-raised`, `bg-item-pressed`, `bg-item-selected` and `bg-danger-surface-pressed` tokens; light and dark follow the system appearance.
+- The fade-in respects the system Reduce Motion setting.

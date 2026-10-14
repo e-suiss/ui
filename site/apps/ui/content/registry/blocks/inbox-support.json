@@ -1,0 +1,5 @@
+{
+  "description": "A support ticket inbox with status views, a ticket list with priorities, and a detail pane for replying and resolving.",
+  "overview": "A help desk inbox with Open, Pending, Solved and All views and live counts, a ticket list with priority badges and a detail pane for replying or marking a ticket solved. Sending a reply moves the ticket to Pending. On mobile the panes show one at a time with a back button. A good base for support queues, moderation queues or any triage workflow.",
+  "usage": "Replace `initialTickets` with your tickets, each with an id, title, device, status, priority, requester and avatar hue; `priorityClass` maps priorities to badge colors. Connect the reply and Mark as solved actions to your help desk API. Every ticket shows the same hard-coded customer message and timestamp, so load the real conversation."
+}

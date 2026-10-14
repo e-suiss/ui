@@ -1,0 +1,57 @@
+{
+  "name": "toggle-group",
+  "type": "ui",
+  "files": [
+    "components/ui/toggle-group.tsx"
+  ],
+  "requires": [
+    "toggle"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Outline",
+    "Attached",
+    "Sizes",
+    "Segmented",
+    "SegmentedVertical",
+    "SegmentedMultiple",
+    "SegmentedSizes",
+    "SingleSelection",
+    "Vertical",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "ToggleGroup",
+      "extends": [
+        "ToggleGroupPrimitive.Props"
+      ],
+      "props": [
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "default": "2"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\""
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroupItem",
+      "extends": [
+        "TogglePrimitive.Props"
+      ],
+      "props": []
+    }
+  ]
+}

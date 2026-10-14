@@ -1,0 +1,17 @@
+{
+  "description": "A small label for a status, count or category, with an optional icon.",
+  "overview": "`Badge` is a compact pill `View` that passes a small, bold text style and a 12-point icon size to its children. Six variants are available. `default`, `secondary`, `destructive` and `link` show colored text with no background, while `outline` adds a hairline border and `ghost` adds horizontal padding.\n\nUse `default` for highlighted labels, `secondary` for neutral metadata, `destructive` for errors and `outline` when the badge needs a visible edge.",
+  "usage": "Put the label in a `Text` and icons in an `Icon`. Use `render` to render the badge as a different component, such as a `Pressable`, while keeping its styles.\n\n`badgeVariants` and `badgeTextVariants` are also exported if you need the classes on another element.",
+  "examples": {
+    "Variants": "All six variants side by side.",
+    "WithIcon": "Badges with a leading icon."
+  },
+  "props": {
+    "Badge": {
+      "variant": "`default`, `secondary`, `destructive`, `outline`, `ghost` or `link`.",
+      "render": "Element to render instead of the default `View`."
+    }
+  },
+  "accessibility": "- The badge adds no role; it is read as plain text.\n- If you render it as a pressable element, give that element a role and label.",
+  "notes": "- Text colors come from `text-link`, `text-label-secondary`, `text-danger` and `text-label`; light and dark follow the system appearance."
+}

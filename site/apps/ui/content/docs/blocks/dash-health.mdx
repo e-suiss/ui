@@ -1,0 +1,46 @@
+---
+title: Dash Health
+description: "A health summary dashboard with pinned metric cards, sparklines, and category views in a sidebar."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="dash-health">
+
+<SourceFile path="components/blocks/dash-health.tsx" fold={false} />
+
+</Example>
+
+A health summary in the style of a phone health app, with cards for pinned metrics such as Move, Steps and Sleep, each showing its value and a small sparkline or bar chart. Edit mode lets users pin and unpin cards, and each category page lists all its metrics for the last seven days. Navigation is a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Use it for fitness, wellness or any personal metrics dashboard.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks dash-health"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Sidebar](/docs/components/sidebar).
+
+3. Copy the source into `components/blocks/dash-health.tsx`:
+
+<SourceFile path="components/blocks/dash-health.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { DashHealth } from \"@/components/blocks/dash-health\""} />
+
+<Code lang="tsx" code={"<DashHealth />"} />
+
+Edit `categories` for names, icons and colors, and `metrics` for the cards; each metric has a category, label, value, optional unit, color and seven data points. Store the pinned list per user instead of in local state. Card links point to anchors built from each label, and the 9:41 time and JR avatar are hard-coded.
+
+## Notes
+
+Sparklines are hidden from assistive technology because each value is also shown as text, and pin buttons are labeled with the metric name.

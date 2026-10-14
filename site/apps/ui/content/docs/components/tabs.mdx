@@ -1,0 +1,162 @@
+---
+title: Tabs
+description: "A set of tabs that switches between panels of related content in the same place."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="tabs" story="Default">
+
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+`Tabs` wraps the Base UI Tabs primitive. `TabsList` holds the `TabsTrigger` buttons, and each `TabsContent` panel is shown when its `value` matches the selected tab. An indicator slides to the active tab: a raised pill in the `default` variant, or an underline in the `line` variant.
+
+When there are more tabs than fit, the list scrolls horizontally and keeps the active tab in view. On small screens, a horizontal list bleeds to the edges of its scroll container. Use `Tabs` to switch views within a page. For app-level navigation, use `TabBar` or `Sidebar`; for a compact single-choice control, consider a segmented `ToggleGroup`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add tabs"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/tabs.tsx`:
+
+<SourceFile path="components/ui/tabs.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/ui/tabs\""} />
+
+<Code lang="tsx" code={"<Tabs defaultValue=\"account\" orientation=\"horizontal\">\n  <TabsList variant=\"default\">\n    {tabs.map((tab) => (\n      <TabsTrigger key={tab.value} value={tab.value}>\n        {tab.label}\n      </TabsTrigger>\n    ))}\n  </TabsList>\n  {tabs.map((tab) => (\n    <TabsContent\n      key={tab.value}\n      value={tab.value}\n      className=\"text-label-secondary\"\n    >\n      {tab.content}\n    </TabsContent>\n  ))}\n</Tabs>"} />
+
+Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `value`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
+
+## Examples
+
+### Line
+
+Uses the `line` variant, which underlines the active tab.
+
+<Example kind="ui" name="tabs" story="Line">
+
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsLineExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"line\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+Stacks the tabs vertically beside the panel.
+
+<Example kind="ui" name="tabs" story="Vertical">
+
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsVerticalExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"vertical\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+### With icons
+
+Places an icon before each tab's label.
+
+<Example kind="ui" name="tabs" story="WithIcons">
+
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsWithIconsExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            <tab.icon data-icon=\"inline-start\" />\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+### Disabled tab
+
+Disables one tab so it can't be selected.
+
+<Example kind="ui" name="tabs" story="DisabledTab">
+
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsDisabledTabExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        <TabsTrigger value=\"account\">Account</TabsTrigger>\n        <TabsTrigger value=\"notifications\">Notifications</TabsTrigger>\n        <TabsTrigger value=\"billing\" disabled>\n          Billing\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"account\" className=\"text-label-secondary\">\n        {tabs[0].content}\n      </TabsContent>\n      <TabsContent value=\"notifications\" className=\"text-label-secondary\">\n        {tabs[1].content}\n      </TabsContent>\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+### Many tabs
+
+Holds more tabs than fit, so the list scrolls.
+
+<Example kind="ui" name="tabs" story="ManyTabs">
+
+<Code lang="tsx" code={"import { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsManyTabsExample() {\n  return (\n    <Tabs orientation=\"horizontal\" defaultValue=\"general\" className=\"w-full max-w-3xl\">\n      <TabsList variant=\"default\">\n        {settings.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {settings.map((tab) => (\n        <TabsContent key={tab.value} value={tab.value}>\n          <p className=\"text-label-secondary\">{tab.label} settings</p>\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+### Many tabs line
+
+Combines a scrolling list with the `line` variant.
+
+<Example kind="ui" name="tabs" story="ManyTabsLine">
+
+<Code lang="tsx" code={"import { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsManyTabsLineExample() {\n  return (\n    <Tabs orientation=\"horizontal\" defaultValue=\"general\" className=\"w-full max-w-3xl\">\n      <TabsList variant=\"line\">\n        {settings.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {settings.map((tab) => (\n        <TabsContent key={tab.value} value={tab.value}>\n          <p className=\"text-label-secondary\">{tab.label} settings</p>\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Tabs","href":"#tabs","children":[{"name":"TabsList","href":"#tabslist","children":[{"name":"TabsTrigger","href":"#tabstrigger","children":[]}]},{"name":"TabsContent","href":"#tabscontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Tabs
+
+The root that holds the selected value and orientation.
+
+<PropsTable extends={["TabsPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabsList
+
+The row or column of tabs, with the sliding indicator.
+
+<PropsTable extends={["TabsPrimitive.List.Props"]} props={[{"name":"variant","type":"\"default\" | \"line\"","default":"\"default\"","description":"Chooses a filled `default` list with a raised pill, or a `line` list with an underline."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+<PropsTable extends={["TabsPrimitive.Tab.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TabsContent
+
+The panel shown when its tab is selected.
+
+<PropsTable extends={["TabsPrimitive.Panel.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The list has the `tablist` role with `aria-orientation`; triggers are `tab` elements with `aria-selected`, and panels are `tabpanel` elements.
+- Arrow keys move focus between tabs, wrapping at the ends; `Enter` or `Space` selects the focused tab. Vertical tabs use the up and down arrow keys.
+- `Home` and `End` move focus to the first and last tabs.
+- Disabled tabs set `aria-disabled` and can't be selected by click or keyboard.
+
+## Notes
+
+- Parts carry `data-slot` attributes: `tabs`, `tabs-list`, `tabs-list-content`, `tabs-indicator`, `tabs-trigger` and `tabs-content`. The list and indicator set `data-variant`, and the active trigger sets `data-active`.
+- The edge bleed on small screens is set through the `--tabs-list-bleed-start` and `--tabs-list-bleed-end` properties, which the list measures itself.
+- `className` on `TabsList` styles the inner `tabs-list-content` element, not the scrolling list.
+- Indicator and scroll animations are removed when reduced motion is preferred.

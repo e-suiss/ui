@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-active",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-active.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,24 @@
+{
+  "description": "Lays out a single chat message with an optional avatar, header and footer.",
+  "overview": "`Message` arranges one message row: an optional `MessageAvatar` and a `MessageContent` column. Inside the content, place an optional `MessageHeader` (such as a sender name), one or more bubbles, and an optional `MessageFooter` (such as a timestamp or read receipt). Wrap consecutive messages in `MessageGroup` to stack them.\n\n`Message` handles layout only. Pair it with Bubble for the message surface and with Message Scroller for a scrolling transcript.",
+  "usage": "Set `align=\"end\"` for messages sent by the current user. The row reverses, so the avatar moves to the end, and the content's children and the footer align to the end edge.",
+  "examples": {
+    "AlignEnd": "A message aligned to the end, as used for outgoing messages.",
+    "WithHeaderAndFooter": "A message with a sender name above the bubble and a timestamp below it.",
+    "Conversation": "A `MessageGroup` with an incoming message of two bubbles and an outgoing reply."
+  },
+  "parts": {
+    "MessageGroup": "Stacks several messages vertically.",
+    "Message": "The row for one message that sets its alignment.",
+    "MessageAvatar": "A round container for the sender's avatar, aligned to the bottom of the row.",
+    "MessageContent": "The column that holds the header, bubbles and footer.",
+    "MessageHeader": "Small secondary text above the bubbles, such as the sender name.",
+    "MessageFooter": "Small secondary text below the bubbles, such as a timestamp."
+  },
+  "props": {
+    "Message": {
+      "align": "Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages."
+    }
+  },
+  "notes": "- Styling hooks: `data-slot` values `message-group`, `message`, `message-avatar`, `message-content`, `message-header` and `message-footer`. `Message` also sets `data-align`.\n- When a footer is present, the avatar shifts up to line up with the last bubble rather than the footer.\n- Header and footer drop their horizontal padding when the message contains an element with `data-variant=\"ghost\"`.\n- Header and footer text uses the `label-secondary` token; the avatar background uses `surface-secondary`."
+}

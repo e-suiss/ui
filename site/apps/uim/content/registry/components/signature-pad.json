@@ -1,0 +1,26 @@
+{
+  "description": "A drawing area that captures a handwritten signature as strokes and can export it as an SVG string.",
+  "overview": "`SignaturePad` is a `View` with a single-finger pan gesture from `react-native-gesture-handler`. Each touch records a stroke of points, and the strokes are drawn as smoothed paths with `react-native-svg`. A signature line with an `×` mark and a placeholder sits near the bottom, and a ghost Clear button appears in the top corner once something is drawn.",
+  "usage": "Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points.\n\nPass a `ref` to get a `SignaturePadHandle` with `toSVG()`, `clear()` and `isEmpty()`. `toSVG` returns an SVG string sized to the pad and accepts an optional `color` (defaults to `currentColor`).\n\nThe `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are also exported.",
+  "examples": {
+    "Signed": "A pad that starts with a saved signature.",
+    "ThickStroke": "A signature drawn with `strokeWidth={5}`.",
+    "Disabled": "A disabled pad that ignores touches and hides the Clear button.",
+    "Controlled": "A controlled pad that reads the signature through the ref and exports it with `toSVG`."
+  },
+  "props": {
+    "SignaturePad": {
+      "value": "Strokes for controlled use.",
+      "defaultValue": "Initial strokes for uncontrolled use.",
+      "onChange": "Called with the full list of strokes after each stroke ends or the pad is cleared.",
+      "strokeWidth": "Line width of the strokes. Defaults to `2.5`.",
+      "disabled": "Turns off drawing, hides the Clear button and dims the pad.",
+      "placeholder": "Content shown on the signature line while the pad is empty. Defaults to `\"Sign here\"`.",
+      "clearLabel": "Label of the Clear button. Defaults to `\"Clear\"`.",
+      "accessibilityLabel": "Label read by screen readers. Defaults to `\"Signature\"`.",
+      "ref": "Receives a `SignaturePadHandle` with `toSVG`, `clear` and `isEmpty`."
+    }
+  },
+  "accessibility": "- The pad is a single accessible element labeled by `accessibilityLabel`.\n- Its value is announced as \"Empty\" or \"Signed\", and `disabled` is reported in its state.\n- When it has a signature and is not disabled, it offers a `clear` accessibility action, so VoiceOver and TalkBack users can clear it without finding the button.",
+  "notes": "- Uses `bg-surface-raised` in light mode and `bg-surface-secondary` in dark mode, with `border-separator` and `text-label` for the strokes.\n- Points closer than one point to the previous point are skipped while drawing."
+}

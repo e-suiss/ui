@@ -1,0 +1,6 @@
+{
+  "description": "A live admin activity feed that streams new events, with session stats and a pause control.",
+  "overview": "A live activity feed that streams new events to the top of a list, with session stats above and a Pause or Resume button. People appear with gradient avatars and system events with icons, with warnings tinted orange. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for real-time monitoring, deploy logs or live order feeds.",
+  "usage": "The demo pushes the next item from the `feed` sample every 2.2 seconds; replace that interval with a subscription to your event stream, such as a WebSocket or server-sent events. Each event has an actor, action, detail, either an avatar hue or an icon, and an optional warning flag. The list keeps only the seven newest events, and the Active users and Avg. response stats are hard-coded.",
+  "notes": "Every new event is announced to screen readers, which can get noisy on a busy stream; consider throttling or announcing a summary instead."
+}

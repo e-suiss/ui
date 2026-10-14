@@ -1,0 +1,6 @@
+{
+  "description": "A donut with the total number of users displayed in the center of the ring.",
+  "overview": "A donut with the total shown in its center, so readers get the overall number and the breakdown in one glance. Prefer it over the plain donut when the total is the headline.",
+  "usage": "Replace `chartData` and the category entries in `chartConfig`; the center total is summed from the data automatically. Change the caption under the number to your unit, and adjust `innerRadius` if a longer number needs more room.",
+  "notes": "The center text sits on top of the chart but lets pointer events through, so slice tooltips still work."
+}

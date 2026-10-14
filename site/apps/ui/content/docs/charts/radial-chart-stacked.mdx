@@ -1,0 +1,46 @@
+---
+title: Radial Chart Stacked
+description: "A half-circle arc with two series stacked end to end and the combined total beneath it."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-stacked">
+
+<SourceFile path="components/charts/radial-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+A half-circle arc where two series sit end to end and the combined total appears beneath. Use it to show a split of one total, like desktop versus mobile visitors, in a compact space.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-stacked"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-stacked.tsx`:
+
+<SourceFile path="components/charts/radial-chart-stacked.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartStacked } from \"@/components/charts/radial-chart-stacked\""} />
+
+<Code lang="tsx" code={"<RadialChartStacked />"} />
+
+Set your series values in `visitors`, add a matching entry with label and color for each key in `chartConfig`, and add one `RadialBar` per series with the same `stackId`. The arc's scale is set to the total, so the bars always fill it completely.
+
+## Notes
+
+The tooltip shows both values at once regardless of which segment you hover.

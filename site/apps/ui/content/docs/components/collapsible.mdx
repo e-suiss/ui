@@ -1,0 +1,110 @@
+---
+title: Collapsible
+description: "A section that people can expand and collapse to show or hide its content."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="collapsible" story="Default">
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Collapsible` wraps the Base UI Collapsible primitive. The `Collapsible` root holds the open state, a `CollapsibleTrigger` toggles it, and `CollapsibleContent` holds the content that is shown or hidden. The parts are unstyled, so you control layout and appearance with `className`, or render the trigger as another component such as `Button` with the `render` prop.
+
+Use a collapsible for a single disclosure region. For a set of related, stacked sections, use an accordion instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add collapsible"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react"} />
+
+2. Copy the source into `components/ui/collapsible.tsx`:
+
+<SourceFile path="components/ui/collapsible.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Collapsible, CollapsibleTrigger, CollapsibleContent } from \"@/components/ui/collapsible\""} />
+
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Collapsible className=\"flex flex-col gap-2\">\n    <div className=\"flex items-center justify-between gap-4 px-3\">\n      <span className=\"text-sm font-medium\">\n        @ademceper starred 3 repositories\n      </span>\n      <CollapsibleTrigger\n        render={\n          <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n        }\n      >\n        <CaretUpDownIcon />\n      </CollapsibleTrigger>\n    </div>\n    <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n      {repositories[0]}\n    </div>\n    <CollapsibleContent className=\"flex flex-col gap-2\">\n      {repositories.slice(1).map((repository) => (\n        <div\n          key={repository}\n          className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n        >\n          {repository}\n        </div>\n      ))}\n    </CollapsibleContent>\n  </Collapsible>\n</div>"} />
+
+The root is uncontrolled by default; set `defaultOpen` to start expanded. To control it, pass `open` and `onOpenChange`. Set `disabled` on the root to prevent toggling. While collapsed, the content is removed from the page.
+
+## Examples
+
+### By default
+
+A collapsible that starts expanded using `defaultOpen`.
+
+<Example kind="ui" name="collapsible" story="OpenByDefault">
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleOpenByDefaultExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible defaultOpen className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled collapsible whose trigger does not toggle the content.
+
+<Example kind="ui" name="collapsible" story="Disabled">
+
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleDisabledExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible disabled className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Collapsible","href":"#collapsible","children":[{"name":"CollapsibleTrigger","href":"#collapsibletrigger","children":[]},{"name":"CollapsibleContent","href":"#collapsiblecontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Collapsible
+
+The root that holds the open state and groups the trigger and content.
+
+<PropsTable extends={["CollapsiblePrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+<PropsTable extends={["CollapsiblePrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CollapsibleContent
+
+The panel that is shown when the collapsible is open.
+
+<PropsTable extends={["CollapsiblePrimitive.Panel.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger renders as a button and sets `aria-expanded` to reflect the open state.
+- The trigger toggles on click, and with Enter or Space when focused.
+- Give an icon-only trigger an accessible name with `aria-label`.
+
+## Notes
+
+- Styling hooks: `data-slot="collapsible"`, `data-slot="collapsible-trigger"` and `data-slot="collapsible-content"`.
+- Base UI sets state attributes such as `data-open` and `data-closed` on the parts, which you can use for styling and animation.
+- No styles are applied by default.

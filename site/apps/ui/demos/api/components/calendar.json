@@ -1,0 +1,52 @@
+{
+  "name": "calendar",
+  "type": "ui",
+  "files": [
+    "components/ui/calendar.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn",
+    "react-day-picker"
+  ],
+  "examples": [
+    "Default",
+    "Sizes",
+    "Range",
+    "DropdownCaption",
+    "WeekNumbers",
+    "DisabledDays"
+  ],
+  "parts": [
+    {
+      "name": "Calendar",
+      "extends": [
+        "React.ComponentProps<typeof DayPicker>"
+      ],
+      "props": [
+        {
+          "name": "buttonVariant",
+          "type": "React.ComponentProps<typeof Button>[\"variant\"]",
+          "required": false,
+          "default": "\"plain\""
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\" | \"lg\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "CalendarDayButton",
+      "extends": [
+        "DayButtonProps"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A filterable accessories grid with category chips and add-to-bag buttons that update a bag counter.",
+  "overview": "A product grid with category filter chips and an add button on each card that turns into an In bag pill. A bag icon in the header shows the running count. Cards sit two per row on mobile and fill the width with auto-sized columns on desktop. Use it for accessory, add-on or catalog listings where shoppers add items straight from the grid.",
+  "usage": "Edit `filters` for the chips and `accessories` for the products; each product has a name, a category matching one of the filters, a formatted price and an image. Replace the local bag toggle with your cart logic.",
+  "notes": "The bag count is announced, and each add button names its product and exposes its pressed state. Product photos are Unsplash placeholders."
+}

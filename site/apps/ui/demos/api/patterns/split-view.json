@@ -1,0 +1,101 @@
+{
+  "name": "split-view",
+  "type": "pattern",
+  "files": [
+    "components/patterns/split-view.tsx"
+  ],
+  "requires": [
+    "resizable",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "TwoColumns",
+    "StartOnSidebar"
+  ],
+  "parts": [
+    {
+      "name": "SplitView",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "column",
+          "type": "SplitViewColumn",
+          "required": false
+        },
+        {
+          "name": "defaultColumn",
+          "type": "SplitViewColumn",
+          "required": false,
+          "default": "\"list\""
+        },
+        {
+          "name": "onColumnChange",
+          "type": "(column: SplitViewColumn) => void",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SplitViewSidebar",
+      "extends": [
+        "React.ComponentProps<\"section\">"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SplitViewList",
+      "extends": [
+        "React.ComponentProps<\"section\">"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SplitViewDetail",
+      "extends": [
+        "React.ComponentProps<\"section\">"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SplitViewItem",
+      "extends": [
+        "useRender.ComponentProps<\"button\">",
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+---
+title: Input Accessory Bar
+description: "A toolbar above the keyboard with previous, next and done buttons for moving through form fields."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-input-accessory-bar--default" width={880} height={735} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { InputAccessoryBar, InputAccessoryBarInput } from \"@/components/ui/input-accessory-bar\"\nimport { KeyboardScrollView } from \"@/components/ui/keyboard-scroll-view\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {\n  return (\n    <View className=\"gap-1.5\">\n      <Text variant=\"small\">{label}</Text>\n      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />\n    </View>\n  )\n}\n\nfunction Form({ autoFocus = false }: { autoFocus?: boolean }) {\n  return (\n    <KeyboardScrollView className=\"-m-4\" contentContainerClassName=\"gap-4 p-4\">\n      <Field label=\"Name\" autoFocus={autoFocus} />\n      <Field label=\"Email\" />\n      <Field label=\"Phone\" />\n      <Field label=\"City\" />\n    </KeyboardScrollView>\n  )\n}\n\nexport function InputAccessoryBarExample() {\n  return (\n    <InputAccessoryBar>\n      <Form />\n    </InputAccessoryBar>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum InputAccessoryBarField: Hashable {\n  case name, email, phone, city, subject, message\n}\n\nstruct InputAccessoryBarRow: View {\n  let label: LocalizedStringKey\n  let field: InputAccessoryBarField\n  let focus: FocusState<InputAccessoryBarField?>.Binding\n\n  @State private var text = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 6) {\n      Text(label)\n        .textVariant(.small)\n        .accessibilityHidden(true)\n      TextField(label, text: $text)\n        .textFieldStyle(.input)\n        .focused(focus, equals: field)\n        .submitLabel(.next)\n    }\n  }\n}\n\nstruct InputAccessoryBarForm: View {\n  var autoFocus = false\n  var previousLabel: LocalizedStringKey = \"Previous\"\n  var nextLabel: LocalizedStringKey = \"Next\"\n  var doneLabel: LocalizedStringKey = \"Done\"\n\n  @FocusState private var focus: InputAccessoryBarField?\n\n  var body: some View {\n    KeyboardScrollView {\n      VStack(alignment: .leading, spacing: 16) {\n        InputAccessoryBarRow(label: \"Name\", field: .name, focus: $focus)\n        InputAccessoryBarRow(label: \"Email\", field: .email, focus: $focus)\n        InputAccessoryBarRow(label: \"Phone\", field: .phone, focus: $focus)\n        InputAccessoryBarRow(label: \"City\", field: .city, focus: $focus)\n      }\n      .padding(16)\n    }\n    .inputAccessoryBar(\n      focus: $focus,\n      order: [.name, .email, .phone, .city],\n      previousLabel: previousLabel,\n      nextLabel: nextLabel,\n      doneLabel: doneLabel\n    )\n    .onAppear {\n      if autoFocus { focus = .name }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.FocusRequester\nimport androidx.compose.ui.focus.focusRequester\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.InputAccessoryBar\nimport com.esuiss.ui.components.InputAccessoryState\nimport com.esuiss.ui.components.KeyboardScrollView\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.components.inputAccessory\nimport com.esuiss.ui.components.rememberInputAccessoryState\n\n@Composable\nfun InputAccessoryBarExample() {\n    InputAccessoryBarForm(autoFocus = false)\n}\n\n@Composable\nfun InputAccessoryBarField(\n    label: String,\n    state: InputAccessoryState,\n    index: Int,\n    autoFocus: Boolean = false,\n) {\n    var value by rememberSaveable(label) { mutableStateOf(\"\") }\n    val requester = remember { FocusRequester() }\n    if (autoFocus) {\n        LaunchedEffect(Unit) { requester.requestFocus() }\n    }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n        Text(label, variant = TextVariant.Small)\n        Input(\n            value,\n            { value = it },\n            Modifier.focusRequester(requester).inputAccessory(state, index),\n            placeholder = label,\n        )\n    }\n}\n\n@Composable\nfun InputAccessoryBarForm(\n    autoFocus: Boolean,\n    previousLabel: String = \"Previous\",\n    nextLabel: String = \"Next\",\n    doneLabel: String = \"Done\",\n) {\n    val state = rememberInputAccessoryState()\n    Screen {\n        KeyboardScrollView(\n            modifier = Modifier.fillMaxSize(),\n            contentPadding = PaddingValues(16.dp),\n            verticalArrangement = Arrangement.spacedBy(16.dp),\n        ) {\n            InputAccessoryBarField(\"Name\", state, 0, autoFocus)\n            InputAccessoryBarField(\"Email\", state, 1)\n            InputAccessoryBarField(\"Phone\", state, 2)\n            InputAccessoryBarField(\"City\", state, 3)\n        }\n        InputAccessoryBar(state, previousLabel = previousLabel, nextLabel = nextLabel, doneLabel = doneLabel)\n    }\n}"} />
+
+</Example>
+
+`InputAccessoryBar` connects a set of inputs and shows a bar above the keyboard while one of them is focused. The up and down arrows move focus to the previous or next input, and the done button dismisses the keyboard.
+
+On iOS the bar is a native `InputAccessoryView`, attached to the keyboard. On Android it is rendered through a portal and positioned just above the keyboard while an input is focused.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-accessory-bar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-accessory-bar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-accessory-bar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/input-accessory-bar.tsx`:
+
+<SourceFile path="uniwind/components/ui/input-accessory-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/input-accessory-bar.tsx`:
+
+<SourceFile path="nativewind/components/ui/input-accessory-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
+
+3. Copy the source into `components/ui/input-accessory-bar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/input-accessory-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/InputAccessoryBar.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/InputAccessoryBar.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Screen.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { InputAccessoryBar, InputAccessoryBarInput } from \"@/components/ui/input-accessory-bar\""} />
+
+<Code lang="tsx" code={"<InputAccessoryBar>\n  <Form />\n</InputAccessoryBar>"} />
+
+Wrap the form in `InputAccessoryBar` and use `InputAccessoryBarInput` in place of `Input`. Inputs are ordered by the order they mount. The return key reads "next" on every input but the last, which reads "done" and dismisses the keyboard.
+
+For other text inputs, such as a `Textarea`, call `useInputAccessoryBarInput()` and spread the returned props onto the input. Inside a Keyboard Scroll View, the focused input is scrolled into view.
+
+Use `previousLabel`, `nextLabel` and `doneLabel` to localize the buttons, and `onDone` to react when done is pressed.
+
+## Examples
+
+### Focused
+
+The first input focused, so the bar is visible.
+
+<Example id="components-input-accessory-bar--focused" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { InputAccessoryBar, InputAccessoryBarInput } from \"@/components/ui/input-accessory-bar\"\nimport { KeyboardScrollView } from \"@/components/ui/keyboard-scroll-view\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {\n  return (\n    <View className=\"gap-1.5\">\n      <Text variant=\"small\">{label}</Text>\n      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />\n    </View>\n  )\n}\n\nfunction Form({ autoFocus = false }: { autoFocus?: boolean }) {\n  return (\n    <KeyboardScrollView className=\"-m-4\" contentContainerClassName=\"gap-4 p-4\">\n      <Field label=\"Name\" autoFocus={autoFocus} />\n      <Field label=\"Email\" />\n      <Field label=\"Phone\" />\n      <Field label=\"City\" />\n    </KeyboardScrollView>\n  )\n}\n\nexport function InputAccessoryBarFocusedExample() {\n  return (\n    <InputAccessoryBar>\n      <Form autoFocus />\n    </InputAccessoryBar>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputAccessoryBarFocusedExample: View {\n  var body: some View {\n    InputAccessoryBarForm(autoFocus: true)\n  }\n}\n\nenum InputAccessoryBarField: Hashable {\n  case name, email, phone, city, subject, message\n}\n\nstruct InputAccessoryBarRow: View {\n  let label: LocalizedStringKey\n  let field: InputAccessoryBarField\n  let focus: FocusState<InputAccessoryBarField?>.Binding\n\n  @State private var text = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 6) {\n      Text(label)\n        .textVariant(.small)\n        .accessibilityHidden(true)\n      TextField(label, text: $text)\n        .textFieldStyle(.input)\n        .focused(focus, equals: field)\n        .submitLabel(.next)\n    }\n  }\n}\n\nstruct InputAccessoryBarForm: View {\n  var autoFocus = false\n  var previousLabel: LocalizedStringKey = \"Previous\"\n  var nextLabel: LocalizedStringKey = \"Next\"\n  var doneLabel: LocalizedStringKey = \"Done\"\n\n  @FocusState private var focus: InputAccessoryBarField?\n\n  var body: some View {\n    KeyboardScrollView {\n      VStack(alignment: .leading, spacing: 16) {\n        InputAccessoryBarRow(label: \"Name\", field: .name, focus: $focus)\n        InputAccessoryBarRow(label: \"Email\", field: .email, focus: $focus)\n        InputAccessoryBarRow(label: \"Phone\", field: .phone, focus: $focus)\n        InputAccessoryBarRow(label: \"City\", field: .city, focus: $focus)\n      }\n      .padding(16)\n    }\n    .inputAccessoryBar(\n      focus: $focus,\n      order: [.name, .email, .phone, .city],\n      previousLabel: previousLabel,\n      nextLabel: nextLabel,\n      doneLabel: doneLabel\n    )\n    .onAppear {\n      if autoFocus { focus = .name }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.FocusRequester\nimport androidx.compose.ui.focus.focusRequester\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.InputAccessoryBar\nimport com.esuiss.ui.components.InputAccessoryState\nimport com.esuiss.ui.components.KeyboardScrollView\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.components.inputAccessory\nimport com.esuiss.ui.components.rememberInputAccessoryState\n\n@Composable\nfun InputAccessoryBarFocusedExample() {\n    InputAccessoryBarForm(autoFocus = true)\n}\n\n@Composable\nfun InputAccessoryBarField(\n    label: String,\n    state: InputAccessoryState,\n    index: Int,\n    autoFocus: Boolean = false,\n) {\n    var value by rememberSaveable(label) { mutableStateOf(\"\") }\n    val requester = remember { FocusRequester() }\n    if (autoFocus) {\n        LaunchedEffect(Unit) { requester.requestFocus() }\n    }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n        Text(label, variant = TextVariant.Small)\n        Input(\n            value,\n            { value = it },\n            Modifier.focusRequester(requester).inputAccessory(state, index),\n            placeholder = label,\n        )\n    }\n}\n\n@Composable\nfun InputAccessoryBarForm(\n    autoFocus: Boolean,\n    previousLabel: String = \"Previous\",\n    nextLabel: String = \"Next\",\n    doneLabel: String = \"Done\",\n) {\n    val state = rememberInputAccessoryState()\n    Screen {\n        KeyboardScrollView(\n            modifier = Modifier.fillMaxSize(),\n            contentPadding = PaddingValues(16.dp),\n            verticalArrangement = Arrangement.spacedBy(16.dp),\n        ) {\n            InputAccessoryBarField(\"Name\", state, 0, autoFocus)\n            InputAccessoryBarField(\"Email\", state, 1)\n            InputAccessoryBarField(\"Phone\", state, 2)\n            InputAccessoryBarField(\"City\", state, 3)\n        }\n        InputAccessoryBar(state, previousLabel = previousLabel, nextLabel = nextLabel, doneLabel = doneLabel)\n    }\n}"} />
+
+</Example>
+
+### Custom labels
+
+Custom labels for the previous, next and done buttons.
+
+<Example id="components-input-accessory-bar--custom-labels" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { InputAccessoryBar, InputAccessoryBarInput } from \"@/components/ui/input-accessory-bar\"\nimport { KeyboardScrollView } from \"@/components/ui/keyboard-scroll-view\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {\n  return (\n    <View className=\"gap-1.5\">\n      <Text variant=\"small\">{label}</Text>\n      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />\n    </View>\n  )\n}\n\nfunction Form({ autoFocus = false }: { autoFocus?: boolean }) {\n  return (\n    <KeyboardScrollView className=\"-m-4\" contentContainerClassName=\"gap-4 p-4\">\n      <Field label=\"Name\" autoFocus={autoFocus} />\n      <Field label=\"Email\" />\n      <Field label=\"Phone\" />\n      <Field label=\"City\" />\n    </KeyboardScrollView>\n  )\n}\n\nexport function InputAccessoryBarCustomLabelsExample() {\n  return (\n    <InputAccessoryBar\n      previousLabel=\"Back\"\n      nextLabel=\"Forward\"\n      doneLabel=\"Close\"\n    >\n      <Form autoFocus />\n    </InputAccessoryBar>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputAccessoryBarCustomLabelsExample: View {\n  var body: some View {\n    InputAccessoryBarForm(autoFocus: true, previousLabel: \"Back\", nextLabel: \"Forward\", doneLabel: \"Close\")\n  }\n}\n\nenum InputAccessoryBarField: Hashable {\n  case name, email, phone, city, subject, message\n}\n\nstruct InputAccessoryBarRow: View {\n  let label: LocalizedStringKey\n  let field: InputAccessoryBarField\n  let focus: FocusState<InputAccessoryBarField?>.Binding\n\n  @State private var text = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 6) {\n      Text(label)\n        .textVariant(.small)\n        .accessibilityHidden(true)\n      TextField(label, text: $text)\n        .textFieldStyle(.input)\n        .focused(focus, equals: field)\n        .submitLabel(.next)\n    }\n  }\n}\n\nstruct InputAccessoryBarForm: View {\n  var autoFocus = false\n  var previousLabel: LocalizedStringKey = \"Previous\"\n  var nextLabel: LocalizedStringKey = \"Next\"\n  var doneLabel: LocalizedStringKey = \"Done\"\n\n  @FocusState private var focus: InputAccessoryBarField?\n\n  var body: some View {\n    KeyboardScrollView {\n      VStack(alignment: .leading, spacing: 16) {\n        InputAccessoryBarRow(label: \"Name\", field: .name, focus: $focus)\n        InputAccessoryBarRow(label: \"Email\", field: .email, focus: $focus)\n        InputAccessoryBarRow(label: \"Phone\", field: .phone, focus: $focus)\n        InputAccessoryBarRow(label: \"City\", field: .city, focus: $focus)\n      }\n      .padding(16)\n    }\n    .inputAccessoryBar(\n      focus: $focus,\n      order: [.name, .email, .phone, .city],\n      previousLabel: previousLabel,\n      nextLabel: nextLabel,\n      doneLabel: doneLabel\n    )\n    .onAppear {\n      if autoFocus { focus = .name }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.FocusRequester\nimport androidx.compose.ui.focus.focusRequester\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.InputAccessoryBar\nimport com.esuiss.ui.components.InputAccessoryState\nimport com.esuiss.ui.components.KeyboardScrollView\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.components.inputAccessory\nimport com.esuiss.ui.components.rememberInputAccessoryState\n\n@Composable\nfun InputAccessoryBarCustomLabelsExample() {\n    InputAccessoryBarForm(autoFocus = true, previousLabel = \"Back\", nextLabel = \"Forward\", doneLabel = \"Close\")\n}\n\n@Composable\nfun InputAccessoryBarField(\n    label: String,\n    state: InputAccessoryState,\n    index: Int,\n    autoFocus: Boolean = false,\n) {\n    var value by rememberSaveable(label) { mutableStateOf(\"\") }\n    val requester = remember { FocusRequester() }\n    if (autoFocus) {\n        LaunchedEffect(Unit) { requester.requestFocus() }\n    }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n        Text(label, variant = TextVariant.Small)\n        Input(\n            value,\n            { value = it },\n            Modifier.focusRequester(requester).inputAccessory(state, index),\n            placeholder = label,\n        )\n    }\n}\n\n@Composable\nfun InputAccessoryBarForm(\n    autoFocus: Boolean,\n    previousLabel: String = \"Previous\",\n    nextLabel: String = \"Next\",\n    doneLabel: String = \"Done\",\n) {\n    val state = rememberInputAccessoryState()\n    Screen {\n        KeyboardScrollView(\n            modifier = Modifier.fillMaxSize(),\n            contentPadding = PaddingValues(16.dp),\n            verticalArrangement = Arrangement.spacedBy(16.dp),\n        ) {\n            InputAccessoryBarField(\"Name\", state, 0, autoFocus)\n            InputAccessoryBarField(\"Email\", state, 1)\n            InputAccessoryBarField(\"Phone\", state, 2)\n            InputAccessoryBarField(\"City\", state, 3)\n        }\n        InputAccessoryBar(state, previousLabel = previousLabel, nextLabel = nextLabel, doneLabel = doneLabel)\n    }\n}"} />
+
+</Example>
+
+### With textarea
+
+A textarea connected through `useInputAccessoryBarInput`.
+
+<Example id="components-input-accessory-bar--with-textarea" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { InputAccessoryBar, InputAccessoryBarInput, useInputAccessoryBarInput } from \"@/components/ui/input-accessory-bar\"\nimport { KeyboardScrollView } from \"@/components/ui/keyboard-scroll-view\"\nimport { Text } from \"@/components/ui/text\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nfunction Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {\n  return (\n    <View className=\"gap-1.5\">\n      <Text variant=\"small\">{label}</Text>\n      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />\n    </View>\n  )\n}\n\nfunction MessageField() {\n  const accessory = useInputAccessoryBarInput()\n  return (\n    <View className=\"gap-1.5\">\n      <Text variant=\"small\">Message</Text>\n      <Textarea\n        placeholder=\"Message\"\n        ref={accessory.ref}\n        inputAccessoryViewID={accessory.inputAccessoryViewID}\n        onFocus={accessory.onFocus}\n        onBlur={accessory.onBlur}\n      />\n    </View>\n  )\n}\n\nfunction DoneLogDemo() {\n  const [log, setLog] = React.useState(\"Tap Done.\")\n  return (\n    <InputAccessoryBar onDone={() => setLog(\"Done pressed\")}>\n      <KeyboardScrollView\n        className=\"-m-4\"\n        contentContainerClassName=\"gap-4 p-4\"\n      >\n        <Field label=\"Subject\" autoFocus />\n        <MessageField />\n        <Text role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </Text>\n      </KeyboardScrollView>\n    </InputAccessoryBar>\n  )\n}\n\nexport function InputAccessoryBarWithTextareaExample() {\n  return (\n    <DoneLogDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum InputAccessoryBarField: Hashable {\n  case name, email, phone, city, subject, message\n}\n\nstruct InputAccessoryBarRow: View {\n  let label: LocalizedStringKey\n  let field: InputAccessoryBarField\n  let focus: FocusState<InputAccessoryBarField?>.Binding\n\n  @State private var text = \"\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 6) {\n      Text(label)\n        .textVariant(.small)\n        .accessibilityHidden(true)\n      TextField(label, text: $text)\n        .textFieldStyle(.input)\n        .focused(focus, equals: field)\n        .submitLabel(.next)\n    }\n  }\n}\n\nstruct InputAccessoryBarTextareaDemo: View {\n  @FocusState private var focus: InputAccessoryBarField?\n  @State private var message = \"\"\n  @State private var log = \"Tap Done.\"\n\n  var body: some View {\n    KeyboardScrollView {\n      VStack(alignment: .leading, spacing: 16) {\n        InputAccessoryBarRow(label: \"Subject\", field: .subject, focus: $focus)\n        VStack(alignment: .leading, spacing: 6) {\n          Text(\"Message\")\n            .textVariant(.small)\n            .accessibilityHidden(true)\n          TextField(\"Message\", text: $message, axis: .vertical)\n            .textFieldStyle(.textarea)\n            .focused($focus, equals: .message)\n        }\n        Text(log)\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .padding(16)\n    }\n    .safeAreaInset(edge: .bottom, spacing: 0) {\n      if let current = focus {\n        InputAccessoryBar(\n          onPrevious: current == .message ? { focus = .subject } : nil,\n          onNext: current == .subject ? { focus = .message } : nil,\n          onDone: {\n            log = \"Done pressed\"\n            focus = nil\n          }\n        )\n      }\n    }\n    .onSubmit {\n      if focus == .subject { focus = .message }\n    }\n    .onAppear { focus = .subject }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.PaddingValues\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.FocusRequester\nimport androidx.compose.ui.focus.focusRequester\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.InputAccessoryBar\nimport com.esuiss.ui.components.InputAccessoryState\nimport com.esuiss.ui.components.KeyboardScrollView\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.components.Textarea\nimport com.esuiss.ui.components.inputAccessory\nimport com.esuiss.ui.components.rememberInputAccessoryState\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun InputAccessoryBarField(\n    label: String,\n    state: InputAccessoryState,\n    index: Int,\n    autoFocus: Boolean = false,\n) {\n    var value by rememberSaveable(label) { mutableStateOf(\"\") }\n    val requester = remember { FocusRequester() }\n    if (autoFocus) {\n        LaunchedEffect(Unit) { requester.requestFocus() }\n    }\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n        Text(label, variant = TextVariant.Small)\n        Input(\n            value,\n            { value = it },\n            Modifier.focusRequester(requester).inputAccessory(state, index),\n            placeholder = label,\n        )\n    }\n}\n\n@Composable\nfun InputAccessoryBarDoneLog() {\n    val state = rememberInputAccessoryState()\n    var log by rememberSaveable { mutableStateOf(\"Tap Done.\") }\n    var message by rememberSaveable { mutableStateOf(\"\") }\n    Screen {\n        KeyboardScrollView(\n            modifier = Modifier.fillMaxSize(),\n            contentPadding = PaddingValues(16.dp),\n            verticalArrangement = Arrangement.spacedBy(16.dp),\n        ) {\n            InputAccessoryBarField(\"Subject\", state, 0, autoFocus = true)\n            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n                Text(\"Message\", variant = TextVariant.Small)\n                Textarea(\n                    message,\n                    { message = it },\n                    Modifier.inputAccessory(state, 1),\n                    placeholder = \"Message\",\n                )\n            }\n            Text(\n                log,\n                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n                style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n            )\n        }\n        InputAccessoryBar(state, onDone = { log = \"Done pressed\" })\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### InputAccessoryBar
+
+Provider that tracks the inputs and renders the bar.
+
+<PropsTable props={[{"name":"previousLabel","type":"string","default":"\"Previous\"","description":"Label for the previous button. Defaults to `\"Previous\"`."},{"name":"nextLabel","type":"string","default":"\"Next\"","description":"Label for the next button. Defaults to `\"Next\"`."},{"name":"doneLabel","type":"React.ReactNode","default":"\"Done\"","description":"Text or node for the done button. Defaults to `\"Done\"`."},{"name":"onDone","type":"() => void","description":"Called after the keyboard is dismissed with done."},{"name":"portalHost","type":"string","description":"Name of the portal host on Android."},{"name":"className","type":"string"},{"name":"children","type":"React.ReactNode"}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputAccessoryBarInput
+
+`Input` connected to the bar.
+
+<PropsTable extends={["React.ComponentProps<typeof Input>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The arrow buttons are labelled with `previousLabel` and `nextLabel` and are disabled at the first and last input.
+- The done button is a text button that dismisses the keyboard.
+
+## Notes
+
+- iOS uses the native input accessory view; Android uses a portal and reserves the bar height so keyboard-aware layouts stay above it.
+- Uses `bg-surface-raised` (a secondary surface in dark mode) and `border-separator` tokens.

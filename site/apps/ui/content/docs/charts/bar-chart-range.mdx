@@ -1,0 +1,46 @@
+---
+title: Bar Chart Range
+description: "A weather forecast where each horizontal pill spans the day's low and high on a shared gradient scale."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-range">
+
+<SourceFile path="components/charts/bar-chart-range.tsx" fold={false} />
+
+</Example>
+
+A weather-app forecast where each horizontal pill spans a day's low to high temperature against a shared scale, with a colored gradient fill and the high on the right. Use floating range bars like these whenever each item has a minimum and a maximum.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-range"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-range.tsx`:
+
+<SourceFile path="components/charts/bar-chart-range.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartRange } from \"@/components/charts/bar-chart-range\""} />
+
+<Code lang="tsx" code={"<BarChartRange />"} />
+
+Give each record a label, a `low` and a `high`; the chart derives the two-value `range` from them. Set the hidden value axis `domain` to cover your full range so pills line up across rows. Edit the gradient stops in the `defs` block to change the colors.
+
+## Notes
+
+The gradient runs across each pill rather than across the whole scale, so every pill shows the full color ramp regardless of its temperatures. Only the high is printed beside the bars; the low is available in the tooltip.

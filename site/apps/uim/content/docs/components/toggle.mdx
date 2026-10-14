@@ -1,0 +1,272 @@
+---
+title: Toggle
+description: "A two-state button that can be turned on or off, for formatting and filter controls."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-toggle--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleExample: View {\n  var body: some View {\n    ToggleDemo(label: \"Toggle bold\") { Ph.textB.regular }\n  }\n}\n\nstruct ToggleDemo<Icon: View>: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let label: LocalizedStringKey\n  let icon: Icon\n\n  @State private var isOn: Bool\n\n  init(\n    initial: Bool = false,\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    label: LocalizedStringKey,\n    @ViewBuilder icon: () -> Icon\n  ) {\n    self.variant = variant\n    self.size = size\n    self.label = label\n    self.icon = icon()\n    _isOn = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      icon.frame(width: 16, height: 16)\n    }\n    .toggleStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleBold(initial: Boolean = false) {\n    ToggleRow {\n        ToggleDemo(\"Toggle bold\", initial = initial) {\n            Icon(PhosphorIcons.Regular.TextB, contentDescription = null)\n        }\n    }\n}"} />
+
+</Example>
+
+`Toggle` is a `Pressable` with an on and off state. When on, it shows a selected background and its text turns to the link color; it scales down slightly while pressed. It has two variants, `default` and `outline`, and three sizes.
+
+`ToggleIcon` is an `Icon` sized for use inside a toggle.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="uniwind/components/ui/toggle.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="nativewind/components/ui/toggle.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toggle.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/toggle.tsx`:
+
+<SourceFile path="stylesheet/components/ui/toggle.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Toggle.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Toggle.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Toggle, ToggleIcon } from \"@/components/ui/toggle\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-row\">\n  <ToggleDemo accessibilityLabel=\"Toggle bold\">\n    <ToggleIcon as={TextBIcon} />\n  </ToggleDemo>\n</View>"} />
+
+Control the state with `pressed` and `onPressedChange(pressed, details)`, or leave it uncontrolled with `defaultPressed`. Put text in a `Text` and icons in `ToggleIcon`.
+
+Icon-only toggles need an `accessibilityLabel`. To group toggles with single or multiple selection, use Toggle Group. `toggleVariants`, `toggleStateClassName` and `toggleTextClassName` are exported for reuse in custom components.
+
+## Examples
+
+### Pressed
+
+An icon toggle that starts in the on state.
+
+<Example id="components-toggle--pressed" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function TogglePressedExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo initial accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct TogglePressedExample: View {\n  var body: some View {\n    ToggleDemo(initial: true, label: \"Toggle bold\") { Ph.textB.regular }\n  }\n}\n\nstruct ToggleDemo<Icon: View>: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let label: LocalizedStringKey\n  let icon: Icon\n\n  @State private var isOn: Bool\n\n  init(\n    initial: Bool = false,\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    label: LocalizedStringKey,\n    @ViewBuilder icon: () -> Icon\n  ) {\n    self.variant = variant\n    self.size = size\n    self.label = label\n    self.icon = icon()\n    _isOn = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      icon.frame(width: 16, height: 16)\n    }\n    .toggleStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun TogglePressedExample() {\n    ToggleBold(initial = true)\n}\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleBold(initial: Boolean = false) {\n    ToggleRow {\n        ToggleDemo(\"Toggle bold\", initial = initial) {\n            Icon(PhosphorIcons.Regular.TextB, contentDescription = null)\n        }\n    }\n}"} />
+
+</Example>
+
+### Variants
+
+The `default` and `outline` variants.
+
+<Example id="components-toggle--variants" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { TextItalicIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleVariantsExample() {\n  return (\n    <View className=\"flex-row gap-2\">\n      <ToggleDemo accessibilityLabel=\"Toggle italic\">\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Toggle italic\">\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleVariantsExample: View {\n  var body: some View {\n    HStack(spacing: 8) {\n      ToggleDemo(label: \"Toggle italic\") { Ph.textItalic.regular }\n      ToggleDemo(variant: .outline, label: \"Toggle italic\") { Ph.textItalic.regular }\n    }\n  }\n}\n\nstruct ToggleDemo<Icon: View>: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let label: LocalizedStringKey\n  let icon: Icon\n\n  @State private var isOn: Bool\n\n  init(\n    initial: Bool = false,\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    label: LocalizedStringKey,\n    @ViewBuilder icon: () -> Icon\n  ) {\n    self.variant = variant\n    self.size = size\n    self.label = label\n    self.icon = icon()\n    _isOn = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      icon.frame(width: 16, height: 16)\n    }\n    .toggleStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleVariants() {\n    ToggleRow {\n        ToggleDemo(\"Toggle italic\") {\n            Icon(PhosphorIcons.Regular.TextItalic, contentDescription = null)\n        }\n        ToggleDemo(\"Toggle italic\", variant = ToggleVariant.Outline) {\n            Icon(PhosphorIcons.Regular.TextItalic, contentDescription = null)\n        }\n    }\n}"} />
+
+</Example>
+
+### Sizes
+
+Outline toggles in the `sm`, default and `lg` sizes.
+
+<Example id="components-toggle--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { TextBIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-2\">\n      <ToggleDemo size=\"sm\" variant=\"outline\" accessibilityLabel=\"Small\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Default\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo size=\"lg\" variant=\"outline\" accessibilityLabel=\"Large\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleSizesExample: View {\n  var body: some View {\n    HStack(spacing: 8) {\n      ToggleDemo(variant: .outline, size: .sm, label: \"Small\") { Ph.textB.regular }\n      ToggleDemo(variant: .outline, label: \"Default\") { Ph.textB.regular }\n      ToggleDemo(variant: .outline, size: .lg, label: \"Large\") { Ph.textB.regular }\n    }\n  }\n}\n\nstruct ToggleDemo<Icon: View>: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let label: LocalizedStringKey\n  let icon: Icon\n\n  @State private var isOn: Bool\n\n  init(\n    initial: Bool = false,\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    label: LocalizedStringKey,\n    @ViewBuilder icon: () -> Icon\n  ) {\n    self.variant = variant\n    self.size = size\n    self.label = label\n    self.icon = icon()\n    _isOn = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      icon.frame(width: 16, height: 16)\n    }\n    .toggleStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.key\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleSizes() {\n    ToggleRow {\n        listOf(ToggleSize.Sm to \"Small\", ToggleSize.Default to \"Default\", ToggleSize.Lg to \"Large\").forEach { (size, label) ->\n            key(label) {\n                ToggleDemo(label, variant = ToggleVariant.Outline, size = size) {\n                    Icon(PhosphorIcons.Regular.TextB, contentDescription = null)\n                }\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+### With text
+
+An outline toggle with an icon and a text label.
+
+<Example id="components-toggle--with-text" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { BookmarkSimpleIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleWithTextExample() {\n  return (\n    <View className=\"flex-row\">\n      <ToggleDemo variant=\"outline\" accessibilityLabel=\"Bookmark\">\n        <ToggleIcon as={BookmarkSimpleIcon} />\n        <Text>Bookmark</Text>\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WithTextDemo: View {\n  @State private var isOn = false\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      Label {\n        Text(\"Bookmark\")\n      } icon: {\n        Ph.bookmarkSimple.regular\n      }\n    }\n    .toggleStyle(.variant(.outline))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.BookmarkSimple\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleWithText() {\n    ToggleRow {\n        ToggleDemo(\"Bookmark\", variant = ToggleVariant.Outline) {\n            Icon(PhosphorIcons.Regular.BookmarkSimple, contentDescription = null)\n            Text(\"Bookmark\")\n        }\n    }\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled toggles in the off and on states.
+
+<Example id="components-toggle--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Toggle, ToggleIcon } from \"@/components/ui/toggle\"\n\ntype ToggleDemoProps = Omit<\n  React.ComponentProps<typeof Toggle>,\n  \"pressed\" | \"onPressedChange\"\n> & {\n  initial?: boolean\n}\n\nfunction ToggleDemo({ initial = false, children, ...props }: ToggleDemoProps) {\n  const [pressed, setPressed] = React.useState(initial)\n  return (\n    <Toggle pressed={pressed} onPressedChange={setPressed} {...props}>\n      {children}\n    </Toggle>\n  )\n}\n\nexport function ToggleDisabledExample() {\n  return (\n    <View className=\"flex-row gap-2\">\n      <ToggleDemo disabled accessibilityLabel=\"Toggle bold\">\n        <ToggleIcon as={TextBIcon} />\n      </ToggleDemo>\n      <ToggleDemo\n        disabled\n        initial\n        variant=\"outline\"\n        accessibilityLabel=\"Toggle italic\"\n      >\n        <ToggleIcon as={TextItalicIcon} />\n      </ToggleDemo>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleDisabledExample: View {\n  var body: some View {\n    HStack(spacing: 8) {\n      ToggleDemo(label: \"Toggle bold\") { Ph.textB.regular }\n      ToggleDemo(initial: true, variant: .outline, label: \"Toggle italic\") { Ph.textItalic.regular }\n    }\n    .disabled(true)\n  }\n}\n\nstruct ToggleDemo<Icon: View>: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let label: LocalizedStringKey\n  let icon: Icon\n\n  @State private var isOn: Bool\n\n  init(\n    initial: Bool = false,\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    label: LocalizedStringKey,\n    @ViewBuilder icon: () -> Icon\n  ) {\n    self.variant = variant\n    self.size = size\n    self.label = label\n    self.icon = icon()\n    _isOn = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $isOn) {\n      icon.frame(width: 16, height: 16)\n    }\n    .toggleStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.RowScope\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Toggle\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleDemo(\n    label: String,\n    initial: Boolean = false,\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    enabled: Boolean = true,\n    content: @Composable RowScope.() -> Unit,\n) {\n    var pressed by rememberSaveable { mutableStateOf(initial) }\n    Toggle(\n        pressed,\n        { pressed = it },\n        Modifier.semantics { contentDescription = label },\n        variant = variant,\n        size = size,\n        enabled = enabled,\n        content = content,\n    )\n}\n\n@Composable\nfun ToggleRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun ToggleDisabled() {\n    ToggleRow {\n        ToggleDemo(\"Toggle bold\", enabled = false) {\n            Icon(PhosphorIcons.Regular.TextB, contentDescription = null)\n        }\n        ToggleDemo(\"Toggle italic\", initial = true, variant = ToggleVariant.Outline, enabled = false) {\n            Icon(PhosphorIcons.Regular.TextItalic, contentDescription = null)\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Toggle
+
+The pressable two-state button.
+
+<PropsTable extends={["React.ComponentProps<typeof TogglePrimitive>"]} props={[{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"Visual style: `default` or `outline`."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Height and padding: `default`, `sm` or `lg`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleIcon
+
+An icon sized for a toggle.
+
+<PropsTable extends={["React.ComponentProps<typeof Icon>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Uses the `togglebutton` role and reports `checked` and `disabled` in `accessibilityState`.
+- Inside a single-select Toggle Group, it uses the `radio` role instead.
+- Icon-only toggles need an `accessibilityLabel`.
+
+## Notes
+
+- Changing the state triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
+- Uses the `bg-item-selected`, `bg-item-pressed`, `bg-control-disabled`, `text-link` and `border-separator` tokens.
+- Light and dark colors follow the system appearance.

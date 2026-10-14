@@ -1,0 +1,43 @@
+{
+  "description": "A row of menus that renders as a menubar on desktop and a single More actions sheet on mobile.",
+  "overview": "`ActionBar` groups several `ActionBarMenu`s, each with a `ActionBarTrigger` and `ActionBarContent`. On desktop it renders a `Menubar`: each menu is a `MenubarMenu`, and hovering another trigger while a menu is open switches menus.\n\nBelow the `48rem` breakpoint (`useIsMobile`), the bar collapses into a ghost icon `Button` that opens a `Drawer`. The drawer lists every menu's trigger as a row; choosing a row closes the drawer and opens that menu's items in an `AlertSheet`, with a Cancel button appended. Use it for toolbar-style command groups, such as File, Edit and View, that need to fit on small screens.",
+  "usage": "Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the mobile More actions drawer only; on desktop they have no effect. `ActionBarMenu` accepts its own `open`, `defaultOpen` and `onOpenChange` for an individual menu, which apply on desktop and to the mobile sheet. Use `ActionBarShortcut` with `mod` to prefix the platform modifier key.",
+  "examples": {
+    "WithIcons": "Places an icon before each item in the Edit menu, including a destructive Delete item.",
+    "OpenByDefault": "Opens the File menu on first render using `defaultOpen` on the bar and the menu.",
+    "NotDismissible": "Sets `dismissible` to `false` so mobile sheets close only through an action or Cancel.",
+    "CustomLabels": "Renames the mobile More actions button and the sheet's Cancel button with `moreLabel` and `cancelLabel`.",
+    "Floating": "Detaches the mobile More actions drawer from the screen edges with `floating`."
+  },
+  "parts": {
+    "ActionBar": "The root that renders a `Menubar` on desktop and a More actions button with a `Drawer` on mobile.",
+    "ActionBarMenu": "One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.",
+    "ActionBarTrigger": "The menu's button; a menubar trigger on desktop and a drawer row with a chevron on mobile.",
+    "ActionBarContent": "The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent` with a Cancel button on mobile.",
+    "ActionBarLabel": "A non-interactive heading; a menu label on desktop and the sheet title on mobile.",
+    "ActionBarItem": "An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mobile.",
+    "ActionBarSeparator": "A divider between item groups, rendered on desktop only.",
+    "ActionBarShortcut": "A keyboard shortcut hint aligned to the end of an item, rendered on desktop only."
+  },
+  "props": {
+    "ActionBar": {
+      "open": "Controls whether the mobile More actions drawer is open.",
+      "defaultOpen": "Whether the mobile More actions drawer starts open when uncontrolled.",
+      "onOpenChange": "Called when the mobile More actions drawer opens or closes.",
+      "dismissible": "When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel.",
+      "floating": "Insets the mobile drawer from the screen edges with fully rounded corners.",
+      "moreLabel": "Accessible label of the mobile More actions button and title of its drawer.",
+      "cancelLabel": "Text of the Cancel button appended to each mobile sheet."
+    },
+    "ActionBarMenu": {
+      "onOpenChange": "Called when this menu opens or closes.",
+      "children": "The menu's `ActionBarTrigger` and `ActionBarContent`."
+    },
+    "ActionBarItem": {
+      "variant": "Use `destructive` to style the item as a destructive action.",
+      "disabled": "Prevents the item from being chosen."
+    }
+  },
+  "accessibility": "- On desktop the bar has the `menubar` role and each trigger and item has the `menuitem` role.\n- Disabled items expose `aria-disabled=\"true\"`.\n- `Escape` closes an open menu and returns focus to its trigger.\n- On mobile the More actions button is labelled by `moreLabel`, and each drawer row has `aria-haspopup=\"dialog\"`.",
+  "notes": "Parts carry `data-slot` values such as `action-bar`, `action-bar-menu`, `action-bar-trigger`, `action-bar-content`, `action-bar-item`, `action-bar-more`, `action-bar-label`, `action-bar-separator` and `action-bar-shortcut`. `ActionBarSeparator` and `ActionBarShortcut` render nothing on mobile."
+}

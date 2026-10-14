@@ -1,0 +1,46 @@
+---
+title: Area Chart Interactive
+description: "A stock price chart with time-range toggles, a scrubbing cursor that updates the header, and animated transitions between ranges."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-interactive">
+
+<SourceFile path="components/charts/area-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A stock-style price chart with range toggles from one day to five years. Scrubbing the plot updates the price, change and date in the header, and switching ranges morphs the line into its new shape. Use it as a starting point for financial or any time-series dashboard where readers drill into time ranges.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-interactive"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/area-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartInteractive } from \"@/components/charts/area-chart-interactive\""} />
+
+<Code lang="tsx" code={"<AreaChartInteractive />"} />
+
+The demo generates prices from a seeded random series; replace the `generate` function with your own fetch or data per range, keeping one price and one label per point. Edit `RANGES` to change the available toggles and their captions. The stats row under the chart, including the volume figure, is static and should be wired to your data.
+
+## Notes
+
+The line turns green or red depending on whether the price at the cursor is above or below the opening price, so the color can flip while scrubbing. The morph animation is skipped when the user prefers reduced motion, and on touch devices the header returns to the latest price when the finger lifts. There is no floating tooltip; all readouts live in the header.

@@ -1,0 +1,144 @@
+---
+title: Popover
+description: "A floating panel anchored to a trigger, for supplementary content and lightweight controls."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="popover" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverExample() {\n  return (\n    <Popover>\n      <PopoverTrigger render={<Button variant=\"outline\" />}>\n        Open popover\n      </PopoverTrigger>\n      <PopoverContent>\n        <PopoverHeader>\n          <PopoverTitle>Dimensions</PopoverTitle>\n          <PopoverDescription>\n            Set the dimensions for the layer.\n          </PopoverDescription>\n        </PopoverHeader>\n        <div className=\"grid gap-3\">\n          <div className=\"grid grid-cols-3 items-center gap-3\">\n            <Label htmlFor=\"popover-width\">Width</Label>\n            <Input\n              id=\"popover-width\"\n              defaultValue=\"100%\"\n              className=\"col-span-2\"\n            />\n          </div>\n          <div className=\"grid grid-cols-3 items-center gap-3\">\n            <Label htmlFor=\"popover-height\">Height</Label>\n            <Input\n              id=\"popover-height\"\n              defaultValue=\"25px\"\n              className=\"col-span-2\"\n            />\n          </div>\n        </div>\n      </PopoverContent>\n    </Popover>\n  )\n}"} />
+
+</Example>
+
+Popover wraps Base UI's Popover. `Popover` is the root that holds the open state, `PopoverTrigger` toggles it, and `PopoverContent` renders the positioned panel in a portal. Inside the content, `PopoverHeader` groups a `PopoverTitle` and `PopoverDescription` above any other content, such as form fields.
+
+Use a popover for interactive content that relates to its trigger. Use Tooltip for short, non-interactive hints, and Dialog when the task needs the user's full attention.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add popover"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/popover.tsx`:
+
+<SourceFile path="components/ui/popover.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from \"@/components/ui/popover\""} />
+
+<Code lang="tsx" code={"<Popover>\n  <PopoverTrigger render={<Button variant=\"outline\" />}>\n    Open popover\n  </PopoverTrigger>\n  <PopoverContent>\n    <PopoverHeader>\n      <PopoverTitle>Dimensions</PopoverTitle>\n      <PopoverDescription>\n        Set the dimensions for the layer.\n      </PopoverDescription>\n    </PopoverHeader>\n    <div className=\"grid gap-3\">\n      <div className=\"grid grid-cols-3 items-center gap-3\">\n        <Label htmlFor=\"popover-width\">Width</Label>\n        <Input\n          id=\"popover-width\"\n          defaultValue=\"100%\"\n          className=\"col-span-2\"\n        />\n      </div>\n      <div className=\"grid grid-cols-3 items-center gap-3\">\n        <Label htmlFor=\"popover-height\">Height</Label>\n        <Input\n          id=\"popover-height\"\n          defaultValue=\"25px\"\n          className=\"col-span-2\"\n        />\n      </div>\n    </div>\n  </PopoverContent>\n</Popover>"} />
+
+The popover is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.
+
+Use the trigger's `render` prop to render it as another component, such as a `Button`.
+
+## Examples
+
+### Sides
+
+Four popovers that open on the top, right, bottom and left of their triggers.
+
+<Example kind="ui" name="popover" story="Sides">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverSidesExample() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Popover key={side}>\n          <PopoverTrigger render={<Button variant=\"outline\" />}>\n            {side.charAt(0).toUpperCase() + side.slice(1)}\n          </PopoverTrigger>\n          <PopoverContent side={side} className=\"w-56\">\n            <PopoverHeader>\n              <PopoverTitle>Heads up</PopoverTitle>\n              <PopoverDescription>\n                This popover opens on the {side} side.\n              </PopoverDescription>\n            </PopoverHeader>\n          </PopoverContent>\n        </Popover>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Simple
+
+A plain text popover opened from a ghost button, without a header.
+
+<Example kind="ui" name="popover" story="Simple">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverSimpleExample() {\n  return (\n    <Popover>\n      <PopoverTrigger render={<Button variant=\"ghost\" />}>\n        What is this?\n      </PopoverTrigger>\n      <PopoverContent className=\"w-64\">\n        <p>\n          Shared links stay active for 30 days and can be revoked at any time\n          from settings.\n        </p>\n      </PopoverContent>\n    </Popover>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Popover","href":"#popover","children":[{"name":"PopoverTrigger","href":"#popovertrigger","children":[]},{"name":"PopoverContent","href":"#popovercontent","children":[{"name":"PopoverHeader","href":"#popoverheader","children":[{"name":"PopoverTitle","href":"#popovertitle","children":[]},{"name":"PopoverDescription","href":"#popoverdescription","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Popover
+
+The root that manages the popover's open state.
+
+<PropsTable extends={["PopoverPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PopoverTrigger
+
+The button that opens and closes the popover.
+
+<PropsTable extends={["PopoverPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PopoverContent
+
+The positioned panel that renders in a portal.
+
+<PropsTable extends={["PopoverPrimitive.Popup.Props","PopoverPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PopoverHeader
+
+Groups the title and description at the top of the panel.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PopoverTitle
+
+The heading that names the popover.
+
+<PropsTable extends={["PopoverPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### PopoverDescription
+
+Secondary text that describes the popover.
+
+<PropsTable extends={["PopoverPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The panel has the `dialog` role. `PopoverTitle` provides its accessible name and `PopoverDescription` its accessible description.
+- The trigger exposes `aria-expanded`.
+- Escape closes the popover and returns focus to the trigger.
+- Clicking outside the panel, or clicking the trigger again, closes it.
+
+## Notes
+
+- Styling hooks: `data-slot` values `popover`, `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`.
+- The panel is `w-72` by default; override it with `className`.
+- The panel animates in from the side it opens on, using Base UI's `data-side`, `data-open` and `data-closed` attributes.
+- Uses the `surface-raised`, `label` and `label-secondary` tokens.

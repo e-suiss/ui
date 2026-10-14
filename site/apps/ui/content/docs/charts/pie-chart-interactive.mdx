@@ -1,0 +1,46 @@
+---
+title: Pie Chart Interactive
+description: "A storage breakdown donut with a device switch, hover-linked list and lifted slices, plus a linear usage bar."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-interactive">
+
+<SourceFile path="components/charts/pie-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A storage breakdown with a Phone and Cloud switch, a stacked usage bar, a donut whose hovered slice lifts out and a list linked to it. The center shows the used total or the hovered category, and the slices morph when you switch devices. Use it as a reference for a rich part-to-whole view with linked controls.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-interactive"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/pie-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/pie-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartInteractive } from \"@/components/charts/pie-chart-interactive\""} />
+
+<Code lang="tsx" code={"<PieChartInteractive />"} />
+
+Replace `STORAGE` with your own sources, each with a total and the size of every category, and list all categories in `KINDS`. Add a label and color for each category to `chartConfig`; the free space is computed from the total. Add another source to `STORAGE` to get another toggle.
+
+## Notes
+
+Highlighting works with a mouse over the slices, the bar or the list, but list rows aren't focusable, so keyboard users only get the totals. Changes in the center readout are announced through a live region, and the morph animation is skipped when reduced motion is preferred.

@@ -1,0 +1,115 @@
+---
+title: CLI
+description: The @esuiss/ui command sets up your project and copies components, patterns, interactions, charts and blocks into it.
+eyebrow: suiss/ui
+---
+
+## Overview
+
+`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. The same command also adds the mobile components of [suiss/uim](https://uim.suiss.app): in an Expo or React Native app, an Xcode project or an Android Gradle module it adds React Native, SwiftUI or Jetpack Compose sources instead.
+
+## init
+
+Sets up Tailwind CSS, the `@/*` import alias, the theme stylesheet, the font, `@esuiss/tailwind` and the `button` component. See [Installation](/docs/installation) for every step.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-y, --yes` | Skip confirmation prompts |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-c, --cwd <dir>` | Run in another project directory |
+| `-h, --help` | Show help |
+| `-v, --version` | Show the version |
+
+## add
+
+Copies components into your project, together with the components and npm packages they depend on.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add
+npx @esuiss/ui@latest add <component...> [options]
+npx @esuiss/ui@latest add patterns <pattern...> [options]
+npx @esuiss/ui@latest add interactions <interaction...> [options]
+npx @esuiss/ui@latest add charts <chart...> [options]
+npx @esuiss/ui@latest add blocks <block...> [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-o, --overwrite` | Replace local files that differ from the registry |
+| `--diff` | Show how your local files differ from the registry |
+| `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
+| `-y, --yes` | Skip confirmation prompts |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-c, --cwd <dir>` | Run in another project directory |
+| `-h, --help` | Show help |
+| `-v, --version` | Show the version |
+
+### Pick from a list
+
+Run `add` without names to pick from a list. Choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. `add patterns`, or another group, without names opens the list for that group.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add
+npx @esuiss/ui@latest add patterns
+```
+
+Outside an interactive terminal, such as in CI, `add` without names prints the available names instead.
+
+### Patterns
+
+Patterns combine several components into one ready-made piece, such as a date and time picker. The components a pattern uses are added with it.
+
+```bash title="Terminal"
+npx @esuiss/ui add patterns date-time-picker
+npx @esuiss/ui add patterns --all
+```
+
+### Interactions
+
+Interactions add a behavior to something you already have, such as swiping a row to reveal actions. The components an interaction uses are added with it.
+
+```bash title="Terminal"
+npx @esuiss/ui add interactions swipe-actions
+npx @esuiss/ui add interactions --all
+```
+
+### Charts
+
+Charts are ready-made charts built on the `chart` component. The `chart` component and anything else a chart uses are added with it.
+
+```bash title="Terminal"
+npx @esuiss/ui add charts <name>
+npx @esuiss/ui add charts --all
+```
+
+### Blocks
+
+Blocks are ready-made sections of a page built from the components. The components a block uses are added with it.
+
+```bash title="Terminal"
+npx @esuiss/ui add blocks <name>
+npx @esuiss/ui add blocks --all
+```
+
+<Callout type="note">
+Patterns, interactions, charts and blocks are optional extras. Neither `init` nor `add --all` adds them; add them by name, or all at once with `--all`.
+</Callout>
+
+## Where files are written
+
+Paths are relative to your `@/*` alias root.
+
+| Kind | Directory |
+| --- | --- |
+| Components | `components/ui/` |
+| Hooks | `hooks/` |
+| Patterns | `components/patterns/` |
+| Interactions | `components/interactions/` |
+| Charts | `components/charts/` |
+| Blocks | `components/blocks/` |
+
+Missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.

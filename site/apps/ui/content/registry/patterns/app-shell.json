@@ -1,0 +1,21 @@
+{
+  "description": "An application frame with a collapsible sidebar on desktop and a floating tab bar on mobile.",
+  "overview": "`AppShell` builds navigation from an `items` array of `AppShellItem` objects and wraps your page content. On desktop it renders a `Sidebar` inside a `SidebarProvider`, with optional `header` and `footer`, group labels, badges, tooltips on collapsed icons and a `SidebarRail`; the page renders in a `SidebarInset`.\n\nBelow the `48rem` breakpoint the sidebar is replaced by a `TabBar` pinned to the bottom of the screen, and the content renders in a `main` element padded to clear it. Items that do not fit in the tab bar move behind its More trigger. Use it as the outermost layout of an app with a handful of top-level destinations.",
+  "usage": "Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. Items with the same `group` render under a shared `SidebarGroupLabel`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. Items with an `href` render through `render`, which defaults to a plain anchor, so you can pass your router's link component.\n\nThe sidebar accepts `variant` (`sidebar`, `floating` or `inset`), `collapsible` (`icon` by default, `offcanvas` or `none`), `side`, `rail`, and `open`, `defaultOpen` and `onOpenChange` for its expanded state. `moreLabel` sets the tab bar's More trigger text. Place `AppShellTrigger` in your page header to toggle the sidebar.",
+  "examples": {
+    "WithHeaderAndFooter": "Adds a brand menu in the sidebar header and an account menu in the footer.",
+    "Grouped": "Splits items into labelled Platform and Workspace groups and disables one item.",
+    "MoreTab": "Uses eight items with `defaultValue` so extra items overflow into the mobile tab bar's More panel.",
+    "Links": "Gives every item an `href` so each renders as a link to its route.",
+    "Floating": "Uses the `floating` sidebar variant.",
+    "Inset": "Uses the `inset` sidebar variant.",
+    "Offcanvas": "Sets `collapsible` to `offcanvas` so collapsing slides the whole sidebar out of view.",
+    "RightSide": "Places the sidebar on the right with `side`."
+  },
+  "parts": {
+    "AppShell": "The root layout that renders the sidebar or tab bar from `items` and wraps the page content.",
+    "AppShellTrigger": "A `SidebarTrigger` that toggles the sidebar on desktop and renders nothing on mobile."
+  },
+  "accessibility": "- The selected item has `aria-current=\"page\"`.\n- Collapsed sidebar items show their label in a tooltip on hover.\n- `AppShellTrigger` is labelled Toggle Sidebar, and `Cmd+B` on macOS or `Ctrl+B` elsewhere toggles the sidebar.\n- With `collapsible=\"offcanvas\"`, the hidden sidebar is removed from view and the tab order.\n- Disabled items are disabled buttons.",
+  "notes": "The sidebar exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. On mobile the wrapper carries `data-slot=\"app-shell\"` and the content `data-slot=\"app-shell-content\"`; `className` applies to the content area on both layouts. `rail` only renders when `collapsible` is not `none`."
+}

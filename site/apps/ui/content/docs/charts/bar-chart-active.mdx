@@ -1,0 +1,46 @@
+---
+title: Bar Chart Active
+description: "A week of step counts where clicking a bar selects it, dims the others and updates the header."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-active">
+
+<SourceFile path="components/charts/bar-chart-active.tsx" fold={false} />
+
+</Example>
+
+A week of step counts where one bar is selected at a time: the chosen day stays solid, the rest dim, and the header shows its value. Use it when a bar chart doubles as a picker for the detail shown above it.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-active"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-active.tsx`:
+
+<SourceFile path="components/charts/bar-chart-active.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartActive } from \"@/components/charts/bar-chart-active\""} />
+
+<Code lang="tsx" code={"<BarChartActive />"} />
+
+Replace `chartData` with your own days and values, and rename `steps` in the data, the `Bar` and `chartConfig`. Set the initially selected bar through the `selected` state, and change the unit text and number format in the header. Lower or raise the opacity of the dimmed bars to tune the contrast.
+
+## Notes
+
+Keyboard users move between bars with the arrow keys and select with Return or Space, and the header value is announced through a live region. There is no tooltip; the header is the only readout.

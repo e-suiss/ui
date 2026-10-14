@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart No Indicator
+description: "A stacked bar chart whose tooltip lists series names and values without color indicators."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-no-indicator">
+
+<SourceFile path="components/charts/tooltip-chart-no-indicator.tsx" fold={false} />
+
+</Example>
+
+A stacked bar chart whose tooltip lists series names and values without any color marker. Use it for single-series charts, or when the series names are clear enough on their own.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-no-indicator"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-no-indicator.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-no-indicator.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartNoIndicator } from \"@/components/charts/tooltip-chart-no-indicator\""} />
+
+<Code lang="tsx" code={"<TooltipChartNoIndicator />"} />
+
+Set `hideIndicator` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig`, and keep the labels descriptive since they are the only cue.
+
+## Notes
+
+With several series and no color marker, readers can't match a row to a bar by color, so this suits one or two clearly named series best.

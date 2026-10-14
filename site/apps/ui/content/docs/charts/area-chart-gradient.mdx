@@ -1,0 +1,46 @@
+---
+title: Area Chart Gradient
+description: "Two overlapping areas whose fills fade out toward the bottom using SVG linear gradients."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-gradient">
+
+<SourceFile path="components/charts/area-chart-gradient.tsx" fold={false} />
+
+</Example>
+
+Two overlapping series whose fills fade to transparent toward the baseline, so the lower series stays visible through the upper one. Reach for it over the flat-filled default when you compare two series that cross each other.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-gradient"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-gradient.tsx`:
+
+<SourceFile path="components/charts/area-chart-gradient.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartGradient } from \"@/components/charts/area-chart-gradient\""} />
+
+<Code lang="tsx" code={"<AreaChartGradient />"} />
+
+Replace `chartData` and rename the two series keys consistently across the data, the areas and `chartConfig`. Each series needs its own gradient in the `defs` block, so add or rename one when you add a series. Raise or lower the top stop's `stopOpacity` to make the fill stronger or subtler.
+
+## Notes
+
+The series are drawn in source order, so the last `Area` sits on top. Focus the plot and use the arrow keys to move the tooltip between months.

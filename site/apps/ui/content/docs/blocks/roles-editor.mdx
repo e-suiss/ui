@@ -1,0 +1,42 @@
+---
+title: Roles Editor
+description: "A role editor that lists roles beside grouped permission switches, with save and revert for unsaved changes."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="roles-editor">
+
+<SourceFile path="components/blocks/roles-editor.tsx" fold={false} />
+
+</Example>
+
+A role editor with roles and their permission counts on the left and the selected role's permissions on the right as grouped switches. Revert and Save appear only when there are unsaved changes. It combines `Sidebar` navigation with a `SplitView`, so on mobile the role list and editor show one at a time. Use it for any role-based access control screen.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks roles-editor"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Item](/docs/components/item), [Sidebar](/docs/components/sidebar), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch).
+
+3. Copy the source into `components/blocks/roles-editor.tsx`:
+
+<SourceFile path="components/blocks/roles-editor.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RolesEditor } from \"@/components/blocks/roles-editor\""} />
+
+<Code lang="tsx" code={"<RolesEditor />"} />
+
+Edit `groups` for the permissions, `roles` and `members` for the role list, and `defaults` for each role's starting switches. The `defaults` arrays are positional, mapping to permissions in the order they appear across all groups, so keep them in step with `groups` or switch to keyed data. Save only updates local state, so call your API there, and give New Role a handler.

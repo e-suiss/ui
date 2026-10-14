@@ -1,0 +1,5 @@
+{
+  "description": "Horizontal bars ranking device types by users, each in its own color.",
+  "overview": "A `BarChart` with `layout=\"vertical\"`, so categories run down a `YAxis` and bars extend to the right, which leaves room for longer names. Each bar gets its color from `chartConfig` through a `Cell`, and the axis labels come from the same config.",
+  "usage": "Replace `chartData` with your categories and values, and add a matching entry with a label and color to `chartConfig` for each category. The component takes no props."
+}

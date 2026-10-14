@@ -1,0 +1,5 @@
+{
+  "description": "A two-column accessories grid with category chips and add to bag buttons that update a bag count.",
+  "overview": "Composes `Screen`, `Chip` filters, `Button`, `Icon` and `Text`. Category chips filter the grid, and each card's plus button expands into an In bag state while a badge on the bag icon shows the item count.",
+  "usage": "Replace `ACCESSORIES` and `FILTERS` with your catalog. Pass `onAddToBag`, `onRemoveFromBag` and `onFilterChange` to sync with your cart."
+}

@@ -1,0 +1,201 @@
+---
+title: Badge
+description: "A small label for a status, count or category, with an optional icon."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-badge--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeExample() {\n  return (\n    <View className=\"flex-row\">\n      <Badge>\n        <Text>Badge</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BadgeExample: View {\n  var body: some View {\n    Badge(\"Badge\")\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Badge\n\n@Composable\nfun BadgeDefault() {\n    Row {\n        Badge(\"Badge\")\n    }\n}"} />
+
+</Example>
+
+`Badge` is a compact pill `View` that passes a small, bold text style and a 12-point icon size to its children. Six variants are available. `default`, `secondary`, `destructive` and `link` show colored text with no background, while `outline` adds a hairline border and `ghost` adds horizontal padding.
+
+Use `default` for highlighted labels, `secondary` for neutral metadata, `destructive` for errors and `outline` when the badge needs a visible edge.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add badge"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add badge --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add badge --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="uniwind/components/ui/badge.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="nativewind/components/ui/badge.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+
+2. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="stylesheet/components/ui/badge.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Badge.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Badge.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\""} />
+
+<Code lang="tsx" code={"<View className=\"flex-row\">\n  <Badge>\n    <Text>Badge</Text>\n  </Badge>\n</View>"} />
+
+Put the label in a `Text` and icons in an `Icon`. Use `render` to render the badge as a different component, such as a `Pressable`, while keeping its styles.
+
+`badgeVariants` and `badgeTextVariants` are also exported if you need the classes on another element.
+
+## Examples
+
+### Variants
+
+All six variants side by side.
+
+<Example id="components-badge--variants" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeVariantsExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge>\n        <Text>Default</Text>\n      </Badge>\n      <Badge variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Badge>\n      <Badge variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Text>Outline</Text>\n      </Badge>\n      <Badge variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Badge>\n      <Badge variant=\"link\">\n        <Text>Link</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BadgeVariantsExample: View {\n  var body: some View {\n    FlowRow(spacing: 8) {\n      Badge(\"Default\")\n      Badge(\"Secondary\", variant: .secondary)\n      Badge(\"Destructive\", variant: .destructive)\n      Badge(\"Outline\", variant: .outline)\n      Badge(\"Ghost\", variant: .ghost)\n      Badge(\"Link\", variant: .link)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Badge\nimport com.esuiss.ui.components.BadgeVariant\n\n@Composable\nfun BadgeVariants() {\n    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Badge(\"Default\")\n        Badge(\"Secondary\", variant = BadgeVariant.Secondary)\n        Badge(\"Destructive\", variant = BadgeVariant.Destructive)\n        Badge(\"Outline\", variant = BadgeVariant.Outline)\n        Badge(\"Ghost\", variant = BadgeVariant.Ghost)\n        Badge(\"Link\", variant = BadgeVariant.Link)\n    }\n}"} />
+
+</Example>
+
+### With icon
+
+Badges with a leading icon.
+
+<Example id="components-badge--with-icon" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { SealCheckIcon, StarIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BadgeWithIconExample() {\n  return (\n    <View className=\"flex-row flex-wrap gap-2\">\n      <Badge variant=\"secondary\">\n        <Icon as={SealCheckIcon} />\n        <Text>Verified</Text>\n      </Badge>\n      <Badge variant=\"outline\">\n        <Icon as={StarIcon} />\n        <Text>Featured</Text>\n      </Badge>\n      <Badge variant=\"outline\" className=\"min-w-5 px-1\">\n        <Text>8</Text>\n      </Badge>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct BadgeWithIconExample: View {\n  var body: some View {\n    FlowRow(spacing: 8) {\n      Badge(.secondary) {\n        Label {\n          Text(\"Verified\")\n        } icon: {\n          Ph.sealCheck.regular\n        }\n      }\n      Badge(.outline) {\n        Label {\n          Text(\"Featured\")\n        } icon: {\n          Ph.star.regular\n        }\n      }\n      Badge(\"8\", variant: .outline)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.widthIn\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.SealCheck\nimport com.adamglin.phosphoricons.regular.Star\nimport com.esuiss.ui.components.Badge\nimport com.esuiss.ui.components.BadgeVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun BadgeWithIcon() {\n    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Badge(variant = BadgeVariant.Secondary) {\n            Icon(PhosphorIcons.Regular.SealCheck, contentDescription = null)\n            Text(\"Verified\")\n        }\n        Badge(variant = BadgeVariant.Outline) {\n            Icon(PhosphorIcons.Regular.Star, contentDescription = null)\n            Text(\"Featured\")\n        }\n        Badge(Modifier.widthIn(min = 20.dp), variant = BadgeVariant.Outline) {\n            Text(\"8\")\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Badge
+
+<PropsTable extends={["BadgeProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The badge adds no role; it is read as plain text.
+- If you render it as a pressable element, give that element a role and label.
+
+## Notes
+
+- Text colors come from `text-link`, `text-label-secondary`, `text-danger` and `text-label`; light and dark follow the system appearance.

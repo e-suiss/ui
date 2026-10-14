@@ -1,0 +1,16 @@
+{
+  "title": "Patterns",
+  "pages": [
+    "index",
+    "action-bar",
+    "confirm",
+    "context-actions",
+    "date-picker",
+    "paged-list",
+    "picker",
+    "preview",
+    "search-picker",
+    "split-view",
+    "table-list"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "A navigation menu that covers the whole screen, for site links on small viewports.",
+  "overview": "Fullscreen menu is built on the Base UI Dialog. The `FullscreenMenu` root manages the open state, and `FullscreenMenuTrigger` renders a menu button whose two-line icon animates into a close icon. `FullscreenMenuContent` covers the viewport and reveals from the top, with a sticky header that holds the close button. Inside it, `FullscreenMenuTitle` names the menu, `FullscreenMenuGroup` holds a list of `FullscreenMenuLink` items, and `FullscreenMenuLabel` adds a caption to a group. Links and labels fade in with a staggered delay as the menu opens.\n\nUse it for the primary navigation of a website on phones, like the global navigation on apple.com. For a short list of actions, use a dropdown menu; for a panel that keeps part of the page visible, use a drawer or sheet.",
+  "usage": "The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Choosing a `FullscreenMenuLink` closes the menu. Set `isActive` on the link for the current page.\n\nGroups that contain a `FullscreenMenuLabel` render their links smaller than groups without one, so the first group reads as primary navigation. Use `FullscreenMenuLink` with the `render` prop to render a router link instead of an anchor.",
+  "examples": {
+    "LinksOnly": "A menu with a single group of primary links and no labelled sections.",
+    "WithCloseLabel": "A menu whose close button shows the text `Done` instead of an icon."
+  },
+  "parts": {
+    "FullscreenMenu": "The root that manages the menu's open state.",
+    "FullscreenMenuTrigger": "The menu button, with an icon that animates between menu and close states.",
+    "FullscreenMenuContent": "The full-screen panel, with a sticky header that holds the close button.",
+    "FullscreenMenuTitle": "The menu's title, visually hidden and used as its accessible name.",
+    "FullscreenMenuGroup": "A list of links, animated in sequence.",
+    "FullscreenMenuLabel": "A caption for a group of links.",
+    "FullscreenMenuLink": "A navigation link that closes the menu when chosen.",
+    "FullscreenMenuClose": "A button that closes the menu from any element."
+  },
+  "props": {
+    "FullscreenMenuContent": {
+      "showCloseButton": "Shows the header with a close button at the top of the menu.",
+      "closeLabel": "Replaces the close button's icon with this text."
+    },
+    "FullscreenMenuLink": {
+      "isActive": "Marks the link as the current page with `aria-current=\"page\"` and the link color."
+    }
+  },
+  "accessibility": "- The panel has the `dialog` role and takes its name from `FullscreenMenuTitle`, which is visually hidden. Always include one.\n- The trigger has no text of its own, so give it an accessible name with `aria-label`. It sets `aria-expanded` while the menu is open.\n- Opening the menu moves focus inside it. Escape closes it and returns focus to the trigger.\n- The icon-only close button has a visually hidden `Close` label.\n- The active link sets `aria-current=\"page\"`.",
+  "notes": "- Styling hooks: `data-slot` values `fullscreen-menu-trigger`, `fullscreen-menu-content`, `fullscreen-menu-header`, `fullscreen-menu-body`, `fullscreen-menu-close`, `fullscreen-menu-title`, `fullscreen-menu-group`, `fullscreen-menu-label` and `fullscreen-menu-link`.\n- The active link gets `data-active`.\n- The stagger delay is computed from a link's position in its group, for up to 10 links, and the group's position in the menu, for up to 6 sections.\n- The content respects safe-area insets, and animations are disabled when reduced motion is preferred.\n- Uses the `surface`, `label`, `label-secondary` and `link` tokens."
+}

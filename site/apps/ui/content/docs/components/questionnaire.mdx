@@ -1,0 +1,282 @@
+---
+title: Questionnaire
+description: "A step-by-step form that shows one question at a time, with validation, skipping and keyboard shortcuts."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="questionnaire" story="Default">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required>\n          <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\">\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Questionnaire` renders a `form` that presents a sequence of questions, one at a time. Each `QuestionnaireItem` is a `fieldset` with a `QuestionnaireTitle`, an optional `QuestionnaireDescription`, an answer area and a `QuestionnaireError`. Answers are either `QuestionnaireChoices` holding `QuestionnaireChoice` cards (with optional `QuestionnaireChoiceDescription`), or a `QuestionnaireInput`.
+
+`QuestionnaireProgress` shows the current position, and `QuestionnaireActions` lays out `QuestionnairePrevious`, `QuestionnaireSkip`, `QuestionnaireNext` and `QuestionnaireSubmit`, which show and hide themselves based on the current question. Use Questionnaire for onboarding flows and surveys; use Field and regular form controls when all fields should be visible at once.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add questionnaire"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), `use-questionnaire`.
+
+3. Copy the source into `components/ui/questionnaire.tsx`:
+
+<SourceFile path="components/ui/questionnaire.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit } from \"@/components/ui/questionnaire\""} />
+
+<Code lang="tsx" code={"<div className=\"w-[28rem]\">\n  <Questionnaire onSubmit={(event) => event.preventDefault()}>\n    <QuestionnaireProgress />\n    <QuestionnaireItem name=\"role\" required>\n      <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>\n      <QuestionnaireDescription>\n        This helps us tailor the setup to your team.\n      </QuestionnaireDescription>\n      <QuestionnaireChoices>\n        <QuestionnaireChoice value=\"engineering\">\n          Engineering\n        </QuestionnaireChoice>\n        <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n        <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n        <QuestionnaireChoice value=\"other\">\n          Something else\n        </QuestionnaireChoice>\n      </QuestionnaireChoices>\n      <QuestionnaireError />\n    </QuestionnaireItem>\n    <QuestionnaireItem name=\"team-size\">\n      <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n      <QuestionnaireChoices>\n        <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n        <QuestionnaireChoice value=\"small\">\n          2 to 10 people\n        </QuestionnaireChoice>\n        <QuestionnaireChoice value=\"medium\">\n          11 to 50 people\n        </QuestionnaireChoice>\n        <QuestionnaireChoice value=\"large\">\n          More than 50 people\n        </QuestionnaireChoice>\n      </QuestionnaireChoices>\n      <QuestionnaireError />\n    </QuestionnaireItem>\n    <QuestionnaireItem name=\"company\" required>\n      <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n      <QuestionnaireInput placeholder=\"Acme Inc.\" />\n      <QuestionnaireError>\n        Enter a company name to continue.\n      </QuestionnaireError>\n    </QuestionnaireItem>\n    <Actions />\n  </Questionnaire>\n</div>"} />
+
+Give every item a unique `name`; answers are submitted as form data under that name. The first item is shown by default. Use `defaultItem` to start elsewhere, or `item` with `onItemChange` to control the active question.
+
+A `required` item blocks Next and Submit until it is answered. An optional item shows the Skip button. Set `multiple` on an item to render its choices as checkboxes instead of radio buttons.
+
+Pass `items` to define the sequence, which items are required or disabled, and the order used for shortcut keys, instead of deriving them from the rendered items. Native browser validation is off by default (`noValidate`); the component runs its own validation on Next and Submit.
+
+## Examples
+
+### With shortcuts
+
+Choices labelled with letter keys, so pressing a letter selects the matching answer.
+
+<Example kind="ui" name="questionnaire" story="WithShortcuts">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireWithShortcutsExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()} shortcuts=\"letters\">\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required>\n          <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\">\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Number shortcuts
+
+Choices labelled with number keys from `1` to `9`.
+
+<Example kind="ui" name="questionnaire" story="NumberShortcuts">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireNumberShortcutsExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()} shortcuts=\"numbers\">\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required>\n          <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\">\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Multiple choice
+
+A `multiple` item with checkboxes, a default selection, a disabled choice and a custom error.
+
+<Example kind="ui" name="questionnaire" story="MultipleChoice">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireMultipleChoiceExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"features\" multiple required>\n          <QuestionnaireTitle>\n            Which features do you plan to use?\n          </QuestionnaireTitle>\n          <QuestionnaireDescription>\n            Select all that apply.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"analytics\" defaultChecked>\n              Analytics\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"billing\">Billing</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"automations\">\n              Automations\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"integrations\" disabled>\n              Integrations\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError>Choose at least one feature.</QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With choice descriptions
+
+Choice cards with a title and a secondary description.
+
+<Example kind="ui" name="questionnaire" story="WithChoiceDescriptions">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireChoices, QuestionnaireError, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireWithChoiceDescriptionsExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"plan\" required>\n          <QuestionnaireTitle>Which plan fits you best?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"starter\">\n              Starter\n              <QuestionnaireChoiceDescription>\n                For individuals trying things out.\n              </QuestionnaireChoiceDescription>\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"team\" defaultChecked>\n              Team\n              <QuestionnaireChoiceDescription>\n                Shared workspaces and roles for growing teams.\n              </QuestionnaireChoiceDescription>\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"enterprise\">\n              Enterprise\n              <QuestionnaireChoiceDescription>\n                Single sign-on, audit logs, and priority support.\n              </QuestionnaireChoiceDescription>\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Text input
+
+A required email question answered with `QuestionnaireInput`.
+
+<Example kind="ui" name="questionnaire" story="TextInput">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireTextInputExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()}>\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"email\" required>\n          <QuestionnaireTitle>\n            Where should we send your results?\n          </QuestionnaireTitle>\n          <QuestionnaireDescription>\n            We only use your email to share the report.\n          </QuestionnaireDescription>\n          <QuestionnaireInput type=\"email\" placeholder=\"you@example.com\" />\n          <QuestionnaireError>\n            Enter an email address to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Start on later question
+
+A questionnaire that opens on its second question with `defaultItem`.
+
+<Example kind="ui" name="questionnaire" story="StartOnLaterQuestion">
+
+<Code lang="tsx" code={"import { Questionnaire, QuestionnaireActions, QuestionnaireChoice, QuestionnaireChoices, QuestionnaireDescription, QuestionnaireError, QuestionnaireInput, QuestionnaireItem, QuestionnaireNext, QuestionnairePrevious, QuestionnaireProgress, QuestionnaireSkip, QuestionnaireSubmit, QuestionnaireTitle } from \"@/components/ui/questionnaire\"\n\nfunction Actions() {\n  return (\n    <QuestionnaireActions>\n      <QuestionnairePrevious />\n      <QuestionnaireSkip />\n      <QuestionnaireNext />\n      <QuestionnaireSubmit />\n    </QuestionnaireActions>\n  )\n}\n\nexport function QuestionnaireStartOnLaterQuestionExample() {\n  return (\n    <div className=\"w-[28rem]\">\n      <Questionnaire onSubmit={(event) => event.preventDefault()} defaultItem=\"team-size\">\n        <QuestionnaireProgress />\n        <QuestionnaireItem name=\"role\" required>\n          <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>\n          <QuestionnaireDescription>\n            This helps us tailor the setup to your team.\n          </QuestionnaireDescription>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"engineering\">\n              Engineering\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"design\">Design</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"product\">Product</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"other\">\n              Something else\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"team-size\">\n          <QuestionnaireTitle>How large is your team?</QuestionnaireTitle>\n          <QuestionnaireChoices>\n            <QuestionnaireChoice value=\"solo\">Just me</QuestionnaireChoice>\n            <QuestionnaireChoice value=\"small\">\n              2 to 10 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"medium\">\n              11 to 50 people\n            </QuestionnaireChoice>\n            <QuestionnaireChoice value=\"large\">\n              More than 50 people\n            </QuestionnaireChoice>\n          </QuestionnaireChoices>\n          <QuestionnaireError />\n        </QuestionnaireItem>\n        <QuestionnaireItem name=\"company\" required>\n          <QuestionnaireTitle>What is your company called?</QuestionnaireTitle>\n          <QuestionnaireInput placeholder=\"Acme Inc.\" />\n          <QuestionnaireError>\n            Enter a company name to continue.\n          </QuestionnaireError>\n        </QuestionnaireItem>\n        <Actions />\n      </Questionnaire>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Questionnaire","href":"#questionnaire","children":[{"name":"QuestionnaireProgress","href":"#questionnaireprogress","children":[]},{"name":"QuestionnaireItem","href":"#questionnaireitem","children":[{"name":"QuestionnaireTitle","href":"#questionnairetitle","children":[]},{"name":"QuestionnaireDescription","href":"#questionnairedescription","children":[]},{"name":"QuestionnaireChoices","href":"#questionnairechoices","children":[{"name":"QuestionnaireChoice","href":"#questionnairechoice","children":[{"name":"QuestionnaireChoiceDescription","href":"#questionnairechoicedescription","children":[]}]}]},{"name":"QuestionnaireError","href":"#questionnaireerror","children":[]},{"name":"QuestionnaireInput","href":"#questionnaireinput","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Questionnaire
+
+The `form` root that tracks the active question and handles navigation and submission.
+
+<PropsTable extends={["React.ComponentProps<\"form\">"]} props={[{"name":"defaultItem","type":"string","description":"The `name` of the item shown first when uncontrolled."},{"name":"item","type":"string","description":"The `name` of the active item, for controlled use."},{"name":"items","type":"readonly QuestionnaireItemDefinition[]","description":"Optional item definitions with `name`, `required`, `disabled` and `choices`, used to define the sequence and shortcut order."},{"name":"onItemChange","type":"(item: string) => void","description":"Called with the next item's `name` when the active question changes."},{"name":"shortcuts","type":"QuestionnaireShortcutMode","description":"Enables single-key answer shortcuts using `letters` (A to Z) or `numbers` (1 to 9)."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QuestionnaireProgress
+
+Shows the position, such as `Question 2 of 3`, as a progress bar.
+
+<PropsTable extends={["useRender.ComponentProps<\"div\", QuestionnaireState>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### QuestionnaireItem
+
+A `fieldset` for one question, visible only while it is active.
+
+<PropsTable extends={["React.ComponentProps<\"fieldset\">"]} props={[{"name":"invalid","type":"boolean","default":"false","description":"Forces the item into the invalid state."},{"name":"multiple","type":"boolean","default":"false","description":"Allows several answers, rendering choices as checkboxes."},{"name":"name","type":"string","required":true,"description":"The unique item name, used for navigation and as the form field name."},{"name":"onStatusChange","type":"(status: QuestionnaireItemStatus) => void","description":"Called when the item's status changes between `unanswered`, `answered` and `skipped`."},{"name":"required","type":"boolean","default":"false","description":"Requires an answer before moving on and hides the Skip button."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### QuestionnaireTitle
+
+The question text, rendered as the fieldset's `legend`.
+
+<PropsTable extends={["useRender.ComponentProps<\"legend\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### QuestionnaireDescription
+
+Supporting text that describes the question.
+
+<PropsTable extends={["useRender.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### QuestionnaireChoices
+
+The grid that holds the answer choices.
+
+<PropsTable extends={["useRender.ComponentProps< \"div\", { shortcuts: QuestionnaireShortcutMode | null } >"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### QuestionnaireChoice
+
+A selectable answer card containing a radio button or checkbox.
+
+<PropsTable extends={["useRender.ComponentProps<\"label\", QuestionnaireChoiceState>"]} props={[{"name":"checked","type":"boolean","description":"The checked state, for controlled use."},{"name":"defaultChecked","type":"boolean","default":"false","description":"Whether the choice starts checked when uncontrolled."},{"name":"disabled","type":"boolean","default":"false","description":"Prevents the choice from being selected."},{"name":"onChange","type":"React.ChangeEventHandler<HTMLInputElement>","description":"Called when the underlying input changes."},{"name":"value","type":"string","required":true,"description":"The value submitted for this choice."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### QuestionnaireChoiceDescription
+
+Secondary text inside a choice that describes it.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### QuestionnaireInput
+
+A text-style input for free-form answers.
+
+<PropsTable extends={["useRender.ComponentProps<\"input\", QuestionnaireInputState>"]} props={[{"name":"type","type":"QuestionnaireInputType","default":"\"text\"","description":"The input type, such as `text`, `email`, `number`, `date` or `url`."}]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### QuestionnaireError
+
+The validation message shown when the question needs an answer.
+
+<PropsTable extends={["useRender.ComponentProps<\"p\", { invalid: boolean }>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### QuestionnaireActions
+
+Lays out the navigation buttons in one row.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### QuestionnairePrevious
+
+Goes back to the previous question; hidden on the first.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### QuestionnaireSkip
+
+Skips the current optional question; hidden when the question is required.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### QuestionnaireNext
+
+Validates the current question and moves to the next; hidden on the last.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### QuestionnaireSubmit
+
+Submits the form; shown only on the last question.
+
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each item is a `fieldset` named by its `legend` title; inactive items are `hidden` and `inert`.
+- Choices are native radio buttons or checkboxes inside a `label`. A choice description is linked with `aria-describedby`.
+- `QuestionnaireInput` is labelled by the question title unless you pass `aria-label`.
+- The item's description and, when invalid, its error are linked with `aria-describedby`. The error uses `role="alert"` and focus moves to the invalid answer.
+- `QuestionnaireProgress` has `role="progressbar"`, an `aria-label` of `Questionnaire progress`, `aria-valuetext` and `aria-live="polite"`.
+- Keyboard: Enter on an answered control advances or submits; Command or Control plus Enter advances from anywhere; ArrowUp and ArrowDown move between answers; outside text fields and radio buttons, ArrowLeft goes back and ArrowRight goes forward once the question has an answer. The active item lists these in `aria-keyshortcuts`.
+- Hidden navigation buttons are `aria-hidden`, `inert` and removed from the tab order.
+
+## Notes
+
+- Styling hooks: every part sets a `data-slot`, such as `questionnaire`, `questionnaire-item`, `questionnaire-choice`, `questionnaire-choice-indicator`, `questionnaire-choice-shortcut`, `questionnaire-input` and `questionnaire-error`.
+- Choices expose `data-checked` or `data-unchecked`, plus `data-type`, `data-disabled`, `data-invalid` and `data-shortcut`. Inputs expose `data-filled` or `data-empty`. Navigation buttons expose `data-visible` or `data-hidden`.
+- Shortcut badges are hidden below the `md` breakpoint.
+- The default error text is `Choose an answer to continue.` for required items; pass children to customize it.
+- Uses the `accent`, `separator`, `control`, `danger` and `item-hover` tokens.

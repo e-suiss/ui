@@ -1,0 +1,58 @@
+{
+  "description": "A step-by-step form that shows one question at a time, with validation, skipping and keyboard shortcuts.",
+  "overview": "`Questionnaire` renders a `form` that presents a sequence of questions, one at a time. Each `QuestionnaireItem` is a `fieldset` with a `QuestionnaireTitle`, an optional `QuestionnaireDescription`, an answer area and a `QuestionnaireError`. Answers are either `QuestionnaireChoices` holding `QuestionnaireChoice` cards (with optional `QuestionnaireChoiceDescription`), or a `QuestionnaireInput`.\n\n`QuestionnaireProgress` shows the current position, and `QuestionnaireActions` lays out `QuestionnairePrevious`, `QuestionnaireSkip`, `QuestionnaireNext` and `QuestionnaireSubmit`, which show and hide themselves based on the current question. Use Questionnaire for onboarding flows and surveys; use Field and regular form controls when all fields should be visible at once.",
+  "usage": "Give every item a unique `name`; answers are submitted as form data under that name. The first item is shown by default. Use `defaultItem` to start elsewhere, or `item` with `onItemChange` to control the active question.\n\nA `required` item blocks Next and Submit until it is answered. An optional item shows the Skip button. Set `multiple` on an item to render its choices as checkboxes instead of radio buttons.\n\nPass `items` to define the sequence, which items are required or disabled, and the order used for shortcut keys, instead of deriving them from the rendered items. Native browser validation is off by default (`noValidate`); the component runs its own validation on Next and Submit.",
+  "examples": {
+    "WithShortcuts": "Choices labelled with letter keys, so pressing a letter selects the matching answer.",
+    "NumberShortcuts": "Choices labelled with number keys from `1` to `9`.",
+    "MultipleChoice": "A `multiple` item with checkboxes, a default selection, a disabled choice and a custom error.",
+    "WithChoiceDescriptions": "Choice cards with a title and a secondary description.",
+    "TextInput": "A required email question answered with `QuestionnaireInput`.",
+    "StartOnLaterQuestion": "A questionnaire that opens on its second question with `defaultItem`."
+  },
+  "parts": {
+    "Questionnaire": "The `form` root that tracks the active question and handles navigation and submission.",
+    "QuestionnaireProgress": "Shows the position, such as `Question 2 of 3`, as a progress bar.",
+    "QuestionnaireItem": "A `fieldset` for one question, visible only while it is active.",
+    "QuestionnaireTitle": "The question text, rendered as the fieldset's `legend`.",
+    "QuestionnaireDescription": "Supporting text that describes the question.",
+    "QuestionnaireChoices": "The grid that holds the answer choices.",
+    "QuestionnaireChoice": "A selectable answer card containing a radio button or checkbox.",
+    "QuestionnaireChoiceDescription": "Secondary text inside a choice that describes it.",
+    "QuestionnaireInput": "A text-style input for free-form answers.",
+    "QuestionnaireError": "The validation message shown when the question needs an answer.",
+    "QuestionnaireActions": "Lays out the navigation buttons in one row.",
+    "QuestionnairePrevious": "Goes back to the previous question; hidden on the first.",
+    "QuestionnaireSkip": "Skips the current optional question; hidden when the question is required.",
+    "QuestionnaireNext": "Validates the current question and moves to the next; hidden on the last.",
+    "QuestionnaireSubmit": "Submits the form; shown only on the last question."
+  },
+  "props": {
+    "Questionnaire": {
+      "defaultItem": "The `name` of the item shown first when uncontrolled.",
+      "item": "The `name` of the active item, for controlled use.",
+      "items": "Optional item definitions with `name`, `required`, `disabled` and `choices`, used to define the sequence and shortcut order.",
+      "onItemChange": "Called with the next item's `name` when the active question changes.",
+      "shortcuts": "Enables single-key answer shortcuts using `letters` (A to Z) or `numbers` (1 to 9)."
+    },
+    "QuestionnaireItem": {
+      "invalid": "Forces the item into the invalid state.",
+      "multiple": "Allows several answers, rendering choices as checkboxes.",
+      "name": "The unique item name, used for navigation and as the form field name.",
+      "onStatusChange": "Called when the item's status changes between `unanswered`, `answered` and `skipped`.",
+      "required": "Requires an answer before moving on and hides the Skip button."
+    },
+    "QuestionnaireChoice": {
+      "checked": "The checked state, for controlled use.",
+      "defaultChecked": "Whether the choice starts checked when uncontrolled.",
+      "disabled": "Prevents the choice from being selected.",
+      "onChange": "Called when the underlying input changes.",
+      "value": "The value submitted for this choice."
+    },
+    "QuestionnaireInput": {
+      "type": "The input type, such as `text`, `email`, `number`, `date` or `url`."
+    }
+  },
+  "accessibility": "- Each item is a `fieldset` named by its `legend` title; inactive items are `hidden` and `inert`.\n- Choices are native radio buttons or checkboxes inside a `label`. A choice description is linked with `aria-describedby`.\n- `QuestionnaireInput` is labelled by the question title unless you pass `aria-label`.\n- The item's description and, when invalid, its error are linked with `aria-describedby`. The error uses `role=\"alert\"` and focus moves to the invalid answer.\n- `QuestionnaireProgress` has `role=\"progressbar\"`, an `aria-label` of `Questionnaire progress`, `aria-valuetext` and `aria-live=\"polite\"`.\n- Keyboard: Enter on an answered control advances or submits; Command or Control plus Enter advances from anywhere; ArrowUp and ArrowDown move between answers; outside text fields and radio buttons, ArrowLeft goes back and ArrowRight goes forward once the question has an answer. The active item lists these in `aria-keyshortcuts`.\n- Hidden navigation buttons are `aria-hidden`, `inert` and removed from the tab order.",
+  "notes": "- Styling hooks: every part sets a `data-slot`, such as `questionnaire`, `questionnaire-item`, `questionnaire-choice`, `questionnaire-choice-indicator`, `questionnaire-choice-shortcut`, `questionnaire-input` and `questionnaire-error`.\n- Choices expose `data-checked` or `data-unchecked`, plus `data-type`, `data-disabled`, `data-invalid` and `data-shortcut`. Inputs expose `data-filled` or `data-empty`. Navigation buttons expose `data-visible` or `data-hidden`.\n- Shortcut badges are hidden below the `md` breakpoint.\n- The default error text is `Choose an answer to continue.` for required items; pass children to customize it.\n- Uses the `accent`, `separator`, `control`, `danger` and `item-hover` tokens."
+}

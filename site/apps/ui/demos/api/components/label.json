@@ -1,0 +1,26 @@
+{
+  "name": "label",
+  "type": "ui",
+  "files": [
+    "components/ui/label.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithInput",
+    "WithCheckbox",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Label",
+      "extends": [
+        "React.ComponentProps<\"label\">"
+      ],
+      "props": []
+    }
+  ]
+}

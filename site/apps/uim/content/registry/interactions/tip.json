@@ -1,0 +1,38 @@
+{
+  "description": "One-time hints shown as an inline card or a popover pointing at a control, remembered once dismissed.",
+  "overview": "`Tip` shows a hint until the user dismisses it, then records the dismissal under its `id` so it does not return. It renders either as a `TipCard` placed in the layout, or as a `TipPopover` with an arrow pointing at a `TipAnchor`. Touching the anchor also dismisses the tip.\n\n`TipGroup` shows several tips one at a time in the order they mount, moving to the next when one is dismissed. Use tips to introduce a feature or gesture the user may not discover.",
+  "usage": "Give each `Tip` a stable `id`. Compose `TipIcon`, `TipContent` with `TipTitle` and `TipDescription`, and `TipClose` inside a `TipCard` or `TipPopover`. For a popover, wrap the target in `TipAnchor` inside the same `Tip`.\n\nBy default dismissals are kept in memory and reset when the app restarts. To persist them, pass a `storage` adapter to `TipGroup` with `getItem` and `setItem`, sync or async, such as one backed by your app's key-value store. Keys are prefixed with `tip:`. `resetTips(ids, storage)` clears dismissals, and `useTip` returns `visible` and `dismiss`. The `TipStorage` type is exported.",
+  "examples": {
+    "Card": "An inline card tip with an icon, title, description and close button."
+  },
+  "parts": {
+    "TipGroup": "Shows its tips one at a time and supplies the storage.",
+    "Tip": "One hint, identified by `id`.",
+    "TipCard": "Renders the tip inline as a card.",
+    "TipPopover": "Renders the tip as a popover next to the anchor.",
+    "TipAnchor": "The element the popover points at.",
+    "TipIcon": "A decorative icon slot.",
+    "TipContent": "Holds the title and description.",
+    "TipTitle": "The tip's heading.",
+    "TipDescription": "The tip's supporting text.",
+    "TipClose": "A button that dismisses the tip."
+  },
+  "props": {
+    "TipGroup": {
+      "storage": "Adapter with `getItem` and `setItem` for remembering dismissals. Defaults to in-memory storage."
+    },
+    "Tip": {
+      "id": "Stable key used to remember the dismissal.",
+      "delay": "Milliseconds to wait before showing. Defaults to `0`.",
+      "onDismiss": "Called when the tip is dismissed."
+    },
+    "TipPopover": {
+      "side": "Side of the anchor to show on. Defaults to `bottom`.",
+      "align": "Alignment against the anchor. Defaults to `center`.",
+      "sideOffset": "Gap from the anchor. Defaults to `10`.",
+      "portalHost": "Name of a portal host to render into."
+    }
+  },
+  "accessibility": "- `TipCard` has the `note` role.\n- `TipPopover` is non-modal, does not move focus, and is labelled by `TipTitle`.\n- `TipClose` is labelled `Dismiss tip`.\n- The icon is hidden from screen readers.",
+  "notes": "- Cards use `bg-surface-secondary`; popovers use `bg-surface-raised` with a border that is stronger in dark mode, and are up to 320 points wide.\n- Animations respect the system reduce motion setting.\n- On iOS the popover renders in a full-window overlay so it appears above native screens."
+}

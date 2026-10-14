@@ -1,0 +1,21 @@
+{
+  "name": "chat-conversations",
+  "type": "block",
+  "files": [
+    "components/blocks/chat-conversations.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "bubble",
+    "button",
+    "input",
+    "message",
+    "message-scroller",
+    "split-view"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,46 @@
+---
+title: Pie Chart Nested
+description: "Two concentric pies: an inner ring of grouped totals surrounded by an outer ring of individual categories."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-nested">
+
+<SourceFile path="components/charts/pie-chart-nested.tsx" fold={false} />
+
+</Example>
+
+Two concentric rings: a lighter inner pie of group totals surrounded by an outer ring of individual categories. Use it for two-level breakdowns, such as product lines and the products within them.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-nested"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-nested.tsx`:
+
+<SourceFile path="components/charts/pie-chart-nested.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartNested } from \"@/components/charts/pie-chart-nested\""} />
+
+<Code lang="tsx" code={"<PieChartNested />"} />
+
+Put the detailed records in `chartData` and the group totals in `groups`, making sure each group total matches the sum of its categories. Order the outer categories so each group's members sit together, aligned with their inner slice.
+
+## Notes
+
+In the demo the inner groups reuse the Phone and Watch keys even though they combine several categories, so their tooltips read Phone and Watch. Give each group its own key and label in `chartConfig` to avoid confusion.

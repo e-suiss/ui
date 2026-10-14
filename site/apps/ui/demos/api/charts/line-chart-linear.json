@@ -1,0 +1,16 @@
+{
+  "name": "line-chart-linear",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-linear.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

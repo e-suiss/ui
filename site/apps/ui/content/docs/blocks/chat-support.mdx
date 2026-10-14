@@ -1,0 +1,46 @@
+---
+title: Chat Support
+description: "A support landing section with a floating chat panel, quick-reply suggestions, and a launcher button."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="chat-support">
+
+<SourceFile path="components/blocks/chat-support.tsx" fold={false} />
+
+</Example>
+
+A support page with a floating chat panel holding a greeting, quick-reply suggestions, the conversation and a composer. Closing the panel shrinks it into a round launcher button that reopens it. The panel spans the bottom of the screen on mobile and docks to a corner on larger screens. Use it as the in-app help widget for a store, a SaaS product or a docs site.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks chat-support"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller).
+
+3. Copy the source into `components/blocks/chat-support.tsx`:
+
+<SourceFile path="components/blocks/chat-support.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ChatSupport } from \"@/components/blocks/chat-support\""} />
+
+<Code lang="tsx" code={"<ChatSupport />"} />
+
+Edit the `answers` record: each key becomes a quick-reply button and its value is the canned answer, while any other question gets a fallback about connecting to a Specialist. The `ask` function fakes a reply after a delay, so replace it with your support bot or live-agent API. Change the greeting and the hero photo in the `image` constant.
+
+## Notes
+
+Focus returns to the launcher when the panel closes. The hero photo is an Unsplash placeholder.

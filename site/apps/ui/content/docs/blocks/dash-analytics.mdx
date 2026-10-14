@@ -1,0 +1,46 @@
+---
+title: Dash Analytics
+description: "An app analytics dashboard with a metric switcher, an interactive area chart, and a regional breakdown."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="dash-analytics">
+
+<SourceFile path="components/blocks/dash-analytics.tsx" fold={false} />
+
+</Example>
+
+An analytics dashboard for apps: pick a metric, read its current value and growth, and hover the 12-week area chart to see any week's figure in the headline. A By region list below breaks the metric down by share. The app list sits in a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Start here for product analytics, traffic or revenue reports.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks dash-analytics"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react recharts"} />
+
+2. Add the pieces it builds on: [Chart](/docs/components/chart), [Item](/docs/components/item), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/dash-analytics.tsx`:
+
+<SourceFile path="components/blocks/dash-analytics.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { DashAnalytics } from \"@/components/blocks/dash-analytics\""} />
+
+<Code lang="tsx" code={"<DashAnalytics />"} />
+
+Replace `metrics` with your series; each metric has a label, unit, current value and 12 weekly data points. `regions` holds each region's share, and `apps` and `items` fill the navigation. The sample fakes per-app numbers by scaling the first app's data and computes growth on the fly, so load real figures per app from your analytics source.
+
+## Notes
+
+The headline value is announced as you move through the chart, and the chart supports keyboard navigation.

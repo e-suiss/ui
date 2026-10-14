@@ -1,0 +1,14 @@
+{
+  "name": "footer-compact",
+  "type": "block",
+  "files": [
+    "components/blocks/footer-compact.tsx"
+  ],
+  "requires": [
+    "accordion",
+    "breadcrumb"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

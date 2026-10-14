@@ -1,0 +1,139 @@
+---
+title: Calendar
+description: "A month-grid date picker for selecting a single date, several dates or a date range."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="calendar" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" />\n  )\n}"} />
+
+</Example>
+
+`Calendar` is a styled wrapper around `DayPicker` from `react-day-picker`, so it accepts the full `DayPicker` API, including `mode`, `selected`, `onSelect`, `numberOfMonths`, `captionLayout`, `disabled` and `showWeekNumber`. It replaces the day cells with `CalendarDayButton`, which renders each day as a `Button` and styles today, single selections and range start, middle and end.
+
+Use a calendar when people need to see dates in context, such as availability or a stay range. Place it inside a Popover to build a compact date picker; the calendar's background becomes transparent inside popover and card content.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add calendar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn react-day-picker"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Calendar, CalendarDayButton } from \"@/components/ui/calendar\""} />
+
+<Code lang="tsx" code={"<SingleCalendar buttonVariant=\"plain\" />"} />
+
+Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. For ranges, `numberOfMonths={2}` shows two months side by side on wider screens.
+
+Set `captionLayout` to `dropdown`, `dropdown-months` or `dropdown-years` to let people jump to a month or year directly; the default is `label`.
+
+Unlike the `DayPicker` default, outside days are hidden unless you pass `showOutsideDays`. The default `locale` is `enUS`. Pass `disabled` with a matcher, such as `{ dayOfWeek: [0, 6] }`, to block days.
+
+Use `CalendarDayButton` when you supply your own `components` and still want the library's day styling.
+
+## Examples
+
+### Sizes
+
+Compares the `sm`, `default` and `lg` sizes.
+
+<Example kind="ui" name="calendar" story="Sizes">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarSizesExample() {\n  return (\n    <div className=\"flex flex-wrap items-start gap-6\">\n      <SingleCalendar buttonVariant=\"plain\" size=\"sm\" />\n      <SingleCalendar buttonVariant=\"plain\" size=\"default\" />\n      <SingleCalendar buttonVariant=\"plain\" size=\"lg\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Range
+
+Selects a seven-day range across two months with `mode="range"`.
+
+<Example kind="ui" name="calendar" story="Range">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { DateRange } from \"react-day-picker\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction RangeCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [range, setRange] = React.useState<DateRange | undefined>({\n    from: today,\n    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),\n  })\n  return (\n    <Calendar\n      {...props}\n      mode=\"range\"\n      selected={range}\n      onSelect={setRange}\n      numberOfMonths={2}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarRangeExample() {\n  return (\n    <RangeCalendar buttonVariant=\"plain\" />\n  )\n}"} />
+
+</Example>
+
+### Dropdown caption
+
+Replaces the month label with month and year dropdowns.
+
+<Example kind="ui" name="calendar" story="DropdownCaption">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarDropdownCaptionExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" captionLayout=\"dropdown\" />\n  )\n}"} />
+
+</Example>
+
+### Week numbers
+
+Shows the week number at the start of each row.
+
+<Example kind="ui" name="calendar" story="WeekNumbers">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarWeekNumbersExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" showWeekNumber />\n  )\n}"} />
+
+</Example>
+
+### Disabled days
+
+Disables weekends with a `dayOfWeek` matcher.
+
+<Example kind="ui" name="calendar" story="DisabledDays">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarDisabledDaysExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" disabled={{ dayOfWeek: [0, 6] }} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Calendar
+
+The date grid, with month navigation and caption.
+
+<PropsTable extends={["React.ComponentProps<typeof DayPicker>"]} props={[{"name":"buttonVariant","type":"React.ComponentProps<typeof Button>[\"variant\"]","default":"\"plain\"","description":"`Button` variant used for the previous and next month buttons. Defaults to `plain`."},{"name":"size","type":"\"sm\" | \"default\" | \"lg\"","default":"\"default\"","description":"Cell size and type scale: `sm`, `default` or `lg`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CalendarDayButton
+
+The button rendered for each day, styled by its selection state.
+
+<PropsTable extends={["DayButtonProps"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each month renders as a `grid` labelled with its month and year; selected days set `aria-selected` on their cell.
+- Arrow keys move focus between days, and clicking or pressing a day selects it.
+- The navigation buttons are labelled for the next and previous month.
+- Disabled days render disabled buttons.
+- Caption dropdowns are native `select` elements labelled for month and year.
+
+## Notes
+
+- Styling hooks: `data-slot="calendar"` and `data-size` on the root; day buttons expose `data-day`, `data-today`, `data-selected-single`, `data-range-start`, `data-range-middle` and `data-range-end`.
+- Cell size and radius come from the `--cell-size` and `--cell-radius` custom properties, which `size` adjusts.
+- Pass `classNames` to override any `react-day-picker` class key; your values replace the defaults for that key.
+- Navigation chevrons flip in right-to-left layouts.

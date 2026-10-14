@@ -1,0 +1,95 @@
+---
+title: Spinner
+description: "An eight-spoke activity indicator that shows an indeterminate wait."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="spinner" story="Default">
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
+
+</Example>
+
+`Spinner` is an SVG of eight fading spokes that rotates in steps, like the system activity indicator. It draws in `currentColor` and is `size-4` by default, so it inherits the surrounding text color.
+
+Use it for short waits whose length is unknown, such as saving or loading more. For a placeholder that previews the shape of content, use `Skeleton`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/spinner.tsx`:
+
+<SourceFile path="components/ui/spinner.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\""} />
+
+<Code lang="tsx" code={"<Spinner />"} />
+
+Change the size with a `size-*` class and the color with a `text-*` class. Inside a `Button`, pair it with `disabled` and give it `data-icon="inline-start"` to place it before the label.
+
+## Examples
+
+### Sizes
+
+Shows spinners from `size-3` to `size-8`.
+
+<Example kind="ui" name="spinner" story="Sizes">
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"size-3\" />\n      <Spinner className=\"size-4\" />\n      <Spinner className=\"size-6\" />\n      <Spinner className=\"size-8\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Colors
+
+Tints spinners with `text-*` color classes.
+
+<Example kind="ui" name="spinner" story="Colors">
+
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"text-accent size-6\" />\n      <Spinner className=\"text-label-secondary size-6\" />\n      <Spinner className=\"text-danger size-6\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### In button
+
+Places a spinner in disabled buttons that are busy.
+
+<Example kind="ui" name="spinner" story="InButton">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Button disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Saving\n      </Button>\n      <Button variant=\"outline\" disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Loading more\n      </Button>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Spinner
+
+The animated activity indicator.
+
+<PropsTable extends={["React.ComponentProps<\"svg\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders with the `status` role and the accessible name `Loading`. Override `aria-label` to describe the specific task.
+
+## Notes
+
+- Uses `data-slot="spinner"`.
+- The rotation lasts `0.8s` and moves in eight steps, so one spoke advances at a time.

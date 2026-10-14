@@ -1,0 +1,46 @@
+---
+title: Inbox Mail
+description: "A three-column mail client with mailboxes, a searchable message list, and a message reader with reply."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="inbox-mail">
+
+<SourceFile path="components/blocks/inbox-mail.tsx" fold={false} />
+
+</Example>
+
+A three-pane mail client: mailboxes on the left, a searchable message list in the middle and the open message with a reply box on the right. On small screens the panes collapse into a single view with a back button. Start from it for any inbox-style screen, such as support tickets or notifications.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks inbox-mail"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Input Group](/docs/components/input-group), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea).
+
+3. Copy the source into `components/blocks/inbox-mail.tsx`:
+
+<SourceFile path="components/blocks/inbox-mail.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { InboxMail } from \"@/components/blocks/inbox-mail\""} />
+
+<Code lang="tsx" code={"<InboxMail />"} />
+
+Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue and unread and starred flags, and `mailboxes` with your folders. Only Starred actually filters the list, so load each folder from your mail backend. Archive and Delete both remove the message, the reply form only clears on submit, and New message has no handler.
+
+## Notes
+
+Search runs in the browser over sender, subject and body, so move it server-side for real mailboxes. The reply box receives focus when it opens.

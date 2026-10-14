@@ -1,0 +1,248 @@
+---
+title: Dropdown Menu
+description: "A menu of actions or options that opens from a button."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="dropdown-menu" story="Default">
+
+<Code lang="tsx" code={"import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, TrashIcon, UserIcon, UserPlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function DropdownMenuExample() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n        Open menu\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-56\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>My account</DropdownMenuLabel>\n          <DropdownMenuItem>\n            <UserIcon />\n            Profile\n            <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <CreditCardIcon />\n            Billing\n            <DropdownMenuShortcut mod>B</DropdownMenuShortcut>\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <GearIcon />\n            Settings\n            <DropdownMenuShortcut mod>,</DropdownMenuShortcut>\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuSub>\n          <DropdownMenuSubTrigger>\n            <UserPlusIcon />\n            Invite users\n          </DropdownMenuSubTrigger>\n          <DropdownMenuSubContent>\n            <DropdownMenuItem>\n              <EnvelopeIcon />\n              Email\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <ChatCircleIcon />\n              Message\n            </DropdownMenuItem>\n          </DropdownMenuSubContent>\n        </DropdownMenuSub>\n        <DropdownMenuItem disabled>API access</DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem variant=\"destructive\">\n          <TrashIcon />\n          Delete account\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <SignOutIcon />\n          Log out\n          <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}"} />
+
+</Example>
+
+Dropdown menu wraps the Base UI Menu. The `DropdownMenu` root manages the open state and `DropdownMenuTrigger` opens it. `DropdownMenuContent` renders the menu in a portal, positioned below the trigger. Inside it, use `DropdownMenuItem` for actions, `DropdownMenuCheckboxItem` for toggles, and `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` for a single choice. Organize items with `DropdownMenuGroup`, `DropdownMenuLabel` and `DropdownMenuSeparator`, and nest a submenu with `DropdownMenuSub`, `DropdownMenuSubTrigger` and `DropdownMenuSubContent`. `DropdownMenuShortcut` displays a keyboard shortcut at the end of an item.
+
+Use a dropdown menu for actions and settings behind a visible button. For actions on an object opened with a right-click, use a context menu; to choose a value for a form field, use a select.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dropdown-menu"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: `use-platform`.
+
+3. Copy the source into `components/ui/dropdown-menu.tsx`:
+
+<SourceFile path="components/ui/dropdown-menu.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut } from \"@/components/ui/dropdown-menu\""} />
+
+<Code lang="tsx" code={"<DropdownMenu>\n  <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n    Open menu\n  </DropdownMenuTrigger>\n  <DropdownMenuContent className=\"w-56\">\n    <DropdownMenuGroup>\n      <DropdownMenuLabel>My account</DropdownMenuLabel>\n      <DropdownMenuItem>\n        <UserIcon />\n        Profile\n        <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>\n      </DropdownMenuItem>\n      <DropdownMenuItem>\n        <CreditCardIcon />\n        Billing\n        <DropdownMenuShortcut mod>B</DropdownMenuShortcut>\n      </DropdownMenuItem>\n      <DropdownMenuItem>\n        <GearIcon />\n        Settings\n        <DropdownMenuShortcut mod>,</DropdownMenuShortcut>\n      </DropdownMenuItem>\n    </DropdownMenuGroup>\n    <DropdownMenuSeparator />\n    <DropdownMenuSub>\n      <DropdownMenuSubTrigger>\n        <UserPlusIcon />\n        Invite users\n      </DropdownMenuSubTrigger>\n      <DropdownMenuSubContent>\n        <DropdownMenuItem>\n          <EnvelopeIcon />\n          Email\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <ChatCircleIcon />\n          Message\n        </DropdownMenuItem>\n      </DropdownMenuSubContent>\n    </DropdownMenuSub>\n    <DropdownMenuItem disabled>API access</DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant=\"destructive\">\n      <TrashIcon />\n      Delete account\n    </DropdownMenuItem>\n    <DropdownMenuItem>\n      <SignOutIcon />\n      Log out\n      <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>\n    </DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>"} />
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Selecting an item closes the menu.
+
+Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant="destructive"` on items that delete or remove something.
+
+## Examples
+
+### Checkboxes
+
+Controlled checkbox items that toggle interface elements, including a disabled item.
+
+<Example kind="ui" name="dropdown-menu" story="Checkboxes">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nfunction CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {\n  const [statusBar, setStatusBar] = React.useState(true)\n  const [activityBar, setActivityBar] = React.useState(false)\n  const [panel, setPanel] = React.useState(false)\n\n  return (\n    <DropdownMenu {...props}>\n      <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n        View\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-56\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>Appearance</DropdownMenuLabel>\n          <DropdownMenuCheckboxItem\n            checked={statusBar}\n            onCheckedChange={setStatusBar}\n          >\n            Status bar\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={activityBar}\n            onCheckedChange={setActivityBar}\n          >\n            Activity bar\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={panel}\n            onCheckedChange={setPanel}\n            disabled\n          >\n            Panel\n          </DropdownMenuCheckboxItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport function DropdownMenuCheckboxesExample() {\n  return (\n    <CheckboxesExample />\n  )\n}"} />
+
+</Example>
+
+### Radio group
+
+A controlled radio group for choosing a single panel position.
+
+<Example kind="ui" name="dropdown-menu" story="RadioGroup">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nfunction RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {\n  const [position, setPosition] = React.useState(\"bottom\")\n\n  return (\n    <DropdownMenu {...props}>\n      <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n        Panel position\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-56\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>Position</DropdownMenuLabel>\n          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>\n            <DropdownMenuRadioItem value=\"top\">Top</DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"bottom\">Bottom</DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"right\">Right</DropdownMenuRadioItem>\n          </DropdownMenuRadioGroup>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport function DropdownMenuRadioGroupExample() {\n  return (\n    <RadioGroupExample />\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+A labelled group of inset items without icons, each with a keyboard shortcut.
+
+<Example kind="ui" name="dropdown-menu" story="Inset">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function DropdownMenuInsetExample() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant=\"outline\" />}>\n        Edit\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-56\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel inset>Clipboard</DropdownMenuLabel>\n          <DropdownMenuItem inset>\n            Cut\n            <DropdownMenuShortcut mod>X</DropdownMenuShortcut>\n          </DropdownMenuItem>\n          <DropdownMenuItem inset>\n            Copy\n            <DropdownMenuShortcut mod>C</DropdownMenuShortcut>\n          </DropdownMenuItem>\n          <DropdownMenuItem inset>\n            Paste\n            <DropdownMenuShortcut mod>V</DropdownMenuShortcut>\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"DropdownMenu","href":"#dropdownmenu","children":[{"name":"DropdownMenuTrigger","href":"#dropdownmenutrigger","children":[]},{"name":"DropdownMenuContent","href":"#dropdownmenucontent","children":[{"name":"DropdownMenuGroup","href":"#dropdownmenugroup","children":[{"name":"DropdownMenuLabel","href":"#dropdownmenulabel","children":[]},{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[{"name":"DropdownMenuShortcut","href":"#dropdownmenushortcut","children":[]}]}]},{"name":"DropdownMenuSeparator","href":"#dropdownmenuseparator","children":[]},{"name":"DropdownMenuSub","href":"#dropdownmenusub","children":[{"name":"DropdownMenuSubTrigger","href":"#dropdownmenusubtrigger","children":[]},{"name":"DropdownMenuSubContent","href":"#dropdownmenusubcontent","children":[{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[]}]}]},{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[{"name":"DropdownMenuShortcut","href":"#dropdownmenushortcut","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### DropdownMenu
+
+The root that manages the menu's open state.
+
+<PropsTable extends={["MenuPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DropdownMenuPortal
+
+Renders its children into a portal outside the current DOM hierarchy.
+
+<PropsTable extends={["MenuPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DropdownMenuTrigger
+
+The button that opens the menu.
+
+<PropsTable extends={["MenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DropdownMenuContent
+
+The menu panel, rendered in a portal and positioned relative to the trigger.
+
+<PropsTable extends={["MenuPrimitive.Popup.Props","MenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DropdownMenuGroup
+
+Groups related items.
+
+<PropsTable extends={["MenuPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DropdownMenuLabel
+
+A heading for a group of items.
+
+<PropsTable extends={["MenuPrimitive.GroupLabel.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the label aligns with items that have an icon or indicator."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DropdownMenuItem
+
+An action in the menu.
+
+<PropsTable extends={["MenuPrimitive.Item.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with items that have an icon or indicator."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`destructive` colors the item and its icon with the `danger` color."}]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+<PropsTable extends={["MenuPrimitive.SubmenuRoot.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### DropdownMenuSubTrigger
+
+The item that opens a submenu, shown with a trailing caret.
+
+<PropsTable extends={["MenuPrimitive.SubmenuTrigger.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the trigger aligns with items that have an icon or indicator."}]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### DropdownMenuSubContent
+
+The panel of a submenu, opened beside its trigger.
+
+<PropsTable extends={["React.ComponentProps<typeof DropdownMenuContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### DropdownMenuCheckboxItem
+
+An item that toggles a setting on or off and shows a check mark when on.
+
+<PropsTable extends={["MenuPrimitive.CheckboxItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+<PropsTable extends={["MenuPrimitive.RadioGroup.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### DropdownMenuRadioItem
+
+An item in a radio group that shows a check mark when selected.
+
+<PropsTable extends={["MenuPrimitive.RadioItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### DropdownMenuSeparator
+
+A divider between groups of items.
+
+<PropsTable extends={["MenuPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### DropdownMenuShortcut
+
+Displays a keyboard shortcut at the end of an item.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger sets `aria-expanded`. The menu has the `menu` role; items have the `menuitem`, `menuitemcheckbox` or `menuitemradio` role, and checkbox and radio items set `aria-checked`.
+- Groups have the `group` role and take their name from `DropdownMenuLabel`.
+- Opening the menu from the keyboard focuses the first item. Arrow keys move between items, and disabled items set `aria-disabled`.
+- On a submenu trigger, the Right Arrow opens the submenu and moves focus into it, and the Left Arrow returns to the trigger. The arrow directions follow the reading direction.
+- Escape closes the menu and returns focus to the trigger.
+- `DropdownMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.
+
+## Notes
+
+- Styling hooks: `data-slot` values such as `dropdown-menu-content`, `dropdown-menu-item`, `dropdown-menu-checkbox-item`, `dropdown-menu-checkbox-item-indicator`, `dropdown-menu-radio-item`, `dropdown-menu-radio-item-indicator`, `dropdown-menu-sub-trigger`, `dropdown-menu-label`, `dropdown-menu-separator` and `dropdown-menu-shortcut`.
+- Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.
+- By default the menu opens below the trigger, aligned to `start`, and matches the trigger's width with a minimum of `12rem`. Override the width with `className`.
+- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger`, `danger-surface` and `separator` tokens.

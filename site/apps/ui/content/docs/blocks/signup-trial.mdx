@@ -1,0 +1,46 @@
+---
+title: Signup Trial
+description: "A free trial signup split between a promotional image panel and a short form with a password strength meter."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="signup-trial">
+
+<SourceFile path="components/blocks/signup-trial.tsx" fold={false} />
+
+</Example>
+
+A free trial signup that pairs a promotional image panel with a short form: email, password with a strength meter, and a terms checkbox. The submit button stays disabled until the form is valid. The panel sits beside the form on desktop and above it on mobile. Use it for trial, waitlist or account signups that need a sales pitch alongside.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks signup-trial"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Input](/docs/components/input), [Label](/docs/components/label).
+
+3. Copy the source into `components/blocks/signup-trial.tsx`:
+
+<SourceFile path="components/blocks/signup-trial.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SignupTrial } from \"@/components/blocks/signup-trial\""} />
+
+<Code lang="tsx" code={"<SignupTrial />"} />
+
+Replace the promotional copy, the `image` constant and the success branch with your trial signup call. `strength` scores length, mixed case, a digit and a symbol, and the form needs 3 of 4, so tune it to your password policy. Point `#sign-in` at your sign-in page.
+
+## Notes
+
+The strength meter exposes its level to screen readers. The promo panel is a CSS background image from Unsplash with no text alternative, so keep its copy meaningful.

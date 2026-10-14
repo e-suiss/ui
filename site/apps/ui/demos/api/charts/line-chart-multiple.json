@@ -1,0 +1,16 @@
+{
+  "name": "line-chart-multiple",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-multiple.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

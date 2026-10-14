@@ -1,0 +1,6 @@
+{
+  "description": "A mobile app welcome screen with a Sign in with suiss bottom sheet for sharing or hiding an email.",
+  "overview": "A mobile app welcome screen whose Sign in with suiss button slides up a bottom sheet, where users choose to share or hide their email before continuing. Completing the flow greets the user with a Sign out link. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the section. Use it for third-party sign-in or any consent step shown as a bottom sheet.",
+  "usage": "Replace `proceed`, which fakes a one-second request, with your identity provider's sign-in, and send the chosen email option along. Update the Trail Routes app name, tagline and account details, and give Continue with email a handler.",
+  "notes": "The sheet behaves as a modal dialog: focus moves into it, Escape or a click on the scrim closes it, and focus returns to the trigger."
+}

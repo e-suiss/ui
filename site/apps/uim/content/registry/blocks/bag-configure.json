@@ -1,0 +1,5 @@
+{
+  "description": "A product configuration screen for choosing a model, finish and storage, with a live price and an Add to Bag button.",
+  "overview": "Composes `Screen`, `ToggleGroup` color swatches, `Button`, `Text` and `BottomBar`. Model and storage are radio-style options, the finish swatches cross-fade the product photo, and the bottom bar shows the price and a monthly amount that update as you choose. Add to Bag switches its label to Added to Bag.",
+  "usage": "Replace `MODELS`, `FINISHES` and `STORAGE` with your catalog data. Pass `onAddToBag` to receive the selected model, finish, storage and price."
+}

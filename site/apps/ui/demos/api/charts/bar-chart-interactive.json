@@ -1,0 +1,17 @@
+{
+  "name": "bar-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

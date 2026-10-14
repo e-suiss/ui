@@ -1,0 +1,17 @@
+{
+  "name": "radar-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart",
+    "toggle"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

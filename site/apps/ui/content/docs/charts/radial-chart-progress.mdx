@@ -1,0 +1,46 @@
+---
+title: Radial Chart Progress
+description: "A three-quarter arc tracking progress toward a goal, with the count shown in the center."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-progress">
+
+<SourceFile path="components/charts/radial-chart-progress.tsx" fold={false} />
+
+</Example>
+
+A three-quarter arc tracking progress toward a goal, with the count shown in the center. Use it for goals with a clear finish line, like a reading challenge or a savings target.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-progress"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-progress.tsx`:
+
+<SourceFile path="components/charts/radial-chart-progress.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartProgress } from \"@/components/charts/radial-chart-progress\""} />
+
+<Code lang="tsx" code={"<RadialChartProgress />"} />
+
+Set the progress as a percentage in `chartData`, or change the `domain` on `PolarAngleAxis` to your goal and pass the raw count. Update the center text and caption, and set the color in `chartConfig`.
+
+## Notes
+
+The center text is hard-coded and not derived from the value, so update both together. There is no tooltip.

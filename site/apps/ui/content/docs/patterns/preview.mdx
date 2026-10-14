@@ -1,0 +1,113 @@
+---
+title: Preview
+description: "A link preview that shows a hover card on desktop and a drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="preview" story="Default">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent>\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Preview` reveals extra information about a link, such as a profile or page summary, without navigating. On desktop it renders a suiss/ui `HoverCard` that opens when the trigger is hovered or focused. On mobile (below `48rem`, via `useIsMobile`), where hover is not available, it renders a `Drawer` with a swipe handle that opens when the trigger is tapped. The drawer floats inset from the screen edges by default.
+
+Use it for supplementary content that people can skip. Keep essential information and actions out of the preview, because the hover card opens only on hover or focus.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns preview"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Hover Card](/docs/components/hover-card), `use-mobile`.
+
+3. Copy the source into `components/patterns/preview.tsx`:
+
+<SourceFile path="components/patterns/preview.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Preview, PreviewTrigger, PreviewContent } from \"@/components/patterns/preview\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center p-4\">\n  <Preview>\n    <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n    <PreviewContent>\n      <ProfileCard />\n    </PreviewContent>\n  </Preview>\n</div>"} />
+
+- Place `PreviewTrigger` and `PreviewContent` inside `Preview`. The parts throw when used outside it.
+- Open state is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it.
+- On desktop the trigger is a link that uses `href`; on mobile it is a button that opens the drawer, so the link target is not followed.
+- `align`, `alignOffset`, `side` and `sideOffset` position the desktop card. `showCloseButton` and `closeLabel` apply only to the mobile drawer.
+
+## Examples
+
+### With close button
+
+Adds a close button to the mobile drawer with `showCloseButton`.
+
+<Example kind="pattern" name="preview" story="WithCloseButton">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent showCloseButton>\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Uses a Done text button for the mobile close button through `closeLabel`.
+
+<Example kind="pattern" name="preview" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent showCloseButton closeLabel=\"Done\">\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Preview","href":"#preview","children":[{"name":"PreviewTrigger","href":"#previewtrigger","children":[]},{"name":"PreviewContent","href":"#previewcontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Preview
+
+The root that chooses HoverCard or Drawer and holds the open state.
+
+<PropsTable extends={["React.ComponentProps<typeof HoverCard>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new open state when the preview opens or closes."},{"name":"floating","type":"boolean","default":"true","description":"Insets the mobile drawer from the screen edges. Has no effect on desktop."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewTrigger
+
+The link-styled element that opens the preview.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"href","type":"string","description":"The link destination on desktop. Ignored on mobile."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewContent
+
+The card or drawer that holds the preview.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof HoverCardContent>"]} props={[{"name":"showCloseButton","type":"boolean","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Text for the mobile close button in place of the icon."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the trigger is a link; the card opens on hover and on keyboard focus, and closes when the pointer leaves.
+- On mobile the trigger is a button that opens the drawer.
+- The trigger shows a focus ring when focused with the keyboard.
+
+## Notes
+
+Styling hooks: `data-slot="preview"`, `preview-trigger` and `preview-content`. On mobile, `className` on `PreviewContent` applies to an inner padded wrapper, which adds end padding to clear the close button when it is shown.

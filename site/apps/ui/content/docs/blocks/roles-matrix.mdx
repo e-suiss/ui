@@ -1,0 +1,46 @@
+---
+title: Roles Matrix
+description: "A permissions matrix with a checkbox for every permission and role, grouped by area, with a save action."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="roles-matrix">
+
+<SourceFile path="components/blocks/roles-matrix.tsx" fold={false} />
+
+</Example>
+
+A permissions matrix with a checkbox for every permission and role, grouped by area, and a Save button that enables after a change. The Admin column is fixed. On narrow screens the grid keeps its width and scrolls sideways. Use it when admins need to compare all roles at once rather than edit one at a time.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks roles-matrix"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Sidebar](/docs/components/sidebar).
+
+3. Copy the source into `components/blocks/roles-matrix.tsx`:
+
+<SourceFile path="components/blocks/roles-matrix.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RolesMatrix } from \"@/components/blocks/roles-matrix\""} />
+
+<Code lang="tsx" code={"<RolesMatrix />"} />
+
+Edit `roles` for the columns and `groups` for the rows; each permission has a name and a `grants` array of 1 or 0 per role, in role order. The first column is always disabled. Replace the Save handler, which only toggles local flags, with your API call.
+
+## Notes
+
+Each checkbox is labeled with its group, permission and role, so cells make sense without the visual header row.

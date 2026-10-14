@@ -1,0 +1,26 @@
+{
+  "description": "A toolbar above the keyboard with previous, next and done buttons for moving through form fields.",
+  "overview": "`InputAccessoryBar` connects a set of inputs and shows a bar above the keyboard while one of them is focused. The up and down arrows move focus to the previous or next input, and the done button dismisses the keyboard.\n\nOn iOS the bar is a native `InputAccessoryView`, attached to the keyboard. On Android it is rendered through a portal and positioned just above the keyboard while an input is focused.",
+  "usage": "Wrap the form in `InputAccessoryBar` and use `InputAccessoryBarInput` in place of `Input`. Inputs are ordered by the order they mount. The return key reads \"next\" on every input but the last, which reads \"done\" and dismisses the keyboard.\n\nFor other text inputs, such as a `Textarea`, call `useInputAccessoryBarInput()` and spread the returned props onto the input. Inside a Keyboard Scroll View, the focused input is scrolled into view.\n\nUse `previousLabel`, `nextLabel` and `doneLabel` to localize the buttons, and `onDone` to react when done is pressed.",
+  "examples": {
+    "Focused": "The first input focused, so the bar is visible.",
+    "CustomLabels": "Custom labels for the previous, next and done buttons.",
+    "WithTextarea": "A textarea connected through `useInputAccessoryBarInput`."
+  },
+  "parts": {
+    "InputAccessoryBar": "Provider that tracks the inputs and renders the bar.",
+    "InputAccessoryBarInput": "`Input` connected to the bar.",
+    "useInputAccessoryBarInput": "Returns the props that connect any text input to the bar."
+  },
+  "props": {
+    "InputAccessoryBar": {
+      "previousLabel": "Label for the previous button. Defaults to `\"Previous\"`.",
+      "nextLabel": "Label for the next button. Defaults to `\"Next\"`.",
+      "doneLabel": "Text or node for the done button. Defaults to `\"Done\"`.",
+      "onDone": "Called after the keyboard is dismissed with done.",
+      "portalHost": "Name of the portal host on Android."
+    }
+  },
+  "accessibility": "- The arrow buttons are labelled with `previousLabel` and `nextLabel` and are disabled at the first and last input.\n- The done button is a text button that dismisses the keyboard.",
+  "notes": "- iOS uses the native input accessory view; Android uses a portal and reserves the bar height so keyboard-aware layouts stay above it.\n- Uses `bg-surface-raised` (a secondary surface in dark mode) and `border-separator` tokens."
+}

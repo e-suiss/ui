@@ -1,0 +1,46 @@
+---
+title: Radial Chart Tinted
+description: "Concentric radial bars whose unfilled track is a soft tint of each bar's own color."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-tinted">
+
+<SourceFile path="components/charts/radial-chart-tinted.tsx" fold={false} />
+
+</Example>
+
+Concentric radial bars where the unfilled part of each track is a soft tint of the bar's own color instead of neutral gray. Choose it over the default radial chart for a more colorful look that still shows how far each bar has to go.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-tinted"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-tinted.tsx`:
+
+<SourceFile path="components/charts/radial-chart-tinted.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartTinted } from \"@/components/charts/radial-chart-tinted\""} />
+
+<Code lang="tsx" code={"<RadialChartTinted />"} />
+
+Replace `chartData` and add each category to `chartConfig`; the tinted tracks are built from the same data. Set `MAX` to the value that should close a full ring, and keep it at or above your largest value.
+
+## Notes
+
+The tracks are a second chart layered behind the real one and hidden from assistive technology, so keep the sizing shared between both when you change it.

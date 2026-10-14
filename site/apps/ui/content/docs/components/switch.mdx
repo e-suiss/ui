@@ -1,0 +1,120 @@
+---
+title: Switch
+description: "A toggle control that turns a single setting on or off."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="switch" story="Default">
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchExample() {\n  return (\n    <Switch aria-label=\"Wi-Fi\" />\n  )\n}"} />
+
+</Example>
+
+`Switch` wraps the Base UI Switch primitive and renders the track and thumb together. The thumb stretches while pressed, and the track fills with the accent color when on.
+
+Use a switch for settings that take effect immediately. To select an option in a form that's submitted later, use `Checkbox`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add switch"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/switch.tsx`:
+
+<SourceFile path="components/ui/switch.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\""} />
+
+<Code lang="tsx" code={"<Switch aria-label=\"Wi-Fi\" />"} />
+
+Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. Wrap the switch and its text in a `Label` so the text toggles it too.
+
+## Examples
+
+### Checked
+
+Starts in the on state.
+
+<Example kind="ui" name="switch" story="Checked">
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchCheckedExample() {\n  return (\n    <Switch defaultChecked aria-label=\"Wi-Fi\" />\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Compares the `sm` and `default` sizes.
+
+<Example kind="ui" name="switch" story="Sizes">
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchSizesExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Switch size=\"sm\" defaultChecked aria-label=\"Wi-Fi\" />\n      <Switch size=\"default\" defaultChecked aria-label=\"Bluetooth\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With label
+
+Wraps the switch in a `Label` so the text names and toggles it.
+
+<Example kind="ui" name="switch" story="WithLabel">
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchWithLabelExample() {\n  return (\n    <Label>\n      <Switch />\n      Airplane mode\n    </Label>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Shows disabled switches in the off and on states.
+
+<Example kind="ui" name="switch" story="Disabled">
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchDisabledExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Switch disabled aria-label=\"Wi-Fi\" />\n      <Switch disabled defaultChecked aria-label=\"Bluetooth\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Marks the switch with `aria-invalid` to show an error state.
+
+<Example kind="ui" name="switch" story="Invalid">
+
+<Code lang="tsx" code={"import { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchInvalidExample() {\n  return (\n    <Switch aria-invalid aria-label=\"Accept terms\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Switch
+
+The switch track and its sliding thumb.
+
+<PropsTable extends={["SwitchPrimitive.Root.Props"]} props={[{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"Sets the switch size: `default` or the smaller `sm`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders with the `switch` role and `aria-checked`.
+- Give it a name with `aria-label` or by wrapping it in a `Label`.
+- `Space` toggles the focused switch.
+- A disabled switch sets `aria-disabled` and ignores clicks.
+
+## Notes
+
+- Uses `data-slot="switch"` and `data-slot="switch-thumb"`, plus `data-size` and Base UI's `data-checked`, `data-unchecked` and `data-disabled` attributes.
+- An invalid switch draws a `danger` border.
+- A transparent hit area extends around the track to make it easier to tap.
+- The thumb's travel flips in right-to-left layouts.

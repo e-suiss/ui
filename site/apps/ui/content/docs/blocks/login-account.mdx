@@ -1,0 +1,46 @@
+---
+title: Login Account
+description: "A two-step account sign-in form that asks for an email, then reveals a password field."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="login-account">
+
+<SourceFile path="components/blocks/login-account.tsx" fold={false} />
+
+</Example>
+
+A sign-in form that asks for an email first, then reveals a password field below it. Errors appear inline and shake the fields, followed by a Remember me checkbox and links for a forgotten password and account creation. A successful sign-in shows a greeting with a Sign out link. Use it for any email-and-password login.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks login-account"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Input](/docs/components/input), [Label](/docs/components/label), [Spinner](/docs/components/spinner).
+
+3. Copy the source into `components/blocks/login-account.tsx`:
+
+<SourceFile path="components/blocks/login-account.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LoginAccount } from \"@/components/blocks/login-account\""} />
+
+<Code lang="tsx" code={"<LoginAccount />"} />
+
+Replace the second step of `submit`, which accepts any password of four or more characters after a delay, with your authentication call, and pass its error message to `fail`. Point the `#forgot` and `#create` links at your routes, and wire the Remember me checkbox, which is uncontrolled. Drop the greeting view if you redirect after login.
+
+## Notes
+
+Inputs use the `username` and `current-password` autocomplete values so password managers work, and errors are tied to the fields and announced.

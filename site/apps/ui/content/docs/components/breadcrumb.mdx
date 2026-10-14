@@ -1,0 +1,166 @@
+---
+title: Breadcrumb
+description: "A trail of links that shows where the current page sits in the site hierarchy."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="breadcrumb" story="Default">
+
+<Code lang="tsx" code={"import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@/components/ui/breadcrumb\"\n\nexport function BreadcrumbExample() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Home</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Projects</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Website redesign</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  )\n}"} />
+
+</Example>
+
+A `Breadcrumb` is a labelled `nav` that contains a `BreadcrumbList`. The list holds `BreadcrumbItem` parts separated by `BreadcrumbSeparator` parts. Each item contains either a `BreadcrumbLink` to an ancestor page or, for the last item, a `BreadcrumbPage` for the current page. Use `BreadcrumbEllipsis` inside an item to stand in for collapsed levels.
+
+Use breadcrumbs in deep hierarchies so people can see their location and move up quickly. For top-level navigation between sections, use a navigation menu or tabs.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add breadcrumb"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/ui/breadcrumb.tsx`:
+
+<SourceFile path="components/ui/breadcrumb.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from \"@/components/ui/breadcrumb\""} />
+
+<Code lang="tsx" code={"<Breadcrumb>\n  <BreadcrumbList>\n    <BreadcrumbItem>\n      <BreadcrumbLink href=\"#\">Home</BreadcrumbLink>\n    </BreadcrumbItem>\n    <BreadcrumbSeparator />\n    <BreadcrumbItem>\n      <BreadcrumbLink href=\"#\">Projects</BreadcrumbLink>\n    </BreadcrumbItem>\n    <BreadcrumbSeparator />\n    <BreadcrumbItem>\n      <BreadcrumbPage>Website redesign</BreadcrumbPage>\n    </BreadcrumbItem>\n  </BreadcrumbList>\n</Breadcrumb>"} />
+
+Place a `BreadcrumbSeparator` between items as its own sibling, not inside a `BreadcrumbItem`. It renders a caret by default; pass children to use a different separator.
+
+`BreadcrumbLink` renders an `a` by default. Use the `render` prop to render your router's link component instead.
+
+For an icon-only link, such as a home icon, add an `aria-label`.
+
+## Examples
+
+### With home icon
+
+Replaces the first link with a home icon and an `aria-label`.
+
+<Example kind="ui" name="breadcrumb" story="WithHomeIcon">
+
+<Code lang="tsx" code={"import { HouseIcon } from \"@phosphor-icons/react\"\nimport { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@/components/ui/breadcrumb\"\n\nexport function BreadcrumbWithHomeIconExample() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\" aria-label=\"Home\" className=\"text-label\">\n            <HouseIcon weight=\"fill\" />\n          </BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Menu</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Main Courses</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Grilled Meatballs</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  )\n}"} />
+
+</Example>
+
+### With ellipsis
+
+Collapses middle levels with `BreadcrumbEllipsis`.
+
+<Example kind="ui" name="breadcrumb" story="WithEllipsis">
+
+<Code lang="tsx" code={"import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@/components/ui/breadcrumb\"\n\nexport function BreadcrumbWithEllipsisExample() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Home</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbEllipsis />\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Settings</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Notifications</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  )\n}"} />
+
+</Example>
+
+### Custom separator
+
+Uses a slash instead of the default caret separator.
+
+<Example kind="ui" name="breadcrumb" story="CustomSeparator">
+
+<Code lang="tsx" code={"import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@/components/ui/breadcrumb\"\n\nexport function BreadcrumbCustomSeparatorExample() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Docs</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator>\n          <span>/</span>\n        </BreadcrumbSeparator>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Components</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator>\n          <span>/</span>\n        </BreadcrumbSeparator>\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Breadcrumb","href":"#breadcrumb","children":[{"name":"BreadcrumbList","href":"#breadcrumblist","children":[{"name":"BreadcrumbItem","href":"#breadcrumbitem","children":[{"name":"BreadcrumbLink","href":"#breadcrumblink","children":[]},{"name":"BreadcrumbPage","href":"#breadcrumbpage","children":[]},{"name":"BreadcrumbEllipsis","href":"#breadcrumbellipsis","children":[]}]},{"name":"BreadcrumbSeparator","href":"#breadcrumbseparator","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Breadcrumb
+
+The `nav` landmark that wraps the trail.
+
+<PropsTable extends={["React.ComponentProps<\"nav\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BreadcrumbList
+
+The ordered list of items.
+
+<PropsTable extends={["React.ComponentProps<\"ol\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BreadcrumbItem
+
+A single step in the trail.
+
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BreadcrumbLink
+
+A link to an ancestor page.
+
+<PropsTable extends={["useRender.ComponentProps<\"a\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### BreadcrumbPage
+
+The current page, rendered as plain text.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### BreadcrumbSeparator
+
+A decorative divider between items.
+
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### BreadcrumbEllipsis
+
+A placeholder for collapsed levels, with a screen-reader label.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `Breadcrumb` renders a `nav` with `aria-label="breadcrumb"`.
+- `BreadcrumbPage` sets `aria-current="page"`.
+- Separators have `role="presentation"` and `aria-hidden="true"`, so only items are announced as list items.
+- `BreadcrumbEllipsis` hides its icon and includes visually hidden text, `More` by default; pass children to change it.
+- Only links are in the tab order; the ellipsis and current page are skipped.
+
+## Notes
+
+- Styling hooks: `data-slot` values from `breadcrumb` through `breadcrumb-ellipsis`.
+- The default caret separator flips in right-to-left layouts.
+- Ancestor links use `text-label-secondary` and the current page uses `text-label`.

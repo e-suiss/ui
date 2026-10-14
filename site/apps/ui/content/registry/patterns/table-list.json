@@ -1,0 +1,23 @@
+{
+  "description": "Tabular data that renders as a table on desktop and a grouped list on mobile.",
+  "overview": "`TableList` displays rows of data from a column definition. On desktop it renders a suiss/ui `Table` inside a bordered section, with a header row and one cell per column. On mobile (below `48rem`, via `useIsMobile`), where wide tables do not fit, it renders an inset grouped list: each row shows a title line, a secondary line that joins description columns with a middle dot, and trailing values on the end.\n\nEach column chooses its place in the mobile row through `slot`, and can provide a simpler `mobileCell`. Use it for orders, invoices, transactions and other records that people compare in columns on large screens.",
+  "usage": "- Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`).\n- On mobile, the first `title` column becomes the primary line, `description` columns form the secondary line, and `trailing` columns appear at the end. Columns without a slot, or with `hidden`, are left out on mobile.\n- `mobileCell` replaces `cell` on mobile, for example to drop styling that does not fit the list.\n- `align: \"end\"` right-aligns the desktop header and cells.",
+  "examples": {
+    "WithoutTitle": "Renders the table without a heading or region.",
+    "Empty": "Shows custom `emptyText` when there are no rows."
+  },
+  "parts": {
+    "TableList": "The section that renders the rows as a table or a grouped list."
+  },
+  "props": {
+    "TableList": {
+      "rows": "The data rows to display.",
+      "columns": "The column definitions that render each row.",
+      "getKey": "Returns the React key for a row.",
+      "title": "A heading above the data that also names the section.",
+      "emptyText": "Content shown when `rows` is empty."
+    }
+  },
+  "accessibility": "- With a `title`, the section is labelled by its heading and exposed as a region.\n- On desktop the data is a real table with column headers; an empty state is a single cell that spans every column.\n- On mobile the rows are list items in a `ul`.",
+  "notes": "Styling hooks: `data-slot=\"table-list\"` and `table-list-title`; on mobile also `table-list-items` and `table-list-item`. The `TableListColumn` type is exported."
+}

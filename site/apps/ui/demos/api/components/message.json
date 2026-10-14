@@ -1,0 +1,68 @@
+{
+  "name": "message",
+  "type": "ui",
+  "files": [
+    "components/ui/message.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "AlignEnd",
+    "WithHeaderAndFooter",
+    "Conversation"
+  ],
+  "parts": [
+    {
+      "name": "MessageGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "Message",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "align",
+          "type": "\"start\" | \"end\"",
+          "required": false,
+          "default": "\"start\""
+        }
+      ]
+    },
+    {
+      "name": "MessageAvatar",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "MessageContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "MessageHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "MessageFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

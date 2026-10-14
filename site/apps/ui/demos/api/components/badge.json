@@ -1,0 +1,36 @@
+{
+  "name": "badge",
+  "type": "ui",
+  "files": [
+    "components/ui/badge.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Variants",
+    "WithIcon",
+    "AsLink",
+    "CustomColor"
+  ],
+  "parts": [
+    {
+      "name": "Badge",
+      "extends": [
+        "useRender.ComponentProps<\"span\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"destructive\" | \"outline\" | \"ghost\" | \"link\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

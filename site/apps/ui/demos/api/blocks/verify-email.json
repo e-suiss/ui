@@ -1,0 +1,15 @@
+{
+  "name": "verify-email",
+  "type": "block",
+  "files": [
+    "components/blocks/verify-email.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

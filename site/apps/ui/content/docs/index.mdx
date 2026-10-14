@@ -1,0 +1,62 @@
+---
+title: Introduction
+description: Copy-paste React components with a clean, minimal design, built on Base UI and Tailwind CSS v4.
+eyebrow: suiss/ui
+---
+
+## Overview
+
+suiss/ui is a set of React components for Next.js and React (Vite) projects with TypeScript. It ships 66 accessible components and 5 hooks, from buttons and dialogs to sidebars, charts and chat views.
+
+The components reach your project through the `@esuiss/ui` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init
+npx @esuiss/ui@latest add button dialog sidebar
+```
+
+## Principles
+
+### You own the code
+
+Components live in your repository, under `components/ui/`. Change them however you like. Updates never overwrite your changes silently: you review the difference first, then decide.
+
+The CLI is never installed in your project. It runs with `npx`, so there is no runtime dependency on it.
+
+### Base UI and Tailwind CSS v4
+
+Components are built on [Base UI](https://base-ui.com) primitives and styled with [Tailwind CSS](https://tailwindcss.com) 4.2 or later. Variants, animations and utilities come from the `@esuiss/tailwind` package.
+
+### A palette for light and dark
+
+Colors are written in oklch and named by role, not by component: `surface`, `label`, `accent`, `separator` and so on. Every color has a light value under `:root` and a dark value under `.dark`. See [Theming](/docs/theming).
+
+### Phosphor icons
+
+Components use [Phosphor](https://phosphoricons.com) icons.
+
+## Frameworks
+
+| Framework | Stylesheet written by `init` | Font |
+| --- | --- | --- |
+| Next.js | `app/globals.css` | Inter through `next/font/google` in the root layout |
+| React with Vite | `src/index.css` | Inter through `@fontsource-variable/inter` |
+
+On macOS, text uses the system font. Inter is used everywhere else.
+
+## Beyond components
+
+Besides components and hooks, the CLI can add optional extras:
+
+- **Patterns** combine several components into one ready-made piece, such as a date and time picker.
+- **Interactions** add a behavior to something you already have, such as swiping a row to reveal actions.
+- **Charts** are ready-made charts built on the `chart` component.
+- **Blocks** are ready-made sections of a page built from the components.
+
+See [CLI](/docs/cli) for how to add them.
+
+## Next steps
+
+- [Installation](/docs/installation): set up a project and add your first components.
+- [Theming](/docs/theming): change colors, the font and the corner radius.
+- [Button](/docs/components/button): a first component reference.

@@ -1,0 +1,14 @@
+{
+  "name": "hero-cinematic",
+  "type": "block",
+  "files": [
+    "components/blocks/hero-cinematic.tsx"
+  ],
+  "requires": [
+    "button",
+    "toggle-group"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

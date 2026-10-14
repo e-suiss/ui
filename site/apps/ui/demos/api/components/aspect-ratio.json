@@ -1,0 +1,32 @@
+{
+  "name": "aspect-ratio",
+  "type": "ui",
+  "files": [
+    "components/ui/aspect-ratio.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Square",
+    "Portrait",
+    "Placeholder"
+  ],
+  "parts": [
+    {
+      "name": "AspectRatio",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "ratio",
+          "type": "number",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

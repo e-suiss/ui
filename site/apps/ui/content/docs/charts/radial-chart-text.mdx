@@ -1,0 +1,46 @@
+---
+title: Radial Chart Text
+description: "A single full-circle progress ring with a percentage and caption centered inside."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-text">
+
+<SourceFile path="components/charts/radial-chart-text.tsx" fold={false} />
+
+</Example>
+
+A single full-circle progress ring with a percentage and caption centered inside. Use it for one headline ratio, such as storage used or a completion rate.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-text"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-text.tsx`:
+
+<SourceFile path="components/charts/radial-chart-text.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartText } from \"@/components/charts/radial-chart-text\""} />
+
+<Code lang="tsx" code={"<RadialChartText />"} />
+
+Set the value in `chartData` and keep the `domain` on `PolarAngleAxis` at your maximum. Update the percentage and caption in the center overlay, and change the color in `chartConfig`.
+
+## Notes
+
+The center text is hard-coded, not computed from the data, and there is no tooltip.

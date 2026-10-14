@@ -1,0 +1,18 @@
+{
+  "description": "A small inline label that marks a point in a list or feed, such as a date divider or a notice.",
+  "overview": "`Marker` is a row of secondary text with an optional icon. It has three variants: `default` for a plain row, `separator` for centered text with a line on each side, and `border` for a row with a bottom border.\n\nUse `separator` for date dividers in a chat or feed, `border` for section headings, and `default` for short notices.",
+  "usage": "Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the secondary label color and size through context.\n\nPass a `render` element to `Marker` to render it as another component instead of a `View`.",
+  "parts": {
+    "Marker": "Row that sets the variant and the text and icon styles.",
+    "MarkerIcon": "Fixed-size slot for an icon.",
+    "MarkerContent": "Marker text, centered in the `separator` variant."
+  },
+  "props": {
+    "Marker": {
+      "variant": "`default`, `separator` or `border`.",
+      "render": "Element to render in place of the default `View`."
+    }
+  },
+  "accessibility": "- `MarkerIcon` and the separator lines are hidden from screen readers, so only the text is read.\n- If the icon carries meaning, include it in the text.",
+  "notes": "- Text uses `text-sm text-label-secondary` and icons `size-4`.\n- Lines and the bottom border use `bg-separator` and `border-separator`.\n- Light and dark colors follow the system appearance."
+}

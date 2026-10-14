@@ -1,0 +1,288 @@
+{
+  "name": "sidebar",
+  "type": "ui",
+  "files": [
+    "components/ui/sidebar.tsx"
+  ],
+  "requires": [
+    "button",
+    "direction",
+    "input",
+    "separator",
+    "sheet",
+    "skeleton",
+    "tooltip",
+    "use-mobile",
+    "use-platform"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Floating",
+    "Inset",
+    "Collapsed",
+    "Offcanvas",
+    "RightSide",
+    "Loading"
+  ],
+  "parts": [
+    {
+      "name": "SidebarProvider",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "Sidebar",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "side",
+          "type": "\"left\" | \"right\"",
+          "required": false,
+          "default": "\"left\""
+        },
+        {
+          "name": "variant",
+          "type": "\"sidebar\" | \"floating\" | \"inset\"",
+          "required": false,
+          "default": "\"sidebar\""
+        },
+        {
+          "name": "collapsible",
+          "type": "\"offcanvas\" | \"icon\" | \"none\"",
+          "required": false,
+          "default": "\"offcanvas\""
+        }
+      ]
+    },
+    {
+      "name": "SidebarTrigger",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarRail",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarInset",
+      "extends": [
+        "React.ComponentProps<\"main\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarInput",
+      "extends": [
+        "React.ComponentProps<typeof Input>"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarSeparator",
+      "extends": [
+        "React.ComponentProps<typeof Separator>"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarGroupLabel",
+      "extends": [
+        "useRender.ComponentProps<\"div\">",
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarGroupAction",
+      "extends": [
+        "useRender.ComponentProps<\"button\">",
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarGroupContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenu",
+      "extends": [
+        "React.ComponentProps<\"ul\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenuItem",
+      "extends": [
+        "React.ComponentProps<\"li\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenuButton",
+      "extends": [
+        "useRender.ComponentProps<\"button\">",
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "tooltip",
+          "type": "string | React.ComponentProps<typeof TooltipContent>",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SidebarMenuAction",
+      "extends": [
+        "useRender.ComponentProps<\"button\">",
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "showOnHover",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "SidebarMenuBadge",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenuSkeleton",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "showIcon",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "SidebarMenuSub",
+      "extends": [
+        "React.ComponentProps<\"ul\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenuSubItem",
+      "extends": [
+        "React.ComponentProps<\"li\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SidebarMenuSubButton",
+      "extends": [
+        "useRender.ComponentProps<\"a\">",
+        "React.ComponentProps<\"a\">"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "required": false,
+          "default": "\"md\""
+        },
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    }
+  ]
+}

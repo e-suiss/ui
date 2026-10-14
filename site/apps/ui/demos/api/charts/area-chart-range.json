@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-range",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-range.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

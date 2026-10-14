@@ -1,0 +1,13 @@
+{
+  "name": "bento-stats",
+  "type": "block",
+  "files": [
+    "components/blocks/bento-stats.tsx"
+  ],
+  "requires": [
+    "progress"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

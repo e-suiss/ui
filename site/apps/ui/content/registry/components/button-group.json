@@ -1,0 +1,33 @@
+{
+  "description": "A container that joins related buttons, inputs and menus into a single connected control.",
+  "overview": "A `ButtonGroup` lays out its children in a row or column and joins them visually: only the outer corners stay rounded, and borders between neighbors collapse. Use `ButtonGroupSeparator` to draw a divider between filled buttons, and `ButtonGroupText` to add a static label or prefix such as `https://`.\n\nGroups can contain buttons, `Input`, `InputGroup`, `Select` triggers, and the triggers of dropdown menus and popovers. Nest `ButtonGroup` parts to create clusters with a gap between them. Use a button group for closely related actions, split buttons, or input-and-button combinations; for a set of toggleable options, use Toggle Group instead.",
+  "usage": "Elements are joined only when they expose a `data-slot` attribute, as the library's components do.\n\nWhen a group contains other `ButtonGroup` parts, the outer group adds a gap between them instead of joining them.\n\n`ButtonGroupSeparator` is vertical by default. In a vertical group, pass `orientation=\"horizontal\"`. Separators are most useful between `secondary` or `default` buttons; `outline` buttons already show their borders.\n\nGive the group an `aria-label` when its purpose is not clear from its contents, as in the pagination and media control examples.",
+  "examples": {
+    "Outline": "The same toolbar built with `outline` buttons and no separators.",
+    "Orientation": "Stacks zoom buttons vertically with `orientation=\"vertical\"`.",
+    "Sizes": "Groups of `sm`, `default` and `lg` buttons.",
+    "Nested": "Nests groups to separate page numbers from previous and next buttons.",
+    "WithSeparator": "Divides two `secondary` buttons with `ButtonGroupSeparator`.",
+    "Plain": "Groups `plain` buttons with leading and trailing icons.",
+    "SplitButton": "Pairs a primary action with an icon button for more options.",
+    "WithInput": "Attaches a search button to an `Input`.",
+    "WithInputGroup": "Combines an add button with an `InputGroup` that has an inline voice button.",
+    "WithText": "Prefixes an input with a `ButtonGroupText` label and ends with a save button.",
+    "WithDropdownMenu": "Opens a dropdown menu from the second half of a split button.",
+    "WithSelect": "Joins a currency `Select` to an amount input.",
+    "WithPopover": "Opens a popover from the second half of a split button.",
+    "Pagination": "A labelled group of page buttons that marks the current page with `aria-current`."
+  },
+  "parts": {
+    "ButtonGroup": "The container that joins its children and sets the orientation.",
+    "ButtonGroupText": "A static, button-shaped label for text or icons.",
+    "ButtonGroupSeparator": "A thin divider between adjacent items."
+  },
+  "props": {
+    "ButtonGroup": {
+      "orientation": "Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom."
+    }
+  },
+  "accessibility": "- `ButtonGroup` renders with `role=\"group\"`; add an `aria-label` to name it.\n- Each button, input and trigger remains a separate tab stop in document order.\n- Icon-only buttons inside a group need an `aria-label`.\n- `ButtonGroupText` renders a `div` and is not focusable; use `render` to render a `label` element if it labels an input.",
+  "notes": "- Styling hooks: `data-slot=\"button-group\"`, `\"button-group-text\"` and `\"button-group-separator\"`, plus `data-orientation` on the group.\n- Focused items are raised with `z-10` so their focus ring is not clipped by neighbors.\n- In groups containing `outline` buttons, inputs, input groups and select triggers also get the `border-separator` color."
+}

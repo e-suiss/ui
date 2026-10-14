@@ -1,0 +1,6 @@
+{
+  "description": "A single filled radar shape showing this month's scores across six training skills.",
+  "overview": "One series drawn as a filled shape across six axes on a polygon grid. Use it to show the profile of a single item across several comparable scores, such as skills or product ratings.",
+  "usage": "Replace `chartData` with one record per axis, set `dataKey` on `PolarAngleAxis` to the axis name field and on `Radar` to your value field. Rename the series in `chartConfig` to set its label and color.",
+  "notes": "Without a fixed scale the radius adapts to the largest value, so two charts with different data aren't directly comparable; see the radius-axis variant for a fixed range. Radar charts read best with five to eight axes."
+}

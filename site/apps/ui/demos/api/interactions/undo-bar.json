@@ -1,0 +1,42 @@
+{
+  "name": "undo-bar",
+  "type": "interaction",
+  "files": [
+    "components/interactions/undo-bar.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "LongerTimeout",
+    "WithSwipeActions"
+  ],
+  "parts": [
+    {
+      "name": "UndoBarProvider",
+      "extends": [],
+      "props": [
+        {
+          "name": "timeout",
+          "type": "number",
+          "required": false,
+          "default": "5000"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

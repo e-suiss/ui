@@ -1,0 +1,14 @@
+{
+  "name": "nav-local",
+  "type": "block",
+  "files": [
+    "components/blocks/nav-local.tsx"
+  ],
+  "requires": [
+    "button",
+    "navbar"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

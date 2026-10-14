@@ -1,0 +1,46 @@
+---
+title: Pie Chart Donut Text
+description: "A donut with the total number of users displayed in the center of the ring."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-donut-text">
+
+<SourceFile path="components/charts/pie-chart-donut-text.tsx" fold={false} />
+
+</Example>
+
+A donut with the total shown in its center, so readers get the overall number and the breakdown in one glance. Prefer it over the plain donut when the total is the headline.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-donut-text"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
+
+<SourceFile path="components/charts/pie-chart-donut-text.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartDonutText } from \"@/components/charts/pie-chart-donut-text\""} />
+
+<Code lang="tsx" code={"<PieChartDonutText />"} />
+
+Replace `chartData` and the category entries in `chartConfig`; the center total is summed from the data automatically. Change the caption under the number to your unit, and adjust `innerRadius` if a longer number needs more room.
+
+## Notes
+
+The center text sits on top of the chart but lets pointer events through, so slice tooltips still work.

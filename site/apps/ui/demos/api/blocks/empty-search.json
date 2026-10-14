@@ -1,0 +1,16 @@
+{
+  "name": "empty-search",
+  "type": "block",
+  "files": [
+    "components/blocks/empty-search.tsx"
+  ],
+  "requires": [
+    "button",
+    "empty"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

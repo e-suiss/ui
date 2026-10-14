@@ -1,0 +1,6 @@
+{
+  "description": "An access request queue where admins approve or deny permission requests, with an approval length setting.",
+  "overview": "An access request queue where admins approve or deny permission requests, each showing the requester, the permission, a reason and when it was asked. An Approval length menu in the header sets how long approvals last. A decided row shows its outcome briefly and then collapses out of the list, and an empty state appears once the queue is clear. Use it for access reviews, join requests or any approval inbox.",
+  "usage": "Replace `initialRequests` with your pending requests, each with a name, permission, reason, time and avatar hue. Call your API in `decide` and pass the selected `duration`. Requests are matched by name, so switch to a unique id, and remove the Reset the sample link from the empty state.",
+  "notes": "Each decision is announced as it happens."
+}

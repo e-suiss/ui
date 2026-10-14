@@ -1,0 +1,186 @@
+---
+title: Command
+description: "A searchable menu of commands, used inline or as a command palette in a dialog."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="command" story="Default">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nexport function CommandExample() {\n  return (\n    <div className=\"w-140\">\n      <Command className=\"ring-label/5 shadow-md ring-1\">\n        <CommandInput placeholder=\"Type a command or search...\" />\n        <CommandList>\n          <CommandItems />\n        </CommandList>\n      </Command>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Command is built on cmdk. The `Command` root filters and orders its items as people type into `CommandInput`. `CommandList` holds the results: `CommandGroup` sections with a `heading`, `CommandItem` rows, `CommandSeparator` dividers, and a `CommandEmpty` message shown when nothing matches. `CommandShortcut` displays a keyboard shortcut at the end of an item.
+
+`CommandDialog` places a `Command` in a modal dialog for a command palette. Use a command menu for actions and navigation that people search by name. To pick a value for a form field, use a combobox instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add command"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cmdk cn"} />
+
+2. Add the pieces it builds on: [Dialog](/docs/components/dialog), `use-platform`.
+
+3. Copy the source into `components/ui/command.tsx`:
+
+<SourceFile path="components/ui/command.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut } from \"@/components/ui/command\""} />
+
+<Code lang="tsx" code={"<div className=\"w-140\">\n  <Command className=\"ring-label/5 shadow-md ring-1\">\n    <CommandInput placeholder=\"Type a command or search...\" />\n    <CommandList>\n      <CommandItems />\n    </CommandList>\n  </Command>\n</div>"} />
+
+Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `open` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
+
+Set `mod` on `CommandShortcut` to prefix the shortcut with the platform modifier key: `⌘` on Apple platforms and `Ctrl+` elsewhere.
+
+## Examples
+
+### Empty
+
+A command menu with no items that always shows its empty message.
+
+<Example kind="ui" name="command" story="Empty">
+
+<Code lang="tsx" code={"import { Command, CommandEmpty, CommandInput, CommandList } from \"@/components/ui/command\"\n\nexport function CommandEmptyExample() {\n  return (\n    <div className=\"w-140\">\n      <Command className=\"ring-label/5 shadow-md ring-1\">\n        <CommandInput placeholder=\"Search projects...\" />\n        <CommandList>\n          <CommandEmpty>No projects found.</CommandEmpty>\n        </CommandList>\n      </Command>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Dialog
+
+A command palette in a dialog, opened from a button, that closes with Escape and returns focus to the button.
+
+<Example kind="ui" name="command" story="Dialog">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nfunction CommandDialogExample({\n  defaultOpen = false,\n}: {\n  defaultOpen?: boolean\n}) {\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <>\n      <Button variant=\"outline\" onClick={() => setOpen(true)}>\n        Open command palette\n      </Button>\n      <CommandDialog open={open} onOpenChange={setOpen}>\n        <Command>\n          <CommandInput placeholder=\"Type a command or search...\" />\n          <CommandList>\n            <CommandItems />\n          </CommandList>\n        </Command>\n      </CommandDialog>\n    </>\n  )\n}\n\nexport function CommandDialogExampleDemo() {\n  return (\n    <div className=\"w-140\">\n      <CommandDialogExample />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Dialog open
+
+A command palette that is open when the page loads.
+
+<Example kind="ui" name="command" story="DialogOpen">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nfunction CommandDialogExample({\n  defaultOpen = false,\n}: {\n  defaultOpen?: boolean\n}) {\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <>\n      <Button variant=\"outline\" onClick={() => setOpen(true)}>\n        Open command palette\n      </Button>\n      <CommandDialog open={open} onOpenChange={setOpen}>\n        <Command>\n          <CommandInput placeholder=\"Type a command or search...\" />\n          <CommandList>\n            <CommandItems />\n          </CommandList>\n        </Command>\n      </CommandDialog>\n    </>\n  )\n}\n\nexport function CommandDialogOpenExample() {\n  return (\n    <div className=\"w-140\">\n      <CommandDialogExample defaultOpen />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Command","href":"#command","children":[{"name":"CommandInput","href":"#commandinput","children":[]},{"name":"CommandList","href":"#commandlist","children":[{"name":"CommandEmpty","href":"#commandempty","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Command
+
+The root that filters and manages the items.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CommandDialog
+
+A modal dialog that presents a command menu as a palette.
+
+<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"title","type":"string","default":"\"Command Palette\"","description":"The dialog's accessible title. It is visually hidden."},{"name":"description","type":"string","default":"\"Search for a command to run...\"","description":"The dialog's accessible description. It is visually hidden."},{"name":"className","type":"string","description":"Classes applied to the dialog's content panel."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows the dialog's close button."},{"name":"children","type":"React.ReactNode","required":true,"description":"The dialog's content, typically a `Command`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CommandInput
+
+The search field, shown with a magnifying glass icon.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CommandList
+
+The scrollable container for results.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.List>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CommandEmpty
+
+Content shown when no items match the search.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Empty>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CommandGroup
+
+A section of related items with an optional heading.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Group>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CommandSeparator
+
+A divider between groups.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Separator>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CommandItem
+
+A selectable command.
+
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### CommandShortcut
+
+Displays a keyboard shortcut at the end of an item.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The input has the `combobox` role and items have the `option` role. The highlighted item sets `aria-selected` and disabled items set `aria-disabled`.
+- The first item is highlighted by default. Arrow keys move the highlight and skip disabled items; Enter selects the highlighted item.
+- `CommandDialog` renders a `dialog` named by its `title`, moves focus inside when it opens, closes with Escape, and returns focus to the element that opened it.
+- `CommandShortcut` is hidden on small screens.
+
+## Notes
+
+- Styling hooks: `data-slot` values `command`, `command-input-wrapper`, `command-input`, `command-list`, `command-empty`, `command-group`, `command-separator`, `command-item` and `command-shortcut`.
+- The highlighted item gets `data-selected` and is filled with the `accent` color. Disabled items get `data-disabled="true"`.
+- An item with `data-checked="true"` shows a check mark, unless it contains a `CommandShortcut`.
+- Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `surface-raised` background.

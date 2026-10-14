@@ -1,0 +1,16 @@
+{
+  "name": "tooltip-chart-no-indicator",
+  "type": "chart",
+  "files": [
+    "components/charts/tooltip-chart-no-indicator.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

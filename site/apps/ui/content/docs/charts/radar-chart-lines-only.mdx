@@ -1,0 +1,46 @@
+---
+title: Radar Chart Lines Only
+description: "Two radar outlines with no fill, comparing this month and last month by stroke alone."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-lines-only">
+
+<SourceFile path="components/charts/radar-chart-lines-only.tsx" fold={false} />
+
+</Example>
+
+Two radar outlines without fill, comparing this month with last month by stroke alone. Use it when filled shapes would hide each other, especially with more than two series.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-lines-only"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-lines-only.tsx`:
+
+<SourceFile path="components/charts/radar-chart-lines-only.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartLinesOnly } from \"@/components/charts/radar-chart-lines-only\""} />
+
+<Code lang="tsx" code={"<RadarChartLinesOnly />"} />
+
+Replace `chartData` and rename the series keys in the data, the `Radar` elements and `chartConfig`. Add more `Radar` elements for extra series; give each a distinct color in the config.
+
+## Notes
+
+Without fill or legend, color is the only cue for which line is which, so add a legend or pick strongly contrasting colors.

@@ -1,0 +1,122 @@
+{
+  "name": "item",
+  "type": "ui",
+  "files": [
+    "components/ui/item.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Variants",
+    "Sizes",
+    "AsLink",
+    "WithImage",
+    "Inset",
+    "WithAvatar",
+    "WithHeaderAndFooter"
+  ],
+  "parts": [
+    {
+      "name": "ItemGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"inset\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "ItemSeparator",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "Item",
+      "extends": [
+        "useRender.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\" | \"muted\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"xs\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ItemMedia",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"icon\" | \"image\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ItemContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ItemTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ItemDescription",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ItemActions",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ItemHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ItemFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

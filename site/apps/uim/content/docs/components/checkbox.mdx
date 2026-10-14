@@ -1,0 +1,268 @@
+---
+title: Checkbox
+description: "A small box that toggles an option on or off, with an indeterminate state."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-checkbox--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\n\nfunction CheckboxDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Checkbox checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function CheckboxExample() {\n  return (\n    <CheckboxDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxExample: View {\n  var body: some View {\n    CheckboxDemo(initial: false)\n  }\n}\n\nstruct CheckboxDemo: View {\n  @State private var checked: Bool\n\n  init(initial: Bool) {\n    _checked = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $checked) { EmptyView() }\n      .toggleStyle(.checkbox)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Checkbox\n\n@Composable\nfun CheckboxExample() {\n    CheckboxDemo(initial = false)\n}\n\n@Composable\nfun CheckboxDemo(initial: Boolean) {\n    var checked by rememberSaveable { mutableStateOf(initial) }\n    Row {\n        Checkbox(checked, { checked = it })\n    }\n}"} />
+
+</Example>
+
+`Checkbox` is a `Pressable` with the `checkbox` role that shows a check icon when checked and a minus icon when `indeterminate`. It has an enlarged hit area around the box so it is easy to tap.
+
+Use it for options that can be combined, such as terms acceptance or multi-select lists. For a single on/off setting that applies right away, use Switch.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add checkbox"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add checkbox --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add checkbox --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="uniwind/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="nativewind/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/checkbox.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="stylesheet/components/ui/checkbox.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\""} />
+
+<Code lang="tsx" code={"<CheckboxDemo />"} />
+
+Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected.
+
+Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a danger border.
+
+## Examples
+
+### Checked
+
+Starts checked.
+
+<Example id="components-checkbox--checked" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\n\nfunction CheckboxDemo({ initial = false }: { initial?: boolean }) {\n  const [checked, setChecked] = React.useState(initial)\n  return <Checkbox checked={checked} onCheckedChange={setChecked} />\n}\n\nexport function CheckboxCheckedExample() {\n  return (\n    <CheckboxDemo initial />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxCheckedExample: View {\n  var body: some View {\n    CheckboxDemo(initial: true)\n  }\n}\n\nstruct CheckboxDemo: View {\n  @State private var checked: Bool\n\n  init(initial: Bool) {\n    _checked = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Toggle(isOn: $checked) { EmptyView() }\n      .toggleStyle(.checkbox)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Checkbox\n\n@Composable\nfun CheckboxCheckedExample() {\n    CheckboxDemo(initial = true)\n}\n\n@Composable\nfun CheckboxDemo(initial: Boolean) {\n    var checked by rememberSaveable { mutableStateOf(initial) }\n    Row {\n        Checkbox(checked, { checked = it })\n    }\n}"} />
+
+</Example>
+
+### With label
+
+Linked to a `Label` that also toggles it.
+
+<Example id="components-checkbox--with-label" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nfunction WithLabelDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        accessibilityLabelledBy=\"terms\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label nativeID=\"terms\" onPress={() => setChecked((value) => !value)}>\n        Accept terms and conditions\n      </Label>\n    </View>\n  )\n}\n\nexport function CheckboxWithLabelExample() {\n  return (\n    <WithLabelDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxWithLabelDemo: View {\n  @State private var checked = false\n\n  var body: some View {\n    Toggle(isOn: $checked) {\n      FieldLabel(\"Accept terms and conditions\")\n    }\n    .toggleStyle(.checkbox)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.Label\n\nfun Modifier.checkboxLabelToggle(onToggle: () -> Unit): Modifier =\n    clickable(interactionSource = null, indication = null, onClick = onToggle)\n\n@Composable\nfun CheckboxWithLabel() {\n    var checked by rememberSaveable { mutableStateOf(false) }\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n        Checkbox(checked, { checked = it }, Modifier.semantics { contentDescription = \"Accept terms and conditions\" })\n        Label(\"Accept terms and conditions\", Modifier.checkboxLabelToggle { checked = !checked })\n    }\n}"} />
+
+</Example>
+
+### With description
+
+A label with a supporting description.
+
+<Example id="components-checkbox--with-description" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction WithDescriptionDemo() {\n  const [checked, setChecked] = React.useState(true)\n  return (\n    <View className=\"flex-row items-start gap-3\">\n      <Checkbox\n        accessibilityLabelledBy=\"notifications\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <View className=\"flex-1 gap-1.5\">\n        <Label\n          nativeID=\"notifications\"\n          onPress={() => setChecked((value) => !value)}\n        >\n          Enable notifications\n        </Label>\n        <Text className=\"text-sm text-label-secondary\">\n          You can enable or disable notifications at any time.\n        </Text>\n      </View>\n    </View>\n  )\n}\n\nexport function CheckboxWithDescriptionExample() {\n  return (\n    <WithDescriptionDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxWithDescriptionDemo: View {\n  @State private var checked = true\n\n  var body: some View {\n    HStack(alignment: .top, spacing: 12) {\n      Toggle(isOn: $checked) { EmptyView() }\n        .toggleStyle(.checkbox)\n        .accessibilityLabel(Text(\"Enable notifications\"))\n        .padding(.top, 2)\n      VStack(alignment: .leading, spacing: 6) {\n        FieldLabel(\"Enable notifications\")\n          .onTapGesture { checked.toggle() }\n        Text(\"You can enable or disable notifications at any time.\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity, alignment: .leading)\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nfun Modifier.checkboxLabelToggle(onToggle: () -> Unit): Modifier =\n    clickable(interactionSource = null, indication = null, onClick = onToggle)\n\n@Composable\nfun CheckboxWithDescription() {\n    var checked by rememberSaveable { mutableStateOf(true) }\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {\n        Checkbox(checked, { checked = it }, Modifier.semantics { contentDescription = \"Enable notifications\" })\n        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {\n            Label(\"Enable notifications\", Modifier.checkboxLabelToggle { checked = !checked })\n            Text(\n                \"You can enable or disable notifications at any time.\",\n                style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n            )\n        }\n    }\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled checkboxes in both states.
+
+<Example id="components-checkbox--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked={false} onCheckedChange={() => {}} />\n        <Label disabled>Unchecked</Label>\n      </View>\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked onCheckedChange={() => {}} />\n        <Label disabled>Checked</Label>\n      </View>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxDisabledExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Toggle(isOn: .constant(false)) { FieldLabel(\"Unchecked\") }\n      Toggle(isOn: .constant(true)) { FieldLabel(\"Checked\") }\n    }\n    .toggleStyle(.checkbox)\n    .disabled(true)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun CheckboxDisabled() {\n    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n            Checkbox(false, {}, enabled = false)\n            Label(\"Unchecked\", enabled = false)\n        }\n        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n            Checkbox(true, {}, enabled = false)\n            Label(\"Checked\", enabled = false)\n        }\n    }\n}"} />
+
+</Example>
+
+### Indeterminate
+
+A select-all checkbox in the indeterminate state.
+
+<Example id="components-checkbox--indeterminate" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxIndeterminateExample() {\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        indeterminate\n        checked={false}\n        onCheckedChange={() => {}}\n        accessibilityLabelledBy=\"select-all\"\n      />\n      <Label nativeID=\"select-all\">Select all</Label>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxIndeterminateExample: View {\n  var body: some View {\n    Toggle(sources: [Binding.constant(true), .constant(false)], isOn: \\.self) {\n      FieldLabel(\"Select all\")\n    }\n    .toggleStyle(.checkbox)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.state.ToggleableState\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.TriStateCheckbox\n\nfun Modifier.checkboxLabelToggle(onToggle: () -> Unit): Modifier =\n    clickable(interactionSource = null, indication = null, onClick = onToggle)\n\n@Composable\nfun CheckboxIndeterminate() {\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n        TriStateCheckbox(ToggleableState.Indeterminate, {}, Modifier.semantics { contentDescription = \"Select all\" })\n        Label(\"Select all\")\n    }\n}"} />
+
+</Example>
+
+### Invalid
+
+A required checkbox with the `invalid` border.
+
+<Example id="components-checkbox--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nfunction InvalidDemo() {\n  const [checked, setChecked] = React.useState(false)\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        invalid={!checked}\n        accessibilityLabelledBy=\"terms-invalid\"\n        checked={checked}\n        onCheckedChange={setChecked}\n      />\n      <Label\n        nativeID=\"terms-invalid\"\n        onPress={() => setChecked((value) => !value)}\n      >\n        Accept terms and conditions\n      </Label>\n    </View>\n  )\n}\n\nexport function CheckboxInvalidExample() {\n  return (\n    <InvalidDemo />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxInvalidDemo: View {\n  @State private var checked = false\n\n  var body: some View {\n    Toggle(isOn: $checked) {\n      FieldLabel(\"Accept terms and conditions\")\n    }\n    .toggleStyle(.checkbox)\n    .invalid(!checked)\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.Label\n\nfun Modifier.checkboxLabelToggle(onToggle: () -> Unit): Modifier =\n    clickable(interactionSource = null, indication = null, onClick = onToggle)\n\n@Composable\nfun CheckboxInvalid() {\n    var checked by rememberSaveable { mutableStateOf(false) }\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n        Checkbox(\n            checked,\n            { checked = it },\n            Modifier.semantics { contentDescription = \"Accept terms and conditions\" },\n            invalid = !checked,\n        )\n        Label(\"Accept terms and conditions\", Modifier.checkboxLabelToggle { checked = !checked })\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Checkbox
+
+<PropsTable extends={["React.ComponentProps<typeof CheckboxPrimitive.Root>"]} props={[{"name":"iconClassName","type":"string","description":"Extra classes for the check icon."},{"name":"invalid","type":"boolean","description":"Shows a danger-colored border."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Has the `checkbox` role with `checked` (or `mixed` when indeterminate) and `disabled` state.
+- Link it to a visible label with `accessibilityLabelledBy`, or give it an `accessibilityLabel`.
+
+## Notes
+
+- Uses `bg-accent` when checked and `bg-surface` with a translucent border when unchecked; in dark mode the unchecked box is filled instead of outlined.
+- Light and dark follow the system appearance.

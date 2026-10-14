@@ -1,0 +1,5 @@
+{
+  "description": "An admin activity log grouped by day, with a type filter and expandable before-and-after details.",
+  "overview": "An audit log that groups events by day, each with an icon for its type, the person, the action, the target and a time. Events that changed a value expand to show a before-and-after comparison, and a type filter and Export button sit in the header. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for audit trails, change history or admin activity pages.",
+  "usage": "Replace `events` with entries from your audit log API; each has a day, time, actor, action, target, kind and an optional before-and-after diff. `kinds` sets each event type's icon and tint, and `nav` the shell navigation. Give the Export button a handler."
+}

@@ -1,0 +1,46 @@
+---
+title: Radar Chart Radius Axis
+description: "A single radar shape with a visible 0 to 100 value scale along the vertical axis."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-radius-axis">
+
+<SourceFile path="components/charts/radar-chart-radius-axis.tsx" fold={false} />
+
+</Example>
+
+A single radar shape with a 0 to 100 scale printed along the vertical axis. Choose it when readers need to estimate values, or when several radar charts must share the same scale.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-radius-axis"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-radius-axis.tsx`:
+
+<SourceFile path="components/charts/radar-chart-radius-axis.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartRadiusAxis } from \"@/components/charts/radar-chart-radius-axis\""} />
+
+<Code lang="tsx" code={"<RadarChartRadiusAxis />"} />
+
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Set `domain` on `PolarRadiusAxis` to your score range and `tickCount` for the number of labels. Change its angle to move the scale to another direction.
+
+## Notes
+
+A fixed domain keeps shapes comparable across charts, as long as your scores stay inside it.

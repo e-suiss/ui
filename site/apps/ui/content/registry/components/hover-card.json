@@ -1,0 +1,15 @@
+{
+  "description": "A card that previews content behind a link when people hover over or focus it.",
+  "overview": "`HoverCard` wraps the Base UI Preview Card. The `HoverCard` root manages the open state, `HoverCardTrigger` renders the link that opens it, and `HoverCardContent` renders the floating card in a portal, positioned next to the trigger.\n\nUse a hover card for supplementary, non-essential previews, such as a profile summary behind a username. Because it only opens on hover or focus, do not put content there that people need to complete a task. For interactive content opened with a click, use a popover.",
+  "usage": "The trigger renders an anchor, so give it an `href`. Position the card with the `side`, `sideOffset`, `align` and `alignOffset` props on `HoverCardContent`; by default it opens on the `bottom`, centered, with a `4` pixel offset. Set `defaultOpen` on the root to start open, or control it with `open` and `onOpenChange`.",
+  "examples": {
+    "Sides": "Four hover cards opening on the `top`, `right`, `bottom` and `left` sides of their triggers."
+  },
+  "parts": {
+    "HoverCard": "The root that manages the card's open state.",
+    "HoverCardTrigger": "The link that opens the card on hover or focus.",
+    "HoverCardContent": "The floating card, rendered in a portal and positioned relative to the trigger."
+  },
+  "accessibility": "- The trigger renders as a link and is reachable with Tab.\n- The card opens when the pointer rests on the trigger or when the trigger receives keyboard focus, and closes when the pointer leaves.\n- The card is a visual preview; make sure the same information is available elsewhere, for example on the linked page.",
+  "notes": "- Styling hooks: `data-slot` values `hover-card`, `hover-card-trigger` and `hover-card-content`.\n- `HoverCardContent` receives `data-side` from Base UI, which drives the slide-in direction, along with `data-open` and `data-closed` for the fade and zoom animation.\n- The card is `w-72` by default; override it with `className`.\n- Uses the `surface-raised` and `label` tokens."
+}

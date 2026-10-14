@@ -1,0 +1,42 @@
+---
+title: Radial Chart Interactive
+description: "A weekly activity view where picking a day animates three large rings and updates each ring's totals."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-interactive">
+
+<SourceFile path="components/charts/radial-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+An activity summary with a strip of seven day buttons, each showing mini rings, and large Move, Exercise and Stand rings that fill to the selected day's values. Totals and goal progress for each ring update next to it. Use it as a pattern for daily goals that readers browse day by day.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-interactive"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Card](/docs/components/card), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/charts/radial-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/radial-chart-interactive.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartInteractive } from \"@/components/charts/radial-chart-interactive\""} />
+
+<Code lang="tsx" code={"<RadialChartInteractive />"} />
+
+Replace `WEEK` with your own days and values, one number per ring in the same order as `RINGS`. Edit `RINGS` to change labels, units, goals and colors. Set the initially selected day in the `selected` state.
+
+## Notes
+
+The rings are plain SVG rather than a Recharts chart, so there is no tooltip. Values beyond the goal show a full ring, while the text still reports the real percentage. Day buttons are fully keyboard accessible, the totals are announced through a live region, and the fill animation respects reduced motion.

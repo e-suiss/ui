@@ -1,0 +1,46 @@
+---
+title: Settings Notifications
+description: "Per-app notification settings with a live lock screen preview that reflects each choice."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="settings-notifications">
+
+<SourceFile path="components/blocks/settings-notifications.tsx" fold={false} />
+
+</Example>
+
+Per-app notification settings with a live lock screen preview: toggle notifications and choose alert styles, banner style, sounds, badges, preview text and grouping, and the preview updates to match. The preview sits beside the settings on desktop and below them on mobile. Use it for any settings screen where a live preview helps users understand their choices.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks settings-notifications"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Item](/docs/components/item), [Select](/docs/components/select), [Switch](/docs/components/switch), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/settings-notifications.tsx`:
+
+<SourceFile path="components/blocks/settings-notifications.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SettingsNotifications } from \"@/components/blocks/settings-notifications\""} />
+
+<Code lang="tsx" code={"<SettingsNotifications />"} />
+
+Every setting is local state, so persist each one to your settings store. `alerts`, `previewOptions` and `groupingOptions` define the choices. Replace the `wallpaper` image and the sample sender and message in the preview.
+
+## Notes
+
+When notifications are off, the dependent settings are dimmed and skipped by keyboard, and the preview has a text summary for screen readers. The wallpaper is an Unsplash placeholder.

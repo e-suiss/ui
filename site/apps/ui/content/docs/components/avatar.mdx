@@ -1,0 +1,191 @@
+---
+title: Avatar
+description: "A circular image that represents a person, with initials or an icon when no image is available."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="avatar" story="Default">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarExample() {\n  return (\n    <Avatar>\n      <AvatarImage src={people[0].src} alt={people[0].name} />\n      <AvatarFallback>{people[0].initials}</AvatarFallback>\n    </Avatar>\n  )\n}"} />
+
+</Example>
+
+Avatar wraps the Base UI Avatar primitive. An `Avatar` contains an `AvatarImage` and an `AvatarFallback`; the fallback shows while the image is loading or if it fails to load. Add an `AvatarBadge` to show a status dot or icon in the bottom-end corner.
+
+To show several people together, place avatars in an `AvatarGroup`, which overlaps them and rings each one with the surface color. End the group with an `AvatarGroupCount` to indicate how many more people there are.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add avatar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/avatar.tsx`:
+
+<SourceFile path="components/ui/avatar.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from \"@/components/ui/avatar\""} />
+
+<Code lang="tsx" code={"<Avatar>\n  <AvatarImage src={people[0].src} alt={people[0].name} />\n  <AvatarFallback>{people[0].initials}</AvatarFallback>\n</Avatar>"} />
+
+Always provide an `AvatarFallback` alongside `AvatarImage`, usually the person's initials. The fallback can also hold an icon, which scales to 60% of the avatar.
+
+Set `size` on each `Avatar`. Inside an `AvatarGroup`, `AvatarGroupCount` matches the size of the avatars in the group automatically.
+
+## Examples
+
+### Fallback
+
+Shows initials when no image is provided.
+
+<Example kind="ui" name="avatar" story="Fallback">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nexport function AvatarFallbackExample() {\n  return (\n    <Avatar>\n      <AvatarFallback>LC</AvatarFallback>\n    </Avatar>\n  )\n}"} />
+
+</Example>
+
+### Fallback sizes
+
+Initials fallbacks at every size.
+
+<Example kind="ui" name="avatar" story="FallbackSizes">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarFallbackSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>{people[0].initials}</AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Placeholder
+
+Uses a person icon as the fallback at every size.
+
+<Example kind="ui" name="avatar" story="Placeholder">
+
+<Code lang="tsx" code={"import { UserIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nexport function AvatarPlaceholderExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>\n            <UserIcon weight=\"fill\" />\n          </AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Image avatars in the `sm`, `default`, `lg` and `xl` sizes.
+
+<Example kind="ui" name="avatar" story="Sizes">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage src={people[1].src} alt={people[1].name} />\n          <AvatarFallback>{people[1].initials}</AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With badge
+
+Adds a check-mark status badge to each size.
+
+<Example kind="ui" name="avatar" story="WithBadge">
+
+<Code lang="tsx" code={"import { CheckIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarWithBadgeExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage src={people[2].src} alt={people[2].name} />\n          <AvatarFallback>{people[2].initials}</AvatarFallback>\n          <AvatarBadge className=\"bg-success\">\n            <CheckIcon weight=\"bold\" />\n          </AvatarBadge>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Group
+
+Overlaps several avatars and ends with a `+4` count.
+
+<Example kind="ui" name="avatar" story="Group">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarGroupExample() {\n  return (\n    <AvatarGroup>\n      {people.map((person) => (\n        <Avatar key={person.name}>\n          <AvatarImage src={person.src} alt={person.name} />\n          <AvatarFallback>{person.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n      <AvatarGroupCount>+4</AvatarGroupCount>\n    </AvatarGroup>\n  )\n}"} />
+
+</Example>
+
+### Group with icon count
+
+A large group whose count shows a plus icon instead of a number.
+
+<Example kind="ui" name="avatar" story="GroupWithIconCount">
+
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarGroupWithIconCountExample() {\n  return (\n    <AvatarGroup>\n      {people.map((person) => (\n        <Avatar key={person.name} size=\"lg\">\n          <AvatarImage src={person.src} alt={person.name} />\n          <AvatarFallback>{person.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n      <AvatarGroupCount>\n        <PlusIcon />\n      </AvatarGroupCount>\n    </AvatarGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Avatar","href":"#avatar","children":[{"name":"AvatarImage","href":"#avatarimage","children":[]},{"name":"AvatarFallback","href":"#avatarfallback","children":[]},{"name":"AvatarBadge","href":"#avatarbadge","children":[]}]},{"name":"AvatarGroup","href":"#avatargroup","children":[{"name":"Avatar","href":"#avatar","children":[{"name":"AvatarImage","href":"#avatarimage","children":[]},{"name":"AvatarFallback","href":"#avatarfallback","children":[]}]},{"name":"AvatarGroupCount","href":"#avatargroupcount","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Avatar
+
+The circular root that sets the size.
+
+<PropsTable extends={["AvatarPrimitive.Root.Props"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"lg\" | \"xl\"","default":"\"default\"","description":"Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AvatarImage
+
+The person's image, cropped to a circle.
+
+<PropsTable extends={["AvatarPrimitive.Image.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AvatarFallback
+
+Content shown when the image is missing or still loading.
+
+<PropsTable extends={["AvatarPrimitive.Fallback.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AvatarBadge
+
+A small status indicator pinned to the bottom-end corner.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AvatarGroup
+
+A row that overlaps avatars with a ring between them.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AvatarGroupCount
+
+A trailing circle that shows how many avatars are not displayed.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Give `AvatarImage` an `alt` that names the person.
+- `AvatarBadge` and `AvatarGroupCount` are plain elements; if they carry meaning, label them or describe the status in nearby text.
+
+## Notes
+
+- Styling hooks: `data-slot="avatar"`, `"avatar-image"`, `"avatar-fallback"`, `"avatar-badge"`, `"avatar-group"` and `"avatar-group-count"`, plus `data-size` on the root.
+- `AvatarBadge` uses `bg-accent` by default; override it, for example with `bg-success`. At the `sm` size, icons inside the badge are hidden.
+- The fallback uses a vertical gradient of `label-secondary` with `text-on-accent`.

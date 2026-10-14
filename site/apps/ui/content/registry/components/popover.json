@@ -1,0 +1,19 @@
+{
+  "description": "A floating panel anchored to a trigger, for supplementary content and lightweight controls.",
+  "overview": "Popover wraps Base UI's Popover. `Popover` is the root that holds the open state, `PopoverTrigger` toggles it, and `PopoverContent` renders the positioned panel in a portal. Inside the content, `PopoverHeader` groups a `PopoverTitle` and `PopoverDescription` above any other content, such as form fields.\n\nUse a popover for interactive content that relates to its trigger. Use Tooltip for short, non-interactive hints, and Dialog when the task needs the user's full attention.",
+  "usage": "The popover is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.\n\nUse the trigger's `render` prop to render it as another component, such as a `Button`.",
+  "examples": {
+    "Sides": "Four popovers that open on the top, right, bottom and left of their triggers.",
+    "Simple": "A plain text popover opened from a ghost button, without a header."
+  },
+  "parts": {
+    "Popover": "The root that manages the popover's open state.",
+    "PopoverTrigger": "The button that opens and closes the popover.",
+    "PopoverContent": "The positioned panel that renders in a portal.",
+    "PopoverHeader": "Groups the title and description at the top of the panel.",
+    "PopoverTitle": "The heading that names the popover.",
+    "PopoverDescription": "Secondary text that describes the popover."
+  },
+  "accessibility": "- The panel has the `dialog` role. `PopoverTitle` provides its accessible name and `PopoverDescription` its accessible description.\n- The trigger exposes `aria-expanded`.\n- Escape closes the popover and returns focus to the trigger.\n- Clicking outside the panel, or clicking the trigger again, closes it.",
+  "notes": "- Styling hooks: `data-slot` values `popover`, `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`.\n- The panel is `w-72` by default; override it with `className`.\n- The panel animates in from the side it opens on, using Base UI's `data-side`, `data-open` and `data-closed` attributes.\n- Uses the `surface-raised`, `label` and `label-secondary` tokens."
+}

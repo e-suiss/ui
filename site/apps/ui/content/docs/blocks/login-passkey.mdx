@@ -1,0 +1,46 @@
+---
+title: Login Passkey
+description: "A passwordless sign-in screen that runs a simulated face scan in a dialog, then welcomes the user."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="login-passkey">
+
+<SourceFile path="components/blocks/login-passkey.tsx" fold={false} />
+
+</Example>
+
+A passwordless sign-in screen with an account chip, a Continue with passkey button and a fallback link to sign in with a password. Starting the flow opens a small dialog with a scanning animation that turns into a check mark, then the screen welcomes the user. Use it as the front door for passkey or biometric login.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks login-passkey"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog).
+
+3. Copy the source into `components/blocks/login-passkey.tsx`:
+
+<SourceFile path="components/blocks/login-passkey.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LoginPasskey } from \"@/components/blocks/login-passkey\""} />
+
+<Code lang="tsx" code={"<LoginPasskey />"} />
+
+The scan is faked with timers in `start`; replace it with a WebAuthn call such as `navigator.credentials.get` and move to the welcome state when it resolves. Replace the account email, initials and welcome name, and point the `#change` and `#password` links at your routes.
+
+## Notes
+
+Closing the dialog cancels the pending timers; abort your WebAuthn request the same way when the user cancels.

@@ -1,0 +1,140 @@
+---
+title: Message Scroller
+description: "A scroll container for chat transcripts that opens at the latest message and keeps scroll position stable."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="message-scroller" story="Default">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from \"@/components/ui/message-scroller\"\n\nconst messages = [\n  { id: \"1\", from: \"them\", text: \"Hey, do you have a minute?\" },\n  { id: \"2\", from: \"me\", text: \"Sure, what's up?\" },\n  {\n    id: \"3\",\n    from: \"them\",\n    text: \"The client moved the launch to Thursday.\",\n  },\n  { id: \"4\", from: \"me\", text: \"That's two days earlier than planned.\" },\n  { id: \"5\", from: \"them\", text: \"I know. Can we cut the onboarding tour?\" },\n  {\n    id: \"6\",\n    from: \"me\",\n    text: \"We could ship it behind a flag and turn it on next week.\",\n  },\n  { id: \"7\", from: \"them\", text: \"That works. What about the docs?\" },\n  {\n    id: \"8\",\n    from: \"me\",\n    text: \"The API reference is done. Guides need a pass.\",\n  },\n  { id: \"9\", from: \"them\", text: \"I can review the guides tonight.\" },\n  { id: \"10\", from: \"me\", text: \"Great, I'll send you the draft links.\" },\n  { id: \"11\", from: \"them\", text: \"Any blockers on the release checklist?\" },\n  {\n    id: \"12\",\n    from: \"me\",\n    text: \"Just the final QA run. It should finish this afternoon.\",\n  },\n  { id: \"13\", from: \"them\", text: \"Perfect. Let's sync tomorrow at ten.\" },\n  { id: \"14\", from: \"me\", text: \"Sounds good, see you then.\" },\n]\n\nfunction Messages() {\n  return messages.map((message) => (\n    <MessageScrollerItem key={message.id} messageId={message.id}>\n      <Message align={message.from === \"me\" ? \"end\" : \"start\"}>\n        <MessageContent>\n          <Bubble variant={message.from === \"me\" ? \"default\" : \"muted\"}>\n            <BubbleContent>{message.text}</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  ))\n}\n\nexport function MessageScrollerExample() {\n  return (\n    <div className=\"h-96 w-96 overflow-hidden rounded-2xl border\">\n      <MessageScrollerProvider>\n        <MessageScroller>\n          <MessageScrollerViewport>\n            <MessageScrollerContent className=\"gap-3 p-4\">\n              <Messages />\n            </MessageScrollerContent>\n          </MessageScrollerViewport>\n          <MessageScrollerButton />\n        </MessageScroller>\n      </MessageScrollerProvider>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Message Scroller manages scrolling for conversation views. `MessageScrollerProvider` creates the scroll controller and holds options such as the initial position and auto-scroll. Inside it, `MessageScroller` is the root, `MessageScrollerViewport` is the scrollable region, and `MessageScrollerContent` lists one `MessageScrollerItem` per message. `MessageScrollerButton` sits inside the root and jumps to the start or end.
+
+The scroller opens at the end by default, preserves the reading position when older messages are prepended, and can anchor a newly added message to the top of the viewport. Use it for chat and activity feeds; use Scroll Area for general scrollable content.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message-scroller"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Scroll Area](/docs/components/scroll-area), `use-message-scroller`.
+
+3. Copy the source into `components/ui/message-scroller.tsx`:
+
+<SourceFile path="components/ui/message-scroller.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem, MessageScrollerButton } from \"@/components/ui/message-scroller\""} />
+
+<Code lang="tsx" code={"<div className=\"h-96 w-96 overflow-hidden rounded-2xl border\">\n  <MessageScrollerProvider>\n    <MessageScroller>\n      <MessageScrollerViewport>\n        <MessageScrollerContent className=\"gap-3 p-4\">\n          <Messages />\n        </MessageScrollerContent>\n      </MessageScrollerViewport>\n      <MessageScrollerButton />\n    </MessageScroller>\n  </MessageScrollerProvider>\n</div>"} />
+
+Place every part inside `MessageScrollerProvider`; the components and hooks throw outside of it. Provider options:
+
+- `defaultScrollPosition`: `"end"` (default), `"start"`, or `"last-anchor"` to open at the last item marked with `scrollAnchor`.
+- `autoScroll`: when `true`, follows new content at the bottom until the user scrolls away. Defaults to `false`.
+- `scrollEdgeThreshold`, `scrollPreviousItemPeek` and `scrollMargin`: pixel values that tune edge detection and anchoring (defaults `8`, `64` and `0`).
+
+Give each item a stable `messageId` so it can be targeted programmatically. The exported `useMessageScroller` hook returns `scrollToEnd`, `scrollToStart` and `scrollToMessage`; `useMessageScrollerScrollable` reports whether each edge can scroll, and `useMessageScrollerVisibility` reports the visible message IDs.
+
+## Examples
+
+### Start at top
+
+A scroller that opens at the first message with `defaultScrollPosition="start"`, with buttons for both directions.
+
+<Example kind="ui" name="message-scroller" story="StartAtTop">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\nimport { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from \"@/components/ui/message-scroller\"\n\nconst messages = [\n  { id: \"1\", from: \"them\", text: \"Hey, do you have a minute?\" },\n  { id: \"2\", from: \"me\", text: \"Sure, what's up?\" },\n  {\n    id: \"3\",\n    from: \"them\",\n    text: \"The client moved the launch to Thursday.\",\n  },\n  { id: \"4\", from: \"me\", text: \"That's two days earlier than planned.\" },\n  { id: \"5\", from: \"them\", text: \"I know. Can we cut the onboarding tour?\" },\n  {\n    id: \"6\",\n    from: \"me\",\n    text: \"We could ship it behind a flag and turn it on next week.\",\n  },\n  { id: \"7\", from: \"them\", text: \"That works. What about the docs?\" },\n  {\n    id: \"8\",\n    from: \"me\",\n    text: \"The API reference is done. Guides need a pass.\",\n  },\n  { id: \"9\", from: \"them\", text: \"I can review the guides tonight.\" },\n  { id: \"10\", from: \"me\", text: \"Great, I'll send you the draft links.\" },\n  { id: \"11\", from: \"them\", text: \"Any blockers on the release checklist?\" },\n  {\n    id: \"12\",\n    from: \"me\",\n    text: \"Just the final QA run. It should finish this afternoon.\",\n  },\n  { id: \"13\", from: \"them\", text: \"Perfect. Let's sync tomorrow at ten.\" },\n  { id: \"14\", from: \"me\", text: \"Sounds good, see you then.\" },\n]\n\nfunction Messages() {\n  return messages.map((message) => (\n    <MessageScrollerItem key={message.id} messageId={message.id}>\n      <Message align={message.from === \"me\" ? \"end\" : \"start\"}>\n        <MessageContent>\n          <Bubble variant={message.from === \"me\" ? \"default\" : \"muted\"}>\n            <BubbleContent>{message.text}</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </MessageScrollerItem>\n  ))\n}\n\nexport function MessageScrollerStartAtTopExample() {\n  return (\n    <div className=\"h-96 w-96 overflow-hidden rounded-2xl border\">\n      <MessageScrollerProvider defaultScrollPosition=\"start\">\n        <MessageScroller>\n          <MessageScrollerViewport>\n            <MessageScrollerContent className=\"gap-3 p-4\">\n              <Messages />\n            </MessageScrollerContent>\n          </MessageScrollerViewport>\n          <MessageScrollerButton direction=\"start\" />\n          <MessageScrollerButton />\n        </MessageScroller>\n      </MessageScrollerProvider>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"MessageScrollerProvider","href":"#messagescrollerprovider","children":[{"name":"MessageScroller","href":"#messagescroller","children":[{"name":"MessageScrollerViewport","href":"#messagescrollerviewport","children":[{"name":"MessageScrollerContent","href":"#messagescrollercontent","children":[]}]},{"name":"MessageScrollerButton","href":"#messagescrollerbutton","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### MessageScrollerProvider
+
+Creates the scroll controller and provides it to the parts and hooks inside.
+
+<PropsTable extends={["MessageScrollerOptions"]} props={[{"name":"children","type":"React.ReactNode","description":"The scroller parts and any components that use the message scroller hooks."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MessageScroller
+
+The root container, built on the Base UI Scroll Area root.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageScrollerViewport
+
+The focusable scrollable region, rendered with a vertical scrollbar.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"preserveScrollOnPrepend","type":"boolean","default":"true","description":"Keeps the visible messages in place when items are inserted before the first one, such as when loading history."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageScrollerContent
+
+The live log that holds the message items.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"spacerClassName","type":"string","description":"Class name for the hidden spacer element the scroller appends after the items."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageScrollerItem
+
+Wraps one message and registers it with the controller.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"messageId","type":"string","description":"A stable ID used for `scrollToMessage`, visibility tracking and the `data-message-id` attribute."},{"name":"scrollAnchor","type":"boolean","default":"false","description":"Marks the item as an anchor; when it is added, the scroller aligns it to the top of the viewport instead of the bottom."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageScrollerButton
+
+A floating button that appears when the scroller can move toward its direction and jumps there on click.
+
+<PropsTable extends={["useRender.ComponentProps<\"button\", MessageScrollerButtonState>","React.ComponentProps<typeof Button>"]} props={[{"name":"behavior","type":"ScrollBehavior","default":"\"smooth\"","description":"The scroll behavior used when jumping, such as `smooth` or `auto`."},{"name":"direction","type":"MessageScrollerScrollDirection","default":"\"end\"","description":"Which edge the button scrolls to: `end` or `start`. It also sets the button's position and icon rotation."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The viewport has `role="region"`, an `aria-label` of `Messages` by default, and `tabIndex={0}` so it can be scrolled with the keyboard.
+- The content has `role="log"` with `aria-relevant="additions"`, so assistive technology can announce new messages.
+- `MessageScrollerButton` includes a visually hidden label, `Scroll to end` or `Scroll to start`. While it cannot scroll, the button is `inert` and removed from the tab order.
+- Wheel, touch and scrolling keys stop auto-follow so the user's reading position is respected.
+
+## Notes
+
+- Styling hooks: `data-slot` values `message-scroller`, `message-scroller-viewport`, `message-scroller-content`, `message-scroller-item` and `message-scroller-button`.
+- The root and viewport receive `data-pending-scroll` until the initial position is applied; the viewport is invisible during that time. They also get `data-scrollable` with the scrollable edges and `data-autoscrolling` while a programmatic scroll is running.
+- The button exposes `data-active`, `data-direction`, `data-variant` and `data-size`. It defaults to the `secondary` variant and `icon-sm` size of `Button`.
+- Items set `data-scroll-anchor` and use `content-visibility: auto` to keep long transcripts fast.

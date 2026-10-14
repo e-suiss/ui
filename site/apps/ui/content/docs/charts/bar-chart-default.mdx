@@ -1,0 +1,46 @@
+---
+title: Bar Chart Default
+description: "A single series of rounded vertical bars, one per month."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-default">
+
+<SourceFile path="components/charts/bar-chart-default.tsx" fold={false} />
+
+</Example>
+
+The plain bar chart: one series of rounded vertical bars with a month axis and a tooltip. Start from it whenever you compare a handful of discrete values.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-default"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-default.tsx`:
+
+<SourceFile path="components/charts/bar-chart-default.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartDefault } from \"@/components/charts/bar-chart-default\""} />
+
+<Code lang="tsx" code={"<BarChartDefault />"} />
+
+Replace `chartData`, set the `dataKey` on the axis and the bar to your fields, and rename the `chartConfig` entry to set the label and color. Adjust `radius` for corner rounding and `maxBarSize` to cap bar width on wide containers.
+
+## Notes
+
+Focus the chart and use the arrow keys to move the tooltip from bar to bar.

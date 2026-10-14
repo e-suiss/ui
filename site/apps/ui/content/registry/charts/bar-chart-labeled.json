@@ -1,0 +1,6 @@
+{
+  "description": "A single bar series with each value printed above its bar and no grid lines.",
+  "overview": "A single bar series with each value printed above its bar and no grid lines. Use it when exact numbers matter and there are few enough bars for the labels to fit.",
+  "usage": "Replace `chartData`, set each `dataKey` and rename the `chartConfig` entry for the label and color. Move the labels with the `position` prop on `LabelList`, for example inside the bar. Increase the chart's top margin if larger labels get clipped.",
+  "notes": "Labels follow the theme's text color in light and dark mode. Focus the chart and use the arrow keys to move between bars."
+}

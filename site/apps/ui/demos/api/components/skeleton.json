@@ -1,0 +1,26 @@
+{
+  "name": "skeleton",
+  "type": "ui",
+  "files": [
+    "components/ui/skeleton.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Profile",
+    "Card",
+    "List"
+  ],
+  "parts": [
+    {
+      "name": "Skeleton",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

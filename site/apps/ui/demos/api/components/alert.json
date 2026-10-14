@@ -1,0 +1,56 @@
+{
+  "name": "alert",
+  "type": "ui",
+  "files": [
+    "components/ui/alert.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Destructive",
+    "WithoutIcon",
+    "TitleOnly",
+    "WithAction"
+  ],
+  "parts": [
+    {
+      "name": "Alert",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "AlertTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDescription",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertAction",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

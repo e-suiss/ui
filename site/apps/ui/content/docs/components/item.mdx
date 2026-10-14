@@ -1,0 +1,234 @@
+---
+title: Item
+description: "A flexible row that pairs media, a title, a description and actions, for lists and settings."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="item" story="Default">
+
+<Code lang="tsx" code={"import { ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia variant=\"icon\">\n          <ShieldCheckIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Two-factor authentication</ItemTitle>\n          <ItemDescription>\n            Add an extra layer of security to your account.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button variant=\"outline\" size=\"sm\">\n            Enable\n          </Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. Use the `render` prop to turn the whole item into a link or button.
+
+`ItemGroup` stacks items as a list, and its `inset` variant groups them into a rounded list on a secondary surface, like iOS Settings. Place an `ItemSeparator` between items to divide them. Use items to display content; for form controls with labels and validation, use `Field`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/item.tsx`:
+
+<SourceFile path="components/ui/item.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from \"@/components/ui/item\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Item variant=\"outline\">\n    <ItemMedia variant=\"icon\">\n      <ShieldCheckIcon />\n    </ItemMedia>\n    <ItemContent>\n      <ItemTitle>Two-factor authentication</ItemTitle>\n      <ItemDescription>\n        Add an extra layer of security to your account.\n      </ItemDescription>\n    </ItemContent>\n    <ItemActions>\n      <Button variant=\"outline\" size=\"sm\">\n        Enable\n      </Button>\n    </ItemActions>\n  </Item>\n</div>"} />
+
+`ItemGroup` has the `list` role, so set `role="listitem"` on each `Item` inside it. Choose a `variant` for the item's border and background, and a `size` for its padding. Items inside a group with `sm` or `xs` items are spaced more tightly.
+
+When `ItemDescription` is present, the media aligns to the top of the item instead of its center. The title is limited to one line and the description to two.
+
+## Examples
+
+### Variants
+
+The `default`, `outline` and `muted` item variants.
+
+<Example kind="ui" name="item" story="Variants">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemVariantsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"outline\", \"muted\"] as const).map((variant) => (\n          <Item key={variant} variant={variant}>\n            <ItemContent>\n              <ItemTitle>\n                {variant.charAt(0).toUpperCase() + variant.slice(1)} item\n              </ItemTitle>\n              <ItemDescription>\n                A short description of this list entry.\n              </ItemDescription>\n            </ItemContent>\n            <ItemActions>\n              <Button variant=\"outline\" size=\"sm\">\n                Open\n              </Button>\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+The `default`, `sm` and `xs` item sizes.
+
+<Example kind="ui" name="item" story="Sizes">
+
+<Code lang="tsx" code={"import { CaretRightIcon, CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemSizesExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n          <Item key={size} variant=\"outline\" size={size}>\n            <ItemMedia variant=\"icon\">\n              <CheckCircleIcon />\n            </ItemMedia>\n            <ItemContent>\n              <ItemTitle>Your profile has been verified</ItemTitle>\n            </ItemContent>\n            <ItemActions>\n              <CaretRightIcon className=\"size-4\" />\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### As link
+
+An item rendered as a link, so the whole row is one focusable target.
+
+<Example kind="ui" name="item" story="AsLink">
+
+<Code lang="tsx" code={"import { BellIcon, CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemAsLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\" render={<a href=\"#notifications\" />}>\n        <ItemMedia variant=\"icon\">\n          <BellIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Notification settings</ItemTitle>\n          <ItemDescription>\n            Choose what you want to be notified about.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <CaretRightIcon className=\"size-4\" />\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With image
+
+A list of people with image media, separators and an invite button on each row.
+
+<Example kind="ui" name="item" story="WithImage">
+
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemWithImageExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup>\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+The same list in an `inset` item group, forming a rounded list with inset separators.
+
+<Example kind="ui" name="item" story="Inset">
+
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup variant=\"inset\">\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With avatar
+
+An item with an `Avatar` as media and a Message button.
+
+<Example kind="ui" name="item" story="WithAvatar">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithAvatarExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia>\n          <Avatar size=\"lg\">\n            <AvatarImage\n              src=\"https://i.pravatar.cc/96?img=12\"\n              alt=\"Olivia Martin\"\n            />\n            <AvatarFallback>OM</AvatarFallback>\n          </Avatar>\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Olivia Martin</ItemTitle>\n          <ItemDescription>Last seen 5 minutes ago</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button size=\"sm\">Message</Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With header and footer
+
+A plan summary with a price in the header and a renewal date and action in the footer.
+
+<Example kind="ui" name="item" story="WithHeaderAndFooter">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithHeaderAndFooterExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemHeader>\n          <ItemTitle>Pro plan</ItemTitle>\n          <span className=\"text-sm font-medium\">$24/mo</span>\n        </ItemHeader>\n        <ItemContent>\n          <ItemDescription>\n            Unlimited projects, priority support, and advanced analytics.\n          </ItemDescription>\n        </ItemContent>\n        <ItemFooter>\n          <span className=\"text-label-secondary text-xs\">Renews on May 1</span>\n          <Button variant=\"outline\" size=\"sm\">\n            Manage\n          </Button>\n        </ItemFooter>\n      </Item>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]},{"name":"ItemHeader","href":"#itemheader","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]}]},{"name":"ItemFooter","href":"#itemfooter","children":[]}]},{"name":"ItemGroup","href":"#itemgroup","children":[{"name":"ItemSeparator","href":"#itemseparator","children":[]},{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### ItemGroup
+
+Stacks items as a list, or groups them into an inset list.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ItemSeparator
+
+A divider between items.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Item
+
+The row container for media, content and actions.
+
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"outline\" | \"muted\"","default":"\"default\"","description":"`default` has no border or background, `outline` adds a border, and `muted` adds a subtle background."},{"name":"size","type":"\"default\" | \"sm\" | \"xs\"","default":"\"default\"","description":"Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ItemMedia
+
+Holds an icon, image or avatar at the start of the item.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\" | \"image\"","default":"\"default\"","description":"`icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ItemContent
+
+Stacks the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ItemTitle
+
+The item's title, limited to one line.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ItemDescription
+
+Supporting text, limited to two lines.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ItemActions
+
+Holds buttons or indicators at the end of the item.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ItemHeader
+
+A full-width row above the item's content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ItemFooter
+
+A full-width row below the item's content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `ItemGroup` has the `list` role; give each `Item` in it the `listitem` role.
+- `ItemSeparator` has the `none` role, so it is ignored by assistive technology.
+- An item rendered as a link or button is a single focusable element and shows a focus ring.
+- Give icon-only action buttons an accessible name with `aria-label`.
+
+## Notes
+
+- Styling hooks: `data-slot` values `item-group`, `item-separator`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header` and `item-footer`.
+- `Item` sets `data-variant` and `data-size`; `ItemGroup` and `ItemMedia` set `data-variant`.
+- An item rendered as an anchor gets the `item-hover` background on hover.
+- Uses the `separator`, `surface-secondary`, `item-hover`, `label-secondary` and `link` tokens.

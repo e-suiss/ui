@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-separated",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-separated.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

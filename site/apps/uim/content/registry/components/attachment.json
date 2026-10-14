@@ -1,0 +1,44 @@
+{
+  "description": "A compact card for a file or upload, with media, name, details, progress and actions.",
+  "overview": "`Attachment` is a rounded `View` that lays out an `AttachmentMedia` thumbnail, an `AttachmentContent` column and `AttachmentActions`. It comes in `default`, `sm` and `xs` sizes and in `horizontal` or `vertical` orientation; the vertical layout makes a tile with the actions floating over the media.\n\nThe `state` prop reflects the upload lifecycle: `idle` draws a dashed border for an empty drop slot, `error` turns the description red, and `uploading`, `processing` and `done` are passed to the parts through context. Put several attachments in an `AttachmentGroup` to show them as one list with hairlines between rows.",
+  "usage": "`AttachmentMedia` has three variants: `icon` for a glyph, `document` for a page shape (pair it with `AttachmentLabel` to show a file extension), and `image` for a thumbnail. Put `AttachmentTitle` and `AttachmentDescription` in `AttachmentContent`, and add `AttachmentProgress` with a `value` while uploading.\n\n`AttachmentAction` is a `Button` that defaults to the `secondary` variant and a small icon size scaled to the attachment, with an enlarged hit area. Use `variant=\"link\"` for a text action.\n\nTo make the whole card pressable, add an `AttachmentTrigger`; it covers the card while actions stay pressable above it.",
+  "examples": {
+    "Sizes": "The `default`, `sm` and `xs` sizes.",
+    "States": "The `idle`, uploading, processing, error and done states.",
+    "Image": "An image thumbnail with the `image` media variant.",
+    "Vertical": "Tiles with `orientation=\"vertical\"`.",
+    "Pressable": "A card made pressable with `AttachmentTrigger`.",
+    "Group": "Several attachments in an `AttachmentGroup`, one of them uploading.",
+    "FileTypes": "Document media with colored extension labels."
+  },
+  "parts": {
+    "Attachment": "Card that provides state, size and orientation to its parts.",
+    "AttachmentMedia": "Thumbnail area for an icon, document shape or image.",
+    "AttachmentLabel": "Small uppercase tag, such as a file extension.",
+    "AttachmentContent": "Column for the title, description and progress.",
+    "AttachmentTitle": "File name, one line by default.",
+    "AttachmentDescription": "Secondary details, red in the `error` state.",
+    "AttachmentProgress": "Progress bar with a percentage value.",
+    "AttachmentActions": "Row of actions; floats over the media in vertical layout.",
+    "AttachmentAction": "Small button sized to the attachment.",
+    "AttachmentTrigger": "Pressable overlay that makes the whole card pressable.",
+    "AttachmentGroup": "List container that joins attachments with separators."
+  },
+  "props": {
+    "Attachment": {
+      "state": "`idle`, `uploading`, `processing`, `error` or `done`. Defaults to `done`.",
+      "size": "`default`, `sm` or `xs`.",
+      "orientation": "`horizontal` or `vertical`."
+    },
+    "AttachmentMedia": {
+      "variant": "`icon`, `document` or `image`."
+    },
+    "AttachmentProgress": {
+      "value": "Current progress, or `null` when unknown.",
+      "min": "Lower bound.",
+      "max": "Upper bound."
+    }
+  },
+  "accessibility": "- `AttachmentProgress` has the `progressbar` role with its value exposed.\n- `AttachmentTrigger` has the `button` role; give it an `accessibilityLabel` such as \"Open Invoice.pdf\".\n- Icon-only actions need an `accessibilityLabel`.",
+  "notes": "- Uses `bg-surface-secondary`, `border-separator`, `bg-accent` and `text-danger` tokens; light and dark follow the system appearance.\n- Separators and action positions use start and end offsets, so they flip in right-to-left layouts."
+}

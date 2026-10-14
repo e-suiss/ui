@@ -1,0 +1,125 @@
+{
+  "name": "search-picker",
+  "type": "pattern",
+  "files": [
+    "components/patterns/search-picker.tsx"
+  ],
+  "requires": [
+    "combobox",
+    "command",
+    "drawer",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithValue",
+    "Grouped",
+    "WithTitle",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "Disabled",
+    "Invalid",
+    "Controlled",
+    "Floating"
+  ],
+  "parts": [
+    {
+      "name": "SearchPicker",
+      "extends": [],
+      "props": [
+        {
+          "name": "items",
+          "type": "SearchPickerItem[]",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string | null) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "string",
+          "required": false,
+          "default": "\"Search...\""
+        },
+        {
+          "name": "emptyText",
+          "type": "string",
+          "required": false,
+          "default": "\"No results found.\""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-invalid",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

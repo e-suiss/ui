@@ -1,0 +1,46 @@
+---
+title: Chat Thread
+description: "A single message thread inside a phone frame, with heart reactions and simulated replies."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="chat-thread">
+
+<SourceFile path="components/blocks/chat-thread.tsx" fold={false} />
+
+</Example>
+
+A single conversation in a phone frame, with a contact header, message bubbles, heart reactions and a composer. Double-clicking a bubble, or pressing Enter on it, toggles a heart. The frame appears from small tablets up while the smallest screens show the thread edge to edge, and on desktop a caption sits beside the phone. It works for showing off a chat feature on a marketing page or as the base of a one-to-one chat view.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks chat-thread"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller).
+
+3. Copy the source into `components/blocks/chat-thread.tsx`:
+
+<SourceFile path="components/blocks/chat-thread.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ChatThread } from \"@/components/blocks/chat-thread\""} />
+
+<Code lang="tsx" code={"<ChatThread />"} />
+
+Replace `opening` with your initial messages, each with an id, sender, text and an optional liked flag. The `send` function fakes a typing indicator and a reply from `replies`, so wire it to your messaging backend instead. Update the contact name and initials, and point the `#contact` link at a real profile.
+
+## Notes
+
+Each bubble is a button whose label includes the message and how to toggle the heart, so reactions work from the keyboard.

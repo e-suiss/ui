@@ -1,0 +1,82 @@
+{
+  "name": "confirm",
+  "type": "pattern",
+  "files": [
+    "components/patterns/confirm.tsx"
+  ],
+  "requires": [
+    "alert-dialog",
+    "alert-sheet",
+    "use-mobile"
+  ],
+  "dependencies": [],
+  "examples": [
+    "Default",
+    "Dismissible"
+  ],
+  "parts": [
+    {
+      "name": "Confirm",
+      "extends": [
+        "React.ComponentProps<typeof AlertSheet>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmTrigger",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogTrigger>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmContent",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogContent>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmTitle",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogTitle>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmDescription",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogDescription>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmAction",
+      "extends": [
+        "React.ComponentProps<typeof AlertSheetAction>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ConfirmCancel",
+      "extends": [
+        "React.ComponentProps<typeof AlertSheetCancel>"
+      ],
+      "props": []
+    }
+  ]
+}

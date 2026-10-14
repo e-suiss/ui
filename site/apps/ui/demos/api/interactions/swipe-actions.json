@@ -1,0 +1,67 @@
+{
+  "name": "swipe-actions",
+  "type": "interaction",
+  "files": [
+    "components/interactions/swipe-actions.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "BothSides",
+    "Variants"
+  ],
+  "parts": [
+    {
+      "name": "SwipeActions",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SwipeActionsContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SwipeActionsActions",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "side",
+          "type": "SwipeActionsSide",
+          "required": false,
+          "default": "\"trailing\""
+        }
+      ]
+    },
+    {
+      "name": "SwipeAction",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\" | \"archive\" | \"neutral\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "fullSwipe",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    }
+  ]
+}

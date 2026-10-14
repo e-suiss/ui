@@ -1,0 +1,50 @@
+{
+  "name": "marker",
+  "type": "ui",
+  "files": [
+    "components/ui/marker.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Variants",
+    "Separator",
+    "WithIcon",
+    "WithLink"
+  ],
+  "parts": [
+    {
+      "name": "Marker",
+      "extends": [
+        "useRender.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"separator\" | \"border\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MarkerIcon",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "MarkerContent",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    }
+  ]
+}

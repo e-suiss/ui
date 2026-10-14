@@ -1,0 +1,73 @@
+{
+  "name": "preview",
+  "type": "pattern",
+  "files": [
+    "components/patterns/preview.tsx"
+  ],
+  "requires": [
+    "drawer",
+    "hover-card",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithCloseButton",
+    "WithCloseLabel"
+  ],
+  "parts": [
+    {
+      "name": "Preview",
+      "extends": [
+        "React.ComponentProps<typeof HoverCard>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "PreviewTrigger",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "href",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PreviewContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>",
+        "React.ComponentProps<typeof HoverCardContent>"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

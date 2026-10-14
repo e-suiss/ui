@@ -1,0 +1,110 @@
+---
+title: Section Index
+description: "An A to Z index bar for jumping between sections of a long list by tapping, dragging, or typing."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="section-index" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SectionIndex, SectionIndexBar, SectionIndexHeader, SectionIndexSection } from \"@/components/interactions/section-index\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\nconst UPPERCASE = /[A-Z]/\n\nconst names = [\n  \"Aaron Price\",\n  \"Abby Chen\",\n  \"Alex Morgan\",\n  \"Amira Haddad\",\n  \"Ben Carter\",\n  \"Bianca Rossi\",\n  \"Carla Diaz\",\n  \"Chris Evans\",\n  \"Cody Brooks\",\n  \"Dana Scott\",\n  \"Derek Hale\",\n  \"Elena Petrova\",\n  \"Ethan Wright\",\n  \"Fatima Khan\",\n  \"Felix Wagner\",\n  \"Grace Kim\",\n  \"Hana Sato\",\n  \"Henry Ford\",\n  \"Ivy Turner\",\n  \"Jack Miller\",\n  \"Jade Wilson\",\n  \"Jonas Berg\",\n  \"Kai Nakamura\",\n  \"Laura Bell\",\n  \"Leo Martin\",\n  \"Lina Costa\",\n  \"Maya Patel\",\n  \"Mia Novak\",\n  \"Noah Fischer\",\n  \"Nora Lind\",\n  \"Omar Aziz\",\n  \"Paula Silva\",\n  \"Quinn Avery\",\n  \"Rosa Lopez\",\n  \"Ryan Cole\",\n  \"Sara Ahmed\",\n  \"Sofia Greco\",\n  \"Tom Baker\",\n  \"Uma Rao\",\n  \"Victor Hugo\",\n  \"Will Jensen\",\n  \"Yara Nasser\",\n  \"Zoe Adams\",\n  \"8 Ball Club\",\n]\n\nfunction groupByLetter() {\n  const groups = new Map<string, string[]>()\n  for (const name of names) {\n    const first = name.charAt(0).toUpperCase()\n    const letter = UPPERCASE.test(first) ? first : \"#\"\n    groups.set(letter, [...(groups.get(letter) ?? []), name])\n  }\n  return [...groups.entries()].sort(([a], [b]) => {\n    if (a === \"#\") return 1\n    if (b === \"#\") return -1\n    return a.localeCompare(b)\n  })\n}\n\nfunction ContactsExample({ className }: { className: string }) {\n  const [log, setLog] = React.useState(\"Tap or drag the letters.\")\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3\">\n      <SectionIndex className={className}>\n        <ScrollArea className=\"h-full rounded-2xl border [clip-path:inset(0_round_var(--radius-2xl))]\">\n          {groupByLetter().map(([letter, group]) => (\n            <SectionIndexSection key={letter} value={letter}>\n              <SectionIndexHeader>{letter}</SectionIndexHeader>\n              <ul>\n                {group.map((name) => (\n                  <li\n                    key={name}\n                    className=\"ms-4 me-10 border-separator not-first:border-t\"\n                  >\n                    <button\n                      type=\"button\"\n                      onClick={() => setLog(`Opened ${name}`)}\n                      className=\"w-full py-3 text-start text-base outline-none focus-visible:focus-ring\"\n                    >\n                      {name}\n                    </button>\n                  </li>\n                ))}\n              </ul>\n            </SectionIndexSection>\n          ))}\n        </ScrollArea>\n        <SectionIndexBar\n          onValueChange={(letter) => setLog(`Jumped to ${letter}`)}\n        />\n      </SectionIndex>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function SectionIndexExample() {\n  return (\n    <ContactsExample className=\"h-[min(36rem,calc(100dvh-7rem))]\" />\n  )\n}"} />
+
+</Example>
+
+`SectionIndex` recreates the iOS list index. Sections marked with `SectionIndexSection` carry sticky `SectionIndexHeader` titles, and `SectionIndexBar` sits along the trailing edge. Tapping or dragging over the bar scrolls the nearest scrollable ancestor so the matching section is at the top; while dragging, a bubble shows the current letter. If a letter has no section, it jumps to the next one that exists.
+
+When the container is too short to fit every letter, the bar collapses to fewer letters separated by dots, while still mapping the full alphabet across its height. Use it for long alphabetized lists such as contacts.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions section-index"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/interactions/section-index.tsx`:
+
+<SourceFile path="components/interactions/section-index.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SectionIndex, SectionIndexSection, SectionIndexHeader, SectionIndexBar } from \"@/components/interactions/section-index\""} />
+
+<Code lang="tsx" code={"<ContactsExample className=\"h-[min(36rem,calc(100dvh-7rem))]\" />"} />
+
+- Wrap the scrolling list and `SectionIndexBar` in `SectionIndex`, which positions the bar. The list can scroll in its own container, such as `ScrollArea`, or in the page.
+- Set `value` on each `SectionIndexSection` to a letter from `letters` so the bar can find it.
+- Use `onValueChange` to react to jumps.
+
+## Examples
+
+### Compact
+
+In a short list, the bar collapses its letters with dots and still jumps to any section.
+
+<Example kind="interaction" name="section-index" story="Compact">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SectionIndex, SectionIndexBar, SectionIndexHeader, SectionIndexSection } from \"@/components/interactions/section-index\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\nconst UPPERCASE = /[A-Z]/\n\nconst names = [\n  \"Aaron Price\",\n  \"Abby Chen\",\n  \"Alex Morgan\",\n  \"Amira Haddad\",\n  \"Ben Carter\",\n  \"Bianca Rossi\",\n  \"Carla Diaz\",\n  \"Chris Evans\",\n  \"Cody Brooks\",\n  \"Dana Scott\",\n  \"Derek Hale\",\n  \"Elena Petrova\",\n  \"Ethan Wright\",\n  \"Fatima Khan\",\n  \"Felix Wagner\",\n  \"Grace Kim\",\n  \"Hana Sato\",\n  \"Henry Ford\",\n  \"Ivy Turner\",\n  \"Jack Miller\",\n  \"Jade Wilson\",\n  \"Jonas Berg\",\n  \"Kai Nakamura\",\n  \"Laura Bell\",\n  \"Leo Martin\",\n  \"Lina Costa\",\n  \"Maya Patel\",\n  \"Mia Novak\",\n  \"Noah Fischer\",\n  \"Nora Lind\",\n  \"Omar Aziz\",\n  \"Paula Silva\",\n  \"Quinn Avery\",\n  \"Rosa Lopez\",\n  \"Ryan Cole\",\n  \"Sara Ahmed\",\n  \"Sofia Greco\",\n  \"Tom Baker\",\n  \"Uma Rao\",\n  \"Victor Hugo\",\n  \"Will Jensen\",\n  \"Yara Nasser\",\n  \"Zoe Adams\",\n  \"8 Ball Club\",\n]\n\nfunction groupByLetter() {\n  const groups = new Map<string, string[]>()\n  for (const name of names) {\n    const first = name.charAt(0).toUpperCase()\n    const letter = UPPERCASE.test(first) ? first : \"#\"\n    groups.set(letter, [...(groups.get(letter) ?? []), name])\n  }\n  return [...groups.entries()].sort(([a], [b]) => {\n    if (a === \"#\") return 1\n    if (b === \"#\") return -1\n    return a.localeCompare(b)\n  })\n}\n\nfunction ContactsExample({ className }: { className: string }) {\n  const [log, setLog] = React.useState(\"Tap or drag the letters.\")\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3\">\n      <SectionIndex className={className}>\n        <ScrollArea className=\"h-full rounded-2xl border [clip-path:inset(0_round_var(--radius-2xl))]\">\n          {groupByLetter().map(([letter, group]) => (\n            <SectionIndexSection key={letter} value={letter}>\n              <SectionIndexHeader>{letter}</SectionIndexHeader>\n              <ul>\n                {group.map((name) => (\n                  <li\n                    key={name}\n                    className=\"ms-4 me-10 border-separator not-first:border-t\"\n                  >\n                    <button\n                      type=\"button\"\n                      onClick={() => setLog(`Opened ${name}`)}\n                      className=\"w-full py-3 text-start text-base outline-none focus-visible:focus-ring\"\n                    >\n                      {name}\n                    </button>\n                  </li>\n                ))}\n              </ul>\n            </SectionIndexSection>\n          ))}\n        </ScrollArea>\n        <SectionIndexBar\n          onValueChange={(letter) => setLog(`Jumped to ${letter}`)}\n        />\n      </SectionIndex>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function SectionIndexCompactExample() {\n  return (\n    <ContactsExample className=\"h-64\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SectionIndex
+
+The relative container that holds the list and the index bar.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SectionIndexSection
+
+A section of the list identified by a letter.
+
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"value","type":"string","required":true,"description":"The letter this section belongs to."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SectionIndexHeader
+
+The sticky title at the top of a section.
+
+<PropsTable extends={["React.ComponentProps<\"h3\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SectionIndexBar
+
+The vertical letter bar that jumps between sections.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"letters","type":"string[]","default":"LETTERS","description":"The letters shown on the bar; defaults to `A` through `Z` followed by `#`."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the letter whenever the bar jumps to a section."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The bar is a vertical `slider` labelled `Section index`, with `aria-valuetext` set to the current letter.
+- Arrow keys move one letter, `PageUp` and `PageDown` move five, and `Home` and `End` reach the first and last letters.
+- Typing a letter jumps directly to it.
+- The visible letters and drag bubble are `aria-hidden`.
+
+## Notes
+
+- Parts use `data-slot` values `section-index`, `section-index-section`, `section-index-header`, `section-index-bar`, and `section-index-bubble`. Sections expose `data-value`, and the bar sets `data-dragging` during a drag.
+- The bar extends its hit area toward the list so it is easier to grab.

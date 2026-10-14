@@ -1,0 +1,158 @@
+{
+  "name": "menubar",
+  "type": "ui",
+  "files": [
+    "components/ui/menubar.tsx"
+  ],
+  "requires": [
+    "dropdown-menu"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "OpenByDefault",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Menubar",
+      "extends": [
+        "MenubarPrimitive.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarMenu",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenu>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarGroup",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuGroup>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarPortal",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuPortal>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarTrigger",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuTrigger>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarContent",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuContent>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarItem",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuItem>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarCheckboxItem",
+      "extends": [
+        "MenuPrimitive.CheckboxItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MenubarRadioGroup",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuRadioGroup>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarRadioItem",
+      "extends": [
+        "MenuPrimitive.RadioItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MenubarLabel",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuLabel>"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MenubarSeparator",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuSeparator>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarShortcut",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuShortcut>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarSub",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuSub>"
+      ],
+      "props": []
+    },
+    {
+      "name": "MenubarSubTrigger",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuSubTrigger>"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "MenubarSubContent",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuSubContent>"
+      ],
+      "props": []
+    }
+  ]
+}

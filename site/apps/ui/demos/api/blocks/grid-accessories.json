@@ -1,0 +1,16 @@
+{
+  "name": "grid-accessories",
+  "type": "block",
+  "files": [
+    "components/blocks/grid-accessories.tsx"
+  ],
+  "requires": [
+    "button",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

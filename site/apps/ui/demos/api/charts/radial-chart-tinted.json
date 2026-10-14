@@ -1,0 +1,16 @@
+{
+  "name": "radial-chart-tinted",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-tinted.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

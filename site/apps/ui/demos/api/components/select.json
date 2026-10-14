@@ -1,0 +1,96 @@
+{
+  "name": "select",
+  "type": "ui",
+  "files": [
+    "components/ui/select.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Open",
+    "WithValue",
+    "Small",
+    "Grouped",
+    "WithIcons",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "SelectGroup",
+      "extends": [
+        "SelectPrimitive.Group.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectValue",
+      "extends": [
+        "SelectPrimitive.Value.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectTrigger",
+      "extends": [
+        "SelectPrimitive.Trigger.Props"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "SelectContent",
+      "extends": [
+        "SelectPrimitive.Popup.Props",
+        "SelectPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectLabel",
+      "extends": [
+        "SelectPrimitive.GroupLabel.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectItem",
+      "extends": [
+        "SelectPrimitive.Item.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectSeparator",
+      "extends": [
+        "SelectPrimitive.Separator.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectScrollUpButton",
+      "extends": [
+        "React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectScrollDownButton",
+      "extends": [
+        "React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>"
+      ],
+      "props": []
+    }
+  ]
+}

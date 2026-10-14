@@ -1,0 +1,5 @@
+{
+  "description": "Two overlapping areas whose fills fade toward the bottom, comparing desktop and mobile visitors.",
+  "overview": "Two series, desktop and mobile, drawn as natural curves on the same axis. Both use a shared gradient fill that fades out toward the baseline, so the overlap stays readable. A month axis, a dashed grid and a tooltip listing both values complete the chart.",
+  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Add or rename series in `chartConfig`, and change the `fade` stops to make the gradient stronger or lighter. The component takes no props."
+}

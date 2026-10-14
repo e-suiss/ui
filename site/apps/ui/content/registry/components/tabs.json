@@ -1,0 +1,26 @@
+{
+  "description": "A set of tabs that switches between panels of related content in the same place.",
+  "overview": "`Tabs` wraps the Base UI Tabs primitive. `TabsList` holds the `TabsTrigger` buttons, and each `TabsContent` panel is shown when its `value` matches the selected tab. An indicator slides to the active tab: a raised pill in the `default` variant, or an underline in the `line` variant.\n\nWhen there are more tabs than fit, the list scrolls horizontally and keeps the active tab in view. On small screens, a horizontal list bleeds to the edges of its scroll container. Use `Tabs` to switch views within a page. For app-level navigation, use `TabBar` or `Sidebar`; for a compact single-choice control, consider a segmented `ToggleGroup`.",
+  "usage": "Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `value`. Set `orientation=\"vertical\"` on `Tabs` to stack the triggers beside the panel.",
+  "examples": {
+    "Line": "Uses the `line` variant, which underlines the active tab.",
+    "Vertical": "Stacks the tabs vertically beside the panel.",
+    "WithIcons": "Places an icon before each tab's label.",
+    "DisabledTab": "Disables one tab so it can't be selected.",
+    "ManyTabs": "Holds more tabs than fit, so the list scrolls.",
+    "ManyTabsLine": "Combines a scrolling list with the `line` variant."
+  },
+  "parts": {
+    "Tabs": "The root that holds the selected value and orientation.",
+    "TabsList": "The row or column of tabs, with the sliding indicator.",
+    "TabsTrigger": "A tab that selects its panel.",
+    "TabsContent": "The panel shown when its tab is selected."
+  },
+  "props": {
+    "TabsList": {
+      "variant": "Chooses a filled `default` list with a raised pill, or a `line` list with an underline."
+    }
+  },
+  "accessibility": "- The list has the `tablist` role with `aria-orientation`; triggers are `tab` elements with `aria-selected`, and panels are `tabpanel` elements.\n- Arrow keys move focus between tabs, wrapping at the ends; `Enter` or `Space` selects the focused tab. Vertical tabs use the up and down arrow keys.\n- `Home` and `End` move focus to the first and last tabs.\n- Disabled tabs set `aria-disabled` and can't be selected by click or keyboard.",
+  "notes": "- Parts carry `data-slot` attributes: `tabs`, `tabs-list`, `tabs-list-content`, `tabs-indicator`, `tabs-trigger` and `tabs-content`. The list and indicator set `data-variant`, and the active trigger sets `data-active`.\n- The edge bleed on small screens is set through the `--tabs-list-bleed-start` and `--tabs-list-bleed-end` properties, which the list measures itself.\n- `className` on `TabsList` styles the inner `tabs-list-content` element, not the scrolling list.\n- Indicator and scroll animations are removed when reduced motion is preferred."
+}

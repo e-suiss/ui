@@ -1,0 +1,76 @@
+{
+  "name": "bubble",
+  "type": "ui",
+  "files": [
+    "components/ui/bubble.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Variants",
+    "Conversation",
+    "WithReactions",
+    "Interactive"
+  ],
+  "parts": [
+    {
+      "name": "BubbleGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "Bubble",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"end\"",
+          "required": false,
+          "default": "\"start\""
+        }
+      ]
+    },
+    {
+      "name": "BubbleContent",
+      "extends": [
+        "useRender.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BubbleReactions",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "align",
+          "type": "\"start\" | \"end\"",
+          "required": false,
+          "default": "\"end\""
+        },
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\"",
+          "required": false,
+          "default": "\"bottom\""
+        }
+      ]
+    }
+  ]
+}

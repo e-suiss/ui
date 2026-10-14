@@ -1,0 +1,45 @@
+{
+  "description": "A compact, selectable pill for filters and tags, with an optional icon and remove button.",
+  "overview": "`Chip` is a toggle rendered as a rounded `Pressable`. It switches between an unselected control background and a selected fill, and shrinks slightly while pressed. It has `default` and `sm` sizes, an optional leading `icon`, and an optional trailing remove button when `onRemove` is set.\n\n`ChipGroup` manages selection for a set of chips: single selection by default, or several with `multiple`. It wraps chips onto new lines, or lays them out in a horizontal scroll view with `scrollable`.",
+  "usage": "Use `selected` with `onSelectedChange`, or `defaultSelected`, on a standalone chip. Inside a `ChipGroup`, give each chip a `value` and control the group with `value`, `defaultValue` and `onValueChange` (arrays of values).\n\nThe group's `size` is passed to every chip unless a chip sets its own. Use `removeLabel` to localize the remove button's label.\n\n`chipVariants` is also exported if you need the classes elsewhere.",
+  "examples": {
+    "States": "Unselected, selected and disabled chips.",
+    "Sizes": "The `default` and `sm` sizes.",
+    "WithIcon": "Chips with a leading icon.",
+    "Removable": "Chips with a remove button through `onRemove`.",
+    "Controlled": "A chip controlled with `selected` and `onSelectedChange`.",
+    "GroupSingle": "A group that allows one selected chip.",
+    "GroupMultiple": "A group with `multiple` selection.",
+    "GroupUncontrolled": "A group using `defaultValue`.",
+    "GroupScrollable": "A single scrolling row with `scrollable`.",
+    "GroupDisabled": "A disabled group."
+  },
+  "parts": {
+    "Chip": "Selectable pill.",
+    "ChipGroup": "Manages selection and layout for several chips."
+  },
+  "props": {
+    "Chip": {
+      "selected": "Controlled selected state.",
+      "defaultSelected": "Initial selected state when uncontrolled.",
+      "onSelectedChange": "Called with the new selected value.",
+      "size": "`default` or `sm`.",
+      "icon": "Phosphor icon component shown before the label.",
+      "onRemove": "Shows a remove button and is called when it is pressed.",
+      "removeLabel": "Label for the remove button and action. Defaults to `\"Remove\"`.",
+      "disabled": "Blocks presses and dims the chip.",
+      "value": "Identifier used by `ChipGroup`."
+    },
+    "ChipGroup": {
+      "value": "Controlled array of selected values.",
+      "defaultValue": "Initial selected values when uncontrolled.",
+      "onValueChange": "Called with the new array of values.",
+      "multiple": "Allows more than one selected chip.",
+      "size": "Size passed to every chip.",
+      "scrollable": "Shows chips in a horizontal scroll view instead of wrapping.",
+      "disabled": "Disables every chip."
+    }
+  },
+  "accessibility": "- A chip has the `togglebutton` role with `checked` state, or the `radio` role in a single-selection group.\n- A group has the `radiogroup` role for single selection and `group` for multiple.\n- With `onRemove`, the chip exposes a `remove` accessibility action, and the remove button has its own `button` role and label.",
+  "notes": "- Uses `bg-control`, `bg-control-selected` and `text-on-control-selected` tokens with pressed and disabled states; light and dark follow the system appearance."
+}

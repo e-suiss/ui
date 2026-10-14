@@ -1,0 +1,100 @@
+---
+title: Search Reveal
+description: "A scrolling list with a search field tucked above it that appears when the user scrolls up."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="search-reveal" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({ count }: { count: number }) {\n  const [query, setQuery] = React.useState(\"\")\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <div className=\"mx-auto flex h-[min(36rem,calc(100dvh-4rem))] w-[min(28rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border\">\n      <h2 className=\"px-4 pt-4 pb-2 text-3xl font-bold tracking-tight\">\n        Notes\n      </h2>\n      <SearchReveal className=\"min-h-0 flex-1\">\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <p className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </p>\n          ) : (\n            <ul className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note) => (\n                <li key={note.id} className=\"not-first:border-t\">\n                  <button\n                    type=\"button\"\n                    className=\"flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]\"\n                  >\n                    <span className=\"truncate font-semibold\">{note.title}</span>\n                    <span className=\"truncate text-sm text-label-secondary\">\n                      {note.preview}\n                    </span>\n                  </button>\n                </li>\n              ))}\n            </ul>\n          )}\n          <p className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </p>\n        </SearchRevealContent>\n      </SearchReveal>\n    </div>\n  )\n}\n\nexport function SearchRevealExample() {\n  return (\n    <NotesExample count={12} />\n  )\n}"} />
+
+</Example>
+
+`SearchReveal` recreates the iOS pattern where a search field hides above a list. The container starts scrolled so the field is just out of view; scrolling up reveals it and fades it in. When scrolling stops partway, the container settles to fully shown or fully hidden, and it stays revealed while the field holds a query. Focusing the field scrolls it into view.
+
+`SearchRevealField` is a controlled search input with a magnifying glass and a clear button. Use the pattern for lists such as notes, messages, or contacts where search should be available without taking up space.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions search-reveal"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/interactions/search-reveal.tsx`:
+
+<SourceFile path="components/interactions/search-reveal.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SearchReveal, SearchRevealField, SearchRevealContent } from \"@/components/interactions/search-reveal\""} />
+
+<Code lang="tsx" code={"<NotesExample count={12} />"} />
+
+- Place `SearchRevealField` first and `SearchRevealContent` after it inside `SearchReveal`, and give the container a bounded height.
+- The field is controlled: pass `value` and update it in `onValueChange`. Filter the content from that value.
+- `SearchRevealContent` fills at least the container's height, so the field can hide even when the list is short.
+- `placeholder` defaults to `Search` and also labels the input.
+
+## Examples
+
+### Short list
+
+A short list still hides the field above it and reveals it on focus.
+
+<Example kind="interaction" name="search-reveal" story="ShortList">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SearchReveal, SearchRevealContent, SearchRevealField } from \"@/components/interactions/search-reveal\"\n\nconst allNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: 5, title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: 6, title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n  { id: 7, title: \"Workout plan\", preview: \"Run on Monday, swim on Thursday\" },\n  {\n    id: 8,\n    title: \"Movies to watch\",\n    preview: \"Two documentaries and a classic\",\n  },\n  { id: 9, title: \"Garden\", preview: \"Plant tomatoes after the frost\" },\n  { id: 10, title: \"Packing list\", preview: \"Charger, passport, rain jacket\" },\n  { id: 11, title: \"Podcast notes\", preview: \"Episode about city design\" },\n  { id: 12, title: \"Budget\", preview: \"Rent, groceries, savings\" },\n]\n\nfunction NotesExample({ count }: { count: number }) {\n  const [query, setQuery] = React.useState(\"\")\n  const notes = allNotes\n    .slice(0, count)\n    .filter((note) =>\n      `${note.title} ${note.preview}`\n        .toLowerCase()\n        .includes(query.trim().toLowerCase())\n    )\n\n  return (\n    <div className=\"mx-auto flex h-[min(36rem,calc(100dvh-4rem))] w-[min(28rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border\">\n      <h2 className=\"px-4 pt-4 pb-2 text-3xl font-bold tracking-tight\">\n        Notes\n      </h2>\n      <SearchReveal className=\"min-h-0 flex-1\">\n        <SearchRevealField value={query} onValueChange={setQuery} />\n        <SearchRevealContent>\n          {notes.length === 0 ? (\n            <p className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n              No results for “{query}”\n            </p>\n          ) : (\n            <ul className=\"mx-4 overflow-hidden rounded-xl bg-surface-secondary\">\n              {notes.map((note) => (\n                <li key={note.id} className=\"not-first:border-t\">\n                  <button\n                    type=\"button\"\n                    className=\"flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]\"\n                  >\n                    <span className=\"truncate font-semibold\">{note.title}</span>\n                    <span className=\"truncate text-sm text-label-secondary\">\n                      {note.preview}\n                    </span>\n                  </button>\n                </li>\n              ))}\n            </ul>\n          )}\n          <p className=\"px-4 py-3 text-center text-xs text-label-secondary\">\n            {notes.length} {notes.length === 1 ? \"note\" : \"notes\"}\n          </p>\n        </SearchRevealContent>\n      </SearchReveal>\n    </div>\n  )\n}\n\nexport function SearchRevealShortListExample() {\n  return (\n    <NotesExample count={3} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SearchReveal
+
+The scroll container that hides, reveals, and snaps the search field.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchRevealField
+
+The search input with a clear button.
+
+<PropsTable extends={["React.ComponentProps<\"input\">"]} props={[{"name":"value","type":"string","required":true,"description":"The current query."},{"name":"onValueChange","type":"(value: string) => void","required":true,"description":"Called with the new query when the user types or clears the field."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SearchRevealContent
+
+The scrolling content below the field.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The input has `type="search"` and is labelled by its placeholder through `aria-label`.
+- The clear button is labelled `Clear search` and returns focus to the input.
+- Focusing the field, including with the keyboard, scrolls it into view.
+
+## Notes
+
+- Parts use `data-slot` values `search-reveal`, `search-reveal-field`, `search-reveal-input`, and `search-reveal-content`.
+- The `--search-reveal` custom property runs from `0` to `1` as the field is revealed and drives its opacity.

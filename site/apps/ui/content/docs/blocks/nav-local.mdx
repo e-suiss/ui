@@ -1,0 +1,42 @@
+---
+title: Nav Local
+description: "A sticky product sub-navigation that highlights the section in view, shown on a dark product page."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="nav-local">
+
+<SourceFile path="components/blocks/nav-local.tsx" fold={false} />
+
+</Example>
+
+A sticky product sub-navigation with the product name on the left and section links and a Buy button on the right, underlining the link for the section in view. The bar gains a blurred background once the page scrolls, and the links collapse into a full-screen menu when space runs out. It renders dark and comes with a sample page of three sections. Use it under a global nav on long product or feature pages.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks nav-local"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Navbar](/docs/patterns/navbar).
+
+2. Copy the source into `components/blocks/nav-local.tsx`:
+
+<SourceFile path="components/blocks/nav-local.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { NavLocal } from \"@/components/blocks/nav-local\""} />
+
+<Code lang="tsx" code={"<NavLocal />"} />
+
+Edit `sections`; each `id` must match an element on your page, because an `IntersectionObserver` picks the active link from the section in view. Replace the sample sections, `highlights` and `images` with your own content, and give Buy a handler.
+
+## Notes
+
+Images are Unsplash placeholders.

@@ -1,0 +1,42 @@
+---
+title: Log Activity
+description: "An admin activity log grouped by day, with a type filter and expandable before-and-after details."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="log-activity">
+
+<SourceFile path="components/blocks/log-activity.tsx" fold={false} />
+
+</Example>
+
+An audit log that groups events by day, each with an icon for its type, the person, the action, the target and a time. Events that changed a value expand to show a before-and-after comparison, and a type filter and Export button sit in the header. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for audit trails, change history or admin activity pages.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks log-activity"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Collapsible](/docs/components/collapsible), [Select](/docs/components/select), [Sidebar](/docs/components/sidebar).
+
+3. Copy the source into `components/blocks/log-activity.tsx`:
+
+<SourceFile path="components/blocks/log-activity.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LogActivity } from \"@/components/blocks/log-activity\""} />
+
+<Code lang="tsx" code={"<LogActivity />"} />
+
+Replace `events` with entries from your audit log API; each has a day, time, actor, action, target, kind and an optional before-and-after diff. `kinds` sets each event type's icon and tint, and `nav` the shell navigation. Give the Export button a handler.

@@ -1,0 +1,42 @@
+---
+title: Pie Chart Legend
+description: "A donut with a legend beneath it that lists every category and its color."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-legend">
+
+<SourceFile path="components/charts/pie-chart-legend.tsx" fold={false} />
+
+</Example>
+
+A donut with a legend underneath listing every category and its color. Pick it when a chart has enough slices that labels around the ring would get crowded.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-legend"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-legend.tsx`:
+
+<SourceFile path="components/charts/pie-chart-legend.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartLegend } from \"@/components/charts/pie-chart-legend\""} />
+
+<Code lang="tsx" code={"<PieChartLegend />"} />
+
+Replace `chartData` and add a label and color for each category to `chartConfig`; the legend reads both from there. Keep `nameKey` on the legend content set to your category field so the names resolve.

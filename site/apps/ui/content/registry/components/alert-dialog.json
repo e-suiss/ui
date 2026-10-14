@@ -1,0 +1,30 @@
+{
+  "description": "A modal dialog that interrupts the user to confirm an important action or acknowledge information.",
+  "overview": "Alert Dialog wraps the Base UI Alert Dialog primitive. An `AlertDialog` root contains an `AlertDialogTrigger` and an `AlertDialogContent`. The content renders its own portal and scrim overlay, and typically holds an `AlertDialogHeader` (with optional `AlertDialogMedia`, plus `AlertDialogTitle` and `AlertDialogDescription`) followed by an `AlertDialogFooter` with `AlertDialogCancel` and `AlertDialogAction` buttons.\n\nUse it when a decision must be made before continuing, such as signing out or deleting data. Unlike a regular dialog, it is not dismissed by clicking outside. For a choice of actions anchored to the bottom of the screen, use Alert Sheet.",
+  "usage": "`AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly.\n\n`AlertDialogAction` and `AlertDialogCancel` both close the dialog and render a `Button`; pass `variant` and `size` to style them. Cancel defaults to the `secondary` variant and Action to `default`. Use `variant=\"destructive\"` on the action for irreversible operations.\n\nThe dialog is uncontrolled by default; use `defaultOpen`, or control it with `open` and `onOpenChange`.",
+  "examples": {
+    "Small": "A narrower dialog using `size=\"sm\"` with a destructive action.",
+    "WithMedia": "Adds an icon above the title with `AlertDialogMedia`."
+  },
+  "parts": {
+    "AlertDialog": "The root that manages the open state.",
+    "AlertDialogTrigger": "The control that opens the dialog.",
+    "AlertDialogPortal": "Renders the dialog into a portal outside the DOM hierarchy.",
+    "AlertDialogOverlay": "The full-screen scrim behind the dialog.",
+    "AlertDialogContent": "The dialog surface, rendered with its own portal and overlay.",
+    "AlertDialogHeader": "A centered layout wrapper for the media, title and description.",
+    "AlertDialogFooter": "A two-column grid for the cancel and action buttons.",
+    "AlertDialogMedia": "A circular container for an icon or image above the title.",
+    "AlertDialogTitle": "The heading that names the dialog.",
+    "AlertDialogDescription": "Supporting text that describes the dialog.",
+    "AlertDialogAction": "A button that confirms and closes the dialog.",
+    "AlertDialogCancel": "A button that dismisses the dialog without acting."
+  },
+  "props": {
+    "AlertDialogContent": {
+      "size": "Maximum width of the dialog. `sm` is narrower than `default`."
+    }
+  },
+  "accessibility": "- The popup has the `alertdialog` role, named by `AlertDialogTitle` and described by `AlertDialogDescription`.\n- Opening moves focus into the dialog; closing returns focus to the trigger.\n- `Escape` closes the dialog.\n- Clicking the overlay does not close it; a choice must be made with a footer button or `Escape`.",
+  "notes": "- Styling hooks: `data-slot` values from `alert-dialog` through `alert-dialog-cancel`; the content also sets `data-size`.\n- Surface tokens: `bg-surface-raised` for the dialog, `bg-scrim` for the overlay and `bg-surface-secondary` for media.\n- Enter and exit use fade and zoom animations keyed to `data-open` and `data-closed`."
+}

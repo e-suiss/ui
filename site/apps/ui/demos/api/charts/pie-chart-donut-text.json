@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-donut-text",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-donut-text.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

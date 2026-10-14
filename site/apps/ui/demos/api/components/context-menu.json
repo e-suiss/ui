@@ -1,0 +1,169 @@
+{
+  "name": "context-menu",
+  "type": "ui",
+  "files": [
+    "components/ui/context-menu.tsx"
+  ],
+  "requires": [
+    "use-platform"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Inset"
+  ],
+  "parts": [
+    {
+      "name": "ContextMenu",
+      "extends": [
+        "ContextMenuPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuPortal",
+      "extends": [
+        "ContextMenuPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuTrigger",
+      "extends": [
+        "ContextMenuPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuContent",
+      "extends": [
+        "ContextMenuPrimitive.Popup.Props",
+        "ContextMenuPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuGroup",
+      "extends": [
+        "ContextMenuPrimitive.Group.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuLabel",
+      "extends": [
+        "ContextMenuPrimitive.GroupLabel.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuItem",
+      "extends": [
+        "ContextMenuPrimitive.Item.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuSub",
+      "extends": [
+        "ContextMenuPrimitive.SubmenuRoot.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuSubTrigger",
+      "extends": [
+        "ContextMenuPrimitive.SubmenuTrigger.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuSubContent",
+      "extends": [
+        "React.ComponentProps<typeof ContextMenuContent>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuCheckboxItem",
+      "extends": [
+        "ContextMenuPrimitive.CheckboxItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuRadioGroup",
+      "extends": [
+        "ContextMenuPrimitive.RadioGroup.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuRadioItem",
+      "extends": [
+        "ContextMenuPrimitive.RadioItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuSeparator",
+      "extends": [
+        "ContextMenuPrimitive.Separator.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ContextMenuShortcut",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": [
+        {
+          "name": "mod",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

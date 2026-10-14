@@ -1,0 +1,56 @@
+{
+  "name": "resizable",
+  "type": "ui",
+  "files": [
+    "components/ui/resizable.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn",
+    "react-resizable-panels"
+  ],
+  "examples": [
+    "Default",
+    "WithHandle",
+    "Vertical",
+    "Nested",
+    "Cards",
+    "CardsVertical"
+  ],
+  "parts": [
+    {
+      "name": "ResizablePanelGroup",
+      "extends": [
+        "ResizablePrimitive.GroupProps"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"cards\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "ResizablePanel",
+      "extends": [
+        "ResizablePrimitive.PanelProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "ResizableHandle",
+      "extends": [
+        "ResizablePrimitive.SeparatorProps"
+      ],
+      "props": [
+        {
+          "name": "withHandle",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

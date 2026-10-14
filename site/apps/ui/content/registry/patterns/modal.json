@@ -1,0 +1,36 @@
+{
+  "description": "A modal window that opens as a centered dialog on desktop and a bottom drawer on mobile.",
+  "overview": "`Modal` presents focused content that blocks the rest of the page, such as a form or a share sheet. On desktop it renders a `Dialog`. Below the `48rem` breakpoint it renders a bottom `Drawer` with a swipe handle, and each part switches to its drawer counterpart: the header, title, description and close map to the drawer's parts, `ModalBody` gains padding, and `ModalFooter` stacks its buttons in reverse order so the primary action sits on top.\n\nUse it for tasks that need the user's full attention before returning to the page.",
+  "usage": "The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`. `ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.",
+  "examples": {
+    "WithCloseButton": "Relies on the default corner close button as the only way to dismiss besides `Escape`.",
+    "WithCloseLabel": "Replaces the close icon with a text button using `closeLabel`.",
+    "Floating": "Insets the mobile drawer from the screen edges with `floating`."
+  },
+  "parts": {
+    "Modal": "The root that renders a `Dialog` on desktop and a `Drawer` on mobile.",
+    "ModalTrigger": "The button that opens the modal.",
+    "ModalContent": "The popup window, with a close button by default.",
+    "ModalHeader": "Groups the title and description.",
+    "ModalBody": "The main content area, padded on mobile.",
+    "ModalFooter": "Holds the modal's actions; stacked with the primary action on top on mobile.",
+    "ModalTitle": "The modal's title, used as its accessible name.",
+    "ModalDescription": "Supporting text, used as the modal's accessible description.",
+    "ModalClose": "A button that closes the modal."
+  },
+  "props": {
+    "Modal": {
+      "onOpenChange": "Called when the modal opens or closes.",
+      "floating": "Insets the mobile drawer from the screen edges with fully rounded corners."
+    },
+    "ModalTrigger": {
+      "className": "Classes applied to the trigger."
+    },
+    "ModalContent": {
+      "className": "Classes applied to the dialog or drawer popup.",
+      "style": "Inline styles applied to the dialog or drawer popup."
+    }
+  },
+  "accessibility": "- The popup has the `dialog` role, named by `ModalTitle` and described by `ModalDescription`.\n- `Escape` closes the modal and returns focus to the trigger.\n- The default close button is labelled Close.",
+  "notes": "Parts carry `data-slot` values from `modal` through `modal-close`. `ModalContent` accepts `className` and `style` as plain values only, because the same props are forwarded to either the dialog or the drawer popup."
+}

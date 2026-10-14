@@ -1,0 +1,46 @@
+---
+title: Signup Form
+description: "A full account creation form with name, country, birthday, email, and password fields and live password rules."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="signup-form">
+
+<SourceFile path="components/blocks/signup-form.tsx" fold={false} />
+
+</Example>
+
+A full account creation form with name, country, birthday, email and a password with confirmation, grouped into labeled sections. A checklist of password rules appears as the user types, and mismatched passwords turn the fields red. Submitting a valid form shows a success view. Use it when you need more than an email and password at signup.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks signup-form"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input), [Native Select](/docs/components/native-select).
+
+3. Copy the source into `components/blocks/signup-form.tsx`:
+
+<SourceFile path="components/blocks/signup-form.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SignupForm } from \"@/components/blocks/signup-form\""} />
+
+<Code lang="tsx" code={"<SignupForm />"} />
+
+Replace the success branch with your registration API call. Edit `rules` for the password checklist and the country list inline. The birthday is free text and is never parsed, so swap in a date picker or validate it before sending.
+
+## Notes
+
+Every field has an autocomplete value so browsers and password managers can fill it, and the form runs its own validation instead of the browser's.

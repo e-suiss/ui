@@ -1,0 +1,6 @@
+{
+  "description": "A device protection plan picker with device chips, payment options, an optional theft add-on, and a live total.",
+  "overview": "A protection plan picker: choose a device, pick a payment option for it and, for some devices, add theft and loss cover, with a live total and an Add to Bag button. A photo of the selected device sits beside the options on desktop and above them on mobile. Use it for warranties, insurance add-ons or any per-product plan.",
+  "usage": "Edit `devices`; each has a name, photo, alt text and payment options with a label, price and optional theft surcharge. The theft switch only appears for Phone Pro, so change that check if other devices offer it. Give Add to Bag a handler.",
+  "notes": "The total is announced when it changes. Photos are Unsplash placeholders."
+}

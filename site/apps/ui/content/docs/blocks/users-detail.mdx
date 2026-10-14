@@ -1,0 +1,42 @@
+---
+title: Users Detail
+description: "A user directory with a member list beside a detail pane for profile, sessions, and security settings."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="users-detail">
+
+<SourceFile path="components/blocks/users-detail.tsx" fold={false} />
+
+</Example>
+
+A user directory with members on the left and the selected user's profile, sessions and security settings on the right, switched with tabs. Admins can change a role, sign out sessions, toggle security options and send a password reset link. It combines `Sidebar` navigation with a `SplitView`, so on mobile the list and detail show one at a time. Use it for team members, customers or any record with tabbed details.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks users-detail"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Item](/docs/components/item), [Select](/docs/components/select), [Sidebar](/docs/components/sidebar), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/users-detail.tsx`:
+
+<SourceFile path="components/blocks/users-detail.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { UsersDetail } from \"@/components/blocks/users-detail\""} />
+
+<Code lang="tsx" code={"<UsersDetail />"} />
+
+Replace `users`, `roles` and `initialSessions` with your data. In the sample every user shares one session list, and Department and Joined are hard-coded, so load these per user. Connect the role change, session sign-outs, security switches and reset button to your user management API.

@@ -1,0 +1,13 @@
+{
+  "name": "hero-product",
+  "type": "block",
+  "files": [
+    "components/blocks/hero-product.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

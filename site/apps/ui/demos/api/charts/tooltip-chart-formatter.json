@@ -1,0 +1,16 @@
+{
+  "name": "tooltip-chart-formatter",
+  "type": "chart",
+  "files": [
+    "components/charts/tooltip-chart-formatter.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

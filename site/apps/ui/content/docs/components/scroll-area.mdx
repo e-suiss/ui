@@ -1,0 +1,90 @@
+---
+title: Scroll Area
+description: "A scrollable region with slim, custom-styled scrollbars."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="scroll-area" story="Default">
+
+<Code lang="tsx" code={"import { ScrollArea } from \"@/components/ui/scroll-area\"\nimport { Separator } from \"@/components/ui/separator\"\n\nconst releases = Array.from({ length: 40 }, (_, index) => `v2.${40 - index}.0`)\n\nexport function ScrollAreaExample() {\n  return (\n    <ScrollArea className=\"h-72 w-48 rounded-2xl border\">\n      <div className=\"p-4\">\n        <h4 className=\"mb-4 text-sm font-medium\">Releases</h4>\n        {releases.map((release) => (\n          <div key={release}>\n            <div className=\"text-sm\">{release}</div>\n            <Separator className=\"my-2\" />\n          </div>\n        ))}\n      </div>\n    </ScrollArea>\n  )\n}"} />
+
+</Example>
+
+Scroll Area wraps Base UI's Scroll Area. `ScrollArea` renders the root, a focusable viewport for your content, a vertical `ScrollBar` and a corner. Add a horizontal `ScrollBar` as a child when content scrolls sideways.
+
+Use Scroll Area to give overflowing content a consistent scrollbar across platforms. For chat transcripts that should open at the latest message, use Message Scroller.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add scroll-area"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/scroll-area.tsx`:
+
+<SourceFile path="components/ui/scroll-area.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ScrollArea, ScrollBar } from \"@/components/ui/scroll-area\""} />
+
+<Code lang="tsx" code={"<ScrollArea className=\"h-72 w-48 rounded-2xl border\">\n  <div className=\"p-4\">\n    <h4 className=\"mb-4 text-sm font-medium\">Releases</h4>\n    {releases.map((release) => (\n      <div key={release}>\n        <div className=\"text-sm\">{release}</div>\n        <Separator className=\"my-2\" />\n      </div>\n    ))}\n  </div>\n</ScrollArea>"} />
+
+Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport. For horizontal scrolling, make the content wider than the area (for example with `w-max`) and include `ScrollBar` with `orientation="horizontal"`.
+
+## Examples
+
+### Horizontal
+
+A row of album covers that scrolls sideways with a horizontal scrollbar.
+
+<Example kind="ui" name="scroll-area" story="Horizontal">
+
+<Code lang="tsx" code={"import { ScrollArea, ScrollBar } from \"@/components/ui/scroll-area\"\n\nconst albums = [\n  { title: \"Morning Light\", artist: \"Nora Hale\" },\n  { title: \"Open Roads\", artist: \"The Fieldnotes\" },\n  { title: \"Paper Moons\", artist: \"Ivy Grant\" },\n  { title: \"Low Tide\", artist: \"Harbor Lines\" },\n  { title: \"Glass Garden\", artist: \"Mira Stone\" },\n  { title: \"Northbound\", artist: \"Echo Park\" },\n  { title: \"Slow Motion\", artist: \"Luca Reyes\" },\n]\n\nexport function ScrollAreaHorizontalExample() {\n  return (\n    <ScrollArea className=\"w-96 rounded-2xl border whitespace-nowrap\">\n      <div className=\"flex w-max gap-4 p-4\">\n        {albums.map((album) => (\n          <figure key={album.title} className=\"w-32 shrink-0\">\n            <div className=\"bg-surface-secondary aspect-square rounded-xl\" />\n            <figcaption className=\"text-label-secondary pt-2 text-xs\">\n              <span className=\"text-label font-medium\">{album.title}</span>\n              <br />\n              {album.artist}\n            </figcaption>\n          </figure>\n        ))}\n      </div>\n      <ScrollBar orientation=\"horizontal\" />\n    </ScrollArea>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"ScrollArea","href":"#scrollarea","children":[{"name":"ScrollBar","href":"#scrollbar","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### ScrollArea
+
+The root that renders the viewport, the vertical scrollbar and the corner.
+
+<PropsTable extends={["ScrollAreaPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ScrollBar
+
+A scrollbar track and thumb for one orientation, vertical by default.
+
+<PropsTable extends={["ScrollAreaPrimitive.Scrollbar.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The viewport is focusable, so keyboard users can Tab to it and scroll with the arrow keys.
+- Focus is shown with the standard focus ring, inset inside the viewport.
+- The custom scrollbars are presentational; native scrolling by wheel, touch and keyboard still works.
+
+## Notes
+
+- Styling hooks: `data-slot` values `scroll-area`, `scroll-area-viewport`, `scroll-area-scrollbar` and `scroll-area-thumb`. Scrollbars expose `data-orientation`.
+- The thumb uses the `separator` token.
+- The viewport inherits the root's border radius, so rounded containers clip their content.

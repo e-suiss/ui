@@ -1,0 +1,17 @@
+{
+  "name": "roles-matrix",
+  "type": "block",
+  "files": [
+    "components/blocks/roles-matrix.tsx"
+  ],
+  "requires": [
+    "button",
+    "checkbox",
+    "sidebar"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

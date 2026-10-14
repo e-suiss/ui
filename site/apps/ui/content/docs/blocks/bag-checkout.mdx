@@ -1,0 +1,46 @@
+---
+title: Bag Checkout
+description: "A three-step checkout with delivery, payment, and review steps beside an order summary."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="bag-checkout">
+
+<SourceFile path="components/blocks/bag-checkout.tsx" fold={false} />
+
+</Example>
+
+A checkout that walks the shopper through delivery, payment and review one step at a time, with the order summary and running total alongside. Finished steps collapse to a short summary with an Edit button, and placing the order swaps the form for a confirmation. The summary sits beside the steps on desktop and stacks into a single column on mobile. Use it as the base for any multi-step purchase or booking flow.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bag-checkout"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group).
+
+3. Copy the source into `components/blocks/bag-checkout.tsx`:
+
+<SourceFile path="components/blocks/bag-checkout.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BagCheckout } from \"@/components/blocks/bag-checkout\""} />
+
+<Code lang="tsx" code={"<BagCheckout />"} />
+
+Swap the `items` array for your cart lines, each with a name, variant, price and image. The delivery and payment options and the express surcharge are hard-coded in the component, so drive them from your shipping and payment providers. Wire Place Order to your order API; today it only shows a confirmation with the fixed order number W1049.
+
+## Notes
+
+Collapsed steps are `inert`, so keyboard users only reach the open step, and the total is announced when it changes. Product photos are Unsplash placeholders.

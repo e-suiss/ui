@@ -1,0 +1,82 @@
+---
+title: Pull To Refresh
+description: "A scroll container that refreshes its content when the user pulls down from the top."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="pull-to-refresh" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { PullToRefresh } from \"@/components/interactions/pull-to-refresh\"\n\nconst senders: [from: string, subject: string][] = [\n  [\"Acme Store\", \"Your order has shipped\"],\n  [\"Jordan Lee\", \"Tomorrow's meeting\"],\n  [\"Cloud Drive\", \"Your storage is almost full\"],\n  [\"Taylor Kim\", \"Weekend plans\"],\n  [\"Design Team\", \"New mockups are ready\"],\n  [\"Sam Rivera\", \"Lunch on Thursday?\"],\n  [\"Bank Alerts\", \"Your statement is available\"],\n  [\"Riley Park\", \"Photos from the trip\"],\n]\n\nconst incoming: [from: string, subject: string][] = [\n  [\"Morgan Diaz\", \"Quick question about the brief\"],\n  [\"Travel Desk\", \"Your flight is confirmed\"],\n  [\"Alex Chen\", \"Re: Project timeline\"],\n  [\"News Digest\", \"Today's top stories\"],\n]\n\ntype Message = { id: number; from: string; subject: string; fresh: boolean }\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction InboxExample({ empty = false }: { empty?: boolean }) {\n  const [messages, setMessages] = React.useState<Message[]>(() =>\n    empty\n      ? []\n      : senders.map(([from, subject], index) => ({\n          id: index,\n          from,\n          subject,\n          fresh: false,\n        }))\n  )\n  const [log, setLog] = React.useState(\"Pull down from the top to refresh.\")\n  const count = React.useRef(0)\n\n  const refresh = async () => {\n    setLog(\"Refreshing…\")\n    await wait(1200)\n    const next = incoming[count.current % incoming.length]\n    if (!next) return\n    const [from, subject] = next\n    count.current += 1\n    setMessages((current) => [\n      { id: 100 + count.current, from, subject, fresh: true },\n      ...current.map((message) => ({ ...message, fresh: false })),\n    ])\n    setLog(`New message from ${from}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3\">\n      <PullToRefresh\n        onRefresh={refresh}\n        className=\"h-[min(36rem,calc(100dvh-7rem))] rounded-2xl border\"\n      >\n        <h2 className=\"px-4 pt-4 pb-2 text-3xl font-bold tracking-tight\">\n          Inbox\n        </h2>\n        {messages.length === 0 ? (\n          <p className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n            No messages yet.\n          </p>\n        ) : (\n          <ul>\n            {messages.map((message) => (\n              <li\n                key={message.id}\n                data-fresh={message.fresh ? \"\" : undefined}\n                className=\"ms-4 border-separator not-first:border-t starting:opacity-0 data-fresh:transition-opacity data-fresh:duration-500\"\n              >\n                <button\n                  type=\"button\"\n                  onClick={() => setLog(`Opened ${message.subject}`)}\n                  className=\"flex w-full flex-col py-3 pe-4 text-start outline-none focus-visible:focus-ring\"\n                >\n                  <span className=\"flex items-center gap-2 font-semibold\">\n                    {message.fresh && (\n                      <span className=\"size-2 rounded-full bg-accent\" />\n                    )}\n                    {message.from}\n                  </span>\n                  <span className=\"truncate text-sm text-label-secondary\">\n                    {message.subject}\n                  </span>\n                </button>\n              </li>\n            ))}\n          </ul>\n        )}\n      </PullToRefresh>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PullToRefreshExample() {\n  return (\n    <InboxExample />\n  )\n}"} />
+
+</Example>
+
+`PullToRefresh` is a vertically scrolling container. When it is scrolled to the top, dragging down with touch, or scrolling up with a trackpad or wheel, pulls the content down with increasing resistance. An indicator above the content fills in spoke by spoke as the pull nears the threshold. Releasing past the threshold calls `onRefresh`, holds the content open, and swaps the indicator for the suiss/ui `Spinner` until the refresh finishes; a shorter pull springs back without refreshing.
+
+The spinner stays visible for at least 600 ms so fast refreshes still read clearly. Use it for lists of fetched content, such as feeds and inboxes.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions pull-to-refresh"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Spinner](/docs/components/spinner).
+
+3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+
+<SourceFile path="components/interactions/pull-to-refresh.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PullToRefresh } from \"@/components/interactions/pull-to-refresh\""} />
+
+<Code lang="tsx" code={"<InboxExample />"} />
+
+- Give `PullToRefresh` a bounded height so its content scrolls inside it.
+- `onRefresh` can return a promise; the container stays in the refreshing state until it settles, whether it resolves or rejects.
+- Pulls only start at the top of the scroll position and are ignored while a refresh is in progress.
+
+## Examples
+
+### Empty list
+
+An empty inbox refreshes from a trackpad pull and fills in with the first message.
+
+<Example kind="interaction" name="pull-to-refresh" story="EmptyList">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { PullToRefresh } from \"@/components/interactions/pull-to-refresh\"\n\nconst senders: [from: string, subject: string][] = [\n  [\"Acme Store\", \"Your order has shipped\"],\n  [\"Jordan Lee\", \"Tomorrow's meeting\"],\n  [\"Cloud Drive\", \"Your storage is almost full\"],\n  [\"Taylor Kim\", \"Weekend plans\"],\n  [\"Design Team\", \"New mockups are ready\"],\n  [\"Sam Rivera\", \"Lunch on Thursday?\"],\n  [\"Bank Alerts\", \"Your statement is available\"],\n  [\"Riley Park\", \"Photos from the trip\"],\n]\n\nconst incoming: [from: string, subject: string][] = [\n  [\"Morgan Diaz\", \"Quick question about the brief\"],\n  [\"Travel Desk\", \"Your flight is confirmed\"],\n  [\"Alex Chen\", \"Re: Project timeline\"],\n  [\"News Digest\", \"Today's top stories\"],\n]\n\ntype Message = { id: number; from: string; subject: string; fresh: boolean }\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction InboxExample({ empty = false }: { empty?: boolean }) {\n  const [messages, setMessages] = React.useState<Message[]>(() =>\n    empty\n      ? []\n      : senders.map(([from, subject], index) => ({\n          id: index,\n          from,\n          subject,\n          fresh: false,\n        }))\n  )\n  const [log, setLog] = React.useState(\"Pull down from the top to refresh.\")\n  const count = React.useRef(0)\n\n  const refresh = async () => {\n    setLog(\"Refreshing…\")\n    await wait(1200)\n    const next = incoming[count.current % incoming.length]\n    if (!next) return\n    const [from, subject] = next\n    count.current += 1\n    setMessages((current) => [\n      { id: 100 + count.current, from, subject, fresh: true },\n      ...current.map((message) => ({ ...message, fresh: false })),\n    ])\n    setLog(`New message from ${from}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3\">\n      <PullToRefresh\n        onRefresh={refresh}\n        className=\"h-[min(36rem,calc(100dvh-7rem))] rounded-2xl border\"\n      >\n        <h2 className=\"px-4 pt-4 pb-2 text-3xl font-bold tracking-tight\">\n          Inbox\n        </h2>\n        {messages.length === 0 ? (\n          <p className=\"px-4 py-16 text-center text-sm text-label-secondary\">\n            No messages yet.\n          </p>\n        ) : (\n          <ul>\n            {messages.map((message) => (\n              <li\n                key={message.id}\n                data-fresh={message.fresh ? \"\" : undefined}\n                className=\"ms-4 border-separator not-first:border-t starting:opacity-0 data-fresh:transition-opacity data-fresh:duration-500\"\n              >\n                <button\n                  type=\"button\"\n                  onClick={() => setLog(`Opened ${message.subject}`)}\n                  className=\"flex w-full flex-col py-3 pe-4 text-start outline-none focus-visible:focus-ring\"\n                >\n                  <span className=\"flex items-center gap-2 font-semibold\">\n                    {message.fresh && (\n                      <span className=\"size-2 rounded-full bg-accent\" />\n                    )}\n                    {message.from}\n                  </span>\n                  <span className=\"truncate text-sm text-label-secondary\">\n                    {message.subject}\n                  </span>\n                </button>\n              </li>\n            ))}\n          </ul>\n        )}\n      </PullToRefresh>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PullToRefreshEmptyListExample() {\n  return (\n    <InboxExample empty />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### PullToRefresh
+
+The scroll container that tracks the pull and shows the refresh indicator.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"onRefresh","type":"() => Promise<unknown> | unknown","required":true,"description":"Called when the user releases past the threshold; may return a promise."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The container sets `aria-busy` while refreshing.
+- The spinner is labelled `Refreshing`; the pull indicator is `aria-hidden`.
+- Pulling requires touch or a scroll gesture, so offer another way to refresh where it matters, such as a button.
+
+## Notes
+
+- The root exposes `data-slot="pull-to-refresh"` and `data-phase` (`idle`, `pulling`, `refreshing`, `settling`). The indicator and content use `pull-to-refresh-indicator` and `pull-to-refresh-content`.
+- The `--pull` and `--pull-progress` custom properties track the pull distance and progress toward the threshold.
+- Transitions are disabled under `prefers-reduced-motion`.

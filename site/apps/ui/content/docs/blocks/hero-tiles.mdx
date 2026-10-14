@@ -1,0 +1,46 @@
+---
+title: Hero Tiles
+description: "A pair of promotional hero tiles, each with a title, tagline, two actions, and a product image."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="hero-tiles">
+
+<SourceFile path="components/blocks/hero-tiles.tsx" fold={false} />
+
+</Example>
+
+Two promotional tiles, each with a title, tagline, Learn more and Buy buttons and a product image, one of them rendered in the dark palette. The tiles stack on mobile and sit side by side on desktop. It is a static server component for promoting two products or offers on a home page.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks hero-tiles"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/blocks/hero-tiles.tsx`:
+
+<SourceFile path="components/blocks/hero-tiles.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { HeroTiles } from \"@/components/blocks/hero-tiles\""} />
+
+<Code lang="tsx" code={"<HeroTiles />"} />
+
+Edit the `tiles` array; each tile has a title, text, image, alt text and a `dark` flag. Dark tiles prefix their title with suiss, so remove that span if it doesn't fit your brand. Connect the buttons to your product pages.
+
+## Notes
+
+Images are Unsplash placeholders.

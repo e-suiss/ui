@@ -1,0 +1,269 @@
+---
+title: Field
+description: "Building blocks for form fields that pair controls with labels, descriptions and error messages."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="field" story="Default">
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n        <Input id=\"field-username\" placeholder=\"janedoe\" />\n        <FieldDescription>\n          Choose a unique name for your account.\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDescription` and an optional `FieldError`. It automatically adds the ids of its descriptions and errors to the control's `aria-describedby`, so supporting text is announced with the control. Use `FieldContent` to stack a label and description beside a control in a horizontal field, and `FieldTitle` for a non-label heading inside a field.
+
+`FieldGroup` stacks fields with consistent spacing, and its `inset` variant groups them into a rounded list, like iOS Settings. `FieldSet` and `FieldLegend` group related fields under a caption, and `FieldSeparator` divides sections, optionally with text. Use these parts with any control in the library, such as `Input`, `Textarea`, `Checkbox`, `Switch` or `RadioGroup`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Label](/docs/components/label), [Separator](/docs/components/separator).
+
+3. Copy the source into `components/ui/field.tsx`:
+
+<SourceFile path="components/ui/field.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from \"@/components/ui/field\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Field orientation=\"vertical\">\n    <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n    <Input id=\"field-username\" placeholder=\"janedoe\" />\n    <FieldDescription>\n      Choose a unique name for your account.\n    </FieldDescription>\n  </Field>\n</div>"} />
+
+Connect each `FieldLabel` to its control with `htmlFor` and `id`. Set `orientation="horizontal"` to place the label beside the control, for example for a checkbox or switch, or `responsive` to switch from vertical to horizontal when the surrounding `FieldGroup` is wide enough.
+
+To show an error, set `aria-invalid` on the control and render a `FieldError` with children or an `errors` array. Pass `data-disabled` on a `Field` to dim its label when the control is disabled.
+
+To build selectable cards, place a horizontal `Field` inside a `FieldLabel`; the label gets a border, and a highlighted ring when the control inside it is checked.
+
+## Examples
+
+### With help link
+
+A description that contains a link, styled with the link color and an underline.
+
+<Example kind="ui" name="field" story="WithHelpLink">
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldWithHelpLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-serial\">Serial number</FieldLabel>\n        <Input id=\"field-serial\" placeholder=\"C02XL0GTJGH5\" />\n        <FieldDescription>\n          Printed on the back of the device.{\" \"}\n          <a href=\"#serial-help\">Find your serial number</a>\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+Horizontal fields in an `inset` field group, forming a rounded settings list with separators.
+
+<Example kind="ui" name="field" story="Inset">
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet className=\"w-96\">\n        <FieldLegend>Account</FieldLegend>\n        <FieldGroup variant=\"inset\">\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-name\">Name</FieldLabel>\n            <Input id=\"inset-name\" defaultValue=\"Jordan Lee\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-email\">Email</FieldLabel>\n            <Input id=\"inset-email\" defaultValue=\"jordan@acme.com\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-updates\">Product updates</FieldLabel>\n            <Switch id=\"inset-updates\" defaultChecked />\n          </Field>\n        </FieldGroup>\n        <FieldDescription>\n          Your name and email appear on invoices.\n        </FieldDescription>\n      </FieldSet>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With textarea
+
+A field that labels and describes a `Textarea`.
+
+<Example kind="ui" name="field" story="WithTextarea">
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldWithTextareaExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-feedback\">Feedback</FieldLabel>\n        <Textarea\n          id=\"field-feedback\"\n          placeholder=\"Tell us what you think...\"\n          rows={4}\n        />\n        <FieldDescription>Your feedback helps us improve.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+An invalid field with an error message announced as an alert.
+
+<Example kind="ui" name="field" story="Invalid">
+
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldInvalidExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-email\">Email</FieldLabel>\n        <Input id=\"field-email\" type=\"email\" defaultValue=\"jane@\" aria-invalid />\n        <FieldError>Enter a valid email address.</FieldError>\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Multiple errors
+
+A `FieldError` that renders an `errors` array as a bulleted list.
+
+<Example kind="ui" name="field" story="MultipleErrors">
+
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldMultipleErrorsExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-password\">Password</FieldLabel>\n        <Input\n          id=\"field-password\"\n          type=\"password\"\n          defaultValue=\"abc\"\n          aria-invalid\n        />\n        <FieldError\n          errors={[\n            { message: \"Password must be at least 8 characters.\" },\n            { message: \"Password must contain a number.\" },\n          ]}\n        />\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled field with a dimmed label and a disabled input.
+
+<Example kind="ui" name="field" story="Disabled">
+
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldDisabledExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-disabled>\n        <FieldLabel htmlFor=\"field-disabled\">Workspace URL</FieldLabel>\n        <Input id=\"field-disabled\" defaultValue=\"acme.example.com\" disabled />\n        <FieldDescription>Contact an admin to change this.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Horizontal
+
+Horizontal fields with a checkbox and a switch, one with a description in `FieldContent`.
+
+<Example kind="ui" name="field" story="Horizontal">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldHorizontalExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field orientation=\"horizontal\">\n          <Checkbox id=\"field-terms\" defaultChecked />\n          <FieldLabel htmlFor=\"field-terms\">\n            Accept terms and conditions\n          </FieldLabel>\n        </Field>\n        <Field orientation=\"horizontal\">\n          <FieldContent>\n            <FieldLabel htmlFor=\"field-marketing\">Marketing emails</FieldLabel>\n            <FieldDescription>\n              Receive emails about new products and features.\n            </FieldDescription>\n          </FieldContent>\n          <Switch id=\"field-marketing\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Choice cards
+
+Radio options presented as selectable cards by nesting a `Field` inside a `FieldLabel`.
+
+<Example kind="ui" name="field" story="ChoiceCards">
+
+<Code lang="tsx" code={"import { Field, FieldContent, FieldDescription, FieldLabel, FieldLegend, FieldSet, FieldTitle } from \"@/components/ui/field\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function FieldChoiceCardsExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet>\n        <FieldLegend variant=\"label\">Plan</FieldLegend>\n        <FieldDescription>Select the plan that fits your team.</FieldDescription>\n        <RadioGroup defaultValue=\"pro\">\n          <FieldLabel htmlFor=\"plan-starter\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Starter</FieldTitle>\n                <FieldDescription>\n                  For individuals and small projects.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"starter\" id=\"plan-starter\" />\n            </Field>\n          </FieldLabel>\n          <FieldLabel htmlFor=\"plan-pro\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Pro</FieldTitle>\n                <FieldDescription>\n                  For growing teams that need more.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"pro\" id=\"plan-pro\" />\n            </Field>\n          </FieldLabel>\n        </RadioGroup>\n      </FieldSet>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Form
+
+A complete payment form built from field sets, groups, a separator and actions.
+
+<Example kind="ui" name="field" story="Form">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldFormExample() {\n  return (\n    <div className=\"w-96\">\n      <form onSubmit={(event) => event.preventDefault()}>\n        <FieldGroup>\n          <FieldSet>\n            <FieldLegend>Payment method</FieldLegend>\n            <FieldDescription>\n              All transactions are secure and encrypted.\n            </FieldDescription>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-name\">Name on card</FieldLabel>\n                <Input id=\"form-name\" placeholder=\"Jane Doe\" required />\n              </Field>\n              <Field>\n                <FieldLabel htmlFor=\"form-number\">Card number</FieldLabel>\n                <Input\n                  id=\"form-number\"\n                  placeholder=\"1234 5678 9012 3456\"\n                  required\n                />\n                <FieldDescription>Enter your 16-digit number.</FieldDescription>\n              </Field>\n              <div className=\"grid grid-cols-2 gap-4\">\n                <Field>\n                  <FieldLabel htmlFor=\"form-exp\">Expiry</FieldLabel>\n                  <Input id=\"form-exp\" placeholder=\"MM/YY\" />\n                </Field>\n                <Field>\n                  <FieldLabel htmlFor=\"form-cvv\">CVV</FieldLabel>\n                  <Input id=\"form-cvv\" placeholder=\"123\" />\n                </Field>\n              </div>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSeparator />\n          <FieldSet>\n            <FieldLegend>Billing address</FieldLegend>\n            <FieldGroup>\n              <Field orientation=\"horizontal\">\n                <Checkbox id=\"form-same\" defaultChecked />\n                <FieldLabel htmlFor=\"form-same\" className=\"font-normal\">\n                  Same as shipping address\n                </FieldLabel>\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSet>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-notes\">Notes</FieldLabel>\n                <Textarea\n                  id=\"form-notes\"\n                  placeholder=\"Add any additional comments\"\n                />\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <Field orientation=\"horizontal\">\n            <Button type=\"submit\">Submit</Button>\n            <Button variant=\"outline\" type=\"button\">\n              Cancel\n            </Button>\n          </Field>\n        </FieldGroup>\n      </form>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Separator with text
+
+A `FieldSeparator` with text between a sign-in button and an email field.
+
+<Example kind="ui" name="field" story="SeparatorWithText">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Field, FieldGroup, FieldLabel, FieldSeparator } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldSeparatorWithTextExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field>\n          <Button variant=\"outline\">Continue with Apple</Button>\n        </Field>\n        <FieldSeparator>Or continue with</FieldSeparator>\n        <Field>\n          <FieldLabel htmlFor=\"sep-email\">Email</FieldLabel>\n          <Input id=\"sep-email\" type=\"email\" placeholder=\"jane@example.com\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldError","href":"#fielderror","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]}]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldLabel","href":"#fieldlabel","children":[{"name":"Field","href":"#field","children":[{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldTitle","href":"#fieldtitle","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]}]}]}]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSeparator","href":"#fieldseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### FieldSet
+
+Groups related fields in a native `fieldset`.
+
+<PropsTable extends={["React.ComponentProps<\"fieldset\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FieldLegend
+
+The caption of a field set.
+
+<PropsTable extends={["React.ComponentProps<\"legend\">"]} props={[{"name":"variant","type":"\"legend\" | \"label\"","default":"\"legend\"","description":"Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### FieldGroup
+
+Stacks fields with consistent spacing, or groups them into an inset list.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### Field
+
+Wraps a single control with its label, description and error.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"orientation","type":"\"vertical\" | \"horizontal\" | \"responsive\"","default":"\"vertical\"","description":"`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### FieldContent
+
+Stacks a label and description next to a control in a horizontal field.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### FieldLabel
+
+The label of a field's control.
+
+<PropsTable extends={["React.ComponentProps<typeof Label>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### FieldTitle
+
+A heading inside a field that is not a label, such as the title of a choice card.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### FieldDescription
+
+Supporting text that describes the control.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### FieldSeparator
+
+A divider between sections, with optional centered text.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"children","type":"React.ReactNode","description":"Optional text centered on the separator line."}]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### FieldError
+
+An error message for the field.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"errors","type":"Array<{ message?: string } | undefined>","description":"A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `Field` has the `group` role and links its descriptions and errors to its first control through `aria-describedby`, updating the link when they change.
+- `FieldSet` renders a native `fieldset`, which takes its accessible name from `FieldLegend`.
+- `FieldError` has the `alert` role, so assistive technology announces it when it appears. It renders nothing when it has no children and no errors.
+- Set `aria-invalid` on the control to mark it invalid; `FieldError` does not set it for you.
+- Clicking a `FieldLabel` focuses or toggles its associated control.
+
+## Notes
+
+- Styling hooks: `data-slot` values `field-set`, `field-legend`, `field-group`, `field`, `field-content`, `field-label` (used by both `FieldLabel` and `FieldTitle`), `field-description`, `field-separator` and `field-error`.
+- `Field` sets `data-orientation`, and `FieldGroup` and `FieldLegend` set `data-variant`.
+- `FieldGroup` is a container query context named `field-group`, which drives the `responsive` orientation.
+- Uses the `surface-secondary`, `separator`, `label-secondary`, `link`, `danger`, `accent` and `item-hover` tokens.

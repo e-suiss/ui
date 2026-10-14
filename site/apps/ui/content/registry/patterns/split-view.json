@@ -1,0 +1,37 @@
+{
+  "description": "A two- or three-column sidebar, list and detail layout that becomes a push navigation stack on mobile.",
+  "overview": "`SplitView` arranges content in up to three columns, like Mail: a sidebar, a list and a detail pane. On desktop it places the panes in a horizontal suiss/ui `ResizablePanelGroup` with resize handles between them. The panes default to 20%, 32% and 48% of the width, with minimum sizes of 15%, 22% and 30%.\n\nOn mobile (below `48rem`, via `useIsMobile`) only one column shows at a time. Tapping a `SplitViewItem` pushes the next column, and a back button labelled with the previous pane's title returns to it. After navigation, focus moves to the new pane's heading and the view scrolls into place. Use it for master-detail interfaces such as mail, settings or file browsers.",
+  "usage": "- Place `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail` as direct children of `SplitView`. Leave out the sidebar for a two-column layout.\n- The mobile column is uncontrolled by default and starts at `defaultColumn`. Use `column` with `onColumnChange` to control it.\n- `SplitViewItem` advances to the next column on click and runs your own `onClick` too. Set `isActive` on the current item.\n- The list pane shows a back button to the sidebar only when the sidebar has a `title`.\n- `useSplitView` returns `isMobile`, `column` and `setColumn` for custom navigation inside the view.",
+  "examples": {
+    "TwoColumns": "Leaves out the sidebar for a list and detail layout.",
+    "StartOnSidebar": "Starts on the sidebar column on mobile through `defaultColumn`."
+  },
+  "parts": {
+    "SplitView": "The root that lays out the panes and tracks the visible mobile column.",
+    "SplitViewSidebar": "The leading pane, usually for sources or categories.",
+    "SplitViewList": "The middle pane, usually a list of items.",
+    "SplitViewDetail": "The trailing pane that shows the selected item.",
+    "SplitViewItem": "A button row that marks the current selection and advances to the next column on mobile."
+  },
+  "props": {
+    "SplitView": {
+      "column": "The visible mobile column when controlled: `sidebar`, `list` or `detail`.",
+      "defaultColumn": "The mobile column shown first when uncontrolled.",
+      "onColumnChange": "Called with the new column when navigation changes it."
+    },
+    "SplitViewSidebar": {
+      "title": "The pane heading and accessible name; also labels the back button in the list pane."
+    },
+    "SplitViewList": {
+      "title": "The pane heading and accessible name; visually hidden on desktop and used for the back button in the detail pane."
+    },
+    "SplitViewDetail": {
+      "title": "The pane heading and accessible name."
+    },
+    "SplitViewItem": {
+      "isActive": "Marks the item as the current selection with `aria-current` and `data-active`."
+    }
+  },
+  "accessibility": "- Each pane is a `section` labelled by its `title` heading, so titled panes are exposed as regions.\n- The active item has `aria-current=\"true\"`.\n- On mobile, navigating moves focus to the new pane's heading. The back button's chevron is hidden from assistive technology.",
+  "notes": "Styling hooks: `data-slot=\"split-view\"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column. Use the `render` prop on `SplitViewItem` to render it as a link."
+}

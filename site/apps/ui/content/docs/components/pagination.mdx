@@ -1,0 +1,238 @@
+---
+title: Pagination
+description: "Navigation links for moving between pages of content, such as table results."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="pagination" story="Default">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationSummary } from \"@/components/ui/pagination\"\nimport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst places = [\n  \"Table 7\",\n  \"Table 4\",\n  \"Takeaway\",\n  \"Table 12\",\n  \"Pickup\",\n  \"Garden 3\",\n]\n\nconst currency = new Intl.NumberFormat(\"tr-TR\", {\n  style: \"currency\",\n  currency: \"TRY\",\n})\n\nconst orders = Array.from({ length: 62 }, (_, index) => {\n  const id = 1100 - index\n  return {\n    id,\n    place: places[(id * 7) % places.length],\n    amount: ((id * 379) % 900) + 150,\n  }\n})\n\nfunction pageRange(page: number, count: number) {\n  if (count <= 7) return Array.from({ length: count }, (_, index) => index + 1)\n  const start = Math.max(1, Math.min(page - 2, count - 6))\n  const pages: (number | \"ellipsis\")[] = Array.from(\n    { length: 5 },\n    (_, index) => start + index\n  )\n  if (pages.at(-1) !== count) pages.push(\"ellipsis\", count)\n  return pages\n}\n\nfunction go(setPage: (page: number) => void, page: number, disabled: boolean) {\n  return {\n    href: \"#\",\n    \"aria-disabled\": disabled || undefined,\n    onClick: (event: React.MouseEvent) => {\n      event.preventDefault()\n      if (!disabled) setPage(page)\n    },\n  }\n}\n\nfunction Orders({\n  page,\n  perPage,\n  children,\n}: {\n  page: number\n  perPage: number\n  children: React.ReactNode\n}) {\n  const rows = orders.slice((page - 1) * perPage, page * perPage)\n\n  return (\n    <div className=\"flex w-136 flex-col gap-4\">\n      <Table>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Order</TableHead>\n            <TableHead>Table</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {rows.map((order) => (\n            <TableRow key={order.id}>\n              <TableCell className=\"tabular-nums\">#{order.id}</TableCell>\n              <TableCell className=\"text-label-secondary\">\n                {order.place}\n              </TableCell>\n              <TableCell className=\"text-end tabular-nums\">\n                {currency.format(order.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n      {children}\n    </div>\n  )\n}\n\nfunction NumberedExample() {\n  const [page, setPage] = React.useState(2)\n  const perPage = 5\n  const count = Math.ceil(orders.length / perPage)\n\n  return (\n    <Orders page={page} perPage={perPage}>\n      <Pagination className=\"justify-between\">\n        <PaginationSummary>\n          {(page - 1) * perPage + 1}–{Math.min(page * perPage, orders.length)} /{\" \"}\n          {orders.length}\n        </PaginationSummary>\n        <PaginationContent>\n          <PaginationItem>\n            <PaginationPrevious\n              text=\"\"\n              {...go(setPage, page - 1, page === 1)}\n            />\n          </PaginationItem>\n          {pageRange(page, count).map((entry, index) =>\n            entry === \"ellipsis\" ? (\n              <PaginationItem key={`ellipsis-${index}`}>\n                <PaginationEllipsis />\n              </PaginationItem>\n            ) : (\n              <PaginationItem key={entry}>\n                <PaginationLink\n                  isActive={entry === page}\n                  {...go(setPage, entry, false)}\n                >\n                  {entry}\n                </PaginationLink>\n              </PaginationItem>\n            )\n          )}\n          <PaginationItem>\n            <PaginationNext\n              text=\"\"\n              {...go(setPage, page + 1, page === count)}\n            />\n          </PaginationItem>\n        </PaginationContent>\n      </Pagination>\n    </Orders>\n  )\n}\n\nexport function PaginationExample() {\n  return (\n    <NumberedExample />\n  )\n}"} />
+
+</Example>
+
+Pagination is a set of link primitives you compose around your own page state. `Pagination` is the `nav` landmark. Inside it, `PaginationContent` is a list of `PaginationItem` entries, each holding a `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationFirst`, `PaginationLast` or `PaginationEllipsis`.
+
+For compact toolbars, `PaginationGroup` joins arrow links into one segmented control, `PaginationInput` lets the user type a page number, and `PaginationSummary` shows a range such as `6–10 / 62`. The component does not calculate page ranges; you decide which links to render.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pagination"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/ui/pagination.tsx`:
+
+<SourceFile path="components/ui/pagination.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationFirst, PaginationLast, PaginationEllipsis, PaginationSummary, PaginationGroup, PaginationInput } from \"@/components/ui/pagination\""} />
+
+<Code lang="tsx" code={"<NumberedExample />"} />
+
+Links render as `a` elements, so pass `href` for real routes, or `href="#"` with an `onClick` that calls `preventDefault()` for client-side state. Mark the current page with `isActive` on `PaginationLink`. To disable an edge link, set `aria-disabled` on it; it becomes non-interactive and dimmed.
+
+`PaginationLink` takes a `size` from the Button sizes and defaults to `icon-sm`. Set `text=""` on `PaginationPrevious` or `PaginationNext` for icon-only arrows.
+
+## Examples
+
+### Compact
+
+A page number input with joined previous and next arrows in a `PaginationGroup`, clamping typed values to the valid range.
+
+<Example kind="ui" name="pagination" story="Compact">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pagination, PaginationGroup, PaginationInput, PaginationNext, PaginationPrevious } from \"@/components/ui/pagination\"\nimport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst places = [\n  \"Table 7\",\n  \"Table 4\",\n  \"Takeaway\",\n  \"Table 12\",\n  \"Pickup\",\n  \"Garden 3\",\n]\n\nconst currency = new Intl.NumberFormat(\"tr-TR\", {\n  style: \"currency\",\n  currency: \"TRY\",\n})\n\nconst orders = Array.from({ length: 62 }, (_, index) => {\n  const id = 1100 - index\n  return {\n    id,\n    place: places[(id * 7) % places.length],\n    amount: ((id * 379) % 900) + 150,\n  }\n})\n\nfunction go(setPage: (page: number) => void, page: number, disabled: boolean) {\n  return {\n    href: \"#\",\n    \"aria-disabled\": disabled || undefined,\n    onClick: (event: React.MouseEvent) => {\n      event.preventDefault()\n      if (!disabled) setPage(page)\n    },\n  }\n}\n\nfunction Orders({\n  page,\n  perPage,\n  children,\n}: {\n  page: number\n  perPage: number\n  children: React.ReactNode\n}) {\n  const rows = orders.slice((page - 1) * perPage, page * perPage)\n\n  return (\n    <div className=\"flex w-136 flex-col gap-4\">\n      <Table>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Order</TableHead>\n            <TableHead>Table</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {rows.map((order) => (\n            <TableRow key={order.id}>\n              <TableCell className=\"tabular-nums\">#{order.id}</TableCell>\n              <TableCell className=\"text-label-secondary\">\n                {order.place}\n              </TableCell>\n              <TableCell className=\"text-end tabular-nums\">\n                {currency.format(order.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n      {children}\n    </div>\n  )\n}\n\nfunction CompactExample() {\n  const [page, setPage] = React.useState(3)\n  const [draft, setDraft] = React.useState(\"3\")\n  const perPage = 5\n  const count = Math.ceil(orders.length / perPage)\n\n  const change = (next: number) => {\n    setPage(next)\n    setDraft(String(next))\n  }\n\n  const commit = () => {\n    const next = Number.parseInt(draft, 10)\n    if (Number.isNaN(next)) return setDraft(String(page))\n    change(Math.min(Math.max(next, 1), count))\n  }\n\n  return (\n    <Orders page={page} perPage={perPage}>\n      <Pagination className=\"justify-between\">\n        <div className=\"flex items-center gap-2 text-sm text-label-secondary\">\n          <label htmlFor=\"orders-page\">Page</label>\n          <PaginationInput\n            id=\"orders-page\"\n            value={draft}\n            onChange={(event) => setDraft(event.target.value)}\n            onBlur={commit}\n            onKeyDown={(event) => event.key === \"Enter\" && commit()}\n          />\n          <span className=\"tabular-nums\">/ {count}</span>\n        </div>\n        <PaginationGroup>\n          <PaginationPrevious text=\"\" {...go(change, page - 1, page === 1)} />\n          <PaginationNext text=\"\" {...go(change, page + 1, page === count)} />\n        </PaginationGroup>\n      </Pagination>\n    </Orders>\n  )\n}\n\nexport function PaginationCompactExample() {\n  return (\n    <CompactExample />\n  )\n}"} />
+
+</Example>
+
+### Rows per page
+
+A rows-per-page select, a range summary, and first, previous, next and last arrows.
+
+<Example kind="ui" name="pagination" story="RowsPerPage">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Pagination, PaginationFirst, PaginationGroup, PaginationLast, PaginationNext, PaginationPrevious, PaginationSummary } from \"@/components/ui/pagination\"\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\nimport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst places = [\n  \"Table 7\",\n  \"Table 4\",\n  \"Takeaway\",\n  \"Table 12\",\n  \"Pickup\",\n  \"Garden 3\",\n]\n\nconst currency = new Intl.NumberFormat(\"tr-TR\", {\n  style: \"currency\",\n  currency: \"TRY\",\n})\n\nconst orders = Array.from({ length: 62 }, (_, index) => {\n  const id = 1100 - index\n  return {\n    id,\n    place: places[(id * 7) % places.length],\n    amount: ((id * 379) % 900) + 150,\n  }\n})\n\nfunction go(setPage: (page: number) => void, page: number, disabled: boolean) {\n  return {\n    href: \"#\",\n    \"aria-disabled\": disabled || undefined,\n    onClick: (event: React.MouseEvent) => {\n      event.preventDefault()\n      if (!disabled) setPage(page)\n    },\n  }\n}\n\nfunction Orders({\n  page,\n  perPage,\n  children,\n}: {\n  page: number\n  perPage: number\n  children: React.ReactNode\n}) {\n  const rows = orders.slice((page - 1) * perPage, page * perPage)\n\n  return (\n    <div className=\"flex w-136 flex-col gap-4\">\n      <Table>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Order</TableHead>\n            <TableHead>Table</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {rows.map((order) => (\n            <TableRow key={order.id}>\n              <TableCell className=\"tabular-nums\">#{order.id}</TableCell>\n              <TableCell className=\"text-label-secondary\">\n                {order.place}\n              </TableCell>\n              <TableCell className=\"text-end tabular-nums\">\n                {currency.format(order.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n      {children}\n    </div>\n  )\n}\n\nfunction RowsPerPageExample() {\n  const [page, setPage] = React.useState(1)\n  const [perPage, setPerPage] = React.useState(5)\n  const count = Math.ceil(orders.length / perPage)\n\n  return (\n    <Orders page={page} perPage={perPage}>\n      <Pagination className=\"justify-between\">\n        <Select\n          value={String(perPage)}\n          onValueChange={(value) => {\n            setPerPage(Number(value))\n            setPage(1)\n          }}\n        >\n          <SelectTrigger\n            size=\"sm\"\n            className=\"h-8 text-sm\"\n            aria-label=\"Rows per page\"\n          >\n            <SelectValue>{(value: string) => `${value} rows`}</SelectValue>\n          </SelectTrigger>\n          <SelectContent side=\"top\">\n            {[5, 10, 20].map((value) => (\n              <SelectItem key={value} value={String(value)}>\n                {value} rows\n              </SelectItem>\n            ))}\n          </SelectContent>\n        </Select>\n        <PaginationSummary>\n          {(page - 1) * perPage + 1}–{Math.min(page * perPage, orders.length)} /{\" \"}\n          {orders.length}\n        </PaginationSummary>\n        <PaginationGroup>\n          <PaginationFirst {...go(setPage, 1, page === 1)} />\n          <PaginationPrevious text=\"\" {...go(setPage, page - 1, page === 1)} />\n          <PaginationNext text=\"\" {...go(setPage, page + 1, page === count)} />\n          <PaginationLast {...go(setPage, count, page === count)} />\n        </PaginationGroup>\n      </Pagination>\n    </Orders>\n  )\n}\n\nexport function PaginationRowsPerPageExample() {\n  return (\n    <RowsPerPageExample />\n  )\n}"} />
+
+</Example>
+
+### With ellipsis
+
+A long page range shortened with ellipses on both sides of the current page.
+
+<Example kind="ui" name="pagination" story="WithEllipsis">
+
+<Code lang="tsx" code={"import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from \"@/components/ui/pagination\"\n\nexport function PaginationWithEllipsisExample() {\n  return (\n    <Pagination>\n      <PaginationContent>\n        <PaginationItem>\n          <PaginationPrevious href=\"#\" />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"#\">1</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationEllipsis />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"#\">9</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"#\" isActive>\n            10\n          </PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"#\">11</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationEllipsis />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"#\">24</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationNext href=\"#\" />\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  )\n}"} />
+
+</Example>
+
+### Custom labels
+
+Previous and next links relabelled `Newer` and `Older`.
+
+<Example kind="ui" name="pagination" story="CustomLabels">
+
+<Code lang="tsx" code={"import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from \"@/components/ui/pagination\"\n\nexport function PaginationCustomLabelsExample() {\n  return (\n    <Pagination>\n      <PaginationContent>\n        <PaginationItem>\n          <PaginationPrevious href=\"#\" text=\"Newer\" />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationNext href=\"#\" text=\"Older\" />\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  )\n}"} />
+
+</Example>
+
+### Large links
+
+Page links using the larger `icon` button size.
+
+<Example kind="ui" name="pagination" story="LargeLinks">
+
+<Code lang="tsx" code={"import { Pagination, PaginationContent, PaginationItem, PaginationLink } from \"@/components/ui/pagination\"\n\nexport function PaginationLargeLinksExample() {\n  return (\n    <Pagination>\n      <PaginationContent>\n        {[1, 2, 3, 4, 5].map((page) => (\n          <PaginationItem key={page}>\n            <PaginationLink href=\"#\" size=\"icon\" isActive={page === 1}>\n              {page}\n            </PaginationLink>\n          </PaginationItem>\n        ))}\n      </PaginationContent>\n    </Pagination>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Pagination","href":"#pagination","children":[{"name":"PaginationContent","href":"#paginationcontent","children":[{"name":"PaginationItem","href":"#paginationitem","children":[{"name":"PaginationPrevious","href":"#paginationprevious","children":[]},{"name":"PaginationLink","href":"#paginationlink","children":[]},{"name":"PaginationEllipsis","href":"#paginationellipsis","children":[]},{"name":"PaginationNext","href":"#paginationnext","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Pagination
+
+The `nav` landmark that contains the pagination controls.
+
+<PropsTable extends={["React.ComponentProps<\"nav\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PaginationContent
+
+The list that holds the pagination items.
+
+<PropsTable extends={["React.ComponentProps<\"ul\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PaginationItem
+
+A list item wrapper for one link or ellipsis.
+
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PaginationLink
+
+A page link styled as a button, highlighted when active.
+
+<PropsTable extends={["PaginationLinkProps"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PaginationPrevious
+
+A link to the previous page with a leading caret.
+
+<PropsTable extends={["React.ComponentProps<typeof PaginationLink>"]} props={[{"name":"text","type":"string","default":"\"Previous\"","description":"The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link."}]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### PaginationNext
+
+A link to the next page with a trailing caret.
+
+<PropsTable extends={["React.ComponentProps<typeof PaginationLink>"]} props={[{"name":"text","type":"string","default":"\"Next\"","description":"The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### PaginationFirst
+
+An icon link to the first page.
+
+<PropsTable extends={["React.ComponentProps<typeof PaginationLink>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### PaginationLast
+
+An icon link to the last page.
+
+<PropsTable extends={["React.ComponentProps<typeof PaginationLink>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### PaginationEllipsis
+
+A placeholder that indicates skipped pages.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### PaginationSummary
+
+Secondary text that summarizes the current range.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### PaginationGroup
+
+Joins several links into one segmented control.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### PaginationInput
+
+A numeric text field for jumping to a page.
+
+<PropsTable extends={["React.ComponentProps<\"input\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `Pagination` renders a `nav` with `aria-label="pagination"`.
+- The active `PaginationLink` gets `aria-current="page"`.
+- Arrow links have built-in accessible names: `Go to previous page`, `Go to next page`, `Go to first page` and `Go to last page`. Custom `text` on previous or next replaces the name.
+- `PaginationEllipsis` is hidden from assistive technology.
+- `PaginationGroup` has `role="group"`.
+- `PaginationInput` has no built-in label; associate one with `htmlFor` or `aria-label`.
+
+## Notes
+
+- Styling hooks: `data-slot` values `pagination`, `pagination-content`, `pagination-item`, `pagination-link`, `pagination-ellipsis`, `pagination-summary`, `pagination-group` and `pagination-input`. Active links expose `data-active`.
+- Active links use the `secondary` button variant and others use `ghost`.
+- Previous and next text is hidden below the `sm` breakpoint, and the carets flip in right-to-left layouts.
+- `PaginationInput` uses `inputMode="numeric"` to show a number keypad on touch devices.

@@ -1,0 +1,122 @@
+{
+  "name": "command",
+  "type": "ui",
+  "files": [
+    "components/ui/command.tsx"
+  ],
+  "requires": [
+    "dialog",
+    "use-platform"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cmdk",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Empty",
+    "Dialog",
+    "DialogOpen"
+  ],
+  "parts": [
+    {
+      "name": "Command",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandDialog",
+      "extends": [
+        "React.ComponentProps<typeof Dialog>"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "default": "\"Command Palette\""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": "\"Search for a command to run...\""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "CommandInput",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.Input>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandList",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.List>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandEmpty",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.Empty>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandGroup",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.Group>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandSeparator",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.Separator>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandItem",
+      "extends": [
+        "React.ComponentProps<typeof CommandPrimitive.Item>"
+      ],
+      "props": []
+    },
+    {
+      "name": "CommandShortcut",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": [
+        {
+          "name": "mod",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "description": "A collapsible app sidebar for navigation, with icon, off-canvas and mobile sheet modes.",
+  "overview": "`SidebarProvider` holds the open state and wraps the whole layout. Inside it, `Sidebar` renders the panel and `SidebarInset` renders the main content beside it. The sidebar stacks `SidebarHeader`, a scrolling `SidebarContent` and `SidebarFooter`. Content is organized into `SidebarGroup` sections, each with a `SidebarGroupLabel`, an optional `SidebarGroupAction` and a `SidebarGroupContent`. Navigation lives in a `SidebarMenu` of `SidebarMenuItem` rows, each holding a `SidebarMenuButton` and optionally a `SidebarMenuAction`, `SidebarMenuBadge` or nested `SidebarMenuSub`.\n\n`SidebarTrigger` and `SidebarRail` toggle the sidebar. On screens narrower than `48rem`, the sidebar renders inside a `Sheet` instead. Use `Sidebar` for the main navigation of an app; for bottom navigation on small screens, consider `TabBar`.",
+  "usage": "Use `defaultOpen` on `SidebarProvider` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Read and change state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`.\n\nSet `collapsible=\"icon\"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed to icons. Use the `render` prop on `SidebarMenuButton` to render it as a link.",
+  "examples": {
+    "Floating": "Uses the `floating` variant, a rounded panel with a shadow.",
+    "Inset": "Uses the `inset` variant, which also raises the main content into a rounded card.",
+    "Collapsed": "Starts collapsed to icons and expands from the rail.",
+    "Offcanvas": "Slides the sidebar fully out of view when collapsed.",
+    "RightSide": "Places the sidebar on the right edge.",
+    "Loading": "Shows `SidebarMenuSkeleton` placeholders while items load."
+  },
+  "parts": {
+    "SidebarProvider": "Holds the open state, provides it through context and wraps the layout.",
+    "Sidebar": "The sidebar panel; a sheet on mobile.",
+    "SidebarTrigger": "An icon button that toggles the sidebar.",
+    "SidebarRail": "A thin hit area along the sidebar's edge that toggles it on click.",
+    "SidebarInset": "The `main` element for page content next to the sidebar.",
+    "SidebarInput": "A compact `Input` styled for use in the sidebar.",
+    "SidebarHeader": "The top area, above the scrolling content.",
+    "SidebarFooter": "The bottom area, below the scrolling content.",
+    "SidebarSeparator": "A divider between sidebar sections.",
+    "SidebarContent": "The scrolling region that holds the groups.",
+    "SidebarGroup": "A section of related content.",
+    "SidebarGroupLabel": "The title of a group; it fades out when collapsed to icons.",
+    "SidebarGroupAction": "A small button in the corner of a group, such as an add button.",
+    "SidebarGroupContent": "The body of a group.",
+    "SidebarMenu": "A list of menu items.",
+    "SidebarMenuItem": "A list item that holds a menu button and its extras.",
+    "SidebarMenuButton": "The clickable row for a destination or command.",
+    "SidebarMenuAction": "A small button at the end of a menu item, such as a more button.",
+    "SidebarMenuBadge": "A count or label shown at the end of a menu item.",
+    "SidebarMenuSkeleton": "A loading placeholder shaped like a menu item.",
+    "SidebarMenuSub": "A nested list of sub-items, indented with a leading line.",
+    "SidebarMenuSubItem": "A list item inside a sub-menu.",
+    "SidebarMenuSubButton": "The clickable row of a sub-item, rendered as a link by default."
+  },
+  "props": {
+    "SidebarProvider": {
+      "defaultOpen": "Sets whether the sidebar starts expanded when uncontrolled.",
+      "open": "Controls whether the sidebar is expanded.",
+      "onOpenChange": "Called with the new state when the sidebar expands or collapses."
+    },
+    "Sidebar": {
+      "side": "Places the sidebar on the left or right edge.",
+      "variant": "Chooses a full-height `sidebar`, a rounded `floating` panel, or an `inset` layout.",
+      "collapsible": "Sets how the sidebar collapses: off canvas, to icons, or not at all."
+    },
+    "SidebarMenuButton": {
+      "isActive": "Marks the button as the current item.",
+      "tooltip": "Text or `TooltipContent` props for a tooltip shown only while collapsed on desktop.",
+      "variant": "Uses a plain style or an `outline` style with a background and border.",
+      "size": "Sets the row height: `sm`, `default` or `lg`."
+    },
+    "SidebarMenuAction": {
+      "showOnHover": "On desktop, hides the action until its item is hovered or focused."
+    },
+    "SidebarMenuSkeleton": {
+      "showIcon": "Adds a square placeholder for an icon."
+    },
+    "SidebarMenuSubButton": {
+      "size": "Sets the text size: `sm` or `md`.",
+      "isActive": "Marks the sub-item as the current page."
+    }
+  },
+  "accessibility": "- `SidebarTrigger` and `SidebarRail` are labelled `Toggle Sidebar`. The rail is removed from the tab order, so keep a `SidebarTrigger` in reach of keyboard users.\n- Press `Command-B` on Apple platforms, or `Ctrl+B` elsewhere, to toggle the sidebar.\n- On mobile, the sidebar is a dialog with a visually hidden title, `Sidebar`; `Escape` closes it.\n- Menu-button tooltips appear only while the sidebar is collapsed, so labels stay available when only icons show.",
+  "notes": "- Every toggle writes the state to a `sidebar_state` cookie for 7 days. Read it on the server to set `defaultOpen` and avoid a flash on load.\n- Widths come from `--sidebar-width` (`16rem`) and `--sidebar-width-icon` (`3rem`), set on `SidebarProvider`; override them through its `style`.\n- The sidebar element exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. Menu buttons set `data-active` and `data-size`.\n- `useSidebar` throws if it's used outside a `SidebarProvider`.\n- The panel uses `bg-surface-secondary`; active items use `bg-item-selected` with a `text-link` icon."
+}

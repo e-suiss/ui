@@ -1,0 +1,122 @@
+---
+title: Tooltip
+description: "A small label that appears next to an element on hover or keyboard focus."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="tooltip" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <Tooltip>\n          <TooltipTrigger render={<Button variant=\"outline\" />}>\n            Hover me\n          </TooltipTrigger>\n          <TooltipContent side=\"top\">Add to library</TooltipContent>\n        </Tooltip>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
+
+</Example>
+
+`Tooltip` wraps the Base UI Tooltip primitive. `TooltipTrigger` is the element that shows the tooltip, and `TooltipContent` renders the dark label with an arrow in a portal, positioned beside the trigger. `TooltipProvider` shares open delays across a group of tooltips.
+
+Use tooltips to name icon-only buttons or show a keyboard shortcut. Keep the text short and don't put essential information or interactive content in a tooltip; use `Popover` for that.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add tooltip"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+
+2. Copy the source into `components/ui/tooltip.tsx`:
+
+<SourceFile path="components/ui/tooltip.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from \"@/components/ui/tooltip\""} />
+
+<Code lang="tsx" code={"<TooltipProvider>\n  <div className=\"p-12\">\n    <Tooltip>\n      <TooltipTrigger render={<Button variant=\"outline\" />}>\n        Hover me\n      </TooltipTrigger>\n      <TooltipContent side=\"top\">Add to library</TooltipContent>\n    </Tooltip>\n  </div>\n</TooltipProvider>"} />
+
+Use the `render` prop on `TooltipTrigger` to render it as a `Button`. Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.
+
+Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delay` to `0`, so tooltips open without waiting.
+
+## Examples
+
+### Sides
+
+Places tooltips on each of the four sides of their triggers.
+
+<Example kind="ui" name="tooltip" story="Sides">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipSidesExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <div className=\"grid grid-cols-2 place-items-center gap-x-24 gap-y-16\">\n          {([\"top\", \"right\", \"left\", \"bottom\"] as const).map((side) => (\n            <TooltipProvider key={side}>\n              <Tooltip>\n                <TooltipTrigger render={<Button variant=\"outline\" />}>\n                  {side}\n                </TooltipTrigger>\n                <TooltipContent side={side}>Shown on the {side}</TooltipContent>\n              </Tooltip>\n            </TooltipProvider>\n          ))}\n        </div>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
+
+</Example>
+
+### With shortcut
+
+Names an icon button and shows its keyboard shortcut with `Kbd`.
+
+<Example kind="ui" name="tooltip" story="WithShortcut">
+
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipWithShortcutExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <Tooltip>\n          <TooltipTrigger\n            render={<Button variant=\"outline\" size=\"icon\" aria-label=\"New file\" />}\n          >\n            <PlusIcon />\n          </TooltipTrigger>\n          <TooltipContent side=\"top\">\n            New file\n            <Kbd mod>N</Kbd>\n          </TooltipContent>\n        </Tooltip>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"TooltipProvider","href":"#tooltipprovider","children":[{"name":"Tooltip","href":"#tooltip","children":[{"name":"TooltipTrigger","href":"#tooltiptrigger","children":[]},{"name":"TooltipContent","href":"#tooltipcontent","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### TooltipProvider
+
+Shares delay timing across the tooltips inside it.
+
+<PropsTable extends={["TooltipPrimitive.Provider.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Tooltip
+
+The root that holds a tooltip's open state.
+
+<PropsTable extends={["TooltipPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TooltipTrigger
+
+The element that shows the tooltip on hover or focus.
+
+<PropsTable extends={["TooltipPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TooltipContent
+
+The positioned label with its arrow, rendered in a portal.
+
+<PropsTable extends={["TooltipPrimitive.Popup.Props","TooltipPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Tooltips open when the trigger is hovered or receives keyboard focus, and close when the pointer leaves.
+- `Escape` closes an open tooltip while focus stays on the trigger.
+- A tooltip doesn't name its trigger. Give icon-only triggers their own `aria-label`.
+
+## Notes
+
+- Parts carry `data-slot` attributes such as `tooltip-trigger` and `tooltip-content`; the popup and arrow set `data-side`.
+- The label uses `bg-label` with `text-surface`, so it inverts against the page in both light and dark appearances.
+- `TooltipContent` accepts the positioner props `side`, `sideOffset`, `align` and `alignOffset`.

@@ -1,0 +1,16 @@
+{
+  "name": "nav-global",
+  "type": "block",
+  "files": [
+    "components/blocks/nav-global.tsx"
+  ],
+  "requires": [
+    "button",
+    "navbar"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

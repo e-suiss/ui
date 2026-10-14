@@ -1,0 +1,14 @@
+{
+  "name": "radial-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "toggle-group"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

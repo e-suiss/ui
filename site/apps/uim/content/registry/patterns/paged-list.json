@@ -1,0 +1,23 @@
+{
+  "description": "A FlatList that shows items one page at a time and loads the next page on scroll or with a button.",
+  "overview": "`PagedList` takes the full `items` array and renders only the first `pageSize` items. When the user scrolls near the end, or presses the Load more button in the footer, the next page is appended.\n\nThe button disappears once every item is shown. Use it for long local lists where rendering everything at once is not needed.",
+  "usage": "Pass `items`, `renderItem` and a `getKey` that returns a stable key for each item. `renderItem` receives the item and its index, not the `FlatList` info object.\n\nOther `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReached` and `ListFooterComponent`, which the list manages. Use `listClassName` to style the content container.",
+  "examples": {
+    "SmallPages": "Uses a `pageSize` of 3 so pages load sooner.",
+    "SinglePage": "Fewer items than one page, so no Load more button appears.",
+    "CustomLabels": "Renames the button with `loadMoreLabel`."
+  },
+  "props": {
+    "PagedList": {
+      "items": "The full array of items.",
+      "pageSize": "Items added per page. Defaults to `10`.",
+      "getKey": "Returns a unique key for an item. Defaults to the index.",
+      "renderItem": "Renders one item from the item and its index.",
+      "loadMoreLabel": "Text of the footer button. Defaults to `Load more`.",
+      "className": "Classes for the `FlatList`.",
+      "listClassName": "Classes for the list's content container."
+    }
+  },
+  "accessibility": "- The Load more button is a `Button`, so screen reader users can load the next page without scrolling to the end.",
+  "notes": "- The next page loads when the scroll position is within half a screen of the end (`onEndReachedThreshold` of `0.5`).\n- The footer is a full-width `secondary` button."
+}

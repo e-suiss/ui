@@ -1,0 +1,46 @@
+---
+title: Bar Chart Stacked
+description: "Two series stacked into one bar per month, with a legend below the plot."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-stacked">
+
+<SourceFile path="components/charts/bar-chart-stacked.tsx" fold={false} />
+
+</Example>
+
+Two series stacked into one bar per month, with a legend under the plot. Use it when the total per month matters as well as how each series contributes to it.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-stacked"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+
+<SourceFile path="components/charts/bar-chart-stacked.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartStacked } from \"@/components/charts/bar-chart-stacked\""} />
+
+<Code lang="tsx" code={"<BarChartStacked />"} />
+
+Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`. Every bar in the stack needs the same `stackId`; the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to whichever bar is on top.
+
+## Notes
+
+The legend takes labels and colors from the config. Focus the chart and use the arrow keys to move between months.

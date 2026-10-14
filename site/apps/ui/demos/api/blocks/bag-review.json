@@ -1,0 +1,14 @@
+{
+  "name": "bag-review",
+  "type": "block",
+  "files": [
+    "components/blocks/bag-review.tsx"
+  ],
+  "requires": [
+    "button",
+    "stepper"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

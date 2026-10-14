@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Icons
+description: "A stacked bar chart whose tooltip shows an icon for each series in place of a color swatch."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-icons">
+
+<SourceFile path="components/charts/tooltip-chart-icons.tsx" fold={false} />
+
+</Example>
+
+A stacked bar chart whose tooltip shows a small icon for each series instead of a color swatch. Use icons when series map to recognizable things, like device types, and color alone isn't enough to tell them apart.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-icons"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-icons.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-icons.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartIcons } from \"@/components/charts/tooltip-chart-icons\""} />
+
+<Code lang="tsx" code={"<TooltipChartIcons />"} />
+
+Add an `icon` component to each series entry in `chartConfig`; the tooltip picks it up automatically. Replace `chartData` and the series keys to match your data.
+
+## Notes
+
+Icons replace the color indicator in every tooltip and legend that uses this config, so add them only where you want them everywhere. The tooltip opens on a preset month when the chart loads.

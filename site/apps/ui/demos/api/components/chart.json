@@ -1,0 +1,104 @@
+{
+  "name": "chart",
+  "type": "ui",
+  "files": [
+    "components/ui/chart.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn",
+    "recharts"
+  ],
+  "examples": [
+    "Default",
+    "MultipleSeries",
+    "Stacked",
+    "LineSeries",
+    "AreaSeries",
+    "Donut"
+  ],
+  "parts": [
+    {
+      "name": "ChartContainer",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "config",
+          "type": "ChartConfig",
+          "required": true
+        },
+        {
+          "name": "children",
+          "type": "React.ComponentProps< typeof RechartsPrimitive.ResponsiveContainer >[\"children\"]",
+          "required": true
+        },
+        {
+          "name": "initialDimension",
+          "type": "{ width: number height: number }",
+          "required": false,
+          "default": "INITIAL_DIMENSION"
+        }
+      ]
+    },
+    {
+      "name": "ChartTooltipContent",
+      "extends": [
+        "React.ComponentProps<typeof RechartsPrimitive.Tooltip>",
+        "React.ComponentProps<\"div\">",
+        "RechartsPrimitive.DefaultTooltipContentProps< TooltipValueType, TooltipNameType >"
+      ],
+      "props": [
+        {
+          "name": "hideLabel",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "hideIndicator",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "indicator",
+          "type": "\"line\" | \"dot\" | \"dashed\"",
+          "required": false,
+          "default": "\"dot\""
+        },
+        {
+          "name": "nameKey",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "labelKey",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ChartLegendContent",
+      "extends": [
+        "React.ComponentProps<\"div\">",
+        "RechartsPrimitive.DefaultLegendContentProps"
+      ],
+      "props": [
+        {
+          "name": "hideIcon",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "nameKey",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

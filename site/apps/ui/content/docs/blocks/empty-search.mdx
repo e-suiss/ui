@@ -1,0 +1,46 @@
+---
+title: Empty Search
+description: "A search page showing live suggestions, a no-results state, and suggested queries."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="empty-search">
+
+<SourceFile path="components/blocks/empty-search.tsx" fold={false} />
+
+</Example>
+
+A search page that lists matching suggestions as you type, and shows a no-results message with suggested queries when nothing matches. An empty field shows an idle prompt instead. Use it for site search, command search or any search screen that needs a helpful empty state.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks empty-search"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty).
+
+3. Copy the source into `components/blocks/empty-search.tsx`:
+
+<SourceFile path="components/blocks/empty-search.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { EmptySearch } from \"@/components/blocks/empty-search\""} />
+
+<Code lang="tsx" code={"<EmptySearch />"} />
+
+Replace the `suggestions` array and the `matches` computation with results from your search API; the demo only matches queries that start with book. The query starts as book neo so the no-results state shows on load, so start it empty in your app.
+
+## Notes
+
+The clear button returns focus to the field, and the empty-state message is announced when it changes.

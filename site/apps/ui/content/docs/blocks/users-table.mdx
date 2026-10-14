@@ -1,0 +1,46 @@
+---
+title: Users Table
+description: "A searchable users table with role filters, row selection, and bulk role and status actions."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="users-table">
+
+<SourceFile path="components/blocks/users-table.tsx" fold={false} />
+
+</Example>
+
+A users table with search, role filters and row selection; selecting rows reveals bulk actions to make editors, activate or suspend. Role and last sign-in columns appear as the screen widens, and the search and Invite button take the full width on mobile. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for any admin list that needs bulk actions.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks users-table"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Input Group](/docs/components/input-group), [Sidebar](/docs/components/sidebar), [Table](/docs/components/table), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/users-table.tsx`:
+
+<SourceFile path="components/blocks/users-table.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { UsersTable } from \"@/components/blocks/users-table\""} />
+
+<Code lang="tsx" code={"<UsersTable />"} />
+
+Replace `initialUsers` with your users, each with a name, email, role, status, last-seen text and avatar hue. Call your API in `bulk`, which applies a change to every selected user. Search and filtering run in the browser, so move them server-side for large lists, and give Invite a handler.
+
+## Notes
+
+Each row has a hidden checkbox labeled with the user's name, so selection works from the keyboard as well as by clicking the row.

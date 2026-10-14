@@ -1,0 +1,48 @@
+{
+  "name": "button",
+  "type": "ui",
+  "files": [
+    "components/ui/button.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Variants",
+    "Sizes",
+    "WithIcon",
+    "Disabled",
+    "Block"
+  ],
+  "parts": [
+    {
+      "name": "Button",
+      "extends": [
+        "ButtonPrimitive.Props"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\" | \"secondary\" | \"tinted\" | \"ghost\" | \"plain\" | \"destructive\" | \"link\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"xl\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | \"icon-xl\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "block",
+          "type": "true",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

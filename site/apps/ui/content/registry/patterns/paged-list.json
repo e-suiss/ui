@@ -1,0 +1,33 @@
+{
+  "description": "A list that pages through items with numbered pagination on desktop and a Load more button on mobile.",
+  "overview": "`PagedList` slices an array of items into pages and renders each one through `renderItem` inside a plain list. On desktop it shows a suiss/ui `Pagination` with previous and next links, the first and last page, the pages next to the current one, and ellipses for the gaps. The pagination is hidden when everything fits on one page.\n\nOn mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: a full-width secondary `Button` appends the next page of items, and focus moves to the first newly loaded item. Use it for long feeds, search results or topic lists where the user moves through a known set of items.",
+  "usage": "- The current page is uncontrolled by default and starts at `defaultPage`. Pass `page` and `onPageChange` to control it.\n- Out-of-range page values are clamped between `1` and the page count.\n- Without `getPageHref`, page links use `#` and prevent navigation. With it, each link gets a real `href` and still updates the page on click.\n- Provide `getKey` when items have stable IDs; the default key is the item's index.\n- The mobile Load more state is internal and independent of `page`.",
+  "examples": {
+    "StartOnLaterPage": "Opens on page 4 by setting `defaultPage`.",
+    "SinglePage": "Renders every item without pagination when the items fit on one page.",
+    "PageLinks": "Gives each page link a real `href` through `getPageHref`.",
+    "CustomLabels": "Replaces the previous, next and Load more labels.",
+    "Controlled": "Owns the current page in state with `page` and `onPageChange`."
+  },
+  "parts": {
+    "PagedList": "The root that renders the visible items and the pagination or Load more control."
+  },
+  "props": {
+    "PagedList": {
+      "items": "The full array of items to page through.",
+      "pageSize": "The number of items per page, and per Load more step on mobile.",
+      "page": "The current page when controlled.",
+      "defaultPage": "The page shown first when uncontrolled.",
+      "onPageChange": "Called with the new page number when the user changes pages.",
+      "getPageHref": "Returns the `href` for a page link, turning pagination into real links.",
+      "getKey": "Returns the React key for an item.",
+      "renderItem": "Renders one item; receives the item and its index in `items`.",
+      "loadMoreLabel": "The label of the mobile Load more button.",
+      "previousLabel": "Visible text for the previous link; it also becomes its accessible name.",
+      "nextLabel": "Visible text for the next link; it also becomes its accessible name.",
+      "listClassName": "Classes applied to the inner list element."
+    }
+  },
+  "accessibility": "- Items render in a `ul`, each inside its own `li`.\n- The desktop pagination is a navigation landmark; the current page link has `aria-current=\"page\"`.\n- Previous and next links get `aria-disabled` on the first and last page. Their default accessible names are Go to previous page and Go to next page.\n- Changing pages scrolls the list into view. Loading more on mobile moves focus to the first focusable element of the first new item.",
+  "notes": "Styling hooks: `data-slot=\"paged-list\"`, `paged-list-items`, `paged-list-item`, `paged-list-pagination` and `paged-list-load-more`. Because `renderItem` output is wrapped in an `li`, return row content such as an `Item`, not another list item."
+}

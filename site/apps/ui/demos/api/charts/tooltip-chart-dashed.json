@@ -1,0 +1,16 @@
+{
+  "name": "tooltip-chart-dashed",
+  "type": "chart",
+  "files": [
+    "components/charts/tooltip-chart-dashed.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

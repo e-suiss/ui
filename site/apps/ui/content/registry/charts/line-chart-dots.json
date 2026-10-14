@@ -1,0 +1,6 @@
+{
+  "description": "A weight trend with a dot at every monthly reading and a fixed value axis on the right.",
+  "overview": "A health-style weight card with a dot on every monthly reading and a fixed value axis on the right. The dots make it clear where measurements actually exist, so use this variant when readings are sparse or irregular.",
+  "usage": "Replace the list of readings in `chartData` and rename `weight` in the data, the line and `chartConfig`. Set the value axis `domain` and `ticks` to a range that suits your numbers, and change the unit in the tooltip formatter.",
+  "notes": "The headline value and the change below it are hard-coded text, so update them along with the data or compute them from it."
+}

@@ -1,0 +1,9 @@
+{
+  "description": "A provider that sets the reading direction, left-to-right or right-to-left, for the components inside it.",
+  "overview": "The direction module re-exports `DirectionProvider` and `useDirection` from Base UI. `DirectionProvider` takes a `direction` of `ltr` or `rtl` and makes it available to Base UI components below it, so behaviors that depend on direction, such as arrow-key navigation and popup placement, follow the reading direction. `useDirection` returns the current direction for your own components.\n\nThe provider does not set the `dir` attribute on the page. Set `dir` on the `html` element or on a container yourself so that the browser and logical CSS properties flip the layout.",
+  "usage": "Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon.",
+  "examples": {
+    "RightToLeft": "The same card rendered with `direction` set to `rtl`, so its footer buttons appear in reversed order."
+  },
+  "notes": "- Pair directional icons with the `rtl:` Tailwind variant, for example `rtl:rotate-180`, so arrows point the right way.\n- Many components in the library use logical properties such as `ps-`, `pe-`, `ms-` and `me-`, which flip automatically under `dir=\"rtl\"`."
+}

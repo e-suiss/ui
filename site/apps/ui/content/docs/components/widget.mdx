@@ -1,0 +1,244 @@
+---
+title: Widget
+description: "A rounded card in the style of home screen widgets, with fixed sizes and optional drag-to-resize."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="widget" story="Default">
+
+<Code lang="tsx" code={"import { SunIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nexport function WidgetExample() {\n  return (\n    <Widget size=\"small\" align=\"start\">\n      <WidgetHeader>\n        <WidgetIcon>\n          <SunIcon weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </Widget>\n  )\n}"} />
+
+</Example>
+
+`Widget` is a rounded `surface-secondary` card that comes in four sizes: `small` (168 × 168), `medium` (352 × 168), `large` (352 × 352) and `extra-large` (720 × 352), or `auto` to fill its parent. Compose it from `WidgetHeader`, which holds a `WidgetIcon`, `WidgetTitle` and an optional `WidgetAction`, followed by `WidgetValue`, `WidgetDescription`, `WidgetContent` and a `WidgetFooter` pinned to the bottom.
+
+With `resizable`, a corner handle lets people drag the widget to another size. While dragging, a dashed outline previews the size it will snap to on release. Use widgets for glanceable summaries on a dashboard; for general grouped content, use `Card`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add widget"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/widget.tsx`:
+
+<SourceFile path="components/ui/widget.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from \"@/components/ui/widget\""} />
+
+<Code lang="tsx" code={"<Widget size=\"small\" align=\"start\">\n  <WidgetHeader>\n    <WidgetIcon>\n      <SunIcon weight=\"fill\" />\n    </WidgetIcon>\n    <WidgetTitle>Istanbul</WidgetTitle>\n  </WidgetHeader>\n  <WidgetContent>\n    <WidgetValue>24°</WidgetValue>\n    <WidgetDescription>Partly cloudy</WidgetDescription>\n  </WidgetContent>\n  <WidgetFooter>H 27° · L 18°</WidgetFooter>\n</Widget>"} />
+
+Use `size` with `onSizeChange` to control the size, or `defaultSize` to set where an uncontrolled widget starts. Without either, a resizable widget starts `small` and a fixed widget is `auto`. Limit the sizes a drag can snap to with `sizes`.
+
+Set `resizable="free"` to follow the pointer without snapping; the widget stays between the smallest size and the largest allowed size. Double-click the handle to return to the starting size.
+
+Adapt the content to the current size with the `group/widget` group and `data-size`, for example `group-data-[size=small]/widget:hidden`.
+
+## Examples
+
+### Sales
+
+Shows a resizable widget whose chart and list adapt to each size.
+
+<Example kind="ui" name="widget" story="Sales">
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14]\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n  { name: \"Künefe\", count: 19 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetSalesExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"large\">\n        <WidgetHeader className=\"gap-1.5 text-warning\">\n          <WidgetIcon size=\"sm\" className=\"text-warning\">\n            <CashRegisterIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Hestia</WidgetTitle>\n        </WidgetHeader>\n        <div className=\"flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end\">\n          <div className=\"shrink-0\">\n            <WidgetValue>₺18,240</WidgetValue>\n            <WidgetDescription className=\"text-xs\">\n              Today's revenue · 42 orders\n            </WidgetDescription>\n          </div>\n          <div\n            aria-hidden=\"true\"\n            className=\"flex h-14 shrink-0 items-end gap-1 group-data-[size=medium]/widget:h-full group-data-[size=medium]/widget:flex-1 group-data-[size=small]/widget:hidden\"\n          >\n            {hourly.map((value, index) => (\n              <span\n                key={index}\n                data-now={value === 100}\n                className=\"flex-1 rounded-sm bg-control data-[now=true]:bg-orange\"\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </div>\n        </div>\n        <ul className=\"flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden\">\n          {topItems.map((item) => (\n            <li\n              key={item.name}\n              className=\"flex items-center justify-between border-t py-1.5 text-sm\"\n            >\n              {item.name}\n              <span className=\"text-label-secondary tabular-nums\">\n                {item.count}\n              </span>\n            </li>\n          ))}\n        </ul>\n      </Widget>\n      <Hint>\n        Hover the corner and drag the handle. Double-click it to reset.\n      </Hint>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Kitchen
+
+Places the resize handle inside the widget's corner.
+
+<Example kind="ui" name="widget" story="Kitchen">
+
+<Code lang="tsx" code={"import { CookingPotIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst tickets = [\n  { id: \"#1042\", place: \"Table 4\", minutes: 18 },\n  { id: \"#1043\", place: \"Takeaway\", minutes: 15 },\n  { id: \"#1044\", place: \"Table 12\", minutes: 9 },\n  { id: \"#1045\", place: \"Pickup\", minutes: 7 },\n  { id: \"#1046\", place: \"Garden 3\", minutes: 5 },\n  { id: \"#1047\", place: \"Table 7\", minutes: 3 },\n  { id: \"#1048\", place: \"Takeaway\", minutes: 1 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetKitchenExample() {\n  return (\n    <div>\n      <Widget\n        resizable\n        handle=\"inside\"\n        defaultSize=\"large\"\n        className=\"flex-row gap-4\"\n      >\n        <div className=\"flex w-32 shrink-0 flex-col gap-1 group-data-[size=small]/widget:w-full\">\n          <WidgetHeader className=\"gap-1.5 text-warning\">\n            <WidgetIcon size=\"sm\" className=\"text-warning\">\n              <CookingPotIcon weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle>Kitchen</WidgetTitle>\n          </WidgetHeader>\n          <WidgetValue className=\"mt-2 text-5xl\">7</WidgetValue>\n          <WidgetDescription className=\"text-xs\">\n            pending orders\n          </WidgetDescription>\n          <p className=\"text-xs font-medium text-danger\">2 running late</p>\n        </div>\n        <ul className=\"flex min-w-0 flex-1 flex-col group-data-[size=small]/widget:hidden\">\n          {tickets.map((ticket) => (\n            <li\n              key={ticket.id}\n              className=\"flex items-center gap-2 border-b py-1.5 text-sm group-data-[size=medium]/widget:nth-[n+4]:hidden\"\n            >\n              <span\n                aria-hidden=\"true\"\n                data-late={ticket.minutes >= 15}\n                className=\"size-1.5 shrink-0 rounded-full bg-orange data-[late=true]:bg-red\"\n              />\n              <span className=\"min-w-0 flex-1 truncate\">\n                {ticket.id} · {ticket.place}\n              </span>\n              <span\n                data-late={ticket.minutes >= 15}\n                className=\"text-xs text-label-secondary tabular-nums data-[late=true]:font-medium data-[late=true]:text-danger\"\n              >\n                {ticket.minutes} min\n              </span>\n            </li>\n          ))}\n        </ul>\n      </Widget>\n      <Hint>Handle inside the corner. Hover the corner to reveal it.</Hint>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Reservations
+
+Limits resizing to the `small` and `medium` sizes.
+
+<Example kind="ui" name="widget" story="Reservations">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetAction, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetReservationsExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"medium\" sizes={[\"small\", \"medium\"]}>\n        <WidgetHeader className=\"gap-1.5 text-link\">\n          <WidgetIcon size=\"sm\" className=\"text-link\">\n            <CalendarBlankIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Reservations</WidgetTitle>\n          <WidgetAction className=\"text-xs text-label-secondary\">\n            Up next\n          </WidgetAction>\n        </WidgetHeader>\n        <div>\n          <WidgetValue>20:00</WidgetValue>\n          <p className=\"text-sm\">Ayşe Y. · 6 guests</p>\n        </div>\n        <div className=\"mt-auto flex flex-col gap-1 group-data-[size=small]/widget:hidden\">\n          <div className=\"flex justify-between text-2xs text-label-secondary tabular-nums\">\n            <span>18:00</span>\n            <span>20:00</span>\n            <span>22:00</span>\n            <span>24:00</span>\n          </div>\n          <div className=\"relative h-2 rounded-full bg-control\">\n            <span className=\"absolute inset-y-0 start-[30%] w-[45%] rounded-full bg-blue\" />\n          </div>\n        </div>\n      </Widget>\n      <Hint>Snaps between small and medium only.</Hint>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Weekly report
+
+Starts at `extra-large` and reveals extra content only at that size.
+
+<Example kind="ui" name="widget" story="WeeklyReport">
+
+<Code lang="tsx" code={"import { ChartBarIcon, TriangleIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst week = [\n  { day: \"Mon\", value: 52 },\n  { day: \"Tue\", value: 44 },\n  { day: \"Wed\", value: 60 },\n  { day: \"Thu\", value: 56 },\n  { day: \"Fri\", value: 82 },\n  { day: \"Sat\", value: 100 },\n  { day: \"Sun\", value: 70 },\n]\n\nconst channels = [\n  { name: \"Dine-in\", amount: \"₺64,200\", tint: \"bg-blue\" },\n  { name: \"Takeaway\", amount: \"₺38,900\", tint: \"bg-orange\" },\n  { name: \"Pickup\", amount: \"₺18,800\", tint: \"bg-green\" },\n]\n\nconst bestSellers = [\n  { name: \"Grilled meatballs\", count: 238 },\n  { name: \"Lahmacun\", count: 201 },\n  { name: \"Adana kebab\", count: 164 },\n  { name: \"Künefe\", count: 131 },\n  { name: \"Ayran\", count: 120 },\n  { name: \"Lentil soup\", count: 96 },\n] as const\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetWeeklyReportExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"extra-large\" className=\"flex-row gap-6\">\n        <div className=\"flex min-w-0 flex-1 flex-col gap-3\">\n          <WidgetHeader className=\"gap-1.5 text-success\">\n            <WidgetIcon size=\"sm\" className=\"text-success\">\n              <ChartBarIcon weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle>This week</WidgetTitle>\n          </WidgetHeader>\n          <div className=\"flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end\">\n            <div className=\"shrink-0\">\n              <WidgetValue>₺121,900</WidgetValue>\n              <p className=\"flex items-center gap-1 text-xs font-medium text-success\">\n                <TriangleIcon weight=\"fill\" className=\"size-2.5\" />\n                12% more than last week\n              </p>\n            </div>\n            <div className=\"flex h-24 min-w-0 shrink-0 items-end gap-2 group-data-[size=medium]/widget:h-full group-data-[size=medium]/widget:gap-1.5 group-data-[size=medium]/widget:flex-1 group-data-[size=small]/widget:hidden\">\n              {week.map((day) => (\n                <div\n                  key={day.day}\n                  className=\"flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1\"\n                >\n                  <div className=\"flex min-h-0 w-full flex-1 items-end\">\n                    <span\n                      aria-hidden=\"true\"\n                      data-top={day.value === 100}\n                      className=\"w-full rounded-md bg-control data-[top=true]:bg-green\"\n                      style={{ height: `${day.value}%` }}\n                    />\n                  </div>\n                  <span className=\"text-2xs text-label-secondary group-data-[size=medium]/widget:hidden\">\n                    {day.day}\n                  </span>\n                </div>\n              ))}\n            </div>\n          </div>\n          <ul className=\"flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden\">\n            {channels.map((channel) => (\n              <li\n                key={channel.name}\n                className=\"flex items-center gap-2 border-t py-1.5 text-sm\"\n              >\n                <span\n                  aria-hidden=\"true\"\n                  className={`size-2 rounded-full ${channel.tint}`}\n                />\n                <span className=\"flex-1\">{channel.name}</span>\n                <span className=\"text-label-secondary tabular-nums\">\n                  {channel.amount}\n                </span>\n              </li>\n            ))}\n          </ul>\n        </div>\n        <div className=\"hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:flex\">\n          <p className=\"text-xs font-semibold text-label-secondary\">\n            Best sellers\n          </p>\n          {bestSellers.map((item) => (\n            <div key={item.name} className=\"flex flex-col gap-1\">\n              <div className=\"flex justify-between text-sm\">\n                {item.name}\n                <span className=\"text-label-secondary tabular-nums\">\n                  {item.count}\n                </span>\n              </div>\n              <div className=\"h-1 rounded-full bg-control\">\n                <div\n                  className=\"h-full rounded-full bg-green\"\n                  style={{\n                    width: `${(item.count / bestSellers[0].count) * 100}%`,\n                  }}\n                />\n              </div>\n            </div>\n          ))}\n        </div>\n      </Widget>\n      <Hint>Extra large shows best sellers, large hides them.</Hint>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Free resize
+
+Resizes freely with the pointer instead of snapping to sizes.
+
+<Example kind="ui" name="widget" story="FreeResize">
+
+<Code lang="tsx" code={"import { BowlFoodIcon, CoffeeIcon, HamburgerIcon, IceCreamIcon, OrangeSliceIcon, PizzaIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\nimport { Widget, WidgetTitle } from \"@/components/ui/widget\"\n\nconst menu = [\n  { name: \"Meatballs\", price: \"₺280\", icon: <HamburgerIcon /> },\n  { name: \"Pide\", price: \"₺220\", icon: <PizzaIcon /> },\n  { name: \"Soup\", price: \"₺90\", icon: <BowlFoodIcon /> },\n  { name: \"Coffee\", price: \"₺75\", icon: <CoffeeIcon /> },\n  { name: \"Künefe\", price: \"₺160\", icon: <IceCreamIcon /> },\n  { name: \"Lemonade\", price: \"₺70\", icon: <OrangeSliceIcon /> },\n  { name: \"Ayran\", price: \"₺40\", icon: <CoffeeIcon /> },\n  { name: \"Baklava\", price: \"₺180\", icon: <IceCreamIcon /> },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nfunction FreeResizeExample() {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [box, setBox] = React.useState({ width: 0, height: 0, columns: 0 })\n\n  React.useEffect(() => {\n    const widget = ref.current\n    if (!widget) return\n    const measure = () => {\n      const grid = widget.querySelector<HTMLElement>(\"[data-menu-grid]\")\n      const columns = grid\n        ? getComputedStyle(grid).gridTemplateColumns.split(\" \").length\n        : 0\n      setBox({\n        width: Math.round(widget.offsetWidth),\n        height: Math.round(widget.offsetHeight),\n        columns,\n      })\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(widget)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div>\n      <Widget\n        ref={ref}\n        resizable=\"free\"\n        defaultSize=\"large\"\n        className=\"gap-0 p-0\"\n      >\n        <div className=\"flex items-baseline justify-between px-4 pt-4 pb-3\">\n          <WidgetTitle className=\"text-xl\">Hestia POS</WidgetTitle>\n          <span className=\"text-sm text-label-secondary tabular-nums\">\n            {box.columns} columns\n          </span>\n        </div>\n        <ScrollArea className=\"min-h-0 flex-1\">\n          <div\n            data-menu-grid\n            className=\"grid grid-cols-2 gap-2 px-4 pb-4 @[30rem]/widget:grid-cols-3 @[44rem]/widget:grid-cols-4\"\n          >\n            {menu.map((item) => (\n              <div\n                key={item.name}\n                className=\"flex flex-col gap-2 rounded-2xl bg-surface-raised p-3\"\n              >\n                <span\n                  aria-hidden=\"true\"\n                  className=\"text-warning [&_svg]:size-6\"\n                >\n                  {item.icon}\n                </span>\n                <div>\n                  <p className=\"text-sm font-semibold\">{item.name}</p>\n                  <p className=\"text-sm text-label-secondary tabular-nums\">\n                    {item.price}\n                  </p>\n                </div>\n              </div>\n            ))}\n          </div>\n        </ScrollArea>\n      </Widget>\n      <Hint>\n        Free resize · {box.width} × {box.height}\n      </Hint>\n    </div>\n  )\n}\n\nexport function WidgetFreeResizeExample() {\n  return (\n    <FreeResizeExample />\n  )\n}"} />
+
+</Example>
+
+### Auto resize
+
+Fills its parent with `auto`, and snaps to fixed sizes when dragged.
+
+<Example kind="ui" name="widget" story="AutoResize">
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetAutoResizeExample() {\n  return (\n    <div className=\"h-60 w-full max-w-180\">\n      <Widget resizable defaultSize=\"auto\">\n        <WidgetHeader>\n          <WidgetIcon>\n            <CashRegisterIcon />\n          </WidgetIcon>\n          <WidgetTitle>Point of sale</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>\n          Fills its parent. Drag to snap to a size, double-click to fill again.\n        </WidgetDescription>\n      </Widget>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Centered
+
+Centers the icon, title and description with `align="center"`.
+
+<Example kind="ui" name="widget" story="Centered">
+
+<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetCenteredExample() {\n  return (\n    <Widget size=\"small\" align=\"center\">\n      <WidgetHeader>\n        <WidgetIcon size=\"lg\">\n          <CashRegisterIcon />\n        </WidgetIcon>\n        <WidgetTitle>Point of sale</WidgetTitle>\n      </WidgetHeader>\n      <WidgetDescription>3 open orders</WidgetDescription>\n    </Widget>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Shows each fixed size side by side.
+
+<Example kind="ui" name="widget" story="Sizes">
+
+<Code lang="tsx" code={"import { Widget, WidgetFooter, WidgetHeader, WidgetTitle } from \"@/components/ui/widget\"\n\nconst gridSpans = {\n  small: \"1 × 1\",\n  medium: \"2 × 1\",\n  large: \"2 × 2\",\n  \"extra-large\": \"4 × 2\",\n}\n\nexport function WidgetSizesExample() {\n  return (\n    <div className=\"flex flex-wrap items-start gap-4\">\n      {([\"small\", \"medium\", \"large\", \"extra-large\"] as const).map((size) => (\n        <Widget key={size} size={size}>\n          <WidgetHeader>\n            <WidgetTitle className=\"capitalize\">\n              {size.replace(\"-\", \" \")}\n            </WidgetTitle>\n          </WidgetHeader>\n          <WidgetFooter>{gridSpans[size]}</WidgetFooter>\n        </Widget>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Dashboard
+
+Arranges fixed widgets in a grid as a dashboard.
+
+<Example kind="ui" name="widget" story="Dashboard">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CashRegisterIcon, CookingPotIcon, SunIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst tickets = [\n  { id: \"#1042\", place: \"Table 4\", minutes: 18 },\n  { id: \"#1043\", place: \"Takeaway\", minutes: 15 },\n  { id: \"#1044\", place: \"Table 12\", minutes: 9 },\n  { id: \"#1045\", place: \"Pickup\", minutes: 7 },\n  { id: \"#1046\", place: \"Garden 3\", minutes: 5 },\n  { id: \"#1047\", place: \"Table 7\", minutes: 3 },\n  { id: \"#1048\", place: \"Takeaway\", minutes: 1 },\n]\n\nexport function WidgetDashboardExample() {\n  return (\n    <div className=\"grid max-w-4xl auto-rows-[10.5rem] grid-cols-2 gap-4 md:grid-cols-4\">\n      <Widget>\n        <WidgetHeader>\n          <WidgetIcon>\n            <SunIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Istanbul</WidgetTitle>\n        </WidgetHeader>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetFooter>Partly cloudy</WidgetFooter>\n      </Widget>\n      <Widget align=\"center\">\n        <WidgetHeader>\n          <WidgetIcon size=\"lg\">\n            <CookingPotIcon />\n          </WidgetIcon>\n          <WidgetTitle>Kitchen display</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>5 tickets</WidgetDescription>\n      </Widget>\n      <Widget className=\"col-span-2\">\n        <WidgetHeader className=\"gap-1.5 text-warning\">\n          <WidgetIcon size=\"sm\" className=\"text-warning\">\n            <CashRegisterIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Hestia</WidgetTitle>\n        </WidgetHeader>\n        <WidgetValue>₺18,240</WidgetValue>\n        <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>\n      </Widget>\n      <Widget className=\"col-span-2 row-span-2\">\n        <WidgetHeader className=\"gap-1.5 text-link\">\n          <WidgetIcon size=\"sm\" className=\"text-link\">\n            <CalendarBlankIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Reservations</WidgetTitle>\n        </WidgetHeader>\n        <WidgetContent className=\"gap-2\">\n          {tickets.slice(0, 5).map((ticket, index) => (\n            <div key={ticket.id} className=\"flex items-baseline gap-3 text-sm\">\n              <span className=\"w-11 shrink-0 text-label-secondary tabular-nums\">\n                {`${18 + index}:00`}\n              </span>\n              <span className=\"truncate\">{ticket.place}</span>\n            </div>\n          ))}\n        </WidgetContent>\n      </Widget>\n      <Widget className=\"col-span-2 row-span-2\" align=\"center\">\n        <WidgetHeader>\n          <WidgetIcon size=\"lg\">\n            <CashRegisterIcon />\n          </WidgetIcon>\n          <WidgetTitle>Point of sale</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>3 open orders</WidgetDescription>\n      </Widget>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Widget","href":"#widget","children":[{"name":"WidgetHeader","href":"#widgetheader","children":[{"name":"WidgetIcon","href":"#widgeticon","children":[]},{"name":"WidgetTitle","href":"#widgettitle","children":[]},{"name":"WidgetAction","href":"#widgetaction","children":[]}]},{"name":"WidgetContent","href":"#widgetcontent","children":[{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]},{"name":"WidgetFooter","href":"#widgetfooter","children":[]},{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Widget
+
+The rounded card that sets the size, alignment and resize behavior.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"WidgetSize | \"auto\"","description":"Controls the current size, or `auto` to fill the parent."},{"name":"defaultSize","type":"WidgetSize | \"auto\"","description":"Sets the starting size when uncontrolled; double-clicking the handle also returns to it."},{"name":"onSizeChange","type":"(size: WidgetSize | \"auto\") => void","description":"Called with the new size when a drag snaps to a different size or the size is reset."},{"name":"sizes","type":"WidgetSize[]","default":"[\"small\", \"medium\", \"large\", \"extra-large\"]","description":"Lists the sizes a drag can snap to; the largest also caps free resizing."},{"name":"resizable","type":"boolean | \"free\"","default":"false","description":"Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer."},{"name":"handle","type":"\"inside\" | \"outside\"","default":"\"outside\"","description":"Places the resize handle `inside` or `outside` the bottom corner."},{"name":"align","type":"\"start\" | \"center\"","default":"\"start\"","description":"Centers the content horizontally and vertically when set to `center`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WidgetHeader
+
+A row that holds the icon, title and action.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WidgetIcon
+
+A decorative icon, shown on a tile in the `default` and `lg` sizes.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### WidgetTitle
+
+The widget's title, truncated to one line.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### WidgetAction
+
+A slot at the end of the header for a control; hidden when centered.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### WidgetDescription
+
+Secondary text that explains the content.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### WidgetValue
+
+A large figure in tabular numbers, such as a total or temperature.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### WidgetContent
+
+A flexible column that fills the remaining space.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### WidgetFooter
+
+Small secondary text pinned to the bottom of the widget.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `WidgetIcon` is hidden from assistive technologies, so make sure the title conveys its meaning.
+- The resize handle is hidden from assistive technologies and works with a pointer only. Offer another way to change the size, such as a control that sets `size`, if it matters.
+
+## Notes
+
+- `Widget` sets `data-size` and `data-align`, and `data-resizing` while dragging. It's also a `@container/widget` container for container queries.
+- Parts carry `data-slot` attributes such as `widget`, `widget-container`, `widget-handle`, `widget-preview` and `widget-header`.
+- The handle is visible on hover and always visible on touch screens. It mirrors in right-to-left layouts.
+- Size changes animate over `500ms`, and the animation is removed when reduced motion is preferred.

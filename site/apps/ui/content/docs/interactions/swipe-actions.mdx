@@ -1,0 +1,124 @@
+---
+title: Swipe Actions
+description: "A list row that reveals action buttons when swiped sideways, with optional full swipe to run an action."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="swipe-actions" story="Default">
+
+<Code lang="tsx" code={"import { ArchiveIcon, EnvelopeSimpleIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialMessages = [\n  {\n    id: 1,\n    from: \"Acme Store\",\n    subject: \"Your order has shipped\",\n    preview: \"Order #1042 will be delivered tomorrow.\",\n  },\n  {\n    id: 2,\n    from: \"Jordan Lee\",\n    subject: \"Tomorrow's meeting\",\n    preview: \"Does 10:00 work for you?\",\n  },\n  {\n    id: 3,\n    from: \"Cloud Drive\",\n    subject: \"Your storage is almost full\",\n    preview: \"Upgrade your plan to get more space.\",\n  },\n  {\n    id: 4,\n    from: \"Taylor Kim\",\n    subject: \"Weekend plans\",\n    preview: \"Are we still on for Saturday?\",\n  },\n]\n\nfunction MailExample({ withLeading = false }: { withLeading?: boolean }) {\n  const [messages, setMessages] = React.useState(initialMessages)\n  const [unread, setUnread] = React.useState<number[]>([])\n  const [log, setLog] = React.useState(\"Swipe a message to the left.\")\n\n  const remove = (id: number, action: string) => {\n    setMessages((current) => current.filter((message) => message.id !== id))\n    setLog(`${action} message ${id}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {messages.map((message) => (\n          <li key={message.id} className=\"not-first:border-t\">\n            <SwipeActions>\n              {withLeading && (\n                <SwipeActionsActions side=\"leading\">\n                  <SwipeAction\n                    onClick={() => {\n                      setUnread((current) =>\n                        current.includes(message.id)\n                          ? current.filter((id) => id !== message.id)\n                          : [...current, message.id]\n                      )\n                      setLog(`Toggled unread on message ${message.id}`)\n                    }}\n                  >\n                    <EnvelopeSimpleIcon weight=\"fill\" />\n                    Unread\n                  </SwipeAction>\n                </SwipeActionsActions>\n              )}\n              <SwipeActionsContent className=\"flex flex-col gap-0.5 px-4 py-3\">\n                <span className=\"flex items-center gap-2 font-semibold\">\n                  {unread.includes(message.id) && (\n                    <span className=\"size-2 rounded-full bg-accent\" />\n                  )}\n                  {message.from}\n                </span>\n                <span className=\"text-sm\">{message.subject}</span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {message.preview}\n                </span>\n              </SwipeActionsContent>\n              <SwipeActionsActions>\n                <SwipeAction\n                  variant=\"archive\"\n                  onClick={() => remove(message.id, \"Archived\")}\n                >\n                  <ArchiveIcon weight=\"fill\" />\n                  Archive\n                </SwipeAction>\n                <SwipeAction\n                  variant=\"destructive\"\n                  fullSwipe\n                  onClick={() => remove(message.id, \"Deleted\")}\n                >\n                  <TrashIcon weight=\"fill\" />\n                  Delete\n                </SwipeAction>\n              </SwipeActionsActions>\n            </SwipeActions>\n          </li>\n        ))}\n      </ul>\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button\n          size=\"sm\"\n          variant=\"secondary\"\n          onClick={() => {\n            setMessages(initialMessages)\n            setUnread([])\n            setLog(\"Swipe a message to the left.\")\n          }}\n        >\n          Reset\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport function SwipeActionsExample() {\n  return (\n    <MailExample />\n  )\n}"} />
+
+</Example>
+
+`SwipeActions` recreates iOS swipe actions for list rows. Dragging `SwipeActionsContent` sideways reveals the buttons in `SwipeActionsActions` on that side; releasing past half their width snaps the row open, otherwise it springs closed. Dragging past the actions meets increasing resistance, unless an action has `fullSwipe`: then dragging past 60% of the row width expands that action across the row, and releasing collapses the row and runs it.
+
+Only one row stays open at a time. Tapping the content or pressing elsewhere closes an open row, and choosing an action closes it after the action runs. Use it for quick per-row actions such as archive, delete, or mark as unread.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions swipe-actions"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+
+2. Copy the source into `components/interactions/swipe-actions.tsx`:
+
+<SourceFile path="components/interactions/swipe-actions.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from \"@/components/interactions/swipe-actions\""} />
+
+<Code lang="tsx" code={"<MailExample />"} />
+
+- Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Rows can have leading actions, trailing actions, or both.
+- Handle each action with `onClick`. A full swipe runs the action by clicking it, so the same handler covers both.
+- `useSwipeActions` returns `close` for closing the row from custom controls.
+- Gestures are detected with pointer events and locked to the horizontal axis after a few pixels, so vertical scrolling still works.
+
+## Examples
+
+### Both sides
+
+A row with a leading Unread action on one side and trailing Archive and Delete actions on the other.
+
+<Example kind="interaction" name="swipe-actions" story="BothSides">
+
+<Code lang="tsx" code={"import { ArchiveIcon, EnvelopeSimpleIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialMessages = [\n  {\n    id: 1,\n    from: \"Acme Store\",\n    subject: \"Your order has shipped\",\n    preview: \"Order #1042 will be delivered tomorrow.\",\n  },\n  {\n    id: 2,\n    from: \"Jordan Lee\",\n    subject: \"Tomorrow's meeting\",\n    preview: \"Does 10:00 work for you?\",\n  },\n  {\n    id: 3,\n    from: \"Cloud Drive\",\n    subject: \"Your storage is almost full\",\n    preview: \"Upgrade your plan to get more space.\",\n  },\n  {\n    id: 4,\n    from: \"Taylor Kim\",\n    subject: \"Weekend plans\",\n    preview: \"Are we still on for Saturday?\",\n  },\n]\n\nfunction MailExample({ withLeading = false }: { withLeading?: boolean }) {\n  const [messages, setMessages] = React.useState(initialMessages)\n  const [unread, setUnread] = React.useState<number[]>([])\n  const [log, setLog] = React.useState(\"Swipe a message to the left.\")\n\n  const remove = (id: number, action: string) => {\n    setMessages((current) => current.filter((message) => message.id !== id))\n    setLog(`${action} message ${id}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {messages.map((message) => (\n          <li key={message.id} className=\"not-first:border-t\">\n            <SwipeActions>\n              {withLeading && (\n                <SwipeActionsActions side=\"leading\">\n                  <SwipeAction\n                    onClick={() => {\n                      setUnread((current) =>\n                        current.includes(message.id)\n                          ? current.filter((id) => id !== message.id)\n                          : [...current, message.id]\n                      )\n                      setLog(`Toggled unread on message ${message.id}`)\n                    }}\n                  >\n                    <EnvelopeSimpleIcon weight=\"fill\" />\n                    Unread\n                  </SwipeAction>\n                </SwipeActionsActions>\n              )}\n              <SwipeActionsContent className=\"flex flex-col gap-0.5 px-4 py-3\">\n                <span className=\"flex items-center gap-2 font-semibold\">\n                  {unread.includes(message.id) && (\n                    <span className=\"size-2 rounded-full bg-accent\" />\n                  )}\n                  {message.from}\n                </span>\n                <span className=\"text-sm\">{message.subject}</span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {message.preview}\n                </span>\n              </SwipeActionsContent>\n              <SwipeActionsActions>\n                <SwipeAction\n                  variant=\"archive\"\n                  onClick={() => remove(message.id, \"Archived\")}\n                >\n                  <ArchiveIcon weight=\"fill\" />\n                  Archive\n                </SwipeAction>\n                <SwipeAction\n                  variant=\"destructive\"\n                  fullSwipe\n                  onClick={() => remove(message.id, \"Deleted\")}\n                >\n                  <TrashIcon weight=\"fill\" />\n                  Delete\n                </SwipeAction>\n              </SwipeActionsActions>\n            </SwipeActions>\n          </li>\n        ))}\n      </ul>\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button\n          size=\"sm\"\n          variant=\"secondary\"\n          onClick={() => {\n            setMessages(initialMessages)\n            setUnread([])\n            setLog(\"Swipe a message to the left.\")\n          }}\n        >\n          Reset\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport function SwipeActionsBothSidesExample() {\n  return (\n    <MailExample withLeading />\n  )\n}"} />
+
+</Example>
+
+### Variants
+
+The `default`, `neutral`, `archive`, and `destructive` action colors side by side.
+
+<Example kind="interaction" name="swipe-actions" story="Variants">
+
+<Code lang="tsx" code={"import { ArchiveIcon, BellSlashIcon, FlagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\n\nexport function SwipeActionsVariantsExample() {\n  return (\n    <div className=\"mx-auto w-full max-w-md overflow-hidden rounded-2xl border\">\n      <SwipeActions>\n        <SwipeActionsContent className=\"px-4 py-3\">\n          Swipe to see every action style\n        </SwipeActionsContent>\n        <SwipeActionsActions>\n          <SwipeAction>\n            <FlagIcon weight=\"fill\" />\n            Flag\n          </SwipeAction>\n          <SwipeAction variant=\"neutral\">\n            <BellSlashIcon weight=\"fill\" />\n            Mute\n          </SwipeAction>\n          <SwipeAction variant=\"archive\">\n            <ArchiveIcon weight=\"fill\" />\n            Archive\n          </SwipeAction>\n          <SwipeAction variant=\"destructive\">\n            <TrashIcon weight=\"fill\" />\n            Delete\n          </SwipeAction>\n        </SwipeActionsActions>\n      </SwipeActions>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"SwipeActions","href":"#swipeactions","children":[{"name":"SwipeActionsContent","href":"#swipeactionscontent","children":[]},{"name":"SwipeActionsActions","href":"#swipeactionsactions","children":[{"name":"SwipeAction","href":"#swipeaction","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### SwipeActions
+
+The row container that tracks the swipe and manages open state.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SwipeActionsContent
+
+The visible row content that moves with the swipe.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SwipeActionsActions
+
+The group of actions revealed on one side of the row.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"side","type":"SwipeActionsSide","default":"\"trailing\"","description":"The edge the actions appear on: `leading` or `trailing`."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SwipeAction
+
+A single action button revealed by the swipe.
+
+<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"variant","type":"\"default\" | \"destructive\" | \"archive\" | \"neutral\"","default":"\"default\"","description":"The background color of the action: `default`, `destructive`, `archive`, or `neutral`."},{"name":"fullSwipe","type":"boolean","default":"false","description":"Lets a long swipe expand this action across the row and run it."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The row has `role="group"`, and actions are native buttons that stay in the tab order.
+- Moving focus to an action opens its side of the row so the button is visible; moving focus out of the row closes it.
+- `Escape` closes an open row.
+- Leading and trailing sides follow the writing direction, so swipes mirror in right-to-left layouts.
+
+## Notes
+
+- The root uses `data-slot="swipe-actions"` and sets `data-open` (`leading` or `trailing`), `data-full` during a full swipe, and `data-removing` while the row collapses. Action groups expose `data-side`, and full-swipe actions set `data-full-swipe`.
+- The `--swipe-actions-offset` custom property holds the current offset.
+- `swipeActionVariants` is exported for styling other elements like an action.

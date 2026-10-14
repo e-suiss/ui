@@ -1,0 +1,6 @@
+{
+  "description": "Two series stacked into one bar per month, with a legend below the plot.",
+  "overview": "Two series stacked into one bar per month, with a legend under the plot. Use it when the total per month matters as well as how each series contributes to it.",
+  "usage": "Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`. Every bar in the stack needs the same `stackId`; the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to whichever bar is on top.",
+  "notes": "The legend takes labels and colors from the config. Focus the chart and use the arrow keys to move between months."
+}

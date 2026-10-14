@@ -1,0 +1,14 @@
+{
+  "name": "footer-directory",
+  "type": "block",
+  "files": [
+    "components/blocks/footer-directory.tsx"
+  ],
+  "requires": [
+    "accordion",
+    "breadcrumb"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,42 @@
+{
+  "name": "native-select",
+  "type": "ui",
+  "files": [
+    "components/ui/native-select.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sizes",
+    "WithGroups",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "NativeSelect",
+      "extends": [
+        "NativeSelectProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "NativeSelectOption",
+      "extends": [
+        "React.ComponentProps<\"option\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "NativeSelectOptGroup",
+      "extends": [
+        "React.ComponentProps<\"optgroup\">"
+      ],
+      "props": []
+    }
+  ]
+}

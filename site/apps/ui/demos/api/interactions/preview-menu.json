@@ -1,0 +1,97 @@
+{
+  "name": "preview-menu",
+  "type": "interaction",
+  "files": [
+    "components/interactions/preview-menu.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "DisabledItem",
+    "CustomPreview"
+  ],
+  "parts": [
+    {
+      "name": "PreviewMenu",
+      "extends": [],
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "aspectRatio",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PreviewMenuTrigger",
+      "extends": [
+        "ContextMenuPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "PreviewMenuContent",
+      "extends": [
+        "ContextMenuPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "preview",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "previewClassName",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PreviewMenuItem",
+      "extends": [
+        "ContextMenuPrimitive.Item.Props"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "PreviewMenuSeparator",
+      "extends": [
+        "ContextMenuPrimitive.Separator.Props"
+      ],
+      "props": []
+    }
+  ]
+}

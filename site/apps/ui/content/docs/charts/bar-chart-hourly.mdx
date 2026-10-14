@@ -1,0 +1,46 @@
+---
+title: Bar Chart Hourly
+description: "Twenty-four thin bars of screen time per hour, with a dashed line marking the hourly average."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-hourly">
+
+<SourceFile path="components/charts/bar-chart-hourly.tsx" fold={false} />
+
+</Example>
+
+A screen-time card with 24 thin hourly bars, a total in the header and a dashed line at the hourly average. Use it for any day-at-a-glance metric with many small periods.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-hourly"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-hourly.tsx`:
+
+<SourceFile path="components/charts/bar-chart-hourly.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartHourly } from \"@/components/charts/bar-chart-hourly\""} />
+
+<Code lang="tsx" code={"<BarChartHourly />"} />
+
+Replace the 24 values in `chartData` with your own per-hour numbers; the total and the average line are computed from them. Change the axis `ticks` to label different hours, and update the minute unit in the axis, tooltip and header if you measure something else.
+
+## Notes
+
+With 24 narrow bars, the tooltip is the most reliable way to read a single hour. Focus the chart and use the arrow keys to step through the hours.

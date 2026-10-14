@@ -1,0 +1,133 @@
+{
+  "name": "field",
+  "type": "ui",
+  "files": [
+    "components/ui/field.tsx"
+  ],
+  "requires": [
+    "label",
+    "separator"
+  ],
+  "dependencies": [
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithHelpLink",
+    "Inset",
+    "WithTextarea",
+    "Invalid",
+    "MultipleErrors",
+    "Disabled",
+    "Horizontal",
+    "ChoiceCards",
+    "Form",
+    "SeparatorWithText"
+  ],
+  "parts": [
+    {
+      "name": "FieldSet",
+      "extends": [
+        "React.ComponentProps<\"fieldset\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FieldLegend",
+      "extends": [
+        "React.ComponentProps<\"legend\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"legend\" | \"label\"",
+          "required": false,
+          "default": "\"legend\""
+        }
+      ]
+    },
+    {
+      "name": "FieldGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"inset\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "Field",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\" | \"responsive\"",
+          "default": "\"vertical\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FieldContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FieldLabel",
+      "extends": [
+        "React.ComponentProps<typeof Label>"
+      ],
+      "props": []
+    },
+    {
+      "name": "FieldTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FieldDescription",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "FieldSeparator",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "FieldError",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "errors",
+          "type": "Array<{ message?: string } | undefined>",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

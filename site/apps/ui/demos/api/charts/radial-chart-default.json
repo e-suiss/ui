@@ -1,0 +1,16 @@
+{
+  "name": "radial-chart-default",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-default.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

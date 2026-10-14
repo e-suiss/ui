@@ -1,0 +1,32 @@
+{
+  "description": "A button that opens a list of options so people can pick one value.",
+  "overview": "`Select` wraps the Base UI Select primitive. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.\n\nA highlight pill slides between options as the highlighted item changes, and the selected item shows a check mark. Use `Select` when people choose one value from a fixed list. For a few always-visible options, consider `ToggleGroup` or `RadioGroup`.",
+  "usage": "Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen.\n\n`SelectContent` opens below the trigger by default. It accepts the positioner props `side`, `sideOffset`, `align`, `alignOffset` and `alignItemWithTrigger`.",
+  "examples": {
+    "Open": "Renders the popup open on mount with a value already selected.",
+    "WithValue": "Starts with a default value, so the trigger shows its label.",
+    "Small": "Uses the compact `sm` trigger size.",
+    "Grouped": "Splits options into labelled groups with a separator between them.",
+    "WithIcons": "Places an icon before each option's label.",
+    "Disabled": "Disables the select so it can't be opened.",
+    "Invalid": "Marks the trigger with `aria-invalid` to show an error state."
+  },
+  "parts": {
+    "SelectGroup": "Groups related options; label it with a `SelectLabel`.",
+    "SelectValue": "Shows the selected option's label, or the placeholder, inside the trigger.",
+    "SelectTrigger": "The button that opens the popup and displays the current value.",
+    "SelectContent": "The positioned popup that holds the option list and scroll arrows.",
+    "SelectLabel": "A heading that names a `SelectGroup`.",
+    "SelectItem": "A selectable option, with a check mark when selected.",
+    "SelectSeparator": "A thin line that divides groups of options.",
+    "SelectScrollUpButton": "An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.",
+    "SelectScrollDownButton": "An arrow that scrolls the list down when it overflows; rendered by `SelectContent`."
+  },
+  "props": {
+    "SelectTrigger": {
+      "size": "Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners."
+    }
+  },
+  "accessibility": "- The trigger has the `combobox` role and the popup list has the `listbox` role; each item is an `option` with `aria-selected` on the chosen one.\n- Give the trigger an accessible name, such as `aria-label` or an associated label.\n- When the popup opens, focus moves to the selected option. Arrow keys move between options and `Enter` selects.\n- `Escape` closes the popup without changing the value, and focus returns to the trigger.\n- A `SelectGroup` with a `SelectLabel` is exposed as a named `group`.",
+  "notes": "- Parts carry `data-slot` attributes such as `select-trigger`, `select-content`, `select-item` and `select-highlight`.\n- The trigger sets `data-size`, and styles `data-placeholder`, `aria-invalid` and `disabled` states. Invalid triggers use the `danger` color.\n- The popup uses `bg-surface-raised`, the highlight uses `bg-item-hover`, and the check mark uses `text-link`.\n- The highlight animation is turned off when reduced motion is preferred."
+}

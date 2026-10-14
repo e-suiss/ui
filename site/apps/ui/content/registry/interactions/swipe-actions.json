@@ -1,0 +1,26 @@
+{
+  "description": "A list row that reveals action buttons when swiped sideways, with optional full swipe to run an action.",
+  "overview": "`SwipeActions` recreates iOS swipe actions for list rows. Dragging `SwipeActionsContent` sideways reveals the buttons in `SwipeActionsActions` on that side; releasing past half their width snaps the row open, otherwise it springs closed. Dragging past the actions meets increasing resistance, unless an action has `fullSwipe`: then dragging past 60% of the row width expands that action across the row, and releasing collapses the row and runs it.\n\nOnly one row stays open at a time. Tapping the content or pressing elsewhere closes an open row, and choosing an action closes it after the action runs. Use it for quick per-row actions such as archive, delete, or mark as unread.",
+  "usage": "- Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Rows can have leading actions, trailing actions, or both.\n- Handle each action with `onClick`. A full swipe runs the action by clicking it, so the same handler covers both.\n- `useSwipeActions` returns `close` for closing the row from custom controls.\n- Gestures are detected with pointer events and locked to the horizontal axis after a few pixels, so vertical scrolling still works.",
+  "examples": {
+    "BothSides": "A row with a leading Unread action on one side and trailing Archive and Delete actions on the other.",
+    "Variants": "The `default`, `neutral`, `archive`, and `destructive` action colors side by side."
+  },
+  "parts": {
+    "SwipeActions": "The row container that tracks the swipe and manages open state.",
+    "SwipeActionsContent": "The visible row content that moves with the swipe.",
+    "SwipeActionsActions": "The group of actions revealed on one side of the row.",
+    "SwipeAction": "A single action button revealed by the swipe."
+  },
+  "props": {
+    "SwipeActionsActions": {
+      "side": "The edge the actions appear on: `leading` or `trailing`."
+    },
+    "SwipeAction": {
+      "variant": "The background color of the action: `default`, `destructive`, `archive`, or `neutral`.",
+      "fullSwipe": "Lets a long swipe expand this action across the row and run it."
+    }
+  },
+  "accessibility": "- The row has `role=\"group\"`, and actions are native buttons that stay in the tab order.\n- Moving focus to an action opens its side of the row so the button is visible; moving focus out of the row closes it.\n- `Escape` closes an open row.\n- Leading and trailing sides follow the writing direction, so swipes mirror in right-to-left layouts.",
+  "notes": "- The root uses `data-slot=\"swipe-actions\"` and sets `data-open` (`leading` or `trailing`), `data-full` during a full swipe, and `data-removing` while the row collapses. Action groups expose `data-side`, and full-swipe actions set `data-full-swipe`.\n- The `--swipe-actions-offset` custom property holds the current offset.\n- `swipeActionVariants` is exported for styling other elements like an action."
+}

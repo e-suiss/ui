@@ -1,0 +1,5 @@
+{
+  "description": "A store landing screen with a heading, help links and a scrolling row of product categories with photos.",
+  "overview": "A store screen with a large heading, links to ask a specialist or find a store, and a scrollable `ChipGroup` of categories, each `Chip` showing a photo and a label. Selecting a category updates the line below it.",
+  "usage": "Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders."
+}

@@ -1,0 +1,32 @@
+{
+  "name": "pull-to-refresh",
+  "type": "interaction",
+  "files": [
+    "components/interactions/pull-to-refresh.tsx"
+  ],
+  "requires": [
+    "spinner"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "EmptyList"
+  ],
+  "parts": [
+    {
+      "name": "PullToRefresh",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "onRefresh",
+          "type": "() => Promise<unknown> | unknown",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

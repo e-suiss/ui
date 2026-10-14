@@ -1,0 +1,46 @@
+---
+title: Signup Steps
+description: "A one-question-at-a-time signup flow for name, email, and password, with a progress indicator."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="signup-steps">
+
+<SourceFile path="components/blocks/signup-steps.tsx" fold={false} />
+
+</Example>
+
+A signup flow that asks one question at a time, name, then email, then password, with progress dots above. Each step slides in from the direction of travel, Continue stays disabled until the answer is valid, and the last step becomes Create account. The finish screen greets the user by first name. Use it for onboarding where a long form would feel heavy.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks signup-steps"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input).
+
+3. Copy the source into `components/blocks/signup-steps.tsx`:
+
+<SourceFile path="components/blocks/signup-steps.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SignupSteps } from \"@/components/blocks/signup-steps\""} />
+
+<Code lang="tsx" code={"<SignupSteps />"} />
+
+Edit `steps`; each has a key, title, description, placeholder, input type, autocomplete value and a `valid` function. Add matching keys to the `Values` type when you add steps. Replace the final step with a call to your registration API.
+
+## Notes
+
+The progress dots are an ordered list with the current step marked, and each input after the first receives focus automatically.

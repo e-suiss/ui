@@ -1,0 +1,17 @@
+{
+  "name": "signup-form",
+  "type": "block",
+  "files": [
+    "components/blocks/signup-form.tsx"
+  ],
+  "requires": [
+    "button",
+    "input",
+    "native-select"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

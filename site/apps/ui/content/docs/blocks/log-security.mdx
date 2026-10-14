@@ -1,0 +1,42 @@
+---
+title: Log Security
+description: "A security overview with a computed score ring, alert counts by severity, and resolvable alerts."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="log-security">
+
+<SourceFile path="components/blocks/log-security.tsx" fold={false} />
+
+</Example>
+
+A security overview with a score ring that drops for each open alert and shifts from green to orange to red, next to open alert counts by severity. Below, alerts can be filtered by Open, Resolved or All and resolved or reopened one by one. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for security centers, compliance checklists or system health checks.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks log-security"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/log-security.tsx`:
+
+<SourceFile path="components/blocks/log-security.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LogSecurity } from \"@/components/blocks/log-security\""} />
+
+<Code lang="tsx" code={"<LogSecurity />"} />
+
+Replace `initialAlerts` with alerts from your security backend; each has a severity, title, detail and icon. `severity` sets each level's colors and how much it lowers the score. Alerts are matched by title when resolving, so switch to an id for real data, and connect Resolve and Reopen to your API.

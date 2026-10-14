@@ -1,0 +1,63 @@
+{
+  "name": "section-index",
+  "type": "interaction",
+  "files": [
+    "components/interactions/section-index.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Compact"
+  ],
+  "parts": [
+    {
+      "name": "SectionIndex",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SectionIndexSection",
+      "extends": [
+        "React.ComponentProps<\"section\">"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "SectionIndexHeader",
+      "extends": [
+        "React.ComponentProps<\"h3\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SectionIndexBar",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "letters",
+          "type": "string[]",
+          "required": false,
+          "default": "LETTERS"
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

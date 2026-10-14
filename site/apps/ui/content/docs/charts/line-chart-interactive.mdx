@@ -1,0 +1,46 @@
+---
+title: Line Chart Interactive
+description: "Monthly temperatures for several cities, with chips to show or hide each city and an average, high or low switch."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-interactive">
+
+<SourceFile path="components/charts/line-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+Monthly temperatures for several cities with chips to show or hide each city and a switch between average, high and low. A row of stats under the chart shows each city's range and follows the cursor month. Use it as a pattern for comparing many series where readers pick which ones to see.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-interactive"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/line-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartInteractive } from \"@/components/charts/line-chart-interactive\""} />
+
+<Code lang="tsx" code={"<LineChartInteractive />"} />
+
+Replace `CITIES` with your own series and add a matching entry with label and color to `chartConfig` for each one. Set which series start visible in the `visible` state. The high and low modes are derived from the averages with a demo formula, so replace `temperature` with real values, and adjust the fixed value axis `domain` to your range.
+
+## Notes
+
+The last visible city can't be hidden, so the chart is never empty. Values outside the fixed value axis range are clipped. Newly shown lines draw in with an animation that is skipped when reduced motion is preferred.

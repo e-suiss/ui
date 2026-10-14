@@ -1,0 +1,6 @@
+{
+  "description": "A pie with each category name drawn outside its slice and joined by a leader line.",
+  "overview": "A pie with each category name printed outside its slice and connected by a leader line. Use it when readers shouldn't have to match colors against a separate legend.",
+  "usage": "Replace `chartData` and the category entries in `chartConfig`; labels read their text from the config. To print values or percentages instead, change what the custom `label` renderer returns. Shrink `outerRadius` if long names get clipped at the edges.",
+  "notes": "Outside labels collide when slices are thin, so keep the category count low."
+}

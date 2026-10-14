@@ -1,0 +1,42 @@
+{
+  "description": "A floating panel anchored to a trigger that shows rich content, such as details or a small form.",
+  "overview": "`Popover` positions a panel next to its `PopoverTrigger`. `PopoverContent` renders in a portal, is placed on any `side` with an `align` and offsets, and animates in with a short fade, scale and slide using Reanimated. On iOS the content is wrapped in a `FullWindowOverlay` from `react-native-screens`, so it draws above native modals.\n\nUse `PopoverHeader`, `PopoverTitle` and `PopoverDescription` to label the panel. For short hints, use Tooltip instead.",
+  "usage": "The popover is uncontrolled by default. Use `defaultOpen` to start open, or `open` with `onOpenChange` to control it. `onOpenChangeComplete` runs after the open or close animation.\n\nPass a `render` element to `PopoverTrigger`, such as a `Button`, to use your own pressable.\n\nTo share one popover between several triggers, create a handle with `createHandle` from the popover primitive, pass it as `handle` to the `Popover` and each `PopoverTrigger`, and give each trigger a `payload`. The `Popover` children can be a function that receives the active `payload`.\n\nUse `portalHost` on `PopoverContent` to render into a named portal host.",
+  "examples": {
+    "Sides": "Popovers opened on each of the four sides.",
+    "Simple": "A short text popover aligned to the start of its trigger.",
+    "OpenByDefault": "A popover with a header and labeled inputs that starts open.",
+    "DetachedTriggers": "Several triggers sharing one popover through a handle, each passing its own payload."
+  },
+  "parts": {
+    "Popover": "Root that holds the open state.",
+    "PopoverTrigger": "Pressable that toggles the popover.",
+    "PopoverContent": "Animated panel rendered in a portal and positioned next to the trigger.",
+    "PopoverHeader": "Column for the title and description.",
+    "PopoverTitle": "Heading that labels the panel.",
+    "PopoverDescription": "Secondary text under the title."
+  },
+  "props": {
+    "Popover": {
+      "open": "Controlled open state.",
+      "defaultOpen": "Initial open state when uncontrolled.",
+      "onOpenChange": "Called when the popover opens or closes, with the reason.",
+      "onOpenChangeComplete": "Called after the open or close animation finishes.",
+      "modal": "Whether the popover behaves as a modal. Defaults to `false`.",
+      "handle": "Handle from `createHandle` that links detached triggers to this popover."
+    },
+    "PopoverTrigger": {
+      "handle": "Handle that connects a trigger placed outside the `Popover`.",
+      "payload": "Value passed to the popover when this trigger opens it."
+    },
+    "PopoverContent": {
+      "side": "Side of the trigger to show on: `top`, `bottom` (default), `left` or `right`.",
+      "align": "Alignment along the side: `start`, `center` (default) or `end`.",
+      "sideOffset": "Distance from the trigger. Defaults to `4`.",
+      "alignOffset": "Shift along the alignment axis. Defaults to `0`.",
+      "portalHost": "Name of the portal host to render into."
+    }
+  },
+  "accessibility": "- The panel has the `dialog` role and is labeled by `PopoverTitle` when one is present.\n- `PopoverTitle` has the `heading` role.\n- When the popover opens, focus moves to the title by default.\n- The popover can close from an outside press, the Android back button, or the screen reader escape gesture.\n- Animations follow the system reduce motion setting.",
+  "notes": "- The panel uses `bg-surface-raised`, a subtle `border-label/5` border (`border-label/10` in dark mode) and `shadow-lg`.\n- `FullWindowOverlay` is used only on iOS; on Android the content renders in the portal directly.\n- Light and dark colors follow the system appearance."
+}

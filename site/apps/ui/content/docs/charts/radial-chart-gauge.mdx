@@ -1,0 +1,46 @@
+---
+title: Radial Chart Gauge
+description: "A 240-degree gauge arc showing an air quality reading with its value and rating below the center."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-gauge">
+
+<SourceFile path="components/charts/radial-chart-gauge.tsx" fold={false} />
+
+</Example>
+
+A gauge-style arc that opens at the bottom, showing a single reading with its value and rating in the center. Use it for scores with a known range, such as air quality, health scores or credit utilization.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-gauge"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-gauge.tsx`:
+
+<SourceFile path="components/charts/radial-chart-gauge.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartGauge } from \"@/components/charts/radial-chart-gauge\""} />
+
+<Code lang="tsx" code={"<RadialChartGauge />"} />
+
+Set the reading in `chartData` and the scale on `PolarAngleAxis` through its `domain`. Update the number and rating text in the center overlay, which are not read from the data. Change the color in `chartConfig`, or pick it from the value if the color should signal good and bad ranges.
+
+## Notes
+
+There is no tooltip and the center text is hard-coded, so keep it in sync with the value you pass.

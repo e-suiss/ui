@@ -1,0 +1,121 @@
+---
+title: Command Palette
+description: "A searchable command menu that opens in a dialog on desktop and a drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="command-palette" story="Default">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { CommandPalette, CommandPaletteContent, CommandPaletteTrigger } from \"@/components/patterns/command-palette\"\nimport { Button } from \"@/components/ui/button\"\nimport { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\nimport { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nfunction PaletteItems() {\n  return (\n    <>\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Suggestions\">\n          <CommandItem>\n            <CalendarBlankIcon />\n            Calendar\n          </CommandItem>\n          <CommandItem>\n            <SmileyIcon />\n            Search emoji\n          </CommandItem>\n          <CommandItem disabled>\n            <CalculatorIcon />\n            Calculator\n          </CommandItem>\n        </CommandGroup>\n        <CommandSeparator />\n        <CommandGroup heading=\"Settings\">\n          <CommandItem>\n            <UserIcon />\n            Profile\n            <CommandShortcut mod>P</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <CreditCardIcon />\n            Billing\n            <CommandShortcut mod>B</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <GearIcon />\n            Settings\n            <CommandShortcut mod>S</CommandShortcut>\n          </CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </>\n  )\n}\n\nfunction Trigger() {\n  return (\n    <CommandPaletteTrigger render={<Button variant=\"outline\" />}>\n      Search\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </CommandPaletteTrigger>\n  )\n}\n\nexport function CommandPaletteExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <CommandPalette>\n        <Trigger />\n        <CommandPaletteContent>\n          <PaletteItems />\n        </CommandPaletteContent>\n      </CommandPalette>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`CommandPalette` hosts a `Command` list inside a `Dialog` on desktop, positioned in the upper third of the viewport, and inside a bottom `Drawer` with a swipe handle below the `48rem` breakpoint. Fill `CommandPaletteContent` with `CommandInput`, `CommandList`, `CommandGroup`, `CommandItem` and the other `Command` parts.
+
+A global keyboard shortcut toggles the palette: `Cmd+K` on macOS and `Ctrl+K` elsewhere by default. Use it for app-wide search and quick actions.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns command-palette"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Command](/docs/components/command), [Dialog](/docs/components/dialog), [Drawer](/docs/components/drawer), `use-mobile`, `use-platform`.
+
+3. Copy the source into `components/patterns/command-palette.tsx`:
+
+<SourceFile path="components/patterns/command-palette.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { CommandPalette, CommandPaletteTrigger, CommandPaletteContent } from \"@/components/patterns/command-palette\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <CommandPalette>\n    <Trigger />\n    <CommandPaletteContent>\n      <PaletteItems />\n    </CommandPaletteContent>\n  </CommandPalette>\n</div>"} />
+
+The palette can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`; the hotkey and the trigger update the same state. Set `hotkey` to another letter to change the shortcut, or to `false` to disable it. `CommandPaletteTrigger` accepts `render` to use your own button, for example a `Button` with a `Kbd` hint. Remaining props on `CommandPaletteContent` pass through to `Command`.
+
+## Examples
+
+### With close button
+
+Shows an icon close button with `showCloseButton`.
+
+<Example kind="pattern" name="command-palette" story="WithCloseButton">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { CommandPalette, CommandPaletteContent, CommandPaletteTrigger } from \"@/components/patterns/command-palette\"\nimport { Button } from \"@/components/ui/button\"\nimport { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\nimport { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nfunction PaletteItems() {\n  return (\n    <>\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Suggestions\">\n          <CommandItem>\n            <CalendarBlankIcon />\n            Calendar\n          </CommandItem>\n          <CommandItem>\n            <SmileyIcon />\n            Search emoji\n          </CommandItem>\n          <CommandItem disabled>\n            <CalculatorIcon />\n            Calculator\n          </CommandItem>\n        </CommandGroup>\n        <CommandSeparator />\n        <CommandGroup heading=\"Settings\">\n          <CommandItem>\n            <UserIcon />\n            Profile\n            <CommandShortcut mod>P</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <CreditCardIcon />\n            Billing\n            <CommandShortcut mod>B</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <GearIcon />\n            Settings\n            <CommandShortcut mod>S</CommandShortcut>\n          </CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </>\n  )\n}\n\nfunction Trigger() {\n  return (\n    <CommandPaletteTrigger render={<Button variant=\"outline\" />}>\n      Search\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </CommandPaletteTrigger>\n  )\n}\n\nexport function CommandPaletteWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <CommandPalette>\n        <Trigger />\n        <CommandPaletteContent showCloseButton>\n          <PaletteItems />\n        </CommandPaletteContent>\n      </CommandPalette>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Shows a text close button labelled Cancel with `closeLabel`.
+
+<Example kind="pattern" name="command-palette" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { CommandPalette, CommandPaletteContent, CommandPaletteTrigger } from \"@/components/patterns/command-palette\"\nimport { Button } from \"@/components/ui/button\"\nimport { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\nimport { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nfunction PaletteItems() {\n  return (\n    <>\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Suggestions\">\n          <CommandItem>\n            <CalendarBlankIcon />\n            Calendar\n          </CommandItem>\n          <CommandItem>\n            <SmileyIcon />\n            Search emoji\n          </CommandItem>\n          <CommandItem disabled>\n            <CalculatorIcon />\n            Calculator\n          </CommandItem>\n        </CommandGroup>\n        <CommandSeparator />\n        <CommandGroup heading=\"Settings\">\n          <CommandItem>\n            <UserIcon />\n            Profile\n            <CommandShortcut mod>P</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <CreditCardIcon />\n            Billing\n            <CommandShortcut mod>B</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <GearIcon />\n            Settings\n            <CommandShortcut mod>S</CommandShortcut>\n          </CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </>\n  )\n}\n\nfunction Trigger() {\n  return (\n    <CommandPaletteTrigger render={<Button variant=\"outline\" />}>\n      Search\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </CommandPaletteTrigger>\n  )\n}\n\nexport function CommandPaletteWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <CommandPalette>\n        <Trigger />\n        <CommandPaletteContent showCloseButton closeLabel=\"Cancel\">\n          <PaletteItems />\n        </CommandPaletteContent>\n      </CommandPalette>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Insets the mobile drawer from the screen edges with `floating`.
+
+<Example kind="pattern" name="command-palette" story="Floating">
+
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { CommandPalette, CommandPaletteContent, CommandPaletteTrigger } from \"@/components/patterns/command-palette\"\nimport { Button } from \"@/components/ui/button\"\nimport { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\nimport { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nfunction PaletteItems() {\n  return (\n    <>\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Suggestions\">\n          <CommandItem>\n            <CalendarBlankIcon />\n            Calendar\n          </CommandItem>\n          <CommandItem>\n            <SmileyIcon />\n            Search emoji\n          </CommandItem>\n          <CommandItem disabled>\n            <CalculatorIcon />\n            Calculator\n          </CommandItem>\n        </CommandGroup>\n        <CommandSeparator />\n        <CommandGroup heading=\"Settings\">\n          <CommandItem>\n            <UserIcon />\n            Profile\n            <CommandShortcut mod>P</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <CreditCardIcon />\n            Billing\n            <CommandShortcut mod>B</CommandShortcut>\n          </CommandItem>\n          <CommandItem>\n            <GearIcon />\n            Settings\n            <CommandShortcut mod>S</CommandShortcut>\n          </CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </>\n  )\n}\n\nfunction Trigger() {\n  return (\n    <CommandPaletteTrigger render={<Button variant=\"outline\" />}>\n      Search\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </CommandPaletteTrigger>\n  )\n}\n\nexport function CommandPaletteFloatingExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <CommandPalette floating>\n        <Trigger />\n        <CommandPaletteContent>\n          <PaletteItems />\n        </CommandPaletteContent>\n      </CommandPalette>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"CommandPalette","href":"#commandpalette","children":[{"name":"CommandPaletteContent","href":"#commandpalettecontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### CommandPalette
+
+The root that renders a `Dialog` on desktop and a `Drawer` on mobile and registers the hotkey.
+
+<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the palette opens or closes, including through the hotkey."},{"name":"hotkey","type":"string | false","default":"\"k\"","description":"The letter that toggles the palette together with `Cmd` on macOS or `Ctrl` elsewhere; `false` disables it."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CommandPaletteTrigger
+
+The button that opens the palette.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CommandPaletteContent
+
+The popup that wraps a `Command` with a visually hidden title and description.
+
+<PropsTable extends={["React.ComponentProps<typeof Command>"]} props={[{"name":"title","type":"string","default":"\"Command Palette\"","description":"Accessible name of the dialog, rendered visually hidden."},{"name":"description","type":"string","default":"\"Search for a command to run...\"","description":"Accessible description of the dialog, rendered visually hidden."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the corner of the popup."},{"name":"closeLabel","type":"string","description":"Replaces the close icon with this text; requires `showCloseButton`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup is a `dialog` named by `title` and described by `description`.
+- Opening the palette focuses the search input, and the first enabled option is selected.
+- Arrow keys move between options and skip disabled ones; typing filters the list.
+- `Escape` closes the palette and returns focus to the trigger.
+
+## Notes
+
+Parts carry `data-slot` values `command-palette`, `command-palette-trigger` and `command-palette-content`. On mobile the list is capped at `60dvh` and the input gains end padding when a close button is shown. `className` on `CommandPaletteContent` applies to the inner `Command`, not the dialog or drawer.

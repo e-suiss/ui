@@ -1,0 +1,6 @@
+{
+  "description": "A health summary dashboard with pinned metric cards, sparklines, and category views in a sidebar.",
+  "overview": "A health summary in the style of a phone health app, with cards for pinned metrics such as Move, Steps and Sleep, each showing its value and a small sparkline or bar chart. Edit mode lets users pin and unpin cards, and each category page lists all its metrics for the last seven days. Navigation is a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Use it for fitness, wellness or any personal metrics dashboard.",
+  "usage": "Edit `categories` for names, icons and colors, and `metrics` for the cards; each metric has a category, label, value, optional unit, color and seven data points. Store the pinned list per user instead of in local state. Card links point to anchors built from each label, and the 9:41 time and JR avatar are hard-coded.",
+  "notes": "Sparklines are hidden from assistive technology because each value is also shown as text, and pin buttons are labeled with the metric name."
+}

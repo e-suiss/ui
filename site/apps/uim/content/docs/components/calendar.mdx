@@ -1,0 +1,342 @@
+---
+title: Calendar
+description: "A month grid for picking a single date, several dates or a date range."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-calendar--default" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarExample() {\n  return (\n    <SingleCalendar />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+`Calendar` renders one or more month grids with a caption, previous and next buttons, weekday headers and pressable day cells. Selection mode is set with `mode`: `single`, `multiple` or `range`. Ranges are drawn as a continuous shaded band with filled start and end days.
+
+Three sizes are available: `sm`, `default` and `lg`. The caption can be a plain label or month and year dropdowns built on Select, which suits birth dates and other dates far from today.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add calendar"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add calendar --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add calendar --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="uniwind/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="nativewind/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Select](/docs/components/select), [Text](/docs/components/text), and the primitives `components/primitives/calendar.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/calendar.tsx`:
+
+<SourceFile path="stylesheet/components/ui/calendar.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Calendar.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Calendar.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Checkbox.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/DropdownMenu.kt" />
+
+<SourceFile path="kotlin/components/Field.kt" />
+
+<SourceFile path="kotlin/components/FormSupport.kt" />
+
+<SourceFile path="kotlin/components/Haptics.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Label.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+<SourceFile path="kotlin/components/Separator.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { CalendarDayButton, Calendar } from \"@/components/ui/calendar\""} />
+
+<Code lang="tsx" code={"<SingleCalendar />"} />
+
+Pass `mode`, `selected` and `onSelect` to control the selection; `selected` is a `Date`, a `Date[]` or a `{ from, to }` range depending on the mode. Use `month`, `defaultMonth` and `onMonthChange` to control the visible month, and `numberOfMonths` to show several months.
+
+Use `disabled` with date matchers, such as `{ dayOfWeek: [0, 6] }`, to block days. Limit navigation with `startMonth` and `endMonth`; with a year dropdown they default to the last 100 years.
+
+Set `locale` for month and weekday names, and `weekStartsOn` to change the first day of the week. `CalendarDayButton` is exported for custom day rendering.
+
+## Examples
+
+### Sizes
+
+The `sm`, `default` and `lg` sizes.
+
+<Example id="components-calendar--sizes" width={880} height={1876} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarSizesExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar size=\"sm\" />\n      <SingleCalendar size=\"default\" />\n      <SingleCalendar size=\"lg\" />\n    </ScrollView>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 24) {\n      CalendarSingleDemo(size: .sm)\n      CalendarSingleDemo(size: .default)\n      CalendarSingleDemo(size: .lg)\n    }\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}\n\n@Composable\nfun CalendarSizes() {\n    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {\n        CalendarSingle(size = CalendarSize.Sm, key = \"sm\")\n        CalendarSingle(size = CalendarSize.Default, key = \"default\")\n        CalendarSingle(size = CalendarSize.Lg, key = \"lg\")\n    }\n}"} />
+
+</Example>
+
+### Range
+
+Range selection across two months.
+
+<Example id="components-calendar--range" width={880} height={1207} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { DateRange } from \"@/components/primitives/calendar\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction RangeCalendar() {\n  const today = new Date()\n  const [range, setRange] = React.useState<DateRange | undefined>({\n    from: today,\n    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),\n  })\n  return (\n    <ScrollView>\n      <Calendar\n        mode=\"range\"\n        selected={range}\n        onSelect={setRange}\n        numberOfMonths={2}\n        className=\"rounded-2xl border border-separator\"\n      />\n    </ScrollView>\n  )\n}\n\nexport function CalendarRangeExample() {\n  return (\n    <RangeCalendar />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarRangeDemo: View {\n  @State private var range: DateRange? = DateRange(from: CalendarDates.day(0), to: CalendarDates.day(6))\n\n  var body: some View {\n    DateCalendar(selection: $range, numberOfMonths: 2)\n      .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.DateRange\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarRange() {\n    var from by rememberSaveable { mutableStateOf<Date?>(calendarDay()) }\n    var to by rememberSaveable { mutableStateOf<Date?>(calendarDay(offsetDays = 6)) }\n    CalendarFrame {\n        Calendar(\n            selected = if (from == null) null else DateRange(from, to),\n            onSelect = { range: DateRange? ->\n                from = range?.from\n                to = range?.to\n            },\n            numberOfMonths = 2,\n        )\n    }\n}"} />
+
+</Example>
+
+### Multiple
+
+Several separate dates selected with `mode="multiple"`.
+
+<Example id="components-calendar--multiple" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction MultipleCalendar() {\n  const today = new Date()\n  const [dates, setDates] = React.useState<Date[] | undefined>([\n    new Date(today.getFullYear(), today.getMonth(), 8),\n    new Date(today.getFullYear(), today.getMonth(), 15),\n    new Date(today.getFullYear(), today.getMonth(), 22),\n  ])\n  return (\n    <Calendar\n      mode=\"multiple\"\n      selected={dates}\n      onSelect={setDates}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarMultipleExample() {\n  return (\n    <MultipleCalendar />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarMultipleDemo: View {\n  @State private var dates: Set<Date> = [\n    CalendarDates.dayOfMonth(8),\n    CalendarDates.dayOfMonth(15),\n    CalendarDates.dayOfMonth(22),\n  ]\n\n  var body: some View {\n    DateCalendar(selection: $dates)\n      .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarMultiple() {\n    var dates by rememberSaveable {\n        mutableStateOf(listOf(calendarDay(dayOfMonth = 8), calendarDay(dayOfMonth = 15), calendarDay(dayOfMonth = 22)))\n    }\n    CalendarFrame {\n        Calendar(selected = dates, onSelect = { value: List<Date> -> dates = value })\n    }\n}"} />
+
+</Example>
+
+### Dropdown caption
+
+Month and year dropdowns in the caption.
+
+<Example id="components-calendar--dropdown-caption" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarDropdownCaptionExample() {\n  return (\n    <SingleCalendar captionLayout=\"dropdown\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarDropdownCaptionExample: View {\n  var body: some View {\n    CalendarSingleDemo(captionLayout: .dropdown)\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\n@Composable\nfun CalendarDropdownCaptionExample() {\n    CalendarSingle(captionLayout = CalendarCaptionLayout.Dropdown)\n}\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+### Week numbers
+
+Week numbers in a leading column.
+
+<Example id="components-calendar--week-numbers" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarWeekNumbersExample() {\n  return (\n    <SingleCalendar showWeekNumber />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarWeekNumbersExample: View {\n  var body: some View {\n    CalendarSingleDemo(showWeekNumber: true)\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\n@Composable\nfun CalendarWeekNumbersExample() {\n    CalendarSingle(showWeekNumber = true)\n}\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+### Disabled days
+
+Weekends disabled with a `dayOfWeek` matcher.
+
+<Example id="components-calendar--disabled-days" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarDisabledDaysExample() {\n  return (\n    <SingleCalendar disabled={{ dayOfWeek: [0, 6] }} />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarDisabledDaysExample: View {\n  var body: some View {\n    CalendarSingleDemo(weekendsDisabled: true)\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\n@Composable\nfun CalendarDisabledDaysExample() {\n    CalendarSingle(weekendsDisabled = true)\n}\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+### Outside days
+
+Days from adjacent months shown with `showOutsideDays`.
+
+<Example id="components-calendar--outside-days" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarOutsideDaysExample() {\n  return (\n    <SingleCalendar showOutsideDays />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarOutsideDaysExample: View {\n  var body: some View {\n    CalendarSingleDemo(showOutsideDays: true)\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\n@Composable\nfun CalendarOutsideDaysExample() {\n    CalendarSingle(showOutsideDays = true)\n}\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+### Button variants
+
+Navigation buttons in the `ghost`, `secondary` and `tinted` variants.
+
+<Example id="components-calendar--button-variants" width={880} height={1871} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarButtonVariantsExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar buttonVariant=\"ghost\" />\n      <SingleCalendar buttonVariant=\"secondary\" />\n      <SingleCalendar buttonVariant=\"tinted\" />\n    </ScrollView>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarButtonVariantsExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 24) {\n      CalendarSingleDemo(buttonVariant: .ghost)\n      CalendarSingleDemo(buttonVariant: .secondary)\n      CalendarSingleDemo(buttonVariant: .tinted)\n    }\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}\n\n@Composable\nfun CalendarButtonVariants() {\n    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {\n        CalendarSingle(buttonVariant = ButtonVariant.Ghost, key = \"ghost\")\n        CalendarSingle(buttonVariant = ButtonVariant.Secondary, key = \"secondary\")\n        CalendarSingle(buttonVariant = ButtonVariant.Tinted, key = \"tinted\")\n    }\n}"} />
+
+</Example>
+
+### Locale
+
+Turkish month and weekday names with `locale="tr-TR"`.
+
+<Example id="components-calendar--locale" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarLocaleExample() {\n  return (\n    <SingleCalendar locale=\"tr-TR\" />\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CalendarLocaleExample: View {\n  var body: some View {\n    CalendarSingleDemo()\n      .environment(\\.locale, Locale(identifier: \"tr_TR\"))\n  }\n}\n\nenum CalendarDates {\n  static func day(_ offset: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    let start = calendar.startOfDay(for: Date())\n    return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n  }\n\n  static func dayOfMonth(_ day: Int) -> Date {\n    let calendar = Foundation.Calendar.current\n    var components = calendar.dateComponents([.year, .month], from: Date())\n    components.day = day\n    return calendar.date(from: components) ?? Date()\n  }\n}\n\nstruct CalendarBordered: ViewModifier {\n  func body(content: Content) -> some View {\n    content\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)\n      }\n  }\n}\n\nstruct CalendarSingleDemo: View {\n  var size: DateCalendar.Size = .default\n  var buttonVariant: VariantButtonStyle.Variant = .plain\n  var captionLayout: DateCalendar.CaptionLayout = .label\n  var showOutsideDays = false\n  var showWeekNumber = false\n  var weekendsDisabled = false\n\n  @State private var date: Date? = CalendarDates.day(3)\n\n  var body: some View {\n    DateCalendar(\n      selection: $date,\n      size: size,\n      buttonVariant: buttonVariant,\n      captionLayout: captionLayout,\n      showOutsideDays: showOutsideDays,\n      showWeekNumber: showWeekNumber,\n      isDisabled: { day in\n        guard weekendsDisabled else { return false }\n        let weekday = Foundation.Calendar.current.component(.weekday, from: day)\n        return weekday == 1 || weekday == 7\n      }\n    )\n    .modifier(CalendarBordered())\n  }\n}\n\nfunc day(_ offset: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  let start = calendar.startOfDay(for: Date())\n  return calendar.date(byAdding: .day, value: offset, to: start) ?? start\n}\n\nfunc dayOfMonth(_ day: Int) -> Date {\n  let calendar = Foundation.Calendar.current\n  var components = calendar.dateComponents([.year, .month], from: Date())\n  components.day = day\n  return calendar.date(from: components) ?? Date()\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Calendar\nimport com.esuiss.ui.components.CalendarCaptionLayout\nimport com.esuiss.ui.components.CalendarSize\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport java.util.Date\nimport java.util.GregorianCalendar\nimport java.util.Locale\n\n@Composable\nfun CalendarLocaleExample() {\n    CalendarSingle(locale = Locale.forLanguageTag(\"tr-TR\"))\n}\n\nfun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {\n    val now = GregorianCalendar()\n    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))\n    if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)\n    result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)\n    return result.time\n}\n\nfun calendarIsWeekend(date: Date): Boolean {\n    val day = GregorianCalendar().apply { time = date }.get(GregorianCalendar.DAY_OF_WEEK)\n    return day == GregorianCalendar.SATURDAY || day == GregorianCalendar.SUNDAY\n}\n\n@Composable\nfun CalendarFrame(content: @Composable () -> Unit) {\n    Box(\n        Modifier\n            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))\n            .padding(1.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun CalendarSingle(\n    size: CalendarSize = CalendarSize.Default,\n    captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label,\n    showWeekNumber: Boolean = false,\n    showOutsideDays: Boolean = false,\n    weekendsDisabled: Boolean = false,\n    buttonVariant: ButtonVariant = ButtonVariant.Plain,\n    locale: Locale = Locale.getDefault(),\n    key: String = \"\",\n) {\n    var date by rememberSaveable(key) { mutableStateOf<Date?>(calendarDay(offsetDays = 3)) }\n    CalendarFrame {\n        Calendar(\n            selected = date,\n            onSelect = { date = it },\n            size = size,\n            captionLayout = captionLayout,\n            showWeekNumber = showWeekNumber,\n            showOutsideDays = showOutsideDays,\n            disabled = { weekendsDisabled && calendarIsWeekend(it) },\n            buttonVariant = buttonVariant,\n            locale = locale,\n        )\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### CalendarDayButton
+
+Pressable day cell styled for each selection state.
+
+<PropsTable extends={["React.ComponentProps<typeof CalendarPrimitive.DayButton>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Calendar
+
+Month grids with caption and navigation.
+
+<PropsTable extends={["React.ComponentProps<typeof CalendarPrimitive.Root>"]} props={[{"name":"buttonVariant","type":"ButtonProps[\"variant\"]","default":"\"plain\"","description":"Button variant for the navigation buttons. Defaults to `plain`."},{"name":"size","type":"CalendarSize","default":"\"default\"","description":"`sm`, `default` or `lg`."},{"name":"captionLayout","type":"CaptionLayout","default":"\"label\"","description":"`label`, `dropdown`, `dropdown-months` or `dropdown-years`."},{"name":"showWeekNumber","type":"boolean","default":"false","description":"Shows week numbers."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each month is a `grid` labelled with its caption.
+- Day cells have the `button` role, a full date label, and `selected` and `disabled` state.
+- The previous and next buttons are labelled "Go to the Previous Month" and "Go to the Next Month".
+- Caption dropdowns are labelled "Choose the Month" and "Choose the Year".
+
+## Notes
+
+- Navigation arrows swap in right-to-left layouts.
+- Uses `bg-accent`, `bg-accent-surface`, `bg-surface-secondary` and `text-link` tokens; light and dark follow the system appearance.

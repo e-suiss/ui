@@ -1,0 +1,35 @@
+{
+  "name": "textarea",
+  "type": "ui",
+  "files": [
+    "components/ui/textarea.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithValue",
+    "WithLabel",
+    "Resizable",
+    "ResizableOutside",
+    "Disabled",
+    "Invalid"
+  ],
+  "parts": [
+    {
+      "name": "Textarea",
+      "extends": [
+        "React.ComponentProps<\"textarea\">"
+      ],
+      "props": [
+        {
+          "name": "resizable",
+          "type": "\"inside\" | \"outside\"",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "name": "otp-autofill",
+  "type": "interaction",
+  "files": [
+    "components/interactions/otp-autofill.tsx"
+  ],
+  "requires": [
+    "input-otp",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WrongCode"
+  ],
+  "parts": [
+    {
+      "name": "OtpAutofill",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "maxLength",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "onVerify",
+          "type": "(code: string) => Promise<boolean> | boolean",
+          "required": true
+        },
+        {
+          "name": "webOtp",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "OtpAutofillInput",
+      "extends": [
+        "React.ComponentProps<\"input\">"
+      ],
+      "props": [
+        {
+          "name": "containerClassName",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "OtpAutofillSuggestion",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "code",
+          "type": "string | null | undefined",
+          "required": true
+        },
+        {
+          "name": "source",
+          "type": "React.ReactNode",
+          "required": false,
+          "default": "\"From Messages\""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "description": "A segmented field for entering one-time passcodes, one character per slot.",
+  "overview": "Input OTP is built on the `input-otp` library. `InputOTP` renders a single hidden text input that holds the whole code, and displays it through `InputOTPSlot` elements, each showing the character at its `index`. Group slots with `InputOTPGroup`, and place an `InputOTPSeparator` between groups to split a code, for example into two sets of three.\n\nUse it for verification and two-factor codes. For other short values, use `Input`.",
+  "usage": "Set `maxLength` to the length of the code and render one `InputOTPSlot` for each position, with `index` values from `0`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onChange`, which receives the code as a string. Restrict accepted characters with `pattern`, for example with `REGEXP_ONLY_DIGITS_AND_CHARS` from `input-otp`.\n\nTyping fills the slots in order and stops at `maxLength`; Backspace removes the last character. Set `aria-invalid` on `InputOTP` to show the error style on every slot.",
+  "examples": {
+    "Filled": "A code that starts filled from `defaultValue`.",
+    "SingleGroup": "Six slots in a single group with no separator.",
+    "FourDigits": "A four-digit code with `maxLength` set to `4`.",
+    "Alphanumeric": "A code that accepts letters and digits using the `REGEXP_ONLY_DIGITS_AND_CHARS` pattern.",
+    "Invalid": "An invalid code with every slot outlined in the error color.",
+    "Disabled": "A disabled code that keeps its value and dims its slots and separator."
+  },
+  "parts": {
+    "InputOTP": "The root that holds the code in a single hidden input.",
+    "InputOTPGroup": "Groups adjacent slots.",
+    "InputOTPSlot": "Displays one character of the code and a caret when active.",
+    "InputOTPSeparator": "A dash shown between groups of slots."
+  },
+  "props": {
+    "InputOTP": {
+      "containerClassName": "Classes applied to the element that wraps the slots."
+    },
+    "InputOTPSlot": {
+      "index": "The position of the character this slot displays."
+    }
+  },
+  "accessibility": "- The code is entered into one native text input, so it has the `textbox` role. Give it an accessible name with `aria-label` or an associated label.\n- Slots are visual only; assistive technology reads the value of the input.\n- `InputOTPSeparator` has the `separator` role.\n- When `disabled`, the input cannot be edited and the slots are dimmed.",
+  "notes": "- Styling hooks: `data-slot` values `input-otp`, `input-otp-group`, `input-otp-slot` and `input-otp-separator`. The active slot gets `data-active=\"true\"` and an `accent` border.\n- The container has the `cn-input-otp` class, which slots use to react to the input's invalid and disabled states.\n- The blinking caret uses the `animate-caret-blink` animation.\n- Uses the `control`, `control-disabled`, `accent`, `danger` and `label-quaternary` tokens."
+}

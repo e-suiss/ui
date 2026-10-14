@@ -1,0 +1,121 @@
+---
+title: Checkbox
+description: "A control that lets people turn a single option on or off."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="checkbox" story="Default">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\n\nexport function CheckboxExample() {\n  return (\n    <Checkbox aria-label=\"Accept terms\" />\n  )\n}"} />
+
+</Example>
+
+`Checkbox` wraps the Base UI `Checkbox.Root` and renders a check icon inside a `Checkbox.Indicator` when checked. It is a single self-contained part: there are no child components to compose.
+
+Use a checkbox for independent options that people can select in any combination, such as accepting terms or opting in to email. For a mutually exclusive choice, use a radio group; for a setting that takes effect immediately, consider a switch.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add checkbox"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/ui/checkbox.tsx`:
+
+<SourceFile path="components/ui/checkbox.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\""} />
+
+<Code lang="tsx" code={"<Checkbox aria-label=\"Accept terms\" />"} />
+
+Leave the checkbox uncontrolled with `defaultChecked`, or control it with `checked` and `onCheckedChange`. Pair it with a visible `Label`: wrapping the checkbox in `Label` makes the whole label text clickable. To add supporting text, give the checkbox an `id` and an `aria-describedby` that points to the description element.
+
+## Examples
+
+### Checked
+
+A checkbox that starts checked using `defaultChecked`.
+
+<Example kind="ui" name="checkbox" story="Checked">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\n\nexport function CheckboxCheckedExample() {\n  return (\n    <Checkbox defaultChecked aria-label=\"Accept terms\" />\n  )\n}"} />
+
+</Example>
+
+### With label
+
+A checkbox wrapped in a `Label`, so clicking the text toggles it.
+
+<Example kind="ui" name="checkbox" story="WithLabel">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxWithLabelExample() {\n  return (\n    <Label>\n      <Checkbox />\n      Accept terms and conditions\n    </Label>\n  )\n}"} />
+
+</Example>
+
+### With description
+
+A checkbox labelled with `htmlFor` and described by supporting text through `aria-describedby`.
+
+<Example kind="ui" name="checkbox" story="WithDescription">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxWithDescriptionExample() {\n  return (\n    <div className=\"flex w-80 items-start gap-3\">\n      <Checkbox\n        id=\"marketing\"\n        aria-describedby=\"marketing-description\"\n        defaultChecked\n        className=\"mt-0.75\"\n      />\n      <div className=\"grid gap-1.5\">\n        <Label htmlFor=\"marketing\">Product updates</Label>\n        <p id=\"marketing-description\" className=\"text-label-secondary text-sm\">\n          Get an email when we release new features.\n        </p>\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disabled checkboxes, both unchecked and checked, that ignore clicks and are skipped by Tab.
+
+<Example kind="ui" name="checkbox" story="Disabled">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <div className=\"flex flex-col gap-3\">\n      <Label>\n        <Checkbox disabled />\n        Unavailable option\n      </Label>\n      <Label>\n        <Checkbox disabled defaultChecked />\n        Always included\n      </Label>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+A checkbox marked with `aria-invalid` to show a validation error.
+
+<Example kind="ui" name="checkbox" story="Invalid">
+
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxInvalidExample() {\n  return (\n    <Label>\n      <Checkbox aria-invalid />\n      You must accept the terms\n    </Label>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Checkbox
+
+The checkbox control, rendering the box and its check indicator.
+
+<PropsTable extends={["CheckboxPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders with the `checkbox` role and exposes its checked state to assistive technology.
+- Toggles on click and with Space when focused.
+- Needs an accessible name: wrap it in a `Label`, associate a `Label` through `htmlFor` and `id`, or set `aria-label`.
+- When `disabled`, it sets `aria-disabled`, ignores clicks, and is removed from the Tab order.
+- Set `aria-invalid` to communicate a validation error; the border turns to the `danger` color.
+
+## Notes
+
+- Styling hooks: `data-slot="checkbox"` on the root and `data-slot="checkbox-indicator"` on the indicator.
+- State attributes from Base UI such as `data-checked` and `data-disabled` drive the checked and disabled styles.
+- Uses the `accent`, `accent-pressed`, `on-accent`, `surface`, `control` and `control-disabled` tokens.
+- The hit area extends beyond the visible box through an `after` pseudo-element, making the small control easier to tap.

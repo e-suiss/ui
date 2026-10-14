@@ -1,0 +1,46 @@
+---
+title: Line Chart Goal Dots
+description: "Nightly sleep hours with a goal line and dots colored green or orange depending on whether the goal was met."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-goal-dots">
+
+<SourceFile path="components/charts/line-chart-goal-dots.tsx" fold={false} />
+
+</Example>
+
+Nightly sleep plotted against a dashed goal line, with each dot colored green if the goal was met and orange if not. Pick it over the plain goal chart when readers should spot hits and misses at a glance.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-goal-dots"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+
+<SourceFile path="components/charts/line-chart-goal-dots.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartGoalDots } from \"@/components/charts/line-chart-goal-dots\""} />
+
+<Code lang="tsx" code={"<LineChartGoalDots />"} />
+
+Replace `chartData` and set `GOAL` to your target; dot colors update from the comparison automatically. Adjust the value axis `domain` and `ticks` to your range, and change the two dot colors in the custom `dot` renderer.
+
+## Notes
+
+The headline figure is hard-coded text, not computed from the data, so wire it up when you plug in real values. Color alone marks hit or miss on the chart, so keep a text explanation like the one in the header.

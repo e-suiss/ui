@@ -1,0 +1,46 @@
+---
+title: Bar Chart Multiple
+description: "Two series drawn as grouped bars side by side for each month."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-multiple">
+
+<SourceFile path="components/charts/bar-chart-multiple.tsx" fold={false} />
+
+</Example>
+
+Two series drawn as grouped bars side by side for each month. Pick it over the stacked variant when readers need to compare the series directly rather than see their total.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-multiple"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+
+<SourceFile path="components/charts/bar-chart-multiple.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartMultiple } from \"@/components/charts/bar-chart-multiple\""} />
+
+<Code lang="tsx" code={"<BarChartMultiple />"} />
+
+Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`. Add a third `Bar` for another series. Tune `barGap` to control the space between bars in a group.
+
+## Notes
+
+Grouped bars get thin quickly; beyond three series or a dozen categories, consider stacked bars or a line chart. The arrow keys move the tooltip between months once the chart has focus.

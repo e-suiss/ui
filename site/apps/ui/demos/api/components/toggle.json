@@ -1,0 +1,43 @@
+{
+  "name": "toggle",
+  "type": "ui",
+  "files": [
+    "components/ui/toggle.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Pressed",
+    "Variants",
+    "Sizes",
+    "WithText",
+    "Disabled"
+  ],
+  "parts": [
+    {
+      "name": "Toggle",
+      "extends": [
+        "TogglePrimitive.Props"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "default": "\"default\"",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

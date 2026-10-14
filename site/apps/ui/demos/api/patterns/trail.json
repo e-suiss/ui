@@ -1,0 +1,59 @@
+{
+  "name": "trail",
+  "type": "pattern",
+  "files": [
+    "components/patterns/trail.tsx"
+  ],
+  "requires": [
+    "breadcrumb",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Collapsed",
+    "BackLabel",
+    "TwoLevels"
+  ],
+  "parts": [
+    {
+      "name": "Trail",
+      "extends": [
+        "React.ComponentProps<\"nav\">"
+      ],
+      "props": [
+        {
+          "name": "items",
+          "type": "TrailItem[]",
+          "required": true
+        },
+        {
+          "name": "maxItems",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "backLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "ellipsisLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"More\""
+        },
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false,
+          "default": "<TrailAnchor />"
+        }
+      ]
+    }
+  ]
+}

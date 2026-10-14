@@ -1,0 +1,62 @@
+{
+  "name": "popover",
+  "type": "ui",
+  "files": [
+    "components/ui/popover.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sides",
+    "Simple"
+  ],
+  "parts": [
+    {
+      "name": "Popover",
+      "extends": [
+        "PopoverPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "PopoverTrigger",
+      "extends": [
+        "PopoverPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "PopoverContent",
+      "extends": [
+        "PopoverPrimitive.Popup.Props",
+        "PopoverPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "PopoverHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PopoverTitle",
+      "extends": [
+        "PopoverPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "PopoverDescription",
+      "extends": [
+        "PopoverPrimitive.Description.Props"
+      ],
+      "props": []
+    }
+  ]
+}

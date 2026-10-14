@@ -1,0 +1,42 @@
+---
+title: Radar Chart Dots
+description: "A single radar shape with a solid dot marking the value on every axis."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-dots">
+
+<SourceFile path="components/charts/radar-chart-dots.tsx" fold={false} />
+
+</Example>
+
+A single radar shape with a solid dot at the value on every axis. The dots make individual scores easier to locate than on the plain filled shape.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-dots"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-dots.tsx`:
+
+<SourceFile path="components/charts/radar-chart-dots.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartDots } from \"@/components/charts/radar-chart-dots\""} />
+
+<Code lang="tsx" code={"<RadarChartDots />"} />
+
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Change the marker size through the `dot` prop on `Radar`, or set it to false to go back to the plain shape.

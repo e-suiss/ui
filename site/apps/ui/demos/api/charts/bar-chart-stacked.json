@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-stacked",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-stacked.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

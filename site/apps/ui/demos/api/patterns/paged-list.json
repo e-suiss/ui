@@ -1,0 +1,97 @@
+{
+  "name": "paged-list",
+  "type": "pattern",
+  "files": [
+    "components/patterns/paged-list.tsx"
+  ],
+  "requires": [
+    "button",
+    "pagination",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "StartOnLaterPage",
+    "SinglePage",
+    "PageLinks",
+    "CustomLabels",
+    "Controlled"
+  ],
+  "parts": [
+    {
+      "name": "PagedList",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "items",
+          "type": "T[]",
+          "required": true
+        },
+        {
+          "name": "pageSize",
+          "type": "number",
+          "required": false,
+          "default": "10"
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "defaultPage",
+          "type": "number",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "name": "onPageChange",
+          "type": "(page: number) => void",
+          "required": false
+        },
+        {
+          "name": "getPageHref",
+          "type": "(page: number) => string",
+          "required": false
+        },
+        {
+          "name": "getKey",
+          "type": "(item: T, index: number) => React.Key",
+          "required": false,
+          "default": "(_, index) => index"
+        },
+        {
+          "name": "renderItem",
+          "type": "(item: T, index: number) => React.ReactNode",
+          "required": true
+        },
+        {
+          "name": "loadMoreLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Load more\""
+        },
+        {
+          "name": "previousLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "nextLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "listClassName",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

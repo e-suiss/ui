@@ -1,0 +1,16 @@
+{
+  "name": "radar-chart-multiple",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-multiple.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

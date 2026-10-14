@@ -1,0 +1,25 @@
+{
+  "description": "An A to Z index bar for jumping between sections of a long list by tapping, dragging, or typing.",
+  "overview": "`SectionIndex` recreates the iOS list index. Sections marked with `SectionIndexSection` carry sticky `SectionIndexHeader` titles, and `SectionIndexBar` sits along the trailing edge. Tapping or dragging over the bar scrolls the nearest scrollable ancestor so the matching section is at the top; while dragging, a bubble shows the current letter. If a letter has no section, it jumps to the next one that exists.\n\nWhen the container is too short to fit every letter, the bar collapses to fewer letters separated by dots, while still mapping the full alphabet across its height. Use it for long alphabetized lists such as contacts.",
+  "usage": "- Wrap the scrolling list and `SectionIndexBar` in `SectionIndex`, which positions the bar. The list can scroll in its own container, such as `ScrollArea`, or in the page.\n- Set `value` on each `SectionIndexSection` to a letter from `letters` so the bar can find it.\n- Use `onValueChange` to react to jumps.",
+  "examples": {
+    "Compact": "In a short list, the bar collapses its letters with dots and still jumps to any section."
+  },
+  "parts": {
+    "SectionIndex": "The relative container that holds the list and the index bar.",
+    "SectionIndexSection": "A section of the list identified by a letter.",
+    "SectionIndexHeader": "The sticky title at the top of a section.",
+    "SectionIndexBar": "The vertical letter bar that jumps between sections."
+  },
+  "props": {
+    "SectionIndexSection": {
+      "value": "The letter this section belongs to."
+    },
+    "SectionIndexBar": {
+      "letters": "The letters shown on the bar; defaults to `A` through `Z` followed by `#`.",
+      "onValueChange": "Called with the letter whenever the bar jumps to a section."
+    }
+  },
+  "accessibility": "- The bar is a vertical `slider` labelled `Section index`, with `aria-valuetext` set to the current letter.\n- Arrow keys move one letter, `PageUp` and `PageDown` move five, and `Home` and `End` reach the first and last letters.\n- Typing a letter jumps directly to it.\n- The visible letters and drag bubble are `aria-hidden`.",
+  "notes": "- Parts use `data-slot` values `section-index`, `section-index-section`, `section-index-header`, `section-index-bar`, and `section-index-bubble`. Sections expose `data-value`, and the bar sets `data-dragging` during a drag.\n- The bar extends its hit area toward the list so it is easier to grab."
+}

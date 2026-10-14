@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-step",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-step.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

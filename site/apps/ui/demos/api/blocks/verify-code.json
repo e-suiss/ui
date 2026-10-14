@@ -1,0 +1,15 @@
+{
+  "name": "verify-code",
+  "type": "block",
+  "files": [
+    "components/blocks/verify-code.tsx"
+  ],
+  "requires": [
+    "input-otp"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

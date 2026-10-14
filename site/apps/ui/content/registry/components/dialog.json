@@ -1,0 +1,32 @@
+{
+  "description": "A modal window that appears above the page to focus people on a task or message.",
+  "overview": "Dialog wraps the Base UI Dialog. The `Dialog` root manages the open state, and `DialogTrigger` opens it. `DialogContent` renders the window in a portal over a dimmed `DialogOverlay`, with a close button in the top corner by default. Inside it, `DialogHeader` holds the `DialogTitle` and `DialogDescription`, and `DialogFooter` holds the actions. `DialogClose` closes the dialog from any element.\n\nUse a dialog for a short, focused task such as editing a few fields. To confirm a destructive or important action that needs an explicit response, consider an alert dialog. For larger content that slides in from an edge, use a sheet or drawer.",
+  "usage": "The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Use `DialogClose` with `render` for a Cancel button.\n\nSet `showCloseButton={false}` on `DialogContent` to remove the corner close button, and set `closeLabel` to replace its icon with a text label. Set `showCloseButton` on `DialogFooter` to add a secondary Close button to the actions. The footer stacks its actions in reverse order on small screens and aligns them to the end on wider screens.",
+  "examples": {
+    "WithoutCloseButton": "A dialog with no corner close button that adds a Close action to the footer instead.",
+    "Destructive": "A dialog that confirms deleting a project, with a destructive action and a Cancel button."
+  },
+  "parts": {
+    "Dialog": "The root that manages the dialog's open state.",
+    "DialogTrigger": "The button that opens the dialog.",
+    "DialogPortal": "Renders its children into a portal outside the current DOM hierarchy.",
+    "DialogClose": "A button that closes the dialog.",
+    "DialogOverlay": "The dimmed layer behind the dialog.",
+    "DialogContent": "The dialog window, rendered in a portal with an overlay and an optional close button.",
+    "DialogHeader": "Groups the title and description.",
+    "DialogFooter": "Holds the dialog's actions.",
+    "DialogTitle": "The dialog's title, which also names it for assistive technology.",
+    "DialogDescription": "Supporting text that describes the dialog for assistive technology."
+  },
+  "props": {
+    "DialogContent": {
+      "showCloseButton": "Shows the close button in the top corner.",
+      "closeLabel": "Replaces the close button's icon with this text."
+    },
+    "DialogFooter": {
+      "showCloseButton": "Adds a secondary Close button after the footer's actions."
+    }
+  },
+  "accessibility": "- The window has the `dialog` role. `DialogTitle` provides its accessible name and `DialogDescription` its accessible description.\n- Opening the dialog moves focus inside it. Escape closes it and returns focus to the trigger.\n- The icon-only close button has a visually hidden `Close` label.\n- Always include a `DialogTitle`; hide it visually with `sr-only` if the design has no visible title.",
+  "notes": "- Styling hooks: `data-slot` values `dialog-overlay`, `dialog-content`, `dialog-close`, `dialog-header`, `dialog-footer`, `dialog-title` and `dialog-description`.\n- `data-open` and `data-closed` drive the fade and zoom animation.\n- The window is `sm:max-w-md` by default; override it with `className` on `DialogContent`.\n- When a close button is shown, the first child of the content gets extra end padding so it does not run under the button.\n- Uses the `surface-raised`, `scrim`, `surface-tertiary` and `label-secondary` tokens."
+}

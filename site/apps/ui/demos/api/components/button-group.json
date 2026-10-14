@@ -1,0 +1,62 @@
+{
+  "name": "button-group",
+  "type": "ui",
+  "files": [
+    "components/ui/button-group.tsx"
+  ],
+  "requires": [
+    "separator"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Outline",
+    "Orientation",
+    "Sizes",
+    "Nested",
+    "WithSeparator",
+    "Plain",
+    "SplitButton",
+    "WithInput",
+    "WithInputGroup",
+    "WithText",
+    "WithDropdownMenu",
+    "WithSelect",
+    "WithPopover",
+    "Pagination"
+  ],
+  "parts": [
+    {
+      "name": "ButtonGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroupText",
+      "extends": [
+        "useRender.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "ButtonGroupSeparator",
+      "extends": [
+        "React.ComponentProps<typeof Separator>"
+      ],
+      "props": []
+    }
+  ]
+}

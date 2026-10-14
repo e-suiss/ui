@@ -1,0 +1,6 @@
+{
+  "description": "A solid line for actual values that continues as a dashed forecast over a shaded future range.",
+  "overview": "Actual values drawn as a solid line that continues as a dashed forecast over a shaded future period. Use it whenever you show projections next to history and need readers to tell them apart.",
+  "usage": "Fill the `actual` and `forecast` arrays; the forecast should start with the last actual value so the two lines meet. Move the shaded period by changing `x1` and `x2` on the reference area to match your first and last forecast labels. Both series share one color in `chartConfig`.",
+  "notes": "Since actual and forecast use the same color, the dash pattern and shading carry the distinction; the tooltip also names each series. At the handover point the tooltip lists both values."
+}

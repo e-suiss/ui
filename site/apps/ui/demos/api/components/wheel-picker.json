@@ -1,0 +1,52 @@
+{
+  "name": "wheel-picker",
+  "type": "ui",
+  "files": [
+    "components/ui/wheel-picker.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "DisabledItems",
+    "DateTime"
+  ],
+  "parts": [
+    {
+      "name": "WheelPicker",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WheelPickerColumn",
+      "extends": [
+        "React.ComponentProps<\"div\">",
+        "WheelPickerColumnProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "WheelPickerItem",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    }
+  ]
+}

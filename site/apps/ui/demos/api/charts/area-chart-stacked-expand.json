@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-stacked-expand",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-stacked-expand.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

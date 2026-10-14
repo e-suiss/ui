@@ -1,0 +1,29 @@
+{
+  "description": "A chat-style message bubble with variants, alignment, a tail and optional reactions.",
+  "overview": "A `Bubble` wraps a `BubbleContent`, which renders the rounded message body. Add `BubbleReactions` inside the bubble to pin a reaction pill to its top or bottom edge. Stack bubbles in a `BubbleGroup` to form a conversation.\n\nAlign bubbles to the `start` or `end` of the conversation. The tail appears only on the last bubble in a run of consecutive bubbles with the same alignment, and never on the `outline` or `ghost` variants. Use Bubble for chat transcripts and assistant replies; for a full message row with avatar and metadata, see Message.",
+  "usage": "Set `align=\"end\"` for messages sent by the current user and leave the default `start` for incoming messages.\n\n`BubbleContent` renders a `div` by default. Use its `render` prop to render a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.\n\n`BubbleReactions` defaults to the bottom-end corner. The bubble adds margin on that side so reactions do not overlap neighboring bubbles.",
+  "examples": {
+    "Variants": "Shows every variant, from `default` to `destructive`.",
+    "Conversation": "An exchange of incoming `muted` and outgoing `end`-aligned bubbles.",
+    "WithReactions": "Pins reactions to different corners with `side` and `align`.",
+    "Interactive": "Renders the content as a `button` with the `render` prop."
+  },
+  "parts": {
+    "BubbleGroup": "A vertical stack of bubbles.",
+    "Bubble": "The positioned wrapper that sets variant and alignment.",
+    "BubbleContent": "The rounded message body, with the tail.",
+    "BubbleReactions": "A small pill for reactions, overlapping the bubble's edge."
+  },
+  "props": {
+    "Bubble": {
+      "variant": "Background and text color: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`.",
+      "align": "Which side of the conversation the bubble sits on: `start` or `end`."
+    },
+    "BubbleReactions": {
+      "align": "Horizontal position along the bubble edge: `start` or `end`.",
+      "side": "Which edge of the bubble the reactions overlap: `top` or `bottom`."
+    }
+  },
+  "accessibility": "- Bubbles are static content by default and contribute no focusable elements.\n- When `BubbleContent` renders a `button` or `a`, it is in the tab order and shows a focus ring.\n- Reactions are plain content; if they are emoji, consider adding text that screen readers can announce.",
+  "notes": "- Styling hooks: `data-slot=\"bubble\"`, `\"bubble-content\"`, `\"bubble-group\"` and `\"bubble-reactions\"`, plus `data-variant` and `data-align` on the bubble and `data-side` and `data-align` on reactions.\n- The background is set through the `--bubble-bg` custom property. Set `--bubble-surface` when bubbles sit on a surface other than `--surface`, so the tail and reaction ring blend in.\n- Bubbles are capped at 80% of the container width, except the `ghost` variant.\n- Bubbles also align to `end` when inside a `message` slot with `data-align=\"end\"`."
+}

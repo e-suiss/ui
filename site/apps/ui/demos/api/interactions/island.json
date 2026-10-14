@@ -1,0 +1,63 @@
+{
+  "name": "island",
+  "type": "interaction",
+  "files": [
+    "components/interactions/island.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Notification",
+    "LiveActivity",
+    "ActivityWithNotifications"
+  ],
+  "parts": [
+    {
+      "name": "IslandProvider",
+      "extends": [],
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "Island",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "IslandCompact",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "IslandExpanded",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "IslandRing",
+      "extends": [
+        "React.ComponentProps<\"svg\">"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Docs",
+  "pages": [
+    "---Get Started---",
+    "index",
+    "installation",
+    "theming",
+    "cli",
+    "components",
+    "patterns",
+    "interactions",
+    "charts",
+    "blocks"
+  ]
+}

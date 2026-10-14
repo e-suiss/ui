@@ -1,0 +1,171 @@
+{
+  "name": "dropdown-menu",
+  "type": "ui",
+  "files": [
+    "components/ui/dropdown-menu.tsx"
+  ],
+  "requires": [
+    "use-platform"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Checkboxes",
+    "RadioGroup",
+    "Inset"
+  ],
+  "parts": [
+    {
+      "name": "DropdownMenu",
+      "extends": [
+        "MenuPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuPortal",
+      "extends": [
+        "MenuPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuTrigger",
+      "extends": [
+        "MenuPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuContent",
+      "extends": [
+        "MenuPrimitive.Popup.Props",
+        "MenuPrimitive.Positioner.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuGroup",
+      "extends": [
+        "MenuPrimitive.Group.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuLabel",
+      "extends": [
+        "MenuPrimitive.GroupLabel.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenuItem",
+      "extends": [
+        "MenuPrimitive.Item.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenuSub",
+      "extends": [
+        "MenuPrimitive.SubmenuRoot.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuSubTrigger",
+      "extends": [
+        "MenuPrimitive.SubmenuTrigger.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenuSubContent",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenuContent>"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuCheckboxItem",
+      "extends": [
+        "MenuPrimitive.CheckboxItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenuRadioGroup",
+      "extends": [
+        "MenuPrimitive.RadioGroup.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuRadioItem",
+      "extends": [
+        "MenuPrimitive.RadioItem.Props"
+      ],
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenuSeparator",
+      "extends": [
+        "MenuPrimitive.Separator.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DropdownMenuShortcut",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": [
+        {
+          "name": "mod",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

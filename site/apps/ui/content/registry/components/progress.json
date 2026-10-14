@@ -1,0 +1,19 @@
+{
+  "description": "A horizontal bar that shows the completion of a task.",
+  "overview": "Progress wraps Base UI's Progress. `Progress` is the root and always renders a `ProgressTrack` containing a `ProgressIndicator` after its children. Add a `ProgressLabel` to name the bar and a `ProgressValue` to show the formatted value; they sit on one row above the track.\n\nUse Progress for determinate or indeterminate task progress.",
+  "usage": "Pass `value` as a number between `min` and `max` (by default `0` and `100`). Set `value={null}` for an indeterminate state when the amount of work is unknown.\n\nThe track and indicator are rendered for you, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress` children. `ProgressValue` uses Base UI's formatting and shows a percentage by default.",
+  "examples": {
+    "WithLabel": "A bar with a label and its current value shown above the track.",
+    "Complete": "A labelled bar at `100`.",
+    "Indeterminate": "A labelled bar with `value={null}` for work of unknown length."
+  },
+  "parts": {
+    "Progress": "The root that holds the value and renders the track and indicator.",
+    "ProgressTrack": "The full-width rail behind the indicator.",
+    "ProgressIndicator": "The filled portion of the track that reflects the value.",
+    "ProgressLabel": "Text that names the progress bar.",
+    "ProgressValue": "The formatted current value, aligned to the end of the row."
+  },
+  "accessibility": "- The root has the `progressbar` role with `aria-valuenow` reflecting the value.\n- `ProgressLabel` provides the accessible name. Without it, pass `aria-label`.\n- When `value` is `null`, `aria-valuenow` is omitted to signal an indeterminate state.",
+  "notes": "- Styling hooks: `data-slot` values `progress`, `progress-track`, `progress-indicator`, `progress-label` and `progress-value`. Base UI also sets status attributes such as `data-progressing`, `data-complete` and `data-indeterminate`.\n- The track uses `surface-secondary` and the indicator uses `accent`; the indicator animates width changes."
+}

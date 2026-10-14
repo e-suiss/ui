@@ -1,0 +1,22 @@
+{
+  "description": "Displays a keyboard key or shortcut, with a platform-aware modifier symbol.",
+  "overview": "`Kbd` renders a single key as a native `kbd` element in a small rounded capsule. Set `mod` to prepend the platform's primary modifier: `⌘` on Apple platforms, `Ctrl` elsewhere (`Ctrl+` when the key has children).\n\nWrap several keys in `KbdGroup` to present a key combination. Use `Kbd` inline in text, in tooltips, or inside an input group addon to hint at a shortcut.",
+  "usage": "Pass the key label as children. Use `mod` instead of hard-coding `⌘` or `Ctrl` so the hint matches the user's platform. Icons placed inside `Kbd` are sized to `size-3` unless they set their own `size-*` class.",
+  "examples": {
+    "Modifiers": "The platform modifier alongside common modifier and named keys such as Shift, Option, Control, Esc and Tab.",
+    "Group": "Key combinations wrapped in `KbdGroup`, both inline in a sentence and on their own.",
+    "WithIcon": "Keys that use an icon instead of, or next to, a text label.",
+    "InInputGroup": "A shortcut hint placed in the trailing addon of a search input group."
+  },
+  "parts": {
+    "Kbd": "Renders one key as a `kbd` element, optionally prefixed with the platform modifier.",
+    "KbdGroup": "Groups several keys into a single inline key combination."
+  },
+  "props": {
+    "Kbd": {
+      "mod": "Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms."
+    }
+  },
+  "accessibility": "- Keys render as native `kbd` elements, so the text is announced as keyboard input.\n- `Kbd` and `KbdGroup` are hidden below the `md` breakpoint, so do not rely on them as the only place a shortcut is documented.\n- `Kbd` sets `pointer-events-none`; clicks pass through to the surrounding control, as in an input group addon.",
+  "notes": "- Styling hooks: `data-slot=\"kbd\"` and `data-slot=\"kbd-group\"`.\n- Platform detection reads `navigator` through `useSyncExternalStore`; during server rendering the non-Apple modifier is used.\n- Inside an input group or tooltip content, `Kbd` adapts its background and text colors automatically.\n- Uses the `surface-secondary`, `surface` and `label-secondary` tokens."
+}

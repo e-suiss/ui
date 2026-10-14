@@ -1,0 +1,15 @@
+{
+  "name": "hero-tiles",
+  "type": "block",
+  "files": [
+    "components/blocks/hero-tiles.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [],
+  "parts": []
+}

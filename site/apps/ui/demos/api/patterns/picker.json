@@ -1,0 +1,148 @@
+{
+  "name": "picker",
+  "type": "pattern",
+  "files": [
+    "components/patterns/picker.tsx"
+  ],
+  "requires": [
+    "native-select",
+    "select",
+    "use-mobile"
+  ],
+  "dependencies": [],
+  "examples": [
+    "Default",
+    "WithValue",
+    "Sizes",
+    "Grouped",
+    "Disabled",
+    "Invalid",
+    "Controlled"
+  ],
+  "parts": [
+    {
+      "name": "Picker",
+      "extends": [],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "items",
+          "type": "PickerItemData[]",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\"",
+          "required": false,
+          "default": "\"default\""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "aria-invalid",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PickerGroup",
+      "extends": [],
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PickerItem",
+      "extends": [],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "PickerSeparator",
+      "extends": [],
+      "props": []
+    }
+  ]
+}

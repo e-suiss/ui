@@ -1,0 +1,59 @@
+{
+  "name": "tabs",
+  "type": "ui",
+  "files": [
+    "components/ui/tabs.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Line",
+    "Vertical",
+    "WithIcons",
+    "DisabledTab",
+    "ManyTabs",
+    "ManyTabsLine"
+  ],
+  "parts": [
+    {
+      "name": "Tabs",
+      "extends": [
+        "TabsPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabsList",
+      "extends": [
+        "TabsPrimitive.List.Props"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"line\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "TabsTrigger",
+      "extends": [
+        "TabsPrimitive.Tab.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabsContent",
+      "extends": [
+        "TabsPrimitive.Panel.Props"
+      ],
+      "props": []
+    }
+  ]
+}

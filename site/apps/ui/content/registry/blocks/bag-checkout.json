@@ -1,0 +1,6 @@
+{
+  "description": "A three-step checkout with delivery, payment, and review steps beside an order summary.",
+  "overview": "A checkout that walks the shopper through delivery, payment and review one step at a time, with the order summary and running total alongside. Finished steps collapse to a short summary with an Edit button, and placing the order swaps the form for a confirmation. The summary sits beside the steps on desktop and stacks into a single column on mobile. Use it as the base for any multi-step purchase or booking flow.",
+  "usage": "Swap the `items` array for your cart lines, each with a name, variant, price and image. The delivery and payment options and the express surcharge are hard-coded in the component, so drive them from your shipping and payment providers. Wire Place Order to your order API; today it only shows a confirmation with the fixed order number W1049.",
+  "notes": "Collapsed steps are `inert`, so keyboard users only reach the open step, and the total is announced when it changes. Product photos are Unsplash placeholders."
+}

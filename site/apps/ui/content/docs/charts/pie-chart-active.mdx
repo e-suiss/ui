@@ -1,0 +1,46 @@
+---
+title: Pie Chart Active
+description: "A donut where one slice is enlarged and outlined with an outer arc to highlight it."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-active">
+
+<SourceFile path="components/charts/pie-chart-active.tsx" fold={false} />
+
+</Example>
+
+A donut with one slice pulled outward and traced by a thin outer arc, so a single category stands out from the rest. Use it to call attention to the segment a page is about, such as the current plan or the user's own device.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-active"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-active.tsx`:
+
+<SourceFile path="components/charts/pie-chart-active.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartActive } from \"@/components/charts/pie-chart-active\""} />
+
+<Code lang="tsx" code={"<PieChartActive />"} />
+
+Replace `chartData` with your categories, giving each a value and a `fill` that points at its color in `chartConfig`. Set `ACTIVE` to the index of the slice you want to emphasize, or drive it from state if it should follow a selection.
+
+## Notes
+
+The highlight is fixed and does not follow hover; wire `ACTIVE` to state if you need that.

@@ -1,0 +1,40 @@
+{
+  "name": "hover-card",
+  "type": "ui",
+  "files": [
+    "components/ui/hover-card.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sides"
+  ],
+  "parts": [
+    {
+      "name": "HoverCard",
+      "extends": [
+        "PreviewCardPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "HoverCardTrigger",
+      "extends": [
+        "PreviewCardPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "HoverCardContent",
+      "extends": [
+        "PreviewCardPrimitive.Popup.Props",
+        "PreviewCardPrimitive.Positioner.Props"
+      ],
+      "props": []
+    }
+  ]
+}

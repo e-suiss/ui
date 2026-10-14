@@ -1,0 +1,23 @@
+{
+  "description": "A search field hidden above a scrolling list that appears when the user pulls the list down.",
+  "overview": "`SearchReveal` is a scroll view that starts scrolled just past its `SearchRevealField`, so the list shows first and the field is out of view. Pulling down reveals the field, which fades in as it appears, and the scroll snaps either fully open or fully hidden.\n\nFocusing the field scrolls it into view. While there is a query, snapping is turned off so the field stays visible. Use it for notes, mail or settings lists where search should be close but not take space.",
+  "usage": "Put a `SearchRevealField` first, then the list inside a `SearchRevealContent`, all inside `SearchReveal`. The field is controlled: pass `value` and update it in `onValueChange`, then filter your list with it.\n\n`SearchRevealContent` is at least as tall as the scroll view, so the field can be hidden even when the list is short. Other `ScrollView` props, except `onScroll`, pass through to `SearchReveal`, and other `TextInput` props pass through to the field.",
+  "examples": {
+    "ShortList": "A three-item list that still hides the field.",
+    "WithQuery": "Starts with a query, so the field is visible and the list is filtered."
+  },
+  "parts": {
+    "SearchReveal": "The scroll view that hides and reveals the field.",
+    "SearchRevealField": "The search input with a clear button.",
+    "SearchRevealContent": "The list area, at least one screen tall."
+  },
+  "props": {
+    "SearchRevealField": {
+      "value": "The current query.",
+      "onValueChange": "Called with the new query.",
+      "placeholder": "Placeholder and accessibility label. Defaults to `Search`."
+    }
+  },
+  "accessibility": "- The input has the `searchbox` role and is labelled by `placeholder`.\n- The clear button is labelled `Clear search` and returns focus to the input.",
+  "notes": "- The field uses `bg-control` with `label-secondary` placeholder and icons.\n- Autocorrect and autocapitalization are off, and the return key reads `search`.\n- Taps on the list work while the keyboard is open."
+}

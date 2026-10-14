@@ -1,0 +1,46 @@
+---
+title: Line Chart Default
+description: "A single smooth line through six months of values, without point markers."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-default">
+
+<SourceFile path="components/charts/line-chart-default.tsx" fold={false} />
+
+</Example>
+
+The starting line chart: one smooth series without point markers, a month axis and a tooltip. Use it to show a trend over time when the overall shape matters more than individual readings.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-default"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-default.tsx`:
+
+<SourceFile path="components/charts/line-chart-default.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartDefault } from \"@/components/charts/line-chart-default\""} />
+
+<Code lang="tsx" code={"<LineChartDefault />"} />
+
+Replace `chartData`, point each `dataKey` at your fields and rename the `chartConfig` entry to set the label and color. Switch the `type` on the line to change the curve, or set `dot` to show markers.
+
+## Notes
+
+Focus the chart and use the arrow keys to step the tooltip through the points.

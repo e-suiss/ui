@@ -1,0 +1,17 @@
+{
+  "name": "pie-chart-interactive",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-interactive.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

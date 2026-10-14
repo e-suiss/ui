@@ -1,0 +1,5 @@
+{
+  "description": "A notification settings screen with a live preview of the lock screen banner above alert and appearance options.",
+  "overview": "A wallpaper preview shows a sample notification that reflects the current settings: hidden previews, stacking when grouping is on, and banners that fade out when set to temporary. Below it, `Switch` rows control notifications, sounds and badges, `Toggle` tiles choose Lock Screen, Notification Center and Banners, a `ToggleGroup` picks the banner style, and `Picker` rows set previews and grouping.",
+  "usage": "The settings live in local state and the component takes no props. Replace `WALLPAPER`, `PREVIEW_OPTIONS` and `GROUPING_OPTIONS` and wire each control's change handler to your preferences store."
+}

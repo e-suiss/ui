@@ -1,0 +1,20 @@
+{
+  "name": "chat-thread",
+  "type": "block",
+  "files": [
+    "components/blocks/chat-thread.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "bubble",
+    "button",
+    "input",
+    "message",
+    "message-scroller"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

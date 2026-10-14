@@ -1,0 +1,46 @@
+---
+title: Footer Services
+description: "A footer with a band of service highlights, a newsletter signup, a link directory, and legal links."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="footer-services">
+
+<SourceFile path="components/blocks/footer-services.tsx" fold={false} />
+
+</Example>
+
+A footer that opens with a band of four service highlights, followed by a newsletter signup, a link directory and a legal row. The services and directory show two columns on mobile and four on desktop, where the signup form also moves beside its heading. Use it when the footer should also promote support, delivery or other services.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks footer-services"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Input Group](/docs/components/input-group).
+
+3. Copy the source into `components/blocks/footer-services.tsx`:
+
+<SourceFile path="components/blocks/footer-services.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { FooterServices } from \"@/components/blocks/footer-services\""} />
+
+<Code lang="tsx" code={"<FooterServices />"} />
+
+Edit `services`, `sections` and `legal` for the content, and replace the `slug` helper with your routes. The signup form only validates the address and shows a confirmation, so send the email to your mailing list provider in its submit handler.
+
+## Notes
+
+The form runs its own validation instead of the browser's, marks the field invalid on a bad address and announces the confirmation.

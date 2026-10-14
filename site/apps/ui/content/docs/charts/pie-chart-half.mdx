@@ -1,0 +1,46 @@
+---
+title: Pie Chart Half
+description: "A semicircular gauge-style pie showing battery share by device, with a caption under the arc."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-half">
+
+<SourceFile path="components/charts/pie-chart-half.tsx" fold={false} />
+
+</Example>
+
+A semicircular donut that reads like a gauge, with a figure and caption tucked under the arc. Use it in compact cards where a full circle takes too much height.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-half"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-half.tsx`:
+
+<SourceFile path="components/charts/pie-chart-half.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartHalf } from \"@/components/charts/pie-chart-half\""} />
+
+<Code lang="tsx" code={"<PieChartHalf />"} />
+
+Replace `chartData` with your categories and their shares, and add each key to `chartConfig`. The tooltip appends a percent sign, so change its formatter if your values aren't percentages. Update the figure and caption under the arc, which are plain text.
+
+## Notes
+
+The centered figure and caption are hard-coded, not computed from the data. The arc's size depends on the container height, so check the fit if you change the chart's height.

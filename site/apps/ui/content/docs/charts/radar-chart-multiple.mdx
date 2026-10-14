@@ -1,0 +1,46 @@
+---
+title: Radar Chart Multiple
+description: "Two overlapping radar shapes comparing this month with last month."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-multiple">
+
+<SourceFile path="components/charts/radar-chart-multiple.tsx" fold={false} />
+
+</Example>
+
+Two semi-transparent radar shapes layered on the same grid, comparing this month with last month. Use it for a before-and-after or two-item comparison across the same axes.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-multiple"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-multiple.tsx`:
+
+<SourceFile path="components/charts/radar-chart-multiple.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartMultiple } from \"@/components/charts/radar-chart-multiple\""} />
+
+<Code lang="tsx" code={"<RadarChartMultiple />"} />
+
+Replace `chartData` and rename the series keys in the data, both `Radar` elements and `chartConfig`. Put the reference series first so the current one is drawn on top.
+
+## Notes
+
+There is no legend, so the tooltip is the only place series names appear; use the legend variant if that's not enough.

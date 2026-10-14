@@ -1,0 +1,19 @@
+{
+  "description": "A container that keeps its content at a fixed width-to-height ratio.",
+  "overview": "`AspectRatio` is a single `div` that sets the CSS `aspect-ratio` property from the `ratio` prop. Its width follows the parent, and its height is derived from the ratio. It is positioned `relative`, so children can be absolutely positioned inside it.\n\nUse it to reserve space for images, video or embeds so the layout does not shift while media loads.",
+  "usage": "Pass `ratio` as a number, typically written as a division such as `16 / 9`, `4 / 3` or `1`. Give media inside it `className=\"size-full object-cover\"` to fill the frame. Add `overflow-hidden` and a radius class to clip the content to rounded corners.",
+  "examples": {
+    "Square": "A `1:1` frame using `ratio={1}`.",
+    "Portrait": "A taller-than-wide frame using `ratio={3 / 4}`.",
+    "Placeholder": "A `4:3` frame holding centered placeholder text instead of an image."
+  },
+  "parts": {
+    "AspectRatio": "The ratio-locked container."
+  },
+  "props": {
+    "AspectRatio": {
+      "ratio": "Width divided by height, for example `16 / 9`. Required."
+    }
+  },
+  "notes": "- Styling hook: `data-slot=\"aspect-ratio\"`.\n- The ratio is passed through the `--ratio` CSS custom property and applied with the Tailwind class `aspect-(--ratio)`."
+}

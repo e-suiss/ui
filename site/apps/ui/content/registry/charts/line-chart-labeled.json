@@ -1,0 +1,6 @@
+{
+  "description": "A single line with a dot and a printed value at every point, and no grid.",
+  "overview": "A single smooth line with a dot and a printed value at every point and no grid. Choose it for short series where readers want the exact numbers without hovering.",
+  "usage": "Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Move the value labels with the `position` prop on `LabelList`, and raise the chart's top margin if labels get clipped.",
+  "notes": "Labels overlap quickly on long or dense series; keep this variant to a dozen points or fewer."
+}

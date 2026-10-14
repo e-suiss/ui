@@ -1,0 +1,6 @@
+{
+  "description": "A row of small battery rings, one per device, that turn red when charge is at or below 20%.",
+  "overview": "A row of small battery rings, one per device, that switch from green to red when the charge drops to the low threshold. Use compact rings like these for status at a glance, in widgets, settings pages or device lists.",
+  "usage": "Replace the `devices` array with your own names and levels from 0 to 100. Change `LOW` to move the warning threshold, and edit the two colors in the per-ring config. The letter in each ring is the first character of the name.",
+  "notes": "The rings are hidden from assistive technology and have no tooltip; the percentage and name printed under each ring carry the information."
+}

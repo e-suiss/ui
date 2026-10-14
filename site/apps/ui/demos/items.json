@@ -1,0 +1,1112 @@
+{
+  "components": [
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "group": null
+    },
+    {
+      "name": "alert-dialog",
+      "title": "Alert Dialog",
+      "group": null
+    },
+    {
+      "name": "alert-sheet",
+      "title": "Alert Sheet",
+      "group": null
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "group": null
+    },
+    {
+      "name": "aspect-ratio",
+      "title": "Aspect Ratio",
+      "group": null
+    },
+    {
+      "name": "attachment",
+      "title": "Attachment",
+      "group": null
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "group": null
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "group": null
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "group": null
+    },
+    {
+      "name": "bubble",
+      "title": "Bubble",
+      "group": null
+    },
+    {
+      "name": "button-group",
+      "title": "Button Group",
+      "group": null
+    },
+    {
+      "name": "button",
+      "title": "Button",
+      "group": null
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "group": null
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "group": null
+    },
+    {
+      "name": "carousel",
+      "title": "Carousel",
+      "group": null
+    },
+    {
+      "name": "chart",
+      "title": "Chart",
+      "group": null
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "group": null
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "group": null
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "group": null
+    },
+    {
+      "name": "command",
+      "title": "Command",
+      "group": null
+    },
+    {
+      "name": "context-menu",
+      "title": "Context Menu",
+      "group": null
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "group": null
+    },
+    {
+      "name": "direction",
+      "title": "Direction",
+      "group": null
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "group": null
+    },
+    {
+      "name": "dropdown-menu",
+      "title": "Dropdown Menu",
+      "group": null
+    },
+    {
+      "name": "empty",
+      "title": "Empty",
+      "group": null
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "group": null
+    },
+    {
+      "name": "fullscreen-menu",
+      "title": "Fullscreen Menu",
+      "group": null
+    },
+    {
+      "name": "hover-card",
+      "title": "Hover Card",
+      "group": null
+    },
+    {
+      "name": "input-group",
+      "title": "Input Group",
+      "group": null
+    },
+    {
+      "name": "input-otp",
+      "title": "Input Otp",
+      "group": null
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "group": null
+    },
+    {
+      "name": "item",
+      "title": "Item",
+      "group": null
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "group": null
+    },
+    {
+      "name": "label",
+      "title": "Label",
+      "group": null
+    },
+    {
+      "name": "marker",
+      "title": "Marker",
+      "group": null
+    },
+    {
+      "name": "menubar",
+      "title": "Menubar",
+      "group": null
+    },
+    {
+      "name": "message-scroller",
+      "title": "Message Scroller",
+      "group": null
+    },
+    {
+      "name": "message",
+      "title": "Message",
+      "group": null
+    },
+    {
+      "name": "native-select",
+      "title": "Native Select",
+      "group": null
+    },
+    {
+      "name": "navigation-menu",
+      "title": "Navigation Menu",
+      "group": null
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination",
+      "group": null
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "group": null
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "group": null
+    },
+    {
+      "name": "questionnaire",
+      "title": "Questionnaire",
+      "group": null
+    },
+    {
+      "name": "radio-group",
+      "title": "Radio Group",
+      "group": null
+    },
+    {
+      "name": "resizable",
+      "title": "Resizable",
+      "group": null
+    },
+    {
+      "name": "scroll-area",
+      "title": "Scroll Area",
+      "group": null
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "group": null
+    },
+    {
+      "name": "separator",
+      "title": "Separator",
+      "group": null
+    },
+    {
+      "name": "sheet",
+      "title": "Sheet",
+      "group": null
+    },
+    {
+      "name": "sidebar",
+      "title": "Sidebar",
+      "group": null
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton",
+      "group": null
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "group": null
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "group": null
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "group": null
+    },
+    {
+      "name": "tab-bar",
+      "title": "Tab Bar",
+      "group": null
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "group": null
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "group": null
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "group": null
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "group": null
+    },
+    {
+      "name": "toggle-group",
+      "title": "Toggle Group",
+      "group": null
+    },
+    {
+      "name": "toggle",
+      "title": "Toggle",
+      "group": null
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "group": null
+    },
+    {
+      "name": "wheel-picker",
+      "title": "Wheel Picker",
+      "group": null
+    },
+    {
+      "name": "widget",
+      "title": "Widget",
+      "group": null
+    }
+  ],
+  "patterns": [
+    {
+      "name": "action-bar",
+      "title": "Action Bar",
+      "group": null
+    },
+    {
+      "name": "action-menu",
+      "title": "Action Menu",
+      "group": null
+    },
+    {
+      "name": "app-shell",
+      "title": "App Shell",
+      "group": null
+    },
+    {
+      "name": "command-palette",
+      "title": "Command Palette",
+      "group": null
+    },
+    {
+      "name": "confirm",
+      "title": "Confirm",
+      "group": null
+    },
+    {
+      "name": "context-actions",
+      "title": "Context Actions",
+      "group": null
+    },
+    {
+      "name": "date-picker",
+      "title": "Date Picker",
+      "group": null
+    },
+    {
+      "name": "flyout",
+      "title": "Flyout",
+      "group": null
+    },
+    {
+      "name": "modal",
+      "title": "Modal",
+      "group": null
+    },
+    {
+      "name": "navbar",
+      "title": "Navbar",
+      "group": null
+    },
+    {
+      "name": "paged-list",
+      "title": "Paged List",
+      "group": null
+    },
+    {
+      "name": "panel",
+      "title": "Panel",
+      "group": null
+    },
+    {
+      "name": "picker",
+      "title": "Picker",
+      "group": null
+    },
+    {
+      "name": "preview",
+      "title": "Preview",
+      "group": null
+    },
+    {
+      "name": "search-picker",
+      "title": "Search Picker",
+      "group": null
+    },
+    {
+      "name": "segment-picker",
+      "title": "Segment Picker",
+      "group": null
+    },
+    {
+      "name": "split-view",
+      "title": "Split View",
+      "group": null
+    },
+    {
+      "name": "table-list",
+      "title": "Table List",
+      "group": null
+    },
+    {
+      "name": "trail",
+      "title": "Trail",
+      "group": null
+    }
+  ],
+  "interactions": [
+    {
+      "name": "island",
+      "title": "Island",
+      "group": null
+    },
+    {
+      "name": "otp-autofill",
+      "title": "Otp Autofill",
+      "group": null
+    },
+    {
+      "name": "preview-menu",
+      "title": "Preview Menu",
+      "group": null
+    },
+    {
+      "name": "pull-to-refresh",
+      "title": "Pull To Refresh",
+      "group": null
+    },
+    {
+      "name": "search-reveal",
+      "title": "Search Reveal",
+      "group": null
+    },
+    {
+      "name": "section-index",
+      "title": "Section Index",
+      "group": null
+    },
+    {
+      "name": "selection-list",
+      "title": "Selection List",
+      "group": null
+    },
+    {
+      "name": "stepper",
+      "title": "Stepper",
+      "group": null
+    },
+    {
+      "name": "swipe-actions",
+      "title": "Swipe Actions",
+      "group": null
+    },
+    {
+      "name": "tip",
+      "title": "Tip",
+      "group": null
+    },
+    {
+      "name": "undo-bar",
+      "title": "Undo Bar",
+      "group": null
+    }
+  ],
+  "charts": [
+    {
+      "name": "area-chart-axes",
+      "title": "Area Chart Axes",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-default",
+      "title": "Area Chart Default",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-gradient",
+      "title": "Area Chart Gradient",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-interactive",
+      "title": "Area Chart Interactive",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-linear",
+      "title": "Area Chart Linear",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-range",
+      "title": "Area Chart Range",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-sparkline",
+      "title": "Area Chart Sparkline",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-stacked-expand",
+      "title": "Area Chart Stacked Expand",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-stacked",
+      "title": "Area Chart Stacked",
+      "group": "Area"
+    },
+    {
+      "name": "area-chart-step",
+      "title": "Area Chart Step",
+      "group": "Area"
+    },
+    {
+      "name": "bar-chart-active",
+      "title": "Bar Chart Active",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-default",
+      "title": "Bar Chart Default",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-horizontal",
+      "title": "Bar Chart Horizontal",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-hourly",
+      "title": "Bar Chart Hourly",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-interactive",
+      "title": "Bar Chart Interactive",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-labeled",
+      "title": "Bar Chart Labeled",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-multiple",
+      "title": "Bar Chart Multiple",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-negative",
+      "title": "Bar Chart Negative",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-range",
+      "title": "Bar Chart Range",
+      "group": "Bar"
+    },
+    {
+      "name": "bar-chart-stacked",
+      "title": "Bar Chart Stacked",
+      "group": "Bar"
+    },
+    {
+      "name": "line-chart-default",
+      "title": "Line Chart Default",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-dots",
+      "title": "Line Chart Dots",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-forecast",
+      "title": "Line Chart Forecast",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-goal-dots",
+      "title": "Line Chart Goal Dots",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-goal",
+      "title": "Line Chart Goal",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-interactive",
+      "title": "Line Chart Interactive",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-labeled",
+      "title": "Line Chart Labeled",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-linear",
+      "title": "Line Chart Linear",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-multiple",
+      "title": "Line Chart Multiple",
+      "group": "Line"
+    },
+    {
+      "name": "line-chart-step",
+      "title": "Line Chart Step",
+      "group": "Line"
+    },
+    {
+      "name": "pie-chart-active",
+      "title": "Pie Chart Active",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-default",
+      "title": "Pie Chart Default",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-donut-text",
+      "title": "Pie Chart Donut Text",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-donut",
+      "title": "Pie Chart Donut",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-half",
+      "title": "Pie Chart Half",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-interactive",
+      "title": "Pie Chart Interactive",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-label",
+      "title": "Pie Chart Label",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-legend",
+      "title": "Pie Chart Legend",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-nested",
+      "title": "Pie Chart Nested",
+      "group": "Pie"
+    },
+    {
+      "name": "pie-chart-separated",
+      "title": "Pie Chart Separated",
+      "group": "Pie"
+    },
+    {
+      "name": "radar-chart-default",
+      "title": "Radar Chart Default",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-dots",
+      "title": "Radar Chart Dots",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-grid-circle",
+      "title": "Radar Chart Grid Circle",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-grid-filled",
+      "title": "Radar Chart Grid Filled",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-grid-none",
+      "title": "Radar Chart Grid None",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-interactive",
+      "title": "Radar Chart Interactive",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-legend",
+      "title": "Radar Chart Legend",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-lines-only",
+      "title": "Radar Chart Lines Only",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-multiple",
+      "title": "Radar Chart Multiple",
+      "group": "Radar"
+    },
+    {
+      "name": "radar-chart-radius-axis",
+      "title": "Radar Chart Radius Axis",
+      "group": "Radar"
+    },
+    {
+      "name": "radial-chart-batteries",
+      "title": "Radial Chart Batteries",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-default",
+      "title": "Radial Chart Default",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-gauge",
+      "title": "Radial Chart Gauge",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-interactive",
+      "title": "Radial Chart Interactive",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-label",
+      "title": "Radial Chart Label",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-progress",
+      "title": "Radial Chart Progress",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-rings",
+      "title": "Radial Chart Rings",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-stacked",
+      "title": "Radial Chart Stacked",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-text",
+      "title": "Radial Chart Text",
+      "group": "Radial"
+    },
+    {
+      "name": "radial-chart-tinted",
+      "title": "Radial Chart Tinted",
+      "group": "Radial"
+    },
+    {
+      "name": "tooltip-chart-custom",
+      "title": "Tooltip Chart Custom",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-dashed",
+      "title": "Tooltip Chart Dashed",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-dot",
+      "title": "Tooltip Chart Dot",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-formatter",
+      "title": "Tooltip Chart Formatter",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-icons",
+      "title": "Tooltip Chart Icons",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-interactive",
+      "title": "Tooltip Chart Interactive",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-label-formatter",
+      "title": "Tooltip Chart Label Formatter",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-line",
+      "title": "Tooltip Chart Line",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-no-indicator",
+      "title": "Tooltip Chart No Indicator",
+      "group": "Tooltip"
+    },
+    {
+      "name": "tooltip-chart-no-label",
+      "title": "Tooltip Chart No Label",
+      "group": "Tooltip"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "bag-checkout",
+      "title": "Bag Checkout",
+      "group": "Bag"
+    },
+    {
+      "name": "bag-configure",
+      "title": "Bag Configure",
+      "group": "Bag"
+    },
+    {
+      "name": "bag-review",
+      "title": "Bag Review",
+      "group": "Bag"
+    },
+    {
+      "name": "bento-closer-look",
+      "title": "Bento Closer Look",
+      "group": "Bento"
+    },
+    {
+      "name": "bento-features",
+      "title": "Bento Features",
+      "group": "Bento"
+    },
+    {
+      "name": "bento-stats",
+      "title": "Bento Stats",
+      "group": "Bento"
+    },
+    {
+      "name": "chat-conversations",
+      "title": "Chat Conversations",
+      "group": "Chat"
+    },
+    {
+      "name": "chat-support",
+      "title": "Chat Support",
+      "group": "Chat"
+    },
+    {
+      "name": "chat-thread",
+      "title": "Chat Thread",
+      "group": "Chat"
+    },
+    {
+      "name": "dash-analytics",
+      "title": "Dash Analytics",
+      "group": "Dash"
+    },
+    {
+      "name": "dash-health",
+      "title": "Dash Health",
+      "group": "Dash"
+    },
+    {
+      "name": "dash-store",
+      "title": "Dash Store",
+      "group": "Dash"
+    },
+    {
+      "name": "empty-bag",
+      "title": "Empty Bag",
+      "group": "Empty"
+    },
+    {
+      "name": "empty-offline",
+      "title": "Empty Offline",
+      "group": "Empty"
+    },
+    {
+      "name": "empty-search",
+      "title": "Empty Search",
+      "group": "Empty"
+    },
+    {
+      "name": "footer-compact",
+      "title": "Footer Compact",
+      "group": "Footer"
+    },
+    {
+      "name": "footer-directory",
+      "title": "Footer Directory",
+      "group": "Footer"
+    },
+    {
+      "name": "footer-services",
+      "title": "Footer Services",
+      "group": "Footer"
+    },
+    {
+      "name": "grid-accessories",
+      "title": "Grid Accessories",
+      "group": "Grid"
+    },
+    {
+      "name": "grid-carousel",
+      "title": "Grid Carousel",
+      "group": "Grid"
+    },
+    {
+      "name": "grid-lineup",
+      "title": "Grid Lineup",
+      "group": "Grid"
+    },
+    {
+      "name": "hero-cinematic",
+      "title": "Hero Cinematic",
+      "group": "Hero"
+    },
+    {
+      "name": "hero-product",
+      "title": "Hero Product",
+      "group": "Hero"
+    },
+    {
+      "name": "hero-tiles",
+      "title": "Hero Tiles",
+      "group": "Hero"
+    },
+    {
+      "name": "inbox-categories",
+      "title": "Inbox Categories",
+      "group": "Inbox"
+    },
+    {
+      "name": "inbox-mail",
+      "title": "Inbox Mail",
+      "group": "Inbox"
+    },
+    {
+      "name": "inbox-support",
+      "title": "Inbox Support",
+      "group": "Inbox"
+    },
+    {
+      "name": "log-activity",
+      "title": "Log Activity",
+      "group": "Log"
+    },
+    {
+      "name": "log-live",
+      "title": "Log Live",
+      "group": "Log"
+    },
+    {
+      "name": "log-security",
+      "title": "Log Security",
+      "group": "Log"
+    },
+    {
+      "name": "login-account",
+      "title": "Login Account",
+      "group": "Login"
+    },
+    {
+      "name": "login-passkey",
+      "title": "Login Passkey",
+      "group": "Login"
+    },
+    {
+      "name": "login-sheet",
+      "title": "Login Sheet",
+      "group": "Login"
+    },
+    {
+      "name": "nav-categories",
+      "title": "Nav Categories",
+      "group": "Nav"
+    },
+    {
+      "name": "nav-global",
+      "title": "Nav Global",
+      "group": "Nav"
+    },
+    {
+      "name": "nav-local",
+      "title": "Nav Local",
+      "group": "Nav"
+    },
+    {
+      "name": "price-bundle",
+      "title": "Price Bundle",
+      "group": "Price"
+    },
+    {
+      "name": "price-care",
+      "title": "Price Care",
+      "group": "Price"
+    },
+    {
+      "name": "price-storage",
+      "title": "Price Storage",
+      "group": "Price"
+    },
+    {
+      "name": "roles-editor",
+      "title": "Roles Editor",
+      "group": "Roles"
+    },
+    {
+      "name": "roles-matrix",
+      "title": "Roles Matrix",
+      "group": "Roles"
+    },
+    {
+      "name": "roles-requests",
+      "title": "Roles Requests",
+      "group": "Roles"
+    },
+    {
+      "name": "settings-account",
+      "title": "Settings Account",
+      "group": "Settings"
+    },
+    {
+      "name": "settings-device",
+      "title": "Settings Device",
+      "group": "Settings"
+    },
+    {
+      "name": "settings-notifications",
+      "title": "Settings Notifications",
+      "group": "Settings"
+    },
+    {
+      "name": "signup-form",
+      "title": "Signup Form",
+      "group": "Signup"
+    },
+    {
+      "name": "signup-steps",
+      "title": "Signup Steps",
+      "group": "Signup"
+    },
+    {
+      "name": "signup-trial",
+      "title": "Signup Trial",
+      "group": "Signup"
+    },
+    {
+      "name": "users-detail",
+      "title": "Users Detail",
+      "group": "Users"
+    },
+    {
+      "name": "users-invite",
+      "title": "Users Invite",
+      "group": "Users"
+    },
+    {
+      "name": "users-table",
+      "title": "Users Table",
+      "group": "Users"
+    },
+    {
+      "name": "verify-code",
+      "title": "Verify Code",
+      "group": "Verify"
+    },
+    {
+      "name": "verify-device",
+      "title": "Verify Device",
+      "group": "Verify"
+    },
+    {
+      "name": "verify-email",
+      "title": "Verify Email",
+      "group": "Verify"
+    }
+  ]
+}

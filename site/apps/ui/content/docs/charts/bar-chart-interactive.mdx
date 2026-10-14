@@ -1,0 +1,46 @@
+---
+title: Bar Chart Interactive
+description: "A screen-time report with stacked category bars, a week and day toggle, selectable days and a most-used apps list."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-interactive">
+
+<SourceFile path="components/charts/bar-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A full screen-time report: stacked category bars per day, a Week and Day toggle, selectable days, per-category totals and a most-used apps list that all update together. Use it as a reference for building a drill-down dashboard on top of a bar chart.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-interactive"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/bar-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/bar-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartInteractive } from \"@/components/charts/bar-chart-interactive\""} />
+
+<Code lang="tsx" code={"<BarChartInteractive />"} />
+
+Replace `USAGE` with your per-day category totals and `APPS` with your item breakdown, and rename the categories in `CATEGORIES` and `chartConfig`. The hourly Day view is generated from the daily totals for the demo, so feed it real hourly data in production. The comparison line under the headline is a fixed string until a day is selected.
+
+## Notes
+
+Click, tap or press Return on a bar to select a day, and select it again to clear the selection; taps that move like a scroll are ignored. Day view shows Sunday if no day was selected. The header is a live region so selection changes are announced.

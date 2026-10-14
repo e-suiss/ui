@@ -1,0 +1,14 @@
+{
+  "description": "A thin line that visually divides content, horizontally or vertically.",
+  "overview": "`Separator` wraps the Base UI Separator primitive. It draws a 1px line in the `separator` color: full width when horizontal, and stretched to the container's height when vertical.\n\nUse it between groups of content or between inline items. Inside menus and selects, use the dedicated separator part of that component instead.",
+  "usage": "`orientation` defaults to `horizontal`. Set `orientation=\"vertical\"` inside a flex row; the line stretches to the row's height, so give the row a height.",
+  "examples": {
+    "Horizontal": "Divides two stacked lines of text.",
+    "Vertical": "Divides inline links in a row."
+  },
+  "parts": {
+    "Separator": "Draws the dividing line."
+  },
+  "accessibility": "- Renders with the `separator` role and an `aria-orientation` that matches `orientation`.",
+  "notes": "- Uses `data-slot=\"separator\"` and Base UI's `data-horizontal` and `data-vertical` attributes for sizing.\n- The color comes from the `bg-separator` token."
+}

@@ -1,0 +1,162 @@
+---
+title: App Shell
+description: "An application frame with a collapsible sidebar on desktop and a floating tab bar on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="app-shell" story="Default">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellExample() {\n  return (\n    <ShellExample items={items} />\n  )\n}"} />
+
+</Example>
+
+`AppShell` builds navigation from an `items` array of `AppShellItem` objects and wraps your page content. On desktop it renders a `Sidebar` inside a `SidebarProvider`, with optional `header` and `footer`, group labels, badges, tooltips on collapsed icons and a `SidebarRail`; the page renders in a `SidebarInset`.
+
+Below the `48rem` breakpoint the sidebar is replaced by a `TabBar` pinned to the bottom of the screen, and the content renders in a `main` element padded to clear it. Items that do not fit in the tab bar move behind its More trigger. Use it as the outermost layout of an app with a handful of top-level destinations.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns app-shell"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Sidebar](/docs/components/sidebar), [Tab Bar](/docs/components/tab-bar).
+
+3. Copy the source into `components/patterns/app-shell.tsx`:
+
+<SourceFile path="components/patterns/app-shell.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AppShell, AppShellTrigger } from \"@/components/patterns/app-shell\""} />
+
+<Code lang="tsx" code={"<ShellExample items={items} />"} />
+
+Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. Items with the same `group` render under a shared `SidebarGroupLabel`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. Items with an `href` render through `render`, which defaults to a plain anchor, so you can pass your router's link component.
+
+The sidebar accepts `variant` (`sidebar`, `floating` or `inset`), `collapsible` (`icon` by default, `offcanvas` or `none`), `side`, `rail`, and `open`, `defaultOpen` and `onOpenChange` for its expanded state. `moreLabel` sets the tab bar's More trigger text. Place `AppShellTrigger` in your page header to toggle the sidebar.
+
+## Examples
+
+### With header and footer
+
+Adds a brand menu in the sidebar header and an account menu in the footer.
+
+<Example kind="pattern" name="app-shell" story="WithHeaderAndFooter">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nconst account = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-tertiary text-xs font-medium\">\n          JL\n        </div>\n        <div className=\"grid flex-1 text-start leading-tight\">\n          <span className=\"truncate text-sm font-medium\">Jordan Lee</span>\n          <span className=\"truncate text-xs text-label-secondary\">\n            jordan@acme.com\n          </span>\n        </div>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellWithHeaderAndFooterExample() {\n  return (\n    <ShellExample items={items} header={brand} footer={account} />\n  )\n}"} />
+
+</Example>
+
+### Grouped
+
+Splits items into labelled Platform and Workspace groups and disables one item.
+
+<Example kind="pattern" name="app-shell" story="Grouped">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, ChartBarIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst manyItems: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n    group: \"Platform\",\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"reports\",\n    label: \"Reports\",\n    icon: <ChartBarIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"projects\",\n    label: \"Projects\",\n    icon: <FolderIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"team\",\n    label: \"Team\",\n    icon: <UsersIcon />,\n    group: \"Workspace\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n    group: \"Workspace\",\n  },\n  {\n    value: \"support\",\n    label: \"Support\",\n    icon: <LifebuoyIcon />,\n    group: \"Workspace\",\n    disabled: true,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nconst account = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-tertiary text-xs font-medium\">\n          JL\n        </div>\n        <div className=\"grid flex-1 text-start leading-tight\">\n          <span className=\"truncate text-sm font-medium\">Jordan Lee</span>\n          <span className=\"truncate text-xs text-label-secondary\">\n            jordan@acme.com\n          </span>\n        </div>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellGroupedExample() {\n  return (\n    <ShellExample items={manyItems} header={brand} footer={account} />\n  )\n}"} />
+
+</Example>
+
+### More tab
+
+Uses eight items with `defaultValue` so extra items overflow into the mobile tab bar's More panel.
+
+<Example kind="pattern" name="app-shell" story="MoreTab">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, ChartBarIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst manyItems: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n    group: \"Platform\",\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"reports\",\n    label: \"Reports\",\n    icon: <ChartBarIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"projects\",\n    label: \"Projects\",\n    icon: <FolderIcon />,\n    group: \"Platform\",\n  },\n  {\n    value: \"team\",\n    label: \"Team\",\n    icon: <UsersIcon />,\n    group: \"Workspace\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n    group: \"Workspace\",\n  },\n  {\n    value: \"support\",\n    label: \"Support\",\n    icon: <LifebuoyIcon />,\n    group: \"Workspace\",\n    disabled: true,\n  },\n]\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellMoreTabExample() {\n  return (\n    <ShellExample items={manyItems} defaultValue=\"team\" />\n  )\n}"} />
+
+</Example>
+
+### Links
+
+Gives every item an `href` so each renders as a link to its route.
+
+<Example kind="pattern" name="app-shell" story="Links">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellLinksExample() {\n  return (\n    <ShellExample items={items.map((item) => ({ ...item, href: `#${item.value}` }))} />\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Uses the `floating` sidebar variant.
+
+<Example kind="pattern" name="app-shell" story="Floating">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellFloatingExample() {\n  return (\n    <ShellExample items={items} variant=\"floating\" header={brand} />\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+Uses the `inset` sidebar variant.
+
+<Example kind="pattern" name="app-shell" story="Inset">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellInsetExample() {\n  return (\n    <ShellExample items={items} variant=\"inset\" header={brand} />\n  )\n}"} />
+
+</Example>
+
+### Offcanvas
+
+Sets `collapsible` to `offcanvas` so collapsing slides the whole sidebar out of view.
+
+<Example kind="pattern" name="app-shell" story="Offcanvas">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellOffcanvasExample() {\n  return (\n    <ShellExample items={items} collapsible=\"offcanvas\" header={brand} />\n  )\n}"} />
+
+</Example>
+
+### Right side
+
+Places the sidebar on the right with `side`.
+
+<Example kind="pattern" name="app-shell" story="RightSide">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, GearIcon, HouseIcon, TrayIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { AppShell, type AppShellItem, AppShellTrigger } from \"@/components/patterns/app-shell\"\nimport { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nconst items: AppShellItem[] = [\n  {\n    value: \"home\",\n    label: \"Home\",\n    icon: <HouseIcon />,\n  },\n  {\n    value: \"inbox\",\n    label: \"Inbox\",\n    icon: <TrayIcon />,\n    badge: 12,\n  },\n  {\n    value: \"calendar\",\n    label: \"Calendar\",\n    icon: <CalendarBlankIcon />,\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: <GearIcon />,\n  },\n]\n\nconst brand = (\n  <SidebarMenu>\n    <SidebarMenuItem>\n      <SidebarMenuButton size=\"lg\">\n        <div className=\"flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-on-accent\">\n          A\n        </div>\n        <span className=\"truncate font-medium\">Acme Inc.</span>\n      </SidebarMenuButton>\n    </SidebarMenuItem>\n  </SidebarMenu>\n)\n\nfunction Page({ title }: { title: string }) {\n  return (\n    <>\n      <header className=\"flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4\">\n        <AppShellTrigger className=\"-ms-1\" />\n        <h1 className=\"text-base font-semibold\">{title}</h1>\n      </header>\n      <div className=\"flex flex-1 flex-col gap-4 p-4\">\n        <div className=\"grid grid-cols-3 gap-3 md:gap-4\">\n          {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n            <div\n              key={label}\n              className=\"flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4\"\n            >\n              <span className=\"text-sm text-label-secondary\">{label}</span>\n            </div>\n          ))}\n        </div>\n        <div className=\"min-h-64 flex-1 rounded-2xl bg-surface-secondary\" />\n      </div>\n    </>\n  )\n}\n\nfunction ShellExample(args: React.ComponentProps<typeof AppShell>) {\n  const [value, setValue] = React.useState(args.defaultValue ?? \"home\")\n  const title = args.items.find((item) => item.value === value)?.label ?? \"\"\n\n  return (\n    <AppShell {...args} value={value} onValueChange={setValue}>\n      <Page title={title} />\n    </AppShell>\n  )\n}\n\nexport function AppShellRightSideExample() {\n  return (\n    <ShellExample items={items} side=\"right\" header={brand} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### AppShell
+
+The root layout that renders the sidebar or tab bar from `items` and wraps the page content.
+
+<PropsTable extends={["React.ComponentProps<typeof AppShellLayout>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AppShellTrigger
+
+A `SidebarTrigger` that toggles the sidebar on desktop and renders nothing on mobile.
+
+<PropsTable extends={["React.ComponentProps<typeof SidebarTrigger>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The selected item has `aria-current="page"`.
+- Collapsed sidebar items show their label in a tooltip on hover.
+- `AppShellTrigger` is labelled Toggle Sidebar, and `Cmd+B` on macOS or `Ctrl+B` elsewhere toggles the sidebar.
+- With `collapsible="offcanvas"`, the hidden sidebar is removed from view and the tab order.
+- Disabled items are disabled buttons.
+
+## Notes
+
+The sidebar exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. On mobile the wrapper carries `data-slot="app-shell"` and the content `data-slot="app-shell-content"`; `className` applies to the content area on both layouts. `rail` only renders when `collapsible` is not `none`.

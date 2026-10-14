@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Dot
+description: "A stacked bar chart showing the default tooltip indicator, a small colored square for each series."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-dot">
+
+<SourceFile path="components/charts/tooltip-chart-dot.tsx" fold={false} />
+
+</Example>
+
+A stacked bar chart that shows the default tooltip indicator, a small colored square beside each series. It is the most compact indicator and the one you get without setting anything.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-dot"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-dot.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-dot.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartDot } from \"@/components/charts/tooltip-chart-dot\""} />
+
+<Code lang="tsx" code={"<TooltipChartDot />"} />
+
+Leave `indicator` unset or set it to `dot` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig` with your own.
+
+## Notes
+
+The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.

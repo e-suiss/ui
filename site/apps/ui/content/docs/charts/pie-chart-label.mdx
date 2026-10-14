@@ -1,0 +1,46 @@
+---
+title: Pie Chart Label
+description: "A pie with each category name drawn outside its slice and joined by a leader line."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-label">
+
+<SourceFile path="components/charts/pie-chart-label.tsx" fold={false} />
+
+</Example>
+
+A pie with each category name printed outside its slice and connected by a leader line. Use it when readers shouldn't have to match colors against a separate legend.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-label"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-label.tsx`:
+
+<SourceFile path="components/charts/pie-chart-label.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartLabel } from \"@/components/charts/pie-chart-label\""} />
+
+<Code lang="tsx" code={"<PieChartLabel />"} />
+
+Replace `chartData` and the category entries in `chartConfig`; labels read their text from the config. To print values or percentages instead, change what the custom `label` renderer returns. Shrink `outerRadius` if long names get clipped at the edges.
+
+## Notes
+
+Outside labels collide when slices are thin, so keep the category count low.

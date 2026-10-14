@@ -1,0 +1,27 @@
+{
+  "description": "Brief, stacked notifications that appear at the bottom of the screen and dismiss themselves.",
+  "overview": "Toasts are built on the Base UI Toast primitive. `Toaster` is the ready-made setup: it combines `ToastProvider`, `ToastPortal` and `ToastViewport`, and renders each queued toast as a `Toast` with a `ToastContent` row holding a status icon, `ToastTitle`, `ToastDescription`, `ToastAction` and `ToastClose`.\n\nNew toasts stack at the bottom of the screen, with older ones scaled down behind, and expand into a list on hover or focus. A toast's `type` adds a colored icon: `success`, `info`, `warning` or `error`, or a progress ring for `loading`. Use toasts for short confirmations and background results; for messages that need a decision, use `AlertDialog`.",
+  "usage": "Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.\n\nPass `actionProps` to show a `ToastAction` button, and `timeout` in milliseconds to change how long a toast stays; `0` keeps it until it's closed. `toast.promise(promise, { loading, success, error })` shows a loading toast that turns into the success or error toast when the promise settles.\n\n`Toaster` uses the shared `toast` manager by default. Pass `toastManager` to use one created with `createToastManager()` instead. Use the individual parts only to build a custom toast list.",
+  "examples": {
+    "Types": "Shows each toast `type` with its icon and color.",
+    "TitleOnly": "Shows a toast with a title and no description.",
+    "WithAction": "Adds an `Undo` action button that closes the toast.",
+    "Timeout": "Compares a short `timeout` with a persistent toast that stays until closed.",
+    "PromiseToast": "Uses `toast.promise` to move from loading to success.",
+    "PromiseRejected": "Uses `toast.promise` to move from loading to an error when the promise rejects."
+  },
+  "parts": {
+    "ToastProvider": "Provides a toast manager to the parts inside it.",
+    "ToastPortal": "Renders the viewport into a portal.",
+    "ToastViewport": "The fixed region at the bottom of the screen that holds the stack.",
+    "Toast": "A single toast in the stack, positioned and animated by its index.",
+    "ToastContent": "The row that lays out a toast's icon, text and buttons.",
+    "ToastTitle": "The toast's title, which names it.",
+    "ToastDescription": "Supporting text, which describes the toast.",
+    "ToastAction": "An optional action button, rendered as a small outline `Button`.",
+    "ToastClose": "An icon button that dismisses the toast.",
+    "Toaster": "The complete setup: provider, portal, viewport and the rendered toasts."
+  },
+  "accessibility": "- The viewport is a `region` landmark named `Notifications`.\n- Each toast has the `dialog` role, named by its title and described by its description.\n- `ToastClose` has the accessible name `Close toast`.\n- Prefer an action that can also be reached elsewhere, since toasts dismiss themselves after their timeout.",
+  "notes": "- On small screens the stack spans the bottom of the screen; from the `sm` breakpoint it sits in the bottom end corner, up to `max-w-sm` wide.\n- Toasts can be swiped away; the exit animation follows the swipe direction.\n- Parts carry `data-slot` attributes such as `toast-viewport`, `toast`, `toast-content`, `toast-icon` and `toast-close`.\n- Icons are filled Phosphor icons in `text-green`, `text-accent`, `text-orange` and `text-danger`; the loading ring uses `stroke-accent`. The ring's progress animation is removed when reduced motion is preferred."
+}

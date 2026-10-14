@@ -1,0 +1,135 @@
+{
+  "name": "widget",
+  "type": "ui",
+  "files": [
+    "components/ui/widget.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sales",
+    "Kitchen",
+    "Reservations",
+    "WeeklyReport",
+    "FreeResize",
+    "AutoResize",
+    "Centered",
+    "Sizes",
+    "Dashboard"
+  ],
+  "parts": [
+    {
+      "name": "Widget",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "WidgetSize | \"auto\"",
+          "required": false
+        },
+        {
+          "name": "defaultSize",
+          "type": "WidgetSize | \"auto\"",
+          "required": false
+        },
+        {
+          "name": "onSizeChange",
+          "type": "(size: WidgetSize | \"auto\") => void",
+          "required": false
+        },
+        {
+          "name": "sizes",
+          "type": "WidgetSize[]",
+          "required": false,
+          "default": "[\"small\", \"medium\", \"large\", \"extra-large\"]"
+        },
+        {
+          "name": "resizable",
+          "type": "boolean | \"free\"",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "handle",
+          "type": "\"inside\" | \"outside\"",
+          "required": false,
+          "default": "\"outside\""
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\"",
+          "required": false,
+          "default": "\"start\""
+        }
+      ]
+    },
+    {
+      "name": "WidgetHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetIcon",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "WidgetTitle",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetAction",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetDescription",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetValue",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "WidgetFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

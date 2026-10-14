@@ -1,0 +1,187 @@
+---
+title: Dialog
+description: "A modal window that appears above the page to focus people on a task or message."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="dialog" story="Default">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function DialogExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"outline\" />}>\n        Edit profile\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Edit profile</DialogTitle>\n          <DialogDescription>\n            Update your name and username. Click save when you are done.\n          </DialogDescription>\n        </DialogHeader>\n        <div className=\"grid gap-4\">\n          <div className=\"grid gap-2\">\n            <Label htmlFor=\"name\">Name</Label>\n            <Input id=\"name\" defaultValue=\"Ada Lovelace\" />\n          </div>\n          <div className=\"grid gap-2\">\n            <Label htmlFor=\"username\">Username</Label>\n            <Input id=\"username\" defaultValue=\"@ada\" />\n          </div>\n        </div>\n        <DialogFooter>\n          <DialogClose render={<Button variant=\"secondary\" />}>\n            Cancel\n          </DialogClose>\n          <Button>Save changes</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
+
+</Example>
+
+Dialog wraps the Base UI Dialog. The `Dialog` root manages the open state, and `DialogTrigger` opens it. `DialogContent` renders the window in a portal over a dimmed `DialogOverlay`, with a close button in the top corner by default. Inside it, `DialogHeader` holds the `DialogTitle` and `DialogDescription`, and `DialogFooter` holds the actions. `DialogClose` closes the dialog from any element.
+
+Use a dialog for a short, focused task such as editing a few fields. To confirm a destructive or important action that needs an explicit response, consider an alert dialog. For larger content that slides in from an edge, use a sheet or drawer.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dialog"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from \"@/components/ui/dialog\""} />
+
+<Code lang="tsx" code={"<Dialog>\n  <DialogTrigger render={<Button variant=\"outline\" />}>\n    Edit profile\n  </DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Edit profile</DialogTitle>\n      <DialogDescription>\n        Update your name and username. Click save when you are done.\n      </DialogDescription>\n    </DialogHeader>\n    <div className=\"grid gap-4\">\n      <div className=\"grid gap-2\">\n        <Label htmlFor=\"name\">Name</Label>\n        <Input id=\"name\" defaultValue=\"Ada Lovelace\" />\n      </div>\n      <div className=\"grid gap-2\">\n        <Label htmlFor=\"username\">Username</Label>\n        <Input id=\"username\" defaultValue=\"@ada\" />\n      </div>\n    </div>\n    <DialogFooter>\n      <DialogClose render={<Button variant=\"secondary\" />}>\n        Cancel\n      </DialogClose>\n      <Button>Save changes</Button>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>"} />
+
+The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Use `DialogClose` with `render` for a Cancel button.
+
+Set `showCloseButton={false}` on `DialogContent` to remove the corner close button, and set `closeLabel` to replace its icon with a text label. Set `showCloseButton` on `DialogFooter` to add a secondary Close button to the actions. The footer stacks its actions in reverse order on small screens and aligns them to the end on wider screens.
+
+## Examples
+
+### Without close button
+
+A dialog with no corner close button that adds a Close action to the footer instead.
+
+<Example kind="ui" name="dialog" story="WithoutCloseButton">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\n\nexport function DialogWithoutCloseButtonExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"outline\" />}>\n        Show terms\n      </DialogTrigger>\n      <DialogContent showCloseButton={false}>\n        <DialogHeader>\n          <DialogTitle>Terms updated</DialogTitle>\n          <DialogDescription>\n            We have updated our terms of service. Please review the changes\n            before continuing.\n          </DialogDescription>\n        </DialogHeader>\n        <DialogFooter showCloseButton>\n          <Button>Accept</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
+
+</Example>
+
+### Destructive
+
+A dialog that confirms deleting a project, with a destructive action and a Cancel button.
+
+<Example kind="ui" name="dialog" story="Destructive">
+
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\n\nexport function DialogDestructiveExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"destructive\" />}>\n        Delete project\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Delete this project?</DialogTitle>\n          <DialogDescription>\n            This permanently removes the project and all of its deployments.\n            This action cannot be undone.\n          </DialogDescription>\n        </DialogHeader>\n        <DialogFooter>\n          <DialogClose render={<Button variant=\"secondary\" />}>\n            Cancel\n          </DialogClose>\n          <Button variant=\"destructive\">Delete</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Dialog","href":"#dialog","children":[{"name":"DialogTrigger","href":"#dialogtrigger","children":[]},{"name":"DialogContent","href":"#dialogcontent","children":[{"name":"DialogHeader","href":"#dialogheader","children":[{"name":"DialogTitle","href":"#dialogtitle","children":[]},{"name":"DialogDescription","href":"#dialogdescription","children":[]}]},{"name":"DialogFooter","href":"#dialogfooter","children":[{"name":"DialogClose","href":"#dialogclose","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Dialog
+
+The root that manages the dialog's open state.
+
+<PropsTable extends={["DialogPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DialogTrigger
+
+The button that opens the dialog.
+
+<PropsTable extends={["DialogPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DialogPortal
+
+Renders its children into a portal outside the current DOM hierarchy.
+
+<PropsTable extends={["DialogPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DialogClose
+
+A button that closes the dialog.
+
+<PropsTable extends={["DialogPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DialogOverlay
+
+The dimmed layer behind the dialog.
+
+<PropsTable extends={["DialogPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DialogContent
+
+The dialog window, rendered in a portal with an overlay and an optional close button.
+
+<PropsTable extends={["DialogPrimitive.Popup.Props"]} props={[{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the close button in the top corner."},{"name":"closeLabel","type":"string","description":"Replaces the close button's icon with this text."}]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DialogHeader
+
+Groups the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DialogFooter
+
+Holds the dialog's actions.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Adds a secondary Close button after the footer's actions."}]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### DialogTitle
+
+The dialog's title, which also names it for assistive technology.
+
+<PropsTable extends={["DialogPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### DialogDescription
+
+Supporting text that describes the dialog for assistive technology.
+
+<PropsTable extends={["DialogPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The window has the `dialog` role. `DialogTitle` provides its accessible name and `DialogDescription` its accessible description.
+- Opening the dialog moves focus inside it. Escape closes it and returns focus to the trigger.
+- The icon-only close button has a visually hidden `Close` label.
+- Always include a `DialogTitle`; hide it visually with `sr-only` if the design has no visible title.
+
+## Notes
+
+- Styling hooks: `data-slot` values `dialog-overlay`, `dialog-content`, `dialog-close`, `dialog-header`, `dialog-footer`, `dialog-title` and `dialog-description`.
+- `data-open` and `data-closed` drive the fade and zoom animation.
+- The window is `sm:max-w-md` by default; override it with `className` on `DialogContent`.
+- When a close button is shown, the first child of the content gets extra end padding so it does not run under the button.
+- Uses the `surface-raised`, `scrim`, `surface-tertiary` and `label-secondary` tokens.

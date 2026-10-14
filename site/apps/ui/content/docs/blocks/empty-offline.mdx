@@ -1,0 +1,46 @@
+---
+title: Empty Offline
+description: "An offline empty state with a retry action that reconnects and reveals a grid of albums."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="empty-offline">
+
+<SourceFile path="components/blocks/empty-offline.tsx" fold={false} />
+
+</Example>
+
+An offline state for a content app, with a Wi-Fi icon, an explanation and Try Again and Downloads buttons. Try Again shows a spinner while reconnecting, then reveals an album grid. Use it as the no-connection screen for media, feeds or any app that can fall back to cached content.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks empty-offline"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Spinner](/docs/components/spinner).
+
+3. Copy the source into `components/blocks/empty-offline.tsx`:
+
+<SourceFile path="components/blocks/empty-offline.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { EmptyOffline } from \"@/components/blocks/empty-offline\""} />
+
+<Code lang="tsx" code={"<EmptyOffline />"} />
+
+Replace `albums` with your content. The demo fakes reconnecting with a timer; drive the offline, loading and online states from your network status or a refetch instead, and remove the Disconnect link from the online view. Give the Downloads button a handler.
+
+## Notes
+
+Album artwork is an Unsplash placeholder.

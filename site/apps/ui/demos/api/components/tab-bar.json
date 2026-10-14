@@ -1,0 +1,98 @@
+{
+  "name": "tab-bar",
+  "type": "ui",
+  "files": [
+    "components/ui/tab-bar.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Open",
+    "FitsWithoutMore",
+    "OverflowIntoMore",
+    "Links",
+    "DisabledItem"
+  ],
+  "parts": [
+    {
+      "name": "TabBar",
+      "extends": [
+        "React.ComponentProps<\"nav\">",
+        "TabBarProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarList",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarItem",
+      "extends": [
+        "useRender.ComponentProps<\"button\">",
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "TabBarTrigger",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarSection",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarSectionTitle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "TabBarLink",
+      "extends": [
+        "useRender.ComponentProps<\"a\">",
+        "React.ComponentProps<\"a\">"
+      ],
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    }
+  ]
+}

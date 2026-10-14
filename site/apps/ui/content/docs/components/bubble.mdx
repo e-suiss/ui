@@ -1,0 +1,145 @@
+---
+title: Bubble
+description: "A chat-style message bubble with variants, alignment, a tail and optional reactions."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="bubble" story="Default">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <Bubble align=\"start\">\n        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n      </Bubble>\n    </div>\n  )\n}"} />
+
+</Example>
+
+A `Bubble` wraps a `BubbleContent`, which renders the rounded message body. Add `BubbleReactions` inside the bubble to pin a reaction pill to its top or bottom edge. Stack bubbles in a `BubbleGroup` to form a conversation.
+
+Align bubbles to the `start` or `end` of the conversation. The tail appears only on the last bubble in a run of consecutive bubbles with the same alignment, and never on the `outline` or `ghost` variants. Use Bubble for chat transcripts and assistant replies; for a full message row with avatar and metadata, see Message.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bubble"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/bubble.tsx`:
+
+<SourceFile path="components/ui/bubble.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\""} />
+
+<Code lang="tsx" code={"<div className=\"flex w-96 flex-col\">\n  <Bubble align=\"start\">\n    <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n  </Bubble>\n</div>"} />
+
+Set `align="end"` for messages sent by the current user and leave the default `start` for incoming messages.
+
+`BubbleContent` renders a `div` by default. Use its `render` prop to render a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.
+
+`BubbleReactions` defaults to the bottom-end corner. The bubble adds margin on that side so reactions do not overlap neighboring bubbles.
+
+## Examples
+
+### Variants
+
+Shows every variant, from `default` to `destructive`.
+
+<Example kind="ui" name="bubble" story="Variants">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleVariantsExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        {(\n          [\n            \"default\",\n            \"secondary\",\n            \"muted\",\n            \"tinted\",\n            \"outline\",\n            \"ghost\",\n            \"destructive\",\n          ] as const\n        ).map((variant) => (\n          <Bubble key={variant} align=\"start\" variant={variant}>\n            <BubbleContent>This is a {variant} bubble.</BubbleContent>\n          </Bubble>\n        ))}\n      </BubbleGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Conversation
+
+An exchange of incoming `muted` and outgoing `end`-aligned bubbles.
+
+<Example kind="ui" name="bubble" story="Conversation">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleConversationExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        <Bubble variant=\"muted\">\n          <BubbleContent>\n            Hey, did you get a chance to review the draft?\n          </BubbleContent>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>Yes, I left a few comments on the intro.</BubbleContent>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>Everything else looks great.</BubbleContent>\n        </Bubble>\n        <Bubble variant=\"muted\">\n          <BubbleContent>Thanks! I will update it this afternoon.</BubbleContent>\n        </Bubble>\n      </BubbleGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With reactions
+
+Pins reactions to different corners with `side` and `align`.
+
+<Example kind="ui" name="bubble" story="WithReactions">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@/components/ui/bubble\"\n\nexport function BubbleWithReactionsExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        <Bubble align=\"start\" variant=\"muted\">\n          <BubbleContent>We just hit 10,000 users!</BubbleContent>\n          <BubbleReactions>🎉 3</BubbleReactions>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>That is amazing news.</BubbleContent>\n          <BubbleReactions align=\"start\">❤️</BubbleReactions>\n        </Bubble>\n        <Bubble align=\"start\" variant=\"secondary\">\n          <BubbleContent>Reactions can sit on top as well.</BubbleContent>\n          <BubbleReactions side=\"top\">👍 2</BubbleReactions>\n        </Bubble>\n      </BubbleGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Interactive
+
+Renders the content as a `button` with the `render` prop.
+
+<Example kind="ui" name="bubble" story="Interactive">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <Bubble variant=\"outline\" align=\"start\">\n        <BubbleContent render={<button type=\"button\" />}>\n          Show me the latest release notes\n        </BubbleContent>\n      </Bubble>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Bubble","href":"#bubble","children":[{"name":"BubbleContent","href":"#bubblecontent","children":[]}]},{"name":"BubbleGroup","href":"#bubblegroup","children":[{"name":"Bubble","href":"#bubble","children":[{"name":"BubbleContent","href":"#bubblecontent","children":[]},{"name":"BubbleReactions","href":"#bubblereactions","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### BubbleGroup
+
+A vertical stack of bubbles.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Bubble
+
+The positioned wrapper that sets variant and alignment.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"","default":"\"default\"","description":"Background and text color: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`."},{"name":"align","type":"\"start\" | \"end\"","default":"\"start\"","description":"Which side of the conversation the bubble sits on: `start` or `end`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BubbleContent
+
+The rounded message body, with the tail.
+
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BubbleReactions
+
+A small pill for reactions, overlapping the bubble's edge.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"start\" | \"end\"","default":"\"end\"","description":"Horizontal position along the bubble edge: `start` or `end`."},{"name":"side","type":"\"top\" | \"bottom\"","default":"\"bottom\"","description":"Which edge of the bubble the reactions overlap: `top` or `bottom`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Bubbles are static content by default and contribute no focusable elements.
+- When `BubbleContent` renders a `button` or `a`, it is in the tab order and shows a focus ring.
+- Reactions are plain content; if they are emoji, consider adding text that screen readers can announce.
+
+## Notes
+
+- Styling hooks: `data-slot="bubble"`, `"bubble-content"`, `"bubble-group"` and `"bubble-reactions"`, plus `data-variant` and `data-align` on the bubble and `data-side` and `data-align` on reactions.
+- The background is set through the `--bubble-bg` custom property. Set `--bubble-surface` when bubbles sit on a surface other than `--surface`, so the tail and reaction ring blend in.
+- Bubbles are capped at 80% of the container width, except the `ghost` variant.
+- Bubbles also align to `end` when inside a `message` slot with `data-align="end"`.

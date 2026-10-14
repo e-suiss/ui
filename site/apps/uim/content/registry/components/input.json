@@ -1,0 +1,28 @@
+{
+  "description": "A single-line text field with focus, invalid and disabled states, in three heights.",
+  "overview": "`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.\n\nIt comes in three sizes: `default` (44 pt), `md` and `sm`. Use the default size for forms on a full screen, and the smaller sizes inside dense layouts such as toolbars or sheets.",
+  "usage": "Pass any `TextInput` prop, such as `placeholder`, `secureTextEntry`, `keyboardType` or `inputMode`, to get the matching field type.\n\nThe value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state, so you usually set `invalid` on the `Field` instead of on the input.\n\n`className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes.",
+  "examples": {
+    "Types": "Text, email, password, number and search fields set through standard `TextInput` props.",
+    "Sizes": "The `sm`, `md` and default sizes.",
+    "WithValue": "An input that starts with a `defaultValue`.",
+    "WithLabel": "An input inside a `Field` with a label and description.",
+    "Invalid": "An input inside an invalid `Field` with an error message.",
+    "Controlled": "A controlled input that mirrors its value below.",
+    "Disabled": "A disabled input."
+  },
+  "props": {
+    "Input": {
+      "size": "Height and text size: `default`, `md` or `sm`.",
+      "value": "The current text, for controlled use.",
+      "defaultValue": "The initial text, for uncontrolled use.",
+      "onValueChange": "Called with the new text and change details when the user types.",
+      "disabled": "Blocks editing and shows the disabled style.",
+      "required": "Marks the input as required for field validation.",
+      "minLength": "Minimum length used by field validation.",
+      "name": "Name used when the input is registered in a form."
+    }
+  },
+  "accessibility": "- Inside a `Field`, the input is linked to the field label through `accessibilityLabelledBy` and gets the label as `accessibilityLabel` and the description as `accessibilityHint`.\n- `disabled` is set in `accessibilityState` and makes the input non-editable.\n- Outside a `Field`, give the input an `accessibilityLabel`; a placeholder alone is not a label.",
+  "notes": "- Uses the `bg-control`, `border-focus`, `border-danger` and `bg-control-disabled` tokens.\n- Placeholder, cursor and selection colors come from the `label-secondary` and `accent` tokens.\n- Light and dark colors follow the system appearance."
+}

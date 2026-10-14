@@ -1,0 +1,46 @@
+---
+title: Grid Accessories
+description: "A filterable accessories grid with category chips and add-to-bag buttons that update a bag counter."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="grid-accessories">
+
+<SourceFile path="components/blocks/grid-accessories.tsx" fold={false} />
+
+</Example>
+
+A product grid with category filter chips and an add button on each card that turns into an In bag pill. A bag icon in the header shows the running count. Cards sit two per row on mobile and fill the width with auto-sized columns on desktop. Use it for accessory, add-on or catalog listings where shoppers add items straight from the grid.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks grid-accessories"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/blocks/grid-accessories.tsx`:
+
+<SourceFile path="components/blocks/grid-accessories.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { GridAccessories } from \"@/components/blocks/grid-accessories\""} />
+
+<Code lang="tsx" code={"<GridAccessories />"} />
+
+Edit `filters` for the chips and `accessories` for the products; each product has a name, a category matching one of the filters, a formatted price and an image. Replace the local bag toggle with your cart logic.
+
+## Notes
+
+The bag count is announced, and each add button names its product and exposes its pressed state. Product photos are Unsplash placeholders.

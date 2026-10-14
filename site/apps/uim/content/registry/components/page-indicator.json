@@ -1,0 +1,24 @@
+{
+  "description": "A row of dots that shows the current page in a pager or carousel, with an elongated dot for the active page.",
+  "overview": "`PageIndicator` draws one dot per page and widens the active one into a pill. Width and position changes animate with Reanimated. When `count` exceeds `maxVisible`, only a window of dots is shown; the window slides to keep the active dot near the center and the dots at its edges shrink to hint that more pages exist.\n\nIt comes in two sizes, `default` and `sm`, and two variants: `default` uses the label color for the active dot and `accent` uses the accent color.",
+  "usage": "The component is controlled: pass `count` and the current `index`. Pass `onIndexChange` to make the dots pressable; without it the indicator is display-only. Pressing a dot plays a selection haptic.\n\nThe `PageIndicatorSize` and `PageIndicatorVariant` types are also exported.",
+  "examples": {
+    "Sizes": "The `sm` and `default` sizes.",
+    "Accent": "The `accent` variant.",
+    "ManyPages": "Twelve pages shown in a sliding window at the start, middle and end.",
+    "Interactive": "Pressable dots that change the page through `onIndexChange`."
+  },
+  "props": {
+    "PageIndicator": {
+      "count": "Total number of pages. Nothing renders when it is `0`.",
+      "index": "Zero-based index of the current page.",
+      "onIndexChange": "Called with the new index when a dot is pressed or an accessibility action is used.",
+      "size": "Dot size: `default` or `sm`.",
+      "variant": "Active dot color: `default` or `accent`.",
+      "maxVisible": "Most dots shown at once. Defaults to `7`, minimum `3`.",
+      "accessibilityLabel": "Label read by screen readers. Defaults to `\"Page\"`."
+    }
+  },
+  "accessibility": "- The indicator is a single element with the `adjustable` role, and the dots are not focusable on their own.\n- Its value is announced as \"2 of 5\".\n- When `onIndexChange` is set, VoiceOver and TalkBack users swipe up or down to move to the next or previous page.\n- Animations respect the system reduce motion setting.",
+  "notes": "- Uses `bg-label` or `bg-accent` for the active dot and `bg-label-quaternary` for the others; colors follow the system appearance."
+}

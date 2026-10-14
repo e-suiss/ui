@@ -1,0 +1,42 @@
+---
+title: Price Care
+description: "A device protection plan picker with device chips, payment options, an optional theft add-on, and a live total."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="price-care">
+
+<SourceFile path="components/blocks/price-care.tsx" fold={false} />
+
+</Example>
+
+A protection plan picker: choose a device, pick a payment option for it and, for some devices, add theft and loss cover, with a live total and an Add to Bag button. A photo of the selected device sits beside the options on desktop and above them on mobile. Use it for warranties, insurance add-ons or any per-product plan.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks price-care"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/blocks/price-care.tsx`:
+
+<SourceFile path="components/blocks/price-care.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PriceCare } from \"@/components/blocks/price-care\""} />
+
+<Code lang="tsx" code={"<PriceCare />"} />
+
+Edit `devices`; each has a name, photo, alt text and payment options with a label, price and optional theft surcharge. The theft switch only appears for Phone Pro, so change that check if other devices offer it. Give Add to Bag a handler.
+
+## Notes
+
+The total is announced when it changes. Photos are Unsplash placeholders.

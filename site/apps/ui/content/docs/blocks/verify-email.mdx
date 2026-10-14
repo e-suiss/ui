@@ -1,0 +1,42 @@
+---
+title: Verify Email
+description: "A check-your-inbox screen after signup, with open mail and resend actions and a cooldown timer."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="verify-email">
+
+<SourceFile path="components/blocks/verify-email.tsx" fold={false} />
+
+</Example>
+
+A check-your-inbox screen shown after signup that names the address the link went to, with an Open Mail button, a Resend button with a 45-second cooldown and a link to change the address. Use it for email verification, magic links or password reset confirmations.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks verify-email"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/blocks/verify-email.tsx`:
+
+<SourceFile path="components/blocks/verify-email.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { VerifyEmail } from \"@/components/blocks/verify-email\""} />
+
+<Code lang="tsx" code={"<VerifyEmail />"} />
+
+Pass the real address in place of the `EMAIL` constant. In the demo, Open Mail marks the email as verified, but in production verification happens when the user follows the link, so point that button at a mail app or remove it. Connect Resend to your email service and `#change` to your account settings.

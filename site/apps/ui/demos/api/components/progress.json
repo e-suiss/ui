@@ -1,0 +1,55 @@
+{
+  "name": "progress",
+  "type": "ui",
+  "files": [
+    "components/ui/progress.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithLabel",
+    "Complete",
+    "Indeterminate"
+  ],
+  "parts": [
+    {
+      "name": "Progress",
+      "extends": [
+        "ProgressPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ProgressTrack",
+      "extends": [
+        "ProgressPrimitive.Track.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ProgressIndicator",
+      "extends": [
+        "ProgressPrimitive.Indicator.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ProgressLabel",
+      "extends": [
+        "ProgressPrimitive.Label.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "ProgressValue",
+      "extends": [
+        "ProgressPrimitive.Value.Props"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "description": "An app analytics dashboard with a metric switcher, a weekly area chart, a regional breakdown and a tab bar.",
+  "overview": "Composes `Screen`, `Header`, `DropdownMenu` for picking the app, `ToggleGroup`, the `AreaChart` from `Chart`, `Item` rows and `TabBar`. Switching the metric or app redraws the chart, and dragging across the chart updates the headline value for that week. The other tabs show a placeholder section.",
+  "usage": "Replace `apps`, `metrics` and `regions` with your analytics data. Pass `onAppChange`, `onMetricChange` and `onNavigate` to sync the selections with your app."
+}

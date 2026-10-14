@@ -1,0 +1,31 @@
+{
+  "description": "A panel that slides in from an edge of the screen over the page.",
+  "overview": "`Sheet` is built on the Base UI Dialog primitive. `SheetTrigger` opens it, and `SheetContent` renders the panel in a portal over a dimming backdrop. Inside, `SheetHeader` holds a `SheetTitle` and `SheetDescription`, and `SheetFooter` holds actions. `SheetClose` closes the sheet from any element.\n\nThe panel floats inset from the screen edge with rounded corners and slides in from its `side`. Use a sheet for supporting tasks, such as editing details or showing navigation, that should keep the page in context. For short, centered confirmations, use `Dialog` or `AlertDialog`.",
+  "usage": "Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Use the `render` prop on `SheetTrigger` and `SheetClose` to render them as a `Button`.\n\n`SheetFooter` sits at the bottom of the panel with `mt-auto`. By default `SheetContent` adds an icon close button in the top corner; set `closeLabel` to show a text button instead, or `showCloseButton={false}` to remove it.",
+  "examples": {
+    "Sides": "Opens a sheet from each of the four edges.",
+    "OpenLeft": "Renders a sheet open on the left side.",
+    "OpenBottom": "Renders a sheet open along the bottom edge.",
+    "WithoutCloseButton": "Removes the built-in close button.",
+    "WithCloseLabel": "Replaces the icon close button with a text button labelled `Done`."
+  },
+  "parts": {
+    "Sheet": "The root that holds the open state.",
+    "SheetTrigger": "The element that opens the sheet.",
+    "SheetClose": "An element that closes the sheet when pressed.",
+    "SheetContent": "The sliding panel, rendered in a portal with a backdrop.",
+    "SheetHeader": "A padded stack for the title and description.",
+    "SheetFooter": "A padded stack for actions, pushed to the bottom of the panel.",
+    "SheetTitle": "The sheet's title, which names the dialog.",
+    "SheetDescription": "Supporting text, which describes the dialog."
+  },
+  "props": {
+    "SheetContent": {
+      "side": "Chooses the edge the sheet slides in from.",
+      "showCloseButton": "Shows the built-in close button in the top corner.",
+      "closeLabel": "Shows this text in the close button instead of an icon."
+    }
+  },
+  "accessibility": "- The panel has the `dialog` role. `SheetTitle` gives it an accessible name and `SheetDescription` an accessible description.\n- Opening the sheet moves focus inside it.\n- `Escape` closes the sheet, and focus returns to the trigger.\n- The icon close button has the hidden label `Close`.",
+  "notes": "- Parts carry `data-slot` attributes such as `sheet-content`, `sheet-overlay` and `sheet-close`; the panel also sets `data-side`.\n- Left and right sheets are 3/4 of the screen wide, up to `max-w-sm` from the `sm` breakpoint. Slide directions flip in right-to-left layouts.\n- The panel uses `bg-surface-raised` and the backdrop uses `bg-scrim`."
+}

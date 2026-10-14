@@ -1,0 +1,22 @@
+{
+  "description": "A scrolling, 3D-curved wheel of options, like the iOS picker, for choosing values such as dates and times.",
+  "overview": "`WheelPicker` is the frame: it draws the highlighted selection band across the middle and lays out one or more `WheelPickerColumn` wheels side by side. Each column is a scrolling list of `WheelPickerItem` options that snap to the center, and rows curve away and fade as they move from the middle.\n\nA column selects the item that comes to rest in the center after scrolling, or the item that's clicked. Use a wheel picker for touch-friendly choices from ordered lists, especially several related columns such as day, hour and minute. For a compact dropdown, use `Select`.",
+  "usage": "Each column manages its own value. Use `defaultValue` on `WheelPickerColumn` for an uncontrolled column, or `value` with `onValueChange` to control it. Give every `WheelPickerItem` a unique string `value`; its children are the visible label.\n\nSet `disabled` on items that can't be chosen. Scrolling skips past them to the nearest enabled item, and the keyboard steps over them.",
+  "examples": {
+    "DisabledItems": "Disables booked time slots so scrolling, keys and clicks skip them.",
+    "DateTime": "Combines controlled day, hour and minute columns into a date and time picker."
+  },
+  "parts": {
+    "WheelPicker": "The frame that holds the columns and draws the selection band.",
+    "WheelPickerColumn": "A scrolling, snapping wheel that holds one selected value.",
+    "WheelPickerItem": "A single option in a column."
+  },
+  "props": {
+    "WheelPickerItem": {
+      "value": "The string value this item selects; it must be unique in its column.",
+      "disabled": "Prevents the item from being selected."
+    }
+  },
+  "accessibility": "- Each column has the `listbox` role and is focusable; name it with `aria-label`. Items are `option` elements with `aria-selected`, and the column points to the selected item with `aria-activedescendant`.\n- With a column focused, the up and down arrow keys move to the previous or next enabled item, `Page Up` and `Page Down` move by five, and `Home` and `End` jump to the first and last enabled items.\n- Disabled items set `aria-disabled` and ignore clicks.\n- When reduced motion is preferred, the column scrolls to new values without smooth scrolling.",
+  "notes": "- Row height comes from `--wheel-picker-item-height` (`--spacing(8)` by default), set on `WheelPicker`; the column shows about seven rows.\n- The curve is driven by scroll-driven animations where `ViewTimeline` is supported, and by a scroll handler elsewhere.\n- Parts carry `data-slot` attributes: `wheel-picker`, `wheel-picker-column` and `wheel-picker-item`. Items set `data-value`, `data-selected` and `data-disabled`.\n- The selection band uses `bg-control`."
+}

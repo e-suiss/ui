@@ -1,0 +1,6 @@
+{
+  "description": "Per-app notification settings with a live lock screen preview that reflects each choice.",
+  "overview": "Per-app notification settings with a live lock screen preview: toggle notifications and choose alert styles, banner style, sounds, badges, preview text and grouping, and the preview updates to match. The preview sits beside the settings on desktop and below them on mobile. Use it for any settings screen where a live preview helps users understand their choices.",
+  "usage": "Every setting is local state, so persist each one to your settings store. `alerts`, `previewOptions` and `groupingOptions` define the choices. Replace the `wallpaper` image and the sample sender and message in the preview.",
+  "notes": "When notifications are off, the dependent settings are dimmed and skipped by keyboard, and the preview has a text summary for screen readers. The wallpaper is an Unsplash placeholder."
+}

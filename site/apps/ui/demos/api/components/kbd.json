@@ -1,0 +1,42 @@
+{
+  "name": "kbd",
+  "type": "ui",
+  "files": [
+    "components/ui/kbd.tsx"
+  ],
+  "requires": [
+    "use-platform"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Modifiers",
+    "Group",
+    "WithIcon",
+    "InInputGroup"
+  ],
+  "parts": [
+    {
+      "name": "Kbd",
+      "extends": [
+        "React.ComponentProps<\"kbd\">"
+      ],
+      "props": [
+        {
+          "name": "mod",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "KbdGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

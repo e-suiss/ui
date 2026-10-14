@@ -1,0 +1,5 @@
+{
+  "description": "A device protection picker with device tabs, payment options, a theft add-on and a running total.",
+  "overview": "A product screen with a hero photo per device, a `ToggleGroup` to pick the device, and a `RadioGroup` of payment options. For the phone, a `Switch` adds theft and loss protection. A `BottomBar` shows the total, which updates with each choice, and an Add to Bag `Button`.",
+  "usage": "Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders."
+}

@@ -1,0 +1,46 @@
+---
+title: Area Chart Sparkline
+description: "A watchlist with a tiny gradient area chart beside each price, colored by whether the stock is rising or falling."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-sparkline">
+
+<SourceFile path="components/charts/area-chart-sparkline.tsx" fold={false} />
+
+</Example>
+
+A watchlist where each row pairs a stock's name and price with a tiny gradient area chart, tinted green when rising and red when falling. Use sparklines like these inside lists and tables where a full chart would be too much.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-sparkline"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+
+<SourceFile path="components/charts/area-chart-sparkline.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartSparkline } from \"@/components/charts/area-chart-sparkline\""} />
+
+<Code lang="tsx" code={"<AreaChartSparkline />"} />
+
+Replace the `stocks` array and the demo `series` generator with your own symbols and price history. The tint follows the sign of each row's `change`, and the two colors live in `chartConfig`. Resize the sparkline through the class names on its `ChartContainer`.
+
+## Notes
+
+Sparklines are hidden from assistive technology and have no tooltip or keyboard support, so keep the price and percentage text next to them. Animation is off so long lists render without motion.

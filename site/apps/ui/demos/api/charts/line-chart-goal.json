@@ -1,0 +1,16 @@
+{
+  "name": "line-chart-goal",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-goal.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

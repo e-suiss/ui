@@ -1,0 +1,42 @@
+---
+title: Nav Categories
+description: "A store landing header with a draggable carousel of category tiles and a heading that follows the selection."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="nav-categories">
+
+<SourceFile path="components/blocks/nav-categories.tsx" fold={false} />
+
+</Example>
+
+A store landing header with a Store heading and tagline beside quick help links, then a draggable row of image tiles for each category. Selecting a tile lifts it and updates the line below to name the category. Use it as the top of a shop home page or any visual category picker.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks nav-categories"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Toggle](/docs/components/toggle).
+
+2. Copy the source into `components/blocks/nav-categories.tsx`:
+
+<SourceFile path="components/blocks/nav-categories.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { NavCategories } from \"@/components/blocks/nav-categories\""} />
+
+<Code lang="tsx" code={"<NavCategories />"} />
+
+Replace `categories` with your categories, each with a label and image. Tiles only select themselves, so navigate or load products from the `Toggle`'s `onPressedChange`. Point the `#specialist` and `#stores` links at your routes.
+
+## Notes
+
+Tile images are decorative, so each tile is named by its label. Images are Unsplash placeholders.

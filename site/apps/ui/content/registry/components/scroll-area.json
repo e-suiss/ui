@@ -1,0 +1,14 @@
+{
+  "description": "A scrollable region with slim, custom-styled scrollbars.",
+  "overview": "Scroll Area wraps Base UI's Scroll Area. `ScrollArea` renders the root, a focusable viewport for your content, a vertical `ScrollBar` and a corner. Add a horizontal `ScrollBar` as a child when content scrolls sideways.\n\nUse Scroll Area to give overflowing content a consistent scrollbar across platforms. For chat transcripts that should open at the latest message, use Message Scroller.",
+  "usage": "Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport. For horizontal scrolling, make the content wider than the area (for example with `w-max`) and include `ScrollBar` with `orientation=\"horizontal\"`.",
+  "examples": {
+    "Horizontal": "A row of album covers that scrolls sideways with a horizontal scrollbar."
+  },
+  "parts": {
+    "ScrollArea": "The root that renders the viewport, the vertical scrollbar and the corner.",
+    "ScrollBar": "A scrollbar track and thumb for one orientation, vertical by default."
+  },
+  "accessibility": "- The viewport is focusable, so keyboard users can Tab to it and scroll with the arrow keys.\n- Focus is shown with the standard focus ring, inset inside the viewport.\n- The custom scrollbars are presentational; native scrolling by wheel, touch and keyboard still works.",
+  "notes": "- Styling hooks: `data-slot` values `scroll-area`, `scroll-area-viewport`, `scroll-area-scrollbar` and `scroll-area-thumb`. Scrollbars expose `data-orientation`.\n- The thumb uses the `separator` token.\n- The viewport inherits the root's border radius, so rounded containers clip their content."
+}

@@ -1,0 +1,19 @@
+{
+  "name": "roles-editor",
+  "type": "block",
+  "files": [
+    "components/blocks/roles-editor.tsx"
+  ],
+  "requires": [
+    "button",
+    "item",
+    "sidebar",
+    "split-view",
+    "switch"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

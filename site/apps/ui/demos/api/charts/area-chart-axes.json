@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-axes",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-axes.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

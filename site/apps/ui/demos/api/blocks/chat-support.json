@@ -1,0 +1,19 @@
+{
+  "name": "chat-support",
+  "type": "block",
+  "files": [
+    "components/blocks/chat-support.tsx"
+  ],
+  "requires": [
+    "bubble",
+    "button",
+    "input",
+    "message",
+    "message-scroller"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

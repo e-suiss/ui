@@ -1,0 +1,6 @@
+{
+  "description": "A stacked bar chart whose tooltip marks each series with a thin vertical color bar.",
+  "overview": "A stacked bar chart that shows the line tooltip indicator, a thin vertical bar in each series' color. It reads cleanly in dense tooltips and pairs well with line and area charts.",
+  "usage": "Set `indicator` on `ChartTooltipContent` to `line`. Replace `chartData` and the series in `chartConfig` with your own.",
+  "notes": "The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden."
+}

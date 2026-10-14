@@ -1,0 +1,6 @@
+{
+  "description": "A borderless radar shape over shaded circular rings separated by surface-colored lines.",
+  "overview": "A borderless radar shape over shaded circular bands, separated by lines in the card's surface color. Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.",
+  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Adjust the band shading through the `fill` and opacity on `PolarGrid`, and the shape's strength through the opacity on `Radar`.",
+  "notes": "The gaps between bands use the card's background color, so place this chart on that same surface or update the grid stroke to match."
+}

@@ -1,0 +1,22 @@
+{
+  "description": "A toggle control that turns a single setting on or off.",
+  "overview": "`Switch` wraps the Base UI Switch primitive and renders the track and thumb together. The thumb stretches while pressed, and the track fills with the accent color when on.\n\nUse a switch for settings that take effect immediately. To select an option in a form that's submitted later, use `Checkbox`.",
+  "usage": "Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. Wrap the switch and its text in a `Label` so the text toggles it too.",
+  "examples": {
+    "Checked": "Starts in the on state.",
+    "Sizes": "Compares the `sm` and `default` sizes.",
+    "WithLabel": "Wraps the switch in a `Label` so the text names and toggles it.",
+    "Disabled": "Shows disabled switches in the off and on states.",
+    "Invalid": "Marks the switch with `aria-invalid` to show an error state."
+  },
+  "parts": {
+    "Switch": "The switch track and its sliding thumb."
+  },
+  "props": {
+    "Switch": {
+      "size": "Sets the switch size: `default` or the smaller `sm`."
+    }
+  },
+  "accessibility": "- Renders with the `switch` role and `aria-checked`.\n- Give it a name with `aria-label` or by wrapping it in a `Label`.\n- `Space` toggles the focused switch.\n- A disabled switch sets `aria-disabled` and ignores clicks.",
+  "notes": "- Uses `data-slot=\"switch\"` and `data-slot=\"switch-thumb\"`, plus `data-size` and Base UI's `data-checked`, `data-unchecked` and `data-disabled` attributes.\n- An invalid switch draws a `danger` border.\n- A transparent hit area extends around the track to make it easier to tap.\n- The thumb's travel flips in right-to-left layouts."
+}

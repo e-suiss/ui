@@ -1,0 +1,17 @@
+{
+  "name": "login-passkey",
+  "type": "block",
+  "files": [
+    "components/blocks/login-passkey.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "dialog"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

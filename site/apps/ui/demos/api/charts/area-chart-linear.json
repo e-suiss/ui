@@ -1,0 +1,16 @@
+{
+  "name": "area-chart-linear",
+  "type": "chart",
+  "files": [
+    "components/charts/area-chart-linear.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

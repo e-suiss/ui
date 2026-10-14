@@ -1,0 +1,19 @@
+{
+  "name": "inbox-mail",
+  "type": "block",
+  "files": [
+    "components/blocks/inbox-mail.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "input-group",
+    "split-view",
+    "textarea"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

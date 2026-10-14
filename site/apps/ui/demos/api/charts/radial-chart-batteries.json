@@ -1,0 +1,16 @@
+{
+  "name": "radial-chart-batteries",
+  "type": "chart",
+  "files": [
+    "components/charts/radial-chart-batteries.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

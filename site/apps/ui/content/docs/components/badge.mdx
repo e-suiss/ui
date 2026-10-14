@@ -1,0 +1,112 @@
+---
+title: Badge
+description: "A small inline label for status, counts or metadata."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="badge" story="Default">
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\"\n\nexport function BadgeExample() {\n  return (\n    <Badge>Badge</Badge>\n  )\n}"} />
+
+</Example>
+
+`Badge` is a single element that renders a `span` by default. Use the `render` prop to render it as another element, such as a link. Badges can hold text and an icon on either side.
+
+Use a badge to tag content with a short status or category. For actions, use Button instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add badge"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/badge.tsx`:
+
+<SourceFile path="components/ui/badge.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\""} />
+
+<Code lang="tsx" code={"<Badge>Badge</Badge>"} />
+
+Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` so the `outline` and `ghost` variants tighten their padding on that side. Icons are sized to `size-3`.
+
+Pass `render` with an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.
+
+To use a custom color, override the text color with a `className` such as `text-success`.
+
+## Examples
+
+### Variants
+
+Shows the `default`, `secondary`, `destructive`, `outline`, `ghost` and `link` variants.
+
+<Example kind="ui" name="badge" story="Variants">
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\"\n\nexport function BadgeVariantsExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Badge variant=\"default\">\n        Default\n      </Badge>\n      <Badge variant=\"secondary\">\n        Secondary\n      </Badge>\n      <Badge variant=\"destructive\">\n        Destructive\n      </Badge>\n      <Badge variant=\"outline\">\n        Outline\n      </Badge>\n      <Badge variant=\"ghost\">\n        Ghost\n      </Badge>\n      <Badge variant=\"link\">\n        Link\n      </Badge>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With icon
+
+Places icons before and after the label with `data-icon`.
+
+<Example kind="ui" name="badge" story="WithIcon">
+
+<Code lang="tsx" code={"import { ArrowUpRightIcon, CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Badge } from \"@/components/ui/badge\"\n\nexport function BadgeWithIconExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Badge variant=\"secondary\">\n        <CheckCircleIcon data-icon=\"inline-start\" />\n        Verified\n      </Badge>\n      <Badge variant=\"outline\">\n        Changelog\n        <ArrowUpRightIcon data-icon=\"inline-end\" />\n      </Badge>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### As link
+
+Renders the badge as a link with the `render` prop.
+
+<Example kind="ui" name="badge" story="AsLink">
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\"\n\nexport function BadgeAsLinkExample() {\n  return (\n    <Badge render={<a href=\"#documentation\" />}>Documentation</Badge>\n  )\n}"} />
+
+</Example>
+
+### Custom color
+
+Overrides the text color with utility classes.
+
+<Example kind="ui" name="badge" story="CustomColor">
+
+<Code lang="tsx" code={"import { Badge } from \"@/components/ui/badge\"\n\nexport function BadgeCustomColorExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Badge className=\"text-orange-700 dark:text-orange-400\">\n        New\n      </Badge>\n      <Badge className=\"text-success\">\n        Available\n      </Badge>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Badge
+
+The inline label element.
+
+<PropsTable extends={["useRender.ComponentProps<\"span\">"]} props={[{"name":"variant","type":"\"default\" | \"secondary\" | \"destructive\" | \"outline\" | \"ghost\" | \"link\"","default":"\"default\"","description":"Visual style. `default`, `secondary`, `destructive` and `link` are text-only; `outline` adds a border and `ghost` adds horizontal padding."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- A badge is static text by default and is not focusable.
+- When rendered as a link, it shows a focus ring on keyboard focus.
+- `aria-invalid` adds a danger-colored border.
+
+## Notes
+
+- Styling hook: `data-slot="badge"`, plus `data-variant` from the render state.
+- The `destructive` variant also sets the focus ring color to `--color-danger`.
+- Badges are a fixed `h-5` with fully rounded corners and do not wrap text.

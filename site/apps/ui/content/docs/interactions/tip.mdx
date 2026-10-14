@@ -1,0 +1,158 @@
+---
+title: Tip
+description: "A dismissible feature tip shown inline or as a popover, remembered once dismissed and sequenced in groups."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="tip" story="Default">
+
+<Code lang="tsx" code={"import { NotePencilIcon, PushPinIcon, ShareNetworkIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { resetTips, Tip, TipAnchor, TipCard, TipClose, TipContent, TipDescription, TipGroup, TipIcon, TipPopover, TipTitle } from \"@/components/interactions/tip\"\nimport { Button } from \"@/components/ui/button\"\n\nconst notes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n]\n\nconst TIP_IDS = [\"notes-pin\", \"notes-compose\"]\n\nfunction NotesPage() {\n  const [log, setLog] = React.useState(\"\")\n\n  return (\n    <TipGroup>\n      <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-4\">\n        <div className=\"flex items-center justify-between\">\n          <h2 className=\"text-3xl font-bold tracking-tight\">Notes</h2>\n          <div className=\"flex items-center\">\n            <Button\n              variant=\"plain\"\n              size=\"icon-lg\"\n              aria-label=\"Share folder\"\n              onClick={() => setLog(\"Shared the folder\")}\n            >\n              <ShareNetworkIcon className=\"size-5.5\" />\n            </Button>\n            <Tip id=\"notes-compose\" delay={600}>\n              <TipAnchor>\n                <Button\n                  variant=\"plain\"\n                  size=\"icon-lg\"\n                  aria-label=\"New note\"\n                  onClick={() => setLog(\"Started a new note\")}\n                >\n                  <NotePencilIcon className=\"size-5.5\" />\n                </Button>\n              </TipAnchor>\n              <TipPopover side=\"bottom\" align=\"end\">\n                <TipIcon>\n                  <NotePencilIcon weight=\"duotone\" />\n                </TipIcon>\n                <TipContent>\n                  <TipTitle>Start a note fast</TipTitle>\n                  <TipDescription>\n                    Tap here any time to begin a new note.\n                  </TipDescription>\n                </TipContent>\n                <TipClose />\n              </TipPopover>\n            </Tip>\n          </div>\n        </div>\n        <Tip id=\"notes-pin\">\n          <TipCard>\n            <TipIcon>\n              <PushPinIcon weight=\"duotone\" />\n            </TipIcon>\n            <TipContent>\n              <TipTitle>Pin your favorites</TipTitle>\n              <TipDescription>\n                Swipe right on a note to keep it at the top of the list.\n              </TipDescription>\n            </TipContent>\n            <TipClose />\n          </TipCard>\n        </Tip>\n        <ul className=\"overflow-hidden rounded-2xl border\">\n          {notes.map((note) => (\n            <li key={note.id} className=\"not-first:border-t\">\n              <button\n                type=\"button\"\n                onClick={() => setLog(`Opened ${note.title}`)}\n                className=\"flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]\"\n              >\n                <span className=\"truncate font-semibold\">{note.title}</span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {note.preview}\n                </span>\n              </button>\n            </li>\n          ))}\n        </ul>\n        <p role=\"status\" className=\"min-h-5 text-sm text-label-secondary\">\n          {log}\n        </p>\n      </div>\n    </TipGroup>\n  )\n}\n\nfunction TipsExample() {\n  const [key, setKey] = React.useState(0)\n\n  return (\n    <div className=\"flex flex-col gap-6\">\n      <NotesPage key={key} />\n      <Button\n        variant=\"secondary\"\n        size=\"sm\"\n        className=\"self-center\"\n        onClick={() => {\n          resetTips(TIP_IDS)\n          setKey((value) => value + 1)\n        }}\n      >\n        Show tips again\n      </Button>\n    </div>\n  )\n}\n\nexport function TipExample() {\n  return (\n    <TipsExample />\n  )\n}"} />
+
+</Example>
+
+`Tip` recreates TipKit-style feature tips. Each tip has an `id`; once dismissed, the id is stored in `localStorage` and the tip no longer appears. Show a tip inline with `TipCard`, which expands into the layout, or attach it to a control with `TipAnchor` and `TipPopover`, which uses a non-modal Base UI Popover with an arrow. Using the anchored control also dismisses its tip.
+
+Wrap several tips in `TipGroup` to show them one at a time, in the order they mount; when one is dismissed, the next appears. Use tips sparingly to point out features people might otherwise miss.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions tip"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/interactions/tip.tsx`:
+
+<SourceFile path="components/interactions/tip.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TipGroup, Tip, TipCard, TipAnchor, TipPopover, TipIcon, TipContent, TipTitle, TipDescription, TipClose } from \"@/components/interactions/tip\""} />
+
+<Code lang="tsx" code={"<TipsExample />"} />
+
+- Give every `Tip` a stable, unique `id`. Place either a `TipCard`, or a `TipAnchor` with a `TipPopover`, inside it.
+- Build the content with `TipIcon`, `TipContent`, `TipTitle`, `TipDescription`, and `TipClose`.
+- `TipPopover` accepts `side`, `align`, and `sideOffset` for positioning, defaulting to `bottom`, `center`, and `10`.
+- Call `resetTips` with a list of ids to clear their dismissed state, for example from a Show tips again control.
+
+## API Reference
+
+<ApiPart index={1}>
+
+### TipGroup
+
+Shows the tips inside it one at a time, in order.
+
+<PropsTable props={[{"name":"children","type":"React.ReactNode","description":"The tips to show in sequence."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Tip
+
+Holds a single tip's visibility and dismissed state.
+
+<PropsTable props={[{"name":"id","type":"string","required":true,"description":"The unique key used to remember that the tip was dismissed."},{"name":"delay","type":"number","default":"0","description":"Milliseconds to wait before showing the tip."},{"name":"onDismiss","type":"() => void","description":"Called when the tip is dismissed."},{"name":"children","type":"React.ReactNode","description":"The card or anchored popover for the tip."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TipCard
+
+An inline card that expands into the layout while the tip is visible.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TipAnchor
+
+Wraps the control that a popover tip points to.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TipPopover
+
+A popover with an arrow, positioned against `TipAnchor`.
+
+<PropsTable extends={["PopoverPrimitive.Popup.Props","PopoverPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TipIcon
+
+The leading icon of the tip.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TipContent
+
+The container for the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TipTitle
+
+The tip's title.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TipDescription
+
+The tip's supporting text.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### TipClose
+
+The button that dismisses the tip.
+
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `TipCard` renders with `role="note"`.
+- `TipPopover` is labelled by `TipTitle` and described by `TipDescription`. It does not move focus when it opens or closes, and pressing `Escape` or outside dismisses it.
+- `TipClose` is labelled `Dismiss tip`. `TipIcon` is `aria-hidden`.
+
+## Notes
+
+- Dismissed tips are stored under `tip:` followed by the id in `localStorage`. When storage is unavailable, tips still dismiss for the current session.
+- Parts use `data-slot` values `tip-card-frame`, `tip-card`, `tip-anchor`, `tip-popover`, `tip-icon`, `tip-content`, `tip-title`, `tip-description`, and `tip-close`.

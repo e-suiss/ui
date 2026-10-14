@@ -1,0 +1,150 @@
+---
+title: Picker
+description: "A single-choice picker that renders a custom Select on desktop and a native select on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="picker" story="Default">
+
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n  )\n}"} />
+
+</Example>
+
+`Picker` lets the user choose one option from a short list. On desktop it renders a suiss/ui `Select` with a trigger, a popup list, labelled groups and separators. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect`, so the platform's own picker wheel or sheet appears; groups become `optgroup` elements and separators are omitted.
+
+You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`, and the same markup drives both presentations. Use it for form fields where the options are known and do not need search; for long lists, use `SearchPicker`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns picker"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Native Select](/docs/components/native-select), [Select](/docs/components/select), `use-mobile`.
+
+2. Copy the source into `components/patterns/picker.tsx`:
+
+<SourceFile path="components/patterns/picker.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\""} />
+
+<Code lang="tsx" code={"<Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>"} />
+
+- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it.
+- `Picker` collects the value and label of each `PickerItem` from its children so the desktop trigger can show the selected label. Pass `items` only when options are not rendered as direct or nested `PickerItem` elements.
+- `PickerGroup`, `PickerItem` and `PickerSeparator` must be used inside `Picker`, or they throw.
+- Give the picker an accessible name with `aria-label` or a `Label` that points at its `id`.
+
+## Examples
+
+### With value
+
+Starts with an initial value through `defaultValue`.
+
+<Example kind="pattern" name="picker" story="WithValue">
+
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerWithValueExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" defaultValue=\"banana\">{fruitItems}</Picker>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Shows the `sm` and `default` sizes side by side.
+
+<Example kind="pattern" name="picker" story="Sizes">
+
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" size=\"sm\">\n        {fruitItems}\n      </Picker>\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Grouped
+
+Organizes options under labelled groups with a separator and a disabled option.
+
+<Example kind="pattern" name="picker" story="Grouped">
+
+<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\"\n\nexport function PickerGroupedExample() {\n  return (\n    <Picker placeholder=\"Select a time zone\" aria-label=\"Time zone\" className=\"w-64\">\n      <PickerGroup label=\"North America\">\n        <PickerItem value=\"est\">Eastern Time</PickerItem>\n        <PickerItem value=\"cst\">Central Time</PickerItem>\n        <PickerItem value=\"pst\">Pacific Time</PickerItem>\n      </PickerGroup>\n      <PickerSeparator />\n      <PickerGroup label=\"Europe\">\n        <PickerItem value=\"gmt\">Greenwich Mean Time</PickerItem>\n        <PickerItem value=\"cet\">Central European Time</PickerItem>\n        <PickerItem value=\"trt\" disabled>\n          Turkey Time\n        </PickerItem>\n      </PickerGroup>\n    </Picker>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Prevents opening and changing the value.
+
+<Example kind="pattern" name="picker" story="Disabled">
+
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerDisabledExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" disabled>{fruitItems}</Picker>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Shows the invalid style through `aria-invalid`.
+
+<Example kind="pattern" name="picker" story="Invalid">
+
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerInvalidExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" aria-invalid>{fruitItems}</Picker>\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Owns the value in state with `value` and `onValueChange`.
+
+<Example kind="pattern" name="picker" story="Controlled">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nfunction ControlledExample(args: React.ComponentProps<typeof Picker>) {\n  const [value, setValue] = React.useState(\"grapes\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <Picker {...args} value={value} onValueChange={setValue}>\n        {fruitItems}\n      </Picker>\n      <p className=\"text-sm text-label-secondary\">Selected: {value}</p>\n    </div>\n  )\n}\n\nexport function PickerControlledExample() {\n  return (\n    <ControlledExample placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Picker","href":"#picker","children":[{"name":"PickerGroup","href":"#pickergroup","children":[{"name":"PickerItem","href":"#pickeritem","children":[]}]},{"name":"PickerSeparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Picker
+
+The root that renders the Select or native select and holds the value.
+
+<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when the user picks an option."},{"name":"placeholder","type":"string","description":"Text shown when no value is selected; on mobile it is a disabled first option."},{"name":"items","type":"PickerItemData[]","description":"Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted."},{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"The control height."},{"name":"id","type":"string","description":"The ID of the trigger on desktop or the native select on mobile."},{"name":"name","type":"string","description":"The field name submitted with a form."},{"name":"disabled","type":"boolean","description":"Disables the picker."},{"name":"required","type":"boolean","description":"Marks the field as required for form validation."},{"name":"className","type":"string","description":"Classes applied to the trigger on desktop or the native select on mobile."},{"name":"children","type":"React.ReactNode","description":"The `PickerItem`, `PickerGroup` and `PickerSeparator` elements."},{"name":"aria-invalid","type":"boolean","description":"Marks the field as invalid and applies the error style."},{"name":"aria-label","type":"string","description":"The accessible name of the control."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the control."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PickerGroup
+
+Groups related options under an optional label.
+
+<PropsTable props={[{"name":"label","type":"string","description":"The group's heading; becomes the `optgroup` label on mobile."},{"name":"children","type":"React.ReactNode","description":"The options in the group."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PickerItem
+
+A selectable option.
+
+<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value selected by this option."},{"name":"disabled","type":"boolean","description":"Prevents selecting this option."},{"name":"children","type":"React.ReactNode","description":"The option's label."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The desktop trigger has the `combobox` role and opens a `listbox`; the selected option has `aria-selected`, and disabled options have `aria-disabled`.
+- Labelled groups are exposed as `group` elements named by their label.
+- Escape closes the desktop list without changing the value.
+- On mobile the control is a native `select`, with the platform's built-in keyboard and screen reader support.
+
+## Notes
+
+Styling hooks: `data-slot="picker"`, `picker-group`, `picker-item` and `picker-separator`.

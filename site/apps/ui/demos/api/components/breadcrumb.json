@@ -1,0 +1,70 @@
+{
+  "name": "breadcrumb",
+  "type": "ui",
+  "files": [
+    "components/ui/breadcrumb.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithHomeIcon",
+    "WithEllipsis",
+    "CustomSeparator"
+  ],
+  "parts": [
+    {
+      "name": "Breadcrumb",
+      "extends": [
+        "React.ComponentProps<\"nav\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbList",
+      "extends": [
+        "React.ComponentProps<\"ol\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbItem",
+      "extends": [
+        "React.ComponentProps<\"li\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbLink",
+      "extends": [
+        "useRender.ComponentProps<\"a\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbPage",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbSeparator",
+      "extends": [
+        "React.ComponentProps<\"li\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "BreadcrumbEllipsis",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    }
+  ]
+}

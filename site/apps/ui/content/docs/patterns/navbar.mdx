@@ -1,0 +1,118 @@
+---
+title: Navbar
+description: "A site header that renders a navigation menu on wide screens and a fullscreen menu when space runs out."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="navbar" story="Default">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} />\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Navbar` builds a `header` from an `items` array. On wide screens it renders a `NavigationMenu`: plain links appear inline, groups open a dropdown of links with optional icons and descriptions, and mega items open multi-column panels. The `brand` sits at the start and `actions` at the end.
+
+The navbar switches to a compact layout below the `48rem` breakpoint, and also on wider screens whenever its contents overflow the header; it measures itself with a `ResizeObserver` and returns to the full menu once there is room again. In the compact layout the items move into a `FullscreenMenu` opened by a menu button, with plain links in the first group and each group or mega column as a labelled section. Use it as the primary navigation of a marketing site or documentation site.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns navbar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Fullscreen Menu](/docs/components/fullscreen-menu), [Navigation Menu](/docs/components/navigation-menu), `use-mobile`.
+
+3. Copy the source into `components/patterns/navbar.tsx`:
+
+<SourceFile path="components/patterns/navbar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Navbar } from \"@/components/patterns/navbar\""} />
+
+<Code lang="tsx" code={"<div className=\"min-h-96\">\n  <Navbar items={items} brand={brand} />\n</div>"} />
+
+Each `NavbarItem` is one of three shapes: a link with `label` and `href` (plus optional `description`, `icon` and `active`), a group with `label` and `items`, or a mega item with `label` and `columns`. Each column has a `label`, `links` and an optional `featured` flag that sets its links in a large type size. Pass `render` to route links through your framework's link component; it receives `href` and the link content.
+
+## Examples
+
+### With actions
+
+Adds a Sign in button at the end of the header with `actions`.
+
+<Example kind="pattern" name="navbar" story="WithActions">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarWithActionsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} actions={(\n            <Button size=\"sm\" variant=\"secondary\">\n              Sign in\n            </Button>\n          )} />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Links only
+
+Uses only plain links and marks the current page with `active`.
+
+<Example kind="pattern" name="navbar" story="LinksOnly">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarLinksOnlyExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={[\n            { label: \"Overview\", href: \"#overview\", active: true },\n            { label: \"Customers\", href: \"#customers\" },\n            { label: \"Changelog\", href: \"#changelog\" },\n            { label: \"Blog\", href: \"#blog\" },\n          ]} brand={brand} />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Crowded
+
+Shows nine links in a narrow frame, folding them into the menu until the frame is wide enough.
+
+<Example kind="pattern" name="navbar" story="Crowded">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarCrowdedExample() {\n  return (\n    <div className=\"min-h-96\">\n      <div data-testid=\"frame\" className=\"w-160 max-w-full\">\n        <Navbar items={[\n          \"Store\",\n          \"Laptop\",\n          \"Tablet\",\n          \"Phone\",\n          \"Watch\",\n          \"Headphones\",\n          \"Speakers\",\n          \"Accessories\",\n          \"Support\",\n        ].map((label) => ({ label, href: `#${label.toLowerCase()}` }))} brand={brand} actions={(\n          <Button size=\"sm\" variant=\"secondary\">\n            Sign in\n          </Button>\n        )} />\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Labels the fullscreen menu's close button Done with `closeLabel`.
+
+<Example kind="pattern" name="navbar" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarWithCloseLabelExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} closeLabel=\"Done\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Mega panel
+
+Uses `layout="panel"` with a mega item whose columns open in a full-width panel.
+
+<Example kind="pattern" name="navbar" story="MegaPanel">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarMegaPanelExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={[\n            {\n              label: \"Products\",\n              columns: [\n                {\n                  label: \"Explore\",\n                  featured: true,\n                  links: [\n                    { label: \"Analytics\", href: \"#analytics\" },\n                    { label: \"Automations\", href: \"#automations\" },\n                    { label: \"Security\", href: \"#security\" },\n                  ],\n                },\n                {\n                  label: \"Get started\",\n                  links: [\n                    { label: \"Pricing\", href: \"#pricing\" },\n                    { label: \"Customers\", href: \"#customers\" },\n                  ],\n                },\n                {\n                  label: \"Learn\",\n                  links: [\n                    { label: \"Documentation\", href: \"#docs\" },\n                    { label: \"Help center\", href: \"#help\" },\n                  ],\n                },\n              ],\n            },\n            { label: \"Pricing\", href: \"#pricing\" },\n            { label: \"Blog\", href: \"#blog\" },\n          ]} brand={brand} layout=\"panel\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Navbar
+
+The header that renders the brand, navigation items and actions.
+
+<PropsTable extends={["React.ComponentProps<\"header\">"]} props={[{"name":"items","type":"NavbarItem[]","required":true,"description":"The navigation items: links, groups of links, or mega items with columns."},{"name":"brand","type":"React.ReactNode","description":"Content shown at the start of the header, such as a logo."},{"name":"actions","type":"React.ReactNode","description":"Content shown at the end of the header, such as a sign-in button; it stays visible in the compact layout."},{"name":"menuLabel","type":"string","default":"\"Menu\"","description":"Accessible label of the compact menu button and title of the fullscreen menu."},{"name":"closeLabel","type":"string","description":"Text for the fullscreen menu's close button."},{"name":"layout","type":"\"popover\" | \"panel\"","default":"\"popover\"","description":"With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header."},{"name":"render","type":"React.ReactElement","default":"<NavbarAnchor />","description":"The element used for every link, defaulting to a plain anchor; replace it with your router's link component."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Group and mega triggers are buttons with `aria-expanded` reflecting their state, and `Escape` closes an open dropdown.
+- Links marked `active` have `aria-current="page"`.
+- In the compact layout, the menu button is labelled by `menuLabel`.
+
+## Notes
+
+The header carries `data-slot="navbar"`, `data-layout`, and `data-compact` while the fullscreen menu is in use. The brand and actions wrappers use `data-slot="navbar-brand"` and `data-slot="navbar-actions"`, and mega columns use `data-slot="navbar-column"` with `data-featured`. With `layout="panel"` the header gains `relative` positioning and `z-50` so the panel can anchor to it.

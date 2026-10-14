@@ -1,0 +1,57 @@
+---
+title: Direction
+description: "A provider that sets the reading direction, left-to-right or right-to-left, for the components inside it."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="direction" story="Default">
+
+<Code lang="tsx" code={"import { ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { DirectionProvider, useDirection } from \"@/components/ui/direction\"\n\nfunction DirectionPreview() {\n  const direction = useDirection()\n\n  return (\n    <Card dir={direction} className=\"w-80\">\n      <CardHeader>\n        <CardTitle>Reading direction</CardTitle>\n        <CardDescription>\n          Current direction is {direction.toUpperCase()}.\n        </CardDescription>\n      </CardHeader>\n      <CardContent>\n        <p>\n          Components that use logical properties flip their layout when the\n          direction changes.\n        </p>\n      </CardContent>\n      <CardFooter className=\"justify-end gap-2\">\n        <Button variant=\"ghost\">Cancel</Button>\n        <Button>\n          Continue\n          <ArrowRightIcon data-icon=\"inline-end\" className=\"rtl:rotate-180\" />\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}\n\nexport function DirectionExample() {\n  return (\n    <DirectionProvider direction=\"ltr\">\n      <DirectionPreview />\n    </DirectionProvider>\n  )\n}"} />
+
+</Example>
+
+The direction module re-exports `DirectionProvider` and `useDirection` from Base UI. `DirectionProvider` takes a `direction` of `ltr` or `rtl` and makes it available to Base UI components below it, so behaviors that depend on direction, such as arrow-key navigation and popup placement, follow the reading direction. `useDirection` returns the current direction for your own components.
+
+The provider does not set the `dir` attribute on the page. Set `dir` on the `html` element or on a container yourself so that the browser and logical CSS properties flip the layout.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add direction"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react"} />
+
+2. Copy the source into `components/ui/direction.tsx`:
+
+<SourceFile path="components/ui/direction.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"<DirectionProvider direction=\"ltr\">\n  <DirectionPreview />\n</DirectionProvider>"} />
+
+Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon.
+
+## Examples
+
+### Right to left
+
+The same card rendered with `direction` set to `rtl`, so its footer buttons appear in reversed order.
+
+<Example kind="ui" name="direction" story="RightToLeft">
+
+<Code lang="tsx" code={"import { ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { DirectionProvider, useDirection } from \"@/components/ui/direction\"\n\nfunction DirectionPreview() {\n  const direction = useDirection()\n\n  return (\n    <Card dir={direction} className=\"w-80\">\n      <CardHeader>\n        <CardTitle>Reading direction</CardTitle>\n        <CardDescription>\n          Current direction is {direction.toUpperCase()}.\n        </CardDescription>\n      </CardHeader>\n      <CardContent>\n        <p>\n          Components that use logical properties flip their layout when the\n          direction changes.\n        </p>\n      </CardContent>\n      <CardFooter className=\"justify-end gap-2\">\n        <Button variant=\"ghost\">Cancel</Button>\n        <Button>\n          Continue\n          <ArrowRightIcon data-icon=\"inline-end\" className=\"rtl:rotate-180\" />\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}\n\nexport function DirectionRightToLeftExample() {\n  return (\n    <DirectionProvider direction=\"rtl\">\n      <DirectionPreview />\n    </DirectionProvider>\n  )\n}"} />
+
+</Example>
+
+## Notes
+
+- Pair directional icons with the `rtl:` Tailwind variant, for example `rtl:rotate-180`, so arrows point the right way.
+- Many components in the library use logical properties such as `ps-`, `pe-`, `ms-` and `me-`, which flip automatically under `dir="rtl"`.

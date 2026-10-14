@@ -1,0 +1,50 @@
+{
+  "name": "search-reveal",
+  "type": "interaction",
+  "files": [
+    "components/interactions/search-reveal.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "ShortList"
+  ],
+  "parts": [
+    {
+      "name": "SearchReveal",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SearchRevealField",
+      "extends": [
+        "React.ComponentProps<\"input\">"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "SearchRevealContent",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    }
+  ]
+}

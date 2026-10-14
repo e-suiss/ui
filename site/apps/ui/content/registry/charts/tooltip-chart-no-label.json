@@ -1,0 +1,6 @@
+{
+  "description": "A stacked bar chart whose tooltip omits the category heading and shows only the series rows.",
+  "overview": "A stacked bar chart whose tooltip drops the category heading and shows only the series rows. Use it when the hovered category is obvious from the axis and you want a smaller tooltip.",
+  "usage": "Set `hideLabel` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig` with your own.",
+  "notes": "The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden."
+}

@@ -1,0 +1,19 @@
+{
+  "name": "inbox-support",
+  "type": "block",
+  "files": [
+    "components/blocks/inbox-support.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "split-view",
+    "textarea",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

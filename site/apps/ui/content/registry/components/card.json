@@ -1,0 +1,29 @@
+{
+  "description": "A raised container that groups related content and actions about a single subject.",
+  "overview": "A `Card` stacks a `CardHeader`, `CardContent` and `CardFooter` with consistent spacing. The header holds a `CardTitle`, an optional `CardDescription`, and an optional `CardAction` that sits in the top-end corner. An `img` placed as the first child runs edge to edge, with rounded top corners and no top padding.\n\nUse a card to present a self-contained summary, such as a plan, a metric or a place. For dense lists of rows, use Item or a table instead.",
+  "usage": "All parts are plain `div` elements, so you can omit any of them. Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to draw a divider; the card adds matching padding on that side.\n\nSpacing is controlled by the `--card-spacing` custom property, which the `sm` size reduces.",
+  "examples": {
+    "Small": "The `sm` size with tighter spacing.",
+    "Filled": "The `filled` variant on a flat secondary surface with no shadow.",
+    "WithAction": "Places an icon button in the header with `CardAction`.",
+    "WithBorders": "Separates the header and footer with borders.",
+    "WithImage": "Leads with a full-bleed image above the header."
+  },
+  "parts": {
+    "Card": "The rounded container that sets size and surface.",
+    "CardHeader": "Lays out the title, description and action.",
+    "CardTitle": "The card's heading text.",
+    "CardDescription": "Secondary text below the title.",
+    "CardAction": "A slot in the header's top-end corner for a button or menu.",
+    "CardContent": "The main body, padded to the card's spacing.",
+    "CardFooter": "A row for actions or summary at the bottom."
+  },
+  "props": {
+    "Card": {
+      "size": "Inner spacing: `default` or the more compact `sm`.",
+      "variant": "Surface style. `default` is raised with a shadow and ring; `filled` uses `bg-surface-secondary` with no shadow."
+    }
+  },
+  "accessibility": "- Card parts are non-semantic `div` elements, and `CardTitle` is not a heading. If the title belongs in the document outline, place a heading element such as `h2` inside it.\n- Icon-only buttons in `CardAction` need an `aria-label`.",
+  "notes": "- Styling hooks: `data-slot` values `card`, `card-header`, `card-title`, `card-description`, `card-action`, `card-content` and `card-footer`, plus `data-size` and `data-variant` on the root.\n- The header switches to a two-column grid when it contains a `CardAction`.\n- Calendar detects `data-slot=\"card-content\"` and drops its own background inside a card."
+}

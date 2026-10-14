@@ -1,0 +1,115 @@
+{
+  "name": "alert-dialog",
+  "type": "ui",
+  "files": [
+    "components/ui/alert-dialog.tsx"
+  ],
+  "requires": [
+    "button",
+    "use-scrollbar-gap"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Small",
+    "WithMedia"
+  ],
+  "parts": [
+    {
+      "name": "AlertDialog",
+      "extends": [
+        "AlertDialogPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogTrigger",
+      "extends": [
+        "AlertDialogPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogPortal",
+      "extends": [
+        "AlertDialogPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogOverlay",
+      "extends": [
+        "AlertDialogPrimitive.Backdrop.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogContent",
+      "extends": [
+        "AlertDialogPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\"",
+          "required": false,
+          "default": "\"default\""
+        }
+      ]
+    },
+    {
+      "name": "AlertDialogHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogMedia",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogTitle",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogPrimitive.Title>"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogDescription",
+      "extends": [
+        "React.ComponentProps<typeof AlertDialogPrimitive.Description>"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogAction",
+      "extends": [
+        "AlertDialogPrimitive.Close.Props",
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "AlertDialogCancel",
+      "extends": [
+        "AlertDialogPrimitive.Close.Props",
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    }
+  ]
+}

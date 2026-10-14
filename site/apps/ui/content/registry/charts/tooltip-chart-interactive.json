@@ -1,0 +1,6 @@
+{
+  "description": "A tooltip playground on quarterly revenue bars, with controls for indicator, trigger, title total and hidden parts.",
+  "overview": "A stacked quarterly revenue chart with live controls for every tooltip option: indicator style, hover or click trigger, a total in the title, and hiding the title or indicator. Use it to try combinations before copying the settings into your own chart.",
+  "usage": "Pick the combination you like, then copy the matching props into your chart: `indicator`, `hideLabel` and `hideIndicator` go on the tooltip content, and `trigger` on `ChartTooltip`. The total in the title comes from a label formatter that sums the rows.",
+  "notes": "With the click trigger, the tooltip appears only after a bar is clicked and stays in place as the pointer moves. Every control is a labeled, keyboard-operable switch or toggle group."
+}

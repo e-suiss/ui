@@ -1,0 +1,26 @@
+{
+  "name": "spinner",
+  "type": "ui",
+  "files": [
+    "components/ui/spinner.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sizes",
+    "Colors",
+    "InButton"
+  ],
+  "parts": [
+    {
+      "name": "Spinner",
+      "extends": [
+        "React.ComponentProps<\"svg\">"
+      ],
+      "props": []
+    }
+  ]
+}

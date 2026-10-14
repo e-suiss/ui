@@ -1,0 +1,5 @@
+{
+  "description": "An account settings screen with a profile header, a section list and an editable sign-in and security page.",
+  "overview": "The main page shows an `Avatar` and name above an inset `ItemGroup` of account sections; tapping one pushes it into the same `Header` with a back button. The Sign-In & Security page has cards for email and phone that open an inline `Input` with Save and Cancel, a passkeys `Switch`, and a confirmation that appears after saving. Other sections show a placeholder.",
+  "usage": "Replace `ITEMS` and the initial email and phone values with your account data. Use `onSave`, which receives the field and new value, to persist edits."
+}

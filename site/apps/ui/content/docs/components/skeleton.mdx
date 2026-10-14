@@ -1,0 +1,94 @@
+---
+title: Skeleton
+description: "A pulsing placeholder block that stands in for content while it loads."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="skeleton" story="Default">
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonExample() {\n  return (\n    <Skeleton className=\"h-4 w-48\" />\n  )\n}"} />
+
+</Example>
+
+`Skeleton` is a plain `div` with a pulsing animation, rounded corners and a `surface-secondary` fill. It has no size of its own; set width, height and shape with utility classes so each placeholder matches the content it replaces.
+
+Combine several skeletons to sketch a layout, such as an avatar with two lines of text. For an indeterminate activity indicator, use `Spinner` instead.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add skeleton"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/skeleton.tsx`:
+
+<SourceFile path="components/ui/skeleton.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\""} />
+
+<Code lang="tsx" code={"<Skeleton className=\"h-4 w-48\" />"} />
+
+Size every skeleton with classes such as `h-4 w-48`. Use `rounded-full` for avatars and other rounded shapes to override the default `rounded-md`.
+
+## Examples
+
+### Profile
+
+Sketches an avatar beside two lines of text.
+
+<Example kind="ui" name="skeleton" story="Profile">
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonProfileExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Skeleton className=\"size-12 rounded-full\" />\n      <div className=\"flex flex-col gap-2\">\n        <Skeleton className=\"h-4 w-48\" />\n        <Skeleton className=\"h-4 w-32\" />\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Card
+
+Sketches a media card with an image and two lines of text.
+
+<Example kind="ui" name="skeleton" story="Card">
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonCardExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-3\">\n      <Skeleton className=\"aspect-video w-full\" />\n      <Skeleton className=\"h-4 w-3/4\" />\n      <Skeleton className=\"h-4 w-1/2\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### List
+
+Sketches a list of rows, each with an icon and two lines of text.
+
+<Example kind="ui" name="skeleton" story="List">
+
+<Code lang="tsx" code={"import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function SkeletonListExample() {\n  return (\n    <div className=\"flex w-80 flex-col gap-4\">\n      {Array.from({ length: 4 }, (_, index) => (\n        <div key={index} className=\"flex items-center gap-3\">\n          <Skeleton className=\"size-9 rounded-xl\" />\n          <div className=\"flex flex-1 flex-col gap-2\">\n            <Skeleton className=\"h-3.5 w-2/3\" />\n            <Skeleton className=\"h-3 w-1/3\" />\n          </div>\n        </div>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Skeleton
+
+A pulsing placeholder block.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `Skeleton` renders an empty `div` with no role or text, so it isn't announced. Let assistive technologies know content is loading another way, for example with `aria-busy` on the region that's loading.
+
+## Notes
+
+- Uses `data-slot="skeleton"`, the `animate-pulse` animation and the `bg-surface-secondary` token.

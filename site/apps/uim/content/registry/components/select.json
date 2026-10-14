@@ -1,0 +1,39 @@
+{
+  "description": "A control that opens a floating list of options and shows the chosen one in its trigger.",
+  "overview": "`Select` is built on the select primitive. `SelectTrigger` is a pressable field with the `combobox` role and an up-down caret. `SelectContent` renders in a portal, positioned next to the trigger, and fades in and out with Reanimated. The list matches the trigger width.\n\nThe trigger comes in two sizes, `default` and `sm`. Use Select for picking one value from a short list; for a list that needs searching, use Combobox.",
+  "usage": "Put a `SelectValue` inside `SelectTrigger`, and `SelectItem` entries inside `SelectContent`. Group items with `SelectGroup` and `SelectLabel`, and divide groups with `SelectSeparator`.\n\nControl the value with `value` and `onValueChange` on `Select`, or start from `defaultValue`. Pass the full option list as `items` so `SelectValue` can show the label of the current value. `Select` also accepts `multiple`, `disabled`, `readOnly`, `open`, `defaultOpen` and `onOpenChange`.\n\nGive each `SelectItem` a `value` and a `label`; the label is shown when no children are passed. `SelectValue` shows `placeholder` until a value is chosen. The `Option` type (`{ value, label }`) is also exported.",
+  "examples": {
+    "WithValue": "A select that starts with a chosen value.",
+    "Small": "The `sm` trigger size.",
+    "Grouped": "Two labeled groups divided by a separator.",
+    "WithLabel": "A select labeled by a `Label` through `accessibilityLabelledBy`, with helper text.",
+    "Disabled": "A disabled select with a value.",
+    "Invalid": "The invalid state with an error message.",
+    "OpenByDefault": "A select whose list starts open."
+  },
+  "parts": {
+    "Select": "Root that holds the value and open state.",
+    "SelectTrigger": "Pressable field that opens the list.",
+    "SelectValue": "Shows the selected label or the placeholder.",
+    "SelectContent": "Floating list rendered in a portal.",
+    "SelectGroup": "Groups related items.",
+    "SelectLabel": "Heading for a group.",
+    "SelectItem": "One option, with a check mark when selected.",
+    "SelectSeparator": "Line between groups."
+  },
+  "props": {
+    "SelectTrigger": {
+      "size": "Trigger height: `default` or `sm`.",
+      "invalid": "Shows the danger border. Falls back to the invalid state of an enclosing field."
+    },
+    "SelectContent": {
+      "side": "Side of the trigger to open on. Defaults to `bottom`.",
+      "sideOffset": "Gap from the trigger in points. Defaults to `4`.",
+      "align": "Alignment against the trigger. Defaults to `center`.",
+      "alignOffset": "Offset along the alignment axis. Defaults to `0`.",
+      "portalHost": "Name of the portal host to render into."
+    }
+  },
+  "accessibility": "- The trigger has the `combobox` role and reports its expanded and disabled states.\n- The list has the `list` role; each item has the `option` role, uses its label as `accessibilityLabel` and reports selected and disabled states.\n- Groups have the `group` role and are labeled by their `SelectLabel`.\n- Label the trigger with `accessibilityLabelledBy` pointing at a `Label`'s `nativeID`, or with `accessibilityLabel`.\n- The Android back button and the VoiceOver escape gesture close the list.",
+  "notes": "- Uses `bg-control` for the trigger, `bg-surface-raised` for the list and `text-link` for the check mark; colors follow the system appearance.\n- On iOS the list renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals."
+}

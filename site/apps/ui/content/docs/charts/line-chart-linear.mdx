@@ -1,0 +1,46 @@
+---
+title: Line Chart Linear
+description: "A single line drawn with straight segments between readings instead of a smoothed curve."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-linear">
+
+<SourceFile path="components/charts/line-chart-linear.tsx" fold={false} />
+
+</Example>
+
+One series joined by straight segments instead of a smoothed curve. Prefer it to the default when smoothing would imply values between readings that were never measured.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-linear"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-linear.tsx`:
+
+<SourceFile path="components/charts/line-chart-linear.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartLinear } from \"@/components/charts/line-chart-linear\""} />
+
+<Code lang="tsx" code={"<LineChartLinear />"} />
+
+Replace `chartData`, update each `dataKey` and set the label and color in `chartConfig`. Everything else matches the default line chart.
+
+## Notes
+
+Keyboard users can focus the chart and move between points with the arrow keys.

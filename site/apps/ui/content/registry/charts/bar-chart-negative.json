@@ -1,0 +1,6 @@
+{
+  "description": "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline.",
+  "overview": "Monthly cash flow where bars rise green above a zero line and drop red below it. Use it for any value that can be negative, such as profit, net change or deltas against a target.",
+  "usage": "Replace `chartData` with your values and rename `flow` in the data, the bar and `chartConfig`. The color for each bar is chosen per `Cell` based on its sign, so change the two colors there. Set `interval` on the axis to show more or fewer month labels.",
+  "notes": "Because colors are set per bar instead of in the config, the tooltip has no color swatch, and green and red alone carry the sign; keep the zero line so the direction is clear without color. Focus the chart and use the arrow keys to move between months."
+}

@@ -1,0 +1,15 @@
+{
+  "description": "A pulsing placeholder block that stands in for content while it loads.",
+  "overview": "`Skeleton` is a plain `div` with a pulsing animation, rounded corners and a `surface-secondary` fill. It has no size of its own; set width, height and shape with utility classes so each placeholder matches the content it replaces.\n\nCombine several skeletons to sketch a layout, such as an avatar with two lines of text. For an indeterminate activity indicator, use `Spinner` instead.",
+  "usage": "Size every skeleton with classes such as `h-4 w-48`. Use `rounded-full` for avatars and other rounded shapes to override the default `rounded-md`.",
+  "examples": {
+    "Profile": "Sketches an avatar beside two lines of text.",
+    "Card": "Sketches a media card with an image and two lines of text.",
+    "List": "Sketches a list of rows, each with an icon and two lines of text."
+  },
+  "parts": {
+    "Skeleton": "A pulsing placeholder block."
+  },
+  "accessibility": "- `Skeleton` renders an empty `div` with no role or text, so it isn't announced. Let assistive technologies know content is loading another way, for example with `aria-busy` on the region that's loading.",
+  "notes": "- Uses `data-slot=\"skeleton\"`, the `animate-pulse` animation and the `bg-surface-secondary` token."
+}

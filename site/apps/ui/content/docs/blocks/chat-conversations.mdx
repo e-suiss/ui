@@ -1,0 +1,46 @@
+---
+title: Chat Conversations
+description: "A messaging app layout with a conversation list beside the selected thread and a message composer."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="chat-conversations">
+
+<SourceFile path="components/blocks/chat-conversations.tsx" fold={false} />
+
+</Example>
+
+A messaging app with conversations on the left, the open thread on the right and a composer whose send button appears once you type. On mobile only one pane shows at a time, starting with the conversation list, and a back button returns to it. Built on `SplitView` and `MessageScroller`, it is a starting point for direct messages, team chat or customer conversations.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks chat-conversations"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Split View](/docs/patterns/split-view).
+
+3. Copy the source into `components/blocks/chat-conversations.tsx`:
+
+<SourceFile path="components/blocks/chat-conversations.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ChatConversations } from \"@/components/blocks/chat-conversations\""} />
+
+<Code lang="tsx" code={"<ChatConversations />"} />
+
+Replace the `threads` array; each thread has a name, avatar hue, time and lines written as strings prefixed with `me:` or `them:`. The `send` function fakes a typing indicator and a canned reply from `replies`, so replace it with your messaging backend. The New message, attachment, video call and details buttons have no handlers.
+
+## Notes
+
+Typing status is announced, and icon-only buttons are labeled. The composer input uses its placeholder as its accessible name, so keep the placeholder descriptive.

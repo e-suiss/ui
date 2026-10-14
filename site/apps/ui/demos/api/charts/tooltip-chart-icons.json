@@ -1,0 +1,17 @@
+{
+  "name": "tooltip-chart-icons",
+  "type": "chart",
+  "files": [
+    "components/charts/tooltip-chart-icons.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

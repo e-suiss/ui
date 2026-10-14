@@ -1,0 +1,5 @@
+{
+  "description": "A monthly temperature chart for several cities with city toggles and an average, high and low switch.",
+  "overview": "One line per visible city across twelve months. A `ToggleGroup` switches between average, high and low temperatures, and a row of `Toggle` chips shows or hides each city, keeping at least one on. Touching the plot reports the month through `onActiveIndexChange`, and the summary under the chart switches from each city's range to its value for that month. The lines animate with `animationDuration={650}` and `animationEasing=\"ease-in-out\"`.",
+  "usage": "Replace `CITIES` with your series and monthly values, and add a matching entry to `chartConfig` and `SWATCH` for each. The high and low values are derived in `temperature()`, so replace that with real data. The component takes no props."
+}

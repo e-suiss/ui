@@ -1,0 +1,6 @@
+{
+  "description": "A store landing header with a draggable carousel of category tiles and a heading that follows the selection.",
+  "overview": "A store landing header with a Store heading and tagline beside quick help links, then a draggable row of image tiles for each category. Selecting a tile lifts it and updates the line below to name the category. Use it as the top of a shop home page or any visual category picker.",
+  "usage": "Replace `categories` with your categories, each with a label and image. Tiles only select themselves, so navigate or load products from the `Toggle`'s `onPressedChange`. Point the `#specialist` and `#stores` links at your routes.",
+  "notes": "Tile images are decorative, so each tile is named by its label. Images are Unsplash placeholders."
+}

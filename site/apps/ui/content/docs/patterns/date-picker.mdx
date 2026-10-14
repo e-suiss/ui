@@ -1,0 +1,169 @@
+---
+title: Date Picker
+description: "A date field that opens a calendar popover on desktop and wheel pickers in a drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="date-picker" story="Default">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" />\n  )\n}"} />
+
+</Example>
+
+`DatePicker` is a single component that renders a field-style trigger showing the selected date, formatted with `Intl.DateTimeFormat` in the `medium` date style, or the placeholder. On desktop the trigger opens a `Popover` containing a single-selection `Calendar`; picking a day selects it and closes the popover.
+
+Below the `48rem` breakpoint the trigger opens a bottom `Drawer` with a `WheelPicker` of day, month and year columns, ordered to match the locale's short date format. Turning a wheel updates the value immediately, and the day is clamped to the length of the chosen month. Use it for form fields such as delivery dates or dates of birth.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns date-picker"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Calendar](/docs/components/calendar), [Drawer](/docs/components/drawer), [Popover](/docs/components/popover), `use-mobile`, [Wheel Picker](/docs/components/wheel-picker).
+
+3. Copy the source into `components/patterns/date-picker.tsx`:
+
+<SourceFile path="components/patterns/date-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\""} />
+
+<Code lang="tsx" code={"<DatePicker aria-label=\"Date\" className=\"w-60\" />"} />
+
+Use `value` and `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one; the value is a `Date` or `null`. `locale` drives the trigger format, calendar captions, weekday names, the first day of the week, day labels and the wheel order. `fromYear` and `toYear` bound both the calendar's months and the year wheel. Pass `id`, `aria-label` and `aria-describedby` to connect the field to a label and help text.
+
+## Examples
+
+### With value
+
+Starts with a `defaultValue`, and the calendar opens on that month.
+
+<Example kind="pattern" name="date-picker" story="WithValue">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithValueExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+</Example>
+
+### Locale
+
+Formats the trigger and calendar in Turkish with `locale="tr-TR"`.
+
+<Example kind="pattern" name="date-picker" story="Locale">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerLocaleExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" locale=\"tr-TR\" placeholder=\"Tarih seç\" defaultValue={new Date(2026, 9, 4)} />\n  )\n}"} />
+
+</Example>
+
+### Year range
+
+Limits selection to 1940 through 2010 for a date of birth.
+
+<Example kind="pattern" name="date-picker" story="YearRange">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerYearRangeExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" placeholder=\"Date of birth\" fromYear={1940} toYear={2010} defaultValue={new Date(1990, 5, 15)} />\n  )\n}"} />
+
+</Example>
+
+### With title
+
+Shows a visible Delivery date title in the mobile drawer.
+
+<Example kind="pattern" name="date-picker" story="WithTitle">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithTitleExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" title=\"Delivery date\" />\n  )\n}"} />
+
+</Example>
+
+### With close button
+
+Adds an icon close button to the mobile drawer.
+
+<Example kind="pattern" name="date-picker" story="WithCloseButton">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseButtonExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" showCloseButton />\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Adds a text close button labelled Done to the mobile drawer.
+
+<Example kind="pattern" name="date-picker" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerWithCloseLabelExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" showCloseButton closeLabel=\"Done\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables the trigger so the picker cannot open.
+
+<Example kind="pattern" name="date-picker" story="Disabled">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerDisabledExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" disabled />\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Marks the field invalid with `aria-invalid`.
+
+<Example kind="pattern" name="date-picker" story="Invalid">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerInvalidExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" aria-invalid />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Owns the value in parent state and shows the picked date below the field.
+
+<Example kind="pattern" name="date-picker" story="Controlled">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { DatePicker } from \"@/components/patterns/date-picker\"\n\nfunction ControlledExample(args: React.ComponentProps<typeof DatePicker>) {\n  const [value, setValue] = React.useState<Date | null>(new Date(2026, 9, 4))\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <DatePicker {...args} value={value} onValueChange={setValue} />\n      <p className=\"text-sm text-label-secondary\">\n        Selected: {value ? value.toDateString() : \"none\"}\n      </p>\n    </div>\n  )\n}\n\nexport function DatePickerControlledExample() {\n  return (\n    <ControlledExample aria-label=\"Date\" className=\"w-60\" />\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Insets the mobile drawer from the screen edges with `floating`.
+
+<Example kind="pattern" name="date-picker" story="Floating">
+
+<Code lang="tsx" code={"import { DatePicker } from \"@/components/patterns/date-picker\"\n\nexport function DatePickerFloatingExample() {\n  return (\n    <DatePicker aria-label=\"Date\" className=\"w-60\" floating />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DatePicker
+
+The field trigger with its desktop calendar popover and mobile wheel drawer.
+
+<PropsTable props={[{"name":"value","type":"Date | null","description":"The selected date when controlled; `null` for no date."},{"name":"defaultValue","type":"Date | null","description":"The initial date when uncontrolled."},{"name":"onValueChange","type":"(value: Date | null) => void","description":"Called with the new date when the user picks a day or turns a wheel."},{"name":"placeholder","type":"string","default":"\"Pick a date\"","description":"Text shown in the trigger when no date is selected."},{"name":"locale","type":"string","description":"BCP 47 locale used for formatting, week start, labels and wheel order; defaults to the runtime locale."},{"name":"fromYear","type":"number","default":"new Date().getFullYear() - 100","description":"The earliest selectable year."},{"name":"toYear","type":"number","default":"new Date().getFullYear() + 10","description":"The latest selectable year."},{"name":"title","type":"string","description":"Visible title of the mobile drawer; without it the drawer title is visually hidden."},{"name":"disabled","type":"boolean","description":"Disables the trigger."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Replaces the drawer's close icon with this text; requires `showCloseButton`."},{"name":"id","type":"string","description":"The `id` of the trigger button, for use with a `label`."},{"name":"className","type":"string","description":"Classes applied to the trigger button."},{"name":"aria-invalid","type":"boolean","description":"Marks the field invalid and applies the danger border and tint."},{"name":"aria-label","type":"string","description":"Accessible name of the trigger; also used as the hidden drawer title when `title` is absent."},{"name":"aria-describedby","type":"string","description":"IDs of elements that describe the field, such as help or error text."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger is a `button`; give it a name with `aria-label` or a `label` linked through `id`.
+- On desktop the calendar is a `grid` named by its month caption, and each day button is named with the full localized date, prefixed with today's relative name for the current day.
+- `Escape` closes the calendar and returns focus to the trigger.
+- On mobile each wheel column is labelled Day, Month or Year, and the drawer always has a title, visually hidden when `title` is not set.
+
+## Notes
+
+The trigger carries `data-slot="date-picker-trigger"` and `data-placeholder` while empty; the popup carries `data-slot="date-picker-content"` and the wheels `data-slot="date-picker-wheels"`. When no value is set, the mobile wheels start at today's date. The open state is internal and cannot be controlled.

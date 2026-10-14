@@ -1,0 +1,19 @@
+{
+  "name": "roles-requests",
+  "type": "block",
+  "files": [
+    "components/blocks/roles-requests.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "empty",
+    "select",
+    "sidebar"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

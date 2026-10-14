@@ -1,0 +1,46 @@
+---
+title: Log Live
+description: "A live admin activity feed that streams new events, with session stats and a pause control."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="log-live">
+
+<SourceFile path="components/blocks/log-live.tsx" fold={false} />
+
+</Example>
+
+A live activity feed that streams new events to the top of a list, with session stats above and a Pause or Resume button. People appear with gradient avatars and system events with icons, with warnings tinted orange. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for real-time monitoring, deploy logs or live order feeds.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks log-live"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Sidebar](/docs/components/sidebar).
+
+3. Copy the source into `components/blocks/log-live.tsx`:
+
+<SourceFile path="components/blocks/log-live.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LogLive } from \"@/components/blocks/log-live\""} />
+
+<Code lang="tsx" code={"<LogLive />"} />
+
+The demo pushes the next item from the `feed` sample every 2.2 seconds; replace that interval with a subscription to your event stream, such as a WebSocket or server-sent events. Each event has an actor, action, detail, either an avatar hue or an icon, and an optional warning flag. The list keeps only the seven newest events, and the Active users and Avg. response stats are hard-coded.
+
+## Notes
+
+Every new event is announced to screen readers, which can get noisy on a busy stream; consider throttling or announcing a summary instead.

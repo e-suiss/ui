@@ -1,0 +1,42 @@
+---
+title: Radar Chart Legend
+description: "Two overlapping radar shapes with a legend beneath that names each series."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-legend">
+
+<SourceFile path="components/charts/radar-chart-legend.tsx" fold={false} />
+
+</Example>
+
+Two overlapping radar shapes with a legend underneath naming each series. Pick it over the plain multiple-series chart when readers need to know which shape is which without hovering.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-legend"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-legend.tsx`:
+
+<SourceFile path="components/charts/radar-chart-legend.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartLegend } from \"@/components/charts/radar-chart-legend\""} />
+
+<Code lang="tsx" code={"<RadarChartLegend />"} />
+
+Replace `chartData` and rename the series keys in the data, both `Radar` elements and `chartConfig`; the legend reads labels and colors from the config. The series declared last is drawn on top.

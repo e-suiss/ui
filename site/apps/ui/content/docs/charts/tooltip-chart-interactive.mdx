@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Interactive
+description: "A tooltip playground on quarterly revenue bars, with controls for indicator, trigger, title total and hidden parts."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-interactive">
+
+<SourceFile path="components/charts/tooltip-chart-interactive.tsx" fold={false} />
+
+</Example>
+
+A stacked quarterly revenue chart with live controls for every tooltip option: indicator style, hover or click trigger, a total in the title, and hiding the title or indicator. Use it to try combinations before copying the settings into your own chart.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-interactive"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
+
+3. Copy the source into `components/charts/tooltip-chart-interactive.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-interactive.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartInteractive } from \"@/components/charts/tooltip-chart-interactive\""} />
+
+<Code lang="tsx" code={"<TooltipChartInteractive />"} />
+
+Pick the combination you like, then copy the matching props into your chart: `indicator`, `hideLabel` and `hideIndicator` go on the tooltip content, and `trigger` on `ChartTooltip`. The total in the title comes from a label formatter that sums the rows.
+
+## Notes
+
+With the click trigger, the tooltip appears only after a bar is clicked and stays in place as the pointer moves. Every control is a labeled, keyboard-operable switch or toggle group.

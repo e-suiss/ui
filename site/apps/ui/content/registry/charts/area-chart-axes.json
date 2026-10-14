@@ -1,0 +1,6 @@
+{
+  "description": "A gradient area with visible dots and a value axis on the right edge of the plot.",
+  "overview": "A single series drawn as a smooth area with a soft gradient fill, a dot at every value and a value axis on the right. Use it when readers need to read exact values off the chart, not just see the trend.",
+  "usage": "Swap `chartData` for your own records, point each `dataKey` at your fields and set the series label and color in `chartConfig`. Set `orientation` on the value axis to move it to the left, and adjust `tickCount` to make it denser or sparser. Drop the dots if they feel busy on longer series.",
+  "notes": "The plot is keyboard accessible: focus it and use the arrow keys to step the tooltip through the months. You can render several copies on one page without their gradients clashing."
+}

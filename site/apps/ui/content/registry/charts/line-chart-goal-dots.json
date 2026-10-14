@@ -1,0 +1,6 @@
+{
+  "description": "Nightly sleep hours with a goal line and dots colored green or orange depending on whether the goal was met.",
+  "overview": "Nightly sleep plotted against a dashed goal line, with each dot colored green if the goal was met and orange if not. Pick it over the plain goal chart when readers should spot hits and misses at a glance.",
+  "usage": "Replace `chartData` and set `GOAL` to your target; dot colors update from the comparison automatically. Adjust the value axis `domain` and `ticks` to your range, and change the two dot colors in the custom `dot` renderer.",
+  "notes": "The headline figure is hard-coded text, not computed from the data, so wire it up when you plug in real values. Color alone marks hit or miss on the chart, so keep a text explanation like the one in the header."
+}

@@ -1,0 +1,46 @@
+---
+title: Bar Chart Labeled
+description: "A single bar series with each value printed above its bar and no grid lines."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-labeled">
+
+<SourceFile path="components/charts/bar-chart-labeled.tsx" fold={false} />
+
+</Example>
+
+A single bar series with each value printed above its bar and no grid lines. Use it when exact numbers matter and there are few enough bars for the labels to fit.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-labeled"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-labeled.tsx`:
+
+<SourceFile path="components/charts/bar-chart-labeled.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartLabeled } from \"@/components/charts/bar-chart-labeled\""} />
+
+<Code lang="tsx" code={"<BarChartLabeled />"} />
+
+Replace `chartData`, set each `dataKey` and rename the `chartConfig` entry for the label and color. Move the labels with the `position` prop on `LabelList`, for example inside the bar. Increase the chart's top margin if larger labels get clipped.
+
+## Notes
+
+Labels follow the theme's text color in light and dark mode. Focus the chart and use the arrow keys to move between bars.

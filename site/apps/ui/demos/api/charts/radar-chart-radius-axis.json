@@ -1,0 +1,16 @@
+{
+  "name": "radar-chart-radius-axis",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-radius-axis.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

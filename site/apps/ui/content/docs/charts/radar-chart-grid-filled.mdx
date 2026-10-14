@@ -1,0 +1,46 @@
+---
+title: Radar Chart Grid Filled
+description: "A borderless radar shape over shaded circular rings separated by surface-colored lines."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-grid-filled">
+
+<SourceFile path="components/charts/radar-chart-grid-filled.tsx" fold={false} />
+
+</Example>
+
+A borderless radar shape over shaded circular bands, separated by lines in the card's surface color. Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-grid-filled"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-grid-filled.tsx`:
+
+<SourceFile path="components/charts/radar-chart-grid-filled.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartGridFilled } from \"@/components/charts/radar-chart-grid-filled\""} />
+
+<Code lang="tsx" code={"<RadarChartGridFilled />"} />
+
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Adjust the band shading through the `fill` and opacity on `PolarGrid`, and the shape's strength through the opacity on `Radar`.
+
+## Notes
+
+The gaps between bands use the card's background color, so place this chart on that same surface or update the grid stroke to match.

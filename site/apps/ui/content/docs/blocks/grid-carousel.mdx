@@ -1,0 +1,42 @@
+---
+title: Grid Carousel
+description: "A horizontally scrolling carousel of product cards with previous and next controls."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="grid-carousel">
+
+<SourceFile path="components/blocks/grid-carousel.tsx" fold={false} />
+
+</Example>
+
+A horizontally scrolling row of product cards under a two-tone heading, each with an optional kicker, name, tagline, starting price and image. Previous and next buttons sit below the track, and cards shrink to fit narrow screens. With no state of its own, it is a simple base for latest products, featured items or related content rows.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks grid-carousel"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Carousel](/docs/components/carousel).
+
+2. Copy the source into `components/blocks/grid-carousel.tsx`:
+
+<SourceFile path="components/blocks/grid-carousel.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { GridCarousel } from \"@/components/blocks/grid-carousel\""} />
+
+<Code lang="tsx" code={"<GridCarousel />"} />
+
+Replace `products`; each has an optional kicker, a name, tagline, formatted price, image and alt text. Card links are hash anchors built from the name, so point them at your product pages.
+
+## Notes
+
+Images are Unsplash placeholders with descriptive alt text.

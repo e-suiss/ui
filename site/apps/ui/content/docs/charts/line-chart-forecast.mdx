@@ -1,0 +1,46 @@
+---
+title: Line Chart Forecast
+description: "A solid line for actual values that continues as a dashed forecast over a shaded future range."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-forecast">
+
+<SourceFile path="components/charts/line-chart-forecast.tsx" fold={false} />
+
+</Example>
+
+Actual values drawn as a solid line that continues as a dashed forecast over a shaded future period. Use it whenever you show projections next to history and need readers to tell them apart.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-forecast"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-forecast.tsx`:
+
+<SourceFile path="components/charts/line-chart-forecast.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartForecast } from \"@/components/charts/line-chart-forecast\""} />
+
+<Code lang="tsx" code={"<LineChartForecast />"} />
+
+Fill the `actual` and `forecast` arrays; the forecast should start with the last actual value so the two lines meet. Move the shaded period by changing `x1` and `x2` on the reference area to match your first and last forecast labels. Both series share one color in `chartConfig`.
+
+## Notes
+
+Since actual and forecast use the same color, the dash pattern and shading carry the distinction; the tooltip also names each series. At the handover point the tooltip lists both values.

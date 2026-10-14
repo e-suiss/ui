@@ -1,0 +1,42 @@
+---
+title: Pie Chart Donut
+description: "A donut chart with a hollow center and small gaps between slices."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-donut">
+
+<SourceFile path="components/charts/pie-chart-donut.tsx" fold={false} />
+
+</Example>
+
+A donut with a hollow center and small gaps between slices. It reads lighter than a full pie and leaves the center free for a label if you need one later.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-donut"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-donut.tsx`:
+
+<SourceFile path="components/charts/pie-chart-donut.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartDonut } from \"@/components/charts/pie-chart-donut\""} />
+
+<Code lang="tsx" code={"<PieChartDonut />"} />
+
+Replace `chartData` and add a label and color to `chartConfig` for each category key. Change the ring thickness with `innerRadius` and `outerRadius`, and the gap between slices with `paddingAngle`.

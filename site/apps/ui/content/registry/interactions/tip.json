@@ -1,0 +1,30 @@
+{
+  "description": "A dismissible feature tip shown inline or as a popover, remembered once dismissed and sequenced in groups.",
+  "overview": "`Tip` recreates TipKit-style feature tips. Each tip has an `id`; once dismissed, the id is stored in `localStorage` and the tip no longer appears. Show a tip inline with `TipCard`, which expands into the layout, or attach it to a control with `TipAnchor` and `TipPopover`, which uses a non-modal Base UI Popover with an arrow. Using the anchored control also dismisses its tip.\n\nWrap several tips in `TipGroup` to show them one at a time, in the order they mount; when one is dismissed, the next appears. Use tips sparingly to point out features people might otherwise miss.",
+  "usage": "- Give every `Tip` a stable, unique `id`. Place either a `TipCard`, or a `TipAnchor` with a `TipPopover`, inside it.\n- Build the content with `TipIcon`, `TipContent`, `TipTitle`, `TipDescription`, and `TipClose`.\n- `TipPopover` accepts `side`, `align`, and `sideOffset` for positioning, defaulting to `bottom`, `center`, and `10`.\n- Call `resetTips` with a list of ids to clear their dismissed state, for example from a Show tips again control.",
+  "parts": {
+    "TipGroup": "Shows the tips inside it one at a time, in order.",
+    "Tip": "Holds a single tip's visibility and dismissed state.",
+    "TipCard": "An inline card that expands into the layout while the tip is visible.",
+    "TipAnchor": "Wraps the control that a popover tip points to.",
+    "TipPopover": "A popover with an arrow, positioned against `TipAnchor`.",
+    "TipIcon": "The leading icon of the tip.",
+    "TipContent": "The container for the title and description.",
+    "TipTitle": "The tip's title.",
+    "TipDescription": "The tip's supporting text.",
+    "TipClose": "The button that dismisses the tip."
+  },
+  "props": {
+    "TipGroup": {
+      "children": "The tips to show in sequence."
+    },
+    "Tip": {
+      "id": "The unique key used to remember that the tip was dismissed.",
+      "delay": "Milliseconds to wait before showing the tip.",
+      "onDismiss": "Called when the tip is dismissed.",
+      "children": "The card or anchored popover for the tip."
+    }
+  },
+  "accessibility": "- `TipCard` renders with `role=\"note\"`.\n- `TipPopover` is labelled by `TipTitle` and described by `TipDescription`. It does not move focus when it opens or closes, and pressing `Escape` or outside dismisses it.\n- `TipClose` is labelled `Dismiss tip`. `TipIcon` is `aria-hidden`.",
+  "notes": "- Dismissed tips are stored under `tip:` followed by the id in `localStorage`. When storage is unavailable, tips still dismiss for the current session.\n- Parts use `data-slot` values `tip-card-frame`, `tip-card`, `tip-anchor`, `tip-popover`, `tip-icon`, `tip-content`, `tip-title`, `tip-description`, and `tip-close`."
+}

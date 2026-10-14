@@ -1,0 +1,42 @@
+---
+title: Bag Review
+description: "A shopping bag review page with quantity steppers, removable line items, and a totals summary."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="bag-review">
+
+<SourceFile path="components/blocks/bag-review.tsx" fold={false} />
+
+</Example>
+
+A shopping bag page that leads with the order total, then lists each item with a photo, a quantity stepper, its price and a Remove link, followed by subtotal, shipping and total. Line items use a compact two-column layout on mobile and a four-column row on desktop. Removing everything turns the headline into an empty-bag message. Reach for it for any cart or order review screen.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bag-review"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Stepper](/docs/interactions/stepper).
+
+2. Copy the source into `components/blocks/bag-review.tsx`:
+
+<SourceFile path="components/blocks/bag-review.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BagReview } from \"@/components/blocks/bag-review\""} />
+
+<Code lang="tsx" code={"<BagReview />"} />
+
+Replace `initialItems` with your cart lines, each with a name, variant, price, image and quantity. Persist quantity changes and removals to your cart service, and connect both Check Out buttons to your checkout. The product links point to `#details`, and the free delivery and shipping copy is placeholder text. In the empty state, Continue Shopping restores the sample items, so point it at your catalog instead.
+
+## Notes
+
+Quantities are limited to 1–10, and each stepper and Remove button is labeled with the product name. Product photos are Unsplash placeholders.

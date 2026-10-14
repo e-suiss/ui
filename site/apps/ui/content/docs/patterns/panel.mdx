@@ -1,0 +1,203 @@
+---
+title: Panel
+description: "A side panel that renders as a Sheet on desktop and a swipeable Drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="panel" story="Default">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Panel>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </PanelTrigger>\n        <ProfilePanel />\n      </Panel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Panel` presents secondary content such as forms, filters or details without leaving the page. On desktop it renders a suiss/ui `Sheet` that slides in from the chosen side. On mobile (below `48rem`, via `useIsMobile`) it switches to a `Drawer` with a swipe handle, and every subcomponent swaps to its Drawer counterpart.
+
+The parts mirror the Sheet and Drawer anatomy: a trigger, content with an optional close button, header, title, description, body, footer and a close control. Use it where a desktop layout calls for a side sheet and a phone calls for a bottom sheet.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns panel"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Sheet](/docs/components/sheet), `use-mobile`.
+
+3. Copy the source into `components/patterns/panel.tsx`:
+
+<SourceFile path="components/patterns/panel.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescription, PanelBody, PanelFooter, PanelClose } from \"@/components/patterns/panel\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Panel>\n    <PanelTrigger render={<Button variant=\"outline\" />}>\n      Edit profile\n    </PanelTrigger>\n    <ProfilePanel />\n  </Panel>\n</div>"} />
+
+- Compose `PanelTrigger` and `PanelContent` inside `Panel`. All parts must be used inside `Panel`, or they throw.
+- Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it.
+- Use the `render` prop on `PanelTrigger` and `PanelClose` to render them as a suiss/ui `Button`.
+- Put scrollable or form content in `PanelBody`, which applies padding that matches each presentation.
+
+## Examples
+
+### By default
+
+Starts open with `defaultOpen` and closes from the close button.
+
+<Example kind="pattern" name="panel" story="OpenByDefault">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelOpenByDefaultExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Panel defaultOpen>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </PanelTrigger>\n        <ProfilePanel />\n      </Panel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Sides
+
+Opens the desktop sheet from the top, right, bottom and left.
+
+<Example kind="pattern" name="panel" story="Sides">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelSidesExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <div className=\"flex flex-wrap items-center gap-3\">\n        {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n          <Panel key={side}>\n            <PanelTrigger render={<Button variant=\"outline\" />}>\n              {side.charAt(0).toUpperCase() + side.slice(1)}\n            </PanelTrigger>\n            <ProfilePanel side={side} />\n          </Panel>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Replaces the close icon with a Done text button through `closeLabel`.
+
+<Example kind="pattern" name="panel" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Panel>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </PanelTrigger>\n        <ProfilePanel closeLabel=\"Done\" />\n      </Panel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Without close button
+
+Hides the built-in close button and closes from a Cancel button instead.
+
+<Example kind="pattern" name="panel" story="WithoutCloseButton">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelWithoutCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Panel>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </PanelTrigger>\n        <ProfilePanel showCloseButton={false} />\n      </Panel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Insets the mobile drawer from the screen edges with `floating`.
+
+<Example kind="pattern" name="panel" story="Floating">
+
+<Code lang="tsx" code={"import { Panel, PanelBody, PanelClose, PanelContent, PanelDescription, PanelFooter, PanelHeader, PanelTitle, PanelTrigger } from \"@/components/patterns/panel\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\ntype Side = \"top\" | \"right\" | \"bottom\" | \"left\"\n\nfunction ProfilePanel({\n  side,\n  showCloseButton,\n  closeLabel,\n}: {\n  side?: Side\n  showCloseButton?: boolean\n  closeLabel?: string\n}) {\n  return (\n    <PanelContent\n      side={side}\n      showCloseButton={showCloseButton}\n      closeLabel={closeLabel}\n    >\n      <PanelHeader>\n        <PanelTitle>Edit profile</PanelTitle>\n        <PanelDescription>\n          Update your details and save when you are done.\n        </PanelDescription>\n      </PanelHeader>\n      <PanelBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-name\">Name</Label>\n          <Input id=\"panel-name\" defaultValue=\"Jordan Lee\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"panel-username\">Username</Label>\n          <Input id=\"panel-username\" defaultValue=\"@jordanlee\" />\n        </div>\n      </PanelBody>\n      <PanelFooter>\n        <Button>Save changes</Button>\n        <PanelClose render={<Button variant=\"secondary\" />}>Cancel</PanelClose>\n      </PanelFooter>\n    </PanelContent>\n  )\n}\n\nexport function PanelFloatingExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Panel floating>\n        <PanelTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </PanelTrigger>\n        <ProfilePanel />\n      </Panel>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Panel","href":"#panel","children":[{"name":"PanelTrigger","href":"#paneltrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### Panel
+
+The root that chooses Sheet or Drawer and holds the open state.
+
+<PropsTable extends={["React.ComponentProps<typeof Sheet>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new open state when the panel opens or closes."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges. Has no effect on desktop."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PanelTrigger
+
+The button that opens the panel.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the rendered element, for example with a `Button`."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PanelContent
+
+The popup surface, with an optional close button.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"side","type":"\"top\" | \"right\" | \"bottom\" | \"left\"","default":"\"right\"","description":"The screen edge the desktop sheet slides in from. Ignored on mobile."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the built-in close button."},{"name":"closeLabel","type":"string","description":"Text for the close button in place of the icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PanelHeader
+
+Groups the title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PanelTitle
+
+The panel's heading, which names the dialog.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLHeadingElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### PanelDescription
+
+Supporting text that describes the dialog.
+
+<PropsTable extends={["React.HTMLAttributes<HTMLParagraphElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### PanelBody
+
+The padded main content area.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### PanelFooter
+
+Holds the panel's actions.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### PanelClose
+
+A button that closes the panel.
+
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the rendered element, for example with a `Button`."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The content is a `dialog` named by `PanelTitle` and described by `PanelDescription`.
+- Escape closes the panel and returns focus to the trigger.
+- The built-in close button is named Close, or by `closeLabel` when set.
+
+## Notes
+
+Styling hooks: `data-slot="panel"`, `panel-trigger`, `panel-content`, `panel-header`, `panel-title`, `panel-description`, `panel-body`, `panel-footer` and `panel-close`. The presentation follows the viewport at render time, so a panel open while the viewport crosses `48rem` re-renders in the other presentation.

@@ -1,0 +1,164 @@
+---
+title: Input Otp
+description: "A segmented field for entering one-time passcodes, one character per slot."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="input-otp" story="Default">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+Input OTP is built on the `input-otp` library. `InputOTP` renders a single hidden text input that holds the whole code, and displays it through `InputOTPSlot` elements, each showing the character at its `index`. Group slots with `InputOTPGroup`, and place an `InputOTPSeparator` between groups to split a code, for example into two sets of three.
+
+Use it for verification and two-factor codes. For other short values, use `Input`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn input-otp"} />
+
+2. Copy the source into `components/ui/input-otp.tsx`:
+
+<SourceFile path="components/ui/input-otp.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from \"@/components/ui/input-otp\""} />
+
+<Code lang="tsx" code={"<InputOTP maxLength={6} aria-label=\"Verification code\">\n  <InputOTPGroup>\n    <InputOTPSlot index={0} />\n    <InputOTPSlot index={1} />\n    <InputOTPSlot index={2} />\n  </InputOTPGroup>\n  <InputOTPSeparator />\n  <InputOTPGroup>\n    <InputOTPSlot index={3} />\n    <InputOTPSlot index={4} />\n    <InputOTPSlot index={5} />\n  </InputOTPGroup>\n</InputOTP>"} />
+
+Set `maxLength` to the length of the code and render one `InputOTPSlot` for each position, with `index` values from `0`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onChange`, which receives the code as a string. Restrict accepted characters with `pattern`, for example with `REGEXP_ONLY_DIGITS_AND_CHARS` from `input-otp`.
+
+Typing fills the slots in order and stops at `maxLength`; Backspace removes the last character. Set `aria-invalid` on `InputOTP` to show the error style on every slot.
+
+## Examples
+
+### Filled
+
+A code that starts filled from `defaultValue`.
+
+<Example kind="ui" name="input-otp" story="Filled">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFilledExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"482913\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+### Single group
+
+Six slots in a single group with no separator.
+
+<Example kind="ui" name="input-otp" story="SingleGroup">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpSingleGroupExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+### Four digits
+
+A four-digit code with `maxLength` set to `4`.
+
+<Example kind="ui" name="input-otp" story="FourDigits">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFourDigitsExample() {\n  return (\n    <InputOTP maxLength={4} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+### Alphanumeric
+
+A code that accepts letters and digits using the `REGEXP_ONLY_DIGITS_AND_CHARS` pattern.
+
+<Example kind="ui" name="input-otp" story="Alphanumeric">
+
+<Code lang="tsx" code={"import { REGEXP_ONLY_DIGITS_AND_CHARS } from \"input-otp\"\nimport { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpAlphanumericExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+An invalid code with every slot outlined in the error color.
+
+<Example kind="ui" name="input-otp" story="Invalid">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpInvalidExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"123456\" aria-invalid>\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+A disabled code that keeps its value and dims its slots and separator.
+
+<Example kind="ui" name="input-otp" story="Disabled">
+
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpDisabledExample() {\n  return (\n    <InputOTP maxLength={6} disabled aria-label=\"Verification code\" defaultValue=\"123456\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"InputOTP","href":"#inputotp","children":[{"name":"InputOTPGroup","href":"#inputotpgroup","children":[{"name":"InputOTPSlot","href":"#inputotpslot","children":[]}]},{"name":"InputOTPSeparator","href":"#inputotpseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### InputOTP
+
+The root that holds the code in a single hidden input.
+
+<PropsTable extends={["React.ComponentProps<typeof OTPInput>"]} props={[{"name":"containerClassName","type":"string","description":"Classes applied to the element that wraps the slots."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputOTPGroup
+
+Groups adjacent slots.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputOTPSlot
+
+Displays one character of the code and a caret when active.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"index","type":"number","required":true,"description":"The position of the character this slot displays."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputOTPSeparator
+
+A dash shown between groups of slots.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The code is entered into one native text input, so it has the `textbox` role. Give it an accessible name with `aria-label` or an associated label.
+- Slots are visual only; assistive technology reads the value of the input.
+- `InputOTPSeparator` has the `separator` role.
+- When `disabled`, the input cannot be edited and the slots are dimmed.
+
+## Notes
+
+- Styling hooks: `data-slot` values `input-otp`, `input-otp-group`, `input-otp-slot` and `input-otp-separator`. The active slot gets `data-active="true"` and an `accent` border.
+- The container has the `cn-input-otp` class, which slots use to react to the input's invalid and disabled states.
+- The blinking caret uses the `animate-caret-blink` animation.
+- Uses the `control`, `control-disabled`, `accent`, `danger` and `label-quaternary` tokens.

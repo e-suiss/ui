@@ -1,0 +1,57 @@
+{
+  "name": "accordion",
+  "type": "ui",
+  "files": [
+    "components/ui/accordion.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Filled",
+    "OpenByDefault",
+    "Multiple"
+  ],
+  "parts": [
+    {
+      "name": "Accordion",
+      "extends": [
+        "AccordionPrimitive.Root.Props"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"filled\"",
+          "default": "\"default\"",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "AccordionItem",
+      "extends": [
+        "AccordionPrimitive.Item.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AccordionTrigger",
+      "extends": [
+        "AccordionPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "AccordionContent",
+      "extends": [
+        "AccordionPrimitive.Panel.Props"
+      ],
+      "props": []
+    }
+  ]
+}

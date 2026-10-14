@@ -1,0 +1,99 @@
+{
+  "name": "action-menu",
+  "type": "pattern",
+  "files": [
+    "components/patterns/action-menu.tsx"
+  ],
+  "requires": [
+    "alert-sheet",
+    "dropdown-menu",
+    "use-mobile"
+  ],
+  "dependencies": [],
+  "examples": [
+    "Default",
+    "WithIcons",
+    "NotDismissible"
+  ],
+  "parts": [
+    {
+      "name": "ActionMenu",
+      "extends": [
+        "React.ComponentProps<typeof DropdownMenu>"
+      ],
+      "props": [
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "name": "ActionMenuTrigger",
+      "extends": [
+        "React.ButtonHTMLAttributes<HTMLButtonElement>"
+      ],
+      "props": [
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ActionMenuContent",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>",
+        "React.ComponentProps<typeof DropdownMenuContent>"
+      ],
+      "props": [
+        {
+          "name": "cancelLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Cancel\""
+        }
+      ]
+    },
+    {
+      "name": "ActionMenuLabel",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    },
+    {
+      "name": "ActionMenuItem",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"destructive\"",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ActionMenuSeparator",
+      "extends": [
+        "React.HTMLAttributes<HTMLElement>"
+      ],
+      "props": []
+    }
+  ]
+}

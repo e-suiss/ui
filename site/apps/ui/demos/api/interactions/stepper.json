@@ -1,0 +1,84 @@
+{
+  "name": "stepper",
+  "type": "interaction",
+  "files": [
+    "components/interactions/stepper.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Print"
+  ],
+  "parts": [
+    {
+      "name": "Stepper",
+      "extends": [
+        "NumberFieldPrimitive.Root.Props"
+      ],
+      "props": [
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: number) => void",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "StepperInput",
+      "extends": [
+        "NumberFieldPrimitive.Input.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "StepperGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "StepperDecrement",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "StepperIncrement",
+      "extends": [
+        "React.ComponentProps<\"button\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "StepperSeparator",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "separator",
+  "type": "ui",
+  "files": [
+    "components/ui/separator.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Horizontal",
+    "Vertical"
+  ],
+  "parts": [
+    {
+      "name": "Separator",
+      "extends": [
+        "SeparatorPrimitive.Props"
+      ],
+      "props": []
+    }
+  ]
+}

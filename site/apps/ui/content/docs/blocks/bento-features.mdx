@@ -1,0 +1,44 @@
+---
+title: Bento Features
+description: "A bento grid of product feature tiles mixing photography, gradient figures, and short claims."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="bento-features">
+
+<SourceFile path="components/blocks/bento-features.tsx" fold={false} />
+
+</Example>
+
+A bento grid of feature tiles under a Why Phone Pro heading: a large camera photo tile, two stat tiles with gradient figures and a wide tile pairing copy with an image. Tiles stack in one column on mobile and form a four-column grid on desktop. It is static markup with no state, suited to marketing pages that summarize a product's highlights.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bento-features"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Copy the source into `components/blocks/bento-features.tsx`:
+
+<SourceFile path="components/blocks/bento-features.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BentoFeatures } from \"@/components/blocks/bento-features\""} />
+
+<Code lang="tsx" code={"<BentoFeatures />"} />
+
+All copy, figures and gradient colors are inline in the JSX, so edit them in place. Images come from the `photo` helper, which takes an Unsplash photo ID and a width; swap it for your own image source.
+
+## Notes
+
+Both images are Unsplash placeholders with descriptive alt text.

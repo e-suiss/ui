@@ -1,0 +1,17 @@
+{
+  "description": "A control that lets people turn a single option on or off.",
+  "overview": "`Checkbox` wraps the Base UI `Checkbox.Root` and renders a check icon inside a `Checkbox.Indicator` when checked. It is a single self-contained part: there are no child components to compose.\n\nUse a checkbox for independent options that people can select in any combination, such as accepting terms or opting in to email. For a mutually exclusive choice, use a radio group; for a setting that takes effect immediately, consider a switch.",
+  "usage": "Leave the checkbox uncontrolled with `defaultChecked`, or control it with `checked` and `onCheckedChange`. Pair it with a visible `Label`: wrapping the checkbox in `Label` makes the whole label text clickable. To add supporting text, give the checkbox an `id` and an `aria-describedby` that points to the description element.",
+  "examples": {
+    "Checked": "A checkbox that starts checked using `defaultChecked`.",
+    "WithLabel": "A checkbox wrapped in a `Label`, so clicking the text toggles it.",
+    "WithDescription": "A checkbox labelled with `htmlFor` and described by supporting text through `aria-describedby`.",
+    "Disabled": "Disabled checkboxes, both unchecked and checked, that ignore clicks and are skipped by Tab.",
+    "Invalid": "A checkbox marked with `aria-invalid` to show a validation error."
+  },
+  "parts": {
+    "Checkbox": "The checkbox control, rendering the box and its check indicator."
+  },
+  "accessibility": "- Renders with the `checkbox` role and exposes its checked state to assistive technology.\n- Toggles on click and with Space when focused.\n- Needs an accessible name: wrap it in a `Label`, associate a `Label` through `htmlFor` and `id`, or set `aria-label`.\n- When `disabled`, it sets `aria-disabled`, ignores clicks, and is removed from the Tab order.\n- Set `aria-invalid` to communicate a validation error; the border turns to the `danger` color.",
+  "notes": "- Styling hooks: `data-slot=\"checkbox\"` on the root and `data-slot=\"checkbox-indicator\"` on the indicator.\n- State attributes from Base UI such as `data-checked` and `data-disabled` drive the checked and disabled styles.\n- Uses the `accent`, `accent-pressed`, `on-accent`, `surface`, `control` and `control-disabled` tokens.\n- The hit area extends beyond the visible box through an `after` pseudo-element, making the small control easier to tap."
+}

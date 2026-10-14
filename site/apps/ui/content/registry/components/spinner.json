@@ -1,0 +1,15 @@
+{
+  "description": "An eight-spoke activity indicator that shows an indeterminate wait.",
+  "overview": "`Spinner` is an SVG of eight fading spokes that rotates in steps, like the system activity indicator. It draws in `currentColor` and is `size-4` by default, so it inherits the surrounding text color.\n\nUse it for short waits whose length is unknown, such as saving or loading more. For a placeholder that previews the shape of content, use `Skeleton`.",
+  "usage": "Change the size with a `size-*` class and the color with a `text-*` class. Inside a `Button`, pair it with `disabled` and give it `data-icon=\"inline-start\"` to place it before the label.",
+  "examples": {
+    "Sizes": "Shows spinners from `size-3` to `size-8`.",
+    "Colors": "Tints spinners with `text-*` color classes.",
+    "InButton": "Places a spinner in disabled buttons that are busy."
+  },
+  "parts": {
+    "Spinner": "The animated activity indicator."
+  },
+  "accessibility": "- Renders with the `status` role and the accessible name `Loading`. Override `aria-label` to describe the specific task.",
+  "notes": "- Uses `data-slot=\"spinner\"`.\n- The rotation lasts `0.8s` and moves in eight steps, so one spoke advances at a time."
+}

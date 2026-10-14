@@ -1,0 +1,5 @@
+{
+  "description": "A radar chart comparing up to three phone models across six scored attributes.",
+  "overview": "A `Card` with a row of `Toggle` chips, a `RadarChart` and a summary card per model. Scores live in `SCORES`, one array per model, in the order of `AXES`. Up to three models can be selected; picking a fourth drops the oldest, and the last one cannot be cleared. Pressing an axis bolds its label and switches each summary from the overall average to that axis score; a tooltip lists the values. Each radar sets `isAnimationActive={false}` and draws without the enter animation.",
+  "usage": "Replace `AXES` and `SCORES` with your attributes and items, and add a matching entry to `chartConfig` and `SWATCH` for each. Change `MAX_SELECTED` to allow more series. The component takes no props."
+}

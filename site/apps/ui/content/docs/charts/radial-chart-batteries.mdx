@@ -1,0 +1,46 @@
+---
+title: Radial Chart Batteries
+description: "A row of small battery rings, one per device, that turn red when charge is at or below 20%."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-batteries">
+
+<SourceFile path="components/charts/radial-chart-batteries.tsx" fold={false} />
+
+</Example>
+
+A row of small battery rings, one per device, that switch from green to red when the charge drops to the low threshold. Use compact rings like these for status at a glance, in widgets, settings pages or device lists.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-batteries"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-batteries.tsx`:
+
+<SourceFile path="components/charts/radial-chart-batteries.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartBatteries } from \"@/components/charts/radial-chart-batteries\""} />
+
+<Code lang="tsx" code={"<RadialChartBatteries />"} />
+
+Replace the `devices` array with your own names and levels from 0 to 100. Change `LOW` to move the warning threshold, and edit the two colors in the per-ring config. The letter in each ring is the first character of the name.
+
+## Notes
+
+The rings are hidden from assistive technology and have no tooltip; the percentage and name printed under each ring carry the information.

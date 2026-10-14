@@ -1,0 +1,16 @@
+{
+  "name": "line-chart-dots",
+  "type": "chart",
+  "files": [
+    "components/charts/line-chart-dots.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

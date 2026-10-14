@@ -1,0 +1,46 @@
+---
+title: Radar Chart Default
+description: "A single filled radar shape showing this month's scores across six training skills."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radar-chart-default">
+
+<SourceFile path="components/charts/radar-chart-default.tsx" fold={false} />
+
+</Example>
+
+One series drawn as a filled shape across six axes on a polygon grid. Use it to show the profile of a single item across several comparable scores, such as skills or product ratings.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-default"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radar-chart-default.tsx`:
+
+<SourceFile path="components/charts/radar-chart-default.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadarChartDefault } from \"@/components/charts/radar-chart-default\""} />
+
+<Code lang="tsx" code={"<RadarChartDefault />"} />
+
+Replace `chartData` with one record per axis, set `dataKey` on `PolarAngleAxis` to the axis name field and on `Radar` to your value field. Rename the series in `chartConfig` to set its label and color.
+
+## Notes
+
+Without a fixed scale the radius adapts to the largest value, so two charts with different data aren't directly comparable; see the radius-axis variant for a fixed range. Radar charts read best with five to eight axes.

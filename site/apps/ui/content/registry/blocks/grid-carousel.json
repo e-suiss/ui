@@ -1,0 +1,6 @@
+{
+  "description": "A horizontally scrolling carousel of product cards with previous and next controls.",
+  "overview": "A horizontally scrolling row of product cards under a two-tone heading, each with an optional kicker, name, tagline, starting price and image. Previous and next buttons sit below the track, and cards shrink to fit narrow screens. With no state of its own, it is a simple base for latest products, featured items or related content rows.",
+  "usage": "Replace `products`; each has an optional kicker, a name, tagline, formatted price, image and alt text. Card links are hash anchors built from the name, so point them at your product pages.",
+  "notes": "Images are Unsplash placeholders with descriptive alt text."
+}

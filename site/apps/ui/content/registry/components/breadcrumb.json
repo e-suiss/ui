@@ -1,0 +1,21 @@
+{
+  "description": "A trail of links that shows where the current page sits in the site hierarchy.",
+  "overview": "A `Breadcrumb` is a labelled `nav` that contains a `BreadcrumbList`. The list holds `BreadcrumbItem` parts separated by `BreadcrumbSeparator` parts. Each item contains either a `BreadcrumbLink` to an ancestor page or, for the last item, a `BreadcrumbPage` for the current page. Use `BreadcrumbEllipsis` inside an item to stand in for collapsed levels.\n\nUse breadcrumbs in deep hierarchies so people can see their location and move up quickly. For top-level navigation between sections, use a navigation menu or tabs.",
+  "usage": "Place a `BreadcrumbSeparator` between items as its own sibling, not inside a `BreadcrumbItem`. It renders a caret by default; pass children to use a different separator.\n\n`BreadcrumbLink` renders an `a` by default. Use the `render` prop to render your router's link component instead.\n\nFor an icon-only link, such as a home icon, add an `aria-label`.",
+  "examples": {
+    "WithHomeIcon": "Replaces the first link with a home icon and an `aria-label`.",
+    "WithEllipsis": "Collapses middle levels with `BreadcrumbEllipsis`.",
+    "CustomSeparator": "Uses a slash instead of the default caret separator."
+  },
+  "parts": {
+    "Breadcrumb": "The `nav` landmark that wraps the trail.",
+    "BreadcrumbList": "The ordered list of items.",
+    "BreadcrumbItem": "A single step in the trail.",
+    "BreadcrumbLink": "A link to an ancestor page.",
+    "BreadcrumbPage": "The current page, rendered as plain text.",
+    "BreadcrumbSeparator": "A decorative divider between items.",
+    "BreadcrumbEllipsis": "A placeholder for collapsed levels, with a screen-reader label."
+  },
+  "accessibility": "- `Breadcrumb` renders a `nav` with `aria-label=\"breadcrumb\"`.\n- `BreadcrumbPage` sets `aria-current=\"page\"`.\n- Separators have `role=\"presentation\"` and `aria-hidden=\"true\"`, so only items are announced as list items.\n- `BreadcrumbEllipsis` hides its icon and includes visually hidden text, `More` by default; pass children to change it.\n- Only links are in the tab order; the ellipsis and current page are skipped.",
+  "notes": "- Styling hooks: `data-slot` values from `breadcrumb` through `breadcrumb-ellipsis`.\n- The default caret separator flips in right-to-left layouts.\n- Ancestor links use `text-label-secondary` and the current page uses `text-label`."
+}

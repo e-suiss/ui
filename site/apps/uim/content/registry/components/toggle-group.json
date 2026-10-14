@@ -1,0 +1,42 @@
+{
+  "description": "A set of toggles that share one value, for formatting controls, alignment options and segmented controls.",
+  "overview": "`ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.\n\nWith `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-control` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.",
+  "usage": "The value is always an array of strings. Use `value` and `onValueChange` for controlled use, or `defaultValue`. Set `multiple` to allow more than one pressed item; without it, pressing an item replaces the selection.\n\nGive each `ToggleGroupItem` a `value`. Put icons in a `ToggleGroupIcon`, which sizes them to 16 points, and give icon-only items an `accessibilityLabel`. `orientation` switches between a row and a column, and `disabled` on the group turns off every item.",
+  "examples": {
+    "Outline": "The `outline` variant.",
+    "Attached": "Outlined items joined into one strip with `spacing={0}`.",
+    "Sizes": "The `sm`, `default` and `lg` sizes.",
+    "Segmented": "A single-selection segmented control for calendar views.",
+    "SegmentedVertical": "The segmented control in a vertical orientation.",
+    "SegmentedMultiple": "A segmented control that allows several selected items.",
+    "SegmentedSizes": "Segmented controls at each size.",
+    "SingleSelection": "Outlined alignment options where only one item can be pressed.",
+    "Vertical": "Joined outline items stacked in a column.",
+    "Disabled": "A disabled group."
+  },
+  "parts": {
+    "ToggleGroup": "Container that holds the shared value.",
+    "ToggleGroupItem": "One toggle in the group.",
+    "ToggleGroupIcon": "Icon sized for a toggle group item."
+  },
+  "props": {
+    "ToggleGroup": {
+      "value": "Pressed item values for controlled use.",
+      "defaultValue": "Initially pressed item values for uncontrolled use.",
+      "onValueChange": "Called with the new array of pressed values.",
+      "multiple": "Allows more than one item to be pressed.",
+      "disabled": "Turns off every item.",
+      "orientation": "`horizontal` or `vertical`. Defaults to `horizontal`.",
+      "variant": "Item style for the whole group: `default` or `outline`.",
+      "size": "Item size for the whole group: `default`, `sm` or `lg`.",
+      "spacing": "Gap between items in steps of 4 points. `0` joins the items. Defaults to `2`."
+    },
+    "ToggleGroupItem": {
+      "value": "Value added to the group value when the item is pressed.",
+      "variant": "Accepted on the item, but the group's `variant` takes precedence.",
+      "size": "Accepted on the item, but the group's `size` takes precedence."
+    }
+  },
+  "accessibility": "- A single-selection group has the `radiogroup` role and its items have the `radio` role.\n- A `multiple` group has the `group` role and its items have the `togglebutton` role.\n- Items report checked and disabled states to VoiceOver and TalkBack.\n- The sliding segmented indicator is hidden from VoiceOver and TalkBack.\n- Icon-only items need an `accessibilityLabel`; label the group itself with `accessibilityLabel` when its purpose is not clear from context.",
+  "notes": "- Pressed items use `bg-item-selected` and `text-link`; the segmented indicator and pressed segmented items use `bg-surface-raised` with a small shadow in light mode and `bg-label-quaternary` in dark mode.\n- The indicator slides over 300 ms and respects the system reduce motion setting. It is hidden when the selected item is disabled.\n- Colors follow the system appearance."
+}

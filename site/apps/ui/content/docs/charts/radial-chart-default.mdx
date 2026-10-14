@@ -1,0 +1,46 @@
+---
+title: Radial Chart Default
+description: "Concentric radial bars, one per device, each running around a gray background track."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="radial-chart-default">
+
+<SourceFile path="components/charts/radial-chart-default.tsx" fold={false} />
+
+</Example>
+
+Concentric radial bars, one per category, each running along a gray background track. Use it as a compact, circular alternative to a bar chart for a few categories.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-default"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/radial-chart-default.tsx`:
+
+<SourceFile path="components/charts/radial-chart-default.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { RadialChartDefault } from \"@/components/charts/radial-chart-default\""} />
+
+<Code lang="tsx" code={"<RadialChartDefault />"} />
+
+Give each record a category key, a value and a `fill` that points at its color, and add each key to `chartConfig`. Adjust `barSize` for ring thickness and `innerRadius` to open up the center.
+
+## Notes
+
+Arc lengths are relative to the largest value, which always closes a full circle; add a `PolarAngleAxis` with a fixed `domain` if bars should be measured against a known maximum. The first record sits on the innermost ring, where the same value looks shorter than on outer rings.

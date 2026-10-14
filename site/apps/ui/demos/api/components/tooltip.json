@@ -1,0 +1,48 @@
+{
+  "name": "tooltip",
+  "type": "ui",
+  "files": [
+    "components/ui/tooltip.tsx"
+  ],
+  "requires": [],
+  "dependencies": [
+    "@base-ui/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sides",
+    "WithShortcut"
+  ],
+  "parts": [
+    {
+      "name": "TooltipProvider",
+      "extends": [
+        "TooltipPrimitive.Provider.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "Tooltip",
+      "extends": [
+        "TooltipPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "TooltipTrigger",
+      "extends": [
+        "TooltipPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "TooltipContent",
+      "extends": [
+        "TooltipPrimitive.Popup.Props",
+        "TooltipPrimitive.Positioner.Props"
+      ],
+      "props": []
+    }
+  ]
+}

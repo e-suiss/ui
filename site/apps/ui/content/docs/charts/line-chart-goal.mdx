@@ -1,0 +1,46 @@
+---
+title: Line Chart Goal
+description: "Daily step counts plotted against a labeled dashed goal line at 10,000 steps."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-goal">
+
+<SourceFile path="components/charts/line-chart-goal.tsx" fold={false} />
+
+</Example>
+
+Daily steps as a line with dots, plotted against a labeled dashed goal line. Use it when a single target gives the values their meaning, such as quotas, budgets or fitness goals.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-goal"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-goal.tsx`:
+
+<SourceFile path="components/charts/line-chart-goal.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartGoal } from \"@/components/charts/line-chart-goal\""} />
+
+<Code lang="tsx" code={"<LineChartGoal />"} />
+
+Replace `chartData` and set `GOAL` to your target. Change the label text on the `ReferenceLine` and the unit in the tooltip formatter and axis `tickFormatter` to match your metric.
+
+## Notes
+
+The value axis scales to the data only, so a goal far above or below every value may fall outside the plot; set a `domain` on the axis if that can happen. Focus the chart and use the arrow keys to step through the days.

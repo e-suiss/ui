@@ -1,0 +1,225 @@
+---
+title: Select
+description: "A button that opens a list of options so people can pick one value."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="select" story="Default">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+`Select` wraps the Base UI Select primitive. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
+
+A highlight pill slides between options as the highlighted item changes, and the selected item shows a check mark. Use `Select` when people choose one value from a fixed list. For a few always-visible options, consider `ToggleGroup` or `RadioGroup`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Copy the source into `components/ui/select.tsx`:
+
+<SourceFile path="components/ui/select.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from \"@/components/ui/select\""} />
+
+<Code lang="tsx" code={"<Select items={fruits}>\n  <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n    <SelectValue placeholder=\"Select a fruit\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectGroup>\n      {fruits.map((fruit) => (\n        <SelectItem key={fruit.value} value={fruit.value}>\n          {fruit.label}\n        </SelectItem>\n      ))}\n    </SelectGroup>\n  </SelectContent>\n</Select>"} />
+
+Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen.
+
+`SelectContent` opens below the trigger by default. It accepts the positioner props `side`, `sideOffset`, `align`, `alignOffset` and `alignItemWithTrigger`.
+
+## Examples
+
+### Open
+
+Renders the popup open on mount with a value already selected.
+
+<Example kind="ui" name="select" story="Open">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectOpenExample() {\n  return (\n    <Select items={fruits} defaultValue=\"banana\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### With value
+
+Starts with a default value, so the trigger shows its label.
+
+<Example kind="ui" name="select" story="WithValue">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectWithValueExample() {\n  return (\n    <Select items={fruits} defaultValue=\"blueberry\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### Small
+
+Uses the compact `sm` trigger size.
+
+<Example kind="ui" name="select" story="Small">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectSmallExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" size=\"sm\" className=\"w-40\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### Grouped
+
+Splits options into labelled groups with a separator between them.
+
+<Example kind="ui" name="select" story="Grouped">
+
+<Code lang="tsx" code={"import { Fragment } from \"react\"\nimport { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst timezones = [\n  {\n    label: \"North America\",\n    items: [\n      { value: \"est\", label: \"Eastern Time\" },\n      { value: \"cst\", label: \"Central Time\" },\n      { value: \"pst\", label: \"Pacific Time\" },\n    ],\n  },\n  {\n    label: \"Europe\",\n    items: [\n      { value: \"gmt\", label: \"Greenwich Mean Time\" },\n      { value: \"cet\", label: \"Central European Time\" },\n      { value: \"eet\", label: \"Eastern European Time\" },\n    ],\n  },\n]\n\nexport function SelectGroupedExample() {\n  return (\n    <Select items={timezones.flatMap((group) => group.items)} defaultValue=\"cet\">\n      <SelectTrigger aria-label=\"Timezone\" className=\"w-60\">\n        <SelectValue placeholder=\"Select a timezone\" />\n      </SelectTrigger>\n      <SelectContent>\n        {timezones.map((group, index) => (\n          <Fragment key={group.label}>\n            {index > 0 && <SelectSeparator />}\n            <SelectGroup>\n              <SelectLabel>{group.label}</SelectLabel>\n              {group.items.map((item) => (\n                <SelectItem key={item.value} value={item.value}>\n                  {item.label}\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </Fragment>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### With icons
+
+Places an icon before each option's label.
+
+<Example kind="ui" name="select" story="WithIcons">
+
+<Code lang="tsx" code={"import { GlobeIcon, MoonIcon, SunIcon } from \"@phosphor-icons/react\"\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst themes = [\n  { value: \"light\", label: \"Light\", icon: SunIcon },\n  { value: \"dark\", label: \"Dark\", icon: MoonIcon },\n  { value: \"system\", label: \"System\", icon: GlobeIcon },\n]\n\nexport function SelectWithIconsExample() {\n  return (\n    <Select items={themes.map(({ value, label }) => ({ value, label }))} defaultValue=\"system\">\n      <SelectTrigger aria-label=\"Theme\" className=\"w-40\">\n        <SelectValue placeholder=\"Theme\" />\n      </SelectTrigger>\n      <SelectContent>\n        {themes.map(({ value, label, icon: Icon }) => (\n          <SelectItem key={value} value={value}>\n            <Icon />\n            {label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables the select so it can't be opened.
+
+<Example kind="ui" name="select" story="Disabled">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectDisabledExample() {\n  return (\n    <Select items={fruits} disabled>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Marks the trigger with `aria-invalid` to show an error state.
+
+<Example kind="ui" name="select" story="Invalid">
+
+<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectInvalidExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\" aria-invalid>\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"SelectTrigger","href":"#selecttrigger","children":[{"name":"SelectValue","href":"#selectvalue","children":[]}]},{"name":"SelectContent","href":"#selectcontent","children":[{"name":"SelectGroup","href":"#selectgroup","children":[{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectLabel","href":"#selectlabel","children":[]}]},{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectSeparator","href":"#selectseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### SelectGroup
+
+Groups related options; label it with a `SelectLabel`.
+
+<PropsTable extends={["SelectPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectValue
+
+Shows the selected option's label, or the placeholder, inside the trigger.
+
+<PropsTable extends={["SelectPrimitive.Value.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectTrigger
+
+The button that opens the popup and displays the current value.
+
+<PropsTable extends={["SelectPrimitive.Trigger.Props"]} props={[{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectContent
+
+The positioned popup that holds the option list and scroll arrows.
+
+<PropsTable extends={["SelectPrimitive.Popup.Props","SelectPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectLabel
+
+A heading that names a `SelectGroup`.
+
+<PropsTable extends={["SelectPrimitive.GroupLabel.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SelectItem
+
+A selectable option, with a check mark when selected.
+
+<PropsTable extends={["SelectPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SelectSeparator
+
+A thin line that divides groups of options.
+
+<PropsTable extends={["SelectPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SelectScrollUpButton
+
+An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
+
+<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### SelectScrollDownButton
+
+An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
+
+<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger has the `combobox` role and the popup list has the `listbox` role; each item is an `option` with `aria-selected` on the chosen one.
+- Give the trigger an accessible name, such as `aria-label` or an associated label.
+- When the popup opens, focus moves to the selected option. Arrow keys move between options and `Enter` selects.
+- `Escape` closes the popup without changing the value, and focus returns to the trigger.
+- A `SelectGroup` with a `SelectLabel` is exposed as a named `group`.
+
+## Notes
+
+- Parts carry `data-slot` attributes such as `select-trigger`, `select-content`, `select-item` and `select-highlight`.
+- The trigger sets `data-size`, and styles `data-placeholder`, `aria-invalid` and `disabled` states. Invalid triggers use the `danger` color.
+- The popup uses `bg-surface-raised`, the highlight uses `bg-item-hover`, and the check mark uses `text-link`.
+- The highlight animation is turned off when reduced motion is preferred.

@@ -1,0 +1,15 @@
+{
+  "description": "An accessible text label that names a form control.",
+  "overview": "`Label` renders a native `label` element with the library's form typography. Associate it with a control through `htmlFor`, or nest the control inside it, so clicking the label focuses or toggles the control.\n\nUse `Label` for standalone controls. Inside a `Field` layout, prefer the field's own label part when one is provided.",
+  "usage": "Give the control an `id` and pass the same value to `htmlFor`. Next to a checkbox, radio item or switch, the label automatically switches to regular weight.",
+  "examples": {
+    "WithInput": "A label linked to a text input; clicking the label focuses the input.",
+    "WithCheckbox": "A label placed after a checkbox; clicking the label toggles it.",
+    "Disabled": "A label shown in its dimmed style inside a disabled group, above a disabled input."
+  },
+  "parts": {
+    "Label": "Renders a `label` element that names and activates its associated control."
+  },
+  "accessibility": "- The label text becomes the control's accessible name when linked with `htmlFor` or by nesting.\n- Clicking the label focuses a text input or toggles a checkbox, matching native `label` behavior.",
+  "notes": "- Styling hook: `data-slot=\"label\"`.\n- The label dims to `label-quaternary` when it follows a disabled peer control, or when an ancestor with the `group` class has `data-disabled=\"true\"`.\n- Font weight drops to normal when the label contains, or follows, a `checkbox`, `radio-group-item` or `switch` slot."
+}

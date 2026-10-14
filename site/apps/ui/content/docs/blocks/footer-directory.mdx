@@ -1,0 +1,38 @@
+---
+title: Footer Directory
+description: "A full site footer with footnotes, a breadcrumb, a five-column link directory, and legal links."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="footer-directory">
+
+<SourceFile path="components/blocks/footer-directory.tsx" fold={false} />
+
+</Example>
+
+A full site footer with numbered footnotes, a breadcrumb, a five-column link directory and a legal row with copyright and region links. On mobile the directory collapses into an accordion so the footer stays short. It is a server component with no state, suited to large marketing or store sites.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks footer-directory"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Accordion](/docs/components/accordion), [Breadcrumb](/docs/components/breadcrumb).
+
+2. Copy the source into `components/blocks/footer-directory.tsx`:
+
+<SourceFile path="components/blocks/footer-directory.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { FooterDirectory } from \"@/components/blocks/footer-directory\""} />
+
+<Code lang="tsx" code={"<FooterDirectory />"} />
+
+Edit `sections` for the directory, `columns` for which sections share each desktop column, and `legal` for the bottom links. Links are hash anchors from the `slug` helper, so swap it for your routing. Footnotes, the breadcrumb, phone number and copyright are inline.

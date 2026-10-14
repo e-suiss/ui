@@ -1,0 +1,6 @@
+{
+  "description": "A single smooth line through six months of values, without point markers.",
+  "overview": "The starting line chart: one smooth series without point markers, a month axis and a tooltip. Use it to show a trend over time when the overall shape matters more than individual readings.",
+  "usage": "Replace `chartData`, point each `dataKey` at your fields and rename the `chartConfig` entry to set the label and color. Switch the `type` on the line to change the curve, or set `dot` to show markers.",
+  "notes": "Focus the chart and use the arrow keys to step the tooltip through the points."
+}

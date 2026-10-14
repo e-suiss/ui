@@ -1,0 +1,34 @@
+{
+  "description": "A context menu that lifts the pressed item into an enlarged preview above its actions, like iOS context menus.",
+  "overview": "`PreviewMenu` builds on the Base UI Context Menu. Touching and holding the trigger, or right-clicking it, blurs the page and animates the trigger from its position into a centered preview up to `360px` wide, morphing its corner radius along the way. The menu of actions opens below the preview and the trigger stays hidden until the menu finishes closing, so the preview appears to return to its place.\n\nBy default, the preview shows the trigger's own content. Pass `preview` to `PreviewMenuContent` to show richer content instead; the trigger's snapshot crossfades into it. Use it for items that benefit from a quick look before acting, such as photos, documents, or messages.",
+  "usage": "- Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content.\n- The menu is uncontrolled by default; pass `open` and `onOpenChange` to control it.\n- Set `aspectRatio` when a custom `preview` has a different shape than the trigger; otherwise the preview keeps the trigger's proportions.\n- Handle actions with `onClick` on each item. Items close the menu when chosen.",
+  "examples": {
+    "DisabledItem": "A disabled item is announced as unavailable and does not act, while the other items still work.",
+    "CustomPreview": "A compact album row opens a larger custom preview through the `preview` prop and `aspectRatio`."
+  },
+  "parts": {
+    "PreviewMenu": "The root that manages open state and measures the preview frame.",
+    "PreviewMenuTrigger": "The element that opens the menu on touch and hold or right-click.",
+    "PreviewMenuContent": "The backdrop, lifted preview, and popup that holds the menu items.",
+    "PreviewMenuItem": "An action in the menu.",
+    "PreviewMenuSeparator": "A thick divider between groups of items."
+  },
+  "props": {
+    "PreviewMenu": {
+      "open": "Whether the menu is open, for controlled use.",
+      "defaultOpen": "Whether the menu starts open when uncontrolled.",
+      "onOpenChange": "Called when the menu opens or closes.",
+      "aspectRatio": "The width-to-height ratio of the preview; defaults to the trigger's ratio.",
+      "children": "The trigger and content."
+    },
+    "PreviewMenuContent": {
+      "preview": "Custom content to show in the preview instead of the trigger's content.",
+      "previewClassName": "Classes for the clipped preview container."
+    },
+    "PreviewMenuItem": {
+      "variant": "The item style; `destructive` renders the label in the danger color."
+    }
+  },
+  "accessibility": "- The popup has `role=\"menu\"` and items have `role=\"menuitem\"`, with keyboard navigation from Base UI Context Menu.\n- `Escape` closes the menu without running an action.\n- Disabled items set `aria-disabled` and cannot be chosen.\n- The lifted preview is `aria-hidden`, so assistive technologies read the trigger and menu only.",
+  "notes": "- Parts use `data-slot` values `preview-menu-trigger`, `preview-menu-backdrop`, `preview-menu-preview`, `preview-menu-content`, `preview-menu-item`, and `preview-menu-separator`. Items set `data-variant`.\n- The trigger carries `data-previewing` while open and `data-lifted` until the closing animation ends, and is invisible during that time.\n- The trigger disables text selection and the iOS touch callout so long presses open the menu."
+}

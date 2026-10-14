@@ -1,0 +1,46 @@
+---
+title: Verify Device
+description: "A trusted-device sign-in flow that pairs instructions with a simulated approval alert and code entry."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="verify-device">
+
+<SourceFile path="components/blocks/verify-device.tsx" fold={false} />
+
+</Example>
+
+A trusted-device sign-in flow with instructions on one side and a simulated approval alert on the other, which shows a verification code after Allow and a blocked message after Don't Allow. The user then types the code to finish. The columns sit side by side on desktop and stack on mobile. Use it to illustrate or build sign-in approval from a second device.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks verify-device"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), [Spinner](/docs/components/spinner).
+
+3. Copy the source into `components/blocks/verify-device.tsx`:
+
+<SourceFile path="components/blocks/verify-device.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { VerifyDevice } from \"@/components/blocks/verify-device\""} />
+
+<Code lang="tsx" code={"<VerifyDevice />"} />
+
+In a real flow the approval alert appears on the user's other device, so remove the simulated alert and poll or subscribe for the approval instead. Replace the `DEMO_CODE` check with your verification API, and edit the per-phase text in `copy`. Swap the `backdrop` image and the location text.
+
+## Notes
+
+The backdrop image is an Unsplash placeholder.

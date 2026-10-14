@@ -1,0 +1,17 @@
+{
+  "name": "empty-offline",
+  "type": "block",
+  "files": [
+    "components/blocks/empty-offline.tsx"
+  ],
+  "requires": [
+    "button",
+    "empty",
+    "spinner"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

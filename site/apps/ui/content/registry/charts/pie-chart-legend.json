@@ -1,0 +1,5 @@
+{
+  "description": "A donut with a legend beneath it that lists every category and its color.",
+  "overview": "A donut with a legend underneath listing every category and its color. Pick it when a chart has enough slices that labels around the ring would get crowded.",
+  "usage": "Replace `chartData` and add a label and color for each category to `chartConfig`; the legend reads both from there. Keep `nameKey` on the legend content set to your category field so the names resolve."
+}

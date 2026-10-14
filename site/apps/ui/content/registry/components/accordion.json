@@ -1,0 +1,23 @@
+{
+  "description": "A vertically stacked set of headings that each reveal a section of content.",
+  "overview": "Accordion wraps the Base UI Accordion primitive. An `Accordion` holds one or more `AccordionItem` parts; each item pairs an `AccordionTrigger` with an `AccordionContent` panel. The trigger renders inside a heading element and shows a caret that flips between down and up as the panel opens and closes.\n\nUse an accordion to shorten long pages of related content, such as FAQs or settings groups, where people only need one or a few sections at a time. For a single show-and-hide region, a collapsible is a lighter fit.",
+  "usage": "Give each `AccordionItem` a unique `value`. By default only one panel is open at a time; opening another closes the previous one. Set `multiple` on `Accordion` to let several panels stay open.\n\nThe open state is an array of item values. Use `defaultValue` (for example `[\"shipping\"]`) for uncontrolled use, or `value` with `onValueChange` to control it.",
+  "examples": {
+    "Filled": "The `filled` variant places the items on a rounded, secondary surface.",
+    "OpenByDefault": "Opens an item on first render with `defaultValue`.",
+    "Multiple": "Keeps several panels open at once with `multiple`."
+  },
+  "parts": {
+    "Accordion": "The root that groups items and manages which panels are open.",
+    "AccordionItem": "A single section that pairs a trigger with its panel, identified by `value`.",
+    "AccordionTrigger": "The button, inside a heading, that toggles its item's panel and shows the caret indicator.",
+    "AccordionContent": "The collapsible panel holding the item's content."
+  },
+  "props": {
+    "Accordion": {
+      "variant": "Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container."
+    }
+  },
+  "accessibility": "- Each trigger is a `button` with `aria-expanded` reflecting its panel's state.\n- Triggers are wrapped in a heading element provided by Base UI.\n- Triggers are reachable with Tab; `Enter` and `Space` toggle the focused panel.\n- Disabled triggers receive `aria-disabled` and are styled with `text-label-quaternary`.",
+  "notes": "- Styling hooks: `data-slot=\"accordion\"`, `\"accordion-item\"`, `\"accordion-trigger\"`, `\"accordion-trigger-icon\"` and `\"accordion-content\"`.\n- The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-open` and `data-closed`.\n- `className` on `AccordionContent` applies to the inner padded wrapper, not the animated panel."
+}

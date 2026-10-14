@@ -1,0 +1,145 @@
+---
+title: Message
+description: "Lays out a single chat message with an optional avatar, header and footer."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="message" story="Default">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"start\">\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>MK</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <Bubble variant=\"muted\">\n            <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Message` arranges one message row: an optional `MessageAvatar` and a `MessageContent` column. Inside the content, place an optional `MessageHeader` (such as a sender name), one or more bubbles, and an optional `MessageFooter` (such as a timestamp or read receipt). Wrap consecutive messages in `MessageGroup` to stack them.
+
+`Message` handles layout only. Pair it with Bubble for the message surface and with Message Scroller for a scrolling transcript.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/message.tsx`:
+
+<SourceFile path="components/ui/message.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from \"@/components/ui/message\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Message align=\"start\">\n    <MessageAvatar>\n      <Avatar>\n        <AvatarFallback>MK</AvatarFallback>\n      </Avatar>\n    </MessageAvatar>\n    <MessageContent>\n      <Bubble variant=\"muted\">\n        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n      </Bubble>\n    </MessageContent>\n  </Message>\n</div>"} />
+
+Set `align="end"` for messages sent by the current user. The row reverses, so the avatar moves to the end, and the content's children and the footer align to the end edge.
+
+## Examples
+
+### Align end
+
+A message aligned to the end, as used for outgoing messages.
+
+<Example kind="ui" name="message" story="AlignEnd">
+
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageAlignEndExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"end\">\n        <MessageContent>\n          <Bubble>\n            <BubbleContent>Yes, see you at noon.</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With header and footer
+
+A message with a sender name above the bubble and a timestamp below it.
+
+<Example kind="ui" name="message" story="WithHeaderAndFooter">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\n\nexport function MessageWithHeaderAndFooterExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"start\">\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>JL</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <MessageHeader>Jordan Lee</MessageHeader>\n          <Bubble variant=\"muted\">\n            <BubbleContent>\n              I pushed the updated designs to the shared folder.\n            </BubbleContent>\n          </Bubble>\n          <MessageFooter>9:41 AM</MessageFooter>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Conversation
+
+A `MessageGroup` with an incoming message of two bubbles and an outgoing reply.
+
+<Example kind="ui" name="message" story="Conversation">
+
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup } from \"@/components/ui/message\"\n\nexport function MessageConversationExample() {\n  return (\n    <div className=\"w-96\">\n      <MessageGroup className=\"gap-4\">\n        <Message>\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n          <MessageContent>\n            <Bubble variant=\"muted\">\n              <BubbleContent>Did the build pass?</BubbleContent>\n            </Bubble>\n            <Bubble variant=\"muted\">\n              <BubbleContent>I want to ship before the weekend.</BubbleContent>\n            </Bubble>\n          </MessageContent>\n        </Message>\n        <Message align=\"end\">\n          <MessageContent>\n            <Bubble>\n              <BubbleContent>All green. Merging it now.</BubbleContent>\n            </Bubble>\n            <MessageFooter>Read 10:02 AM</MessageFooter>\n          </MessageContent>\n        </Message>\n      </MessageGroup>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageHeader","href":"#messageheader","children":[]},{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]},{"name":"MessageGroup","href":"#messagegroup","children":[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### MessageGroup
+
+Stacks several messages vertically.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Message
+
+The row for one message that sets its alignment.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"start\" | \"end\"","default":"\"start\"","description":"Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageAvatar
+
+A round container for the sender's avatar, aligned to the bottom of the row.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageContent
+
+The column that holds the header, bubbles and footer.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageHeader
+
+Small secondary text above the bubbles, such as the sender name.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageFooter
+
+Small secondary text below the bubbles, such as a timestamp.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Notes
+
+- Styling hooks: `data-slot` values `message-group`, `message`, `message-avatar`, `message-content`, `message-header` and `message-footer`. `Message` also sets `data-align`.
+- When a footer is present, the avatar shifts up to line up with the last bubble rather than the footer.
+- Header and footer drop their horizontal padding when the message contains an element with `data-variant="ghost"`.
+- Header and footer text uses the `label-secondary` token; the avatar background uses `surface-secondary`.

@@ -1,0 +1,17 @@
+{
+  "name": "price-care",
+  "type": "block",
+  "files": [
+    "components/blocks/price-care.tsx"
+  ],
+  "requires": [
+    "button",
+    "label",
+    "radio-group",
+    "switch",
+    "toggle-group"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

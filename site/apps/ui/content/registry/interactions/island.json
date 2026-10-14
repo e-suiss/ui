@@ -1,0 +1,26 @@
+{
+  "description": "A floating pill at the top of the screen that shows live activities and brief notifications, like the Dynamic Island.",
+  "overview": "`Island` renders a dark pill fixed to the top of the viewport, below the safe-area inset. It morphs between four views: `hidden`, `compact`, `expanded`, and `notice`. The pill measures the active part and animates its width, height, and corner radius with a spring curve, so content changes feel continuous.\n\nA live activity is an `IslandCompact` and `IslandExpanded` pair rendered inside `Island`. Mounting an `IslandCompact` shows the pill; tapping it expands to the details. Notifications come from the `notify` function returned by `useIsland`; a notice temporarily takes over the pill and then returns to the activity, or hides the pill when no activity is mounted. Use it for ongoing, glanceable status such as downloads, timers, or calls.",
+  "usage": "- Wrap the app, or the part of it that posts notifications, in `IslandProvider`. `Island`, `IslandCompact`, `IslandExpanded`, and `useIsland` throw outside of it.\n- Render a single `Island`. Mount `IslandCompact` and `IslandExpanded` as its children only while an activity is running; unmounting the compact part hides the pill and collapses it.\n- Call `notify({ icon, title, description, duration })` from `useIsland` to show a notice. It replaces any current notice and dismisses itself after `duration` milliseconds (4000 by default). Call `dismiss` to remove it early.\n- `useIsland` also exposes `view`, `expanded`, and `setExpanded` for custom controls.",
+  "examples": {
+    "LiveActivity": "A download runs as a live activity, with a progress ring in the compact pill and details plus a cancel button when expanded.",
+    "ActivityWithNotifications": "A notification temporarily replaces a running live activity, which returns once the notice is dismissed."
+  },
+  "parts": {
+    "IslandProvider": "Holds the island state and provides `notify`, `dismiss`, and the expanded state to everything inside it.",
+    "Island": "The fixed pill that sizes itself to the active view and renders the built-in notice.",
+    "IslandCompact": "The button shown in the collapsed pill; tapping it expands the island.",
+    "IslandExpanded": "The detailed view shown when the island is expanded.",
+    "IslandRing": "A small circular progress ring for the compact pill."
+  },
+  "props": {
+    "IslandProvider": {
+      "children": "The content that can render the island and post notifications."
+    },
+    "IslandRing": {
+      "value": "Progress from `0` to `1`; values outside the range are clamped."
+    }
+  },
+  "accessibility": "- `IslandCompact` is a button with `aria-expanded` reflecting the expanded state; give it an `aria-label` that describes the activity.\n- Expanding moves focus to the first enabled button, link, or input inside `IslandExpanded`, which has `role=\"group\"` and is `inert` while not shown.\n- `Escape` or a pointer press outside collapses the expanded view; when focus was inside, it returns to the compact button.\n- Notices render as a button that dismisses on press, and their title and description are announced through a polite live region.\n- Inactive parts are removed from the tab order. `IslandRing` is `aria-hidden`.",
+  "notes": "- The root exposes `data-slot=\"island\"` and `data-view` with the current view. Parts use `data-slot` values `island-compact`, `island-expanded`, `island-notice`, and `island-ring`, and carry `data-active` while shown.\n- Animations are disabled under `prefers-reduced-motion`."
+}

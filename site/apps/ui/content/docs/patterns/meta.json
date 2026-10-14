@@ -1,0 +1,25 @@
+{
+  "title": "Patterns",
+  "pages": [
+    "index",
+    "action-bar",
+    "action-menu",
+    "app-shell",
+    "command-palette",
+    "confirm",
+    "context-actions",
+    "date-picker",
+    "flyout",
+    "modal",
+    "navbar",
+    "paged-list",
+    "panel",
+    "picker",
+    "preview",
+    "search-picker",
+    "segment-picker",
+    "split-view",
+    "table-list",
+    "trail"
+  ]
+}

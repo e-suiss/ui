@@ -1,0 +1,222 @@
+{
+  "name": "questionnaire",
+  "type": "ui",
+  "files": [
+    "components/ui/questionnaire.tsx"
+  ],
+  "requires": [
+    "button",
+    "use-questionnaire"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithShortcuts",
+    "NumberShortcuts",
+    "MultipleChoice",
+    "WithChoiceDescriptions",
+    "TextInput",
+    "StartOnLaterQuestion"
+  ],
+  "parts": [
+    {
+      "name": "Questionnaire",
+      "extends": [
+        "React.ComponentProps<\"form\">"
+      ],
+      "props": [
+        {
+          "name": "defaultItem",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "item",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "items",
+          "type": "readonly QuestionnaireItemDefinition[]",
+          "required": false
+        },
+        {
+          "name": "onItemChange",
+          "type": "(item: string) => void",
+          "required": false
+        },
+        {
+          "name": "shortcuts",
+          "type": "QuestionnaireShortcutMode",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "QuestionnaireProgress",
+      "extends": [
+        "useRender.ComponentProps<\"div\", QuestionnaireState>"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireItem",
+      "extends": [
+        "React.ComponentProps<\"fieldset\">"
+      ],
+      "props": [
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "onStatusChange",
+          "type": "(status: QuestionnaireItemStatus) => void",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "QuestionnaireTitle",
+      "extends": [
+        "useRender.ComponentProps<\"legend\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireDescription",
+      "extends": [
+        "useRender.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireChoices",
+      "extends": [
+        "useRender.ComponentProps< \"div\", { shortcuts: QuestionnaireShortcutMode | null } >"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireChoice",
+      "extends": [
+        "useRender.ComponentProps<\"label\", QuestionnaireChoiceState>"
+      ],
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "QuestionnaireChoiceDescription",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireInput",
+      "extends": [
+        "useRender.ComponentProps<\"input\", QuestionnaireInputState>"
+      ],
+      "props": [
+        {
+          "name": "type",
+          "type": "QuestionnaireInputType",
+          "required": false,
+          "default": "\"text\""
+        }
+      ]
+    },
+    {
+      "name": "QuestionnaireError",
+      "extends": [
+        "useRender.ComponentProps<\"p\", { invalid: boolean }>"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireActions",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnairePrevious",
+      "extends": [
+        "QuestionnaireNavigationProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireSkip",
+      "extends": [
+        "QuestionnaireNavigationProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireNext",
+      "extends": [
+        "QuestionnaireNavigationProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "QuestionnaireSubmit",
+      "extends": [
+        "QuestionnaireNavigationProps"
+      ],
+      "props": []
+    }
+  ]
+}

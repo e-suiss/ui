@@ -1,0 +1,94 @@
+{
+  "name": "selection-list",
+  "type": "interaction",
+  "files": [
+    "components/interactions/selection-list.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "IconActions"
+  ],
+  "parts": [
+    {
+      "name": "SelectionList",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "editing",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultEditing",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "onEditingChange",
+          "type": "(editing: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "default": "[]"
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string[]) => void",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SelectionListTrigger",
+      "extends": [
+        "React.ComponentProps<typeof Button>"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectionListItem",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "SelectionListBar",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SelectionListCount",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    }
+  ]
+}

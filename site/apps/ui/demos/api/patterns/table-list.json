@@ -1,0 +1,56 @@
+{
+  "name": "table-list",
+  "type": "pattern",
+  "files": [
+    "components/patterns/table-list.tsx"
+  ],
+  "requires": [
+    "table",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithoutTitle",
+    "Empty"
+  ],
+  "parts": [
+    {
+      "name": "TableList",
+      "extends": [
+        "React.ComponentProps<\"section\">"
+      ],
+      "props": [
+        {
+          "name": "rows",
+          "type": "T[]",
+          "required": true
+        },
+        {
+          "name": "columns",
+          "type": "TableListColumn<T>[]",
+          "required": true
+        },
+        {
+          "name": "getKey",
+          "type": "(row: T, index: number) => React.Key",
+          "required": false,
+          "default": "(_, index) => index"
+        },
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "emptyText",
+          "type": "React.ReactNode",
+          "required": false,
+          "default": "\"No results.\""
+        }
+      ]
+    }
+  ]
+}

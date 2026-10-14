@@ -1,0 +1,13 @@
+{
+  "name": "grid-carousel",
+  "type": "block",
+  "files": [
+    "components/blocks/grid-carousel.tsx"
+  ],
+  "requires": [
+    "carousel"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,133 @@
+---
+title: Accordion
+description: "A vertically stacked set of headings that each reveal a section of content."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="accordion" story="Default">
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Accordion wraps the Base UI Accordion primitive. An `Accordion` holds one or more `AccordionItem` parts; each item pairs an `AccordionTrigger` with an `AccordionContent` panel. The trigger renders inside a heading element and shows a caret that flips between down and up as the panel opens and closes.
+
+Use an accordion to shorten long pages of related content, such as FAQs or settings groups, where people only need one or a few sections at a time. For a single show-and-hide region, a collapsible is a lighter fit.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/accordion.tsx`:
+
+<SourceFile path="components/ui/accordion.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\""} />
+
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Accordion>\n    {items.map((item) => (\n      <AccordionItem key={item.value} value={item.value}>\n        <AccordionTrigger>{item.title}</AccordionTrigger>\n        <AccordionContent>{item.content}</AccordionContent>\n      </AccordionItem>\n    ))}\n  </Accordion>\n</div>"} />
+
+Give each `AccordionItem` a unique `value`. By default only one panel is open at a time; opening another closes the previous one. Set `multiple` on `Accordion` to let several panels stay open.
+
+The open state is an array of item values. Use `defaultValue` (for example `["shipping"]`) for uncontrolled use, or `value` with `onValueChange` to control it.
+
+## Examples
+
+### Filled
+
+The `filled` variant places the items on a rounded, secondary surface.
+
+<Example kind="ui" name="accordion" story="Filled">
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionFilledExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion variant=\"filled\">\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### By default
+
+Opens an item on first render with `defaultValue`.
+
+<Example kind="ui" name="accordion" story="OpenByDefault">
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionOpenByDefaultExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion defaultValue={[\"shipping\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Multiple
+
+Keeps several panels open at once with `multiple`.
+
+<Example kind="ui" name="accordion" story="Multiple">
+
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionMultipleExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion multiple defaultValue={[\"shipping\", \"returns\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Accordion","href":"#accordion","children":[{"name":"AccordionItem","href":"#accordionitem","children":[{"name":"AccordionTrigger","href":"#accordiontrigger","children":[]},{"name":"AccordionContent","href":"#accordioncontent","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Accordion
+
+The root that groups items and manages which panels are open.
+
+<PropsTable extends={["AccordionPrimitive.Root.Props"]} props={[{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AccordionItem
+
+A single section that pairs a trigger with its panel, identified by `value`.
+
+<PropsTable extends={["AccordionPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AccordionTrigger
+
+The button, inside a heading, that toggles its item's panel and shows the caret indicator.
+
+<PropsTable extends={["AccordionPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AccordionContent
+
+The collapsible panel holding the item's content.
+
+<PropsTable extends={["AccordionPrimitive.Panel.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Each trigger is a `button` with `aria-expanded` reflecting its panel's state.
+- Triggers are wrapped in a heading element provided by Base UI.
+- Triggers are reachable with Tab; `Enter` and `Space` toggle the focused panel.
+- Disabled triggers receive `aria-disabled` and are styled with `text-label-quaternary`.
+
+## Notes
+
+- Styling hooks: `data-slot="accordion"`, `"accordion-item"`, `"accordion-trigger"`, `"accordion-trigger-icon"` and `"accordion-content"`.
+- The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-open` and `data-closed`.
+- `className` on `AccordionContent` applies to the inner padded wrapper, not the animated panel.

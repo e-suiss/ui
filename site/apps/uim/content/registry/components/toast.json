@@ -1,0 +1,34 @@
+{
+  "description": "Brief notifications that slide up from the bottom of the screen, stack, and dismiss on a timer or with a swipe.",
+  "overview": "`Toaster` wraps your app in a toast provider and renders the queue through a portal into a full-screen viewport. On iOS the viewport sits inside a `FullWindowOverlay` from `react-native-screens`, so toasts appear above native modals. Each toast is a Reanimated view that slides in from the bottom edge, fades out downward, and is capped at 384 points wide.\n\nVisible toasts stack with a small peek and shrink behind the frontmost one. Touching the stack expands it; it collapses again three seconds after the touch ends. Each toast shows an icon for its `type` (`success`, `info`, `warning`, `error`, or a spinner for `loading`), a title, a description, an optional action button and a close button.",
+  "usage": "Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id).\n\n`toast.promise(promise, { loading, success, error })` shows a loading toast and replaces it with the success or error state when the promise settles.\n\nPass `actionProps` (for example `{ children: \"Undo\", onPress }`) to show an action button. Set `priority: \"high\"` for urgent messages and `timeout` to override the provider default; `loading` toasts stay until updated.\n\nUse `createToastManager` to create a separate manager and pass it to `Toaster` as `toastManager`, and `useToastManager` to read the current toasts and actions inside the provider. The lower-level parts are exported for building a custom toast layout.",
+  "examples": {
+    "ShowOnLoad": "Shows a success toast as soon as the screen mounts."
+  },
+  "parts": {
+    "Toaster": "Provider, portal and viewport that render the default toast list.",
+    "ToastProvider": "Holds the toast queue, default timeout and visible limit.",
+    "ToastPortal": "Renders its children into a portal host.",
+    "ToastViewport": "Full-screen layer that holds the stack and expands it on touch.",
+    "Toast": "One animated, swipeable toast in the stack.",
+    "ToastContent": "Row layout for the icon, text, action and close button.",
+    "ToastTitle": "The toast title, read from the toast object.",
+    "ToastDescription": "Secondary text under the title.",
+    "ToastAction": "Outline button rendered from `actionProps`.",
+    "ToastClose": "Icon button that dismisses the toast."
+  },
+  "props": {
+    "Toaster": {
+      "toastManager": "Manager whose toasts are shown. Defaults to the exported `toast`.",
+      "timeout": "Default auto-dismiss time in milliseconds. Defaults to `5000`.",
+      "limit": "Maximum number of visible toasts. Defaults to `3`.",
+      "portalHost": "Name of the portal host to render into."
+    },
+    "Toast": {
+      "toast": "The toast object to render.",
+      "swipeDirection": "Direction or directions that dismiss the toast with a swipe. Defaults to `down` and `right`."
+    }
+  },
+  "accessibility": "- Each toast has the `alert` role and a live region that is `polite`, or `assertive` for `priority: \"high\"`.\n- New toasts are announced with their title and description; high-priority announcements are not queued.\n- A `dismiss` accessibility action and the escape gesture close the toast.\n- Toasts stacked behind the front one are hidden from VoiceOver and TalkBack.\n- The close button has the label \"Close toast\" and the type icon is hidden from assistive technology.\n- Animations respect the system reduce motion setting.",
+  "notes": "- Uses `bg-surface-raised`, `text-label`, `text-label-secondary` and tint tokens `bg-green`, `bg-accent`, `bg-orange` and `bg-danger` for the icons.\n- Light and dark colors follow the system appearance; dark mode drops the border.\n- Toasts respect the bottom safe area inset.\n- `FullWindowOverlay` is used on iOS only; Android renders the viewport directly."
+}

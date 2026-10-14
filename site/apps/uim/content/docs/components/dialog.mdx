@@ -1,0 +1,299 @@
+---
+title: Dialog
+description: "A modal window centered over the screen for focused tasks and messages."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-dialog--open-by-default" width={880} height={1289} live="dialog/OpenByDefault" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction EditProfileContent() {\n  return (\n    <DialogContent>\n      <DialogHeader>\n        <DialogTitle>Edit profile</DialogTitle>\n        <DialogDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </DialogDescription>\n      </DialogHeader>\n      <View className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <DialogFooter>\n        <DialogClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DialogClose>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n      </DialogFooter>\n    </DialogContent>\n  )\n}\n\nexport function DialogOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog defaultOpen>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Edit profile</Text>\n        </DialogTrigger>\n        <EditProfileContent />\n      </Dialog>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DialogOpenByDefaultExample: View {\n  var body: some View {\n    DialogEditProfile(open: true)\n  }\n}\n\nstruct DialogEditProfile: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Edit profile\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .dialog(isPresented: $open) {\n        DialogEditProfileContent()\n      }\n  }\n}\n\nstruct DialogEditProfileContent: View {\n  @State private var name = \"Pedro Duarte\"\n  @State private var username = \"@peduarte\"\n\n  var body: some View {\n    DialogContent {\n      DialogHeader {\n        DialogTitle(\"Edit profile\")\n        DialogDescription(\"Make changes to your profile here. Tap save when you're done.\")\n      }\n      VStack(alignment: .leading, spacing: 16) {\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Name\")\n            .accessibilityHidden(true)\n          TextField(\"Name\", text: $name)\n            .textFieldStyle(.input)\n        }\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Username\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n        }\n      }\n      DialogFooter {\n        DialogClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n        Button {} label: {\n          Text(\"Save changes\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Dialog\nimport com.esuiss.ui.components.DialogDescription\nimport com.esuiss.ui.components.DialogFooter\nimport com.esuiss.ui.components.DialogHeader\nimport com.esuiss.ui.components.DialogTitle\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun DialogOpenByDefaultExample() {\n    DialogDefault(defaultOpen = true)\n}\n\n@Composable\nfun DialogDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var name by rememberSaveable { mutableStateOf(\"Pedro Duarte\") }\n    var username by rememberSaveable { mutableStateOf(\"@peduarte\") }\n    Column {\n        Button(\"Edit profile\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Dialog(open = open, onOpenChange = { open = it }) {\n            DialogHeader {\n                DialogTitle(\"Edit profile\")\n                DialogDescription(\"Make changes to your profile here. Tap save when you're done.\")\n            }\n            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Name\")\n                    Input(name, { name = it }, Modifier.semantics { contentDescription = \"Name\" })\n                }\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Username\")\n                    Input(\n                        username,\n                        { username = it },\n                        Modifier.semantics { contentDescription = \"Username\" },\n                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),\n                    )\n                }\n            }\n            DialogFooter {\n                Button(\"Cancel\", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n                Button(\"Save changes\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+`Dialog` opens a centered card over a dimmed scrim. `DialogContent` renders through a portal (inside a full-window overlay on iOS), scales and fades in, and shows a round close button in the top-right corner by default. Tapping the scrim closes the dialog.
+
+Use it for short forms and information that the user can dismiss freely. When the user must make an explicit choice, use Alert Dialog instead.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dialog"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dialog --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dialog --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="uniwind/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="nativewind/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/dialog.tsx`:
+
+<SourceFile path="stylesheet/components/ui/dialog.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Add the Swift package to your app:
+
+<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+
+3. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+4. Copy the source and every file it uses:
+
+<SourceFile path="swift/Components/Dialog.swift" />
+
+<SourceFile path="swift/Components/Button.swift" />
+
+<SourceFile path="swift/Components/ButtonGroup.swift" />
+
+<SourceFile path="swift/Components/Checkbox.swift" />
+
+<SourceFile path="swift/Components/Field.swift" />
+
+<SourceFile path="swift/Components/Haptics.swift" />
+
+<SourceFile path="swift/Components/Overlay.swift" />
+
+<SourceFile path="swift/Components/Separator.swift" />
+
+<SourceFile path="swift/Components/TextVariant.swift" />
+
+5. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Dialog.kt" />
+
+<SourceFile path="kotlin/components/Button.kt" />
+
+<SourceFile path="kotlin/components/ButtonGroup.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+<SourceFile path="kotlin/components/Icon.kt" />
+
+<SourceFile path="kotlin/components/Overlay.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from \"@/components/ui/dialog\""} />
+
+<Code lang="tsx" code={"<View className=\"items-start\">\n  <Dialog defaultOpen>\n    <DialogTrigger render={<Button variant=\"outline\" />}>\n      <Text>Edit profile</Text>\n    </DialogTrigger>\n    <EditProfileContent />\n  </Dialog>\n</View>"} />
+
+Compose `DialogTrigger` and `DialogContent` with a `DialogHeader` (`DialogTitle`, `DialogDescription`), your content, and a `DialogFooter`. Footer buttons stack vertically with the first child at the bottom, and sit in a row aligned to the end on wider screens. Use `DialogClose` with `render` to turn any `Button` into a close button.
+
+Set `showCloseButton={false}` on the content to hide the corner button, or pass `closeLabel` to show a text button such as "Done" instead of the icon. The header adds end padding so the title does not run under it. `DialogFooter` takes `showCloseButton` to append a secondary Close button.
+
+Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
+
+## Examples
+
+### Default
+
+<Example id="components-dialog--default" width={880} height={1339} live="dialog/Default" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction EditProfileContent() {\n  return (\n    <DialogContent>\n      <DialogHeader>\n        <DialogTitle>Edit profile</DialogTitle>\n        <DialogDescription>\n          Make changes to your profile here. Tap save when you&apos;re done.\n        </DialogDescription>\n      </DialogHeader>\n      <View className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-name\">Name</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-name\"\n            defaultValue=\"Pedro Duarte\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"dialog-username\">Username</Label>\n          <Input\n            accessibilityLabelledBy=\"dialog-username\"\n            defaultValue=\"@peduarte\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n      </View>\n      <DialogFooter>\n        <DialogClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DialogClose>\n        <Button>\n          <Text>Save changes</Text>\n        </Button>\n      </DialogFooter>\n    </DialogContent>\n  )\n}\n\nexport function DialogExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Edit profile</Text>\n        </DialogTrigger>\n        <EditProfileContent />\n      </Dialog>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DialogEditProfile: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Edit profile\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .dialog(isPresented: $open) {\n        DialogEditProfileContent()\n      }\n  }\n}\n\nstruct DialogEditProfileContent: View {\n  @State private var name = \"Pedro Duarte\"\n  @State private var username = \"@peduarte\"\n\n  var body: some View {\n    DialogContent {\n      DialogHeader {\n        DialogTitle(\"Edit profile\")\n        DialogDescription(\"Make changes to your profile here. Tap save when you're done.\")\n      }\n      VStack(alignment: .leading, spacing: 16) {\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Name\")\n            .accessibilityHidden(true)\n          TextField(\"Name\", text: $name)\n            .textFieldStyle(.input)\n        }\n        VStack(alignment: .leading, spacing: 8) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Username\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n        }\n      }\n      DialogFooter {\n        DialogClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n        Button {} label: {\n          Text(\"Save changes\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Dialog\nimport com.esuiss.ui.components.DialogDescription\nimport com.esuiss.ui.components.DialogFooter\nimport com.esuiss.ui.components.DialogHeader\nimport com.esuiss.ui.components.DialogTitle\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun DialogExample() {\n    DialogDefault(defaultOpen = false)\n}\n\n@Composable\nfun DialogDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var name by rememberSaveable { mutableStateOf(\"Pedro Duarte\") }\n    var username by rememberSaveable { mutableStateOf(\"@peduarte\") }\n    Column {\n        Button(\"Edit profile\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Dialog(open = open, onOpenChange = { open = it }) {\n            DialogHeader {\n                DialogTitle(\"Edit profile\")\n                DialogDescription(\"Make changes to your profile here. Tap save when you're done.\")\n            }\n            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Name\")\n                    Input(name, { name = it }, Modifier.semantics { contentDescription = \"Name\" })\n                }\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Username\")\n                    Input(\n                        username,\n                        { username = it },\n                        Modifier.semantics { contentDescription = \"Username\" },\n                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),\n                    )\n                }\n            }\n            DialogFooter {\n                Button(\"Cancel\", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n                Button(\"Save changes\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+### Destructive
+
+A destructive action with a cancel button in the footer.
+
+<Example id="components-dialog--destructive" width={880} height={1151} live="dialog/Destructive" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogDestructiveExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete account</Text>\n        </DialogTrigger>\n        <DialogContent>\n          <DialogHeader>\n            <DialogTitle>Delete account</DialogTitle>\n            <DialogDescription>\n              This will permanently delete your account and all of its data.\n            </DialogDescription>\n          </DialogHeader>\n          <DialogFooter>\n            <DialogClose render={<Button variant=\"secondary\" />}>\n              <Text>Cancel</Text>\n            </DialogClose>\n            <DialogClose render={<Button variant=\"destructive\" />}>\n              <Text>Delete</Text>\n            </DialogClose>\n          </DialogFooter>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DialogDestructive: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Delete account\") { open = true }\n      .buttonStyle(.variant(.destructive))\n      .dialog(isPresented: $open) {\n        DialogContent {\n          DialogHeader {\n            DialogTitle(\"Delete account\")\n            DialogDescription(\"This will permanently delete your account and all of its data.\")\n          }\n          DialogFooter {\n            DialogClose {\n              Text(\"Cancel\").frame(maxWidth: .infinity)\n            }\n            .buttonStyle(.variant(.secondary))\n            DialogClose {\n              Text(\"Delete\").frame(maxWidth: .infinity)\n            }\n            .buttonStyle(.variant(.destructive))\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Dialog\nimport com.esuiss.ui.components.DialogDescription\nimport com.esuiss.ui.components.DialogFooter\nimport com.esuiss.ui.components.DialogHeader\nimport com.esuiss.ui.components.DialogTitle\n\n@Composable\nfun DialogDestructive() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Delete account\", onClick = { open = true }, variant = ButtonVariant.Destructive)\n        Dialog(open = open, onOpenChange = { open = it }) {\n            DialogHeader {\n                DialogTitle(\"Delete account\")\n                DialogDescription(\"This will permanently delete your account and all of its data.\")\n            }\n            DialogFooter {\n                Button(\"Cancel\", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Secondary)\n                Button(\"Delete\", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Destructive)\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+### Without close button
+
+No corner button, with a Close button in the footer.
+
+<Example id="components-dialog--without-close-button" width={880} height={1151} live="dialog/WithoutCloseButton" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogWithoutCloseButtonExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show terms</Text>\n        </DialogTrigger>\n        <DialogContent showCloseButton={false}>\n          <DialogHeader>\n            <DialogTitle>Terms updated</DialogTitle>\n            <DialogDescription>\n              We have updated our terms of service. Please review the changes\n              before continuing.\n            </DialogDescription>\n          </DialogHeader>\n          <DialogFooter showCloseButton>\n            <Button>\n              <Text>Accept</Text>\n            </Button>\n          </DialogFooter>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DialogWithoutCloseButton: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Show terms\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .dialog(isPresented: $open) {\n        DialogContent(showCloseButton: false) {\n          DialogHeader {\n            DialogTitle(\"Terms updated\")\n            DialogDescription(\"We have updated our terms of service. Please review the changes before continuing.\")\n          }\n          DialogFooter(showCloseButton: true) {\n            Button {} label: {\n              Text(\"Accept\").frame(maxWidth: .infinity)\n            }\n            .buttonStyle(.variant())\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Dialog\nimport com.esuiss.ui.components.DialogDescription\nimport com.esuiss.ui.components.DialogFooter\nimport com.esuiss.ui.components.DialogHeader\nimport com.esuiss.ui.components.DialogTitle\n\n@Composable\nfun DialogWithoutCloseButton() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Show terms\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Dialog(open = open, onOpenChange = { open = it }, showCloseButton = false) {\n            DialogHeader {\n                DialogTitle(\"Terms updated\")\n                DialogDescription(\"We have updated our terms of service. Please review the changes before continuing.\")\n            }\n            DialogFooter(showCloseButton = true) {\n                Button(\"Accept\", onClick = {}, modifier = Modifier.fillMaxWidth())\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+### With close label
+
+A text close button through `closeLabel`.
+
+<Example id="components-dialog--with-close-label" width={880} height={1047} live="dialog/WithCloseLabel" platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DialogWithCloseLabelExample() {\n  return (\n    <View className=\"items-start\">\n      <Dialog>\n        <DialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open settings</Text>\n        </DialogTrigger>\n        <DialogContent closeLabel=\"Done\">\n          <DialogHeader>\n            <DialogTitle>Notification settings</DialogTitle>\n            <DialogDescription>\n              Choose how you want to be notified about activity in your\n              workspace.\n            </DialogDescription>\n          </DialogHeader>\n        </DialogContent>\n      </Dialog>\n    </View>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DialogWithCloseLabel: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Open settings\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .dialog(isPresented: $open) {\n        DialogContent(closeLabel: \"Done\") {\n          DialogHeader {\n            DialogTitle(\"Notification settings\")\n            DialogDescription(\"Choose how you want to be notified about activity in your workspace.\")\n          }\n        }\n      }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Dialog\nimport com.esuiss.ui.components.DialogDescription\nimport com.esuiss.ui.components.DialogHeader\nimport com.esuiss.ui.components.DialogTitle\n\n@Composable\nfun DialogWithCloseLabel() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Open settings\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Dialog(open = open, onOpenChange = { open = it }, closeLabel = \"Done\") {\n            DialogHeader {\n                DialogTitle(\"Notification settings\")\n                DialogDescription(\"Choose how you want to be notified about activity in your workspace.\")\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DialogOverlay
+
+Dimmed scrim that closes the dialog when tapped.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Backdrop>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DialogContent
+
+Centered card with an optional close button.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the corner close button. Defaults to `true`."},{"name":"closeLabel","type":"string","description":"Text for the close button instead of the icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DialogHeader
+
+Column for the title and description.
+
+<PropsTable extends={["ViewProps"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DialogFooter
+
+Area for actions.
+
+<PropsTable extends={["ViewProps"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Appends a secondary Close button."}]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DialogTitle
+
+Dialog heading.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DialogDescription
+
+Supporting text.
+
+<PropsTable extends={["React.ComponentProps<typeof DialogPrimitive.Description>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The popup has the `dialog` role, is labelled by the title and is marked as modal for VoiceOver.
+- Focus moves to the title when the dialog opens.
+- The Android back button and the VoiceOver escape gesture close it.
+- The icon close button is labelled "Close".
+
+## Notes
+
+- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.
+- Animations respect the system Reduce Motion setting.
+- Uses `bg-surface-raised`, `bg-scrim` and `bg-surface-tertiary` tokens; light and dark follow the system appearance.

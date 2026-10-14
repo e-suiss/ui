@@ -1,0 +1,14 @@
+{
+  "name": "nav-categories",
+  "type": "block",
+  "files": [
+    "components/blocks/nav-categories.tsx"
+  ],
+  "requires": [
+    "carousel",
+    "toggle"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

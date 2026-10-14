@@ -1,0 +1,71 @@
+{
+  "name": "navbar",
+  "type": "pattern",
+  "files": [
+    "components/patterns/navbar.tsx"
+  ],
+  "requires": [
+    "fullscreen-menu",
+    "navigation-menu",
+    "use-mobile"
+  ],
+  "dependencies": [
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "WithActions",
+    "LinksOnly",
+    "Crowded",
+    "WithCloseLabel",
+    "MegaPanel"
+  ],
+  "parts": [
+    {
+      "name": "Navbar",
+      "extends": [
+        "React.ComponentProps<\"header\">"
+      ],
+      "props": [
+        {
+          "name": "items",
+          "type": "NavbarItem[]",
+          "required": true
+        },
+        {
+          "name": "brand",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "menuLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Menu\""
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "\"popover\" | \"panel\"",
+          "required": false,
+          "default": "\"popover\""
+        },
+        {
+          "name": "render",
+          "type": "React.ReactElement",
+          "required": false,
+          "default": "<NavbarAnchor />"
+        }
+      ]
+    }
+  ]
+}

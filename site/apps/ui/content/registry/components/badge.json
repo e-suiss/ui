@@ -1,0 +1,21 @@
+{
+  "description": "A small inline label for status, counts or metadata.",
+  "overview": "`Badge` is a single element that renders a `span` by default. Use the `render` prop to render it as another element, such as a link. Badges can hold text and an icon on either side.\n\nUse a badge to tag content with a short status or category. For actions, use Button instead.",
+  "usage": "Mark icons with `data-icon=\"inline-start\"` or `data-icon=\"inline-end\"` so the `outline` and `ghost` variants tighten their padding on that side. Icons are sized to `size-3`.\n\nPass `render` with an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.\n\nTo use a custom color, override the text color with a `className` such as `text-success`.",
+  "examples": {
+    "Variants": "Shows the `default`, `secondary`, `destructive`, `outline`, `ghost` and `link` variants.",
+    "WithIcon": "Places icons before and after the label with `data-icon`.",
+    "AsLink": "Renders the badge as a link with the `render` prop.",
+    "CustomColor": "Overrides the text color with utility classes."
+  },
+  "parts": {
+    "Badge": "The inline label element."
+  },
+  "props": {
+    "Badge": {
+      "variant": "Visual style. `default`, `secondary`, `destructive` and `link` are text-only; `outline` adds a border and `ghost` adds horizontal padding."
+    }
+  },
+  "accessibility": "- A badge is static text by default and is not focusable.\n- When rendered as a link, it shows a focus ring on keyboard focus.\n- `aria-invalid` adds a danger-colored border.",
+  "notes": "- Styling hook: `data-slot=\"badge\"`, plus `data-variant` from the render state.\n- The `destructive` variant also sets the focus ring color to `--color-danger`.\n- Badges are a fixed `h-5` with fully rounded corners and do not wrap text."
+}

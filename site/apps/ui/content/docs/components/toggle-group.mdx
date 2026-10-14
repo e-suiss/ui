@@ -1,0 +1,186 @@
+---
+title: Toggle Group
+description: "A set of toggle buttons for choosing one or several related options, including segmented controls."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="toggle-group" story="Default">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupExample() {\n  return (\n    <ToggleGroup spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+`ToggleGroup` wraps the Base UI Toggle Group primitive and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.
+
+With `spacing={0}` and the `default` variant, the group becomes a segmented control: a filled track where a raised pill slides to the pressed item. Use a segmented group to switch between views, such as day, week and month. For a single on-off option, use `Toggle`; for switching panels of content, use `Tabs`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle-group"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Toggle](/docs/components/toggle).
+
+3. Copy the source into `components/ui/toggle-group.tsx`:
+
+<SourceFile path="components/ui/toggle-group.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\""} />
+
+<Code lang="tsx" code={"<ToggleGroup spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n  <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n    <TextBIcon />\n  </ToggleGroupItem>\n  <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n    <TextItalicIcon />\n  </ToggleGroupItem>\n  <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n    <TextUnderlineIcon />\n  </ToggleGroupItem>\n</ToggleGroup>"} />
+
+The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.
+
+Set `variant` and `size` on `ToggleGroup`; items take these from the group. Use `spacing={0}` with the `outline` variant to join items into one bordered bar.
+
+## Examples
+
+### Outline
+
+Uses the `outline` variant with spaced items.
+
+<Example kind="ui" name="toggle-group" story="Outline">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupOutlineExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"italic\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Attached
+
+Joins outline items into one bar with `spacing={0}`.
+
+<Example kind="ui" name="toggle-group" story="Attached">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupAttachedExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={0} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Sizes
+
+Compares the `sm`, `default` and `lg` sizes.
+
+<Example kind="ui" name="toggle-group" story="Sizes">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"sm\", \"default\", \"lg\"] as const).map((size) => (\n        <ToggleGroup key={size} spacing={2} orientation=\"horizontal\" multiple size={size}>\n          <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n            <TextBIcon />\n          </ToggleGroupItem>\n          <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n            <TextItalicIcon />\n          </ToggleGroupItem>\n          <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n            <TextUnderlineIcon />\n          </ToggleGroupItem>\n        </ToggleGroup>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Segmented
+
+Shows a single-choice segmented control with a sliding pill.
+
+<Example kind="ui" name="toggle-group" story="Segmented">
+
+<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"horizontal\" defaultValue={[\"week\"]} aria-label=\"Calendar view\">\n      <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n      <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n      <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n      <ToggleGroupItem value=\"year\">Year</ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Segmented vertical
+
+Stacks a segmented control vertically.
+
+<Example kind="ui" name="toggle-group" story="SegmentedVertical">
+
+<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedVerticalExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"vertical\" defaultValue={[\"week\"]} aria-label=\"Calendar view\">\n      <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n      <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n      <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n      <ToggleGroupItem value=\"year\">Year</ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Segmented multiple
+
+Uses a segmented control that allows several pressed items.
+
+<Example kind="ui" name="toggle-group" story="SegmentedMultiple">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedMultipleExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"horizontal\" multiple defaultValue={[\"bold\", \"underline\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Segmented sizes
+
+Compares segmented controls in each size.
+
+<Example kind="ui" name="toggle-group" story="SegmentedSizes">
+
+<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"sm\", \"default\", \"lg\"] as const).map((size) => (\n        <ToggleGroup\n          key={size} spacing={0} orientation=\"horizontal\"\n          size={size}\n          defaultValue={[\"week\"]}\n          aria-label={`Calendar view, ${size}`}\n        >\n          <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n          <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n          <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n        </ToggleGroup>\n      ))}\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Single selection
+
+Allows only one pressed item in an outline group.
+
+<Example kind="ui" name="toggle-group" story="SingleSelection">
+
+<Code lang="tsx" code={"import { TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSingleSelectionExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={2} orientation=\"horizontal\" defaultValue={[\"left\"]}>\n      <ToggleGroupItem value=\"left\" aria-label=\"Align left\">\n        <TextAlignLeftIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"center\" aria-label=\"Align center\">\n        <TextAlignCenterIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"right\" aria-label=\"Align right\">\n        <TextAlignRightIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Vertical
+
+Stacks attached outline items vertically.
+
+<Example kind="ui" name="toggle-group" story="Vertical">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupVerticalExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={0} orientation=\"vertical\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables every item in the group.
+
+<Example kind="ui" name="toggle-group" story="Disabled">
+
+<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupDisabledExample() {\n  return (\n    <ToggleGroup spacing={2} orientation=\"horizontal\" multiple disabled defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"ToggleGroup","href":"#togglegroup","children":[{"name":"ToggleGroupItem","href":"#togglegroupitem","children":[]}]}]} />
+
+<ApiPart index={1}>
+
+### ToggleGroup
+
+The container that holds the pressed values and shared styles.
+
+<PropsTable extends={["ToggleGroupPrimitive.Props"]} props={[{"name":"spacing","type":"number","default":"2","description":"Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant."},{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"Lays items out in a row or a column, and sets which arrow keys move focus."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleGroupItem
+
+A toggle button within the group, identified by its `value`.
+
+<PropsTable extends={["TogglePrimitive.Props"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The group has the `group` role; name it with `aria-label`.
+- Each item is a `button` with `aria-pressed`. Icon-only items need an `aria-label`.
+- Arrow keys move focus between items: left and right in a horizontal group, up and down in a vertical one. `Space` toggles the focused item.
+- `disabled` on the group disables every item.
+
+## Notes
+
+- The segmented indicator appears only when exactly one item is pressed. Its position is set through `--active-toggle-left`, `--active-toggle-top`, `--active-toggle-width` and `--active-toggle-height`.
+- `variant` and `size` set on a `ToggleGroupItem` are overridden by the group's values.
+- The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`; parts use the `toggle-group`, `toggle-group-item` and `toggle-group-indicator` slots.
+- The segmented track uses `bg-control` and the pill uses `bg-surface-raised`. Its animation is removed when reduced motion is preferred.

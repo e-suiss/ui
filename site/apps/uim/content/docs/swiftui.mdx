@@ -1,0 +1,71 @@
+---
+title: SwiftUI
+description: Copy-paste SwiftUI components for iOS apps, with the same design, names and variants as the React Native components.
+eyebrow: suiss/uim
+---
+
+suiss/uim includes SwiftUI source for every component, pattern, interaction, chart and block. The SwiftUI views are built from the same design tokens as the React Native components, so a native iOS app and an Expo app share one design. The source is copied into your project, not installed as a package, so you own and can change every view.
+
+## Requirements
+
+- iOS 17 or later.
+- Components with icons use the [Phosphor](https://github.com/phosphor-icons/swift) Swift package.
+- Charts are drawn with Apple's Swift Charts framework, which ships with iOS.
+
+## Add a component
+
+Pass `--platform swift` to the CLI:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --platform swift
+```
+
+Leave out the names to pick from a list that only shows what exists for SwiftUI:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add --platform swift
+```
+
+Every component page also lists the files to copy by hand under **Installation**, in the **SwiftUI** tab.
+
+## Manual setup
+
+1. Add the Phosphor package to your app:
+
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
+
+2. Copy the theme files, `Theme.swift` and `Tokens.swift`. Every view uses them.
+3. Copy the component and the files it uses, then add them to your app target.
+
+## Usage
+
+Components follow SwiftUI conventions. The button, for example, is a button style:
+
+```swift
+struct ContentView: View {
+  var body: some View {
+    Button("Continue") {}
+      .buttonStyle(.variant())
+  }
+}
+```
+
+## Light and dark mode
+
+Every color in `Tokens.swift` has a light and a dark value. Views follow the system appearance without extra setup.
+
+## Same names as React Native
+
+Component names, variants and sizes match the React Native components. The SwiftUI button has the same eight variants: `default`, `outline`, `secondary`, `tinted`, `ghost`, `plain`, `destructive` and `link`. Moving between the React Native docs, the SwiftUI source and suiss/ui on the web uses one vocabulary.
+
+## Browse
+
+Open the **Code** tab of any example and choose **SwiftUI** to see the Swift version:
+
+- [Components](/docs/components)
+- [Patterns](/docs/patterns)
+- [Interactions](/docs/interactions)
+- [Charts](/docs/charts)
+- [Blocks](/docs/blocks)

@@ -1,0 +1,46 @@
+---
+title: Tooltip Chart Label Formatter
+description: "A gradient area chart whose tooltip heading shows a longer date than the axis ticks."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="tooltip-chart-label-formatter">
+
+<SourceFile path="components/charts/tooltip-chart-label-formatter.tsx" fold={false} />
+
+</Example>
+
+Two weeks of active energy as a gradient area, where the axis shows only day numbers but the tooltip heading spells out the weekday. Use a label formatter when the axis needs short labels and the tooltip has room for the full context.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-label-formatter"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/tooltip-chart-label-formatter.tsx`:
+
+<SourceFile path="components/charts/tooltip-chart-label-formatter.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { TooltipChartLabelFormatter } from \"@/components/charts/tooltip-chart-label-formatter\""} />
+
+<Code lang="tsx" code={"<TooltipChartLabelFormatter />"} />
+
+Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there to add the month or year if your range spans more than one month.
+
+## Notes
+
+The demo format shows the day number and weekday but not the month, which can be ambiguous across month boundaries.

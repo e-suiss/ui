@@ -1,0 +1,123 @@
+{
+  "name": "pagination",
+  "type": "ui",
+  "files": [
+    "components/ui/pagination.tsx"
+  ],
+  "requires": [
+    "button"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Compact",
+    "RowsPerPage",
+    "WithEllipsis",
+    "CustomLabels",
+    "LargeLinks"
+  ],
+  "parts": [
+    {
+      "name": "Pagination",
+      "extends": [
+        "React.ComponentProps<\"nav\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationContent",
+      "extends": [
+        "React.ComponentProps<\"ul\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationItem",
+      "extends": [
+        "React.ComponentProps<\"li\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationLink",
+      "extends": [
+        "PaginationLinkProps"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationPrevious",
+      "extends": [
+        "React.ComponentProps<typeof PaginationLink>"
+      ],
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "default": "\"Previous\""
+        }
+      ]
+    },
+    {
+      "name": "PaginationNext",
+      "extends": [
+        "React.ComponentProps<typeof PaginationLink>"
+      ],
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "default": "\"Next\""
+        }
+      ]
+    },
+    {
+      "name": "PaginationFirst",
+      "extends": [
+        "React.ComponentProps<typeof PaginationLink>"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationLast",
+      "extends": [
+        "React.ComponentProps<typeof PaginationLink>"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationEllipsis",
+      "extends": [
+        "React.ComponentProps<\"span\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationSummary",
+      "extends": [
+        "React.ComponentProps<\"p\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationGroup",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "PaginationInput",
+      "extends": [
+        "React.ComponentProps<\"input\">"
+      ],
+      "props": []
+    }
+  ]
+}

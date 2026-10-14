@@ -1,0 +1,46 @@
+---
+title: Line Chart Dots
+description: "A weight trend with a dot at every monthly reading and a fixed value axis on the right."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-dots">
+
+<SourceFile path="components/charts/line-chart-dots.tsx" fold={false} />
+
+</Example>
+
+A health-style weight card with a dot on every monthly reading and a fixed value axis on the right. The dots make it clear where measurements actually exist, so use this variant when readings are sparse or irregular.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-dots"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-dots.tsx`:
+
+<SourceFile path="components/charts/line-chart-dots.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartDots } from \"@/components/charts/line-chart-dots\""} />
+
+<Code lang="tsx" code={"<LineChartDots />"} />
+
+Replace the list of readings in `chartData` and rename `weight` in the data, the line and `chartConfig`. Set the value axis `domain` and `ticks` to a range that suits your numbers, and change the unit in the tooltip formatter.
+
+## Notes
+
+The headline value and the change below it are hard-coded text, so update them along with the data or compute them from it.

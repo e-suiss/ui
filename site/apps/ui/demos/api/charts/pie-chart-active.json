@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-active",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-active.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

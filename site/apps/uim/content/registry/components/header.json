@@ -1,0 +1,41 @@
+{
+  "description": "A navigation bar with a back button, a centered title, actions and an optional large title that collapses on scroll.",
+  "overview": "`Header` is a 44-point bar that sorts its children into three slots: `HeaderBack` and leading `HeaderActions` on the start side, `HeaderTitle` in the center, and everything else on the end side. The side slots share the remaining width equally, so the title stays centered.\n\nFor a large title, create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.",
+  "usage": "`HeaderBack` shows a caret and an optional text label such as the previous screen's name; wire `onPress` to your navigation. Group icon buttons in `HeaderActions`, and set `side=\"leading\"` to place a group on the start side.\n\nBoth `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.\n\nWithout a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.",
+  "examples": {
+    "LargeTitle": "A large title that collapses into the bar on scroll.",
+    "LargeTitleWithSubtitle": "A large title with a subtitle.",
+    "CompactWithScroll": "A compact title whose hairline appears on scroll.",
+    "Subtitle": "A two-line title with a subtitle.",
+    "LeadingActions": "Actions on both sides of the title.",
+    "BackOnly": "A long back label that truncates."
+  },
+  "parts": {
+    "Header": "Bar that lays out the back button, title and actions.",
+    "HeaderBack": "Back button with a caret and optional label.",
+    "HeaderTitle": "Centered title with optional subtitle.",
+    "HeaderActions": "Row of actions for either side.",
+    "HeaderLargeTitle": "Large title at the top of the scroll content.",
+    "HeaderScrollView": "Scroll view that drives the header animations.",
+    "useHeaderScroll": "Creates the shared scroll state."
+  },
+  "props": {
+    "Header": {
+      "scroll": "Scroll state from `useHeaderScroll()`."
+    },
+    "HeaderTitle": {
+      "subtitle": "Second line under the title."
+    },
+    "HeaderLargeTitle": {
+      "subtitle": "Line under the large title."
+    },
+    "HeaderActions": {
+      "side": "`leading` or `trailing`. Defaults to `trailing`."
+    },
+    "HeaderScrollView": {
+      "scroll": "Scroll state from `useHeaderScroll()`."
+    }
+  },
+  "accessibility": "- `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.\n- `HeaderBack` has the `button` role and is labelled with its text, or \"Back\" when it has none.\n- Give icon-only actions an `accessibilityLabel`.",
+  "notes": "- The back caret rotates and the large title scales from the correct edge in right-to-left layouts.\n- Uses `text-link`, `bg-separator` and `bg-item-pressed` tokens; light and dark follow the system appearance."
+}

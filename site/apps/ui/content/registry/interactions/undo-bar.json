@@ -1,0 +1,21 @@
+{
+  "description": "A floating bar that offers to undo the last action for a few seconds before committing it.",
+  "overview": "`UndoBarProvider` renders a floating bar at the bottom of the screen and provides `useUndoBar`. Calling `show` displays a title and an Undo button with a countdown ring. Pressing Undo, or `Ctrl+Z` or `Cmd+Z` outside text fields, runs `onUndo`; when the timer runs out, the bar closes and runs `onCommit`. Showing a new entry commits the previous one first.\n\nThe countdown pauses while the pointer hovers the bar, while it has focus, and while the page is hidden. The Undo button is a suiss/ui `Button`. Use it to make destructive actions, such as deleting from a list, immediate but reversible.",
+  "usage": "- Wrap the app or screen in `UndoBarProvider` and call `show({ title, actionLabel, onUndo, onCommit })` from `useUndoBar` after performing the action.\n- Apply the change optimistically, restore it in `onUndo`, and finalize it in `onCommit`.\n- `actionLabel` defaults to `Undo`. `useUndoBar` also returns `undo` and `dismiss` to settle the current entry from code.\n- It pairs well with `SwipeActions`, including full swipes.",
+  "examples": {
+    "LongerTimeout": "A `timeout` of 10 seconds keeps the bar on screen longer before committing.",
+    "WithSwipeActions": "Notes deleted from swipe actions, including a full swipe, can be restored from the bar."
+  },
+  "parts": {
+    "UndoBarProvider": "Provides `useUndoBar` and renders the floating undo bar."
+  },
+  "props": {
+    "UndoBarProvider": {
+      "timeout": "Milliseconds the bar stays visible before committing.",
+      "className": "Classes for the fixed region that positions the bar.",
+      "children": "The content that can show undo entries."
+    }
+  },
+  "accessibility": "- The bar sits in a polite live region, so its title is announced when it appears.\n- The bar has `role=\"group\"` and is labelled by its title.\n- `Ctrl+Z` or `Cmd+Z` triggers undo while the bar is visible, except when focus is in an editable field.\n- The countdown pauses while the bar has keyboard focus, giving people time to reach the button.",
+  "notes": "- Parts use `data-slot` values `undo-bar-region`, `undo-bar`, `undo-bar-title`, and `undo-bar-action`. The bar sets `data-paused` while the countdown is paused and `data-closed` while closing.\n- The bar is fixed to the bottom of the viewport above the safe-area inset."
+}

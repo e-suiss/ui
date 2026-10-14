@@ -1,0 +1,21 @@
+{
+  "description": "A scrolling list with a search field tucked above it that appears when the user scrolls up.",
+  "overview": "`SearchReveal` recreates the iOS pattern where a search field hides above a list. The container starts scrolled so the field is just out of view; scrolling up reveals it and fades it in. When scrolling stops partway, the container settles to fully shown or fully hidden, and it stays revealed while the field holds a query. Focusing the field scrolls it into view.\n\n`SearchRevealField` is a controlled search input with a magnifying glass and a clear button. Use the pattern for lists such as notes, messages, or contacts where search should be available without taking up space.",
+  "usage": "- Place `SearchRevealField` first and `SearchRevealContent` after it inside `SearchReveal`, and give the container a bounded height.\n- The field is controlled: pass `value` and update it in `onValueChange`. Filter the content from that value.\n- `SearchRevealContent` fills at least the container's height, so the field can hide even when the list is short.\n- `placeholder` defaults to `Search` and also labels the input.",
+  "examples": {
+    "ShortList": "A short list still hides the field above it and reveals it on focus."
+  },
+  "parts": {
+    "SearchReveal": "The scroll container that hides, reveals, and snaps the search field.",
+    "SearchRevealField": "The search input with a clear button.",
+    "SearchRevealContent": "The scrolling content below the field."
+  },
+  "props": {
+    "SearchRevealField": {
+      "value": "The current query.",
+      "onValueChange": "Called with the new query when the user types or clears the field."
+    }
+  },
+  "accessibility": "- The input has `type=\"search\"` and is labelled by its placeholder through `aria-label`.\n- The clear button is labelled `Clear search` and returns focus to the input.\n- Focusing the field, including with the keyboard, scrolls it into view.",
+  "notes": "- Parts use `data-slot` values `search-reveal`, `search-reveal-field`, `search-reveal-input`, and `search-reveal-content`.\n- The `--search-reveal` custom property runs from `0` to `1` as the field is revealed and drives its opacity."
+}

@@ -1,0 +1,42 @@
+---
+title: Hero Cinematic
+description: "A dark, centered product hero whose image, gradient title, and glow change with the selected finish."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="hero-cinematic">
+
+<SourceFile path="components/blocks/hero-cinematic.tsx" fold={false} />
+
+</Example>
+
+A dark, centered product hero whose glow, gradient headline and wide image all change with the selected finish. Below the image sit the finish name, round swatches, a Buy button and a Watch the film link. It always renders dark, which suits a flagship product launch.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks hero-cinematic"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/blocks/hero-cinematic.tsx`:
+
+<SourceFile path="components/blocks/hero-cinematic.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { HeroCinematic } from \"@/components/blocks/hero-cinematic\""} />
+
+<Code lang="tsx" code={"<HeroCinematic />"} />
+
+Edit `finishes`; each has an id, label, CSS color, image and alt text, and the color drives both the glow and the headline gradient. Change the headline inline, give Buy a handler and point `#film` at your video.
+
+## Notes
+
+The finish name is announced when the selection changes. Images are Unsplash placeholders.

@@ -1,0 +1,29 @@
+{
+  "description": "A circular image that represents a person, with initials or an icon when no image is available.",
+  "overview": "Avatar wraps the Base UI Avatar primitive. An `Avatar` contains an `AvatarImage` and an `AvatarFallback`; the fallback shows while the image is loading or if it fails to load. Add an `AvatarBadge` to show a status dot or icon in the bottom-end corner.\n\nTo show several people together, place avatars in an `AvatarGroup`, which overlaps them and rings each one with the surface color. End the group with an `AvatarGroupCount` to indicate how many more people there are.",
+  "usage": "Always provide an `AvatarFallback` alongside `AvatarImage`, usually the person's initials. The fallback can also hold an icon, which scales to 60% of the avatar.\n\nSet `size` on each `Avatar`. Inside an `AvatarGroup`, `AvatarGroupCount` matches the size of the avatars in the group automatically.",
+  "examples": {
+    "Fallback": "Shows initials when no image is provided.",
+    "FallbackSizes": "Initials fallbacks at every size.",
+    "Placeholder": "Uses a person icon as the fallback at every size.",
+    "Sizes": "Image avatars in the `sm`, `default`, `lg` and `xl` sizes.",
+    "WithBadge": "Adds a check-mark status badge to each size.",
+    "Group": "Overlaps several avatars and ends with a `+4` count.",
+    "GroupWithIconCount": "A large group whose count shows a plus icon instead of a number."
+  },
+  "parts": {
+    "Avatar": "The circular root that sets the size.",
+    "AvatarImage": "The person's image, cropped to a circle.",
+    "AvatarFallback": "Content shown when the image is missing or still loading.",
+    "AvatarBadge": "A small status indicator pinned to the bottom-end corner.",
+    "AvatarGroup": "A row that overlaps avatars with a ring between them.",
+    "AvatarGroupCount": "A trailing circle that shows how many avatars are not displayed."
+  },
+  "props": {
+    "Avatar": {
+      "size": "Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge."
+    }
+  },
+  "accessibility": "- Give `AvatarImage` an `alt` that names the person.\n- `AvatarBadge` and `AvatarGroupCount` are plain elements; if they carry meaning, label them or describe the status in nearby text.",
+  "notes": "- Styling hooks: `data-slot=\"avatar\"`, `\"avatar-image\"`, `\"avatar-fallback\"`, `\"avatar-badge\"`, `\"avatar-group\"` and `\"avatar-group-count\"`, plus `data-size` on the root.\n- `AvatarBadge` uses `bg-accent` by default; override it, for example with `bg-success`. At the `sm` size, icons inside the badge are hidden.\n- The fallback uses a vertical gradient of `label-secondary` with `text-on-accent`."
+}

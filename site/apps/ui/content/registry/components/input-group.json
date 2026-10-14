@@ -1,0 +1,35 @@
+{
+  "description": "A text field with icons, text, buttons or keyboard hints attached inside its border.",
+  "overview": "`InputGroup` is the container that draws the field's background, border and focus ring. Inside it, place one control, either `InputGroupInput` or `InputGroupTextarea`, and one or more `InputGroupAddon` elements. An addon can hold icons, `InputGroupText`, `InputGroupButton` or a `Kbd`, and is placed before, after, above or below the control with its `align` prop.\n\nUse an input group when supporting content belongs inside the field, such as a search icon, a currency symbol, a clear button or a send button. For a plain field, use `Input`; for a field with a filterable list of options, use `Combobox`, which is built on this component.",
+  "usage": "Addons are positioned with CSS order, so you can place them before or after the control in your markup. `inline-start` and `inline-end` sit beside the control; `block-start` and `block-end` sit above or below it and make the group grow to fit. Clicking an addon outside its buttons focuses the group's `input`.\n\n`InputGroupButton` defaults to `type=\"button\"`, so it does not submit a surrounding form unless you set `type=\"submit\"`. Set `aria-invalid` on the control to show the error style on the whole group. To dim a disabled group's addons, disable the control and set `data-disabled=\"true\"` on `InputGroup`.",
+  "examples": {
+    "Search": "A search field with a clear button that appears only when there is text.",
+    "WithText": "Text addons for a currency symbol and code, and for a URL prefix and suffix.",
+    "WithButtons": "Buttons inside the field for copying a link, subscribing, and showing information.",
+    "ButtonSizes": "The `xs`, `icon-xs` and `icon-sm` button sizes in one addon.",
+    "WithKbd": "A search field with a keyboard shortcut hint at the end.",
+    "BlockAddons": "Addons placed above and below the input with `block-start` and `block-end`.",
+    "WithTextarea": "A chat-style textarea with attach and send buttons and usage text in a bottom addon.",
+    "Invalid": "An invalid input that shows the error style on the whole group.",
+    "Disabled": "A disabled group with a dimmed background and addon."
+  },
+  "parts": {
+    "InputGroup": "The container that draws the field and holds the control and addons.",
+    "InputGroupAddon": "Holds icons, text or buttons beside, above or below the control.",
+    "InputGroupButton": "A compact button sized to fit inside the field.",
+    "InputGroupText": "Static text or an icon with text, such as a unit or prefix.",
+    "InputGroupInput": "The single-line text control of the group.",
+    "InputGroupTextarea": "The multi-line text control of the group."
+  },
+  "props": {
+    "InputGroupAddon": {
+      "align": "Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it."
+    },
+    "InputGroupButton": {
+      "size": "`xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size.",
+      "type": "The native button type. Defaults to `button` so the button does not submit forms."
+    }
+  },
+  "accessibility": "- `InputGroup` and `InputGroupAddon` have the `group` role.\n- Give the control an accessible name with a label or `aria-label`; placeholder text and addon text do not name it.\n- Give icon-only buttons an accessible name with `aria-label`.\n- Buttons in addons are reachable with Tab after the control.\n- Set `aria-invalid` on the control to communicate a validation error.",
+  "notes": "- Styling hooks: `data-slot` values `input-group`, `input-group-addon` and `input-group-control` (on the input or textarea). Addons set `data-align`, and buttons set `data-size`.\n- The group's rounded corners grow when it contains a textarea or a block addon.\n- Uses the `control`, `control-disabled`, `label-secondary`, `label-quaternary` and `danger` tokens."
+}

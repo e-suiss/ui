@@ -1,0 +1,20 @@
+{
+  "description": "Styled native table elements for displaying rows of structured data.",
+  "overview": "`Table` renders a native `table` inside a container that scrolls horizontally when the table is too wide. Build it from `TableHeader`, `TableBody` and `TableFooter`, each holding `TableRow` elements with `TableHead` or `TableCell` cells. `TableCaption` adds a caption below the table.\n\nThe parts add spacing, hairline row dividers, hover and selection backgrounds, and tabular numbers in cells. They don't add sorting, pagination or selection logic; handle those in your own code.",
+  "usage": "Every part passes its props to the native element, so use standard attributes such as `colSpan`. Align numeric columns with `text-end` on both the `TableHead` and its cells. To highlight a row, set `data-selected` on `TableRow`.",
+  "examples": {
+    "SelectedRow": "Highlights one row with the `data-selected` attribute."
+  },
+  "parts": {
+    "Table": "The `table` element, wrapped in a horizontally scrolling container.",
+    "TableHeader": "The `thead` section for column headings.",
+    "TableBody": "The `tbody` section for data rows.",
+    "TableFooter": "The `tfoot` section, shaded and bold, for totals or summaries.",
+    "TableRow": "A `tr` row with a bottom divider and hover background.",
+    "TableHead": "A `th` column heading in small, secondary text.",
+    "TableCell": "A `td` data cell with tabular numbers.",
+    "TableCaption": "A `caption` shown below the table that also names it."
+  },
+  "accessibility": "- The parts render native table elements, so rows, column headers and cells keep their built-in roles.\n- `TableCaption` gives the table its accessible name.",
+  "notes": "- `data-selected` is matched by presence, so leave the attribute off unselected rows rather than setting it to `false`.\n- A `TableRow` that contains an element with `aria-expanded` also gets the selected background.\n- Header and data cells that contain a `role=\"checkbox\"` drop their end padding.\n- Parts carry `data-slot` attributes such as `table-container`, `table`, `table-row` and `table-cell`.\n- Hover and selection use the `item-hover` and `item-selected` tokens; the footer uses a tinted `surface-secondary`."
+}

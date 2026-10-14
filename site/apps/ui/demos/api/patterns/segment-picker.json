@@ -1,0 +1,137 @@
+{
+  "name": "segment-picker",
+  "type": "pattern",
+  "files": [
+    "components/patterns/segment-picker.tsx"
+  ],
+  "requires": [
+    "native-select",
+    "toggle-group",
+    "use-mobile"
+  ],
+  "dependencies": [],
+  "examples": [
+    "Default",
+    "WithoutValue",
+    "Outline",
+    "Spaced",
+    "Sizes",
+    "WithIcons",
+    "WithIconsAndText",
+    "DisabledItem",
+    "Disabled",
+    "Controlled"
+  ],
+  "parts": [
+    {
+      "name": "SegmentPicker",
+      "extends": [],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "required": false,
+          "default": "\"default\""
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\" | \"lg\"",
+          "required": false,
+          "default": "\"default\""
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SegmentPickerItem",
+      "extends": [],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

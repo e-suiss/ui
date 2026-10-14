@@ -1,0 +1,6 @@
+{
+  "description": "A single line drawn with straight segments between readings instead of a smoothed curve.",
+  "overview": "One series joined by straight segments instead of a smoothed curve. Prefer it to the default when smoothing would imply values between readings that were never measured.",
+  "usage": "Replace `chartData`, update each `dataKey` and set the label and color in `chartConfig`. Everything else matches the default line chart.",
+  "notes": "Keyboard users can focus the chart and move between points with the arrow keys."
+}

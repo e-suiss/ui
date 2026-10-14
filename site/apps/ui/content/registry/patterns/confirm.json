@@ -1,0 +1,21 @@
+{
+  "description": "A confirmation prompt that opens as an alert dialog on desktop and an action sheet on mobile.",
+  "overview": "`Confirm` asks the user to confirm or cancel an action. On desktop it renders an `AlertDialog` with a header and a footer of buttons. Below the `48rem` breakpoint it renders an `AlertSheet`: `ConfirmContent` lifts the buttons out of `ConfirmFooter`, places the title, description and actions in one grouped card, and moves `ConfirmCancel` into its own button below the card.\n\nUse it before destructive or irreversible actions, such as deleting a record, where the user must make an explicit choice.",
+  "usage": "Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. `Confirm` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.",
+  "examples": {
+    "Dismissible": "Sets `dismissible` so the mobile sheet also closes when the user presses outside it."
+  },
+  "parts": {
+    "Confirm": "The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.",
+    "ConfirmTrigger": "The button that opens the confirmation.",
+    "ConfirmContent": "The popup; on mobile it regroups the footer buttons into the sheet layout.",
+    "ConfirmHeader": "Groups the title and description.",
+    "ConfirmFooter": "Holds the cancel and action buttons on desktop; on mobile its buttons are moved into the sheet.",
+    "ConfirmTitle": "The prompt's title, used as the dialog's accessible name.",
+    "ConfirmDescription": "Supporting text, used as the dialog's accessible description.",
+    "ConfirmAction": "A button that performs the action and closes the prompt.",
+    "ConfirmCancel": "A button that closes the prompt without acting; shown separately below the actions on mobile."
+  },
+  "accessibility": "- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`.\n- Opening moves focus into the dialog, and closing returns it to the trigger.\n- On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.",
+  "notes": "Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `variant=\"destructive\"` to `ConfirmAction` for destructive actions. The `size` prop of `ConfirmContent` applies to the desktop `AlertDialogContent` only."
+}

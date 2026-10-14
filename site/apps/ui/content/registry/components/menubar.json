@@ -1,0 +1,43 @@
+{
+  "description": "A horizontal bar of menus, like a desktop application's menu bar.",
+  "overview": "`Menubar` wraps Base UI's Menubar and groups several menus into one keyboard-navigable bar. Each `MenubarMenu` holds a `MenubarTrigger` and a `MenubarContent` popup. Inside the content, compose `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup` with `MenubarRadioItem`, `MenubarLabel`, `MenubarGroup`, `MenubarSeparator`, `MenubarShortcut`, and nested submenus built from `MenubarSub`, `MenubarSubTrigger` and `MenubarSubContent`.\n\nMost parts reuse the Dropdown Menu components with menubar styling. Use `Menubar` for persistent, app-level command menus; use Dropdown Menu for a single menu opened from one button.",
+  "usage": "Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` and `onOpenChange`. `MenubarItem` also accepts `variant=\"destructive\"` and `inset`. Checkbox items use `checked`/`defaultChecked`, and radio groups use `value`/`defaultValue`. Pass `disabled` on `Menubar` to disable the whole bar, or on an individual item.\n\n`MenubarContent` defaults to `align=\"start\"`, `alignOffset={-4}` and `sideOffset={8}`. `MenubarShortcut` accepts `mod` to prepend the platform modifier key.",
+  "examples": {
+    "OpenByDefault": "The File menu opened on first render with `defaultOpen`, including a Share submenu.",
+    "Disabled": "A menubar with `disabled` set, so none of its menus open."
+  },
+  "parts": {
+    "Menubar": "The bar that contains the menus and manages keyboard navigation between them.",
+    "MenubarMenu": "Groups one trigger with its popup and holds that menu's open state.",
+    "MenubarGroup": "Groups related items inside a menu.",
+    "MenubarPortal": "Renders menu content into a portal outside the bar.",
+    "MenubarTrigger": "The button in the bar that opens its menu.",
+    "MenubarContent": "The positioned popup that holds a menu's items.",
+    "MenubarItem": "A single command in a menu.",
+    "MenubarCheckboxItem": "An item that toggles on and off, with a leading check indicator.",
+    "MenubarRadioGroup": "Groups radio items so only one can be selected.",
+    "MenubarRadioItem": "One option in a radio group, with a leading check indicator when selected.",
+    "MenubarLabel": "A non-interactive heading for a section of items.",
+    "MenubarSeparator": "A thin divider between groups of items.",
+    "MenubarShortcut": "A trailing keyboard shortcut hint inside an item.",
+    "MenubarSub": "The root of a nested submenu.",
+    "MenubarSubTrigger": "The item that opens a submenu.",
+    "MenubarSubContent": "The popup that holds a submenu's items."
+  },
+  "props": {
+    "MenubarCheckboxItem": {
+      "inset": "Sets `data-inset` on the item for inset alignment."
+    },
+    "MenubarRadioItem": {
+      "inset": "Sets `data-inset` on the item for inset alignment."
+    },
+    "MenubarLabel": {
+      "inset": "Indents the label to align with items that show a leading icon or indicator."
+    },
+    "MenubarSubTrigger": {
+      "inset": "Indents the trigger to align with items that show a leading icon or indicator."
+    }
+  },
+  "accessibility": "- The bar has the `menubar` role and each trigger has the `menuitem` role, with `aria-expanded` reflecting its menu's state.\n- Popups use the `menu` role; items use `menuitem`, `menuitemcheckbox` or `menuitemradio`, with `aria-checked` on checkbox and radio items.\n- While a menu is open, ArrowLeft and ArrowRight move to the adjacent menu. ArrowRight on a submenu trigger opens the submenu.\n- Escape closes the open menu and returns focus to its trigger.\n- Disabled items expose `aria-disabled=\"true\"`.",
+  "notes": "- Styling hooks: each part sets a `data-slot` such as `menubar`, `menubar-trigger`, `menubar-content`, `menubar-item` and `menubar-sub-trigger`. Items expose `data-variant` and `data-inset`.\n- Checkbox and radio items always reserve leading space for their indicator.\n- `MenubarShortcut` is hidden below the `md` breakpoint.\n- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger` and `separator` tokens."
+}

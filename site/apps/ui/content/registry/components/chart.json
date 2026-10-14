@@ -1,0 +1,37 @@
+{
+  "description": "Themed building blocks for Recharts charts, with a shared color config, tooltip and legend.",
+  "overview": "Chart does not draw charts itself; it styles charts you compose with `recharts`. A `ChartContainer` takes a `config` that maps each data key to a label, an optional icon and a color, and wraps your Recharts chart in a `ResponsiveContainer`. Inside the chart, use `ChartTooltip` with `content={<ChartTooltipContent />}` and `ChartLegend` with `content={<ChartLegendContent />}` to render a tooltip and legend that read labels and colors from the config.\n\nUse it for bar, line, area and pie charts in dashboards and reports. Because you work with Recharts directly, every Recharts chart type and prop remains available.",
+  "usage": "Each key in `config` becomes a CSS custom property scoped to the chart, such as `--color-desktop`. Reference it from your series, as in `fill=\"var(--color-desktop)\"`. Set `color` for a single value, or `theme` with `light` and `dark` values to switch colors with the `.dark` class.\n\nFor data where each row is its own category, such as a pie chart, put the color in the row (for example `fill: \"var(--color-safari)\"`) and pass `nameKey` to `ChartLegendContent` so labels are looked up by that field.\n\nThe container is `aspect-video` by default; override its size with `className`, for example `aspect-square max-w-72`. Enable `accessibilityLayer` on the Recharts chart to support keyboard navigation.\n\n`ChartTooltip`, `ChartLegend` and `ChartStyle` are also exported; the first two are the Recharts `Tooltip` and `Legend` components.",
+  "examples": {
+    "MultipleSeries": "Two bar series with a legend and a `dashed` tooltip indicator.",
+    "Stacked": "Stacks two bar series and hides the tooltip label.",
+    "LineSeries": "Two smooth lines with a `line` tooltip indicator.",
+    "AreaSeries": "Two stacked, semi-transparent areas.",
+    "Donut": "A pie chart with an inner radius, colored per row and labelled through `nameKey`."
+  },
+  "parts": {
+    "ChartContainer": "Provides the config, injects the color variables and makes the chart responsive.",
+    "ChartTooltipContent": "A styled tooltip body that lists each series with its indicator, label and value.",
+    "ChartLegendContent": "A styled legend that lists series in config order with a swatch or icon."
+  },
+  "props": {
+    "ChartContainer": {
+      "config": "Maps data keys to a `label`, optional `icon`, and a `color` or per-theme `theme` colors.",
+      "children": "The Recharts chart element to render responsively.",
+      "initialDimension": "Width and height used before the container is measured. Defaults to 320 by 200."
+    },
+    "ChartTooltipContent": {
+      "hideLabel": "Hides the tooltip's heading label.",
+      "hideIndicator": "Hides the color indicator next to each series.",
+      "indicator": "Shape of the series indicator: `dot`, `line` or `dashed`.",
+      "nameKey": "Field used to look up each item's config entry instead of its name or data key.",
+      "labelKey": "Field used to look up the heading label in the config."
+    },
+    "ChartLegendContent": {
+      "hideIcon": "Shows a color swatch even when the config entry has an `icon`.",
+      "nameKey": "Field used to look up each legend item's config entry instead of its data key."
+    }
+  },
+  "accessibility": "- With `accessibilityLayer` on the Recharts chart, the chart is focusable and arrow keys move between data points, showing the tooltip for each.\n- Charts are visual; provide a nearby summary or table when the exact values matter.\n- Do not rely on color alone to tell series apart; the legend and tooltip pair each color with its label.",
+  "notes": "- Styling hooks: `data-slot=\"chart\"` and a unique `data-chart` id on the container, which scopes the generated `--color-*` variables.\n- Config keys and color values containing unsafe characters are skipped when generating CSS.\n- The container restyles Recharts defaults, such as grid lines, axis ticks and the tooltip cursor, with `separator`, `label-secondary` and `surface-secondary` tokens.\n- Tooltip values that are numbers are formatted with `toLocaleString()`."
+}

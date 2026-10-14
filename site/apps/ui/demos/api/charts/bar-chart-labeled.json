@@ -1,0 +1,16 @@
+{
+  "name": "bar-chart-labeled",
+  "type": "chart",
+  "files": [
+    "components/charts/bar-chart-labeled.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

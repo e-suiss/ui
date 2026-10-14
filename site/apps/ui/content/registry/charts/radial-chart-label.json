@@ -1,0 +1,6 @@
+{
+  "description": "Concentric radial bars with each category's name printed at the start of its bar.",
+  "overview": "Concentric radial bars with each category name printed at the start of its bar. Pick it over the default radial chart when you want readers to identify bars without a legend or tooltip.",
+  "usage": "Replace `chartData` and add each category key with its label and color to `chartConfig`; the bar labels read from there. Change `startAngle` and `endAngle` to set how far the longest bar sweeps, and `barSize` to fit longer names.",
+  "notes": "Labels sit inside the bars in a light color, so very short bars may not have room for their name."
+}

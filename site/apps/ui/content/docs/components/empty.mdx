@@ -1,0 +1,150 @@
+---
+title: Empty
+description: "A placeholder that explains why a view has no content and what people can do next."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="empty" story="Default">
+
+<Code lang="tsx" code={"import { ArrowUpRightIcon, FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <FolderSimpleIcon />\n          </EmptyMedia>\n          <EmptyTitle>No projects yet</EmptyTitle>\n          <EmptyDescription>\n            You haven&apos;t created any projects yet. Get started by creating\n            your first project.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <div className=\"flex gap-2\">\n            <Button>Create project</Button>\n            <Button variant=\"outline\">Import project</Button>\n          </div>\n          <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n            Learn more\n            <ArrowUpRightIcon data-icon=\"inline-end\" />\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Empty` is a centered container for empty states. Inside it, `EmptyHeader` groups an optional `EmptyMedia` with an `EmptyTitle` and `EmptyDescription`, and `EmptyContent` holds the actions, such as buttons, a search field or a help link. All parts are plain, styled elements with no interactive behavior of their own.
+
+Use it when a list, folder, search or page has nothing to show. Keep the title short and use the description to suggest a next step.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/empty.tsx`:
+
+<SourceFile path="components/ui/empty.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from \"@/components/ui/empty\""} />
+
+<Code lang="tsx" code={"<div className=\"w-[32rem]\">\n  <Empty>\n    <EmptyHeader>\n      <EmptyMedia variant=\"icon\">\n        <FolderSimpleIcon />\n      </EmptyMedia>\n      <EmptyTitle>No projects yet</EmptyTitle>\n      <EmptyDescription>\n        You haven&apos;t created any projects yet. Get started by creating\n        your first project.\n      </EmptyDescription>\n    </EmptyHeader>\n    <EmptyContent>\n      <div className=\"flex gap-2\">\n        <Button>Create project</Button>\n        <Button variant=\"outline\">Import project</Button>\n      </div>\n      <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n        Learn more\n        <ArrowUpRightIcon data-icon=\"inline-end\" />\n      </Button>\n    </EmptyContent>\n  </Empty>\n</div>"} />
+
+`Empty` has a dashed border style but no border width by default; add `border` through `className` to show an outline. Set `EmptyMedia` to `variant="icon"` for a small icon in a tinted tile, or keep the default to render media such as a large icon or illustration as is. Links placed directly inside `EmptyDescription` are underlined.
+
+## Examples
+
+### Outline
+
+An empty state with a visible dashed outline, added through `className="border"`.
+
+<Example kind="ui" name="empty" story="Outline">
+
+<Code lang="tsx" code={"import { CloudIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyOutlineExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty className=\"border\">\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <CloudIcon />\n          </EmptyMedia>\n          <EmptyTitle>Cloud storage is empty</EmptyTitle>\n          <EmptyDescription>\n            Upload files to your cloud storage to access them anywhere.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <Button variant=\"outline\" size=\"sm\">\n            Upload files\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Default media
+
+An empty state with a large icon in `EmptyMedia` using the default variant.
+
+<Example kind="ui" name="empty" story="DefaultMedia">
+
+<Code lang="tsx" code={"import { FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyDefaultMediaExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia>\n            <FolderSimpleIcon className=\"text-label-secondary size-12\" />\n          </EmptyMedia>\n          <EmptyTitle>This folder is empty</EmptyTitle>\n          <EmptyDescription>Drag files here to add them.</EmptyDescription>\n        </EmptyHeader>\n      </Empty>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With search
+
+A not-found state with an `InputGroup` search field and a support link in `EmptyContent`.
+
+<Example kind="ui" name="empty" story="WithSearch">
+
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from \"@/components/ui/empty\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function EmptyWithSearchExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyTitle>404 - Not found</EmptyTitle>\n          <EmptyDescription>\n            The page you&apos;re looking for doesn&apos;t exist. Try searching for\n            what you need below.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <InputGroup className=\"sm:w-3/4\">\n            <InputGroupInput placeholder=\"Search pages...\" />\n            <InputGroupAddon>\n              <MagnifyingGlassIcon />\n            </InputGroupAddon>\n          </InputGroup>\n          <EmptyDescription>\n            Need help? <a href=\"#support\">Contact support</a>\n          </EmptyDescription>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"Empty","href":"#empty","children":[{"name":"EmptyHeader","href":"#emptyheader","children":[{"name":"EmptyMedia","href":"#emptymedia","children":[]},{"name":"EmptyTitle","href":"#emptytitle","children":[]},{"name":"EmptyDescription","href":"#emptydescription","children":[]}]},{"name":"EmptyContent","href":"#emptycontent","children":[{"name":"EmptyDescription","href":"#emptydescription","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
+### Empty
+
+The centered container for the empty state.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### EmptyHeader
+
+Groups the media, title and description.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### EmptyMedia
+
+Holds an icon or image above the title.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\"","default":"\"default\"","description":"`icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### EmptyTitle
+
+The short heading of the empty state.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### EmptyDescription
+
+Supporting text that explains the state or suggests a next step.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### EmptyContent
+
+Holds actions such as buttons, inputs or links.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `EmptyTitle` renders a `div`, not a heading. If the empty state should appear in the document outline, render a heading element inside it or pass the appropriate role and level.
+- Give interactive elements in `EmptyContent` clear accessible names.
+
+## Notes
+
+- Styling hooks: `data-slot` values `empty`, `empty-header`, `empty-icon` (on `EmptyMedia`), `empty-title`, `empty-description` and `empty-content`.
+- `EmptyMedia` also sets `data-variant`.
+- `EmptyDescription` renders a `div` element even though it accepts paragraph props.
+- Uses the `surface-secondary`, `label`, `label-secondary` and `link` tokens.

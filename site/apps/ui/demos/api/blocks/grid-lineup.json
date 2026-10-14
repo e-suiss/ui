@@ -1,0 +1,14 @@
+{
+  "name": "grid-lineup",
+  "type": "block",
+  "files": [
+    "components/blocks/grid-lineup.tsx"
+  ],
+  "requires": [
+    "button",
+    "toggle-group"
+  ],
+  "dependencies": [],
+  "examples": [],
+  "parts": []
+}

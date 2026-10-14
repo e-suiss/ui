@@ -1,0 +1,42 @@
+---
+title: Grid Lineup
+description: "A product lineup comparing models side by side, each with finish swatches, a price, and buy actions."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="grid-lineup">
+
+<SourceFile path="components/blocks/grid-lineup.tsx" fold={false} />
+
+</Example>
+
+A side-by-side model comparison where each model shows a photo, finish swatches, a name and tagline, a starting price, a Buy button and a Learn more link. Models sit two per row, or four on large screens, and the text blocks keep a fixed height so prices line up. Use it for a product family page or any plan or tier lineup.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks grid-lineup"} />
+
+### Manual
+
+1. Add the pieces it builds on: [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
+
+2. Copy the source into `components/blocks/grid-lineup.tsx`:
+
+<SourceFile path="components/blocks/grid-lineup.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { GridLineup } from \"@/components/blocks/grid-lineup\""} />
+
+<Code lang="tsx" code={"<GridLineup />"} />
+
+Edit `models`; each has a name, tagline, formatted price, optional kicker, image, alt text and a list of finishes with a label and color. Picking a swatch changes only the selection, not the photo, so add per-finish images if you need them. Give Buy a handler and point the `#learn` links at real pages.
+
+## Notes
+
+Swatches are labeled with their finish names and have enlarged hit areas. Photos are Unsplash placeholders.

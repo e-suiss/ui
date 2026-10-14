@@ -1,0 +1,46 @@
+---
+title: Line Chart Labeled
+description: "A single line with a dot and a printed value at every point, and no grid."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="line-chart-labeled">
+
+<SourceFile path="components/charts/line-chart-labeled.tsx" fold={false} />
+
+</Example>
+
+A single smooth line with a dot and a printed value at every point and no grid. Choose it for short series where readers want the exact numbers without hovering.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-labeled"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/line-chart-labeled.tsx`:
+
+<SourceFile path="components/charts/line-chart-labeled.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LineChartLabeled } from \"@/components/charts/line-chart-labeled\""} />
+
+<Code lang="tsx" code={"<LineChartLabeled />"} />
+
+Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Move the value labels with the `position` prop on `LabelList`, and raise the chart's top margin if labels get clipped.
+
+## Notes
+
+Labels overlap quickly on long or dense series; keep this variant to a dozen points or fewer.

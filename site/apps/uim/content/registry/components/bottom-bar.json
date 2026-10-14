@@ -1,0 +1,22 @@
+{
+  "description": "A bar pinned to the bottom of a screen for primary actions, which rises above the keyboard.",
+  "overview": "`BottomBar` is an animated `View` that adds bottom padding equal to the safe-area inset, or to the keyboard height while the keyboard is open, and animates between them with the keyboard's own timing. `BottomBarContent` adds the standard padding and spacing for the buttons inside.\n\nUse it for the main call to action of a screen, such as checkout or a form submit button.",
+  "usage": "Place `BottomBar` as the last child of the screen so it sits below the scrolling content. Stack buttons in `BottomBarContent`, or add `flex-row` to place them side by side.\n\nSet `separator` to draw a hairline above the bar. Inside a `Screen` that already handles the bottom safe-area edge, the inset is not added twice.",
+  "examples": {
+    "WithSeparator": "A hairline above the bar with `separator`.",
+    "TwoActions": "A primary and a plain button stacked.",
+    "SideBySide": "Back and Next buttons in a row.",
+    "AboveKeyboard": "The bar moving up with the keyboard while an input is focused."
+  },
+  "parts": {
+    "BottomBar": "Bottom container that follows the safe area and keyboard.",
+    "BottomBarContent": "Padded area for the actions."
+  },
+  "props": {
+    "BottomBar": {
+      "separator": "Draws a top border. Defaults to `false`."
+    }
+  },
+  "accessibility": "- The bar adds no role; each action inside provides its own.",
+  "notes": "- The padding animation respects the system Reduce Motion setting.\n- Uses `bg-surface` and `border-separator` tokens; light and dark follow the system appearance."
+}

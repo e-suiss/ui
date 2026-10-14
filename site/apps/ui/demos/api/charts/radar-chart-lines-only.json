@@ -1,0 +1,16 @@
+{
+  "name": "radar-chart-lines-only",
+  "type": "chart",
+  "files": [
+    "components/charts/radar-chart-lines-only.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

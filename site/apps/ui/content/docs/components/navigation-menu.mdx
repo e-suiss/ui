@@ -1,0 +1,196 @@
+---
+title: Navigation Menu
+description: "A site navigation bar whose items open popover or full-width panels of links."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="navigation-menu" story="Default">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from \"@/components/ui/navigation-menu\"\n\nconst products = [\n  {\n    title: \"Analytics\",\n    description: \"Track traffic and conversions in real time.\",\n    icon: ChartLineIcon,\n  },\n  {\n    title: \"Automations\",\n    description: \"Run workflows when events happen.\",\n    icon: LightningIcon,\n  },\n  {\n    title: \"Security\",\n    description: \"Single sign-on, audit logs, and roles.\",\n    icon: ShieldCheckIcon,\n  },\n]\n\nconst resources = [\n  { title: \"Documentation\", icon: BookOpenIcon },\n  { title: \"API reference\", icon: CodeIcon },\n  { title: \"Help center\", icon: LifebuoyIcon },\n]\n\nexport function NavigationMenuExample() {\n  return (\n    <div className=\"flex min-h-96 items-start justify-center\">\n      <NavigationMenu align=\"start\">\n        <NavigationMenuList>\n          <NavigationMenuItem value=\"products\">\n            <NavigationMenuTrigger>Products</NavigationMenuTrigger>\n            <NavigationMenuContent>\n              <ul className=\"grid w-96 gap-1\">\n                {products.map((product) => (\n                  <li key={product.title}>\n                    <NavigationMenuLink href=\"#\" className=\"items-start gap-3\">\n                      <product.icon className=\"mt-0.5\" />\n                      <div className=\"flex flex-col gap-1\">\n                        <span className=\"font-medium\">{product.title}</span>\n                        <span className=\"text-label-secondary\">\n                          {product.description}\n                        </span>\n                      </div>\n                    </NavigationMenuLink>\n                  </li>\n                ))}\n              </ul>\n            </NavigationMenuContent>\n          </NavigationMenuItem>\n          <NavigationMenuItem value=\"resources\">\n            <NavigationMenuTrigger>Resources</NavigationMenuTrigger>\n            <NavigationMenuContent>\n              <ul className=\"grid w-56 gap-1\">\n                {resources.map((resource) => (\n                  <li key={resource.title}>\n                    <NavigationMenuLink href=\"#\">\n                      <resource.icon />\n                      {resource.title}\n                    </NavigationMenuLink>\n                  </li>\n                ))}\n              </ul>\n            </NavigationMenuContent>\n          </NavigationMenuItem>\n          <NavigationMenuItem>\n            <NavigationMenuLink href=\"#\" className={navigationMenuTriggerStyle()}>\n              Pricing\n            </NavigationMenuLink>\n          </NavigationMenuItem>\n        </NavigationMenuList>\n      </NavigationMenu>\n    </div>\n  )\n}"} />
+
+</Example>
+
+Navigation Menu wraps Base UI's Navigation Menu. `NavigationMenu` is the root; inside it, `NavigationMenuList` holds `NavigationMenuItem` entries. An item contains either a `NavigationMenuTrigger` with `NavigationMenuContent`, or a single `NavigationMenuLink`. Inside content, use `NavigationMenuLabel` for column headings and `NavigationMenuLink` for destinations.
+
+The root renders the popup for you. With `layout="popover"` it adds a `NavigationMenuPositioner`, a floating card that resizes and slides between items. With `layout="panel"` it adds a `NavigationMenuPanel`, a full-width sheet under the bar with a blurred backdrop, like a store's global navigation. Use Navigation Menu for site navigation links; use Menubar or Dropdown Menu for commands.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add navigation-menu"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react class-variance-authority cn"} />
+
+2. Copy the source into `components/ui/navigation-menu.tsx`:
+
+<SourceFile path="components/ui/navigation-menu.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuPositioner, NavigationMenuPanel, NavigationMenuLink, NavigationMenuLabel, NavigationMenuIndicator } from \"@/components/ui/navigation-menu\""} />
+
+<Code lang="tsx" code={"<div className=\"flex min-h-96 items-start justify-center\">\n  <NavigationMenu align=\"start\">\n    <NavigationMenuList>\n      <NavigationMenuItem value=\"products\">\n        <NavigationMenuTrigger>Products</NavigationMenuTrigger>\n        <NavigationMenuContent>\n          <ul className=\"grid w-96 gap-1\">\n            {products.map((product) => (\n              <li key={product.title}>\n                <NavigationMenuLink href=\"#\" className=\"items-start gap-3\">\n                  <product.icon className=\"mt-0.5\" />\n                  <div className=\"flex flex-col gap-1\">\n                    <span className=\"font-medium\">{product.title}</span>\n                    <span className=\"text-label-secondary\">\n                      {product.description}\n                    </span>\n                  </div>\n                </NavigationMenuLink>\n              </li>\n            ))}\n          </ul>\n        </NavigationMenuContent>\n      </NavigationMenuItem>\n      <NavigationMenuItem value=\"resources\">\n        <NavigationMenuTrigger>Resources</NavigationMenuTrigger>\n        <NavigationMenuContent>\n          <ul className=\"grid w-56 gap-1\">\n            {resources.map((resource) => (\n              <li key={resource.title}>\n                <NavigationMenuLink href=\"#\">\n                  <resource.icon />\n                  {resource.title}\n                </NavigationMenuLink>\n              </li>\n            ))}\n          </ul>\n        </NavigationMenuContent>\n      </NavigationMenuItem>\n      <NavigationMenuItem>\n        <NavigationMenuLink href=\"#\" className={navigationMenuTriggerStyle()}>\n          Pricing\n        </NavigationMenuLink>\n      </NavigationMenuItem>\n    </NavigationMenuList>\n  </NavigationMenu>\n</div>"} />
+
+Give each item with content a `value` so the menu can be opened by default or controlled with `value`, `defaultValue` and `onValueChange` on the root. The root also accepts `align` for the popover and `anchor` for either layout; in `panel` layout, pass a ref to the full-width bar as `anchor` so the panel spans its width.
+
+To style a top-level link like a trigger, pass `navigationMenuTriggerStyle()` as its `className`. Set `active` on a link to mark the current page.
+
+## Examples
+
+### By default
+
+A menu that opens the Products item on mount with `defaultValue`.
+
+<Example kind="ui" name="navigation-menu" story="OpenByDefault">
+
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from \"@/components/ui/navigation-menu\"\n\nconst products = [\n  {\n    title: \"Analytics\",\n    description: \"Track traffic and conversions in real time.\",\n    icon: ChartLineIcon,\n  },\n  {\n    title: \"Automations\",\n    description: \"Run workflows when events happen.\",\n    icon: LightningIcon,\n  },\n  {\n    title: \"Security\",\n    description: \"Single sign-on, audit logs, and roles.\",\n    icon: ShieldCheckIcon,\n  },\n]\n\nconst resources = [\n  { title: \"Documentation\", icon: BookOpenIcon },\n  { title: \"API reference\", icon: CodeIcon },\n  { title: \"Help center\", icon: LifebuoyIcon },\n]\n\nexport function NavigationMenuOpenByDefaultExample() {\n  return (\n    <div className=\"flex min-h-96 items-start justify-center\">\n      <NavigationMenu align=\"start\" defaultValue=\"products\">\n        <NavigationMenuList>\n          <NavigationMenuItem value=\"products\">\n            <NavigationMenuTrigger>Products</NavigationMenuTrigger>\n            <NavigationMenuContent>\n              <ul className=\"grid w-96 gap-1\">\n                {products.map((product) => (\n                  <li key={product.title}>\n                    <NavigationMenuLink href=\"#\" className=\"items-start gap-3\">\n                      <product.icon className=\"mt-0.5\" />\n                      <div className=\"flex flex-col gap-1\">\n                        <span className=\"font-medium\">{product.title}</span>\n                        <span className=\"text-label-secondary\">\n                          {product.description}\n                        </span>\n                      </div>\n                    </NavigationMenuLink>\n                  </li>\n                ))}\n              </ul>\n            </NavigationMenuContent>\n          </NavigationMenuItem>\n          <NavigationMenuItem value=\"resources\">\n            <NavigationMenuTrigger>Resources</NavigationMenuTrigger>\n            <NavigationMenuContent>\n              <ul className=\"grid w-56 gap-1\">\n                {resources.map((resource) => (\n                  <li key={resource.title}>\n                    <NavigationMenuLink href=\"#\">\n                      <resource.icon />\n                      {resource.title}\n                    </NavigationMenuLink>\n                  </li>\n                ))}\n              </ul>\n            </NavigationMenuContent>\n          </NavigationMenuItem>\n          <NavigationMenuItem>\n            <NavigationMenuLink href=\"#\" className={navigationMenuTriggerStyle()}>\n              Pricing\n            </NavigationMenuLink>\n          </NavigationMenuItem>\n        </NavigationMenuList>\n      </NavigationMenu>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Links only
+
+A bar of plain links styled like triggers, with the first marked `active`.
+
+<Example kind="ui" name="navigation-menu" story="LinksOnly">
+
+<Code lang="tsx" code={"import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from \"@/components/ui/navigation-menu\"\n\nexport function NavigationMenuLinksOnlyExample() {\n  return (\n    <div className=\"flex min-h-96 items-start justify-center\">\n      <NavigationMenu align=\"start\">\n        <NavigationMenuList>\n          {[\"Overview\", \"Customers\", \"Changelog\", \"Blog\"].map((label, index) => (\n            <NavigationMenuItem key={label}>\n              <NavigationMenuLink\n                href=\"#\"\n                active={index === 0}\n                className={navigationMenuTriggerStyle()}\n              >\n                {label}\n              </NavigationMenuLink>\n            </NavigationMenuItem>\n          ))}\n        </NavigationMenuList>\n      </NavigationMenu>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Panel
+
+The `panel` layout anchored to a sticky header, with columns of labelled links and large primary links.
+
+<Example kind="ui" name="navigation-menu" story="Panel">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLabel, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from \"@/components/ui/navigation-menu\"\n\nconst panelMenus = [\n  {\n    value: \"pos\",\n    label: \"POS\",\n    explore: [\"Terminals\", \"Handhelds\", \"Compare models\"],\n    shop: [\"Shop POS\", \"Accessories\", \"Financing\", \"Trade in\"],\n    more: [\"POS support\", \"Setup guide\", \"Integrations\"],\n  },\n  {\n    value: \"kitchen\",\n    label: \"Kitchen\",\n    explore: [\"Displays\", \"Printers\"],\n    shop: [\"Shop Kitchen\", \"Mounts\", \"Cables\"],\n    more: [\"Kitchen support\", \"Station layouts\"],\n  },\n  {\n    value: \"reservations\",\n    label: \"Reservations\",\n    explore: [\"Floor plans\", \"Waitlist\", \"Guest profiles\", \"Online booking\"],\n    shop: [\"Plans\", \"Add-ons\"],\n    more: [\"Reservations support\", \"Booking widget\", \"Calendar sync\"],\n  },\n  {\n    value: \"analytics\",\n    label: \"Analytics\",\n    explore: [\"Reports\", \"Forecasts\"],\n    shop: [\"Plans\", \"Data exports\"],\n    more: [\"Analytics support\"],\n  },\n]\n\nfunction PanelColumn({\n  label,\n  links,\n  size,\n}: {\n  label: string\n  links: string[]\n  size?: \"default\" | \"lg\"\n}) {\n  return (\n    <div className=\"flex flex-col\">\n      <NavigationMenuLabel>{label}</NavigationMenuLabel>\n      <ul className=\"flex flex-col gap-1.5\">\n        {links.map((link) => (\n          <li key={link}>\n            <NavigationMenuLink href=\"#\" size={size}>\n              {link}\n            </NavigationMenuLink>\n          </li>\n        ))}\n      </ul>\n    </div>\n  )\n}\n\nfunction PanelExample() {\n  const ref = React.useRef<HTMLDivElement>(null)\n\n  return (\n    <div className=\"w-full\">\n      <div\n        ref={ref}\n        className=\"sticky top-0 z-50 flex w-full justify-center bg-surface/80 backdrop-blur-xl transition-colors duration-300 has-data-popup-open:bg-surface dark:bg-surface-secondary/80 dark:has-data-popup-open:bg-surface-secondary\"\n      >\n        <NavigationMenu layout=\"panel\" anchor={ref}>\n          <NavigationMenuList>\n            <NavigationMenuItem>\n              <NavigationMenuLink\n                href=\"#\"\n                className={navigationMenuTriggerStyle()}\n              >\n                Store\n              </NavigationMenuLink>\n            </NavigationMenuItem>\n            {panelMenus.map((menu) => (\n              <NavigationMenuItem key={menu.value} value={menu.value}>\n                <NavigationMenuTrigger>{menu.label}</NavigationMenuTrigger>\n                <NavigationMenuContent>\n                  <div className=\"mx-auto flex max-w-245 gap-16 px-6 pt-10 pb-16\">\n                    <PanelColumn\n                      label={`Explore ${menu.label}`}\n                      links={menu.explore}\n                      size=\"lg\"\n                    />\n                    <PanelColumn\n                      label={`Shop ${menu.label}`}\n                      links={menu.shop}\n                    />\n                    <PanelColumn\n                      label={`More from ${menu.label}`}\n                      links={menu.more}\n                    />\n                  </div>\n                </NavigationMenuContent>\n              </NavigationMenuItem>\n            ))}\n            <NavigationMenuItem>\n              <NavigationMenuLink\n                href=\"#\"\n                className={navigationMenuTriggerStyle()}\n              >\n                Support\n              </NavigationMenuLink>\n            </NavigationMenuItem>\n          </NavigationMenuList>\n        </NavigationMenu>\n      </div>\n      <div className=\"mx-auto flex max-w-245 flex-col items-center gap-3 px-6 py-24 text-center\">\n        <h2 className=\"text-5xl font-semibold\">Hestia POS</h2>\n        <p className=\"text-xl text-label-secondary\">\n          Orders, kitchen and tables in one place.\n        </p>\n        <div className=\"mt-8 grid w-full grid-cols-3 gap-4\">\n          {[\"bg-blue\", \"bg-orange\", \"bg-green\"].map((tint) => (\n            <div key={tint} className={`aspect-4/3 rounded-3xl ${tint}`} />\n          ))}\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function NavigationMenuPanelExample() {\n  return (\n    <div className=\"flex min-h-96 items-start justify-center\">\n      <PanelExample />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<Anatomy tree={[{"name":"NavigationMenu","href":"#navigationmenu","children":[{"name":"NavigationMenuList","href":"#navigationmenulist","children":[{"name":"NavigationMenuItem","href":"#navigationmenuitem","children":[{"name":"NavigationMenuTrigger","href":"#navigationmenutrigger","children":[]},{"name":"NavigationMenuContent","href":"#navigationmenucontent","children":[{"name":"NavigationMenuLink","href":"#navigationmenulink","children":[]}]},{"name":"NavigationMenuLink","href":"#navigationmenulink","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
+### NavigationMenu
+
+The root that manages open state and renders the popover or panel popup.
+
+<PropsTable extends={["NavigationMenuPrimitive.Root.Props","NavigationMenuPrimitive.Positioner.Props"]} props={[{"name":"layout","type":"\"popover\" | \"panel\"","default":"\"popover\"","description":"Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### NavigationMenuList
+
+The horizontal list of top-level items.
+
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### NavigationMenuItem
+
+One top-level entry, holding a trigger with content or a single link.
+
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### NavigationMenuTrigger
+
+The button that opens its item's content, with a caret in the popover layout.
+
+<PropsTable extends={["NavigationMenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### NavigationMenuContent
+
+The content shown in the popup when its item is open.
+
+<PropsTable extends={["NavigationMenuPrimitive.Content.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### NavigationMenuPositioner
+
+The floating popover card used by the `popover` layout.
+
+<PropsTable extends={["NavigationMenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### NavigationMenuPanel
+
+The full-width sheet and backdrop used by the `panel` layout.
+
+<PropsTable extends={["NavigationMenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### NavigationMenuLink
+
+A navigation link, either in the bar or inside content.
+
+<PropsTable extends={["NavigationMenuPrimitive.Link.Props"]} props={[{"name":"size","type":"\"default\" | \"lg\"","default":"\"default\"","description":"Sets the link size; `lg` uses large, semibold text for primary destinations."}]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### NavigationMenuLabel
+
+A small secondary heading above a group of links.
+
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### NavigationMenuIndicator
+
+A small arrow built on the Base UI `NavigationMenu.Icon` part that fades in while its menu is open.
+
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Triggers are buttons with `aria-expanded` reflecting whether their content is open.
+- Enter opens a focused trigger, and Tab moves focus into the open content.
+- Escape closes the open content and returns focus to its trigger.
+- Hovering another trigger switches the open content.
+- A link with `active` set receives `aria-current="page"`.
+- The trigger's caret icon is `aria-hidden`.
+
+## Notes
+
+- Styling hooks: `data-slot` values such as `navigation-menu`, `navigation-menu-trigger`, `navigation-menu-content`, `navigation-menu-popup`, `navigation-menu-panel`, `navigation-menu-backdrop` and `navigation-menu-link`. The root exposes `data-layout`; links expose `data-size` and `data-active`.
+- Triggers and links restyle themselves automatically in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.
+- `navigationMenuTriggerStyle` is exported for styling links as triggers.
+- Uses the `surface-raised`, `surface`, `item-hover`, `item-selected`, `scrim` and `link` tokens.

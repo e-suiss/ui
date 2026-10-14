@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-half",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-half.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

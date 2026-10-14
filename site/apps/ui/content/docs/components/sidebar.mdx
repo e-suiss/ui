@@ -1,0 +1,355 @@
+---
+title: Sidebar
+description: "A collapsible app sidebar for navigation, with icon, off-canvas and mobile sheet modes."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="sidebar" story="Default">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarExample() {\n  return (\n    <AppShell side=\"left\" variant=\"sidebar\" collapsible=\"icon\" />\n  )\n}"} />
+
+</Example>
+
+`SidebarProvider` holds the open state and wraps the whole layout. Inside it, `Sidebar` renders the panel and `SidebarInset` renders the main content beside it. The sidebar stacks `SidebarHeader`, a scrolling `SidebarContent` and `SidebarFooter`. Content is organized into `SidebarGroup` sections, each with a `SidebarGroupLabel`, an optional `SidebarGroupAction` and a `SidebarGroupContent`. Navigation lives in a `SidebarMenu` of `SidebarMenuItem` rows, each holding a `SidebarMenuButton` and optionally a `SidebarMenuAction`, `SidebarMenuBadge` or nested `SidebarMenuSub`.
+
+`SidebarTrigger` and `SidebarRail` toggle the sidebar. On screens narrower than `48rem`, the sidebar renders inside a `Sheet` instead. Use `Sidebar` for the main navigation of an app; for bottom navigation on small screens, consider `TabBar`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add sidebar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react class-variance-authority cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Direction](/docs/components/direction), [Input](/docs/components/input), [Separator](/docs/components/separator), [Sheet](/docs/components/sheet), [Skeleton](/docs/components/skeleton), [Tooltip](/docs/components/tooltip), `use-mobile`, `use-platform`.
+
+3. Copy the source into `components/ui/sidebar.tsx`:
+
+<SourceFile path="components/ui/sidebar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset, SidebarInput, SidebarHeader, SidebarFooter, SidebarSeparator, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupAction, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction, SidebarMenuBadge, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton } from \"@/components/ui/sidebar\""} />
+
+<Code lang="tsx" code={"<AppShell side=\"left\" variant=\"sidebar\" collapsible=\"icon\" />"} />
+
+Use `defaultOpen` on `SidebarProvider` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Read and change state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`.
+
+Set `collapsible="icon"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed to icons. Use the `render` prop on `SidebarMenuButton` to render it as a link.
+
+## Examples
+
+### Floating
+
+Uses the `floating` variant, a rounded panel with a shadow.
+
+<Example kind="ui" name="sidebar" story="Floating">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarFloatingExample() {\n  return (\n    <AppShell side=\"left\" variant=\"floating\" collapsible=\"icon\" />\n  )\n}"} />
+
+</Example>
+
+### Inset
+
+Uses the `inset` variant, which also raises the main content into a rounded card.
+
+<Example kind="ui" name="sidebar" story="Inset">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarInsetExample() {\n  return (\n    <AppShell side=\"left\" variant=\"inset\" collapsible=\"icon\" />\n  )\n}"} />
+
+</Example>
+
+### Collapsed
+
+Starts collapsed to icons and expands from the rail.
+
+<Example kind="ui" name="sidebar" story="Collapsed">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarCollapsedExample() {\n  return (\n    <AppShell side=\"left\" variant=\"sidebar\" collapsible=\"icon\" defaultOpen={false} />\n  )\n}"} />
+
+</Example>
+
+### Offcanvas
+
+Slides the sidebar fully out of view when collapsed.
+
+<Example kind="ui" name="sidebar" story="Offcanvas">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarOffcanvasExample() {\n  return (\n    <AppShell side=\"left\" variant=\"sidebar\" collapsible=\"offcanvas\" />\n  )\n}"} />
+
+</Example>
+
+### Right side
+
+Places the sidebar on the right edge.
+
+<Example kind="ui" name="sidebar" story="RightSide">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarRightSideExample() {\n  return (\n    <AppShell side=\"right\" variant=\"sidebar\" collapsible=\"icon\" />\n  )\n}"} />
+
+</Example>
+
+### Loading
+
+Shows `SidebarMenuSkeleton` placeholders while items load.
+
+<Example kind="ui" name="sidebar" story="Loading">
+
+<Code lang="tsx" code={"import { CalendarBlankIcon, CaretUpDownIcon, ChartBarIcon, DotsThreeIcon, FolderIcon, GearIcon, HouseIcon, LifebuoyIcon, PlusIcon, TrayIcon, UsersIcon } from \"@phosphor-icons/react\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst mainNav = [\n  { title: \"Home\", icon: HouseIcon, active: true },\n  { title: \"Inbox\", icon: TrayIcon, badge: \"12\" },\n  { title: \"Calendar\", icon: CalendarBlankIcon },\n  { title: \"Reports\", icon: ChartBarIcon },\n]\n\nconst projects = [\"Website redesign\", \"Mobile app\", \"Q3 planning\"]\n\nconst workspaceNav = [\n  { title: \"Team\", icon: UsersIcon },\n  { title: \"Settings\", icon: GearIcon },\n  { title: \"Support\", icon: LifebuoyIcon },\n]\n\ntype SidebarArgs = React.ComponentProps<typeof Sidebar>\n\nfunction AppSidebar(props: SidebarArgs) {\n  return (\n    <Sidebar {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold\">\n                A\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Acme Inc.</span>\n                <span className=\"text-label/70 truncate text-xs\">Pro plan</span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarInput placeholder=\"Search\" aria-label=\"Search\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Platform</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {mainNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    isActive={item.active}\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                  {item.badge && (\n                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>\n                  )}\n                </SidebarMenuItem>\n              ))}\n              <SidebarMenuItem>\n                <SidebarMenuButton tooltip=\"Projects\">\n                  <FolderIcon />\n                  <span>Projects</span>\n                </SidebarMenuButton>\n                <SidebarMenuAction showOnHover aria-label=\"More options\">\n                  <DotsThreeIcon />\n                </SidebarMenuAction>\n                <SidebarMenuSub>\n                  {projects.map((project, index) => (\n                    <SidebarMenuSubItem key={project}>\n                      <SidebarMenuSubButton href=\"#\" isActive={index === 0}>\n                        <span>{project}</span>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarSeparator />\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarGroupAction aria-label=\"Add member\">\n            <PlusIcon />\n          </SidebarGroupAction>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {workspaceNav.map((item) => (\n                <SidebarMenuItem key={item.title}>\n                  <SidebarMenuButton\n                    tooltip={item.title}\n                    render={<a href={`#${item.title.toLowerCase()}`} />}\n                  >\n                    <item.icon />\n                    <span>{item.title}</span>\n                  </SidebarMenuButton>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\">\n              <div className=\"bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium\">\n                JL\n              </div>\n              <div className=\"grid flex-1 text-start leading-tight\">\n                <span className=\"truncate font-medium\">Jordan Lee</span>\n                <span className=\"text-label/70 truncate text-xs\">\n                  jordan@acme.com\n                </span>\n              </div>\n              <CaretUpDownIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\nfunction AppShell({\n  defaultOpen = true,\n  sidebar,\n  ...props\n}: SidebarArgs & { defaultOpen?: boolean; sidebar?: React.ReactNode }) {\n  return (\n    <SidebarProvider defaultOpen={defaultOpen}>\n      {sidebar ?? <AppSidebar {...props} />}\n      <SidebarInset>\n        <header className=\"flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger className=\"-ms-1\" />\n          <Separator\n            orientation=\"vertical\"\n            className=\"me-2 data-vertical:h-4 data-vertical:self-center\"\n          />\n          <span className=\"text-label-secondary text-sm\">Platform</span>\n          <span className=\"text-label-secondary text-sm\">/</span>\n          <span className=\"text-sm font-medium\">Home</span>\n        </header>\n        <div className=\"flex flex-1 flex-col gap-4 p-4\">\n          <div className=\"grid gap-4 md:grid-cols-3\">\n            {[\"Revenue\", \"Active users\", \"Open issues\"].map((label) => (\n              <div\n                key={label}\n                className=\"bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4\"\n              >\n                <span className=\"text-label-secondary text-sm\">{label}</span>\n              </div>\n            ))}\n          </div>\n          <div className=\"bg-surface-secondary min-h-64 flex-1 rounded-2xl\" />\n        </div>\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n\nexport function SidebarLoadingExample() {\n  return (\n    <AppShell\n      sidebar={\n        <Sidebar side=\"left\" variant=\"sidebar\" collapsible=\"icon\">\n          <SidebarHeader>\n            <SidebarMenu>\n              <SidebarMenuItem>\n                <SidebarMenuSkeleton showIcon />\n              </SidebarMenuItem>\n            </SidebarMenu>\n          </SidebarHeader>\n          <SidebarContent>\n            <SidebarGroup>\n              <SidebarGroupLabel>Platform</SidebarGroupLabel>\n              <SidebarGroupContent>\n                <SidebarMenu>\n                  {Array.from({ length: 6 }, (_, index) => (\n                    <SidebarMenuItem key={index}>\n                      <SidebarMenuSkeleton showIcon />\n                    </SidebarMenuItem>\n                  ))}\n                </SidebarMenu>\n              </SidebarGroupContent>\n            </SidebarGroup>\n          </SidebarContent>\n        </Sidebar>\n      }\n    />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SidebarProvider
+
+Holds the open state, provides it through context and wraps the layout.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"defaultOpen","type":"boolean","default":"true","description":"Sets whether the sidebar starts expanded when uncontrolled."},{"name":"open","type":"boolean","description":"Controls whether the sidebar is expanded."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new state when the sidebar expands or collapses."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Sidebar
+
+The sidebar panel; a sheet on mobile.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"side","type":"\"left\" | \"right\"","default":"\"left\"","description":"Places the sidebar on the left or right edge."},{"name":"variant","type":"\"sidebar\" | \"floating\" | \"inset\"","default":"\"sidebar\"","description":"Chooses a full-height `sidebar`, a rounded `floating` panel, or an `inset` layout."},{"name":"collapsible","type":"\"offcanvas\" | \"icon\" | \"none\"","default":"\"offcanvas\"","description":"Sets how the sidebar collapses: off canvas, to icons, or not at all."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SidebarTrigger
+
+An icon button that toggles the sidebar.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SidebarRail
+
+A thin hit area along the sidebar's edge that toggles it on click.
+
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SidebarInset
+
+The `main` element for page content next to the sidebar.
+
+<PropsTable extends={["React.ComponentProps<\"main\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SidebarInput
+
+A compact `Input` styled for use in the sidebar.
+
+<PropsTable extends={["React.ComponentProps<typeof Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SidebarHeader
+
+The top area, above the scrolling content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SidebarFooter
+
+The bottom area, below the scrolling content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### SidebarSeparator
+
+A divider between sidebar sections.
+
+<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### SidebarContent
+
+The scrolling region that holds the groups.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### SidebarGroup
+
+A section of related content.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### SidebarGroupLabel
+
+The title of a group; it fades out when collapsed to icons.
+
+<PropsTable extends={["useRender.ComponentProps<\"div\">","React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### SidebarGroupAction
+
+A small button in the corner of a group, such as an add button.
+
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### SidebarGroupContent
+
+The body of a group.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### SidebarMenu
+
+A list of menu items.
+
+<PropsTable extends={["React.ComponentProps<\"ul\">"]} />
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### SidebarMenuItem
+
+A list item that holds a menu button and its extras.
+
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### SidebarMenuButton
+
+The clickable row for a destination or command.
+
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the button as the current item."},{"name":"tooltip","type":"string | React.ComponentProps<typeof TooltipContent>","description":"Text or `TooltipContent` props for a tooltip shown only while collapsed on desktop."},{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"Uses a plain style or an `outline` style with a background and border."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the row height: `sm`, `default` or `lg`."}]} />
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### SidebarMenuAction
+
+A small button at the end of a menu item, such as a more button.
+
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"showOnHover","type":"boolean","default":"false","description":"On desktop, hides the action until its item is hovered or focused."}]} />
+
+</ApiPart>
+
+<ApiPart index={19}>
+
+### SidebarMenuBadge
+
+A count or label shown at the end of a menu item.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={20}>
+
+### SidebarMenuSkeleton
+
+A loading placeholder shaped like a menu item.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"showIcon","type":"boolean","default":"false","description":"Adds a square placeholder for an icon."}]} />
+
+</ApiPart>
+
+<ApiPart index={21}>
+
+### SidebarMenuSub
+
+A nested list of sub-items, indented with a leading line.
+
+<PropsTable extends={["React.ComponentProps<\"ul\">"]} />
+
+</ApiPart>
+
+<ApiPart index={22}>
+
+### SidebarMenuSubItem
+
+A list item inside a sub-menu.
+
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={23}>
+
+### SidebarMenuSubButton
+
+The clickable row of a sub-item, rendered as a link by default.
+
+<PropsTable extends={["useRender.ComponentProps<\"a\">","React.ComponentProps<\"a\">"]} props={[{"name":"size","type":"\"sm\" | \"md\"","default":"\"md\"","description":"Sets the text size: `sm` or `md`."},{"name":"isActive","type":"boolean","default":"false","description":"Marks the sub-item as the current page."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `SidebarTrigger` and `SidebarRail` are labelled `Toggle Sidebar`. The rail is removed from the tab order, so keep a `SidebarTrigger` in reach of keyboard users.
+- Press `Command-B` on Apple platforms, or `Ctrl+B` elsewhere, to toggle the sidebar.
+- On mobile, the sidebar is a dialog with a visually hidden title, `Sidebar`; `Escape` closes it.
+- Menu-button tooltips appear only while the sidebar is collapsed, so labels stay available when only icons show.
+
+## Notes
+
+- Every toggle writes the state to a `sidebar_state` cookie for 7 days. Read it on the server to set `defaultOpen` and avoid a flash on load.
+- Widths come from `--sidebar-width` (`16rem`) and `--sidebar-width-icon` (`3rem`), set on `SidebarProvider`; override them through its `style`.
+- The sidebar element exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. Menu buttons set `data-active` and `data-size`.
+- `useSidebar` throws if it's used outside a `SidebarProvider`.
+- The panel uses `bg-surface-secondary`; active items use `bg-item-selected` with a `text-link` icon.

@@ -1,0 +1,33 @@
+{
+  "description": "A searchable command menu that opens in a dialog on desktop and a drawer on mobile.",
+  "overview": "`CommandPalette` hosts a `Command` list inside a `Dialog` on desktop, positioned in the upper third of the viewport, and inside a bottom `Drawer` with a swipe handle below the `48rem` breakpoint. Fill `CommandPaletteContent` with `CommandInput`, `CommandList`, `CommandGroup`, `CommandItem` and the other `Command` parts.\n\nA global keyboard shortcut toggles the palette: `Cmd+K` on macOS and `Ctrl+K` elsewhere by default. Use it for app-wide search and quick actions.",
+  "usage": "The palette can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`; the hotkey and the trigger update the same state. Set `hotkey` to another letter to change the shortcut, or to `false` to disable it. `CommandPaletteTrigger` accepts `render` to use your own button, for example a `Button` with a `Kbd` hint. Remaining props on `CommandPaletteContent` pass through to `Command`.",
+  "examples": {
+    "WithCloseButton": "Shows an icon close button with `showCloseButton`.",
+    "WithCloseLabel": "Shows a text close button labelled Cancel with `closeLabel`.",
+    "Floating": "Insets the mobile drawer from the screen edges with `floating`."
+  },
+  "parts": {
+    "CommandPalette": "The root that renders a `Dialog` on desktop and a `Drawer` on mobile and registers the hotkey.",
+    "CommandPaletteTrigger": "The button that opens the palette.",
+    "CommandPaletteContent": "The popup that wraps a `Command` with a visually hidden title and description."
+  },
+  "props": {
+    "CommandPalette": {
+      "onOpenChange": "Called when the palette opens or closes, including through the hotkey.",
+      "hotkey": "The letter that toggles the palette together with `Cmd` on macOS or `Ctrl` elsewhere; `false` disables it.",
+      "floating": "Insets the mobile drawer from the screen edges with fully rounded corners."
+    },
+    "CommandPaletteTrigger": {
+      "render": "Replaces the default button element with your own element, such as a `Button`."
+    },
+    "CommandPaletteContent": {
+      "title": "Accessible name of the dialog, rendered visually hidden.",
+      "description": "Accessible description of the dialog, rendered visually hidden.",
+      "showCloseButton": "Shows a close button in the corner of the popup.",
+      "closeLabel": "Replaces the close icon with this text; requires `showCloseButton`."
+    }
+  },
+  "accessibility": "- The popup is a `dialog` named by `title` and described by `description`.\n- Opening the palette focuses the search input, and the first enabled option is selected.\n- Arrow keys move between options and skip disabled ones; typing filters the list.\n- `Escape` closes the palette and returns focus to the trigger.",
+  "notes": "Parts carry `data-slot` values `command-palette`, `command-palette-trigger` and `command-palette-content`. On mobile the list is capped at `60dvh` and the input gains end padding when a close button is shown. `className` on `CommandPaletteContent` applies to the inner `Command`, not the dialog or drawer."
+}

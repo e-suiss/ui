@@ -1,0 +1,93 @@
+---
+title: Undo Bar
+description: "A floating bar that offers to undo the last action for a few seconds before committing it."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="undo-bar" story="Default">
+
+<Code lang="tsx" code={"import { TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { UndoBarProvider, useUndoBar } from \"@/components/interactions/undo-bar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Delete a note.\")\n  const { show } = useUndoBar()\n\n  const remove = (note: Note) => {\n    const index = notes.findIndex((item) => item.id === note.id)\n    setNotes((current) => current.filter((item) => item.id !== note.id))\n    setLog(`Removed “${note.title}”`)\n    show({\n      title: `“${note.title}” deleted`,\n      onUndo: () => {\n        setNotes((current) => {\n          const next = [...current]\n          next.splice(Math.min(index, next.length), 0, note)\n          return next\n        })\n        setLog(`Restored “${note.title}”`)\n      },\n      onCommit: () => setLog(`Deleted “${note.title}” permanently`),\n    })\n  }\n\n  return { notes, remove, log }\n}\n\nfunction NotesList() {\n  const { notes, remove, log } = useNotes()\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {notes.map((note) => (\n          <li\n            key={note.id}\n            className=\"flex items-center gap-3 py-1 ps-4 pe-1 not-first:border-t\"\n          >\n            <span className=\"flex min-w-0 flex-1 flex-col py-2\">\n              <span className=\"truncate text-base font-semibold\">\n                {note.title}\n              </span>\n              <span className=\"truncate text-sm text-label-secondary\">\n                {note.preview}\n              </span>\n            </span>\n            <Button\n              variant=\"ghost\"\n              size=\"icon-lg\"\n              aria-label={`Delete ${note.title}`}\n              onClick={() => remove(note)}\n            >\n              <TrashIcon className=\"size-5\" />\n            </Button>\n          </li>\n        ))}\n      </ul>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function UndoBarExample() {\n  return (\n    <UndoBarProvider>\n      <NotesList />\n    </UndoBarProvider>\n  )\n}"} />
+
+</Example>
+
+`UndoBarProvider` renders a floating bar at the bottom of the screen and provides `useUndoBar`. Calling `show` displays a title and an Undo button with a countdown ring. Pressing Undo, or `Ctrl+Z` or `Cmd+Z` outside text fields, runs `onUndo`; when the timer runs out, the bar closes and runs `onCommit`. Showing a new entry commits the previous one first.
+
+The countdown pauses while the pointer hovers the bar, while it has focus, and while the page is hidden. The Undo button is a suiss/ui `Button`. Use it to make destructive actions, such as deleting from a list, immediate but reversible.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions undo-bar"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/interactions/undo-bar.tsx`:
+
+<SourceFile path="components/interactions/undo-bar.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { UndoBarProvider } from \"@/components/interactions/undo-bar\""} />
+
+<Code lang="tsx" code={"<UndoBarProvider>\n  <NotesList />\n</UndoBarProvider>"} />
+
+- Wrap the app or screen in `UndoBarProvider` and call `show({ title, actionLabel, onUndo, onCommit })` from `useUndoBar` after performing the action.
+- Apply the change optimistically, restore it in `onUndo`, and finalize it in `onCommit`.
+- `actionLabel` defaults to `Undo`. `useUndoBar` also returns `undo` and `dismiss` to settle the current entry from code.
+- It pairs well with `SwipeActions`, including full swipes.
+
+## Examples
+
+### Longer timeout
+
+A `timeout` of 10 seconds keeps the bar on screen longer before committing.
+
+<Example kind="interaction" name="undo-bar" story="LongerTimeout">
+
+<Code lang="tsx" code={"import { TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { UndoBarProvider, useUndoBar } from \"@/components/interactions/undo-bar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Delete a note.\")\n  const { show } = useUndoBar()\n\n  const remove = (note: Note) => {\n    const index = notes.findIndex((item) => item.id === note.id)\n    setNotes((current) => current.filter((item) => item.id !== note.id))\n    setLog(`Removed “${note.title}”`)\n    show({\n      title: `“${note.title}” deleted`,\n      onUndo: () => {\n        setNotes((current) => {\n          const next = [...current]\n          next.splice(Math.min(index, next.length), 0, note)\n          return next\n        })\n        setLog(`Restored “${note.title}”`)\n      },\n      onCommit: () => setLog(`Deleted “${note.title}” permanently`),\n    })\n  }\n\n  return { notes, remove, log }\n}\n\nfunction NotesList() {\n  const { notes, remove, log } = useNotes()\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {notes.map((note) => (\n          <li\n            key={note.id}\n            className=\"flex items-center gap-3 py-1 ps-4 pe-1 not-first:border-t\"\n          >\n            <span className=\"flex min-w-0 flex-1 flex-col py-2\">\n              <span className=\"truncate text-base font-semibold\">\n                {note.title}\n              </span>\n              <span className=\"truncate text-sm text-label-secondary\">\n                {note.preview}\n              </span>\n            </span>\n            <Button\n              variant=\"ghost\"\n              size=\"icon-lg\"\n              aria-label={`Delete ${note.title}`}\n              onClick={() => remove(note)}\n            >\n              <TrashIcon className=\"size-5\" />\n            </Button>\n          </li>\n        ))}\n      </ul>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function UndoBarLongerTimeoutExample() {\n  return (\n    <UndoBarProvider timeout={10000}>\n      <NotesList />\n    </UndoBarProvider>\n  )\n}"} />
+
+</Example>
+
+### With swipe actions
+
+Notes deleted from swipe actions, including a full swipe, can be restored from the bar.
+
+<Example kind="interaction" name="undo-bar" story="WithSwipeActions">
+
+<Code lang="tsx" code={"import { TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { UndoBarProvider, useUndoBar } from \"@/components/interactions/undo-bar\"\n\nconst initialNotes = [\n  { id: 1, title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: 2, title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: 3, title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: 4, title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Delete a note.\")\n  const { show } = useUndoBar()\n\n  const remove = (note: Note) => {\n    const index = notes.findIndex((item) => item.id === note.id)\n    setNotes((current) => current.filter((item) => item.id !== note.id))\n    setLog(`Removed “${note.title}”`)\n    show({\n      title: `“${note.title}” deleted`,\n      onUndo: () => {\n        setNotes((current) => {\n          const next = [...current]\n          next.splice(Math.min(index, next.length), 0, note)\n          return next\n        })\n        setLog(`Restored “${note.title}”`)\n      },\n      onCommit: () => setLog(`Deleted “${note.title}” permanently`),\n    })\n  }\n\n  return { notes, remove, log }\n}\n\nfunction SwipeNotesList() {\n  const { notes, remove, log } = useNotes()\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {notes.map((note) => (\n          <li key={note.id} className=\"not-first:border-t\">\n            <SwipeActions>\n              <SwipeActionsContent className=\"flex flex-col px-4 py-3\">\n                <span className=\"truncate text-base font-semibold\">\n                  {note.title}\n                </span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {note.preview}\n                </span>\n              </SwipeActionsContent>\n              <SwipeActionsActions side=\"trailing\">\n                <SwipeAction\n                  variant=\"destructive\"\n                  fullSwipe\n                  onClick={() => remove(note)}\n                >\n                  <TrashIcon weight=\"fill\" />\n                  Delete\n                </SwipeAction>\n              </SwipeActionsActions>\n            </SwipeActions>\n          </li>\n        ))}\n      </ul>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function UndoBarWithSwipeActionsExample() {\n  return (\n    <UndoBarProvider>\n      <SwipeNotesList />\n    </UndoBarProvider>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### UndoBarProvider
+
+Provides `useUndoBar` and renders the floating undo bar.
+
+<PropsTable props={[{"name":"timeout","type":"number","default":"5000","description":"Milliseconds the bar stays visible before committing."},{"name":"className","type":"string","description":"Classes for the fixed region that positions the bar."},{"name":"children","type":"React.ReactNode","description":"The content that can show undo entries."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- The bar sits in a polite live region, so its title is announced when it appears.
+- The bar has `role="group"` and is labelled by its title.
+- `Ctrl+Z` or `Cmd+Z` triggers undo while the bar is visible, except when focus is in an editable field.
+- The countdown pauses while the bar has keyboard focus, giving people time to reach the button.
+
+## Notes
+
+- Parts use `data-slot` values `undo-bar-region`, `undo-bar`, `undo-bar-title`, and `undo-bar-action`. The bar sets `data-paused` while the countdown is paused and `data-closed` while closing.
+- The bar is fixed to the bottom of the viewport above the safe-area inset.

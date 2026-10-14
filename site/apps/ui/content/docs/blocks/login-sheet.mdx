@@ -1,0 +1,46 @@
+---
+title: Login Sheet
+description: "A mobile app welcome screen with a Sign in with suiss bottom sheet for sharing or hiding an email."
+eyebrow: Block
+generated: true
+---
+
+<Example kind="block" name="login-sheet">
+
+<SourceFile path="components/blocks/login-sheet.tsx" fold={false} />
+
+</Example>
+
+A mobile app welcome screen whose Sign in with suiss button slides up a bottom sheet, where users choose to share or hide their email before continuing. Completing the flow greets the user with a Sign out link. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the section. Use it for third-party sign-in or any consent step shown as a bottom sheet.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks login-sheet"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Spinner](/docs/components/spinner).
+
+3. Copy the source into `components/blocks/login-sheet.tsx`:
+
+<SourceFile path="components/blocks/login-sheet.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { LoginSheet } from \"@/components/blocks/login-sheet\""} />
+
+<Code lang="tsx" code={"<LoginSheet />"} />
+
+Replace `proceed`, which fakes a one-second request, with your identity provider's sign-in, and send the chosen email option along. Update the Trail Routes app name, tagline and account details, and give Continue with email a handler.
+
+## Notes
+
+The sheet behaves as a modal dialog: focus moves into it, Escape or a click on the scrim closes it, and focus returns to the trigger.

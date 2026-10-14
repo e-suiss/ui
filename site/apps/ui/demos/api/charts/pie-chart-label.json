@@ -1,0 +1,16 @@
+{
+  "name": "pie-chart-label",
+  "type": "chart",
+  "files": [
+    "components/charts/pie-chart-label.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

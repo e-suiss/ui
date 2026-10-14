@@ -1,0 +1,131 @@
+---
+title: Textarea
+description: "A multi-line text field that grows with its content, with an optional resize handle."
+eyebrow: React Component
+generated: true
+---
+
+<Example kind="ui" name="textarea" story="Default">
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+`Textarea` renders a native `textarea` styled to match the other form controls. By default it uses `field-sizing: content`, so it grows as people type, starting at a minimum height of `4rem`.
+
+Set `resizable` to give it a fixed height and a custom handle that people drag to resize it vertically. Use `Textarea` for free-form text such as messages or notes; for a single line, use `Input`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add textarea"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
+
+2. Copy the source into `components/ui/textarea.tsx`:
+
+<SourceFile path="components/ui/textarea.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\""} />
+
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Textarea placeholder=\"Type your message here.\" />\n</div>"} />
+
+`Textarea` passes its props to the native element, so use `value` with `onChange` to control it, or `defaultValue` for an uncontrolled field. Pair it with a `Label` through `htmlFor` and `id`, and link hint text with `aria-describedby`.
+
+With `resizable`, the textarea and its handle are wrapped in a relative container. Double-click the handle to reset the height.
+
+## Examples
+
+### With value
+
+Starts with a default value.
+
+<Example kind="ui" name="textarea" story="WithValue">
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithValueExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" defaultValue=\"Thanks for the quick turnaround. The new layout looks great on mobile.\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### With label
+
+Names the textarea with a `Label`.
+
+<Example kind="ui" name="textarea" story="WithLabel">
+
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithLabelExample() {\n  return (\n    <div className=\"w-80\">\n      <div className=\"flex flex-col gap-2\">\n        <Label htmlFor=\"feedback\">Feedback</Label>\n        <Textarea id=\"feedback\" placeholder=\"Tell us what you think.\" />\n      </div>\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Resizable
+
+Adds a resize handle inside the bottom corner of the field.
+
+<Example kind="ui" name="textarea" story="Resizable">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nfunction ResizableExample({\n  resizable,\n  ...props\n}: React.ComponentProps<typeof Textarea>) {\n  const ref = React.useRef<HTMLTextAreaElement>(null)\n  const [rows, setRows] = React.useState(0)\n\n  React.useEffect(() => {\n    const area = ref.current\n    if (!area) return\n    const measure = () => {\n      const style = getComputedStyle(area)\n      const padding =\n        Number.parseFloat(style.paddingTop) +\n        Number.parseFloat(style.paddingBottom)\n      const line = Number.parseFloat(style.lineHeight)\n      setRows(Math.floor((area.clientHeight - padding) / line))\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(area)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <div className=\"flex items-baseline justify-between\">\n        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>\n        <span className=\"text-xs text-label-secondary tabular-nums\">\n          {rows} rows\n        </span>\n      </div>\n      <Textarea\n        {...props}\n        ref={ref}\n        id={`campaign-${resizable}`}\n        resizable={resizable}\n        aria-describedby={`campaign-${resizable}-hint`}\n      />\n      <p\n        id={`campaign-${resizable}-hint`}\n        className=\"text-xs text-label-secondary\"\n      >\n        Drag the bottom corner to resize. Double-click it to reset.\n      </p>\n    </div>\n  )\n}\n\nconst campaign =\n\"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders.\"\n\nexport function TextareaResizableExample() {\n  return (\n    <div className=\"w-80\">\n      <ResizableExample placeholder=\"Type your message here.\"\n        resizable=\"inside\"\n        rows={5}\n        defaultValue={campaign}\n      />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Resizable outside
+
+Places the resize handle just outside the bottom corner of the field.
+
+<Example kind="ui" name="textarea" story="ResizableOutside">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nfunction ResizableExample({\n  resizable,\n  ...props\n}: React.ComponentProps<typeof Textarea>) {\n  const ref = React.useRef<HTMLTextAreaElement>(null)\n  const [rows, setRows] = React.useState(0)\n\n  React.useEffect(() => {\n    const area = ref.current\n    if (!area) return\n    const measure = () => {\n      const style = getComputedStyle(area)\n      const padding =\n        Number.parseFloat(style.paddingTop) +\n        Number.parseFloat(style.paddingBottom)\n      const line = Number.parseFloat(style.lineHeight)\n      setRows(Math.floor((area.clientHeight - padding) / line))\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(area)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <div className=\"flex items-baseline justify-between\">\n        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>\n        <span className=\"text-xs text-label-secondary tabular-nums\">\n          {rows} rows\n        </span>\n      </div>\n      <Textarea\n        {...props}\n        ref={ref}\n        id={`campaign-${resizable}`}\n        resizable={resizable}\n        aria-describedby={`campaign-${resizable}-hint`}\n      />\n      <p\n        id={`campaign-${resizable}-hint`}\n        className=\"text-xs text-label-secondary\"\n      >\n        Drag the bottom corner to resize. Double-click it to reset.\n      </p>\n    </div>\n  )\n}\n\nconst campaign =\n\"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders.\"\n\nexport function TextareaResizableOutsideExample() {\n  return (\n    <div className=\"w-80\">\n      <ResizableExample placeholder=\"Type your message here.\"\n        resizable=\"outside\"\n        rows={5}\n        defaultValue={campaign}\n      />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables the textarea so it can't be edited.
+
+<Example kind="ui" name="textarea" story="Disabled">
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaDisabledExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" disabled />\n    </div>\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Marks the textarea with `aria-invalid` to show an error state.
+
+<Example kind="ui" name="textarea" story="Invalid">
+
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaInvalidExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" aria-invalid defaultValue=\"Too short\" />\n    </div>\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Textarea
+
+The multi-line text field, with an optional resize handle.
+
+<PropsTable extends={["React.ComponentProps<\"textarea\">"]} props={[{"name":"resizable","type":"\"inside\" | \"outside\"","description":"Adds a vertical resize handle, placed `inside` or `outside` the field's bottom corner, and turns off automatic growth."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- Renders a native `textarea` with the `textbox` role. Name it with a `Label` or `aria-label`.
+- The resize handle is hidden from assistive technologies and works with a pointer only.
+- An invalid field is exposed through `aria-invalid`.
+
+## Notes
+
+- Uses `data-slot="textarea"` and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.
+- A resizable textarea starts at a minimum height of `6rem`, and dragging never shrinks it below its minimum height.
+- The handle is hidden while the textarea is disabled, and mirrors in right-to-left layouts.
+- The caret uses the `accent` color; invalid fields use the `danger` color.

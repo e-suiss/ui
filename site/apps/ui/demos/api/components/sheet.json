@@ -1,0 +1,100 @@
+{
+  "name": "sheet",
+  "type": "ui",
+  "files": [
+    "components/ui/sheet.tsx"
+  ],
+  "requires": [
+    "button",
+    "use-scrollbar-gap"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Sides",
+    "OpenLeft",
+    "OpenBottom",
+    "WithoutCloseButton",
+    "WithCloseLabel"
+  ],
+  "parts": [
+    {
+      "name": "Sheet",
+      "extends": [
+        "SheetPrimitive.Root.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetTrigger",
+      "extends": [
+        "SheetPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetClose",
+      "extends": [
+        "SheetPrimitive.Close.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetContent",
+      "extends": [
+        "SheetPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "side",
+          "type": "\"top\" | \"right\" | \"bottom\" | \"left\"",
+          "required": false,
+          "default": "\"right\""
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "SheetHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetTitle",
+      "extends": [
+        "SheetPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "SheetDescription",
+      "extends": [
+        "SheetPrimitive.Description.Props"
+      ],
+      "props": []
+    }
+  ]
+}

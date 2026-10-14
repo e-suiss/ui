@@ -1,0 +1,46 @@
+---
+title: Pie Chart Default
+description: "A full pie split into five device slices, separated by thin surface-colored borders."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="pie-chart-default">
+
+<SourceFile path="components/charts/pie-chart-default.tsx" fold={false} />
+
+</Example>
+
+A full pie split into five slices separated by thin gaps, with a tooltip for each slice. Use it for a quick part-to-whole view of a small number of categories.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-default"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/pie-chart-default.tsx`:
+
+<SourceFile path="components/charts/pie-chart-default.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { PieChartDefault } from \"@/components/charts/pie-chart-default\""} />
+
+<Code lang="tsx" code={"<PieChartDefault />"} />
+
+Give each record a category key, a value and a `fill` that references its color, then add a label and color for every key in `chartConfig`. Point `dataKey` and `nameKey` on the `Pie` at your value and category fields.
+
+## Notes
+
+Pies work best with about five slices or fewer; group the long tail into an Other slice.

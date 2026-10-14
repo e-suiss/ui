@@ -1,0 +1,29 @@
+{
+  "description": "A set of toggle buttons for choosing one or several related options, including segmented controls.",
+  "overview": "`ToggleGroup` wraps the Base UI Toggle Group primitive and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.\n\nWith `spacing={0}` and the `default` variant, the group becomes a segmented control: a filled track where a raised pill slides to the pressed item. Use a segmented group to switch between views, such as day, week and month. For a single on-off option, use `Toggle`; for switching panels of content, use `Tabs`.",
+  "usage": "The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.\n\nSet `variant` and `size` on `ToggleGroup`; items take these from the group. Use `spacing={0}` with the `outline` variant to join items into one bordered bar.",
+  "examples": {
+    "Outline": "Uses the `outline` variant with spaced items.",
+    "Attached": "Joins outline items into one bar with `spacing={0}`.",
+    "Sizes": "Compares the `sm`, `default` and `lg` sizes.",
+    "Segmented": "Shows a single-choice segmented control with a sliding pill.",
+    "SegmentedVertical": "Stacks a segmented control vertically.",
+    "SegmentedMultiple": "Uses a segmented control that allows several pressed items.",
+    "SegmentedSizes": "Compares segmented controls in each size.",
+    "SingleSelection": "Allows only one pressed item in an outline group.",
+    "Vertical": "Stacks attached outline items vertically.",
+    "Disabled": "Disables every item in the group."
+  },
+  "parts": {
+    "ToggleGroup": "The container that holds the pressed values and shared styles.",
+    "ToggleGroupItem": "A toggle button within the group, identified by its `value`."
+  },
+  "props": {
+    "ToggleGroup": {
+      "spacing": "Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant.",
+      "orientation": "Lays items out in a row or a column, and sets which arrow keys move focus."
+    }
+  },
+  "accessibility": "- The group has the `group` role; name it with `aria-label`.\n- Each item is a `button` with `aria-pressed`. Icon-only items need an `aria-label`.\n- Arrow keys move focus between items: left and right in a horizontal group, up and down in a vertical one. `Space` toggles the focused item.\n- `disabled` on the group disables every item.",
+  "notes": "- The segmented indicator appears only when exactly one item is pressed. Its position is set through `--active-toggle-left`, `--active-toggle-top`, `--active-toggle-width` and `--active-toggle-height`.\n- `variant` and `size` set on a `ToggleGroupItem` are overridden by the group's values.\n- The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`; parts use the `toggle-group`, `toggle-group-item` and `toggle-group-indicator` slots.\n- The segmented track uses `bg-control` and the pill uses `bg-surface-raised`. Its animation is removed when reduced motion is preferred."
+}

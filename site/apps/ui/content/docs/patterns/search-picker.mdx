@@ -1,0 +1,161 @@
+---
+title: Search Picker
+description: "A searchable single-choice picker that renders a Combobox on desktop and a search drawer on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="search-picker" story="Default">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />\n  )\n}"} />
+
+</Example>
+
+`SearchPicker` lets the user find and choose one item from a long list. On desktop it renders a suiss/ui `Combobox`: the field itself is the search input, and the list filters as the user types. On mobile (below `48rem`, via `useIsMobile`) it renders a field-style button that shows the selected label. Tapping it opens a `Drawer` with a swipe handle and a `Command` menu whose search input receives focus. Choosing an item closes the drawer.
+
+Items are passed as data. When any item has a `group`, items are listed under group headings in both presentations. Use it for countries, cities, users and other lists too long to scan; for short lists, use `Picker`.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns search-picker"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Combobox](/docs/components/combobox), [Command](/docs/components/command), [Drawer](/docs/components/drawer), `use-mobile`.
+
+3. Copy the source into `components/patterns/search-picker.tsx`:
+
+<SourceFile path="components/patterns/search-picker.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SearchPicker } from \"@/components/patterns/search-picker\""} />
+
+<Code lang="tsx" code={"<SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />"} />
+
+- Each item in `items` has a `value`, a `label`, and an optional `group` and `disabled` flag. The `SearchPickerItem` type is exported.
+- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. The value is `null` when nothing is selected.
+- `searchPlaceholder`, `title`, `floating`, `showCloseButton` and `closeLabel` affect only the mobile drawer. On desktop the field shows `placeholder`.
+- Mobile search matches against each item's label.
+
+## Examples
+
+### With value
+
+Starts with a selected item through `defaultValue`.
+
+<Example kind="pattern" name="search-picker" story="WithValue">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithValueExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" defaultValue=\"astro\" />\n  )\n}"} />
+
+</Example>
+
+### Grouped
+
+Lists cities under group headings and filters across groups.
+
+<Example kind="pattern" name="search-picker" story="Grouped">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst cities: SearchPickerItem[] = [\n  { value: \"nyc\", label: \"New York\", group: \"Americas\" },\n  { value: \"chi\", label: \"Chicago\", group: \"Americas\" },\n  { value: \"sao\", label: \"São Paulo\", group: \"Americas\" },\n  { value: \"lon\", label: \"London\", group: \"Europe\" },\n  { value: \"ber\", label: \"Berlin\", group: \"Europe\" },\n  { value: \"ist\", label: \"Istanbul\", group: \"Europe\" },\n  { value: \"tyo\", label: \"Tokyo\", group: \"Asia\" },\n  { value: \"sin\", label: \"Singapore\", group: \"Asia\" },\n]\n\nexport function SearchPickerGroupedExample() {\n  return (\n    <SearchPicker items={cities} placeholder=\"Select a city\" searchPlaceholder=\"Search cities...\" emptyText=\"No city found.\" aria-label=\"City\" className=\"w-56\" />\n  )\n}"} />
+
+</Example>
+
+### With title
+
+Shows a visible title at the top of the mobile drawer.
+
+<Example kind="pattern" name="search-picker" story="WithTitle">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithTitleExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" title=\"Framework\" />\n  )\n}"} />
+
+</Example>
+
+### With close button
+
+Adds a close button to the mobile drawer.
+
+<Example kind="pattern" name="search-picker" story="WithCloseButton">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseButtonExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" showCloseButton />\n  )\n}"} />
+
+</Example>
+
+### With close label
+
+Uses a Cancel text button for the mobile close button.
+
+<Example kind="pattern" name="search-picker" story="WithCloseLabel">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseLabelExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" showCloseButton closeLabel=\"Cancel\" />\n  )\n}"} />
+
+</Example>
+
+### Disabled
+
+Disables the field.
+
+<Example kind="pattern" name="search-picker" story="Disabled">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerDisabledExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" disabled />\n  )\n}"} />
+
+</Example>
+
+### Invalid
+
+Shows the invalid style through `aria-invalid`.
+
+<Example kind="pattern" name="search-picker" story="Invalid">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerInvalidExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" aria-invalid />\n  )\n}"} />
+
+</Example>
+
+### Controlled
+
+Owns the value in state with `value` and `onValueChange`.
+
+<Example kind="pattern" name="search-picker" story="Controlled">
+
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nfunction ControlledExample(args: React.ComponentProps<typeof SearchPicker>) {\n  const [value, setValue] = React.useState<string | null>(\"next\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <SearchPicker {...args} value={value} onValueChange={setValue} />\n      <p className=\"text-sm text-label-secondary\">\n        Selected: {value ?? \"none\"}\n      </p>\n    </div>\n  )\n}\n\nexport function SearchPickerControlledExample() {\n  return (\n    <ControlledExample items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />\n  )\n}"} />
+
+</Example>
+
+### Floating
+
+Insets the mobile drawer from the screen edges.
+
+<Example kind="pattern" name="search-picker" story="Floating">
+
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerFloatingExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" floating />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+<PropsTable props={[{"name":"items","type":"SearchPickerItem[]","required":true,"description":"The items to choose from, each with a `value`, `label`, and optional `group` and `disabled`."},{"name":"value","type":"string | null","description":"The selected value when controlled, or `null` for no selection."},{"name":"defaultValue","type":"string | null","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string | null) => void","description":"Called with the new value, or `null`, when the selection changes."},{"name":"placeholder","type":"string","description":"Text shown when nothing is selected."},{"name":"searchPlaceholder","type":"string","default":"\"Search...\"","description":"Placeholder of the search input in the mobile drawer."},{"name":"emptyText","type":"string","default":"\"No results found.\"","description":"Text shown when no item matches the search."},{"name":"title","type":"string","description":"A visible heading for the mobile drawer. When omitted, the drawer title is visually hidden and falls back to `placeholder` or `aria-label`."},{"name":"disabled","type":"boolean","description":"Disables the field."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Text for the mobile close button in place of the icon."},{"name":"id","type":"string","description":"The ID of the input on desktop or the trigger button on mobile."},{"name":"className","type":"string","description":"Classes applied to the input on desktop or the trigger button on mobile."},{"name":"aria-invalid","type":"boolean","description":"Marks the field as invalid and applies the error style."},{"name":"aria-label","type":"string","description":"The accessible name of the field."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the field."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the field has the `combobox` role and controls a `listbox`. The selected option has `aria-selected`, disabled options have `aria-disabled`, and groups are exposed as `group` elements named by their heading.
+- Escape closes the desktop list.
+- On mobile, the drawer is titled by `title`, `placeholder` or `aria-label`, and focus moves to the search input when it opens.
+
+## Notes
+
+Styling hooks: `data-slot="search-picker"`, `search-picker-trigger` (mobile) and `search-picker-content`. The mobile trigger has `data-placeholder` while nothing is selected, and the selected command item has `data-checked`.

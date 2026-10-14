@@ -1,0 +1,151 @@
+{
+  "name": "drawer",
+  "type": "ui",
+  "files": [
+    "components/ui/drawer.tsx"
+  ],
+  "requires": [
+    "button",
+    "use-scrollbar-gap"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "@phosphor-icons/react",
+    "cn"
+  ],
+  "examples": [
+    "Default",
+    "Directions",
+    "WithCloseButton",
+    "WithCloseLabel",
+    "Floating",
+    "WithSnapPoints",
+    "NonModal",
+    "SheetWithDetents"
+  ],
+  "parts": [
+    {
+      "name": "DrawerProvider",
+      "extends": [
+        "DrawerPrimitive.Provider.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerIndentBackground",
+      "extends": [
+        "DrawerPrimitive.IndentBackground.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerIndent",
+      "extends": [
+        "DrawerPrimitive.Indent.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "Drawer",
+      "extends": [
+        "DrawerPrimitive.Root.Props"
+      ],
+      "props": [
+        {
+          "name": "floating",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "showSwipeHandle",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "DrawerTrigger",
+      "extends": [
+        "DrawerPrimitive.Trigger.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerPortal",
+      "extends": [
+        "DrawerPrimitive.Portal.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerClose",
+      "extends": [
+        "DrawerPrimitive.Close.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerOverlay",
+      "extends": [
+        "DrawerPrimitive.Backdrop.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerSwipeHandle",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerContent",
+      "extends": [
+        "DrawerPrimitive.Popup.Props"
+      ],
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "DrawerHeader",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerFooter",
+      "extends": [
+        "React.ComponentProps<\"div\">"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerTitle",
+      "extends": [
+        "DrawerPrimitive.Title.Props"
+      ],
+      "props": []
+    },
+    {
+      "name": "DrawerDescription",
+      "extends": [
+        "DrawerPrimitive.Description.Props"
+      ],
+      "props": []
+    }
+  ]
+}

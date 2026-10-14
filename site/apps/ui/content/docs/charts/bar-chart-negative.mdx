@@ -1,0 +1,46 @@
+---
+title: Bar Chart Negative
+description: "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="bar-chart-negative">
+
+<SourceFile path="components/charts/bar-chart-negative.tsx" fold={false} />
+
+</Example>
+
+Monthly cash flow where bars rise green above a zero line and drop red below it. Use it for any value that can be negative, such as profit, net change or deltas against a target.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-negative"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/bar-chart-negative.tsx`:
+
+<SourceFile path="components/charts/bar-chart-negative.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { BarChartNegative } from \"@/components/charts/bar-chart-negative\""} />
+
+<Code lang="tsx" code={"<BarChartNegative />"} />
+
+Replace `chartData` with your values and rename `flow` in the data, the bar and `chartConfig`. The color for each bar is chosen per `Cell` based on its sign, so change the two colors there. Set `interval` on the axis to show more or fewer month labels.
+
+## Notes
+
+Because colors are set per bar instead of in the config, the tooltip has no color swatch, and green and red alone carry the sign; keep the zero line so the direction is clear without color. Focus the chart and use the arrow keys to move between months.

@@ -1,0 +1,125 @@
+---
+title: Selection List
+description: "A list with an edit mode for selecting multiple rows and acting on them from a floating toolbar."
+eyebrow: Interaction
+generated: true
+---
+
+<Example kind="interaction" name="selection-list" story="Default">
+
+<Code lang="tsx" code={"import { CaretRightIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger, useSelectionList } from \"@/components/interactions/selection-list\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialNotes = [\n  { id: \"groceries\", title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: \"trip\", title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: \"books\", title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: \"meeting\", title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: \"gifts\", title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: \"recipes\", title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction NoteRows({\n  notes,\n  onOpen,\n}: {\n  notes: Note[]\n  onOpen: (note: Note) => void\n}) {\n  return (\n    <div className=\"overflow-hidden rounded-2xl border\">\n      {notes.map((note) => (\n        <SelectionListItem\n          key={note.id}\n          value={note.id}\n          className=\"not-first:border-t\"\n        >\n          <button\n            type=\"button\"\n            onClick={() => onOpen(note)}\n            className=\"flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]\"\n          >\n            <span className=\"flex min-w-0 flex-1 flex-col\">\n              <span className=\"truncate text-base font-semibold\">\n                {note.title}\n              </span>\n              <span className=\"truncate text-sm text-label-secondary\">\n                {note.preview}\n              </span>\n            </span>\n            <CaretRightIcon\n              aria-hidden\n              className=\"size-4 shrink-0 text-label-tertiary transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0\"\n            />\n          </button>\n        </SelectionListItem>\n      ))}\n    </div>\n  )\n}\n\nfunction SelectAllButton() {\n  const { selected, selectAll, clear } = useSelectionList()\n  const all = selected.length > 0\n\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4\"\n      onClick={all ? clear : selectAll}\n    >\n      {all ? \"Deselect All\" : \"Select All\"}\n    </Button>\n  )\n}\n\nfunction DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {\n  const { selected, setEditing } = useSelectionList()\n\n  return (\n    <Button\n      variant=\"plain\"\n      size=\"lg\"\n      className=\"px-4 text-danger disabled:text-label-quaternary\"\n      disabled={selected.length === 0}\n      onClick={() => {\n        onDelete(selected)\n        setEditing(false)\n      }}\n    >\n      Delete\n    </Button>\n  )\n}\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Tap Select to choose notes.\")\n\n  return {\n    notes,\n    log,\n    setLog,\n    remove: (ids: string[]) => {\n      setNotes((current) => current.filter((note) => !ids.includes(note.id)))\n      setLog(`Deleted ${ids.length} ${ids.length === 1 ? \"note\" : \"notes\"}`)\n    },\n    reset: () => {\n      setNotes(initialNotes)\n      setLog(\"Tap Select to choose notes.\")\n    },\n  }\n}\n\nfunction NotesExample() {\n  const { notes, log, setLog, remove, reset } = useNotes()\n\n  return (\n    <SelectionList className=\"mx-auto flex w-full max-w-md flex-col gap-3 pb-24\">\n      <div className=\"flex items-center justify-between\">\n        <h2 className=\"text-3xl font-bold tracking-tight\">Notes</h2>\n        <SelectionListTrigger />\n      </div>\n      <NoteRows\n        notes={notes}\n        onOpen={(note) => setLog(`Opened ${note.title}`)}\n      />\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button size=\"sm\" variant=\"secondary\" onClick={reset}>\n          Reset\n        </Button>\n      </div>\n      <SelectionListBar aria-label=\"Selection actions\">\n        <SelectAllButton />\n        <SelectionListCount />\n        <DeleteButton onDelete={remove} />\n      </SelectionListBar>\n    </SelectionList>\n  )\n}\n\nexport function SelectionListExample() {\n  return (\n    <NotesExample />\n  )\n}"} />
+
+</Example>
+
+`SelectionList` recreates the iOS Select mode for lists. Pressing `SelectionListTrigger` switches into editing: each `SelectionListItem` slides in a round checkmark indicator and becomes a checkbox, and `SelectionListBar` rises from the bottom of the screen as a floating toolbar. The row content is made `inert` while editing, so taps toggle selection instead of opening the row. Leaving editing clears the selection.
+
+The trigger is a suiss/ui `Button` that reads `Select` or `Done` by default, and `SelectionListCount` shows how many rows are selected. Use it for lists where people manage several items at once, such as deleting notes or archiving mail.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions selection-list"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Button](/docs/components/button).
+
+3. Copy the source into `components/interactions/selection-list.tsx`:
+
+<SourceFile path="components/interactions/selection-list.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBar, SelectionListCount } from \"@/components/interactions/selection-list\""} />
+
+<Code lang="tsx" code={"<NotesExample />"} />
+
+- Place `SelectionListTrigger`, the `SelectionListItem` rows, and `SelectionListBar` inside `SelectionList`. Put your own action buttons and `SelectionListCount` inside the bar.
+- Editing and selection are each uncontrolled by default. Pass `editing` and `onEditingChange`, or `value` and `onValueChange`, to control them.
+- `useSelectionList` returns `editing`, `setEditing`, `selected`, `setSelected`, `selectAll`, and `clear` for building actions such as Select All or Delete.
+- Shift-clicking a row, or pressing `Shift` with `Enter` or `Space`, selects the range from the previously toggled row.
+- `Escape` leaves editing.
+
+## Examples
+
+### Icon actions
+
+A controlled selection drives icon-only toolbar actions that stay disabled until a row is picked.
+
+<Example kind="interaction" name="selection-list" story="IconActions">
+
+<Code lang="tsx" code={"import { ArchiveIcon, CaretRightIcon, FolderSimpleIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger } from \"@/components/interactions/selection-list\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialNotes = [\n  { id: \"groceries\", title: \"Groceries\", preview: \"Milk, eggs, bread, coffee\" },\n  { id: \"trip\", title: \"Trip ideas\", preview: \"Lisbon, Porto, the coast road\" },\n  { id: \"books\", title: \"Book list\", preview: \"Three novels for the summer\" },\n  { id: \"meeting\", title: \"Meeting notes\", preview: \"Ship the beta on Friday\" },\n  { id: \"gifts\", title: \"Gift ideas\", preview: \"Headphones, a plant, a scarf\" },\n  { id: \"recipes\", title: \"Recipes\", preview: \"Lemon pasta and a quick curry\" },\n]\n\ntype Note = (typeof initialNotes)[number]\n\nfunction NoteRows({\n  notes,\n  onOpen,\n}: {\n  notes: Note[]\n  onOpen: (note: Note) => void\n}) {\n  return (\n    <div className=\"overflow-hidden rounded-2xl border\">\n      {notes.map((note) => (\n        <SelectionListItem\n          key={note.id}\n          value={note.id}\n          className=\"not-first:border-t\"\n        >\n          <button\n            type=\"button\"\n            onClick={() => onOpen(note)}\n            className=\"flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]\"\n          >\n            <span className=\"flex min-w-0 flex-1 flex-col\">\n              <span className=\"truncate text-base font-semibold\">\n                {note.title}\n              </span>\n              <span className=\"truncate text-sm text-label-secondary\">\n                {note.preview}\n              </span>\n            </span>\n            <CaretRightIcon\n              aria-hidden\n              className=\"size-4 shrink-0 text-label-tertiary transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0\"\n            />\n          </button>\n        </SelectionListItem>\n      ))}\n    </div>\n  )\n}\n\nfunction useNotes() {\n  const [notes, setNotes] = React.useState(initialNotes)\n  const [log, setLog] = React.useState(\"Tap Select to choose notes.\")\n\n  return {\n    notes,\n    log,\n    setLog,\n    remove: (ids: string[]) => {\n      setNotes((current) => current.filter((note) => !ids.includes(note.id)))\n      setLog(`Deleted ${ids.length} ${ids.length === 1 ? \"note\" : \"notes\"}`)\n    },\n    reset: () => {\n      setNotes(initialNotes)\n      setLog(\"Tap Select to choose notes.\")\n    },\n  }\n}\n\nfunction MailExample() {\n  const { notes, log, setLog, remove, reset } = useNotes()\n  const [selected, setSelected] = React.useState<string[]>([])\n\n  const act = (verb: string) => {\n    setLog(`${verb} ${selected.join(\", \")}`)\n  }\n\n  return (\n    <SelectionList\n      value={selected}\n      onValueChange={setSelected}\n      className=\"mx-auto flex w-full max-w-md flex-col gap-3 pb-24\"\n    >\n      <div className=\"flex items-center justify-between\">\n        <h2 className=\"text-3xl font-bold tracking-tight\">Inbox</h2>\n        <SelectionListTrigger />\n      </div>\n      <NoteRows\n        notes={notes}\n        onOpen={(note) => setLog(`Opened ${note.title}`)}\n      />\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button size=\"sm\" variant=\"secondary\" onClick={reset}>\n          Reset\n        </Button>\n      </div>\n      <SelectionListBar aria-label=\"Selection actions\">\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          aria-label=\"Archive\"\n          disabled={selected.length === 0}\n          onClick={() => act(\"Archived\")}\n        >\n          <ArchiveIcon className=\"size-5.5\" />\n        </Button>\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          aria-label=\"Move\"\n          disabled={selected.length === 0}\n          onClick={() => act(\"Moved\")}\n        >\n          <FolderSimpleIcon className=\"size-5.5\" />\n        </Button>\n        <SelectionListCount />\n        <Button\n          variant=\"plain\"\n          size=\"icon-lg\"\n          aria-label=\"Delete\"\n          className=\"text-danger disabled:text-label-quaternary\"\n          disabled={selected.length === 0}\n          onClick={() => {\n            remove(selected)\n            setSelected([])\n          }}\n        >\n          <TrashIcon className=\"size-5.5\" />\n        </Button>\n      </SelectionListBar>\n    </SelectionList>\n  )\n}\n\nexport function SelectionListIconActionsExample() {\n  return (\n    <MailExample />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### SelectionList
+
+The root that holds the editing state and the selected values.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"editing","type":"boolean","description":"Whether the list is in editing mode, for controlled use."},{"name":"defaultEditing","type":"boolean","default":"false","description":"Whether the list starts in editing mode when uncontrolled."},{"name":"onEditingChange","type":"(editing: boolean) => void","description":"Called when editing mode turns on or off."},{"name":"value","type":"string[]","description":"The selected row values, for controlled use."},{"name":"defaultValue","type":"string[]","default":"[]","description":"The rows selected initially when uncontrolled."},{"name":"onValueChange","type":"(value: string[]) => void","description":"Called with the new array of selected values."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectionListTrigger
+
+The button that enters and leaves editing.
+
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectionListItem
+
+A row that becomes a selectable checkbox while editing.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"value","type":"string","required":true,"description":"The unique value that identifies the row in the selection."}]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectionListBar
+
+The floating toolbar shown while editing.
+
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectionListCount
+
+A live label with the number of selected rows.
+
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `SelectionListTrigger` sets `aria-pressed` while editing.
+- In editing mode, each row has `role="checkbox"` with `aria-checked`, is focusable, and toggles with `Enter` or `Space`. Its accessible name comes from the row's text unless you set `aria-label`.
+- `SelectionListBar` has `role="toolbar"` and is `inert` while not editing; give it an `aria-label`.
+- `SelectionListCount` is a polite live region, so selection changes are announced.
+
+## Notes
+
+- The root sets `data-editing` while editing, available to children as the `group/selection-list` Tailwind group. Rows expose `data-value` and `data-checked`.
+- Parts use `data-slot` values `selection-list`, `selection-list-trigger`, `selection-list-item`, `selection-list-indicator`, `selection-list-item-content`, `selection-list-bar`, and `selection-list-count`.
+- The bar is fixed to the bottom of the viewport, so leave room below the list for it.

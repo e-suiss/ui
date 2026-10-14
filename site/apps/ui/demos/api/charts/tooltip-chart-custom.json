@@ -1,0 +1,16 @@
+{
+  "name": "tooltip-chart-custom",
+  "type": "chart",
+  "files": [
+    "components/charts/tooltip-chart-custom.tsx"
+  ],
+  "requires": [
+    "card",
+    "chart"
+  ],
+  "dependencies": [
+    "recharts"
+  ],
+  "examples": [],
+  "parts": []
+}

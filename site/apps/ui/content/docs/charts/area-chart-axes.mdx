@@ -1,0 +1,46 @@
+---
+title: Area Chart Axes
+description: "A gradient area with visible dots and a value axis on the right edge of the plot."
+eyebrow: Chart
+generated: true
+---
+
+<Example kind="chart" name="area-chart-axes">
+
+<SourceFile path="components/charts/area-chart-axes.tsx" fold={false} />
+
+</Example>
+
+A single series drawn as a smooth area with a soft gradient fill, a dot at every value and a value axis on the right. Use it when readers need to read exact values off the chart, not just see the trend.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-axes"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+
+2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+3. Copy the source into `components/charts/area-chart-axes.tsx`:
+
+<SourceFile path="components/charts/area-chart-axes.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { AreaChartAxes } from \"@/components/charts/area-chart-axes\""} />
+
+<Code lang="tsx" code={"<AreaChartAxes />"} />
+
+Swap `chartData` for your own records, point each `dataKey` at your fields and set the series label and color in `chartConfig`. Set `orientation` on the value axis to move it to the left, and adjust `tickCount` to make it denser or sparser. Drop the dots if they feel busy on longer series.
+
+## Notes
+
+The plot is keyboard accessible: focus it and use the arrow keys to step the tooltip through the months. You can render several copies on one page without their gradients clashing.

@@ -1,0 +1,274 @@
+---
+title: Card
+description: "A container that groups related content and actions with a header, body and footer."
+eyebrow: React Native Component
+generated: true
+---
+
+<Example id="components-card--default" width={880} height={877} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardExample() {\n  return (\n    <Card className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Login to your account</CardTitle>\n        <CardDescription>\n          Enter your email below to login to your account\n        </CardDescription>\n      </CardHeader>\n      <CardContent className=\"gap-4\">\n        <View className=\"gap-2\">\n          <Label nativeID=\"card-email\">Email</Label>\n          <Input\n            accessibilityLabelledBy=\"card-email\"\n            placeholder=\"m@example.com\"\n            keyboardType=\"email-address\"\n            autoCapitalize=\"none\"\n          />\n        </View>\n        <View className=\"gap-2\">\n          <Label nativeID=\"card-password\">Password</Label>\n          <Input accessibilityLabelledBy=\"card-password\" secureTextEntry />\n        </View>\n      </CardContent>\n      <CardFooter className=\"flex-col gap-2\">\n        <Button block>\n          <Text>Login</Text>\n        </Button>\n        <Button block variant=\"secondary\">\n          <Text>Login with Google</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CardLoginDemo: View {\n  @State private var email = \"\"\n  @State private var password = \"\"\n\n  var body: some View {\n    Card {\n      CardHeader(\"Login to your account\", description: \"Enter your email below to login to your account\")\n      CardContent {\n        VStack(alignment: .leading, spacing: 16) {\n          VStack(alignment: .leading, spacing: 8) {\n            FieldLabel(\"Email\")\n              .accessibilityHidden(true)\n            TextField(\"Email\", text: $email, prompt: Text(verbatim: \"m@example.com\"))\n              .textFieldStyle(.input)\n              .keyboardType(.emailAddress)\n              .textInputAutocapitalization(.never)\n          }\n          VStack(alignment: .leading, spacing: 8) {\n            FieldLabel(\"Password\")\n              .accessibilityHidden(true)\n            SecureField(\"Password\", text: $password, prompt: Text(verbatim: \"\"))\n              .textFieldStyle(.input)\n          }\n        }\n      }\n      CardFooter {\n        VStack(spacing: 8) {\n          Button(\"Login\") {}\n            .buttonStyle(.variant(block: true))\n          Button(\"Login with Google\") {}\n            .buttonStyle(.variant(.secondary, block: true))\n        }\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport androidx.compose.ui.text.input.PasswordVisualTransformation\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardFooter\nimport com.esuiss.ui.components.CardHeader\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Label\n\n@Composable\nfun CardDefault() {\n    var email by rememberSaveable { mutableStateOf(\"\") }\n    var password by rememberSaveable { mutableStateOf(\"\") }\n    Card {\n        CardHeader(\"Login to your account\", description = \"Enter your email below to login to your account\")\n        CardContent {\n            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Email\")\n                    Input(\n                        email,\n                        { email = it },\n                        Modifier.semantics { contentDescription = \"Email\" },\n                        placeholder = \"m@example.com\",\n                        keyboardOptions = KeyboardOptions(\n                            capitalization = KeyboardCapitalization.None,\n                            autoCorrectEnabled = false,\n                            keyboardType = KeyboardType.Email,\n                        ),\n                    )\n                }\n                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Label(\"Password\")\n                    Input(\n                        password,\n                        { password = it },\n                        Modifier.semantics { contentDescription = \"Password\" },\n                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),\n                        visualTransformation = PasswordVisualTransformation(),\n                    )\n                }\n            }\n        }\n        CardFooter {\n            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n                Button(\"Login\", onClick = {}, block = true)\n                Button(\"Login with Google\", onClick = {}, variant = ButtonVariant.Secondary, block = true)\n            }\n        }\n    }\n}"} />
+
+</Example>
+
+`Card` is a rounded `View` that stacks a `CardHeader`, `CardContent` and `CardFooter` with consistent spacing. The `default` variant is a raised surface with a hairline border and a shadow; the `filled` variant is a flat secondary surface.
+
+The `sm` size reduces the padding and gaps for dense layouts. All parts read the size from context, so their horizontal padding stays aligned.
+
+## Installation
+
+<Tabs items={["React Native","SwiftUI","Jetpack Compose"]}>
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add card"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add card --platform swift"} />
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add card --platform kotlin"} />
+
+</Tabs>
+
+The CLI also adds what it builds on: [Text](/docs/components/text).
+
+### Manual
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet","SwiftUI","Jetpack Compose"]}>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="uniwind/components/ui/card.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+
+2. Add the pieces it builds on: [Text](/docs/components/text).
+
+3. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="nativewind/components/ui/card.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Add the pieces it builds on: [Text](/docs/components/text).
+
+2. Copy the source into `components/ui/card.tsx`:
+
+<SourceFile path="stylesheet/components/ui/card.tsx" />
+
+3. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="swift/Theme/Theme.swift" />
+
+<SourceFile path="swift/Theme/Tokens.swift" />
+
+3. Copy the source:
+
+<SourceFile path="swift/Components/Card.swift" />
+
+4. Add the files to your app target.
+
+</div>
+
+<div>
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+
+2. Copy the theme files every view uses:
+
+<SourceFile path="kotlin/theme/Theme.kt" />
+
+<SourceFile path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<SourceFile path="kotlin/components/Card.kt" />
+
+<SourceFile path="kotlin/components/Content.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</div>
+
+</Tabs>
+
+## Usage
+
+<Code lang="tsx" code={"import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from \"@/components/ui/card\""} />
+
+<Code lang="tsx" code={"<Card className=\"w-full\">\n  <CardHeader>\n    <CardTitle>Login to your account</CardTitle>\n    <CardDescription>\n      Enter your email below to login to your account\n    </CardDescription>\n  </CardHeader>\n  <CardContent className=\"gap-4\">\n    <View className=\"gap-2\">\n      <Label nativeID=\"card-email\">Email</Label>\n      <Input\n        accessibilityLabelledBy=\"card-email\"\n        placeholder=\"m@example.com\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n    </View>\n    <View className=\"gap-2\">\n      <Label nativeID=\"card-password\">Password</Label>\n      <Input accessibilityLabelledBy=\"card-password\" secureTextEntry />\n    </View>\n  </CardContent>\n  <CardFooter className=\"flex-col gap-2\">\n    <Button block>\n      <Text>Login</Text>\n    </Button>\n    <Button block variant=\"secondary\">\n      <Text>Login with Google</Text>\n    </Button>\n  </CardFooter>\n</Card>"} />
+
+Put a `CardTitle` and `CardDescription` in `CardHeader`. Add a `CardAction` anywhere in the header and it is placed in the top-end corner beside the title.
+
+To show an image edge to edge, place it directly in the card before the header and add `pt-0` to the card; only the header, content and footer are padded horizontally.
+
+## Examples
+
+### Small
+
+The compact `sm` size.
+
+<Example id="components-card--small" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardSmallExample() {\n  return (\n    <Card size=\"sm\" className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Team plan</CardTitle>\n        <CardDescription>Up to 10 members</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm\">\n          Shared workspaces, unlimited projects and priority support.\n        </Text>\n      </CardContent>\n    </Card>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CardSmallExample: View {\n  var body: some View {\n    Card(size: .sm) {\n      CardHeader(\"Team plan\", description: \"Up to 10 members\")\n      CardContent {\n        Text(\"Shared workspaces, unlimited projects and priority support.\")\n          .textStyle(.sm)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardHeader\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CardSmall() {\n    Card(size = CardSize.Sm) {\n        CardHeader(\"Team plan\", description = \"Up to 10 members\")\n        CardContent {\n            Text(\"Shared workspaces, unlimited projects and priority support.\", style = Typography.sm)\n        }\n    }\n}"} />
+
+</Example>
+
+### With action
+
+A `CardAction` button beside the title.
+
+<Example id="components-card--with-action" width={880} height={501} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { BellIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardWithActionExample() {\n  return (\n    <Card className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Notifications</CardTitle>\n        <CardDescription>You have 3 unread messages.</CardDescription>\n        <CardAction>\n          <Button size=\"icon\" variant=\"ghost\">\n            <Icon as={BellIcon} />\n          </Button>\n        </CardAction>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm\">\n          Your call has been confirmed for tomorrow at 10:00.\n        </Text>\n      </CardContent>\n      <CardFooter>\n        <Button block>\n          <Text>Mark all as read</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct CardWithActionExample: View {\n  var body: some View {\n    Card {\n      CardHeader(\"Notifications\", description: \"You have 3 unread messages.\") {\n        Button {} label: {\n          Ph.bell.regular\n            .frame(width: VariantButtonStyle.Size.icon.iconSize, height: VariantButtonStyle.Size.icon.iconSize)\n        }\n        .buttonStyle(.variant(.ghost, size: .icon))\n        .accessibilityLabel(Text(\"Notifications\"))\n      }\n      CardContent {\n        Text(\"Your call has been confirmed for tomorrow at 10:00.\")\n          .textStyle(.sm)\n      }\n      CardFooter {\n        Button(\"Mark all as read\") {}\n          .buttonStyle(.variant(block: true))\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Bell\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardFooter\nimport com.esuiss.ui.components.CardHeader\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CardWithAction() {\n    Card {\n        CardHeader(\n            \"Notifications\",\n            description = \"You have 3 unread messages.\",\n            action = {\n                Button(onClick = {}, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {\n                    Icon(PhosphorIcons.Regular.Bell, contentDescription = \"Notifications\")\n                }\n            },\n        )\n        CardContent {\n            Text(\"Your call has been confirmed for tomorrow at 10:00.\", style = Typography.sm)\n        }\n        CardFooter {\n            Button(\"Mark all as read\", onClick = {}, block = true)\n        }\n    }\n}"} />
+
+</Example>
+
+### With image
+
+An edge-to-edge image above the header.
+
+<Example id="components-card--with-image" width={880} height={871} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Image } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardWithImageExample() {\n  return (\n    <Card className=\"w-full pt-0\">\n      <Image\n        source={{\n          uri: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\",\n        }}\n        className=\"aspect-video w-full\"\n      />\n      <CardHeader>\n        <CardTitle>Mountain retreat</CardTitle>\n        <CardDescription>A quiet cabin with a view.</CardDescription>\n      </CardHeader>\n      <CardFooter>\n        <Button block variant=\"tinted\">\n          <Text>Book now</Text>\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CardWithImageExample: View {\n  var body: some View {\n    Card {\n      Color.surfaceSecondary\n        .aspectRatio(16.0 / 9.0, contentMode: .fit)\n        .overlay {\n          AsyncImage(url: CardImage.url) { phase in\n            if let image = phase.image {\n              image.resizable().scaledToFill()\n            }\n          }\n        }\n        .clipped()\n        .padding(.top, -24)\n        .accessibilityHidden(true)\n      CardHeader(\"Mountain retreat\", description: \"A quiet cabin with a view.\")\n      CardFooter {\n        Button(\"Book now\") {}\n          .buttonStyle(.variant(.tinted, block: true))\n      }\n    }\n  }\n}\n\nenum CardImage {\n  static let url = URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\")\n}\n\nlet url = URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\")"} />
+
+<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.layout.layout\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardFooter\nimport com.esuiss.ui.components.CardHeader\nimport com.esuiss.ui.components.CardSize\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun CardWithImage() {\n    val colors = EsuissTheme.colors\n    val inset = CardSize.Default.spacing\n    Card {\n        Box(\n            Modifier\n                .layout { measurable, constraints ->\n                    val placeable = measurable.measure(constraints)\n                    val shift = inset.roundToPx()\n                    layout(placeable.width, placeable.height - shift) { placeable.place(0, -shift) }\n                }\n                .fillMaxWidth()\n                .aspectRatio(16f / 9f)\n                .background(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))),\n        )\n        CardHeader(\"Mountain retreat\", description = \"A quiet cabin with a view.\")\n        CardFooter {\n            Button(\"Book now\", onClick = {}, variant = ButtonVariant.Tinted, block = true)\n        }\n    }\n}"} />
+
+</Example>
+
+### Filled
+
+The flat `filled` variant.
+
+<Example id="components-card--filled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+
+<Code lang="tsx" code={"import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function CardFilledExample() {\n  return (\n    <Card variant=\"filled\" className=\"w-full\">\n      <CardHeader>\n        <CardTitle>Storage</CardTitle>\n        <CardDescription>42 GB of 128 GB used</CardDescription>\n      </CardHeader>\n      <CardContent>\n        <Text className=\"text-sm text-label-secondary\">\n          Photos and backups take up most of your space.\n        </Text>\n      </CardContent>\n    </Card>\n  )\n}"} />
+
+<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CardFilledExample: View {\n  var body: some View {\n    Card(.filled) {\n      CardHeader(\"Storage\", description: \"42 GB of 128 GB used\")\n      CardContent {\n        Text(\"Photos and backups take up most of your space.\")\n          .textStyle(.sm)\n          .foregroundStyle(Color.labelSecondary)\n      }\n    }\n  }\n}"} />
+
+<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Card\nimport com.esuiss.ui.components.CardContent\nimport com.esuiss.ui.components.CardHeader\nimport com.esuiss.ui.components.CardVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun CardFilled() {\n    Card(variant = CardVariant.Filled) {\n        CardHeader(\"Storage\", description = \"42 GB of 128 GB used\")\n        CardContent {\n            Text(\n                \"Photos and backups take up most of your space.\",\n                style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n            )\n        }\n    }\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Card
+
+Outer container that sets the size and variant.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} props={[{"name":"size","type":"CardSize","default":"\"default\"","description":"`default` or `sm`."},{"name":"variant","type":"CardVariant","default":"\"default\"","description":"`default` (raised) or `filled`."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardTitle
+
+Bold heading.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardDescription
+
+Secondary text below the title.
+
+<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardAction
+
+Slot for a button in the header.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardContent
+
+Padded body.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CardFooter
+
+Padded row for actions.
+
+<PropsTable extends={["React.ComponentProps<typeof View>","React.RefAttributes<View>"]} />
+
+</ApiPart>
+
+## Accessibility
+
+- `CardTitle` has the `heading` role.
+- The card itself adds no role; actions inside provide their own.
+
+## Notes
+
+- Uses `bg-surface-raised` with a shadow, or `bg-surface-secondary` for `filled`; the border is stronger in dark mode.
+- Light and dark follow the system appearance.

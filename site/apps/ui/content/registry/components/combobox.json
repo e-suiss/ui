@@ -1,0 +1,39 @@
+{
+  "description": "A text input with a filterable list of options, for choosing one or more values by typing.",
+  "overview": "Combobox is built on the Base UI Combobox. The `Combobox` root takes the `items` to choose from and holds the value. `ComboboxInput` renders the text field inside an `InputGroup`, with an optional button that opens the list and an optional clear button. `ComboboxContent` renders the popup in a portal; inside it, `ComboboxList` renders each item through a render function, `ComboboxEmpty` appears when nothing matches, and `ComboboxItem` shows a check mark when selected. Group related items with `ComboboxGroup`, `ComboboxLabel`, `ComboboxCollection` and `ComboboxSeparator`.\n\nFor multiple selection, replace `ComboboxInput` with `ComboboxChips`, which shows each selected value as a `ComboboxChip` next to a `ComboboxChipsInput`. Use a combobox when the list is long enough that typing to filter helps. For a short, fixed list without filtering, use a select; for a list of actions rather than values, use a command menu.",
+  "usage": "Pass `items` to the root and a function as the child of `ComboboxList`, which receives each item and returns a `ComboboxItem` with a matching `value`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. To read or control the typed text, use `inputValue` and `onInputValueChange`.\n\nFor grouped data, pass groups as `items`, render a `ComboboxGroup` with its own `items` for each one, and render its items with `ComboboxCollection`. For multiple selection, set `multiple` on the root, create a ref with `useComboboxAnchor`, attach it to `ComboboxChips`, and pass it as `anchor` to `ComboboxContent` so the popup aligns to the chips field. Use `ComboboxValue` with a render function to map the selected values to chips.",
+  "examples": {
+    "WithClearButton": "A combobox with a starting value and a clear button, enabled with `showClear`.",
+    "Disabled": "A disabled combobox whose input and toggle button cannot be focused or used.",
+    "Grouped": "Options grouped by region with labels and separators between groups.",
+    "HighlightMatch": "A controlled `inputValue` used to emphasize the matching part of each option.",
+    "Multiple": "Multiple selection shown as removable chips, with Backspace removing the last chip."
+  },
+  "parts": {
+    "ComboboxValue": "Renders the current value, or passes it to a render function, for example to draw chips.",
+    "ComboboxTrigger": "A button that opens the list, with a caret icon.",
+    "ComboboxInput": "The text field, rendered inside an `InputGroup` with optional open and clear buttons.",
+    "ComboboxContent": "The popup, rendered in a portal and positioned below the input.",
+    "ComboboxList": "The scrollable list that renders items through a render function.",
+    "ComboboxItem": "A selectable option that shows a check mark when selected.",
+    "ComboboxGroup": "Groups related options and takes its own `items`.",
+    "ComboboxLabel": "The visible label of a group.",
+    "ComboboxCollection": "Renders the items of a group through a render function.",
+    "ComboboxEmpty": "Content shown when no options match the typed text.",
+    "ComboboxSeparator": "A divider between groups.",
+    "ComboboxChips": "The field that holds selected values as chips in multiple selection.",
+    "ComboboxChip": "A selected value shown as a chip, with an optional remove button.",
+    "ComboboxChipsInput": "The text field placed after the chips in multiple selection."
+  },
+  "props": {
+    "ComboboxInput": {
+      "showTrigger": "Shows the button at the end of the field that opens the list.",
+      "showClear": "Shows a clear button at the end of the field. When shown, it hides the open button."
+    },
+    "ComboboxChip": {
+      "showRemove": "Shows a button inside the chip that removes the value."
+    }
+  },
+  "accessibility": "- The input has the `combobox` role and sets `aria-expanded` to reflect whether the list is open.\n- The popup has the `listbox` role, options have the `option` role and selected options set `aria-selected`; groups have the `group` role and take their name from `ComboboxLabel`.\n- Typing filters the options. Arrow keys move the highlight, Enter selects the highlighted option, and Escape closes the list.\n- In multiple selection, Backspace in the empty input removes the last chip.\n- The open button is labelled `Show options` and the clear button is labelled `Clear`.\n- When disabled, the input and the open button are disabled and removed from the Tab order.\n- Give the input an accessible name with a visible label or `aria-label`.",
+  "notes": "- Styling hooks: `data-slot` values such as `combobox-content`, `combobox-list`, `combobox-item`, `combobox-label`, `combobox-empty`, `combobox-chips`, `combobox-chip`, `combobox-chip-remove` and `combobox-chip-input`.\n- Highlighted items get `data-highlighted` and disabled items get `data-disabled`.\n- The popup matches the width of its anchor through `--anchor-width` and limits its height to the available space.\n- Uses the `surface-raised`, `item-hover`, `link`, `accent-surface`, `control` and `separator` tokens."
+}

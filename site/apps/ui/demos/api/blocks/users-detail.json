@@ -1,0 +1,22 @@
+{
+  "name": "users-detail",
+  "type": "block",
+  "files": [
+    "components/blocks/users-detail.tsx"
+  ],
+  "requires": [
+    "avatar",
+    "button",
+    "item",
+    "select",
+    "sidebar",
+    "split-view",
+    "switch",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A messaging app layout with a conversation list beside the selected thread and a message composer.",
+  "overview": "A messaging app with conversations on the left, the open thread on the right and a composer whose send button appears once you type. On mobile only one pane shows at a time, starting with the conversation list, and a back button returns to it. Built on `SplitView` and `MessageScroller`, it is a starting point for direct messages, team chat or customer conversations.",
+  "usage": "Replace the `threads` array; each thread has a name, avatar hue, time and lines written as strings prefixed with `me:` or `them:`. The `send` function fakes a typing indicator and a canned reply from `replies`, so replace it with your messaging backend. The New message, attachment, video call and details buttons have no handlers.",
+  "notes": "Typing status is announced, and icon-only buttons are labeled. The composer input uses its placeholder as its accessible name, so keep the placeholder descriptive."
+}
