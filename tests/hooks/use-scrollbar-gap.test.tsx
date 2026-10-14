@@ -91,8 +91,9 @@ describe("useScrollbarGap", () => {
       )
       expect(body.style.paddingInlineEnd).toBe(`${SCROLLBAR}px`)
       await close()
-      expect(body.style.paddingInlineEnd).toBe("")
+      await expect.poll(() => body.style.paddingInlineEnd).toBe("")
       expect(html.style.getPropertyValue("scrollbar-gutter")).toBe("")
+      expect(html.style.overflow).toBe("")
     }
   )
 
@@ -102,8 +103,19 @@ describe("useScrollbarGap", () => {
     await open(dialog)
     await expect.poll(() => body.style.paddingInlineEnd).toBe(`${SCROLLBAR}px`)
     await close()
-    expect(body.style.paddingInlineEnd).toBe("4px")
+    await expect.poll(() => body.style.paddingInlineEnd).toBe("4px")
     body.style.paddingInlineEnd = ""
+  })
+
+  it("keeps the scrollbar hidden until the popup finishes closing", async () => {
+    fakeScrollbar()
+    await open(dialog)
+    await expect.poll(() => body.style.paddingInlineEnd).toBe(`${SCROLLBAR}px`)
+    await close()
+    expect(html.style.overflow).toBe("hidden")
+    expect(body.style.paddingInlineEnd).toBe(`${SCROLLBAR}px`)
+    await expect.poll(() => html.style.overflow).toBe("")
+    expect(body.style.paddingInlineEnd).toBe("")
   })
 
   it("leaves the page alone without a visible scrollbar", async () => {
