@@ -386,7 +386,7 @@ function WheelPickerColumn({
         onClickCapture={handleClick}
         onKeyDownCapture={handleKeyDown}
         className={cn(
-          "no-scrollbar relative h-[calc(var(--wheel-picker-item-height)*6.75)] snap-y snap-mandatory overflow-y-auto overscroll-contain rounded-lg py-[calc(var(--wheel-picker-item-height)*2.875)] outline-none focus-visible:focus-ring",
+          "no-scrollbar relative h-[calc(var(--wheel-picker-item-height)*6.75)] min-w-max snap-y snap-mandatory overflow-y-auto overscroll-contain rounded-lg py-[calc(var(--wheel-picker-item-height)*2.875)] outline-none focus-visible:focus-ring",
           className
         )}
         {...props}
