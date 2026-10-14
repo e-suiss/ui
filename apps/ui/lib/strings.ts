@@ -8,6 +8,7 @@ export const strings = {
   searchOpen: "Open",
   searchClose: "Close",
   onThisPage: "On this page",
+  backToTop: "Back to top",
   previous: "Previous",
   next: "Next",
   documentation: "Documentation",

@@ -11,6 +11,7 @@ import { Logo } from "@/components/site/logo";
 import { Search } from "@/components/site/search";
 import { repository, sections } from "@/lib/sections";
 import { strings } from "@/lib/strings";
+import { ThemeToggle } from "@/components/ui/theme";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 const MENU_EXIT = 500;
@@ -86,7 +87,7 @@ export function GlobalNav() {
 
   return (
     <header
-      style={home && !menuOpen ? ({ "--label": "oklch(0.2316 0.0038 286.09)" } as React.CSSProperties) : undefined}
+      style={home && !menuOpen ? ({ "--label": "oklch(0.2316 0.0038 286.09)", "--surface": "oklch(1 0 0)" } as React.CSSProperties) : undefined}
 className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative border-b border-label/10 bg-surface")}
     >
       <nav
@@ -134,6 +135,7 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
               <ArrowUpRightIcon weight="bold" className="size-3.5" />
             </span>
           </Anchor>
+          <ThemeToggle effect="rectangle" origin="top-down" size="icon-sm" className="size-10" />
           <button
             type="button"
             aria-expanded={menuOpen}

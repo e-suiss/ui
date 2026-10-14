@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
-import { ThemeToggle } from "@/components/ui/theme";
 import { repository, sections } from "@/lib/sections";
 import { strings } from "@/lib/strings";
 
@@ -112,13 +111,12 @@ function BottomBar() {
         {strings.creditSuffix}
       </span>
       <div className="ms-auto flex items-center gap-3">
-        <ThemeToggle effect="rectangle" origin="bottom-up" size="icon-sm" className="size-8" />
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
         >
-          Back to top
+          {strings.backToTop}
           <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
             <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
           </span>
@@ -130,14 +128,7 @@ function BottomBar() {
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname.startsWith("/preview")) return null;
-  if (pathname !== "/") {
-    return (
-      <footer className="bg-surface text-label">
-        <BottomBar />
-      </footer>
-    );
-  }
+  if (pathname !== "/") return null;
 
   return (
     <footer className="dark overflow-hidden bg-surface text-label">
