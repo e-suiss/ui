@@ -108,6 +108,17 @@ Git hooks are installed by `pnpm install`:
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
 - pre-push: Biome, Knip, typecheck, the registry checks, the site copy check, and the tests.
 
+## Deploy
+
+Every push to `main` that changes the site builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui/site`, tagged `latest` and with the short commit SHA. The server only pulls and runs it:
+
+```bash
+docker pull ghcr.io/e-suiss/ui/site:latest
+docker run -d -p 3000:3000 ghcr.io/e-suiss/ui/site:latest
+```
+
+To build it locally, run `docker build -f apps/Dockerfile .` from the repository root.
+
 ## Release
 
 Component, hook, and theme color changes, on the web and on mobile, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` or `packages/tailwind` changes; both packages are released together with the same version:

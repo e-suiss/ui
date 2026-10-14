@@ -21,10 +21,10 @@ COPY packages/cli/package.json packages/cli/
 COPY packages/tailwind/package.json packages/tailwind/
 COPY packages/tokens/package.json packages/tokens/
 RUN corepack install
-ARG APP
+ARG APP=ui
 RUN pnpm install --frozen-lockfile --filter "./apps/${APP}..." --os=linux --cpu=x64 --cpu=arm64 --libc=glibc
 COPY . .
-ARG SITE_URL
+ARG SITE_URL=https://ui.suiss.app
 ENV NEXT_PUBLIC_SITE_URL=${SITE_URL}
 RUN pnpm --filter "./apps/${APP}" build
 RUN mkdir -p /out \
@@ -34,7 +34,7 @@ RUN mkdir -p /out \
  && if [ -d "apps/${APP}/public" ]; then cp -r "apps/${APP}/public" "/out/apps/${APP}/public"; fi
 
 FROM ${RUNTIME_IMAGE}
-ARG APP
+ARG APP=ui
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
