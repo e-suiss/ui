@@ -5,6 +5,7 @@ import { XIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"
 import { Button } from "@/components/ui/button"
+import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
@@ -23,6 +24,8 @@ function SheetPortal({ ...props }: SheetPrimitive.Portal.Props) {
 }
 
 function SheetOverlay({ className, ...props }: SheetPrimitive.Backdrop.Props) {
+  useScrollbarGap()
+
   return (
     <SheetPrimitive.Backdrop
       data-slot="sheet-overlay"

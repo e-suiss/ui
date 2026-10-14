@@ -5,6 +5,7 @@ import { XIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
+import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 
 type DrawerContextProps = {
   floating: boolean
@@ -160,6 +161,8 @@ function DrawerOverlay({
   className,
   ...props
 }: DrawerPrimitive.Backdrop.Props) {
+  useScrollbarGap()
+
   return (
     <DrawerPrimitive.Backdrop
       data-slot="drawer-overlay"

@@ -4,7 +4,9 @@
   "files": [
     "components/ui/alert-sheet.tsx"
   ],
-  "requires": [],
+  "requires": [
+    "use-scrollbar-gap"
+  ],
   "dependencies": [
     "@base-ui/react",
     "class-variance-authority",

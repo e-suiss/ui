@@ -5,7 +5,8 @@
     "components/ui/sheet.tsx"
   ],
   "requires": [
-    "button"
+    "button",
+    "use-scrollbar-gap"
   ],
   "dependencies": [
     "@base-ui/react",

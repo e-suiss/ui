@@ -179,7 +179,7 @@ const meta = {
       <div
         className={
           viewMode === "docs"
-            ? "h-[32rem] transform-gpu overflow-hidden"
+            ? "h-[32rem] transform-gpu overflow-hidden [&_[data-slot=sidebar-container]]:h-full [&_[data-slot=sidebar-wrapper]]:min-h-full"
             : "min-h-svh"
         }
       >

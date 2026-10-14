@@ -11,7 +11,7 @@ generated: true
 
 </Example>
 
-`TabBar` renders a fixed, translucent `nav` centered at the bottom of the screen. `TabBarList` holds the primary `TabBarItem` buttons. `TabBarTrigger` is the More button: pressing it expands `TabBarContent` above the list, with a spring animation, to show `TabBarSection` columns. Each section has a `TabBarSectionTitle` and a set of `TabBarLink` entries.
+`TabBar` renders a fixed `nav` centered at the bottom of the screen. `TabBarList` holds the primary `TabBarItem` buttons. `TabBarTrigger` is the More button: pressing it expands `TabBarContent` above the list, with a spring animation, to show `TabBarSection` columns. Each section has a `TabBarSectionTitle` and a set of `TabBarLink` entries.
 
 The list measures itself and moves items that don't fit into the expanded content, where they appear as links. When every item fits and there are no sections, the More button is hidden. Use `TabBar` for top-level navigation on any screen size; for in-page panels, use `Tabs`, and for an app's side navigation, use `Sidebar`.
 
@@ -194,6 +194,6 @@ A link inside a section that closes the bar when chosen.
 
 - `TabBar` sets `data-open`, `data-overflowing` and `data-sections` for styling. The trigger sets `data-idle` when it's hidden, and items and links set `data-active`.
 - Parts carry `data-slot` attributes such as `tab-bar`, `tab-bar-list`, `tab-bar-item`, `tab-bar-trigger` and `tab-bar-content`.
-- The bar sits above the safe-area inset at the bottom of the screen and uses a blurred `surface-secondary` background.
+- The bar sits above the safe-area inset at the bottom of the screen and uses a `surface-raised` background with a thin border and a shadow. The active item gets a `control` fill and `link` text.
 - Animations are removed when reduced motion is preferred.
 - `useTabBar` throws if it's used outside a `TabBar`.

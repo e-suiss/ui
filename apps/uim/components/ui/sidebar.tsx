@@ -305,7 +305,10 @@ function SidebarInput({
   return (
     <Input
       data-slot="sidebar-input"
-      className={cn("h-8 w-full bg-control shadow-none", className)}
+      className={cn(
+        "h-8 w-full bg-control shadow-none group-data-[collapsible=icon]:hidden",
+        className
+      )}
       {...props}
     />
   )
@@ -596,9 +599,9 @@ function SidebarMenuSkeleton({
       className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
       {...props}
     >
-      {showIcon && <Skeleton className="size-4 rounded-sm" />}
+      {showIcon && <Skeleton className="size-4 rounded-sm bg-control" />}
       <Skeleton
-        className="h-4 max-w-(--skeleton-width) flex-1"
+        className="h-4 max-w-(--skeleton-width) flex-1 bg-control"
         style={
           {
             "--skeleton-width": width,

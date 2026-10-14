@@ -69,6 +69,14 @@ Shows the `idle`, `uploading`, `processing`, `error` and `done` states.
 
 </Example>
 
+### Drop zone
+
+<Example kind="ui" name="attachment" story="DropZone">
+
+<Code lang="tsx" code={"import { UploadSimpleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from \"@/components/ui/attachment\"\n\nexport function AttachmentDropZoneExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"idle\" className=\"w-96\">\n      <AttachmentTrigger aria-label=\"Choose a file to upload\" />\n      <AttachmentMedia>\n        <UploadSimpleIcon />\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Drop a file or click to choose</AttachmentTitle>\n        <AttachmentDescription>\n          PDF, PNG or JPG up to 10 MB\n        </AttachmentDescription>\n      </AttachmentContent>\n    </Attachment>\n  )\n}"} />
+
+</Example>
+
 ### Image
 
 Uses an image thumbnail with the `image` media variant.
