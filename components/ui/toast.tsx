@@ -1,7 +1,13 @@
 "use client"
 
 import { Toast as ToastPrimitive } from "@base-ui/react/toast"
-import { CheckIcon, ExclamationMarkIcon, XIcon } from "@phosphor-icons/react"
+import {
+  CheckCircleIcon,
+  InfoIcon,
+  WarningIcon,
+  XCircleIcon,
+  XIcon,
+} from "@phosphor-icons/react"
 import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
@@ -168,23 +174,23 @@ function ToastIcon({ type }: { type: string | undefined }) {
   let tint = ""
 
   if (type === "success") {
-    icon = <CheckIcon weight="bold" />
-    tint = "bg-green"
+    icon = <CheckCircleIcon weight="fill" />
+    tint = "text-green"
   }
 
   if (type === "info") {
-    icon = <ExclamationMarkIcon weight="bold" className="rotate-180" />
-    tint = "bg-accent"
+    icon = <InfoIcon weight="fill" />
+    tint = "text-accent"
   }
 
   if (type === "warning") {
-    icon = <ExclamationMarkIcon weight="bold" />
-    tint = "bg-orange"
+    icon = <WarningIcon weight="fill" />
+    tint = "text-orange"
   }
 
   if (type === "error") {
-    icon = <XIcon weight="bold" />
-    tint = "bg-danger"
+    icon = <XCircleIcon weight="fill" />
+    tint = "text-danger"
   }
 
   const badge = icon && (
@@ -192,7 +198,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
       data-slot={tracked ? undefined : "toast-icon"}
       aria-hidden="true"
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-full text-surface [&_svg]:pointer-events-none [&_svg]:size-4",
+        "flex size-6 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-6",
         tracked &&
           "absolute inset-0 animate-in duration-300 delay-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] fill-mode-both fade-in zoom-in-50",
         tint
@@ -207,7 +213,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   return (
     <span
       data-slot="toast-icon"
-      className="relative flex size-8 shrink-0 items-center justify-center"
+      className="relative flex size-6 shrink-0 items-center justify-center"
     >
       <svg
         aria-hidden
@@ -215,7 +221,10 @@ function ToastIcon({ type }: { type: string | undefined }) {
         fill="none"
         strokeWidth="2.5"
         strokeLinecap="round"
-        className="size-8 -rotate-90"
+        className={cn(
+          "size-6 -rotate-90 transition-opacity duration-200 motion-reduce:transition-none",
+          type !== "loading" && "opacity-0 delay-250"
+        )}
       >
         <circle cx="16" cy="16" r="14.5" className="stroke-label/15" />
         <circle

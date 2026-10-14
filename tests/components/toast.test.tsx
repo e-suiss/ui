@@ -177,11 +177,11 @@ describe("Toast basics", () => {
   })
 
   it.each([
-    ["success", "bg-green"],
-    ["info", "bg-accent"],
-    ["warning", "bg-orange"],
-    ["error", "bg-danger"],
-  ])("shows a %s badge", async (type, tint) => {
+    ["success", "text-green"],
+    ["info", "text-accent"],
+    ["warning", "text-orange"],
+    ["error", "text-danger"],
+  ])("shows a %s icon", async (type, tint) => {
     await renderToaster()
     manager.add({ type, title: type })
     await expect.element(card(type)).toBeVisible()
@@ -189,7 +189,7 @@ describe("Toast basics", () => {
     expect(badge?.getAttribute("aria-hidden")).toBe("true")
     expect(badge?.className).toContain(tint)
     expect(badge?.querySelector("svg")).not.toBeNull()
-    expect(badge?.getBoundingClientRect().width).toBe(32)
+    expect(badge?.getBoundingClientRect().width).toBe(24)
   })
 
   it("shows no icon without a type", async () => {
@@ -348,7 +348,7 @@ describe("Toast actions and updates", () => {
     expect(toasts()).toHaveLength(1)
     await expect
       .poll(() => icon("Uploaded")?.querySelector("span")?.className ?? "")
-      .toContain("bg-green")
+      .toContain("text-green")
   })
 
   it("follows a promise from loading to success", async () => {
