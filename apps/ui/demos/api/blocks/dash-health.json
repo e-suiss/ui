@@ -5,9 +5,9 @@
     "components/blocks/dash-health.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
-    "button"
+    "button",
+    "sidebar"
   ],
   "dependencies": [
     "@phosphor-icons/react"

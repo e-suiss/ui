@@ -12,15 +12,110 @@ import {
 } from "@phosphor-icons/react"
 import * as React from "react"
 
-import {
-  AppShell,
-  type AppShellItem,
-  AppShellTrigger,
-} from "@/components/patterns/app-shell"
 import { Button } from "@/components/ui/button"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-const nav: AppShellItem[] = [
+type NavItem = {
+  value: string
+  label: string
+  icon: React.ReactNode
+  badge?: React.ReactNode
+  group?: string
+}
+
+function NavSidebar({
+  items,
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  header,
+  footer,
+}: {
+  items: NavItem[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  header?: React.ReactNode
+  footer?: React.ReactNode
+}) {
+  const { isMobile, setOpenMobile } = useSidebar()
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultValue ?? items[0]?.value
+  )
+  const value = valueProp ?? uncontrolledValue
+  const groups = [...new Set(items.map((item) => item.group ?? ""))]
+
+  return (
+    <Sidebar collapsible="icon">
+      {header && (
+        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
+          {header}
+        </SidebarHeader>
+      )}
+      <SidebarContent>
+        {groups.map((group) => (
+          <SidebarGroup key={group}>
+            {group && <SidebarGroupLabel>{group}</SidebarGroupLabel>}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items
+                  .filter((item) => (item.group ?? "") === group)
+                  .map((item) => (
+                    <SidebarMenuItem key={item.value}>
+                      <SidebarMenuButton
+                        isActive={item.value === value}
+                        tooltip={item.label}
+                        aria-current={item.value === value ? "page" : undefined}
+                        onClick={() => {
+                          if (valueProp === undefined) {
+                            setUncontrolledValue(item.value)
+                          }
+                          onValueChange?.(item.value)
+                          if (isMobile) setOpenMobile(false)
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.badge !== undefined && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      {footer && (
+        <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+          {footer}
+        </SidebarFooter>
+      )}
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+const nav: NavItem[] = [
   { value: "users", label: "Users", icon: <UsersIcon /> },
   { value: "roles", label: "Roles", icon: <ShieldIcon /> },
   { value: "log", label: "Activity", icon: <ChartBarIcon /> },
@@ -116,138 +211,150 @@ export function LogSecurity() {
     )
 
   return (
-    <AppShell
-      items={nav}
-      defaultValue="log"
-      header={
-        <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
-          <span className="font-bold">suiss</span> Admin
-        </p>
-      }
-    >
-      <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
-        <div className="flex items-start gap-3">
-          <AppShellTrigger className="-ms-2 mt-0.5" />
-          <div className="flex flex-1 flex-col">
-            <h1 className="text-3xl font-semibold tracking-tight">Security</h1>
-            <p className="text-sm text-label-secondary" aria-live="polite">
-              {open.length ? `${open.length} open alerts` : "No open alerts"}
-            </p>
+    <SidebarProvider>
+      <NavSidebar
+        items={nav}
+        defaultValue="log"
+        header={
+          <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
+            <span className="font-bold">suiss</span> Admin
+          </p>
+        }
+      />
+      <SidebarInset>
+        <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
+          <div className="flex items-start gap-3">
+            <SidebarTrigger className="-ms-2 mt-0.5" />
+            <div className="flex flex-1 flex-col">
+              <h1 className="text-3xl font-semibold tracking-tight">
+                Security
+              </h1>
+              <p className="text-sm text-label-secondary" aria-live="polite">
+                {open.length ? `${open.length} open alerts` : "No open alerts"}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-4 rounded-xl bg-surface-secondary px-4 py-3.5">
-          <svg
-            aria-hidden
-            viewBox="0 0 54 54"
-            className={`size-13.5 -rotate-90 transition-colors duration-400 ${tone}`}
-          >
-            <circle
-              cx="27"
-              cy="27"
-              r="22"
-              fill="none"
-              strokeWidth="6"
-              className="stroke-control"
-            />
-            <circle
-              cx="27"
-              cy="27"
-              r="22"
-              fill="none"
-              strokeWidth="6"
-              strokeLinecap="round"
-              pathLength={100}
-              strokeDasharray={`${score} 100`}
-              className="stroke-current transition-[stroke-dasharray] duration-600 ease-[cubic-bezier(0.32,0.72,0,1)]"
-            />
-          </svg>
-          <div className="flex flex-1 flex-col">
-            <span className="text-sm text-label-secondary">Security score</span>
-            <span className="text-3xl font-bold tabular-nums">{score}</span>
-          </div>
-          <dl className="flex gap-4.5">
-            {(Object.keys(severity) as Severity[]).map((level) => (
-              <div key={level} className="flex flex-col items-center">
-                <dt className="text-xs text-label-secondary">{level}</dt>
-                <dd
-                  className={`text-xl font-semibold tabular-nums ${count(level) ? severity[level].text : "text-label-tertiary"}`}
-                >
-                  {count(level)}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-        <ToggleGroup
-          spacing={0}
-          value={[filter]}
-          onValueChange={(value: string[]) => {
-            if (value[0]) setFilter(value[0])
-          }}
-          aria-label="Filter"
-        >
-          {["Open", "Resolved", "All"].map((item) => (
-            <ToggleGroupItem key={item} value={item} size="sm" className="px-4">
-              {item}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
-        <div key={filter}>
-          {list.length > 0 ? (
-            <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
-              {list.map((alert) => (
-                <li
-                  key={alert.title}
-                  className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
-                >
-                  <span
-                    className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--green),var(--label)_20%)] dark:bg-green" : severity[alert.severity].tint}`}
+          <div className="flex flex-wrap items-center gap-4 rounded-xl bg-surface-secondary px-4 py-3.5">
+            <svg
+              aria-hidden
+              viewBox="0 0 54 54"
+              className={`size-13.5 -rotate-90 transition-colors duration-400 ${tone}`}
+            >
+              <circle
+                cx="27"
+                cy="27"
+                r="22"
+                fill="none"
+                strokeWidth="6"
+                className="stroke-control"
+              />
+              <circle
+                cx="27"
+                cy="27"
+                r="22"
+                fill="none"
+                strokeWidth="6"
+                strokeLinecap="round"
+                pathLength={100}
+                strokeDasharray={`${score} 100`}
+                className="stroke-current transition-[stroke-dasharray] duration-600 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              />
+            </svg>
+            <div className="flex flex-1 flex-col">
+              <span className="text-sm text-label-secondary">
+                Security score
+              </span>
+              <span className="text-3xl font-bold tabular-nums">{score}</span>
+            </div>
+            <dl className="flex gap-4.5">
+              {(Object.keys(severity) as Severity[]).map((level) => (
+                <div key={level} className="flex flex-col items-center">
+                  <dt className="text-xs text-label-secondary">{level}</dt>
+                  <dd
+                    className={`text-xl font-semibold tabular-nums ${count(level) ? severity[level].text : "text-label-tertiary"}`}
                   >
-                    {alert.resolved ? (
-                      <CheckIcon weight="bold" className="size-4" />
-                    ) : (
-                      <alert.icon weight="bold" className="size-4" />
-                    )}
-                  </span>
-                  <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate text-sm font-semibold">
-                      {alert.title}
-                    </span>
-                    <span className="truncate text-xs text-label-secondary">
-                      {alert.resolved
-                        ? "Resolved"
-                        : `${alert.severity} severity`}{" "}
-                      · {alert.detail}
-                    </span>
-                  </span>
-                  {alert.resolved ? (
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => setResolved(alert.title, false)}
-                    >
-                      Reopen
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      onClick={() => setResolved(alert.title, true)}
-                    >
-                      Resolve
-                    </Button>
-                  )}
-                </li>
+                    {count(level)}
+                  </dd>
+                </div>
               ))}
-            </ul>
-          ) : (
-            <p className="p-7.5 text-center text-sm text-label-secondary">
-              {filter === "Open"
-                ? "No open alerts. All good."
-                : "Nothing here yet."}
-            </p>
-          )}
+            </dl>
+          </div>
+          <ToggleGroup
+            spacing={0}
+            value={[filter]}
+            onValueChange={(value: string[]) => {
+              if (value[0]) setFilter(value[0])
+            }}
+            aria-label="Filter"
+          >
+            {["Open", "Resolved", "All"].map((item) => (
+              <ToggleGroupItem
+                key={item}
+                value={item}
+                size="sm"
+                className="px-4"
+              >
+                {item}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+          <div key={filter}>
+            {list.length > 0 ? (
+              <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+                {list.map((alert) => (
+                  <li
+                    key={alert.title}
+                    className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
+                  >
+                    <span
+                      className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--green),var(--label)_20%)] dark:bg-green" : severity[alert.severity].tint}`}
+                    >
+                      {alert.resolved ? (
+                        <CheckIcon weight="bold" className="size-4" />
+                      ) : (
+                        <alert.icon weight="bold" className="size-4" />
+                      )}
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="truncate text-sm font-semibold">
+                        {alert.title}
+                      </span>
+                      <span className="truncate text-xs text-label-secondary">
+                        {alert.resolved
+                          ? "Resolved"
+                          : `${alert.severity} severity`}{" "}
+                        · {alert.detail}
+                      </span>
+                    </span>
+                    {alert.resolved ? (
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => setResolved(alert.title, false)}
+                      >
+                        Reopen
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        onClick={() => setResolved(alert.title, true)}
+                      >
+                        Resolve
+                      </Button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="p-7.5 text-center text-sm text-label-secondary">
+                {filter === "Open"
+                  ? "No open alerts. All good."
+                  : "Nothing here yet."}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-    </AppShell>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

@@ -120,7 +120,7 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3">
       <PullToRefresh
         onRefresh={refresh}
-        className="h-[min(36rem,calc(100dvh-6rem))] rounded-2xl border"
+        className="h-[min(36rem,calc(100dvh-7rem))] rounded-2xl border"
       >
         <h2 className="px-4 pt-4 pb-2 text-3xl font-bold tracking-tight">
           Inbox

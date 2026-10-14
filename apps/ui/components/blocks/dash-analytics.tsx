@@ -17,11 +17,6 @@ import {
 } from "recharts"
 
 import {
-  AppShell,
-  type AppShellItem,
-  AppShellTrigger,
-} from "@/components/patterns/app-shell"
-import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
@@ -34,6 +29,24 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const apps = [
@@ -42,7 +55,80 @@ const apps = [
   { value: "fitness", label: "Fitness+", hue: 20, icon: FlameIcon },
 ]
 
-const items: AppShellItem[] = [
+type NavItem = {
+  value: string
+  label: string
+  icon: React.ReactNode
+  badge?: React.ReactNode
+  group?: string
+}
+
+function NavSidebar({
+  items,
+  value,
+  onValueChange,
+  header,
+  footer,
+}: {
+  items: NavItem[]
+  value: string
+  onValueChange: (value: string) => void
+  header?: React.ReactNode
+  footer?: React.ReactNode
+}) {
+  const { isMobile, setOpenMobile } = useSidebar()
+  const groups = [...new Set(items.map((item) => item.group ?? ""))]
+
+  return (
+    <Sidebar collapsible="icon">
+      {header && (
+        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
+          {header}
+        </SidebarHeader>
+      )}
+      <SidebarContent>
+        {groups.map((group) => (
+          <SidebarGroup key={group}>
+            {group && <SidebarGroupLabel>{group}</SidebarGroupLabel>}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items
+                  .filter((item) => (item.group ?? "") === group)
+                  .map((item) => (
+                    <SidebarMenuItem key={item.value}>
+                      <SidebarMenuButton
+                        isActive={item.value === value}
+                        tooltip={item.label}
+                        aria-current={item.value === value ? "page" : undefined}
+                        onClick={() => {
+                          onValueChange(item.value)
+                          if (isMobile) setOpenMobile(false)
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.badge !== undefined && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      {footer && (
+        <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+          {footer}
+        </SidebarFooter>
+      )}
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+const items: NavItem[] = [
   ...apps.map((app) => ({
     value: app.value,
     label: app.label,
@@ -149,120 +235,123 @@ export function DashAnalytics() {
   const title = items.find((item) => item.value === section)?.label
 
   return (
-    <AppShell items={items} value={section} onValueChange={setSection}>
-      <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
-        <div className="flex flex-wrap items-start gap-4">
-          <AppShellTrigger className="-ms-2 mt-1" />
-          <div className="flex flex-1 flex-col">
-            <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
-            <p className="text-sm text-label-secondary">
-              Last 12 weeks · All regions
-            </p>
+    <SidebarProvider>
+      <NavSidebar items={items} value={section} onValueChange={setSection} />
+      <SidebarInset>
+        <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
+          <div className="flex flex-wrap items-start gap-4">
+            <SidebarTrigger className="-ms-2 mt-1" />
+            <div className="flex flex-1 flex-col">
+              <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+              <p className="text-sm text-label-secondary">
+                Last 12 weeks · All regions
+              </p>
+            </div>
+            <ToggleGroup
+              spacing={0}
+              value={[metricValue]}
+              onValueChange={(value: string[]) => {
+                if (value[0]) setMetricValue(value[0])
+              }}
+              aria-label="Metric"
+              className="no-scrollbar max-w-full overflow-x-auto"
+            >
+              {metrics.map((item) => (
+                <ToggleGroupItem key={item.value} value={item.value} size="sm">
+                  {item.label}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
           </div>
-          <ToggleGroup
-            spacing={0}
-            value={[metricValue]}
-            onValueChange={(value: string[]) => {
-              if (value[0]) setMetricValue(value[0])
-            }}
-            aria-label="Metric"
-            className="max-w-full overflow-x-auto"
-          >
-            {metrics.map((item) => (
-              <ToggleGroupItem key={item.value} value={item.value} size="sm">
-                {item.label}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
-        </div>
-        <div className="rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2.5">
-          <div className="flex items-end gap-2.5">
-            <div className="flex flex-1 flex-col" aria-live="polite">
-              <span className="text-sm text-label-secondary">
-                {current === data.length - 1 ? "This week" : point.week} ·{" "}
-                {metric.label}
-              </span>
-              <span className="text-3xl font-bold tracking-tight tabular-nums">
-                {format(point.value)}
+          <div className="rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2.5">
+            <div className="flex items-end gap-2.5">
+              <div className="flex flex-1 flex-col" aria-live="polite">
+                <span className="text-sm text-label-secondary">
+                  {current === data.length - 1 ? "This week" : point.week} ·{" "}
+                  {metric.label}
+                </span>
+                <span className="text-3xl font-bold tracking-tight tabular-nums">
+                  {format(point.value)}
+                </span>
+              </div>
+              <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">
+                +{12 + metrics.indexOf(metric) * 3}%
               </span>
             </div>
-            <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">
-              +{12 + metrics.indexOf(metric) * 3}%
-            </span>
-          </div>
-          <ChartContainer
-            config={chartConfig}
-            className="mt-3 aspect-auto h-44 w-full"
-          >
-            <AreaChart
-              accessibilityLayer
-              data={data}
-              margin={{ top: 8, right: 6, left: 6, bottom: 0 }}
+            <ChartContainer
+              config={chartConfig}
+              className="mt-3 aspect-auto h-44 w-full"
             >
-              <defs>
-                <linearGradient id={`${id}-fill`} x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="0%"
-                    stopColor="var(--color-value)"
-                    stopOpacity={0.22}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="var(--color-value)"
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-              </defs>
-              <CartesianGrid vertical={false} strokeDasharray="2 4" />
-              <XAxis dataKey="week" hide />
-              <ChartTooltip
-                content={() => null}
-                cursor={{ stroke: "var(--color-separator-strong)" }}
-                defaultIndex={data.length - 1}
-              />
-              <Area
-                dataKey="value"
-                type="linear"
-                stroke="var(--color-value)"
-                strokeWidth={2.5}
-                fill={`url(#${id}-fill)`}
-                activeDot={{
-                  r: 5,
-                  fill: "var(--color-value)",
-                  stroke: "var(--color-surface-secondary)",
-                  strokeWidth: 2,
-                }}
-                animationDuration={500}
-              />
-              <ActiveWeek onChange={setActive} />
-            </AreaChart>
-          </ChartContainer>
-        </div>
-        <h2 className="-mb-2.5 px-1 text-sm font-semibold">By region</h2>
-        <ItemGroup variant="inset">
-          {regions.map((region, index) => (
-            <React.Fragment key={region.name}>
-              {index > 0 && <ItemSeparator />}
-              <Item size="sm" role="listitem">
-                <ItemContent>
-                  <ItemTitle className="font-normal">{region.name}</ItemTitle>
-                </ItemContent>
-                <ItemActions className="gap-4">
-                  <span className="hidden h-1.5 w-35 overflow-hidden rounded-full bg-control sm:block">
-                    <span
-                      style={{ width: `${(region.share / 0.46) * 100}%` }}
-                      className="block h-full rounded-full bg-accent transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              <AreaChart
+                accessibilityLayer
+                data={data}
+                margin={{ top: 8, right: 6, left: 6, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient id={`${id}-fill`} x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="0%"
+                      stopColor="var(--color-value)"
+                      stopOpacity={0.22}
                     />
-                  </span>
-                  <span className="w-18 text-end tabular-nums">
-                    {format(latest * region.share)}
-                  </span>
-                </ItemActions>
-              </Item>
-            </React.Fragment>
-          ))}
-        </ItemGroup>
-      </div>
-    </AppShell>
+                    <stop
+                      offset="100%"
+                      stopColor="var(--color-value)"
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid vertical={false} strokeDasharray="2 4" />
+                <XAxis dataKey="week" hide />
+                <ChartTooltip
+                  content={() => null}
+                  cursor={{ stroke: "var(--color-separator-strong)" }}
+                  defaultIndex={data.length - 1}
+                />
+                <Area
+                  dataKey="value"
+                  type="linear"
+                  stroke="var(--color-value)"
+                  strokeWidth={2.5}
+                  fill={`url(#${id}-fill)`}
+                  activeDot={{
+                    r: 5,
+                    fill: "var(--color-value)",
+                    stroke: "var(--color-surface-secondary)",
+                    strokeWidth: 2,
+                  }}
+                  animationDuration={500}
+                />
+                <ActiveWeek onChange={setActive} />
+              </AreaChart>
+            </ChartContainer>
+          </div>
+          <h2 className="-mb-2.5 px-1 text-sm font-semibold">By region</h2>
+          <ItemGroup variant="inset">
+            {regions.map((region, index) => (
+              <React.Fragment key={region.name}>
+                {index > 0 && <ItemSeparator />}
+                <Item size="sm" role="listitem">
+                  <ItemContent>
+                    <ItemTitle className="font-normal">{region.name}</ItemTitle>
+                  </ItemContent>
+                  <ItemActions className="gap-4">
+                    <span className="hidden h-1.5 w-35 overflow-hidden rounded-full bg-control sm:block">
+                      <span
+                        style={{ width: `${(region.share / 0.46) * 100}%` }}
+                        className="block h-full rounded-full bg-accent transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                      />
+                    </span>
+                    <span className="w-18 text-end tabular-nums">
+                      {format(latest * region.share)}
+                    </span>
+                  </ItemActions>
+                </Item>
+              </React.Fragment>
+            ))}
+          </ItemGroup>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

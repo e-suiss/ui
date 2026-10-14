@@ -11,7 +11,7 @@ generated: true
 
 </Example>
 
-An audit log that groups events by day, each with an icon for its type, the person, the action, the target and a time. Events that changed a value expand to show a before-and-after comparison, and a type filter and Export button sit in the header. It lives in an `AppShell`, so navigation becomes a tab bar on mobile. Use it for audit trails, change history or admin activity pages.
+An audit log that groups events by day, each with an icon for its type, the person, the action, the target and a time. Events that changed a value expand to show a before-and-after comparison, and a type filter and Export button sit in the header. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for audit trails, change history or admin activity pages.
 
 ## Installation
 
@@ -25,7 +25,7 @@ An audit log that groups events by day, each with an icon for its type, the pers
 
 <Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
 
-2. Add the pieces it builds on: [App Shell](/docs/patterns/app-shell), [Button](/docs/components/button), [Collapsible](/docs/components/collapsible), [Select](/docs/components/select).
+2. Add the pieces it builds on: [Button](/docs/components/button), [Collapsible](/docs/components/collapsible), [Select](/docs/components/select), [Sidebar](/docs/components/sidebar).
 
 3. Copy the source into `components/blocks/log-activity.tsx`:
 

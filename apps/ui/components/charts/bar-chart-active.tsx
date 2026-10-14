@@ -96,7 +96,6 @@ export function BarChartActive() {
               dataKey="steps"
               radius={5}
               maxBarSize={28}
-              isAnimationActive={false}
               onClick={(_, index) => setSelected(index)}
             >
               {chartData.map((item) => (

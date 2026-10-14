@@ -5,10 +5,10 @@
     "components/blocks/dash-store.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
     "chart",
     "item",
+    "sidebar",
     "toggle-group"
   ],
   "dependencies": [

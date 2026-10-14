@@ -1,5 +1,5 @@
 {
   "description": "A user directory with a member list beside a detail pane for profile, sessions, and security settings.",
-  "overview": "A user directory with members on the left and the selected user's profile, sessions and security settings on the right, switched with tabs. Admins can change a role, sign out sessions, toggle security options and send a password reset link. It combines `AppShell` navigation with a `SplitView`, so on mobile the list and detail show one at a time. Use it for team members, customers or any record with tabbed details.",
+  "overview": "A user directory with members on the left and the selected user's profile, sessions and security settings on the right, switched with tabs. Admins can change a role, sign out sessions, toggle security options and send a password reset link. It combines `Sidebar` navigation with a `SplitView`, so on mobile the list and detail show one at a time. Use it for team members, customers or any record with tabbed details.",
   "usage": "Replace `users`, `roles` and `initialSessions` with your data. In the sample every user shares one session list, and Department and Joined are hard-coded, so load these per user. Connect the role change, session sign-outs, security switches and reset button to your user management API."
 }

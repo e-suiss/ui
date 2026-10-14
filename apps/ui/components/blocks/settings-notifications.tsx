@@ -128,7 +128,7 @@ export function SettingsNotifications() {
   const footnote = bannerFootnote(allow, enabled.banner, bannerStyle)
 
   return (
-    <section className="grid min-h-140 bg-surface md:grid-cols-[minmax(0,1fr)_18.75rem]">
+    <section className="grid min-h-140 grid-cols-1 bg-surface md:grid-cols-[minmax(0,1fr)_18.75rem]">
       <div className="flex flex-col gap-5 px-5 py-6 md:px-8">
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-[0.625rem] bg-green text-white">

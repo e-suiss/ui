@@ -5,9 +5,9 @@
     "components/blocks/dash-analytics.tsx"
   ],
   "requires": [
-    "app-shell",
     "chart",
     "item",
+    "sidebar",
     "toggle-group"
   ],
   "dependencies": [

@@ -13,11 +13,6 @@ import {
 } from "@phosphor-icons/react"
 import * as React from "react"
 
-import {
-  AppShell,
-  type AppShellItem,
-  AppShellTrigger,
-} from "@/components/patterns/app-shell"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -31,8 +26,108 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
 
-const nav: AppShellItem[] = [
+type NavItem = {
+  value: string
+  label: string
+  icon: React.ReactNode
+  badge?: React.ReactNode
+  group?: string
+}
+
+function NavSidebar({
+  items,
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  header,
+  footer,
+}: {
+  items: NavItem[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  header?: React.ReactNode
+  footer?: React.ReactNode
+}) {
+  const { isMobile, setOpenMobile } = useSidebar()
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultValue ?? items[0]?.value
+  )
+  const value = valueProp ?? uncontrolledValue
+  const groups = [...new Set(items.map((item) => item.group ?? ""))]
+
+  return (
+    <Sidebar collapsible="icon">
+      {header && (
+        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
+          {header}
+        </SidebarHeader>
+      )}
+      <SidebarContent>
+        {groups.map((group) => (
+          <SidebarGroup key={group}>
+            {group && <SidebarGroupLabel>{group}</SidebarGroupLabel>}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items
+                  .filter((item) => (item.group ?? "") === group)
+                  .map((item) => (
+                    <SidebarMenuItem key={item.value}>
+                      <SidebarMenuButton
+                        isActive={item.value === value}
+                        tooltip={item.label}
+                        aria-current={item.value === value ? "page" : undefined}
+                        onClick={() => {
+                          if (valueProp === undefined) {
+                            setUncontrolledValue(item.value)
+                          }
+                          onValueChange?.(item.value)
+                          if (isMobile) setOpenMobile(false)
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.badge !== undefined && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      {footer && (
+        <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+          {footer}
+        </SidebarFooter>
+      )}
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+const nav: NavItem[] = [
   { value: "users", label: "Users", icon: <UsersIcon /> },
   { value: "roles", label: "Roles", icon: <ShieldIcon /> },
   { value: "log", label: "Activity", icon: <ChartBarIcon /> },
@@ -177,65 +272,68 @@ export function LogActivity() {
   const days = [...new Set(list.map((event) => event.day))]
 
   return (
-    <AppShell
-      items={nav}
-      defaultValue="log"
-      header={
-        <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
-          <span className="font-bold">suiss</span> Admin
-        </p>
-      }
-    >
-      <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
-        <div className="flex flex-wrap items-start gap-3">
-          <AppShellTrigger className="-ms-2 mt-0.5" />
-          <h1 className="flex-1 text-3xl font-semibold tracking-tight">
-            Activity log
-          </h1>
-          <div className="flex items-center gap-2">
-            <Select
-              value={filter}
-              onValueChange={(value) => setFilter(value as string)}
-            >
-              <SelectTrigger size="sm" aria-label="Type" className="h-7.5">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent align="end">
-                {["All", ...Object.keys(kinds)].map((item) => (
-                  <SelectItem key={item} value={item}>
-                    {item}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button size="sm" variant="secondary">
-              Export
-            </Button>
+    <SidebarProvider>
+      <NavSidebar
+        items={nav}
+        defaultValue="log"
+        header={
+          <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
+            <span className="font-bold">suiss</span> Admin
+          </p>
+        }
+      />
+      <SidebarInset>
+        <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
+          <div className="flex flex-wrap items-start gap-3">
+            <SidebarTrigger className="-ms-2 mt-0.5" />
+            <h1 className="flex-1 text-3xl font-semibold tracking-tight whitespace-nowrap">
+              Activity log
+            </h1>
+            <div className="flex items-center gap-2">
+              <Select
+                value={filter}
+                onValueChange={(value) => setFilter(value as string)}
+              >
+                <SelectTrigger size="sm" aria-label="Type" className="h-7.5">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent align="end">
+                  {["All", ...Object.keys(kinds)].map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button size="sm" variant="secondary">
+                Export
+              </Button>
+            </div>
+          </div>
+          <div
+            key={filter}
+            className="flex flex-col gap-5 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
+          >
+            {days.map((day) => (
+              <section key={day} className="flex flex-col gap-2">
+                <h2 className="px-1 text-sm font-semibold">{day}</h2>
+                <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+                  {list
+                    .filter((event) => event.day === day)
+                    .map((event) => (
+                      <li
+                        key={`${event.time}-${event.actor}`}
+                        className="relative not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
+                      >
+                        <EventRow event={event} />
+                      </li>
+                    ))}
+                </ul>
+              </section>
+            ))}
           </div>
         </div>
-        <div
-          key={filter}
-          className="flex flex-col gap-5 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
-        >
-          {days.map((day) => (
-            <section key={day} className="flex flex-col gap-2">
-              <h2 className="px-1 text-sm font-semibold">{day}</h2>
-              <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
-                {list
-                  .filter((event) => event.day === day)
-                  .map((event) => (
-                    <li
-                      key={`${event.time}-${event.actor}`}
-                      className="relative not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
-                    >
-                      <EventRow event={event} />
-                    </li>
-                  ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-      </div>
-    </AppShell>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

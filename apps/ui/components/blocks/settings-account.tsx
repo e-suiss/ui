@@ -12,17 +12,114 @@ import {
 } from "@phosphor-icons/react"
 import * as React from "react"
 
-import {
-  AppShell,
-  type AppShellItem,
-  AppShellTrigger,
-} from "@/components/patterns/app-shell"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import { Switch } from "@/components/ui/switch"
 
-const items: AppShellItem[] = [
+type NavItem = {
+  value: string
+  label: string
+  icon: React.ReactNode
+  badge?: React.ReactNode
+  group?: string
+}
+
+function NavSidebar({
+  items,
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  header,
+  footer,
+  collapsible = "icon",
+}: {
+  collapsible?: "offcanvas" | "icon"
+  items: NavItem[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  header?: React.ReactNode
+  footer?: React.ReactNode
+}) {
+  const { isMobile, setOpenMobile } = useSidebar()
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultValue ?? items[0]?.value
+  )
+  const value = valueProp ?? uncontrolledValue
+  const groups = [...new Set(items.map((item) => item.group ?? ""))]
+
+  return (
+    <Sidebar collapsible={collapsible}>
+      {header && (
+        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
+          {header}
+        </SidebarHeader>
+      )}
+      <SidebarContent>
+        {groups.map((group) => (
+          <SidebarGroup key={group}>
+            {group && <SidebarGroupLabel>{group}</SidebarGroupLabel>}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items
+                  .filter((item) => (item.group ?? "") === group)
+                  .map((item) => (
+                    <SidebarMenuItem key={item.value}>
+                      <SidebarMenuButton
+                        isActive={item.value === value}
+                        tooltip={item.label}
+                        aria-current={item.value === value ? "page" : undefined}
+                        onClick={() => {
+                          if (valueProp === undefined) {
+                            setUncontrolledValue(item.value)
+                          }
+                          onValueChange?.(item.value)
+                          if (isMobile) setOpenMobile(false)
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.badge !== undefined && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      {footer && (
+        <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+          {footer}
+        </SidebarFooter>
+      )}
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+const items: NavItem[] = [
   { value: "personal", label: "Personal Information", icon: <UserIcon /> },
   { value: "security", label: "Sign-In & Security", icon: <KeyIcon /> },
   { value: "payment", label: "Payment & Shipping", icon: <CreditCardIcon /> },
@@ -209,43 +306,49 @@ export function SettingsAccount() {
   const current = items.find((item) => item.value === section) ?? items[1]
 
   return (
-    <AppShell
-      items={items}
-      value={section}
-      onValueChange={setSection}
-      collapsible="offcanvas"
-      header={
-        <div className="flex flex-col gap-2 px-2 pt-2 pb-1">
-          <Avatar className="size-18">
-            <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_250)] to-[oklch(0.6_0.15_280)] text-2xl text-white dark:from-[oklch(0.78_0.1_250)] dark:to-[oklch(0.6_0.15_280)]">
-              JR
-            </AvatarFallback>
-          </Avatar>
-          <p className="text-2xl font-semibold tracking-tight">Jamie Rivera</p>
-          <p className="text-sm text-label-secondary">jamie@suiss.com</p>
-        </div>
-      }
-    >
-      <div className="mx-auto flex w-full max-w-170 flex-col gap-3.5 px-5 py-8 md:px-9">
-        <div className="flex items-center gap-2">
-          <AppShellTrigger className="-ms-2" />
-          <h1 className="text-4xl font-semibold tracking-tight">
-            {current?.label}
-          </h1>
-        </div>
-        <div
-          key={section}
-          className="transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
-        >
-          {section === "security" ? (
-            <Security />
-          ) : (
-            <p className="text-lg text-label-secondary">
-              This section isn't part of the sample. Choose Sign-In & Security.
+    <SidebarProvider>
+      <NavSidebar
+        items={items}
+        value={section}
+        onValueChange={setSection}
+        collapsible="offcanvas"
+        header={
+          <div className="flex flex-col gap-2 px-2 pt-2 pb-1">
+            <Avatar className="size-18">
+              <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_250)] to-[oklch(0.6_0.15_280)] text-2xl text-white dark:from-[oklch(0.78_0.1_250)] dark:to-[oklch(0.6_0.15_280)]">
+                JR
+              </AvatarFallback>
+            </Avatar>
+            <p className="text-2xl font-semibold tracking-tight">
+              Jamie Rivera
             </p>
-          )}
+            <p className="text-sm text-label-secondary">jamie@suiss.com</p>
+          </div>
+        }
+      />
+      <SidebarInset>
+        <div className="mx-auto flex w-full max-w-170 flex-col gap-3.5 px-5 py-8 md:px-9">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger className="-ms-2" />
+            <h1 className="text-4xl font-semibold tracking-tight">
+              {current?.label}
+            </h1>
+          </div>
+          <div
+            key={section}
+            className="transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
+          >
+            {section === "security" ? (
+              <Security />
+            ) : (
+              <p className="text-lg text-label-secondary">
+                This section isn't part of the sample. Choose Sign-In &
+                Security.
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-    </AppShell>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

@@ -1,6 +1,6 @@
 {
   "description": "A store admin overview with sales stats, an online versus in-store bar chart, and a filterable orders list.",
-  "overview": "A store admin home with sales stats for the chosen range, a bar chart comparing online and in-store sales by day and a recent orders list filtered by status. Hovering a day dims the other bars and updates the chart headline. Order status shows from small tablets up, and the `AppShell` navigation becomes a tab bar on mobile. A good base for e-commerce, point-of-sale or bookings dashboards.",
+  "overview": "A store admin home with sales stats for the chosen range, a bar chart comparing online and in-store sales by day and a recent orders list filtered by status. Hovering a day dims the other bars and updates the chart headline. Order status shows from small tablets up, and the `Sidebar` navigation opens as a sheet from the trigger on mobile. A good base for e-commerce, point-of-sale or bookings dashboards.",
   "usage": "Replace `week` with your daily online and in-store series and `orders` with recent orders, each with an id, customer name, product, status, total and avatar hue. The stats and change percentages are fixed numbers multiplied by the range factor in `ranges`, so fetch real values per range from your backend. `items` sets the navigation.",
   "notes": "The chart supports keyboard navigation, and its headline is announced as you move through the days."
 }

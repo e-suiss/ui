@@ -5,8 +5,8 @@
     "components/blocks/log-security.tsx"
   ],
   "requires": [
-    "app-shell",
     "button",
+    "sidebar",
     "toggle-group"
   ],
   "dependencies": [

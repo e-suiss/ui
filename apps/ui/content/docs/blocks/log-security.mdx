@@ -11,7 +11,7 @@ generated: true
 
 </Example>
 
-A security overview with a score ring that drops for each open alert and shifts from green to orange to red, next to open alert counts by severity. Below, alerts can be filtered by Open, Resolved or All and resolved or reopened one by one. It sits in an `AppShell` with admin navigation. Use it for security centers, compliance checklists or system health checks.
+A security overview with a score ring that drops for each open alert and shifts from green to orange to red, next to open alert counts by severity. Below, alerts can be filtered by Open, Resolved or All and resolved or reopened one by one. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for security centers, compliance checklists or system health checks.
 
 ## Installation
 
@@ -25,7 +25,7 @@ A security overview with a score ring that drops for each open alert and shifts 
 
 <Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
 
-2. Add the pieces it builds on: [App Shell](/docs/patterns/app-shell), [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
+2. Add the pieces it builds on: [Button](/docs/components/button), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/log-security.tsx`:
 

@@ -5,9 +5,9 @@
     "components/blocks/roles-matrix.tsx"
   ],
   "requires": [
-    "app-shell",
     "button",
-    "checkbox"
+    "checkbox",
+    "sidebar"
   ],
   "dependencies": [
     "@phosphor-icons/react"

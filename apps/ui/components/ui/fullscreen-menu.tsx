@@ -112,7 +112,7 @@ function FullscreenMenuContent({
       <DialogPrimitive.Popup
         data-slot="fullscreen-menu-content"
         className={cn(
-          "group/fullscreen-menu fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-surface pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-label outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:duration-350 data-ending-style:[clip-path:inset(0_0_100%_0)] data-starting-style:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none",
+          "group/fullscreen-menu no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-label outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:duration-350 data-ending-style:[clip-path:inset(0_0_100%_0)] data-starting-style:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none",
           className
         )}
         {...props}

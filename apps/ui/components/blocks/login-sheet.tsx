@@ -19,12 +19,15 @@ export function LoginSheet() {
 
   const close = () => {
     setOpen(false)
-    triggerRef.current?.focus()
+    triggerRef.current?.focus({ preventScroll: true })
   }
 
   React.useEffect(() => {
+    if (open) closeRef.current?.focus({ preventScroll: true })
+  }, [open])
+
+  React.useEffect(() => {
     if (!open) return
-    closeRef.current?.focus()
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close()
     }

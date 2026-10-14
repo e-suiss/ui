@@ -1,6 +1,6 @@
 ---
 title: Dash Health
-description: "A health summary dashboard with pinned metric cards, sparklines, and category views in an app shell."
+description: "A health summary dashboard with pinned metric cards, sparklines, and category views in a sidebar."
 eyebrow: Block
 generated: true
 ---
@@ -11,7 +11,7 @@ generated: true
 
 </Example>
 
-A health summary in the style of a phone health app, with cards for pinned metrics such as Move, Steps and Sleep, each showing its value and a small sparkline or bar chart. Edit mode lets users pin and unpin cards, and each category page lists all its metrics for the last seven days. Navigation is a sidebar on desktop and a tab bar on mobile through `AppShell`. Use it for fitness, wellness or any personal metrics dashboard.
+A health summary in the style of a phone health app, with cards for pinned metrics such as Move, Steps and Sleep, each showing its value and a small sparkline or bar chart. Edit mode lets users pin and unpin cards, and each category page lists all its metrics for the last seven days. Navigation is a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Use it for fitness, wellness or any personal metrics dashboard.
 
 ## Installation
 
@@ -25,7 +25,7 @@ A health summary in the style of a phone health app, with cards for pinned metri
 
 <Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
 
-2. Add the pieces it builds on: [App Shell](/docs/patterns/app-shell), [Avatar](/docs/components/avatar), [Button](/docs/components/button).
+2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Sidebar](/docs/components/sidebar).
 
 3. Copy the source into `components/blocks/dash-health.tsx`:
 

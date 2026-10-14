@@ -5,11 +5,11 @@
     "components/blocks/roles-requests.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
     "button",
     "empty",
-    "select"
+    "select",
+    "sidebar"
   ],
   "dependencies": [
     "@phosphor-icons/react"

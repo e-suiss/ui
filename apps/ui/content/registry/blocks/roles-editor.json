@@ -1,5 +1,5 @@
 {
   "description": "A role editor that lists roles beside grouped permission switches, with save and revert for unsaved changes.",
-  "overview": "A role editor with roles and their permission counts on the left and the selected role's permissions on the right as grouped switches. Revert and Save appear only when there are unsaved changes. It combines `AppShell` navigation with a `SplitView`, so on mobile the role list and editor show one at a time. Use it for any role-based access control screen.",
+  "overview": "A role editor with roles and their permission counts on the left and the selected role's permissions on the right as grouped switches. Revert and Save appear only when there are unsaved changes. It combines `Sidebar` navigation with a `SplitView`, so on mobile the role list and editor show one at a time. Use it for any role-based access control screen.",
   "usage": "Edit `groups` for the permissions, `roles` and `members` for the role list, and `defaults` for each role's starting switches. The `defaults` arrays are positional, mapping to permissions in the order they appear across all groups, so keep them in step with `groups` or switch to keyed data. Save only updates local state, so call your API there, and give New Role a handler."
 }

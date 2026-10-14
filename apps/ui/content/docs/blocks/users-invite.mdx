@@ -11,7 +11,7 @@ generated: true
 
 </Example>
 
-An invite form that turns typed email addresses into removable chips, assigns a role and optionally sends a welcome email, with pending invitations listed below. Sending shows a toast and moves the addresses to the pending list, where each can be resent or cancelled. It sits in an `AppShell` with admin navigation. Use it for team invites or sharing access with several people at once.
+An invite form that turns typed email addresses into removable chips, assigns a role and optionally sends a welcome email, with pending invitations listed below. Sending shows a toast and moves the addresses to the pending list, where each can be resent or cancelled. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for team invites or sharing access with several people at once.
 
 ## Installation
 
@@ -25,7 +25,7 @@ An invite form that turns typed email addresses into removable chips, assigns a 
 
 <Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
 
-2. Add the pieces it builds on: [App Shell](/docs/patterns/app-shell), [Button](/docs/components/button), [Item](/docs/components/item), [Select](/docs/components/select), [Switch](/docs/components/switch), [Toast](/docs/components/toast).
+2. Add the pieces it builds on: [Button](/docs/components/button), [Item](/docs/components/item), [Select](/docs/components/select), [Sidebar](/docs/components/sidebar), [Switch](/docs/components/switch), [Toast](/docs/components/toast).
 
 3. Copy the source into `components/blocks/users-invite.tsx`:
 

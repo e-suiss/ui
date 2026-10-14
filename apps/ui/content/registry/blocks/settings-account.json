@@ -1,6 +1,6 @@
 {
   "description": "An account settings page with a profile sidebar and a Sign-In and Security section of editable cards.",
-  "overview": "An account settings page with a profile header and a sidebar of sections. Only Sign-In and Security is filled in: email and phone cards that expand into an inline edit form, a Passkeys switch, a two-factor row and a confirmation after each save, while the other sections show a placeholder. It uses `AppShell` with an off-canvas sidebar. Use it as the frame for any account or profile settings.",
+  "overview": "An account settings page with a profile header and a sidebar of sections. Only Sign-In and Security is filled in: email and phone cards that expand into an inline edit form, a Passkeys switch, a two-factor row and a confirmation after each save, while the other sections show a placeholder. It uses a `Sidebar` that slides off canvas. Use it as the frame for any account or profile settings.",
   "usage": "Load the email, phone and profile details from the signed-in user, and replace the `onSave` handler with your account API. Add content for the remaining sections listed in `items`. The profile name, email and initials in the header are hard-coded.",
   "notes": "Collapsed edit forms are `inert`, focus moves to the input when a card opens, and save confirmations are announced."
 }

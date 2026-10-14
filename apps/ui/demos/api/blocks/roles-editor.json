@@ -5,9 +5,9 @@
     "components/blocks/roles-editor.tsx"
   ],
   "requires": [
-    "app-shell",
     "button",
     "item",
+    "sidebar",
     "split-view",
     "switch"
   ],

@@ -5,10 +5,10 @@
     "components/blocks/log-activity.tsx"
   ],
   "requires": [
-    "app-shell",
     "button",
     "collapsible",
-    "select"
+    "select",
+    "sidebar"
   ],
   "dependencies": [
     "@phosphor-icons/react"

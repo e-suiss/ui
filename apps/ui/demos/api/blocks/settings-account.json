@@ -5,10 +5,10 @@
     "components/blocks/settings-account.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
     "button",
     "input",
+    "sidebar",
     "switch"
   ],
   "dependencies": [

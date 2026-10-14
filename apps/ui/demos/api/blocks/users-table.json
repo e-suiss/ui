@@ -5,11 +5,11 @@
     "components/blocks/users-table.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
     "button",
     "checkbox",
     "input-group",
+    "sidebar",
     "table",
     "toggle-group"
   ],

@@ -55,7 +55,7 @@ function MailExample({
   return (
     <SplitView
       defaultColumn={defaultColumn}
-      className="h-[34rem] max-md:h-auto"
+      className="h-[30rem] max-md:h-auto"
     >
       {withSidebar && (
         <SplitViewSidebar title="Mailboxes">

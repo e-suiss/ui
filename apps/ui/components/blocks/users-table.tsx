@@ -10,11 +10,6 @@ import {
 } from "@phosphor-icons/react"
 import * as React from "react"
 
-import {
-  AppShell,
-  type AppShellItem,
-  AppShellTrigger,
-} from "@/components/patterns/app-shell"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -23,6 +18,24 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import {
   Table,
   TableBody,
@@ -33,7 +46,89 @@ import {
 } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-const nav: AppShellItem[] = [
+type NavItem = {
+  value: string
+  label: string
+  icon: React.ReactNode
+  badge?: React.ReactNode
+  group?: string
+}
+
+function NavSidebar({
+  items,
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  header,
+  footer,
+}: {
+  items: NavItem[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  header?: React.ReactNode
+  footer?: React.ReactNode
+}) {
+  const { isMobile, setOpenMobile } = useSidebar()
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultValue ?? items[0]?.value
+  )
+  const value = valueProp ?? uncontrolledValue
+  const groups = [...new Set(items.map((item) => item.group ?? ""))]
+
+  return (
+    <Sidebar collapsible="icon">
+      {header && (
+        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
+          {header}
+        </SidebarHeader>
+      )}
+      <SidebarContent>
+        {groups.map((group) => (
+          <SidebarGroup key={group}>
+            {group && <SidebarGroupLabel>{group}</SidebarGroupLabel>}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items
+                  .filter((item) => (item.group ?? "") === group)
+                  .map((item) => (
+                    <SidebarMenuItem key={item.value}>
+                      <SidebarMenuButton
+                        isActive={item.value === value}
+                        tooltip={item.label}
+                        aria-current={item.value === value ? "page" : undefined}
+                        onClick={() => {
+                          if (valueProp === undefined) {
+                            setUncontrolledValue(item.value)
+                          }
+                          onValueChange?.(item.value)
+                          if (isMobile) setOpenMobile(false)
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.badge !== undefined && (
+                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      {footer && (
+        <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+          {footer}
+        </SidebarFooter>
+      )}
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+const nav: NavItem[] = [
   { value: "users", label: "Users", icon: <UsersIcon /> },
   { value: "roles", label: "Roles", icon: <ShieldIcon /> },
   { value: "log", label: "Activity", icon: <ChartBarIcon /> },
@@ -141,182 +236,185 @@ export function UsersTable() {
   }
 
   return (
-    <AppShell
-      items={nav}
-      defaultValue="users"
-      header={
-        <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
-          <span className="font-bold">suiss</span> Admin
-        </p>
-      }
-    >
-      <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
-        <div className="flex flex-wrap items-start gap-3">
-          <AppShellTrigger className="-ms-2 mt-0.5" />
-          <div className="flex flex-1 flex-col">
-            <h1 className="text-3xl font-semibold tracking-tight">Users</h1>
-            <p className="text-sm text-label-secondary">
-              {users.length} people
-            </p>
+    <SidebarProvider>
+      <NavSidebar
+        items={nav}
+        defaultValue="users"
+        header={
+          <p className="flex items-center gap-2 px-2 pt-1 text-sm font-semibold">
+            <span className="font-bold">suiss</span> Admin
+          </p>
+        }
+      />
+      <SidebarInset>
+        <div className="flex flex-col gap-5 px-5 py-5.5 md:px-7">
+          <div className="flex flex-wrap items-start gap-3">
+            <SidebarTrigger className="-ms-2 mt-0.5" />
+            <div className="flex flex-1 flex-col">
+              <h1 className="text-3xl font-semibold tracking-tight">Users</h1>
+              <p className="text-sm text-label-secondary">
+                {users.length} people
+              </p>
+            </div>
+            <div className="flex w-full items-center gap-2 sm:w-auto">
+              <InputGroup className="h-8 flex-1 sm:w-48">
+                <InputGroupAddon>
+                  <MagnifyingGlassIcon />
+                </InputGroupAddon>
+                <InputGroupInput
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search"
+                  aria-label="Search users"
+                  className="text-sm"
+                />
+              </InputGroup>
+              <Button size="sm" className="gap-1">
+                <PlusIcon weight="bold" className="size-3.25" />
+                Invite
+              </Button>
+            </div>
           </div>
-          <div className="flex w-full items-center gap-2 sm:w-auto">
-            <InputGroup className="h-8 flex-1 sm:w-48">
-              <InputGroupAddon>
-                <MagnifyingGlassIcon />
-              </InputGroupAddon>
-              <InputGroupInput
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search"
-                aria-label="Search users"
-                className="text-sm"
-              />
-            </InputGroup>
-            <Button size="sm" className="gap-1">
-              <PlusIcon weight="bold" className="size-3.25" />
-              Invite
-            </Button>
-          </div>
-        </div>
-        <ToggleGroup
-          spacing={0}
-          value={[role]}
-          onValueChange={(value: string[]) => {
-            if (!value[0]) return
-            setRole(value[0])
-            setSelected([])
-          }}
-          aria-label="Role"
-          className="max-w-full overflow-x-auto"
-        >
-          {["All", ...roles].map((item) => (
-            <ToggleGroupItem
-              key={item}
-              value={item}
-              size="sm"
-              className="px-4 md:px-8"
-            >
-              {item}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
-        <div className="overflow-hidden rounded-xl bg-surface-secondary">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-separator hover:bg-transparent">
-                <TableHead className="ps-4 text-xs font-normal text-label-secondary">
-                  Name
-                </TableHead>
-                <TableHead className="hidden text-xs font-normal text-label-secondary sm:table-cell">
-                  Role
-                </TableHead>
-                <TableHead className="text-xs font-normal text-label-secondary">
-                  Status
-                </TableHead>
-                <TableHead className="hidden pe-4 text-end text-xs font-normal text-label-secondary md:table-cell">
-                  Last sign-in
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {list.map((user) => {
-                const isSelected = selected.includes(user.email)
-                return (
-                  <TableRow
-                    key={user.email}
-                    data-selected={isSelected ? "true" : undefined}
-                    onClick={() => toggle(user.email)}
-                    className="group/row cursor-default border-0 select-none not-data-selected:even:bg-surface/60 not-data-selected:hover:bg-label/5 has-focus-visible:focus-ring data-selected:bg-accent data-selected:text-on-accent"
-                  >
-                    <TableCell className="ps-4">
-                      <span className="flex items-center gap-2.5">
-                        <Checkbox
-                          checked={isSelected}
-                          onClick={(event) => event.stopPropagation()}
-                          onCheckedChange={() => toggle(user.email)}
-                          aria-label={`Select ${user.name}`}
-                          className="absolute sr-only"
-                        />
-                        <Avatar className="size-7">
-                          <AvatarFallback
-                            style={{
-                              background: `linear-gradient(160deg, oklch(0.78 0.1 ${user.hue}), oklch(0.6 0.14 ${user.hue + 30}))`,
-                            }}
-                            className="text-3xs text-white"
-                          >
-                            {initials(user.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="flex min-w-0 flex-col">
-                          <span className="text-sm font-semibold">
-                            {user.name}
-                          </span>
-                          <span className="truncate text-xs text-label-secondary group-data-selected/row:text-on-accent">
-                            {user.email}
+          <ToggleGroup
+            spacing={0}
+            value={[role]}
+            onValueChange={(value: string[]) => {
+              if (!value[0]) return
+              setRole(value[0])
+              setSelected([])
+            }}
+            aria-label="Role"
+            className="max-w-full overflow-x-auto"
+          >
+            {["All", ...roles].map((item) => (
+              <ToggleGroupItem
+                key={item}
+                value={item}
+                size="sm"
+                className="px-4 md:px-8"
+              >
+                {item}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+          <div className="overflow-hidden rounded-xl bg-surface-secondary">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-separator hover:bg-transparent">
+                  <TableHead className="ps-4 text-xs font-normal text-label-secondary">
+                    Name
+                  </TableHead>
+                  <TableHead className="hidden text-xs font-normal text-label-secondary sm:table-cell">
+                    Role
+                  </TableHead>
+                  <TableHead className="text-xs font-normal text-label-secondary">
+                    Status
+                  </TableHead>
+                  <TableHead className="hidden pe-4 text-end text-xs font-normal text-label-secondary md:table-cell">
+                    Last sign-in
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {list.map((user) => {
+                  const isSelected = selected.includes(user.email)
+                  return (
+                    <TableRow
+                      key={user.email}
+                      data-selected={isSelected ? "true" : undefined}
+                      onClick={() => toggle(user.email)}
+                      className="group/row cursor-default border-0 select-none not-data-selected:even:bg-surface/60 not-data-selected:hover:bg-label/5 has-focus-visible:focus-ring data-selected:bg-accent data-selected:text-on-accent"
+                    >
+                      <TableCell className="ps-4">
+                        <span className="flex items-center gap-2.5">
+                          <Checkbox
+                            checked={isSelected}
+                            onClick={(event) => event.stopPropagation()}
+                            onCheckedChange={() => toggle(user.email)}
+                            aria-label={`Select ${user.name}`}
+                            className="absolute sr-only"
+                          />
+                          <Avatar className="size-7">
+                            <AvatarFallback
+                              style={{
+                                background: `linear-gradient(160deg, oklch(0.78 0.1 ${user.hue}), oklch(0.6 0.14 ${user.hue + 30}))`,
+                              }}
+                              className="text-3xs text-white"
+                            >
+                              {initials(user.name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="flex min-w-0 flex-col">
+                            <span className="text-sm font-semibold">
+                              {user.name}
+                            </span>
+                            <span className="truncate text-xs text-label-secondary group-data-selected/row:text-on-accent">
+                              {user.email}
+                            </span>
                           </span>
                         </span>
-                      </span>
-                    </TableCell>
-                    <TableCell className="hidden text-sm sm:table-cell">
-                      {user.role}
-                    </TableCell>
-                    <TableCell
-                      data-status={isSelected ? undefined : user.status}
-                      className="text-sm data-[status=Invited]:text-label-secondary data-[status=Suspended]:text-danger group-data-selected/row:text-on-accent"
-                    >
-                      {user.status}
-                    </TableCell>
-                    <TableCell className="hidden pe-4 text-end text-sm text-label-secondary group-data-selected/row:text-on-accent md:table-cell">
-                      {user.seen}
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-          {list.length === 0 && (
-            <p className="p-6 text-center text-sm text-label-secondary">
-              No matching users.
-            </p>
-          )}
-          <div className="flex min-h-12 flex-wrap items-center gap-2 border-t border-separator py-2 ps-4 pe-3">
-            <span
-              className="flex-1 text-xs text-label-secondary"
-              aria-live="polite"
-            >
-              {selected.length
-                ? `${selected.length} selected`
-                : "Click rows to select"}
-            </span>
-            {selected.length > 0 && (
-              <>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => bulk({ role: "Editor" })}
-                >
-                  Make Editor
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => bulk({ status: "Active" })}
-                >
-                  Activate
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => bulk({ status: "Suspended" })}
-                >
-                  Suspend
-                </Button>
-              </>
+                      </TableCell>
+                      <TableCell className="hidden text-sm sm:table-cell">
+                        {user.role}
+                      </TableCell>
+                      <TableCell
+                        data-status={isSelected ? undefined : user.status}
+                        className="text-sm data-[status=Invited]:text-label-secondary data-[status=Suspended]:text-danger group-data-selected/row:text-on-accent"
+                      >
+                        {user.status}
+                      </TableCell>
+                      <TableCell className="hidden pe-4 text-end text-sm text-label-secondary group-data-selected/row:text-on-accent md:table-cell">
+                        {user.seen}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+            {list.length === 0 && (
+              <p className="p-6 text-center text-sm text-label-secondary">
+                No matching users.
+              </p>
             )}
+            <div className="flex min-h-12 flex-wrap items-center gap-2 border-t border-separator py-2 ps-4 pe-3">
+              <span
+                className="flex-1 text-xs text-label-secondary"
+                aria-live="polite"
+              >
+                {selected.length
+                  ? `${selected.length} selected`
+                  : "Click rows to select"}
+              </span>
+              {selected.length > 0 && (
+                <>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => bulk({ role: "Editor" })}
+                  >
+                    Make Editor
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => bulk({ status: "Active" })}
+                  >
+                    Activate
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => bulk({ status: "Suspended" })}
+                  >
+                    Suspend
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </AppShell>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

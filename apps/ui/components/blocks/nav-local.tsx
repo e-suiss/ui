@@ -25,17 +25,19 @@ const highlights = [
   { value: "33 hours", text: "The longest video playback yet." },
 ]
 
-const SCROLL_THRESHOLD = 8
-
 export function NavLocal() {
   const [scrolled, setScrolled] = React.useState(false)
   const [active, setActive] = React.useState(sections[0].id)
+  const topRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    const top = topRef.current
+    if (!top) return
+    const observer = new IntersectionObserver(([entry]) =>
+      setScrolled(entry ? !entry.isIntersecting : false)
+    )
+    observer.observe(top)
+    return () => observer.disconnect()
   }, [])
 
   React.useEffect(() => {
@@ -55,6 +57,11 @@ export function NavLocal() {
 
   return (
     <div className="dark bg-surface text-label">
+      <div
+        ref={topRef}
+        aria-hidden
+        className="h-(--nav-local-threshold) -mb-(--nav-local-threshold) [--nav-local-threshold:8px]"
+      />
       <Navbar
         data-scrolled={scrolled ? "" : undefined}
         items={sections.map((section) => ({

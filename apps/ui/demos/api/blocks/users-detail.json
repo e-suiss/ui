@@ -5,11 +5,11 @@
     "components/blocks/users-detail.tsx"
   ],
   "requires": [
-    "app-shell",
     "avatar",
     "button",
     "item",
     "select",
+    "sidebar",
     "split-view",
     "switch",
     "toggle-group"
