@@ -85,7 +85,7 @@
   },
   "overrides": [
     {
-      "includes": ["packages/cli/**", "scripts/**", ".design-sync/**"],
+      "includes": ["packages/cli/**", "scripts/**"],
       "linter": {
         "rules": {
           "suspicious": {
