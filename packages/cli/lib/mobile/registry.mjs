@@ -1,6 +1,6 @@
 import { CliError } from "../output.mjs"
 
-const DEFAULT_BASE = "https://raw.githubusercontent.com/e-suiss/uim/main"
+const DEFAULT_BASE = "https://raw.githubusercontent.com/e-suiss/ui/main/mobile"
 const base = (process.env.ESUISS_MOBILE_REGISTRY ?? DEFAULT_BASE).replace(
   /\/$/,
   ""

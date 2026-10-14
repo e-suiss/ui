@@ -38,8 +38,7 @@ const columns: Column[] = [
   {
     title: "Source",
     links: [
-      { label: "e-suiss/uim", href: repository },
-      { label: "e-suiss/docs", href: "https://github.com/e-suiss/docs" },
+      { label: "e-suiss/ui", href: repository },
       { label: "@esuiss/ui on npm", href: "https://www.npmjs.com/package/@esuiss/ui" },
     ],
   },

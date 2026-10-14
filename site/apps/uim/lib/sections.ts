@@ -1,6 +1,6 @@
 export type Section = { label: string; path: string };
 
-export const repository = "https://github.com/e-suiss/uim";
+export const repository = "https://github.com/e-suiss/ui/tree/main/mobile";
 
 export const sections: Section[] = [
   { label: "Docs", path: "/docs" },

@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!registry.json", "!pnpm-lock.yaml"]
+    "includes": ["**", "!registry.json", "!pnpm-lock.yaml", "!mobile", "!site"]
   },
   "formatter": {
     "enabled": true,

@@ -33,8 +33,10 @@ jobs:
             fi
           done
 
-      - name: Check registry
-        run: node scripts/build-registry.mjs --check
+      - name: Check registries
+        run: |
+          node scripts/build-registry.mjs --check
+          (cd mobile && node scripts/build-registry.mjs --check)
 
       - name: Publish to npm
         run: |
@@ -58,6 +60,36 @@ jobs:
               fi
             fi
           done
+
+      - name: Publish the Swift and Kotlin repositories
+        env:
+          SWIFT_MIRROR_KEY: ${{ secrets.SWIFT_MIRROR_KEY }}
+          KOTLIN_MIRROR_KEY: ${{ secrets.KOTLIN_MIRROR_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2> /dev/null
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          publish() {
+            if [ -z "$2" ]; then
+              echo "::warning::No deploy key for e-suiss/$3; it was not updated."
+              return
+            fi
+            echo "$2" > ~/.ssh/$3
+            chmod 600 ~/.ssh/$3
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/$3 -o IdentitiesOnly=yes"
+            rm -rf "/tmp/$3"
+            git clone --quiet "git@github.com:e-suiss/$3.git" "/tmp/$3"
+            find "/tmp/$3" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+            cp -R "$1/." "/tmp/$3/"
+            git -C "/tmp/$3" add -A
+            git -C "/tmp/$3" diff --cached --quiet || git -C "/tmp/$3" commit --quiet -m "chore(release): $GITHUB_REF_NAME"
+            git -C "/tmp/$3" tag "$GITHUB_REF_NAME"
+            git -C "/tmp/$3" push --quiet origin HEAD:main "refs/tags/$GITHUB_REF_NAME"
+            unset GIT_SSH_COMMAND
+          }
+          publish mobile/swiftui "$SWIFT_MIRROR_KEY" uim-swift
+          publish mobile/kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
 
       - name: Create GitHub release
         env:

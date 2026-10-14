@@ -6,7 +6,7 @@ import { componentApi, storyExamples } from "./lib/extract.mjs";
 import { nativeStories } from "./lib/native.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
-const uimRepo = path.resolve(root, process.argv[2] ?? "../../../uim");
+const uimRepo = path.resolve(root, process.argv[2] ?? "../../../mobile");
 const only = process.argv[3] ? new Set(process.argv[3].split(",")) : null;
 const registry = JSON.parse(readFileSync(path.join(uimRepo, "registry.json"), "utf8"));
 const previews = JSON.parse(readFileSync(path.join(root, "content/previews.json"), "utf8"));

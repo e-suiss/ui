@@ -78,6 +78,7 @@
     "vitest-browser-react": "2.3.0"
   },
   "lint-staged": {
-    "*.{js,mjs,ts,tsx,json,jsonc,css}": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true"
+    "*.{js,mjs,ts,tsx,json,jsonc,css}": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true",
+    "mobile/**/*.{js,mjs,ts,tsx,json,jsonc,css}": "pnpm --dir mobile exec biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true"
   }
 }

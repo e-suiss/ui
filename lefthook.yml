@@ -5,6 +5,13 @@ pre-commit:
     registry:
       glob: "{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,components/blocks/*.tsx,hooks/*.ts}"
       run: node scripts/build-registry.mjs && git add registry.json
+    site:
+      glob: "{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,components/blocks/*.tsx,hooks/*.ts}"
+      run: node scripts/sync-site.mjs && git add site/apps/ui/components site/apps/ui/hooks site/apps/uim/components site/apps/uim/hooks
+    mobile-registry:
+      glob: "{mobile/uniwind/components/**/*.tsx,mobile/stylesheet/components/**/*.ts*,mobile/styles/uniwind.css,mobile/packages/tokens/tokens.json,mobile/swiftui/Sources/**/*.swift,mobile/swiftui/Package.swift,mobile/kotlin/ui/src/main/**/*.kt,mobile/kotlin/ui/build.gradle.kts}"
+      root: mobile/
+      run: node scripts/build-tokens.mjs && node scripts/build-nativewind.mjs && node scripts/build-registry.mjs && git add styles/uniwind.css stylesheet/components/ui/theme.ts swiftui/Sources/EsuissUI/Theme/Tokens.swift kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt nativewind styles/nativewind.css styles/nativewind.config.js registry.json
 
 pre-push:
   parallel: true
@@ -17,8 +24,31 @@ pre-push:
       run: pnpm knip
     registry:
       run: pnpm registry:check
+    site-sync:
+      run: node scripts/sync-site.mjs --check
     test:
       run: pnpm test
+    mobile-check:
+      root: mobile/
+      run: pnpm check
+    mobile-typecheck:
+      root: mobile/
+      run: pnpm typecheck
+    mobile-knip:
+      root: mobile/
+      run: pnpm knip
+    mobile-registry:
+      root: mobile/
+      run: pnpm registry:check
+    mobile-nativewind:
+      root: mobile/
+      run: pnpm nativewind:check
+    mobile-tokens:
+      root: mobile/
+      run: pnpm tokens:check
+    site-typecheck:
+      root: site/
+      run: pnpm typecheck
 
 commit-msg:
   commands:

@@ -100,11 +100,7 @@ pnpm registry        # regenerate registry.json after changing components
 pnpm registry:check  # fail if registry.json is out of date
 ```
 
-Git hooks are installed by `pnpm install`:
-
-- pre-commit: Biome fixes and checks the staged files (warnings fail too). When components or the Uniwind stylesheet change, the NativeWind files and `registry.json` are regenerated.
-- commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
-- pre-push: Biome on the whole repo, typecheck, Knip, the registry check, and the NativeWind check.
+The git hooks live at the repository root and run these checks for `mobile/` too: on commit, Biome fixes the staged files and the tokens, NativeWind files and `registry.json` are regenerated when components, the Uniwind stylesheet or the tokens change; on push, Biome, typecheck, Knip and the registry, NativeWind and token checks run.
 
 - `uniwind/components/ui/`: the Uniwind components, the source the other versions are generated from. `add` copies them into `components/ui/` in projects.
 - `packages/tokens/tokens.json`: the design tokens for every platform; edit them here and run `pnpm tokens` to regenerate each platform's theme.
@@ -117,10 +113,4 @@ Git hooks are installed by `pnpm install`:
 
 ## Release
 
-Component and stylesheet changes reach users as soon as they are pushed to `main`, because the `@esuiss/ui` CLI in [e-suiss/ui](https://github.com/e-suiss/ui) always reads this repository's `main` branch. Release when the SwiftUI and Compose libraries should get a new version tag:
-
-```bash
-pnpm release patch   # or minor, major, or an exact version like 1.0.0
-```
-
-This bumps the version in `package.json`, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes `swiftui/` and `kotlin/` to their repositories with the same tag and creates the GitHub release.
+Component and stylesheet changes reach users as soon as they are pushed to `main`, because the `@esuiss/ui` CLI always reads `mobile/registry.json` from the `main` branch. The SwiftUI and Compose repositories get a new tag with every release of the repository; see the root README.
