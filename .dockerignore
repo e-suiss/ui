@@ -1,0 +1,12 @@
+**/node_modules
+**/.next
+**/.turbo
+**/.source
+**/*.tsbuildinfo
+**/next-env.d.ts
+.DS_Store
+.env*
+storybook-static
+packages/web/tests/screenshots
+packages/mobile/ios
+packages/mobile/android

@@ -65,7 +65,7 @@ Next.js and React with Vite, using TypeScript and Tailwind CSS 4.2 or later.
 Yes. Every color has a light and a dark value, and components switch with the `.dark` class.
 
 **Is there a version for mobile apps?**
-Yes. [suiss/uim](mobile) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them: run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
+Yes. [suiss/uim](packages/mobile) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them: run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
 
 **Is it free?**
 Yes, it is released under the [MIT License](LICENSE).
@@ -75,37 +75,46 @@ Yes. [ui.suiss.app/llms.txt](https://ui.suiss.app/llms.txt) lists every page, [u
 
 ## Develop
 
+This repository is a pnpm workspace. One install at the root sets up everything:
+
 ```bash
 pnpm install
-pnpm typecheck
-pnpm check           # lint and format check with Biome
+pnpm dev             # both sites: ui.suiss.app on :3000, uim.suiss.app on :3001
+pnpm build           # build both sites
+pnpm typecheck       # every package and site
+pnpm test            # web component tests and CLI tests
+pnpm check           # Biome on the web library, the CLI and the mobile library
 pnpm format          # apply Biome fixes and formatting
-pnpm knip            # find unused files, exports, and dependencies
-pnpm registry        # regenerate registry.json after changing components or hooks
-pnpm registry:check  # fail if registry.json is out of date
-pnpm storybook       # preview every component at http://localhost:6006
+pnpm knip            # unused files, exports, and dependencies in every package
+pnpm registry        # regenerate the web and mobile registries and the site pages
+pnpm registry:check  # fail if a registry is out of date
+pnpm sync-site       # copy changed library components into the sites
+pnpm --filter @esuiss/web storybook     # web Storybook at http://localhost:6006
+pnpm --filter @esuiss/mobile start      # the React Native Storybook app
 ```
+
+Layout:
+
+- `apps/ui`: the ui.suiss.app site.
+- `apps/uim`: the uim.suiss.app site.
+- `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `stories/` has one Storybook file per component, and `registry.json` lists everything.
+- `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
+- `packages/tokens`: the design tokens the mobile themes are generated from.
+- `packages/cli`: the `@esuiss/ui` command.
+- `packages/tailwind`: the `@esuiss/tailwind` stylesheet with variants, animations, and utilities.
 
 Git hooks are installed by `pnpm install`:
 
-- pre-commit: Biome fixes and checks the staged files (warnings fail too), and `registry.json` is regenerated when components or hooks change.
+- pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components regenerate `packages/web/registry.json` and the copies in the sites; changed mobile components, the Uniwind stylesheet or the tokens regenerate the NativeWind files, the themes and `packages/mobile/registry.json`.
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
-- pre-push: Biome on the whole repo, typecheck, Knip, and the registry check, plus the same checks for `mobile/` and the site typecheck.
-
-- `components/ui/` and `hooks/`: the files `add` copies into projects.
-- `styles/globals.css`: the theme (oklch colors, radius, font, `@theme inline` names), written to the project stylesheet by `init`.
-- `stories/`: one Storybook file per component. Use the toolbar to switch between light and dark mode.
-- `packages/cli/`: the `@esuiss/ui` command.
-- `packages/tailwind/`: the `@esuiss/tailwind` stylesheet with variants, animations, and utilities.
-- `mobile/`: suiss/uim, the React Native (Uniwind, NativeWind and StyleSheet), SwiftUI and Jetpack Compose library with its own `registry.json`, stories and catalog apps. Run `pnpm install` inside it; see `mobile/README.md`.
-- `site/`: the ui.suiss.app and uim.suiss.app sites. Run `pnpm install` and `pnpm dev` inside it; see `site/README.md`.
+- pre-push: Biome, Knip, typecheck, the registry checks, the site copy check, and the tests.
 
 ## Release
 
-Component, hook, and theme color changes, on the web and in `mobile/`, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` or `packages/tailwind` changes; both packages are released together with the same version:
+Component, hook, and theme color changes, on the web and on mobile, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` or `packages/tailwind` changes; both packages are released together with the same version:
 
 ```bash
 pnpm release patch   # or minor, major, or an exact version like 1.0.0
 ```
 
-This bumps both packages, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes them to npm, publishes `mobile/swiftui` and `mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
+This bumps both packages, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes them to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.

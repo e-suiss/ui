@@ -2,6 +2,10 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "workspaces": {
     ".": {
+      "entry": ["scripts/*.mjs"],
+      "project": ["scripts/*.mjs"]
+    },
+    "packages/web": {
       "entry": [
         "components/ui/*.tsx",
         "components/patterns/*.tsx",
@@ -10,20 +14,54 @@
         "components/blocks/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
-        "packages/cli/index.mjs",
         "tests/*-setup.ts"
       ],
       "project": [
         "components/**/*.{ts,tsx}",
         "hooks/**/*.ts",
         "scripts/**/*.mjs",
-        "packages/cli/**/*.mjs",
         ".storybook/**/*.{ts,tsx}",
         "styles/**/*.css",
         ".storybook/**/*.css",
         "stories/**/*.{tsx,mdx}"
       ]
     },
-    "packages/tailwind": {}
-  }
+    "packages/cli": {
+      "entry": ["tests/**/*.test.mjs"],
+      "project": ["lib/**/*.mjs", "tests/**/*.mjs"]
+    },
+    "packages/tailwind": {},
+    "packages/mobile": {
+      "entry": [
+        "uniwind/components/**/*.tsx",
+        "scripts/*.mjs",
+        "stories/**/*.stories.tsx",
+        ".rnstorybook/*.{ts,tsx}",
+        "nativewind/components/**/*.tsx",
+        "stylesheet/components/**/*.{ts,tsx}",
+        "components/primitives/*.{ts,tsx}",
+        "App.web.tsx"
+      ],
+      "project": [
+        "uniwind/**/*.{ts,tsx}",
+        "scripts/**/*.mjs",
+        ".rnstorybook/**/*.{ts,tsx}",
+        "stories/**/*.tsx",
+        "*.{ts,tsx}",
+        "nativewind/**/*.tsx",
+        "stylesheet/**/*.{ts,tsx}",
+        "components/primitives/*.{ts,tsx}"
+      ],
+      "ignoreDependencies": ["expo-updates"],
+      "paths": {
+        "@/components/primitives/*": ["./components/primitives/*"],
+        "@/components/*": [
+          "./uniwind/components/*",
+          "./stylesheet/components/*"
+        ]
+      },
+      "metro": false
+    }
+  },
+  "ignoreWorkspaces": ["apps/*", "packages/tokens"]
 }

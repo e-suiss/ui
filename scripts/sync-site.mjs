@@ -3,7 +3,8 @@ import path from "node:path"
 
 const root = path.resolve(import.meta.dirname, "..")
 const check = process.argv.includes("--check")
-const APPS = ["site/apps/ui", "site/apps/uim"]
+const LIBRARY = path.join(root, "packages/web")
+const APPS = ["apps/ui", "apps/uim"]
 const FOLDERS = [
   "components/ui",
   "components/patterns",
@@ -20,7 +21,7 @@ for (const app of APPS) {
     const target = path.join(root, app, folder)
     if (!existsSync(target)) continue
     for (const file of readdirSync(target)) {
-      const source = path.join(root, folder, file)
+      const source = path.join(LIBRARY, folder, file)
       const copy = path.join(target, file)
       if (!existsSync(source)) continue
       if (readFileSync(source, "utf8") === readFileSync(copy, "utf8")) continue

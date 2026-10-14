@@ -35,8 +35,8 @@ jobs:
 
       - name: Check registries
         run: |
-          node scripts/build-registry.mjs --check
-          (cd mobile && node scripts/build-registry.mjs --check)
+          (cd packages/web && node scripts/build-registry.mjs --check)
+          (cd packages/mobile && node scripts/build-registry.mjs --check)
 
       - name: Publish to npm
         run: |
@@ -88,8 +88,8 @@ jobs:
             git -C "/tmp/$3" push --quiet origin HEAD:main "refs/tags/$GITHUB_REF_NAME"
             unset GIT_SSH_COMMAND
           }
-          publish mobile/swiftui "$SWIFT_MIRROR_KEY" uim-swift
-          publish mobile/kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
+          publish packages/mobile/swiftui "$SWIFT_MIRROR_KEY" uim-swift
+          publish packages/mobile/kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
 
       - name: Create GitHub release
         env:

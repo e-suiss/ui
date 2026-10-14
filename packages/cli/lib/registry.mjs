@@ -1,6 +1,7 @@
 import { CliError } from "./output.mjs"
 
-const DEFAULT_BASE = "https://raw.githubusercontent.com/e-suiss/ui/main"
+const DEFAULT_BASE =
+  "https://raw.githubusercontent.com/e-suiss/ui/main/packages/web"
 const base = (process.env.ESUISS_REGISTRY ?? DEFAULT_BASE).replace(/\/$/, "")
 
 export async function fetchText(file) {

@@ -14,7 +14,7 @@ export function isInteractive() {
   return Boolean(process.stdin.isTTY && process.stdout.isTTY)
 }
 
-function fit(text, width) {
+function clip(text, width) {
   return text.length > width ? `${text.slice(0, width - 1)}…` : text
 }
 
@@ -60,7 +60,7 @@ export function choose(
 
       const lines = [
         `${color.yellow("?")} ${color.bold(message)} ${
-          query ? fit(query, width) : color.dim("type to filter")
+          query ? clip(query, width) : color.dim("type to filter")
         }`,
       ]
       if (!visible.length) lines.push(color.dim("  No matches"))
@@ -72,7 +72,7 @@ export function choose(
           ? color.green("● ")
           : color.dim("○ ")
         const mark = multiple ? checkbox : ""
-        const label = fit(choice.label, width - 6)
+        const label = clip(choice.label, width - 6)
         const hint = choice.hint ? color.dim(`  ${choice.hint}`) : ""
         lines.push(
           `${active ? color.yellow("›") : " "} ${mark}${
@@ -87,7 +87,7 @@ export function choose(
       const count = multiple && picked.size ? `${picked.size} selected · ` : ""
       lines.push(
         color.dim(
-          fit(
+          clip(
             `${position}${count}${multiple ? MULTIPLE_HINT : SINGLE_HINT}`,
             width
           )
@@ -102,7 +102,7 @@ export function choose(
       input.setRawMode?.(wasRaw ?? false)
       input.pause()
       const summary = values
-        ? `${color.green("✔")} ${color.bold(message)} ${fit(
+        ? `${color.green("✔")} ${color.bold(message)} ${clip(
             values
               .map(
                 (value) =>

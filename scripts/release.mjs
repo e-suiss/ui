@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process"
-import { readFileSync, writeFileSync } from "node:fs"
+import { existsSync, readFileSync, writeFileSync } from "node:fs"
 
+const LIBRARIES = ["packages/web", "packages/mobile"]
 const MANIFESTS = [
   "packages/cli/package.json",
   "packages/tailwind/package.json",
@@ -72,9 +73,13 @@ if (git("rev-parse", "HEAD") !== git("rev-parse", `origin/${BRANCH}`)) {
 
 if (git("tag", "--list", tag)) fail(`${tag} already exists.`)
 
-execFileSync("node", ["scripts/build-registry.mjs", "--check"], {
-  stdio: "inherit",
-})
+for (const library of LIBRARIES) {
+  if (!existsSync(library)) continue
+  execFileSync("node", ["scripts/build-registry.mjs", "--check"], {
+    cwd: library,
+    stdio: "inherit",
+  })
+}
 
 for (const { file, content } of manifests) {
   content.version = version

@@ -1,10 +1,13 @@
 packages:
-  - packages/tailwind
+  - apps/*
+  - packages/*
 
 allowBuilds:
   esbuild: true
   lefthook: false
   msw: false
+  sharp: false
+  unrs-resolver: false
 
 minimumReleaseAgeExclude:
   - '@storybook/addon-a11y@10.6.1'

@@ -6,7 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!registry.json", "!pnpm-lock.yaml", "!mobile", "!site"]
+    "includes": [
+      "**",
+      "!**/registry.json",
+      "!pnpm-lock.yaml",
+      "!packages/mobile",
+      "!apps"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -85,7 +91,12 @@
   },
   "overrides": [
     {
-      "includes": ["packages/cli/**", "scripts/**"],
+      "includes": [
+        "packages/cli/**",
+        "scripts/**",
+        "packages/web/scripts/**",
+        "packages/web/tests/**/*.mjs"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
@@ -96,8 +107,8 @@
     },
     {
       "includes": [
-        "hooks/use-message-scroller.ts",
-        "hooks/use-questionnaire.ts"
+        "packages/web/hooks/use-message-scroller.ts",
+        "packages/web/hooks/use-questionnaire.ts"
       ],
       "linter": {
         "rules": {
@@ -108,7 +119,7 @@
       }
     },
     {
-      "includes": ["components/ui/label.tsx"],
+      "includes": ["packages/web/components/ui/label.tsx"],
       "linter": {
         "rules": {
           "a11y": {
@@ -118,7 +129,7 @@
       }
     },
     {
-      "includes": ["components/ui/input-group.tsx"],
+      "includes": ["packages/web/components/ui/input-group.tsx"],
       "linter": {
         "rules": {
           "a11y": {
@@ -128,7 +139,7 @@
       }
     },
     {
-      "includes": ["components/ui/message-scroller.tsx"],
+      "includes": ["packages/web/components/ui/message-scroller.tsx"],
       "linter": {
         "rules": {
           "a11y": {
@@ -139,7 +150,7 @@
       }
     },
     {
-      "includes": ["components/ui/sidebar.tsx"],
+      "includes": ["packages/web/components/ui/sidebar.tsx"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -149,7 +160,10 @@
       }
     },
     {
-      "includes": ["components/ui/slider.tsx", "stories/**"],
+      "includes": [
+        "packages/web/components/ui/slider.tsx",
+        "packages/web/stories/**"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
@@ -159,7 +173,7 @@
       }
     },
     {
-      "includes": ["stories/**"],
+      "includes": ["packages/web/stories/**"],
       "linter": {
         "rules": {
           "a11y": {
@@ -179,7 +193,7 @@
       }
     },
     {
-      "includes": ["components/ui/theme.tsx"],
+      "includes": ["packages/web/components/ui/theme.tsx"],
       "linter": {
         "rules": {
           "security": {
