@@ -5,9 +5,7 @@
   "examples": {
     "DetailColumn": "Starts on the detail column.",
     "StartOnSidebar": "Starts on the sidebar column.",
-    "TwoColumns": "Only list and detail panes, without a sidebar.",
-    "Wide": "Sets `breakpoint` to `0` to always show the columns side by side.",
-    "WideTwoColumns": "Side-by-side list and detail panes without a sidebar."
+    "TwoColumns": "Only list and detail panes, without a sidebar."
   },
   "parts": {
     "SplitView": "The root that tracks the current column and the layout mode.",
