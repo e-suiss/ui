@@ -63,6 +63,8 @@ describe("esuiss-ui command", () => {
     const cwd = createProject({})
     const result = run("add", "--cwd", cwd, "button")
     expect(result.code).toBe(1)
-    expect(result.stderr).toContain("No package.json found.")
+    expect(result.stderr).toContain(
+      `No React, React Native, Xcode or Android Gradle project found in ${cwd}.`
+    )
   })
 })

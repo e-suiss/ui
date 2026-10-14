@@ -42,3 +42,21 @@ export async function confirm(question) {
   prompt.close()
   return YES_ANSWER.test(answer.trim())
 }
+
+export async function choose(question, choices) {
+  if (!process.stdin.isTTY) return choices[0]
+  const prompt = createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+  console.log(`${color.yellow("?")} ${question}`)
+  choices.forEach((choice, index) => {
+    console.log(color.dim(`  ${index + 1}) ${choice}`))
+  })
+  const answer = await prompt.question(
+    color.dim(`  (1-${choices.length}, default 1) `)
+  )
+  prompt.close()
+  const index = Number(answer.trim() || "1") - 1
+  return choices[index] ?? choices[0]
+}

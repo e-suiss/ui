@@ -10,6 +10,7 @@ Copy-paste React components with a clean, minimal design, built on [Base UI](htt
 - A refined color palette for light and dark mode, written in oklch
 - [Phosphor](https://phosphoricons.com) icons
 - Next.js and React (Vite) with TypeScript
+- The mobile components of [suiss/uim](https://uim.suiss.app) for React Native and Expo, SwiftUI and Jetpack Compose, with the same commands
 - No runtime dependency on this CLI: it runs with `npx` and is never installed in your project
 
 ## Requirements
@@ -18,6 +19,19 @@ Copy-paste React components with a clean, minimal design, built on [Base UI](htt
 - TypeScript
 - Tailwind CSS 4.2 or later (installed for you if missing)
 - Node.js 18 or later
+
+## Mobile apps
+
+Run the same commands in an Expo or React Native app, an Xcode project or an Android Gradle module, and the CLI adds the matching [suiss/uim](https://uim.suiss.app) sources:
+
+```bash
+npx @esuiss/ui@latest init
+npx @esuiss/ui@latest add dialog
+npx @esuiss/ui@latest add dialog --platform swift
+npx @esuiss/ui@latest add dialog --platform kotlin
+```
+
+React Native projects can pick a styling with `--styling uniwind|nativewind|stylesheet`; SwiftUI and Compose files go to `--path <dir>` when given. When a folder holds more than one project, choose one with `--platform web|rn|swift|kotlin`.
 
 ## Quick start
 

@@ -65,7 +65,7 @@ Next.js and React with Vite, using TypeScript and Tailwind CSS 4.2 or later.
 Yes. Every color has a light and a dark value, and components switch with the `.dark` class.
 
 **Is there a version for mobile apps?**
-Yes. [suiss/uim](https://github.com/e-suiss/uim) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose.
+Yes. [suiss/uim](https://github.com/e-suiss/uim) brings the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them: run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
 
 **Is it free?**
 Yes, it is released under the [MIT License](LICENSE).
