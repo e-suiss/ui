@@ -71,7 +71,11 @@ function Neighbour({
 }
 
 export default function Page(props: PageProps<"/docs/[[...slug]]">) {
-  return <DocPage params={props.params} />;
+  return (
+    <React.Suspense>
+      <DocPage params={props.params} />
+    </React.Suspense>
+  );
 }
 
 async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"] }) {
