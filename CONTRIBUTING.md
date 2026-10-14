@@ -41,11 +41,11 @@ Git hooks are installed by `pnpm install`:
 
 ## Deploy
 
-Every push to `main` that changes the site builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui/site`, tagged `latest` and with the short commit SHA. The server only pulls and runs it:
+Every push to `main` that changes the site builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui`, tagged `latest` and with the short commit SHA. The server only pulls and runs it:
 
 ```bash
-docker pull ghcr.io/e-suiss/ui/site:latest
-docker run -d -p 3000:3000 ghcr.io/e-suiss/ui/site:latest
+docker pull ghcr.io/e-suiss/ui:latest
+docker run -d -p 3000:3000 ghcr.io/e-suiss/ui:latest
 ```
 
 To build it locally, run `docker build -f apps/Dockerfile .` from the repository root.
