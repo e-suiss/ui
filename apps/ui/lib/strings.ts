@@ -17,9 +17,9 @@ export const strings = {
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
   heroLead:
-    "Accessible components, patterns, interactions, charts and blocks for React, React Native, SwiftUI and Jetpack Compose. Open source and yours to change.",
+    "Accessible components, patterns, interactions, charts and blocks for Next.js, Vite, Expo, SwiftUI and Jetpack Compose. Open source and yours to change.",
   heroSubtitle:
-    "Copy-paste components, patterns, interactions, charts and blocks for React, React Native, SwiftUI and Jetpack Compose.",
+    "Copy-paste components, patterns, interactions, charts and blocks for React with Next.js and Vite, React Native with Expo, SwiftUI and Jetpack Compose.",
   menu: "Menu",
   close: "Close",
   copy: "Copy",
