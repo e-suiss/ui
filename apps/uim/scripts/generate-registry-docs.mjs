@@ -136,6 +136,7 @@ function example(id, body, others = {}) {
   const extra = Object.entries(switcher).filter(([platform]) => others[platform]);
   const attrs = [
     size ? ` id="${id}" width={${size[0]}} height={${size[1]}}` : "",
+    size && existsSync(path.join(root, "public/previews", `${id}.light.mp4`)) ? " video" : "",
     extra.length ? ` platforms={${JSON.stringify(["React Native", ...extra.map(([, label]) => label)])}}` : "",
   ].join("");
   return [`<Example${attrs}>`, "", body, "", ...extra.flatMap(([platform]) => [others[platform], ""]), "</Example>", ""];

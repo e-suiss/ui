@@ -48,12 +48,14 @@ export function Example({
   width,
   height,
   platforms = [],
+  video,
   children,
 }: {
   id?: string;
   width?: number;
   height?: number;
   platforms?: string[];
+  video?: boolean;
   children: React.ReactNode;
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">(id ? "preview" : "code");
@@ -110,24 +112,35 @@ export function Example({
             className="mt-[1.2em] flex justify-center overflow-hidden rounded-[24px] bg-surface-secondary px-6 py-10 ring-1 ring-label/10 md:py-14"
           >
             <div className="w-full max-w-[360px] overflow-hidden rounded-[28px] shadow-[0_24px_60px_-28px_rgb(0_0_0/0.35)] ring-1 ring-label/10">
-              <img
-                src={`/previews/${id}.light.webp`}
-                width={width}
-                height={height}
-                alt={previewAlt(id, "light")}
-                loading="lazy"
-                decoding="async"
-                className="block h-auto w-full dark:hidden"
-              />
-              <img
-                src={`/previews/${id}.dark.webp`}
-                width={width}
-                height={height}
-                alt={previewAlt(id, "dark")}
-                loading="lazy"
-                decoding="async"
-                className="hidden h-auto w-full dark:block"
-              />
+              {(["light", "dark"] as const).map((scheme) =>
+                video ? (
+                  <video
+                    key={scheme}
+                    src={`/previews/${id}.${scheme}.mp4`}
+                    poster={`/previews/${id}.${scheme}.webp`}
+                    width={width}
+                    height={height}
+                    aria-label={previewAlt(id, scheme)}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className={cn("block h-auto w-full", scheme === "light" ? "dark:hidden" : "hidden dark:block")}
+                  />
+                ) : (
+                  <img
+                    key={scheme}
+                    src={`/previews/${id}.${scheme}.webp`}
+                    width={width}
+                    height={height}
+                    alt={previewAlt(id, scheme)}
+                    loading="lazy"
+                    decoding="async"
+                    className={cn("block h-auto w-full", scheme === "light" ? "dark:hidden" : "hidden dark:block")}
+                  />
+                ),
+              )}
             </div>
           </div>
         </div>
