@@ -6,7 +6,7 @@ eyebrow: suiss/ui
 
 ## Overview
 
-`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`.
+`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. The same command also adds the mobile components of [suiss/uim](https://uim.suiss.app): in an Expo or React Native app, an Xcode project or an Android Gradle module it adds React Native, SwiftUI or Jetpack Compose sources instead.
 
 ## init
 
@@ -19,6 +19,7 @@ npx @esuiss/ui@latest init [options]
 | Option | Description |
 | --- | --- |
 | `-y, --yes` | Skip confirmation prompts |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |
@@ -42,6 +43,7 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `--diff` | Show how your local files differ from the registry |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |
