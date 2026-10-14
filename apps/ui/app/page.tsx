@@ -21,7 +21,7 @@ const collections = [
   {
     title: "Components",
     href: "/docs/components",
-    description: "Accessible primitives on Base UI, from buttons and fields to sidebars and dialogs.",
+    description: "From buttons and fields to sheets, keypads and dialogs, on every platform.",
   },
   {
     title: "Patterns",
@@ -60,7 +60,7 @@ function Hero() {
       <div className={cn(frame, "relative flex flex-col gap-10 pt-60 pb-12 md:pt-[26rem] md:pb-16")}>
         <div className="flex max-w-6xl flex-col gap-6">
           <h1 className="text-[clamp(3rem,8vw,8rem)] leading-[0.88] font-semibold tracking-[-0.055em] text-balance">
-            Copy-paste React components.
+            Copy-paste components for web and mobile.
           </h1>
           <p className="max-w-2xl text-[clamp(1.125rem,1.6vw,1.375rem)] leading-[1.38] tracking-[-0.02em] text-pretty text-[#1d1d1f]/70">
             {strings.heroLead}
@@ -84,8 +84,8 @@ function Manifesto() {
         <span className="text-label-tertiary">
           Copy them into your project and change anything you like.
         </span>{" "}
-        Built on Base UI and Tailwind CSS.{" "}
-        <span className="text-label-tertiary">Accessible, themeable and open source.</span>
+        For React, React Native, SwiftUI and Jetpack Compose.{" "}
+        <span className="text-label-tertiary">One design, accessible, themeable and open source.</span>
       </p>
     </section>
   );
@@ -101,8 +101,8 @@ function Interface() {
             Every piece is live.
           </h2>
           <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-label-secondary">
-            No screenshots. These are the components themselves, running on this page. Try
-            them.
+            No screenshots. These are the React components themselves, running on this page.
+            Try them.
           </p>
         </div>
       </div>
