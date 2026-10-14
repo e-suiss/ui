@@ -8,11 +8,11 @@ eyebrow: suiss/uim
 
 suiss/uim is the mobile counterpart of suiss/ui: a set of React Native components for Expo and React Native projects with TypeScript.
 
-The components reach your project through the `@esuiss/uim` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency.
+The components reach your project through the `@esuiss/ui` command-line tool. The tool copies each component's source into your project instead of installing it as a dependency.
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest init
-npx @esuiss/uim@latest add button dialog sheet
+npx @esuiss/ui@latest init
+npx @esuiss/ui@latest add button dialog sheet
 ```
 
 ## Principles
@@ -34,8 +34,8 @@ Each component ships in three flavors with the same API:
 The same components are available as SwiftUI and Jetpack Compose source, built from the same design tokens. Pass `--platform swift` or `--platform kotlin` to the CLI:
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest add dialog --platform swift
-npx @esuiss/uim@latest add dialog --platform kotlin
+npx @esuiss/ui@latest add dialog --platform swift
+npx @esuiss/ui@latest add dialog --platform kotlin
 ```
 
 See [SwiftUI](/docs/swiftui) and [Jetpack Compose](/docs/jetpack-compose) for requirements and setup.

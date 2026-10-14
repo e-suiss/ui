@@ -11,7 +11,7 @@ An Expo or React Native project with TypeScript.
 ## Initialize
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest init
+npx @esuiss/ui@latest init
 ```
 
 `init` sets up:
@@ -26,9 +26,9 @@ npx @esuiss/uim@latest init
 The styling library is detected from your project. When neither Uniwind nor NativeWind is installed, `init` asks. Pass `--styling` to choose up front:
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest init --styling uniwind
-npx @esuiss/uim@latest init --styling nativewind
-npx @esuiss/uim@latest init --styling stylesheet
+npx @esuiss/ui@latest init --styling uniwind
+npx @esuiss/ui@latest init --styling nativewind
+npx @esuiss/ui@latest init --styling stylesheet
 ```
 
 StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
@@ -44,13 +44,13 @@ cd ios && pod install
 ## Add components
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest add dialog
+npx @esuiss/ui@latest add dialog
 ```
 
 Run `add` without names to pick from a list instead. Choose a group, type to filter, select with space and press enter. See [CLI](/docs/cli#pick-from-a-list).
 
 ```bash title="Terminal"
-npx @esuiss/uim@latest add
+npx @esuiss/ui@latest add
 ```
 
 Components are copied into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK.

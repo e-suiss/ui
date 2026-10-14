@@ -8,11 +8,11 @@ export const site = {
   title: `${strings.brand} – Copy-paste components for React Native, SwiftUI and Jetpack Compose`,
   description: strings.heroSubtitle,
   summary:
-    "suiss/uim is an open-source collection of accessible React Native components, patterns and interactions with a clean, minimal design, for Expo and React Native projects with TypeScript. Every component ships in three styling flavors with the same API: Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) and plain React Native StyleSheet. Components are copied into your project with the @esuiss/uim CLI, so you own and can change the code. The same components are also available as SwiftUI and Jetpack Compose (Kotlin) source built from the same design tokens, added with `--platform swift` or `--platform kotlin`. It is the mobile counterpart of suiss/ui.",
-  packageName: "@esuiss/uim",
-  install: "npx @esuiss/uim@latest init",
+    "suiss/uim is an open-source collection of accessible React Native components, patterns and interactions with a clean, minimal design, for Expo and React Native projects with TypeScript. Every component ships in three styling flavors with the same API: Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) and plain React Native StyleSheet. Components are copied into your project with the @esuiss/ui CLI, so you own and can change the code. The same components are also available as SwiftUI and Jetpack Compose (Kotlin) source built from the same design tokens, added with `--platform swift` or `--platform kotlin`. It is the mobile counterpart of suiss/ui.",
+  packageName: "@esuiss/ui",
+  install: "npx @esuiss/ui@latest init",
   repository,
-  npm: "https://www.npmjs.com/package/@esuiss/uim",
+  npm: "https://www.npmjs.com/package/@esuiss/ui",
   license: "MIT",
   organization: { name: "suiss", url: "https://github.com/e-suiss" },
   keywords: [

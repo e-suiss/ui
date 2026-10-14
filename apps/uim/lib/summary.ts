@@ -10,5 +10,5 @@ const kinds: Record<string, string> = {
 
 export function pageSummary(title: string, eyebrow: string | undefined) {
   const kind = eyebrow ? kinds[eyebrow] : undefined;
-  return kind ? `${title} is ${kind} The @esuiss/uim CLI copies its source into your project, so you own the code.` : undefined;
+  return kind ? `${title} is ${kind} The @esuiss/ui CLI copies its source into your project, so you own the code.` : undefined;
 }

@@ -94,7 +94,7 @@ function Start() {
   return (
     <section className={cn(frame, "flex flex-col gap-6 pb-32 md:pb-48")}>
       <Label index="02">Start in one line</Label>
-      <InstallCommand command="npx @esuiss/uim@latest init" />
+      <InstallCommand command="npx @esuiss/ui@latest init" />
     </section>
   );
 }

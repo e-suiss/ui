@@ -40,7 +40,7 @@ const columns: Column[] = [
     links: [
       { label: "e-suiss/uim", href: repository },
       { label: "e-suiss/docs", href: "https://github.com/e-suiss/docs" },
-      { label: "@esuiss/uim on npm", href: "https://www.npmjs.com/package/@esuiss/uim" },
+      { label: "@esuiss/ui on npm", href: "https://www.npmjs.com/package/@esuiss/ui" },
     ],
   },
 ];
