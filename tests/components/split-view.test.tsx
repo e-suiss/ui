@@ -207,6 +207,43 @@ describe("SplitView on mobile", () => {
     await expect.element(backButton("Mailboxes")).toBeVisible()
   })
 
+  it("leaves the page scroll alone when the pane is already in view", async () => {
+    await page.viewport(390, 844)
+    await render(
+      <div>
+        <div style={{ height: 200 }} />
+        <Mail />
+        <div style={{ height: 2000 }} />
+      </div>
+    )
+    window.scrollTo(0, 100)
+    await item("Jordan Lee").click()
+    await expect.poll(shownPanes).toEqual(["detail"])
+    expect(window.scrollY).toBe(100)
+    window.scrollTo(0, 0)
+  })
+
+  it("scrolls only its own container to show the top of a new pane", async () => {
+    await page.viewport(390, 844)
+    await render(
+      <div data-testid="scroller" style={{ height: 300, overflowY: "auto" }}>
+        <div style={{ height: 100 }} />
+        <Mail />
+        <div style={{ height: 2000 }} />
+      </div>
+    )
+    const scroller = document.querySelector<HTMLElement>(
+      "[data-testid=scroller]"
+    )
+    if (!scroller) throw new Error("scroller not rendered")
+    scroller.scrollTop = 250
+    window.scrollTo(0, 0)
+    await item("Jordan Lee").click()
+    await expect.poll(shownPanes).toEqual(["detail"])
+    await expect.poll(() => scroller.scrollTop).toBe(100)
+    expect(window.scrollY).toBe(0)
+  })
+
   it("does not focus a heading on the first render", async () => {
     await page.viewport(390, 844)
     await render(<Mail defaultColumn="detail" />)

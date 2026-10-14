@@ -54,6 +54,29 @@ const PREVIOUS: Record<SplitViewColumn, SplitViewColumn | null> = {
   detail: "list",
 }
 
+const SCROLLABLE = /auto|scroll/
+
+function scrollParent(element: HTMLElement) {
+  for (let node = element.parentElement; node; node = node.parentElement) {
+    const { overflowY } = getComputedStyle(node)
+    if (SCROLLABLE.test(overflowY) && node.scrollHeight > node.clientHeight) {
+      return node
+    }
+  }
+  return null
+}
+
+function revealTop(element: HTMLElement) {
+  const parent = scrollParent(element)
+  const top = element.getBoundingClientRect().top
+  if (parent) {
+    const offset = top - parent.getBoundingClientRect().top
+    if (offset < 0) parent.scrollTop += offset
+  } else if (top < 0) {
+    window.scrollBy({ top })
+  }
+}
+
 function SplitView({
   column: columnProp,
   defaultColumn = "list",
@@ -93,8 +116,10 @@ function SplitView({
     if (!isMobile || !navigatedRef.current) return
     navigatedRef.current = false
     const pane = ref.current?.querySelector(`[data-slot=split-view-${column}]`)
-    pane?.querySelector<HTMLElement>("[data-split-view-heading]")?.focus()
-    ref.current?.scrollIntoView({ block: "start" })
+    pane
+      ?.querySelector<HTMLElement>("[data-split-view-heading]")
+      ?.focus({ preventScroll: true })
+    if (ref.current) revealTop(ref.current)
   }, [isMobile, column])
 
   const contextValue = { isMobile, column, setColumn, titles }
