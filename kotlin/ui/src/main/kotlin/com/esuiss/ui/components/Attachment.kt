@@ -140,7 +140,12 @@ fun Attachment(
         size == AttachmentSize.Xs -> RoundedCornerShape(Radius.lg)
         else -> RoundedCornerShape(Radius.xl2)
     }
-    val background = if (pressed) lerp(colors.surfaceSecondary, colors.label, 0.05f) else colors.surfaceSecondary
+    val idle = state == AttachmentState.Idle && !grouped
+    val background = when {
+        idle -> if (pressed) colors.itemPressed else Color.Transparent
+        pressed -> lerp(colors.surfaceSecondary, colors.label, 0.05f)
+        else -> colors.surfaceSecondary
+    }
     val padding = attachmentPadding(size, vertical, hasMedia, hasContent)
     val gap = when (size) {
         AttachmentSize.Default -> if (vertical) 8.dp else 12.dp
@@ -177,7 +182,7 @@ fun Attachment(
                             val stroke = 1.dp.toPx()
                             val radius = if (size == AttachmentSize.Xs) Radius.lg.toPx() else Radius.xl2.toPx()
                             drawRoundRect(
-                                color = colors.separator,
+                                color = colors.separatorStrong,
                                 topLeft = Offset(stroke / 2, stroke / 2),
                                 size = Size(this.size.width - stroke, this.size.height - stroke),
                                 cornerRadius = CornerRadius(radius),

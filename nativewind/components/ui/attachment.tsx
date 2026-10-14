@@ -73,12 +73,25 @@ const ACTION_SIZE: Record<AttachmentSize, [string, number]> = {
   xs: ["size-5", 13],
 }
 
-function wrapText(children: React.ReactNode) {
+const LABEL_TEXT = {
+  numberOfLines: 1,
+  adjustsFontSizeToFit: true,
+  minimumFontScale: 0.8,
+}
+
+function wrapText(
+  children: React.ReactNode,
+  textProps?: React.ComponentProps<typeof Text>
+) {
   const output: React.ReactNode[] = []
   let run: (string | number)[] = []
   const flush = () => {
     if (run.length === 0) return
-    output.push(<Text key={`text-${output.length}`}>{run.join("")}</Text>)
+    output.push(
+      <Text key={`text-${output.length}`} {...textProps}>
+        {run.join("")}
+      </Text>
+    )
     run = []
   }
   for (const child of React.Children.toArray(children)) {
@@ -129,7 +142,7 @@ function Attachment({
       >
         <View
           className={cn(
-            "relative min-w-0 max-w-full shrink-0 rounded-2xl bg-surface-secondary",
+            "relative min-w-0 max-w-full shrink-0 rounded-2xl",
             SIZE[size],
             size === "xs" && "rounded-lg",
             vertical
@@ -141,9 +154,9 @@ function Attachment({
                 ? SIZE_WITH_CONTENT[size]
                 : hasMedia && SIZE_WITH_MEDIA[size]),
             grouped ? "w-full rounded-none" : "self-start",
-            !grouped &&
-              state === "idle" &&
-              "border border-dashed border-separator",
+            !grouped && state === "idle"
+              ? "border border-dashed border-separator-strong"
+              : "bg-surface-secondary",
             className
           )}
           {...props}
@@ -201,7 +214,7 @@ function AttachmentLabel({ className, children, ...props }: ViewProps) {
         className={cn("rounded-xs bg-accent px-1 py-0.5", className)}
         {...props}
       >
-        {wrapText(children)}
+        {wrapText(children, LABEL_TEXT)}
       </View>
     </TextClassContext.Provider>
   )
@@ -215,7 +228,7 @@ function AttachmentContent({ className, children, ...props }: ViewProps) {
       <View
         className={cn(
           "min-w-0 max-w-full",
-          orientation === "vertical" ? "px-1" : "flex-1",
+          orientation === "vertical" ? "px-1" : "shrink grow",
           className
         )}
         {...props}

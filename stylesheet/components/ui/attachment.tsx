@@ -158,12 +158,25 @@ function withAlpha(color: string, alpha: number) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-function wrapText(children: React.ReactNode) {
+const LABEL_TEXT = {
+  numberOfLines: 1,
+  adjustsFontSizeToFit: true,
+  minimumFontScale: 0.8,
+}
+
+function wrapText(
+  children: React.ReactNode,
+  textProps?: React.ComponentProps<typeof Text>
+) {
   const output: React.ReactNode[] = []
   let run: (string | number)[] = []
   const flush = () => {
     if (run.length === 0) return
-    output.push(<Text key={`text-${output.length}`}>{run.join("")}</Text>)
+    output.push(
+      <Text key={`text-${output.length}`} {...textProps}>
+        {run.join("")}
+      </Text>
+    )
     run = []
   }
   for (const child of React.Children.toArray(children)) {
@@ -227,7 +240,9 @@ function Attachment({
         <View
           style={[
             styles.root,
-            { backgroundColor: colors.surfaceSecondary },
+            (grouped || state !== "idle") && {
+              backgroundColor: colors.surfaceSecondary,
+            },
             SIZE[size],
             vertical
               ? [styles.vertical, { width: hasContent ? 120 : 96 }]
@@ -240,7 +255,7 @@ function Attachment({
             !grouped &&
               state === "idle" && [
                 styles.dashed,
-                { borderColor: colors.separator },
+                { borderColor: colors.separatorStrong },
               ],
             style,
           ]}
@@ -311,7 +326,7 @@ function AttachmentLabel({ style, children, ...props }: ViewProps) {
         style={[styles.label, { backgroundColor: colors.accent }, style]}
         {...props}
       >
-        {wrapText(children)}
+        {wrapText(children, LABEL_TEXT)}
       </View>
     </TextStyleContext.Provider>
   )
@@ -325,7 +340,9 @@ function AttachmentContent({ style, children, ...props }: ViewProps) {
       <View
         style={[
           styles.content,
-          orientation === "vertical" ? { paddingHorizontal: 4 } : { flex: 1 },
+          orientation === "vertical"
+            ? { paddingHorizontal: 4 }
+            : { flexGrow: 1, flexShrink: 1 },
           style,
         ]}
         {...props}
