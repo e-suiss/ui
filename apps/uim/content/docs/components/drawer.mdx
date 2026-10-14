@@ -173,7 +173,7 @@ With `modal={false}` there is no scrim. For the scaled background, render `Drawe
 
 ### Default
 
-<Example id="components-drawer--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-drawer--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
 
@@ -187,7 +187,7 @@ With `modal={false}` there is no scrim. For the scaled background, render `Drawe
 
 A drawer that rests at 40% and full height.
 
-<Example id="components-drawer--snap-points" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-drawer--snap-points" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { ScrollView, View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst ITEMS = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`)\n\nexport function DrawerSnapPointsExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer snapPoints={[0.4, 1]} showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open with snap points</Text>\n        </DrawerTrigger>\n        <DrawerContent showCloseButton>\n          <DrawerHeader>\n            <DrawerTitle>Snap points</DrawerTitle>\n            <DrawerDescription>\n              Drag up to expand, drag down to collapse or dismiss.\n            </DrawerDescription>\n          </DrawerHeader>\n          <ScrollView contentContainerClassName=\"gap-3 p-4\">\n            {ITEMS.map((item) => (\n              <View\n                key={item}\n                className=\"h-12 justify-center rounded-xl bg-surface-secondary px-4\"\n              >\n                <Text>{item}</Text>\n              </View>\n            ))}\n          </ScrollView>\n        </DrawerContent>\n      </Drawer>\n    </View>\n  )\n}"} />
 

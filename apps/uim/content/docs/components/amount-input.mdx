@@ -5,7 +5,7 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-amount-input--default" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--default" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" />\n  )\n}"} />
 
@@ -173,7 +173,7 @@ Pass `deleteLabel` and `decimalLabel` to localize the keypad's spoken labels.
 
 Starts with a value through `defaultValue`.
 
-<Example id="components-amount-input--filled" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--filled" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputFilledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"1250.5\" />\n  )\n}"} />
 
@@ -187,7 +187,7 @@ Starts with a value through `defaultValue`.
 
 Controlled with `value` and `onValueChange`.
 
-<Example id="components-amount-input--controlled" width={880} height={1023} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--controlled" width={880} height={1024} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { AmountInput } from \"@/components/ui/amount-input\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [amount, setAmount] = React.useState(0)\n  return (\n    <View className=\"items-center gap-4\">\n      <AmountInput\n        currency=\"USD\"\n        locale=\"en-US\"\n        value={value}\n        onValueChange={(next, nextAmount) => {\n          setValue(next)\n          setAmount(nextAmount)\n        }}\n      />\n      <Text className=\"text-sm text-label-secondary\">\n        {`value \"${value}\" · amount ${amount}`}\n      </Text>\n    </View>\n  )\n}\n\nexport function AmountInputControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
 
@@ -201,7 +201,7 @@ Controlled with `value` and `onValueChange`.
 
 A long amount that shrinks to fit.
 
-<Example id="components-amount-input--long-amount" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--long-amount" width={880} height={919} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputLongAmountExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"98765432109.99\" />\n  )\n}"} />
 
@@ -215,7 +215,7 @@ A long amount that shrinks to fit.
 
 EUR in the `de-DE` locale with a comma decimal separator.
 
-<Example id="components-amount-input--euro" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--euro" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputEuroExample() {\n  return (\n    <AmountInput currency=\"EUR\" locale=\"de-DE\" defaultValue=\"1234.5\" />\n  )\n}"} />
 
@@ -229,7 +229,7 @@ EUR in the `de-DE` locale with a comma decimal separator.
 
 TRY in the `tr-TR` locale.
 
-<Example id="components-amount-input--turkish-lira" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--turkish-lira" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputTurkishLiraExample() {\n  return (\n    <AmountInput currency=\"TRY\" locale=\"tr-TR\" defaultValue=\"2500.75\" />\n  )\n}"} />
 
@@ -243,7 +243,7 @@ TRY in the `tr-TR` locale.
 
 JPY, which has no decimal key.
 
-<Example id="components-amount-input--yen" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--yen" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputYenExample() {\n  return (\n    <AmountInput currency=\"JPY\" locale=\"ja-JP\" defaultValue=\"15000\" />\n  )\n}"} />
 
@@ -257,7 +257,7 @@ JPY, which has no decimal key.
 
 Capped at 500 with `max`; larger entries are rejected.
 
-<Example id="components-amount-input--with-max" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--with-max" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputWithMaxExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" max={500} />\n  )\n}"} />
 
@@ -271,7 +271,7 @@ Capped at 500 with `max`; larger entries are rejected.
 
 A disabled input with a dimmed amount and keypad.
 
-<Example id="components-amount-input--disabled" width={880} height={959} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-amount-input--disabled" width={880} height={961} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { AmountInput } from \"@/components/ui/amount-input\"\n\nexport function AmountInputDisabledExample() {\n  return (\n    <AmountInput currency=\"USD\" locale=\"en-US\" defaultValue=\"42\" disabled />\n  )\n}"} />
 

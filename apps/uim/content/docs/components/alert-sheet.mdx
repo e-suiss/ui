@@ -5,7 +5,7 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-alert-sheet--open-by-default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-sheet--open-by-default" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction SheetBody() {\n  return (\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>\n          <AlertSheetDescription>\n            This photo will be deleted from all of your devices.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction>Save to Files</AlertSheetAction>\n        <AlertSheetAction variant=\"destructive\">Delete Photo</AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  )\n}\n\nexport function AlertSheetOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet defaultOpen>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show sheet</Text>\n        </AlertSheetTrigger>\n        <SheetBody />\n      </AlertSheet>\n    </View>\n  )\n}"} />
 
@@ -173,7 +173,7 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 ### Default
 
-<Example id="components-alert-sheet--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-sheet--default" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction SheetBody() {\n  return (\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>\n          <AlertSheetDescription>\n            This photo will be deleted from all of your devices.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction>Save to Files</AlertSheetAction>\n        <AlertSheetAction variant=\"destructive\">Delete Photo</AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  )\n}\n\nexport function AlertSheetExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show sheet</Text>\n        </AlertSheetTrigger>\n        <SheetBody />\n      </AlertSheet>\n    </View>\n  )\n}"} />
 
@@ -187,7 +187,7 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 `dismissible={false}` with a destructive and a disabled action.
 
-<Example id="components-alert-sheet--not-dismissible" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-sheet--not-dismissible" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertSheetNotDismissibleExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet dismissible={false}>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Sign out</Text>\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Sign out of all devices?</AlertSheetTitle>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">Sign Out</AlertSheetAction>\n            <AlertSheetAction disabled>Keep Signed In Here</AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </View>\n  )\n}"} />
 

@@ -185,7 +185,7 @@ Set `locale` for month and weekday names, and `weekStartsOn` to change the first
 
 The `sm`, `default` and `lg` sizes.
 
-<Example id="components-calendar--sizes" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-calendar--sizes" width={880} height={1876} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarSizesExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar size=\"sm\" />\n      <SingleCalendar size=\"default\" />\n      <SingleCalendar size=\"lg\" />\n    </ScrollView>\n  )\n}"} />
 
@@ -283,7 +283,7 @@ Days from adjacent months shown with `showOutsideDays`.
 
 Navigation buttons in the `ghost`, `secondary` and `tinted` variants.
 
-<Example id="components-calendar--button-variants" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-calendar--button-variants" width={880} height={1871} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import * as React from \"react\"\nimport { ScrollView } from \"react-native\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>\n\nfunction SingleCalendar(\n  props: Omit<CalendarProps, \"mode\" | \"selected\" | \"onSelect\">\n) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border border-separator\"\n    />\n  )\n}\n\nexport function CalendarButtonVariantsExample() {\n  return (\n    <ScrollView contentContainerClassName=\"items-start gap-6\">\n      <SingleCalendar buttonVariant=\"ghost\" />\n      <SingleCalendar buttonVariant=\"secondary\" />\n      <SingleCalendar buttonVariant=\"tinted\" />\n    </ScrollView>\n  )\n}"} />
 

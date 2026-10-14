@@ -175,7 +175,7 @@ Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontr
 
 ### Default
 
-<Example id="components-alert-dialog--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-dialog--default" width={880} height={1124} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction AlertDialogBody() {\n  return (\n    <AlertDialogContent>\n      <AlertDialogHeader>\n        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\n        <AlertDialogDescription>\n          This action cannot be undone. This will permanently delete your\n          account and remove your data from our servers.\n        </AlertDialogDescription>\n      </AlertDialogHeader>\n      <AlertDialogFooter>\n        <AlertDialogCancel>\n          <Text>Cancel</Text>\n        </AlertDialogCancel>\n        <AlertDialogAction>\n          <Text>Continue</Text>\n        </AlertDialogAction>\n      </AlertDialogFooter>\n    </AlertDialogContent>\n  )\n}\n\nexport function AlertDialogExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show dialog</Text>\n        </AlertDialogTrigger>\n        <AlertDialogBody />\n      </AlertDialog>\n    </View>\n  )\n}"} />
 
@@ -189,7 +189,7 @@ Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontr
 
 The narrower `sm` content size.
 
-<Example id="components-alert-dialog--small" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-dialog--small" width={880} height={1084} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogSmallExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n          <Text>Discard draft</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent size=\"sm\">\n          <AlertDialogHeader>\n            <AlertDialogTitle>Discard draft?</AlertDialogTitle>\n            <AlertDialogDescription>\n              Your unsaved message will be lost.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Keep</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Discard</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
 
@@ -203,7 +203,7 @@ The narrower `sm` content size.
 
 An icon badge above the title with `AlertDialogMedia`.
 
-<Example id="components-alert-dialog--with-media" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-dialog--with-media" width={880} height={1182} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogMedia, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogWithMediaExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete project</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogMedia className=\"bg-danger/10\">\n              <Icon as={TrashIcon} className=\"text-danger\" />\n            </AlertDialogMedia>\n            <AlertDialogTitle>Delete this project?</AlertDialogTitle>\n            <AlertDialogDescription>\n              This permanently removes the project and all of its files. This\n              action cannot be undone.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Cancel</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Delete</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
 
@@ -217,7 +217,7 @@ An icon badge above the title with `AlertDialogMedia`.
 
 A destructive action button for an irreversible confirmation.
 
-<Example id="components-alert-dialog--destructive" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-alert-dialog--destructive" width={880} height={1103} platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertDialogDestructiveExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertDialog>\n        <AlertDialogTrigger render={<Button variant=\"destructive\" />}>\n          <Text>Delete project</Text>\n        </AlertDialogTrigger>\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogTitle>Delete project?</AlertDialogTitle>\n            <AlertDialogDescription>\n              All deployments and settings for this project will be removed.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>\n              <Text>Cancel</Text>\n            </AlertDialogCancel>\n            <AlertDialogAction variant=\"destructive\">\n              <Text>Delete</Text>\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    </View>\n  )\n}"} />
 

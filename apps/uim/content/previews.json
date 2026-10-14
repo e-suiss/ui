@@ -469,11 +469,11 @@
   ],
   "components-alert-dialog--default": [
     880,
-    400
+    1124
   ],
   "components-alert-dialog--destructive": [
     880,
-    400
+    1103
   ],
   "components-alert-dialog--open-by-default": [
     880,
@@ -481,59 +481,59 @@
   ],
   "components-alert-dialog--small": [
     880,
-    400
+    1084
   ],
   "components-alert-dialog--with-media": [
     880,
-    400
+    1182
   ],
   "components-alert-sheet--default": [
     880,
-    400
+    1767
   ],
   "components-alert-sheet--not-dismissible": [
     880,
-    400
+    1767
   ],
   "components-alert-sheet--open-by-default": [
     880,
-    1720
+    1767
   ],
   "components-amount-input--controlled": [
     880,
-    1023
+    1024
   ],
   "components-amount-input--default": [
     880,
-    959
+    961
   ],
   "components-amount-input--disabled": [
     880,
-    959
+    961
   ],
   "components-amount-input--euro": [
     880,
-    959
+    961
   ],
   "components-amount-input--filled": [
     880,
-    959
+    961
   ],
   "components-amount-input--long-amount": [
     880,
-    959
+    919
   ],
   "components-amount-input--turkish-lira": [
     880,
-    959
+    961
   ],
   "components-amount-input--with-max": [
     880,
-    959
+    961
   ],
   "components-amount-input--yen": [
     880,
-    959
+    961
   ],
   "components-aspect-ratio--default": [
     880,
@@ -557,11 +557,11 @@
   ],
   "components-attachment--file-types": [
     880,
-    855
+    857
   ],
   "components-attachment--group": [
     880,
-    759
+    761
   ],
   "components-attachment--image": [
     880,
@@ -573,15 +573,15 @@
   ],
   "components-attachment--sizes": [
     880,
-    459
+    453
   ],
   "components-attachment--states": [
     880,
-    859
+    857
   ],
   "components-attachment--vertical": [
     880,
-    415
+    410
   ],
   "components-avatar--default": [
     880,
@@ -637,7 +637,7 @@
   ],
   "components-bubble--conversation": [
     880,
-    459
+    462
   ],
   "components-bubble--default": [
     880,
@@ -653,11 +653,11 @@
   ],
   "components-bubble--variants": [
     880,
-    651
+    654
   ],
   "components-bubble--with-reactions": [
     880,
-    447
+    449
   ],
   "components-button--block": [
     880,
@@ -745,7 +745,7 @@
   ],
   "components-calendar--button-variants": [
     880,
-    1720
+    1871
   ],
   "components-calendar--default": [
     880,
@@ -777,7 +777,7 @@
   ],
   "components-calendar--sizes": [
     880,
-    1720
+    1876
   ],
   "components-calendar--week-numbers": [
     880,
@@ -809,19 +809,19 @@
   ],
   "components-carousel--default": [
     880,
-    799
+    703
   ],
   "components-carousel--featured": [
     880,
-    1048
+    1064
   ],
   "components-carousel--loop": [
     880,
-    799
+    703
   ],
   "components-carousel--multiple-items": [
     880,
-    439
+    400
   ],
   "components-carousel--shelf": [
     880,
@@ -833,7 +833,7 @@
   ],
   "components-carousel--vertical": [
     880,
-    751
+    783
   ],
   "components-carousel--with-page-indicator": [
     880,
@@ -965,7 +965,7 @@
   ],
   "components-combobox--default": [
     880,
-    400
+    819
   ],
   "components-combobox--disabled": [
     880,
@@ -977,11 +977,11 @@
   ],
   "components-combobox--invalid": [
     880,
-    400
+    819
   ],
   "components-combobox--multiple": [
     880,
-    400
+    819
   ],
   "components-combobox--open-by-default": [
     880,
@@ -989,19 +989,19 @@
   ],
   "components-combobox--with-clear": [
     880,
-    400
+    819
   ],
   "components-combobox--with-label": [
     880,
-    400
+    879
   ],
   "components-combobox--with-value": [
     880,
-    400
+    819
   ],
   "components-context-menu--default": [
     880,
-    400
+    1330
   ],
   "components-context-menu--open-by-default": [
     880,
@@ -1009,15 +1009,15 @@
   ],
   "components-context-menu--simple": [
     880,
-    400
+    826
   ],
   "components-dialog--default": [
     880,
-    400
+    1339
   ],
   "components-dialog--destructive": [
     880,
-    400
+    1151
   ],
   "components-dialog--open-by-default": [
     880,
@@ -1025,15 +1025,15 @@
   ],
   "components-dialog--with-close-label": [
     880,
-    400
+    1047
   ],
   "components-dialog--without-close-button": [
     880,
-    400
+    1151
   ],
   "components-drawer--default": [
     880,
-    400
+    1788
   ],
   "components-drawer--floating": [
     880,
@@ -1049,27 +1049,27 @@
   ],
   "components-drawer--snap-points": [
     880,
-    400
+    1788
   ],
   "components-dropdown-menu--checkboxes": [
     880,
-    400
+    533
   ],
   "components-dropdown-menu--default": [
     880,
-    400
+    706
   ],
   "components-dropdown-menu--inset": [
     880,
-    400
+    533
   ],
   "components-dropdown-menu--open-by-default": [
     880,
-    731
+    706
   ],
   "components-dropdown-menu--radio-group": [
     880,
-    400
+    533
   ],
   "components-empty--default": [
     880,
@@ -1425,19 +1425,19 @@
   ],
   "components-popover--default": [
     880,
-    400
+    744
   ],
   "components-popover--detached-triggers": [
     880,
-    400
+    488
   ],
   "components-popover--open-by-default": [
     880,
-    611
+    744
   ],
   "components-popover--sides": [
     880,
-    655
+    659
   ],
   "components-popover--simple": [
     880,
@@ -1545,7 +1545,7 @@
   ],
   "components-select--default": [
     880,
-    400
+    669
   ],
   "components-select--disabled": [
     880,
@@ -1553,11 +1553,11 @@
   ],
   "components-select--grouped": [
     880,
-    400
+    840
   ],
   "components-select--invalid": [
     880,
-    400
+    669
   ],
   "components-select--open-by-default": [
     880,
@@ -1565,15 +1565,15 @@
   ],
   "components-select--small": [
     880,
-    400
+    653
   ],
   "components-select--with-label": [
     880,
-    400
+    729
   ],
   "components-select--with-value": [
     880,
-    400
+    669
   ],
   "components-separator--default": [
     880,
@@ -1589,19 +1589,19 @@
   ],
   "components-sheet--default": [
     880,
-    400
+    1775
   ],
   "components-sheet--open-by-default": [
     880,
-    1720
+    1775
   ],
   "components-sheet--sides": [
     880,
-    439
+    904
   ],
   "components-sheet--with-close-label": [
     880,
-    400
+    1775
   ],
   "components-signature-pad--controlled": [
     880,
@@ -1845,7 +1845,7 @@
   ],
   "components-toast--default": [
     880,
-    535
+    1720
   ],
   "components-toast--show-on-load": [
     880,
