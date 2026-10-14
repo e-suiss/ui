@@ -5,26 +5,29 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
 
-**suiss/ui is an open-source library of copy-paste React components with a clean, minimal design.** It is built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4 for Next.js and React (Vite) projects with TypeScript. Instead of installing a component package, the `@esuiss/ui` command-line tool copies each component's source into your project, so you own the code and can change anything.
+**suiss/ui is an open-source library of copy-paste components with a clean, minimal design for React, React Native, SwiftUI and Jetpack Compose.** React components are built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4 for Next.js and Vite. React Native components come in [Uniwind](https://uniwind.dev), [NativeWind](https://www.nativewind.dev) and plain StyleSheet flavors with the same API for Expo and React Native. SwiftUI views and Compose composables share the same design tokens, names and variants. Instead of installing a component package, the `@esuiss/ui` command-line tool copies each component's source into your project, so you own the code and can change anything.
 
 **[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [Patterns](https://ui.suiss.app/docs/patterns) · [Interactions](https://ui.suiss.app/docs/interactions) · [Charts](https://ui.suiss.app/docs/charts) · [Blocks](https://ui.suiss.app/docs/blocks) · [CLI](https://ui.suiss.app/docs/cli)
 
 ## Features
 
-- **Components**: buttons, inputs, dialogs, sheets, drawers, menus, sidebars, tables, calendars, toasts, chat views and more.
-- **Patterns and interactions**: command palettes, pickers, split views, swipe actions, pull to refresh, steppers and other compositions built from the components.
-- **Charts**: area, bar, line, pie, radar and radial charts built on Recharts.
-- **Blocks**: full sections such as sign-up, checkout, dashboards, settings and pricing pages.
-- **Accessible**: keyboard navigation, focus management and ARIA come from Base UI primitives.
-- **Themeable**: colors named by role (`bg-surface`, `text-label`, `bg-accent`), written in oklch for light and dark mode.
+- **Four platforms, one design**: React, React Native, SwiftUI and Jetpack Compose read the same tokens and use the same component names, parts and variants.
+- **Components**: buttons, inputs, dialogs, sheets, drawers, menus, sidebars, tables, calendars, toasts, keypads, chat views and more.
+- **Patterns and interactions**: command palettes, pickers, split views, swipe actions, pull to refresh, card stacks and other compositions built from the components.
+- **Charts**: area, bar, line, pie, radar and radial charts, built on Recharts on the web, react-native-svg in React Native, Swift Charts in SwiftUI and the Compose canvas on Android.
+- **Blocks**: complete screens such as sign-up, checkout, dashboards, settings and pricing.
+- **Accessible**: keyboard navigation, focus management and screen reader labels on every platform.
+- **Themeable**: colors named by role (`surface`, `label`, `accent`), with a light and a dark value for every color.
 - **Phosphor icons** throughout.
 - **No runtime dependency**: the CLI runs with `npx` and is never installed in your project.
 
 ## Quick start
 
+Run the CLI in your project. It detects whether it is a Next.js or Vite app, an Expo or React Native app, an Xcode project or an Android Gradle module:
+
 ```bash
 npx @esuiss/ui@latest init
-npx @esuiss/ui@latest add button dialog sidebar
+npx @esuiss/ui@latest add button dialog sheet
 ```
 
 ```tsx
@@ -35,7 +38,14 @@ export function Example() {
 }
 ```
 
-`init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet, and the button. The stylesheet holds your theme: colors in oklch under `:root` and `.dark`, the radius, the font, and the `@theme inline` block that turns them into Tailwind classes such as `bg-surface`, `text-label` and `bg-accent`. Add or change colors there. Variants, animations, and utilities come from the `@esuiss/tailwind` package it imports. `add` copies components into `components/ui/` together with the components and packages they depend on. Patterns, interactions, charts and blocks are added by name:
+For SwiftUI and Jetpack Compose, pass the platform when the folder holds more than one project:
+
+```bash
+npx @esuiss/ui@latest add dialog --platform swift
+npx @esuiss/ui@latest add dialog --platform kotlin
+```
+
+On the web, `init` sets up Tailwind CSS (4.2 or later), the `@/*` import alias, the theme stylesheet and the button. In React Native projects it sets up Uniwind, NativeWind or StyleSheet, the theme, Metro and the portal host. In Xcode and Gradle projects it copies the theme files and the button. `add` copies components together with the components and packages they depend on. Patterns, interactions, charts and blocks are added by name:
 
 ```bash
 npx @esuiss/ui@latest add patterns command-palette
@@ -53,19 +63,16 @@ npx @esuiss/ui@latest add button --overwrite
 ## FAQ
 
 **What is suiss/ui?**
-An open-source collection of React components, patterns, interactions, charts and blocks with a clean, minimal design, distributed as source code through the `@esuiss/ui` CLI.
+An open-source collection of components, patterns, interactions, charts and blocks with a clean, minimal design for React, React Native, SwiftUI and Jetpack Compose, distributed as source code through the `@esuiss/ui` CLI.
 
 **How is it different from a component library on npm?**
-Components are not imported from a package. Their source is copied into `components/ui/` in your project, so you can read, change and extend every line without waiting for a release.
+Components are not imported from a package. Their source is copied into your project, so you can read, change and extend every line without waiting for a release.
 
-**Which frameworks does it support?**
-Next.js and React with Vite, using TypeScript and Tailwind CSS 4.2 or later.
+**Which platforms does it support?**
+React with Next.js or Vite (TypeScript, Tailwind CSS 4.2 or later), React Native with Expo or without it (TypeScript; Uniwind, NativeWind v4 or StyleSheet), SwiftUI on iOS 17 or later, and Jetpack Compose with `minSdk` 24 or higher.
 
 **Does it support dark mode?**
-Yes. Every color has a light and a dark value, and components switch with the `.dark` class.
-
-**Is there a version for mobile apps?**
-Yes. suiss/ui also ships the same components to React Native and Expo, SwiftUI and Jetpack Compose, and the same `@esuiss/ui` command adds them (see [packages/mobile](packages/mobile)): run it in an Expo or React Native app, an Xcode project or an Android Gradle module.
+Yes. Every color has a light and a dark value on every platform.
 
 **Is it free?**
 Yes, it is released under the [MIT License](LICENSE).
