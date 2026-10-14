@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 public struct PopoverContent<Content: View>: View {
   let width: CGFloat?
@@ -21,6 +22,39 @@ public struct PopoverContent<Content: View>: View {
     .fixedSize(horizontal: width == nil, vertical: true)
     .presentationCompactAdaptation(.popover)
     .presentationBackground(Color.surfaceRaised)
+    .background(PopoverChrome())
+  }
+}
+
+private struct PopoverChrome: UIViewRepresentable {
+  func makeUIView(context: Context) -> PopoverChromeView { PopoverChromeView() }
+  func updateUIView(_ view: PopoverChromeView, context: Context) { view.apply() }
+}
+
+final class PopoverChromeView: UIView {
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    isUserInteractionEnabled = false
+    registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (view: PopoverChromeView, _) in view.apply() }
+  }
+
+  required init?(coder: NSCoder) { nil }
+
+  override func didMoveToWindow() {
+    super.didMoveToWindow()
+    apply()
+    DispatchQueue.main.async { self.apply() }
+  }
+
+  func apply() {
+    let dark = traitCollection.userInterfaceStyle == .dark
+    var view = superview
+    while let current = view, !(current is UIWindow) {
+      for sibling in current.subviews where String(describing: type(of: sibling)).contains("ShadowView") {
+        sibling.isHidden = dark
+      }
+      view = current.superview
+    }
   }
 }
 
