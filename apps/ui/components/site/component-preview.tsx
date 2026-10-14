@@ -9,7 +9,8 @@ import { components, stories } from "@/demos/registry";
 type Kind = "ui" | "pattern" | "interaction" | "chart" | "block";
 type Args = Record<string, unknown>;
 type Layout = "centered" | "padded" | "fullscreen";
-type Context = { args: Args; parameters: Record<string, unknown>; globals: Record<string, unknown>; viewMode: "docs" };
+type Context = { args: Args; parameters: Record<string, unknown>; globals: Record<string, unknown>; viewMode: ViewMode };
+type ViewMode = "docs" | "story";
 type Decorator = (Story: React.ComponentType, context: Context) => React.ReactNode;
 type Story = {
   name?: string;
@@ -85,7 +86,17 @@ class Boundary extends React.Component<{ children: React.ReactNode }, { failed: 
   }
 }
 
-function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?: boolean }) {
+function StoryView({
+  meta,
+  story,
+  closed,
+  viewMode = "docs",
+}: {
+  meta: Meta;
+  story: Story;
+  closed?: boolean;
+  viewMode?: ViewMode;
+}) {
   const args: Args = { ...meta.args, ...story.args };
   if (closed) {
     args.defaultOpen = false;
@@ -95,7 +106,7 @@ function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?:
     args,
     parameters: { ...meta.parameters, ...story.parameters },
     globals: {},
-    viewMode: "docs",
+    viewMode,
   };
 
   const render = story.render ?? meta.render;
@@ -265,9 +276,11 @@ export function PreviewCanvas({ kind, name, story: only }: { kind: Kind; name: s
   if (Component) {
     return (
       <ScrollArea className="h-svh">
-        <Boundary>
-          <Component />
-        </Boundary>
+        <div className="grid min-h-svh grid-cols-[minmax(0,1fr)] *:md:h-auto">
+          <Boundary>
+            <Component />
+          </Boundary>
+        </div>
       </ScrollArea>
     );
   }
@@ -291,7 +304,7 @@ export function PreviewCanvas({ kind, name, story: only }: { kind: Kind; name: s
         )}
       >
         <Boundary>
-          <StoryView meta={meta} story={story} closed={closed} />
+          <StoryView meta={meta} story={story} closed={closed} viewMode="story" />
         </Boundary>
       </div>
     </ScrollArea>
