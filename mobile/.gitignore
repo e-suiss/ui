@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+dist/
+web-build/
+ios/
+android/
+*.tsbuildinfo
+.DS_Store
+.rnstorybook/storybook.requires.ts
+uniwind-types.d.ts
+.build/
+.swiftpm/
+Package.resolved
+xcuserdata/

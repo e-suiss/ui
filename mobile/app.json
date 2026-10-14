@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "esuiss uim",
+    "slug": "esuiss-uim",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.esuiss.uim",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.esuiss.uim"
+    },
+    "experiments": {
+      "baseUrl": "/live"
+    }
+  }
+}

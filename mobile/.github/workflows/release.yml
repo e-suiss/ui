@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Check version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $PACKAGE_VERSION." >&2
+            exit 1
+          fi
+
+      - name: Check registry
+        run: node scripts/build-registry.mjs --check
+
+      - name: Publish the Swift and Kotlin repositories
+        env:
+          SWIFT_MIRROR_KEY: ${{ secrets.SWIFT_MIRROR_KEY }}
+          KOTLIN_MIRROR_KEY: ${{ secrets.KOTLIN_MIRROR_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2> /dev/null
+          publish() {
+            if [ -z "$2" ]; then
+              echo "::warning::No deploy key for e-suiss/$3; it was not updated."
+              return
+            fi
+            echo "$2" > ~/.ssh/$3
+            chmod 600 ~/.ssh/$3
+            git subtree split --prefix="$1" --branch "$3-release"
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/$3 -o IdentitiesOnly=yes" git push "git@github.com:e-suiss/$3.git" "$3-release:main" "$3-release:refs/tags/$GITHUB_REF_NAME"
+          }
+          publish swiftui "$SWIFT_MIRROR_KEY" uim-swift
+          publish kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PREVIOUS=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2> /dev/null || true)
+          RANGE="${PREVIOUS:+$PREVIOUS..}$GITHUB_REF_NAME"
+          {
+            echo "## Changes"
+            echo
+            git log --no-merges --format='- %s (%h)' "$RANGE"
+            echo
+            echo "## Install"
+            echo
+            echo '```bash'
+            echo "npx @esuiss/ui@latest init"
+            echo '```'
+          } > notes.md
+          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag
