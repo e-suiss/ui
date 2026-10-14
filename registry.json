@@ -27,7 +27,8 @@
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-scrollbar-gap"
       ],
       "files": [
         "components/ui/alert-dialog.tsx"
@@ -42,7 +43,9 @@
         "class-variance-authority",
         "cn"
       ],
-      "requires": [],
+      "requires": [
+        "use-scrollbar-gap"
+      ],
       "files": [
         "components/ui/alert-sheet.tsx"
       ]
@@ -317,7 +320,8 @@
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-scrollbar-gap"
       ],
       "files": [
         "components/ui/dialog.tsx"
@@ -345,7 +349,8 @@
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-scrollbar-gap"
       ],
       "files": [
         "components/ui/drawer.tsx"
@@ -731,7 +736,8 @@
         "cn"
       ],
       "requires": [
-        "button"
+        "button",
+        "use-scrollbar-gap"
       ],
       "files": [
         "components/ui/sheet.tsx"
@@ -3374,6 +3380,16 @@
       "requires": [],
       "files": [
         "hooks/use-questionnaire.ts"
+      ]
+    },
+    {
+      "name": "use-scrollbar-gap",
+      "type": "hook",
+      "title": "Use Scrollbar Gap",
+      "dependencies": [],
+      "requires": [],
+      "files": [
+        "hooks/use-scrollbar-gap.ts"
       ]
     }
   ]

@@ -176,7 +176,10 @@ function AppShell({
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ms-1" />
-          <Separator orientation="vertical" className="me-2 h-4" />
+          <Separator
+            orientation="vertical"
+            className="me-2 data-vertical:h-4 data-vertical:self-center"
+          />
           <span className="text-label-secondary text-sm">Platform</span>
           <span className="text-label-secondary text-sm">/</span>
           <span className="text-sm font-medium">Home</span>
@@ -210,7 +213,7 @@ const meta = {
       <div
         className={
           viewMode === "docs"
-            ? "h-[32rem] transform-gpu overflow-hidden"
+            ? "h-[32rem] transform-gpu overflow-hidden [&_[data-slot=sidebar-container]]:h-full [&_[data-slot=sidebar-wrapper]]:min-h-full"
             : "min-h-svh"
         }
       >
