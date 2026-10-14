@@ -101,13 +101,13 @@ public struct Attachment<Content: View>: View {
     .frame(width: vertical ? (parts.content ? 120 : 96) : nil)
     .frame(minWidth: vertical ? nil : 160, alignment: .leading)
     .background {
-      if !grouped {
+      if !grouped && state != .idle {
         shape.fill(Color.surfaceSecondary)
       }
     }
     .overlay {
       if state == .idle && !grouped {
-        shape.strokeBorder(Color.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+        shape.strokeBorder(Color.separatorStrong, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
       }
     }
     .scaledFont(size == .default ? .sm : .xs)
