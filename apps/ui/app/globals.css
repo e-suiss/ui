@@ -448,7 +448,7 @@ body {
 }
 
 [data-slot="preview"] :is(.min-h-svh, .min-h-dvh, .min-h-screen) {
-  min-height: 20rem;
+  min-height: max(20rem, var(--preview-fill, 100%));
 }
 
 [data-slot="preview"] :is(.h-svh, .h-dvh, .h-screen) {

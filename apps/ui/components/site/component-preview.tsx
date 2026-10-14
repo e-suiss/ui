@@ -9,7 +9,7 @@ import { components, stories } from "@/demos/registry";
 type Kind = "ui" | "pattern" | "interaction" | "chart" | "block";
 type Args = Record<string, unknown>;
 type Layout = "centered" | "padded" | "fullscreen";
-type Context = { args: Args; parameters: Record<string, unknown>; globals: Record<string, unknown> };
+type Context = { args: Args; parameters: Record<string, unknown>; globals: Record<string, unknown>; viewMode: "docs" };
 type Decorator = (Story: React.ComponentType, context: Context) => React.ReactNode;
 type Story = {
   name?: string;
@@ -95,6 +95,7 @@ function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?:
     args,
     parameters: { ...meta.parameters, ...story.parameters },
     globals: {},
+    viewMode: "docs",
   };
 
   const render = story.render ?? meta.render;
