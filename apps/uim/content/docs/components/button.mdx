@@ -5,7 +5,7 @@ eyebrow: React Native Component
 generated: true
 ---
 
-<Example id="components-button--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--default" width={880} height={400} live="button/Default" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonExample() {\n  return (\n    <View className=\"items-start\">\n      <Button>\n        <Text>Button</Text>\n      </Button>\n    </View>\n  )\n}"} />
 
@@ -161,7 +161,7 @@ Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only a
 
 All eight variants, plus an icon-only button.
 
-<Example id="components-button--variants" width={880} height={919} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--variants" width={880} height={919} live="button/Variants" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonVariantsExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button>\n        <Text>Default</Text>\n      </Button>\n      <Button variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button variant=\"ghost\">\n        <Text>Ghost</Text>\n      </Button>\n      <Button variant=\"plain\">\n        <Text>Plain</Text>\n      </Button>\n      <Button variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n      <Button variant=\"link\">\n        <Text>Link</Text>\n      </Button>\n      <Button size=\"icon\" variant=\"outline\">\n        <Icon as={PlusIcon} />\n      </Button>\n    </View>\n  )\n}"} />
 
@@ -175,7 +175,7 @@ All eight variants, plus an icon-only button.
 
 Compares the text and icon-only sizes.
 
-<Example id="components-button--sizes" width={880} height={439} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--sizes" width={880} height={439} live="button/Sizes" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonSizesExample() {\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"xs\">\n          <Text>Extra small</Text>\n        </Button>\n        <Button size=\"sm\">\n          <Text>Small</Text>\n        </Button>\n        <Button>\n          <Text>Default</Text>\n        </Button>\n        <Button size=\"lg\">\n          <Text>Large</Text>\n        </Button>\n        <Button size=\"xl\">\n          <Text>Extra large</Text>\n        </Button>\n      </View>\n      <View className=\"flex-row flex-wrap items-center gap-3\">\n        <Button size=\"icon-xs\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-sm\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-lg\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n        <Button size=\"icon-xl\" variant=\"secondary\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </View>\n    </View>\n  )\n}"} />
 
@@ -189,7 +189,7 @@ Compares the text and icon-only sizes.
 
 Leading and trailing icons, and an icon-only button.
 
-<Example id="components-button--with-icon" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--with-icon" width={880} height={400} live="button/WithIcon" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { ArrowRightIcon, DownloadSimpleIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonWithIconExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button>\n        <Icon as={DownloadSimpleIcon} />\n        <Text>Download</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>Continue</Text>\n        <Icon as={ArrowRightIcon} />\n      </Button>\n      <Button variant=\"destructive\">\n        <Icon as={TrashIcon} />\n        <Text>Delete</Text>\n      </Button>\n    </View>\n  )\n}"} />
 
@@ -203,7 +203,7 @@ Leading and trailing icons, and an icon-only button.
 
 Disabled buttons in every variant.
 
-<Example id="components-button--disabled" width={880} height={535} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--disabled" width={880} height={535} live="button/Disabled" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonDisabledExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Text>Default</Text>\n      </Button>\n      <Button disabled variant=\"secondary\">\n        <Text>Secondary</Text>\n      </Button>\n      <Button disabled variant=\"tinted\">\n        <Text>Tinted</Text>\n      </Button>\n      <Button disabled variant=\"outline\">\n        <Text>Outline</Text>\n      </Button>\n      <Button disabled variant=\"destructive\">\n        <Text>Destructive</Text>\n      </Button>\n    </View>\n  )\n}"} />
 
@@ -217,7 +217,7 @@ Disabled buttons in every variant.
 
 Full-width buttons at each size, whose corner radius scales with size.
 
-<Example id="components-button--block" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
+<Example id="components-button--block" width={880} height={400} live="button/Block" platforms={["React Native","SwiftUI","Compose"]}>
 
 <Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonBlockExample() {\n  return (\n    <View className=\"gap-3\">\n      <Button block size=\"lg\">\n        <Text>Continue</Text>\n      </Button>\n      <Button block size=\"lg\" variant=\"secondary\">\n        <Text>Not now</Text>\n      </Button>\n      <Button block variant=\"tinted\">\n        <Text>Learn more</Text>\n      </Button>\n    </View>\n  )\n}"} />
 

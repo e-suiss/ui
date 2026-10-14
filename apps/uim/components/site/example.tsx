@@ -4,6 +4,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { SourceCode } from "@/components/site/source-code";
+import { useTheme } from "@/components/ui/theme";
 
 const KEY = "uim-platform";
 const listeners = new Set<() => void>();
@@ -36,6 +37,31 @@ function previewAlt(id: string, scheme: string) {
   return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} on iOS in ${scheme} mode`;
 }
 
+function LiveFrame({ live, id, width, height }: { live: string; id: string; width?: number; height?: number }) {
+  const { resolvedTheme } = useTheme();
+  const ref = React.useRef<HTMLIFrameElement>(null);
+  const [file = "", story = "Default"] = live.split("/");
+  const [initial, setInitial] = React.useState<string>();
+  React.useEffect(() => {
+    if (!initial && resolvedTheme) setInitial(resolvedTheme);
+  }, [initial, resolvedTheme]);
+  React.useEffect(() => {
+    ref.current?.contentWindow?.postMessage({ theme: resolvedTheme }, window.location.origin);
+  }, [resolvedTheme]);
+  if (!initial) return <div style={{ aspectRatio: width && height ? `${width} / ${height}` : undefined }} />;
+  return (
+    <iframe
+      ref={ref}
+      src={`/live/index.html?file=${file}&story=${story}&theme=${initial}`}
+      title={previewAlt(id, initial)}
+      loading="lazy"
+      onLoad={() => ref.current?.contentWindow?.postMessage({ theme: resolvedTheme }, window.location.origin)}
+      className="block w-full bg-surface"
+      style={{ aspectRatio: width && height ? `${width} / ${Math.max(height, width * 1.1)}` : "9 / 16" }}
+    />
+  );
+}
+
 function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => {
@@ -49,6 +75,7 @@ export function Example({
   height,
   platforms = [],
   video,
+  live,
   children,
 }: {
   id?: string;
@@ -56,6 +83,7 @@ export function Example({
   height?: number;
   platforms?: string[];
   video?: boolean;
+  live?: string;
   children: React.ReactNode;
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">(id ? "preview" : "code");
@@ -102,17 +130,19 @@ export function Example({
             ))}
           </div>
         ) : (
-          id && <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">iOS</span>
+          id && <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">{live ? "Web" : "iOS"}</span>
         )}
       </div>
       {id && (
         <div hidden={tab !== "preview"}>
           <div
             data-slot="preview"
-            className="mt-[1.2em] flex justify-center overflow-hidden rounded-[24px] bg-surface-secondary px-6 py-10 ring-1 ring-label/10 md:py-14"
+            className="mt-[1.2em] flex flex-col items-center gap-4 overflow-hidden rounded-[24px] bg-surface-secondary px-6 py-10 ring-1 ring-label/10 md:py-14"
           >
             <div className="w-full max-w-[360px] overflow-hidden rounded-[28px] shadow-[0_24px_60px_-28px_rgb(0_0_0/0.35)] ring-1 ring-label/10">
-              {(["light", "dark"] as const).map((scheme) =>
+              {live ? (
+                <LiveFrame live={live} id={id} width={width} height={height} />
+              ) : (["light", "dark"] as const).map((scheme) =>
                 video ? (
                   <video
                     key={scheme}
@@ -142,6 +172,9 @@ export function Example({
                 ),
               )}
             </div>
+            {live && (
+              <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">Web preview</p>
+            )}
           </div>
         </div>
       )}

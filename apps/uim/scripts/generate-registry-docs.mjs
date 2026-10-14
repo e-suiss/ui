@@ -131,12 +131,23 @@ const labelOf = (key) => {
 
 const switcher = { swift: "SwiftUI", kotlin: "Compose" };
 
+const live = new Set(["attachment", "button", "carousel", "combobox", "dialog"]);
+
+function liveOf(id) {
+  const [group, story] = id.split("--");
+  const file = group.replace(/^components-/, "");
+  if (!group.startsWith("components-") || !live.has(file)) return undefined;
+  return `${file}/${story.replace(/(^|-)([a-z0-9])/g, (_, __, char) => char.toUpperCase())}`;
+}
+
 function example(id, body, others = {}) {
   const size = previews[id];
+  const web = size && liveOf(id);
   const extra = Object.entries(switcher).filter(([platform]) => others[platform]);
   const attrs = [
     size ? ` id="${id}" width={${size[0]}} height={${size[1]}}` : "",
-    size && existsSync(path.join(root, "public/previews", `${id}.light.mp4`)) ? " video" : "",
+    web ? ` live="${web}"` : "",
+    size && !web && existsSync(path.join(root, "public/previews", `${id}.light.mp4`)) ? " video" : "",
     extra.length ? ` platforms={${JSON.stringify(["React Native", ...extra.map(([, label]) => label)])}}` : "",
   ].join("");
   return [`<Example${attrs}>`, "", body, "", ...extra.flatMap(([platform]) => [others[platform], ""]), "</Example>", ""];
