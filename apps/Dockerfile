@@ -20,7 +20,8 @@ COPY packages/mobile/package.json packages/mobile/
 COPY packages/cli/package.json packages/cli/
 COPY packages/tailwind/package.json packages/tailwind/
 COPY packages/tokens/package.json packages/tokens/
-RUN corepack install
+RUN corepack install \
+ && npm pkg delete scripts.prepare
 ARG APP=ui
 RUN pnpm install --frozen-lockfile --filter "./apps/${APP}..." --os=linux --cpu=x64 --cpu=arm64 --libc=glibc
 COPY . .
