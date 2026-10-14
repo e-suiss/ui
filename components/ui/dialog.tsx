@@ -5,6 +5,7 @@ import { XIcon } from "@phosphor-icons/react"
 import { cn } from "cn"
 import type * as React from "react"
 import { Button } from "@/components/ui/button"
+import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
@@ -26,6 +27,8 @@ function DialogOverlay({
   className,
   ...props
 }: DialogPrimitive.Backdrop.Props) {
+  useScrollbarGap()
+
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"

@@ -5,6 +5,7 @@ import { cn } from "cn"
 import type * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
@@ -26,6 +27,8 @@ function AlertDialogOverlay({
   className,
   ...props
 }: AlertDialogPrimitive.Backdrop.Props) {
+  useScrollbarGap()
+
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
