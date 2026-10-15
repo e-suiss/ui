@@ -17,6 +17,13 @@ import { renderExample } from "@/tests/render-example"
 const openState = byBase<[string, string?]>({
   base: ["data-open"],
   radix: ["data-state", "instant-open"],
+  aria: ["data-placement"],
+})
+
+const SIDE = byBase({
+  base: "data-side",
+  radix: "data-side",
+  aria: "data-placement",
 })
 
 function TooltipOpen() {
@@ -141,9 +148,7 @@ test("Sides", async () => {
       const trigger = canvas.getByRole("button", { name: side })
       const content = screen.getByText(`Shown on the ${side}`)
       await expect(
-        content
-          .closest('[data-slot="tooltip-content"]')
-          ?.getAttribute("data-side")
+        content.closest('[data-slot="tooltip-content"]')?.getAttribute(SIDE)
       ).toBe(side)
       await waitFor(() => {
         const tip = content.getBoundingClientRect()

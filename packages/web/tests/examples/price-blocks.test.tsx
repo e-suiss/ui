@@ -10,6 +10,7 @@ import { renderExample } from "@/tests/render-example"
 const SINGLE = byBase({
   base: { group: "group", role: "button", pressed: "aria-pressed" },
   radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+  aria: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
 } as const)
 
 const TWO_TB_PLAN = /^2 TB\b/
@@ -30,13 +31,13 @@ test("Storage", async () => {
     await expect(yearly).toHaveAttribute(SINGLE.pressed, "true")
     const sixTb = canvas
       .getByRole("radio", { name: SIX_TB_PLAN })
-      .closest("label")
+      .closest("[data-slot=label]")
     await waitFor(() => expect(sixTb).toHaveTextContent("$299.90 /yr"))
   })
 
   await step("picking a plan offers to switch to it", async () => {
     const plan = canvas.getByRole("radio", { name: TWO_TB_PLAN })
-    const card = plan.closest("label")
+    const card = plan.closest("[data-slot=label]")
     if (!card) throw new Error("Missing plan card")
     await userEvent.click(card)
     await expect(plan).toBeChecked()
@@ -56,7 +57,7 @@ test("Bundle", async () => {
       "Save $8 compared to buying separately ›"
     )
     const premier = canvas.getByRole("radio", { name: PREMIER_PLAN })
-    const card = premier.closest("label")
+    const card = premier.closest("[data-slot=label]")
     if (!card) throw new Error("Missing plan card")
     await userEvent.click(card)
     await expect(premier).toBeChecked()

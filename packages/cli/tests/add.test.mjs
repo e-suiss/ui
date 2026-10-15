@@ -9,6 +9,7 @@ import { choose, isInteractive } from "../lib/prompt.mjs"
 import { read, serveRegistry, silenceOutput, viteProject } from "./helpers.mjs"
 
 const RADIX_INDEX = /\/registry\/radix\/registry\.json$/
+const ARIA_INDEX = /\/registry\/aria\/registry\.json$/
 
 vi.mock("node:child_process", () => ({
   spawnSync: vi.fn(() => ({ status: 0 })),
@@ -213,6 +214,55 @@ export const Icon = () => (
       await add(["dialog"], { cwd, base: "base" })
       expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
         files["components/ui/dialog.tsx"]
+      )
+    })
+  })
+
+  describe("with the third primitive base", () => {
+    const aria = {
+      "bases/aria/components/ui/dialog.tsx":
+        'import { Modal } from "react-aria-components"\n',
+      "registry/aria/registry.json": {
+        ...registry,
+        items: registry.items.map((item) =>
+          item.name === "dialog"
+            ? {
+                ...item,
+                dependencies: ["react-aria-components"],
+                files: [
+                  {
+                    path: "bases/aria/components/ui/dialog.tsx",
+                    type: "registry:ui",
+                  },
+                ],
+              }
+            : item
+        ),
+      },
+      ...files,
+    }
+
+    it("installs the twin into the usual folder", async () => {
+      serveRegistry(aria)
+      const cwd = viteProject()
+      await add(["dialog"], { cwd, base: "aria" })
+      expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
+        aria["bases/aria/components/ui/dialog.tsx"]
+      )
+      expect(spawnSync).toHaveBeenCalledWith(
+        "npm",
+        ["install", "@base-ui/react", "react-aria-components"],
+        expect.objectContaining({ cwd })
+      )
+    })
+
+    it("follows the style in components.json", async () => {
+      const fetch = serveRegistry(aria)
+      const cwd = viteProject({ "components.json": { style: "aria-nova" } })
+      await add(["dialog"], { cwd })
+      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(ARIA_INDEX))
+      expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
+        aria["bases/aria/components/ui/dialog.tsx"]
       )
     })
   })

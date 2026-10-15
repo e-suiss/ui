@@ -105,11 +105,13 @@ const item = (cwd, name) =>
 const standardItem = (cwd, name) =>
   standardOf(cwd).items.find((entry) => entry.name === name)
 
-function radixOf(cwd) {
+function baseOf(cwd, base) {
   return JSON.parse(
-    readFileSync(path.join(cwd, "registry/radix/registry.json"), "utf8")
+    readFileSync(path.join(cwd, `registry/${base}/registry.json`), "utf8")
   )
 }
+
+const radixOf = (cwd) => baseOf(cwd, "radix")
 
 describe("build-registry", () => {
   it("lists every source file with its type, title and path", () => {
@@ -650,22 +652,25 @@ describe("the published registry", () => {
     expect(problems).toEqual([])
   })
 
-  it("lists every item of the second base with existing files", () => {
-    const standard = standardOf(repo)
-    const radix = radixOf(repo)
-    expect(radix.items.map((entry) => entry.name)).toEqual(
-      standard.items.map((entry) => entry.name)
-    )
-    const problems = radix.items.flatMap((entry) => [
-      ...(entry.files ?? [])
-        .filter((file) => !existsSync(path.join(repo, file.path)))
-        .map((file) => `${entry.name}: ${file.path}`),
-      ...(entry.dependencies ?? [])
-        .filter((dependency) => !declared.has(dependency))
-        .map((dependency) => `${entry.name}: ${dependency}`),
-    ])
-    expect(problems).toEqual([])
-  })
+  it.each(["radix", "aria"])(
+    "lists every item of the %s base with existing files",
+    (base) => {
+      const standard = standardOf(repo)
+      const variant = baseOf(repo, base)
+      expect(variant.items.map((entry) => entry.name)).toEqual(
+        standard.items.map((entry) => entry.name)
+      )
+      const problems = variant.items.flatMap((entry) => [
+        ...(entry.files ?? [])
+          .filter((file) => !existsSync(path.join(repo, file.path)))
+          .map((file) => `${entry.name}: ${file.path}`),
+        ...(entry.dependencies ?? [])
+          .filter((dependency) => !declared.has(dependency))
+          .map((dependency) => `${entry.name}: ${dependency}`),
+      ])
+      expect(problems).toEqual([])
+    }
+  )
 
   it("points every item at a file that exists", () => {
     const missing = registry.items.flatMap((entry) =>

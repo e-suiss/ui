@@ -20,6 +20,7 @@ import { renderExample } from "@/tests/render-example"
 const openState = byBase<[string, string?]>({
   base: ["data-open"],
   radix: ["data-state", "open"],
+  aria: ["data-slot", "confirm-content"],
 })
 
 function ConfirmOpenByDefault() {
@@ -85,6 +86,7 @@ test("Default", async () => {
     const dialog = await screen.findByRole("alertdialog")
     await waitFor(() => expect(dialog).toBeVisible())
     await userEvent.click(document.body, { pointerEventsCheck: 0 })
+    await expect(dialog).toBeInTheDocument()
     await expect(dialog).toHaveAttribute(...openState)
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())

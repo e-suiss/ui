@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/dom"
+import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
@@ -134,7 +134,7 @@ test("Open By Default", async () => {
     })
     await waitFor(() => expect(dialog).toBeVisible())
     await userEvent.click(
-      await screen.findByRole("button", { name: "Sign out" })
+      await within(dialog).findByRole("button", { name: "Sign out" })
     )
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
   })

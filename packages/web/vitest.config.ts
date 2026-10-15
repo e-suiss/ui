@@ -43,7 +43,7 @@ function browser(name: string) {
 
 function examples(
   name: string,
-  base?: "radix"
+  base?: "radix" | "aria"
 ): TestProjectInlineConfiguration {
   return {
     extends: true,
@@ -175,6 +175,7 @@ export default defineConfig({
         : []),
       examples("examples"),
       examples("examples-radix", "radix"),
+      examples("examples-aria", "aria"),
     ],
   },
 })

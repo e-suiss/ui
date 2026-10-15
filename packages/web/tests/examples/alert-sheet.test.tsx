@@ -144,9 +144,10 @@ test("Not Dismissible", async () => {
   await userEvent.click(canvas.getByRole("button", { name: "Delete order" }))
 
   await step("opens as an alert dialog", async () => {
-    await expect(
-      await screen.findByRole("alertdialog", { name: "Delete order" })
-    ).toBeVisible()
+    const sheet = await screen.findByRole("alertdialog", {
+      name: "Delete order",
+    })
+    await waitFor(() => expect(sheet).toBeVisible())
   })
 
   await step("closes from cancel", async () => {
@@ -164,7 +165,9 @@ test("With Title", async () => {
     await expect(sheet).toHaveAccessibleDescription(
       "You will need to sign in again to access your projects."
     )
-    await expect(screen.getByText("Sign out of your account?")).toBeVisible()
+    await waitFor(() =>
+      expect(screen.getByText("Sign out of your account?")).toBeVisible()
+    )
   })
 
   await step("closes from the action", async () => {

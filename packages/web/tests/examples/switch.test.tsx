@@ -11,6 +11,7 @@ import { renderExample } from "@/tests/render-example"
 const DISABLED = byBase({
   base: { name: "aria-disabled", value: "true" },
   radix: { name: "disabled", value: "" },
+  aria: { name: "disabled", value: "" },
 })
 
 test("Default", async () => {
@@ -19,15 +20,15 @@ test("Default", async () => {
   const control = canvas.getByRole("switch", { name: "Wi-Fi" })
 
   await step("toggles on click", async () => {
-    await expect(control).toHaveAttribute("aria-checked", "false")
+    await expect(control).not.toBeChecked()
     await userEvent.click(control)
-    await expect(control).toHaveAttribute("aria-checked", "true")
+    await expect(control).toBeChecked()
   })
 
   await step("toggles back with Space", async () => {
     await expect(control).toHaveFocus()
     await userEvent.keyboard(" ")
-    await expect(control).toHaveAttribute("aria-checked", "false")
+    await expect(control).not.toBeChecked()
   })
 })
 test("Checked", async () => {
@@ -36,9 +37,9 @@ test("Checked", async () => {
   const control = canvas.getByRole("switch", { name: "Wi-Fi" })
 
   await step("starts on and turns off on click", async () => {
-    await expect(control).toHaveAttribute("aria-checked", "true")
+    await expect(control).toBeChecked()
     await userEvent.click(control)
-    await expect(control).toHaveAttribute("aria-checked", "false")
+    await expect(control).not.toBeChecked()
   })
 })
 test("With Label", async () => {
@@ -48,7 +49,7 @@ test("With Label", async () => {
 
   await step("toggles from the label text", async () => {
     await userEvent.click(canvas.getByText("Airplane mode"))
-    await expect(control).toHaveAttribute("aria-checked", "true")
+    await expect(control).toBeChecked()
   })
 })
 test("Disabled", async () => {
@@ -59,8 +60,8 @@ test("Disabled", async () => {
   await step("ignores clicks while disabled", async () => {
     await expect(off).toHaveAttribute(DISABLED.name, DISABLED.value)
     await userEvent.click(off, { pointerEventsCheck: 0 })
-    await expect(off).toHaveAttribute("aria-checked", "false")
-    await expect(on).toHaveAttribute("aria-checked", "true")
+    await expect(off).not.toBeChecked()
+    await expect(on).toBeChecked()
   })
 })
 test("Invalid", async () => {
@@ -70,12 +71,12 @@ test("Invalid", async () => {
 
   await step("flags the switch as invalid", async () => {
     await expect(control).toBeInvalid()
-    await expect(control).toHaveAttribute("aria-checked", "false")
+    await expect(control).not.toBeChecked()
   })
 
   await step("still toggles on click", async () => {
     await userEvent.click(control)
-    await expect(control).toHaveAttribute("aria-checked", "true")
+    await expect(control).toBeChecked()
     await expect(control).toBeInvalid()
   })
 })

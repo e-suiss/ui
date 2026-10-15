@@ -12,6 +12,7 @@ import { renderExample } from "@/tests/render-example"
 const DISABLED = byBase({
   base: { name: "aria-disabled", value: "true" },
   radix: { name: "disabled", value: "" },
+  aria: { name: "disabled", value: "" },
 })
 
 test("Default", async () => {

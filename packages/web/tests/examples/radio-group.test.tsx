@@ -20,13 +20,13 @@ test("Default", async () => {
     await expect(
       canvas.getByRole("radiogroup", { name: "Notification method" })
     ).toBeVisible()
-    await expect(email).toHaveAttribute("aria-checked", "true")
+    await expect(email).toBeChecked()
   })
 
   await step("selects with a click on the label", async () => {
     await userEvent.click(canvas.getByText("Text message"))
-    await expect(sms).toHaveAttribute("aria-checked", "true")
-    await expect(email).toHaveAttribute("aria-checked", "false")
+    await expect(sms).toBeChecked()
+    await expect(email).not.toBeChecked()
   })
 
   await step("moves the selection with arrow keys", async () => {
@@ -34,7 +34,7 @@ test("Default", async () => {
     await userEvent.keyboard("{ArrowDown>}{/ArrowDown}")
     const push = canvas.getByRole("radio", { name: "Push notification" })
     await expect(push).toHaveFocus()
-    await expect(push).toHaveAttribute("aria-checked", "true")
+    await expect(push).toBeChecked()
   })
 })
 test("With Descriptions", async () => {
@@ -63,10 +63,10 @@ test("With Descriptions", async () => {
   })
 
   await step("selects an option from its description", async () => {
-    await expect(standard).toHaveAttribute("aria-checked", "true")
+    await expect(standard).toBeChecked()
     await userEvent.click(canvas.getByText("Arrives in 1 to 2 business days."))
-    await expect(express).toHaveAttribute("aria-checked", "true")
-    await expect(standard).toHaveAttribute("aria-checked", "false")
+    await expect(express).toBeChecked()
+    await expect(standard).not.toBeChecked()
   })
 })
 test("Disabled Item", async () => {
@@ -78,7 +78,7 @@ test("Disabled Item", async () => {
     await userEvent.click(canvas.getByRole("radio", { name: "Text message" }))
     await userEvent.keyboard("{ArrowDown>}{/ArrowDown}")
     await expect(push).not.toHaveFocus()
-    await expect(push).toHaveAttribute("aria-checked", "false")
+    await expect(push).not.toBeChecked()
   })
 })
 test("Disabled", async () => {
@@ -90,11 +90,8 @@ test("Disabled", async () => {
     })
     await expect(
       canvas.getByRole("radio", { name: "Text message" })
-    ).toHaveAttribute("aria-checked", "false")
-    await expect(canvas.getByRole("radio", { name: "Email" })).toHaveAttribute(
-      "aria-checked",
-      "true"
-    )
+    ).not.toBeChecked()
+    await expect(canvas.getByRole("radio", { name: "Email" })).toBeChecked()
   })
 })
 test("Invalid", async () => {
@@ -106,7 +103,7 @@ test("Invalid", async () => {
     await expect(radios).toHaveLength(3)
     for (const radio of radios) {
       await expect(radio).toBeInvalid()
-      await expect(radio).toHaveAttribute("aria-checked", "false")
+      await expect(radio).not.toBeChecked()
     }
   })
 
@@ -114,6 +111,6 @@ test("Invalid", async () => {
     await userEvent.click(canvas.getByText("Text message"))
     await expect(
       canvas.getByRole("radio", { name: "Text message" })
-    ).toHaveAttribute("aria-checked", "true")
+    ).toBeChecked()
   })
 })

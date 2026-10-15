@@ -16,8 +16,24 @@ import SelectInvalid from "@/examples/select-invalid"
 import SelectSmall from "@/examples/select-small"
 import SelectWithIcons from "@/examples/select-with-icons"
 import SelectWithValue from "@/examples/select-with-value"
-import { byBase } from "@/tests/base"
+import { base, byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const TRIGGER = byBase({ base: "combobox", radix: "combobox", aria: "button" })
+
+const INVALID = byBase({
+  base: "aria-invalid",
+  radix: "aria-invalid",
+  aria: "data-invalid",
+})
+
+function triggerName(label: string) {
+  return byBase<string | RegExp>({
+    base: label,
+    radix: label,
+    aria: new RegExp(`${label}$`),
+  })
+}
 
 const fruits = [
   { value: "apple", label: "Apple" },
@@ -30,7 +46,11 @@ const fruits = [
 function SelectOpenOpen() {
   return (
     <Select
-      {...byBase<object>({ base: { items: fruits }, radix: {} })}
+      {...byBase<object>({
+        base: { items: fruits },
+        radix: {},
+        aria: { "aria-label": "Fruit" },
+      })}
       defaultOpen
       defaultValue="banana"
     >
@@ -53,7 +73,7 @@ function SelectOpenOpen() {
 test("Default", async () => {
   const { canvas, step } = await renderExample(<SelectDemo />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
 
   await step("opens the list and picks an option", async () => {
     await expect(trigger).toHaveTextContent("Select a fruit")
@@ -62,7 +82,7 @@ test("Default", async () => {
     await userEvent.click(await screen.findByRole("option", { name: "Banana" }))
     await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
     await expect(trigger).toHaveTextContent("Banana")
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
   })
 
   await step("marks the chosen option as selected", async () => {
@@ -75,7 +95,7 @@ test("Default", async () => {
   await step("closes with Escape and keeps the value", async () => {
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
     await expect(trigger).toHaveTextContent("Banana")
   })
 })
@@ -95,7 +115,7 @@ test("Open", async () => {
     await userEvent.keyboard("{ArrowDown}{Enter}")
     await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
     await expect(
-      canvas.getByRole("combobox", { name: "Fruit" })
+      canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
     ).toHaveTextContent("Blueberry")
   })
 })
@@ -104,14 +124,14 @@ test("With Value", async () => {
 
   await step("shows the default value's label", async () => {
     await expect(
-      canvas.getByRole("combobox", { name: "Fruit" })
+      canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
     ).toHaveTextContent("Blueberry")
   })
 })
 test("Small", async () => {
   const { canvas, step } = await renderExample(<SelectSmall />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
 
   await step("opens the list and picks an option", async () => {
     await expect(trigger).toHaveAttribute("data-size", "sm")
@@ -126,9 +146,11 @@ test("Grouped", async () => {
 
   await step("labels each group of options", async () => {
     await expect(
-      canvas.getByRole("combobox", { name: "Timezone" })
+      canvas.getByRole(TRIGGER, { name: triggerName("Timezone") })
     ).toHaveTextContent("Central European Time")
-    await userEvent.click(canvas.getByRole("combobox", { name: "Timezone" }))
+    await userEvent.click(
+      canvas.getByRole(TRIGGER, { name: triggerName("Timezone") })
+    )
     const europe = await screen.findByRole("group", { name: "Europe" })
     await expect(within(europe).getAllByRole("option")).toHaveLength(3)
     await expect(
@@ -141,7 +163,7 @@ test("Grouped", async () => {
 test("With Icons", async () => {
   const { canvas, step } = await renderExample(<SelectWithIcons />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Theme" })
+  const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Theme") })
 
   await step("shows the default value", async () => {
     await expect(trigger).toHaveTextContent("System")
@@ -159,7 +181,7 @@ test("With Icons", async () => {
 test("Disabled", async () => {
   const { canvas, step } = await renderExample(<SelectDisabled />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
 
   await step("does not open while disabled", async () => {
     await expect(trigger).toHaveAttribute("data-disabled")
@@ -171,8 +193,9 @@ test("Invalid", async () => {
   const { canvas, step } = await renderExample(<SelectInvalid />)
 
   await step("flags the trigger as invalid", async () => {
+    const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
     await expect(
-      canvas.getByRole("combobox", { name: "Fruit" })
-    ).toHaveAttribute("aria-invalid", "true")
+      base === "aria" ? trigger.closest("[data-slot=select]") : trigger
+    ).toHaveAttribute(INVALID, "true")
   })
 })

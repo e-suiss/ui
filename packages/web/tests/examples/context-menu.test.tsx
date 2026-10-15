@@ -29,7 +29,11 @@ const RELOAD = /^Reload/
 function ContextMenuOpenByDefault() {
   return (
     <ContextMenu
-      {...byBase<object>({ base: { defaultOpen: true }, radix: {} })}
+      {...byBase<object>({
+        base: { defaultOpen: true },
+        radix: {},
+        aria: { defaultOpen: true },
+      })}
     >
       <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
         Right click here
@@ -47,7 +51,13 @@ function ContextMenuOpenByDefault() {
             Back
             <ContextMenuShortcut mod>[</ContextMenuShortcut>
           </ContextMenuItem>
-          <ContextMenuItem disabled>
+          <ContextMenuItem
+            {...byBase<object>({
+              base: { disabled: true },
+              radix: { disabled: true },
+              aria: { isDisabled: true },
+            })}
+          >
             <IconPlaceholder
               lucide="ArrowRightIcon"
               tabler="IconArrowRight"
@@ -81,7 +91,13 @@ function ContextMenuOpenByDefault() {
         </ContextMenuSub>
         <ContextMenuSeparator />
         <ContextMenuGroup>
-          <ContextMenuCheckboxItem defaultChecked>
+          <ContextMenuCheckboxItem
+            {...byBase<object>({
+              base: { defaultChecked: true },
+              radix: { defaultChecked: true },
+              aria: { defaultSelected: true },
+            })}
+          >
             Show bookmarks bar
           </ContextMenuCheckboxItem>
           <ContextMenuCheckboxItem>Show full URLs</ContextMenuCheckboxItem>

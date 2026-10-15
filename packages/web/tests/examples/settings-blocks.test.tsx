@@ -10,6 +10,7 @@ import { renderExample } from "@/tests/render-example"
 const SINGLE = byBase({
   base: { group: "group", role: "button", pressed: "aria-pressed" },
   radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+  aria: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
 } as const)
 
 const PREVIEW = /^Lock screen preview/
@@ -25,7 +26,7 @@ test("Device", async () => {
     await expect(wifi).toHaveTextContent("Home")
     const airplane = canvas.getByRole("switch", { name: "Airplane Mode" })
     await userEvent.click(airplane)
-    await expect(airplane).toHaveAttribute("aria-checked", "true")
+    await expect(airplane).toBeChecked()
     await waitFor(() => expect(wifi).toHaveTextContent("Off"))
     await expect(
       canvas.getByRole("link", { name: BLUETOOTH_ROW })

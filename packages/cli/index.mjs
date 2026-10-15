@@ -36,7 +36,7 @@ Options:
                    chart or block after "patterns", "interactions",
                    "charts" or "blocks"; theme is only added by name
   -y, --yes        skip confirmation prompts
-  -b, --base <base|radix>
+  -b, --base <base|radix|aria>
                    the primitive base of React components (read from the
                    style in components.json when omitted, otherwise base)
   -p, --platform <web|rn|swift|kotlin>
@@ -110,7 +110,9 @@ function parseArgs(args) {
       case "--base": {
         const base = queue.next().value
         if (!BASES.includes(base)) {
-          throw new CliError(`${arg} needs ${BASES.join(" or ")}.`)
+          throw new CliError(
+            `${arg} needs ${BASES.slice(0, -1).join(", ")} or ${BASES.at(-1)}.`
+          )
         }
         options.base = base
         break

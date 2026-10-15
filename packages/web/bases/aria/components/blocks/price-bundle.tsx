@@ -1,0 +1,203 @@
+"use client"
+
+import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { cn } from "@/lib/utils"
+
+const services = [
+  {
+    name: "suiss Music",
+    icon: (
+      <IconPlaceholder
+        lucide="MusicIcon"
+        tabler="IconMusic"
+        hugeicons="MusicNote01Icon"
+        phosphor="MusicNoteIcon"
+        remixicon="RiMusic2Line"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-red-500 text-white",
+  },
+  {
+    name: "suiss TV",
+    icon: (
+      <IconPlaceholder
+        lucide="TvIcon"
+        tabler="IconDeviceTv"
+        hugeicons="Tv01Icon"
+        phosphor="TelevisionIcon"
+        remixicon="RiTvLine"
+        className="size-3.25"
+      />
+    ),
+    tint: "bg-foreground text-background",
+  },
+  {
+    name: "suiss Arcade",
+    icon: (
+      <IconPlaceholder
+        lucide="Gamepad2Icon"
+        tabler="IconDeviceGamepad2"
+        hugeicons="GameController03Icon"
+        phosphor="GameControllerIcon"
+        remixicon="RiGamepadLine"
+        className="size-3.25"
+      />
+    ),
+    tint: "bg-red-500 text-white",
+  },
+  {
+    name: "suiss Cloud+",
+    icon: (
+      <IconPlaceholder
+        lucide="CloudIcon"
+        tabler="IconCloud"
+        hugeicons="CloudIcon"
+        phosphor="CloudIcon"
+        remixicon="RiCloudLine"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-blue-500 text-white",
+  },
+  {
+    name: "Fitness+",
+    icon: (
+      <IconPlaceholder
+        lucide="FlameIcon"
+        tabler="IconFlame"
+        hugeicons="FireIcon"
+        phosphor="FlameIcon"
+        remixicon="RiFireLine"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-green-500 text-white",
+  },
+  {
+    name: "News+",
+    icon: (
+      <IconPlaceholder
+        lucide="NewspaperIcon"
+        tabler="IconNews"
+        hugeicons="NewsIcon"
+        phosphor="NewspaperIcon"
+        remixicon="RiNewspaperLine"
+        className="size-3.25"
+      />
+    ),
+    tint: "bg-pink-500 text-white",
+  },
+]
+
+const plans = [
+  {
+    name: "Individual",
+    price: 19.95,
+    people: "1 person",
+    storage: "50 GB",
+    included: 4,
+    saving: 6,
+  },
+  {
+    name: "Family",
+    price: 25.95,
+    people: "Up to 6 people",
+    storage: "200 GB",
+    included: 4,
+    saving: 8,
+  },
+  {
+    name: "Premier",
+    price: 37.95,
+    people: "Up to 6 people",
+    storage: "2 TB",
+    included: 6,
+    saving: 29,
+  },
+] as const
+
+export function PriceBundle() {
+  const [selected, setSelected] = React.useState("Family")
+  const plan = plans.find((item) => item.name === selected) ?? plans[1]
+
+  return (
+    <section className="dark flex flex-col items-center gap-5.5 bg-background px-5 py-8.5 text-foreground md:px-9">
+      <div className="flex flex-col items-center gap-2 text-center">
+        <h1 className="text-4xl font-semibold tracking-tight">
+          <span className="font-bold">suiss</span> One
+        </h1>
+        <p className="text-2xl text-balance text-muted-foreground">
+          Bundle it all in one subscription.
+        </p>
+      </div>
+      <RadioGroup
+        value={selected}
+        onChange={(value) => setSelected(value as string)}
+        aria-label="Plan"
+        className="grid w-full max-w-215 grid-cols-1 gap-3 md:grid-cols-3"
+      >
+        {plans.map((item) => (
+          <Label
+            key={item.name}
+            className="flex cursor-pointer flex-col gap-3.5 rounded-[1.25rem] bg-muted/60 p-5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-[background-color,box-shadow] duration-300 has-data-selected:bg-muted has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 font-normal items-stretch"
+          >
+            <span className="flex items-center gap-2">
+              <span className="flex-1 text-2xl font-semibold">{item.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {item.people}
+              </span>
+              <RadioGroupItem
+                value={item.name}
+                aria-label={item.name}
+                className="absolute sr-only"
+              />
+            </span>
+            <span>
+              <span className="text-2xl font-semibold tabular-nums">
+                ${item.price}
+              </span>
+              <span className="text-sm text-muted-foreground"> /mo</span>
+            </span>
+            <ul className="flex flex-col gap-2">
+              {services.map((service, index) => {
+                const included = index < item.included
+                return (
+                  <li
+                    key={service.name}
+                    data-included={included ? "" : undefined}
+                    className="group/service flex items-center gap-2 text-sm text-muted-foreground line-through data-included:text-foreground data-included:no-underline"
+                  >
+                    <span
+                      className={cn(
+                        "flex size-5.5 items-center justify-center rounded-md bg-secondary text-muted-foreground transition-colors duration-300",
+                        included && service.tint
+                      )}
+                    >
+                      {service.icon}
+                    </span>
+                    {service.name}
+                    {index === 3 && ` ${item.storage}`}
+                    {!included && (
+                      <span className="sr-only">(not included)</span>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </Label>
+        ))}
+      </RadioGroup>
+      <div className="flex flex-wrap items-center justify-center gap-x-4.5 gap-y-3">
+        <Button size="lg">Try it free</Button>
+        <a href="#compare" className="text-lg text-primary hover:underline">
+          Save ${plan.saving} compared to buying separately ›
+        </a>
+      </div>
+    </section>
+  )
+}
