@@ -1,9 +1,14 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import {
+  type CxOptions,
+  cva,
+  cx,
+  type VariantProps,
+} from "class-variance-authority"
 import { Slot } from "radix-ui"
 import type * as React from "react"
 import { cn } from "@/lib/utils"
 
-const buttonVariants = cva(
+const buttonStyles = cva(
   "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
@@ -41,18 +46,45 @@ const buttonVariants = cva(
         true: "w-full",
       },
     },
-    compoundVariants: [
-      { block: true, size: "xs", className: "rounded-sm" },
-      { block: true, size: ["sm", "default"], className: "rounded-md" },
-      { block: true, size: "lg", className: "rounded-lg" },
-      { block: true, size: "xl", className: "rounded-xl" },
-    ],
     defaultVariants: {
       variant: "default",
       size: "default",
     },
   }
 )
+
+const blockRadius = cva("", {
+  variants: {
+    size: {
+      default: "rounded-md",
+      xs: "rounded-sm",
+      sm: "rounded-md",
+      lg: "rounded-lg",
+      xl: "rounded-xl",
+      icon: "",
+      "icon-xs": "",
+      "icon-sm": "",
+      "icon-lg": "",
+      "icon-xl": "",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+})
+
+function buttonVariants({
+  block,
+  size,
+  className,
+  ...props
+}: VariantProps<typeof buttonStyles> & { className?: CxOptions[number] } = {}) {
+  return cx(
+    buttonStyles({ ...props, size, block }),
+    block ? blockRadius({ size }) : undefined,
+    className
+  )
+}
 
 function Button({
   className,
