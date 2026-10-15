@@ -16,6 +16,7 @@ const SITE = "https://ui.suiss.app"
 const SCHEMA_URL = "https://ui.shadcn.com/schema"
 const LEGACY_OUTPUT = path.join(ROOT, "registry.json")
 const OUTPUT = path.join(ROOT, "registry/registry.json")
+const BASES = path.join(ROOT, "bases")
 const STYLESHEET = "styles/globals.css"
 const NAMESPACE = "@esuiss"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
@@ -108,10 +109,28 @@ async function docsPage(source, name) {
   }
 }
 
-async function collect(source, file) {
+async function readBases() {
+  if (!existsSync(BASES)) return []
+  const dirs = (await readdir(BASES, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort()
+  return Promise.all(
+    dirs.map(async (name) => {
+      const manifest = path.join(BASES, name, "files.json")
+      const { files } = JSON.parse(await readFile(manifest, "utf8"))
+      return { name, files: new Set(files) }
+    })
+  )
+}
+
+async function collect(source, file, base) {
   const filePath = path.posix.join(source.dir, file)
+  const sourcePath = base?.files.has(filePath)
+    ? path.posix.join("bases", base.name, filePath)
+    : filePath
   const name = path.basename(file, path.extname(file))
-  const code = await readFile(path.join(ROOT, filePath), "utf8")
+  const code = await readFile(path.join(ROOT, sourcePath), "utf8")
 
   const dependencies = new Set()
   const requires = new Set()
@@ -124,7 +143,7 @@ async function collect(source, file) {
     } else if (local) {
       if (local[2] !== name) requires.add(local[2])
     } else if (specifier.startsWith("@/")) {
-      throw new Error(`${filePath}: unsupported local import "${specifier}"`)
+      throw new Error(`${sourcePath}: unsupported local import "${specifier}"`)
     } else if (!specifier.startsWith(".")) {
       const pkg = packageName(specifier)
       if (!IGNORED_PACKAGES.has(pkg)) dependencies.add(pkg)
@@ -135,6 +154,7 @@ async function collect(source, file) {
     name,
     source,
     file: filePath,
+    path: sourcePath,
     icons,
     dependencies: [...dependencies].sort(),
     requires: [...requires].sort(),
@@ -227,7 +247,7 @@ async function toStandard(entry) {
   const nested =
     source.dir.startsWith("components/") && source.type !== "registry:ui"
   const file = {
-    path: entry.file,
+    path: entry.path,
     type: nested ? "registry:component" : source.type,
     ...(nested && { target: `@${entry.file}` }),
   }
@@ -307,33 +327,60 @@ async function schemaProblems(registry) {
   )
 }
 
-const entries = []
-for (const source of sources) {
-  if (!existsSync(path.join(ROOT, source.dir))) continue
-  const files = (await readdir(path.join(ROOT, source.dir)))
-    .filter((file) => SOURCE_FILE.test(file))
-    .sort()
-  for (const file of files) entries.push(await collect(source, file))
+async function collectAll(base) {
+  const entries = []
+  for (const source of sources) {
+    if (!existsSync(path.join(ROOT, source.dir))) continue
+    const files = (await readdir(path.join(ROOT, source.dir)))
+      .filter((file) => SOURCE_FILE.test(file))
+      .sort()
+    for (const file of files) entries.push(await collect(source, file, base))
+  }
+  return entries
 }
 
+async function toRegistry(entries) {
+  return {
+    $schema: `${SCHEMA_URL}/registry.json`,
+    name: "esuiss",
+    homepage: SITE,
+    items: [...(await Promise.all(entries.map(toStandard))), await themeItem()],
+  }
+}
+
+const entries = await collectAll()
 const legacy = {
   name: "esuiss-ui",
   homepage: "https://github.com/e-suiss/ui",
   stylesheet: STYLESHEET,
   items: entries.map(toLegacy),
 }
-const registry = {
-  $schema: `${SCHEMA_URL}/registry.json`,
-  name: "esuiss",
-  homepage: SITE,
-  items: [...(await Promise.all(entries.map(toStandard))), await themeItem()],
-}
+const registry = await toRegistry(entries)
+const variants = await Promise.all(
+  (await readBases()).map(async (base) => {
+    const baseEntries = await collectAll(base)
+    return {
+      name: base.name,
+      file: path.join(ROOT, "registry", base.name, "registry.json"),
+      entries: baseEntries,
+      registry: await toRegistry(baseEntries),
+    }
+  })
+)
 
 const checking = process.argv.includes("--check")
+const schema = process.argv.includes("--schema")
 const problems = [
   ...validate(entries, registry),
-  ...(process.argv.includes("--schema") ? await schemaProblems(registry) : []),
+  ...(schema ? await schemaProblems(registry) : []),
 ]
+for (const variant of variants) {
+  const found = [
+    ...validate(variant.entries, variant.registry),
+    ...(schema ? await schemaProblems(variant.registry) : []),
+  ]
+  problems.push(...found.map((problem) => `${variant.name}: ${problem}`))
+}
 if (problems.length) {
   console.error(problems.join("\n"))
   process.exit(1)
@@ -342,6 +389,7 @@ if (problems.length) {
 const outputs = [
   [OUTPUT, registry],
   [LEGACY_OUTPUT, legacy],
+  ...variants.map((variant) => [variant.file, variant.registry]),
 ]
 
 if (checking) {
@@ -359,10 +407,18 @@ if (checking) {
   console.log(
     `The registry is up to date and valid: ${registry.items.length} items`
   )
+  for (const variant of variants) {
+    console.log(
+      `The ${variant.name} registry is up to date and valid: ${variant.registry.items.length} items`
+    )
+  }
 } else {
-  await mkdir(path.dirname(OUTPUT), { recursive: true })
   for (const [file, content] of outputs) {
+    await mkdir(path.dirname(file), { recursive: true })
     await writeFile(file, `${JSON.stringify(content, null, 2)}\n`)
   }
-  console.log(`registry/registry.json: ${registry.items.length} items`)
+  for (const [file, content] of outputs) {
+    if (file === LEGACY_OUTPUT) continue
+    console.log(`${path.relative(ROOT, file)}: ${content.items.length} items`)
+  }
 }

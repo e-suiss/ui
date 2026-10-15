@@ -105,6 +105,12 @@ const item = (cwd, name) =>
 const standardItem = (cwd, name) =>
   standardOf(cwd).items.find((entry) => entry.name === name)
 
+function radixOf(cwd) {
+  return JSON.parse(
+    readFileSync(path.join(cwd, "registry/radix/registry.json"), "utf8")
+  )
+}
+
 describe("build-registry", () => {
   it("lists every source file with its type, title and path", () => {
     const cwd = project({
@@ -524,6 +530,79 @@ html[data-theme-transition]::view-transition-new(
   })
 })
 
+describe("a second primitive base", () => {
+  const files = {
+    "components/ui/button.tsx": `import { Slot } from "@base-ui/react/slot"
+import { cn } from "@/lib/utils"
+`,
+    "components/ui/dialog.tsx": `import { Dialog } from "@base-ui/react/dialog"
+import { Button } from "@/components/ui/button"
+import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
+`,
+    "components/patterns/flyout.tsx": `import { Dialog } from "@/components/ui/dialog"`,
+    "hooks/use-scrollbar-gap.ts": "export {}",
+    "lib/utils.ts": 'export { cn } from "cn"',
+    "bases/radix/files.json": JSON.stringify({
+      base: "radix",
+      files: ["components/patterns/flyout.tsx", "components/ui/dialog.tsx"],
+    }),
+    "bases/radix/components/ui/dialog.tsx": `import { Dialog } from "radix-ui"
+import { Button } from "@/components/ui/button"
+`,
+    "bases/radix/components/patterns/flyout.tsx": `import { Dialog } from "@/components/ui/dialog"
+import { Slot } from "radix-ui"
+`,
+  }
+
+  it("publishes a registry per base with the same item names", () => {
+    const cwd = project(files)
+    const result = build(cwd)
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain("registry/radix/registry.json: 6 items")
+    expect(radixOf(cwd).items.map((entry) => entry.name)).toEqual(
+      standardOf(cwd).items.map((entry) => entry.name)
+    )
+    expect(radixOf(cwd)).toMatchObject({ name: "esuiss" })
+  })
+
+  it("takes twinned files and their dependencies from the base", () => {
+    const cwd = project(files)
+    expect(build(cwd).code).toBe(0)
+    const radix = (name) =>
+      radixOf(cwd).items.find((entry) => entry.name === name)
+    expect(radix("dialog")).toMatchObject({
+      dependencies: ["radix-ui"],
+      registryDependencies: ["@esuiss/button"],
+      files: [
+        { path: "bases/radix/components/ui/dialog.tsx", type: "registry:ui" },
+      ],
+    })
+    expect(radix("flyout")).toMatchObject({
+      dependencies: ["radix-ui"],
+      files: [
+        {
+          path: "bases/radix/components/patterns/flyout.tsx",
+          target: "@components/patterns/flyout.tsx",
+        },
+      ],
+    })
+    expect(radix("button")).toEqual(standardItem(cwd, "button"))
+    expect(standardItem(cwd, "dialog").dependencies).toEqual(["@base-ui/react"])
+  })
+
+  it("checks the base registries too", () => {
+    const cwd = project(files)
+    expect(build(cwd).code).toBe(0)
+    writeFileSync(
+      path.join(cwd, "bases/radix/components/ui/dialog.tsx"),
+      'import { Dialog } from "radix-ui"'
+    )
+    const stale = build(cwd, "--check")
+    expect(stale.code).toBe(1)
+    expect(stale.stderr).toContain("Out of date: registry/radix/registry.json.")
+  })
+})
+
 describe("the published registry", () => {
   const registry = registryOf(repo)
   const manifest = JSON.parse(
@@ -567,6 +646,23 @@ describe("the published registry", () => {
           (name) => name !== "utils" && !names.has(name.replace("@esuiss/", ""))
         )
         .map((name) => `${entry.name}: ${name}`),
+    ])
+    expect(problems).toEqual([])
+  })
+
+  it("lists every item of the second base with existing files", () => {
+    const standard = standardOf(repo)
+    const radix = radixOf(repo)
+    expect(radix.items.map((entry) => entry.name)).toEqual(
+      standard.items.map((entry) => entry.name)
+    )
+    const problems = radix.items.flatMap((entry) => [
+      ...(entry.files ?? [])
+        .filter((file) => !existsSync(path.join(repo, file.path)))
+        .map((file) => `${entry.name}: ${file.path}`),
+      ...(entry.dependencies ?? [])
+        .filter((dependency) => !declared.has(dependency))
+        .map((dependency) => `${entry.name}: ${dependency}`),
     ])
     expect(problems).toEqual([])
   })
