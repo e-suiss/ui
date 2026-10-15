@@ -4,6 +4,7 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs"
 import path from "node:path"
@@ -21,19 +22,48 @@ const SCRIPTS = [
   ["scripts/lib/registry.mjs", "scripts/lib/registry.mjs"],
 ]
 
-function fakeRepo(files) {
+const DOCS = {
+  "components/ui": "components",
+  "components/patterns": "patterns",
+  "components/interactions": "interactions",
+  "components/charts": "charts",
+  "components/blocks": "blocks",
+}
+const SOURCE = /^(components\/\w+)\/([\w-]+)\.tsx$/
+
+function docsPages(files) {
+  return Object.keys(files).flatMap((file) => {
+    const match = file.match(SOURCE)
+    const docs = match && DOCS[match[1]]
+    return docs
+      ? [
+          [
+            `apps/ui/content/docs/${docs}/${match[2]}.mdx`,
+            `---\ntitle: Page\ndescription: "About ${match[2]}."\n---\n`,
+          ],
+        ]
+      : []
+  })
+}
+
+function fakeRepo(files, { docs = true } = {}) {
   const root = createProject(
-    Object.fromEntries(
-      Object.entries(files).map(([file, content]) => [
+    Object.fromEntries([
+      ...Object.entries(files).map(([file, content]) => [
         `${PACKAGE}/${file}`,
         content,
-      ])
-    )
+      ]),
+      ...(docs ? docsPages(files) : []),
+    ])
   )
   for (const [from, to] of SCRIPTS) {
     mkdirSync(path.dirname(path.join(root, to)), { recursive: true })
     copyFileSync(path.join(repo, "../..", from), path.join(root, to))
   }
+  symlinkSync(
+    path.join(repo, "node_modules"),
+    path.join(root, PACKAGE, "node_modules")
+  )
   return path.join(root, PACKAGE)
 }
 
@@ -59,12 +89,21 @@ function registryOf(cwd) {
   return JSON.parse(readFileSync(path.join(cwd, "registry.json"), "utf8"))
 }
 
+function standardOf(cwd) {
+  return JSON.parse(
+    readFileSync(path.join(cwd, "registry/registry.json"), "utf8")
+  )
+}
+
 function project(files) {
   return fakeRepo({ "styles/globals.css": "", ...files })
 }
 
 const item = (cwd, name) =>
   registryOf(cwd).items.find((entry) => entry.name === name)
+
+const standardItem = (cwd, name) =>
+  standardOf(cwd).items.find((entry) => entry.name === name)
 
 describe("build-registry", () => {
   it("lists every source file with its type, title and path", () => {
@@ -82,7 +121,7 @@ describe("build-registry", () => {
     })
     const result = build(cwd)
     expect(result.code).toBe(0)
-    expect(result.stdout).toContain("registry.json: 8 items")
+    expect(result.stdout).toContain("registry/registry.json: 9 items")
     const registry = registryOf(cwd)
     expect(registry).toMatchObject({
       name: "esuiss-ui",
@@ -272,7 +311,9 @@ import { useIsMobile } from "@/hooks/use-mobile"
     expect(build(cwd).code).toBe(0)
     const result = build(cwd, "--check")
     expect(result.code).toBe(0)
-    expect(result.stdout).toContain("registry.json is up to date: 1 items")
+    expect(result.stdout).toContain(
+      "The registry is up to date and valid: 2 items"
+    )
 
     writeFileSync(
       path.join(cwd, "components/ui/button.tsx"),
@@ -281,9 +322,205 @@ import { useIsMobile } from "@/hooks/use-mobile"
     const stale = build(cwd, "--check")
     expect(stale.code).toBe(1)
     expect(stale.stderr).toContain(
-      "registry.json is out of date. Run `pnpm registry`."
+      "Out of date: registry/registry.json, registry.json. Run `pnpm registry`."
     )
     expect(item(cwd, "button").dependencies).toEqual([])
+  })
+})
+
+describe("the standard registry", () => {
+  it("describes the registry for the registry CLI", () => {
+    const cwd = project({ "components/ui/button.tsx": "export {}" })
+    expect(build(cwd).code).toBe(0)
+    expect(standardOf(cwd)).toMatchObject({
+      $schema: "https://ui.shadcn.com/schema/registry.json",
+      name: "esuiss",
+      homepage: "https://ui.suiss.app",
+    })
+  })
+
+  it("maps every folder to a registry type and keeps nested folders", () => {
+    const cwd = project({
+      "components/ui/button.tsx": "export {}",
+      "components/patterns/date-picker.tsx": "export {}",
+      "components/interactions/swipe-actions.tsx": "export {}",
+      "components/charts/bar-chart-active.tsx": "export {}",
+      "components/blocks/login-account.tsx": "export {}",
+      "hooks/use-mobile.ts": "export {}",
+      "lib/utils.ts": "export {}",
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(
+      standardOf(cwd).items.map(({ name, type, files }) => [name, type, files])
+    ).toEqual([
+      [
+        "button",
+        "registry:ui",
+        [{ path: "components/ui/button.tsx", type: "registry:ui" }],
+      ],
+      [
+        "date-picker",
+        "registry:component",
+        [
+          {
+            path: "components/patterns/date-picker.tsx",
+            type: "registry:component",
+            target: "@components/patterns/date-picker.tsx",
+          },
+        ],
+      ],
+      [
+        "swipe-actions",
+        "registry:component",
+        [
+          {
+            path: "components/interactions/swipe-actions.tsx",
+            type: "registry:component",
+            target: "@components/interactions/swipe-actions.tsx",
+          },
+        ],
+      ],
+      [
+        "bar-chart-active",
+        "registry:block",
+        [
+          {
+            path: "components/charts/bar-chart-active.tsx",
+            type: "registry:component",
+            target: "@components/charts/bar-chart-active.tsx",
+          },
+        ],
+      ],
+      [
+        "login-account",
+        "registry:block",
+        [
+          {
+            path: "components/blocks/login-account.tsx",
+            type: "registry:component",
+            target: "@components/blocks/login-account.tsx",
+          },
+        ],
+      ],
+      [
+        "use-mobile",
+        "registry:hook",
+        [{ path: "hooks/use-mobile.ts", type: "registry:hook" }],
+      ],
+      [
+        "utils",
+        "registry:lib",
+        [{ path: "lib/utils.ts", type: "registry:lib" }],
+      ],
+      ["theme-suiss", "registry:theme", undefined],
+    ])
+    expect(standardItem(cwd, "bar-chart-active").categories).toEqual([
+      "charts",
+      "charts-bar",
+    ])
+  })
+
+  it("namespaces its own dependencies and keeps the built-in utils", () => {
+    const cwd = project({
+      "components/ui/button.tsx": 'import { cn } from "@/lib/utils"',
+      "components/ui/dialog.tsx": `import { Button } from "@/components/ui/button"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import { Dialog } from "@base-ui/react/dialog"
+`,
+      "lib/utils.ts": 'export { cn } from "cn"',
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(standardItem(cwd, "button").registryDependencies).toEqual(["utils"])
+    expect(standardItem(cwd, "dialog")).toMatchObject({
+      dependencies: ["@base-ui/react"],
+      registryDependencies: ["@esuiss/button"],
+    })
+    expect(standardItem(cwd, "utils").dependencies).toEqual(["cn"])
+  })
+
+  it("takes titles, descriptions and links from the docs", () => {
+    const cwd = project({ "components/ui/alert-dialog.tsx": "export {}" })
+    expect(build(cwd).code).toBe(0)
+    expect(standardItem(cwd, "alert-dialog")).toMatchObject({
+      title: "Alert Dialog",
+      description: "About alert-dialog.",
+      meta: {
+        links: { docs: "https://ui.suiss.app/docs/components/alert-dialog" },
+      },
+    })
+  })
+
+  it("reports an item without a description", () => {
+    const cwd = fakeRepo(
+      { "styles/globals.css": "", "components/ui/button.tsx": "export {}" },
+      { docs: false }
+    )
+    const result = build(cwd)
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("button has no description")
+  })
+
+  it("ships the theme styles as rules", () => {
+    const cwd = project({
+      "components/ui/theme.tsx": "export {}",
+      "styles/theme.css": `@keyframes theme-mask {
+  to {
+    mask-size: 350vmax;
+  }
+}
+
+html[data-theme-transition]::view-transition-new(
+  root
+) {
+  animation: theme-mask 1s
+    ease-out;
+}
+`,
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(standardItem(cwd, "theme")).toMatchObject({
+      css: {
+        "@keyframes theme-mask": { to: { "mask-size": "350vmax" } },
+        "html[data-theme-transition]::view-transition-new(root)": {
+          animation: "theme-mask 1s ease-out",
+        },
+      },
+      meta: { optIn: true },
+    })
+  })
+
+  it("publishes the theme variables as a theme item", () => {
+    const cwd = project({
+      "styles/globals.css": `:root {
+  --radius: 0.625rem;
+  --primary: oklch(0.56 0.19 256);
+}
+
+.dark {
+  --primary: oklch(0.67 0.18 252);
+}
+
+@theme inline {
+  --font-sans: -apple-system, sans-serif;
+  --color-primary: var(--primary);
+  --radius-lg: var(--radius);
+}
+`,
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(standardItem(cwd, "theme-suiss")).toMatchObject({
+      type: "registry:theme",
+      dependencies: ["@fontsource-variable/inter"],
+      cssVars: {
+        theme: {
+          "font-sans": "-apple-system, sans-serif",
+          "radius-lg": "var(--radius)",
+        },
+        light: { radius: "0.625rem", primary: "oklch(0.56 0.19 256)" },
+        dark: { primary: "oklch(0.67 0.18 252)" },
+      },
+      css: { '@import "@fontsource-variable/inter"': {} },
+    })
   })
 })
 
@@ -314,6 +551,24 @@ describe("the published registry", () => {
         .map((dependency) => `${entry.name}: ${dependency}`)
     )
     expect(leaked).toEqual([])
+  })
+
+  it("lists every standard item with existing files and known dependencies", () => {
+    const standard = standardOf(repo)
+    const names = new Set(standard.items.map((entry) => entry.name))
+    const problems = standard.items.flatMap((entry) => [
+      ...(entry.files ?? [])
+        .filter(
+          (file) => "content" in file || !existsSync(path.join(repo, file.path))
+        )
+        .map((file) => `${entry.name}: ${file.path}`),
+      ...(entry.registryDependencies ?? [])
+        .filter(
+          (name) => name !== "utils" && !names.has(name.replace("@esuiss/", ""))
+        )
+        .map((name) => `${entry.name}: ${name}`),
+    ])
+    expect(problems).toEqual([])
   })
 
   it("points every item at a file that exists", () => {

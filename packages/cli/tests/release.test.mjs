@@ -1,5 +1,11 @@
 import { execFileSync } from "node:child_process"
-import { copyFileSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs"
+import {
+  copyFileSync,
+  mkdirSync,
+  mkdtempSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
@@ -11,6 +17,7 @@ const registryScript = new URL(
   "../../web/scripts/build-registry.mjs",
   import.meta.url
 ).pathname
+const webModules = new URL("../../web/node_modules", import.meta.url).pathname
 
 const env = {
   ...process.env,
@@ -36,6 +43,8 @@ function repository({ cli = "0.9.0" } = {}) {
     "packages/web/styles/globals.css": "",
     "packages/web/styles/theme.css": "",
     "packages/web/components/ui/button.tsx": "export {}",
+    "apps/ui/content/docs/components/button.mdx":
+      '---\ntitle: Button\ndescription: "A button."\n---\n',
   })
   mkdirSync(path.join(cwd, "scripts"))
   mkdirSync(path.join(cwd, "packages/web/scripts"))
@@ -47,6 +56,7 @@ function repository({ cli = "0.9.0" } = {}) {
     registryScript,
     path.join(cwd, "packages/web/scripts/build-registry.mjs")
   )
+  symlinkSync(webModules, path.join(cwd, "packages/web/node_modules"))
   mkdirSync(path.join(cwd, "scripts/lib"))
   copyFileSync(
     path.join(scripts, "lib/registry.mjs"),

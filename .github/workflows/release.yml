@@ -33,7 +33,7 @@ jobs:
 
       - name: Check registries
         run: |
-          (cd packages/web && node scripts/build-registry.mjs --check)
+          (cd packages/web && node scripts/build-registry.mjs --check --schema)
           (cd packages/mobile && node scripts/build-registry.mjs --check)
 
       - name: Publish to npm
