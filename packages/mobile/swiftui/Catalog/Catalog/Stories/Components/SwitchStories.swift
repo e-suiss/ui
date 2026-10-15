@@ -80,7 +80,7 @@ private struct WithDescriptionDemo: View {
           .onTapGesture { checked.toggle() }
         Text("Receive emails about new products.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       Toggle(isOn: $checked) { EmptyView() }
@@ -88,7 +88,7 @@ private struct WithDescriptionDemo: View {
         .accessibilityLabel(Text("Marketing emails"))
     }
     .padding(16)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
   }
 }
 

@@ -83,6 +83,7 @@ import com.esuiss.ui.patterns.SplitViewColumn
 import com.esuiss.ui.patterns.SplitViewItem
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val DetailRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
@@ -115,12 +116,12 @@ private val DetailSecurity = listOf(
 )
 
 private fun detailTint(colors: Colors, hue: Int): Color = when (hue) {
-    250 -> colors.indigo
-    30 -> colors.orange
-    150 -> colors.green
-    200 -> colors.blue
-    330 -> colors.pink
-    else -> colors.teal
+    250 -> Palette.indigo500
+    30 -> Palette.orange500
+    150 -> Palette.green500
+    200 -> Palette.blue500
+    330 -> Palette.pink500
+    else -> Palette.teal500
 }
 
 @Composable
@@ -158,8 +159,8 @@ fun UsersDetail(
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                                 DetailAvatar(item, 28.dp)
                                 Column {
-                                    BasicText(item.name, style = Typography.sm.copy(color = colors.label))
-                                    BasicText(overrides[index] ?: item.role, style = Typography.xs.copy(color = colors.labelSecondary))
+                                    BasicText(item.name, style = Typography.sm.copy(color = colors.foreground))
+                                    BasicText(overrides[index] ?: item.role, style = Typography.xs.copy(color = colors.mutedForeground))
                                 }
                             }
                         }
@@ -178,9 +179,9 @@ fun UsersDetail(
                                         BasicText(
                                             user.name,
                                             modifier = Modifier.semantics { heading() },
-                                            style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                                            style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
                                         )
-                                        BasicText("${user.email} · $role", style = Typography.sm.copy(color = colors.labelSecondary))
+                                        BasicText("${user.email} · $role", style = Typography.sm.copy(color = colors.mutedForeground))
                                     }
                                 }
                                 ToggleGroup(
@@ -273,7 +274,7 @@ private fun DetailAvatar(user: DetailUser, size: Dp) {
     ) {
         BasicText(
             user.name.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-            style = Typography.xs.copy(color = colors.onMedia, fontWeight = FontWeight.Medium, fontSize = (size.value * 0.38f).sp),
+            style = Typography.xs.copy(color = Palette.white, fontWeight = FontWeight.Medium, fontSize = (size.value * 0.38f).sp),
         )
     }
 }
@@ -285,7 +286,7 @@ private fun DetailRow(title: String, action: @Composable () -> Unit) {
             ItemTitle {
                 BasicText(
                     title,
-                    style = Typography.base.copy(color = EsuissTheme.colors.label),
+                    style = Typography.base.copy(color = EsuissTheme.colors.foreground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -305,7 +306,7 @@ private fun DetailProfile(user: DetailUser, role: String, onRole: (String) -> Un
             "Department" to "Product",
             "Joined" to "March 12, 2024",
         ).forEach { (label, value) ->
-            DetailRow(label) { BasicText(value, style = Typography.base.copy(color = colors.labelSecondary), maxLines = 1) }
+            DetailRow(label) { BasicText(value, style = Typography.base.copy(color = colors.mutedForeground), maxLines = 1) }
             ItemSeparator()
         }
         DetailRow("Role") {
@@ -318,7 +319,7 @@ private fun DetailProfile(user: DetailUser, role: String, onRole: (String) -> Un
             )
         }
         ItemSeparator()
-        DetailRow("Status") { BasicText(user.status, style = Typography.base.copy(color = colors.labelSecondary)) }
+        DetailRow("Status") { BasicText(user.status, style = Typography.base.copy(color = colors.mutedForeground)) }
     }
 }
 
@@ -338,29 +339,29 @@ private fun DetailSessions(
                         Box(
                             Modifier
                                 .size(30.dp)
-                                .background(colors.gray, RoundedCornerShape(7.dp)),
+                                .background(Palette.zinc500, RoundedCornerShape(7.dp)),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(session.icon, contentDescription = null, size = 16.dp, tint = colors.onMedia)
+                            Icon(session.icon, contentDescription = null, size = 16.dp, tint = Palette.white)
                         }
                     }
                     ItemContent {
                         BasicText(
                             session.device,
-                            style = Typography.base.copy(color = colors.label),
+                            style = Typography.base.copy(color = colors.foreground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                         BasicText(
                             "${session.place} · ${session.time}",
-                            style = Typography.xs.copy(color = colors.labelSecondary),
+                            style = Typography.xs.copy(color = colors.mutedForeground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
                     ItemActions {
                         if (index == 0) {
-                            BasicText("This device", style = Typography.sm.copy(color = colors.label))
+                            BasicText("This device", style = Typography.sm.copy(color = colors.foreground))
                         } else {
                             Button(text = "Sign Out", onClick = { onSignOut(session) }, size = ButtonSize.Sm, variant = ButtonVariant.Secondary)
                         }
@@ -399,7 +400,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

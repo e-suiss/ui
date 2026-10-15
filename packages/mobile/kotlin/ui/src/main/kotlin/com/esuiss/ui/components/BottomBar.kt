@@ -31,10 +31,10 @@ fun BottomBar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.surface)
+            .background(colors.background)
             .then(
                 if (separator) {
-                    Modifier.drawBehind { drawRect(colors.separator, Offset.Zero, Size(size.width, 1.dp.toPx())) }
+                    Modifier.drawBehind { drawRect(colors.border, Offset.Zero, Size(size.width, 1.dp.toPx())) }
                 } else {
                     Modifier
                 },

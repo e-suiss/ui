@@ -148,10 +148,10 @@ private fun Inline() {
         }
         Collapsible(expanded = true, onExpandedChange = {}) {
             CollapsibleTrigger {
-                BasicText("Starred repositories", style = Typography.sm.copy(color = colors.label))
+                BasicText("Starred repositories", style = Typography.sm.copy(color = colors.foreground))
             }
             CollapsibleContent {
-                BasicText("@esuiss/ui", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("@esuiss/ui", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         var tab by remember { mutableStateOf("overview") }
@@ -162,7 +162,7 @@ private fun Inline() {
                 TabsTrigger("reports", "Reports")
             }
             TabsContent("overview") {
-                BasicText("Overview content", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Overview content", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         Tabs("analytics", {}) {
@@ -224,7 +224,7 @@ private fun Scene(scene: Scene) {
             BasicText(
                 "350 calories/day",
                 modifier = Modifier.fillMaxWidth().padding(24.dp),
-                style = Typography.xl2.copy(color = EsuissTheme.colors.label),
+                style = Typography.xl2.copy(color = EsuissTheme.colors.foreground),
             )
             DrawerFooter {
                 Button("Submit", onClick = {}, modifier = Modifier.fillMaxWidth())
@@ -278,7 +278,7 @@ private fun Scene(scene: Scene) {
             onExpandedChange = {},
             trigger = {
                 Box(modifier = Modifier.width(300.dp).padding(48.dp), contentAlignment = Alignment.Center) {
-                    BasicText("Long press here", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+                    BasicText("Long press here", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
                 }
             },
             modifier = Modifier.testTag(Overlay),
@@ -332,7 +332,7 @@ class OverlaysGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .safeDrawingPadding()
                         .padding(16.dp),
                 ) {

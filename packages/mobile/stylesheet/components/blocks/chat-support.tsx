@@ -39,7 +39,13 @@ import {
 } from "@/components/ui/message-scroller"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  radius,
+  shadow,
+  useTheme,
+} from "@/components/ui/theme"
 
 const IMAGE =
   "https://images.unsplash.com/photo-1634403665443-81dc4d75843a?w=900&q=80&auto=format&fit=crop"
@@ -155,7 +161,7 @@ function TypingDot({ index }: { index: number }) {
     <AnimatedView
       style={[
         styles.dot,
-        { backgroundColor: colors.labelTertiary },
+        { backgroundColor: colors.mutedForeground },
         animatedStyle,
       ]}
     />
@@ -225,7 +231,7 @@ function Composer({
             as={PlusIcon}
             weight="bold"
             size={18}
-            color={colors.labelSecondary}
+            color={colors.mutedForeground}
           />
         </Button>
         <InputGroup style={styles.group}>
@@ -366,7 +372,7 @@ function ChatSupport({
           <Text
             style={[
               fontSize.lg,
-              { fontWeight: "600", color: colors.labelSecondary },
+              { fontWeight: "600", color: colors.mutedForeground },
             ]}
           >
             suiss Support
@@ -380,7 +386,7 @@ function ChatSupport({
             accessible
             accessibilityLabel="A phone resting on a soft beige surface"
             accessibilityIgnoresInvertColors
-            style={[styles.image, { backgroundColor: colors.control }]}
+            style={[styles.image, { backgroundColor: colors.secondary }]}
           />
         </ScrollView>
         {height > 0 ? (
@@ -395,8 +401,8 @@ function ChatSupport({
               shadow.lg,
               {
                 height: panelHeight,
-                borderColor: colors.separator,
-                backgroundColor: colors.surface,
+                borderColor: colors.border,
+                backgroundColor: colors.background,
                 transformOrigin: I18nManager.isRTL
                   ? "left bottom"
                   : "right bottom",
@@ -408,14 +414,16 @@ function ChatSupport({
               <View
                 style={[
                   styles.panelHeader,
-                  { borderBottomColor: colors.separator },
+                  { borderBottomColor: colors.border },
                 ]}
               >
-                <View style={[styles.logo, { backgroundColor: colors.label }]}>
+                <View
+                  style={[styles.logo, { backgroundColor: colors.foreground }]}
+                >
                   <Text
                     style={[
                       fontSize.base,
-                      { fontWeight: "700", color: colors.surface },
+                      { fontWeight: "700", color: colors.background },
                     ]}
                   >
                     s
@@ -432,10 +440,12 @@ function ChatSupport({
                     <View
                       style={[
                         styles.statusDot,
-                        { backgroundColor: colors.green },
+                        { backgroundColor: palette.green500 },
                       ]}
                     />
-                    <Text style={[fontSize["2xs"], { color: colors.green }]}>
+                    <Text
+                      style={[fontSize["2xs"], { color: palette.green500 }]}
+                    >
                       Online
                     </Text>
                   </View>
@@ -451,7 +461,7 @@ function ChatSupport({
                     as={XIcon}
                     weight="bold"
                     size={13}
-                    color={colors.labelSecondary}
+                    color={colors.mutedForeground}
                   />
                 </Button>
               </View>
@@ -505,9 +515,9 @@ function ChatSupport({
                       variant="outline"
                       size="sm"
                       onPress={() => ask(question)}
-                      style={{ borderColor: colors.accent }}
+                      style={{ borderColor: colors.primary }}
                     >
-                      <Text style={{ color: colors.link }}>{question}</Text>
+                      <Text style={{ color: colors.primary }}>{question}</Text>
                     </Button>
                   ))}
                 </ScrollView>

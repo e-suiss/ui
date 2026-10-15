@@ -86,7 +86,7 @@ public struct BagReview: View {
             .accessibilityAddTraits(.isHeader)
             Text("Free delivery and free returns on every order.")
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             if bag.isEmpty {
               Button("Continue Shopping") {
                 onContinueShopping?()
@@ -120,12 +120,12 @@ public struct BagReview: View {
               BagReviewTotal(label: "Total", value: Text(verbatim: money(subtotal)), large: true)
                 .padding(.top, 12)
                 .overlay(alignment: .top) {
-                  Color.separator.frame(height: 1)
+                  EsuissColor.border.frame(height: 1)
                 }
             }
             .padding(.top, 20)
             .overlay(alignment: .top) {
-              Color.separator.frame(height: 1)
+              EsuissColor.border.frame(height: 1)
             }
           }
         }
@@ -179,7 +179,7 @@ private struct BagReviewRow: View {
   var body: some View {
     HStack(alignment: .top, spacing: 12) {
       Button(action: onShowDetails) {
-        Color.control
+        EsuissColor.secondary
           .overlay {
             AsyncImage(url: item.image) { phase in
               if let image = phase.image {
@@ -214,7 +214,7 @@ private struct BagReviewRow: View {
           }
           Text(verbatim: item.variant)
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .lineLimit(1)
         }
         HStack {
@@ -237,7 +237,7 @@ private struct BagReviewRow: View {
     }
     .padding(.vertical, 16)
     .overlay(alignment: .top) {
-      Color.separator.frame(height: 1)
+      EsuissColor.border.frame(height: 1)
     }
   }
 }
@@ -262,8 +262,8 @@ private struct BagReviewLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.sm)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }
@@ -272,7 +272,7 @@ private struct BagReviewLinkStyle: ButtonStyle {
 private struct BagReviewPressStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.6 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .contentShape(Rectangle())
   }
 }
@@ -283,9 +283,9 @@ private struct BagReviewPayStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.base, weight: .medium)
-      .foregroundStyle(Color.surface)
+      .foregroundStyle(EsuissColor.background)
       .frame(maxWidth: .infinity, minHeight: 44)
-      .background(Color.label.opacity(configuration.isPressed ? 0.8 : 1), in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      .background(EsuissColor.foreground.opacity(configuration.isPressed ? 0.8 : 1), in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
       .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
       .contentShape(Rectangle())
   }

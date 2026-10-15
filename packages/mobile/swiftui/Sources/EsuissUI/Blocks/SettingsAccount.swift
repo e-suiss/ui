@@ -58,10 +58,10 @@ public struct SettingsAccount: View {
           Avatar(size: .xl) {
             Text(verbatim: "JR")
               .scaledFont(.xl, weight: .semibold)
-              .foregroundStyle(Color.onAccent)
+              .foregroundStyle(EsuissColor.primaryForeground)
               .frame(maxWidth: .infinity, maxHeight: .infinity)
               .background(
-                Color.indigo,
+                Palette.indigo500,
                 in: Circle()
               )
           }
@@ -69,7 +69,7 @@ public struct SettingsAccount: View {
             .scaledTextStyle(.xl, weight: .bold)
           Text(verbatim: "jamie@suiss.com")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
@@ -82,7 +82,7 @@ public struct SettingsAccount: View {
               ItemMedia {
                 item.icon
                   .frame(width: 22, height: 22)
-                  .foregroundStyle(Color.accent)
+                  .foregroundStyle(EsuissColor.primary)
               }
               ItemContent {
                 ItemTitle {
@@ -93,7 +93,7 @@ public struct SettingsAccount: View {
               ItemActions {
                 Ph.caretRight.bold
                   .frame(width: 14, height: 14)
-                  .foregroundStyle(Color.labelTertiary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .flipsForRightToLeftLayoutDirection(true)
               }
             }
@@ -115,7 +115,7 @@ public struct SettingsAccount: View {
         } else {
           Text("This section isn't part of the sample. Choose Sign-In & Security.")
             .scaledTextStyle(.lg)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .fixedSize(horizontal: false, vertical: true)
         }
       }
@@ -132,7 +132,7 @@ public struct SettingsAccount: View {
         }
       }
     }
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -178,7 +178,7 @@ private struct SettingsAccountSecurity: View {
             .scaledFont(.lg, weight: .semibold)
           Text(passkeys ? "On for 3 devices" : "Off")
             .scaledFont(.base)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         Toggle(isOn: $passkeys) { Text("Passkeys") }
@@ -193,13 +193,13 @@ private struct SettingsAccountSecurity: View {
             .scaledFont(.lg, weight: .semibold)
           Text("Codes are sent to your trusted devices.")
             .scaledTextStyle(.base)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         Text("On")
           .scaledFont(.sm, weight: .semibold)
-          .foregroundStyle(Color.success)
+          .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
       }
       .accessibilityElement(children: .combine)
       .modifier(SettingsAccountCardSurface())
@@ -207,7 +207,7 @@ private struct SettingsAccountSecurity: View {
         if let saved {
           Ph.check.bold
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.success)
+            .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
           Text(saved)
             .scaledFont(.sm)
         }
@@ -251,7 +251,7 @@ private struct SettingsAccountCard: View {
           if !editing {
             Text(verbatim: value)
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -297,11 +297,11 @@ private struct SettingsAccountCard: View {
 private struct SettingsAccountCardSurface: ViewModifier {
   func body(content: Content) -> some View {
     content
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .padding(.horizontal, 20)
       .padding(.vertical, 18)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
   }
 }
 
@@ -309,8 +309,8 @@ private struct SettingsAccountLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.base)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 44)
       .contentShape(Rectangle())
   }

@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -93,7 +94,7 @@ fun ItemGroup(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .then(if (inset) Modifier.clip(shape).background(colors.surfaceSecondary, shape) else Modifier)
+            .then(if (inset) Modifier.clip(shape).background(colors.muted, shape) else Modifier)
             .semantics { isTraversalGroup = true },
         verticalArrangement = if (inset) Arrangement.Top else Arrangement.spacedBy(16.dp),
     ) {
@@ -112,7 +113,7 @@ fun ItemSeparator(modifier: Modifier = Modifier) {
             .padding(start = if (inset) 16.dp else 0.dp)
             .padding(vertical = if (inset) 0.dp else 8.dp)
             .height(1.dp)
-            .background(EsuissTheme.colors.separator),
+            .background(EsuissTheme.colors.border),
     )
 }
 
@@ -170,12 +171,11 @@ internal fun ItemFrame(
     val state = remember(size) { ItemState(size) }
     val interactive = onClick != null || onLongClick != null
     val background = when {
-        pressed && enabled && interactive -> colors.itemPressed
-        selected == true -> colors.itemSelected
-        variant == ItemVariant.Muted -> colors.surfaceSecondary.copy(alpha = colors.surfaceSecondary.alpha * 0.5f)
+        selected == true -> colors.accent
+        variant == ItemVariant.Muted -> colors.muted.copy(alpha = colors.muted.alpha * 0.5f)
         else -> Color.Transparent
     }
-    val foreground = if (enabled) colors.label else colors.labelQuaternary
+    val foreground = colors.foreground
     val behaviour = if (interactive) {
         Modifier
             .heightIn(min = maxOf(minHeight, 48.dp))
@@ -196,9 +196,16 @@ internal fun ItemFrame(
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed && interactive -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(shape)
             .background(background, shape)
-            .then(if (variant == ItemVariant.Outline) Modifier.border(1.dp, colors.separator, shape) else Modifier)
+            .then(if (variant == ItemVariant.Outline) Modifier.border(1.dp, colors.border, shape) else Modifier)
             .then(if (selected != null) Modifier.semantics { this.selected = selected } else Modifier)
             .then(behaviour)
             .padding(padding),
@@ -369,7 +376,7 @@ fun ItemDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
     )

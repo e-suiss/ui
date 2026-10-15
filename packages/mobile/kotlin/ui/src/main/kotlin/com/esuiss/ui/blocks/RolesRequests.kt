@@ -90,6 +90,7 @@ import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -110,13 +111,13 @@ private fun accessRequests() = listOf(
 )
 
 private fun requestTint(colors: Colors, hue: Int): Color = when (hue) {
-    30 -> colors.orange
-    150 -> colors.green
-    200 -> colors.blue
-    else -> colors.teal
+    30 -> Palette.orange500
+    150 -> Palette.green500
+    200 -> Palette.blue500
+    else -> Palette.teal500
 }
 
-private fun approvedTint(colors: Colors): Color = if (colors.isDark) colors.green else lerp(colors.green, colors.label, 0.45f)
+private fun approvedTint(colors: Colors): Color = if (colors.isDark) Palette.green500 else lerp(Palette.green500, colors.foreground, 0.45f)
 
 @Composable
 fun RolesRequests(
@@ -165,7 +166,7 @@ fun RolesRequests(
                         Item(size = ItemSize.Sm, role = null) {
                             ItemContent {
                                 ItemTitle {
-                                    BasicText("Approval length", style = Typography.base.copy(color = colors.label))
+                                    BasicText("Approval length", style = Typography.base.copy(color = colors.foreground))
                                 }
                             }
                             ItemActions {
@@ -187,7 +188,7 @@ fun RolesRequests(
                             Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(Radius.xl2))
-                                .background(colors.surfaceSecondary),
+                                .background(colors.muted),
                         ) {
                             requests.forEachIndexed { index, request ->
                                 key(request.name) {
@@ -229,7 +230,7 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
     ) {
         SwipeActions(
             enabled = request.decision == null,
-            background = colors.surfaceSecondary,
+            background = colors.muted,
             leading = listOf(
                 SwipeAction(
                     label = "Approve",
@@ -251,7 +252,7 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.surfaceSecondary)
+                    .background(colors.muted)
                     .padding(start = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -264,7 +265,7 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
                 ) {
                     BasicText(
                         request.name.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-                        style = Typography.xs.copy(color = colors.onMedia, fontWeight = FontWeight.Medium),
+                        style = Typography.xs.copy(color = Palette.white, fontWeight = FontWeight.Medium),
                     )
                 }
                 Column(Modifier.weight(1f)) {
@@ -273,7 +274,7 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
                             Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(colors.separator),
+                                .background(colors.border),
                         )
                     }
                     Column(
@@ -282,11 +283,11 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
                     ) {
                         Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                BasicText(request.name, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                                BasicText(request.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                                BasicText(request.name, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                                BasicText(request.time, style = Typography.xs.copy(color = colors.mutedForeground))
                             }
-                            BasicText("Requests ${request.permission}", style = Typography.sm.copy(color = colors.label))
-                            BasicText(request.reason, style = Typography.sm.copy(color = colors.labelSecondary))
+                            BasicText("Requests ${request.permission}", style = Typography.sm.copy(color = colors.foreground))
+                            BasicText(request.reason, style = Typography.sm.copy(color = colors.mutedForeground))
                         }
                         val decision = request.decision
                         if (decision != null) {
@@ -294,7 +295,7 @@ private fun RequestRow(request: AccessRequest, divided: Boolean, onDecide: (Stri
                                 if (decision == "approved") "Approved" else "Denied",
                                 modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                                 style = Typography.sm.copy(
-                                    color = if (decision == "approved") approvedTint(colors) else colors.danger,
+                                    color = if (decision == "approved") approvedTint(colors) else colors.destructive,
                                     fontWeight = FontWeight.SemiBold,
                                 ),
                             )
@@ -328,7 +329,7 @@ private fun RequestsEmpty(onReset: () -> Unit) {
                     PhosphorIcons.Bold.Check,
                     contentDescription = null,
                     size = 40.dp,
-                    tint = if (colors.isDark) colors.green else lerp(colors.green, colors.label, 0.35f),
+                    tint = if (colors.isDark) Palette.green500 else lerp(Palette.green500, colors.foreground, 0.35f),
                 )
             }
             EmptyTitle("No pending requests.")
@@ -359,7 +360,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

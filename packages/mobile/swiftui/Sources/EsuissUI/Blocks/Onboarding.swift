@@ -63,9 +63,9 @@ private struct OnboardingSymbol: View {
   var body: some View {
     icon
       .frame(width: 96, height: 96)
-      .foregroundStyle(Color.accent)
+      .foregroundStyle(EsuissColor.primary)
       .frame(width: 200, height: 200)
-      .background(Color.accentSurface, in: Circle())
+      .background(Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2)), in: Circle())
   }
 }
 
@@ -160,11 +160,11 @@ private struct OnboardingSlide: View {
       VStack(spacing: 12) {
         page.title
           .scaledTextStyle(.xl2, weight: .bold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .accessibilityAddTraits(.isHeader)
         page.description
           .scaledTextStyle(.lg)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)

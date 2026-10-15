@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -55,6 +56,7 @@ import com.esuiss.ui.components.RadioGroupItem
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.Spinner
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -101,17 +103,17 @@ fun LoginSheet(
                         .padding(bottom = 20.dp)
                         .size(84.dp)
                         .clip(RoundedCornerShape(20.dp))
-                        .background(colors.green),
+                        .background(Palette.green500),
                 )
                 BasicText(
                     if (done) "Welcome, Jamie" else "Trail Routes",
                     modifier = Modifier.semantics { heading() },
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                 )
                 Spacer(Modifier.height(8.dp))
                 BasicText(
                     if (done) "Your account was created with suiss." else "Save your routes and share them with friends.",
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
             BottomBar {
@@ -128,7 +130,7 @@ fun LoginSheet(
                         ) {
                             BasicText(
                                 "Continue with email",
-                                style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                         }
                     }
@@ -145,7 +147,7 @@ fun LoginSheet(
             DrawerHeader {
                 BasicText(
                     "suiss",
-                    style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
+                    style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
                 )
             }
             Column(
@@ -157,14 +159,14 @@ fun LoginSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .semantics { heading() },
-                    style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                    style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                 )
                 val shape = RoundedCornerShape(Radius.xl)
                 Column(
                     Modifier
                         .fillMaxWidth()
                         .clip(shape)
-                        .background(colors.surfaceSecondary, shape),
+                        .background(colors.muted, shape),
                 ) {
                     InfoRow(PhosphorIcons.Regular.User, "Name", "Jamie Rivera")
                     Divider()
@@ -191,11 +193,11 @@ fun LoginSheet(
                     enabled = !busy,
                 ) {
                     if (busy) {
-                        Spinner(size = 20.dp, color = colors.onAccent)
+                        Spinner(size = 20.dp, color = colors.primaryForeground)
                     } else {
                         BasicText(
                             "Continue with face scan",
-                            style = Typography.lg.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+                            style = Typography.lg.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
                         )
                     }
                 }
@@ -215,11 +217,12 @@ private fun InvertedButton(text: String, onClick: () -> Unit) {
             .fillMaxWidth()
             .height(56.dp)
             .clip(shape)
-            .background(colors.label.copy(alpha = if (pressed) 0.8f else 1f), shape)
+            .alpha(if (pressed) 0.8f else 1f)
+            .background(colors.foreground, shape)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        BasicText(text, style = Typography.lg.copy(color = colors.surface, fontWeight = FontWeight.SemiBold))
+        BasicText(text, style = Typography.lg.copy(color = colors.background, fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -230,7 +233,7 @@ private fun Divider() {
             .padding(start = 46.dp)
             .fillMaxWidth()
             .height(1.dp)
-            .background(EsuissTheme.colors.separator),
+            .background(EsuissTheme.colors.border),
     )
 }
 
@@ -244,10 +247,10 @@ private fun InfoRow(icon: ImageVector, caption: String, value: String) {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(icon, contentDescription = null, size = 20.dp, tint = colors.labelSecondary)
+        Icon(icon, contentDescription = null, size = 20.dp, tint = colors.mutedForeground)
         Column {
-            BasicText(caption, style = Typography.xs.copy(color = colors.labelSecondary))
-            BasicText(value, style = Typography.base.copy(color = colors.label))
+            BasicText(caption, style = Typography.xs.copy(color = colors.mutedForeground))
+            BasicText(value, style = Typography.base.copy(color = colors.foreground))
         }
     }
 }
@@ -261,7 +264,7 @@ private fun ChoiceRow(choice: EmailChoice, icon: ImageVector?, selected: Boolean
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 52.dp)
-            .background(if (pressed) colors.itemPressed else Color.Transparent)
+            .alpha(if (pressed) 0.8f else 1f)
             .selectable(
                 selected = selected,
                 interactionSource = interaction,
@@ -273,10 +276,10 @@ private fun ChoiceRow(choice: EmailChoice, icon: ImageVector?, selected: Boolean
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (icon != null) Icon(icon, contentDescription = null, size = 20.dp, tint = colors.labelSecondary)
+        if (icon != null) Icon(icon, contentDescription = null, size = 20.dp, tint = colors.mutedForeground)
         Column(Modifier.weight(1f)) {
-            BasicText(choice.label, style = Typography.base.copy(color = colors.label))
-            BasicText(choice.hint, style = Typography.xs.copy(color = colors.labelSecondary))
+            BasicText(choice.label, style = Typography.base.copy(color = colors.foreground))
+            BasicText(choice.hint, style = Typography.xs.copy(color = colors.mutedForeground))
         }
         Box(Modifier.graphicsLayer { scaleX = 1.3f; scaleY = 1.3f }) {
             RadioGroupItem(choice.value)

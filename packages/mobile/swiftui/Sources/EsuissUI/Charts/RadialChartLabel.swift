@@ -6,10 +6,10 @@ private let chartData: [(device: String, users: Double)] = [
 
 private let chartConfig: ChartConfig = [
   "users": .init("Users"),
-  "phone": .init("Phone", color: .blue),
-  "laptop": .init("Laptop", color: .teal),
-  "tablet": .init("Tablet", color: .indigo),
-  "watch": .init("Watch", color: .orange),
+  "phone": .init("Phone", color: EsuissColor.chart1),
+  "laptop": .init("Laptop", color: EsuissColor.chart2),
+  "tablet": .init("Tablet", color: EsuissColor.chart3),
+  "watch": .init("Watch", color: EsuissColor.chart4),
 ]
 
 public struct RadialChartLabel: View {

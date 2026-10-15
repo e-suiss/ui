@@ -90,6 +90,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.Switch
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -181,28 +182,28 @@ private fun AccountList(modifier: Modifier, onSelect: (String) -> Unit) {
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .background(colors.indigo, CircleShape),
+                            .background(Palette.indigo500, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
-                        BasicText("JR", style = Typography.xl2.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))
+                        BasicText("JR", style = Typography.xl2.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold))
                     }
                 },
             )
             BasicText(
                 "Jamie Rivera",
                 modifier = Modifier.semantics { heading() },
-                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
-            BasicText("jamie@suiss.com", style = Typography.sm.copy(color = colors.labelSecondary))
+            BasicText("jamie@suiss.com", style = Typography.sm.copy(color = colors.mutedForeground))
         }
         ItemGroup(variant = ItemGroupVariant.Inset) {
             Sections.forEachIndexed { index, section ->
                 if (index > 0) ItemSeparator(Modifier.padding(start = 34.dp))
                 Item(onClick = { onSelect(section.value) }) {
-                    ItemMedia { Icon(section.icon, contentDescription = null, size = 20.dp, tint = colors.accent) }
+                    ItemMedia { Icon(section.icon, contentDescription = null, size = 20.dp, tint = colors.primary) }
                     ItemContent { ItemTitle(section.label) }
                     ItemActions {
-                        Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.labelTertiary)
+                        Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.mutedForeground)
                     }
                 }
             }
@@ -238,7 +239,7 @@ private fun SectionPage(
             } else {
                 BasicText(
                     "This section isn't part of the sample. Choose Sign-In & Security.",
-                    style = Typography.lg.copy(color = colors.labelSecondary),
+                    style = Typography.lg.copy(color = colors.mutedForeground),
                 )
             }
         }
@@ -277,8 +278,8 @@ private fun Security(onSave: (String, String) -> Unit) {
         }
         Card {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                BasicText("Passkeys", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                BasicText(if (passkeys) "On for 3 devices" else "Off", style = Typography.base.copy(color = colors.labelSecondary))
+                BasicText("Passkeys", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                BasicText(if (passkeys) "On for 3 devices" else "Off", style = Typography.base.copy(color = colors.mutedForeground))
             }
             Switch(
                 checked = passkeys,
@@ -289,10 +290,10 @@ private fun Security(onSave: (String, String) -> Unit) {
         }
         Card {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                BasicText("Two-factor authentication", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                BasicText("Codes are sent to your trusted devices.", style = Typography.base.copy(color = colors.labelSecondary))
+                BasicText("Two-factor authentication", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                BasicText("Codes are sent to your trusted devices.", style = Typography.base.copy(color = colors.mutedForeground))
             }
-            BasicText("On", style = Typography.sm.copy(color = colors.success, fontWeight = FontWeight.SemiBold))
+            BasicText("On", style = Typography.sm.copy(color = if (colors.isDark) Palette.green400 else Palette.green600, fontWeight = FontWeight.SemiBold))
         }
         Column(
             Modifier
@@ -305,8 +306,8 @@ private fun Security(onSave: (String, String) -> Unit) {
                 exit = fadeOut(tween(200)),
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 16.dp, tint = colors.success)
-                    BasicText("${saved ?: ""} saved.", style = Typography.sm.copy(color = colors.label))
+                    Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 16.dp, tint = if (colors.isDark) Palette.green400 else Palette.green600)
+                    BasicText("${saved ?: ""} saved.", style = Typography.sm.copy(color = colors.foreground))
                 }
             }
         }
@@ -320,7 +321,7 @@ private fun Card(content: @Composable RowScope.() -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(EsuissTheme.colors.surfaceSecondary, shape)
+            .background(EsuissTheme.colors.muted, shape)
             .padding(horizontal = 20.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -350,7 +351,7 @@ private fun EditableCard(
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(colors.surfaceSecondary, shape)
+            .background(colors.muted, shape)
             .padding(horizontal = 20.dp, vertical = 18.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -358,9 +359,9 @@ private fun EditableCard(
                 BasicText(
                     title,
                     modifier = Modifier.semantics { heading() },
-                    style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
-                if (!editing) BasicText(value, style = Typography.base.copy(color = colors.labelSecondary))
+                if (!editing) BasicText(value, style = Typography.base.copy(color = colors.mutedForeground))
             }
             if (!editing) {
                 val interaction = remember { MutableInteractionSource() }
@@ -368,7 +369,7 @@ private fun EditableCard(
                 BasicText(
                     "Edit ›",
                     modifier = Modifier
-                        .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                        .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                         .clickable(
                             interactionSource = interaction,
                             indication = null,
@@ -377,7 +378,7 @@ private fun EditableCard(
                             onClick = onEdit,
                         )
                         .padding(vertical = 8.dp),
-                    style = Typography.base.copy(color = colors.link),
+                    style = Typography.base.copy(color = colors.primary),
                 )
             }
         }

@@ -65,9 +65,10 @@ fun Toggle(
         size = size,
         shape = RoundedCornerShape(Radius.lg),
         outlined = variant == ToggleVariant.Outline,
-        background = toggleBackground(colors, pressed, enabled, touching),
-        foreground = toggleForeground(colors, pressed, enabled),
+        background = toggleBackground(colors, pressed),
+        foreground = toggleForeground(colors, pressed),
         scaled = touching && enabled,
+        alpha = toggleAlpha(enabled, touching),
         content = content,
     )
 }
@@ -87,17 +88,16 @@ fun Toggle(
     }
 }
 
-internal fun toggleBackground(colors: Colors, on: Boolean, enabled: Boolean, touching: Boolean): Color = when {
-    !enabled -> if (on) colors.controlDisabled else Color.Transparent
-    on -> if (touching) colors.itemPressed else colors.itemSelected
-    touching -> colors.itemPressed
-    else -> Color.Transparent
-}
+internal fun toggleBackground(colors: Colors, on: Boolean): Color =
+    if (on) colors.accent else Color.Transparent
 
-internal fun toggleForeground(colors: Colors, on: Boolean, enabled: Boolean): Color = when {
-    !enabled -> colors.labelQuaternary
-    on -> colors.link
-    else -> colors.label
+internal fun toggleForeground(colors: Colors, on: Boolean): Color =
+    if (on) colors.primary else colors.foreground
+
+internal fun toggleAlpha(enabled: Boolean, touching: Boolean): Float = when {
+    !enabled -> 0.5f
+    touching -> 0.8f
+    else -> 1f
 }
 
 @Composable
@@ -109,6 +109,7 @@ internal fun ToggleSurface(
     background: Color,
     foreground: Color,
     scaled: Boolean,
+    alpha: Float = 1f,
     horizontalPadding: Dp = size.horizontalPadding,
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -119,12 +120,13 @@ internal fun ToggleSurface(
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
+                this.alpha = alpha
             }
             .height(size.height)
             .defaultMinSize(minWidth = size.height)
             .clip(shape)
             .background(background, shape)
-            .then(if (outlined) Modifier.border(1.dp, colors.separator, shape) else Modifier)
+            .then(if (outlined) Modifier.border(1.dp, colors.border, shape) else Modifier)
             .padding(horizontal = horizontalPadding),
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

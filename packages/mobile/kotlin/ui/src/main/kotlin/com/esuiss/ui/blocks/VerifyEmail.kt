@@ -60,6 +60,7 @@ import com.esuiss.ui.components.ButtonVariant
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadow
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -111,21 +112,21 @@ fun VerifyEmail(
                         BasicText(
                             "Check your inbox.",
                             modifier = Modifier.semantics { heading() },
-                            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                         )
                         Spacer(Modifier.height(12.dp))
                         BasicText(
                             buildAnnotatedString {
                                 append("We sent a verification link to ")
-                                withStyle(SpanStyle(color = colors.label, fontWeight = FontWeight.SemiBold)) { append(DemoEmail) }
+                                withStyle(SpanStyle(color = colors.foreground, fontWeight = FontWeight.SemiBold)) { append(DemoEmail) }
                                 append(". Tap the link to activate your account.")
                             },
-                            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                         Spacer(Modifier.height(26.dp))
                         BasicText(
                             "Didn't get it? Check your junk folder or",
-                            style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                         LinkText("change the address ›", onChangeAddress)
                     }
@@ -170,24 +171,24 @@ private fun MailGlyph() {
         Box(
             Modifier
                 .fillMaxSize()
-                .shadow(Shadow(0.dp, 10.dp, 30.dp, colors.accent.copy(alpha = 0.45f)), shape)
-                .background(colors.accent, shape),
+                .shadow(Shadow(0.dp, 10.dp, 30.dp, colors.primary.copy(alpha = 0.45f)), shape)
+                .background(colors.primary, shape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Regular.EnvelopeSimple, contentDescription = null, size = 40.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Regular.EnvelopeSimple, contentDescription = null, size = 40.dp, tint = colors.primaryForeground)
         }
         Box(
             Modifier
                 .align(Alignment.TopEnd)
                 .offset(x = 8.dp, y = (-8).dp)
                 .size(26.dp)
-                .border(3.dp, colors.surface, CircleShape)
+                .border(3.dp, colors.background, CircleShape)
                 .padding(1.dp)
-                .background(colors.red, CircleShape)
+                .background(Palette.red500, CircleShape)
                 .clearAndSetSemantics {},
             contentAlignment = Alignment.Center,
         ) {
-            BasicText("1", style = Typography.sm.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))
+            BasicText("1", style = Typography.sm.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold))
         }
     }
 }
@@ -199,10 +200,10 @@ private fun LinkText(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link, textAlign = TextAlign.Center),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary, textAlign = TextAlign.Center),
     )
 }
 
@@ -225,19 +226,19 @@ private fun Success(email: String, onStartOver: () -> Unit) {
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             "Your email is verified.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
         BasicText(
             "$email is now your suiss Account.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         LinkText("Start over ›", onStartOver)
     }

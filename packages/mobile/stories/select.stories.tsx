@@ -147,7 +147,7 @@ export const WithLabel: Story = {
     <View className="gap-2">
       <Label nativeID="select-fruit">Favorite fruit</Label>
       <SelectDemo labelledBy="select-fruit" />
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         Used to personalize your recommendations.
       </Text>
     </View>
@@ -162,7 +162,7 @@ export const Invalid: Story = {
   render: () => (
     <View className="gap-2">
       <SelectDemo invalid />
-      <Text className="text-sm text-danger">Please select a fruit.</Text>
+      <Text className="text-sm text-destructive">Please select a fruit.</Text>
     </View>
   ),
 }

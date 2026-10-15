@@ -89,6 +89,7 @@ import com.esuiss.ui.components.TabBarItem
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val ActivityRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
@@ -96,11 +97,11 @@ private val ActivityRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
 private class ActivityKind(val value: String, val icon: ImageVector, val tint: (Colors) -> Color)
 
 private val ActivityKinds = listOf(
-    ActivityKind("Price", PhosphorIcons.Bold.Tag) { it.orange },
-    ActivityKind("Content", PhosphorIcons.Bold.NotePencil) { it.blue },
-    ActivityKind("Security", PhosphorIcons.Bold.Shield) { it.red },
-    ActivityKind("Order", PhosphorIcons.Bold.Handbag) { it.green },
-    ActivityKind("User", PhosphorIcons.Bold.User) { it.purple },
+    ActivityKind("Price", PhosphorIcons.Bold.Tag) { Palette.orange500 },
+    ActivityKind("Content", PhosphorIcons.Bold.NotePencil) { Palette.blue500 },
+    ActivityKind("Security", PhosphorIcons.Bold.Shield) { Palette.red500 },
+    ActivityKind("Order", PhosphorIcons.Bold.Handbag) { Palette.green500 },
+    ActivityKind("User", PhosphorIcons.Bold.User) { Palette.purple500 },
 )
 
 private class ActivityEvent(
@@ -184,7 +185,7 @@ fun LogActivity(
                                             modifier = Modifier
                                                 .padding(horizontal = 4.dp)
                                                 .semantics { heading() },
-                                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                         )
                                         ItemGroup(variant = ItemGroupVariant.Inset) {
                                             list.filter { it.day == day }.forEachIndexed { index, event ->
@@ -244,7 +245,7 @@ private fun ActivityItem(event: ActivityEvent, expanded: Boolean?) {
                     .background(kind.tint(colors), RoundedCornerShape(7.dp)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(kind.icon, contentDescription = null, size = 16.dp, tint = colors.onMedia)
+                Icon(kind.icon, contentDescription = null, size = 16.dp, tint = Palette.white)
             }
         }
         ItemContent {
@@ -253,19 +254,19 @@ private fun ActivityItem(event: ActivityEvent, expanded: Boolean?) {
                     withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) { append(event.actor) }
                     append(" ${event.action}")
                 },
-                style = Typography.sm.copy(color = colors.label),
+                style = Typography.sm.copy(color = colors.foreground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             BasicText(
                 event.target,
-                style = Typography.xs.copy(color = colors.labelSecondary),
+                style = Typography.xs.copy(color = colors.mutedForeground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
         }
         ItemActions {
-            BasicText(event.time, style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"))
+            BasicText(event.time, style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"))
             Box(Modifier.size(12.dp), contentAlignment = Alignment.Center) {
                 if (expanded != null) {
                     Icon(
@@ -273,7 +274,7 @@ private fun ActivityItem(event: ActivityEvent, expanded: Boolean?) {
                         contentDescription = null,
                         modifier = Modifier.rotate(rotation),
                         size = 12.dp,
-                        tint = colors.labelTertiary,
+                        tint = colors.mutedForeground,
                     )
                 }
             }
@@ -290,12 +291,12 @@ private fun ActivityDiff(diff: Pair<String, String>) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            BasicText("Before", style = Typography.xs.copy(color = colors.labelSecondary))
-            BasicText(diff.first, style = Typography.sm.copy(color = colors.labelSecondary, textDecoration = TextDecoration.LineThrough))
+            BasicText("Before", style = Typography.xs.copy(color = colors.mutedForeground))
+            BasicText(diff.first, style = Typography.sm.copy(color = colors.mutedForeground, textDecoration = TextDecoration.LineThrough))
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            BasicText("After", style = Typography.xs.copy(color = colors.labelSecondary))
-            BasicText(diff.second, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+            BasicText("After", style = Typography.xs.copy(color = colors.mutedForeground))
+            BasicText(diff.second, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
         }
     }
 }
@@ -320,7 +321,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

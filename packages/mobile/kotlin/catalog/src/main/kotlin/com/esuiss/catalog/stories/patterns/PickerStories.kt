@@ -54,7 +54,7 @@ private fun PickerDefault() {
                 PickerItem("spinach", "Spinach", enabled = false)
             }
         }
-        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
     }
 }
 

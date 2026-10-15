@@ -35,6 +35,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -67,6 +68,7 @@ import com.esuiss.ui.components.EmptyMedia
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val PopEasing = CubicBezierEasing(0.3f, 1.25f, 0.5f, 1f)
@@ -97,7 +99,7 @@ fun EmptyBag(
             Empty {
                 EmptyHeader {
                     EmptyMedia {
-                        Icon(PhosphorIcons.Light.Handbag, contentDescription = null, size = 46.dp, tint = colors.label)
+                        Icon(PhosphorIcons.Light.Handbag, contentDescription = null, size = 46.dp, tint = colors.foreground)
                         CountBadge(
                             count,
                             Modifier
@@ -115,11 +117,11 @@ fun EmptyBag(
                             heading()
                             liveRegion = LiveRegionMode.Polite
                         },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                     BasicText(
                         if (count > 0) "Check out now or keep browsing." else "Sign in to see items you saved.",
-                        style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
                 EmptyContent {
@@ -141,7 +143,7 @@ fun EmptyBag(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .semantics { heading() },
-                style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
             Row(
                 modifier = Modifier
@@ -173,12 +175,12 @@ private fun CountBadge(count: Int, modifier: Modifier) {
         Box(
             Modifier
                 .size(20.dp)
-                .background(colors.label, CircleShape),
+                .background(colors.foreground, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             BasicText(
                 count.toString(),
-                style = Typography.xs3.copy(color = colors.surface, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                style = Typography.xs3.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
             )
         }
     }
@@ -192,16 +194,16 @@ private fun ProductCard(product: Product, inBag: Boolean, onToggle: () -> Unit) 
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(1.2f)
-                .background(colors.surfaceSecondary, RoundedCornerShape(16.dp))
+                .background(colors.muted, RoundedCornerShape(16.dp))
                 .clearAndSetSemantics {},
             contentAlignment = Alignment.Center,
         ) {
-            Icon(product.icon, contentDescription = null, size = 64.dp, tint = colors.labelTertiary)
+            Icon(product.icon, contentDescription = null, size = 64.dp, tint = colors.mutedForeground)
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                BasicText(product.name, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                BasicText(product.price, style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText(product.name, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                BasicText(product.price, style = Typography.sm.copy(color = colors.mutedForeground))
             }
             AddButton(product.name, inBag, onToggle)
         }
@@ -214,17 +216,14 @@ private fun AddButton(name: String, inBag: Boolean, onToggle: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val fill by animateColorAsState(
-        when {
-            inBag -> colors.success
-            pressed -> colors.accentPressed
-            else -> colors.accent
-        },
+        if (inBag) Palette.green500 else colors.primary,
         tween(250),
         label = "fill",
     )
     Box(
         Modifier
             .size(44.dp)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onToggle)
             .semantics {
                 contentDescription = if (inBag) "Remove $name from bag" else "Add $name to bag"
@@ -247,7 +246,7 @@ private fun AddButton(name: String, inBag: Boolean, onToggle: () -> Unit) {
                 if (inBag) PhosphorIcons.Bold.Check else PhosphorIcons.Bold.Plus,
                 contentDescription = null,
                 size = 15.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
         }
     }

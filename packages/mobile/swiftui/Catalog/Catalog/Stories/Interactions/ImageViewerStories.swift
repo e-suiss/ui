@@ -58,7 +58,7 @@ private struct ImageViewerGallery: View {
             } label: {
               thumbnail(page)
                 .frame(width: side, height: side)
-                .background(Color.surfaceSecondary)
+                .background(EsuissColor.muted)
                 .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
             }
             .buttonStyle(.plain)
@@ -83,7 +83,7 @@ private struct ImageViewerGallery: View {
         .resizable()
         .scaledToFill()
     } else {
-      Color.surfaceSecondary
+      EsuissColor.muted
     }
   }
 

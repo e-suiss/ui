@@ -103,14 +103,13 @@ public struct InputGroup<Content: View>: View {
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 
   private var border: Color {
-    if invalid { return .danger }
-    return focused ? .focus : .clear
+    if invalid { return EsuissColor.destructive }
+    return focused ? EsuissColor.ring : .clear
   }
 }
 
@@ -229,7 +228,8 @@ public struct InputGroupAddon<Content: View>: View {
     }
     .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
     .scaledFont(.base)
-    .foregroundStyle(isEnabled ? Color.labelSecondary : .labelQuaternary)
+    .foregroundStyle(EsuissColor.mutedForeground)
+    .opacity(isEnabled ? 1 : 0.5)
     .lineLimit(1)
     .padding(.vertical, align.isBlock ? 0 : 8)
     .padding(.top, align == .blockStart ? 12 : 0)
@@ -332,7 +332,7 @@ public struct InputGroupText<Content: View>: View {
     }
     .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
     .scaledFont(.base)
-    .foregroundStyle(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -363,8 +363,9 @@ public struct InputGroupInput: View {
     TextField(title, text: text)
       .textFieldStyle(.plain)
       .scaledFont(.base)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
+      .opacity(isEnabled ? 1 : 0.5)
       .padding(.leading, addons.contains(.inlineStart) ? 6 : 12)
       .padding(.trailing, addons.contains(.inlineEnd) ? 6 : 12)
       .frame(maxWidth: .infinity, minHeight: 44)
@@ -392,8 +393,9 @@ public struct InputGroupTextarea: View {
       .textFieldStyle(.plain)
       .lineLimit(lineLimit)
       .scaledFont(.base)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
+      .opacity(isEnabled ? 1 : 0.5)
       .padding(.horizontal, 12)
       .padding(.vertical, 10)
       .frame(maxWidth: .infinity, alignment: .topLeading)

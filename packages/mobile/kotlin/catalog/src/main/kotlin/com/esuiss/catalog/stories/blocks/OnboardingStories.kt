@@ -21,6 +21,7 @@ import com.esuiss.ui.blocks.Onboarding
 import com.esuiss.ui.blocks.OnboardingPage
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 
 val onboardingStories = StoryGroup(
@@ -39,10 +40,10 @@ private fun OnboardingIllustration(icon: ImageVector) {
     Box(
         Modifier
             .size(160.dp)
-            .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl3)),
+            .background(colors.muted, RoundedCornerShape(Radius.xl3)),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, contentDescription = null, size = 80.dp, tint = colors.green)
+        Icon(icon, contentDescription = null, size = 80.dp, tint = Palette.green500)
     }
 }
 

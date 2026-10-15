@@ -35,10 +35,17 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -47,14 +54,14 @@ const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "settings", label: "Settings", icon: GearIcon },
 ]
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 const KINDS = {
-  Price: { icon: TagIcon, tint: "orange" },
-  Content: { icon: NotePencilIcon, tint: "blue" },
-  Security: { icon: ShieldIcon, tint: "red" },
-  Order: { icon: HandbagIcon, tint: "green" },
-  User: { icon: UserIcon, tint: "purple" },
+  Price: { icon: TagIcon, tint: "orange500" },
+  Content: { icon: NotePencilIcon, tint: "blue500" },
+  Security: { icon: ShieldIcon, tint: "red500" },
+  Order: { icon: HandbagIcon, tint: "green500" },
+  User: { icon: UserIcon, tint: "purple500" },
 } satisfies Record<string, { icon: PhosphorIcon; tint: Tint }>
 
 type Kind = keyof typeof KINDS
@@ -206,7 +213,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -224,8 +231,13 @@ function EventBody({ event }: { event: Event }) {
   const kind = KINDS[event.kind]
   return (
     <>
-      <View style={[styles.tile, { backgroundColor: colors[kind.tint] }]}>
-        <Icon as={kind.icon} weight="bold" size={16} color={colors.onAccent} />
+      <View style={[styles.tile, { backgroundColor: tone(colors, kind.tint) }]}>
+        <Icon
+          as={kind.icon}
+          weight="bold"
+          size={16}
+          color={colors.primaryForeground}
+        />
       </View>
       <View style={styles.text}>
         <Text numberOfLines={1} style={fontSize.sm}>
@@ -234,12 +246,12 @@ function EventBody({ event }: { event: Event }) {
         </Text>
         <Text
           numberOfLines={1}
-          style={[fontSize.xs, { color: colors.labelSecondary }]}
+          style={[fontSize.xs, { color: colors.mutedForeground }]}
         >
           {event.target}
         </Text>
       </View>
-      <Text style={[styles.time, { color: colors.labelSecondary }]}>
+      <Text style={[styles.time, { color: colors.mutedForeground }]}>
         {event.time}
       </Text>
     </>
@@ -267,10 +279,7 @@ function EventRow({ event }: { event: Event }) {
           return (
             <Pressable
               {...rest}
-              style={({ pressed }) => [
-                baseStyle,
-                pressed && { backgroundColor: colors.itemPressed },
-              ]}
+              style={({ pressed }) => [baseStyle, pressed && { opacity: 0.8 }]}
             />
           )
         }}
@@ -280,7 +289,7 @@ function EventRow({ event }: { event: Event }) {
           as={CaretRightIcon}
           weight="bold"
           size={12}
-          color={colors.labelTertiary}
+          color={colors.mutedForeground}
           style={caretStyle(open)}
         />
       </CollapsibleTrigger>
@@ -290,14 +299,14 @@ function EventRow({ event }: { event: Event }) {
           style={styles.diff}
         >
           <View style={styles.diffItem}>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               Before
             </Text>
             <Text
               style={[
                 fontSize.sm,
                 {
-                  color: colors.labelSecondary,
+                  color: colors.mutedForeground,
                   textDecorationLine: "line-through",
                 },
               ]}
@@ -306,7 +315,7 @@ function EventRow({ event }: { event: Event }) {
             </Text>
           </View>
           <View style={styles.diffItem}>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               After
             </Text>
             <Text style={styles.strong}>{event.diff[1]}</Text>
@@ -383,10 +392,7 @@ function LogActivity({
                     {day}
                   </Text>
                   <View
-                    style={[
-                      styles.group,
-                      { backgroundColor: colors.surfaceSecondary },
-                    ]}
+                    style={[styles.group, { backgroundColor: colors.muted }]}
                   >
                     {list
                       .filter((event) => event.day === day)
@@ -396,7 +402,7 @@ function LogActivity({
                             <View
                               style={[
                                 styles.separator,
-                                { backgroundColor: colors.separator },
+                                { backgroundColor: colors.border },
                               ]}
                             />
                           ) : null}

@@ -242,7 +242,7 @@ function AmountInput({
     : formatParts(value, locale, currency, decimalSeparator)
   const text = parts.map((part) => part.value).join("")
   const size = amountSizeClassName(text.length)
-  const color = empty || disabled ? "text-label-tertiary" : "text-label"
+  const color = empty || disabled ? "text-muted-foreground" : "text-foreground"
 
   return (
     <View className={cn("items-center gap-8", className)} {...props}>

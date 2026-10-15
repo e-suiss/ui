@@ -76,6 +76,7 @@ import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadow
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -142,18 +143,18 @@ fun SettingsNotifications(modifier: Modifier = Modifier) {
                 Box(
                     Modifier
                         .size(40.dp)
-                        .background(colors.green, RoundedCornerShape(10.dp)),
+                        .background(Palette.green500, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, size = 24.dp, tint = colors.onAccent)
+                    Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, size = 24.dp, tint = colors.primaryForeground)
                 }
                 Column {
                     BasicText(
                         "Messages",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                        style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
                     )
-                    BasicText("Notifications", style = Typography.sm.copy(color = colors.labelSecondary))
+                    BasicText("Notifications", style = Typography.sm.copy(color = colors.mutedForeground))
                 }
             }
             ItemGroup(variant = ItemGroupVariant.Inset) {
@@ -261,7 +262,7 @@ private fun SectionTitle(text: String, modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(horizontal = 4.dp)
             .semantics { heading() },
-        style = Typography.sm.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
+        style = Typography.sm.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -272,7 +273,7 @@ private fun SettingRow(title: String, action: @Composable () -> Unit) {
             ItemTitle {
                 BasicText(
                     title,
-                    style = Typography.base.copy(color = EsuissTheme.colors.label),
+                    style = Typography.base.copy(color = EsuissTheme.colors.foreground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -291,8 +292,8 @@ private fun AlertTile(
     onSelectedChange: (Boolean) -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val fill by animateColorAsState(if (selected) colors.accent else Color.Transparent, tween(250), label = "fill")
-    val edge by animateColorAsState(if (selected) Color.Transparent else colors.separatorStrong, tween(250), label = "edge")
+    val fill by animateColorAsState(if (selected) colors.primary else Color.Transparent, tween(250), label = "fill")
+    val edge by animateColorAsState(if (selected) Color.Transparent else colors.input, tween(250), label = "edge")
     val check by animateFloatAsState(if (selected) 1f else 0f, tween(250, easing = PopEasing), label = "check")
     Column(
         modifier = modifier
@@ -313,7 +314,7 @@ private fun AlertTile(
         BasicText(
             kind.label,
             modifier = Modifier.padding(horizontal = 2.dp),
-            style = Typography.xs.copy(color = colors.label, textAlign = TextAlign.Center),
+            style = Typography.xs.copy(color = colors.foreground, textAlign = TextAlign.Center),
             minLines = 2,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -333,7 +334,7 @@ private fun AlertTile(
                     scaleY = check
                 },
                 size = 12.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
         }
     }
@@ -347,8 +348,8 @@ private fun MiniScreen(kind: AlertKind) {
         Modifier
             .size(width = 64.dp, height = 92.dp)
             .clip(shape)
-            .background(colors.indigo, shape)
-            .border(2.dp, colors.label, shape)
+            .background(Palette.indigo500, shape)
+            .border(2.dp, colors.foreground, shape)
             .clearAndSetSemantics {},
     ) {
         if (kind == AlertKind.Lock) {
@@ -357,7 +358,7 @@ private fun MiniScreen(kind: AlertKind) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 14.dp),
-                style = Typography.sm.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                style = Typography.sm.copy(color = Palette.white, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
             )
         }
         kind.bars.forEachIndexed { index, top ->
@@ -368,7 +369,7 @@ private fun MiniScreen(kind: AlertKind) {
                     .fillMaxWidth()
                     .height(13.dp)
                     .graphicsLayer { alpha = 1f - index * 0.15f }
-                    .background(colors.onMedia, RoundedCornerShape(4.dp)),
+                    .background(Palette.white, RoundedCornerShape(4.dp)),
             )
         }
     }
@@ -390,12 +391,12 @@ private fun LockScreenPreview(
     Box(
         modifier = modifier
             .size(width = 230.dp, height = 470.dp)
-            .shadow(Shadow(0.dp, 20.dp, 50.dp, colors.media.copy(alpha = 0.4f)), outer)
-            .background(colors.media, outer)
-            .border(1.5.dp, colors.labelTertiary, outer)
+            .shadow(Shadow(0.dp, 20.dp, 50.dp, Palette.black.copy(alpha = 0.4f)), outer)
+            .background(Palette.black, outer)
+            .border(1.5.dp, colors.mutedForeground, outer)
             .padding(8.dp)
             .clip(inner)
-            .background(colors.indigo)
+            .background(Palette.indigo500)
             .semantics { contentDescription = "Lock screen preview. $footnote." },
     ) {
         Box(
@@ -403,7 +404,7 @@ private fun LockScreenPreview(
                 .align(Alignment.TopCenter)
                 .padding(top = 8.dp)
                 .size(width = 74.dp, height = 22.dp)
-                .background(colors.media, CircleShape),
+                .background(Palette.black, CircleShape),
         )
         Column(
             Modifier
@@ -413,12 +414,12 @@ private fun LockScreenPreview(
         ) {
             BasicText(
                 "Tuesday, October 6",
-                style = Typography.xs.copy(color = colors.onMedia.copy(alpha = 0.9f), fontWeight = FontWeight.SemiBold),
+                style = Typography.xs.copy(color = Palette.white.copy(alpha = 0.9f), fontWeight = FontWeight.SemiBold),
             )
             BasicText(
                 "9:41",
                 style = Typography.xl3.copy(
-                    color = colors.onMedia,
+                    color = Palette.white,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 60.sp,
                     lineHeight = 60.sp,
@@ -452,7 +453,7 @@ private fun LockScreenPreview(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 14.dp),
-            style = Typography.xs3.copy(color = colors.onMedia.copy(alpha = 0.85f), textAlign = TextAlign.Center),
+            style = Typography.xs3.copy(color = Palette.white.copy(alpha = 0.85f), textAlign = TextAlign.Center),
         )
     }
 }
@@ -460,7 +461,7 @@ private fun LockScreenPreview(
 @Composable
 private fun Notification(body: String, stacked: Boolean) {
     val colors = EsuissTheme.colors
-    val ink = colors.media
+    val ink = Palette.black
     val shape = RoundedCornerShape(18.dp)
     Box {
         if (stacked) {
@@ -469,23 +470,23 @@ private fun Notification(body: String, stacked: Boolean) {
                     .matchParentSize()
                     .padding(horizontal = 10.dp)
                     .offset(y = 6.dp)
-                    .background(colors.onMedia.copy(alpha = 0.55f), RoundedCornerShape(16.dp)),
+                    .background(Palette.white.copy(alpha = 0.55f), RoundedCornerShape(16.dp)),
             )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colors.onMedia, shape)
+                .background(Palette.white, shape)
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Box(
                 Modifier
                     .size(30.dp)
-                    .background(colors.green, RoundedCornerShape(7.dp)),
+                    .background(Palette.green500, RoundedCornerShape(7.dp)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, size = 18.dp, tint = colors.onMedia)
+                Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, size = 18.dp, tint = Palette.white)
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(1.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

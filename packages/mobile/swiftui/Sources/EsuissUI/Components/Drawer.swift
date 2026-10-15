@@ -43,7 +43,7 @@ struct DrawerHost<Content: View>: View {
         }
       }
       .presentationDragIndicator(.visible)
-      .presentationBackground(Color.surfaceRaised)
+      .presentationBackground(EsuissColor.popover)
       .presentationCornerRadius(Radius.xl3)
     if let detents, let selection {
       styled.presentationDetents(detents, selection: selection)
@@ -87,7 +87,7 @@ public struct DrawerContent<Content: View>: View {
           .padding(.trailing, 16)
       }
     }
-    .background(Color.surfaceRaised)
+    .background(EsuissColor.popover)
   }
 }
 

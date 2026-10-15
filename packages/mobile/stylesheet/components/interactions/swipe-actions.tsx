@@ -23,7 +23,12 @@ import { useHaptics } from "@/components/primitives/haptics"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { IconSizeContext } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 type SwipeActionsSide = "leading" | "trailing"
 
@@ -355,7 +360,7 @@ function SwipeActionsContent({
       }}
       style={[
         styles.content,
-        { backgroundColor: colors.surface },
+        { backgroundColor: colors.background },
         animatedStyle,
         style,
       ]}
@@ -375,13 +380,13 @@ type SwipeActionVariant = "default" | "destructive" | "archive" | "neutral"
 function swipeActionColor(variant: SwipeActionVariant, colors: ThemeColors) {
   switch (variant) {
     case "destructive":
-      return colors.danger
+      return colors.destructive
     case "archive":
-      return colors.purple
+      return palette.purple500
     case "neutral":
-      return colors.gray
+      return palette.zinc500
     default:
-      return colors.accent
+      return colors.primary
   }
 }
 
@@ -436,7 +441,7 @@ function SwipeAction({
         ...fontSize.xs,
         fontWeight: "500",
         textAlign: "center",
-        color: colors.onAccent,
+        color: colors.primaryForeground,
       }}
     >
       <IconSizeContext.Provider value={20}>

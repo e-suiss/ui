@@ -54,10 +54,10 @@ function MiniScreen({ kind }: { kind: Alert }) {
     <View
       accessible={false}
       importantForAccessibility="no-hide-descendants"
-      className="h-23 w-16 overflow-hidden rounded-xl border-2 border-label bg-indigo"
+      className="h-23 w-16 overflow-hidden rounded-xl border-2 border-foreground bg-indigo-500"
     >
       {kind === "lock" ? (
-        <Text className="absolute inset-x-0 top-3 text-center text-sm font-semibold text-on-media">
+        <Text className="absolute inset-x-0 top-3 text-center text-sm font-semibold text-white">
           9:41
         </Text>
       ) : null}
@@ -65,7 +65,7 @@ function MiniScreen({ kind }: { kind: Alert }) {
         <View
           key={top}
           style={{ top: top - 2, opacity: 1 - index * 0.15 }}
-          className="absolute inset-x-1.5 h-3.25 rounded-sm bg-on-media"
+          className="absolute inset-x-1.5 h-3.25 rounded-sm bg-white"
         />
       ))}
     </View>
@@ -78,20 +78,20 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
       entering={FadeInUp.duration(600).reduceMotion(ReduceMotion.System)}
     >
       {stacked ? (
-        <View className="absolute inset-x-2.5 -bottom-1.5 h-5 rounded-2xl bg-surface-raised opacity-55" />
+        <View className="absolute inset-x-2.5 -bottom-1.5 h-5 rounded-2xl bg-card opacity-55" />
       ) : null}
-      <View className="flex-row gap-2.5 rounded-[1.125rem] bg-surface-raised px-3 py-2.5 opacity-95">
-        <View className="size-7.5 shrink-0 items-center justify-center rounded-[7px] bg-green">
+      <View className="flex-row gap-2.5 rounded-[1.125rem] bg-card px-3 py-2.5 opacity-95">
+        <View className="size-7.5 shrink-0 items-center justify-center rounded-[7px] bg-green-500">
           <Icon
             as={ChatCircleIcon}
             weight="fill"
-            className="size-4.5 text-on-accent"
+            className="size-4.5 text-primary-foreground"
           />
         </View>
         <View className="min-w-0 flex-1 gap-px">
           <View className="flex-row items-center gap-1.5">
             <Text className="flex-1 text-xs font-semibold">Riley Morgan</Text>
-            <Text className="text-2xs text-label-secondary">now</Text>
+            <Text className="text-2xs text-muted-foreground">now</Text>
           </View>
           <Text className="text-xs">{body}</Text>
         </View>
@@ -183,25 +183,25 @@ function SettingsNotifications() {
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerClassName="gap-5 px-4 pt-4 pb-8">
         <View className="flex-row items-center gap-3">
-          <View className="size-10 items-center justify-center rounded-[0.625rem] bg-green">
+          <View className="size-10 items-center justify-center rounded-[0.625rem] bg-green-500">
             <Icon
               as={ChatCircleIcon}
               weight="fill"
-              className="size-6 text-on-accent"
+              className="size-6 text-primary-foreground"
             />
           </View>
           <View>
             <Text role="heading" className="text-2xl font-bold">
               Messages
             </Text>
-            <Text className="text-sm text-label-secondary">Notifications</Text>
+            <Text className="text-sm text-muted-foreground">Notifications</Text>
           </View>
         </View>
         <View
           accessible
           accessibilityRole="image"
           accessibilityLabel={`Lock screen preview. ${footnote}.`}
-          className="h-75 overflow-hidden rounded-3xl bg-media"
+          className="h-75 overflow-hidden rounded-3xl bg-black"
         >
           <Image
             source={{ uri: WALLPAPER }}
@@ -209,12 +209,12 @@ function SettingsNotifications() {
             accessibilityIgnoresInvertColors
             className="absolute inset-0 size-full"
           />
-          <View className="absolute inset-0 bg-scrim opacity-40" />
+          <View className="absolute inset-0 bg-black/50 opacity-40" />
           <View className="absolute inset-x-0 top-10 items-center">
-            <Text className="text-xs font-semibold text-on-media opacity-90">
+            <Text className="text-xs font-semibold text-white opacity-90">
               Tuesday, October 6
             </Text>
-            <Text className="text-3xl font-semibold text-on-media">9:41</Text>
+            <Text className="text-3xl font-semibold text-white">9:41</Text>
           </View>
           {allow && enabled.banner && bannerVisible ? (
             <View key={bannerKey} className="absolute inset-x-2 top-2">
@@ -226,7 +226,7 @@ function SettingsNotifications() {
               <Notification body={body} stacked={grouping !== "Off"} />
             </View>
           ) : null}
-          <Text className="absolute inset-x-0 bottom-3.5 text-center text-2xs text-on-media opacity-85">
+          <Text className="absolute inset-x-0 bottom-3.5 text-center text-2xs text-white opacity-85">
             {footnote}
           </Text>
         </View>
@@ -268,22 +268,20 @@ function SettingsNotifications() {
                     className="h-auto flex-1 flex-col gap-2 rounded-xl bg-transparent pt-3.5 pb-3 active:bg-transparent"
                   >
                     <MiniScreen kind={alert.value} />
-                    <Text className="text-center text-sm text-label">
+                    <Text className="text-center text-sm text-foreground">
                       {alert.label}
                     </Text>
                     <View
                       className={cn(
                         "size-5.5 items-center justify-center rounded-full border-[1.5px]",
-                        on
-                          ? "border-transparent bg-accent"
-                          : "border-separator-strong"
+                        on ? "border-transparent bg-primary" : "border-input"
                       )}
                     >
                       {on ? (
                         <Icon
                           as={CheckIcon}
                           weight="bold"
-                          className="size-3 text-on-accent"
+                          className="size-3 text-primary-foreground"
                         />
                       ) : null}
                     </View>

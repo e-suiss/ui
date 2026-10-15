@@ -31,10 +31,10 @@ private val chartData = listOf(
 
 private val chartConfig = ChartConfig(
     "users" to ChartConfigItem("Users"),
-    "phone" to ChartConfigItem("Phone") { blue },
-    "laptop" to ChartConfigItem("Laptop") { teal },
-    "tablet" to ChartConfigItem("Tablet") { indigo },
-    "watch" to ChartConfigItem("Watch") { orange },
+    "phone" to ChartConfigItem("Phone") { chart1 },
+    "laptop" to ChartConfigItem("Laptop") { chart2 },
+    "tablet" to ChartConfigItem("Tablet") { chart3 },
+    "watch" to ChartConfigItem("Watch") { chart4 },
 )
 
 @Composable
@@ -64,10 +64,10 @@ fun RadialChartLabel(modifier: Modifier = Modifier) {
                         value = { it.users },
                         nameKey = { it.device },
                         cornerRadius = 10.dp,
-                        background = colors.control,
+                        background = colors.secondary,
                         labelList = ChartLabelList(
                             ChartLabelPosition.InsideStart,
-                            color = colors.onAccent,
+                            color = colors.primaryForeground,
                             fontSize = Typography.xs2.fontSize,
                             formatter = { index, _ -> chartConfig[chartData[index].device]?.label ?: "" },
                         ),

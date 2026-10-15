@@ -57,6 +57,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.ScreenVariant
 import com.esuiss.ui.components.rememberCarouselState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -98,12 +99,12 @@ fun GridCarousel(
             BasicText(
                 buildAnnotatedString {
                     append("The latest. ")
-                    withStyle(SpanStyle(color = colors.labelSecondary)) { append("Fresh favorites of the season.") }
+                    withStyle(SpanStyle(color = colors.mutedForeground)) { append("Fresh favorites of the season.") }
                 },
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .semantics { heading() },
-                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
             Carousel(state, modifier = Modifier.semantics { contentDescription = "Latest products" }) {
                 CarouselContent(
@@ -153,7 +154,7 @@ private fun CarouselCard(product: CarouselProduct, onClick: () -> Unit) {
             }
             .shadow(Shadows.md, shape)
             .clip(shape)
-            .background(colors.surface, shape)
+            .background(colors.background, shape)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
     ) {
         Column(
@@ -163,15 +164,15 @@ private fun CarouselCard(product: CarouselProduct, onClick: () -> Unit) {
             if (product.kicker != null) {
                 BasicText(
                     product.kicker.uppercase(),
-                    style = Typography.xs.copy(color = colors.warning, fontWeight = FontWeight.SemiBold, letterSpacing = 0.025.em),
+                    style = Typography.xs.copy(color = if (colors.isDark) Palette.amber400 else Palette.amber600, fontWeight = FontWeight.SemiBold, letterSpacing = 0.025.em),
                 )
             }
-            BasicText(product.name, style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-            BasicText(product.tagline, style = Typography.lg.copy(color = colors.label))
+            BasicText(product.name, style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+            BasicText(product.tagline, style = Typography.lg.copy(color = colors.foreground))
             BasicText(
                 "From ${product.price}",
                 modifier = Modifier.padding(top = 6.dp),
-                style = Typography.sm.copy(color = colors.labelSecondary),
+                style = Typography.sm.copy(color = colors.mutedForeground),
             )
         }
         Box(
@@ -179,11 +180,11 @@ private fun CarouselCard(product: CarouselProduct, onClick: () -> Unit) {
                 .padding(20.dp)
                 .weight(1f)
                 .fillMaxWidth()
-                .background(colors.surfaceSecondary, RoundedCornerShape(12.dp))
+                .background(colors.muted, RoundedCornerShape(12.dp))
                 .clearAndSetSemantics { contentDescription = product.alt },
             contentAlignment = Alignment.Center,
         ) {
-            Icon(product.icon, contentDescription = null, size = 96.dp, tint = colors.labelTertiary)
+            Icon(product.icon, contentDescription = null, size = 96.dp, tint = colors.mutedForeground)
         }
     }
 }

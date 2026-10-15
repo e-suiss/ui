@@ -44,7 +44,7 @@ function NotesExample({
     )
 
   return (
-    <View className="flex-1 overflow-hidden rounded-2xl border border-separator">
+    <View className="flex-1 overflow-hidden rounded-2xl border border-border">
       <Text variant="h1" className="px-4 pt-4 pb-2">
         Notes
       </Text>
@@ -52,18 +52,18 @@ function NotesExample({
         <SearchRevealField value={query} onValueChange={setQuery} />
         <SearchRevealContent>
           {notes.length === 0 ? (
-            <Text className="px-4 py-16 text-center text-sm text-label-secondary">
+            <Text className="px-4 py-16 text-center text-sm text-muted-foreground">
               No results for “{query}”
             </Text>
           ) : (
-            <View className="mx-4 overflow-hidden rounded-xl bg-surface-secondary">
+            <View className="mx-4 overflow-hidden rounded-xl bg-muted">
               {notes.map((note, index) => (
                 <Pressable
                   key={note.id}
                   className={
                     index > 0
-                      ? "border-t border-separator px-4 py-3 active:bg-item-pressed"
-                      : "px-4 py-3 active:bg-item-pressed"
+                      ? "border-t border-border px-4 py-3 active:opacity-80"
+                      : "px-4 py-3 active:opacity-80"
                   }
                 >
                   <Text numberOfLines={1} className="font-semibold">
@@ -71,7 +71,7 @@ function NotesExample({
                   </Text>
                   <Text
                     numberOfLines={1}
-                    className="text-sm text-label-secondary"
+                    className="text-sm text-muted-foreground"
                   >
                     {note.preview}
                   </Text>
@@ -79,7 +79,7 @@ function NotesExample({
               ))}
             </View>
           )}
-          <Text className="px-4 py-3 text-center text-xs text-label-secondary">
+          <Text className="px-4 py-3 text-center text-xs text-muted-foreground">
             {notes.length} {notes.length === 1 ? "note" : "notes"}
           </Text>
         </SearchRevealContent>

@@ -75,7 +75,7 @@ public struct ChatSupport: View {
   }
 
   public var body: some View {
-    Screen(background: .surfaceSecondary) {
+    Screen(background: .muted) {
       ZStack(alignment: .bottomTrailing) {
         KeyboardScrollView {
           hero
@@ -109,12 +109,12 @@ public struct ChatSupport: View {
     VStack(alignment: .leading, spacing: 0) {
       Text(verbatim: "suiss Support")
         .scaledFont(.lg, weight: .semibold)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Text("How can we help you?")
         .scaledTextStyle(.xl3, weight: .semibold)
         .padding(.top, 6)
         .accessibilityAddTraits(.isHeader)
-      Color.control
+      EsuissColor.secondary
         .overlay {
           AsyncImage(url: Self.image) { phase in
             if let image = phase.image {
@@ -142,9 +142,9 @@ public struct ChatSupport: View {
       HStack(spacing: 10) {
         Text(verbatim: "s")
           .font(.system(size: TextStyle.base.size, weight: .bold))
-          .foregroundStyle(Color.surface)
+          .foregroundStyle(EsuissColor.background)
           .frame(width: 34, height: 34)
-          .background(Color.label, in: Circle())
+          .background(EsuissColor.foreground, in: Circle())
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: 0) {
           Text(verbatim: "suiss Support")
@@ -154,7 +154,7 @@ public struct ChatSupport: View {
             Text("Online")
           }
           .scaledFont(.xs2)
-          .foregroundStyle(Color.success)
+          .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
@@ -169,7 +169,7 @@ public struct ChatSupport: View {
       .padding(.horizontal, 14)
       .padding(.vertical, 12)
       .overlay(alignment: .bottom) {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
       MessageScroller(entries, spacing: 4) { entry in
         switch entry {
@@ -230,12 +230,12 @@ public struct ChatSupport: View {
       .padding(.top, 8)
       .padding(.bottom, 12)
     }
-    .environment(\.screenBackground, Color.surface)
+    .environment(\.screenBackground, EsuissColor.background)
     .frame(maxWidth: .infinity, maxHeight: 520)
-    .background(Color.surface, in: shape)
+    .background(EsuissColor.background, in: shape)
     .clipShape(shape)
     .overlay {
-      shape.strokeBorder(Color.separator, lineWidth: 0.5)
+      shape.strokeBorder(EsuissColor.border, lineWidth: 0.5)
     }
     .shadow(Shadow.lg)
     .accessibilityElement(children: .contain)
@@ -279,7 +279,7 @@ private struct ChatSupportTyping: View {
               HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { dot in
                   Circle()
-                    .fill(Color.labelTertiary)
+                    .fill(EsuissColor.mutedForeground)
                     .frame(width: 8, height: 8)
                     .opacity(reduceMotion ? 1 : 0.55 + 0.45 * abs(sin((time - Double(dot) * 0.18) * .pi / 1.1)))
                 }

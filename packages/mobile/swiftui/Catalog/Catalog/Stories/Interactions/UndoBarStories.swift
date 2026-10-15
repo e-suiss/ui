@@ -53,11 +53,11 @@ private struct UndoBarNoteText: View {
     VStack(alignment: .leading, spacing: 0) {
       Text(verbatim: note.title)
         .textStyle(.base, weight: .semibold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
       Text(verbatim: note.preview)
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .lineLimit(1)
     }
     .padding(.vertical, 8)
@@ -82,16 +82,16 @@ private struct UndoBarNotes: View {
           row(note)
             .overlay(alignment: .top) {
               if index > 0 {
-                Color.separator.frame(height: 1)
+                EsuissColor.border.frame(height: 1)
               }
             }
         }
       }
       .clipShape(shape)
-      .overlay { shape.strokeBorder(Color.separator) }
+      .overlay { shape.strokeBorder(EsuissColor.border) }
       Text(verbatim: log)
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityAddTraits(.updatesFrequently)
     }
     .onAppear {

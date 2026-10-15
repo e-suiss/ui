@@ -40,7 +40,7 @@ function PrintExample() {
 
   return (
     <View className="w-full gap-3">
-      <View className="overflow-hidden rounded-2xl border border-separator">
+      <View className="overflow-hidden rounded-2xl border border-border">
         <StepperRow
           label="Copies"
           value={copies}
@@ -48,7 +48,7 @@ function PrintExample() {
           min={1}
           max={999}
         />
-        <View className="h-px bg-separator" />
+        <View className="h-px bg-border" />
         <StepperRow
           label="Scale"
           value={scale}
@@ -58,12 +58,12 @@ function PrintExample() {
           step={5}
           format={{ style: "unit", unit: "percent" }}
         />
-        <View className="h-px bg-separator" />
+        <View className="h-px bg-border" />
         <StepperRow label="Pages per sheet" defaultValue={1} disabled />
       </View>
       <Text
         accessibilityLiveRegion="polite"
-        className="text-sm text-label-secondary"
+        className="text-sm text-muted-foreground"
       >
         {copies} {copies === 1 ? "copy" : "copies"} at {scale}%
       </Text>

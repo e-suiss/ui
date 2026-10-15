@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
@@ -90,30 +91,31 @@ fun <T> RadioGroupItem(
             },
         )
         .then(if (error) Modifier.semantics { error("Invalid") } else Modifier)
-    val control = @Composable { controlModifier: Modifier ->
+    val control = @Composable { controlModifier: Modifier, alpha: Float ->
         Box(
             modifier = controlModifier
                 .size(16.dp)
+                .alpha(alpha)
                 .then(if (look.shadow) Modifier.shadow(FormShadowXs, CircleShape) else Modifier)
                 .background(look.background, CircleShape)
                 .border(1.dp, look.border, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             if (selected) {
-                Box(Modifier.size(if (colors.isDark) 10.dp else 8.dp).background(colors.onAccent, CircleShape))
+                Box(Modifier.size(if (colors.isDark) 10.dp else 8.dp).background(colors.primaryForeground, CircleShape))
             }
         }
     }
     if (label == null) {
-        control(modifier.then(select).formTouchTarget())
+        control(modifier.then(select).formTouchTarget(), look.alpha)
     } else {
-        val color = if (active) colors.label else colors.labelQuaternary
+        val color = colors.foreground
         Row(
-            modifier = modifier.then(select).heightIn(min = 24.dp),
+            modifier = modifier.then(select).heightIn(min = 24.dp).alpha(if (active) 1f else 0.5f),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            control(Modifier)
+            control(Modifier, if (pressed && active) 0.8f else 1f)
             CompositionLocalProvider(
                 LocalContentStyle provides Typography.base.copy(color = color),
                 LocalContentColor provides color,

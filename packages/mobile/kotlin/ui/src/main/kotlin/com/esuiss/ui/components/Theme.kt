@@ -384,7 +384,7 @@ fun ThemeProvider(
     val path = remember { Path() }
     CompositionLocalProvider(LocalThemeState provides state) {
         EsuissTheme(darkTheme = state.resolvedTheme == ResolvedTheme.Dark) {
-            val label = EsuissTheme.colors.label
+            val label = EsuissTheme.colors.foreground
             CompositionLocalProvider(
                 LocalContentStyle provides LocalContentStyle.current.copy(color = label),
                 LocalContentColor provides label,

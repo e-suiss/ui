@@ -96,7 +96,7 @@ function WithDescriptionsDemo() {
             >
               {plan.label}
             </Label>
-            <Text className="text-sm text-label-secondary">
+            <Text className="text-sm text-muted-foreground">
               {plan.description}
             </Text>
           </View>

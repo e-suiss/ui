@@ -68,7 +68,7 @@ function EmptyMedia({
         style={[
           styles.media,
           icon && styles.mediaIcon,
-          icon && { backgroundColor: colors.surfaceSecondary },
+          icon && { backgroundColor: colors.muted },
           style,
         ]}
         {...props}
@@ -82,7 +82,7 @@ function EmptyTitle({ style, ...props }: React.ComponentProps<typeof Text>) {
   return (
     <Text
       role="heading"
-      style={[styles.title, { color: colors.label }, style]}
+      style={[styles.title, { color: colors.foreground }, style]}
       {...props}
     />
   )
@@ -95,7 +95,7 @@ function EmptyDescription({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )

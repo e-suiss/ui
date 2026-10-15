@@ -32,8 +32,8 @@ private val chartData = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
     }
 
 private val chartConfig = ChartConfig(
-    "actual" to ChartConfigItem("Actual") { blue },
-    "forecast" to ChartConfigItem("Forecast") { blue },
+    "actual" to ChartConfigItem("Actual") { chart1 },
+    "forecast" to ChartConfigItem("Forecast") { chart1 },
 )
 
 @Composable
@@ -56,7 +56,7 @@ fun LineChartForecast(modifier: Modifier = Modifier) {
                     CartesianGrid(strokeDasharray = listOf(2f, 4f))
                     XAxis(label = { it.month }, tickMargin = 8.dp, interval = 2)
                     ChartTooltip { ChartTooltipContent(indicator = ChartTooltipIndicator.Line) }
-                    ReferenceArea(8, 11, fill = colors.control, fillOpacity = 0.6f)
+                    ReferenceArea(8, 11, fill = colors.secondary, fillOpacity = 0.6f)
                     Line("actual", value = { it.actual }, curve = ChartCurve.Monotone, strokeWidth = 2.5.dp)
                     Line(
                         "forecast",

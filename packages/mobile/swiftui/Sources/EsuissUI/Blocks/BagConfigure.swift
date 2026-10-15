@@ -38,9 +38,9 @@ public struct BagConfigure: View {
 
   static var finishes: [Finish] {
     [
-      Finish(name: "Cosmic Orange", color: .orange, image: photo("1714972384975-fbd4f19b1bb3"), alt: "An orange phone on a warm gradient"),
-      Finish(name: "Deep Blue", color: .indigo, image: photo("1714578187196-29775454aa39"), alt: "A phone floating among blue spheres"),
-      Finish(name: "Silver", color: .gray, image: photo("1664883410931-2edffc8be5e6"), alt: "A silver phone on a light grey background"),
+      Finish(name: "Cosmic Orange", color: Palette.orange500, image: photo("1714972384975-fbd4f19b1bb3"), alt: "An orange phone on a warm gradient"),
+      Finish(name: "Deep Blue", color: Palette.indigo500, image: photo("1714578187196-29775454aa39"), alt: "A phone floating among blue spheres"),
+      Finish(name: "Silver", color: Palette.zinc500, image: photo("1664883410931-2edffc8be5e6"), alt: "A silver phone on a light grey background"),
     ]
   }
 
@@ -89,7 +89,7 @@ public struct BagConfigure: View {
             VStack(alignment: .leading, spacing: 6) {
               Text("New")
                 .scaledFont(.xs, weight: .semibold)
-                .foregroundStyle(Color.warning)
+                .foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
               Text("Buy Phone Pro")
                 .scaledTextStyle(.xl3, weight: .semibold)
                 .accessibilityAddTraits(.isHeader)
@@ -106,7 +106,7 @@ public struct BagConfigure: View {
                       .frame(maxWidth: .infinity, alignment: .leading)
                     Text("From \(money(item.price, digits: 0))")
                       .scaledFont(.sm)
-                      .foregroundStyle(Color.labelSecondary)
+                      .foregroundStyle(EsuissColor.mutedForeground)
                   }
                   .padding(.horizontal, 16)
                   .padding(.vertical, 14)
@@ -143,7 +143,7 @@ public struct BagConfigure: View {
                       }
                     }
                     .scaledFont(.xs2)
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                   }
                   .lineLimit(1)
                   .frame(maxWidth: .infinity)
@@ -169,7 +169,7 @@ public struct BagConfigure: View {
                 .contentTransition(.numericText())
               Text("or \(money(price / 12))/mo. for 12 mo.")
                 .scaledFont(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityElement(children: .combine)
@@ -193,7 +193,7 @@ public struct BagConfigure: View {
   private func heading(_ title: LocalizedStringKey, detail: Text?) -> some View {
     Group {
       if let detail {
-        Text("\(Text(title)) \(detail.foregroundStyle(Color.labelSecondary))")
+        Text("\(Text(title)) \(detail.foregroundStyle(EsuissColor.mutedForeground))")
       } else {
         Text(title)
       }
@@ -203,7 +203,7 @@ public struct BagConfigure: View {
   }
 
   private var gallery: some View {
-    Color.surfaceSecondary
+    EsuissColor.muted
       .aspectRatio(4 / 3, contentMode: .fit)
       .overlay {
         ForEach(Self.finishes) { item in
@@ -242,7 +242,7 @@ private struct BagConfigureCard<Label: View>: View {
     let shape = RoundedRectangle(cornerRadius: 14, style: .continuous)
     Button(action: action) {
       label
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .frame(maxWidth: .infinity)
         .contentShape(shape)
     }
@@ -258,9 +258,9 @@ private struct BagConfigureCardStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     let shape = RoundedRectangle(cornerRadius: 14, style: .continuous)
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear, in: shape)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .overlay {
-        shape.strokeBorder(selected ? Color.accent : .separatorStrong, lineWidth: selected ? 2 : 1)
+        shape.strokeBorder(selected ? EsuissColor.primary : EsuissColor.input, lineWidth: selected ? 2 : 1)
       }
       .animation(.easeOut(duration: 0.2), value: selected)
   }
@@ -276,13 +276,13 @@ private struct BagConfigureSwatch: View {
       Circle()
         .fill(finish.color)
         .overlay {
-          Circle().strokeBorder(Color.label.opacity(0.15), lineWidth: 1)
+          Circle().strokeBorder(EsuissColor.foreground.opacity(0.15), lineWidth: 1)
         }
         .frame(width: 30, height: 30)
         .padding(3)
         .overlay {
           if selected {
-            Circle().strokeBorder(Color.accent, lineWidth: 2)
+            Circle().strokeBorder(EsuissColor.primary, lineWidth: 2)
           }
         }
         .frame(width: 44, height: 44)

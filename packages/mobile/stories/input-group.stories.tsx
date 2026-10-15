@@ -124,7 +124,7 @@ export const BlockStart: Story = {
     <InputGroup>
       <InputGroupInput placeholder="Enter your name" />
       <InputGroupAddon align="block-start">
-        <Text className="text-sm font-medium text-label">Full name</Text>
+        <Text className="text-sm font-medium text-foreground">Full name</Text>
       </InputGroupAddon>
     </InputGroup>
   ),

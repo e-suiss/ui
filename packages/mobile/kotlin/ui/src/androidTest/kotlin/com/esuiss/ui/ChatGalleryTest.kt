@@ -102,6 +102,7 @@ import com.esuiss.ui.components.MessageScroller
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.Spinner
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.io.File
 import org.junit.Assert.assertEquals
@@ -169,7 +170,7 @@ private fun threadFor(scene: ChatScene): ChatThread = when (scene) {
 @Composable
 private fun Section(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        BasicText(title, style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+        BasicText(title, style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold))
         content()
     }
 }
@@ -190,7 +191,7 @@ private fun Page(content: @Composable ColumnScope.() -> Unit) {
 @Composable
 private fun rememberPhoto(): BrushPainter {
     val colors = EsuissTheme.colors
-    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }
+    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(Palette.teal500, Palette.blue500, Palette.indigo500))) }
 }
 
 @Composable
@@ -281,7 +282,7 @@ private fun Messages() {
 private fun PdfAttachment(state: AttachmentState, title: String, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Attachment(modifier, state = state) {
         AttachmentMedia(variant = AttachmentMediaVariant.Document) {
-            AttachmentLabel("pdf", background = EsuissTheme.colors.red)
+            AttachmentLabel("pdf", background = Palette.red500)
         }
         AttachmentContent {
             AttachmentTitle(title)
@@ -305,7 +306,7 @@ private fun Attachments() {
                 }
                 Attachment(Modifier.fillMaxWidth(), state = AttachmentState.Uploading) {
                     AttachmentMedia(variant = AttachmentMediaVariant.Document) {
-                        AttachmentLabel("pdf", background = EsuissTheme.colors.red)
+                        AttachmentLabel("pdf", background = Palette.red500)
                     }
                     AttachmentContent {
                         AttachmentTitle("Invoice March.pdf")
@@ -319,17 +320,17 @@ private fun Attachments() {
                 }
                 Attachment(Modifier.fillMaxWidth(), state = AttachmentState.Processing) {
                     AttachmentMedia(variant = AttachmentMediaVariant.Document) {
-                        AttachmentLabel("pdf", background = EsuissTheme.colors.red)
+                        AttachmentLabel("pdf", background = Palette.red500)
                     }
                     AttachmentContent {
                         AttachmentTitle("Invoice March.pdf")
                         AttachmentDescription("Processing…")
                     }
-                    AttachmentActions { Spinner(size = 20.dp, color = EsuissTheme.colors.labelSecondary) }
+                    AttachmentActions { Spinner(size = 20.dp, color = EsuissTheme.colors.mutedForeground) }
                 }
                 Attachment(Modifier.fillMaxWidth(), state = AttachmentState.Error) {
                     AttachmentMedia(variant = AttachmentMediaVariant.Document) {
-                        AttachmentLabel("key", background = EsuissTheme.colors.orange)
+                        AttachmentLabel("key", background = Palette.orange500)
                     }
                     AttachmentContent {
                         AttachmentTitle("Presentation.key")
@@ -569,7 +570,7 @@ class ChatGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface),
+                        .background(EsuissTheme.colors.background),
                 ) {
                     key(scene, dark) { Scene(scene, chat) }
                 }

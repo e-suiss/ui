@@ -78,7 +78,7 @@ function EmptyOffline() {
                 onPress={() => setState("offline")}
                 style={({ pressed }) => pressed && { opacity: 0.6 }}
               >
-                <Text style={[styles.link, { color: colors.link }]}>
+                <Text style={[styles.link, { color: colors.primary }]}>
                   Disconnect ›
                 </Text>
               </Pressable>
@@ -90,7 +90,10 @@ function EmptyOffline() {
                     source={{ uri: album.image }}
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
-                    style={[styles.cover, { backgroundColor: colors.control }]}
+                    style={[
+                      styles.cover,
+                      { backgroundColor: colors.secondary },
+                    ]}
                   />
                   <Text style={styles.albumTitle}>{album.title}</Text>
                 </View>
@@ -111,7 +114,7 @@ function EmptyOffline() {
               as={WifiSlashIcon}
               weight="light"
               size={52}
-              color={colors.labelTertiary}
+              color={colors.mutedForeground}
             />
           </EmptyMedia>
           <EmptyTitle style={styles.title}>

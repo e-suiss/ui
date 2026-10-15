@@ -23,15 +23,15 @@ enum PreviewMenuStories {
 }
 
 private let previewMenuTones: [Color] = [
-  .accent,
-  .warning,
-  .success,
-  .link,
-  .danger,
-  .accentPressed,
-  .labelTertiary,
-  .separatorStrong,
-  .surfaceTertiary,
+  EsuissColor.primary,
+  Palette.amber500,
+  Palette.green500,
+  Palette.cyan500,
+  EsuissColor.destructive,
+  Palette.indigo500,
+  EsuissColor.mutedForeground,
+  EsuissColor.input,
+  EsuissColor.secondary,
 ]
 
 private struct PreviewMenuPhotoGrid: View {
@@ -107,19 +107,19 @@ private struct PreviewMenuAlbum: View {
   var body: some View {
     HStack(spacing: 12) {
       RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-        .fill(Color.accent)
+        .fill(EsuissColor.primary)
         .frame(width: 48, height: 48)
       VStack(alignment: .leading, spacing: 0) {
         Text("Trip to the coast")
           .textStyle(.base, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Text("48 photos")
           .textVariant(.muted)
       }
     }
     .padding(12)
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
     .previewMenu(isPresented: $open, aspectRatio: 4 / 3) {
       PreviewMenuItem("Share album", icon: Ph.shareNetwork.regular) {}
       PreviewMenuItem("Delete album", icon: Ph.trash.regular, variant: .destructive) {}
@@ -130,10 +130,10 @@ private struct PreviewMenuAlbum: View {
         Text("48 photos · Updated today")
           .textStyle(.sm)
       }
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .padding(16)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-      .background(Color.accent)
+      .background(EsuissColor.primary)
     }
   }
 }

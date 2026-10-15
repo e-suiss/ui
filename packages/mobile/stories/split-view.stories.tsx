@@ -74,17 +74,17 @@ function MailExample({
               <Text className="shrink font-semibold" numberOfLines={1}>
                 {item.from}
               </Text>
-              <Text className="text-sm text-label-secondary">{item.time}</Text>
+              <Text className="text-sm text-muted-foreground">{item.time}</Text>
             </View>
             <Text numberOfLines={1}>{item.subject}</Text>
-            <Text className="text-sm text-label-secondary" numberOfLines={1}>
+            <Text className="text-sm text-muted-foreground" numberOfLines={1}>
               {item.body}
             </Text>
           </SplitViewItem>
         ))}
       </SplitViewList>
       <SplitViewDetail title={message.subject}>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           {message.from} · {message.time}
         </Text>
         <Text className="mt-6">{message.body}</Text>

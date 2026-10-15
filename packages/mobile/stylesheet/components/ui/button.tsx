@@ -83,82 +83,55 @@ function withAlpha(color: string, alpha: number) {
 function buttonColors(
   variant: ButtonVariant,
   colors: ThemeColors,
-  isDark: boolean,
-  pressed: boolean,
-  disabled: boolean
+  isDark: boolean
 ): ViewStyle {
   switch (variant) {
     case "default":
-      if (disabled) return { backgroundColor: colors.accentDisabled }
-      return { backgroundColor: pressed ? colors.accentPressed : colors.accent }
+      return { backgroundColor: colors.primary }
     case "outline":
-      if (pressed) {
-        return {
-          borderColor: colors.separator,
-          backgroundColor: colors.itemPressed,
-        }
-      }
       return {
-        borderColor: colors.separator,
-        backgroundColor: isDark ? "transparent" : colors.surface,
+        borderColor: colors.border,
+        backgroundColor: isDark ? "transparent" : colors.background,
       }
     case "secondary":
-      if (disabled) return { backgroundColor: colors.controlDisabled }
-      return {
-        backgroundColor: pressed ? colors.controlPressed : colors.control,
-      }
+      return { backgroundColor: colors.secondary }
     case "tinted":
-      return {
-        backgroundColor:
-          pressed && !disabled
-            ? colors.accentSurfacePressed
-            : colors.accentSurface,
-      }
-    case "ghost":
-    case "plain":
-      return { backgroundColor: pressed ? colors.itemPressed : "transparent" }
+      return { backgroundColor: withAlpha(colors.primary, isDark ? 0.2 : 0.1) }
     case "destructive":
       return {
-        backgroundColor:
-          pressed && !disabled
-            ? colors.dangerSurfacePressed
-            : colors.dangerSurface,
+        backgroundColor: withAlpha(colors.destructive, isDark ? 0.2 : 0.1),
       }
     default:
       return {}
   }
 }
 
-function buttonTextColor(
-  variant: ButtonVariant,
-  colors: ThemeColors,
-  disabled: boolean
-) {
+function buttonTextColor(variant: ButtonVariant, colors: ThemeColors) {
   switch (variant) {
     case "default":
-      return colors.onAccent
+      return colors.primaryForeground
+    case "secondary":
+      return colors.secondaryForeground
     case "tinted":
     case "plain":
-      return disabled ? withAlpha(colors.link, 0.4) : colors.link
     case "link":
-      return disabled ? colors.labelQuaternary : colors.link
+      return colors.primary
     case "destructive":
-      return disabled ? withAlpha(colors.danger, 0.4) : colors.danger
+      return colors.destructive
     default:
-      return disabled ? colors.labelQuaternary : colors.label
+      return colors.foreground
   }
 }
 
 function buttonTextStyle(
   variant: ButtonVariant,
   size: ButtonSize,
-  colors: ThemeColors,
-  disabled = false
+  colors: ThemeColors
 ): TextStyle {
   let scale: TextStyle =
     size === "lg" || size === "xl" ? fontSize.base : fontSize.sm
   if (size === "xs") scale = fontSize["2xs"]
-  return { ...scale, color: buttonTextColor(variant, colors, disabled) }
+  return { ...scale, color: buttonTextColor(variant, colors) }
 }
 
 const ButtonStyleContext = React.createContext<
@@ -189,9 +162,7 @@ function Button({
   const groupStyle = React.useContext(ButtonStyleContext)
   return (
     <ButtonStyleContext.Provider value={undefined}>
-      <TextStyleContext.Provider
-        value={buttonTextStyle(variant, size, colors, isDisabled)}
-      >
+      <TextStyleContext.Provider value={buttonTextStyle(variant, size, colors)}>
         <IconSizeContext.Provider
           value={size === "xs" || size === "icon-xs" ? 12 : 16}
         >
@@ -205,7 +176,9 @@ function Button({
               blockRadiusValue !== undefined && {
                 borderRadius: blockRadiusValue,
               },
-              buttonColors(variant, colors, isDark, state.pressed, isDisabled),
+              buttonColors(variant, colors, isDark),
+              state.pressed && !isDisabled && { opacity: 0.8 },
+              isDisabled && { opacity: 0.5 },
               groupStyle?.(variant),
               typeof style === "function" ? style(state) : style,
             ]}

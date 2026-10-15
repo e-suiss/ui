@@ -37,7 +37,7 @@ private struct PreviewDemo: View {
     } label: {
       Text(verbatim: "@ada")
         .textStyle(.base)
-        .foregroundStyle(Color.link)
+        .foregroundStyle(EsuissColor.primary)
     }
     .buttonStyle(PreviewTriggerStyle())
     .preview(isPresented: $open) {
@@ -53,7 +53,7 @@ private struct PreviewDemo: View {
 private struct PreviewTriggerStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.6 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -65,10 +65,10 @@ private struct PreviewProfileCard: View {
       VStack(alignment: .leading, spacing: 4) {
         Text(verbatim: "@ada")
           .textStyle(.sm, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Text("Mathematician and writer, known for her work on the Analytical Engine.")
           .textStyle(.sm)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .fixedSize(horizontal: false, vertical: true)
         HStack(spacing: 6) {
           Ph.calendarBlank.regular
@@ -76,7 +76,7 @@ private struct PreviewProfileCard: View {
           Text("Joined December 2021")
             .textStyle(.xs)
         }
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.top, 4)
       }
       .frame(maxWidth: .infinity, alignment: .leading)

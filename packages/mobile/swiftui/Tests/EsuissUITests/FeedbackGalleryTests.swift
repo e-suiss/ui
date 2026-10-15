@@ -38,7 +38,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -49,29 +49,29 @@ private struct NoteRow: View {
     VStack(alignment: .leading, spacing: 2) {
       Text(verbatim: note.title)
         .font(TextStyle.base.font(weight: .semibold))
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
       Text(verbatim: note.preview)
         .font(TextStyle.sm.font())
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .lineLimit(1)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .frame(maxWidth: .infinity, alignment: .leading)
     .overlay(alignment: .bottom) {
-      Color.separator.frame(height: 1).padding(.leading, 16)
+      EsuissColor.border.frame(height: 1).padding(.leading, 16)
     }
   }
 }
 
 private struct FeedbackBackdrop: View {
   var body: some View {
-    Color.surface
+    EsuissColor.background
       .overlay(alignment: .top) {
         VStack(alignment: .leading, spacing: 12) {
           ForEach(0..<14) { _ in
-            RoundedRectangle(cornerRadius: Radius.md).fill(Color.surfaceSecondary).frame(height: 40)
+            RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.muted).frame(height: 40)
           }
         }
         .padding(16)
@@ -189,7 +189,7 @@ private struct SelectionStage: View {
         HStack {
           Text(verbatim: "Notes")
             .font(TextStyle.xl2.font(weight: .bold))
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           Spacer()
           SelectionListTrigger()
         }
@@ -203,7 +203,7 @@ private struct SelectionStage: View {
         Spacer(minLength: 0)
       }
       .frame(width: 402, height: 520, alignment: .top)
-      .background(Color.surface)
+      .background(EsuissColor.background)
       .overlay(alignment: .bottom) {
         SelectionListBar { list in
           Button(list.count == list.total ? "Deselect all" : "Select all") {
@@ -227,7 +227,7 @@ private struct SelectionGallery: View {
       SelectionStage(editing: true, selection: [])
       SelectionStage(editing: true, selection: ["trip", "meeting"])
     }
-    .background(Color.separator)
+    .background(EsuissColor.border)
   }
 }
 
@@ -272,7 +272,7 @@ private struct ActionBarGallery: View {
         HStack {
           Text(verbatim: "Document")
             .font(TextStyle.lg.font(weight: .semibold))
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           ActionBar { ActionBarMenus() }
         }
         Caption(text: "Regular")
@@ -282,7 +282,7 @@ private struct ActionBarGallery: View {
       .padding(16)
       ZStack(alignment: .bottom) {
         FeedbackBackdrop()
-        Color.scrim
+        Palette.black.opacity(0.5)
         DrawerContent {
           ActionBarRows {
             ActionBarMenus().environment(\.actionBar, rowContext)
@@ -295,7 +295,7 @@ private struct ActionBarGallery: View {
       .clipped()
       ZStack(alignment: .bottom) {
         FeedbackBackdrop()
-        Color.scrim
+        Palette.black.opacity(0.5)
         ActionSheetBody(cancelLabel: "Cancel") {
           ActionBarItem("Cut", icon: Ph.scissors.regular) {}
           ActionBarItem("Copy", icon: Ph.copy.regular) {}
@@ -308,7 +308,7 @@ private struct ActionBarGallery: View {
       .clipped()
       ZStack(alignment: .bottom) {
         FeedbackBackdrop()
-        Color.scrim
+        Palette.black.opacity(0.5)
         ActionSheetBody(cancelLabel: "Close") {
           ActionBarLabel("Appearance")
           ActionBarItem("Zoom in") {}
@@ -342,7 +342,7 @@ private struct UndoGallery: View {
           }
           Spacer(minLength: 0)
         }
-        .background(Color.surface)
+        .background(EsuissColor.background)
         if let entry = first.entry {
           UndoBarView(manager: first, entry: entry)
         }
@@ -413,7 +413,7 @@ private struct TipGallery: View {
           }
           Text(verbatim: "List content")
             .font(TextStyle.sm.font())
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       Caption(text: "Popover")
@@ -433,7 +433,7 @@ private struct TipGallery: View {
             }
             .background {
               RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-                .fill(Color.surfaceRaised)
+                .fill(EsuissColor.card)
                 .shadow(Shadow(color: .black.opacity(0.14), radius: 12, y: 12))
             }
           }
@@ -461,7 +461,7 @@ private struct SearchStage: View {
       }
     }
     .frame(width: 402, height: height)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -472,7 +472,7 @@ private struct SearchGallery: View {
       SearchStage(query: "", height: 300, count: 2)
       SearchStage(query: "ide", height: 300)
     }
-    .background(Color.separator)
+    .background(EsuissColor.border)
   }
 }
 
@@ -501,19 +501,19 @@ private struct PagedGallery: View {
     HStack(spacing: 12) {
       Ph.chatCircle.regular
         .frame(width: 20, height: 20)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Text(verbatim: topic.title)
         .font(TextStyle.base.font())
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
         .frame(maxWidth: .infinity, alignment: .leading)
       Text(verbatim: "\(topic.replies)")
         .font(TextStyle.sm.font())
         .monospacedDigit()
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     .padding(.vertical, 10)
-    .overlay(alignment: .bottom) { Color.separator.frame(height: 1) }
+    .overlay(alignment: .bottom) { EsuissColor.border.frame(height: 1) }
   }
 }
 
@@ -534,7 +534,7 @@ final class FeedbackGalleryTests: XCTestCase {
       let renderer = ImageRenderer(content: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US")))
       renderer.scale = 3
@@ -550,7 +550,7 @@ final class FeedbackGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

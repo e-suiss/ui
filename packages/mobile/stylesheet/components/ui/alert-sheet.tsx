@@ -84,7 +84,6 @@ function AlertSheetOverlay({
   style,
   ...props
 }: React.ComponentProps<typeof AlertSheetPrimitive.Backdrop>) {
-  const { colors } = useTheme()
   return (
     <AlertSheetPrimitive.Backdrop
       render={
@@ -96,7 +95,7 @@ function AlertSheetOverlay({
       }
       style={(state) => [
         styles.backdrop,
-        { backgroundColor: colors.scrim },
+        { backgroundColor: "rgba(0, 0, 0, 0.5)" },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -150,7 +149,7 @@ function AlertSheetGroup({ style, children, ...props }: ViewProps) {
   const items = React.Children.toArray(children).filter(Boolean)
   return (
     <View
-      style={[styles.group, { backgroundColor: colors.surfaceRaised }, style]}
+      style={[styles.group, { backgroundColor: colors.popover }, style]}
       {...props}
     >
       {items.map((child, index) => (
@@ -160,7 +159,7 @@ function AlertSheetGroup({ style, children, ...props }: ViewProps) {
           {index > 0 ? (
             <View
               accessible={false}
-              style={[styles.separator, { backgroundColor: colors.separator }]}
+              style={[styles.separator, { backgroundColor: colors.border }]}
             />
           ) : null}
           {child}
@@ -187,7 +186,7 @@ function AlertSheetTitle({
     <AlertSheetPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -204,7 +203,7 @@ function AlertSheetDescription({
     <AlertSheetPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -227,13 +226,9 @@ type AlertSheetActionProps = Omit<
   children?: React.ReactNode
 }
 
-function useActionText(
-  variant: "default" | "destructive",
-  disabled: boolean
-): TextStyle {
+function useActionText(variant: "default" | "destructive"): TextStyle {
   const { colors } = useTheme()
-  let color = variant === "destructive" ? colors.danger : colors.link
-  if (disabled) color = colors.labelQuaternary
+  const color = variant === "destructive" ? colors.destructive : colors.primary
   return {
     ...fontSize.lg,
     textAlign: "center",
@@ -248,8 +243,7 @@ function AlertSheetAction({
   children,
   ...props
 }: AlertSheetActionProps) {
-  const { colors } = useTheme()
-  const textStyle = useActionText(variant, Boolean(disabled))
+  const textStyle = useActionText(variant)
   return (
     <TextStyleContext.Provider value={textStyle}>
       <IconSizeContext.Provider value={20}>
@@ -259,7 +253,8 @@ function AlertSheetAction({
             <Pressable
               style={({ pressed }) => [
                 styles.action,
-                pressed && { backgroundColor: colors.itemPressed },
+                pressed && { opacity: 0.8 },
+                disabled && { opacity: 0.5 },
                 typeof style === "function"
                   ? style({ disabled: Boolean(disabled) })
                   : style,
@@ -282,7 +277,7 @@ function AlertSheetCancel({
   ...props
 }: Omit<AlertSheetActionProps, "variant">) {
   const { colors } = useTheme()
-  const textStyle = useActionText("default", Boolean(disabled))
+  const textStyle = useActionText("default")
   return (
     <TextStyleContext.Provider value={{ ...textStyle, fontWeight: "600" }}>
       <IconSizeContext.Provider value={20}>
@@ -293,11 +288,9 @@ function AlertSheetCancel({
               style={({ pressed }) => [
                 styles.action,
                 styles.cancel,
-                {
-                  backgroundColor: pressed
-                    ? colors.surfaceTertiary
-                    : colors.surfaceRaised,
-                },
+                { backgroundColor: colors.popover },
+                pressed && { opacity: 0.8 },
+                disabled && { opacity: 0.5 },
                 typeof style === "function"
                   ? style({ disabled: Boolean(disabled) })
                   : style,

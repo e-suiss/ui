@@ -33,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -58,6 +59,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Currency
@@ -77,9 +79,9 @@ private val ConfigureModels = listOf(
 )
 
 private val ConfigureFinishes = listOf(
-    ConfigureFinish("Cosmic Orange", { it.orange }, "An orange phone on a warm gradient"),
-    ConfigureFinish("Deep Blue", { it.indigo }, "A phone floating among blue spheres"),
-    ConfigureFinish("Silver", { it.gray }, "A silver phone on a light grey background"),
+    ConfigureFinish("Cosmic Orange", { Palette.orange500 }, "An orange phone on a warm gradient"),
+    ConfigureFinish("Deep Blue", { Palette.indigo500 }, "A phone floating among blue spheres"),
+    ConfigureFinish("Silver", { Palette.zinc500 }, "A silver phone on a light grey background"),
 )
 
 private val ConfigureStorageOptions = listOf(
@@ -120,19 +122,19 @@ fun BagConfigure(
             ) {
                 ConfigureHero(current)
                 Column {
-                    BasicText("New", style = Typography.xs.copy(color = colors.warning, fontWeight = FontWeight.SemiBold))
+                    BasicText("New", style = Typography.xs.copy(color = if (colors.isDark) Palette.amber400 else Palette.amber600, fontWeight = FontWeight.SemiBold))
                     BasicText(
                         "Buy Phone Pro",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                 }
                 BasicText(
                     buildAnnotatedString {
                         append("Model. ")
-                        withStyle(SpanStyle(color = colors.labelSecondary)) { append("Which one is right for you?") }
+                        withStyle(SpanStyle(color = colors.mutedForeground)) { append("Which one is right for you?") }
                     },
-                    style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
                 Column(
                     Modifier
@@ -155,9 +157,9 @@ fun BagConfigure(
                                 BasicText(
                                     item.name,
                                     modifier = Modifier.weight(1f),
-                                    style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                    style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                 )
-                                BasicText("From ${configureMoney(item.price, 0)}", style = Typography.sm.copy(color = colors.labelSecondary))
+                                BasicText("From ${configureMoney(item.price, 0)}", style = Typography.sm.copy(color = colors.mutedForeground))
                             }
                         }
                     }
@@ -165,9 +167,9 @@ fun BagConfigure(
                 BasicText(
                     buildAnnotatedString {
                         append("Finish. ")
-                        withStyle(SpanStyle(color = colors.labelSecondary)) { append(finish) }
+                        withStyle(SpanStyle(color = colors.mutedForeground)) { append(finish) }
                     },
-                    style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
                 Row(
                     Modifier
@@ -179,7 +181,7 @@ fun BagConfigure(
                         ConfigureSwatch(item, selected = item.name == finish) { finish = item.name }
                     }
                 }
-                BasicText("Storage.", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText("Storage.", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 Row(
                     Modifier
                         .selectableGroup()
@@ -204,12 +206,12 @@ fun BagConfigure(
                             ) {
                                 BasicText(
                                     item.size,
-                                    style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                    style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                     maxLines = 1,
                                 )
                                 BasicText(
                                     if (item.extra > 0) "+${configureMoney(item.extra, 0)}" else "Included",
-                                    style = Typography.xs2.copy(color = colors.labelSecondary),
+                                    style = Typography.xs2.copy(color = colors.mutedForeground),
                                     maxLines = 1,
                                 )
                             }
@@ -232,11 +234,11 @@ fun BagConfigure(
                     ) {
                         BasicText(
                             configureMoney(price),
-                            style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                         BasicText(
                             "or ${configureMoney(price / 12)}/mo. for 12 mo.",
-                            style = Typography.xs.copy(color = colors.labelSecondary),
+                            style = Typography.xs.copy(color = colors.mutedForeground),
                         )
                     }
                     Button(
@@ -266,7 +268,7 @@ private fun ConfigureHero(finish: ConfigureFinish) {
         Modifier
             .fillMaxWidth()
             .aspectRatio(4f / 3f)
-            .background(colors.surfaceSecondary, RoundedCornerShape(22.dp))
+            .background(colors.muted, RoundedCornerShape(22.dp))
             .clearAndSetSemantics { contentDescription = finish.alt },
         contentAlignment = Alignment.Center,
     ) {
@@ -295,11 +297,11 @@ private fun ConfigureCard(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val shape = RoundedCornerShape(14.dp)
-    val border by animateColorAsState(if (selected) colors.accent else colors.separatorStrong, tween(200), label = "border")
+    val border by animateColorAsState(if (selected) colors.primary else colors.input, tween(200), label = "border")
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(if (pressed) colors.itemPressed else Color.Transparent, shape)
+            .alpha(if (pressed) 0.8f else 1f)
             .border(if (selected) 2.dp else 1.dp, border, shape)
             .selectable(
                 selected = selected,
@@ -320,7 +322,7 @@ private fun ConfigureCard(
 private fun ConfigureSwatch(finish: ConfigureFinish, selected: Boolean, onSelect: () -> Unit) {
     val colors = EsuissTheme.colors
     val haptics = rememberHaptics()
-    val ring by animateColorAsState(if (selected) colors.accent else Color.Transparent, tween(200), label = "ring")
+    val ring by animateColorAsState(if (selected) colors.primary else Color.Transparent, tween(200), label = "ring")
     Box(
         Modifier
             .size(44.dp)
@@ -343,7 +345,7 @@ private fun ConfigureSwatch(finish: ConfigureFinish, selected: Boolean, onSelect
                 .border(2.dp, ring, CircleShape)
                 .padding(4.dp)
                 .background(finish.color(colors), CircleShape)
-                .border(1.dp, colors.label.copy(alpha = 0.15f), CircleShape),
+                .border(1.dp, colors.foreground.copy(alpha = 0.15f), CircleShape),
         )
     }
 }

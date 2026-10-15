@@ -26,10 +26,10 @@ public struct InboxSupport: View {
 
   static var initialTickets: [Ticket] {
     [
-      Ticket(id: "#4821", title: "Screen flickers", device: "Phone Pro", status: .open, priority: .high, requester: "Jamie Rivera", tint: .orange),
-      Ticket(id: "#4820", title: "Battery drains fast", device: "Book Air", status: .pending, priority: .medium, requester: "Morgan Lee", tint: .blue),
-      Ticket(id: "#4819", title: "Pods won't pair", device: "Pods Studio", status: .open, priority: .low, requester: "Avery Brooks", tint: .pink),
-      Ticket(id: "#4818", title: "Cloud backup error", device: "Phone Air", status: .solved, priority: .medium, requester: "Taylor Kim", tint: .green),
+      Ticket(id: "#4821", title: "Screen flickers", device: "Phone Pro", status: .open, priority: .high, requester: "Jamie Rivera", tint: Palette.orange500),
+      Ticket(id: "#4820", title: "Battery drains fast", device: "Book Air", status: .pending, priority: .medium, requester: "Morgan Lee", tint: Palette.blue500),
+      Ticket(id: "#4819", title: "Pods won't pair", device: "Pods Studio", status: .open, priority: .low, requester: "Avery Brooks", tint: Palette.pink500),
+      Ticket(id: "#4818", title: "Cloud backup error", device: "Phone Air", status: .solved, priority: .medium, requester: "Taylor Kim", tint: Palette.green500),
     ]
   }
 
@@ -90,13 +90,13 @@ public struct InboxSupport: View {
               HStack(spacing: 10) {
                 (item == "Solved" ? Ph.check.regular : item == "All" ? Ph.tray.regular : Ph.chatCircle.regular)
                   .frame(width: 20, height: 20)
-                  .foregroundStyle(Color.accent)
+                  .foregroundStyle(EsuissColor.primary)
                 Text(LocalizedStringKey(item))
                   .frame(maxWidth: .infinity, alignment: .leading)
                 Text(verbatim: "\(count(item))")
                   .scaledFont(.xs)
                   .monospacedDigit()
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
             }
           }
@@ -122,7 +122,7 @@ public struct InboxSupport: View {
             if list.isEmpty {
               Text("No tickets")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .frame(maxWidth: .infinity)
                 .padding(24)
             }
@@ -144,7 +144,7 @@ public struct InboxSupport: View {
     return VStack(alignment: .leading, spacing: 16) {
       Text(verbatim: "\(ticket.id) · \(ticket.device)")
         .scaledFont(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.top, 8)
       ToggleGroup(
         selection: Binding<Status?>(
@@ -170,7 +170,7 @@ public struct InboxSupport: View {
             .scaledFont(.sm, weight: .semibold)
           Text("Today 8:12 AM")
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .accessibilityElement(children: .combine)
@@ -188,7 +188,7 @@ public struct InboxSupport: View {
             topTrailingRadius: Radius.xl2,
             style: .continuous
           )
-          .fill(Color.surfaceSecondary)
+          .fill(EsuissColor.muted)
         )
       VStack(alignment: .leading, spacing: 10) {
         TextField("Write a reply…", text: $reply, axis: .vertical)
@@ -210,7 +210,7 @@ public struct InboxSupport: View {
         }
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 
   private func setStatus(_ status: Status, for id: String) {
@@ -229,7 +229,7 @@ private struct InboxSupportAvatar: View {
   var body: some View {
     Text(verbatim: ticket.requester.split(separator: " ").compactMap(\.first).map(String.init).joined())
       .font(.system(size: size * 0.4, weight: .semibold))
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(ticket.tint, in: Circle())
       .accessibilityHidden(true)
@@ -244,7 +244,7 @@ private struct InboxSupportRow: View {
       HStack(spacing: 8) {
         Text(verbatim: "\(ticket.id) · \(ticket.device)")
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .frame(maxWidth: .infinity, alignment: .leading)
         InboxSupportPriority(priority: ticket.priority)
       }
@@ -254,7 +254,7 @@ private struct InboxSupportRow: View {
         InboxSupportAvatar(ticket: ticket, size: 18)
         Text(verbatim: ticket.requester)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.top, 2)
     }
@@ -267,15 +267,15 @@ private struct InboxSupportPriority: View {
 
   var body: some View {
     let tint: Color = switch priority {
-    case .high: .danger
-    case .medium: .warning
-    case .low: .labelSecondary
+    case .high: EsuissColor.destructive
+    case .medium: Color.adaptive(light: Palette.amber600, dark: Palette.amber400)
+    case .low: EsuissColor.mutedForeground
     }
     Text(LocalizedStringKey(priority.rawValue))
       .scaledFont(.xs2, weight: .semibold)
       .foregroundStyle(tint)
       .padding(.horizontal, 8)
       .padding(.vertical, 2)
-      .background(priority == .low ? Color.control : tint.opacity(0.14), in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+      .background(priority == .low ? EsuissColor.secondary : tint.opacity(0.14), in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
   }
 }

@@ -18,10 +18,14 @@ import { Text } from "@/components/ui/text"
 const slides = [1, 2, 3, 4, 5]
 
 const picks = [
-  { eyebrow: "Today's pick", title: "Weekend breakfast", tint: "bg-orange" },
-  { eyebrow: "New", title: "Grilled meatballs", tint: "bg-red" },
-  { eyebrow: "Chef's special", title: "Lentil soup", tint: "bg-teal" },
-  { eyebrow: "Dessert", title: "Künefe", tint: "bg-purple" },
+  {
+    eyebrow: "Today's pick",
+    title: "Weekend breakfast",
+    tint: "bg-orange-500",
+  },
+  { eyebrow: "New", title: "Grilled meatballs", tint: "bg-red-500" },
+  { eyebrow: "Chef's special", title: "Lentil soup", tint: "bg-teal-500" },
+  { eyebrow: "Dessert", title: "Künefe", tint: "bg-purple-500" },
 ]
 
 const features = [
@@ -134,10 +138,10 @@ export const WithPageIndicator: Story = {
             <View
               className={`aspect-[4/5] justify-end gap-1 rounded-3xl p-5 ${pick.tint}`}
             >
-              <Text className="text-xs font-semibold text-on-accent uppercase">
+              <Text className="text-xs font-semibold text-primary-foreground uppercase">
                 {pick.eyebrow}
               </Text>
-              <Text className="text-2xl font-bold text-on-accent">
+              <Text className="text-2xl font-bold text-primary-foreground">
                 {pick.title}
               </Text>
             </View>
@@ -158,10 +162,10 @@ export const Featured: Story = {
             <View
               className={`aspect-[4/5] justify-end gap-1 rounded-3xl p-5 ${pick.tint}`}
             >
-              <Text className="text-xs font-semibold text-on-accent uppercase">
+              <Text className="text-xs font-semibold text-primary-foreground uppercase">
                 {pick.eyebrow}
               </Text>
-              <Text className="text-2xl font-bold text-on-accent">
+              <Text className="text-2xl font-bold text-primary-foreground">
                 {pick.title}
               </Text>
             </View>
@@ -182,9 +186,9 @@ export const Spotlight: Story = {
       <CarouselContent>
         {features.map((feature) => (
           <CarouselItem key={feature.title}>
-            <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8">
+            <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
               <Text className="text-3xl font-bold">Hestia POS</Text>
-              <Text className="text-center text-label-secondary">
+              <Text className="text-center text-muted-foreground">
                 {feature.title}
               </Text>
             </View>
@@ -205,9 +209,9 @@ export const Autoplay: Story = {
       <CarouselContent>
         {features.map((feature) => (
           <CarouselItem key={feature.title}>
-            <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-surface-secondary p-8">
+            <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
               <Text className="text-3xl font-bold">Hestia POS</Text>
-              <Text className="text-center text-label-secondary">
+              <Text className="text-center text-muted-foreground">
                 {feature.title}
               </Text>
             </View>

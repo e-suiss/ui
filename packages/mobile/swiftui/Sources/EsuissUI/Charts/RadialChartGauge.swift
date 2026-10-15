@@ -1,7 +1,7 @@
 import SwiftUI
 
 private let chartConfig: ChartConfig = [
-  "value": .init("Air quality", color: .green),
+  "value": .init("Air quality", color: Palette.green500),
 ]
 
 public struct RadialChartGauge: View {
@@ -30,7 +30,7 @@ public struct RadialChartGauge: View {
                 .monospacedDigit()
               Text("Good")
                 .textStyle(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .multilineTextAlignment(.center)
             .padding(.top, 208 * 0.44)

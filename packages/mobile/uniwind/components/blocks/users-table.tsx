@@ -65,7 +65,7 @@ const INITIAL_USERS: User[] = [
     role: "Admin",
     status: "Active",
     seen: "2 min ago",
-    tint: "bg-indigo dark:bg-indigo",
+    tint: "bg-indigo-500",
   },
   {
     name: "Morgan Lee",
@@ -73,7 +73,7 @@ const INITIAL_USERS: User[] = [
     role: "Editor",
     status: "Active",
     seen: "1 hr ago",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
   },
   {
     name: "Riley Chen",
@@ -81,7 +81,7 @@ const INITIAL_USERS: User[] = [
     role: "Support",
     status: "Active",
     seen: "Yesterday",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
   },
   {
     name: "Taylor Kim",
@@ -89,7 +89,7 @@ const INITIAL_USERS: User[] = [
     role: "Viewer",
     status: "Suspended",
     seen: "3 days ago",
-    tint: "bg-cyan dark:bg-cyan",
+    tint: "bg-cyan-500",
   },
   {
     name: "Avery Brooks",
@@ -97,7 +97,7 @@ const INITIAL_USERS: User[] = [
     role: "Editor",
     status: "Invited",
     seen: "—",
-    tint: "bg-pink dark:bg-pink",
+    tint: "bg-pink-500",
   },
   {
     name: "Jordan Park",
@@ -105,14 +105,14 @@ const INITIAL_USERS: User[] = [
     role: "Support",
     status: "Active",
     seen: "5 hr ago",
-    tint: "bg-mint dark:bg-mint",
+    tint: "bg-teal-400",
   },
 ]
 
 const STATUS_CLASS: Record<Status, string> = {
-  Active: "text-label",
-  Suspended: "text-danger",
-  Invited: "text-label-secondary",
+  Active: "text-foreground",
+  Suspended: "text-destructive",
+  Invited: "text-muted-foreground",
 }
 
 const initials = (name: string) =>
@@ -152,7 +152,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -164,7 +164,7 @@ function UserRow({ user, first }: { user: User; first: boolean }) {
     <SelectionListItem
       value={user.email}
       accessibilityLabel={`${user.name}, ${user.role}, ${user.status}`}
-      className={cn(!first && "border-t border-separator")}
+      className={cn(!first && "border-t border-border")}
     >
       <View className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-2.5">
         <Avatar size="sm" className="size-8">
@@ -176,12 +176,12 @@ function UserRow({ user, first }: { user: User; first: boolean }) {
           <Text numberOfLines={1} className="text-sm font-semibold">
             {user.name}
           </Text>
-          <Text numberOfLines={1} className="text-xs text-label-secondary">
+          <Text numberOfLines={1} className="text-xs text-muted-foreground">
             {user.email}
           </Text>
         </View>
         <View className="items-end gap-1">
-          <Badge variant="secondary" className="bg-control px-2">
+          <Badge variant="secondary" className="bg-secondary px-2">
             <Text>{user.role}</Text>
           </Badge>
           <Text className={cn("text-xs", STATUS_CLASS[user.status])}>
@@ -277,7 +277,7 @@ function UsersTable({
                 <Icon
                   as={PlusIcon}
                   weight="bold"
-                  className="size-5 text-accent"
+                  className="size-5 text-primary"
                 />
               </Button>
             )}
@@ -292,7 +292,7 @@ function UsersTable({
             subtitle={
               <Text
                 accessibilityLiveRegion="polite"
-                className="text-sm text-label-secondary"
+                className="text-sm text-muted-foreground"
               >
                 {summary}
               </Text>
@@ -307,7 +307,7 @@ function UsersTable({
                   <Icon
                     as={MagnifyingGlassIcon}
                     weight="bold"
-                    className="size-4 text-label-secondary"
+                    className="size-4 text-muted-foreground"
                   />
                 </InputGroupAddon>
                 <InputGroupInput
@@ -340,12 +340,12 @@ function UsersTable({
                 </Chip>
               ))}
             </ChipGroup>
-            <View className="mx-4 overflow-hidden rounded-xl bg-surface-secondary">
+            <View className="mx-4 overflow-hidden rounded-xl bg-muted">
               {list.map((user, index) => (
                 <UserRow key={user.email} user={user} first={index === 0} />
               ))}
               {list.length === 0 ? (
-                <Text className="p-6 text-center text-sm text-label-secondary">
+                <Text className="p-6 text-center text-sm text-muted-foreground">
                   No matching users.
                 </Text>
               ) : null}
@@ -377,7 +377,9 @@ function UsersTable({
           >
             <Text
               className={
-                selected.length === 0 ? "text-label-quaternary" : "text-danger"
+                selected.length === 0
+                  ? "text-destructive opacity-50"
+                  : "text-destructive"
               }
             >
               Suspend

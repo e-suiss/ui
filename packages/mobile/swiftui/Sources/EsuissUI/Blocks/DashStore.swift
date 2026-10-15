@@ -25,11 +25,11 @@ public struct DashStore: View {
 
   static var orders: [Order] {
     [
-      Order(id: "W1048", name: "Jamie Rivera", product: "Phone Pro", status: "Shipped", total: 999, tint: .indigo),
-      Order(id: "W1047", name: "Morgan Lee", product: "Book Air", status: "Processing", total: 1099, tint: .orange),
-      Order(id: "W1046", name: "Riley Chen", product: "Watch Series 11", status: "Delivered", total: 399, tint: .green),
-      Order(id: "W1045", name: "Avery Brooks", product: "Pods Studio", status: "Returned", total: 549, tint: .pink),
-      Order(id: "W1044", name: "Taylor Kim", product: "Pad Air", status: "Delivered", total: 599, tint: .cyan),
+      Order(id: "W1048", name: "Jamie Rivera", product: "Phone Pro", status: "Shipped", total: 999, tint: Palette.indigo500),
+      Order(id: "W1047", name: "Morgan Lee", product: "Book Air", status: "Processing", total: 1099, tint: Palette.orange500),
+      Order(id: "W1046", name: "Riley Chen", product: "Watch Series 11", status: "Delivered", total: 399, tint: Palette.green500),
+      Order(id: "W1045", name: "Avery Brooks", product: "Pods Studio", status: "Returned", total: 549, tint: Palette.pink500),
+      Order(id: "W1044", name: "Taylor Kim", product: "Pad Air", status: "Delivered", total: 599, tint: Palette.cyan500),
     ]
   }
 
@@ -40,8 +40,8 @@ public struct DashStore: View {
   }
 
   private let chartConfig: ChartConfig = [
-    "online": .init("Online", color: .blue),
-    "store": .init("In store", color: .teal),
+    "online": .init("Online", color: Palette.blue500),
+    "store": .init("In store", color: Palette.teal500),
   ]
 
   private var onRangeChange: ((String) -> Void)?
@@ -146,16 +146,16 @@ public struct DashStore: View {
           Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
             GridRow {
               stat(stats[0])
-              stat(stats[1]).overlay(alignment: .leading) { Color.separator.frame(width: 1) }
+              stat(stats[1]).overlay(alignment: .leading) { EsuissColor.border.frame(width: 1) }
             }
             GridRow {
-              stat(stats[2]).overlay(alignment: .top) { Color.separator.frame(height: 1) }
+              stat(stats[2]).overlay(alignment: .top) { EsuissColor.border.frame(height: 1) }
               stat(stats[3])
-                .overlay(alignment: .top) { Color.separator.frame(height: 1) }
-                .overlay(alignment: .leading) { Color.separator.frame(width: 1) }
+                .overlay(alignment: .top) { EsuissColor.border.frame(height: 1) }
+                .overlay(alignment: .leading) { EsuissColor.border.frame(width: 1) }
             }
           }
-          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+          .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
           .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
           sales(scale: scale)
           Text("Recent orders")
@@ -199,7 +199,7 @@ public struct DashStore: View {
           } label: {
             Ph.storefront.regular
               .frame(width: 22, height: 22)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
               .frame(width: 44, height: 44)
               .contentShape(Rectangle())
           }
@@ -214,7 +214,7 @@ public struct DashStore: View {
     VStack(alignment: .leading, spacing: 2) {
       Text(LocalizedStringKey(stat.label))
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Text(verbatim: stat.value)
         .textStyle(.xl2, weight: .semibold)
         .monospacedDigit()
@@ -223,7 +223,7 @@ public struct DashStore: View {
         .contentTransition(.numericText())
       Text("\(stat.change) vs. previous period")
         .textStyle(.xs)
-        .foregroundStyle(stat.up ? Color.success : .danger)
+        .foregroundStyle(stat.up ? Color.adaptive(light: Palette.green600, dark: Palette.green400) : EsuissColor.destructive)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 14)
@@ -239,7 +239,7 @@ public struct DashStore: View {
         VStack(alignment: .leading, spacing: 0) {
           Text(LocalizedStringKey(day?.day ?? "Weekly sales"))
             .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Text(verbatim: day.map { money(($0.online + $0.store) * 1000) } ?? money(1284500 * scale))
             .textStyle(.xl2, weight: .semibold)
             .monospacedDigit()
@@ -258,7 +258,7 @@ public struct DashStore: View {
           }
         }
         .textStyle(.xs)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityHidden(true)
       }
       ChartContainer(config: chartConfig) {
@@ -296,7 +296,7 @@ public struct DashStore: View {
     .padding(.horizontal, 16)
     .padding(.top, 14)
     .padding(.bottom, 8)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
   }
 
   private func orderRow(_ order: Order) -> some View {
@@ -304,7 +304,7 @@ public struct DashStore: View {
       ItemMedia {
         Text(verbatim: order.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
           .font(.system(size: 14, weight: .semibold))
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 32, height: 32)
           .background(order.tint, in: Circle())
           .accessibilityHidden(true)
@@ -318,10 +318,10 @@ public struct DashStore: View {
           Text(verbatim: money(order.total))
             .textStyle(.base)
             .monospacedDigit()
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           Text(LocalizedStringKey(order.status))
             .textStyle(.sm)
-            .foregroundStyle(order.status == "Returned" ? Color.danger : .labelSecondary)
+            .foregroundStyle(order.status == "Returned" ? EsuissColor.destructive : EsuissColor.mutedForeground)
         }
       }
     }
@@ -369,7 +369,7 @@ private struct DashStoreShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text("Overview")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

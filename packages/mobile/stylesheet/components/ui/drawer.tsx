@@ -196,7 +196,7 @@ function DrawerIndentBackground({
     <DrawerPrimitive.IndentBackground
       style={(state) => [
         styles.indentBackground,
-        { backgroundColor: isDark ? colors.surface : colors.label },
+        { backgroundColor: isDark ? colors.background : colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -234,7 +234,7 @@ function DrawerIndent({
       render={<AnimatedView style={animatedStyle} />}
       style={(state) => [
         styles.indent,
-        { backgroundColor: colors.surface },
+        { backgroundColor: colors.background },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -303,7 +303,6 @@ function DrawerOverlay({
   style,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Backdrop>) {
-  const { colors } = useTheme()
   return (
     <AnimatedView
       entering={FadeIn.duration(EASE_DURATION).reduceMotion(
@@ -315,7 +314,7 @@ function DrawerOverlay({
       <DrawerPrimitive.Backdrop
         style={(state) => [
           styles.fill,
-          { backgroundColor: colors.scrim },
+          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}
@@ -345,7 +344,7 @@ function DrawerSwipeHandle({ style, ...props }: ViewProps) {
         style={[
           styles.handleBar,
           horizontal ? styles.handleBarHorizontal : styles.handleBarVertical,
-          { backgroundColor: colors.labelQuaternary },
+          { backgroundColor: colors.border },
         ]}
       />
     </View>
@@ -428,7 +427,7 @@ function DrawerContent({
               <DrawerPrimitive.Popup
                 style={(state) => [
                   styles.popup,
-                  { backgroundColor: colors.surfaceRaised },
+                  { backgroundColor: colors.popover },
                   horizontal && styles.popupHorizontal,
                   !floating && DOCKED_RADIUS[swipeDirection],
                   popupStyle,
@@ -442,7 +441,7 @@ function DrawerContent({
                     style={[
                       styles.bleed,
                       BLEED[swipeDirection],
-                      { backgroundColor: colors.surfaceRaised },
+                      { backgroundColor: colors.popover },
                     ]}
                   />
                 )}
@@ -469,8 +468,8 @@ function DrawerContent({
                           { top: showSwipeHandle ? 23 : 11 },
                           !closeLabel && {
                             backgroundColor: pressed
-                              ? colors.separator
-                              : colors.surfaceTertiary,
+                              ? colors.border
+                              : colors.secondary,
                           },
                         ]}
                       />
@@ -484,7 +483,7 @@ function DrawerContent({
                       <Icon
                         as={XIcon}
                         size={16}
-                        color={colors.label}
+                        color={colors.foreground}
                         style={styles.closeIcon}
                       />
                     )}
@@ -532,7 +531,7 @@ function DrawerTitle({
     <DrawerPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         vertical && styles.centered,
         typeof style === "function" ? style(state) : style,
       ]}
@@ -552,7 +551,7 @@ function DrawerDescription({
     <DrawerPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         vertical && styles.centered,
         typeof style === "function" ? style(state) : style,
       ]}

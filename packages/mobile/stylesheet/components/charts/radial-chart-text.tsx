@@ -19,7 +19,7 @@ import { fontSize, useTheme } from "@/components/ui/theme"
 const chartData = [{ name: "value", value: 72 }]
 
 const chartConfig = {
-  value: { label: "Used", color: "blue" },
+  value: { label: "Used", color: "chart-1" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -50,7 +50,7 @@ export function RadialChartText() {
         <View>
           <View pointerEvents="none" style={styles.overlay}>
             <Text style={styles.value}>72%</Text>
-            <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+            <Text style={[styles.caption, { color: colors.mutedForeground }]}>
               cloud storage used
             </Text>
           </View>

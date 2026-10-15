@@ -113,7 +113,7 @@ public struct WheelPicker<Content: View>: View {
     .frame(maxWidth: .infinity)
     .background {
       RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-        .fill(Color.control)
+        .fill(EsuissColor.secondary)
         .frame(height: WheelPickerMetrics.rowHeight)
     }
   }
@@ -261,7 +261,7 @@ public struct WheelPickerItem<Value: Hashable & Sendable, Label: View>: View {
       .monospacedDigit()
       .lineLimit(1)
       .fixedSize()
-      .foregroundStyle(isEnabled ? Color.label : .labelTertiary)
+      .foregroundStyle(isEnabled ? EsuissColor.foreground : EsuissColor.mutedForeground)
       .visualEffect { content, geometry in
         let row = Double(WheelPickerMetrics.rowHeight)
         let center = Double(WheelPickerMetrics.height) / 2

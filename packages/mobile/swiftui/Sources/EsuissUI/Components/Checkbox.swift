@@ -34,6 +34,7 @@ struct SelectionIndicator<Mark: View>: View {
     }
     .frame(width: 16, height: 16)
     .shadow(raised ? .control : Shadow(color: .clear, radius: 0))
+    .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
   }
 
   private var isDark: Bool { colorScheme == .dark }
@@ -41,21 +42,14 @@ struct SelectionIndicator<Mark: View>: View {
   private var raised: Bool { !checked && isEnabled && !isDark }
 
   private var fill: Color {
-    if checked {
-      return !isEnabled ? .accentDisabled : pressed ? .accentPressed : .accent
-    }
-    if !isEnabled { return .controlDisabled }
-    if isDark { return pressed ? .labelTertiary.opacity(0.6) : .labelQuaternary }
-    return pressed ? .control : .surface
+    if checked { return EsuissColor.primary }
+    return isDark ? EsuissColor.border : EsuissColor.background
   }
 
   private var border: Color {
-    if checked {
-      return !isEnabled ? .clear : pressed ? .accentPressed : .accent
-    }
-    if !isEnabled { return isDark ? .clear : .label.opacity(0.1) }
-    if invalid { return .danger }
-    return isDark ? .clear : .label.opacity(0.25)
+    if checked { return EsuissColor.primary }
+    if invalid && isEnabled { return EsuissColor.destructive }
+    return isDark ? .clear : EsuissColor.foreground.opacity(0.25)
   }
 }
 
@@ -84,7 +78,7 @@ public struct CheckboxStyle: ToggleStyle {
         ) {
           (configuration.isMixed ? Ph.minus.regular : Ph.check.regular)
             .frame(width: 14, height: 14)
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
         }
         configuration.label
       }

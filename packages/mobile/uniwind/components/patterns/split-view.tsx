@@ -58,7 +58,7 @@ const RATIO: Record<SplitViewColumn, number> = {
 }
 
 const TITLE_CLASS: Record<SplitViewColumn, string> = {
-  sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-label-secondary",
+  sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-muted-foreground",
   list: "",
   detail: "pb-1 text-2xl font-semibold",
 }
@@ -129,7 +129,7 @@ function SplitView({
         className={cn(
           "flex-1",
           !isCompact &&
-            "flex-row overflow-hidden rounded-2xl border border-separator",
+            "flex-row overflow-hidden rounded-2xl border border-border",
           className
         )}
         {...props}
@@ -189,9 +189,9 @@ function SplitViewPane({
             as={CaretLeftIcon}
             weight="bold"
             mirrored={I18nManager.isRTL}
-            className="size-4.5 text-link"
+            className="size-4.5 text-primary"
           />
-          <TextClassContext.Provider value="text-base text-link">
+          <TextClassContext.Provider value="text-base text-primary">
             {typeof titles[backColumn] === "string" ? (
               <Text>{titles[backColumn]}</Text>
             ) : (
@@ -231,10 +231,7 @@ function SplitViewPane({
 
   return (
     <View
-      className={cn(
-        "min-h-0",
-        kinds[0] !== kind && "border-s border-separator"
-      )}
+      className={cn("min-h-0", kinds[0] !== kind && "border-s border-border")}
       style={{ flex: RATIO[kind] / total }}
       accessibilityLabel={typeof title === "string" ? title : undefined}
       {...props}
@@ -290,10 +287,10 @@ function SplitViewItem({
       className={cn(
         "flex-row items-center gap-3",
         isCompact
-          ? "min-h-11 border-b border-separator py-3 active:bg-item-pressed"
+          ? "min-h-11 border-b border-border py-3 active:opacity-80"
           : cn(
               "rounded-lg px-3 py-2",
-              isActive ? "bg-surface-secondary" : "active:bg-item-pressed",
+              isActive ? "bg-muted" : "active:opacity-80",
               kind === "list" && "rounded-xl py-3"
             ),
         typeof className === "string" ? className : undefined
@@ -311,7 +308,7 @@ function SplitViewItem({
         <Icon
           as={CaretRightIcon}
           mirrored={I18nManager.isRTL}
-          className="size-4 text-label-tertiary"
+          className="size-4 text-muted-foreground"
         />
       ) : null}
     </Pressable>

@@ -9,17 +9,17 @@ public struct LogSecurity: View {
 
     var tint: Color {
       switch self {
-      case .high: .danger
-      case .medium: .warning
-      case .low: .label
+      case .high: EsuissColor.destructive
+      case .medium: Color.adaptive(light: Palette.amber600, dark: Palette.amber400)
+      case .low: EsuissColor.foreground
       }
     }
 
     var tile: Color {
       switch self {
-      case .high: .danger
-      case .medium: .warning
-      case .low: .gray
+      case .high: EsuissColor.destructive
+      case .medium: Palette.amber500
+      case .low: Palette.zinc500
       }
     }
 
@@ -58,9 +58,9 @@ public struct LogSecurity: View {
   }
 
   static func tone(_ score: Int) -> Color {
-    if score > 85 { return .green }
-    if score > 65 { return .orange }
-    return .red
+    if score > 85 { return Palette.green500 }
+    if score > 65 { return Palette.orange500 }
+    return Palette.red500
   }
 
   private var onNavigate: ((String) -> Void)?
@@ -131,7 +131,7 @@ public struct LogSecurity: View {
             if list.isEmpty {
               Text(current == "Open" ? "No open alerts. All good." : "Nothing here yet.")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .frame(maxWidth: .infinity)
                 .padding(30)
             } else {
@@ -140,13 +140,13 @@ public struct LogSecurity: View {
                   row(alert)
                     .overlay(alignment: .top) {
                       if index > 0 {
-                        Color.separator.frame(height: 1).padding(.leading, 58)
+                        EsuissColor.border.frame(height: 1).padding(.leading, 58)
                       }
                     }
                     .transition(.opacity)
                 }
               }
-              .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+              .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
               .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
             }
           }
@@ -170,7 +170,7 @@ public struct LogSecurity: View {
     return HStack(spacing: 16) {
       ZStack {
         Circle()
-          .stroke(Color.control, lineWidth: 6)
+          .stroke(EsuissColor.secondary, lineWidth: 6)
         Circle()
           .trim(from: 0, to: CGFloat(max(score, 0)) / 100)
           .stroke(tone, style: StrokeStyle(lineWidth: 6, lineCap: .round))
@@ -183,7 +183,7 @@ public struct LogSecurity: View {
       VStack(alignment: .leading, spacing: 0) {
         Text("Security score")
           .scaledFont(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         Text(verbatim: "\(score)")
           .scaledFont(.xl3, weight: .bold)
           .monospacedDigit()
@@ -198,11 +198,11 @@ public struct LogSecurity: View {
             Text(LocalizedStringKey(level.rawValue))
               .scaledFont(.xs)
               .fixedSize()
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: "\(count)")
               .scaledFont(.xl, weight: .semibold)
               .monospacedDigit()
-              .foregroundStyle(count > 0 ? level.tint : .labelTertiary)
+              .foregroundStyle(count > 0 ? level.tint : EsuissColor.mutedForeground)
               .contentTransition(.numericText())
           }
           .accessibilityElement(children: .combine)
@@ -211,16 +211,16 @@ public struct LogSecurity: View {
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 14)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
   }
 
   private func row(_ alert: Alert) -> some View {
     HStack(spacing: 12) {
       (alert.resolved ? Ph.check.bold : alert.icon)
         .frame(width: 16, height: 16)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 30, height: 30)
-        .background(alert.resolved ? Color.success : alert.severity.tile, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+        .background(alert.resolved ? Palette.green500 : alert.severity.tile, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
         .accessibilityHidden(true)
       VStack(alignment: .leading, spacing: 1) {
         Text(verbatim: alert.title)
@@ -228,7 +228,7 @@ public struct LogSecurity: View {
           .lineLimit(1)
         (Text(alert.resolved ? "Resolved" : "\(alert.severity.rawValue) severity") + Text(verbatim: " · \(alert.detail)"))
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -241,7 +241,7 @@ public struct LogSecurity: View {
           .buttonStyle(.variant(.default, size: .sm))
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .frame(minHeight: 52)
@@ -298,7 +298,7 @@ private struct LogSecurityShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

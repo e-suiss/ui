@@ -60,7 +60,7 @@ fun Input(
     val group = LocalButtonGroup.current
     val item = rememberButtonGroupItem(group, RoundedCornerShape(size.radius))
     val textStyle = (if (size == InputSize.Default) Typography.base else Typography.sm)
-        .copy(color = if (enabled) colors.label else colors.labelQuaternary)
+        .copy(color = colors.foreground)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
         BasicTextField(
             value = value,
@@ -80,7 +80,7 @@ fun Input(
             singleLine = true,
             visualTransformation = visualTransformation,
             interactionSource = source,
-            cursorBrush = SolidColor(colors.accent),
+            cursorBrush = SolidColor(colors.primary),
             decorationBox = { inner ->
                 Box(
                     modifier = Modifier.padding(horizontal = size.horizontalPadding),
@@ -89,7 +89,7 @@ fun Input(
                     if (value.isEmpty() && placeholder != null) {
                         BasicText(
                             placeholder,
-                            style = textStyle.copy(color = if (enabled) colors.labelSecondary else colors.labelQuaternary),
+                            style = textStyle.copy(color = colors.mutedForeground),
                             maxLines = 1,
                         )
                     }

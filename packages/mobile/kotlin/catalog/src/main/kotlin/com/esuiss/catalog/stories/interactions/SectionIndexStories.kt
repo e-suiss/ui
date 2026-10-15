@@ -109,7 +109,7 @@ private fun SectionIndexContacts(height: Dp) {
                 .fillMaxWidth()
                 .height(height)
                 .clip(shape)
-                .border(1.dp, colors.separator, shape),
+                .border(1.dp, colors.border, shape),
             onValueChange = { letter -> log = "Jumped to $letter" },
         ) {
             sectionIndexGroups.forEach { (letter, group) ->
@@ -135,7 +135,7 @@ private fun SectionIndexRow(name: String, divided: Boolean, onClick: () -> Unit)
             .padding(start = 16.dp, end = 40.dp)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
     ) {
-        if (divided) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+        if (divided) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
         Text(name, modifier = Modifier.alpha(if (pressed) 0.6f else 1f).padding(vertical = 12.dp))
     }
 }

@@ -19,66 +19,130 @@ import { Icon } from "@/components/ui/icon"
 import { Text, TextClassContext } from "@/components/ui/text"
 
 const CHART_COLORS = {
-  blue: { text: "text-blue", bg: "bg-blue", border: "border-blue" },
-  green: { text: "text-green", bg: "bg-green", border: "border-green" },
-  orange: { text: "text-orange", bg: "bg-orange", border: "border-orange" },
-  red: { text: "text-red", bg: "bg-red", border: "border-red" },
-  yellow: { text: "text-yellow", bg: "bg-yellow", border: "border-yellow" },
-  purple: { text: "text-purple", bg: "bg-purple", border: "border-purple" },
-  pink: { text: "text-pink", bg: "bg-pink", border: "border-pink" },
-  indigo: { text: "text-indigo", bg: "bg-indigo", border: "border-indigo" },
-  teal: { text: "text-teal", bg: "bg-teal", border: "border-teal" },
-  mint: { text: "text-mint", bg: "bg-mint", border: "border-mint" },
-  cyan: { text: "text-cyan", bg: "bg-cyan", border: "border-cyan" },
-  brown: { text: "text-brown", bg: "bg-brown", border: "border-brown" },
-  gray: { text: "text-gray", bg: "bg-gray", border: "border-gray" },
-  accent: { text: "text-accent", bg: "bg-accent", border: "border-accent" },
-  success: { text: "text-success", bg: "bg-success", border: "border-success" },
-  danger: { text: "text-danger", bg: "bg-danger", border: "border-danger" },
-  warning: { text: "text-warning", bg: "bg-warning", border: "border-warning" },
-  link: { text: "text-link", bg: "bg-link", border: "border-link" },
-  control: { text: "text-control", bg: "bg-control", border: "border-control" },
-  label: { text: "text-label", bg: "bg-label", border: "border-label" },
-  "label-secondary": {
-    text: "text-label-secondary",
-    bg: "bg-label-secondary",
-    border: "border-label-secondary",
+  "chart-1": {
+    text: "text-chart-1",
+    bg: "bg-chart-1",
+    border: "border-chart-1",
   },
-  "label-tertiary": {
-    text: "text-label-tertiary",
-    bg: "bg-label-tertiary",
-    border: "border-label-tertiary",
+  "chart-2": {
+    text: "text-chart-2",
+    bg: "bg-chart-2",
+    border: "border-chart-2",
   },
-  "label-quaternary": {
-    text: "text-label-quaternary",
-    bg: "bg-label-quaternary",
-    border: "border-label-quaternary",
+  "chart-3": {
+    text: "text-chart-3",
+    bg: "bg-chart-3",
+    border: "border-chart-3",
   },
-  separator: {
-    text: "text-separator",
-    bg: "bg-separator",
-    border: "border-separator",
+  "chart-4": {
+    text: "text-chart-4",
+    bg: "bg-chart-4",
+    border: "border-chart-4",
   },
-  "separator-strong": {
-    text: "text-separator-strong",
-    bg: "bg-separator-strong",
-    border: "border-separator-strong",
+  "chart-5": {
+    text: "text-chart-5",
+    bg: "bg-chart-5",
+    border: "border-chart-5",
   },
-  surface: { text: "text-surface", bg: "bg-surface", border: "border-surface" },
-  "surface-secondary": {
-    text: "text-surface-secondary",
-    bg: "bg-surface-secondary",
-    border: "border-surface-secondary",
+  primary: { text: "text-primary", bg: "bg-primary", border: "border-primary" },
+  "primary-foreground": {
+    text: "text-primary-foreground",
+    bg: "bg-primary-foreground",
+    border: "border-primary-foreground",
   },
-  "surface-raised": {
-    text: "text-surface-raised",
-    bg: "bg-surface-raised",
-    border: "border-surface-raised",
+  secondary: {
+    text: "text-secondary",
+    bg: "bg-secondary",
+    border: "border-secondary",
   },
-  "on-accent": {
-    text: "text-on-accent",
-    bg: "bg-on-accent",
-    border: "border-on-accent",
+  muted: { text: "text-muted", bg: "bg-muted", border: "border-muted" },
+  "muted-foreground": {
+    text: "text-muted-foreground",
+    bg: "bg-muted-foreground",
+    border: "border-muted-foreground",
+  },
+  foreground: {
+    text: "text-foreground",
+    bg: "bg-foreground",
+    border: "border-foreground",
+  },
+  background: {
+    text: "text-background",
+    bg: "bg-background",
+    border: "border-background",
+  },
+  card: { text: "text-card", bg: "bg-card", border: "border-card" },
+  destructive: {
+    text: "text-destructive",
+    bg: "bg-destructive",
+    border: "border-destructive",
+  },
+  border: { text: "text-border", bg: "bg-border", border: "border-border" },
+  input: { text: "text-input", bg: "bg-input", border: "border-input" },
+  "red-500": {
+    text: "text-red-500",
+    bg: "bg-red-500",
+    border: "border-red-500",
+  },
+  "orange-500": {
+    text: "text-orange-500",
+    bg: "bg-orange-500",
+    border: "border-orange-500",
+  },
+  "amber-500": {
+    text: "text-amber-500",
+    bg: "bg-amber-500",
+    border: "border-amber-500",
+  },
+  "yellow-500": {
+    text: "text-yellow-500",
+    bg: "bg-yellow-500",
+    border: "border-yellow-500",
+  },
+  "green-500": {
+    text: "text-green-500",
+    bg: "bg-green-500",
+    border: "border-green-500",
+  },
+  "teal-400": {
+    text: "text-teal-400",
+    bg: "bg-teal-400",
+    border: "border-teal-400",
+  },
+  "teal-500": {
+    text: "text-teal-500",
+    bg: "bg-teal-500",
+    border: "border-teal-500",
+  },
+  "cyan-500": {
+    text: "text-cyan-500",
+    bg: "bg-cyan-500",
+    border: "border-cyan-500",
+  },
+  "blue-500": {
+    text: "text-blue-500",
+    bg: "bg-blue-500",
+    border: "border-blue-500",
+  },
+  "indigo-500": {
+    text: "text-indigo-500",
+    bg: "bg-indigo-500",
+    border: "border-indigo-500",
+  },
+  "purple-500": {
+    text: "text-purple-500",
+    bg: "bg-purple-500",
+    border: "border-purple-500",
+  },
+  "pink-500": {
+    text: "text-pink-500",
+    bg: "bg-pink-500",
+    border: "border-pink-500",
+  },
+  "zinc-500": {
+    text: "text-zinc-500",
+    bg: "bg-zinc-500",
+    border: "border-zinc-500",
   },
 } as const
 
@@ -90,17 +154,17 @@ type ChartConfig = Record<
 >
 
 const DEFAULT_COLORS: ChartPrimitive.DefaultColors = {
-  grid: "separator",
-  cursor: "separator",
-  spoke: "separator-strong",
-  reference: "separator",
-  fallback: "label",
+  grid: "border",
+  cursor: "border",
+  spoke: "input",
+  reference: "border",
+  fallback: "foreground",
 }
 
 const TEXT_CLASS: Record<ChartPrimitive.TextItem["role"], string> = {
-  tick: "text-xs text-label-secondary",
-  label: "text-xs font-semibold text-label",
-  reference: "text-xs font-semibold text-label-secondary",
+  tick: "text-xs text-muted-foreground",
+  label: "text-xs font-semibold text-foreground",
+  reference: "text-xs font-semibold text-muted-foreground",
 }
 
 function isChartColor(value: string | undefined): value is ChartColor {
@@ -513,7 +577,7 @@ function ChartTooltipContent({
     const content = labelFormatter ? labelFormatter(value, payload) : value
     if (content !== undefined && content !== null && content !== "") {
       tooltipLabel = (
-        <TextClassContext.Provider value="text-xs font-semibold text-label">
+        <TextClassContext.Provider value="text-xs font-semibold text-foreground">
           {wrapText(content)}
         </TextClassContext.Provider>
       )
@@ -521,10 +585,10 @@ function ChartTooltipContent({
   }
   const nestLabel = payload.length === 1 && indicator !== "dot"
   return (
-    <TextClassContext.Provider value="text-xs text-label">
+    <TextClassContext.Provider value="text-xs text-foreground">
       <View
         className={cn(
-          "min-w-32 gap-1.5 rounded-md border border-label/5 bg-surface-raised px-2.5 py-1.5 shadow-lg dark:border-label/10",
+          "min-w-32 gap-1.5 rounded-md border border-foreground/5 bg-popover px-2.5 py-1.5 shadow-lg dark:border-foreground/10",
           className
         )}
       >
@@ -553,7 +617,7 @@ function ChartTooltipContent({
                     {itemConfig?.icon ? (
                       <Icon
                         as={itemConfig.icon}
-                        className="size-2.5 text-label-secondary"
+                        className="size-2.5 text-muted-foreground"
                       />
                     ) : (
                       !hideIndicator && (
@@ -580,11 +644,11 @@ function ChartTooltipContent({
                     >
                       <View className="gap-1.5">
                         {nestLabel ? tooltipLabel : null}
-                        <Text className="text-xs text-label-secondary">
+                        <Text className="text-xs text-muted-foreground">
                           {itemConfig?.label ?? item.name}
                         </Text>
                       </View>
-                      <Text className="font-mono text-xs font-semibold text-label tabular-nums">
+                      <Text className="font-mono text-xs font-semibold text-foreground tabular-nums">
                         {ChartPrimitive.formatValue(item.value)}
                       </Text>
                     </View>
@@ -641,7 +705,7 @@ function ChartLegendContent({
             {itemConfig?.icon ? (
               <Icon
                 as={itemConfig.icon}
-                className="size-3 text-label-secondary"
+                className="size-3 text-muted-foreground"
               />
             ) : (
               <View
@@ -651,7 +715,7 @@ function ChartLegendContent({
                 )}
               />
             )}
-            <Text className="text-xs text-label">{itemConfig?.label}</Text>
+            <Text className="text-xs text-foreground">{itemConfig?.label}</Text>
           </View>
         )
       })}

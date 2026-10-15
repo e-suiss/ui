@@ -34,6 +34,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
@@ -52,6 +53,7 @@ import com.adamglin.PhosphorIcons
 import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.Minus
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -155,32 +157,38 @@ fun InputOTPSlot(index: Int, modifier: Modifier = Modifier) {
     val active = state.focused && state.maxLength > 0 &&
         index == state.value.length.coerceAtMost(state.maxLength - 1)
     val shape = RoundedCornerShape(Radius.lg)
-    val dangerFill = colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
+    val dangerFill = colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
     val background = when {
-        !state.enabled -> colors.controlDisabled
-        tone == OtpTone.Verified -> colors.successSurface
+        tone == OtpTone.Verified -> Palette.green500.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
         tone == OtpTone.Invalid || state.invalid -> dangerFill
-        else -> colors.control
+        else -> colors.secondary
     }
     val border = when {
         !state.enabled -> Color.Transparent
-        tone == OtpTone.Verified -> colors.success
-        tone == OtpTone.Invalid -> colors.danger
-        active -> colors.accent
-        state.invalid -> colors.danger
+        tone == OtpTone.Verified -> Palette.green500
+        tone == OtpTone.Invalid -> colors.destructive
+        active -> colors.primary
+        state.invalid -> colors.destructive
         else -> Color.Transparent
     }
     val foreground = when {
-        !state.enabled -> colors.labelQuaternary
-        tone == OtpTone.Verified -> colors.success
-        tone == OtpTone.Invalid -> colors.danger
-        else -> colors.label
+        tone == OtpTone.Verified -> if (colors.isDark) Palette.green400 else Palette.green600
+        tone == OtpTone.Invalid -> colors.destructive
+        else -> colors.foreground
     }
     val spec = tween<Color>(if (tone == OtpTone.Default) 150 else 300, easing = FormEasing)
     val animatedBackground by animateColorAsState(background, spec, label = "background")
     val animatedBorder by animateColorAsState(border, spec, label = "border")
     val animatedForeground by animateColorAsState(foreground, spec, label = "foreground")
-    val alpha by animateFloatAsState(if (tone == OtpTone.Verifying) 0.6f else 1f, tween(300, easing = FormEasing), label = "alpha")
+    val alpha by animateFloatAsState(
+        when {
+            !state.enabled -> 0.5f
+            tone == OtpTone.Verifying -> 0.6f
+            else -> 1f
+        },
+        tween(300, easing = FormEasing),
+        label = "alpha",
+    )
     val reduced = formReducedMotion()
     val scale = remember { Animatable(1f) }
     val pop = state.appearance.pop
@@ -233,9 +241,9 @@ fun InputOTPSeparator(modifier: Modifier = Modifier) {
     Icon(
         PhosphorIcons.Regular.Minus,
         contentDescription = null,
-        modifier = modifier,
+        modifier = modifier.alpha(if (enabled) 1f else 0.5f),
         size = 16.dp,
-        tint = if (enabled) colors.label else colors.labelQuaternary,
+        tint = colors.foreground,
     )
 }
 
@@ -262,6 +270,6 @@ private fun OtpCaret() {
         Modifier
             .graphicsLayer { alpha = if (reduced) 1f else blink }
             .size(width = 2.dp, height = 24.dp)
-            .background(EsuissTheme.colors.accent, CircleShape),
+            .background(EsuissTheme.colors.primary, CircleShape),
     )
 }

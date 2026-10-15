@@ -92,6 +92,7 @@ import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.util.Locale
@@ -100,9 +101,9 @@ import kotlin.math.roundToLong
 private class AnalyticsApp(val value: String, val label: String, val icon: ImageVector, val tint: Colors.() -> Color)
 
 private val AnalyticsApps = listOf(
-    AnalyticsApp("route", "Route", PhosphorIcons.Bold.BoldChartBar) { green },
-    AnalyticsApp("notebook", "Notebook", PhosphorIcons.Bold.NotePencil) { orange },
-    AnalyticsApp("fitness", "Fitness+", PhosphorIcons.Bold.Flame) { red },
+    AnalyticsApp("route", "Route", PhosphorIcons.Bold.BoldChartBar) { Palette.green500 },
+    AnalyticsApp("notebook", "Notebook", PhosphorIcons.Bold.NotePencil) { Palette.orange500 },
+    AnalyticsApp("fitness", "Fitness+", PhosphorIcons.Bold.Flame) { Palette.red500 },
 )
 
 private class AnalyticsMetric(val value: String, val label: String, val unit: String, val data: List<Double>)
@@ -121,7 +122,7 @@ private val AnalyticsRegions = listOf(
     "Netherlands" to 0.09,
 )
 
-private val AnalyticsConfig = ChartConfig("value" to ChartConfigItem("Value") { accent })
+private val AnalyticsConfig = ChartConfig("value" to ChartConfigItem("Value") { primary })
 
 private fun analyticsData(metric: AnalyticsMetric, app: String): List<Double> {
     val appIndex = AnalyticsApps.indexOfFirst { it.value == app }.coerceAtLeast(0)
@@ -191,7 +192,7 @@ fun DashAnalytics(
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     AppTile(selectedApp)
-                                    Icon(PhosphorIcons.Bold.CaretDown, contentDescription = null, size = 12.dp, tint = colors.labelSecondary)
+                                    Icon(PhosphorIcons.Bold.CaretDown, contentDescription = null, size = 12.dp, tint = colors.mutedForeground)
                                 }
                             },
                         ) {
@@ -243,7 +244,7 @@ fun DashAnalytics(
                     Column(
                         Modifier
                             .fillMaxWidth()
-                            .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))
+                            .background(colors.muted, RoundedCornerShape(Radius.xl))
                             .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 10.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
@@ -255,16 +256,16 @@ fun DashAnalytics(
                             ) {
                                 BasicText(
                                     "${if (index == last) "This week" else "Week ${index + 1}"} · ${current.label}",
-                                    style = Typography.sm.copy(color = colors.labelSecondary),
+                                    style = Typography.sm.copy(color = colors.mutedForeground),
                                 )
                                 BasicText(
                                     format(data[index]),
-                                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold, fontFeatureSettings = "tnum"),
                                 )
                             }
                             BasicText(
                                 "+${12 + AnalyticsMetrics.indexOf(current) * 3}%",
-                                style = Typography.sm.copy(color = colors.success, fontWeight = FontWeight.SemiBold),
+                                style = Typography.sm.copy(color = if (colors.isDark) Palette.green400 else Palette.green600, fontWeight = FontWeight.SemiBold),
                             )
                         }
                         ChartContainer(
@@ -288,7 +289,7 @@ fun DashAnalytics(
                                     value = { data[it] },
                                     strokeWidth = 2.5.dp,
                                     fill = ChartFill.VerticalGradient(topAlpha = 0.22f, bottomAlpha = 0f),
-                                    activeDot = ChartDot(6.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                                    activeDot = ChartDot(6.dp, strokeColor = colors.muted, strokeWidth = 2.dp),
                                     animationDuration = 500,
                                 )
                             }
@@ -300,7 +301,7 @@ fun DashAnalytics(
                             Modifier
                                 .padding(horizontal = 4.dp)
                                 .semantics { heading() },
-                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                         )
                         ItemGroup(variant = ItemGroupVariant.Inset) {
                             AnalyticsRegions.forEachIndexed { position, (name, share) ->
@@ -310,7 +311,7 @@ fun DashAnalytics(
                                     ItemActions {
                                         BasicText(
                                             format(latest * share),
-                                            style = Typography.base.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                                            style = Typography.base.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 }
@@ -332,7 +333,7 @@ private fun AppTile(app: AnalyticsApp) {
             .background(app.tint(colors), RoundedCornerShape(Radius.md)),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(app.icon, contentDescription = null, size = 14.dp, tint = colors.onAccent)
+        Icon(app.icon, contentDescription = null, size = 14.dp, tint = colors.primaryForeground)
     }
 }
 
@@ -358,7 +359,7 @@ internal fun DashTabs(
                 Empty(
                     Modifier
                         .fillMaxSize()
-                        .background(colors.surface),
+                        .background(colors.background),
                 ) {
                     EmptyHeader {
                         EmptyDescription("This section isn't part of the sample. Choose $homeLabel.")

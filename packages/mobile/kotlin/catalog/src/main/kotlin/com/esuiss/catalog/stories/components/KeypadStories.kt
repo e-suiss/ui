@@ -54,7 +54,7 @@ private fun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {
             last?.let { "Last key: $it" } ?: "Press a key",
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             style = Typography.sm,
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
         )
         Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)
     }

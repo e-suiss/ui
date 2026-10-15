@@ -42,8 +42,8 @@ const chartData = MONTHS.map((month, index) => ({
 }))
 
 const chartConfig = {
-  actual: { label: "Actual", color: "blue" },
-  forecast: { label: "Forecast", color: "blue" },
+  actual: { label: "Actual", color: "chart-1" },
+  forecast: { label: "Forecast", color: "chart-1" },
 } satisfies ChartConfig
 
 export function LineChartForecast() {
@@ -66,7 +66,12 @@ export function LineChartForecast() {
             <CartesianGrid vertical={false} strokeDasharray="2 4" />
             <XAxis dataKey="month" tickMargin={8} interval={2} />
             <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
-            <ReferenceArea x1="Sep" x2="Dec" fill="control" fillOpacity={0.6} />
+            <ReferenceArea
+              x1="Sep"
+              x2="Dec"
+              fill="secondary"
+              fillOpacity={0.6}
+            />
             <Line dataKey="actual" type="monotone" strokeWidth={2.5} />
             <Line
               dataKey="forecast"

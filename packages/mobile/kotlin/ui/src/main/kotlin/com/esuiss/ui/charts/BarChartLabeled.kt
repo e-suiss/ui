@@ -32,7 +32,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
 )
 
 @Composable
@@ -59,7 +59,7 @@ fun BarChartLabeled(modifier: Modifier = Modifier) {
                         value = { it.desktop },
                         radius = ChartRadius(6.dp),
                         maxBarSize = 36.dp,
-                        labelList = ChartLabelList(offset = 8.dp, color = colors.label),
+                        labelList = ChartLabelList(offset = 8.dp, color = colors.foreground),
                     )
                 }
             }

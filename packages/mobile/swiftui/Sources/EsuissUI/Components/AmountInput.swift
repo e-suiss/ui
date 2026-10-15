@@ -103,6 +103,7 @@ struct AmountDisplay: View {
       .monospacedDigit()
       .lineLimit(1)
       .minimumScaleFactor(0.3)
+      .opacity(isEnabled ? 1 : 0.5)
       .frame(maxWidth: .infinity)
       .accessibilityElement(children: .ignore)
       .accessibilityLabel(Text(label))
@@ -112,8 +113,8 @@ struct AmountDisplay: View {
   private func text(empty: Bool) -> AttributedString {
     let symbolFont = Font.system(size: TextStyle.xl3.size * scale, weight: .semibold)
     let numberFont = Font.system(size: 60 * scale, weight: .semibold)
-    let symbolColor: Color = isEnabled ? .labelSecondary : .labelQuaternary
-    let numberColor: Color = !isEnabled ? .labelQuaternary : empty ? .labelTertiary : .label
+    let symbolColor: Color = EsuissColor.mutedForeground
+    let numberColor: Color = empty ? EsuissColor.mutedForeground : EsuissColor.foreground
     var prefix = AttributedString(format.prefix)
     prefix.font = symbolFont
     prefix.foregroundColor = symbolColor

@@ -43,15 +43,15 @@ public struct EmptyBag: View {
               EmptyMedia {
                 Ph.handbag.light
                   .frame(width: 46, height: 46)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
                   .overlay(alignment: .bottomTrailing) {
                     if count > 0 {
                       Text(verbatim: "\(count)")
                         .font(.system(size: TextStyle.xs3.size, weight: .semibold))
                         .monospacedDigit()
-                        .foregroundStyle(Color.surface)
+                        .foregroundStyle(EsuissColor.background)
                         .frame(width: 20, height: 20)
-                        .background(Color.label, in: Circle())
+                        .background(EsuissColor.foreground, in: Circle())
                         .offset(x: 6, y: 2)
                         .transition(.scale)
                     }
@@ -107,7 +107,7 @@ private struct EmptyBagProduct: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Color.control
+      EsuissColor.secondary
         .overlay {
           AsyncImage(url: item.image) { phase in
             if let image = phase.image {
@@ -125,15 +125,15 @@ private struct EmptyBagProduct: View {
             .lineLimit(1)
           Text(verbatim: item.price)
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         Button(action: action) {
           (inBag ? Ph.check.bold : Ph.plus.bold)
             .frame(width: 15, height: 15)
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 30, height: 30)
-            .background(inBag ? Color.success : .accent, in: Circle())
+            .background(inBag ? Palette.green500 : EsuissColor.primary, in: Circle())
             .frame(width: 44, height: 44)
             .contentShape(Rectangle())
         }

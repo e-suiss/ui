@@ -10,7 +10,7 @@ public struct IslandRing: View {
   let value: Double
   let color: Color
 
-  public init(value: Double, color: Color = .accent) {
+  public init(value: Double, color: Color = EsuissColor.primary) {
     self.value = value
     self.color = color
   }

@@ -135,7 +135,7 @@ function CountdownRing({
   const startStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${Math.max(progress.value * 360 - 180, 0)}deg` }],
   }))
-  const arc = [styles.circle, { borderColor: colors.labelSecondary }]
+  const arc = [styles.circle, { borderColor: colors.mutedForeground }]
   return (
     <View
       accessibilityElementsHidden
@@ -150,7 +150,7 @@ function CountdownRing({
           style={[
             StyleSheet.absoluteFill,
             styles.circle,
-            { borderColor: colors.separator },
+            { borderColor: colors.border },
           ]}
         />
         <View
@@ -339,10 +339,8 @@ function UndoBarProvider({
               style={[
                 styles.bar,
                 {
-                  borderColor: colors.separator,
-                  backgroundColor: isDark
-                    ? colors.surfaceSecondary
-                    : colors.surfaceRaised,
+                  borderColor: colors.border,
+                  backgroundColor: isDark ? colors.muted : colors.popover,
                 },
                 style,
               ]}

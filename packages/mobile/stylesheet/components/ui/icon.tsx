@@ -21,7 +21,7 @@ function Icon({ as: IconComponent, size, color, ...props }: IconProps) {
   return (
     <IconComponent
       size={size ?? inheritedSize ?? 20}
-      color={color ?? inheritedColor ?? colors.label}
+      color={color ?? inheritedColor ?? colors.foreground}
       {...props}
     />
   )

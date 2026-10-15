@@ -88,27 +88,27 @@ function NotesPage() {
             <TipClose />
           </TipCard>
         </Tip>
-        <View className="overflow-hidden rounded-2xl border border-separator">
+        <View className="overflow-hidden rounded-2xl border border-border">
           {notes.map((note, index) => (
             <Pressable
               key={note.id}
               onPress={() => setLog(`Opened ${note.title}`)}
               className={
                 index > 0
-                  ? "border-t border-separator px-4 py-3 active:bg-item-pressed"
-                  : "px-4 py-3 active:bg-item-pressed"
+                  ? "border-t border-border px-4 py-3 active:opacity-80"
+                  : "px-4 py-3 active:opacity-80"
               }
             >
               <Text numberOfLines={1} className="font-semibold">
                 {note.title}
               </Text>
-              <Text numberOfLines={1} className="text-sm text-label-secondary">
+              <Text numberOfLines={1} className="text-sm text-muted-foreground">
                 {note.preview}
               </Text>
             </Pressable>
           ))}
         </View>
-        <Text role="status" className="min-h-5 text-sm text-label-secondary">
+        <Text role="status" className="min-h-5 text-sm text-muted-foreground">
           {log}
         </Text>
       </View>

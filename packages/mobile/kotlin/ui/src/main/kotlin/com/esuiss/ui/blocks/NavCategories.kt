@@ -94,15 +94,15 @@ fun NavCategories(
                     BasicText(
                         "Store.",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
                     )
                     BasicText(
                         "The best way to buy the suiss products you love.",
-                        style = Typography.xl.copy(color = colors.labelSecondary),
+                        style = Typography.xl.copy(color = colors.mutedForeground),
                     )
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    BasicText("Need shopping help?", style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+                    BasicText("Need shopping help?", style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
                     NavLink("Ask a Specialist ›", onAskSpecialist)
                     NavLink("Visit a suiss Store near you ›", onFindStore)
                 }
@@ -130,17 +130,17 @@ fun NavCategories(
                     Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(colors.separator),
+                        .background(colors.border),
                 )
                 BasicText(
                     buildAnnotatedString {
                         append("The latest. ")
-                        withStyle(SpanStyle(color = colors.labelSecondary)) { append("Take a look at what's new in $selected.") }
+                        withStyle(SpanStyle(color = colors.mutedForeground)) { append("Take a look at what's new in $selected.") }
                     },
                     modifier = Modifier
                         .padding(top = 22.dp)
                         .semantics { liveRegion = LiveRegionMode.Polite },
-                    style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
             }
         }
@@ -154,9 +154,9 @@ private fun NavLink(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary),
     )
 }

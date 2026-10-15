@@ -109,7 +109,7 @@ function Header({
           {trailing}
         </View>
         <AnimatedView
-          className="absolute inset-x-0 bottom-0 h-px bg-separator"
+          className="absolute inset-x-0 bottom-0 h-px bg-border"
           style={[{ pointerEvents: "none" }, borderStyle]}
         />
       </View>
@@ -150,7 +150,7 @@ function HeaderTitle({
     >
       {wrapText(children, "text-base font-semibold")}
       {subtitle !== undefined
-        ? wrapText(subtitle, "text-xs text-label-secondary")
+        ? wrapText(subtitle, "text-xs text-muted-foreground")
         : null}
     </AnimatedView>
   )
@@ -210,7 +210,7 @@ function HeaderLargeTitle({
         children
       )}
       {subtitle !== undefined
-        ? wrapText(subtitle, "text-sm text-label-secondary")
+        ? wrapText(subtitle, "text-sm text-muted-foreground")
         : null}
     </AnimatedView>
   )
@@ -234,7 +234,7 @@ function HeaderBack({
         "Back"
       }
       className={cn(
-        "h-9 shrink flex-row items-center gap-0.5 rounded-full ps-0.5 pe-3 active:bg-item-pressed",
+        "h-9 shrink flex-row items-center gap-0.5 rounded-full ps-0.5 pe-3 active:opacity-80",
         children === undefined && "pe-0.5",
         className
       )}
@@ -243,9 +243,9 @@ function HeaderBack({
       <Icon
         as={CaretLeftIcon}
         weight="bold"
-        className={cn("size-6 text-link", I18nManager.isRTL && "rotate-180")}
+        className={cn("size-6 text-primary", I18nManager.isRTL && "rotate-180")}
       />
-      {wrapText(children, "shrink text-base text-link")}
+      {wrapText(children, "shrink text-base text-primary")}
     </Pressable>
   )
 }

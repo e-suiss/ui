@@ -24,6 +24,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.LineChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class LineDotsRow(val month: String, val weight: Double)
@@ -34,20 +35,20 @@ private val chartData = listOf(82.4, 81.6, 81.9, 80.8, 80.1, 79.6, 79.8, 78.9, 7
     .mapIndexed { index, weight -> LineDotsRow(months[index], weight) }
 
 private val chartConfig = ChartConfig(
-    "weight" to ChartConfigItem("Weight") { purple },
+    "weight" to ChartConfigItem("Weight") { Palette.purple500 },
 )
 
 @Composable
 fun LineChartDots(modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
-    val number = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
+    val number = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 BasicText(
                     "Weight",
                     style = Typography.sm.copy(
-                        color = if (colors.isDark) colors.purple else lerp(colors.purple, colors.label, 0.15f),
+                        color = if (colors.isDark) Palette.purple500 else lerp(Palette.purple500, colors.foreground, 0.15f),
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
@@ -56,10 +57,10 @@ fun LineChartDots(modifier: Modifier = Modifier) {
                     BasicText(
                         "kg",
                         Modifier.alignByBaseline(),
-                        style = Typography.base.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.base.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                 }
-                BasicText("Down 4.5 kg since January", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Down 4.5 kg since January", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent {
@@ -89,7 +90,7 @@ fun LineChartDots(modifier: Modifier = Modifier) {
                             formatter = { item ->
                                 BasicText(
                                     "${item.value} kg",
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             },
                         )

@@ -22,5 +22,5 @@ fun Separator(
     } else {
         Modifier.fillMaxHeight().width(1.dp)
     }
-    Box(modifier.then(sizing).background(EsuissTheme.colors.separator))
+    Box(modifier.then(sizing).background(EsuissTheme.colors.border))
 }

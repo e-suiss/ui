@@ -41,10 +41,17 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -53,7 +60,7 @@ const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "settings", label: "Settings", icon: GearIcon },
 ]
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type FeedEvent = {
   actor: string
@@ -69,7 +76,7 @@ const FEED: FeedEvent[] = [
     actor: "Jamie Rivera",
     action: "signed in",
     detail: "Book Pro · San Francisco",
-    tint: "indigo",
+    tint: "indigo500",
   },
   {
     actor: "System",
@@ -81,14 +88,14 @@ const FEED: FeedEvent[] = [
     actor: "Morgan Lee",
     action: "updated a product",
     detail: "Phone Air · 240 in stock",
-    tint: "orange",
+    tint: "orange500",
     icon: TagIcon,
   },
   {
     actor: "Riley Chen",
     action: "answered a ticket",
     detail: "#4821 Screen flickers",
-    tint: "green",
+    tint: "green500",
     icon: ChatCircleIcon,
   },
   {
@@ -102,7 +109,7 @@ const FEED: FeedEvent[] = [
     actor: "Jordan Park",
     action: "approved an order",
     detail: "W1052 · $399",
-    tint: "mint",
+    tint: "teal400",
     icon: HandbagIcon,
   },
 ]
@@ -203,7 +210,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -211,7 +218,6 @@ function OtherSection({ value, home }: { value: string; home: string }) {
 }
 
 function LiveDot() {
-  const { colors } = useTheme()
   const opacity = useSharedValue(1)
 
   React.useEffect(() => {
@@ -232,7 +238,7 @@ function LiveDot() {
 
   return (
     <AnimatedView
-      style={[styles.dot, { backgroundColor: colors.green }, animatedStyle]}
+      style={[styles.dot, { backgroundColor: palette.green500 }, animatedStyle]}
     />
   )
 }
@@ -247,14 +253,14 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
         .reduceMotion(ReduceMotion.System)}
     >
       {first ? null : (
-        <View
-          style={[styles.separator, { backgroundColor: colors.separator }]}
-        />
+        <View style={[styles.separator, { backgroundColor: colors.border }]} />
       )}
       <View style={styles.row}>
         {event.tint ? (
           <Avatar size="sm" style={styles.avatar}>
-            <AvatarFallback style={{ backgroundColor: colors[event.tint] }}>
+            <AvatarFallback
+              style={{ backgroundColor: tone(colors, event.tint) }}
+            >
               {initials(event.actor)}
             </AvatarFallback>
           </Avatar>
@@ -263,7 +269,9 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
             style={[
               styles.tile,
               {
-                backgroundColor: event.warning ? colors.orange : colors.gray,
+                backgroundColor: event.warning
+                  ? palette.orange500
+                  : palette.zinc500,
               },
             ]}
           >
@@ -272,7 +280,7 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
                 as={event.icon}
                 weight="bold"
                 size={16}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             ) : null}
           </View>
@@ -284,12 +292,12 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
           </Text>
           <Text
             numberOfLines={1}
-            style={[fontSize.xs, { color: colors.labelSecondary }]}
+            style={[fontSize.xs, { color: colors.mutedForeground }]}
           >
             {event.detail}
           </Text>
         </View>
-        <Text style={[styles.time, { color: colors.labelSecondary }]}>
+        <Text style={[styles.time, { color: colors.mutedForeground }]}>
           {entry.time}
         </Text>
       </View>
@@ -366,12 +374,7 @@ function LogLive({
               Live activity
             </HeaderLargeTitle>
             <View style={styles.body}>
-              <View
-                style={[
-                  styles.stats,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.stats, { backgroundColor: colors.muted }]}>
                 {stats.map((stat, index) => (
                   <View
                     key={stat.label}
@@ -380,13 +383,13 @@ function LogLive({
                       styles.stat,
                       index > 0 && [
                         styles.statDivider,
-                        { borderColor: colors.separator },
+                        { borderColor: colors.border },
                       ],
                     ]}
                   >
                     <Text
                       numberOfLines={1}
-                      style={[fontSize.xs, { color: colors.labelSecondary }]}
+                      style={[fontSize.xs, { color: colors.mutedForeground }]}
                     >
                       {stat.label}
                     </Text>
@@ -408,7 +411,7 @@ function LogLive({
                   <View style={styles.live}>
                     <LiveDot />
                     <Text
-                      style={[fontSize.xs, { color: colors.labelSecondary }]}
+                      style={[fontSize.xs, { color: colors.mutedForeground }]}
                     >
                       Live
                     </Text>
@@ -417,10 +420,7 @@ function LogLive({
               </View>
               <View
                 accessibilityLiveRegion="polite"
-                style={[
-                  styles.group,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
+                style={[styles.group, { backgroundColor: colors.muted }]}
               >
                 {entries.map((entry, index) => (
                   <EntryRow key={entry.id} entry={entry} first={index === 0} />

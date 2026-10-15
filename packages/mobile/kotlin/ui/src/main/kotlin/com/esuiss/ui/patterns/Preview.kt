@@ -49,10 +49,10 @@ fun PreviewTrigger(
     val pressed by interaction.collectIsPressedAsState()
     CompositionLocalProvider(
         LocalContentStyle provides LocalContentStyle.current.copy(
-            color = colors.link,
+            color = colors.primary,
             textDecoration = if (pressed) TextDecoration.Underline else null,
         ),
-        LocalContentColor provides colors.link,
+        LocalContentColor provides colors.primary,
     ) {
         Box(
             modifier = modifier.clickable(

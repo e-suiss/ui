@@ -21,7 +21,7 @@ import { Icon } from "@/components/ui/icon"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 type Shipping = "standard" | "express"
 
@@ -175,8 +175,8 @@ function Choice<Value extends string>({
       style={({ pressed }) => [
         styles.choice,
         checked ? styles.choiceChecked : styles.choiceIdle,
-        { borderColor: checked ? colors.accent : colors.separatorStrong },
-        pressed && { backgroundColor: colors.itemPressed },
+        { borderColor: checked ? colors.primary : colors.input },
+        pressed && { opacity: 0.8 },
       ]}
     >
       <RadioGroupItem
@@ -207,12 +207,12 @@ function Step({
   const { colors } = useTheme()
   const open = current === index
   const done = current > index
-  let badgeColor = colors.control
-  if (done) badgeColor = colors.success
-  else if (open) badgeColor = colors.label
+  let badgeColor = colors.secondary
+  if (done) badgeColor = palette.green500
+  else if (open) badgeColor = colors.foreground
 
   return (
-    <View style={[styles.step, { borderColor: colors.separator }]}>
+    <View style={[styles.step, { borderColor: colors.border }]}>
       <View style={styles.stepRow}>
         <View
           style={[
@@ -227,13 +227,13 @@ function Step({
               as={CheckIcon}
               weight="bold"
               size={13}
-              color={colors.onAccent}
+              color={colors.primaryForeground}
             />
           ) : (
             <Text
               style={[
                 styles.badgeText,
-                { color: open ? colors.surface : colors.labelSecondary },
+                { color: open ? colors.background : colors.mutedForeground },
               ]}
             >
               {index + 1}
@@ -244,7 +244,7 @@ function Step({
           role="heading"
           style={[
             styles.stepTitle,
-            !open && !done && { color: colors.labelSecondary },
+            !open && !done && { color: colors.mutedForeground },
           ]}
         >
           {title}
@@ -257,12 +257,12 @@ function Step({
             accessibilityLabel={`Edit ${title.toLowerCase()}`}
             style={({ pressed }) => pressed && { opacity: 0.6 }}
           >
-            <Text style={[fontSize.sm, { color: colors.link }]}>Edit ›</Text>
+            <Text style={[fontSize.sm, { color: colors.primary }]}>Edit ›</Text>
           </Pressable>
         ) : null}
       </View>
       {done && summary ? (
-        <Text style={[styles.summary, { color: colors.labelSecondary }]}>
+        <Text style={[styles.summary, { color: colors.mutedForeground }]}>
           {summary}
         </Text>
       ) : null}
@@ -310,19 +310,19 @@ function BagCheckout({
             style={styles.doneContent}
           >
             <View
-              style={[styles.doneBadge, { backgroundColor: colors.success }]}
+              style={[styles.doneBadge, { backgroundColor: palette.green500 }]}
             >
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text role="heading" style={styles.doneTitle}>
               Thank you. Your order is in.
             </Text>
-            <Text style={[styles.doneText, { color: colors.labelSecondary }]}>
+            <Text style={[styles.doneText, { color: colors.mutedForeground }]}>
               Your order number is W1049. We sent a confirmation email.
             </Text>
             <Pressable
@@ -335,7 +335,7 @@ function BagCheckout({
               }}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[fontSize.lg, { color: colors.link }]}>
+              <Text style={[fontSize.lg, { color: colors.primary }]}>
                 Start over ›
               </Text>
             </Pressable>
@@ -430,14 +430,12 @@ function BagCheckout({
             title="Review"
             onEdit={() => setStep(2)}
           >
-            <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
               By placing your order, you agree to the Sales Policy.
             </Text>
           </Step>
         </View>
-        <View
-          style={[styles.order, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.order, { backgroundColor: colors.muted }]}>
           <Text role="heading" style={styles.orderTitle}>
             Order summary
           </Text>
@@ -447,11 +445,14 @@ function BagCheckout({
                 source={{ uri: item.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                style={[styles.orderImage, { backgroundColor: colors.control }]}
+                style={[
+                  styles.orderImage,
+                  { backgroundColor: colors.secondary },
+                ]}
               />
               <View style={styles.orderText}>
                 <Text style={styles.orderName}>{item.name}</Text>
-                <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
                   {item.variant}
                 </Text>
               </View>
@@ -460,7 +461,7 @@ function BagCheckout({
               </Text>
             </View>
           ))}
-          <View style={[styles.orderTotal, { borderColor: colors.separator }]}>
+          <View style={[styles.orderTotal, { borderColor: colors.border }]}>
             <Text style={styles.totalLabel}>Total</Text>
             <Text style={styles.totalValue}>{money(total)}</Text>
           </View>
@@ -469,7 +470,7 @@ function BagCheckout({
       <BottomBar separator>
         <BottomBarContent style={styles.bar}>
           <View accessibilityLiveRegion="polite" style={styles.grow}>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               Total
             </Text>
             <Text style={styles.totalValue}>{money(total)}</Text>

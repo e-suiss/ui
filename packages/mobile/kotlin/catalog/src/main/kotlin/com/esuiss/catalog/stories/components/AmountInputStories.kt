@@ -79,7 +79,7 @@ private fun AmountInputControlled() {
         val shown = if (amount % 1.0 == 0.0) amount.toLong().toString() else amount.toString()
         Text(
             "value \"$value\" · amount $shown",
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
         )
     }
 }

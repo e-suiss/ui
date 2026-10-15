@@ -238,7 +238,7 @@ private fun ButtonGroupPlain() {
 private fun ButtonGroupSplitButton() {
     ButtonGroup {
         Button("Publish", onClick = {})
-        ButtonGroupSeparator(color = EsuissTheme.colors.onAccent.copy(alpha = 0.3f))
+        ButtonGroupSeparator(color = EsuissTheme.colors.primaryForeground.copy(alpha = 0.3f))
         ButtonGroupIconButton("More options", PhosphorIcons.Regular.CaretDown)
     }
 }

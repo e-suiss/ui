@@ -23,6 +23,7 @@ import com.esuiss.ui.components.ChartContainer
 import com.esuiss.ui.components.RadialBarChart
 import com.esuiss.ui.components.chartColor
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class RadialGaugeReading(val value: Double)
@@ -30,7 +31,7 @@ private class RadialGaugeReading(val value: Double)
 private val chartData = listOf(RadialGaugeReading(38.0))
 
 private val chartConfig = ChartConfig(
-    "value" to ChartConfigItem("Air quality") { green },
+    "value" to ChartConfigItem("Air quality") { Palette.green500 },
 )
 
 @Composable
@@ -68,9 +69,9 @@ fun RadialChartGauge(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         "38",
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("Good", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("Good", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

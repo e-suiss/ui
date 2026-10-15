@@ -49,9 +49,9 @@ function RefreshIndicator(props: RefreshControlProps) {
   const { colors } = useTheme()
   return (
     <RefreshControl
-      tintColor={colors.labelSecondary}
-      colors={[colors.labelSecondary]}
-      progressBackgroundColor={colors.surfaceRaised}
+      tintColor={colors.mutedForeground}
+      colors={[colors.mutedForeground]}
+      progressBackgroundColor={colors.card}
       {...props}
     />
   )

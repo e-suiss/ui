@@ -19,7 +19,7 @@ import {
 import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const EMAIL = /.+@.+\..+/
 const UPPERCASE = /[A-Z]/
@@ -122,9 +122,9 @@ function PasswordRules({ password }: { password: string }) {
                 met
                   ? {
                       borderColor: "transparent",
-                      backgroundColor: colors.success,
+                      backgroundColor: palette.green500,
                     }
-                  : { borderColor: colors.labelQuaternary },
+                  : { borderColor: colors.border },
               ]}
             >
               {met ? (
@@ -137,7 +137,7 @@ function PasswordRules({ password }: { password: string }) {
                     as={CheckIcon}
                     weight="bold"
                     size={10}
-                    color={colors.onAccent}
+                    color={colors.primaryForeground}
                   />
                 </AnimatedView>
               ) : null}
@@ -145,7 +145,7 @@ function PasswordRules({ password }: { password: string }) {
             <Text
               style={{
                 ...fontSize.sm,
-                color: met ? colors.label : colors.labelSecondary,
+                color: met ? colors.foreground : colors.mutedForeground,
               }}
             >
               {rule.label}
@@ -225,9 +225,9 @@ function SignupForm({
 
   const stack = [
     styles.stack,
-    { borderColor: colors.separatorStrong, backgroundColor: colors.surface },
+    { borderColor: colors.input, backgroundColor: colors.background },
   ]
-  const divider = { height: 1, backgroundColor: colors.separatorStrong }
+  const divider = { height: 1, backgroundColor: colors.input }
 
   if (done) {
     return (
@@ -239,12 +239,12 @@ function SignupForm({
             )}
             style={styles.done}
           >
-            <View style={[styles.badge, { backgroundColor: colors.success }]}>
+            <View style={[styles.badge, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text role="heading" style={styles.heading}>
@@ -254,7 +254,7 @@ function SignupForm({
               style={{
                 ...fontSize.lg,
                 textAlign: "center",
-                color: colors.labelSecondary,
+                color: colors.mutedForeground,
               }}
             >
               We sent a verification code to {form.email}.
@@ -268,7 +268,7 @@ function SignupForm({
               }}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={{ ...fontSize.lg, color: colors.link }}>
+              <Text style={{ ...fontSize.lg, color: colors.primary }}>
                 Start over ›
               </Text>
             </Pressable>
@@ -290,13 +290,13 @@ function SignupForm({
               ...fontSize.lg,
               marginTop: 10,
               textAlign: "center",
-              color: colors.labelSecondary,
+              color: colors.mutedForeground,
             }}
           >
             One suiss Account is all you need to access every suiss service.{" "}
             <Text
               role="link"
-              style={{ ...fontSize.lg, color: colors.link }}
+              style={{ ...fontSize.lg, color: colors.primary }}
               onPress={onLearnMore}
             >
               Learn more ›
@@ -377,7 +377,7 @@ function SignupForm({
               style={{
                 ...fontSize.xs,
                 marginTop: 6,
-                color: colors.labelSecondary,
+                color: colors.mutedForeground,
               }}
             >
               This will be your new suiss Account.
@@ -389,9 +389,9 @@ function SignupForm({
               style={[
                 stack,
                 mismatch && {
-                  borderColor: colors.danger,
+                  borderColor: colors.destructive,
                   backgroundColor: withAlpha(
-                    colors.danger,
+                    colors.destructive,
                     isDark ? 0.1 : 0.05
                   ),
                 },
@@ -410,7 +410,7 @@ function SignupForm({
               <View
                 style={[
                   divider,
-                  mismatch && { backgroundColor: colors.danger },
+                  mismatch && { backgroundColor: colors.destructive },
                 ]}
               />
               <InputAccessoryBarInput
@@ -442,7 +442,7 @@ function SignupForm({
               marginTop: 14,
               minHeight: 20,
               textAlign: "center",
-              color: colors.danger,
+              color: colors.destructive,
             }}
           >
             {tried && !valid ? "Please fill in every field correctly." : ""}

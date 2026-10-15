@@ -43,7 +43,7 @@ function MessageRows() {
       {messages.map((message, index) => (
         <View
           key={message}
-          className={index > 0 ? "border-t border-separator py-3" : "py-3"}
+          className={index > 0 ? "border-t border-border py-3" : "py-3"}
         >
           <Text numberOfLines={1}>{message}</Text>
         </View>

@@ -121,10 +121,10 @@ fun UndoBarProvider(
             val radius = 8.dp.toPx()
             val topLeft = Offset(center.x - radius, center.y - radius)
             val arc = Size(radius * 2, radius * 2)
-            drawCircle(colors.separator, radius, style = Stroke(stroke))
+            drawCircle(colors.border, radius, style = Stroke(stroke))
             scale(if (rtl) -1f else 1f, 1f) {
                 drawArc(
-                    color = colors.labelSecondary,
+                    color = colors.mutedForeground,
                     startAngle = -90f + progress.value * 360f,
                     sweepAngle = (1f - progress.value) * 360f,
                     useCenter = false,
@@ -137,7 +137,7 @@ fun UndoBarProvider(
         BasicText(
             entry.title,
             modifier = Modifier.weight(1f),
-            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.Medium),
+            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.Medium),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

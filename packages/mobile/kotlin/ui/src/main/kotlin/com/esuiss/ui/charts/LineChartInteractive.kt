@@ -48,6 +48,7 @@ import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.chartColor
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlin.math.PI
@@ -74,11 +75,11 @@ private val longMonths = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "istanbul" to ChartConfigItem("Istanbul") { blue },
-    "ankara" to ChartConfigItem("Ankara") { purple },
-    "izmir" to ChartConfigItem("Izmir") { teal },
-    "antalya" to ChartConfigItem("Antalya") { orange },
-    "erzurum" to ChartConfigItem("Erzurum") { indigo },
+    "istanbul" to ChartConfigItem("Istanbul") { chart1 },
+    "ankara" to ChartConfigItem("Ankara") { Palette.purple500 },
+    "izmir" to ChartConfigItem("Izmir") { chart2 },
+    "antalya" to ChartConfigItem("Antalya") { chart4 },
+    "erzurum" to ChartConfigItem("Erzurum") { chart3 },
 )
 
 private class TemperatureRow(val index: Int, val month: String, val values: Map<String, Double>)
@@ -98,8 +99,8 @@ private fun degrees(value: Double): String = if (value % 1.0 == 0.0) value.toLon
 private fun CityToggle(label: String, color: Color, pressed: Boolean, onPressedChange: (Boolean) -> Unit) {
     val colors = EsuissTheme.colors
     val haptics = rememberHaptics()
-    val background by animateColorAsState(if (pressed) color.copy(alpha = 0.16f) else colors.control, label = "background")
-    val dot by animateColorAsState(if (pressed) color else colors.labelQuaternary, label = "dot")
+    val background by animateColorAsState(if (pressed) color.copy(alpha = 0.16f) else colors.secondary, label = "background")
+    val dot by animateColorAsState(if (pressed) color else colors.border, label = "dot")
     Row(
         modifier = Modifier
             .height(32.dp)
@@ -117,7 +118,7 @@ private fun CityToggle(label: String, color: Color, pressed: Boolean, onPressedC
                 .size(8.dp)
                 .background(dot, CircleShape),
         )
-        BasicText(label, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+        BasicText(label, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -141,10 +142,10 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    BasicText("Monthly temperature", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                    BasicText("Monthly temperature", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                     BasicText(
                         "${modes.getValue(mode)} · °C · long-term",
-                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        style = Typography.sm.copy(color = colors.mutedForeground),
                     )
                 }
                 ToggleGroup(value = mode, onValueChange = { value -> if (value != null) mode = value }, size = ToggleSize.Sm, spacing = 0) {
@@ -189,14 +190,14 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                             ticks = listOf(-20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 40.0),
                             tickFormatter = { "${it.toInt()}°" },
                         )
-                        ReferenceLine(0.0, stroke = colors.separatorStrong)
+                        ReferenceLine(0.0, stroke = colors.input)
                         ChartTooltip {
                             ChartTooltipContent(
                                 indicator = ChartTooltipIndicator.Line,
                                 labelFormatter = { _, items ->
                                     BasicText(
                                         longMonths[items.firstOrNull()?.index ?: 0],
-                                        style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                        style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                     )
                                 },
                                 formatter = { item ->
@@ -214,11 +215,11 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                                         BasicText(
                                             chartConfig[item.key]?.label ?: item.key,
                                             Modifier.weight(1f),
-                                            style = Typography.xs.copy(color = colors.labelSecondary),
+                                            style = Typography.xs.copy(color = colors.mutedForeground),
                                         )
                                         BasicText(
                                             "${degrees(item.value)}°",
-                                            style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 },
@@ -230,7 +231,7 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                                 value = { it.values.getValue(city) },
                                 curve = ChartCurve.Monotone,
                                 strokeWidth = 2.5.dp,
-                                activeDot = ChartDot(5.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                                activeDot = ChartDot(5.dp, strokeColor = colors.muted, strokeWidth = 2.dp),
                                 animationDuration = 650,
                                 animationEasing = ChartEasing.EaseInOut,
                             )
@@ -253,7 +254,7 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                                             )
                                             BasicText(
                                                 chartConfig[city]?.label ?: city,
-                                                style = Typography.sm.copy(color = colors.labelSecondary),
+                                                style = Typography.sm.copy(color = colors.mutedForeground),
                                             )
                                         }
                                         BasicText(
@@ -262,7 +263,7 @@ fun LineChartInteractive(modifier: Modifier = Modifier) {
                                             } else {
                                                 "${highlighted.roundToInt()}° · ${longMonths[month!!]}"
                                             },
-                                            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 }

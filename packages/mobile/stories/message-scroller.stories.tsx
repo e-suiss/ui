@@ -155,7 +155,7 @@ function ChatRow({ message }: { message: ChatMessage }) {
               className="w-64"
             >
               <AttachmentMedia variant="document">
-                <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+                <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
               </AttachmentMedia>
               <AttachmentContent>
                 <AttachmentTitle>{message.attachment.name}</AttachmentTitle>
@@ -191,7 +191,7 @@ function ChatRow({ message }: { message: ChatMessage }) {
           ))}
           {message.status ? (
             <MessageFooter className="gap-1">
-              <Icon as={ChecksIcon} className="text-accent" />
+              <Icon as={ChecksIcon} className="text-primary" />
               <Text>{message.status}</Text>
             </MessageFooter>
           ) : null}

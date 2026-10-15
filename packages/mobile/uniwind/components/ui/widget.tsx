@@ -125,11 +125,14 @@ function WidgetFrame({
   return (
     <WidgetContext.Provider value={context}>
       <TextClassContext.Provider
-        value={cn("text-base text-label", align === "center" && "text-center")}
+        value={cn(
+          "text-base text-foreground",
+          align === "center" && "text-center"
+        )}
       >
         <View
           className={cn(
-            "max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-surface-secondary p-4",
+            "max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-muted p-4",
             align === "center" && "items-center justify-center",
             fill && "size-full",
             className
@@ -403,7 +406,7 @@ function Widget({
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
-            className="absolute start-0 top-0 z-10 rounded-3xl border border-dashed border-label/25"
+            className="absolute start-0 top-0 z-10 rounded-3xl border border-dashed border-foreground/25"
             style={previewStyle}
           />
         ) : null}
@@ -442,7 +445,7 @@ function Widget({
                   }
                   className={cn(
                     handle === "inside" ? "size-7" : "size-8.5",
-                    dragging ? "text-accent" : "text-label-quaternary"
+                    dragging ? "text-primary" : "text-muted-foreground/50"
                   )}
                 />
               </TextClassContext.Provider>
@@ -472,9 +475,9 @@ function WidgetHeader({
 }
 
 const WIDGET_ICON_SIZE = {
-  default: { frame: "size-8 rounded-lg bg-control", icon: "size-4.5" },
+  default: { frame: "size-8 rounded-lg bg-secondary", icon: "size-4.5" },
   sm: { frame: "", icon: "size-3.5" },
-  lg: { frame: "size-13 rounded-2xl bg-control", icon: "size-6" },
+  lg: { frame: "size-13 rounded-2xl bg-secondary", icon: "size-6" },
 } as const
 
 function WidgetIcon({
@@ -490,7 +493,7 @@ function WidgetIcon({
   }) {
   return (
     <IconClassContext.Provider
-      value={cn(WIDGET_ICON_SIZE[size].icon, "text-label", iconClassName)}
+      value={cn(WIDGET_ICON_SIZE[size].icon, "text-foreground", iconClassName)}
     >
       <View
         accessibilityElementsHidden
@@ -543,7 +546,7 @@ function WidgetDescription({
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
   return (
     <Text
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -588,8 +591,8 @@ function WidgetFooter({
 }: ViewProps & React.RefAttributes<View> & { className?: string }) {
   const { align } = useWidget()
   return (
-    <TextClassContext.Provider value="text-xs text-label-secondary">
-      <IconClassContext.Provider value="size-3.5 shrink-0 text-label-secondary">
+    <TextClassContext.Provider value="text-xs text-muted-foreground">
+      <IconClassContext.Provider value="size-3.5 shrink-0 text-muted-foreground">
         <View
           className={cn(
             "min-w-0 shrink-0 flex-row items-center gap-1.5",

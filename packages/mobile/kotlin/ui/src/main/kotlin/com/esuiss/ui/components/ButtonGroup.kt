@@ -147,7 +147,7 @@ fun ButtonGroup(
     val joined = state.nested == 0
     val horizontal = orientation == ButtonGroupOrientation.Horizontal
     val shape = if (horizontal) CircleShape else RoundedCornerShape(Radius.xl2)
-    val outline = colors.separator
+    val outline = colors.border
     Layout(
         content = {
             CompositionLocalProvider(LocalButtonGroup provides state, content = content)
@@ -257,15 +257,15 @@ fun ButtonGroupText(
     Row(
         modifier = modifier
             .clip(shape)
-            .background(colors.control, shape)
+            .background(colors.secondary, shape)
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
             LocalButtonGroup provides null,
-            LocalContentStyle provides Typography.sm.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.sm.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
             LocalIconSize provides 16.dp,
         ) {
             content()
@@ -279,7 +279,7 @@ fun ButtonGroupSeparator(
     orientation: Orientation = Orientation.Vertical,
     color: Color = Color.Unspecified,
 ) {
-    val line = color.takeOrElse { EsuissTheme.colors.label.copy(alpha = 0.2f) }
+    val line = color.takeOrElse { EsuissTheme.colors.foreground.copy(alpha = 0.2f) }
     Box(
         modifier = modifier
             .layoutId(ButtonGroupDivider)

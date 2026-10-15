@@ -92,7 +92,7 @@ private struct InputAccessoryBarTextareaDemo: View {
         }
         Text(log)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(16)
     }

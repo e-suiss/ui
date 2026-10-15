@@ -250,22 +250,17 @@ public struct Chip<Label: View>: View {
     .foregroundStyle(foreground(selected: selected))
     .padding(.horizontal, size.padding)
     .frame(height: size.height)
-    .background(background(selected: selected, pressed: pressed), in: Capsule())
-    .opacity(selected && !isEnabled ? 0.4 : 1)
+    .background(background(selected: selected), in: Capsule())
+    .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
     .contentShape(Capsule())
   }
 
   private func foreground(selected: Bool) -> Color {
-    if selected { return .onControlSelected }
-    return isEnabled ? .label : .labelQuaternary
+    selected ? EsuissColor.background : EsuissColor.secondaryForeground
   }
 
-  private func background(selected: Bool, pressed: Bool) -> Color {
-    if selected {
-      return isEnabled && pressed ? .controlSelected.opacity(0.8) : .controlSelected
-    }
-    if !isEnabled { return .controlDisabled }
-    return pressed ? .controlPressed : .control
+  private func background(selected: Bool) -> Color {
+    selected ? EsuissColor.foreground : EsuissColor.secondary
   }
 }
 

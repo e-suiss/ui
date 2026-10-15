@@ -30,7 +30,11 @@ function NotifyButtons({ children }: { children?: React.ReactNode }) {
         onPress={() =>
           notify({
             icon: (
-              <Icon as={ChatCircleIcon} weight="fill" className="text-green" />
+              <Icon
+                as={ChatCircleIcon}
+                weight="fill"
+                className="text-green-500"
+              />
             ),
             title: "Jordan Lee",
             description: "Are we still on for Saturday?",
@@ -43,7 +47,9 @@ function NotifyButtons({ children }: { children?: React.ReactNode }) {
         variant="secondary"
         onPress={() =>
           notify({
-            icon: <Icon as={BellIcon} weight="fill" className="text-orange" />,
+            icon: (
+              <Icon as={BellIcon} weight="fill" className="text-orange-500" />
+            ),
             title: "Design review",
             description: "Starts in 10 minutes",
           })
@@ -74,7 +80,7 @@ function useDownload(initial: number | null = null) {
       setProgress(null)
       notify({
         icon: (
-          <Icon as={CheckCircleIcon} weight="fill" className="text-green" />
+          <Icon as={CheckCircleIcon} weight="fill" className="text-green-500" />
         ),
         title: "Download complete",
         description: "Design-Kit.zip",
@@ -106,11 +112,11 @@ function DownloadIsland({
     <Island
       accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}
       compactLeading={
-        <Icon as={DownloadSimpleIcon} weight="bold" className="text-accent" />
+        <Icon as={DownloadSimpleIcon} weight="bold" className="text-primary" />
       }
       compactTrailing={
         done ? (
-          <Icon as={CheckCircleIcon} weight="fill" className="text-green" />
+          <Icon as={CheckCircleIcon} weight="fill" className="text-green-500" />
         ) : (
           <IslandRing value={progress} />
         )
@@ -118,8 +124,12 @@ function DownloadIsland({
       minimal={<IslandRing value={progress} />}
     >
       <IslandExpandedRegion region="leading">
-        <View className="size-10 items-center justify-center rounded-xl bg-on-media/15">
-          <Icon as={FileZipIcon} weight="fill" className="size-6 text-accent" />
+        <View className="size-10 items-center justify-center rounded-xl bg-white/15">
+          <Icon
+            as={FileZipIcon}
+            weight="fill"
+            className="size-6 text-primary"
+          />
         </View>
       </IslandExpandedRegion>
       <IslandExpandedRegion region="trailing">
@@ -129,7 +139,7 @@ function DownloadIsland({
         <Text numberOfLines={1} className="text-sm font-semibold">
           {done ? "Downloaded" : "Downloading"}
         </Text>
-        <Text numberOfLines={1} className="text-sm text-on-media/70">
+        <Text numberOfLines={1} className="text-sm text-white/70">
           Design-Kit.zip
         </Text>
       </IslandExpandedRegion>
@@ -138,10 +148,10 @@ function DownloadIsland({
           role="progressbar"
           accessibilityLabel="Download progress"
           accessibilityValue={{ min: 0, max: 100, now: percent }}
-          className="h-1.5 overflow-hidden rounded-full bg-on-media/20"
+          className="h-1.5 overflow-hidden rounded-full bg-white/20"
         >
           <View
-            className="h-full rounded-full bg-accent"
+            className="h-full rounded-full bg-primary"
             style={{ width: `${percent}%` }}
           />
         </View>
@@ -149,7 +159,7 @@ function DownloadIsland({
           role="button"
           disabled={done}
           onPress={onCancel}
-          className="h-11 items-center justify-center rounded-full bg-on-media/15 active:bg-on-media/25 disabled:opacity-50"
+          className="h-11 items-center justify-center rounded-full bg-white/15 active:opacity-80 disabled:opacity-50"
         >
           <Text className="text-sm font-semibold">Cancel download</Text>
         </Pressable>
@@ -178,7 +188,7 @@ function DownloadsExample({
   return (
     <View className="flex-1 items-center justify-center gap-4">
       <DownloadIsland progress={progress} onCancel={cancel} />
-      <Text className="max-w-xs text-center text-sm text-label-secondary">
+      <Text className="max-w-xs text-center text-sm text-muted-foreground">
         Start a download, then tap the pill at the top to see the details. Swipe
         up on it to close.
       </Text>
@@ -212,7 +222,9 @@ function NoticeOnMount() {
     if (shownRef.current) return
     shownRef.current = true
     notify({
-      icon: <Icon as={ChatCircleIcon} weight="fill" className="text-green" />,
+      icon: (
+        <Icon as={ChatCircleIcon} weight="fill" className="text-green-500" />
+      ),
       title: "Jordan Lee",
       description: "Are we still on for Saturday?",
       duration: 600000,
@@ -222,7 +234,7 @@ function NoticeOnMount() {
   return (
     <View className="flex-1 items-center justify-center gap-4">
       <Island />
-      <Text className="max-w-xs text-center text-sm text-label-secondary">
+      <Text className="max-w-xs text-center text-sm text-muted-foreground">
         The pill grows to show the notification and shrinks back on its own.
       </Text>
       <NotifyButtons />

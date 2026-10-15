@@ -18,6 +18,7 @@ import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.ChartTooltipIndicator
 import com.esuiss.ui.components.RadarChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 
 private class RadarDotsRow(val skill: String, val thisMonth: Double, val lastMonth: Double)
 
@@ -31,8 +32,8 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "thisMonth" to ChartConfigItem("This month") { green },
-    "lastMonth" to ChartConfigItem("Last month") { gray },
+    "thisMonth" to ChartConfigItem("This month") { Palette.green500 },
+    "lastMonth" to ChartConfigItem("Last month") { chart5 },
 )
 
 @Composable
@@ -49,7 +50,7 @@ fun RadarChartDots(modifier: Modifier = Modifier) {
             ) {
                 RadarChart(chartData, outerRadius = 0.7f, accessibilityLabel = "With dots") {
                     ChartTooltip { ChartTooltipContent(indicator = ChartTooltipIndicator.Line) }
-                    PolarGrid(stroke = colors.separator)
+                    PolarGrid(stroke = colors.border)
                     PolarAngleAxis(label = { it.skill })
                     Radar(
                         "thisMonth",

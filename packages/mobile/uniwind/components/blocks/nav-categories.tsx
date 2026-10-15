@@ -44,12 +44,12 @@ function NavCategories({
             <Text role="heading" className="text-3xl font-bold">
               Store.
             </Text>
-            <Text className="text-xl text-label-secondary">
+            <Text className="text-xl text-muted-foreground">
               The best way to buy the suiss products you love.
             </Text>
           </View>
           <View className="items-start gap-1.5">
-            <Text className="text-xs font-semibold text-label-secondary">
+            <Text className="text-xs font-semibold text-muted-foreground">
               Need shopping help?
             </Text>
             <Pressable
@@ -58,7 +58,7 @@ function NavCategories({
               onPress={onAskSpecialist}
               className="active:opacity-60"
             >
-              <Text className="text-xs text-link">Ask a Specialist ›</Text>
+              <Text className="text-xs text-primary">Ask a Specialist ›</Text>
             </Pressable>
             <Pressable
               role="link"
@@ -66,7 +66,7 @@ function NavCategories({
               onPress={onFindStore}
               className="active:opacity-60"
             >
-              <Text className="text-xs text-link">
+              <Text className="text-xs text-primary">
                 Visit a suiss Store near you ›
               </Text>
             </Pressable>
@@ -94,13 +94,13 @@ function NavCategories({
                 source={{ uri: category.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                className="size-8 rounded-full bg-surface-secondary"
+                className="size-8 rounded-full bg-muted"
               />
               <Text numberOfLines={1}>{category.label}</Text>
             </Chip>
           ))}
         </ChipGroup>
-        <View className="mx-5 border-t border-separator pt-5.5">
+        <View className="mx-5 border-t border-border pt-5.5">
           <AnimatedView
             key={selected}
             entering={FadeIn.duration(400).reduceMotion(ReduceMotion.System)}
@@ -108,7 +108,7 @@ function NavCategories({
           >
             <Text className="text-2xl font-semibold">
               The latest.{" "}
-              <Text className="text-2xl font-semibold text-label-secondary">
+              <Text className="text-2xl font-semibold text-muted-foreground">
                 Take a look at what's new in {selected}.
               </Text>
             </Text>

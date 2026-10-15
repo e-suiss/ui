@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
 function usePopupColors() {
   const { colors, isDark } = useTheme()
   return {
-    borderColor: `${colors.label}${isDark ? "1a" : "0d"}`,
-    backgroundColor: colors.surfaceRaised,
+    borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
+    backgroundColor: colors.popover,
   }
 }
 
@@ -136,7 +136,7 @@ function DropdownMenuContent({
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.label }}
+              value={{ ...fontSize.base, color: colors.foreground }}
             >
               <MenuPrimitive.Popup
                 style={(state) => [
@@ -171,14 +171,15 @@ function DropdownMenuSubTrigger({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: props.disabled ? colors.labelQuaternary : colors.label,
+        color: colors.foreground,
       }}
     >
       <MenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.open && { backgroundColor: colors.itemSelected },
-          state.highlighted && { backgroundColor: colors.itemPressed },
+          state.open && { backgroundColor: colors.accent },
+          state.highlighted && { opacity: 0.8 },
+          props.disabled && { opacity: 0.5 },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -225,8 +226,7 @@ function DropdownMenuItem({
 }) {
   const { colors } = useTheme()
   const destructive = variant === "destructive"
-  let color = destructive ? colors.danger : colors.label
-  if (props.disabled) color = colors.labelQuaternary
+  const color = destructive ? colors.destructive : colors.foreground
   return (
     <TextStyleContext.Provider
       value={{
@@ -237,11 +237,8 @@ function DropdownMenuItem({
       <MenuPrimitive.Item
         style={(state) => [
           styles.item,
-          state.highlighted && {
-            backgroundColor: destructive
-              ? colors.dangerSurfacePressed
-              : colors.itemPressed,
-          },
+          state.highlighted && { opacity: 0.8 },
+          props.disabled && { opacity: 0.5 },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -265,13 +262,14 @@ function DropdownMenuCheckboxItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: props.disabled ? colors.labelQuaternary : colors.label,
+        color: colors.foreground,
       }}
     >
       <MenuPrimitive.CheckboxItem
         style={(state) => [
           styles.checkItem,
-          state.highlighted && { backgroundColor: colors.itemPressed },
+          state.highlighted && { opacity: 0.8 },
+          props.disabled && { opacity: 0.5 },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -302,13 +300,14 @@ function DropdownMenuRadioItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: props.disabled ? colors.labelQuaternary : colors.label,
+        color: colors.foreground,
       }}
     >
       <MenuPrimitive.RadioItem
         style={(state) => [
           styles.checkItem,
-          state.highlighted && { backgroundColor: colors.itemPressed },
+          state.highlighted && { opacity: 0.8 },
+          props.disabled && { opacity: 0.5 },
           inset && styles.inset,
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
@@ -337,7 +336,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         inset && styles.inset,
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
@@ -355,7 +354,7 @@ function DropdownMenuSeparator({
     <MenuPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.separator },
+        { backgroundColor: colors.border },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

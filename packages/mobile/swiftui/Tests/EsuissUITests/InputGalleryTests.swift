@@ -10,7 +10,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
@@ -150,9 +150,9 @@ private struct OtpStatus: View {
 
   private var color: Color {
     switch state {
-    case .verified: .success
-    case .invalid: .danger
-    default: .labelSecondary
+    case .verified: Color.adaptive(light: Palette.green600, dark: Palette.green400)
+    case .invalid: EsuissColor.destructive
+    default: EsuissColor.mutedForeground
     }
   }
 }
@@ -205,10 +205,10 @@ private struct OtpGallery: View {
       VStack(spacing: 4) {
         Text(verbatim: "Enter the code")
           .font(TextStyle.xl2.font(weight: .bold))
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Text(verbatim: "We sent a 6-digit code to +1 555 0100.")
           .font(TextStyle.sm.font())
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       OtpExample(title: "Focused · suggestion above the keyboard", model: models[0], suggestion: "482913")
       OtpExample(title: "Verifying", model: models[1])
@@ -233,7 +233,7 @@ final class InputGalleryTests: XCTestCase {
       let renderer = ImageRenderer(content: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US")))
       renderer.scale = 3
@@ -249,7 +249,7 @@ final class InputGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

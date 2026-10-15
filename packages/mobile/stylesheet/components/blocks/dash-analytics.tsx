@@ -46,7 +46,7 @@ import {
 import { Screen } from "@/components/ui/screen"
 import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const apps: { value: string; label: string; icon: PhosphorIcon }[] = [
@@ -96,7 +96,7 @@ const regions = [
 ]
 
 const chartConfig = {
-  value: { label: "Value", color: "accent" },
+  value: { label: "Value", color: "primary" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -160,7 +160,7 @@ function AppMenu({
         >
           {apps.map((item) => (
             <DropdownMenuRadioItem key={item.value} value={item.value}>
-              <Icon as={item.icon} size={18} color={colors.label} />
+              <Icon as={item.icon} size={18} color={colors.foreground} />
               <Text>{item.label}</Text>
             </DropdownMenuRadioItem>
           ))}
@@ -178,7 +178,7 @@ function OtherSection({ value }: { value: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         This section isn't part of the sample. Choose Analytics.
       </Text>
     </View>
@@ -267,22 +267,20 @@ function DashAnalytics({
                   ))}
                 </ToggleGroup>
               </ScrollView>
-              <View
-                style={[
-                  styles.card,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.card, { backgroundColor: colors.muted }]}>
                 <View style={styles.summary}>
                   <View accessibilityLiveRegion="polite" style={styles.reading}>
                     <Text
-                      style={[styles.caption, { color: colors.labelSecondary }]}
+                      style={[
+                        styles.caption,
+                        { color: colors.mutedForeground },
+                      ]}
                     >
                       {`${current === data.length - 1 ? "This week" : point.week} · ${metric.label}`}
                     </Text>
                     <Text style={styles.value}>{format(point.value)}</Text>
                   </View>
-                  <Text style={[styles.change, { color: colors.green }]}>
+                  <Text style={[styles.change, { color: palette.green500 }]}>
                     {`+${12 + metrics.indexOf(metric) * 3}%`}
                   </Text>
                 </View>
@@ -300,14 +298,14 @@ function DashAnalytics({
                     <XAxis dataKey="week" hide />
                     <ChartTooltip
                       content={() => null}
-                      cursor={{ stroke: "separator-strong" }}
+                      cursor={{ stroke: "input" }}
                       defaultIndex={data.length - 1}
                     />
                     <Area
                       animationDuration={500}
                       dataKey="value"
                       type="linear"
-                      stroke="accent"
+                      stroke="primary"
                       strokeWidth={2.5}
                       fill={{
                         stops: [
@@ -317,8 +315,8 @@ function DashAnalytics({
                       }}
                       activeDot={{
                         r: 5,
-                        fill: "accent",
-                        stroke: "surface-secondary",
+                        fill: "primary",
+                        stroke: "muted",
                         strokeWidth: 2,
                       }}
                     />

@@ -49,22 +49,11 @@ const styles = StyleSheet.create({
   thumb: { borderRadius: 9999, ...shadow.sm },
 })
 
-function trackColors(checked: boolean, disabled: boolean, colors: ThemeColors) {
+function trackColors(checked: boolean, colors: ThemeColors) {
   if (!checked) {
-    return {
-      borderColor: "transparent",
-      backgroundColor: disabled
-        ? colors.controlDisabled
-        : colors.labelQuaternary,
-    }
+    return { borderColor: "transparent", backgroundColor: colors.input }
   }
-  if (disabled) {
-    return {
-      borderColor: "transparent",
-      backgroundColor: colors.accentDisabled,
-    }
-  }
-  return { borderColor: colors.accent, backgroundColor: colors.accent }
+  return { borderColor: colors.primary, backgroundColor: colors.primary }
 }
 
 function SwitchThumb({
@@ -91,7 +80,7 @@ function SwitchThumb({
         styles.thumb,
         {
           height: metrics.height,
-          backgroundColor: isDark ? colors.label : colors.surface,
+          backgroundColor: isDark ? colors.foreground : colors.background,
         },
       ]}
       render={<Animated.View style={animatedStyle} />}
@@ -117,8 +106,9 @@ function Switch({
       style={(state) => [
         styles.root,
         styles[size],
-        trackColors(state.checked, state.disabled, colors),
-        invalid && !state.disabled && { borderColor: colors.danger },
+        trackColors(state.checked, colors),
+        invalid && !state.disabled && { borderColor: colors.destructive },
+        state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}
       hitSlop={HIT_SLOP}

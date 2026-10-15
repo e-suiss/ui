@@ -63,6 +63,7 @@ import com.esuiss.ui.patterns.SplitViewColumn
 import com.esuiss.ui.patterns.SplitViewItem
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -99,16 +100,16 @@ private val SupportViews = listOf(
 private val TicketStatuses = listOf("Open", "Pending", "Solved")
 
 private fun requesterTint(colors: Colors, hue: Int): Color = when (hue) {
-    30 -> colors.orange
-    200 -> colors.blue
-    330 -> colors.pink
-    else -> colors.green
+    30 -> Palette.orange500
+    200 -> Palette.blue500
+    330 -> Palette.pink500
+    else -> Palette.green500
 }
 
 private fun priorityColors(colors: Colors, priority: String): Pair<Color, Color> = when (priority) {
-    "High" -> colors.dangerSurface to if (colors.isDark) colors.danger else lerp(colors.danger, colors.label, 0.3f)
-    "Medium" -> colors.warningSurface to if (colors.isDark) colors.orange else lerp(colors.orange, colors.label, 0.5f)
-    else -> colors.control to colors.labelSecondary
+    "High" -> colors.destructive.copy(alpha = if (colors.isDark) 0.2f else 0.1f) to if (colors.isDark) colors.destructive else lerp(colors.destructive, colors.foreground, 0.3f)
+    "Medium" -> Palette.amber500.copy(alpha = if (colors.isDark) 0.2f else 0.1f) to if (colors.isDark) Palette.orange500 else lerp(Palette.orange500, colors.foreground, 0.5f)
+    else -> colors.secondary to colors.mutedForeground
 }
 
 @Composable
@@ -144,10 +145,10 @@ fun InboxSupport(
                         },
                     ) {
                         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(item.icon, contentDescription = null, size = 18.dp, tint = colors.accent)
-                            BasicText(item.value, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
+                            Icon(item.icon, contentDescription = null, size = 18.dp, tint = colors.primary)
+                            BasicText(item.value, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
                             val count = if (item.value == "All") tickets.size else tickets.count { it.status == item.value }
-                            BasicText("$count", style = Typography.xs.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"))
+                            BasicText("$count", style = Typography.xs.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"))
                         }
                     }
                 }
@@ -179,7 +180,7 @@ fun InboxSupport(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(24.dp),
-                        style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
             }
@@ -208,7 +209,7 @@ private fun TicketRow(ticket: SupportTicket, active: Boolean, onClick: () -> Uni
                 BasicText(
                     "${ticket.id} · ${ticket.device}",
                     modifier = Modifier.weight(1f),
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                 )
                 BasicText(
                     ticket.priority,
@@ -218,14 +219,14 @@ private fun TicketRow(ticket: SupportTicket, active: Boolean, onClick: () -> Uni
                     style = Typography.xs3.copy(color = ink, fontWeight = FontWeight.SemiBold),
                 )
             }
-            BasicText(ticket.title, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+            BasicText(ticket.title, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
             Row(
                 modifier = Modifier.padding(top = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 TicketRequester(ticket, 18.dp)
-                BasicText(ticket.requester, style = Typography.xs.copy(color = colors.labelSecondary))
+                BasicText(ticket.requester, style = Typography.xs.copy(color = colors.mutedForeground))
             }
         }
     }
@@ -242,7 +243,7 @@ private fun TicketRequester(ticket: SupportTicket, size: Dp) {
     ) {
         BasicText(
             ticket.requester.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-            style = Typography.xs.copy(color = colors.onMedia, fontWeight = FontWeight.Medium, fontSize = (size.value * 0.4f).sp),
+            style = Typography.xs.copy(color = Palette.white, fontWeight = FontWeight.Medium, fontSize = (size.value * 0.4f).sp),
         )
     }
 }
@@ -263,7 +264,7 @@ private fun TicketDetail(ticket: SupportTicket, onStatus: (String) -> Unit, onRe
             },
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BasicText("${ticket.id} · ${ticket.device}", style = Typography.sm.copy(color = colors.labelSecondary))
+        BasicText("${ticket.id} · ${ticket.device}", style = Typography.sm.copy(color = colors.mutedForeground))
         ToggleGroup(
             value = ticket.status,
             onValueChange = { if (it != null) onStatus(it) },
@@ -276,22 +277,22 @@ private fun TicketDetail(ticket: SupportTicket, onStatus: (String) -> Unit, onRe
         BasicText(
             ticket.title,
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
         )
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
             TicketRequester(ticket, 34.dp)
             Column {
-                BasicText(ticket.requester, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                BasicText("Today 8:12 AM", style = Typography.xs.copy(color = colors.labelSecondary))
+                BasicText(ticket.requester, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                BasicText("Today 8:12 AM", style = Typography.xs.copy(color = colors.mutedForeground))
             }
         }
         BasicText(
             "Hi, this started right after the latest update. I tried restarting but it keeps happening. Can you help?",
             modifier = Modifier
                 .widthIn(max = 520.dp)
-                .background(colors.surfaceSecondary, RoundedCornerShape(topStart = 4.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp))
+                .background(colors.muted, RoundedCornerShape(topStart = 4.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp))
                 .padding(horizontal = 14.dp, vertical = 12.dp),
-            style = Typography.base.copy(color = colors.label, lineHeight = 26.sp),
+            style = Typography.base.copy(color = colors.foreground, lineHeight = 26.sp),
         )
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Textarea(

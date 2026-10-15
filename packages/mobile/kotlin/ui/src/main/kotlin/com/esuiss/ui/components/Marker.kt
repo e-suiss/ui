@@ -43,7 +43,7 @@ fun Marker(
         Modifier
             .drawBehind {
                 val stroke = 1.dp.toPx()
-                drawRect(colors.separator, Offset(0f, size.height - stroke), Size(size.width, stroke))
+                drawRect(colors.border, Offset(0f, size.height - stroke), Size(size.width, stroke))
             }
             .padding(bottom = 8.dp)
     } else {
@@ -60,8 +60,8 @@ fun Marker(
     ) {
         CompositionLocalProvider(
             LocalMarkerVariant provides variant,
-            LocalContentStyle provides Typography.sm.copy(color = colors.labelSecondary),
-            LocalContentColor provides colors.labelSecondary,
+            LocalContentStyle provides Typography.sm.copy(color = colors.mutedForeground),
+            LocalContentColor provides colors.mutedForeground,
             LocalIconSize provides 16.dp,
         ) {
             if (variant == MarkerVariant.Separator) {
@@ -95,7 +95,7 @@ private fun RowScope.MarkerLine(modifier: Modifier) {
             .weight(1f)
             .then(modifier)
             .height(1.dp)
-            .background(EsuissTheme.colors.separator),
+            .background(EsuissTheme.colors.border),
     )
 }
 

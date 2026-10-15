@@ -17,7 +17,7 @@ function VerifyDemo() {
         role="status"
         accessibilityLiveRegion="polite"
         className={
-          error ? "text-sm text-danger" : "text-sm text-label-secondary"
+          error ? "text-sm text-destructive" : "text-sm text-muted-foreground"
         }
       >
         {status}
@@ -47,7 +47,7 @@ function BiometricDemo({ faceId = false }: { faceId?: boolean }) {
   const [log, setLog] = React.useState(0)
   return (
     <View className="items-center gap-6">
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         {log > 0 ? `Biometric requested (${log})` : "Biometric key"}
       </Text>
       <PinPad

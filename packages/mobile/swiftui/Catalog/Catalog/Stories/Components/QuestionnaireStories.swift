@@ -84,7 +84,7 @@ private struct QuestionnaireOnboarding: View {
       if let submitted {
         Text(verbatim: submitted)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityAddTraits(.updatesFrequently)
       }
     }

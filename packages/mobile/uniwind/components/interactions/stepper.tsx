@@ -50,13 +50,13 @@ function StepperInput({
     <NumberFieldPrimitive.Input
       className={(state) =>
         cn(
-          "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 py-0 text-right text-base text-label tabular-nums",
-          state.disabled && "text-label-quaternary",
+          "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 py-0 text-right text-base text-foreground tabular-nums",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
-      cursorColorClassName="accent-accent"
-      selectionColorClassName="accent-accent"
+      cursorColorClassName="accent-primary"
+      selectionColorClassName="accent-primary"
       {...props}
     />
   )
@@ -70,7 +70,7 @@ function StepperGroup({
     <NumberFieldPrimitive.Group
       className={(state) =>
         cn(
-          "h-8 shrink-0 flex-row items-center gap-[3px] rounded-lg bg-control p-[3px]",
+          "h-8 shrink-0 flex-row items-center gap-[3px] rounded-lg bg-secondary p-[3px]",
           resolveClassName(className, state)
         )
       }
@@ -90,24 +90,17 @@ function StepperDecrement({
       hitSlop={{ top: 9, bottom: 9 }}
       className={(state) =>
         cn(
-          "relative h-full w-9 items-center justify-center rounded-md",
+          "relative h-full w-9 items-center justify-center rounded-md bg-card shadow-sm dark:bg-border dark:shadow-none",
           state.disabled || !canDecrement
-            ? "bg-control-disabled"
-            : "bg-surface-raised shadow-sm active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
+            ? "opacity-50 shadow-none"
+            : "active:opacity-80 active:shadow-none",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
       {children ?? (
-        <Icon
-          as={MinusIcon}
-          weight="bold"
-          className={cn(
-            "size-4 text-label",
-            !canDecrement && "text-label-quaternary"
-          )}
-        />
+        <Icon as={MinusIcon} weight="bold" className="size-4 text-foreground" />
       )}
     </NumberFieldPrimitive.Decrement>
   )
@@ -124,24 +117,17 @@ function StepperIncrement({
       hitSlop={{ top: 9, bottom: 9 }}
       className={(state) =>
         cn(
-          "relative h-full w-9 items-center justify-center rounded-md",
+          "relative h-full w-9 items-center justify-center rounded-md bg-card shadow-sm dark:bg-border dark:shadow-none",
           state.disabled || !canIncrement
-            ? "bg-control-disabled"
-            : "bg-surface-raised shadow-sm active:bg-control-pressed active:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed",
+            ? "opacity-50 shadow-none"
+            : "active:opacity-80 active:shadow-none",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
       {children ?? (
-        <Icon
-          as={PlusIcon}
-          weight="bold"
-          className={cn(
-            "size-4 text-label",
-            !canIncrement && "text-label-quaternary"
-          )}
-        />
+        <Icon as={PlusIcon} weight="bold" className="size-4 text-foreground" />
       )}
     </NumberFieldPrimitive.Increment>
   )
@@ -152,7 +138,7 @@ function StepperSeparator({ className, ...props }: ViewProps) {
     <View
       accessible={false}
       importantForAccessibility="no"
-      className={cn("h-4.5 w-px shrink-0 bg-separator", className)}
+      className={cn("h-4.5 w-px shrink-0 bg-border", className)}
       {...props}
     />
   )

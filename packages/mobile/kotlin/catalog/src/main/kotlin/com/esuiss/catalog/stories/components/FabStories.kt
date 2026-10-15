@@ -84,7 +84,7 @@ private fun FabPage(log: String? = null, fab: @Composable () -> Unit) {
                 Text(
                     log,
                     modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+                    style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
                 )
             }
         }

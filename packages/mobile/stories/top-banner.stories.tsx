@@ -55,7 +55,7 @@ function Triggers() {
       <Button variant="ghost" onPress={() => dismiss()}>
         <Text>Dismiss current</Text>
       </Button>
-      <Text role="status" className="text-sm text-label-secondary">
+      <Text role="status" className="text-sm text-muted-foreground">
         {log}
       </Text>
     </View>

@@ -61,7 +61,7 @@ export function BarChartNegative() {
               interval={1}
               tickFormatter={(value: string) => value.slice(0, 3)}
             />
-            <ReferenceLine y={0} stroke="separator-strong" />
+            <ReferenceLine y={0} stroke="input" />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideIndicator />}
@@ -70,7 +70,7 @@ export function BarChartNegative() {
               {chartData.map((item) => (
                 <Cell
                   key={item.month}
-                  fill={item.flow >= 0 ? "green" : "red"}
+                  fill={item.flow >= 0 ? "green-500" : "red-500"}
                 />
               ))}
             </Bar>

@@ -79,9 +79,9 @@ public struct ChatThread: View {
         VStack(spacing: 4) {
           Text(verbatim: "RC")
             .font(.system(size: TextStyle.lg.size, weight: .semibold))
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 48, height: 48)
-            .background(Color.green, in: Circle())
+            .background(Palette.green500, in: Circle())
           HStack(spacing: 2) {
             Text(verbatim: "Riley")
               .scaledFont(.xs, weight: .semibold)
@@ -89,7 +89,7 @@ public struct ChatThread: View {
               .frame(width: 10, height: 10)
               .flipsForRightToLeftLayoutDirection(true)
           }
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
@@ -100,14 +100,14 @@ public struct ChatThread: View {
       .accessibilityLabel(Text(verbatim: "Riley"))
       .accessibilityHint(Text("Show contact"))
       .overlay(alignment: .bottom) {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
       MessageScroller(entries, spacing: 4) { entry in
         switch entry {
         case .day:
           Text("Today 9:30 AM")
             .scaledFont(.xs2)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity)
             .padding(.top, 4)
             .padding(.bottom, 10)
@@ -196,9 +196,9 @@ private struct ChatThreadLine: View {
             BubbleReactions(side: .top, align: line.fromMe ? .start : .end) {
               Ph.heart.fill
                 .frame(width: 13, height: 13)
-                .foregroundStyle(Color.onAccent)
+                .foregroundStyle(EsuissColor.primaryForeground)
                 .frame(width: 22, height: 22)
-                .background(Color.accent, in: Circle())
+                .background(EsuissColor.primary, in: Circle())
                 .padding(.horizontal, -6)
                 .padding(.vertical, -2)
             }
@@ -215,7 +215,7 @@ private struct ChatThreadLine: View {
 
 private struct ChatThreadContactStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
-    configuration.label.opacity(configuration.isPressed ? 0.6 : 1)
+    configuration.label.opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -232,7 +232,7 @@ private struct ChatThreadTyping: View {
               HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { dot in
                   Circle()
-                    .fill(Color.labelTertiary)
+                    .fill(EsuissColor.mutedForeground)
                     .frame(width: 8, height: 8)
                     .opacity(reduceMotion ? 1 : 0.55 + 0.45 * abs(sin((time - Double(dot) * 0.18) * .pi / 1.1)))
                 }

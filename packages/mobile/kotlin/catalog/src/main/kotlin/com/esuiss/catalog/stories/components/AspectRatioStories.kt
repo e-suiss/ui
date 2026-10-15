@@ -30,6 +30,7 @@ import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.components.TextVariant
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 
 val aspectRatioStories = StoryGroup(
@@ -46,7 +47,7 @@ val aspectRatioStories = StoryGroup(
 @Composable
 private fun AspectRatioPhoto(width: Dp?, ratio: Float) {
     val colors = EsuissTheme.colors
-    val photo = remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }
+    val photo = remember(colors) { BrushPainter(Brush.linearGradient(listOf(Palette.teal500, Palette.blue500, Palette.indigo500))) }
     Box(
         (if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())
             .clip(RoundedCornerShape(Radius.lg)),
@@ -62,11 +63,11 @@ private fun AspectRatioPlaceholder() {
     val colors = EsuissTheme.colors
     AspectRatio(16f / 9f) {
         Column(
-            Modifier.fillMaxSize().background(colors.surfaceSecondary, RoundedCornerShape(Radius.lg)),
+            Modifier.fillMaxSize().background(colors.muted, RoundedCornerShape(Radius.lg)),
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.mutedForeground)
             Text("16 / 9", variant = TextVariant.Muted)
         }
     }

@@ -147,10 +147,10 @@ fun SectionIndexHeader(text: String, modifier: Modifier = Modifier) {
         text,
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.surface.copy(alpha = 0.94f))
+            .background(colors.background.copy(alpha = 0.94f))
             .padding(horizontal = 16.dp, vertical = 6.dp)
             .semantics { heading() },
-        style = Typography.sm.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+        style = Typography.sm.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -236,7 +236,7 @@ fun SectionIndexBar(
                     Box(modifier = Modifier.height(RowHeight).widthIn(min = 12.dp), contentAlignment = Alignment.Center) {
                         BasicText(
                             label,
-                            style = Typography.xs3.copy(color = colors.link, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                            style = Typography.xs3.copy(color = colors.primary, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                         )
                     }
                 }
@@ -256,13 +256,13 @@ fun SectionIndexBar(
                     modifier = Modifier
                         .size(56.dp)
                         .shadow(Shadows.lg, CircleShape)
-                        .background(colors.surfaceRaised, CircleShape)
-                        .border(1.dp, colors.separator, CircleShape),
+                        .background(colors.popover, CircleShape)
+                        .border(1.dp, colors.border, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     BasicText(
                         letters.getOrElse(current) { "" },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                 }
             }

@@ -38,9 +38,7 @@ function Screen({
           styles.root,
           {
             backgroundColor:
-              variant === "secondary"
-                ? colors.surfaceSecondary
-                : colors.surface,
+              variant === "secondary" ? colors.muted : colors.background,
             paddingTop: edges.includes("top") ? insets.top : 0,
             paddingRight: edges.includes("right") ? insets.right : 0,
             paddingBottom: edges.includes("bottom") ? insets.bottom : 0,

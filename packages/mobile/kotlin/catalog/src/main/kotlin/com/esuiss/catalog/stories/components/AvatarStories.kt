@@ -26,6 +26,7 @@ import com.esuiss.ui.components.AvatarGroupCount
 import com.esuiss.ui.components.AvatarSize
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 
 val avatarStories = StoryGroup(
     section = Section.Components,
@@ -42,9 +43,9 @@ val avatarStories = StoryGroup(
 private class AvatarPerson(val name: String, val initials: String, val tones: @Composable () -> List<Color>)
 
 private val avatarPeople = listOf(
-    AvatarPerson("Ada Lovelace", "AL") { listOf(EsuissTheme.colors.pink, EsuissTheme.colors.purple) },
-    AvatarPerson("Alan Turing", "AT") { listOf(EsuissTheme.colors.teal, EsuissTheme.colors.blue) },
-    AvatarPerson("Grace Hopper", "GH") { listOf(EsuissTheme.colors.orange, EsuissTheme.colors.red) },
+    AvatarPerson("Ada Lovelace", "AL") { listOf(Palette.pink500, Palette.purple500) },
+    AvatarPerson("Alan Turing", "AT") { listOf(Palette.teal500, Palette.blue500) },
+    AvatarPerson("Grace Hopper", "GH") { listOf(Palette.orange500, Palette.red500) },
 )
 
 @Composable

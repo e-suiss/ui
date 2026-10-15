@@ -5,7 +5,7 @@ import { Text as RNText, type Role } from "react-native"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
 
-const textVariants = cva("text-base text-label", {
+const textVariants = cva("text-base text-foreground", {
   variants: {
     variant: {
       default: "",
@@ -14,12 +14,12 @@ const textVariants = cva("text-base text-label", {
       h3: "text-xl font-semibold",
       h4: "text-lg font-semibold",
       p: "mt-3",
-      blockquote: "mt-4 border-s-2 border-separator ps-3 italic",
-      code: "rounded-sm bg-surface-secondary px-1 py-0.5 font-mono text-sm font-semibold",
-      lead: "text-lg text-label-secondary",
+      blockquote: "mt-4 border-s-2 border-border ps-3 italic",
+      code: "rounded-sm bg-muted px-1 py-0.5 font-mono text-sm font-semibold",
+      lead: "text-lg text-muted-foreground",
       large: "text-lg font-semibold",
       small: "text-sm font-medium",
-      muted: "text-sm text-label-secondary",
+      muted: "text-sm text-muted-foreground",
     },
   },
   defaultVariants: {

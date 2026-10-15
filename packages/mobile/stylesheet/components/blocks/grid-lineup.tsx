@@ -7,16 +7,24 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=600&q=80&auto=format&fit=crop`
 
-type Finish = { label: string; swatch: keyof ThemeColors }
+type Finish = { label: string; swatch: Tone }
 
 type Model = {
   name: string
@@ -37,9 +45,9 @@ const MODELS: Model[] = [
     image: photo("1714972384975-fbd4f19b1bb3"),
     alt: "An orange phone on a warm gradient",
     finishes: [
-      { label: "Cosmic Orange", swatch: "orange" },
-      { label: "Deep Blue", swatch: "indigo" },
-      { label: "Silver", swatch: "gray" },
+      { label: "Cosmic Orange", swatch: "orange500" },
+      { label: "Deep Blue", swatch: "indigo500" },
+      { label: "Silver", swatch: "zinc500" },
     ],
   },
   {
@@ -50,9 +58,9 @@ const MODELS: Model[] = [
     image: photo("1664883410931-2edffc8be5e6"),
     alt: "A silver phone on a light grey background",
     finishes: [
-      { label: "Sky Blue", swatch: "cyan" },
-      { label: "Light Gold", swatch: "yellow" },
-      { label: "Space Black", swatch: "media" },
+      { label: "Sky Blue", swatch: "cyan500" },
+      { label: "Light Gold", swatch: "yellow500" },
+      { label: "Space Black", swatch: "black" },
     ],
   },
   {
@@ -62,10 +70,10 @@ const MODELS: Model[] = [
     image: photo("1714578187196-29775454aa39"),
     alt: "A phone floating among blue spheres",
     finishes: [
-      { label: "Lavender", swatch: "purple" },
-      { label: "Sage", swatch: "mint" },
-      { label: "Mist Blue", swatch: "teal" },
-      { label: "Black", swatch: "media" },
+      { label: "Lavender", swatch: "purple500" },
+      { label: "Sage", swatch: "teal400" },
+      { label: "Mist Blue", swatch: "teal500" },
+      { label: "Black", swatch: "black" },
     ],
   },
   {
@@ -75,8 +83,8 @@ const MODELS: Model[] = [
     image: photo("1703676311066-34caf2cbee33"),
     alt: "A phone on a pink and purple backdrop",
     finishes: [
-      { label: "Black", swatch: "media" },
-      { label: "White", swatch: "onMedia" },
+      { label: "Black", swatch: "black" },
+      { label: "White", swatch: "white" },
     ],
   },
 ]
@@ -150,7 +158,7 @@ function LineupModel({
         resizeMode="cover"
         accessibilityIgnoresInvertColors
         accessibilityLabel={model.alt}
-        style={[styles.image, { backgroundColor: colors.control }]}
+        style={[styles.image, { backgroundColor: colors.secondary }]}
       />
       <ToggleGroup
         value={[finish]}
@@ -172,7 +180,7 @@ function LineupModel({
               {
                 backgroundColor: "transparent",
                 borderColor: state.pressed
-                  ? colors.labelSecondary
+                  ? colors.mutedForeground
                   : "transparent",
               },
             ]}
@@ -181,22 +189,22 @@ function LineupModel({
               style={[
                 styles.swatch,
                 {
-                  backgroundColor: colors[item.swatch],
-                  borderColor: colors.separator,
+                  backgroundColor: tone(colors, item.swatch),
+                  borderColor: colors.border,
                 },
               ]}
             />
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <Text style={[styles.kicker, { color: colors.orange }]}>
+      <Text style={[styles.kicker, { color: palette.orange500 }]}>
         {model.kicker ?? ""}
       </Text>
       <Text role="heading" style={styles.name}>
         {model.name}
       </Text>
       <Text style={styles.tagline}>{model.tagline}</Text>
-      <Text style={[styles.price, { color: colors.labelSecondary }]}>
+      <Text style={[styles.price, { color: colors.mutedForeground }]}>
         From {model.price}
       </Text>
       <View style={styles.actions}>
@@ -214,7 +222,7 @@ function LineupModel({
           onPress={() => onLearnMore?.(model.name)}
           style={({ pressed }) => pressed && { opacity: 0.6 }}
         >
-          <Text style={[styles.link, { color: colors.link }]}>
+          <Text style={[styles.link, { color: colors.primary }]}>
             Learn more ›
           </Text>
         </Pressable>

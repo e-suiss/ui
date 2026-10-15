@@ -16,7 +16,7 @@ import { Chip, ChipGroup } from "@/components/ui/chip"
 import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=500&q=80&auto=format&fit=crop`
@@ -145,7 +145,6 @@ function BagButton({
   inBag: boolean
   onPress: () => void
 }) {
-  const { colors } = useTheme()
   const width = useSharedValue(inBag ? 84 : 30)
 
   React.useEffect(() => {
@@ -168,7 +167,7 @@ function BagButton({
           inBag ? `Remove ${name} from bag` : `Add ${name} to bag`
         }
         onPress={onPress}
-        style={[styles.button, inBag && { backgroundColor: colors.success }]}
+        style={[styles.button, inBag && { backgroundColor: palette.green500 }]}
       >
         <Icon as={inBag ? CheckIcon : PlusIcon} weight="bold" size={15} />
         {inBag ? (
@@ -200,7 +199,7 @@ function AccessoryCard({
         source={{ uri: item.image }}
         resizeMode="cover"
         accessibilityIgnoresInvertColors
-        style={[styles.image, { backgroundColor: colors.surfaceSecondary }]}
+        style={[styles.image, { backgroundColor: colors.muted }]}
       />
       <Text numberOfLines={2} style={styles.name}>
         {item.name}
@@ -250,7 +249,7 @@ function GridAccessories({
             <Text role="heading" style={styles.title}>
               Accessories
             </Text>
-            <Text style={[styles.subtitle, { color: colors.labelSecondary }]}>
+            <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
               Designed for every suiss device.
             </Text>
           </View>
@@ -267,9 +266,9 @@ function GridAccessories({
                 entering={ZoomIn.duration(300).reduceMotion(
                   ReduceMotion.System
                 )}
-                style={[styles.badge, { backgroundColor: colors.label }]}
+                style={[styles.badge, { backgroundColor: colors.foreground }]}
               >
-                <Text style={[styles.badgeText, { color: colors.surface }]}>
+                <Text style={[styles.badgeText, { color: colors.background }]}>
                   {bag.length}
                 </Text>
               </AnimatedView>

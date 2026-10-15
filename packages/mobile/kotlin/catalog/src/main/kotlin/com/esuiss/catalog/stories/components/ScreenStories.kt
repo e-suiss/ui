@@ -73,7 +73,7 @@ private fun ScreenDefault() {
                 "The screen pads every safe-area edge and sets the status bar style from the color scheme.",
                 variant = TextVariant.Muted,
             )
-            ScreenRows(screenRowLabels(4), EsuissTheme.colors.surfaceSecondary)
+            ScreenRows(screenRowLabels(4), EsuissTheme.colors.muted)
         }
     }
 }
@@ -83,7 +83,7 @@ private fun ScreenSecondary() {
     Screen(variant = ScreenVariant.Secondary) {
         ScreenContent {
             Text("Settings", variant = TextVariant.H2)
-            ScreenRows(listOf("General", "Privacy", "Notifications"), EsuissTheme.colors.surface)
+            ScreenRows(listOf("General", "Privacy", "Notifications"), EsuissTheme.colors.background)
         }
     }
 }
@@ -93,7 +93,7 @@ private fun ScreenScrollable() {
     Screen {
         ScreenContent(Modifier.fillMaxSize(), scrollable = true) {
             Text("Long content", variant = TextVariant.H2)
-            ScreenRows(screenRowLabels(24), EsuissTheme.colors.surfaceSecondary)
+            ScreenRows(screenRowLabels(24), EsuissTheme.colors.muted)
         }
     }
 }
@@ -101,7 +101,7 @@ private fun ScreenScrollable() {
 @Composable
 private fun ScreenTopEdgeOnly() {
     Screen(edges = setOf(ScreenEdge.Top)) {
-        ScreenContent(Modifier.background(EsuissTheme.colors.surfaceSecondary)) {
+        ScreenContent(Modifier.background(EsuissTheme.colors.muted)) {
             Text("Top edge only", variant = TextVariant.H3)
             Text("The bottom, left and right edges are not padded.", variant = TextVariant.Muted)
         }

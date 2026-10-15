@@ -14,11 +14,19 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1000&q=80&auto=format&fit=crop`
@@ -27,7 +35,7 @@ type Model = { name: string; price: number }
 
 type Finish = {
   name: string
-  swatch: keyof ThemeColors
+  swatch: Tone
   image: string
   alt: string
 }
@@ -42,19 +50,19 @@ const MODELS: [Model, ...Model[]] = [
 const FINISHES: [Finish, ...Finish[]] = [
   {
     name: "Cosmic Orange",
-    swatch: "orange",
+    swatch: "orange500",
     image: photo("1714972384975-fbd4f19b1bb3"),
     alt: "An orange phone on a warm gradient",
   },
   {
     name: "Deep Blue",
-    swatch: "indigo",
+    swatch: "indigo500",
     image: photo("1714578187196-29775454aa39"),
     alt: "A phone floating among blue spheres",
   },
   {
     name: "Silver",
-    swatch: "gray",
+    swatch: "zinc500",
     image: photo("1664883410931-2edffc8be5e6"),
     alt: "A silver phone on a light grey background",
   },
@@ -203,16 +211,14 @@ function BagConfigure({
   const choice = (checked: boolean, pressed: boolean) => [
     styles.choice,
     checked ? styles.checked : styles.idle,
-    { borderColor: checked ? colors.accent : colors.separatorStrong },
-    pressed && { backgroundColor: colors.itemPressed },
+    { borderColor: checked ? colors.primary : colors.input },
+    pressed && { opacity: 0.8 },
   ]
 
   return (
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <View
-          style={[styles.hero, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.hero, { backgroundColor: colors.muted }]}>
           {FINISHES.map((item) => (
             <FinishImage
               key={item.name}
@@ -221,13 +227,13 @@ function BagConfigure({
             />
           ))}
         </View>
-        <Text style={[styles.kicker, { color: colors.orange }]}>New</Text>
+        <Text style={[styles.kicker, { color: palette.orange500 }]}>New</Text>
         <Text role="heading" style={styles.title}>
           Buy Phone Pro
         </Text>
         <Text style={styles.label}>
           Model.{" "}
-          <Text style={[styles.label, { color: colors.labelSecondary }]}>
+          <Text style={[styles.label, { color: colors.mutedForeground }]}>
             Which one is right for you?
           </Text>
         </Text>
@@ -254,7 +260,7 @@ function BagConfigure({
                 ]}
               >
                 <Text style={styles.modelName}>{item.name}</Text>
-                <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
                   From {money(item.price, 0)}
                 </Text>
               </Pressable>
@@ -263,7 +269,7 @@ function BagConfigure({
         </View>
         <Text style={styles.label}>
           Finish.{" "}
-          <Text style={[styles.label, { color: colors.labelSecondary }]}>
+          <Text style={[styles.label, { color: colors.mutedForeground }]}>
             {finish}
           </Text>
         </Text>
@@ -283,7 +289,7 @@ function BagConfigure({
               style={(state) => [
                 styles.swatchItem,
                 {
-                  borderColor: state.pressed ? colors.accent : "transparent",
+                  borderColor: state.pressed ? colors.primary : "transparent",
                 },
               ]}
             >
@@ -291,8 +297,8 @@ function BagConfigure({
                 style={[
                   styles.swatch,
                   {
-                    backgroundColor: colors[item.swatch],
-                    borderColor: withAlpha(colors.label, 0.15),
+                    backgroundColor: tone(colors, item.swatch),
+                    borderColor: withAlpha(colors.foreground, 0.15),
                   },
                 ]}
               />
@@ -327,7 +333,7 @@ function BagConfigure({
                 </Text>
                 <Text
                   numberOfLines={1}
-                  style={[fontSize["2xs"], { color: colors.labelSecondary }]}
+                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
                 >
                   {item.extra ? `+${money(item.extra, 0)}` : "Included"}
                 </Text>
@@ -340,7 +346,7 @@ function BagConfigure({
         <BottomBarContent style={styles.bar}>
           <View accessibilityLiveRegion="polite" style={styles.grow}>
             <Text style={styles.price}>{money(price)}</Text>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               or {money(price / 12)}/mo. for 12 mo.
             </Text>
           </View>

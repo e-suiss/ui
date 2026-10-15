@@ -45,7 +45,7 @@ public struct Header<Title: View, Leading: View, Trailing: View>: View {
     .frame(maxWidth: .infinity)
     .background(background.ignoresSafeArea(.container, edges: .top))
     .overlay(alignment: .bottom) {
-      Color.separator
+      EsuissColor.border
         .frame(height: 1)
         .opacity(progress ?? 0)
     }
@@ -133,11 +133,11 @@ public struct HeaderTitle: View {
     VStack(spacing: 0) {
       title
         .scaledFont(.base, weight: .semibold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       if let subtitle {
         subtitle
           .scaledFont(.xs2)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
     }
     .lineLimit(1)
@@ -168,12 +168,12 @@ public struct HeaderLargeTitle: View {
     VStack(alignment: .leading, spacing: 2) {
       title
         .scaledFont(.xl3, weight: .bold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .accessibilityAddTraits(.isHeader)
       if let subtitle {
         subtitle
           .scaledFont(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
     }
     .lineLimit(2)
@@ -227,7 +227,8 @@ public struct HeaderBack: View {
             .lineLimit(1)
         }
       }
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : pressed ? .link.opacity(0.4) : .link)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .padding(.horizontal, 4)
       .frame(minWidth: 44, minHeight: 44, alignment: .leading)
       .contentShape(Rectangle())

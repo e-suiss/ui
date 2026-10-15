@@ -89,10 +89,8 @@ function InputAccessoryBarView({
       style={[
         styles.bar,
         {
-          borderColor: colors.separator,
-          backgroundColor: isDark
-            ? colors.surfaceSecondary
-            : colors.surfaceRaised,
+          borderColor: colors.border,
+          backgroundColor: isDark ? colors.muted : colors.card,
         },
         style,
       ]}

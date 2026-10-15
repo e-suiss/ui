@@ -63,20 +63,20 @@ public struct VerifyEmail: View {
       ZStack(alignment: .topTrailing) {
         Ph.envelopeSimple.regular
           .frame(width: 40, height: 40)
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 96, height: 72)
           .background(
-            Color.accent,
+            EsuissColor.primary,
             in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
           )
-          .shadow(Shadow(color: Color.accent.opacity(0.45), radius: 15, y: 10))
+          .shadow(Shadow(color: EsuissColor.primary.opacity(0.45), radius: 15, y: 10))
         Text(verbatim: "1")
           .scaledFont(.sm, weight: .semibold)
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 26, height: 26)
-          .background(Color.red, in: Circle())
+          .background(Palette.red500, in: Circle())
           .padding(3)
-          .background(Color.surface, in: Circle())
+          .background(EsuissColor.background, in: Circle())
           .offset(x: 11, y: -11)
       }
       .accessibilityElement(children: .ignore)
@@ -84,14 +84,14 @@ public struct VerifyEmail: View {
       Text("Check your inbox.")
         .scaledTextStyle(.xl2, weight: .bold)
         .padding(.top, 26)
-      Text("We sent a verification link to \(Text(verbatim: Self.email).fontWeight(.semibold).foregroundStyle(Color.label)). Tap the link to activate your account.")
+      Text("We sent a verification link to \(Text(verbatim: Self.email).fontWeight(.semibold).foregroundStyle(EsuissColor.foreground)). Tap the link to activate your account.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.top, 12)
       VStack(spacing: 0) {
         Text("Didn't get it? Check your junk folder or")
           .scaledFont(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         Button("change the address ›") { onChangeAddress?() }
           .buttonStyle(VerifyEmailLinkStyle())
       }
@@ -109,15 +109,15 @@ public struct VerifyEmail: View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Your email is verified.")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("\(Self.email) is now your suiss Account.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") { verified = false }
         .buttonStyle(VerifyEmailLinkStyle(style: .lg))
     }
@@ -134,8 +134,8 @@ private struct VerifyEmailLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

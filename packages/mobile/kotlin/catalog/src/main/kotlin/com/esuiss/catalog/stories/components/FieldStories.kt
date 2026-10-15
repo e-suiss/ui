@@ -259,9 +259,9 @@ private fun FieldInsetInput(value: String, onValueChange: (String) -> Unit, labe
         modifier = modifier
             .height(32.dp)
             .semantics { contentDescription = label },
-        textStyle = Typography.base.copy(color = colors.label, textAlign = TextAlign.End),
+        textStyle = Typography.base.copy(color = colors.foreground, textAlign = TextAlign.End),
         singleLine = true,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         decorationBox = { inner ->
             Row(verticalAlignment = Alignment.CenterVertically) { inner() }
         },

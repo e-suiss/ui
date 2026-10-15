@@ -45,13 +45,13 @@ function Alert({
   const content = nodes.filter((node) => !actions.includes(node))
   return (
     <TextStyleContext.Provider
-      value={{ ...fontSize.base, color: colors.label }}
+      value={{ ...fontSize.base, color: colors.foreground }}
     >
       <View
         role="alert"
         style={[
           styles.root,
-          { backgroundColor: colors.surfaceSecondary },
+          { backgroundColor: colors.muted },
           actions.length > 0 && styles.withAction,
           style,
         ]}
@@ -61,7 +61,9 @@ function Alert({
           <Icon
             as={icon}
             size={20}
-            color={variant === "destructive" ? colors.danger : colors.accent}
+            color={
+              variant === "destructive" ? colors.destructive : colors.primary
+            }
             style={[styles.icon, iconStyle]}
           />
         ) : null}
@@ -81,7 +83,7 @@ function AlertDescription({
   ...props
 }: React.ComponentProps<typeof Text>) {
   const { colors } = useTheme()
-  return <Text style={[{ color: colors.labelSecondary }, style]} {...props} />
+  return <Text style={[{ color: colors.mutedForeground }, style]} {...props} />
 }
 
 function AlertAction({

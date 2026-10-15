@@ -127,7 +127,7 @@ private struct InputGroupBlockStartDemo: View {
       InputGroupAddon(align: .blockStart) {
         Text("Full name")
           .textStyle(.sm, weight: .medium)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
     }
   }

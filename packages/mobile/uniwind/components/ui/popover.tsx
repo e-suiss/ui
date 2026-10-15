@@ -81,14 +81,14 @@ function PopoverContent({
           sideOffset={sideOffset}
           className="z-50"
         >
-          <TextClassContext.Provider value="text-base text-label">
+          <TextClassContext.Provider value="text-base text-foreground">
             <PopoverPrimitive.Popup
               render={
                 <AnimatedView entering={ENTERING[side]} exiting={EXITING} />
               }
               className={(state) =>
                 cn(
-                  "z-50 w-72 flex-col gap-4 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-lg dark:border-label/10",
+                  "z-50 w-72 flex-col gap-4 rounded-2xl border border-foreground/5 bg-popover p-4 shadow-lg dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -103,7 +103,7 @@ function PopoverContent({
 
 function PopoverHeader({ className, ...props }: ViewProps) {
   return (
-    <TextClassContext.Provider value="text-sm text-label">
+    <TextClassContext.Provider value="text-sm text-foreground">
       <View className={cn("flex-col gap-1", className)} {...props} />
     </TextClassContext.Provider>
   )
@@ -117,7 +117,7 @@ function PopoverTitle({
     <PopoverPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-label",
+          "text-base font-semibold text-foreground",
           resolveClassName(className, state)
         )
       }
@@ -133,7 +133,7 @@ function PopoverDescription({
   return (
     <PopoverPrimitive.Description
       className={(state) =>
-        cn("text-sm text-label-secondary", resolveClassName(className, state))
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
       }
       {...props}
     />

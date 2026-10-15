@@ -110,7 +110,7 @@ public struct SignupForm: View {
             .scaledTextStyle(.xl2, weight: .bold)
           Text("One suiss Account is all you need to access every suiss service.")
             .scaledTextStyle(.lg)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Button("Learn more ›") { onLearnMore?() }
             .buttonStyle(SignupFormLinkStyle())
         }
@@ -136,7 +136,7 @@ public struct SignupForm: View {
           input(Text(verbatim: "name@example.com"), text: $form.email, field: .email, content: .emailAddress, keyboard: .emailAddress)
           Text("This will be your new suiss Account.")
             .scaledTextStyle(.xs2)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         section("Password") {
           input(Text("Password"), text: $form.password, field: .password, content: .newPassword, secure: true)
@@ -152,7 +152,7 @@ public struct SignupForm: View {
         .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.4), value: form.password.isEmpty)
         Text(tried && !valid ? "Please fill in every field correctly." : "")
           .scaledTextStyle(.xs)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
           .frame(maxWidth: .infinity, minHeight: 20)
           .accessibilityHidden(!(tried && !valid))
       }
@@ -222,17 +222,17 @@ private struct SignupFormRules: View {
         HStack(spacing: 8) {
           ZStack {
             Circle()
-              .strokeBorder(met ? Color.clear : .labelQuaternary, lineWidth: 1.5)
-              .background(met ? Color.success : .clear, in: Circle())
+              .strokeBorder(met ? Color.clear : EsuissColor.border, lineWidth: 1.5)
+              .background(met ? Palette.green500 : .clear, in: Circle())
             Ph.check.bold
               .frame(width: 10, height: 10)
-              .foregroundStyle(Color.onAccent)
+              .foregroundStyle(EsuissColor.primaryForeground)
               .scaleEffect(met ? 1 : 0)
           }
           .frame(width: 16, height: 16)
           Text(rule.0)
             .scaledFont(.sm)
-            .foregroundStyle(met ? Color.label : .labelSecondary)
+            .foregroundStyle(met ? EsuissColor.foreground : EsuissColor.mutedForeground)
         }
         .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.6), value: met)
         .accessibilityElement(children: .combine)
@@ -250,15 +250,15 @@ private struct SignupFormDone: View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Your suiss Account is ready.")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("We sent a verification code to \(email).")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›", action: onReset)
         .buttonStyle(SignupFormLinkStyle(style: .lg))
     }
@@ -275,8 +275,8 @@ private struct SignupFormLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

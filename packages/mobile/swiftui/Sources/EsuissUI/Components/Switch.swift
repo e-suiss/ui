@@ -98,24 +98,24 @@ private struct SwitchTrack: View {
       Capsule().fill(fill)
       Capsule().strokeBorder(border, lineWidth: 2)
       Capsule()
-        .fill(colorScheme == .dark ? Color.label : .surface)
+        .fill(colorScheme == .dark ? EsuissColor.foreground : EsuissColor.background)
         .frame(width: size.thumbWidth(pressed: squeezed), height: size.thumbHeight)
         .shadow(.thumb)
         .offset(x: 2 + (isOn ? size.travel(pressed: squeezed) : 0))
     }
     .frame(width: size.track.width, height: size.track.height)
+    .opacity(isEnabled ? 1 : 0.5)
     .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.2), value: isOn)
     .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.2), value: squeezed)
   }
 
   private var fill: Color {
-    if isOn { return isEnabled ? .accent : .accentDisabled }
-    return isEnabled ? .labelQuaternary : .controlDisabled
+    isOn ? EsuissColor.primary : EsuissColor.input
   }
 
   private var border: Color {
-    if invalid && isEnabled { return .danger }
-    return isOn && isEnabled ? .accent : .clear
+    if invalid && isEnabled { return EsuissColor.destructive }
+    return isOn ? EsuissColor.primary : .clear
   }
 }
 

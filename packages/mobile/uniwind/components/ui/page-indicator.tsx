@@ -112,9 +112,9 @@ function PageIndicatorDot({
       <AnimatedView
         className={cn(
           "rounded-full",
-          active && variant === "accent" && "bg-accent",
-          active && variant !== "accent" && "bg-label",
-          !active && "bg-label-quaternary"
+          active && variant === "accent" && "bg-primary",
+          active && variant !== "accent" && "bg-foreground",
+          !active && "bg-border"
         )}
         style={[{ height: metrics.dot }, animatedStyle]}
       />

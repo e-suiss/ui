@@ -182,9 +182,9 @@ fun SelectionListItem(
     val indicatorAlpha by animateFloatAsState(if (editing) 1f else 0f, tween(slow, easing = FormEasing), label = "alpha")
     val indicatorScale by animateFloatAsState(if (editing) 1f else 0.5f, tween(medium, easing = FormEasing), label = "scale")
     val checkScale by animateFloatAsState(if (checked) 1f else 0f, tween(fast), label = "check")
-    val background by animateColorAsState(if (checked) colors.itemSelected else Color.Transparent, tween(fast), label = "background")
-    val fill by animateColorAsState(if (checked) colors.accent else Color.Transparent, tween(medium, easing = FormEasing), label = "fill")
-    val stroke by animateColorAsState(if (checked) colors.accent else colors.labelTertiary, tween(medium, easing = FormEasing), label = "stroke")
+    val background by animateColorAsState(if (checked) colors.accent else Color.Transparent, tween(fast), label = "background")
+    val fill by animateColorAsState(if (checked) colors.primary else Color.Transparent, tween(medium, easing = FormEasing), label = "fill")
+    val stroke by animateColorAsState(if (checked) colors.primary else colors.mutedForeground, tween(medium, easing = FormEasing), label = "stroke")
     Box(modifier = modifier.fillMaxWidth().background(background)) {
         Row(
             modifier = Modifier.fillMaxWidth().then(if (editing) Modifier.clearAndSetSemantics {} else Modifier),
@@ -211,7 +211,7 @@ fun SelectionListItem(
                         contentDescription = null,
                         modifier = Modifier.scale(checkScale),
                         size = 14.dp,
-                        tint = colors.onAccent,
+                        tint = colors.primaryForeground,
                     )
                 }
             }
@@ -267,7 +267,7 @@ fun RowScope.SelectionListCount(
         text ?: if (count == 0) "Select items" else "$count selected",
         modifier = modifier.weight(1f),
         style = Typography.sm.copy(
-            color = EsuissTheme.colors.label,
+            color = EsuissTheme.colors.foreground,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center,
             fontFeatureSettings = "tnum",

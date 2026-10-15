@@ -131,7 +131,7 @@ public struct SettingsNotifications: View {
           lockScreen
             .frame(maxWidth: .infinity)
             .padding(.vertical, 20)
-            .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
+            .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
@@ -149,9 +149,9 @@ public struct SettingsNotifications: View {
     HStack(spacing: 12) {
       Ph.chatCircle.fill
         .frame(width: 24, height: 24)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 40, height: 40)
-        .background(Color.green, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+        .background(Palette.green500, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
         .accessibilityHidden(true)
       VStack(alignment: .leading, spacing: 0) {
         Text("Messages")
@@ -159,7 +159,7 @@ public struct SettingsNotifications: View {
           .accessibilityAddTraits(.isHeader)
         Text("Notifications")
           .scaledFont(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
     }
   }
@@ -204,7 +204,7 @@ public struct SettingsNotifications: View {
   }
 
   private var lockScreen: some View {
-    Color.media
+    Palette.black
       .overlay {
         AsyncImage(url: Self.wallpaper) { phase in
           if let image = phase.image {
@@ -213,12 +213,12 @@ public struct SettingsNotifications: View {
         }
       }
       .overlay {
-        LinearGradient(colors: [Color.media.opacity(0.15), Color.media.opacity(0.35)], startPoint: .top, endPoint: .bottom)
+        LinearGradient(colors: [Palette.black.opacity(0.15), Palette.black.opacity(0.35)], startPoint: .top, endPoint: .bottom)
       }
       .overlay(alignment: .top) {
         ZStack(alignment: .top) {
           Capsule()
-            .fill(Color.media)
+            .fill(Palette.black)
             .frame(width: 74, height: 22)
             .padding(.top, 8)
           VStack(spacing: 0) {
@@ -250,11 +250,11 @@ public struct SettingsNotifications: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
       }
-      .foregroundStyle(Color.onMedia)
+      .foregroundStyle(Palette.white)
       .frame(width: 214, height: 454)
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
       .padding(8)
-      .background(Color.media, in: RoundedRectangle(cornerRadius: Radius.xl3 + 8, style: .continuous))
+      .background(Palette.black, in: RoundedRectangle(cornerRadius: Radius.xl3 + 8, style: .continuous))
       .accessibilityElement(children: .ignore)
       .accessibilityLabel(Text("Lock screen preview. \(Text(footnote))."))
   }
@@ -276,16 +276,16 @@ private struct SettingsNotificationsAlert: View {
         SettingsNotificationsMini(alert: alert)
         Text(alert.label)
           .scaledFont(.sm)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .lineLimit(1)
           .minimumScaleFactor(0.8)
         ZStack {
           Circle()
-            .strokeBorder(on ? Color.clear : .separatorStrong, lineWidth: 1.5)
-            .background(on ? Color.accent : .clear, in: Circle())
+            .strokeBorder(on ? Color.clear : EsuissColor.input, lineWidth: 1.5)
+            .background(on ? EsuissColor.primary : .clear, in: Circle())
           Ph.check.bold
             .frame(width: 12, height: 12)
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
             .scaleEffect(on ? 1 : 0)
         }
         .frame(width: 22, height: 22)
@@ -309,26 +309,26 @@ private struct SettingsNotificationsMini: View {
   var body: some View {
     let shape = RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
     ZStack(alignment: .top) {
-      Color.indigo
+      Palette.indigo500
       if alert == .lock {
         Text(verbatim: "9:41")
           .scaledFont(.sm, weight: .semibold)
-          .foregroundStyle(Color.onMedia)
+          .foregroundStyle(Palette.white)
           .padding(.top, 14)
       }
       ForEach(Array(alert.bars.enumerated()), id: \.offset) { index, top in
         RoundedRectangle(cornerRadius: Radius.xs, style: .continuous)
-          .fill(Color.onMedia)
+          .fill(Palette.white)
           .frame(height: 13)
           .opacity(1 - Double(index) * 0.15)
-          .shadow(Shadow(color: Color.media.opacity(0.15), radius: 1.5, y: 1))
+          .shadow(Shadow(color: Palette.black.opacity(0.15), radius: 1.5, y: 1))
           .padding(.horizontal, 8)
           .padding(.top, top)
       }
     }
     .frame(width: 64, height: 92)
     .clipShape(shape)
-    .overlay { shape.strokeBorder(Color.label, lineWidth: 2) }
+    .overlay { shape.strokeBorder(EsuissColor.foreground, lineWidth: 2) }
     .accessibilityHidden(true)
   }
 }
@@ -341,7 +341,7 @@ private struct SettingsNotificationsCard: View {
     ZStack(alignment: .bottom) {
       if stacked {
         RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-          .fill(Color.onMedia.opacity(0.55))
+          .fill(Palette.white.opacity(0.55))
           .frame(height: 20)
           .padding(.horizontal, 10)
           .offset(y: 6)
@@ -349,9 +349,9 @@ private struct SettingsNotificationsCard: View {
       HStack(alignment: .top, spacing: 10) {
         Ph.chatCircle.fill
           .frame(width: 18, height: 18)
-          .foregroundStyle(Color.onMedia)
+          .foregroundStyle(Palette.white)
           .frame(width: 30, height: 30)
-          .background(Color.green, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+          .background(Palette.green500, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
         VStack(alignment: .leading, spacing: 1) {
           HStack {
             Text(verbatim: "Riley Morgan")
@@ -359,17 +359,17 @@ private struct SettingsNotificationsCard: View {
               .frame(maxWidth: .infinity, alignment: .leading)
             Text("now")
               .scaledFont(.xs3)
-              .foregroundStyle(Color.media.opacity(0.55))
+              .foregroundStyle(Palette.black.opacity(0.55))
           }
           Text(message)
             .scaledFont(.xs2)
             .fixedSize(horizontal: false, vertical: true)
         }
       }
-      .foregroundStyle(Color.media.opacity(0.88))
+      .foregroundStyle(Palette.black.opacity(0.88))
       .padding(.horizontal, 12)
       .padding(.vertical, 10)
-      .background(Color.onMedia.opacity(0.82), in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(Palette.white.opacity(0.82), in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     }
   }
 }

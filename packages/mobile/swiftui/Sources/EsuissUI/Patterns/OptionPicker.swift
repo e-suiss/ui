@@ -59,11 +59,11 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
         (valueText ?? Text(placeholder))
           .scaledFont(.base)
           .lineLimit(1)
-          .foregroundStyle(!isEnabled ? Color.labelQuaternary : valueText == nil ? .labelSecondary : .label)
+          .foregroundStyle(valueText == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
         Ph.caretUpDown.regular
           .frame(width: 16, height: 16)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityHidden(true)
       }
       .padding(.horizontal, 12)
@@ -71,12 +71,13 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
       .background(background, in: shape)
       .overlay {
         if invalid {
-          shape.strokeBorder(Color.danger)
+          shape.strokeBorder(EsuissColor.destructive)
         }
       }
       .contentShape(shape)
+      .opacity(isEnabled ? 1 : 0.5)
     }
-    .tint(Color.label)
+    .tint(EsuissColor.foreground)
     .accessibilityLabel(valueText ?? Text(placeholder))
     .accessibilityHint(Text("Shows options"))
     .background {
@@ -94,9 +95,8 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 }
 

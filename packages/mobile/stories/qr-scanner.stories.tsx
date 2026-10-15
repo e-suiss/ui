@@ -63,9 +63,9 @@ function QRCode({ color }: PhosphorIconProps) {
 
 function CameraPlaceholder() {
   return (
-    <View className="flex-1 items-center justify-center bg-media">
-      <View className="mb-12 -rotate-6 rounded-xl bg-on-media p-2.5">
-        <Icon as={QRCode} className="text-media" />
+    <View className="flex-1 items-center justify-center bg-black">
+      <View className="mb-12 -rotate-6 rounded-xl bg-white p-2.5">
+        <Icon as={QRCode} className="text-black" />
       </View>
     </View>
   )

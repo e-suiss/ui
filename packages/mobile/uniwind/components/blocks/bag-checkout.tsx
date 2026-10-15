@@ -97,10 +97,10 @@ function Choice<Value extends string>({
       accessible={false}
       onPress={() => onSelect(value)}
       className={cn(
-        "flex-row items-center gap-3 rounded-[0.875rem] active:bg-item-pressed",
+        "flex-row items-center gap-3 rounded-[0.875rem] active:opacity-80",
         checked
-          ? "border-2 border-accent px-3.75 py-3.25"
-          : "border border-separator-strong px-4 py-3.5"
+          ? "border-2 border-primary px-3.75 py-3.25"
+          : "border border-input px-4 py-3.5"
       )}
     >
       <RadioGroupItem
@@ -132,27 +132,27 @@ function Step({
   const done = current > index
 
   return (
-    <View className="border-b border-separator py-4.5">
+    <View className="border-b border-border py-4.5">
       <View className="flex-row items-center gap-2.5">
         <View
           className={cn(
             "size-6.5 items-center justify-center rounded-full",
-            done && "bg-success",
-            !done && open && "bg-label",
-            !(done || open) && "bg-control"
+            done && "bg-green-500",
+            !done && open && "bg-foreground",
+            !(done || open) && "bg-secondary"
           )}
         >
           {done ? (
             <Icon
               as={CheckIcon}
               weight="bold"
-              className="size-3.25 text-on-accent"
+              className="size-3.25 text-primary-foreground"
             />
           ) : (
             <Text
               className={cn(
                 "text-sm font-semibold",
-                open ? "text-surface" : "text-label-secondary"
+                open ? "text-background" : "text-muted-foreground"
               )}
             >
               {index + 1}
@@ -163,7 +163,7 @@ function Step({
           role="heading"
           className={cn(
             "flex-1 text-2xl font-semibold",
-            !open && !done && "text-label-secondary"
+            !open && !done && "text-muted-foreground"
           )}
         >
           {title}
@@ -176,12 +176,12 @@ function Step({
             accessibilityLabel={`Edit ${title.toLowerCase()}`}
             className="active:opacity-60"
           >
-            <Text className="text-sm text-link">Edit ›</Text>
+            <Text className="text-sm text-primary">Edit ›</Text>
           </Pressable>
         ) : null}
       </View>
       {done && summary ? (
-        <Text className="ps-9 pt-1.5 text-sm text-label-secondary">
+        <Text className="ps-9 pt-1.5 text-sm text-muted-foreground">
           {summary}
         </Text>
       ) : null}
@@ -227,17 +227,17 @@ function BagCheckout({
             )}
             className="max-w-105 items-center gap-3.5"
           >
-            <View className="size-19 items-center justify-center rounded-full bg-success">
+            <View className="size-19 items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-9.5 text-on-accent"
+                className="size-9.5 text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Thank you. Your order is in.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               Your order number is W1049. We sent a confirmation email.
             </Text>
             <Pressable
@@ -250,7 +250,7 @@ function BagCheckout({
               }}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -339,12 +339,12 @@ function BagCheckout({
             title="Review"
             onEdit={() => setStep(2)}
           >
-            <Text className="text-sm text-label-secondary">
+            <Text className="text-sm text-muted-foreground">
               By placing your order, you agree to the Sales Policy.
             </Text>
           </Step>
         </View>
-        <View className="mx-4 mt-6 mb-8 gap-3.5 rounded-2xl bg-surface-secondary px-5 py-5">
+        <View className="mx-4 mt-6 mb-8 gap-3.5 rounded-2xl bg-muted px-5 py-5">
           <Text role="heading" className="text-lg font-semibold">
             Order summary
           </Text>
@@ -354,18 +354,18 @@ function BagCheckout({
                 source={{ uri: item.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                className="size-12 shrink-0 rounded-[0.625rem] bg-control"
+                className="size-12 shrink-0 rounded-[0.625rem] bg-secondary"
               />
               <View className="min-w-0 flex-1">
                 <Text className="text-sm font-semibold">{item.name}</Text>
-                <Text className="text-xs text-label-secondary">
+                <Text className="text-xs text-muted-foreground">
                   {item.variant}
                 </Text>
               </View>
               <Text className="text-sm tabular-nums">{money(item.price)}</Text>
             </View>
           ))}
-          <View className="flex-row items-center border-t border-separator pt-3">
+          <View className="flex-row items-center border-t border-border pt-3">
             <Text className="flex-1 text-base font-semibold">Total</Text>
             <Text className="text-lg font-semibold tabular-nums">
               {money(total)}
@@ -376,7 +376,7 @@ function BagCheckout({
       <BottomBar separator>
         <BottomBarContent className="flex-row items-center gap-3">
           <View accessibilityLiveRegion="polite" className="flex-1">
-            <Text className="text-xs text-label-secondary">Total</Text>
+            <Text className="text-xs text-muted-foreground">Total</Text>
             <Text className="text-lg font-semibold tabular-nums">
               {money(total)}
             </Text>

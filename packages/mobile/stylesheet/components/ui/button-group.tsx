@@ -138,13 +138,15 @@ function ButtonGroupText({
     render,
     props: [
       {
-        style: [styles.text, { backgroundColor: colors.control }, style],
+        style: [styles.text, { backgroundColor: colors.secondary }, style],
       },
       props,
     ],
   })
   return (
-    <TextStyleContext.Provider value={{ ...fontSize.sm, color: colors.label }}>
+    <TextStyleContext.Provider
+      value={{ ...fontSize.sm, color: colors.foreground }}
+    >
       <IconSizeContext.Provider value={16}>{element}</IconSizeContext.Provider>
     </TextStyleContext.Provider>
   )
@@ -161,7 +163,7 @@ function ButtonGroupSeparator({
       orientation={orientation}
       style={(state): StyleProp<ViewStyle> => [
         styles.separator,
-        { backgroundColor: colors.label, opacity: 0.2 },
+        { backgroundColor: colors.foreground, opacity: 0.2 },
         state.orientation === "horizontal"
           ? styles.separatorHorizontal
           : styles.separatorVertical,

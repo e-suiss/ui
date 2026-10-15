@@ -16,6 +16,7 @@ import com.esuiss.ui.components.ChartContainer
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.ChartTooltipIndicator
 import com.esuiss.ui.components.RadarChart
+import com.esuiss.ui.theme.Palette
 
 private class RadarGridNoneRow(val skill: String, val thisMonth: Double, val lastMonth: Double)
 
@@ -29,8 +30,8 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "thisMonth" to ChartConfigItem("This month") { green },
-    "lastMonth" to ChartConfigItem("Last month") { gray },
+    "thisMonth" to ChartConfigItem("This month") { Palette.green500 },
+    "lastMonth" to ChartConfigItem("Last month") { chart5 },
 )
 
 @Composable

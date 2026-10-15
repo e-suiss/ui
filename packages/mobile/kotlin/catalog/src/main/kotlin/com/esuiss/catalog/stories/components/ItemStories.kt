@@ -40,6 +40,7 @@ import com.esuiss.ui.components.ItemTitle
 import com.esuiss.ui.components.ItemVariant
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 val itemStories = StoryGroup(
@@ -53,7 +54,7 @@ val itemStories = StoryGroup(
 
 @Composable
 private fun ItemCaret() {
-    Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.labelSecondary)
+    Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.mutedForeground)
 }
 
 @Composable
@@ -86,7 +87,7 @@ private fun ItemDefault() {
                 ItemDescription("Items can carry a header and a footer.")
             }
             ItemFooter {
-                Text("Footer", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+                Text("Footer", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
             }
         }
     }
@@ -96,7 +97,7 @@ private fun ItemDefault() {
 private fun ItemSettingsMedia(icon: ImageVector, background: Color) {
     ItemMedia(variant = ItemMediaVariant.Image) {
         Box(Modifier.matchParentSize().background(background))
-        Icon(icon, contentDescription = null, size = 20.dp, tint = EsuissTheme.colors.onAccent)
+        Icon(icon, contentDescription = null, size = 20.dp, tint = EsuissTheme.colors.primaryForeground)
     }
 }
 
@@ -105,7 +106,7 @@ private fun ItemInsetGroup() {
     val colors = EsuissTheme.colors
     ItemGroup(variant = ItemGroupVariant.Inset) {
         Item(onClick = {}) {
-            ItemSettingsMedia(PhosphorIcons.Regular.WifiHigh, colors.blue)
+            ItemSettingsMedia(PhosphorIcons.Regular.WifiHigh, Palette.blue500)
             ItemContent {
                 ItemTitle("Wi-Fi")
             }
@@ -116,7 +117,7 @@ private fun ItemInsetGroup() {
         }
         ItemSeparator()
         Item(onClick = {}) {
-            ItemSettingsMedia(PhosphorIcons.Regular.Bell, colors.red)
+            ItemSettingsMedia(PhosphorIcons.Regular.Bell, Palette.red500)
             ItemContent {
                 ItemTitle("Notifications")
                 ItemDescription("Banners, sounds, badges")

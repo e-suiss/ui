@@ -113,11 +113,11 @@ private struct SliderTrack: View {
       let end = centers.last ?? 0
       ZStack(alignment: .leading) {
         Capsule()
-          .fill(isEnabled ? Color.labelQuaternary : .controlDisabled)
+          .fill(EsuissColor.border)
           .frame(height: 4)
           .overlay(alignment: .leading) {
             Rectangle()
-              .fill(isEnabled ? Color.accent : .accentDisabled)
+              .fill(EsuissColor.primary)
               .frame(width: max(0, end - start))
               .offset(x: start)
           }
@@ -132,6 +132,7 @@ private struct SliderTrack: View {
         }
       }
       .frame(maxHeight: .infinity)
+      .opacity(isEnabled ? 1 : 0.5)
       .contentShape(Rectangle())
       .gesture(
         DragGesture(minimumDistance: 0)
@@ -182,9 +183,9 @@ private struct SliderTrack: View {
 
   private func thumb(dragging: Bool) -> some View {
     Capsule()
-      .fill(colorScheme == .dark ? Color.label : .surface)
+      .fill(colorScheme == .dark ? EsuissColor.foreground : EsuissColor.background)
       .overlay {
-        Capsule().strokeBorder(Color.label.opacity(0.1), lineWidth: 1)
+        Capsule().strokeBorder(EsuissColor.foreground.opacity(0.1), lineWidth: 1)
       }
       .frame(width: dragging ? thumbWidth + 4 : thumbWidth, height: thumbHeight)
       .shadow(isEnabled ? .md : Shadow(color: .clear, radius: 0))

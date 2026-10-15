@@ -54,6 +54,7 @@ import com.esuiss.ui.interactions.OtpAutofill
 import com.esuiss.ui.interactions.OtpAutofillInput
 import com.esuiss.ui.interactions.OtpAutofillState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -101,21 +102,21 @@ fun VerifyCode(
                     Box(
                         Modifier
                             .size(64.dp)
-                            .background(colors.surfaceSecondary, CircleShape),
+                            .background(colors.muted, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(PhosphorIcons.Bold.LockSimple, contentDescription = null, size = 30.dp, tint = colors.accent)
+                        Icon(PhosphorIcons.Bold.LockSimple, contentDescription = null, size = 30.dp, tint = colors.primary)
                     }
                     Spacer(Modifier.height(20.dp))
                     BasicText(
                         "Two-factor authentication",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                     Spacer(Modifier.height(12.dp))
                     BasicText(
                         "Enter the 6-digit code sent to your trusted devices.",
-                        style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                     Spacer(Modifier.height(30.dp))
                     key(attempt) {
@@ -145,7 +146,7 @@ fun VerifyCode(
                                     .heightIn(min = 20.dp)
                                     .semantics { liveRegion = LiveRegionMode.Polite },
                                 style = Typography.sm.copy(
-                                    color = if (invalid) colors.danger else colors.labelSecondary,
+                                    color = if (invalid) colors.destructive else colors.mutedForeground,
                                     textAlign = TextAlign.Center,
                                 ),
                             )
@@ -159,7 +160,7 @@ fun VerifyCode(
                         if (left > 0) {
                             BasicText(
                                 "Resend code · 0:${left.toString().padStart(2, '0')}",
-                                style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                                style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                             )
                         } else {
                             LinkText("Resend code ›") {
@@ -181,10 +182,10 @@ private fun LinkText(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link, textAlign = TextAlign.Center),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary, textAlign = TextAlign.Center),
     )
 }
 
@@ -207,19 +208,19 @@ private fun Success(onStartOver: () -> Unit) {
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             "Verified.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
         )
         BasicText(
             "This device is now trusted. You won't be asked for a code next time.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         BasicText(
             "Start over ›",
@@ -229,7 +230,7 @@ private fun Success(onStartOver: () -> Unit) {
                 role = Role.Button,
                 onClick = onStartOver,
             ),
-            style = Typography.lg.copy(color = colors.link),
+            style = Typography.lg.copy(color = colors.primary),
         )
     }
 }

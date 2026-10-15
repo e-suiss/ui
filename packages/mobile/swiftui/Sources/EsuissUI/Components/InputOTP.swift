@@ -144,7 +144,7 @@ public struct InputOTPSlot: View {
     .overlay {
       shape.strokeBorder(border(active: active), lineWidth: 1.5)
     }
-    .opacity(tone.dimmed ? 0.6 : 1)
+    .opacity((tone.dimmed ? 0.6 : 1) * (isEnabled ? 1 : 0.5))
     .animation(.easeInOut(duration: 0.3), value: tone)
     .animation(.easeInOut(duration: 0.3), value: invalid)
     .keyframeAnimator(initialValue: CGFloat(1), trigger: pop) { view, value in
@@ -160,24 +160,22 @@ public struct InputOTPSlot: View {
   }
 
   private var foreground: Color {
-    if !isEnabled { return .labelQuaternary }
-    if tone.verified { return .success }
-    if tone.danger { return .danger }
-    return .label
+    if tone.verified { return Color.adaptive(light: Palette.green600, dark: Palette.green400) }
+    if tone.danger { return EsuissColor.destructive }
+    return EsuissColor.foreground
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if tone.verified { return .successSurface }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if tone.verified { return Color.adaptive(light: Palette.green500.opacity(0.1), dark: Palette.green500.opacity(0.2)) }
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 
   private func border(active: Bool) -> Color {
     if !isEnabled { return .clear }
-    if tone.verified { return .success }
-    if invalid { return .danger }
-    return active ? .accent : .clear
+    if tone.verified { return Palette.green500 }
+    if invalid { return EsuissColor.destructive }
+    return active ? EsuissColor.primary : .clear
   }
 }
 
@@ -188,7 +186,7 @@ private struct InputOTPCaret: View {
     TimelineView(.periodic(from: .now, by: 0.5)) { timeline in
       let phase = Int(timeline.date.timeIntervalSinceReferenceDate * 2) % 2
       Capsule()
-        .fill(Color.accent)
+        .fill(EsuissColor.primary)
         .frame(width: 2, height: 24)
         .opacity(reduceMotion || phase == 0 ? 1 : 0)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: phase)
@@ -204,6 +202,7 @@ public struct InputOTPSeparator: View {
   public var body: some View {
     Ph.minus.regular
       .frame(width: 16, height: 16)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
+      .opacity(isEnabled ? 1 : 0.5)
   }
 }

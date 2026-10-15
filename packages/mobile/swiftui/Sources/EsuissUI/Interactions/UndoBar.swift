@@ -182,10 +182,10 @@ struct UndoBarRing: View {
   var body: some View {
     ZStack {
       Circle()
-        .stroke(Color.separator, lineWidth: 2)
+        .stroke(EsuissColor.border, lineWidth: 2)
       Circle()
         .trim(from: 0, to: 1 - progress)
-        .stroke(Color.labelSecondary, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+        .stroke(EsuissColor.mutedForeground, style: StrokeStyle(lineWidth: 2, lineCap: .round))
         .rotationEffect(.degrees(-90))
     }
     .frame(width: 16, height: 16)

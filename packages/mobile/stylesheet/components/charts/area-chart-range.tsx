@@ -49,8 +49,8 @@ const chartData = readings.map(([low, high, average], hour) => ({
 }))
 
 const chartConfig = {
-  range: { label: "Range", color: "red" },
-  average: { label: "Average", color: "red" },
+  range: { label: "Range", color: "red-500" },
+  average: { label: "Average", color: "red-500" },
 } satisfies ChartConfig
 
 const low = Math.min(...chartData.map((point) => point.range[0]))
@@ -83,18 +83,18 @@ export function AreaChartRange() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
-        <Text style={[styles.eyebrow, { color: colors.danger }]}>
+        <Text style={[styles.eyebrow, { color: colors.destructive }]}>
           Heart rate
         </Text>
         <View style={styles.reading}>
           <Text style={styles.value}>
             {low}–{high}
           </Text>
-          <Text style={[styles.unit, { color: colors.labelSecondary }]}>
+          <Text style={[styles.unit, { color: colors.mutedForeground }]}>
             BPM
           </Text>
         </View>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           Today
         </Text>
       </CardHeader>
@@ -123,7 +123,7 @@ export function AreaChartRange() {
                   indicator="line"
                   formatter={(value, name) => (
                     <View style={styles.row}>
-                      <Text style={{ color: colors.labelSecondary }}>
+                      <Text style={{ color: colors.mutedForeground }}>
                         {chartConfig[name as keyof typeof chartConfig].label}
                       </Text>
                       <Text style={styles.strong}>

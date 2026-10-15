@@ -38,12 +38,19 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
 
-type Tint = keyof ThemeColors
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
+
+type Tint = Tone
 
 type Category = "Activity" | "Heart" | "Sleep" | "Mobility"
 
@@ -60,22 +67,22 @@ const CATEGORIES: [CategoryStyle, ...CategoryStyle[]] = [
   {
     value: "Activity",
     icon: FlameIcon,
-    tint: "orange",
-    text: "orange",
+    tint: "orange500",
+    text: "orange500",
   },
-  { value: "Heart", icon: HeartIcon, tint: "red", text: "red" },
-  { value: "Sleep", icon: MoonIcon, tint: "cyan", text: "cyan" },
+  { value: "Heart", icon: HeartIcon, tint: "red500", text: "red500" },
+  { value: "Sleep", icon: MoonIcon, tint: "cyan500", text: "cyan500" },
   {
     value: "Mobility",
     icon: ChartBarIcon,
-    tint: "green",
-    text: "green",
+    tint: "green500",
+    text: "green500",
   },
 ]
 
 const SECTIONS: { value: Section; icon: PhosphorIcon; tint: Tint }[] = [
-  { value: "Summary", icon: HeartIcon, tint: "pink" },
-  { value: "Sharing", icon: UsersIcon, tint: "blue" },
+  { value: "Summary", icon: HeartIcon, tint: "pink500" },
+  { value: "Sharing", icon: UsersIcon, tint: "blue500" },
 ]
 
 type Metric = {
@@ -95,8 +102,8 @@ const METRICS: Metric[] = [
     label: "Move",
     value: "486",
     unit: "kcal",
-    bar: "red",
-    line: "red",
+    bar: "red500",
+    line: "red500",
     data: [40, 62, 38, 70, 55, 81, 65],
     bars: true,
   },
@@ -105,8 +112,8 @@ const METRICS: Metric[] = [
     label: "Steps",
     value: "8,412",
     unit: "steps",
-    bar: "orange",
-    line: "orange",
+    bar: "orange500",
+    line: "orange500",
     data: [60, 80, 45, 90, 70, 95, 52],
     bars: true,
   },
@@ -115,16 +122,16 @@ const METRICS: Metric[] = [
     label: "Resting Heart Rate",
     value: "58",
     unit: "bpm",
-    bar: "red",
-    line: "red",
+    bar: "red500",
+    line: "red500",
     data: [61, 60, 59, 58, 60, 57, 58],
   },
   {
     category: "Sleep",
     label: "Sleep",
     value: "7 hr 12 min",
-    bar: "cyan",
-    line: "cyan",
+    bar: "cyan500",
+    line: "cyan500",
     data: [68, 74, 59, 79, 64, 86, 72],
     bars: true,
   },
@@ -133,8 +140,8 @@ const METRICS: Metric[] = [
     label: "Cardio Fitness",
     value: "42.1",
     unit: "VO₂ max",
-    bar: "red",
-    line: "red",
+    bar: "red500",
+    line: "red500",
     data: [40, 40, 41, 41, 42, 42, 42],
   },
   {
@@ -142,8 +149,8 @@ const METRICS: Metric[] = [
     label: "Walking Speed",
     value: "5.1",
     unit: "km/h",
-    bar: "green",
-    line: "green",
+    bar: "green500",
+    line: "green500",
     data: [48, 50, 49, 51, 50, 52, 51],
   },
 ]
@@ -218,7 +225,7 @@ function Spark({ metric }: { metric: Metric }) {
               styles.bar,
               {
                 height: `${(value / max) * 100}%`,
-                backgroundColor: colors[metric.bar],
+                backgroundColor: tone(colors, metric.bar),
               },
               index < metric.data.length - 1 && { opacity: 0.45 },
             ]}
@@ -244,7 +251,7 @@ function Spark({ metric }: { metric: Metric }) {
         <Polyline
           points={points}
           fill="none"
-          stroke={colors[metric.line]}
+          stroke={tone(colors, metric.line)}
           strokeWidth={2.2}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -257,8 +264,13 @@ function Spark({ metric }: { metric: Metric }) {
 function Tile({ icon, tint }: { icon: PhosphorIcon; tint: Tint }) {
   const { colors } = useTheme()
   return (
-    <ItemMedia style={[styles.tile, { backgroundColor: colors[tint] }]}>
-      <Icon as={icon} weight="fill" size={16} color={colors.onAccent} />
+    <ItemMedia style={[styles.tile, { backgroundColor: tone(colors, tint) }]}>
+      <Icon
+        as={icon}
+        weight="fill"
+        size={16}
+        color={colors.primaryForeground}
+      />
     </ItemMedia>
   )
 }
@@ -270,7 +282,7 @@ function Chevron({ size = 14 }: { size?: number }) {
       as={CaretRightIcon}
       weight="bold"
       size={size}
-      color={colors.labelTertiary}
+      color={colors.mutedForeground}
       style={
         I18nManager.isRTL ? { transform: [{ rotate: "180deg" }] } : undefined
       }
@@ -309,13 +321,15 @@ function MetricCard({
           accessibilityLabel={`${pinned ? "Unpin" : "Pin"} ${metric.label}`}
           hitSlop={10}
           onPress={onTogglePin}
-          style={{ backgroundColor: pinned ? colors.danger : colors.green }}
+          style={{
+            backgroundColor: pinned ? colors.destructive : palette.green500,
+          }}
         >
           <Icon
             as={pinned ? MinusIcon : PlusIcon}
             weight="bold"
             size={14}
-            color={colors.onAccent}
+            color={colors.primaryForeground}
           />
         </Button>
       ) : null}
@@ -325,7 +339,7 @@ function MetricCard({
         style={({ pressed }) => [
           styles.cardBody,
           {
-            backgroundColor: isDark ? colors.surfaceSecondary : colors.surface,
+            backgroundColor: isDark ? colors.muted : colors.background,
           },
           editing && !pinned && { opacity: 0.55 },
           pressed && { opacity: 0.8 },
@@ -336,15 +350,15 @@ function MetricCard({
             as={category.icon}
             weight="fill"
             size={16}
-            color={colors[category.text]}
+            color={tone(colors, category.text)}
           />
           <Text
             numberOfLines={1}
-            style={[styles.cardLabel, { color: colors[category.text] }]}
+            style={[styles.cardLabel, { color: tone(colors, category.text) }]}
           >
             {metric.label}
           </Text>
-          <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
             9:41
           </Text>
           <Chevron size={12} />
@@ -353,7 +367,7 @@ function MetricCard({
           <Text style={{ flex: 1 }}>
             <Text style={styles.value}>{metric.value}</Text>
             {metric.unit ? (
-              <Text style={[styles.unit, { color: colors.labelSecondary }]}>
+              <Text style={[styles.unit, { color: colors.mutedForeground }]}>
                 {` ${metric.unit}`}
               </Text>
             ) : null}
@@ -431,7 +445,7 @@ function SectionView({
           ))}
         </View>
       ) : (
-        <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+        <Text style={[styles.empty, { color: colors.mutedForeground }]}>
           No pinned items. Use Edit to add some.
         </Text>
       )}
@@ -440,10 +454,9 @@ function SectionView({
 }
 
 function ProfileAvatar() {
-  const { colors } = useTheme()
   return (
     <Avatar style={{ width: 34, height: 34 }}>
-      <AvatarFallback style={{ backgroundColor: colors.indigo }}>
+      <AvatarFallback style={{ backgroundColor: palette.indigo500 }}>
         JR
       </AvatarFallback>
     </Avatar>
@@ -486,14 +499,14 @@ function DashHealth({
   const scroll = useHeaderScroll()
 
   const group = {
-    backgroundColor: isDark ? colors.surfaceSecondary : colors.surface,
+    backgroundColor: isDark ? colors.muted : colors.background,
   }
 
   return (
     <Screen
       variant="secondary"
       edges={["top", "right", "left"]}
-      style={isDark ? { backgroundColor: colors.surface } : undefined}
+      style={isDark ? { backgroundColor: colors.background } : undefined}
     >
       <Header scroll={scroll}>
         {section ? (
@@ -533,7 +546,7 @@ function DashHealth({
             </ItemGroup>
             <Text
               role="heading"
-              style={[styles.categories, { color: colors.label }]}
+              style={[styles.categories, { color: colors.foreground }]}
             >
               Categories
             </Text>

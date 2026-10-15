@@ -39,10 +39,10 @@ private val chartData = listOf(
 
 private val chartConfig = ChartConfig(
     "share" to ChartConfigItem("Share"),
-    "phone" to ChartConfigItem("Phone") { blue },
-    "laptop" to ChartConfigItem("Laptop") { teal },
-    "tablet" to ChartConfigItem("Tablet") { indigo },
-    "watch" to ChartConfigItem("Watch") { orange },
+    "phone" to ChartConfigItem("Phone") { chart1 },
+    "laptop" to ChartConfigItem("Laptop") { chart2 },
+    "tablet" to ChartConfigItem("Tablet") { chart3 },
+    "watch" to ChartConfigItem("Watch") { chart4 },
 )
 
 @Composable
@@ -66,11 +66,11 @@ fun PieChartHalf(modifier: Modifier = Modifier) {
                                     Row {
                                         BasicText(
                                             "${chartConfig[item.key]?.label ?: item.key} · ",
-                                            style = Typography.xs.copy(color = colors.label),
+                                            style = Typography.xs.copy(color = colors.foreground),
                                         )
                                         BasicText(
                                             "${number.format(item.value)}%",
-                                            style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 },
@@ -99,9 +99,9 @@ fun PieChartHalf(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         "100%",
-                        style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("last 24 hours", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("last 24 hours", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -122,8 +123,8 @@ internal fun MenuPopup(
     ) {
         CompositionLocalProvider(
             LocalMenu provides MenuContext(onDismissRequest),
-            LocalContentStyle provides Typography.base.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
             LocalIconSize provides 16.dp,
         ) {
             Column(
@@ -144,7 +145,6 @@ private fun MenuRow(
     modifier: Modifier,
     enabled: Boolean,
     foreground: Color,
-    pressedBackground: Color,
     restingBackground: Color,
     interaction: MutableInteractionSource,
     startPadding: Dp,
@@ -158,8 +158,15 @@ private fun MenuRow(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 44.dp)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(shape)
-            .background(if (pressed && enabled) pressedBackground else restingBackground, shape)
+            .background(restingBackground, shape)
             .then(modifier),
         contentAlignment = Alignment.CenterEnd,
     ) {
@@ -190,13 +197,9 @@ private fun MenuRow(
 }
 
 @Composable
-private fun menuForeground(enabled: Boolean, destructive: Boolean = false): Color {
+private fun menuForeground(destructive: Boolean = false): Color {
     val colors = EsuissTheme.colors
-    return when {
-        !enabled -> colors.labelQuaternary
-        destructive -> colors.danger
-        else -> colors.label
-    }
+    return if (destructive) colors.destructive else colors.foreground
 }
 
 @Composable
@@ -225,8 +228,7 @@ fun DropdownMenuItem(
             },
         ),
         enabled = enabled,
-        foreground = menuForeground(enabled, destructive),
-        pressedBackground = if (destructive) colors.dangerSurfacePressed else colors.itemPressed,
+        foreground = menuForeground(destructive),
         restingBackground = Color.Transparent,
         interaction = interaction,
         startPadding = if (inset) 38.dp else 12.dp,
@@ -286,8 +288,7 @@ fun DropdownMenuCheckboxItem(
             },
         ),
         enabled = enabled,
-        foreground = menuForeground(enabled),
-        pressedBackground = colors.itemPressed,
+        foreground = menuForeground(),
         restingBackground = Color.Transparent,
         interaction = interaction,
         startPadding = if (inset) 38.dp else 12.dp,
@@ -350,8 +351,7 @@ fun DropdownMenuRadioItem(
             },
         ),
         enabled = enabled,
-        foreground = menuForeground(enabled),
-        pressedBackground = colors.itemPressed,
+        foreground = menuForeground(),
         restingBackground = Color.Transparent,
         interaction = interaction,
         startPadding = if (inset) 38.dp else 12.dp,
@@ -386,13 +386,13 @@ fun DropdownMenuLabel(
             .fillMaxWidth()
             .semantics { heading() }
             .padding(start = if (inset) 38.dp else 12.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold),
     )
 }
 
 @Composable
 fun DropdownMenuSeparator(modifier: Modifier = Modifier) {
-    MenuSeparatorLine(modifier, bleed = 6.dp, color = EsuissTheme.colors.separator.copy(alpha = 0.5f))
+    MenuSeparatorLine(modifier, bleed = 6.dp, color = EsuissTheme.colors.border.copy(alpha = 0.5f))
 }
 
 @Composable
@@ -467,9 +467,8 @@ fun DropdownMenuSub(
                     onClick = { open = !open },
                 ),
             enabled = enabled,
-            foreground = menuForeground(enabled),
-            pressedBackground = colors.itemPressed,
-            restingBackground = if (open) colors.itemSelected else Color.Transparent,
+            foreground = menuForeground(),
+            restingBackground = if (open) colors.accent else Color.Transparent,
             interaction = interaction,
             startPadding = if (inset) 38.dp else 12.dp,
             endPadding = 12.dp,

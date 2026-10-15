@@ -96,7 +96,6 @@ function DialogOverlay({
   style,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Backdrop>) {
-  const { colors } = useTheme()
   return (
     <DialogPrimitive.Backdrop
       render={
@@ -108,7 +107,7 @@ function DialogOverlay({
       }
       style={(state) => [
         styles.backdrop,
-        { backgroundColor: colors.scrim },
+        { backgroundColor: "rgba(0, 0, 0, 0.5)" },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -124,13 +123,9 @@ function DialogCloseButton({ closeLabel }: { closeLabel?: string }) {
         <Button
           variant={closeLabel ? "plain" : "ghost"}
           size={closeLabel ? "sm" : "icon-sm"}
-          style={({ pressed }) => [
+          style={[
             styles.close,
-            !closeLabel && {
-              backgroundColor: pressed
-                ? colors.separator
-                : colors.surfaceTertiary,
-            },
+            !closeLabel && { backgroundColor: colors.secondary },
           ]}
         />
       }
@@ -140,7 +135,7 @@ function DialogCloseButton({ closeLabel }: { closeLabel?: string }) {
       {closeLabel ? (
         <Text style={styles.closeLabel}>{closeLabel}</Text>
       ) : (
-        <Icon as={XIcon} size={16} color={colors.label} />
+        <Icon as={XIcon} size={16} color={colors.foreground} />
       )}
     </DialogPrimitive.Close>
   )
@@ -180,8 +175,11 @@ function DialogContent({
               style={(state) => [
                 styles.content,
                 {
-                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
-                  backgroundColor: colors.surfaceRaised,
+                  borderColor: withAlpha(
+                    colors.foreground,
+                    isDark ? 0.1 : 0.05
+                  ),
+                  backgroundColor: colors.popover,
                 },
                 typeof style === "function" ? style(state) : style,
               ]}
@@ -247,7 +245,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -264,7 +262,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

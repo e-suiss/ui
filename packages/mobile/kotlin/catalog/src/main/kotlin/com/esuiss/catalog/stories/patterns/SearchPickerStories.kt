@@ -112,6 +112,6 @@ private fun SearchPickerControlled() {
             searchPlaceholder = "Search frameworks...",
             emptyText = "No framework found.",
         )
-        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
     }
 }

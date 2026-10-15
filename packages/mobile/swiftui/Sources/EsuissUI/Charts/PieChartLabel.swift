@@ -7,11 +7,11 @@ private let chartData: [(device: String, users: Double)] = [
 
 private let chartConfig: ChartConfig = [
   "users": .init("Users"),
-  "phone": .init("Phone", color: .blue),
-  "laptop": .init("Laptop", color: .teal),
-  "tablet": .init("Tablet", color: .indigo),
-  "watch": .init("Watch", color: .orange),
-  "other": .init("Other", color: .gray),
+  "phone": .init("Phone", color: EsuissColor.chart1),
+  "laptop": .init("Laptop", color: EsuissColor.chart2),
+  "tablet": .init("Tablet", color: EsuissColor.chart3),
+  "watch": .init("Watch", color: EsuissColor.chart4),
+  "other": .init("Other", color: EsuissColor.chart5),
 ]
 
 private let total = chartData.reduce(0) { $0 + $1.users }
@@ -47,10 +47,10 @@ public struct PieChartLabel: View {
                     path.move(to: start)
                     path.addLine(to: end)
                   }
-                  .stroke(Color.separatorStrong, lineWidth: 1)
+                  .stroke(EsuissColor.input, lineWidth: 1)
                   Text(LocalizedStringKey(chartConfig.label(chartData[index].device)))
                     .font(TextStyle.xs.font(weight: .semibold))
-                    .foregroundStyle(Color.label)
+                    .foregroundStyle(EsuissColor.foreground)
                     .fixedSize()
                     .frame(width: 0, height: 0, alignment: sin(angle) >= 0 ? .leading : .trailing)
                     .position(x: end.x + (sin(angle) >= 0 ? 2 : -2), y: end.y)

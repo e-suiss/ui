@@ -138,10 +138,10 @@ function SearchRevealField({
       style={revealStyle}
       onLayout={(event) => setFieldHeight(event.nativeEvent.layout.height)}
     >
-      <View className="h-9 flex-row items-center gap-1.5 rounded-lg bg-control px-2">
+      <View className="h-9 flex-row items-center gap-1.5 rounded-lg bg-secondary px-2">
         <Icon
           as={MagnifyingGlassIcon}
-          className="size-4.5 shrink-0 text-label-secondary"
+          className="size-4.5 shrink-0 text-muted-foreground"
         />
         <TextInput
           ref={inputRef}
@@ -158,12 +158,12 @@ function SearchRevealField({
           autoCapitalize="none"
           returnKeyType="search"
           className={cn(
-            "h-full min-w-0 flex-1 py-0 text-base text-label",
+            "h-full min-w-0 flex-1 py-0 text-base text-foreground",
             className
           )}
-          placeholderTextColorClassName="accent-label-secondary"
-          cursorColorClassName="accent-accent"
-          selectionColorClassName="accent-accent"
+          placeholderTextColorClassName="accent-muted-foreground"
+          cursorColorClassName="accent-primary"
+          selectionColorClassName="accent-primary"
           {...props}
         />
         {value ? (
@@ -180,7 +180,7 @@ function SearchRevealField({
             <Icon
               as={XCircleIcon}
               weight="fill"
-              className="size-4.5 text-label-secondary"
+              className="size-4.5 text-muted-foreground"
             />
           </Pressable>
         ) : null}

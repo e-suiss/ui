@@ -21,6 +21,7 @@ import { Icon } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   shadow,
   type ThemeColors,
@@ -28,36 +29,36 @@ import {
 } from "@/components/ui/theme"
 
 const CHART_COLORS = {
-  blue: "blue",
-  green: "green",
-  orange: "orange",
-  red: "red",
-  yellow: "yellow",
-  purple: "purple",
-  pink: "pink",
-  indigo: "indigo",
-  teal: "teal",
-  mint: "mint",
-  cyan: "cyan",
-  brown: "brown",
-  gray: "gray",
-  accent: "accent",
-  success: "success",
-  danger: "danger",
-  warning: "warning",
-  link: "link",
-  control: "control",
-  label: "label",
-  "label-secondary": "labelSecondary",
-  "label-tertiary": "labelTertiary",
-  "label-quaternary": "labelQuaternary",
-  separator: "separator",
-  "separator-strong": "separatorStrong",
-  surface: "surface",
-  "surface-secondary": "surfaceSecondary",
-  "surface-raised": "surfaceRaised",
-  "on-accent": "onAccent",
-} as const satisfies Record<string, keyof ThemeColors>
+  "chart-1": "chart1",
+  "chart-2": "chart2",
+  "chart-3": "chart3",
+  "chart-4": "chart4",
+  "chart-5": "chart5",
+  primary: "primary",
+  "primary-foreground": "primaryForeground",
+  secondary: "secondary",
+  destructive: "destructive",
+  foreground: "foreground",
+  "muted-foreground": "mutedForeground",
+  muted: "muted",
+  border: "border",
+  input: "input",
+  background: "background",
+  card: "card",
+  "red-500": "red500",
+  "orange-500": "orange500",
+  "amber-500": "amber500",
+  "yellow-500": "yellow500",
+  "green-500": "green500",
+  "teal-400": "teal400",
+  "teal-500": "teal500",
+  "cyan-500": "cyan500",
+  "blue-500": "blue500",
+  "indigo-500": "indigo500",
+  "purple-500": "purple500",
+  "pink-500": "pink500",
+  "zinc-500": "zinc500",
+} as const satisfies Record<string, keyof ThemeColors | keyof typeof palette>
 
 type ChartColor = keyof typeof CHART_COLORS
 
@@ -67,11 +68,11 @@ type ChartConfig = Record<
 >
 
 const DEFAULT_COLORS: ChartPrimitive.DefaultColors = {
-  grid: "separator",
-  cursor: "separator",
-  spoke: "separator-strong",
-  reference: "separator",
-  fallback: "label",
+  grid: "border",
+  cursor: "border",
+  spoke: "input",
+  reference: "border",
+  fallback: "foreground",
 }
 
 const styles = StyleSheet.create({
@@ -130,8 +131,13 @@ function isChartColor(value: string | undefined): value is ChartColor {
   return value !== undefined && value in CHART_COLORS
 }
 
+function chartColor(colors: ThemeColors, token: ChartColor) {
+  const tones = { ...colors, ...palette }
+  return tones[CHART_COLORS[token]]
+}
+
 function resolveColor(colors: ThemeColors, token: string | undefined) {
-  return isChartColor(token) ? colors[CHART_COLORS[token]] : undefined
+  return isChartColor(token) ? chartColor(colors, token) : undefined
 }
 
 function ChartPalette({
@@ -142,16 +148,16 @@ function ChartPalette({
   children: (palette: Partial<Record<ChartColor, string>>) => React.ReactNode
 }) {
   const { colors } = useTheme()
-  const palette: Partial<Record<ChartColor, string>> = {}
-  for (const token of tokens) palette[token] = colors[CHART_COLORS[token]]
-  return <>{children(palette)}</>
+  const resolved: Partial<Record<ChartColor, string>> = {}
+  for (const token of tokens) resolved[token] = chartColor(colors, token)
+  return <>{children(resolved)}</>
 }
 
 function ChartSurface({ shapes, width, height }: ChartPrimitive.SurfaceProps) {
   const { colors } = useTheme()
   const id = React.useId().replace(/[^\w-]/g, "")
   const paint = (token: string | undefined) =>
-    isChartColor(token) ? colors[CHART_COLORS[token]] : "none"
+    isChartColor(token) ? chartColor(colors, token) : "none"
   return (
     <Svg width={width} height={height}>
       <Defs>
@@ -238,7 +244,8 @@ function ChartText({ text }: { text: ChartPrimitive.TextItem }) {
       style={[
         text.role === "tick" ? styles.tick : styles.label,
         {
-          color: text.role === "label" ? colors.label : colors.labelSecondary,
+          color:
+            text.role === "label" ? colors.foreground : colors.mutedForeground,
         },
         text.style,
       ]}
@@ -499,7 +506,7 @@ function ChartTooltipContent({
   const { active, payload, label } = ChartPrimitive.useTooltipContext()
   const [first] = payload
   if (!active || !first) return null
-  const baseText: TextStyle = { ...fontSize.xs, color: colors.label }
+  const baseText: TextStyle = { ...fontSize.xs, color: colors.foreground }
   let tooltipLabel: React.ReactNode = null
   if (!hideLabel) {
     const itemConfig = config[configKeyOf(config, first, first.dataKey)]
@@ -523,8 +530,10 @@ function ChartTooltipContent({
         style={[
           styles.tooltip,
           {
-            backgroundColor: colors.surfaceRaised,
-            borderColor: isDark ? `${colors.label}1a` : `${colors.label}0d`,
+            backgroundColor: colors.popover,
+            borderColor: isDark
+              ? `${colors.foreground}1a`
+              : `${colors.foreground}0d`,
           },
           style,
         ]}
@@ -555,7 +564,7 @@ function ChartTooltipContent({
                       <Icon
                         as={itemConfig.icon}
                         size={10}
-                        color={colors.labelSecondary}
+                        color={colors.mutedForeground}
                       />
                     ) : null}
                     {itemConfig?.icon || hideIndicator ? null : (
@@ -588,13 +597,15 @@ function ChartTooltipContent({
                         <Text
                           style={[
                             fontSize.xs,
-                            { color: colors.labelSecondary },
+                            { color: colors.mutedForeground },
                           ]}
                         >
                           {itemConfig?.label ?? item.name}
                         </Text>
                       </View>
-                      <Text style={[styles.value, { color: colors.label }]}>
+                      <Text
+                        style={[styles.value, { color: colors.foreground }]}
+                      >
                         {ChartPrimitive.formatValue(item.value)}
                       </Text>
                     </View>
@@ -645,7 +656,7 @@ function ChartLegendContent({
               <Icon
                 as={itemConfig.icon}
                 size={12}
-                color={colors.labelSecondary}
+                color={colors.mutedForeground}
               />
             ) : (
               <View
@@ -655,7 +666,7 @@ function ChartLegendContent({
                 ]}
               />
             )}
-            <Text style={[fontSize.xs, { color: colors.label }]}>
+            <Text style={[fontSize.xs, { color: colors.foreground }]}>
               {itemConfig?.label}
             </Text>
           </View>

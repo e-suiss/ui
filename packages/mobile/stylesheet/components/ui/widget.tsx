@@ -226,14 +226,14 @@ function WidgetFrame({
       <TextStyleContext.Provider
         value={{
           ...fontSize.base,
-          color: colors.label,
+          color: colors.foreground,
           textAlign: align === "center" ? "center" : undefined,
         }}
       >
         <View
           style={[
             styles.frame,
-            { backgroundColor: colors.surfaceSecondary },
+            { backgroundColor: colors.muted },
             align === "center" && styles.center,
             styles.fill,
             style,
@@ -493,7 +493,7 @@ function Widget({
             style={[
               styles.preview,
               {
-                borderColor: withAlpha(colors.label, 0.25),
+                borderColor: withAlpha(colors.foreground, 0.25),
               },
               previewStyle,
             ]}
@@ -517,7 +517,11 @@ function Widget({
             <Icon
               as={handle === "inside" ? InsideHandleShape : OutsideHandleShape}
               size={handle === "inside" ? 28 : 34}
-              color={dragging ? colors.accent : colors.labelQuaternary}
+              color={
+                dragging
+                  ? colors.primary
+                  : withAlpha(colors.mutedForeground, 0.5)
+              }
             />
           </View>
         </GestureDetector>
@@ -552,7 +556,9 @@ function WidgetIcon({
   const { colors } = useTheme()
   return (
     <IconSizeContext.Provider value={ICON_SIZE[size]}>
-      <TextStyleContext.Provider value={{ color: iconColor ?? colors.label }}>
+      <TextStyleContext.Provider
+        value={{ color: iconColor ?? colors.foreground }}
+      >
         <View
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
@@ -560,11 +566,11 @@ function WidgetIcon({
             styles.icon,
             size === "default" && [
               styles.iconDefault,
-              { backgroundColor: colors.control },
+              { backgroundColor: colors.secondary },
             ],
             size === "lg" && [
               styles.iconLarge,
-              { backgroundColor: colors.control },
+              { backgroundColor: colors.secondary },
             ],
             style,
           ]}
@@ -605,7 +611,7 @@ function WidgetDescription({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -639,7 +645,7 @@ function WidgetFooter({
   const { align } = useWidget()
   const text: StyleProp<TextStyle> = {
     ...fontSize.xs,
-    color: colors.labelSecondary,
+    color: colors.mutedForeground,
   }
   const footer: StyleProp<ViewStyle> = [
     styles.footer,

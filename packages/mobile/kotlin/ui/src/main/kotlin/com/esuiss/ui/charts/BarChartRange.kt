@@ -24,6 +24,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartRadius
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class ForecastDay(val day: String, val low: Int, val high: Int)
@@ -46,7 +47,7 @@ private val chartConfig = ChartConfig(
 @Composable
 fun BarChartRange(modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
-    val tick = TextStyle(color = colors.label, fontWeight = FontWeight.SemiBold)
+    val tick = TextStyle(color = colors.foreground, fontWeight = FontWeight.SemiBold)
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardHeader("8-day forecast", description = "Each bar spans the low and high")
         CardContent {
@@ -72,7 +73,7 @@ fun BarChartRange(modifier: Modifier = Modifier) {
                             formatter = { item ->
                                 BasicText(
                                     "${item.base?.toInt()}° to ${item.value.toInt()}°",
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             },
                         )
@@ -81,9 +82,9 @@ fun BarChartRange(modifier: Modifier = Modifier) {
                         "range",
                         value = { it.high.toDouble() },
                         base = { it.low.toDouble() },
-                        fill = ChartFill.HorizontalGradient(listOf(0f to colors.teal, 0.55f to colors.yellow, 1f to colors.orange)),
+                        fill = ChartFill.HorizontalGradient(listOf(0f to colors.chart2, 0.55f to Palette.yellow500, 1f to colors.chart4)),
                         radius = ChartRadius(99.dp),
-                        background = colors.control,
+                        background = colors.secondary,
                     )
                 }
             }

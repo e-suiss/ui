@@ -256,11 +256,7 @@ function TipCard({ style, ...props }: ViewProps) {
     >
       <View
         role="note"
-        style={[
-          styles.card,
-          { backgroundColor: colors.surfaceSecondary },
-          style,
-        ]}
+        style={[styles.card, { backgroundColor: colors.muted }, style]}
         {...props}
       />
     </AnimatedView>
@@ -352,8 +348,11 @@ function TipPopover({
                 styles.popup,
                 {
                   width: Math.min(320, width - 32),
-                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
-                  backgroundColor: colors.surfaceRaised,
+                  borderColor: withAlpha(
+                    colors.foreground,
+                    isDark ? 0.1 : 0.05
+                  ),
+                  backgroundColor: colors.popover,
                 },
                 typeof style === "function" ? style(state) : style,
               ]}
@@ -365,12 +364,12 @@ function TipPopover({
                 <View
                   style={[
                     styles.arrowSquare,
-                    { backgroundColor: colors.surfaceRaised },
+                    { backgroundColor: colors.popover },
                   ]}
                 />
               </PopoverPrimitive.Arrow>
               <TextStyleContext.Provider
-                value={{ ...fontSize.base, color: colors.label }}
+                value={{ ...fontSize.base, color: colors.foreground }}
               >
                 <TipContext.Provider value={tip}>
                   {children}
@@ -387,7 +386,7 @@ function TipPopover({
 function TipIcon({ style, ...props }: ViewProps) {
   const { colors } = useTheme()
   return (
-    <TextStyleContext.Provider value={{ color: colors.accent }}>
+    <TextStyleContext.Provider value={{ color: colors.primary }}>
       <IconSizeContext.Provider value={32}>
         <View
           accessibilityElementsHidden
@@ -410,7 +409,7 @@ function TipTitle({ style, ...props }: React.ComponentProps<typeof Text>) {
   return (
     <Text
       nativeID={titleId}
-      style={[styles.title, { color: colors.label }, style]}
+      style={[styles.title, { color: colors.foreground }, style]}
       {...props}
     />
   )
@@ -423,7 +422,7 @@ function TipDescription({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -447,12 +446,12 @@ function TipClose({
       }}
       style={(state): StyleProp<ViewStyle> => [
         styles.close,
-        state.pressed && { backgroundColor: colors.itemPressed },
+        state.pressed && { opacity: 0.8 },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
     >
-      <Icon as={XIcon} weight="bold" size={16} color={colors.labelSecondary} />
+      <Icon as={XIcon} weight="bold" size={16} color={colors.mutedForeground} />
     </Pressable>
   )
 }

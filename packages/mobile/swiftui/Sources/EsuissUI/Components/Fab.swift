@@ -89,7 +89,7 @@ public struct Fab<Icon: View, Actions: View>: View {
     let open = action == nil && expanded.wrappedValue
     ZStack(alignment: .bottomTrailing) {
       if open {
-        Color.scrim
+        Palette.black.opacity(0.5)
           .ignoresSafeArea()
           .contentShape(Rectangle())
           .onTapGesture { set(false) }
@@ -230,14 +230,15 @@ private struct FabButtonStyle<Icon: View>: ButtonStyle {
           .lineLimit(1)
       }
     }
-    .foregroundStyle(Color.onAccent)
+    .foregroundStyle(EsuissColor.primaryForeground)
     .padding(.horizontal, label == nil ? 0 : 20)
     .frame(minWidth: size.dimension, minHeight: size.dimension, maxHeight: size.dimension)
     .background {
       Capsule()
-        .fill(!isEnabled ? Color.accentDisabled : pressed ? .accentPressed : .accent)
+        .fill(EsuissColor.primary)
         .shadow(isEnabled ? .lg : Shadow(color: .clear, radius: 0))
     }
+    .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
     .scaleEffect(pressed ? 0.96 : 1)
     .animation(.easeOut(duration: 0.15), value: pressed)
     .contentShape(Capsule())
@@ -276,27 +277,26 @@ public struct FabAction<Icon: View>: View {
         title
           .scaledFont(.sm, weight: .medium)
           .lineLimit(1)
-          .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+          .foregroundStyle(EsuissColor.foreground)
           .padding(.horizontal, 12)
           .frame(height: 32)
           .background {
             Capsule()
-              .fill(pressed ? Color.itemPressed : .clear)
-              .background(Color.surfaceRaised, in: Capsule())
+              .fill(EsuissColor.card)
               .shadow(.md)
           }
         icon
           .frame(width: 20, height: 20)
-          .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(width: 44, height: 44)
           .background {
             Circle()
-              .fill(pressed ? Color.itemPressed : .clear)
-              .background(Color.surfaceRaised, in: Circle())
+              .fill(EsuissColor.card)
               .shadow(.md)
           }
       }
       .padding(.trailing, fab?.inset ?? 0)
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .contentShape(Rectangle())
     })
     .accessibilityLabel(title)

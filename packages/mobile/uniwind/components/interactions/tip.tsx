@@ -203,7 +203,7 @@ function TipCard({ className, ...props }: ViewProps) {
       <View
         role="note"
         className={cn(
-          "relative flex-row items-start gap-3 rounded-2xl bg-surface-secondary p-4 pe-12",
+          "relative flex-row items-start gap-3 rounded-2xl bg-muted p-4 pe-12",
           className
         )}
         {...props}
@@ -294,7 +294,7 @@ function TipPopover({
               render={<AnimatedView entering={ENTERING} exiting={EXITING} />}
               className={(state) =>
                 cn(
-                  "relative flex-row items-start gap-3 rounded-2xl border border-label/5 bg-surface-raised p-4 pe-12 shadow-lg dark:border-label/10",
+                  "relative flex-row items-start gap-3 rounded-2xl border border-foreground/5 bg-popover p-4 pe-12 shadow-lg dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -304,7 +304,7 @@ function TipPopover({
               <PopoverPrimitive.Arrow
                 className={(state) => cn("size-4", ARROW_OFFSET[state.side])}
               >
-                <View className="size-3 translate-x-0.5 translate-y-0.5 rotate-45 rounded-xs bg-surface-raised" />
+                <View className="size-3 translate-x-0.5 translate-y-0.5 rotate-45 rounded-xs bg-popover" />
               </PopoverPrimitive.Arrow>
               <TipContext.Provider value={tip}>{children}</TipContext.Provider>
             </PopoverPrimitive.Popup>
@@ -317,7 +317,7 @@ function TipPopover({
 
 function TipIcon({ className, ...props }: ViewProps) {
   return (
-    <IconClassContext.Provider value="size-8 text-accent">
+    <IconClassContext.Provider value="size-8 text-primary">
       <View
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
@@ -354,7 +354,7 @@ function TipDescription({
 }: React.ComponentProps<typeof Text>) {
   return (
     <Text
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -376,12 +376,12 @@ function TipClose({
         dismiss()
       }}
       className={cn(
-        "absolute end-2 top-2 size-8 items-center justify-center rounded-full active:bg-item-pressed",
+        "absolute end-2 top-2 size-8 items-center justify-center rounded-full active:opacity-80",
         className
       )}
       {...props}
     >
-      <Icon as={XIcon} weight="bold" className="size-4 text-label-secondary" />
+      <Icon as={XIcon} weight="bold" className="size-4 text-muted-foreground" />
     </Pressable>
   )
 }

@@ -74,8 +74,8 @@ function StoryView({ meta, story }: { meta: Meta; story: Story }) {
     <View
       className={
         parameters.layout === "fullscreen"
-          ? "flex-1 bg-surface"
-          : "flex-1 bg-surface p-4"
+          ? "flex-1 bg-background"
+          : "flex-1 bg-background p-4"
       }
     >
       <Rendered />
@@ -108,7 +108,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <View className="flex-1 bg-surface">
+        <View className="flex-1 bg-background">
           {module?.default && story ? (
             <StoryView meta={module.default} story={story} />
           ) : null}

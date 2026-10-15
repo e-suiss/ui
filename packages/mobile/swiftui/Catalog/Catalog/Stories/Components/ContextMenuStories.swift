@@ -22,13 +22,13 @@ private struct ContextMenuTriggerArea: View {
   var body: some View {
     Text("Long press here")
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(maxWidth: .infinity)
       .frame(height: 144)
-      .background(Color.surface, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+      .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
       .overlay {
         RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
-          .strokeBorder(Color.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+          .strokeBorder(EsuissColor.border, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
       }
   }
 }

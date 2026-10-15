@@ -118,8 +118,9 @@ function FieldLegend({
       role={variant === "legend" ? "heading" : undefined}
       style={(state) => [
         styles.legend,
-        { color: state.disabled ? colors.labelQuaternary : colors.label },
-        inset && [styles.legendInset, { color: colors.labelSecondary }],
+        { color: colors.foreground },
+        inset && [styles.legendInset, { color: colors.mutedForeground }],
+        state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -152,7 +153,7 @@ function FieldGroup({
           styles.group,
           variant === "inset" && [
             styles.groupInset,
-            { backgroundColor: colors.surfaceSecondary },
+            { backgroundColor: colors.muted },
           ],
           style,
         ]}
@@ -193,10 +194,7 @@ function Field({
         >
           {inset && item.index > 0 ? (
             <View
-              style={[
-                styles.insetDivider,
-                { backgroundColor: colors.separator },
-              ]}
+              style={[styles.insetDivider, { backgroundColor: colors.border }]}
             />
           ) : null}
           {children}
@@ -221,7 +219,8 @@ function FieldLabel({
       style={(state) => [
         styles.label,
         inset && styles.labelInset,
-        { color: state.disabled ? colors.labelQuaternary : colors.label },
+        { color: colors.foreground },
+        state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -236,9 +235,8 @@ function FieldTitle({ style, ...props }: React.ComponentProps<typeof RNText>) {
     <RNText
       style={[
         styles.title,
-        {
-          color: field.state.disabled ? colors.labelQuaternary : colors.label,
-        },
+        { color: colors.foreground },
+        field.state.disabled && { opacity: 0.5 },
         style,
       ]}
       {...props}
@@ -257,7 +255,7 @@ function FieldDescription({
       style={(state) => [
         styles.description,
         inset && styles.descriptionInset,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -279,8 +277,8 @@ function FieldSeparator({
           style={[
             styles.separatorContent,
             {
-              backgroundColor: colors.surface,
-              color: colors.labelSecondary,
+              backgroundColor: colors.background,
+              color: colors.mutedForeground,
             },
           ]}
         >
@@ -324,7 +322,7 @@ function FieldError({
       match={match ?? (content !== undefined ? true : undefined)}
       style={(state) => [
         styles.error,
-        { color: colors.danger },
+        { color: colors.destructive },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

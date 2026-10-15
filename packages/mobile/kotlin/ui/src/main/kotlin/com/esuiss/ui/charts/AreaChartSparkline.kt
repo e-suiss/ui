@@ -32,6 +32,7 @@ import com.esuiss.ui.components.ChartFill
 import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.Separator
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
@@ -49,8 +50,8 @@ private val stocks = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "up" to ChartConfigItem("Rising") { success },
-    "down" to ChartConfigItem("Falling") { danger },
+    "up" to ChartConfigItem("Rising") { Palette.green500 },
+    "down" to ChartConfigItem("Falling") { destructive },
 )
 
 private fun series(seed: Long, rising: Boolean): List<SparkPoint> {
@@ -110,10 +111,10 @@ fun AreaChartSparkline(modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(Modifier.weight(1f)) {
-                        BasicText(stock.symbol, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                        BasicText(stock.symbol, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                         BasicText(
                             stock.name,
-                            style = Typography.xs.copy(color = colors.labelSecondary),
+                            style = Typography.xs.copy(color = colors.mutedForeground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -122,16 +123,16 @@ fun AreaChartSparkline(modifier: Modifier = Modifier) {
                     Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(3.dp)) {
                         BasicText(
                             priceFormat.format(stock.price),
-                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                         BasicText(
                             "${if (stock.change >= 0) "+" else "-"}${priceFormat.format(kotlin.math.abs(stock.change))}%",
                             Modifier
                                 .widthIn(min = 52.dp)
-                                .background(if (rising) colors.success else colors.danger, RoundedCornerShape(Radius.md))
+                                .background(if (rising) Palette.green500 else colors.destructive, RoundedCornerShape(Radius.md))
                                 .padding(horizontal = 6.dp, vertical = 2.dp),
                             style = Typography.xs.copy(
-                                color = if (colors.isDark) colors.surface else colors.onAccent,
+                                color = if (colors.isDark) colors.background else colors.primaryForeground,
                                 fontWeight = FontWeight.SemiBold,
                                 fontFeatureSettings = "tnum",
                                 textAlign = TextAlign.End,

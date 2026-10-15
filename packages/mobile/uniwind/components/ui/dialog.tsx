@@ -61,7 +61,7 @@ function DialogOverlay({
       }
       className={(state) =>
         cn(
-          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-scrim",
+          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-black/50",
           resolveClassName(className, state)
         )
       }
@@ -79,7 +79,7 @@ function DialogCloseButton({ closeLabel }: { closeLabel?: string }) {
           size={closeLabel ? "sm" : "icon-sm"}
           className={cn(
             "absolute top-[19px] right-4",
-            !closeLabel && "bg-surface-tertiary active:bg-separator"
+            !closeLabel && "bg-secondary active:opacity-80"
           )}
         />
       }
@@ -89,7 +89,7 @@ function DialogCloseButton({ closeLabel }: { closeLabel?: string }) {
       {closeLabel ? (
         <Text className="text-base">{closeLabel}</Text>
       ) : (
-        <Icon as={XIcon} className="size-4 text-label" />
+        <Icon as={XIcon} className="size-4 text-foreground" />
       )}
     </DialogPrimitive.Close>
   )
@@ -131,7 +131,7 @@ function DialogContent({
             <DialogPrimitive.Popup
               className={(state) =>
                 cn(
-                  "z-50 w-full flex-col gap-6 rounded-2xl border border-label/5 bg-surface-raised p-6 shadow-xl dark:border-label/10",
+                  "z-50 w-full flex-col gap-6 rounded-2xl border border-foreground/5 bg-popover p-6 shadow-xl dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -198,7 +198,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-label",
+          "text-base font-semibold text-foreground",
           resolveClassName(className, state)
         )
       }
@@ -214,7 +214,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       className={(state) =>
-        cn("text-sm text-label-secondary", resolveClassName(className, state))
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
       }
       {...props}
     />

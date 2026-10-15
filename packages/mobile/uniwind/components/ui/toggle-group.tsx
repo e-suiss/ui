@@ -44,8 +44,7 @@ const INDICATOR_TRANSITION = LinearTransition.duration(300)
   .easing(Easing.bezier(0.32, 0.72, 0, 1))
   .reduceMotion(ReduceMotion.System)
 
-const SEGMENTED_SELECTED_CLASS_NAME =
-  "bg-surface-raised shadow-sm dark:bg-label-quaternary"
+const SEGMENTED_SELECTED_CLASS_NAME = "bg-card shadow-sm dark:bg-border"
 
 function ToggleGroupIndicator() {
   return (
@@ -85,7 +84,7 @@ function ToggleGroup({
           "relative flex-row items-center self-start",
           orientation === "vertical" && "flex-col items-stretch",
           spacing === 0 && variant === "outline" && "rounded-lg",
-          segmented && "rounded-xl bg-control p-1",
+          segmented && "rounded-xl bg-secondary p-1",
           resolveClassName(className, state)
         )
       }
@@ -120,10 +119,8 @@ function itemClassName(
   if (context.spacing === 0 && context.variant === "default") {
     return cn(
       "rounded-md px-3",
-      state.pressed &&
-        (state.disabled
-          ? "bg-control-disabled"
-          : multiple && SEGMENTED_SELECTED_CLASS_NAME)
+      state.pressed && multiple && SEGMENTED_SELECTED_CLASS_NAME,
+      state.disabled && "opacity-50"
     )
   }
   return cn(
@@ -154,9 +151,7 @@ function itemTextClassName(
   if (context.spacing === 0 && context.variant === "default") {
     return cn(
       "text-sm",
-      state.disabled && "text-label-quaternary",
-      !state.disabled && state.pressed && "text-label",
-      !(state.disabled || state.pressed) && "text-label-secondary"
+      state.pressed ? "text-card-foreground" : "text-muted-foreground"
     )
   }
   return toggleTextClassName(state)

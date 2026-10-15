@@ -137,8 +137,8 @@ fun ChartContainer(
     val colors = EsuissTheme.colors
     CompositionLocalProvider(
         LocalChartConfig provides config,
-        LocalContentStyle provides Typography.xs.copy(color = colors.label),
-        LocalContentColor provides colors.label,
+        LocalContentStyle provides Typography.xs.copy(color = colors.foreground),
+        LocalContentColor provides colors.foreground,
     ) {
         Box(modifier, content = content)
     }
@@ -148,7 +148,7 @@ fun ChartContainer(
 fun chartColor(key: String): Color = configColor(LocalChartConfig.current, key, EsuissTheme.colors)
 
 private fun configColor(config: ChartConfig, key: String, colors: Colors): Color =
-    config[key]?.color?.invoke(colors) ?: colors.labelSecondary
+    config[key]?.color?.invoke(colors) ?: colors.mutedForeground
 
 enum class ChartCurve { Natural, Monotone, Linear, Step }
 
@@ -277,7 +277,7 @@ fun ChartTooltipScope.ChartTooltipContent(
     if (payload.isEmpty()) return
     val colors = EsuissTheme.colors
     val config = LocalChartConfig.current
-    val baseStyle = Typography.xs.copy(color = colors.label)
+    val baseStyle = Typography.xs.copy(color = colors.foreground)
     val labelStyle = baseStyle.copy(fontWeight = FontWeight.SemiBold)
     val labelText = config[label]?.label ?: label
     val showLabel = !hideLabel && (labelFormatter != null || labelText.isNotEmpty())
@@ -288,15 +288,15 @@ fun ChartTooltipScope.ChartTooltipContent(
         }
     }
     val shape = RoundedCornerShape(Radius.md)
-    CompositionLocalProvider(LocalContentStyle provides baseStyle, LocalContentColor provides colors.label) {
+    CompositionLocalProvider(LocalContentStyle provides baseStyle, LocalContentColor provides colors.foreground) {
         Column(
             modifier = modifier
                 .width(IntrinsicSize.Max)
                 .widthIn(min = 128.dp)
                 .shadow(Shadows.lg, shape)
                 .clip(shape)
-                .background(colors.surfaceRaised, shape)
-                .border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+                .background(colors.popover, shape)
+                .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
                 .padding(horizontal = 10.dp, vertical = 6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
@@ -314,7 +314,7 @@ fun ChartTooltipScope.ChartTooltipContent(
                     } else {
                         val icon = config[item.key]?.icon
                         if (icon != null) {
-                            Icon(icon, null, Modifier.align(Alignment.CenterVertically), size = 10.dp, tint = colors.labelSecondary)
+                            Icon(icon, null, Modifier.align(Alignment.CenterVertically), size = 10.dp, tint = colors.mutedForeground)
                         } else if (!hideIndicator) {
                             TooltipIndicator(indicator, color ?: item.color, nest)
                         }
@@ -326,7 +326,7 @@ fun ChartTooltipScope.ChartTooltipContent(
                                 if (nest && showLabel) tooltipLabel()
                                 BasicText(
                                     config[item.key]?.label ?: item.key,
-                                    style = baseStyle.copy(color = colors.labelSecondary),
+                                    style = baseStyle.copy(color = colors.mutedForeground),
                                 )
                             }
                             Spacer(Modifier.weight(1f).widthIn(min = 8.dp))
@@ -401,7 +401,7 @@ fun ChartLegendContent(
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                 val icon = item?.icon
                 if (icon != null && !hideIcon) {
-                    Icon(icon, null, size = 12.dp, tint = colors.labelSecondary)
+                    Icon(icon, null, size = 12.dp, tint = colors.mutedForeground)
                 } else {
                     Box(
                         Modifier
@@ -409,7 +409,7 @@ fun ChartLegendContent(
                             .background(configColor(config, key, colors), RoundedCornerShape(Radius.xs)),
                     )
                 }
-                BasicText(item?.label ?: key, style = Typography.xs.copy(color = colors.label))
+                BasicText(item?.label ?: key, style = Typography.xs.copy(color = colors.foreground))
             }
         }
     }
@@ -1113,7 +1113,7 @@ private fun <T> CartesianChart(
         accessibilityLabel,
         if (n > 1 && categoryAxis != null) "${categoryLabel(0)} to ${categoryLabel(n - 1)}" else null,
     ).joinToString(", ")
-    val tickStyle = Typography.xs.copy(color = colors.labelSecondary)
+    val tickStyle = Typography.xs.copy(color = colors.mutedForeground)
     val legendKeys = series.flatMap { s -> if (s.nameKey != null) data.map { s.nameKey.invoke(it) } else listOf(s.dataKey) }
 
     Column(modifier.fillMaxSize()) {
@@ -1331,7 +1331,7 @@ private fun <T> CartesianChart(
             }
             val labelTexts = series.associateWith { s ->
                 val list = s.labelList ?: return@associateWith emptyList<TextLayoutResult?>()
-                val style = TextStyle(color = list.color ?: colors.label, fontSize = list.fontSize, fontWeight = FontWeight.SemiBold)
+                val style = TextStyle(color = list.color ?: colors.foreground, fontSize = list.fontSize, fontWeight = FontWeight.SemiBold)
                 (0 until n).map { i ->
                     val raw = frame.series[s.dataKey]?.raw?.getOrNull(i)
                     if (raw == null || raw.isNaN()) null else measure(measurer, list.formatter?.invoke(i, raw) ?: chartNumber(raw), style)
@@ -1349,13 +1349,13 @@ private fun <T> CartesianChart(
                         val effect = dashEffect(scope.grid, density)
                         for (tick in ticks) {
                             val y = valuePx(tick)
-                            drawLine(colors.separator.copy(alpha = colors.separator.alpha * 0.5f), Offset(plot.left, y), Offset(plot.right, y), 1.dp.toPx(), pathEffect = effect)
+                            drawLine(colors.border.copy(alpha = colors.border.alpha * 0.5f), Offset(plot.left, y), Offset(plot.right, y), 1.dp.toPx(), pathEffect = effect)
                         }
                     }
                     val cursor = tooltip?.cursor
                     if (cursor != null && selected != null && selected in 0 until n) {
                         val c = center(selected)
-                        val color = cursor.color ?: colors.separator
+                        val color = cursor.color ?: colors.border
                         if (vertical) {
                             drawLine(color, Offset(plot.left, c), Offset(plot.right, c), cursor.width.toPx())
                         } else {
@@ -1369,7 +1369,7 @@ private fun <T> CartesianChart(
                                 if (n == 0) continue
                                 val a = center(layer.x1.coerceIn(0, n - 1))
                                 val b = center(layer.x2.coerceIn(0, n - 1))
-                                val color = layer.fill ?: colors.control
+                                val color = layer.fill ?: colors.secondary
                                 drawRect(
                                     color.copy(alpha = color.alpha * layer.fillOpacity),
                                     Offset(min(a, b), plot.top),
@@ -1379,7 +1379,7 @@ private fun <T> CartesianChart(
                             is ReferenceLineLayer -> {
                                 val y = valuePx(layer.y)
                                 drawLine(
-                                    layer.stroke ?: colors.separator,
+                                    layer.stroke ?: colors.border,
                                     Offset(plot.left, y),
                                     Offset(plot.right, y),
                                     1.dp.toPx(),
@@ -1813,7 +1813,7 @@ fun PieChart(
     fun describe(flat: Int) = items(flat).joinToString(", ") { "${config[it.key]?.label ?: it.key}: ${itemValueText(it)}" }
     val description = listOfNotNull(accessibilityLabel, scope.pies.firstOrNull()?.keys?.joinToString(", ") { config[it]?.label ?: it }).joinToString(", ")
     val legendKeys = scope.pies.lastOrNull()?.keys ?: emptyList()
-    val labelStyle = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold)
+    val labelStyle = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold)
     val entrance = scope.pies.mapIndexed { p, pie -> key(p) { rememberEntrance(pie.animation) } }
 
     Column(modifier.fillMaxSize()) {
@@ -2028,7 +2028,7 @@ fun <T> RadialBarChart(
                             val text = measure(
                                 measurer,
                                 list.formatter?.invoke(i, raw) ?: chartNumber(raw),
-                                TextStyle(color = list.color ?: colors.onAccent, fontSize = list.fontSize, fontWeight = FontWeight.SemiBold),
+                                TextStyle(color = list.color ?: colors.primaryForeground, fontSize = list.fontSize, fontWeight = FontWeight.SemiBold),
                             )
                             val mid = (inner + outer) / 2f
                             val direction = sign(endAngle - startAngle).let { if (it == 0f) 1f else it }
@@ -2212,7 +2212,7 @@ fun <T> RadarChart(
     }
     val lo = radiusAxis?.domain?.start ?: ticks.first()
     val hi = radiusAxis?.domain?.endInclusive ?: ticks.last()
-    val tickStyle = Typography.xs.copy(color = colors.labelSecondary)
+    val tickStyle = Typography.xs.copy(color = colors.mutedForeground)
     val entrance = scope.radars.associateWith { radar -> key(radar.dataKey) { rememberEntrance(radar.animation) } }
 
     Column(modifier.fillMaxSize()) {
@@ -2291,7 +2291,7 @@ fun <T> RadarChart(
                 Canvas(Modifier.fillMaxSize()) {
                     val grid = scope.grid
                     if (grid != null && n > 0) {
-                        val stroke = grid.stroke ?: colors.separator
+                        val stroke = grid.stroke ?: colors.border
                         val width = grid.strokeWidth.toPx()
                         fun ring(r: Float): Path = Path().apply {
                             if (grid.gridType == PolarGridType.Circle) {
@@ -2316,7 +2316,7 @@ fun <T> RadarChart(
                     }
                     val cursor = tooltip?.cursor
                     if (cursor != null && selected != null && selected in 0 until n) {
-                        drawLine(cursor.color ?: colors.separatorStrong, center, polar(center, radius, angleOf(selected)), max(cursor.width.toPx(), 1.5.dp.toPx()))
+                        drawLine(cursor.color ?: colors.input, center, polar(center, radius, angleOf(selected)), max(cursor.width.toPx(), 1.5.dp.toPx()))
                     }
                     for (radar in scope.radars) {
                         if (n == 0) break

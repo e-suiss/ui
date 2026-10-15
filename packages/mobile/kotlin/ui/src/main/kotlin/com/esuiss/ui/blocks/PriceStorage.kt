@@ -61,6 +61,7 @@ import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Currency
@@ -106,11 +107,11 @@ fun PriceStorage(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Icon(PhosphorIcons.Regular.Cloud, contentDescription = null, size = 40.dp, tint = colors.blue)
+                    Icon(PhosphorIcons.Regular.Cloud, contentDescription = null, size = 40.dp, tint = Palette.blue500)
                     BasicText(
                         "More space with suiss Cloud+.",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                     ToggleGroup(
                         value = period,
@@ -168,7 +169,7 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
     val haptics = rememberHaptics()
     val shape = RoundedCornerShape(18.dp)
     val lift by animateDpAsState(if (selected) (-3).dp else 0.dp, tween(350, easing = StorageLiftEasing), label = "lift")
-    val border by animateColorAsState(if (selected) colors.accent else Color.Transparent, tween(200), label = "border")
+    val border by animateColorAsState(if (selected) colors.primary else Color.Transparent, tween(200), label = "border")
     Box(
         Modifier
             .fillMaxWidth()
@@ -178,7 +179,7 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
         Column(
             Modifier
                 .fillMaxWidth()
-                .background(colors.surfaceSecondary, shape)
+                .background(colors.muted, shape)
                 .border(2.dp, border, shape)
                 .selectable(
                     selected = selected,
@@ -197,7 +198,7 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
                 BasicText(
                     plan.size,
                     modifier = Modifier.weight(1f),
-                    style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
                 StorageDot(selected)
             }
@@ -206,9 +207,9 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
                     withStyle(SpanStyle(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")) {
                         append(storageMoney(if (yearly) plan.price * 10 else plan.price))
                     }
-                    withStyle(Typography.sm.toSpanStyle().copy(color = colors.labelSecondary)) { append(if (yearly) " /yr" else " /mo") }
+                    withStyle(Typography.sm.toSpanStyle().copy(color = colors.mutedForeground)) { append(if (yearly) " /yr" else " /mo") }
                 },
-                style = Typography.xl2.copy(color = colors.label),
+                style = Typography.xl2.copy(color = colors.foreground),
             )
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 plan.features.forEach { feature ->
@@ -218,9 +219,9 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
                             contentDescription = null,
                             modifier = Modifier.padding(top = 3.dp),
                             size = 13.dp,
-                            tint = colors.success,
+                            tint = if (colors.isDark) Palette.green400 else Palette.green600,
                         )
-                        BasicText(feature, style = Typography.sm.copy(color = colors.label))
+                        BasicText(feature, style = Typography.sm.copy(color = colors.foreground))
                     }
                 }
             }
@@ -230,9 +231,9 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
                 "Most popular",
                 modifier = Modifier
                     .offset(x = 18.dp, y = (-9).dp)
-                    .background(colors.accent, CircleShape)
+                    .background(colors.primary, CircleShape)
                     .padding(horizontal = 9.dp, vertical = 2.dp),
-                style = Typography.xs2.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+                style = Typography.xs2.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
             )
         }
     }
@@ -244,8 +245,8 @@ private fun StorageDot(selected: Boolean) {
     Box(
         Modifier
             .size(20.dp)
-            .background(if (selected) colors.accent else colors.surface, CircleShape)
-            .border(1.dp, if (selected) colors.accent else colors.separatorStrong, CircleShape)
+            .background(if (selected) colors.primary else colors.background, CircleShape)
+            .border(1.dp, if (selected) colors.primary else colors.input, CircleShape)
             .clearAndSetSemantics {},
         contentAlignment = Alignment.Center,
     ) {
@@ -253,7 +254,7 @@ private fun StorageDot(selected: Boolean) {
             Box(
                 Modifier
                     .size(8.dp)
-                    .background(colors.onAccent, CircleShape),
+                    .background(colors.primaryForeground, CircleShape),
             )
         }
     }

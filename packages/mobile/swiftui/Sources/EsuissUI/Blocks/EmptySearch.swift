@@ -46,7 +46,7 @@ public struct EmptySearch: View {
     HStack(spacing: 10) {
       Ph.magnifyingGlass.regular
         .frame(width: 20, height: 20)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityHidden(true)
       TextField("Search suiss", text: $query)
         .focused($focused)
@@ -54,8 +54,8 @@ public struct EmptySearch: View {
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled()
         .scaledFont(.xl, weight: .semibold)
-        .foregroundStyle(Color.label)
-        .tint(Color.accent)
+        .foregroundStyle(EsuissColor.foreground)
+        .tint(EsuissColor.primary)
         .accessibilityLabel(Text("Search suiss"))
       if !query.isEmpty {
         Button {
@@ -64,9 +64,9 @@ public struct EmptySearch: View {
         } label: {
           Ph.x.bold
             .frame(width: 11, height: 11)
-            .foregroundStyle(Color.surface)
+            .foregroundStyle(EsuissColor.background)
             .frame(width: 22, height: 22)
-            .background(Color.labelTertiary, in: Circle())
+            .background(EsuissColor.mutedForeground, in: Circle())
             .frame(width: 44, height: 44)
             .contentShape(Rectangle())
         }
@@ -77,7 +77,7 @@ public struct EmptySearch: View {
     }
     .frame(height: 52)
     .overlay(alignment: .bottom) {
-      (focused ? Color.accent : .separatorStrong).frame(height: 1)
+      (focused ? EsuissColor.primary : EsuissColor.input).frame(height: 1)
     }
   }
 
@@ -85,7 +85,7 @@ public struct EmptySearch: View {
     VStack(alignment: .leading, spacing: 4) {
       Text("Suggested")
         .scaledFont(.xs2)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.bottom, 6)
         .accessibilityAddTraits(.isHeader)
       ForEach(matches, id: \.self) { item in
@@ -95,10 +95,10 @@ public struct EmptySearch: View {
           HStack(spacing: 10) {
             Ph.magnifyingGlass.regular
               .frame(width: 14, height: 14)
-              .foregroundStyle(Color.labelTertiary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: item)
               .scaledFont(.lg)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
           }
           .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
           .contentShape(Rectangle())
@@ -122,7 +122,7 @@ public struct EmptySearch: View {
       .accessibilityAddTraits(.isHeader)
       Text(query.isEmpty ? "Search for products, support articles or stores." : "Check the spelling or try one of these:")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .fixedSize(horizontal: false, vertical: true)
       ComboboxFlowLayout(spacing: 8) {
         ForEach(Self.suggestions, id: \.self) { item in
@@ -139,6 +139,6 @@ public struct EmptySearch: View {
 private struct EmptySearchRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }

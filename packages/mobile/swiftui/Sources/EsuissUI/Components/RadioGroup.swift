@@ -61,7 +61,7 @@ public struct RadioGroupItem<Value: Hashable, Label: View>: View {
       HStack(spacing: 12) {
         SelectionIndicator(checked: checked, pressed: pressed, cornerRadius: 8) {
           Circle()
-            .fill(Color.onAccent)
+            .fill(EsuissColor.primaryForeground)
             .frame(width: colorScheme == .dark ? 10 : 8, height: colorScheme == .dark ? 10 : 8)
         }
         label

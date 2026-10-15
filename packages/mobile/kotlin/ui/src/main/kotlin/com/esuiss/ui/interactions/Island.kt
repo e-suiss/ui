@@ -104,6 +104,7 @@ import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.theme.DarkColors
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.LocalColors
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadow
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -363,8 +364,8 @@ fun Island(
         scope.launch { drag.snapTo((drag.value + delta).coerceAtMost(with(density) { 8.dp.toPx() })) }
     }
     val shape = RoundedCornerShape(radius)
-    val background = colors.media
-    val foreground = colors.onMedia
+    val background = Palette.black
+    val foreground = Palette.white
     val hole = camera?.let { with(density) { it.width.toDp() } }
     val clearance = if (camera != null && atCamera != null) {
         with(density) { (camera.bottom.toDp() - atCamera - 8.dp).coerceAtLeast(0.dp) }
@@ -716,7 +717,7 @@ private fun IslandExpandedView(
 fun IslandRing(
     value: Float,
     modifier: Modifier = Modifier,
-    color: Color = EsuissTheme.colors.accent,
+    color: Color = EsuissTheme.colors.primary,
 ) {
     val progress = value.coerceIn(0f, 1f)
     Canvas(modifier = modifier.size(20.dp)) {

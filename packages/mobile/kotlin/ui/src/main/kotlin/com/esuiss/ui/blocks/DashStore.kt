@@ -99,6 +99,7 @@ import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
@@ -139,18 +140,18 @@ private class StoreOrder(
 )
 
 private val StoreOrders = listOf(
-    StoreOrder("W1048", "Jamie Rivera", "Phone Pro", "Shipped", 999.0) { indigo },
-    StoreOrder("W1047", "Morgan Lee", "Book Air", "Processing", 1099.0) { orange },
-    StoreOrder("W1046", "Riley Chen", "Watch Series 11", "Delivered", 399.0) { green },
-    StoreOrder("W1045", "Avery Brooks", "Pods Studio", "Returned", 549.0) { pink },
-    StoreOrder("W1044", "Taylor Kim", "Pad Air", "Delivered", 599.0) { cyan },
+    StoreOrder("W1048", "Jamie Rivera", "Phone Pro", "Shipped", 999.0) { Palette.indigo500 },
+    StoreOrder("W1047", "Morgan Lee", "Book Air", "Processing", 1099.0) { Palette.orange500 },
+    StoreOrder("W1046", "Riley Chen", "Watch Series 11", "Delivered", 399.0) { Palette.green500 },
+    StoreOrder("W1045", "Avery Brooks", "Pods Studio", "Returned", 549.0) { Palette.pink500 },
+    StoreOrder("W1044", "Taylor Kim", "Pad Air", "Delivered", 599.0) { Palette.cyan500 },
 )
 
 private val StoreFilters = listOf("All", "Shipped", "Delivered", "Returned")
 
 private val StoreConfig = ChartConfig(
-    "online" to ChartConfigItem("Online") { blue },
-    "store" to ChartConfigItem("In store") { teal },
+    "online" to ChartConfigItem("Online") { chart1 },
+    "store" to ChartConfigItem("In store") { chart2 },
 )
 
 private class StoreStat(val label: String, val value: String, val change: String, val up: Boolean)
@@ -222,7 +223,7 @@ fun DashStore(
                                         .semantics { contentDescription = "Stores" },
                                     contentAlignment = Alignment.Center,
                                 ) {
-                                    Icon(PhosphorIcons.Regular.Storefront, contentDescription = null, size = 22.dp, tint = colors.label)
+                                    Icon(PhosphorIcons.Regular.Storefront, contentDescription = null, size = 22.dp, tint = colors.foreground)
                                 }
                             },
                         ) {
@@ -278,7 +279,7 @@ fun DashStore(
                             Modifier
                                 .padding(horizontal = 4.dp)
                                 .semantics { heading() },
-                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                         )
                         Row(Modifier.horizontalScroll(rememberScrollState())) {
                             ToggleGroup(
@@ -313,7 +314,7 @@ fun DashStore(
                                                     .padding(start = 60.dp)
                                                     .fillMaxWidth()
                                                     .height(1.dp)
-                                                    .background(colors.separator),
+                                                    .background(colors.border),
                                             )
                                         }
                                         OrderRow(order) { onOrderPress(order.id) }
@@ -332,12 +333,12 @@ fun DashStore(
 private fun StatGrid(stats: List<StoreStat>) {
     val colors = EsuissTheme.colors
     val divider = Modifier
-        .background(colors.separator)
+        .background(colors.border)
     Column(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(Radius.xl))
-            .background(colors.surfaceSecondary),
+            .background(colors.muted),
     ) {
         for (row in 0 until 2) {
             if (row > 0) Box(divider.fillMaxWidth().height(1.dp))
@@ -359,10 +360,10 @@ private fun StatCell(stat: StoreStat, modifier: Modifier) {
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        BasicText(stat.label, style = Typography.sm.copy(color = colors.labelSecondary))
+        BasicText(stat.label, style = Typography.sm.copy(color = colors.mutedForeground))
         BasicText(
             stat.value,
-            style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+            style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
             maxLines = 1,
             autoSize = TextAutoSize.StepBased(
                 minFontSize = Typography.lg.fontSize,
@@ -371,7 +372,7 @@ private fun StatCell(stat: StoreStat, modifier: Modifier) {
         )
         BasicText(
             "${stat.change} vs. previous period",
-            style = Typography.xs.copy(color = if (stat.up) colors.success else colors.danger),
+            style = Typography.xs.copy(color = if (stat.up) (if (colors.isDark) Palette.green400 else Palette.green600) else colors.destructive),
         )
     }
 }
@@ -384,7 +385,7 @@ private fun WeeklySales(scale: Double) {
     Column(
         Modifier
             .fillMaxWidth()
-            .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))
+            .background(colors.muted, RoundedCornerShape(Radius.xl))
             .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 8.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
@@ -394,10 +395,10 @@ private fun WeeklySales(scale: Double) {
                     .weight(1f)
                     .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
             ) {
-                BasicText(day?.day ?: "Weekly sales", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText(day?.day ?: "Weekly sales", style = Typography.sm.copy(color = colors.mutedForeground))
                 BasicText(
                     day?.let { money((it.online + it.store) * 1000) } ?: money(1284500 * scale),
-                    style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                 )
             }
             Row(Modifier.clearAndSetSemantics {}, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -406,9 +407,9 @@ private fun WeeklySales(scale: Double) {
                         Box(
                             Modifier
                                 .size(8.dp)
-                                .background(StoreConfig[key]?.color?.invoke(colors) ?: colors.labelSecondary, CircleShape),
+                                .background(StoreConfig[key]?.color?.invoke(colors) ?: colors.mutedForeground, CircleShape),
                         )
-                        BasicText(StoreConfig[key]?.label ?: key, style = Typography.xs.copy(color = colors.labelSecondary))
+                        BasicText(StoreConfig[key]?.label ?: key, style = Typography.xs.copy(color = colors.mutedForeground))
                     }
                 }
             }
@@ -458,7 +459,7 @@ private fun OrderRow(order: StoreOrder, onClick: () -> Unit) {
             ) {
                 BasicText(
                     order.name.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-                    style = Typography.sm.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+                    style = Typography.sm.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
                 )
             }
         }
@@ -470,13 +471,13 @@ private fun OrderRow(order: StoreOrder, onClick: () -> Unit) {
             Column(horizontalAlignment = Alignment.End) {
                 BasicText(
                     money(order.total),
-                    style = Typography.base.copy(color = colors.label, fontFeatureSettings = "tnum"),
+                    style = Typography.base.copy(color = colors.foreground, fontFeatureSettings = "tnum"),
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
                 )
                 BasicText(
                     order.status,
-                    style = Typography.sm.copy(color = if (order.status == "Returned") colors.danger else colors.labelSecondary),
+                    style = Typography.sm.copy(color = if (order.status == "Returned") colors.destructive else colors.mutedForeground),
                 )
             }
         }

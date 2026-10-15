@@ -64,8 +64,8 @@ private fun PreviewProfileCard() {
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null, size = 16.dp, tint = colors.labelSecondary)
-                Text("Joined December 2021", style = Typography.xs.copy(color = colors.labelSecondary))
+                Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null, size = 16.dp, tint = colors.mutedForeground)
+                Text("Joined December 2021", style = Typography.xs.copy(color = colors.mutedForeground))
             }
         }
     }

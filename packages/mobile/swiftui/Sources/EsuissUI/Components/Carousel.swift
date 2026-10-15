@@ -338,7 +338,7 @@ public struct CarouselDots: View {
           carousel?.scrollTo(index)
         } label: {
           Capsule()
-            .fill(active ? (autoplay ? Color.labelTertiary : .label) : .labelTertiary)
+            .fill(active ? (autoplay ? EsuissColor.mutedForeground : EsuissColor.foreground) : EsuissColor.mutedForeground)
             .frame(width: active ? 24 : 8, height: 8)
             .overlay(alignment: .leading) {
               if active && autoplay, let carousel {
@@ -360,7 +360,7 @@ public struct CarouselDots: View {
     .padding(.horizontal, variant == .default ? 16 : 0)
     .background {
       if variant == .default {
-        Capsule().fill(Color.control)
+        Capsule().fill(EsuissColor.secondary)
       }
     }
   }
@@ -373,7 +373,7 @@ private struct CarouselDotsFill: View {
     TimelineView(.animation(paused: carousel.autoplayStart == nil)) { timeline in
       GeometryReader { proxy in
         Capsule()
-          .fill(Color.label)
+          .fill(EsuissColor.foreground)
           .frame(width: proxy.size.width * fraction(at: timeline.date))
       }
     }

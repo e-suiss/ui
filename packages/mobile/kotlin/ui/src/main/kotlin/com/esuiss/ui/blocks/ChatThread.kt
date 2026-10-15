@@ -102,6 +102,7 @@ import com.esuiss.ui.components.MessageContent
 import com.esuiss.ui.components.MessageScroller
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -211,7 +212,7 @@ fun ChatThread(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 4.dp, bottom = 10.dp),
-                        style = Typography.xs2.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                     ThreadTyping -> ThreadTypingBubble()
                     is ThreadText -> ThreadBubble(row.line) { toggleLike(row.line.id) }
@@ -230,13 +231,13 @@ private fun ThreadContact(onPress: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.surface)
+            .background(colors.background)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onPress),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .graphicsLayer { alpha = if (pressed) 0.6f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .padding(top = 8.dp, bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -248,23 +249,23 @@ private fun ThreadContact(onPress: () -> Unit) {
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .background(colors.green, CircleShape),
+                            .background(Palette.green500, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
-                        BasicText("RC", style = Typography.lg.copy(color = colors.onMedia, fontWeight = FontWeight.Medium))
+                        BasicText("RC", style = Typography.lg.copy(color = Palette.white, fontWeight = FontWeight.Medium))
                     }
                 },
             )
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Riley", style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 10.dp, tint = colors.labelSecondary)
+                BasicText("Riley", style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 10.dp, tint = colors.mutedForeground)
             }
         }
         Box(
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
     }
 }
@@ -316,10 +317,10 @@ private fun ThreadBubble(line: ThreadLine, onToggleLike: () -> Unit) {
                         Box(
                             Modifier
                                 .size(22.dp)
-                                .background(colors.accent, CircleShape),
+                                .background(colors.primary, CircleShape),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(PhosphorIcons.Fill.Heart, contentDescription = null, size = 13.dp, tint = colors.onAccent)
+                            Icon(PhosphorIcons.Fill.Heart, contentDescription = null, size = 13.dp, tint = colors.primaryForeground)
                         }
                     }
                 }
@@ -354,7 +355,7 @@ private fun ThreadTypingBubble() {
                                 Modifier
                                     .size(8.dp)
                                     .graphicsLayer { this.alpha = alpha }
-                                    .background(colors.labelTertiary, CircleShape),
+                                    .background(colors.mutedForeground, CircleShape),
                             )
                         }
                     }
@@ -402,7 +403,7 @@ private fun ThreadComposer(placeholder: String, onSend: (String, Boolean) -> Uni
                     photo = true
                 },
                 variant = ButtonVariant.Secondary, size = ButtonSize.IconSm) {
-                Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.labelSecondary)
+                Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.mutedForeground)
             }
             InputGroup(Modifier.weight(1f)) {
                 InputGroupInput(
@@ -436,7 +437,7 @@ private fun ThreadPhoto(onRemove: (() -> Unit)? = null) {
     val colors = EsuissTheme.colors
     Attachment(modifier = Modifier.width(224.dp), size = AttachmentSize.Sm) {
         AttachmentMedia(variant = AttachmentMediaVariant.Icon) {
-            Icon(PhosphorIcons.Regular.Image, contentDescription = null, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.Image, contentDescription = null, tint = colors.mutedForeground)
         }
         AttachmentContent {
             AttachmentTitle(ThreadPhotoName)

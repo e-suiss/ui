@@ -84,7 +84,7 @@ function ItemGroup({
         style={[
           styles.group,
           inset && styles.groupInset,
-          inset && { backgroundColor: colors.surfaceSecondary },
+          inset && { backgroundColor: colors.muted },
           style,
         ]}
         {...props}
@@ -103,7 +103,7 @@ function ItemSeparator({ style, ...props }: ViewProps) {
       style={[
         styles.separator,
         inset && styles.separatorInset,
-        { backgroundColor: colors.separator },
+        { backgroundColor: colors.border },
         style,
       ]}
       {...props}
@@ -142,9 +142,9 @@ function Item({
   const base: StyleProp<ViewStyle> = [
     styles.item,
     styles[size],
-    variant === "outline" && { borderColor: colors.separator },
+    variant === "outline" && { borderColor: colors.border },
     variant === "muted" && {
-      backgroundColor: withAlpha(colors.surfaceSecondary, 0.5),
+      backgroundColor: withAlpha(colors.muted, 0.5),
     },
     inset && { borderRadius: 0 },
     props.disabled && { opacity: 0.5 },
@@ -158,7 +158,7 @@ function Item({
         style: interactive
           ? (state: PressableStateCallbackType) => [
               base,
-              state.pressed && { backgroundColor: colors.itemPressed },
+              state.pressed && { opacity: 0.8 },
               typeof style === "function" ? style(state) : style,
             ]
           : [
@@ -217,7 +217,7 @@ function ItemTitle({
   return (
     <Text
       numberOfLines={numberOfLines}
-      style={[styles.title, { color: colors.label }, style]}
+      style={[styles.title, { color: colors.foreground }, style]}
       {...props}
     />
   )
@@ -232,7 +232,7 @@ function ItemDescription({
   return (
     <Text
       numberOfLines={numberOfLines}
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -242,7 +242,7 @@ function ItemActions({ style, ...props }: ViewProps) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...fontSize.base, color: colors.labelSecondary }}
+      value={{ ...fontSize.base, color: colors.mutedForeground }}
     >
       <View style={[styles.actions, style]} {...props} />
     </TextStyleContext.Provider>

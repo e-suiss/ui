@@ -63,6 +63,7 @@ import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.util.Locale
@@ -88,15 +89,15 @@ private val storage = linkedMapOf(
 )
 
 private val chartConfig = ChartConfig(
-    "apps" to ChartConfigItem("Apps") { red },
-    "photos" to ChartConfigItem("Photos") { orange },
-    "system" to ChartConfigItem("System") { gray },
-    "backups" to ChartConfigItem("Backups") { purple },
-    "drive" to ChartConfigItem("Drive") { blue },
-    "messages" to ChartConfigItem("Messages") { green },
-    "mail" to ChartConfigItem("Mail") { cyan },
-    "other" to ChartConfigItem("Other") { yellow },
-    "free" to ChartConfigItem("Free") { control },
+    "apps" to ChartConfigItem("Apps") { Palette.red500 },
+    "photos" to ChartConfigItem("Photos") { chart4 },
+    "system" to ChartConfigItem("System") { chart5 },
+    "backups" to ChartConfigItem("Backups") { Palette.purple500 },
+    "drive" to ChartConfigItem("Drive") { chart1 },
+    "messages" to ChartConfigItem("Messages") { Palette.green500 },
+    "mail" to ChartConfigItem("Mail") { Palette.cyan500 },
+    "other" to ChartConfigItem("Other") { Palette.yellow500 },
+    "free" to ChartConfigItem("Free") { secondary },
 )
 
 private val MorphEasing = CubicBezierEasing(0.65f, 0f, 0.35f, 1f)
@@ -134,18 +135,18 @@ fun PieChartInteractive(modifier: Modifier = Modifier) {
     val total = sizes.sum()
     val used = total - sizes.last()
     val value = active?.let { sizes[it] } ?: used
-    val swatch = { kind: String -> chartConfig[kind]?.color?.invoke(colors) ?: colors.labelSecondary }
+    val swatch = { kind: String -> chartConfig[kind]?.color?.invoke(colors) ?: colors.mutedForeground }
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.Top) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     BasicText(
                         "${storage.getValue(device).label} storage",
-                        style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                     BasicText(
                         "${gigabytes(target.sum() - target.last())} GB of ${storage.getValue(device).total.toInt()} GB used",
-                        style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                        style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                     )
                 }
                 ToggleGroup(
@@ -186,7 +187,7 @@ fun PieChartInteractive(modifier: Modifier = Modifier) {
                                 outerRadius = 0.88f,
                                 startAngle = 90f,
                                 endAngle = -270f,
-                                stroke = colors.surfaceSecondary,
+                                stroke = colors.muted,
                                 strokeWidth = 3.dp,
                                 cornerRadius = 4.dp,
                                 sectors = { index -> ChartSector(lift = 7.dp * lifts[index].value) },
@@ -203,16 +204,16 @@ fun PieChartInteractive(modifier: Modifier = Modifier) {
                     ) {
                         BasicText(
                             active?.let { chartConfig[kinds[it]]?.label } ?: "Used",
-                            style = Typography.sm.copy(color = colors.labelSecondary),
+                            style = Typography.sm.copy(color = colors.mutedForeground),
                         )
                         BasicText(
                             "${gigabytes(value)} GB",
-                            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                             maxLines = 1,
                         )
                         BasicText(
                             "${(value / max(total, 1.0) * 100).roundToInt()}%",
-                            style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                            style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                         )
                     }
                 }
@@ -249,7 +250,7 @@ private fun StorageBar(sizes: List<Double>, total: Double, active: Int?) {
                     Modifier
                         .fillMaxHeight()
                         .graphicsLayer { alpha = if (active == null || active == index) 1f else 0.35f }
-                        .background(chartConfig[kinds[index]]?.color?.invoke(colors) ?: colors.labelSecondary),
+                        .background(chartConfig[kinds[index]]?.color?.invoke(colors) ?: colors.mutedForeground),
                 )
             }
         },
@@ -257,7 +258,7 @@ private fun StorageBar(sizes: List<Double>, total: Double, active: Int?) {
             .fillMaxWidth()
             .height(10.dp)
             .clip(CircleShape)
-            .background(colors.control)
+            .background(colors.secondary)
             .clearAndSetSemantics {},
     ) { measurables, constraints ->
         val width = constraints.maxWidth
@@ -292,7 +293,7 @@ private fun StorageRow(
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(if (selected) colors.control else Color.Transparent, shape)
+            .background(if (selected) colors.secondary else Color.Transparent, shape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -308,15 +309,15 @@ private fun StorageRow(
             Modifier
                 .size(10.dp)
                 .background(color, CircleShape)
-                .then(if (free) Modifier.border(1.dp, colors.separatorStrong, CircleShape) else Modifier),
+                .then(if (free) Modifier.border(1.dp, colors.input, CircleShape) else Modifier),
         )
         BasicText(
             label,
             Modifier.weight(1f),
-            style = Typography.base.copy(color = colors.label),
+            style = Typography.base.copy(color = colors.foreground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-        BasicText(value, style = Typography.base.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"))
+        BasicText(value, style = Typography.base.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"))
     }
 }

@@ -142,13 +142,17 @@ function PinPad({
         accessible
         accessibilityLabel={dotsLabel(value.length, length)}
         accessibilityLiveRegion="polite"
-        style={[styles.dots, dotsStyle, shakeStyle]}
+        style={[
+          styles.dots,
+          disabled && { opacity: 0.5 },
+          dotsStyle,
+          shakeStyle,
+        ]}
       >
         {Array.from({ length }, (_, position) => position).map((index) => {
           const filled = index < value.length
-          let color = filled ? colors.label : colors.separatorStrong
-          if (disabled) color = colors.labelQuaternary
-          if (error) color = colors.danger
+          let color = filled ? colors.foreground : colors.input
+          if (error) color = colors.destructive
           return (
             <View
               key={index}

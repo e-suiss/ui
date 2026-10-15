@@ -22,21 +22,21 @@ public struct DashHealth: View {
 
   static var categories: [Category] {
     [
-      Category(value: "Activity", icon: Ph.flame.fill, tint: .orange),
-      Category(value: "Heart", icon: Ph.heart.fill, tint: .red),
-      Category(value: "Sleep", icon: Ph.moon.fill, tint: .cyan),
-      Category(value: "Mobility", icon: Ph.chartBar.fill, tint: .green),
+      Category(value: "Activity", icon: Ph.flame.fill, tint: Palette.orange500),
+      Category(value: "Heart", icon: Ph.heart.fill, tint: Palette.red500),
+      Category(value: "Sleep", icon: Ph.moon.fill, tint: Palette.cyan500),
+      Category(value: "Mobility", icon: Ph.chartBar.fill, tint: Palette.green500),
     ]
   }
 
   static var metrics: [Metric] {
     [
-      Metric(category: "Activity", label: "Move", value: "486", unit: "kcal", color: .red, data: [40, 62, 38, 70, 55, 81, 65], bars: true),
-      Metric(category: "Activity", label: "Steps", value: "8,412", unit: "steps", color: .orange, data: [60, 80, 45, 90, 70, 95, 52], bars: true),
-      Metric(category: "Heart", label: "Resting Heart Rate", value: "58", unit: "bpm", color: .red, data: [61, 60, 59, 58, 60, 57, 58]),
-      Metric(category: "Sleep", label: "Sleep", value: "7 hr 12 min", color: .cyan, data: [68, 74, 59, 79, 64, 86, 72], bars: true),
-      Metric(category: "Heart", label: "Cardio Fitness", value: "42.1", unit: "VO₂ max", color: .red, data: [40, 40, 41, 41, 42, 42, 42]),
-      Metric(category: "Mobility", label: "Walking Speed", value: "5.1", unit: "km/h", color: .green, data: [48, 50, 49, 51, 50, 52, 51]),
+      Metric(category: "Activity", label: "Move", value: "486", unit: "kcal", color: Palette.red500, data: [40, 62, 38, 70, 55, 81, 65], bars: true),
+      Metric(category: "Activity", label: "Steps", value: "8,412", unit: "steps", color: Palette.orange500, data: [60, 80, 45, 90, 70, 95, 52], bars: true),
+      Metric(category: "Heart", label: "Resting Heart Rate", value: "58", unit: "bpm", color: Palette.red500, data: [61, 60, 59, 58, 60, 57, 58]),
+      Metric(category: "Sleep", label: "Sleep", value: "7 hr 12 min", color: Palette.cyan500, data: [68, 74, 59, 79, 64, 86, 72], bars: true),
+      Metric(category: "Heart", label: "Cardio Fitness", value: "42.1", unit: "VO₂ max", color: Palette.red500, data: [40, 40, 41, 41, 42, 42, 42]),
+      Metric(category: "Mobility", label: "Walking Speed", value: "5.1", unit: "km/h", color: Palette.green500, data: [48, 50, 49, 51, 50, 52, 51]),
     ]
   }
 
@@ -74,7 +74,7 @@ public struct DashHealth: View {
   private var dark: Bool { colorScheme == .dark }
 
   public var body: some View {
-    Screen(background: dark ? .surface : .surfaceSecondary) {
+    Screen(background: dark ? .background : .muted) {
       ZStack {
         if let section {
           detail(section)
@@ -94,9 +94,9 @@ public struct DashHealth: View {
       HeaderLargeTitle("Health")
       VStack(alignment: .leading, spacing: 10) {
         group {
-          sectionRow("Summary", icon: Ph.heart.fill, tint: .pink)
+          sectionRow("Summary", icon: Ph.heart.fill, tint: Palette.pink500)
           ItemSeparator().padding(.leading, 40)
-          sectionRow("Sharing", icon: Ph.users.fill, tint: .blue)
+          sectionRow("Sharing", icon: Ph.users.fill, tint: Palette.blue500)
         }
         Text("Categories")
           .scaledFont(.xl, weight: .bold)
@@ -120,9 +120,9 @@ public struct DashHealth: View {
       } trailing: {
         Text(verbatim: "JR")
           .font(.system(size: 13, weight: .semibold))
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 34, height: 34)
-          .background(Color.indigo, in: Circle())
+          .background(Palette.indigo500, in: Circle())
           .padding(.trailing, 8)
           .accessibilityHidden(true)
       }
@@ -135,7 +135,7 @@ public struct DashHealth: View {
       content()
     }
     .environment(\.itemGroupInset, true)
-    .background(dark ? Color.surfaceSecondary : .surface, in: shape)
+    .background(dark ? EsuissColor.muted : EsuissColor.background, in: shape)
     .clipShape(shape)
   }
 
@@ -153,7 +153,7 @@ public struct DashHealth: View {
       ItemActions {
         Ph.caretRight.bold
           .frame(width: 12, height: 12)
-          .foregroundStyle(Color.labelTertiary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .flipsForRightToLeftLayoutDirection(true)
       }
     }
@@ -185,7 +185,7 @@ public struct DashHealth: View {
         if cards.isEmpty {
           Text("No pinned items. Use Edit to add some.")
             .scaledFont(.base)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 30)
         } else {
@@ -217,9 +217,9 @@ public struct DashHealth: View {
             } label: {
               (isPinned ? Ph.minus.bold : Ph.plus.bold)
                 .frame(width: 12, height: 12)
-                .foregroundStyle(Color.onAccent)
+                .foregroundStyle(EsuissColor.primaryForeground)
                 .frame(width: 24, height: 24)
-                .background(isPinned ? Color.danger : .green, in: Circle())
+                .background(isPinned ? EsuissColor.destructive : Palette.green500, in: Circle())
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
             }
@@ -260,7 +260,7 @@ private struct DashHealthTile: View {
   var body: some View {
     icon
       .frame(width: 14, height: 14)
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: 26, height: 26)
       .background(tint, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
       .accessibilityHidden(true)
@@ -286,20 +286,20 @@ private struct DashHealthCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
           Text(verbatim: "9:41")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Ph.caretRight.bold
             .frame(width: 12, height: 12)
-            .foregroundStyle(Color.labelTertiary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .flipsForRightToLeftLayoutDirection(true)
         }
         .foregroundStyle(category.tint)
         HStack(alignment: .bottom, spacing: 16) {
           (Text(verbatim: metric.value)
             .font(TextStyle.xl3.font(weight: .bold))
-            .foregroundColor(Color.label)
+            .foregroundColor(EsuissColor.foreground)
             + Text(verbatim: metric.unit.map { " \($0)" } ?? "")
             .font(TextStyle.base.font(weight: .semibold))
-            .foregroundColor(Color.labelSecondary))
+            .foregroundColor(EsuissColor.mutedForeground))
             .monospacedDigit()
             .lineLimit(1)
             .minimumScaleFactor(0.7)
@@ -309,7 +309,7 @@ private struct DashHealthCard: View {
       }
       .padding(.horizontal, 16)
       .padding(.vertical, 12)
-      .background(colorScheme == .dark ? Color.surfaceSecondary : .surface, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      .background(colorScheme == .dark ? EsuissColor.muted : EsuissColor.background, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .contentShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .opacity(dimmed ? 0.55 : 1)
       .animation(.easeOut(duration: 0.2), value: dimmed)
@@ -322,7 +322,7 @@ private struct DashHealthCard: View {
 private struct DashHealthCardStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.7 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 

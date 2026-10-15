@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onPlaced
@@ -94,7 +95,7 @@ fun TabsList(
         modifier = modifier
             .width(IntrinsicSize.Max)
             .height(if (line) 41.dp else 44.dp)
-            .then(if (line) Modifier else Modifier.background(colors.control, listShape))
+            .then(if (line) Modifier else Modifier.background(colors.secondary, listShape))
             .padding(if (line) 2.dp else 4.dp)
             .then(if (line) Modifier.padding(bottom = 5.dp) else Modifier),
     ) {
@@ -128,7 +129,7 @@ private fun TabsIndicator(state: TabsState, variant: TabsListVariant) {
             modifier = Modifier
                 .offset { IntOffset(left.value.roundToInt(), (target.bottom + with(density) { 3.dp.toPx() }).roundToInt()) }
                 .size(with(density) { width.value.toDp() }, 2.dp)
-                .background(colors.label),
+                .background(colors.foreground),
         )
     } else {
         Box(
@@ -136,7 +137,7 @@ private fun TabsIndicator(state: TabsState, variant: TabsListVariant) {
                 .offset { IntOffset(left.value.roundToInt(), target.top.roundToInt()) }
                 .size(with(density) { width.value.toDp() }, with(density) { target.height.toDp() })
                 .shadow(Shadows.md, shape)
-                .background(if (colors.isDark) colors.labelQuaternary else colors.surfaceRaised, shape),
+                .background(if (colors.isDark) colors.border else colors.card, shape),
         )
     }
 }
@@ -163,15 +164,12 @@ fun RowScope.TabsTrigger(
     val state = LocalTabs.current ?: error("TabsTrigger must be used within Tabs.")
     val colors = EsuissTheme.colors
     val active = state.selected == value
-    val foreground = when {
-        !enabled -> colors.labelQuaternary
-        active -> colors.label
-        else -> colors.labelSecondary
-    }
+    val foreground = if (active) colors.foreground else colors.mutedForeground
     Row(
         modifier = modifier
             .weight(1f)
             .fillMaxHeight()
+            .alpha(if (enabled) 1f else 0.5f)
             .onPlaced { state.bounds[value] = it.boundsInParent() }
             .selectable(
                 selected = active,

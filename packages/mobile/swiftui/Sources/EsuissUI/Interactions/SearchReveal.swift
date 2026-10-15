@@ -103,13 +103,13 @@ public struct SearchRevealField: View {
       Ph.magnifyingGlass.regular
         .frame(width: 18, height: 18)
         .accessibilityHidden(true)
-      TextField(placeholder, text: text, prompt: Text(placeholder).foregroundStyle(Color.labelSecondary))
+      TextField(placeholder, text: text, prompt: Text(placeholder).foregroundStyle(EsuissColor.mutedForeground))
         .focused($focused)
         .submitLabel(.search)
         .autocorrectionDisabled()
         .scaledFont(.base)
-        .foregroundStyle(Color.label)
-        .tint(Color.accent)
+        .foregroundStyle(EsuissColor.foreground)
+        .tint(EsuissColor.primary)
       if !text.wrappedValue.isEmpty {
         Button {
           text.wrappedValue = ""
@@ -125,10 +125,10 @@ public struct SearchRevealField: View {
         .accessibilityLabel(Text("Clear search"))
       }
     }
-    .foregroundStyle(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
     .padding(.horizontal, 8)
     .frame(height: 36)
-    .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+    .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
     .padding(.horizontal, 16)
     .padding(.bottom, 8)
     .visualEffect { view, proxy in

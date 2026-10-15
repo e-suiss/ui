@@ -178,7 +178,7 @@ fun InputGroupAddon(
         InputGroupAddonAlign.BlockStart -> Modifier.padding(start = 12.dp, end = 12.dp, top = if (hasControl) 14.dp else 12.dp)
         InputGroupAddonAlign.BlockEnd -> Modifier.padding(start = 12.dp, end = 12.dp, bottom = if (hasControl) 14.dp else 12.dp)
     }
-    val foreground = if (enabled) colors.labelSecondary else colors.labelQuaternary
+    val foreground = colors.mutedForeground
     Row(
         modifier = modifier
             .layoutId(align)
@@ -293,7 +293,7 @@ fun InputGroupInput(
     val colors = EsuissTheme.colors
     val enabled = group?.enabled ?: true
     val invalid = group?.invalid ?: false
-    val textStyle = Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary)
+    val textStyle = Typography.base.copy(color = colors.foreground)
     val start = if ((group?.inlineStart ?: 0) > 0) 6.dp else 12.dp
     val end = if ((group?.inlineEnd ?: 0) > 0) 6.dp else 12.dp
     val hasBlockStart = (group?.blockStart ?: 0) > 0
@@ -322,7 +322,7 @@ fun InputGroupInput(
         keyboardActions = keyboardActions,
         singleLine = true,
         visualTransformation = visualTransformation,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         decorationBox = { inner ->
             Box(
                 modifier = Modifier
@@ -333,7 +333,7 @@ fun InputGroupInput(
                 if (value.isEmpty() && placeholder != null) {
                     BasicText(
                         placeholder,
-                        style = textStyle.copy(color = if (enabled) colors.labelSecondary else colors.labelQuaternary),
+                        style = textStyle.copy(color = colors.mutedForeground),
                         maxLines = 1,
                     )
                 }
@@ -360,7 +360,7 @@ fun InputGroupTextarea(
     val colors = EsuissTheme.colors
     val enabled = group?.enabled ?: true
     val invalid = group?.invalid ?: false
-    val textStyle = Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary)
+    val textStyle = Typography.base.copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -375,7 +375,7 @@ fun InputGroupTextarea(
         keyboardActions = keyboardActions,
         minLines = minLines,
         maxLines = maxLines,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         decorationBox = { inner ->
             Box(
                 modifier = Modifier
@@ -386,7 +386,7 @@ fun InputGroupTextarea(
                 if (value.isEmpty() && placeholder != null) {
                     BasicText(
                         placeholder,
-                        style = textStyle.copy(color = if (enabled) colors.labelSecondary else colors.labelQuaternary),
+                        style = textStyle.copy(color = colors.mutedForeground),
                     )
                 }
                 inner()

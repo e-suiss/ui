@@ -104,7 +104,7 @@ private struct DatePickerControlled: View {
         .accessibilityLabel(Text("Date"))
       Text(verbatim: "Selected: \(selected)")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
   }
 }

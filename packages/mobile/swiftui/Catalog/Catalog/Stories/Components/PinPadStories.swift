@@ -63,7 +63,7 @@ private struct PinPadVerify: View {
     VStack(spacing: 24) {
       Text(verbatim: status)
         .textStyle(.sm)
-        .foregroundStyle(error ? Color.danger : .labelSecondary)
+        .foregroundStyle(error ? EsuissColor.destructive : EsuissColor.mutedForeground)
         .accessibilityAddTraits(.updatesFrequently)
       PinPad(value: $value, error: error, onComplete: complete)
       .onChange(of: value) { _, next in
@@ -103,7 +103,7 @@ private struct PinPadBiometric: View {
         }
       }
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       PinPad(
         value: $value,
         biometricIcon: faceID ? Ph.scanSmiley.regular : Ph.fingerprint.regular,

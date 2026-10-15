@@ -230,12 +230,12 @@ struct ToastCard: View {
         Text(item.title)
           .font(TextStyle.sm.font(weight: .semibold))
           .tracking(TextStyle.sm.letterSpacing)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         if let description = item.description {
           Text(description)
             .font(TextStyle.sm.font())
             .tracking(TextStyle.sm.letterSpacing)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .fixedSize(horizontal: false, vertical: true)
@@ -252,7 +252,7 @@ struct ToastCard: View {
       Button(action: onDismiss) {
         Ph.x.regular
           .frame(width: 16, height: 16)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .buttonStyle(.variant(.ghost, size: .iconSm))
       .accessibilityLabel(Text("Close toast"))
@@ -262,11 +262,11 @@ struct ToastCard: View {
     .frame(maxWidth: .infinity)
     .background {
       shape
-        .fill(Color.surfaceRaised)
+        .fill(EsuissColor.popover)
         .shadow(dark ? .lg : Shadow(color: .black.opacity(0.14), radius: 16, y: 8))
     }
     .overlay {
-      if !dark { shape.strokeBorder(Color.label.opacity(0.05)) }
+      if !dark { shape.strokeBorder(EsuissColor.foreground.opacity(0.05)) }
     }
     .offset(y: drag)
     .gesture(
@@ -297,14 +297,14 @@ private struct ToastIcon: View {
       EmptyView()
     case .loading:
       ProgressView()
-        .tint(Color.accent)
+        .tint(EsuissColor.primary)
         .frame(width: 32, height: 32)
         .accessibilityHidden(true)
     case .success, .info, .warning, .error:
       icon
         .frame(width: 16, height: 16)
         .rotationEffect(.degrees(type == .info ? 180 : 0))
-        .foregroundStyle(Color.surface)
+        .foregroundStyle(EsuissColor.background)
         .frame(width: 32, height: 32)
         .background(tint, in: Circle())
         .accessibilityHidden(true)
@@ -321,10 +321,10 @@ private struct ToastIcon: View {
 
   private var tint: Color {
     switch type {
-    case .success: .success
-    case .info: .accent
-    case .warning: .warning
-    default: .danger
+    case .success: Color.adaptive(light: Palette.green600, dark: Palette.green400)
+    case .info: EsuissColor.primary
+    case .warning: Color.adaptive(light: Palette.amber600, dark: Palette.amber400)
+    default: EsuissColor.destructive
     }
   }
 }

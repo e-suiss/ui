@@ -31,7 +31,7 @@ function Screen({
       <View
         className={cn(
           "flex-1",
-          variant === "secondary" ? "bg-surface-secondary" : "bg-surface",
+          variant === "secondary" ? "bg-muted" : "bg-background",
           className
         )}
         style={[

@@ -40,10 +40,17 @@ import { Text } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Mail = {
   id: number
@@ -51,7 +58,7 @@ type Mail = {
   subject: string
   body: string
   time: string
-  tint: keyof ThemeColors | null
+  tint: Tone | null
   unread: boolean
   starred: boolean
 }
@@ -73,7 +80,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Tomorrow's meeting",
     body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.",
     time: "8:40 AM",
-    tint: "orange",
+    tint: "orange500",
     unread: true,
     starred: false,
   },
@@ -83,7 +90,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Your storage is almost full",
     body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.",
     time: "Yesterday",
-    tint: "blue",
+    tint: "blue500",
     unread: true,
     starred: false,
   },
@@ -93,7 +100,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Coast trip photos",
     body: "I added the photos to the shared album. The ones from the boat tour came out great.",
     time: "Yesterday",
-    tint: "green",
+    tint: "green500",
     unread: false,
     starred: true,
   },
@@ -188,14 +195,14 @@ function SenderAvatar({ mail }: { mail: Mail }) {
   return (
     <Avatar size="lg">
       <AvatarFallback
-        style={{ backgroundColor: colors[mail.tint ?? "label"] }}
+        style={{ backgroundColor: tone(colors, mail.tint ?? "foreground") }}
         accessibilityLabel={mail.from}
       >
         <Text
           style={
             mail.tint
               ? undefined
-              : { color: colors.surface, textTransform: "none" }
+              : { color: colors.background, textTransform: "none" }
           }
         >
           {mail.tint
@@ -250,7 +257,7 @@ function Reader({
 
   return (
     <View style={styles.reader}>
-      <View style={[styles.toolbar, { borderBottomColor: colors.separator }]}>
+      <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -268,7 +275,7 @@ function Reader({
               as={action.icon}
               weight={action.active ? "fill" : "regular"}
               size={20}
-              color={action.active ? colors.orange : colors.labelSecondary}
+              color={action.active ? palette.orange500 : colors.mutedForeground}
             />
           </Button>
         ))}
@@ -278,11 +285,11 @@ function Reader({
           <SenderAvatar mail={mail} />
           <View style={styles.senderText}>
             <Text style={styles.semibold}>{mail.from}</Text>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               To: Jamie Rivera
             </Text>
           </View>
-          <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
             {mail.time}
           </Text>
         </View>
@@ -294,7 +301,7 @@ function Reader({
       {replying ? (
         <AnimatedView
           entering={ENTERING}
-          style={[styles.reply, { borderTopColor: colors.separator }]}
+          style={[styles.reply, { borderTopColor: colors.border }]}
         >
           <Textarea
             autoFocus
@@ -347,7 +354,9 @@ function MailRow({
   onDelete: () => void
 }) {
   const { colors } = useTheme()
-  const muted = { color: active ? colors.onAccent : colors.labelSecondary }
+  const muted = {
+    color: active ? colors.primaryForeground : colors.mutedForeground,
+  }
   return (
     <AnimatedView
       entering={FadeInDown.delay(index * 40)
@@ -366,7 +375,7 @@ function MailRow({
             }
             style={
               active
-                ? { ...styles.row, backgroundColor: colors.accent }
+                ? { ...styles.row, backgroundColor: colors.primary }
                 : styles.row
             }
           >
@@ -375,7 +384,9 @@ function MailRow({
                 style={[
                   styles.dot,
                   {
-                    backgroundColor: active ? colors.onAccent : colors.accent,
+                    backgroundColor: active
+                      ? colors.primaryForeground
+                      : colors.primary,
                   },
                 ]}
               />
@@ -383,7 +394,10 @@ function MailRow({
             <View style={styles.rowTop}>
               <Text
                 numberOfLines={1}
-                style={[styles.from, active && { color: colors.onAccent }]}
+                style={[
+                  styles.from,
+                  active && { color: colors.primaryForeground },
+                ]}
               >
                 {mail.from}
               </Text>
@@ -392,14 +406,17 @@ function MailRow({
                   as={StarIcon}
                   weight="fill"
                   size={12}
-                  color={active ? colors.onAccent : colors.orange}
+                  color={active ? colors.primaryForeground : palette.orange500}
                 />
               ) : null}
               <Text style={[fontSize.xs, muted]}>{mail.time}</Text>
             </View>
             <Text
               numberOfLines={1}
-              style={[fontSize.sm, active && { color: colors.onAccent }]}
+              style={[
+                fontSize.sm,
+                active && { color: colors.primaryForeground },
+              ]}
             >
               {mail.subject}
             </Text>
@@ -484,7 +501,7 @@ function InboxMail({
           title="Mailboxes"
           style={
             wide
-              ? { minHeight: "100%", backgroundColor: colors.surfaceSecondary }
+              ? { minHeight: "100%", backgroundColor: colors.muted }
               : styles.sidebar
           }
         >
@@ -498,14 +515,14 @@ function InboxMail({
               }}
               style={
                 wide && mailbox === box.value
-                  ? { backgroundColor: colors.control }
+                  ? { backgroundColor: colors.secondary }
                   : undefined
               }
             >
               <View style={styles.mailbox}>
-                <Icon as={box.icon} size={20} color={colors.accent} />
+                <Icon as={box.icon} size={20} color={colors.primary} />
                 <Text style={styles.fill}>{box.value}</Text>
-                <Text style={[styles.count, { color: colors.labelSecondary }]}>
+                <Text style={[styles.count, { color: colors.mutedForeground }]}>
                   {counts[box.value] ? String(counts[box.value]) : ""}
                 </Text>
               </View>
@@ -526,7 +543,7 @@ function InboxMail({
               <View style={styles.fill}>
                 <Text style={styles.mailboxTitle}>{mailbox}</Text>
                 <Text
-                  style={[fontSize["2xs"], { color: colors.labelSecondary }]}
+                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
                 >
                   {unread ? `${unread} unread` : "All read"}
                 </Text>
@@ -538,7 +555,7 @@ function InboxMail({
               accessibilityLabel="New message"
               onPress={onNewMessage}
             >
-              <Icon as={NotePencilIcon} size={20} color={colors.accent} />
+              <Icon as={NotePencilIcon} size={20} color={colors.primary} />
             </Button>
           </View>
           <InputGroup style={[styles.search, wide && styles.searchWide]}>
@@ -547,7 +564,7 @@ function InboxMail({
                 as={MagnifyingGlassIcon}
                 weight="bold"
                 size={16}
-                color={colors.labelSecondary}
+                color={colors.mutedForeground}
               />
             </InputGroupAddon>
             <InputGroupInput
@@ -583,7 +600,7 @@ function InboxMail({
                 />
               ))
             ) : (
-              <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+              <Text style={[styles.empty, { color: colors.mutedForeground }]}>
                 No Results
               </Text>
             )}
@@ -609,7 +626,7 @@ function InboxMail({
             />
           ) : (
             <View style={styles.none}>
-              <Text style={{ color: colors.labelSecondary }}>
+              <Text style={{ color: colors.mutedForeground }}>
                 No Message Selected
               </Text>
             </View>

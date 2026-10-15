@@ -21,9 +21,9 @@ public struct InboxMail: View {
   static var initialMail: [Mail] {
     [
       Mail(id: 0, from: "suiss", subject: "Your order has shipped", body: "Order #W1048 is on its way and arrives tomorrow. A signature is required on delivery.", time: "9:12 AM", tint: nil, unread: true, starred: false),
-      Mail(id: 1, from: "Morgan Lee", subject: "Tomorrow's meeting", body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.", time: "8:40 AM", tint: .orange, unread: true, starred: false),
-      Mail(id: 2, from: "suiss Cloud", subject: "Your storage is almost full", body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.", time: "Yesterday", tint: .blue, unread: true, starred: false),
-      Mail(id: 3, from: "Riley Chen", subject: "Coast trip photos", body: "I added the photos to the shared album. The ones from the boat tour came out great.", time: "Yesterday", tint: .green, unread: false, starred: true),
+      Mail(id: 1, from: "Morgan Lee", subject: "Tomorrow's meeting", body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.", time: "8:40 AM", tint: Palette.orange500, unread: true, starred: false),
+      Mail(id: 2, from: "suiss Cloud", subject: "Your storage is almost full", body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.", time: "Yesterday", tint: Palette.blue500, unread: true, starred: false),
+      Mail(id: 3, from: "Riley Chen", subject: "Coast trip photos", body: "I added the photos to the shared album. The ones from the boat tour came out great.", time: "Yesterday", tint: Palette.green500, unread: false, starred: true),
       Mail(id: 4, from: "suiss Store", subject: "Just for you: a Trade In offer", body: "Bring in your old phone and get up to $650 off a new one.", time: "Monday", tint: nil, unread: false, starred: false),
       Mail(id: 5, from: "App Store", subject: "Your receipt", body: "Your Studio Pro subscription renewed. Total: $4.99.", time: "Monday", tint: nil, unread: false, starred: false),
     ]
@@ -114,14 +114,14 @@ public struct InboxMail: View {
               HStack(spacing: 10) {
                 box.icon
                   .frame(width: 20, height: 20)
-                  .foregroundStyle(Color.accent)
+                  .foregroundStyle(EsuissColor.primary)
                 Text(LocalizedStringKey(box.value))
                   .frame(maxWidth: .infinity, alignment: .leading)
                 if let count = counts[box.value], count > 0 {
                   Text(verbatim: "\(count)")
                     .scaledFont(.xs)
                     .monospacedDigit()
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                 }
               }
             }
@@ -144,7 +144,7 @@ public struct InboxMail: View {
               } label: {
                 Ph.notePencil.regular
                   .frame(width: 22, height: 22)
-                  .foregroundStyle(Color.link)
+                  .foregroundStyle(EsuissColor.primary)
               }
               .buttonStyle(.variant(.ghost, size: .icon))
               .accessibilityLabel(Text("New message"))
@@ -154,7 +154,7 @@ public struct InboxMail: View {
               if list.isEmpty {
                 Text("No Results")
                   .scaledFont(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .frame(maxWidth: .infinity)
                   .padding(24)
               }
@@ -206,7 +206,7 @@ public struct InboxMail: View {
           } else {
             Text("No Message Selected")
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .frame(maxWidth: .infinity)
               .padding(.top, 120)
           }
@@ -243,9 +243,9 @@ private struct InboxMailHeading: View {
       }
       Text(unread > 0 ? "\(unread) unread" : "All read")
         .scaledFont(.xs2)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 }
 
@@ -257,9 +257,9 @@ private struct InboxMailAvatar: View {
     let initials = mail.from.split(separator: " ").compactMap(\.first).map(String.init).joined()
     Text(verbatim: mail.tint == nil ? "s" : initials)
       .font(.system(size: size * 0.4, weight: .semibold))
-      .foregroundStyle(mail.tint == nil ? Color.surface : .onAccent)
+      .foregroundStyle(mail.tint == nil ? EsuissColor.background : EsuissColor.primaryForeground)
       .frame(width: size, height: size)
-      .background(mail.tint ?? .label, in: Circle())
+      .background(mail.tint ?? EsuissColor.foreground, in: Circle())
       .accessibilityHidden(true)
   }
 }
@@ -270,7 +270,7 @@ private struct InboxMailRow: View {
   var body: some View {
     HStack(alignment: .top, spacing: 8) {
       Circle()
-        .fill(mail.unread ? Color.accent : .clear)
+        .fill(mail.unread ? EsuissColor.primary : .clear)
         .frame(width: 8, height: 8)
         .padding(.top, 6)
         .accessibilityHidden(true)
@@ -283,19 +283,19 @@ private struct InboxMailRow: View {
           if mail.starred {
             Ph.star.fill
               .frame(width: 12, height: 12)
-              .foregroundStyle(Color.orange)
+              .foregroundStyle(Palette.orange500)
               .accessibilityLabel(Text("Starred"))
           }
           Text(LocalizedStringKey(mail.time))
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Text(verbatim: mail.subject)
           .scaledFont(.sm)
           .lineLimit(1)
         Text(verbatim: mail.body)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(2)
           .multilineTextAlignment(.leading)
       }
@@ -347,7 +347,7 @@ private struct InboxMailReader: View {
       }
       .frame(height: 50)
       .overlay(alignment: .bottom) {
-        Color.separator.frame(height: 1).padding(.horizontal, -16)
+        EsuissColor.border.frame(height: 1).padding(.horizontal, -16)
       }
       VStack(alignment: .leading, spacing: 16) {
         HStack(spacing: 12) {
@@ -357,12 +357,12 @@ private struct InboxMailReader: View {
               .scaledFont(.base, weight: .semibold)
             Text("To: Jamie Rivera")
               .scaledFont(.xs)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
           Text(LocalizedStringKey(mail.time))
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .accessibilityElement(children: .combine)
         Text(verbatim: mail.subject)
@@ -398,13 +398,13 @@ private struct InboxMailReader: View {
         }
         .padding(.top, 18)
         .overlay(alignment: .top) {
-          Color.separator.frame(height: 1)
+          EsuissColor.border.frame(height: 1)
         }
         .padding(.top, 22)
         .transition(.opacity.combined(with: .offset(y: 8)))
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.5), value: replying)
   }
 
@@ -412,7 +412,7 @@ private struct InboxMailReader: View {
     Button(action: perform) {
       icon
         .frame(width: 20, height: 20)
-        .foregroundStyle(active ? Color.orange : .labelSecondary)
+        .foregroundStyle(active ? Palette.orange500 : EsuissColor.mutedForeground)
     }
     .buttonStyle(.variant(.ghost, size: .icon))
     .accessibilityLabel(Text(title))

@@ -24,8 +24,8 @@ const stocks = [
 ]
 
 const chartConfig = {
-  up: { label: "Rising", color: "success" },
-  down: { label: "Falling", color: "danger" },
+  up: { label: "Rising", color: "green-500" },
+  down: { label: "Falling", color: "destructive" },
 } satisfies ChartConfig
 
 function formatPrice(value: number, signed = false) {
@@ -100,7 +100,7 @@ export function AreaChartSparkline() {
               <View
                 key={stock.symbol}
                 className={cn(
-                  "flex-row items-center gap-3 border-separator py-2.25",
+                  "flex-row items-center gap-3 border-border py-2.25",
                   index > 0 && "border-t"
                 )}
               >
@@ -110,7 +110,7 @@ export function AreaChartSparkline() {
                   </Text>
                   <Text
                     numberOfLines={1}
-                    className="text-xs text-label-secondary"
+                    className="text-xs text-muted-foreground"
                   >
                     {stock.name}
                   </Text>
@@ -123,10 +123,10 @@ export function AreaChartSparkline() {
                   <View
                     className={cn(
                       "min-w-13 rounded-md px-1.5 py-0.5",
-                      rising ? "bg-success" : "bg-danger"
+                      rising ? "bg-green-500" : "bg-destructive"
                     )}
                   >
-                    <Text className="text-right text-xs font-semibold text-on-accent tabular-nums dark:text-surface">
+                    <Text className="text-right text-xs font-semibold text-primary-foreground tabular-nums dark:text-background">
                       {formatPrice(stock.change, true)}%
                     </Text>
                   </View>

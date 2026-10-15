@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
@@ -53,8 +54,8 @@ internal fun formReducedMotion(): Boolean {
 }
 
 internal fun formSelectionColors(colors: Colors) = TextSelectionColors(
-    handleColor = colors.accent,
-    backgroundColor = colors.accent.copy(alpha = 0.3f),
+    handleColor = colors.primary,
+    backgroundColor = colors.primary.copy(alpha = 0.3f),
 )
 
 internal fun Modifier.formInputSurface(
@@ -64,17 +65,13 @@ internal fun Modifier.formInputSurface(
     invalid: Boolean,
     enabled: Boolean,
 ): Modifier {
-    val background = when {
-        !enabled -> colors.controlDisabled
-        invalid -> colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
-        else -> colors.control
-    }
+    val background = if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.secondary
     val border = when {
-        invalid -> colors.danger
-        focused -> colors.focus
+        invalid -> colors.destructive
+        focused -> colors.ring
         else -> Color.Transparent
     }
-    return clip(shape).background(background, shape).border(1.dp, border, shape)
+    return alpha(if (enabled) 1f else 0.5f).clip(shape).background(background, shape).border(1.dp, border, shape)
 }
 
 @Composable

@@ -86,6 +86,7 @@ import com.esuiss.ui.components.MessageScroller
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.ScreenVariant
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -149,24 +150,24 @@ fun ChatSupport(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp, vertical = 32.dp),
         ) {
-            BasicText("suiss Support", style = Typography.lg.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+            BasicText("suiss Support", style = Typography.lg.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
             BasicText(
                 "How can we help you?",
                 modifier = Modifier
                     .padding(top = 6.dp)
                     .semantics { heading() },
-                style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
             Box(
                 Modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth()
                     .height(220.dp)
-                    .background(colors.surfaceTertiary, RoundedCornerShape(18.dp))
+                    .background(colors.secondary, RoundedCornerShape(18.dp))
                     .clearAndSetSemantics { contentDescription = "A phone resting on a soft beige surface" },
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(PhosphorIcons.Light.DeviceMobile, contentDescription = null, size = 96.dp, tint = colors.labelTertiary)
+                Icon(PhosphorIcons.Light.DeviceMobile, contentDescription = null, size = 96.dp, tint = colors.mutedForeground)
             }
         }
         BoxWithConstraints(
@@ -191,7 +192,7 @@ fun ChatSupport(
                         }
                         .shadow(Shadows.lg, shape)
                         .clip(shape)
-                        .background(colors.surface, shape)
+                        .background(colors.background, shape)
                         .semantics { paneTitle = "suiss Support chat" },
                 ) {
                     SupportPanel(lines, typing, ::ask, onAttach) {
@@ -243,31 +244,31 @@ private fun ColumnScope.SupportPanel(
         Box(
             Modifier
                 .size(34.dp)
-                .background(colors.label, CircleShape),
+                .background(colors.foreground, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            BasicText("s", style = Typography.base.copy(color = colors.surface, fontWeight = FontWeight.Bold))
+            BasicText("s", style = Typography.base.copy(color = colors.background, fontWeight = FontWeight.Bold))
         }
         Column(Modifier.weight(1f)) {
-            BasicText("suiss Support", style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+            BasicText("suiss Support", style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     Modifier
                         .size(6.dp)
-                        .background(colors.success, CircleShape),
+                        .background(Palette.green500, CircleShape),
                 )
-                BasicText("Online", style = Typography.xs2.copy(color = colors.success))
+                BasicText("Online", style = Typography.xs2.copy(color = if (colors.isDark) Palette.green400 else Palette.green600))
             }
         }
         Button(onClick = onClose, variant = ButtonVariant.Secondary, size = ButtonSize.IconSm) {
-            Icon(PhosphorIcons.Bold.X, contentDescription = "Close chat", size = 13.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Bold.X, contentDescription = "Close chat", size = 13.dp, tint = colors.mutedForeground)
         }
     }
     Box(
         Modifier
             .fillMaxWidth()
             .height(1.dp)
-            .background(colors.separator),
+            .background(colors.border),
     )
     val keys = buildList {
         lines.forEach { add(it.id) }
@@ -353,7 +354,7 @@ private fun SupportTypingBubble() {
                                 Modifier
                                     .size(8.dp)
                                     .graphicsLayer { this.alpha = alpha }
-                                    .background(colors.labelTertiary, CircleShape),
+                                    .background(colors.mutedForeground, CircleShape),
                             )
                         }
                     }
@@ -384,7 +385,7 @@ private fun SupportComposer(onSend: (String) -> Unit, onAttach: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(onClick = onAttach, variant = ButtonVariant.Secondary, size = ButtonSize.IconSm) {
-            Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.mutedForeground)
         }
         InputGroup(Modifier.weight(1f)) {
             InputGroupInput(

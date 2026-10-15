@@ -219,7 +219,7 @@ function SignaturePad({
 
   const placeholderNode =
     typeof placeholder === "string" || typeof placeholder === "number" ? (
-      <Text style={[styles.placeholder, { color: colors.labelTertiary }]}>
+      <Text style={[styles.placeholder, { color: colors.mutedForeground }]}>
         {placeholder}
       </Text>
     ) : (
@@ -246,10 +246,8 @@ function SignaturePad({
       style={[
         styles.root,
         {
-          borderColor: colors.separator,
-          backgroundColor: isDark
-            ? colors.surfaceSecondary
-            : colors.surfaceRaised,
+          borderColor: colors.border,
+          backgroundColor: isDark ? colors.muted : colors.card,
         },
         disabled && { opacity: 0.5 },
         style,
@@ -258,16 +256,16 @@ function SignaturePad({
     >
       <View
         pointerEvents="none"
-        style={[styles.baseline, { borderBottomColor: colors.separatorStrong }]}
+        style={[styles.baseline, { borderBottomColor: colors.input }]}
       >
-        <Text style={[styles.mark, { color: colors.labelTertiary }]}>×</Text>
+        <Text style={[styles.mark, { color: colors.mutedForeground }]}>×</Text>
         {empty ? placeholderNode : null}
       </View>
       <GestureDetector gesture={gesture}>
         <View style={StyleSheet.absoluteFill}>
           <SignaturePadContext.Provider value={context}>
             <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-              <SignaturePadStrokes color={colors.label} />
+              <SignaturePadStrokes color={colors.foreground} />
             </View>
           </SignaturePadContext.Provider>
         </View>

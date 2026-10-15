@@ -105,7 +105,7 @@ public struct SignupSteps: View {
     HStack(spacing: 8) {
       ForEach(0..<Self.steps.count, id: \.self) { position in
         Capsule()
-          .fill(position <= index ? Color.accent : .labelQuaternary)
+          .fill(position <= index ? EsuissColor.primary : EsuissColor.border)
           .frame(width: position == index ? 28 : 6, height: 6)
       }
     }
@@ -120,12 +120,12 @@ public struct SignupSteps: View {
     return VStack(spacing: 14) {
       Text("Step \(index + 1) of \(Self.steps.count)")
         .scaledFont(.sm, weight: .semibold)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Text(step.title)
         .scaledTextStyle(.xl2, weight: .bold)
       Text(step.description)
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Group {
         if step.secure {
           SecureField(text: $values[index], prompt: step.placeholder) { step.placeholder }
@@ -141,14 +141,14 @@ public struct SignupSteps: View {
       .focused($focused)
       .onSubmit { if ready { go(1) } }
       .scaledFont(.lg)
-      .foregroundStyle(Color.label)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
       .multilineTextAlignment(.leading)
       .padding(.horizontal, 16)
       .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
-      .background(Color.surface, in: shape)
+      .background(EsuissColor.background, in: shape)
       .overlay {
-        shape.strokeBorder(focused ? Color.focus : .separatorStrong, lineWidth: 1)
+        shape.strokeBorder(focused ? EsuissColor.ring : EsuissColor.input, lineWidth: 1)
       }
       .padding(.top, 16)
       if step.secure && !values[index].isEmpty {
@@ -167,15 +167,15 @@ public struct SignupSteps: View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Welcome, \(name).")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("Your account is ready. Verify \(email) to finish.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") {
         done = false
         index = 0
@@ -220,17 +220,17 @@ private struct SignupStepsRules: View {
         HStack(spacing: 8) {
           ZStack {
             Circle()
-              .strokeBorder(met ? Color.clear : .labelQuaternary, lineWidth: 1.5)
-              .background(met ? Color.success : .clear, in: Circle())
+              .strokeBorder(met ? Color.clear : EsuissColor.border, lineWidth: 1.5)
+              .background(met ? Palette.green500 : .clear, in: Circle())
             Ph.check.bold
               .frame(width: 10, height: 10)
-              .foregroundStyle(Color.onAccent)
+              .foregroundStyle(EsuissColor.primaryForeground)
               .scaleEffect(met ? 1 : 0)
           }
           .frame(width: 16, height: 16)
           Text(rule.0)
             .scaledFont(.sm)
-            .foregroundStyle(met ? Color.label : .labelSecondary)
+            .foregroundStyle(met ? EsuissColor.foreground : EsuissColor.mutedForeground)
         }
         .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.6), value: met)
         .accessibilityElement(children: .combine)
@@ -244,8 +244,8 @@ private struct SignupStepsLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.lg)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

@@ -50,17 +50,17 @@ private struct SelectionListRows: View {
               VStack(alignment: .leading, spacing: 0) {
                 Text(verbatim: note.title)
                   .textStyle(.base, weight: .semibold)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
                   .lineLimit(1)
                 Text(verbatim: note.preview)
                   .textStyle(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .lineLimit(1)
               }
               .frame(maxWidth: .infinity, alignment: .leading)
               Ph.caretRight.regular
                 .frame(width: 16, height: 16)
-                .foregroundStyle(Color.labelTertiary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .opacity(editing ? 0 : 1)
             }
             .padding(.horizontal, 16)
@@ -71,20 +71,20 @@ private struct SelectionListRows: View {
         }
         .overlay(alignment: .top) {
           if index > 0 {
-            Color.separator.frame(height: 1)
+            EsuissColor.border.frame(height: 1)
           }
         }
       }
     }
     .clipShape(shape)
-    .overlay { shape.strokeBorder(Color.separator) }
+    .overlay { shape.strokeBorder(EsuissColor.border) }
   }
 }
 
 private struct SelectionListRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -96,7 +96,7 @@ private struct SelectionListFooter: View {
     HStack(spacing: 12) {
       Text(verbatim: log)
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityAddTraits(.updatesFrequently)
       Button("Reset", action: onReset)
@@ -162,7 +162,7 @@ private struct SelectionListNotes: View {
             list.setEditing(false)
           } label: {
             Text("Delete")
-              .foregroundStyle(list.count == 0 ? Color.labelQuaternary : .danger)
+              .foregroundStyle(EsuissColor.destructive)
           }
           .buttonStyle(.variant(.plain, size: .lg))
           .disabled(list.count == 0)
@@ -225,7 +225,7 @@ private struct SelectionListMail: View {
           } label: {
             Ph.trash.regular
               .frame(width: 22, height: 22)
-              .foregroundStyle(disabled ? Color.labelQuaternary : .danger)
+              .foregroundStyle(EsuissColor.destructive)
           }
           .buttonStyle(.variant(.plain, size: .iconLg))
           .accessibilityLabel(Text("Delete"))

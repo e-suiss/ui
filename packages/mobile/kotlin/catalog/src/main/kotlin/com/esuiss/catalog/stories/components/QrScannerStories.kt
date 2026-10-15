@@ -27,6 +27,7 @@ import com.esuiss.catalog.StoryGroup
 import com.esuiss.ui.components.QrScanner
 import com.esuiss.ui.components.QrScannerState
 import com.esuiss.ui.theme.DarkColors
+import com.esuiss.ui.theme.Palette
 
 val qrScannerStories = StoryGroup(
     section = Section.Components,
@@ -65,14 +66,14 @@ private fun BoxScope.QrScannerCameraPlaceholder() {
         (0 until QrModules).flatMap { r -> (0 until QrModules).filter { c -> qrModuleDark(r, c) }.map { c -> r to c } }
     }
     Box(
-        modifier = Modifier.matchParentSize().background(colors.media),
+        modifier = Modifier.matchParentSize().background(Palette.black),
         contentAlignment = Alignment.Center,
     ) {
         Box(
             Modifier
                 .offset(y = (-24).dp)
                 .rotate(-6f)
-                .background(colors.onMedia, RoundedCornerShape(12.dp))
+                .background(Palette.white, RoundedCornerShape(12.dp))
                 .padding(10.dp),
         ) {
             Canvas(Modifier.size(QrModule * QrModules)) {
@@ -80,7 +81,7 @@ private fun BoxScope.QrScannerCameraPlaceholder() {
                 val path = Path().apply {
                     modules.forEach { (r, c) -> addRect(Rect(c * unit, r * unit, (c + 1) * unit, (r + 1) * unit)) }
                 }
-                drawPath(path, colors.media)
+                drawPath(path, Palette.black)
             }
         }
     }

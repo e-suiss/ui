@@ -21,6 +21,14 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import { fontSize, radius, useTheme } from "@/components/ui/theme"
 
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith("#") || color.length !== 7) return color
+  const r = Number.parseInt(color.slice(1, 3), 16)
+  const g = Number.parseInt(color.slice(3, 5), 16)
+  const b = Number.parseInt(color.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 type OnboardingPage = {
   title: string
   description: string
@@ -51,12 +59,15 @@ const styles = StyleSheet.create({
 })
 
 function Illustration({ icon }: { icon: PhosphorIcon }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   return (
     <View
-      style={[styles.illustration, { backgroundColor: colors.accentSurface }]}
+      style={[
+        styles.illustration,
+        { backgroundColor: withAlpha(colors.primary, isDark ? 0.2 : 0.1) },
+      ]}
     >
-      <Icon as={icon} weight="duotone" size={80} color={colors.accent} />
+      <Icon as={icon} weight="duotone" size={80} color={colors.primary} />
     </View>
   )
 }
@@ -159,7 +170,7 @@ function Onboarding({
                   <Text
                     style={[
                       styles.description,
-                      { color: colors.labelSecondary },
+                      { color: colors.mutedForeground },
                     ]}
                   >
                     {page.description}

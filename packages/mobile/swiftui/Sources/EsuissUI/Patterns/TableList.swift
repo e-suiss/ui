@@ -52,17 +52,17 @@ public struct TableList<Row, ID: Hashable>: View {
       if let title {
         Text(title)
           .scaledTextStyle(.xl3, weight: .bold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .accessibilityAddTraits(.isHeader)
       }
       if rows.isEmpty {
         Text(emptyText)
           .scaledTextStyle(.base)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.horizontal, 16)
           .padding(.vertical, 12)
           .frame(maxWidth: .infinity, alignment: .leading)
-          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+          .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       } else {
         TableListGroup {
           ForEach(rows.map { TableListEntry(id: id($0), row: $0) }) { entry in
@@ -85,7 +85,7 @@ public struct TableList<Row, ID: Hashable>: View {
       if let titleColumn {
         titleColumn.cell(row)
           .scaledTextStyle(.base)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .lineLimit(1)
       }
       if !descriptions.isEmpty {
@@ -93,7 +93,7 @@ public struct TableList<Row, ID: Hashable>: View {
           entry.offset == 0 ? text + entry.element.cell(row) : text + Text(verbatim: " \u{00B7} ") + entry.element.cell(row)
         }
         .scaledTextStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .lineLimit(1)
       }
     }
@@ -102,7 +102,7 @@ public struct TableList<Row, ID: Hashable>: View {
       column.cell(row)
         .scaledTextStyle(.base)
         .monospacedDigit()
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .lineLimit(1)
         .fixedSize()
     }
@@ -152,7 +152,7 @@ public struct TableListGroup<Content: View>: View {
         let rects = anchors.map { proxy[$0] }.sorted { $0.minY < $1.minY }
         ForEach(Array(rects.dropFirst().enumerated()), id: \.offset) { _, rect in
           Rectangle()
-            .fill(Color.separator)
+            .fill(EsuissColor.border)
             .frame(width: max(rect.width - 16, 0), height: 1)
             .offset(x: rect.minX + 16, y: rect.minY)
         }
@@ -161,7 +161,7 @@ public struct TableListGroup<Content: View>: View {
       .accessibilityHidden(true)
     }
     .transformPreference(TableListRowKey.self) { $0 = [] }
-    .background(Color.surfaceSecondary, in: shape)
+    .background(EsuissColor.muted, in: shape)
     .clipShape(shape)
     .environment(\.itemGroupInset, true)
     .accessibilityElement(children: .contain)
@@ -205,8 +205,8 @@ public struct TableListRow<Content: View>: View {
 private struct TableListRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .foregroundStyle(Color.label)
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .foregroundStyle(EsuissColor.foreground)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -231,7 +231,7 @@ public struct TableListSection<Content: View>: View {
         Text(header)
           .textCase(.uppercase)
           .scaledTextStyle(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.horizontal, 16)
           .accessibilityAddTraits(.isHeader)
       }
@@ -239,7 +239,7 @@ public struct TableListSection<Content: View>: View {
       if let footer {
         Text(footer)
           .scaledTextStyle(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .fixedSize(horizontal: false, vertical: true)
           .padding(.horizontal, 16)
       }

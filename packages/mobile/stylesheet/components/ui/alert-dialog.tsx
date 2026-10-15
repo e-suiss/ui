@@ -84,7 +84,6 @@ function AlertDialogOverlay({
   style,
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>) {
-  const { colors } = useTheme()
   return (
     <AlertDialogPrimitive.Backdrop
       render={
@@ -96,7 +95,7 @@ function AlertDialogOverlay({
       }
       style={(state) => [
         styles.backdrop,
-        { backgroundColor: colors.scrim },
+        { backgroundColor: "rgba(0, 0, 0, 0.5)" },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -131,8 +130,11 @@ function AlertDialogContent({
               style={(state) => [
                 styles.content,
                 {
-                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
-                  backgroundColor: colors.surfaceRaised,
+                  borderColor: withAlpha(
+                    colors.foreground,
+                    isDark ? 0.1 : 0.05
+                  ),
+                  backgroundColor: colors.popover,
                 },
                 typeof style === "function" ? style(state) : style,
               ]}
@@ -165,11 +167,7 @@ function AlertDialogMedia({ style, ...props }: ViewProps) {
   const { colors } = useTheme()
   return (
     <View
-      style={[
-        styles.media,
-        { backgroundColor: colors.surfaceSecondary },
-        style,
-      ]}
+      style={[styles.media, { backgroundColor: colors.muted }, style]}
       {...props}
     />
   )
@@ -184,7 +182,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -201,7 +199,7 @@ function AlertDialogDescription({
     <AlertDialogPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

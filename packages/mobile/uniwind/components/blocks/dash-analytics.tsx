@@ -95,7 +95,7 @@ const regions = [
 ]
 
 const chartConfig = {
-  value: { label: "Value", color: "accent" },
+  value: { label: "Value", color: "primary" },
 } satisfies ChartConfig
 
 function AppMenu({
@@ -125,7 +125,7 @@ function AppMenu({
         >
           {apps.map((item) => (
             <DropdownMenuRadioItem key={item.value} value={item.value}>
-              <Icon as={item.icon} className="size-4.5 text-label" />
+              <Icon as={item.icon} className="size-4.5 text-foreground" />
               <Text>{item.label}</Text>
             </DropdownMenuRadioItem>
           ))}
@@ -142,7 +142,7 @@ function OtherSection({ value }: { value: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         This section isn't part of the sample. Choose Analytics.
       </Text>
     </View>
@@ -230,20 +230,20 @@ function DashAnalytics({
                   ))}
                 </ToggleGroup>
               </ScrollView>
-              <View className="mx-4 rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2.5">
+              <View className="mx-4 rounded-xl bg-muted px-4 pt-3.5 pb-2.5">
                 <View className="flex-row items-end gap-2.5">
                   <View
                     accessibilityLiveRegion="polite"
                     className="min-w-0 flex-1"
                   >
-                    <Text className="text-sm text-label-secondary">
+                    <Text className="text-sm text-muted-foreground">
                       {`${current === data.length - 1 ? "This week" : point.week} · ${metric.label}`}
                     </Text>
                     <Text className="text-3xl font-bold tracking-tight tabular-nums">
                       {format(point.value)}
                     </Text>
                   </View>
-                  <Text className="text-sm font-semibold text-green">
+                  <Text className="text-sm font-semibold text-green-500">
                     {`+${12 + metrics.indexOf(metric) * 3}%`}
                   </Text>
                 </View>
@@ -261,14 +261,14 @@ function DashAnalytics({
                     <XAxis dataKey="week" hide />
                     <ChartTooltip
                       content={() => null}
-                      cursor={{ stroke: "separator-strong" }}
+                      cursor={{ stroke: "input" }}
                       defaultIndex={data.length - 1}
                     />
                     <Area
                       animationDuration={500}
                       dataKey="value"
                       type="linear"
-                      stroke="accent"
+                      stroke="primary"
                       strokeWidth={2.5}
                       fill={{
                         stops: [
@@ -278,8 +278,8 @@ function DashAnalytics({
                       }}
                       activeDot={{
                         r: 5,
-                        fill: "accent",
-                        stroke: "surface-secondary",
+                        fill: "primary",
+                        stroke: "muted",
                         strokeWidth: 2,
                       }}
                     />

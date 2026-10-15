@@ -124,7 +124,7 @@ public struct SheetContent<Content: View>: View {
     .clipShape(shape)
     .background {
       shape
-        .fill(Color.surfaceRaised)
+        .fill(EsuissColor.popover)
         .shadow(.lg)
     }
     .overlay(alignment: .topTrailing) {

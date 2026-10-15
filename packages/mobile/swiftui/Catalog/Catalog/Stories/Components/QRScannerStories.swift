@@ -82,14 +82,14 @@ private struct QRScannerCameraPlaceholder: View {
     GeometryReader { proxy in
       Canvas { context, _ in
         let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))
-        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))
-        context.fill(QRCodeSample.modules, with: .color(.media))
+        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(Palette.white))
+        context.fill(QRCodeSample.modules, with: .color(Palette.black))
       }
       .frame(width: QRCodeSample.side, height: QRCodeSample.side)
       .rotationEffect(.degrees(-6))
       .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)
     }
-    .background(Color.media)
+    .background(Palette.black)
     .accessibilityHidden(true)
   }
 }

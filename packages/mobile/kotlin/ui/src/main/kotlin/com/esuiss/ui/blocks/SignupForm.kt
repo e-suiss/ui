@@ -80,6 +80,7 @@ import com.esuiss.ui.components.rememberInputAccessoryState
 import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -162,13 +163,13 @@ fun SignupForm(
                     modifier = Modifier
                         .fillMaxWidth()
                         .semantics { heading() },
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                 )
                 Spacer(Modifier.height(10.dp))
                 BasicText(
                     "One suiss Account is all you need to access every suiss service.",
                     modifier = Modifier.fillMaxWidth(),
-                    style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
                 LinkText("Learn more ›", onLearnMore, Modifier.align(Alignment.CenterHorizontally))
                 Legend("Your name")
@@ -199,7 +200,7 @@ fun SignupForm(
                 BasicText(
                     "This will be your new suiss Account.",
                     modifier = Modifier.padding(top = 6.dp),
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                 )
                 Legend("Password")
                 FieldStack(invalid = mismatch) {
@@ -232,7 +233,7 @@ fun SignupForm(
                         .padding(top = 14.dp)
                         .heightIn(min = 20.dp)
                         .semantics { liveRegion = LiveRegionMode.Polite },
-                    style = Typography.sm.copy(color = colors.danger, textAlign = TextAlign.Center),
+                    style = Typography.sm.copy(color = colors.destructive, textAlign = TextAlign.Center),
                 )
             }
             BottomBar {
@@ -250,7 +251,7 @@ private fun Legend(text: String) {
     BasicText(
         text,
         modifier = Modifier.padding(top = 22.dp, bottom = 8.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
+        style = Typography.sm.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -263,11 +264,11 @@ private fun FieldStack(
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(Radius.xl)
     val fill by animateColorAsState(
-        if (invalid) colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.surface,
+        if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.background,
         tween(200),
         label = "fill",
     )
-    val edge by animateColorAsState(if (invalid) colors.danger else colors.separatorStrong, tween(200), label = "edge")
+    val edge by animateColorAsState(if (invalid) colors.destructive else colors.input, tween(200), label = "edge")
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -284,7 +285,7 @@ private fun StackDivider() {
         Modifier
             .fillMaxWidth()
             .height(1.dp)
-            .background(EsuissTheme.colors.separatorStrong),
+            .background(EsuissTheme.colors.input),
     )
 }
 
@@ -303,7 +304,7 @@ private fun StackInput(
 ) {
     val colors = EsuissTheme.colors
     val focus = LocalFocusManager.current
-    val style = Typography.lg.copy(color = colors.label)
+    val style = Typography.lg.copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -317,7 +318,7 @@ private fun StackInput(
             },
         textStyle = style,
         singleLine = true,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         visualTransformation = if (secret) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = KeyboardActions(
@@ -330,7 +331,7 @@ private fun StackInput(
         decorationBox = { inner ->
             Box(Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
                 if (value.isEmpty()) {
-                    BasicText(placeholder, style = style.copy(color = colors.labelSecondary), maxLines = 1)
+                    BasicText(placeholder, style = style.copy(color = colors.mutedForeground), maxLines = 1)
                 }
                 inner()
             }
@@ -350,8 +351,8 @@ private fun RuleList(password: String, modifier: Modifier = Modifier) {
 @Composable
 private fun RuleRow(label: String, met: Boolean) {
     val colors = EsuissTheme.colors
-    val fill by animateColorAsState(if (met) colors.success else Color.Transparent, tween(250), label = "fill")
-    val edge by animateColorAsState(if (met) Color.Transparent else colors.labelQuaternary, tween(250), label = "edge")
+    val fill by animateColorAsState(if (met) Palette.green500 else Color.Transparent, tween(250), label = "fill")
+    val edge by animateColorAsState(if (met) Color.Transparent else colors.border, tween(250), label = "edge")
     val scale by animateFloatAsState(if (met) 1f else 0f, tween(250, easing = PopEasing), label = "scale")
     Row(
         modifier = Modifier.semantics(mergeDescendants = true) { stateDescription = if (met) "Met" else "Not met" },
@@ -373,10 +374,10 @@ private fun RuleRow(label: String, met: Boolean) {
                     scaleY = scale
                 },
                 size = 10.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
         }
-        BasicText(label, style = Typography.sm.copy(color = if (met) colors.label else colors.labelSecondary))
+        BasicText(label, style = Typography.sm.copy(color = if (met) colors.foreground else colors.mutedForeground))
     }
 }
 
@@ -387,10 +388,10 @@ private fun LinkText(text: String, onClick: () -> Unit, modifier: Modifier = Mod
     BasicText(
         text,
         modifier = modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 6.dp),
-        style = Typography.lg.copy(color = EsuissTheme.colors.link, textAlign = TextAlign.Center),
+        style = Typography.lg.copy(color = EsuissTheme.colors.primary, textAlign = TextAlign.Center),
     )
 }
 
@@ -413,17 +414,17 @@ private fun Success(title: String, description: String, onStartOver: () -> Unit)
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             title,
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
-        BasicText(description, style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center))
+        BasicText(description, style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center))
         LinkText("Start over ›", onStartOver)
     }
 }

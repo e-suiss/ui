@@ -53,9 +53,9 @@ function AlertAction({
     <Pressable
       role="button"
       onPress={onPress}
-      className="h-11 w-full items-center justify-center border-t border-separator-strong active:bg-item-pressed"
+      className="h-11 w-full items-center justify-center border-t border-input active:opacity-80"
     >
-      <Text className={cn("text-lg text-link", primary && "font-semibold")}>
+      <Text className={cn("text-lg text-primary", primary && "font-semibold")}>
         {children}
       </Text>
     </Pressable>
@@ -87,17 +87,17 @@ function VerifyDevice({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-19 items-center justify-center rounded-full bg-success">
+            <View className="size-19 items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-9.5 text-on-accent"
+                className="size-9.5 text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Sign-in approved.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               This device was added to your suiss Account.
             </Text>
             <Pressable
@@ -110,7 +110,7 @@ function VerifyDevice({
               }}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -121,17 +121,19 @@ function VerifyDevice({
   return (
     <Screen>
       <KeyboardScrollView contentContainerClassName="grow gap-3.5 px-6 py-8">
-        <View className="size-14 items-center justify-center rounded-full bg-surface-secondary">
+        <View className="size-14 items-center justify-center rounded-full bg-muted">
           <Icon
             as={phase === "code" ? LockSimpleIcon : DeviceMobileIcon}
             weight="bold"
-            className="size-6.5 text-accent"
+            className="size-6.5 text-primary"
           />
         </View>
         <Text role="heading" className="text-3xl font-semibold">
           {COPY[phase].title}
         </Text>
-        <Text className="text-lg text-label-secondary">{COPY[phase].body}</Text>
+        <Text className="text-lg text-muted-foreground">
+          {COPY[phase].body}
+        </Text>
         <View accessibilityLiveRegion="polite" className="mt-2.5 min-h-16">
           {phase === "code" ? (
             <AnimatedView entering={ENTERING}>
@@ -157,9 +159,9 @@ function VerifyDevice({
                       className={(state) =>
                         cn(
                           "h-14 w-11 rounded-xl border bg-transparent",
-                          error && "border-danger",
-                          !error && state.active && "border-accent",
-                          !(error || state.active) && "border-separator-strong"
+                          error && "border-destructive",
+                          !error && state.active && "border-primary",
+                          !(error || state.active) && "border-input"
                         )
                       }
                     />
@@ -167,7 +169,7 @@ function VerifyDevice({
                 </InputOTPGroup>
               </InputOTP>
               {error ? (
-                <Text className="mt-2.5 text-sm text-danger">
+                <Text className="mt-2.5 text-sm text-destructive">
                   Incorrect code.
                 </Text>
               ) : null}
@@ -176,7 +178,7 @@ function VerifyDevice({
           {phase === "ask" ? (
             <View className="flex-row items-center gap-2.5">
               <Spinner />
-              <Text className="text-sm text-label-secondary">
+              <Text className="text-sm text-muted-foreground">
                 Waiting for approval…
               </Text>
             </View>
@@ -188,17 +190,17 @@ function VerifyDevice({
               onPress={() => setPhase("ask")}
               className="self-start active:opacity-60"
             >
-              <Text className="text-base text-link">Try again ›</Text>
+              <Text className="text-base text-primary">Try again ›</Text>
             </Pressable>
           ) : null}
         </View>
-        <View className="mt-2 items-center justify-center rounded-3xl bg-surface-secondary px-6 py-10">
+        <View className="mt-2 items-center justify-center rounded-3xl bg-muted px-6 py-10">
           <AnimatedView
             key={phase}
             entering={ENTERING}
             accessibilityRole="alert"
             accessibilityLabel="Trusted device"
-            className="w-67.5 overflow-hidden rounded-[0.875rem] bg-surface-raised shadow-lg"
+            className="w-67.5 overflow-hidden rounded-[0.875rem] bg-popover shadow-lg"
           >
             {phase === "code" ? (
               <>
@@ -209,7 +211,7 @@ function VerifyDevice({
                   <Text className="mt-2.5 mb-1 text-3xl font-semibold tracking-widest tabular-nums">
                     482 913
                   </Text>
-                  <Text className="text-center text-sm text-label-secondary">
+                  <Text className="text-center text-sm text-muted-foreground">
                     Enter this code on the device you're signing in to.
                   </Text>
                 </View>
@@ -222,7 +224,7 @@ function VerifyDevice({
                   <Text className="text-center text-lg font-semibold">
                     Sign-in blocked
                   </Text>
-                  <Text className="mt-1 text-center text-sm text-label-secondary">
+                  <Text className="mt-1 text-center text-sm text-muted-foreground">
                     If this wasn't you, change your password.
                   </Text>
                 </View>
@@ -237,13 +239,13 @@ function VerifyDevice({
                   <Text className="text-center text-lg font-semibold">
                     suiss Account Sign-in Requested
                   </Text>
-                  <Text className="mt-1 text-center text-sm text-label-secondary">
+                  <Text className="mt-1 text-center text-sm text-muted-foreground">
                     Your suiss Account is being used to sign in to a device near
                     San Francisco.
                   </Text>
-                  <View className="mt-3.5 h-24 items-center justify-center rounded-[0.625rem] bg-accent-surface">
-                    <View className="size-12 items-center justify-center rounded-full bg-accent/25">
-                      <View className="size-2.5 rounded-full bg-accent" />
+                  <View className="mt-3.5 h-24 items-center justify-center rounded-[0.625rem] bg-primary/10 dark:bg-primary/20">
+                    <View className="size-12 items-center justify-center rounded-full bg-primary/25">
+                      <View className="size-2.5 rounded-full bg-primary" />
                     </View>
                   </View>
                 </View>

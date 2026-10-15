@@ -125,7 +125,7 @@ fun SearchRevealField(
     LaunchedEffect(focused) {
         if (focused) context?.scroll?.animateScrollTo(0)
     }
-    val textStyle = Typography.base.copy(color = colors.label)
+    val textStyle = Typography.base.copy(color = colors.foreground)
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -137,14 +137,14 @@ fun SearchRevealField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(36.dp)
-                .background(colors.control, RoundedCornerShape(Radius.lg))
+                .background(colors.secondary, RoundedCornerShape(Radius.lg))
                 .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 18.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 18.dp, tint = colors.mutedForeground)
             CompositionLocalProvider(
-                LocalTextSelectionColors provides TextSelectionColors(colors.accent, colors.accent.copy(alpha = 0.3f)),
+                LocalTextSelectionColors provides TextSelectionColors(colors.primary, colors.primary.copy(alpha = 0.3f)),
             ) {
                 BasicTextField(
                     value = value,
@@ -158,11 +158,11 @@ fun SearchRevealField(
                     textStyle = textStyle,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     interactionSource = interaction,
-                    cursorBrush = SolidColor(colors.accent),
+                    cursorBrush = SolidColor(colors.primary),
                     decorationBox = { inner ->
                         Box(contentAlignment = Alignment.CenterStart) {
                             if (value.isEmpty()) {
-                                BasicText(placeholder, style = textStyle.copy(color = colors.labelSecondary), maxLines = 1)
+                                BasicText(placeholder, style = textStyle.copy(color = colors.mutedForeground), maxLines = 1)
                             }
                             inner()
                         }
@@ -185,7 +185,7 @@ fun SearchRevealField(
                         .semantics { contentDescription = "Clear search" },
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(PhosphorIcons.Fill.XCircle, contentDescription = null, size = 18.dp, tint = colors.labelSecondary)
+                    Icon(PhosphorIcons.Fill.XCircle, contentDescription = null, size = 18.dp, tint = colors.mutedForeground)
                 }
             }
         }

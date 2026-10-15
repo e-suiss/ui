@@ -132,7 +132,6 @@ function SheetOverlay({
   style,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Backdrop>) {
-  const { colors } = useTheme()
   return (
     <AnimatedView
       entering={FadeIn.duration(DURATION).reduceMotion(ReduceMotion.System)}
@@ -142,7 +141,7 @@ function SheetOverlay({
       <DrawerPrimitive.Backdrop
         style={(state) => [
           styles.fill,
-          { backgroundColor: colors.scrim },
+          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}
@@ -213,7 +212,7 @@ function SheetContent({
             <DrawerPrimitive.Popup
               style={(state) => [
                 styles.popup,
-                { backgroundColor: colors.surfaceRaised },
+                { backgroundColor: colors.popover },
                 horizontal && styles.popupFill,
                 typeof style === "function" ? style(state) : style,
               ]}
@@ -232,8 +231,8 @@ function SheetContent({
                         styles.close,
                         !closeLabel && {
                           backgroundColor: pressed
-                            ? colors.separator
-                            : colors.surfaceTertiary,
+                            ? colors.border
+                            : colors.secondary,
                         },
                       ]}
                     />
@@ -247,7 +246,7 @@ function SheetContent({
                     <Icon
                       as={XIcon}
                       size={16}
-                      color={colors.label}
+                      color={colors.foreground}
                       style={styles.closeIcon}
                     />
                   )}
@@ -288,7 +287,7 @@ function SheetTitle({
     <DrawerPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -305,7 +304,7 @@ function SheetDescription({
     <DrawerPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

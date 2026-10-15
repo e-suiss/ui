@@ -70,7 +70,7 @@ function InputAccessoryBarView({
   return (
     <View
       className={cn(
-        "h-11 flex-row items-center border-t border-separator bg-surface-raised px-1 dark:bg-surface-secondary",
+        "h-11 flex-row items-center border-t border-border bg-card px-1 dark:bg-muted",
         className
       )}
     >

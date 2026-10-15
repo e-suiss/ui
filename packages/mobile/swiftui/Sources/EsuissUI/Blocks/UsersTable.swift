@@ -17,12 +17,12 @@ public struct UsersTable: View {
 
   static var initialUsers: [User] {
     [
-      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", seen: "2 min ago", tint: .indigo),
-      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", seen: "1 hr ago", tint: .orange),
-      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", seen: "Yesterday", tint: .green),
-      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", seen: "3 days ago", tint: .blue),
-      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", seen: "—", tint: .pink),
-      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", seen: "5 hr ago", tint: .mint),
+      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", seen: "2 min ago", tint: Palette.indigo500),
+      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", seen: "1 hr ago", tint: Palette.orange500),
+      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", seen: "Yesterday", tint: Palette.green500),
+      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", seen: "3 days ago", tint: Palette.blue500),
+      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", seen: "—", tint: Palette.pink500),
+      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", seen: "5 hr ago", tint: Palette.teal400),
     ]
   }
 
@@ -128,23 +128,23 @@ public struct UsersTable: View {
                     }
                     .overlay(alignment: .top) {
                       if index > 0 {
-                        Color.separator.frame(height: 1).padding(.leading, 16)
+                        EsuissColor.border.frame(height: 1).padding(.leading, 16)
                       }
                     }
                   }
                   if list.isEmpty {
                     Text("No matching users.")
                       .scaledFont(.sm)
-                      .foregroundStyle(Color.labelSecondary)
+                      .foregroundStyle(EsuissColor.mutedForeground)
                       .frame(maxWidth: .infinity)
                       .padding(24)
                   }
                 }
-                .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+                .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
                 .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
                 Text(selected.isEmpty ? "Tap rows to select" : "\(selected.count) selected")
                   .scaledFont(.xs)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .padding(.horizontal, 4)
                   .contentTransition(.numericText())
               }
@@ -205,7 +205,7 @@ private struct UsersTableRow: View {
     HStack(spacing: 10) {
       Text(verbatim: user.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
         .font(.system(size: 12, weight: .semibold))
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 32, height: 32)
         .background(user.tint, in: Circle())
         .accessibilityHidden(true)
@@ -214,7 +214,7 @@ private struct UsersTableRow: View {
           .scaledFont(.sm, weight: .semibold)
         Text(verbatim: user.email)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .lineLimit(1)
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -222,10 +222,10 @@ private struct UsersTableRow: View {
         Badge(LocalizedStringKey(user.role), variant: .secondary)
         Text(LocalizedStringKey(user.status))
           .scaledFont(.xs)
-          .foregroundStyle(user.status == "Suspended" ? Color.danger : user.status == "Invited" ? .labelSecondary : .label)
+          .foregroundStyle(user.status == "Suspended" ? EsuissColor.destructive : user.status == "Invited" ? EsuissColor.mutedForeground : EsuissColor.foreground)
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .frame(minHeight: 56)
@@ -277,7 +277,7 @@ private struct UsersTableShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

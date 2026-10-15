@@ -231,14 +231,14 @@ function Attachment({
       <TextStyleContext.Provider
         value={{
           ...(size === "default" ? fontSize.sm : fontSize.xs),
-          color: colors.label,
+          color: colors.foreground,
         }}
       >
         <View
           style={[
             styles.root,
             (grouped || state !== "idle") && {
-              backgroundColor: colors.surfaceSecondary,
+              backgroundColor: colors.muted,
             },
             SIZE[size],
             vertical
@@ -252,7 +252,7 @@ function Attachment({
             !grouped &&
               state === "idle" && [
                 styles.dashed,
-                { borderColor: colors.separatorStrong },
+                { borderColor: colors.input },
               ],
             style,
           ]}
@@ -264,7 +264,7 @@ function Attachment({
                 styles.separator,
                 {
                   start: SEPARATOR_START[size][hasMedia ? 1 : 0],
-                  backgroundColor: colors.separator,
+                  backgroundColor: colors.border,
                 },
               ]}
             />
@@ -288,20 +288,20 @@ function AttachmentMedia({
   if (vertical) iconSize = 24
   return (
     <TextStyleContext.Provider
-      value={variant === "icon" ? { color: colors.labelSecondary } : undefined}
+      value={variant === "icon" ? { color: colors.mutedForeground } : undefined}
     >
       <IconSizeContext.Provider value={iconSize}>
         <View
           style={[
             styles.media,
-            { backgroundColor: colors.surfaceSecondary },
+            { backgroundColor: colors.muted },
             MEDIA_SIZE[size],
             vertical && { width: "100%" },
             variant !== "image" && [
               styles.mediaFramed,
               {
-                borderColor: colors.separator,
-                backgroundColor: colors.surface,
+                borderColor: colors.border,
+                backgroundColor: colors.background,
               },
             ],
             variant === "document" && styles.document,
@@ -319,10 +319,10 @@ function AttachmentLabel({ style, children, ...props }: ViewProps) {
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...styles.labelText, color: colors.onAccent }}
+      value={{ ...styles.labelText, color: colors.primaryForeground }}
     >
       <View
-        style={[styles.label, { backgroundColor: colors.accent }, style]}
+        style={[styles.label, { backgroundColor: colors.primary }, style]}
         {...props}
       >
         {wrapText(children, LABEL_TEXT)}
@@ -386,7 +386,8 @@ function AttachmentDescription({
         size === "default" ? fontSize.sm : fontSize.xs,
         {
           marginTop: 2,
-          color: state === "error" ? colors.danger : colors.labelSecondary,
+          color:
+            state === "error" ? colors.destructive : colors.mutedForeground,
         },
         style,
       ]}
@@ -412,7 +413,7 @@ function AttachmentProgress({
       <ProgressTrack
         style={[
           styles.track,
-          { backgroundColor: withAlpha(colors.label, 0.1) },
+          { backgroundColor: withAlpha(colors.foreground, 0.1) },
         ]}
       >
         <ProgressIndicator style={styles.indicator} />
@@ -452,8 +453,7 @@ function AttachmentAction({
   const resolvedSize = size ?? (isText ? "sm" : "icon-xs")
   const [actionSize, slop] = ACTION_SIZE[attachmentSize]
   const vertical = orientation === "vertical"
-  const disabled = Boolean(props.disabled)
-  const textStyle = buttonTextStyle(variant, resolvedSize, colors, disabled)
+  const textStyle = buttonTextStyle(variant, resolvedSize, colors)
   let iconSize = resolvedSize === "xs" || resolvedSize === "icon-xs" ? 12 : 16
   if (!isText && attachmentSize === "xs") iconSize = 10
   return (
@@ -465,7 +465,7 @@ function AttachmentAction({
         isText
           ? { height: undefined, paddingHorizontal: 0 }
           : { width: actionSize, height: actionSize },
-        !isText && vertical && { backgroundColor: colors.scrim },
+        !isText && vertical && { backgroundColor: "rgba(0, 0, 0, 0.5)" },
         style,
       ]}
       {...props}
@@ -476,7 +476,9 @@ function AttachmentAction({
             ? { ...textStyle, ...fontSize.base }
             : {
                 ...textStyle,
-                color: vertical ? colors.onAccent : colors.labelSecondary,
+                color: vertical
+                  ? colors.primaryForeground
+                  : colors.mutedForeground,
               }
         }
       >
@@ -497,7 +499,6 @@ function AttachmentTrigger({
     style?: StyleProp<ViewStyle>
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {
-  const { colors } = useTheme()
   const { size, grouped } = React.useContext(AttachmentContext)
   let borderRadius: number = size === "xs" ? radius.lg : radius["2xl"]
   if (grouped) borderRadius = 0
@@ -509,7 +510,7 @@ function AttachmentTrigger({
         style: ({ pressed }: { pressed: boolean }) => [
           styles.trigger,
           { borderRadius },
-          pressed && { backgroundColor: colors.itemPressed },
+          pressed && { opacity: 0.8 },
           style,
         ],
         role: "button",
@@ -534,11 +535,7 @@ function AttachmentGroup({ style, children, ...props }: ViewProps) {
   })
   return (
     <View
-      style={[
-        styles.group,
-        { backgroundColor: colors.surfaceSecondary },
-        style,
-      ]}
+      style={[styles.group, { backgroundColor: colors.muted }, style]}
       {...props}
     >
       {items}

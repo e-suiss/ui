@@ -76,9 +76,9 @@ public struct PermissionPrimer: View {
         VStack(spacing: 0) {
           icon
             .frame(width: 44, height: 44)
-            .foregroundStyle(Color.accent)
+            .foregroundStyle(EsuissColor.primary)
             .frame(width: 88, height: 88)
-            .background(Color.accentSurface, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
+            .background(Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2)), in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
             .accessibilityHidden(true)
           title
             .scaledTextStyle(.xl2, weight: .bold)
@@ -87,7 +87,7 @@ public struct PermissionPrimer: View {
             .accessibilityAddTraits(.isHeader)
           description
             .scaledTextStyle(.lg)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .multilineTextAlignment(.center)
             .padding(.top, 12)
           VStack(alignment: .leading, spacing: 20) {
@@ -95,16 +95,16 @@ public struct PermissionPrimer: View {
               HStack(alignment: .top, spacing: 14) {
                 benefit.icon
                   .frame(width: 22, height: 22)
-                  .foregroundStyle(Color.accent)
+                  .foregroundStyle(EsuissColor.primary)
                   .frame(width: 40, height: 40)
-                  .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+                  .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
                   .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                   benefit.title
                     .scaledFont(.base, weight: .semibold)
                   benefit.description
                     .scaledTextStyle(.sm)
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
               }

@@ -31,23 +31,23 @@ const chartData = [
 ].map((weight, index) => ({ month: MONTHS[index] ?? "", weight }))
 
 const chartConfig = {
-  weight: { label: "Weight", color: "purple" },
+  weight: { label: "Weight", color: "purple-500" },
 } satisfies ChartConfig
 
 export function LineChartDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <Text className="text-sm font-semibold text-purple">Weight</Text>
+        <Text className="text-sm font-semibold text-purple-500">Weight</Text>
         <View className="flex-row items-baseline gap-1">
           <Text className="text-3xl font-semibold tracking-tight tabular-nums">
             77.9
           </Text>
-          <Text className="text-base font-semibold text-label-secondary">
+          <Text className="text-base font-semibold text-muted-foreground">
             kg
           </Text>
         </View>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Down 4.5 kg since January
         </Text>
       </CardHeader>

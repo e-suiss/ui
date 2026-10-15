@@ -70,6 +70,7 @@ function Slider<
         state.orientation === "vertical"
           ? styles.rootVertical
           : styles.rootHorizontal,
+        state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}
       defaultValue={defaultValue}
@@ -92,22 +93,11 @@ function Slider<
             state.orientation === "vertical"
               ? styles.trackVertical
               : styles.trackHorizontal,
-            {
-              backgroundColor: state.disabled
-                ? colors.controlDisabled
-                : colors.labelQuaternary,
-            },
+            { backgroundColor: colors.border },
           ]}
         >
           <SliderPrimitive.Indicator
-            style={(state) => [
-              styles.indicator,
-              {
-                backgroundColor: state.disabled
-                  ? colors.accentDisabled
-                  : colors.accent,
-              },
-            ]}
+            style={[styles.indicator, { backgroundColor: colors.primary }]}
           />
         </SliderPrimitive.Track>
         {thumbIndexes(value, defaultValue).map((index) => (
@@ -131,8 +121,10 @@ function Slider<
                 styles.thumb,
                 size,
                 {
-                  backgroundColor: isDark ? colors.label : colors.surface,
-                  borderColor: `${colors.label}1a`,
+                  backgroundColor: isDark
+                    ? colors.foreground
+                    : colors.background,
+                  borderColor: `${colors.foreground}1a`,
                 },
                 state.disabled && styles.thumbDisabled,
               ]

@@ -65,7 +65,7 @@ export const Values: Story = {
       <Progress value={25} />
       <Progress value={50} />
       <Progress value={75} />
-      <Progress value={100} indicatorClassName="bg-green" />
+      <Progress value={100} indicatorClassName="bg-green-500" />
     </View>
   ),
 }

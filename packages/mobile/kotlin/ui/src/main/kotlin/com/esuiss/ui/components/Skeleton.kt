@@ -35,6 +35,6 @@ fun Skeleton(
         modifier
             .clearAndSetSemantics {}
             .graphicsLayer { alpha = if (reduced) 1f else pulse }
-            .background(EsuissTheme.colors.surfaceSecondary, shape),
+            .background(EsuissTheme.colors.muted, shape),
     )
 }

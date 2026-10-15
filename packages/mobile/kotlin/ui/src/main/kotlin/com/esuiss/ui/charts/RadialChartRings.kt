@@ -24,14 +24,15 @@ import com.esuiss.ui.components.CardSize
 import com.esuiss.ui.components.CardVariant
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import kotlin.math.min
 
 private class RadialRingsRing(val label: String, val value: Double, val goal: Double, val color: Colors.() -> Color)
 
 private val rings = listOf(
-    RadialRingsRing("Move", 720.0, 600.0) { red },
-    RadialRingsRing("Exercise", 62.0, 30.0) { green },
-    RadialRingsRing("Stand", 12.0, 12.0) { cyan },
+    RadialRingsRing("Move", 720.0, 600.0) { Palette.red500 },
+    RadialRingsRing("Exercise", 62.0, 30.0) { Palette.green500 },
+    RadialRingsRing("Stand", 12.0, 12.0) { Palette.cyan500 },
 )
 
 internal fun DrawScope.drawActivityRing(color: Color, radius: Float, bar: Float, progress: Float) {

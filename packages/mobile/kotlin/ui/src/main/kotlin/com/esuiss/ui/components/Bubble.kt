@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -33,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.drawscope.withTransform
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
@@ -184,7 +184,7 @@ fun BubbleContent(
     val clicked by interaction.collectIsPressedAsState()
     var holding by remember { mutableStateOf(false) }
     val pressed = clicked || holding
-    val background = bubbleBackground(variant, colors, pressed)
+    val background = bubbleBackground(variant, colors)
     val foreground = bubbleForeground(variant, colors)
     val ghost = variant == BubbleVariant.Ghost
     val shape = if (ghost) RectangleShape else RoundedCornerShape(Radius.xl2)
@@ -223,6 +223,7 @@ fun BubbleContent(
     }
     Box(
         modifier = modifier
+            .alpha(if (pressed) 0.8f else 1f)
             .drawBehind {
                 if (tailing && (slot?.tailed ?: true)) {
                     val unit = 1.dp.toPx()
@@ -238,7 +239,7 @@ fun BubbleContent(
                 }
             }
             .background(background, shape)
-            .then(if (variant == BubbleVariant.Outline) Modifier.border(1.dp, colors.separator, shape) else Modifier)
+            .then(if (variant == BubbleVariant.Outline) Modifier.border(1.dp, colors.border, shape) else Modifier)
             .then(gestures)
             .then(if (ghost) Modifier else Modifier.padding(horizontal = 15.dp, vertical = 7.dp)),
     ) {
@@ -277,20 +278,20 @@ fun BubbleReactions(
             .drawBehind {
                 val ring = 3.dp.toPx()
                 drawRoundRect(
-                    color = colors.surface,
+                    color = colors.background,
                     topLeft = Offset(-ring, -ring),
                     size = Size(size.width + ring * 2, size.height + ring * 2),
                     cornerRadius = CornerRadius(size.height / 2 + ring),
                 )
             }
-            .background(colors.surfaceSecondary, CircleShape)
+            .background(colors.muted, CircleShape)
             .padding(horizontal = 6.dp, vertical = 2.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides Typography.sm.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.sm.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
             LocalIconSize provides 16.dp,
         ) {
             content()
@@ -310,21 +311,21 @@ fun BubbleReactions(
     }
 }
 
-private fun bubbleBackground(variant: BubbleVariant, colors: Colors, pressed: Boolean): Color =
-    if (variant == BubbleVariant.Ghost) bubbleFill(variant, colors, pressed) else bubbleFill(variant, colors, pressed).compositeOver(colors.surface)
+private fun bubbleBackground(variant: BubbleVariant, colors: Colors): Color =
+    if (variant == BubbleVariant.Ghost) bubbleFill(variant, colors) else bubbleFill(variant, colors).compositeOver(colors.background)
 
-private fun bubbleFill(variant: BubbleVariant, colors: Colors, pressed: Boolean): Color = when (variant) {
-    BubbleVariant.Default -> if (pressed) colors.accentPressed else colors.accent
-    BubbleVariant.Secondary -> if (pressed) colors.controlPressed else colors.control
-    BubbleVariant.Muted -> if (pressed) lerp(colors.surfaceSecondary, colors.label, 0.05f) else colors.surfaceSecondary
-    BubbleVariant.Tinted -> colors.accent.copy(alpha = if (pressed) 0.2f else 0.12f)
-    BubbleVariant.Outline -> if (pressed) colors.control else colors.surface
-    BubbleVariant.Ghost -> if (pressed) colors.itemPressed else Color.Transparent
-    BubbleVariant.Destructive -> if (pressed) colors.dangerSurfacePressed else colors.dangerSurface
+private fun bubbleFill(variant: BubbleVariant, colors: Colors): Color = when (variant) {
+    BubbleVariant.Default -> colors.primary
+    BubbleVariant.Secondary -> colors.secondary
+    BubbleVariant.Muted -> colors.muted
+    BubbleVariant.Tinted -> colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
+    BubbleVariant.Outline -> colors.background
+    BubbleVariant.Ghost -> Color.Transparent
+    BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
 }
 
 private fun bubbleForeground(variant: BubbleVariant, colors: Colors): Color = when (variant) {
-    BubbleVariant.Default -> colors.onAccent
-    BubbleVariant.Destructive -> colors.danger
-    else -> colors.label
+    BubbleVariant.Default -> colors.primaryForeground
+    BubbleVariant.Destructive -> colors.destructive
+    else -> colors.foreground
 }

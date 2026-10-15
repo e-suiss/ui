@@ -79,17 +79,15 @@ function TabsIndicator({ variant }: { variant: TabsListVariant }) {
           return [
             styles.indicatorDefault,
             {
-              backgroundColor: isDark
-                ? colors.labelQuaternary
-                : colors.surfaceRaised,
+              backgroundColor: isDark ? colors.border : colors.card,
             },
           ]
         }
         const position = state.activeTabPosition
         const size = state.activeTabSize
-        if (!position || !size) return { backgroundColor: colors.label }
+        if (!position || !size) return { backgroundColor: colors.foreground }
         return [
-          { backgroundColor: colors.label },
+          { backgroundColor: colors.foreground },
           state.orientation === "vertical"
             ? { left: position.left + size.width + 2, width: 2 }
             : { top: position.top + size.height + 3, height: 2 },
@@ -116,7 +114,7 @@ function TabsList({
           styles.list,
           variant === "line"
             ? styles.listLine
-            : [styles.listDefault, { backgroundColor: colors.control }],
+            : [styles.listDefault, { backgroundColor: colors.secondary }],
           state.orientation === "vertical" && styles.listVertical,
           typeof style === "function" ? style(state) : style,
         ]}
@@ -137,8 +135,7 @@ function TabsTrigger({
   const { value, orientation } = TabsPrimitive.useRootContext()
   const { colors } = useTheme()
   const active = value === props.value
-  let color = active ? colors.label : colors.labelSecondary
-  if (disabled) color = colors.labelQuaternary
+  const color = active ? colors.foreground : colors.mutedForeground
   return (
     <TextStyleContext.Provider
       value={{
@@ -153,6 +150,7 @@ function TabsTrigger({
           orientation === "vertical"
             ? styles.triggerVertical
             : styles.triggerHorizontal,
+          disabled && { opacity: 0.5 },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}

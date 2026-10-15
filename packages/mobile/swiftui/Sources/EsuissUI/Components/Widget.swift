@@ -158,7 +158,7 @@ public struct Widget<Content: View>: View {
       .overlay(alignment: .topLeading) {
         if let snap, dragging {
           RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous)
-            .strokeBorder(Color.label.opacity(0.25), style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 3]))
+            .strokeBorder(EsuissColor.foreground.opacity(0.25), style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 3]))
             .frame(width: snap.dimensions.width, height: snap.dimensions.height)
             .transition(.opacity)
             .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.5), value: snap)
@@ -225,8 +225,8 @@ public struct Widget<Content: View>: View {
     .frame(width: frame?.width, height: frame?.height, alignment: center ? .center : .topLeading)
     .multilineTextAlignment(center ? .center : .leading)
     .font(TextStyle.base.font())
-    .foregroundStyle(Color.label)
-    .background(Color.surfaceSecondary, in: shape)
+    .foregroundStyle(EsuissColor.foreground)
+    .background(EsuissColor.muted, in: shape)
     .clipShape(shape)
     .environment(\.widgetSize, frame == nil ? nil : (binding?.wrappedValue ?? size))
     .environment(\.widgetAlign, align)
@@ -253,7 +253,7 @@ struct WidgetHandle: View {
       }
       context.stroke(
         path,
-        with: .color(dragging ? Color.accent : .labelQuaternary),
+        with: .color(dragging ? EsuissColor.primary : EsuissColor.border),
         style: StrokeStyle(lineWidth: 4, lineCap: .round)
       )
     }
@@ -306,13 +306,13 @@ public struct WidgetIcon<Content: View>: View {
       content
         .frame(width: 18, height: 18)
         .frame(width: 32, height: 32)
-        .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+        .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
         .accessibilityHidden(true)
     case .lg:
       content
         .frame(width: 24, height: 24)
         .frame(width: 52, height: 52)
-        .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+        .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
         .accessibilityHidden(true)
     }
   }
@@ -368,7 +368,7 @@ public struct WidgetDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -429,7 +429,7 @@ public struct WidgetFooter<Content: View>: View {
         content
       }
       .scaledFont(.xs)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .lineLimit(1)
     }
   }

@@ -27,19 +27,19 @@ private struct Board: View {
         VStack(alignment: .leading, spacing: 10) {
           Text(verbatim: shot.caption)
             .font(TextStyle.xs.font(weight: .semibold))
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           shot.view
             .frame(width: phone.width, height: shot.height)
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
             .overlay {
-              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(Color.separator)
+              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(EsuissColor.border)
             }
         }
       }
     }
     .padding(24)
     .fixedSize()
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -57,7 +57,7 @@ private struct Presented<Base: View, Content: View>: View {
   var body: some View {
     ZStack(alignment: alignment) {
       base
-      Color.scrim
+      Palette.black.opacity(0.5)
       content
     }
   }
@@ -73,7 +73,7 @@ final class BlocksGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let host = UIHostingController(rootView: Board(shots: shots)
         .frame(width: size.width, height: size.height, alignment: .topLeading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
@@ -131,7 +131,7 @@ final class BlocksGalleryTests: XCTestCase {
         Presented(alignment: .bottom) { LoginSheet() } content: {
           LoginSheetPanel(onComplete: {})
             .padding(.bottom, 20)
-            .background(Color.surfaceRaised)
+            .background(EsuissColor.card)
             .clipShape(UnevenRoundedRectangle(topLeadingRadius: Radius.xl3, topTrailingRadius: Radius.xl3, style: .continuous))
         }
       },

@@ -29,10 +29,17 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -41,16 +48,16 @@ const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "settings", label: "Settings", icon: GearIcon },
 ]
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type Severity = "High" | "Medium" | "Low"
 
 const LEVELS: Severity[] = ["High", "Medium", "Low"]
 
 const SEVERITY: Record<Severity, { tint: Tint; text: Tint; weight: number }> = {
-  High: { tint: "red", text: "danger", weight: 18 },
-  Medium: { tint: "orange", text: "warning", weight: 8 },
-  Low: { tint: "yellow", text: "label", weight: 3 },
+  High: { tint: "red500", text: "destructive", weight: 18 },
+  Medium: { tint: "orange500", text: "amber500", weight: 8 },
+  Low: { tint: "yellow500", text: "foreground", weight: 3 },
 }
 
 const FILTERS = ["Open", "Resolved", "All"]
@@ -148,9 +155,9 @@ const styles = StyleSheet.create({
 })
 
 const scoreTone = (score: number): Tint => {
-  if (score > 85) return "green"
-  if (score > 65) return "orange"
-  return "red"
+  if (score > 85) return "green500"
+  if (score > 65) return "orange500"
+  return "red500"
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -168,7 +175,7 @@ function ScoreRing({ score }: { score: number }) {
           r={22}
           fill="none"
           strokeWidth={6}
-          stroke={colors.control}
+          stroke={colors.secondary}
         />
       </Svg>
       <Svg width={54} height={54} viewBox="0 0 54 54" style={styles.ringLayer}>
@@ -179,7 +186,7 @@ function ScoreRing({ score }: { score: number }) {
           fill="none"
           strokeWidth={6}
           strokeLinecap="round"
-          stroke={colors[scoreTone(score)]}
+          stroke={tone(colors, scoreTone(score))}
           strokeDasharray={`${(Math.max(0, score) / 100) * RING_LENGTH} ${RING_LENGTH}`}
         />
       </Svg>
@@ -219,7 +226,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -276,7 +283,7 @@ function LogSecurity({
               subtitle={
                 <Text
                   accessibilityLiveRegion="polite"
-                  style={[fontSize.sm, { color: colors.labelSecondary }]}
+                  style={[fontSize.sm, { color: colors.mutedForeground }]}
                 >
                   {summary}
                 </Text>
@@ -285,15 +292,12 @@ function LogSecurity({
               Security
             </HeaderLargeTitle>
             <View style={styles.body}>
-              <View
-                style={[
-                  styles.card,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.card, { backgroundColor: colors.muted }]}>
                 <ScoreRing score={score} />
                 <View accessible style={styles.score}>
-                  <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.sm, { color: colors.mutedForeground }]}
+                  >
                     Security score
                   </Text>
                   <Text style={styles.scoreValue}>{String(score)}</Text>
@@ -302,7 +306,7 @@ function LogSecurity({
                   {LEVELS.map((level) => (
                     <View key={level} accessible style={styles.level}>
                       <Text
-                        style={[fontSize.xs, { color: colors.labelSecondary }]}
+                        style={[fontSize.xs, { color: colors.mutedForeground }]}
                       >
                         {level}
                       </Text>
@@ -311,8 +315,8 @@ function LogSecurity({
                           styles.levelValue,
                           {
                             color: count(level)
-                              ? colors[SEVERITY[level].text]
-                              : colors.labelTertiary,
+                              ? tone(colors, SEVERITY[level].text)
+                              : colors.mutedForeground,
                           },
                         ]}
                       >
@@ -345,10 +349,7 @@ function LogSecurity({
               >
                 {list.length > 0 ? (
                   <View
-                    style={[
-                      styles.group,
-                      { backgroundColor: colors.surfaceSecondary },
-                    ]}
+                    style={[styles.group, { backgroundColor: colors.muted }]}
                   >
                     {list.map((alert, index) => (
                       <View key={alert.title}>
@@ -356,7 +357,7 @@ function LogSecurity({
                           <View
                             style={[
                               styles.separator,
-                              { backgroundColor: colors.separator },
+                              { backgroundColor: colors.border },
                             ]}
                           />
                         ) : null}
@@ -366,8 +367,8 @@ function LogSecurity({
                               styles.tile,
                               {
                                 backgroundColor: alert.resolved
-                                  ? colors.green
-                                  : colors[SEVERITY[alert.severity].tint],
+                                  ? palette.green500
+                                  : tone(colors, SEVERITY[alert.severity].tint),
                               },
                             ]}
                           >
@@ -375,7 +376,7 @@ function LogSecurity({
                               as={alert.resolved ? CheckIcon : alert.icon}
                               weight="bold"
                               size={16}
-                              color={colors.onAccent}
+                              color={colors.primaryForeground}
                             />
                           </View>
                           <View style={styles.text}>
@@ -386,7 +387,7 @@ function LogSecurity({
                               numberOfLines={1}
                               style={[
                                 fontSize.xs,
-                                { color: colors.labelSecondary },
+                                { color: colors.mutedForeground },
                               ]}
                             >
                               {`${alert.resolved ? "Resolved" : `${alert.severity} severity`} · ${alert.detail}`}
@@ -414,7 +415,7 @@ function LogSecurity({
                   </View>
                 ) : (
                   <Text
-                    style={[styles.empty, { color: colors.labelSecondary }]}
+                    style={[styles.empty, { color: colors.mutedForeground }]}
                   >
                     {filter === "Open"
                       ? "No open alerts. All good."

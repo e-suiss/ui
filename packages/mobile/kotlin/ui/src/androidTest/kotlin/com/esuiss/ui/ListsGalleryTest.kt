@@ -211,13 +211,13 @@ private fun Items() {
             }
             Item(variant = ItemVariant.Outline, size = ItemSize.Xs) {
                 ItemHeader {
-                    BasicText("Header", style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
-                    BasicText("Today", style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
+                    BasicText("Header", style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
+                    BasicText("Today", style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
                 }
                 ItemMedia(variant = ItemMediaVariant.Icon) { Icon(PhosphorIcons.Regular.Folder, contentDescription = null) }
                 ItemContent { ItemTitle("Extra small item") }
                 ItemFooter {
-                    BasicText("Footer", style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
+                    BasicText("Footer", style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
                 }
             }
         }
@@ -262,9 +262,9 @@ private fun Feedback() {
         Row(horizontalArrangement = Arrangement.spacedBy(20.dp), verticalAlignment = Alignment.CenterVertically) {
             Spinner()
             Spinner(size = 24.dp)
-            Spinner(size = 32.dp, color = colors.accent)
+            Spinner(size = 32.dp, color = colors.primary)
             Button(onClick = {}, enabled = false) {
-                Spinner(color = colors.onAccent)
+                Spinner(color = colors.primaryForeground)
                 BasicText("Loading", style = LocalContentStyle.current)
             }
         }
@@ -275,7 +275,7 @@ private fun Feedback() {
             MarkerContent("Pinned messages")
         }
         Marker("Edited 2 minutes ago", icon = PhosphorIcons.Regular.Info)
-        Empty(modifier = Modifier.background(colors.surfaceSecondary, androidx.compose.foundation.shape.RoundedCornerShape(18.dp))) {
+        Empty(modifier = Modifier.background(colors.muted, androidx.compose.foundation.shape.RoundedCornerShape(18.dp))) {
             EmptyHeader {
                 EmptyMedia(variant = EmptyMediaVariant.Icon) { Icon(PhosphorIcons.Regular.Tray, contentDescription = null) }
                 EmptyTitle("No messages yet")
@@ -365,7 +365,7 @@ private fun SwipeRows() {
                     }
                 }
             }
-            Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+            Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(colors.border))
         }
     }
 }
@@ -420,7 +420,7 @@ private fun Scene(scene: ListScene) {
                         ItemContent {
                             BasicText(invoice.customer, style = LocalContentStyle.current)
                         }
-                        BasicText(invoice.amount, style = Typography.base.copy(color = colors.labelSecondary))
+                        BasicText(invoice.amount, style = Typography.base.copy(color = colors.mutedForeground))
                     }
                 }
                 section(header = "Empty", emptyText = "No results.") {}
@@ -500,7 +500,7 @@ class ListsGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .safeDrawingPadding()
                         .padding(16.dp),
                 ) {

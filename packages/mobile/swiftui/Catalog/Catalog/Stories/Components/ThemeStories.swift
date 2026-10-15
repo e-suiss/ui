@@ -60,7 +60,7 @@ private struct ThemeTransitionDemo: View {
           CardContent {
             Text("Every surface, label and accent follows the theme tokens.")
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           CardFooter {
             Button("Continue") {}
@@ -71,7 +71,7 @@ private struct ThemeTransitionDemo: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .background {
-        Color.surface.padding(-16)
+        EsuissColor.background.padding(-16)
       }
     }
   }
@@ -105,7 +105,7 @@ private struct ThemeDemo: View {
     ThemeProvider(defaultTheme: defaultTheme, storage: storage, storageKey: "theme-story") {
       ThemePreview()
         .background {
-          Color.surface.padding(-16)
+          EsuissColor.background.padding(-16)
         }
     }
   }
@@ -120,27 +120,27 @@ private struct ThemePreview: View {
         Text("Light and dark.").textVariant(.h2)
         Text("Every surface, label and accent follows the theme tokens, so the whole app changes at once.")
           .textStyle(.base)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       ThemeToggle()
       VStack(alignment: .leading, spacing: 4) {
         Text("Selected")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         Text(verbatim: theme.theme.rawValue)
           .textStyle(.base, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Text("Showing")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.top, 8)
         Text(verbatim: theme.resolvedTheme == .dark ? "dark" : "light")
           .textStyle(.base, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
       .padding(16)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }

@@ -27,7 +27,12 @@ import {
   type InputOTPSlotStyles,
 } from "@/components/ui/input-otp"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 type OtpAutofillState =
   | "idle"
@@ -122,18 +127,18 @@ function slotStyles(
     case "invalid":
       return {
         style: {
-          borderColor: colors.danger,
-          backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+          borderColor: colors.destructive,
+          backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
         },
-        textStyle: { color: colors.danger },
+        textStyle: { color: colors.destructive },
       }
     case "verified":
       return {
         style: {
-          borderColor: colors.success,
-          backgroundColor: colors.successSurface,
+          borderColor: palette.green500,
+          backgroundColor: withAlpha(palette.green500, isDark ? 0.2 : 0.1),
         },
-        textStyle: { color: colors.success },
+        textStyle: { color: isDark ? palette.green400 : palette.green600 },
       }
     case "verifying":
       return { style: { opacity: 0.6 } }
@@ -347,10 +352,8 @@ function OtpAutofillSuggestion({
               styles.frame,
               {
                 bottom: keyboard.height,
-                borderTopColor: colors.separator,
-                backgroundColor: isDark
-                  ? colors.surfaceSecondary
-                  : colors.surfaceRaised,
+                borderTopColor: colors.border,
+                backgroundColor: isDark ? colors.muted : colors.popover,
               },
             ]}
           >
@@ -361,8 +364,8 @@ function OtpAutofillSuggestion({
               }}
               style={({ pressed }) => [
                 styles.suggestion,
+                pressed && { opacity: 0.8 },
                 {
-                  backgroundColor: pressed ? colors.itemPressed : undefined,
                   paddingBottom:
                     keyboard.height > 0 ? 6 : Math.max(6, insets.bottom),
                 },
@@ -371,7 +374,9 @@ function OtpAutofillSuggestion({
               {...props}
             >
               {typeof source === "string" || typeof source === "number" ? (
-                <Text style={[styles.source, { color: colors.labelSecondary }]}>
+                <Text
+                  style={[styles.source, { color: colors.mutedForeground }]}
+                >
                   {source}
                 </Text>
               ) : (

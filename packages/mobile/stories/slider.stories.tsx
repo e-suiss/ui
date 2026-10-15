@@ -28,7 +28,7 @@ function ControlledDemo() {
     <View className="w-full gap-3">
       <View className="flex-row items-center justify-between">
         <Text className="text-sm font-medium">Brightness</Text>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           {value} / committed {committed}
         </Text>
       </View>
@@ -52,7 +52,7 @@ function RangeDemo() {
     <View className="w-full gap-3">
       <View className="flex-row items-center justify-between">
         <Text className="text-sm font-medium">Price</Text>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           ${value[0]} – ${value[1]}
         </Text>
       </View>

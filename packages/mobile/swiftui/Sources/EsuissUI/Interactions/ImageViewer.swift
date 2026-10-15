@@ -99,7 +99,7 @@ public struct ImageViewer: View {
       let current = CarouselMath.clamp(index.wrappedValue, count: count)
       let fade = axis == .vertical || dismissing ? ImageViewerMath.backdropOpacity(drag.height) : 1
       ZStack {
-        Color.surface
+        EsuissColor.background
           .opacity(fade)
           .ignoresSafeArea()
         HStack(spacing: 0) {
@@ -143,7 +143,7 @@ public struct ImageViewer: View {
             Text("\(current + 1) of \(count)")
               .scaledFont(.md, weight: .semibold)
               .monospacedDigit()
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
             HStack {
               Spacer()
               Button {

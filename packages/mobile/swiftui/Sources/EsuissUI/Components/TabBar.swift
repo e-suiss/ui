@@ -75,11 +75,11 @@ public struct TabBar<Content: View>: View {
     .padding(4)
     .background {
       Capsule()
-        .fill(Color.surfaceRaised)
+        .fill(EsuissColor.card)
         .shadow(.lg)
     }
     .overlay {
-      Capsule().strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+      Capsule().strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
     }
     .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.15), value: binding.wrappedValue)
     .padding(.horizontal, 16)
@@ -156,7 +156,8 @@ public struct TabBarItem: View {
           .scaledFont(.xs3, weight: .medium)
           .lineLimit(1)
       }
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : active ? .accent : .labelSecondary)
+      .foregroundStyle(active ? EsuissColor.primary : EsuissColor.mutedForeground)
+      .opacity(isEnabled ? 1 : 0.5)
       .padding(.vertical, 6)
       .frame(maxWidth: .infinity)
       .contentShape(Capsule())
@@ -165,7 +166,7 @@ public struct TabBarItem: View {
     .background {
       if active, let namespace = tabBar.namespace {
         Capsule()
-          .fill(Color.control)
+          .fill(EsuissColor.secondary)
           .matchedGeometryEffect(id: "active", in: namespace)
       }
     }
@@ -188,7 +189,7 @@ public struct TabBarItem: View {
 private struct TabBarItemStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear, in: Capsule())
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -201,17 +202,17 @@ private struct TabBarBadgeView: View {
         Text(verbatim: label)
           .font(TextStyle.xs3.font(weight: .semibold))
           .monospacedDigit()
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, 5)
           .frame(minWidth: 18, minHeight: 18)
-          .background(Color.danger, in: Capsule())
+          .background(EsuissColor.destructive, in: Capsule())
       } else {
         Circle()
-          .fill(Color.danger)
+          .fill(EsuissColor.destructive)
           .frame(width: 10, height: 10)
       }
     }
-    .background(Capsule().fill(Color.surfaceRaised).padding(-2))
+    .background(Capsule().fill(EsuissColor.card).padding(-2))
     .fixedSize()
     .accessibilityHidden(true)
   }

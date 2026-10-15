@@ -130,10 +130,11 @@ private struct StyledButton: View {
     .background(background, in: shape)
     .overlay {
       if variant == .outline && !joined {
-        rounded.strokeBorder(Color.separator)
+        rounded.strokeBorder(EsuissColor.border)
       }
     }
     .contentShape(shape)
+    .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
     .anchorPreference(key: ButtonGroupFramesKey.self, value: .bounds) { anchor in
       joined ? [ButtonGroupFrame(bounds: anchor, outlined: variant == .outline)] : []
     }
@@ -145,36 +146,32 @@ private struct StyledButton: View {
   private var foreground: Color {
     switch variant {
     case .default:
-      .onAccent
-    case .outline, .secondary, .ghost:
-      isEnabled ? .label : .labelQuaternary
-    case .tinted, .plain:
-      isEnabled ? .link : .link.opacity(0.4)
+      EsuissColor.primaryForeground
+    case .outline, .ghost:
+      EsuissColor.foreground
+    case .secondary:
+      EsuissColor.secondaryForeground
+    case .tinted, .plain, .link:
+      EsuissColor.primary
     case .destructive:
-      isEnabled ? .danger : .danger.opacity(0.4)
-    case .link:
-      isEnabled ? .link : .labelQuaternary
+      EsuissColor.destructive
     }
   }
 
   private var background: Color {
     switch variant {
     case .default:
-      !isEnabled ? .accentDisabled : pressed ? .accentPressed : .accent
+      EsuissColor.primary
     case .outline:
-      isEnabled && pressed ? .itemPressed : isDark ? .clear : .surface
+      isDark ? .clear : EsuissColor.background
     case .secondary:
-      !isEnabled ? .controlDisabled : pressed ? .controlPressed : .control
+      EsuissColor.secondary
     case .tinted:
-      isEnabled && pressed ? .accentSurfacePressed : .accentSurface
-    case .ghost:
-      isEnabled && pressed ? .itemPressed : .clear
-    case .plain:
-      isEnabled && pressed ? .itemPressed : .clear
-    case .destructive:
-      isEnabled && pressed ? .dangerSurfacePressed : .dangerSurface
-    case .link:
+      Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))
+    case .ghost, .plain, .link:
       .clear
+    case .destructive:
+      Color.adaptive(light: EsuissColor.destructive.opacity(0.1), dark: EsuissColor.destructive.opacity(0.2))
     }
   }
 }

@@ -48,7 +48,7 @@ private struct FabPage: View {
       if let log, !log.isEmpty {
         Text(verbatim: log)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityAddTraits(.updatesFrequently)
       }
     }

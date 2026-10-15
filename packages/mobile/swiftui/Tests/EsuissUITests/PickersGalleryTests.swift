@@ -19,11 +19,11 @@ private func fromToday(_ days: Int) -> Date {
 
 private struct PickersBackdrop: View {
   var body: some View {
-    Color.surface
+    EsuissColor.background
       .overlay(alignment: .top) {
         VStack(alignment: .leading, spacing: 12) {
           ForEach(0..<14) { _ in
-            RoundedRectangle(cornerRadius: Radius.md).fill(Color.surfaceSecondary).frame(height: 40)
+            RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.muted).frame(height: 40)
           }
         }
         .padding(16)
@@ -40,7 +40,7 @@ private struct SheetStage<Content: View>: View {
   var body: some View {
     ZStack(alignment: .bottom) {
       PickersBackdrop()
-      Color.scrim
+      Palette.black.opacity(0.5)
       content()
         .environment(\.drawerFitsContent, fits)
         .frame(maxHeight: fits ? nil : height - 40)
@@ -58,7 +58,7 @@ private struct RaisedCard<Content: View>: View {
     content()
       .padding(16)
       .frame(width: 320)
-      .background(Color.surfaceRaised, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.card, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .shadow(Shadow.md)
   }
 }
@@ -69,7 +69,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -134,7 +134,7 @@ private struct WheelGallery: View {
           Text(verbatim: "2026-10-04 \(hour):\(minute)")
             .font(TextStyle.sm.font())
             .monospacedDigit()
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
     }
@@ -175,7 +175,7 @@ private struct CalendarGallery: View {
     calendar
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .overlay {
-        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)
+        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(EsuissColor.border)
       }
   }
 }
@@ -225,7 +225,7 @@ private struct DateGallery: View {
             .frame(width: 240)
           DateCalendar(selection: $value)
             .environment(\.calendarTransparent, true)
-            .background(Color.surfaceRaised, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+            .background(EsuissColor.card, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
             .shadow(Shadow.lg)
         }
         .padding(16)
@@ -278,11 +278,11 @@ private struct StepperGallery: View {
       }
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .overlay {
-        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)
+        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(EsuissColor.border)
       }
       Text(verbatim: "\(copies) \(copies == 1 ? "copy" : "copies") at \(Int(scale))%")
         .font(TextStyle.sm.font())
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
   }
 
@@ -299,7 +299,7 @@ private struct StepperGallery: View {
     HStack(spacing: 16) {
       Text(verbatim: label)
         .font(TextStyle.base.font())
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       Spacer(minLength: 0)
       stepper()
     }
@@ -394,7 +394,7 @@ final class PickersGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let size = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

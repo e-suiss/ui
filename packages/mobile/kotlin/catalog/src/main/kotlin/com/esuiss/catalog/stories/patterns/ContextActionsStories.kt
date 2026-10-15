@@ -49,7 +49,7 @@ private fun ContextActionsDefault() {
                 .fillMaxWidth()
                 .height(160.dp)
                 .clip(shape)
-                .background(colors.surfaceSecondary, shape),
+                .background(colors.muted, shape),
             label = "Photo",
         ) {
             Column(
@@ -57,8 +57,8 @@ private fun ContextActionsDefault() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.labelSecondary)
-                Text("Long press", style = Typography.sm.copy(color = colors.labelSecondary))
+                Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.mutedForeground)
+                Text("Long press", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         ContextActionsContent {
@@ -78,7 +78,7 @@ private fun ContextActionsInline() {
             ContextActionsTrigger(
                 modifier = Modifier
                     .clip(shape)
-                    .background(EsuissTheme.colors.control, shape)
+                    .background(EsuissTheme.colors.secondary, shape)
                     .padding(horizontal = 12.dp, vertical = 8.dp),
             ) {
                 Text("Hold this message")

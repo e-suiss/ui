@@ -19,10 +19,10 @@ import { fontSize, useTheme } from "@/components/ui/theme"
 
 const chartConfig = {
   users: { label: "Users" },
-  phone: { label: "Phone", color: "blue" },
-  laptop: { label: "Laptop", color: "teal" },
-  tablet: { label: "Tablet", color: "indigo" },
-  watch: { label: "Watch", color: "orange" },
+  phone: { label: "Phone", color: "chart-1" },
+  laptop: { label: "Laptop", color: "chart-2" },
+  tablet: { label: "Tablet", color: "chart-3" },
+  watch: { label: "Watch", color: "chart-4" },
 } satisfies ChartConfig
 
 type Device = "phone" | "laptop" | "tablet" | "watch"
@@ -65,7 +65,7 @@ export function RadialChartLabel() {
             <RadialBar
               dataKey="users"
               cornerRadius={10}
-              background={{ fill: "control" }}
+              background={{ fill: "secondary" }}
             >
               {chartData.map((item) => (
                 <Cell key={item.device} fill={chartConfig[item.device].color} />
@@ -76,7 +76,7 @@ export function RadialChartLabel() {
                 style={{
                   ...fontSize["2xs"],
                   fontWeight: "600",
-                  color: colors.onAccent,
+                  color: colors.primaryForeground,
                 }}
                 formatter={(value) => chartConfig[value as Device]?.label}
               />

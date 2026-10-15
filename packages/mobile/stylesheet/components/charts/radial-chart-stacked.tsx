@@ -23,8 +23,8 @@ const visitors = { desktop: 1260, mobile: 570 }
 const chartData = [visitors]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
-  mobile: { label: "Mobile", color: "teal" },
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
 const total = visitors.desktop + visitors.mobile
@@ -67,7 +67,7 @@ export function RadialChartStacked() {
         <View>
           <View pointerEvents="none" style={styles.overlay}>
             <Text style={styles.value}>{formatTotal(total)}</Text>
-            <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+            <Text style={[styles.caption, { color: colors.mutedForeground }]}>
               visitors
             </Text>
           </View>
@@ -93,16 +93,16 @@ export function RadialChartStacked() {
                 dataKey="desktop"
                 stackId="a"
                 cornerRadius={6}
-                fill="blue"
-                stroke="surface-secondary"
+                fill="chart-1"
+                stroke="muted"
                 strokeWidth={3}
               />
               <RadialBar
                 dataKey="mobile"
                 stackId="a"
                 cornerRadius={6}
-                fill="teal"
-                stroke="surface-secondary"
+                fill="chart-2"
+                stroke="muted"
                 strokeWidth={3}
               />
             </RadialBarChart>

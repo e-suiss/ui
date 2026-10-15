@@ -37,8 +37,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -110,8 +110,8 @@ fun AlertSheet(
                     CompositionLocalProvider(
                         LocalPaneTitle provides paneTitle,
                         LocalAlertSheetClose provides close,
-                        LocalContentStyle provides Typography.base.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                     ) {
                         content()
                     }
@@ -130,11 +130,11 @@ fun AlertSheetGroup(
     val shape = RoundedCornerShape(Radius.xl2)
     FormDividedStack(
         orientation = Orientation.Vertical,
-        dividerColor = colors.separator,
+        dividerColor = colors.border,
         modifier = modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(colors.surfaceRaised, shape),
+            .background(colors.popover, shape),
         content = content,
     )
 }
@@ -160,7 +160,7 @@ fun AlertSheetTitle(text: String, modifier: Modifier = Modifier) {
         text,
         modifier,
         Typography.sm.copy(
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
         ),
@@ -172,7 +172,7 @@ fun AlertSheetDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, textAlign = TextAlign.Center),
+        style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, textAlign = TextAlign.Center),
     )
 }
 
@@ -190,16 +190,18 @@ private fun AlertSheetButton(
     val close = LocalAlertSheetClose.current
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val foreground = when {
-        !enabled -> colors.labelQuaternary
-        variant == AlertSheetActionVariant.Destructive -> colors.danger
-        else -> colors.link
-    }
+    val foreground = if (variant == AlertSheetActionVariant.Destructive) colors.destructive else colors.primary
     Row(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .background(if (pressed && enabled) colors.label.copy(alpha = 0.1f) else Color.Transparent)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clickable(
                 interactionSource = interaction,
                 indication = null,
@@ -246,7 +248,7 @@ fun AlertSheetCancel(
 ) {
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(Radius.xl2)
-    Box(modifier = modifier.fillMaxWidth().clip(shape).background(colors.surfaceRaised, shape)) {
+    Box(modifier = modifier.fillMaxWidth().clip(shape).background(colors.popover, shape)) {
         AlertSheetButton(text, onClick, Modifier, AlertSheetActionVariant.Default, true, null, emphasized = true)
     }
 }

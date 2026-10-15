@@ -63,7 +63,7 @@ private fun ReorderListDemo(inset: Boolean) {
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
                         Text(task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         if (task.detail != null) {
-                            Text(task.detail, style = Typography.sm.copy(color = colors.labelSecondary))
+                            Text(task.detail, style = Typography.sm.copy(color = colors.mutedForeground))
                         }
                     }
                     ReorderListHandle(contentDescription = "Reorder ${task.title}")
@@ -74,7 +74,7 @@ private fun ReorderListDemo(inset: Boolean) {
         Text(
             value.joinToString(", ") { reorderListTasks.getValue(it).title },
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
         )
     }
 }

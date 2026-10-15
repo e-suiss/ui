@@ -31,22 +31,22 @@ public struct ChatConversations: View {
 
   static var threads: [Thread] {
     [
-      Thread(name: "Riley Chen", tint: .green, time: "9:41 AM", lines: [
+      Thread(name: "Riley Chen", tint: Palette.green500, time: "9:41 AM", lines: [
         "them:Is the weekend trip to the coast still on?",
         "me:Yes! We leave Friday evening",
         "me:I booked the boat tour, it leaves at 5 AM",
         "them:Great, I'll bring the camera",
       ]),
-      Thread(name: "Morgan Lee", tint: .orange, time: "8:12 AM", lines: [
+      Thread(name: "Morgan Lee", tint: Palette.orange500, time: "8:12 AM", lines: [
         "them:I sent the deck, can you take a look?",
         "me:On it, back to you in 10 minutes",
       ]),
-      Thread(name: "Family", tint: .purple, time: "Yesterday", lines: [
+      Thread(name: "Family", tint: Palette.purple500, time: "Yesterday", lines: [
         "them:Is everyone coming for Sunday brunch?",
         "me:We'll be there",
         "them:I'll bring pastries",
       ]),
-      Thread(name: "Taylor Kim", tint: .teal, time: "Monday", lines: [
+      Thread(name: "Taylor Kim", tint: Palette.teal500, time: "Monday", lines: [
         "them:What time does the game start?",
       ]),
     ]
@@ -161,7 +161,7 @@ public struct ChatConversations: View {
             } label: {
               Ph.notePencil.regular
                 .frame(width: 22, height: 22)
-                .foregroundStyle(Color.link)
+                .foregroundStyle(EsuissColor.primary)
             }
             .accessibilityLabel(Text("New message"))
           }
@@ -182,10 +182,10 @@ public struct ChatConversations: View {
           VStack(alignment: .leading, spacing: 0) {
             Text(verbatim: thread.name)
               .scaledFont(.sm, weight: .semibold)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
             Text(typing ? "typing…" : "Message")
               .scaledFont(.xs2)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .contentTransition(.opacity)
           }
           .lineLimit(1)
@@ -210,17 +210,17 @@ public struct ChatConversations: View {
           }
           .accessibilityLabel(Text("Details"))
         }
-        .foregroundStyle(Color.link)
+        .foregroundStyle(EsuissColor.primary)
       }
       .overlay(alignment: .bottom) {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
       MessageScroller(entries, spacing: 4) { entry in
         switch entry {
         case .day:
           Text("Today 9:30 AM")
             .scaledFont(.xs2)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity)
             .padding(.top, 4)
             .padding(.bottom, 10)
@@ -301,7 +301,7 @@ private struct ChatConversationsAvatar: View {
   var body: some View {
     Text(verbatim: name.split(separator: " ").compactMap(\.first).prefix(2).map(String.init).joined())
       .font(.system(size: size * 0.38, weight: .semibold))
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(tint, in: Circle())
       .accessibilityHidden(true)
@@ -322,27 +322,27 @@ private struct ChatConversationsRow: View {
           HStack(spacing: 6) {
             Text(verbatim: thread.name)
               .scaledFont(.base, weight: .semibold)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
               .lineLimit(1)
               .frame(maxWidth: .infinity, alignment: .leading)
             Text(LocalizedStringKey(thread.time))
               .scaledFont(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             Ph.caretRight.bold
               .frame(width: 12, height: 12)
-              .foregroundStyle(Color.labelTertiary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .flipsForRightToLeftLayoutDirection(true)
           }
           Text(verbatim: last)
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .lineLimit(2, reservesSpace: true)
             .multilineTextAlignment(.leading)
         }
         .padding(.bottom, 12)
         .overlay(alignment: .bottom) {
           if separator {
-            Color.separator.frame(height: 1)
+            EsuissColor.border.frame(height: 1)
           }
         }
       }
@@ -358,7 +358,7 @@ private struct ChatConversationsRow: View {
 private struct ChatConversationsRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -375,7 +375,7 @@ private struct ChatConversationsTyping: View {
               HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { dot in
                   Circle()
-                    .fill(Color.labelTertiary)
+                    .fill(EsuissColor.mutedForeground)
                     .frame(width: 8, height: 8)
                     .opacity(reduceMotion ? 1 : 0.55 + 0.45 * abs(sin((time - Double(dot) * 0.18) * .pi / 1.1)))
                 }

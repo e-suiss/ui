@@ -55,7 +55,7 @@ function AlertDialogOverlay({
       }
       className={(state) =>
         cn(
-          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-scrim",
+          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-black/50",
           resolveClassName(className, state)
         )
       }
@@ -90,7 +90,7 @@ function AlertDialogContent({
             <AlertDialogPrimitive.Popup
               className={(state) =>
                 cn(
-                  "z-50 w-full flex-col gap-6 rounded-2xl border border-label/5 bg-surface-raised p-6 shadow-xl dark:border-label/10",
+                  "z-50 w-full flex-col gap-6 rounded-2xl border border-foreground/5 bg-popover p-6 shadow-xl dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -127,7 +127,7 @@ function AlertDialogMedia({ className, ...props }: ViewProps) {
     <IconClassContext.Provider value="size-8">
       <View
         className={cn(
-          "mb-2 size-16 items-center justify-center rounded-full bg-surface-secondary",
+          "mb-2 size-16 items-center justify-center rounded-full bg-muted",
           className
         )}
         {...props}
@@ -144,7 +144,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       className={(state) =>
         cn(
-          "text-center text-lg font-semibold text-label",
+          "text-center text-lg font-semibold text-foreground",
           resolveClassName(className, state)
         )
       }
@@ -161,7 +161,7 @@ function AlertDialogDescription({
     <AlertDialogPrimitive.Description
       className={(state) =>
         cn(
-          "text-center text-sm text-label-secondary",
+          "text-center text-sm text-muted-foreground",
           resolveClassName(className, state)
         )
       }

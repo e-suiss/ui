@@ -90,11 +90,11 @@ private struct TipNotesPage: View {
               VStack(alignment: .leading, spacing: 0) {
                 Text(verbatim: note.title)
                   .textStyle(.base, weight: .semibold)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
                   .lineLimit(1)
                 Text(verbatim: note.preview)
                   .textStyle(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .lineLimit(1)
               }
               .padding(.horizontal, 16)
@@ -105,16 +105,16 @@ private struct TipNotesPage: View {
             .buttonStyle(TipRowStyle())
             .overlay(alignment: .top) {
               if index > 0 {
-                Color.separator.frame(height: 1)
+                EsuissColor.border.frame(height: 1)
               }
             }
           }
         }
         .clipShape(shape)
-        .overlay { shape.strokeBorder(Color.separator) }
+        .overlay { shape.strokeBorder(EsuissColor.border) }
         Text(verbatim: log)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .frame(minHeight: 20)
           .accessibilityAddTraits(.updatesFrequently)
       }
@@ -125,7 +125,7 @@ private struct TipNotesPage: View {
 private struct TipRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 

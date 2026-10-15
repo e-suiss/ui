@@ -5,7 +5,7 @@ public enum SwipeActionVariant: CaseIterable, Sendable {
 
   var color: Color {
     switch self {
-    case .default: .accent
+    case .default: EsuissColor.primary
     case .destructive: .adaptive(light: .init(0xD0000A), dark: .init(0xB33B32))
     case .archive: .adaptive(light: .init(0x994AC1), dark: .init(0x863FA9))
     case .neutral: .adaptive(light: .init(0x66666A), dark: .init(0x555558))
@@ -64,7 +64,7 @@ public struct SwipeActions<Content: View, Leading: View, Trailing: View>: View {
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init(
-    background: Color = .surface,
+    background: Color = EsuissColor.background,
     @ViewBuilder content: () -> Content,
     @ViewBuilder leading: () -> Leading,
     @ViewBuilder trailing: () -> Trailing
@@ -73,7 +73,7 @@ public struct SwipeActions<Content: View, Leading: View, Trailing: View>: View {
   }
 
   init(
-    background: Color = .surface,
+    background: Color = EsuissColor.background,
     revealed: CGFloat,
     full: HorizontalEdge? = nil,
     @ViewBuilder content: () -> Content,
@@ -275,7 +275,7 @@ public struct SwipeActions<Content: View, Leading: View, Trailing: View>: View {
 
 extension SwipeActions where Leading == EmptyView {
   public init(
-    background: Color = .surface,
+    background: Color = EsuissColor.background,
     @ViewBuilder content: () -> Content,
     @ViewBuilder trailing: () -> Trailing
   ) {
@@ -285,7 +285,7 @@ extension SwipeActions where Leading == EmptyView {
 
 extension SwipeActions where Trailing == EmptyView {
   public init(
-    background: Color = .surface,
+    background: Color = EsuissColor.background,
     @ViewBuilder content: () -> Content,
     @ViewBuilder leading: () -> Leading
   ) {
@@ -339,7 +339,7 @@ public struct SwipeAction<Label: View>: View {
           .font(TextStyle.xs.font(weight: .medium))
           .tracking(TextStyle.xs.letterSpacing)
           .multilineTextAlignment(.center)
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .environment(\.layoutDirection, context.direction)
           .padding(.horizontal, hidden ? 0 : 12)
           .frame(minWidth: hidden ? 0 : 72, maxWidth: hidden ? 0 : .infinity, maxHeight: .infinity)

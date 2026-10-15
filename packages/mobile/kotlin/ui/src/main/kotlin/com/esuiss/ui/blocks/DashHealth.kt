@@ -44,6 +44,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -99,6 +100,7 @@ import com.esuiss.ui.components.ScreenVariant
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -112,10 +114,10 @@ private class HealthCategory(
 )
 
 private val HealthCategories = listOf(
-    HealthCategory("Activity", PhosphorIcons.Fill.Flame, { it.orange }, 0.45f),
-    HealthCategory("Heart", PhosphorIcons.Fill.Heart, { it.red }, 0.25f),
-    HealthCategory("Sleep", PhosphorIcons.Fill.Moon, { it.cyan }, 0.5f),
-    HealthCategory("Mobility", PhosphorIcons.Fill.ChartBar, { it.green }, 0.45f),
+    HealthCategory("Activity", PhosphorIcons.Fill.Flame, { Palette.orange500 }, 0.45f),
+    HealthCategory("Heart", PhosphorIcons.Fill.Heart, { Palette.red500 }, 0.25f),
+    HealthCategory("Sleep", PhosphorIcons.Fill.Moon, { Palette.cyan500 }, 0.5f),
+    HealthCategory("Mobility", PhosphorIcons.Fill.ChartBar, { Palette.green500 }, 0.45f),
 )
 
 private class HealthMetric(
@@ -129,16 +131,16 @@ private class HealthMetric(
 )
 
 private val HealthMetrics = listOf(
-    HealthMetric("Activity", "Move", "486", "kcal", { it.red }, listOf(40, 62, 38, 70, 55, 81, 65), true),
-    HealthMetric("Activity", "Steps", "8,412", "steps", { it.orange }, listOf(60, 80, 45, 90, 70, 95, 52), true),
-    HealthMetric("Heart", "Resting Heart Rate", "58", "bpm", { it.red }, listOf(61, 60, 59, 58, 60, 57, 58), false),
-    HealthMetric("Sleep", "Sleep", "7 hr 12 min", null, { it.cyan }, listOf(68, 74, 59, 79, 64, 86, 72), true),
-    HealthMetric("Heart", "Cardio Fitness", "42.1", "VO₂ max", { it.red }, listOf(40, 40, 41, 41, 42, 42, 42), false),
-    HealthMetric("Mobility", "Walking Speed", "5.1", "km/h", { it.green }, listOf(48, 50, 49, 51, 50, 52, 51), false),
+    HealthMetric("Activity", "Move", "486", "kcal", { Palette.red500 }, listOf(40, 62, 38, 70, 55, 81, 65), true),
+    HealthMetric("Activity", "Steps", "8,412", "steps", { Palette.orange500 }, listOf(60, 80, 45, 90, 70, 95, 52), true),
+    HealthMetric("Heart", "Resting Heart Rate", "58", "bpm", { Palette.red500 }, listOf(61, 60, 59, 58, 60, 57, 58), false),
+    HealthMetric("Sleep", "Sleep", "7 hr 12 min", null, { Palette.cyan500 }, listOf(68, 74, 59, 79, 64, 86, 72), true),
+    HealthMetric("Heart", "Cardio Fitness", "42.1", "VO₂ max", { Palette.red500 }, listOf(40, 40, 41, 41, 42, 42, 42), false),
+    HealthMetric("Mobility", "Walking Speed", "5.1", "km/h", { Palette.green500 }, listOf(48, 50, 49, 51, 50, 52, 51), false),
 )
 
 private fun categoryText(colors: Colors, category: HealthCategory): Color =
-    if (colors.isDark) category.tint(colors) else lerp(category.tint(colors), colors.label, category.mix)
+    if (colors.isDark) category.tint(colors) else lerp(category.tint(colors), colors.foreground, category.mix)
 
 @Composable
 fun DashHealth(
@@ -187,11 +189,11 @@ fun DashHealth(
                         Box(
                             Modifier
                                 .size(34.dp)
-                                .background(colors.indigo, CircleShape)
+                                .background(Palette.indigo500, CircleShape)
                                 .semantics { contentDescription = "Jamie Rivera" },
                             contentAlignment = Alignment.Center,
                         ) {
-                            BasicText("JR", style = Typography.xs.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold))
+                            BasicText("JR", style = Typography.xs.copy(color = Palette.white, fontWeight = FontWeight.SemiBold))
                         }
                     }
                 }
@@ -209,13 +211,13 @@ fun DashHealth(
                             modifier = Modifier
                                 .weight(1f)
                                 .semantics { heading() },
-                            style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                            style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
                         )
                         if (summary) {
                             Button(onClick = { editing = !editing }, variant = ButtonVariant.Plain, size = ButtonSize.Sm) {
                                 BasicText(
                                     if (editing) "Done" else "Edit",
-                                    style = Typography.base.copy(color = colors.link, fontWeight = if (editing) FontWeight.SemiBold else FontWeight.Normal),
+                                    style = Typography.base.copy(color = colors.primary, fontWeight = if (editing) FontWeight.SemiBold else FontWeight.Normal),
                                 )
                             }
                         }
@@ -226,7 +228,7 @@ fun DashHealth(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 30.dp),
-                            style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                     }
                     cards.forEachIndexed { index, metric ->
@@ -258,17 +260,17 @@ private fun HealthTile(icon: ImageVector, tint: Color) {
             .background(tint, RoundedCornerShape(Radius.md)),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.onMedia)
+        Icon(icon, contentDescription = null, size = 16.dp, tint = Palette.white)
     }
 }
 
 @Composable
 private fun HealthNav(onOpen: (String) -> Unit, modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
-    val card = if (colors.isDark) colors.surfaceSecondary else colors.surface
+    val card = if (colors.isDark) colors.muted else colors.background
     Column(modifier, verticalArrangement = Arrangement.spacedBy(20.dp)) {
         HealthNavGroup(card) {
-            HealthNavRow("Sharing", PhosphorIcons.Fill.Users, colors.blue) { onOpen("Sharing") }
+            HealthNavRow("Sharing", PhosphorIcons.Fill.Users, Palette.blue500) { onOpen("Sharing") }
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             BasicText(
@@ -276,7 +278,7 @@ private fun HealthNav(onOpen: (String) -> Unit, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
                     .semantics { heading() },
-                style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
             )
             HealthNavGroup(card) {
                 HealthCategories.forEachIndexed { index, category ->
@@ -307,11 +309,11 @@ private fun HealthNavRow(label: String, icon: ImageVector, tint: Color, onClick:
         ItemMedia { HealthTile(icon, tint) }
         ItemContent {
             ItemTitle {
-                BasicText(label, style = Typography.base.copy(color = colors.label))
+                BasicText(label, style = Typography.base.copy(color = colors.foreground))
             }
         }
         ItemActions {
-            Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 12.dp, tint = colors.labelTertiary)
+            Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 12.dp, tint = colors.mutedForeground)
         }
     }
 }
@@ -331,13 +333,13 @@ private fun MetricRow(
     LaunchedEffect(Unit) { appear.animateTo(1f, tween(800, delayMillis = index * 40, easing = HealthEasing)) }
     val dim by animateFloatAsState(if (editing && !pinned) 0.55f else 1f, tween(200), label = "dim")
     val pinFill by animateColorAsState(
-        if (pinned) colors.danger else if (colors.isDark) colors.green else lerp(colors.green, colors.label, 0.35f),
+        if (pinned) colors.destructive else if (colors.isDark) Palette.green500 else lerp(Palette.green500, colors.foreground, 0.35f),
         tween(200),
         label = "pin",
     )
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val card = if (colors.isDark) colors.surfaceSecondary else colors.surface
+    val card = if (colors.isDark) colors.muted else colors.background
     Row(
         modifier = Modifier.graphicsLayer {
             alpha = appear.value
@@ -365,7 +367,7 @@ private fun MetricRow(
                         .background(pinFill, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(if (pinned) PhosphorIcons.Bold.Minus else PhosphorIcons.Bold.Plus, contentDescription = null, size = 12.dp, tint = colors.onMedia)
+                    Icon(if (pinned) PhosphorIcons.Bold.Minus else PhosphorIcons.Bold.Plus, contentDescription = null, size = 12.dp, tint = Palette.white)
                 }
             }
         }
@@ -374,7 +376,8 @@ private fun MetricRow(
                 .weight(1f)
                 .graphicsLayer { alpha = dim }
                 .clip(RoundedCornerShape(Radius.xl))
-                .background(if (pressed) colors.itemPressed else card)
+                .alpha(if (pressed) 0.8f else 1f)
+                .background(card)
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -388,17 +391,17 @@ private fun MetricRow(
                     style = Typography.base.copy(color = text, fontWeight = FontWeight.SemiBold),
                     maxLines = 1,
                 )
-                BasicText("9:41", style = Typography.sm.copy(color = colors.labelSecondary))
-                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 12.dp, tint = colors.labelTertiary)
+                BasicText("9:41", style = Typography.sm.copy(color = colors.mutedForeground))
+                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 12.dp, tint = colors.mutedForeground)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.Bottom) {
                 BasicText(
                     buildAnnotatedString {
-                        withStyle(SpanStyle(fontSize = Typography.xl2.fontSize, fontWeight = FontWeight.Bold, color = colors.label)) {
+                        withStyle(SpanStyle(fontSize = Typography.xl2.fontSize, fontWeight = FontWeight.Bold, color = colors.foreground)) {
                             append(metric.value)
                         }
                         if (metric.unit != null) {
-                            withStyle(SpanStyle(fontSize = Typography.base.fontSize, fontWeight = FontWeight.SemiBold, color = colors.labelSecondary)) {
+                            withStyle(SpanStyle(fontSize = Typography.base.fontSize, fontWeight = FontWeight.SemiBold, color = colors.mutedForeground)) {
                                 append(" ${metric.unit}")
                             }
                         }

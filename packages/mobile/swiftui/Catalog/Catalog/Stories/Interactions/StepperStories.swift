@@ -42,7 +42,7 @@ private struct StepperRow<Content: View>: View {
     HStack(spacing: 16) {
       Text(label)
         .textStyle(.base)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .frame(maxWidth: .infinity, alignment: .leading)
       content()
         .accessibilityLabel(Text(label))
@@ -65,7 +65,7 @@ private struct StepperPrint: View {
         StepperRow(label: "Copies") {
           ValueStepper(value: $copies, in: 1...999) { StepperParts() }
         }
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
         StepperRow(label: "Scale") {
           ValueStepper(
             value: $scale,
@@ -74,17 +74,17 @@ private struct StepperPrint: View {
             format: FloatingPointFormatStyle<Double>.Percent().scale(1)
           ) { StepperParts() }
         }
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
         StepperRow(label: "Pages per sheet") {
           ValueStepper(value: $pages) { StepperParts() }
             .disabled(true)
         }
       }
       .clipShape(shape)
-      .overlay { shape.strokeBorder(Color.separator) }
+      .overlay { shape.strokeBorder(EsuissColor.border) }
       Text(verbatim: "\(copies) \(copies == 1 ? "copy" : "copies") at \(Int(scale))%")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityAddTraits(.updatesFrequently)
     }
   }

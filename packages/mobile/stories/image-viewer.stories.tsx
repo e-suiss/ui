@@ -61,7 +61,7 @@ function Gallery({
               key={image.accessibilityLabel}
               index={index}
               accessibilityLabel={image.accessibilityLabel}
-              className="aspect-square w-[31%] overflow-hidden rounded-xl bg-surface-secondary"
+              className="aspect-square w-[31%] overflow-hidden rounded-xl bg-muted"
             >
               <Image source={image.source} className="h-full w-full" />
             </ImageViewerTrigger>

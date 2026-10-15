@@ -107,12 +107,12 @@ function WithIconsDemo({ variant }: { variant?: ListVariant }) {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="profile">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Your public profile information.
         </Text>
       </TabsContent>
       <TabsContent value="settings">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Manage your preferences.
         </Text>
       </TabsContent>
@@ -136,12 +136,12 @@ function DisabledTabDemo({ variant }: { variant?: ListVariant }) {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           A summary of your activity.
         </Text>
       </TabsContent>
       <TabsContent value="analytics">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Detailed metrics and trends.
         </Text>
       </TabsContent>
@@ -171,17 +171,17 @@ function SectionsDemo({
         </TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           A summary of your activity.
         </Text>
       </TabsContent>
       <TabsContent value="analytics">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Detailed metrics and trends.
         </Text>
       </TabsContent>
       <TabsContent value="reports">
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Exported reports and schedules.
         </Text>
       </TabsContent>

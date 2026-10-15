@@ -27,19 +27,19 @@ private struct Board: View {
         VStack(alignment: .leading, spacing: 10) {
           Text(verbatim: shot.caption)
             .font(TextStyle.xs.font(weight: .semibold))
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           shot.view
             .frame(width: phone.width, height: shot.height)
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
             .overlay {
-              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(Color.separator)
+              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(EsuissColor.border)
             }
         }
       }
     }
     .padding(24)
     .fixedSize()
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -53,7 +53,7 @@ final class CommerceGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let host = UIHostingController(rootView: Board(shots: shots)
         .frame(width: size.width, height: size.height, alignment: .topLeading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first

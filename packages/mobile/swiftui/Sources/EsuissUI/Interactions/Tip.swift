@@ -247,9 +247,9 @@ public struct TipCard<Content: View>: View {
       TipRowLayout {
         content
       }
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .accessibilityElement(children: .contain)
       .transition(.opacity.combined(with: .offset(y: -8)))
     }
@@ -297,7 +297,7 @@ struct TipPopoverPresenter<Popover: View>: ViewModifier {
         TipPopoverSurface { popover() }
           .environment(\.tip, tip)
           .presentationCompactAdaptation(.popover)
-          .presentationBackground(Color.surfaceRaised)
+          .presentationBackground(EsuissColor.popover)
       }
   }
 }
@@ -309,7 +309,7 @@ struct TipPopoverSurface<Content: View>: View {
     TipRowLayout {
       content()
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .frame(width: 320, alignment: .leading)
     .fixedSize(horizontal: false, vertical: true)
     .accessibilityElement(children: .contain)
@@ -326,7 +326,7 @@ public struct TipIcon<Content: View>: View {
   public var body: some View {
     content
       .frame(width: 32, height: 32)
-      .foregroundStyle(Color.accent)
+      .foregroundStyle(EsuissColor.primary)
       .accessibilityHidden(true)
   }
 }
@@ -361,7 +361,7 @@ public struct TipTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.base, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
   }
@@ -381,7 +381,7 @@ public struct TipDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
   }
 }
@@ -407,9 +407,9 @@ public struct TipClose: View {
 private struct TipCloseStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .foregroundStyle(configuration.isPressed ? Color.label : .labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(width: 32, height: 32)
-      .background(configuration.isPressed ? Color.itemPressed : .clear, in: Circle())
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .contentShape(Circle().inset(by: -6))
   }
 }

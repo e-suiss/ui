@@ -129,7 +129,7 @@ private fun MediaSection() {
             }
         }
         AspectRatio(16f / 9f, Modifier.width(200.dp)) {
-            Box(Modifier.fillMaxSize().background(EsuissTheme.colors.surfaceTertiary))
+            Box(Modifier.fillMaxSize().background(EsuissTheme.colors.secondary))
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             AvatarSize.entries.forEach { size ->
@@ -362,7 +362,7 @@ class FormsGalleryTest {
                     modifier = Modifier
                         .testTag("forms")
                         .width(402.dp)
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                 ) {

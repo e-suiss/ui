@@ -19,10 +19,10 @@ public struct RolesRequests: View {
 
   static var initialRequests: [Request] {
     [
-      Request(name: "Morgan Lee", permission: "Change prices", reason: "I need to update the campaign prices.", time: "10 min ago", tint: .orange),
-      Request(name: "Riley Chen", permission: "Export customers", reason: "I need the customer list for the monthly report.", time: "1 hr ago", tint: .green),
-      Request(name: "Jordan Park", permission: "Issue refunds", reason: "So I can refund support tickets myself.", time: "Yesterday", tint: .mint),
-      Request(name: "Taylor Kim", permission: "Publish", reason: "I'd like to publish blog posts.", time: "2 days ago", tint: .blue),
+      Request(name: "Morgan Lee", permission: "Change prices", reason: "I need to update the campaign prices.", time: "10 min ago", tint: Palette.orange500),
+      Request(name: "Riley Chen", permission: "Export customers", reason: "I need the customer list for the monthly report.", time: "1 hr ago", tint: Palette.green500),
+      Request(name: "Jordan Park", permission: "Issue refunds", reason: "So I can refund support tickets myself.", time: "Yesterday", tint: Palette.teal400),
+      Request(name: "Taylor Kim", permission: "Publish", reason: "I'd like to publish blog posts.", time: "2 days ago", tint: Palette.blue500),
     ]
   }
 
@@ -102,7 +102,7 @@ public struct RolesRequests: View {
                 EmptyMedia {
                   Ph.check.bold
                     .frame(width: 40, height: 40)
-                    .foregroundStyle(Color.green)
+                    .foregroundStyle(Palette.green500)
                 }
                 EmptyTitle("No pending requests.")
               }
@@ -118,7 +118,7 @@ public struct RolesRequests: View {
           } else {
             VStack(spacing: 0) {
               ForEach(Array(requests.enumerated()), id: \.element.id) { index, request in
-                SwipeActions(background: .surfaceSecondary, revealed: swiped == request.name ? 88 : 0) {
+                SwipeActions(background: EsuissColor.muted, revealed: swiped == request.name ? 88 : 0) {
                   RolesRequestsRow(
                     request: request,
                     separator: index > 0,
@@ -141,7 +141,7 @@ public struct RolesRequests: View {
                 .transition(.opacity.combined(with: .scale(scale: 1, anchor: .top)))
               }
             }
-            .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+            .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
           }
         }
@@ -181,7 +181,7 @@ private struct RolesRequestsRow: View {
     HStack(alignment: .top, spacing: 12) {
       Text(verbatim: request.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
         .font(.system(size: 13, weight: .semibold))
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 34, height: 34)
         .background(request.tint, in: Circle())
         .padding(.top, 12)
@@ -193,20 +193,20 @@ private struct RolesRequestsRow: View {
               .scaledFont(.sm, weight: .semibold)
             Text(LocalizedStringKey(request.time))
               .scaledFont(.xs)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           Text("Requests \(request.permission)")
             .scaledFont(.sm)
           Text(verbatim: request.reason)
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityElement(children: .combine)
         if let decision = request.decision {
           Text(decision == .approved ? "Approved" : "Denied")
             .scaledFont(.sm, weight: .semibold)
-            .foregroundStyle(decision == .approved ? Color.success : .danger)
+            .foregroundStyle(decision == .approved ? Color.adaptive(light: Palette.green600, dark: Palette.green400) : EsuissColor.destructive)
             .transition(.opacity)
         } else {
           HStack(spacing: 8) {
@@ -222,11 +222,11 @@ private struct RolesRequestsRow: View {
       .frame(maxWidth: .infinity, alignment: .leading)
       .overlay(alignment: .top) {
         if separator {
-          Color.separator.frame(height: 1)
+          EsuissColor.border.frame(height: 1)
         }
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.leading, 16)
   }
 }
@@ -275,7 +275,7 @@ private struct RolesRequestsShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

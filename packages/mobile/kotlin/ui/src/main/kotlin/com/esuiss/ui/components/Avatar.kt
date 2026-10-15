@@ -71,7 +71,7 @@ fun Avatar(
                     .fillMaxSize()
                     .then(
                         if (grouped) {
-                            Modifier.background(colors.surface, CircleShape).padding(2.dp)
+                            Modifier.background(colors.background, CircleShape).padding(2.dp)
                         } else {
                             Modifier
                         },
@@ -106,17 +106,17 @@ fun AvatarFallback(
     val colors = EsuissTheme.colors
     val size = LocalAvatarSize.current
     val background = if (colors.isDark) {
-        colors.labelSecondary.copy(alpha = colors.labelSecondary.alpha * 0.6f)
+        colors.mutedForeground.copy(alpha = colors.mutedForeground.alpha * 0.6f)
     } else {
-        colors.labelSecondary
+        colors.mutedForeground
     }
     Box(
         modifier = modifier.fillMaxSize().background(background, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides size.textStyle.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
-            LocalContentColor provides colors.onAccent,
+            LocalContentStyle provides size.textStyle.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
+            LocalContentColor provides colors.primaryForeground,
             LocalIconSize provides size.iconSize,
         ) {
             content()
@@ -144,15 +144,15 @@ fun AvatarBadge(
     Box(
         modifier = modifier
             .size(size.badgeSize)
-            .background(colors.surface, CircleShape)
+            .background(colors.background, CircleShape)
             .padding(2.dp)
-            .background(colors.accent, CircleShape),
+            .background(colors.primary, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         if (size != AvatarSize.Sm) {
             CompositionLocalProvider(
-                LocalContentStyle provides Typography.xs3.copy(color = colors.onAccent),
-                LocalContentColor provides colors.onAccent,
+                LocalContentStyle provides Typography.xs3.copy(color = colors.primaryForeground),
+                LocalContentColor provides colors.primaryForeground,
                 LocalIconSize provides size.badgeIconSize,
             ) {
                 content()
@@ -199,14 +199,14 @@ fun AvatarGroupCount(
     Box(
         modifier = modifier
             .size(size.size)
-            .background(colors.surface, CircleShape)
+            .background(colors.background, CircleShape)
             .padding(2.dp)
-            .background(colors.surfaceSecondary, CircleShape),
+            .background(colors.muted, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides size.textStyle.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides size.textStyle.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
+            LocalContentColor provides colors.foreground,
             LocalIconSize provides size.countIconSize,
         ) {
             content()

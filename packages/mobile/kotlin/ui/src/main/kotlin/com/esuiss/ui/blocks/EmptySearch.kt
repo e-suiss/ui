@@ -39,6 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -115,7 +116,7 @@ fun EmptySearch(
                     BasicText(
                         "Suggested",
                         modifier = Modifier.padding(bottom = 6.dp),
-                        style = Typography.xs.copy(color = colors.labelSecondary),
+                        style = Typography.xs.copy(color = colors.mutedForeground),
                     )
                     matches.forEach { item ->
                         SuggestionRow(item) { query = item }
@@ -134,11 +135,11 @@ fun EmptySearch(
                             BasicText(
                                 if (idle) "What are you looking for?" else "No results for “$query”.",
                                 modifier = Modifier.semantics { heading() },
-                                style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                                style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                             )
                             BasicText(
                                 if (idle) "Search for products, support articles or stores." else "Check the spelling or try one of these:",
-                                style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                                style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                             )
                         }
                         EmptyContent {
@@ -169,8 +170,8 @@ private fun SearchField(
     val colors = EsuissTheme.colors
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
-    val line by animateColorAsState(if (focused) colors.accent else colors.separatorStrong, tween(200), label = "line")
-    val style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold)
+    val line by animateColorAsState(if (focused) colors.primary else colors.input, tween(200), label = "line")
+    val style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -182,7 +183,7 @@ private fun SearchField(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 20.dp, tint = colors.labelSecondary)
+        Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 20.dp, tint = colors.mutedForeground)
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
@@ -191,13 +192,13 @@ private fun SearchField(
                 .semantics { contentDescription = "Search suiss" },
             textStyle = style,
             singleLine = true,
-            cursorBrush = SolidColor(colors.accent),
+            cursorBrush = SolidColor(colors.primary),
             interactionSource = interaction,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = { onSearch() }),
             decorationBox = { inner ->
                 Box(contentAlignment = Alignment.CenterStart) {
-                    if (value.isEmpty()) BasicText("Search suiss", style = style.copy(color = colors.labelTertiary), maxLines = 1)
+                    if (value.isEmpty()) BasicText("Search suiss", style = style.copy(color = colors.mutedForeground), maxLines = 1)
                     inner()
                 }
             },
@@ -215,10 +216,11 @@ private fun SearchField(
                 Box(
                     Modifier
                         .size(22.dp)
-                        .background(if (pressed) colors.labelSecondary else colors.labelTertiary, CircleShape),
+                        .alpha(if (pressed) 0.8f else 1f)
+                        .background(colors.mutedForeground, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(PhosphorIcons.Bold.X, contentDescription = null, size = 11.dp, tint = colors.surface)
+                    Icon(PhosphorIcons.Bold.X, contentDescription = null, size = 11.dp, tint = colors.background)
                 }
             }
         }
@@ -234,12 +236,12 @@ private fun SuggestionRow(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 44.dp)
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 14.dp, tint = colors.labelTertiary)
-        BasicText(text, style = Typography.lg.copy(color = colors.label))
+        Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 14.dp, tint = colors.mutedForeground)
+        BasicText(text, style = Typography.lg.copy(color = colors.foreground))
     }
 }

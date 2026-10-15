@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
@@ -122,18 +123,18 @@ internal fun PickerTrigger(
     val isEnabled = enabled && field.enabled
     val shape = RoundedCornerShape(Radius.lg)
     val foreground = when {
-        !isEnabled -> colors.labelQuaternary
-        text == null -> colors.labelSecondary
-        else -> colors.label
+        text == null -> colors.mutedForeground
+        else -> colors.foreground
     }
-    val iconTint = if (isEnabled) colors.labelSecondary else colors.labelQuaternary
+    val iconTint = colors.mutedForeground
     Row(
         modifier = modifier
             .then(if (fill) Modifier.fillMaxWidth() else Modifier)
             .height(44.dp)
+            .alpha(if (isEnabled) 1f else 0.5f)
             .clip(shape)
-            .background(controlBackground(colors, isInvalid, isEnabled), shape)
-            .border(1.dp, if (isInvalid) colors.danger else Color.Transparent, shape)
+            .background(controlBackground(colors, isInvalid), shape)
+            .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
             .then(if (isInvalid) Modifier.semantics { error("Invalid") } else Modifier)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

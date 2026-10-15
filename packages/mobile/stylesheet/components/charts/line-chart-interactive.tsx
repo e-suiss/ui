@@ -14,9 +14,21 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
 import { Toggle } from "@/components/ui/toggle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type City = "istanbul" | "ankara" | "izmir" | "antalya" | "erzurum"
 
@@ -69,19 +81,19 @@ const MONTHS = [
 ]
 
 const chartConfig = {
-  istanbul: { label: "Istanbul", color: "blue" },
-  ankara: { label: "Ankara", color: "purple" },
-  izmir: { label: "Izmir", color: "teal" },
-  antalya: { label: "Antalya", color: "orange" },
-  erzurum: { label: "Erzurum", color: "indigo" },
+  istanbul: { label: "Istanbul", color: "chart-1" },
+  ankara: { label: "Ankara", color: "purple-500" },
+  izmir: { label: "Izmir", color: "chart-2" },
+  antalya: { label: "Antalya", color: "chart-4" },
+  erzurum: { label: "Erzurum", color: "chart-3" },
 } satisfies ChartConfig
 
-const SWATCH: Record<City, keyof ThemeColors> = {
-  istanbul: "blue",
-  ankara: "purple",
-  izmir: "teal",
-  antalya: "orange",
-  erzurum: "indigo",
+const SWATCH: Record<City, Tone> = {
+  istanbul: "chart1",
+  ankara: "purple500",
+  izmir: "chart2",
+  antalya: "chart4",
+  erzurum: "chart3",
 }
 
 function withAlpha(color: string, alpha: number) {
@@ -171,7 +183,7 @@ export function LineChartInteractive() {
       <CardHeader style={styles.header}>
         <View style={styles.heading}>
           <Text style={styles.title}>Monthly temperature</Text>
-          <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+          <Text style={[styles.caption, { color: colors.mutedForeground }]}>
             {MODES[mode]} · °C · long-term
           </Text>
         </View>
@@ -202,8 +214,8 @@ export function LineChartInteractive() {
                 styles.city,
                 {
                   backgroundColor: state.pressed
-                    ? withAlpha(colors[SWATCH[city]], 0.15)
-                    : colors.control,
+                    ? withAlpha(tone(colors, SWATCH[city]), 0.15)
+                    : colors.secondary,
                 },
               ]}
             >
@@ -212,12 +224,12 @@ export function LineChartInteractive() {
                   styles.dot,
                   {
                     backgroundColor: visible.includes(city)
-                      ? colors[SWATCH[city]]
-                      : colors.labelQuaternary,
+                      ? tone(colors, SWATCH[city])
+                      : colors.border,
                   },
                 ]}
               />
-              <Text style={[styles.cityLabel, { color: colors.label }]}>
+              <Text style={[styles.cityLabel, { color: colors.foreground }]}>
                 {chartConfig[city].label}
               </Text>
             </Toggle>
@@ -243,7 +255,7 @@ export function LineChartInteractive() {
               ticks={[-20, -10, 0, 10, 20, 30, 40]}
               tickFormatter={(value: number) => `${value}°`}
             />
-            <ReferenceLine y={0} stroke="separator-strong" />
+            <ReferenceLine y={0} stroke="input" />
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -256,11 +268,13 @@ export function LineChartInteractive() {
                       <View
                         style={[
                           styles.bar,
-                          { backgroundColor: colors[SWATCH[name as City]] },
+                          {
+                            backgroundColor: tone(colors, SWATCH[name as City]),
+                          },
                         ]}
                       />
                       <Text
-                        style={[styles.grow, { color: colors.labelSecondary }]}
+                        style={[styles.grow, { color: colors.mutedForeground }]}
                       >
                         {chartConfig[name as City].label}
                       </Text>
@@ -281,7 +295,7 @@ export function LineChartInteractive() {
                 activeDot={{
                   r: 5,
                   strokeWidth: 2,
-                  stroke: "surface-secondary",
+                  stroke: "muted",
                 }}
               />
             ))}
@@ -297,11 +311,11 @@ export function LineChartInteractive() {
                   <View
                     style={[
                       styles.dot,
-                      { backgroundColor: colors[SWATCH[city]] },
+                      { backgroundColor: tone(colors, SWATCH[city]) },
                     ]}
                   />
                   <Text
-                    style={[styles.caption, { color: colors.labelSecondary }]}
+                    style={[styles.caption, { color: colors.mutedForeground }]}
                   >
                     {chartConfig[city].label}
                   </Text>

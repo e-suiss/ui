@@ -52,7 +52,7 @@ function ExportDemo() {
       >
         <Text>Export SVG</Text>
       </Button>
-      <Text role="status" className="text-sm text-label-secondary">
+      <Text role="status" className="text-sm text-muted-foreground">
         {`${strokes.length} strokes${size ? ` · ${size}` : ""}`}
       </Text>
     </View>

@@ -16,12 +16,12 @@ public struct PopoverContent<Content: View>: View {
     }
     .font(TextStyle.base.font())
     .tracking(TextStyle.base.letterSpacing)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(16)
     .frame(width: width, alignment: .leading)
     .fixedSize(horizontal: width == nil, vertical: true)
     .presentationCompactAdaptation(.popover)
-    .presentationBackground(Color.surfaceRaised)
+    .presentationBackground(EsuissColor.popover)
     .background(PopoverChrome())
   }
 }

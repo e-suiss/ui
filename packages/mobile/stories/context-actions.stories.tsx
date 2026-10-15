@@ -25,10 +25,10 @@ export const Default: Story = {
     <ContextActions>
       <ContextActionsTrigger
         accessibilityLabel="Photo"
-        className="h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80"
+        className="h-40 items-center justify-center gap-2 rounded-2xl bg-muted active:opacity-80"
       >
-        <Icon as={ImageIcon} className="size-8 text-label-secondary" />
-        <Text className="text-sm text-label-secondary">Long press</Text>
+        <Icon as={ImageIcon} className="size-8 text-muted-foreground" />
+        <Text className="text-sm text-muted-foreground">Long press</Text>
       </ContextActionsTrigger>
       <ContextActionsContent>
         <ContextActionsLabel>Photo</ContextActionsLabel>
@@ -44,7 +44,7 @@ export const Inline: Story = {
   render: () => (
     <View className="items-start">
       <ContextActions>
-        <ContextActionsTrigger className="rounded-lg bg-control px-3 py-2">
+        <ContextActionsTrigger className="rounded-lg bg-secondary px-3 py-2">
           <Text>Hold this message</Text>
         </ContextActionsTrigger>
         <ContextActionsContent cancelLabel="Close">

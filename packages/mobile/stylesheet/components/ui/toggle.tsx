@@ -58,28 +58,15 @@ function toggleStyle(
   return [
     styles.root,
     sizes[size ?? "default"],
-    variant === "outline" && [
-      styles.outline,
-      { borderColor: colors.separator },
-    ],
-    state.disabled
-      ? state.pressed && { backgroundColor: colors.controlDisabled }
-      : [
-          pressing && styles.scaled,
-          state.pressed
-            ? {
-                backgroundColor: pressing
-                  ? colors.itemPressed
-                  : colors.itemSelected,
-              }
-            : pressing && { backgroundColor: colors.itemPressed },
-        ],
+    variant === "outline" && [styles.outline, { borderColor: colors.border }],
+    state.pressed && { backgroundColor: colors.accent },
+    pressing && !state.disabled && [styles.scaled, { opacity: 0.8 }],
+    state.disabled && { opacity: 0.5 },
   ]
 }
 
 function toggleTextStyle(colors: ThemeColors, state: ToggleState): TextStyle {
-  let color = state.pressed ? colors.link : colors.label
-  if (state.disabled) color = colors.labelQuaternary
+  const color = state.pressed ? colors.primary : colors.foreground
   return { ...fontSize.sm, color }
 }
 

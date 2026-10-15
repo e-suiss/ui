@@ -316,12 +316,12 @@ public struct MessageScrollerButton: View {
           .monospacedDigit()
           .lineLimit(1)
           .fixedSize()
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, 5)
           .frame(minWidth: 18, minHeight: 18)
-          .background(Color.accent, in: Capsule())
+          .background(EsuissColor.primary, in: Capsule())
           .background {
-            Capsule().fill(Color.surfaceRaised).padding(-2)
+            Capsule().fill(EsuissColor.card).padding(-2)
           }
           .offset(x: 6, y: -6)
           .accessibilityHidden(true)
@@ -341,20 +341,16 @@ public struct MessageScrollerButton: View {
 private struct MessageScrollerButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(width: 32, height: 32)
       .background {
         Circle()
-          .fill(Color.surfaceRaised)
-          .overlay {
-            if configuration.isPressed {
-              Circle().fill(Color.controlPressed)
-            }
-          }
+          .fill(EsuissColor.card)
       }
       .overlay {
-        Circle().strokeBorder(Color.separator, lineWidth: 1)
+        Circle().strokeBorder(EsuissColor.border, lineWidth: 1)
       }
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .shadow(.md)
       .contentShape(Circle())
   }

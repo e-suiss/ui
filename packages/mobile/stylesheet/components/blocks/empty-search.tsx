@@ -99,16 +99,14 @@ function EmptySearch() {
           style={[
             styles.field,
             {
-              borderBottomColor: focused
-                ? colors.accent
-                : colors.separatorStrong,
+              borderBottomColor: focused ? colors.primary : colors.input,
             },
           ]}
         >
           <Icon
             as={MagnifyingGlassIcon}
             size={20}
-            color={colors.labelSecondary}
+            color={colors.mutedForeground}
           />
           <Input
             ref={inputRef}
@@ -135,19 +133,24 @@ function EmptySearch() {
                 styles.clear,
                 {
                   backgroundColor: pressed
-                    ? colors.labelSecondary
-                    : colors.labelTertiary,
+                    ? colors.mutedForeground
+                    : colors.mutedForeground,
                 },
               ]}
             >
-              <Icon as={XIcon} weight="bold" size={11} color={colors.surface} />
+              <Icon
+                as={XIcon}
+                weight="bold"
+                size={11}
+                color={colors.background}
+              />
             </Button>
           ) : null}
         </View>
         {matches.length > 0 ? (
           <View accessibilityLabel="Suggested" style={styles.suggested}>
             <Text
-              style={[styles.suggestedLabel, { color: colors.labelSecondary }]}
+              style={[styles.suggestedLabel, { color: colors.mutedForeground }]}
             >
               Suggested
             </Text>
@@ -164,7 +167,7 @@ function EmptySearch() {
                 <Icon
                   as={MagnifyingGlassIcon}
                   size={14}
-                  color={colors.labelTertiary}
+                  color={colors.mutedForeground}
                 />
                 <Text style={styles.suggestionText}>{item}</Text>
               </Pressable>

@@ -48,7 +48,7 @@ export const Default: Story = {
 
 export const Muted: Story = {
   render: () => (
-    <Empty className="bg-surface-secondary">
+    <Empty className="bg-muted">
       <EmptyHeader>
         <EmptyTitle>No results</EmptyTitle>
         <EmptyDescription>Try a different search.</EmptyDescription>

@@ -87,14 +87,14 @@ private fun SwitchWithDescription() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.surfaceSecondary, shape)
+            .background(colors.muted, shape)
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Label("Marketing emails", Modifier.toggles { checked = !checked })
-            Text("Receive emails about new products.", style = Typography.sm.copy(color = colors.labelSecondary))
+            Text("Receive emails about new products.", style = Typography.sm.copy(color = colors.mutedForeground))
         }
         Switch(checked, { checked = it }, Modifier.label("Marketing emails"))
     }

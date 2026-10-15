@@ -127,7 +127,7 @@ function Avatar({
             { width: dimension, height: dimension },
             groupIndex !== null && [
               styles.ring,
-              { borderColor: colors.surface },
+              { borderColor: colors.background },
             ],
             groupOffset(groupIndex, size),
             typeof style === "function" ? style(state) : style,
@@ -168,7 +168,7 @@ function AvatarFallback({
         ...fontSize[TEXT_SIZE[size]],
         fontWeight: "600",
         textTransform: "uppercase",
-        color: colors.onAccent,
+        color: colors.primaryForeground,
       }}
     >
       <IconSizeContext.Provider value={FALLBACK_ICON[size]}>
@@ -177,8 +177,8 @@ function AvatarFallback({
             styles.fallback,
             {
               backgroundColor: isDark
-                ? withAlpha(colors.labelSecondary, 0.6)
-                : colors.labelSecondary,
+                ? withAlpha(colors.mutedForeground, 0.6)
+                : colors.mutedForeground,
             },
             typeof style === "function" ? style(state) : style,
           ]}
@@ -204,7 +204,7 @@ function AvatarBadge({
   const size = React.useContext(AvatarSizeContext)
   const dimension = BADGE_SIZE[size]
   return (
-    <TextStyleContext.Provider value={{ color: colors.onAccent }}>
+    <TextStyleContext.Provider value={{ color: colors.primaryForeground }}>
       <IconSizeContext.Provider value={BADGE_ICON[size]}>
         <View
           style={[
@@ -212,8 +212,8 @@ function AvatarBadge({
             {
               width: dimension,
               height: dimension,
-              backgroundColor: colors.accent,
-              borderColor: colors.surface,
+              backgroundColor: colors.primary,
+              borderColor: colors.background,
             },
             style,
           ]}
@@ -265,7 +265,7 @@ function AvatarGroupCount({
       value={{
         ...fontSize[TEXT_SIZE[size]],
         fontWeight: "600",
-        color: colors.label,
+        color: colors.foreground,
       }}
     >
       <IconSizeContext.Provider value={COUNT_ICON[size]}>
@@ -275,8 +275,8 @@ function AvatarGroupCount({
             {
               width: dimension,
               height: dimension,
-              backgroundColor: colors.surfaceSecondary,
-              borderColor: colors.surface,
+              backgroundColor: colors.muted,
+              borderColor: colors.background,
             },
             groupOffset(groupIndex, size),
             style,

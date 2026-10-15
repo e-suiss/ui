@@ -6,8 +6,8 @@ private let forecast: [Double] = [26, 28, 30, 33]
 private let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 private let chartConfig: ChartConfig = [
-  "actual": .init("Actual", color: .blue),
-  "forecast": .init("Forecast", color: .blue),
+  "actual": .init("Actual", color: EsuissColor.chart1),
+  "forecast": .init("Forecast", color: EsuissColor.chart1),
 ]
 
 private func value(_ key: String, _ index: Int) -> Double? {
@@ -28,7 +28,7 @@ public struct LineChartForecast: View {
           ChartAnimator { progress in
             Chart {
               RectangleMark(xStart: .value("Month", 8), xEnd: .value("Month", 11))
-                .foregroundStyle(Color.control.opacity(0.6))
+                .foregroundStyle(EsuissColor.secondary.opacity(0.6))
               ForEach(chartConfig.keys, id: \.self) { key in
                 ForEach(months.indices, id: \.self) { index in
                   if let point = value(key, index) {

@@ -42,8 +42,8 @@ fun Empty(
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides Typography.base.copy(color = colors.label, textAlign = TextAlign.Center),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.base.copy(color = colors.foreground, textAlign = TextAlign.Center),
+            LocalContentColor provides colors.foreground,
         ) {
             content()
         }
@@ -72,7 +72,7 @@ fun EmptyMedia(
     val colors = EsuissTheme.colors
     val surface = if (variant == EmptyMediaVariant.Icon) {
         val shape = RoundedCornerShape(Radius.lg)
-        Modifier.size(40.dp).background(colors.surfaceSecondary, shape)
+        Modifier.size(40.dp).background(colors.muted, shape)
     } else {
         Modifier
     }
@@ -82,7 +82,7 @@ fun EmptyMedia(
     ) {
         CompositionLocalProvider(
             LocalIconSize provides if (variant == EmptyMediaVariant.Icon) 20.dp else LocalIconSize.current,
-            LocalContentColor provides colors.label,
+            LocalContentColor provides colors.foreground,
         ) {
             content()
         }
@@ -95,7 +95,7 @@ fun EmptyTitle(text: String, modifier: Modifier = Modifier) {
         text,
         modifier = modifier.semantics { heading() },
         style = Typography.lg.copy(
-            color = EsuissTheme.colors.label,
+            color = EsuissTheme.colors.foreground,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
         ),
@@ -108,7 +108,7 @@ fun EmptyDescription(text: String, modifier: Modifier = Modifier) {
         text,
         modifier = modifier,
         style = Typography.sm.copy(
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
             lineHeight = 24.sp,
             textAlign = TextAlign.Center,
         ),

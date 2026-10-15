@@ -131,7 +131,7 @@ private fun InputGroupBlockStart() {
     InputGroup {
         InputGroupInput(value, { value = it }, placeholder = "Enter your name")
         InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
-            Text("Full name", style = Typography.sm.copy(fontWeight = FontWeight.Medium, color = EsuissTheme.colors.label))
+            Text("Full name", style = Typography.sm.copy(fontWeight = FontWeight.Medium, color = EsuissTheme.colors.foreground))
         }
     }
 }

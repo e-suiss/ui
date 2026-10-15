@@ -29,8 +29,8 @@ type OnboardingPage = {
 
 function Illustration({ icon }: { icon: PhosphorIcon }) {
   return (
-    <View className="size-40 items-center justify-center rounded-full bg-accent-surface">
-      <Icon as={icon} weight="duotone" className="size-20 text-accent" />
+    <View className="size-40 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20">
+      <Icon as={icon} weight="duotone" className="size-20 text-primary" />
     </View>
   )
 }
@@ -132,7 +132,7 @@ function Onboarding({
                   >
                     {page.title}
                   </Text>
-                  <Text className="text-center text-lg text-label-secondary">
+                  <Text className="text-center text-lg text-muted-foreground">
                     {page.description}
                   </Text>
                 </View>

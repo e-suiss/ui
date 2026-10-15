@@ -55,16 +55,16 @@ public struct VerifyCode: View {
       VStack(spacing: 0) {
         Ph.lockSimple.bold
           .frame(width: 30, height: 30)
-          .foregroundStyle(Color.accent)
+          .foregroundStyle(EsuissColor.primary)
           .frame(width: 64, height: 64)
-          .background(Color.surfaceSecondary, in: Circle())
+          .background(EsuissColor.muted, in: Circle())
           .accessibilityHidden(true)
         Text("Two-factor authentication")
           .scaledTextStyle(.xl2, weight: .bold)
           .padding(.top, 20)
         Text("Enter the 6-digit code sent to your trusted devices.")
           .scaledTextStyle(.lg)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.top, 12)
           .padding(.bottom, 30)
         InputOTP(text: $code, length: 6) {
@@ -87,7 +87,7 @@ public struct VerifyCode: View {
         .accessibilityLabel(Text("Verification code"))
         Text(status == .error ? "Incorrect code." : "Demo code: \(Self.demoCode)")
           .scaledFont(.sm)
-          .foregroundStyle(status == .error ? Color.danger : .labelSecondary)
+          .foregroundStyle(status == .error ? EsuissColor.destructive : EsuissColor.mutedForeground)
           .frame(minHeight: 20)
           .padding(.top, 14)
         VStack(spacing: 10) {
@@ -95,7 +95,7 @@ public struct VerifyCode: View {
             Text("Resend code · 0:\(String(format: "%02d", left))")
               .scaledFont(.sm)
               .monospacedDigit()
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .frame(minHeight: 32)
           } else {
             Button("Resend code ›") { left = 30 }
@@ -119,15 +119,15 @@ public struct VerifyCode: View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Verified.")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("This device is now trusted. You won't be asked for a code next time.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") {
         code = ""
         status = .idle
@@ -163,8 +163,8 @@ private struct VerifyCodeLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

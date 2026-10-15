@@ -63,42 +63,42 @@ const USERS: User[] = [
     email: "jamie@company.com",
     role: "Admin",
     status: "Active",
-    tint: "bg-indigo dark:bg-indigo",
+    tint: "bg-indigo-500",
   },
   {
     name: "Morgan Lee",
     email: "morgan@company.com",
     role: "Editor",
     status: "Active",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
   },
   {
     name: "Riley Chen",
     email: "riley@company.com",
     role: "Support",
     status: "Active",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
   },
   {
     name: "Taylor Kim",
     email: "taylor@company.com",
     role: "Viewer",
     status: "Suspended",
-    tint: "bg-cyan dark:bg-cyan",
+    tint: "bg-cyan-500",
   },
   {
     name: "Avery Brooks",
     email: "avery@company.com",
     role: "Editor",
     status: "Invited",
-    tint: "bg-pink dark:bg-pink",
+    tint: "bg-pink-500",
   },
   {
     name: "Jordan Park",
     email: "jordan@company.com",
     role: "Support",
     status: "Active",
-    tint: "bg-mint dark:bg-mint",
+    tint: "bg-teal-400",
   },
 ]
 
@@ -173,7 +173,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -281,7 +281,7 @@ function UsersDetail({
             {wide ? (
               <Text
                 role="heading"
-                className="px-1 pb-2 text-sm font-semibold text-label-secondary"
+                className="px-1 pb-2 text-sm font-semibold text-muted-foreground"
               >
                 Users
               </Text>
@@ -296,7 +296,7 @@ function UsersDetail({
                     setSelected(index)
                     setTab("Profile")
                   }}
-                  className={active ? "bg-accent py-1.5" : "py-1.5"}
+                  className={active ? "bg-primary py-1.5" : "py-1.5"}
                 >
                   <View className="flex-row items-center gap-2.5">
                     <UserAvatar user={item} size="sm" className="size-7" />
@@ -304,7 +304,7 @@ function UsersDetail({
                       <Text
                         numberOfLines={1}
                         className={
-                          active ? "text-sm text-on-accent" : "text-sm"
+                          active ? "text-sm text-primary-foreground" : "text-sm"
                         }
                       >
                         {item.name}
@@ -312,8 +312,8 @@ function UsersDetail({
                       <Text
                         className={
                           active
-                            ? "text-xs text-on-accent"
-                            : "text-xs text-label-secondary"
+                            ? "text-xs text-primary-foreground"
+                            : "text-xs text-muted-foreground"
                         }
                       >
                         {overrides[index] ?? item.role}
@@ -338,7 +338,7 @@ function UsersDetail({
                   <Text role="heading" className="text-2xl font-bold">
                     {user.name}
                   </Text>
-                  <Text className="text-sm text-label-secondary">
+                  <Text className="text-sm text-muted-foreground">
                     {`${user.email} · ${role}`}
                   </Text>
                 </View>
@@ -417,11 +417,11 @@ function UsersDetail({
                             <ItemSeparator className="ms-15" />
                           ) : null}
                           <Item size="sm">
-                            <ItemMedia className="size-7.5 rounded-[7px] bg-gray">
+                            <ItemMedia className="size-7.5 rounded-[7px] bg-zinc-500">
                               <Icon
                                 as={session.icon}
                                 weight="bold"
-                                className="size-4 text-on-accent"
+                                className="size-4 text-primary-foreground"
                               />
                             </ItemMedia>
                             <ItemContent className="gap-0">
@@ -434,7 +434,7 @@ function UsersDetail({
                             </ItemContent>
                             <ItemActions>
                               {index === 0 ? (
-                                <Text className="text-sm text-label">
+                                <Text className="text-sm text-foreground">
                                   This device
                                 </Text>
                               ) : (

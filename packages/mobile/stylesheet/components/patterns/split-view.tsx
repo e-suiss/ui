@@ -122,7 +122,7 @@ function titleStyle(
 ): TextStyle {
   if (isCompact) return styles.compactTitle
   if (kind === "sidebar") {
-    return { ...styles.sidebarTitle, color: colors.labelSecondary }
+    return { ...styles.sidebarTitle, color: colors.mutedForeground }
   }
   return styles.detailTitle
 }
@@ -187,7 +187,7 @@ function SplitView({
       <View
         style={[
           styles.root,
-          !isCompact && [styles.rootWide, { borderColor: colors.separator }],
+          !isCompact && [styles.rootWide, { borderColor: colors.border }],
           style,
         ]}
         {...props}
@@ -249,10 +249,10 @@ function SplitViewPane({
             weight="bold"
             mirrored={I18nManager.isRTL}
             size={18}
-            color={colors.link}
+            color={colors.primary}
           />
           <TextStyleContext.Provider
-            value={{ ...fontSize.base, color: colors.link }}
+            value={{ ...fontSize.base, color: colors.primary }}
           >
             {typeof titles[backColumn] === "string" ? (
               <Text>{titles[backColumn]}</Text>
@@ -297,7 +297,7 @@ function SplitViewPane({
         styles.pane,
         kinds[0] !== kind && [
           styles.paneDivider,
-          { borderColor: colors.separator },
+          { borderColor: colors.border },
         ],
         { flex: RATIO[kind] / total },
       ]}
@@ -357,11 +357,10 @@ function SplitViewItem({
       style={({ pressed }) => [
         styles.item,
         isCompact
-          ? [styles.itemCompact, { borderColor: colors.separator }]
+          ? [styles.itemCompact, { borderColor: colors.border }]
           : [styles.itemWide, kind === "list" && styles.itemWideList],
-        !isCompact && isActive && { backgroundColor: colors.surfaceSecondary },
-        pressed &&
-          (isCompact || !isActive) && { backgroundColor: colors.itemPressed },
+        !isCompact && isActive && { backgroundColor: colors.muted },
+        pressed && (isCompact || !isActive) && { opacity: 0.8 },
         style,
       ]}
       {...props}
@@ -378,7 +377,7 @@ function SplitViewItem({
           as={CaretRightIcon}
           mirrored={I18nManager.isRTL}
           size={16}
-          color={colors.labelTertiary}
+          color={colors.mutedForeground}
         />
       ) : null}
     </Pressable>

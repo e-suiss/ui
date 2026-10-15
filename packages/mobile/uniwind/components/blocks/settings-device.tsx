@@ -64,41 +64,41 @@ const GROUPS: Row[][] = [
     {
       label: "Airplane Mode",
       icon: AirplaneIcon,
-      tint: "bg-orange",
+      tint: "bg-orange-500",
       toggle: "airplane",
     },
     {
       label: "Wi-Fi",
       icon: WifiHighIcon,
-      tint: "bg-blue",
+      tint: "bg-blue-500",
       detail: (toggles) => (toggles.wifi ? "Home" : "Off"),
     },
     {
       label: "Bluetooth",
       icon: BluetoothIcon,
-      tint: "bg-blue",
+      tint: "bg-blue-500",
       detail: (toggles) => (toggles.bluetooth ? "On" : "Off"),
     },
     {
       label: "Cellular",
       icon: CellSignalFullIcon,
-      tint: "bg-green",
+      tint: "bg-green-500",
       detail: (toggles) => (toggles.airplane ? "Off" : ""),
     },
   ],
   [
-    { label: "Notifications", icon: BellIcon, tint: "bg-red" },
-    { label: "Sounds & Haptics", icon: SpeakerHighIcon, tint: "bg-pink" },
-    { label: "Focus", icon: MoonIcon, tint: "bg-indigo", toggle: "focus" },
-    { label: "Screen Time", icon: HourglassIcon, tint: "bg-indigo" },
+    { label: "Notifications", icon: BellIcon, tint: "bg-red-500" },
+    { label: "Sounds & Haptics", icon: SpeakerHighIcon, tint: "bg-pink-500" },
+    { label: "Focus", icon: MoonIcon, tint: "bg-indigo-500", toggle: "focus" },
+    { label: "Screen Time", icon: HourglassIcon, tint: "bg-indigo-500" },
   ],
   [
-    { label: "General", icon: GearIcon, tint: "bg-gray" },
-    { label: "Display & Brightness", icon: SunIcon, tint: "bg-blue" },
+    { label: "General", icon: GearIcon, tint: "bg-zinc-500" },
+    { label: "Display & Brightness", icon: SunIcon, tint: "bg-blue-500" },
   ],
 ]
 
-const GROUP_CLASS = "bg-surface dark:bg-surface-secondary"
+const GROUP_CLASS = "bg-background dark:bg-muted"
 
 function Chevron() {
   return (
@@ -106,7 +106,7 @@ function Chevron() {
       as={CaretRightIcon}
       weight="bold"
       className={cn(
-        "size-3.5 text-label-tertiary",
+        "size-3.5 text-muted-foreground",
         I18nManager.isRTL && "rotate-180"
       )}
     />
@@ -146,7 +146,7 @@ function SettingsDevice({
     <Screen
       variant="secondary"
       edges={["top", "right", "left"]}
-      className="dark:bg-surface"
+      className="dark:bg-background"
     >
       <Header scroll={scroll}>
         <HeaderTitle>Settings</HeaderTitle>
@@ -158,12 +158,12 @@ function SettingsDevice({
       >
         <HeaderLargeTitle>Settings</HeaderLargeTitle>
         <View className="gap-4.5 px-4 pb-8">
-          <InputGroup className="h-9 rounded-[0.625rem] dark:bg-surface-secondary">
+          <InputGroup className="h-9 rounded-[0.625rem] dark:bg-muted">
             <InputGroupAddon>
               <Icon
                 as={MagnifyingGlassIcon}
                 weight="bold"
-                className="size-4 text-label-secondary"
+                className="size-4 text-muted-foreground"
               />
             </InputGroupAddon>
             <InputGroupInput
@@ -185,7 +185,7 @@ function SettingsDevice({
                 className="gap-3.5 py-2.5"
               >
                 <Avatar size="xl" className="size-14.5">
-                  <AvatarFallback className="bg-indigo dark:bg-indigo">
+                  <AvatarFallback className="bg-indigo-500">
                     <Text className="text-xl">JR</Text>
                   </AvatarFallback>
                 </Avatar>
@@ -226,7 +226,7 @@ function SettingsDevice({
                         <Icon
                           as={row.icon}
                           weight="bold"
-                          className="size-4.25 text-on-accent"
+                          className="size-4.25 text-primary-foreground"
                         />
                       </ItemMedia>
                       <ItemContent>
@@ -262,7 +262,7 @@ function SettingsDevice({
             </ItemGroup>
           ))}
           {visible.length === 0 ? (
-            <Text className="p-7.5 text-center text-base text-label-secondary">
+            <Text className="p-7.5 text-center text-base text-muted-foreground">
               No Results
             </Text>
           ) : null}

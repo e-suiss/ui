@@ -7,11 +7,11 @@ private let chartData: [(device: String, users: Double)] = [
 
 private let chartConfig: ChartConfig = [
   "users": .init("Users"),
-  "phone": .init("Phone", color: .blue),
-  "laptop": .init("Laptop", color: .teal),
-  "tablet": .init("Tablet", color: .indigo),
-  "watch": .init("Watch", color: .orange),
-  "other": .init("Other", color: .gray),
+  "phone": .init("Phone", color: EsuissColor.chart1),
+  "laptop": .init("Laptop", color: EsuissColor.chart2),
+  "tablet": .init("Tablet", color: EsuissColor.chart3),
+  "watch": .init("Watch", color: EsuissColor.chart4),
+  "other": .init("Other", color: EsuissColor.chart5),
 ]
 
 public struct PieChartSeparated: View {

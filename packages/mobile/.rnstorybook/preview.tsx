@@ -7,8 +7,8 @@ const preview: Preview = {
       <View
         className={
           parameters.layout === "fullscreen"
-            ? "flex-1 bg-surface"
-            : "flex-1 bg-surface p-4"
+            ? "flex-1 bg-background"
+            : "flex-1 bg-background p-4"
         }
       >
         <Story />

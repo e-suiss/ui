@@ -4,8 +4,20 @@ import Svg, { Circle, G } from "react-native-svg"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { type ChartColor, ChartPalette } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Ring = "move" | "exercise" | "stand"
 
@@ -14,28 +26,32 @@ const RINGS: {
   label: string
   unit: string
   goal: number
-  color: ChartColor & keyof ThemeColors
+  color: ChartColor
+  swatch: Tone
 }[] = [
   {
     key: "move",
     label: "Move",
     unit: "kcal",
     goal: 600,
-    color: "red",
+    color: "red-500",
+    swatch: "red500",
   },
   {
     key: "exercise",
     label: "Exercise",
     unit: "min",
     goal: 30,
-    color: "green",
+    color: "green-500",
+    swatch: "green500",
   },
   {
     key: "stand",
     label: "Stand",
     unit: "hr",
     goal: 12,
-    color: "cyan",
+    color: "cyan-500",
+    swatch: "cyan500",
   },
 ]
 
@@ -160,7 +176,7 @@ export function RadialChartInteractive() {
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
         <Text style={styles.title}>Activity</Text>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           This week · pick a day
         </Text>
       </CardHeader>
@@ -181,7 +197,7 @@ export function RadialChartInteractive() {
               accessibilityLabel={entry.day}
               style={(state) => [
                 styles.day,
-                state.pressed && { backgroundColor: colors.surface },
+                state.pressed && { backgroundColor: colors.background },
               ]}
             >
               <Text
@@ -189,7 +205,9 @@ export function RadialChartInteractive() {
                   styles.dayLabel,
                   {
                     color:
-                      selected === index ? colors.label : colors.labelSecondary,
+                      selected === index
+                        ? colors.foreground
+                        : colors.mutedForeground,
                   },
                 ]}
               >
@@ -210,15 +228,25 @@ export function RadialChartInteractive() {
                 <View key={ring.key} accessible style={styles.ring}>
                   <Text style={styles.ringLabel}>{ring.label}</Text>
                   <View style={styles.reading}>
-                    <Text style={[styles.value, { color: colors[ring.color] }]}>
+                    <Text
+                      style={[
+                        styles.value,
+                        { color: tone(colors, ring.swatch) },
+                      ]}
+                    >
                       {`${Math.round(values[index] ?? 0)}/${ring.goal}`}
                     </Text>
-                    <Text style={[styles.unit, { color: colors[ring.color] }]}>
+                    <Text
+                      style={[
+                        styles.unit,
+                        { color: tone(colors, ring.swatch) },
+                      ]}
+                    >
                       {ring.unit}
                     </Text>
                   </View>
                   <Text
-                    style={[styles.percent, { color: colors.labelSecondary }]}
+                    style={[styles.percent, { color: colors.mutedForeground }]}
                   >
                     {`${percent}%${percent >= 100 ? " · goal met" : ""}`}
                   </Text>

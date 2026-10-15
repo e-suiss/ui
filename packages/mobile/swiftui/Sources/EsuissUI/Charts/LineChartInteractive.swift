@@ -38,11 +38,11 @@ private enum Mode: String, CaseIterable {
 }
 
 private let chartConfig: ChartConfig = [
-  "istanbul": .init("Istanbul", color: .blue),
-  "ankara": .init("Ankara", color: .purple),
-  "izmir": .init("Izmir", color: .teal),
-  "antalya": .init("Antalya", color: .orange),
-  "erzurum": .init("Erzurum", color: .indigo),
+  "istanbul": .init("Istanbul", color: EsuissColor.chart1),
+  "ankara": .init("Ankara", color: Palette.purple500),
+  "izmir": .init("Izmir", color: EsuissColor.chart2),
+  "antalya": .init("Antalya", color: EsuissColor.chart4),
+  "erzurum": .init("Erzurum", color: EsuissColor.chart3),
 ]
 
 private func temperature(_ city: City, month: Int, mode: Mode) -> Double {
@@ -99,7 +99,7 @@ public struct LineChartInteractive: View {
             .textStyle(.lg, weight: .semibold)
           Text("\(mode.title) · °C · long-term")
             .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         ToggleGroup(selection: modeBinding, size: .sm, spacing: 0) {
           ForEach(Mode.allCases, id: \.self) { item in
@@ -142,7 +142,7 @@ public struct LineChartInteractive: View {
         Chart {
           RuleMark(y: .value("Zero", 0))
             .lineStyle(StrokeStyle(lineWidth: 1))
-            .foregroundStyle(Color.separatorStrong)
+            .foregroundStyle(EsuissColor.input)
           ForEach(shown, id: \.self) { city in
             ForEach(0..<12, id: \.self) { month in
               LineMark(
@@ -159,7 +159,7 @@ public struct LineChartInteractive: View {
                 .symbol {
                   Circle()
                     .fill(chartConfig.color(city.rawValue))
-                    .stroke(Color.surfaceSecondary, lineWidth: 2)
+                    .stroke(EsuissColor.muted, lineWidth: 2)
                     .frame(width: 12, height: 12)
                 }
             }
@@ -188,7 +188,7 @@ public struct LineChartInteractive: View {
               .fill(chartConfig.color(item.key))
               .frame(width: 3, height: 12)
             Text(LocalizedStringKey(chartConfig.label(item.key)))
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .frame(maxWidth: .infinity, alignment: .leading)
             Text("\(item.value, format: .number)°")
               .font(TextStyle.xs.font(weight: .semibold))
@@ -215,7 +215,7 @@ public struct LineChartInteractive: View {
           .frame(width: 8, height: 8)
         Text(LocalizedStringKey(chartConfig.label(city.rawValue)))
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       Text(verbatim: value)
         .textStyle(.base, weight: .semibold)
@@ -235,11 +235,11 @@ private struct CityChip: View {
     Button(action: action) {
       HStack(spacing: 6) {
         Circle()
-          .fill(isOn ? color : Color.labelQuaternary)
+          .fill(isOn ? color : EsuissColor.border)
           .frame(width: 8, height: 8)
         Text(LocalizedStringKey(label))
           .textStyle(.sm, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
       .padding(.horizontal, 12)
       .frame(height: 32)
@@ -254,9 +254,9 @@ private struct CityChipStyle: ButtonStyle {
   let isOn: Bool
 
   func makeBody(configuration: Configuration) -> some View {
-    let fill: Color = isOn ? color.opacity(configuration.isPressed ? 0.28 : 0.16) : (configuration.isPressed ? .controlPressed : .control)
     configuration.label
-      .background(fill, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      .background(isOn ? color.opacity(0.16) : EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .contentShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
   }
 }

@@ -201,7 +201,7 @@ struct SplitViewPane<Content: View>: View {
           .frame(maxHeight: .infinity, alignment: .top)
           .overlay(alignment: .leading) {
             if context.panes.first?.kind != kind {
-              Color.separator.frame(width: 1).offset(x: -1)
+              EsuissColor.border.frame(width: 1).offset(x: -1)
             }
           }
           .layoutValue(key: SplitViewColumnKey.self, value: kind)
@@ -242,7 +242,7 @@ struct SplitViewPane<Content: View>: View {
               }
             }
             .scaledFont(.base)
-            .foregroundStyle(Color.link)
+            .foregroundStyle(EsuissColor.primary)
             .frame(minHeight: 44)
             .contentShape(Rectangle())
           }
@@ -269,7 +269,7 @@ struct SplitViewPane<Content: View>: View {
     if !wide {
       title
         .scaledFont(.xl3, weight: .bold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .padding(.bottom, 8)
         .accessibilityAddTraits(.isHeader)
     } else {
@@ -277,7 +277,7 @@ struct SplitViewPane<Content: View>: View {
       case .sidebar:
         title
           .scaledFont(.xs, weight: .semibold)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.horizontal, 12)
           .padding(.top, 12)
           .padding(.bottom, 8)
@@ -290,7 +290,7 @@ struct SplitViewPane<Content: View>: View {
       case .detail:
         title
           .scaledFont(.xl, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .padding(.bottom, 4)
           .accessibilityAddTraits(.isHeader)
       }
@@ -309,7 +309,7 @@ struct SplitViewPane<Content: View>: View {
 
 private struct SplitViewBackStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
-    configuration.label.opacity(configuration.isPressed ? 0.6 : 1)
+    configuration.label.opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -399,7 +399,7 @@ public struct SplitViewItem<Label: View>: View {
         if !wide && kind != .detail {
           Ph.caretRight.regular
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.labelTertiary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .flipsForRightToLeftLayoutDirection(true)
             .accessibilityHidden(true)
         }
@@ -418,24 +418,25 @@ private struct SplitViewItemStyle: ButtonStyle {
   @Environment(\.isEnabled) private var isEnabled
 
   func makeBody(configuration: Configuration) -> some View {
-    let pressed = configuration.isPressed && isEnabled
+    let pressed = configuration.isPressed
     if wide {
       let shape = RoundedRectangle(cornerRadius: kind == .list ? Radius.xl : Radius.lg, style: .continuous)
       configuration.label
-        .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+        .foregroundStyle(EsuissColor.foreground)
         .padding(.horizontal, 12)
         .padding(.vertical, kind == .list ? 12 : 8)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(pressed ? Color.itemPressed : active ? .itemSelected : .clear, in: shape)
+        .background(active ? EsuissColor.accent : .clear, in: shape)
+        .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
         .contentShape(shape)
     } else {
       configuration.label
-        .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+        .foregroundStyle(EsuissColor.foreground)
         .padding(.vertical, 12)
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-        .background(pressed ? Color.itemPressed : .clear)
+        .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
         .overlay(alignment: .top) {
-          Color.separator.frame(height: 1)
+          EsuissColor.border.frame(height: 1)
         }
         .contentShape(Rectangle())
     }

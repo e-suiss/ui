@@ -11,7 +11,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
@@ -36,11 +36,11 @@ private struct GallerySection<Content: View>: View {
 @MainActor
 private func photo(_ index: Int, size: CGSize = CGSize(width: 300, height: 200)) -> Image {
   let palettes: [(Color, Color)] = [
-    (.accent, .success),
-    (.warning, .danger),
-    (.success, .accent),
-    (.danger, .warning),
-    (.labelSecondary, .accent),
+    (EsuissColor.primary, Palette.green500),
+    (Palette.amber500, EsuissColor.destructive),
+    (Palette.green500, EsuissColor.primary),
+    (EsuissColor.destructive, Palette.amber500),
+    (EsuissColor.mutedForeground, EsuissColor.primary),
   ]
   let pair = palettes[index % palettes.count]
   let image = UIGraphicsImageRenderer(size: size).image { context in
@@ -49,7 +49,7 @@ private func photo(_ index: Int, size: CGSize = CGSize(width: 300, height: 200))
     if let gradient = CGGradient(colorsSpace: space, colors: colors, locations: [0, 1]) {
       context.cgContext.drawLinearGradient(gradient, start: .zero, end: CGPoint(x: size.width, y: size.height), options: [])
     }
-    UIColor(Color.onAccent).withAlphaComponent(0.8).setFill()
+    UIColor(EsuissColor.primaryForeground).withAlphaComponent(0.8).setFill()
     let hill = UIBezierPath()
     hill.move(to: CGPoint(x: 0, y: size.height))
     hill.addLine(to: CGPoint(x: size.width * 0.35, y: size.height * 0.45))
@@ -70,11 +70,11 @@ private struct Slide: View {
 
   var body: some View {
     RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-      .fill(Color.surfaceSecondary)
+      .fill(EsuissColor.muted)
       .overlay {
         Text(verbatim: "\(number)")
           .font(TextStyle.xl3.font(weight: .semibold))
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
       .frame(height: height)
   }
@@ -242,8 +242,8 @@ private struct TabBarGallery: View {
         TabBarSample(selection: .settings, inboxBadge: 8, fiveItems: true)
       }
       GallerySection("Secondary screen") {
-        Screen(background: .surfaceSecondary) {
-          RoundedRectangle(cornerRadius: Radius.md).fill(Color.surface).frame(height: 60).padding(16)
+        Screen(background: .muted) {
+          RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.background).frame(height: 60).padding(16)
           TabBarSample(selection: .search)
         }
         .fixedSize(horizontal: false, vertical: true)
@@ -273,13 +273,13 @@ private struct ContactRow: View {
       Avatar(url: nil, initials: String(name.split(separator: " ").compactMap(\.first)))
       Text(verbatim: name)
         .font(TextStyle.base.font())
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       Spacer(minLength: 0)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 8)
     .overlay(alignment: .bottom) {
-      Color.separator.frame(height: 1).padding(.leading, 68)
+      EsuissColor.border.frame(height: 1).padding(.leading, 68)
     }
   }
 }
@@ -373,11 +373,11 @@ private struct CustomPreviewMenuGallery: View {
               photos[index % photos.count].resizable().scaledToFill().frame(width: 48, height: 48).clipShape(Circle())
               VStack(alignment: .leading, spacing: 2) {
                 Text(verbatim: "Album \(index + 1)").font(TextStyle.base.font(weight: .semibold))
-                Text(verbatim: "\(12 + index * 7) photos").font(TextStyle.sm.font()).foregroundStyle(Color.labelSecondary)
+                Text(verbatim: "\(12 + index * 7) photos").font(TextStyle.sm.font()).foregroundStyle(EsuissColor.mutedForeground)
               }
               Spacer()
             }
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
             .padding(12)
           }
         }
@@ -410,7 +410,7 @@ private struct MailItem: View {
 
   var body: some View {
     Text(verbatim: from).font(TextStyle.base.font(weight: .semibold))
-    Text(verbatim: subject).font(TextStyle.sm.font()).foregroundStyle(Color.labelSecondary).lineLimit(1)
+    Text(verbatim: subject).font(TextStyle.sm.font()).foregroundStyle(EsuissColor.mutedForeground).lineLimit(1)
   }
 }
 
@@ -438,10 +438,10 @@ private struct SplitViewSample: View {
         VStack(alignment: .leading, spacing: 12) {
           Text(verbatim: "From Jordan Lee · 9:41 AM")
             .font(TextStyle.sm.font())
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Text(verbatim: "Morning! The client moved the launch to Thursday. Can we trim the scope a little and ship onboarding behind a flag?")
             .font(TextStyle.base.font())
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
             .fixedSize(horizontal: false, vertical: true)
         }
       }
@@ -492,31 +492,31 @@ private struct PreviewGallery: View {
         VStack(alignment: .leading, spacing: 12) {
           Text("Read the release notes for")
             .font(TextStyle.base.font())
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           Text("suiss/ui")
             .font(TextStyle.base.font())
-            .foregroundStyle(Color.link)
+            .foregroundStyle(EsuissColor.primary)
           Spacer()
         }
         .padding(16)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        Color.scrim
+        Palette.black.opacity(0.5)
         PreviewContent(showCloseButton: true) {
           HStack(spacing: 12) {
             Avatar(url: nil, initials: "EU")
             VStack(alignment: .leading, spacing: 2) {
-              Text("suiss/ui").font(TextStyle.base.font(weight: .semibold)).foregroundStyle(Color.label)
+              Text("suiss/ui").font(TextStyle.base.font(weight: .semibold)).foregroundStyle(EsuissColor.foreground)
               Text("Mobile UI components with a clean, minimal design.")
                 .font(TextStyle.sm.font())
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .fixedSize(horizontal: false, vertical: true)
             }
           }
-          Text("Updated 2 hours ago").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
+          Text("Updated 2 hours ago").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
         }
         .environment(\.drawerFitsContent, true)
         .overlay(alignment: .top) {
-          Capsule().fill(Color.labelQuaternary).frame(width: 36, height: 5).padding(.top, 5)
+          Capsule().fill(EsuissColor.border).frame(width: 36, height: 5).padding(.top, 5)
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: Radius.xl3, topTrailingRadius: Radius.xl3, style: .continuous))
       }
@@ -529,9 +529,9 @@ private struct PreviewGallery: View {
             Text("suiss/ui").font(TextStyle.base.font(weight: .semibold))
             Text("Mobile UI components with a clean, minimal design.")
               .font(TextStyle.sm.font())
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
-          Text("Updated 2 hours ago").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
+          Text("Updated 2 hours ago").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
         }
         .popupSurface(radius: 13)
         .environment(\.patternCompact, false)
@@ -557,7 +557,7 @@ final class NavigationGalleryTests: XCTestCase {
       let renderer = ImageRenderer(content: view
         .padding(padding)
         .frame(width: width, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US")))
       renderer.scale = 3
@@ -576,7 +576,7 @@ final class NavigationGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let host = UIHostingController(rootView: view
         .frame(width: width, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))

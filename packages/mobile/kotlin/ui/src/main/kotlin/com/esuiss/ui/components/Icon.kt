@@ -17,7 +17,7 @@ fun Icon(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     size: Dp = LocalIconSize.current,
-    tint: Color = LocalContentColor.current.takeOrElse { EsuissTheme.colors.label },
+    tint: Color = LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground },
 ) {
     Image(
         imageVector = imageVector,

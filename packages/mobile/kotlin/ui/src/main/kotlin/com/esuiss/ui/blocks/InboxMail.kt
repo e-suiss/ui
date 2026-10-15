@@ -73,6 +73,7 @@ import com.esuiss.ui.patterns.SplitViewColumn
 import com.esuiss.ui.patterns.SplitViewItem
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val MailRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
@@ -111,13 +112,13 @@ private val Mailboxes = listOf(
 )
 
 private fun senderTint(colors: Colors, hue: Int): Color = when (hue) {
-    30 -> colors.orange
-    150 -> colors.green
-    210 -> colors.blue
-    else -> colors.label
+    30 -> Palette.orange500
+    150 -> Palette.green500
+    210 -> Palette.blue500
+    else -> colors.foreground
 }
 
-private fun starTint(colors: Colors): Color = if (colors.isDark) colors.orange else lerp(colors.orange, colors.label, 0.45f)
+private fun starTint(colors: Colors): Color = if (colors.isDark) Palette.orange500 else lerp(Palette.orange500, colors.foreground, 0.45f)
 
 @Composable
 fun InboxMail(
@@ -177,11 +178,11 @@ fun InboxMail(
                         },
                     ) {
                         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(box.icon, contentDescription = null, size = 18.dp, tint = colors.accent)
-                            BasicText(box.value, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
+                            Icon(box.icon, contentDescription = null, size = 18.dp, tint = colors.primary)
+                            BasicText(box.value, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
                             val count = counts[box.value] ?: 0
                             if (count > 0) {
-                                BasicText("$count", style = Typography.xs.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"))
+                                BasicText("$count", style = Typography.xs.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"))
                             }
                         }
                     }
@@ -193,15 +194,15 @@ fun InboxMail(
                         BasicText(
                             if (unread > 0) "$unread unread" else "All read",
                             modifier = Modifier.weight(1f),
-                            style = Typography.xs.copy(color = colors.labelSecondary),
+                            style = Typography.xs.copy(color = colors.mutedForeground),
                         )
                         Button(onClick = onNewMessage, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {
-                            Icon(PhosphorIcons.Regular.NotePencil, contentDescription = "New message", size = 20.dp, tint = colors.labelSecondary)
+                            Icon(PhosphorIcons.Regular.NotePencil, contentDescription = "New message", size = 20.dp, tint = colors.mutedForeground)
                         }
                     }
                     InputGroup(Modifier.semantics { contentDescription = "Search mail" }) {
                         InputGroupAddon {
-                            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 16.dp, tint = colors.labelSecondary)
+                            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 16.dp, tint = colors.mutedForeground)
                         }
                         InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search")
                     }
@@ -212,7 +213,7 @@ fun InboxMail(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(24.dp),
-                                style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                                style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                             )
                         }
                         list.forEach { item ->
@@ -269,7 +270,7 @@ fun InboxMail(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 48.dp),
-                        style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
             }
@@ -286,7 +287,7 @@ private fun MailRow(mail: MailMessage, active: Boolean, onClick: () -> Unit) {
                 Modifier
                     .padding(top = 6.dp)
                     .size(8.dp)
-                    .background(if (mail.unread) colors.accent else Color.Transparent, CircleShape)
+                    .background(if (mail.unread) colors.primary else Color.Transparent, CircleShape)
                     .semantics { if (mail.unread) stateDescription = "Unread" },
             )
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(1.dp)) {
@@ -294,24 +295,24 @@ private fun MailRow(mail: MailMessage, active: Boolean, onClick: () -> Unit) {
                     BasicText(
                         mail.from,
                         modifier = Modifier.weight(1f),
-                        style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     if (mail.starred) {
                         Icon(PhosphorIcons.Fill.FillStar, contentDescription = "Starred", size = 12.dp, tint = starTint(colors))
                     }
-                    BasicText(mail.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(mail.time, style = Typography.xs.copy(color = colors.mutedForeground))
                 }
                 BasicText(
                     mail.subject,
-                    style = Typography.sm.copy(color = colors.label),
+                    style = Typography.sm.copy(color = colors.foreground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 BasicText(
                     mail.body,
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -332,7 +333,7 @@ private fun MailSender(mail: MailMessage, size: Dp) {
         BasicText(
             if (mail.hue != 0) mail.from.split(" ").mapNotNull { it.firstOrNull() }.joinToString("") else "s",
             style = Typography.base.copy(
-                color = if (mail.hue != 0) colors.onMedia else colors.surface,
+                color = if (mail.hue != 0) Palette.white else colors.background,
                 fontWeight = FontWeight.Medium,
                 fontSize = (size.value * 0.4f).sp,
             ),
@@ -365,7 +366,7 @@ private fun MailReader(
             MailAction(
                 if (mail.starred) PhosphorIcons.Fill.FillStar else PhosphorIcons.Regular.Star,
                 if (mail.starred) "Unstar" else "Star",
-                tint = if (mail.starred) starTint(colors) else colors.labelSecondary,
+                tint = if (mail.starred) starTint(colors) else colors.mutedForeground,
                 onClick = onStar,
             )
             MailAction(PhosphorIcons.Regular.Archive, "Archive", onClick = onArchive)
@@ -375,7 +376,7 @@ private fun MailReader(
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
         Column(
             modifier = Modifier
@@ -389,17 +390,17 @@ private fun MailReader(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 MailSender(mail, 40.dp)
                 Column(Modifier.weight(1f)) {
-                    BasicText(mail.from, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                    BasicText("To: Jamie Rivera", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(mail.from, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                    BasicText("To: Jamie Rivera", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
-                BasicText(mail.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                BasicText(mail.time, style = Typography.xs.copy(color = colors.mutedForeground))
             }
             BasicText(
                 mail.subject,
                 modifier = Modifier.semantics { heading() },
-                style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
-            BasicText(mail.body, style = Typography.base.copy(color = colors.label, lineHeight = 26.sp))
+            BasicText(mail.body, style = Typography.base.copy(color = colors.foreground, lineHeight = 26.sp))
         }
         if (replying) {
             Column(
@@ -410,7 +411,7 @@ private fun MailReader(
                     Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(colors.separator),
+                        .background(colors.border),
                 )
                 Textarea(
                     value = reply,
@@ -444,7 +445,7 @@ private fun MailReader(
 private fun MailAction(
     icon: ImageVector,
     label: String,
-    tint: Color = EsuissTheme.colors.labelSecondary,
+    tint: Color = EsuissTheme.colors.mutedForeground,
     onClick: () -> Unit,
 ) {
     Button(onClick = onClick, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {

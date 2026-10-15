@@ -38,11 +38,11 @@ private val chartData = listOf(
 
 private val chartConfig = ChartConfig(
     "users" to ChartConfigItem("Users"),
-    "phone" to ChartConfigItem("Phone") { blue },
-    "laptop" to ChartConfigItem("Laptop") { teal },
-    "tablet" to ChartConfigItem("Tablet") { indigo },
-    "watch" to ChartConfigItem("Watch") { orange },
-    "other" to ChartConfigItem("Other") { gray },
+    "phone" to ChartConfigItem("Phone") { chart1 },
+    "laptop" to ChartConfigItem("Laptop") { chart2 },
+    "tablet" to ChartConfigItem("Tablet") { chart3 },
+    "watch" to ChartConfigItem("Watch") { chart4 },
+    "other" to ChartConfigItem("Other") { chart5 },
 )
 
 private val total = chartData.sumOf { it.users }
@@ -81,9 +81,9 @@ fun PieChartDonutText(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         NumberFormat.getNumberInstance(Locale.US).format(total),
-                        style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("users", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("users", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

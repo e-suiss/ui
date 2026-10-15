@@ -23,6 +23,7 @@ import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   shadow,
   type ThemeColors,
@@ -164,10 +165,10 @@ function Toast({
           style={(state) => [
             styles.root,
             {
-              backgroundColor: colors.surfaceRaised,
+              backgroundColor: colors.popover,
               borderColor: isDark
                 ? "transparent"
-                : withAlpha(colors.label, 0.05),
+                : withAlpha(colors.foreground, 0.05),
             },
             isDark ? shadow.lg : styles.rootShadow,
             heightStyle,
@@ -215,7 +216,7 @@ function ToastTitle({
     <ToastPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -232,7 +233,7 @@ function ToastDescription({
     <ToastPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -285,16 +286,16 @@ function ToastClose({
       ]}
       {...props}
     >
-      {children ?? <Icon as={XIcon} size={16} color={colors.labelSecondary} />}
+      {children ?? <Icon as={XIcon} size={16} color={colors.mutedForeground} />}
     </ToastPrimitive.Close>
   )
 }
 
 function toastTint(type: string | undefined, colors: ThemeColors) {
-  if (type === "success") return colors.green
-  if (type === "info") return colors.accent
-  if (type === "warning") return colors.orange
-  if (type === "error") return colors.danger
+  if (type === "success") return palette.green500
+  if (type === "info") return colors.primary
+  if (type === "warning") return palette.orange500
+  if (type === "error") return colors.destructive
   return
 }
 
@@ -309,7 +310,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   if (type === "loading") {
     return (
       <View accessible={false} style={styles.icon}>
-        <ActivityIndicator color={colors.accent} />
+        <ActivityIndicator color={colors.primary} />
       </View>
     )
   }
@@ -327,7 +328,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
           as={IconComponent}
           weight="bold"
           size={16}
-          color={colors.surface}
+          color={colors.background}
         />
       </View>
     </View>

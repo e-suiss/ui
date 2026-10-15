@@ -13,7 +13,7 @@ const meta = {
   component: WheelPicker,
   decorators: [
     (Story) => (
-      <View className="w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10">
+      <View className="w-80 rounded-2xl border border-foreground/5 bg-card p-4 shadow-md dark:border-foreground/10">
         <Story />
       </View>
     ),
@@ -158,7 +158,7 @@ function DateTimeExample() {
           ))}
         </WheelPickerColumn>
       </WheelPicker>
-      <Text className="text-center text-sm text-label-secondary tabular-nums">
+      <Text className="text-center text-sm text-muted-foreground tabular-nums">
         {day} {hour}:{minute}
       </Text>
     </View>

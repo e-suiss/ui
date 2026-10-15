@@ -57,13 +57,13 @@ fun Progress(
         if (label != null || showValue) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (label != null) {
-                    BasicText(label, style = Typography.sm.copy(color = colors.label))
+                    BasicText(label, style = Typography.sm.copy(color = colors.foreground))
                 }
                 Spacer(Modifier.weight(1f))
                 if (showValue && value != null) {
                     BasicText(
                         "${(fraction * 100).roundToInt()}%",
-                        style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                        style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                     )
                 }
             }
@@ -73,13 +73,13 @@ fun Progress(
                 .fillMaxWidth()
                 .height(4.dp)
                 .clip(CircleShape)
-                .background(colors.surfaceSecondary),
+                .background(colors.muted),
         ) {
             Box(
                 Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(animated)
-                    .background(colors.accent),
+                    .background(colors.primary),
             )
         }
     }

@@ -81,6 +81,7 @@ import com.adamglin.phosphoricons.bold.X
 import com.adamglin.phosphoricons.regular.CircleNotch
 import com.adamglin.phosphoricons.regular.X
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadow
 import com.esuiss.ui.theme.Shadows
@@ -372,8 +373,8 @@ private fun ToastItem(
             .then(if (forced) Modifier.height(with(density) { frontHeight.toDp() }) else Modifier)
             .then(if (colors.isDark) Modifier.shadow(Shadows.lg, shape) else Modifier.shadow(ToastShadow, shape))
             .clip(shape)
-            .background(colors.surfaceRaised, shape)
-            .border(1.dp, if (colors.isDark) Color.Transparent else colors.label.copy(alpha = 0.05f), shape)
+            .background(colors.popover, shape)
+            .border(1.dp, if (colors.isDark) Color.Transparent else colors.foreground.copy(alpha = 0.05f), shape)
             .semantics {
                 liveRegion = liveMode
                 dismiss {
@@ -418,9 +419,9 @@ private fun ToastItem(
         ) {
             ToastIcon(toast.type)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                BasicText(toast.title, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText(toast.title, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 toast.description?.let {
-                    BasicText(it, style = Typography.sm.copy(color = colors.labelSecondary))
+                    BasicText(it, style = Typography.sm.copy(color = colors.mutedForeground))
                 }
             }
             toast.action?.let { action ->
@@ -435,7 +436,7 @@ private fun ToastItem(
                 )
             }
             Button(onClick = onDismiss, variant = ButtonVariant.Ghost, size = ButtonSize.IconSm) {
-                Icon(PhosphorIcons.Regular.X, contentDescription = "Close toast", size = 16.dp, tint = colors.labelSecondary)
+                Icon(PhosphorIcons.Regular.X, contentDescription = "Close toast", size = 16.dp, tint = colors.mutedForeground)
             }
         }
     }
@@ -453,15 +454,15 @@ private fun ToastIcon(type: ToastType) {
             label = "rotation",
         )
         Box(modifier = Modifier.size(32.dp).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
-            Icon(PhosphorIcons.Regular.CircleNotch, contentDescription = null, modifier = Modifier.rotate(rotation), size = 20.dp, tint = colors.accent)
+            Icon(PhosphorIcons.Regular.CircleNotch, contentDescription = null, modifier = Modifier.rotate(rotation), size = 20.dp, tint = colors.primary)
         }
         return
     }
     val tint = when (type) {
-        ToastType.Success -> colors.green
-        ToastType.Info -> colors.accent
-        ToastType.Warning -> colors.orange
-        ToastType.Error -> colors.danger
+        ToastType.Success -> Palette.green500
+        ToastType.Info -> colors.primary
+        ToastType.Warning -> Palette.orange500
+        ToastType.Error -> colors.destructive
         else -> return
     }
     val icon = when (type) {
@@ -481,7 +482,7 @@ private fun ToastIcon(type: ToastType) {
             contentDescription = null,
             modifier = if (type == ToastType.Info) Modifier.rotate(180f) else Modifier,
             size = 16.dp,
-            tint = colors.surface,
+            tint = colors.background,
         )
     }
 }

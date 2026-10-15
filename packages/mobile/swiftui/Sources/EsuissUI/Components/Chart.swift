@@ -35,7 +35,7 @@ public struct ChartConfig: ExpressibleByDictionaryLiteral, Sendable {
   }
 
   public func color(_ key: String) -> Color {
-    items[key]?.color ?? .labelTertiary
+    items[key]?.color ?? EsuissColor.mutedForeground
   }
 }
 
@@ -59,7 +59,7 @@ public struct ChartContainer<Content: View>: View {
     .frame(maxWidth: .infinity)
     .environment(\.chartConfig, config)
     .font(TextStyle.xs.font())
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 }
 
@@ -293,7 +293,7 @@ public enum ChartAxis {
 
   static func gridLine() -> some AxisMark {
     AxisGridLine(stroke: StrokeStyle(lineWidth: 1, dash: [2, 4]))
-      .foregroundStyle(Color.separator.opacity(0.5))
+      .foregroundStyle(EsuissColor.border.opacity(0.5))
   }
 
   static func label<Value: Plottable>(
@@ -307,7 +307,7 @@ public enum ChartAxis {
       if let plotted = value.as(Value.self) {
         Text(verbatim: format(plotted))
           .font(TextStyle.xs.font(weight: emphasized ? .semibold : .regular))
-          .foregroundStyle(emphasized ? Color.label : .labelSecondary)
+          .foregroundStyle(emphasized ? EsuissColor.foreground : EsuissColor.mutedForeground)
       }
     }
   }
@@ -388,13 +388,13 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
       }
     }
     .font(TextStyle.xs.font())
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 10)
     .padding(.vertical, 6)
     .frame(minWidth: 128, alignment: .leading)
-    .background(Color.surfaceRaised, in: shape)
+    .background(EsuissColor.popover, in: shape)
     .overlay {
-      shape.strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+      shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
     }
     .shadow(.lg)
     .fixedSize()
@@ -427,7 +427,7 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
           icon
             .resizable()
             .frame(width: 10, height: 10)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         } else if !hideIndicator {
           ChartTooltipIndicatorMark(indicator: indicator, color: item.color ?? config.color(item.key), nest: nest)
         }
@@ -437,13 +437,13 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
               title
             }
             Text(LocalizedStringKey(config.label(item.key)))
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           Spacer(minLength: 8)
           Text(item.value, format: .number)
             .font(TextStyle.xs.font(weight: .semibold))
             .monospacedDigit()
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
         }
       }
       .fixedSize(horizontal: false, vertical: true)
@@ -558,7 +558,7 @@ public struct ChartLegendContent: View {
             icon
               .resizable()
               .frame(width: 12, height: 12)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           } else {
             RoundedRectangle(cornerRadius: Radius.xs / 1.5, style: .continuous)
               .fill(config.color(key))
@@ -566,7 +566,7 @@ public struct ChartLegendContent: View {
           }
           Text(LocalizedStringKey(config.label(key)))
             .font(TextStyle.xs.font())
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
         }
         .accessibilityElement(children: .combine)
       }
@@ -833,7 +833,7 @@ struct ChartTooltipModifier<Value: Plottable & Hashable, Tooltip: View>: ViewMod
           {
             let plot = geometry[frame]
             Rectangle()
-              .fill(Color.separator)
+              .fill(EsuissColor.border)
               .frame(width: 1, height: plot.height)
               .position(x: plot.minX + x, y: plot.midY)
           }
@@ -1137,7 +1137,7 @@ public struct RadialBarChart<Tooltip: View>: View {
                 center: layout.center, radius: ring.middle, thickness: ring.thickness,
                 start: startAngle, end: endAngle, rounded: rounded
               )
-              .fill(track == .tint ? color.opacity(0.22) : Color.control)
+              .fill(track == .tint ? color.opacity(0.22) : EsuissColor.secondary)
             }
             ChartSweep(
               arc: ChartArc(
@@ -1153,7 +1153,7 @@ public struct RadialBarChart<Tooltip: View>: View {
               ForEach(layout.glyphs(String(localized: String.LocalizationValue(config.label(bars[index].key))), ring: index), id: \.offset) { glyph in
                 Text(verbatim: glyph.text)
                   .font(TextStyle.xs2.font(weight: .semibold))
-                  .foregroundStyle(Color.onAccent)
+                  .foregroundStyle(EsuissColor.primaryForeground)
                   .fixedSize()
                   .rotationEffect(glyph.rotation)
                   .position(glyph.point)
@@ -1387,7 +1387,7 @@ public struct PolarGrid: Sendable {
 
   public init(
     gridType: PolarGridType = .polygon,
-    stroke: Color = .separator,
+    stroke: Color = EsuissColor.border,
     strokeWidth: CGFloat = 1,
     fill: Color? = nil,
     fillOpacity: Double = 1
@@ -1529,7 +1529,7 @@ public struct RadarChart<Tooltip: View>: View {
           }
           if let index = current {
             ChartSpokes(center: layout.center, radius: layout.outer, angles: [layout.angle(index)])
-              .stroke(Color.separatorStrong, lineWidth: 1)
+              .stroke(EsuissColor.input, lineWidth: 1)
           }
           ForEach(series) { radar in
             let color = radar.color ?? config.color(radar.key)
@@ -1573,7 +1573,7 @@ public struct RadarChart<Tooltip: View>: View {
               ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
                 Text(verbatim: value.formatted())
                   .font(TextStyle.xs2.font())
-                  .foregroundStyle(Color.labelTertiary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .fixedSize()
               }
             }
@@ -1583,7 +1583,7 @@ public struct RadarChart<Tooltip: View>: View {
               let active = angleAxis.highlightsSelection && current == index
               Text(LocalizedStringKey(labels[index]))
                 .font(angleAxis.textStyle.font(weight: active ? .semibold : .regular))
-                .foregroundStyle(active ? Color.label : .labelSecondary)
+                .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
                 .fixedSize()
             }
           }

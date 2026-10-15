@@ -105,8 +105,8 @@ function TabBarList({
       style={(state) => [
         styles.list,
         {
-          borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
-          backgroundColor: colors.surfaceRaised,
+          borderColor: withAlpha(colors.foreground, isDark ? 0.1 : 0.05),
+          backgroundColor: colors.card,
         },
         resolveStyle(style, state) as ViewStyle,
       ]}
@@ -123,7 +123,7 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
       <View
         style={[
           styles.dot,
-          { backgroundColor: colors.danger, borderColor: colors.surfaceRaised },
+          { backgroundColor: colors.destructive, borderColor: colors.card },
         ]}
       />
     )
@@ -133,11 +133,11 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
     <View
       style={[
         styles.badge,
-        { backgroundColor: colors.danger, borderColor: colors.surfaceRaised },
+        { backgroundColor: colors.destructive, borderColor: colors.card },
       ]}
     >
       <Text
-        style={[styles.badgeText, { color: colors.onAccent }]}
+        style={[styles.badgeText, { color: colors.primaryForeground }]}
         numberOfLines={1}
       >
         {text}
@@ -162,24 +162,20 @@ function TabBarItem({
     <TabsPrimitive.Tab
       style={(state) => [
         styles.item,
-        state.active && { backgroundColor: colors.control },
+        state.active && { backgroundColor: colors.secondary },
+        state.disabled && { opacity: 0.5 },
         resolveStyle(style, state) as ViewStyle,
       ]}
       accessibilityValue={text === undefined ? undefined : { text }}
       render={(renderProps, state) => {
-        let color = state.disabled
-          ? colors.labelQuaternary
-          : colors.labelSecondary
-        if (state.active) color = colors.accent
+        let color = colors.mutedForeground
+        if (state.active) color = colors.primary
         const { style: baseStyle, ...rest } = renderProps
         return (
           <TextStyleContext.Provider value={{ ...styles.label, color }}>
             <Pressable
               {...rest}
-              style={({ pressed }) => [
-                baseStyle,
-                pressed && { backgroundColor: colors.itemPressed },
-              ]}
+              style={({ pressed }) => [baseStyle, pressed && { opacity: 0.8 }]}
             >
               {icon || badge !== undefined ? (
                 <View style={styles.iconWrap}>

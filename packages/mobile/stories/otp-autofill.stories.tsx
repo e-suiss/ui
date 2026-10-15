@@ -22,9 +22,10 @@ function wait(ms: number) {
 }
 
 function statusClassName(state: string) {
-  if (state === "invalid") return "min-h-5 text-sm text-danger"
-  if (state === "verified") return "min-h-5 text-sm text-success"
-  return "min-h-5 text-sm text-label-secondary"
+  if (state === "invalid") return "min-h-5 text-sm text-destructive"
+  if (state === "verified")
+    return "min-h-5 text-sm text-green-600 dark:text-green-400"
+  return "min-h-5 text-sm text-muted-foreground"
 }
 
 function statusText(state: string) {
@@ -67,7 +68,7 @@ function VerificationExample({ incoming }: { incoming: string }) {
   return (
     <View className="w-full items-center gap-2">
       <Text className="text-center text-2xl font-bold">Enter the code</Text>
-      <Text className="text-center text-sm text-label-secondary">
+      <Text className="text-center text-sm text-muted-foreground">
         We sent a 6-digit code to +1 555 0100.
       </Text>
       <OtpAutofill

@@ -50,7 +50,7 @@ const ITEMS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "privacy", label: "Privacy", icon: ShieldIcon },
 ]
 
-const CARD_CLASS = "rounded-[1.125rem] bg-surface-secondary px-5 py-4.5"
+const CARD_CLASS = "rounded-[1.125rem] bg-muted px-5 py-4.5"
 
 type Editable = "email" | "phone"
 
@@ -83,7 +83,7 @@ function EditableCard({
             {title}
           </Text>
           {editing ? null : (
-            <Text className="text-base text-label-secondary">{value}</Text>
+            <Text className="text-base text-muted-foreground">{value}</Text>
           )}
         </View>
         {editing ? null : (
@@ -94,7 +94,7 @@ function EditableCard({
             accessibilityLabel={`Edit ${title.toLowerCase()}`}
             className="active:opacity-60"
           >
-            <Text className="text-base text-link">Edit ›</Text>
+            <Text className="text-base text-primary">Edit ›</Text>
           </Pressable>
         )}
       </View>
@@ -112,8 +112,8 @@ function EditableCard({
             onSubmitEditing={() => onSave(draft)}
             className={(state) =>
               cn(
-                "h-12 rounded-xl bg-surface text-lg",
-                state.focused ? "border-focus" : "border-separator-strong"
+                "h-12 rounded-xl bg-background text-lg",
+                state.focused ? "border-ring" : "border-input"
               )
             }
           />
@@ -181,7 +181,7 @@ function Security({
           >
             Passkeys
           </Text>
-          <Text className="text-base text-label-secondary">
+          <Text className="text-base text-muted-foreground">
             {passkeys ? "On for 3 devices" : "Off"}
           </Text>
         </View>
@@ -196,11 +196,13 @@ function Security({
           <Text role="heading" className="text-lg font-semibold">
             Two-factor authentication
           </Text>
-          <Text className="text-base text-label-secondary">
+          <Text className="text-base text-muted-foreground">
             Codes are sent to your trusted devices.
           </Text>
         </View>
-        <Text className="text-sm font-semibold text-success">On</Text>
+        <Text className="text-sm font-semibold text-green-600 dark:text-green-400">
+          On
+        </Text>
       </View>
       <View
         accessibilityLiveRegion="polite"
@@ -216,7 +218,7 @@ function Security({
             <Icon
               as={CheckIcon}
               weight="bold"
-              className="size-4 text-success"
+              className="size-4 text-green-600 dark:text-green-400"
             />
             <Text className="text-sm">{saved} saved.</Text>
           </AnimatedView>
@@ -256,7 +258,7 @@ function SettingsAccount({
               {current.value === "security" ? (
                 <Security onSave={onSave} />
               ) : (
-                <Text className="text-lg text-label-secondary">
+                <Text className="text-lg text-muted-foreground">
                   This section isn't part of the sample. Choose Sign-In &
                   Security.
                 </Text>
@@ -267,14 +269,12 @@ function SettingsAccount({
           <>
             <HeaderLargeTitle className="gap-2 pb-4">
               <Avatar size="xl" className="size-18">
-                <AvatarFallback className="bg-indigo dark:bg-indigo">
-                  JR
-                </AvatarFallback>
+                <AvatarFallback className="bg-indigo-500">JR</AvatarFallback>
               </Avatar>
               <Text role="heading" className="text-2xl font-semibold">
                 Jamie Rivera
               </Text>
-              <Text className="text-sm text-label-secondary">
+              <Text className="text-sm text-muted-foreground">
                 jamie@suiss.com
               </Text>
             </HeaderLargeTitle>
@@ -289,7 +289,7 @@ function SettingsAccount({
                       className="min-h-11 gap-3.5 py-2.5"
                     >
                       <ItemMedia>
-                        <Icon as={item.icon} className="size-5 text-accent" />
+                        <Icon as={item.icon} className="size-5 text-primary" />
                       </ItemMedia>
                       <ItemContent>
                         <ItemTitle className="font-normal">
@@ -301,7 +301,7 @@ function SettingsAccount({
                           as={CaretRightIcon}
                           weight="bold"
                           className={cn(
-                            "size-3.5 text-label-tertiary",
+                            "size-3.5 text-muted-foreground",
                             I18nManager.isRTL && "rotate-180"
                           )}
                         />

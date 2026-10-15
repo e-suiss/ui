@@ -32,7 +32,7 @@ function Skeleton({
     <Animated.View
       style={[
         styles.root,
-        { backgroundColor: colors.surfaceSecondary },
+        { backgroundColor: colors.muted },
         style,
         animatedStyle,
       ]}

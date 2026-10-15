@@ -18,7 +18,7 @@ import { Text } from "@/components/ui/text"
 const chartData = [{ name: "value", value: 38 }]
 
 const chartConfig = {
-  value: { label: "Air quality", color: "green" },
+  value: { label: "Air quality", color: "green-500" },
 } satisfies ChartConfig
 
 export function RadialChartGauge() {
@@ -37,7 +37,7 @@ export function RadialChartGauge() {
             <Text className="text-3xl font-semibold tracking-tight tabular-nums">
               38
             </Text>
-            <Text className="text-xs text-label-secondary">Good</Text>
+            <Text className="text-xs text-muted-foreground">Good</Text>
           </View>
           <ChartContainer
             config={chartConfig}

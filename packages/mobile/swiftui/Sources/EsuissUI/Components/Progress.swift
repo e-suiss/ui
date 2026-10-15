@@ -18,20 +18,20 @@ private struct BarProgress: View {
     VStack(alignment: .leading, spacing: 12) {
       HStack(alignment: .firstTextBaseline, spacing: 12) {
         configuration.label
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Spacer(minLength: 0)
         configuration.currentValueLabel
           .monospacedDigit()
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .scaledTextStyle(.sm)
       Capsule()
-        .fill(Color.surfaceSecondary)
+        .fill(EsuissColor.muted)
         .frame(height: 4)
         .overlay(alignment: .leading) {
           GeometryReader { proxy in
             Rectangle()
-              .fill(Color.accent)
+              .fill(EsuissColor.primary)
               .frame(width: proxy.size.width * fraction)
               .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 1), value: fraction)
           }

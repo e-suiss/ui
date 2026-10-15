@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.rotate
@@ -71,7 +72,7 @@ fun Accordion(
             .fillMaxWidth()
             .then(
                 if (variant == AccordionVariant.Filled) {
-                    Modifier.clip(shape).background(colors.surfaceSecondary, shape)
+                    Modifier.clip(shape).background(colors.muted, shape)
                 } else {
                     Modifier
                 },
@@ -84,7 +85,7 @@ fun Accordion(
                 dividers.positions.forEach { y ->
                     val top = y + stroke / 2
                     drawLine(
-                        color = colors.separator,
+                        color = colors.border,
                         start = Offset(if (rtl) 0f else inset, top),
                         end = Offset(if (rtl) size.width - inset else size.width, top),
                         strokeWidth = stroke,
@@ -163,11 +164,12 @@ private fun AccordionTrigger(
         animationSpec = tween(if (expanded) 250 else 200),
         label = "caret",
     )
-    val foreground = if (enabled) colors.label else colors.labelQuaternary
+    val foreground = colors.foreground
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 44.dp)
+            .alpha(if (enabled) 1f else 0.5f)
             .semantics {
                 heading()
                 stateDescription = if (expanded) "Expanded" else "Collapsed"
@@ -210,7 +212,7 @@ private fun AccordionTrigger(
             contentDescription = null,
             modifier = Modifier.rotate(rotation),
             size = 16.dp,
-            tint = colors.labelSecondary,
+            tint = colors.mutedForeground,
         )
     }
 }
@@ -219,8 +221,8 @@ private fun AccordionTrigger(
 private fun AccordionContent(content: @Composable ColumnScope.() -> Unit) {
     val colors = EsuissTheme.colors
     CompositionLocalProvider(
-        LocalContentStyle provides Typography.sm.copy(color = colors.labelSecondary),
-        LocalContentColor provides colors.labelSecondary,
+        LocalContentStyle provides Typography.sm.copy(color = colors.mutedForeground),
+        LocalContentColor provides colors.mutedForeground,
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(end = 40.dp, bottom = 12.dp),

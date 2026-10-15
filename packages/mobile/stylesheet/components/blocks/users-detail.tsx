@@ -36,8 +36,20 @@ import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -50,7 +62,7 @@ const ROLES = ["Admin", "Editor", "Support", "Viewer"]
 
 const TABS = ["Profile", "Sessions", "Security"]
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type User = {
   name: string
@@ -66,42 +78,42 @@ const USERS: User[] = [
     email: "jamie@company.com",
     role: "Admin",
     status: "Active",
-    tint: "indigo",
+    tint: "indigo500",
   },
   {
     name: "Morgan Lee",
     email: "morgan@company.com",
     role: "Editor",
     status: "Active",
-    tint: "orange",
+    tint: "orange500",
   },
   {
     name: "Riley Chen",
     email: "riley@company.com",
     role: "Support",
     status: "Active",
-    tint: "green",
+    tint: "green500",
   },
   {
     name: "Taylor Kim",
     email: "taylor@company.com",
     role: "Viewer",
     status: "Suspended",
-    tint: "cyan",
+    tint: "cyan500",
   },
   {
     name: "Avery Brooks",
     email: "avery@company.com",
     role: "Editor",
     status: "Invited",
-    tint: "pink",
+    tint: "pink500",
   },
   {
     name: "Jordan Park",
     email: "jordan@company.com",
     role: "Support",
     status: "Active",
-    tint: "mint",
+    tint: "teal400",
   },
 ]
 
@@ -209,7 +221,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -228,7 +240,7 @@ function UserAvatar({
   const { colors } = useTheme()
   return (
     <Avatar size={size} style={style}>
-      <AvatarFallback style={{ backgroundColor: colors[user.tint] }}>
+      <AvatarFallback style={{ backgroundColor: tone(colors, user.tint) }}>
         {initials(user.name)}
       </AvatarFallback>
     </Avatar>
@@ -319,7 +331,7 @@ function UsersDetail({
             {wide ? (
               <Text
                 role="heading"
-                style={[styles.listHeading, { color: colors.labelSecondary }]}
+                style={[styles.listHeading, { color: colors.mutedForeground }]}
               >
                 Users
               </Text>
@@ -336,7 +348,7 @@ function UsersDetail({
                   }}
                   style={
                     active
-                      ? { paddingVertical: 6, backgroundColor: colors.accent }
+                      ? { paddingVertical: 6, backgroundColor: colors.primary }
                       : styles.listItem
                   }
                 >
@@ -351,7 +363,7 @@ function UsersDetail({
                         numberOfLines={1}
                         style={[
                           fontSize.sm,
-                          active && { color: colors.onAccent },
+                          active && { color: colors.primaryForeground },
                         ]}
                       >
                         {item.name}
@@ -361,8 +373,8 @@ function UsersDetail({
                           fontSize.xs,
                           {
                             color: active
-                              ? colors.onAccent
-                              : colors.labelSecondary,
+                              ? colors.primaryForeground
+                              : colors.mutedForeground,
                           },
                         ]}
                       >
@@ -388,7 +400,9 @@ function UsersDetail({
                   <Text role="heading" style={styles.name}>
                     {user.name}
                   </Text>
-                  <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.sm, { color: colors.mutedForeground }]}
+                  >
                     {`${user.email} · ${role}`}
                   </Text>
                 </View>
@@ -470,14 +484,14 @@ function UsersDetail({
                             <ItemMedia
                               style={[
                                 styles.sessionMedia,
-                                { backgroundColor: colors.gray },
+                                { backgroundColor: palette.zinc500 },
                               ]}
                             >
                               <Icon
                                 as={session.icon}
                                 weight="bold"
                                 size={16}
-                                color={colors.onAccent}
+                                color={colors.primaryForeground}
                               />
                             </ItemMedia>
                             <ItemContent style={styles.tight}>
@@ -491,7 +505,10 @@ function UsersDetail({
                             <ItemActions>
                               {index === 0 ? (
                                 <Text
-                                  style={[fontSize.sm, { color: colors.label }]}
+                                  style={[
+                                    fontSize.sm,
+                                    { color: colors.foreground },
+                                  ]}
                                 >
                                   This device
                                 </Text>

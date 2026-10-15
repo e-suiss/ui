@@ -66,7 +66,7 @@ private fun ColumnScope.DrawerGoalContent(onClose: () -> Unit) {
             "350",
             style = Typography.xl3.copy(fontSize = 48.sp, lineHeight = 48.sp, letterSpacing = (-0.025).em, fontWeight = FontWeight.SemiBold),
         )
-        Text("CALORIES/DAY", style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
+        Text("CALORIES/DAY", style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
     }
     DrawerFooter {
         Button("Submit", onClick = {}, modifier = Modifier.fillMaxWidth())
@@ -114,7 +114,7 @@ private fun DrawerSnapPoints() {
                             .fillMaxWidth()
                             .height(48.dp)
                             .clip(RoundedCornerShape(Radius.xl))
-                            .background(EsuissTheme.colors.surfaceSecondary)
+                            .background(EsuissTheme.colors.muted)
                             .padding(horizontal = 16.dp),
                         contentAlignment = Alignment.CenterStart,
                     ) {

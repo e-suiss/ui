@@ -206,38 +206,38 @@ private struct BubbleContentBody<Content: View>: View {
       .padding(.horizontal, ghost ? 0 : 15)
       .padding(.vertical, ghost ? 0 : 7)
       .background {
-        if ghost {
-          Rectangle().fill(pressed ? Color.itemPressed : .clear)
-        } else {
+        if !ghost {
           shape.fill(background)
         }
       }
       .overlay {
         if style.variant == .outline {
           RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-            .strokeBorder(Color.separator, lineWidth: 1)
+            .strokeBorder(EsuissColor.border, lineWidth: 1)
         }
       }
       .contentShape(shape)
+      .opacity(pressed ? 0.8 : 1)
   }
 
   private var foreground: Color {
     switch style.variant {
-    case .default: .onAccent
-    case .destructive: .danger
-    case .secondary, .muted, .tinted, .outline, .ghost: .label
+    case .default: EsuissColor.primaryForeground
+    case .destructive: EsuissColor.destructive
+    case .secondary: EsuissColor.secondaryForeground
+    case .muted, .tinted, .outline, .ghost: EsuissColor.foreground
     }
   }
 
   private var background: Color {
     switch style.variant {
-    case .default: pressed ? .accentPressed : .accent
-    case .secondary: pressed ? .controlPressed : .control
-    case .muted: pressed ? .surfaceTertiary : .surfaceSecondary
-    case .tinted: pressed ? .accentSurfacePressed : .accentSurface
-    case .outline: pressed ? .control : surface
-    case .ghost: pressed ? .itemPressed : .clear
-    case .destructive: pressed ? .dangerSurfacePressed : .dangerSurface
+    case .default: EsuissColor.primary
+    case .secondary: EsuissColor.secondary
+    case .muted: EsuissColor.muted
+    case .tinted: Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))
+    case .outline: surface
+    case .ghost: .clear
+    case .destructive: Color.adaptive(light: EsuissColor.destructive.opacity(0.1), dark: EsuissColor.destructive.opacity(0.2))
     }
   }
 }
@@ -310,10 +310,10 @@ public struct BubbleReactions<Content: View>: View {
     .scaledFont(.sm)
     .lineLimit(1)
     .fixedSize()
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 6)
     .padding(.vertical, 2)
-    .background(Color.surfaceSecondary, in: Capsule())
+    .background(EsuissColor.muted, in: Capsule())
     .background {
       Capsule().fill(surface).padding(-3)
     }

@@ -89,13 +89,13 @@ private struct SplitViewMail: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
               Text(verbatim: item.time)
                 .textStyle(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             Text(verbatim: item.subject)
               .lineLimit(1)
             Text(verbatim: item.body)
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .lineLimit(1)
           }
         }
@@ -103,9 +103,9 @@ private struct SplitViewMail: View {
       SplitViewDetail(verbatim: message.subject) {
         Text(verbatim: "\(message.from) · \(message.time)")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         Text(verbatim: message.body)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .fixedSize(horizontal: false, vertical: true)
           .padding(.top, 24)
       }

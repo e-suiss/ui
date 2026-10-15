@@ -76,14 +76,14 @@ public struct LoginAccount: View {
           .shake(trigger: shakes)
         Text(error ?? "")
           .scaledTextStyle(.xs)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
           .frame(minHeight: 22)
           .padding(.top, 10)
           .accessibilityHidden(error == nil)
         Toggle(isOn: $remember) {
           Text("Remember me")
             .scaledFont(.sm)
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
         }
         .toggleStyle(.checkbox)
         .padding(.top, 6)
@@ -107,7 +107,7 @@ public struct LoginAccount: View {
   @ViewBuilder private var createAccount: some View {
     Text("Don't have a suiss Account?")
       .scaledFont(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
     Button("Create yours now ›") { onCreateAccount?() }
       .buttonStyle(LoginAccountLinkStyle())
   }
@@ -135,7 +135,7 @@ public struct LoginAccount: View {
         }
       }
       if step == .password {
-        Color.separatorStrong.frame(height: 1)
+        EsuissColor.input.frame(height: 1)
         HStack(spacing: 0) {
           SecureField("Password", text: $password)
             .textContentType(.password)
@@ -149,10 +149,10 @@ public struct LoginAccount: View {
         .transition(.move(edge: .top).combined(with: .opacity))
       }
     }
-    .background(invalid ? Color.dangerSurface : .surface, in: shape)
+    .background(invalid ? Color.adaptive(light: EsuissColor.destructive.opacity(0.1), dark: EsuissColor.destructive.opacity(0.2)) : EsuissColor.background, in: shape)
     .clipShape(shape)
     .overlay {
-      shape.strokeBorder(invalid ? Color.danger : focus != nil ? .focus : .separatorStrong, lineWidth: 1)
+      shape.strokeBorder(invalid ? EsuissColor.destructive : focus != nil ? EsuissColor.ring : EsuissColor.input, lineWidth: 1)
     }
     .animation(.easeInOut(duration: 0.2), value: invalid)
   }
@@ -162,15 +162,15 @@ public struct LoginAccount: View {
       Avatar(size: .xl) {
         Text(verbatim: String(email.prefix(1)).uppercased())
           .scaledFont(.xl2, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .background(Color.surfaceSecondary, in: Circle())
+          .background(EsuissColor.muted, in: Circle())
       }
       Text("Hello.")
         .scaledTextStyle(.xl3, weight: .bold)
       Text(verbatim: email)
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Sign out ›") {
         signedIn = false
         step = .email
@@ -218,8 +218,8 @@ private struct LoginAccountFieldText: ViewModifier {
   func body(content: Content) -> some View {
     content
       .scaledFont(.lg)
-      .foregroundStyle(Color.label)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
       .padding(.horizontal, 16)
       .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
   }
@@ -241,10 +241,10 @@ private struct LoginAccountArrow: View {
             .flipsForRightToLeftLayoutDirection(true)
         }
       }
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(width: 30, height: 30)
       .overlay {
-        Circle().strokeBorder(ready ? Color.labelSecondary : .labelQuaternary, lineWidth: 1.5)
+        Circle().strokeBorder(ready ? EsuissColor.mutedForeground : EsuissColor.border, lineWidth: 1.5)
       }
       .frame(width: 44, height: 44)
       .contentShape(Rectangle())
@@ -263,8 +263,8 @@ private struct LoginAccountLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

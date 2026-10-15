@@ -7,7 +7,7 @@ private let chartData: [(month: String, weight: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "weight": .init("Weight", color: .purple),
+  "weight": .init("Weight", color: Palette.purple500),
 ]
 
 public struct LineChartDots: View {
@@ -27,11 +27,11 @@ public struct LineChartDots: View {
             .monospacedDigit()
           Text("kg")
             .textStyle(.base, weight: .semibold)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Text("Down 4.5 kg since January")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {

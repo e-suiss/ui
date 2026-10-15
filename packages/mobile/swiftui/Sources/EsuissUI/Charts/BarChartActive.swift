@@ -7,7 +7,7 @@ private let chartData: [(day: String, steps: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "steps": .init("Steps", color: .orange),
+  "steps": .init("Steps", color: EsuissColor.chart4),
 ]
 
 public struct BarChartActive: View {
@@ -33,11 +33,11 @@ public struct BarChartActive: View {
             .monospacedDigit()
           Text("steps")
             .textStyle(.base, weight: .semibold)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Text("\(day.day) · select a bar")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {

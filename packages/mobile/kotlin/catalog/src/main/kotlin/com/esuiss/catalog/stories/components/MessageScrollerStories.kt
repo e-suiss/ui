@@ -81,6 +81,7 @@ import com.esuiss.ui.components.ScreenEdge
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.components.rememberMessageScrollerState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -168,7 +169,7 @@ private fun MessageScrollerRow(message: MessageScrollerMessage) {
                     state = if (file.progress != null) AttachmentState.Uploading else AttachmentState.Done,
                 ) {
                     AttachmentMedia(variant = AttachmentMediaVariant.Document) {
-                        AttachmentLabel("pdf", background = colors.red)
+                        AttachmentLabel("pdf", background = Palette.red500)
                     }
                     AttachmentContent {
                         AttachmentTitle(file.name)
@@ -197,7 +198,7 @@ private fun MessageScrollerRow(message: MessageScrollerMessage) {
             }
             if (message.status != null) {
                 MessageFooter {
-                    Icon(PhosphorIcons.Regular.Checks, contentDescription = null, tint = colors.accent)
+                    Icon(PhosphorIcons.Regular.Checks, contentDescription = null, tint = colors.primary)
                     Text(message.status)
                 }
             }

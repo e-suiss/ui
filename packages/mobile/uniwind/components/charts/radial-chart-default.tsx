@@ -17,10 +17,10 @@ import {
 
 const chartConfig = {
   users: { label: "Users" },
-  phone: { label: "Phone", color: "blue" },
-  laptop: { label: "Laptop", color: "teal" },
-  tablet: { label: "Tablet", color: "indigo" },
-  watch: { label: "Watch", color: "orange" },
+  phone: { label: "Phone", color: "chart-1" },
+  laptop: { label: "Laptop", color: "chart-2" },
+  tablet: { label: "Tablet", color: "chart-3" },
+  watch: { label: "Watch", color: "chart-4" },
 } satisfies ChartConfig
 
 type Device = "phone" | "laptop" | "tablet" | "watch"
@@ -57,7 +57,7 @@ export function RadialChartDefault() {
             />
             <RadialBar
               dataKey="users"
-              background={{ fill: "control" }}
+              background={{ fill: "secondary" }}
               cornerRadius={10}
             >
               {chartData.map((item) => (

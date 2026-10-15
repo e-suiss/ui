@@ -20,20 +20,20 @@ public struct SettingsDevice: View {
   static var groups: [[Row]] {
     [
       [
-        Row(label: "Airplane Mode", icon: Ph.airplane.bold, tint: .orange, toggle: \.airplane),
-        Row(label: "Wi-Fi", icon: Ph.wifiHigh.bold, tint: .blue, detail: { $0.wifi ? "Home" : "Off" }),
-        Row(label: "Bluetooth", icon: Ph.bluetooth.bold, tint: .blue, detail: { $0.bluetooth ? "On" : "Off" }),
-        Row(label: "Cellular", icon: Ph.cellSignalFull.bold, tint: .green, detail: { $0.airplane ? "Off" : nil }),
+        Row(label: "Airplane Mode", icon: Ph.airplane.bold, tint: Palette.orange500, toggle: \.airplane),
+        Row(label: "Wi-Fi", icon: Ph.wifiHigh.bold, tint: Palette.blue500, detail: { $0.wifi ? "Home" : "Off" }),
+        Row(label: "Bluetooth", icon: Ph.bluetooth.bold, tint: Palette.blue500, detail: { $0.bluetooth ? "On" : "Off" }),
+        Row(label: "Cellular", icon: Ph.cellSignalFull.bold, tint: Palette.green500, detail: { $0.airplane ? "Off" : nil }),
       ],
       [
-        Row(label: "Notifications", icon: Ph.bell.bold, tint: .red),
-        Row(label: "Sounds & Haptics", icon: Ph.speakerHigh.bold, tint: .pink),
-        Row(label: "Focus", icon: Ph.moon.bold, tint: .indigo, toggle: \.focus),
-        Row(label: "Screen Time", icon: Ph.hourglass.bold, tint: .indigo),
+        Row(label: "Notifications", icon: Ph.bell.bold, tint: Palette.red500),
+        Row(label: "Sounds & Haptics", icon: Ph.speakerHigh.bold, tint: Palette.pink500),
+        Row(label: "Focus", icon: Ph.moon.bold, tint: Palette.indigo500, toggle: \.focus),
+        Row(label: "Screen Time", icon: Ph.hourglass.bold, tint: Palette.indigo500),
       ],
       [
-        Row(label: "General", icon: Ph.gear.bold, tint: .gray),
-        Row(label: "Display & Brightness", icon: Ph.sun.bold, tint: .blue),
+        Row(label: "General", icon: Ph.gear.bold, tint: Palette.zinc500),
+        Row(label: "Display & Brightness", icon: Ph.sun.bold, tint: Palette.blue500),
       ],
     ]
   }
@@ -79,10 +79,10 @@ public struct SettingsDevice: View {
                   Avatar(size: .xl) {
                     Text(verbatim: "JR")
                       .scaledFont(.xl, weight: .semibold)
-                      .foregroundStyle(Color.onAccent)
+                      .foregroundStyle(EsuissColor.primaryForeground)
                       .frame(maxWidth: .infinity, maxHeight: .infinity)
                       .background(
-                        Color.indigo,
+                        Palette.indigo500,
                         in: Circle()
                       )
                   }
@@ -114,7 +114,7 @@ public struct SettingsDevice: View {
           if visible.isEmpty {
             Text("No Results")
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .frame(maxWidth: .infinity)
               .padding(30)
           }
@@ -163,7 +163,7 @@ private struct SettingsDeviceRow: View {
           if let detail = row.detail?(toggles) {
             Text(detail)
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           SettingsDeviceChevron()
         }
@@ -175,7 +175,7 @@ private struct SettingsDeviceRow: View {
     ItemMedia {
       row.icon
         .frame(width: 17, height: 17)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 29, height: 29)
         .background(row.tint, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
     }
@@ -199,7 +199,7 @@ private struct SettingsDeviceChevron: View {
   var body: some View {
     Ph.caretRight.bold
       .frame(width: 14, height: 14)
-      .foregroundStyle(Color.labelTertiary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .flipsForRightToLeftLayoutDirection(true)
       .accessibilityHidden(true)
   }

@@ -16,7 +16,7 @@ import {
 import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 import { Toggle } from "@/components/ui/toggle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -161,11 +161,11 @@ function MiniScreen({ kind }: { kind: Alert }) {
       importantForAccessibility="no-hide-descendants"
       style={[
         styles.mini,
-        { borderColor: colors.label, backgroundColor: colors.indigo },
+        { borderColor: colors.foreground, backgroundColor: palette.indigo500 },
       ]}
     >
       {kind === "lock" ? (
-        <Text style={[styles.miniTime, { color: colors.onMedia }]}>9:41</Text>
+        <Text style={[styles.miniTime, { color: palette.white }]}>9:41</Text>
       ) : null}
       {MINI_SCREEN_BARS[kind].map((top, index) => (
         <View
@@ -175,7 +175,7 @@ function MiniScreen({ kind }: { kind: Alert }) {
             {
               top: top - 2,
               opacity: 1 - index * 0.15,
-              backgroundColor: colors.onMedia,
+              backgroundColor: palette.white,
             },
           ]}
         />
@@ -191,17 +191,15 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
       entering={FadeInUp.duration(600).reduceMotion(ReduceMotion.System)}
     >
       {stacked ? (
-        <View
-          style={[styles.stack, { backgroundColor: colors.surfaceRaised }]}
-        />
+        <View style={[styles.stack, { backgroundColor: colors.card }]} />
       ) : null}
-      <View style={[styles.card, { backgroundColor: colors.surfaceRaised }]}>
-        <View style={[styles.appIcon, { backgroundColor: colors.green }]}>
+      <View style={[styles.card, { backgroundColor: colors.card }]}>
+        <View style={[styles.appIcon, { backgroundColor: palette.green500 }]}>
           <Icon
             as={ChatCircleIcon}
             weight="fill"
             size={18}
-            color={colors.onAccent}
+            color={colors.primaryForeground}
           />
         </View>
         <View style={styles.cardBody}>
@@ -209,7 +207,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
             <Text style={[fontSize.xs, { flex: 1, fontWeight: "600" }]}>
               Riley Morgan
             </Text>
-            <Text style={[fontSize["2xs"], { color: colors.labelSecondary }]}>
+            <Text style={[fontSize["2xs"], { color: colors.mutedForeground }]}>
               now
             </Text>
           </View>
@@ -304,12 +302,12 @@ function SettingsNotifications() {
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.appHeader}>
-          <View style={[styles.appTile, { backgroundColor: colors.green }]}>
+          <View style={[styles.appTile, { backgroundColor: palette.green500 }]}>
             <Icon
               as={ChatCircleIcon}
               weight="fill"
               size={24}
-              color={colors.onAccent}
+              color={colors.primaryForeground}
             />
           </View>
           <View>
@@ -319,7 +317,7 @@ function SettingsNotifications() {
             >
               Messages
             </Text>
-            <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
               Notifications
             </Text>
           </View>
@@ -328,7 +326,7 @@ function SettingsNotifications() {
           accessible
           accessibilityRole="image"
           accessibilityLabel={`Lock screen preview. ${footnote}.`}
-          style={[styles.preview, { backgroundColor: colors.media }]}
+          style={[styles.preview, { backgroundColor: palette.black }]}
         >
           <Image
             source={{ uri: WALLPAPER }}
@@ -339,14 +337,14 @@ function SettingsNotifications() {
           <View
             style={[
               StyleSheet.absoluteFill,
-              { backgroundColor: colors.scrim, opacity: 0.4 },
+              { backgroundColor: "rgba(0, 0, 0, 0.5)", opacity: 0.4 },
             ]}
           />
           <View style={styles.clock}>
             <Text
               style={[
                 fontSize.xs,
-                { fontWeight: "600", color: colors.onMedia, opacity: 0.9 },
+                { fontWeight: "600", color: palette.white, opacity: 0.9 },
               ]}
             >
               Tuesday, October 6
@@ -354,7 +352,7 @@ function SettingsNotifications() {
             <Text
               style={[
                 fontSize["3xl"],
-                { fontWeight: "600", color: colors.onMedia },
+                { fontWeight: "600", color: palette.white },
               ]}
             >
               9:41
@@ -373,7 +371,7 @@ function SettingsNotifications() {
               <Notification body={body} stacked={grouping !== "Off"} />
             </View>
           ) : null}
-          <Text style={[styles.footnote, { color: colors.onMedia }]}>
+          <Text style={[styles.footnote, { color: palette.white }]}>
             {footnote}
           </Text>
         </View>
@@ -420,7 +418,7 @@ function SettingsNotifications() {
                     <Text
                       style={[
                         fontSize.sm,
-                        { textAlign: "center", color: colors.label },
+                        { textAlign: "center", color: colors.foreground },
                       ]}
                     >
                       {alert.label}
@@ -431,9 +429,9 @@ function SettingsNotifications() {
                         on
                           ? {
                               borderColor: "transparent",
-                              backgroundColor: colors.accent,
+                              backgroundColor: colors.primary,
                             }
-                          : { borderColor: colors.separatorStrong },
+                          : { borderColor: colors.input },
                       ]}
                     >
                       {on ? (
@@ -441,7 +439,7 @@ function SettingsNotifications() {
                           as={CheckIcon}
                           weight="bold"
                           size={12}
-                          color={colors.onAccent}
+                          color={colors.primaryForeground}
                         />
                       ) : null}
                     </View>

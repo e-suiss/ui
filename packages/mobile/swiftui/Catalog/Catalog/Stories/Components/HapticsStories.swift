@@ -27,16 +27,16 @@ private struct HapticsLog: View {
     HStack {
       Text("Last haptic")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Spacer(minLength: 16)
       Text(verbatim: count > 0 ? "\(last) (\(count))" : last)
         .textStyle(.sm, weight: .medium)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .accessibilityAddTraits(.updatesFrequently)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 12)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
   }
 }
 
@@ -48,7 +48,7 @@ private struct HapticsRow<Content: View>: View {
     HStack(spacing: 16) {
       Text(label)
         .textStyle(.base)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       Spacer(minLength: 0)
       content()
     }
@@ -176,14 +176,14 @@ private struct HapticsReorderDemo: View {
     ReorderList($tasks) { task in
       Text(verbatim: task)
         .textStyle(.base)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
         .padding(.vertical, 12)
     }
     .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     .overlay {
       RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-        .strokeBorder(Color.separator)
+        .strokeBorder(EsuissColor.border)
     }
   }
 }

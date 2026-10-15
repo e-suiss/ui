@@ -62,7 +62,7 @@ enum MessageStories {
             MessageFooter {
               Ph.checks.regular
                 .frame(width: 16, height: 16)
-                .foregroundStyle(Color.accent)
+                .foregroundStyle(EsuissColor.primary)
               Text("Read 10:02 AM")
             }
           }

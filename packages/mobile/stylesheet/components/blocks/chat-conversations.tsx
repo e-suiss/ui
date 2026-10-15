@@ -59,14 +59,21 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
 
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
+
 type Line = { id: string; from: "me" | "them"; text: string }
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type Thread = { name: string; tint: Tint; time: string; lines: Line[] }
 
@@ -78,7 +85,7 @@ type Row =
 const THREADS: { name: string; tint: Tint; time: string; lines: string[] }[] = [
   {
     name: "Riley Chen",
-    tint: "green",
+    tint: "green500",
     time: "9:41 AM",
     lines: [
       "them:Is the weekend trip to the coast still on?",
@@ -89,7 +96,7 @@ const THREADS: { name: string; tint: Tint; time: string; lines: string[] }[] = [
   },
   {
     name: "Morgan Lee",
-    tint: "orange",
+    tint: "orange500",
     time: "8:12 AM",
     lines: [
       "them:I sent the deck, can you take a look?",
@@ -98,7 +105,7 @@ const THREADS: { name: string; tint: Tint; time: string; lines: string[] }[] = [
   },
   {
     name: "Family",
-    tint: "purple",
+    tint: "purple500",
     time: "Yesterday",
     lines: [
       "them:Is everyone coming for Sunday brunch?",
@@ -108,7 +115,7 @@ const THREADS: { name: string; tint: Tint; time: string; lines: string[] }[] = [
   },
   {
     name: "Taylor Kim",
-    tint: "blue",
+    tint: "blue500",
     time: "Monday",
     lines: ["them:What time does the game start?"],
   },
@@ -221,7 +228,7 @@ function TypingDot({ index }: { index: number }) {
     <AnimatedView
       style={[
         styles.dot,
-        { backgroundColor: colors.labelTertiary },
+        { backgroundColor: colors.mutedForeground },
         animatedStyle,
       ]}
     />
@@ -291,7 +298,7 @@ function Composer({
             as={PlusIcon}
             weight="bold"
             size={18}
-            color={colors.labelSecondary}
+            color={colors.mutedForeground}
           />
         </Button>
         <InputGroup style={styles.group}>
@@ -351,7 +358,7 @@ function ThreadAvatar({ thread, size }: { thread: Thread; size: number }) {
   const { colors } = useTheme()
   return (
     <Avatar size="lg" style={{ width: size, height: size }}>
-      <AvatarFallback style={{ backgroundColor: colors[thread.tint] }}>
+      <AvatarFallback style={{ backgroundColor: tone(colors, thread.tint) }}>
         {initials(thread.name)}
       </AvatarFallback>
     </Avatar>
@@ -431,9 +438,7 @@ function ChatConversations({
     return (
       <Screen edges={["top", "right", "left"]}>
         <MessageScrollerProvider key={thread.name}>
-          <Header
-            style={[styles.header, { borderBottomColor: colors.separator }]}
-          >
+          <Header style={[styles.header, { borderBottomColor: colors.border }]}>
             <HeaderBack onPress={() => setSelected(null)}>Messages</HeaderBack>
             <HeaderTitle style={styles.title}>
               <ThreadAvatar thread={thread} size={30} />
@@ -446,7 +451,7 @@ function ChatConversations({
                 </Text>
                 <Text
                   accessibilityLiveRegion="polite"
-                  style={[fontSize["2xs"], { color: colors.labelSecondary }]}
+                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
                 >
                   {typing === thread.name ? "typing…" : "Message"}
                 </Text>
@@ -459,7 +464,7 @@ function ChatConversations({
                 accessibilityLabel="Video call"
                 onPress={() => onVideoCall?.(thread.name)}
               >
-                <Icon as={VideoCameraIcon} size={20} color={colors.accent} />
+                <Icon as={VideoCameraIcon} size={20} color={colors.primary} />
               </Button>
               <Button
                 variant="ghost"
@@ -467,7 +472,7 @@ function ChatConversations({
                 accessibilityLabel="Details"
                 onPress={() => onDetails?.(thread.name)}
               >
-                <Icon as={InfoIcon} size={20} color={colors.accent} />
+                <Icon as={InfoIcon} size={20} color={colors.primary} />
               </Button>
             </HeaderActions>
           </Header>
@@ -481,7 +486,7 @@ function ChatConversations({
                 <MessageScrollerItem>
                   {item.kind === "stamp" ? (
                     <Text
-                      style={[styles.stamp, { color: colors.labelSecondary }]}
+                      style={[styles.stamp, { color: colors.mutedForeground }]}
                     >
                       Today 9:30 AM
                     </Text>
@@ -509,14 +514,14 @@ function ChatConversations({
             accessibilityLabel="New message"
             onPress={onNewMessage}
           >
-            <Icon as={NotePencilIcon} size={20} color={colors.accent} />
+            <Icon as={NotePencilIcon} size={20} color={colors.primary} />
           </Button>
         </HeaderActions>
       </Header>
       <HeaderScrollView scroll={scroll}>
         <HeaderLargeTitle>Messages</HeaderLargeTitle>
         {threads.length === 0 ? (
-          <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+          <Text style={[styles.empty, { color: colors.mutedForeground }]}>
             No Messages
           </Text>
         ) : null}
@@ -526,10 +531,7 @@ function ChatConversations({
             <React.Fragment key={item.name}>
               {index > 0 ? (
                 <View
-                  style={[
-                    styles.separator,
-                    { backgroundColor: colors.separator },
-                  ]}
+                  style={[styles.separator, { backgroundColor: colors.border }]}
                 />
               ) : null}
               <SwipeActions>
@@ -539,7 +541,7 @@ function ChatConversations({
                     onPress={() => setSelected(item.name)}
                     style={({ pressed }) => [
                       styles.row,
-                      pressed && { backgroundColor: colors.itemPressed },
+                      pressed && { opacity: 0.8 },
                     ]}
                   >
                     <ThreadAvatar thread={item} size={44} />
@@ -551,7 +553,7 @@ function ChatConversations({
                         <Text
                           style={[
                             fontSize.sm,
-                            { color: colors.labelSecondary },
+                            { color: colors.mutedForeground },
                           ]}
                         >
                           {item.time}
@@ -559,7 +561,7 @@ function ChatConversations({
                       </View>
                       <Text
                         numberOfLines={1}
-                        style={[fontSize.sm, { color: colors.labelSecondary }]}
+                        style={[fontSize.sm, { color: colors.mutedForeground }]}
                       >
                         {last?.text}
                       </Text>

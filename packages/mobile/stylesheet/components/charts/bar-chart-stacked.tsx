@@ -28,8 +28,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
-  mobile: { label: "Mobile", color: "teal" },
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
 export function BarChartStacked() {
@@ -64,14 +64,14 @@ export function BarChartStacked() {
             <Bar
               dataKey="desktop"
               stackId="a"
-              fill="blue"
+              fill="chart-1"
               radius={[0, 0, 4, 4]}
               maxBarSize={36}
             />
             <Bar
               dataKey="mobile"
               stackId="a"
-              fill="teal"
+              fill="chart-2"
               radius={[4, 4, 0, 0]}
               maxBarSize={36}
             />

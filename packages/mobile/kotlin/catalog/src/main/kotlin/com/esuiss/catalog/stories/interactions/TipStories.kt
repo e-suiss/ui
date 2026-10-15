@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -146,17 +147,17 @@ private fun TipNotesPage() {
                 Modifier
                     .fillMaxWidth()
                     .clip(shape)
-                    .border(1.dp, colors.separator, shape),
+                    .border(1.dp, colors.border, shape),
             ) {
                 tipNotes.forEachIndexed { index, note ->
-                    if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+                    if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
                     TipNoteRow(note) { log = "Opened ${note.title}" }
                 }
             }
             Text(
                 log,
                 modifier = Modifier.heightIn(min = 20.dp).semantics { liveRegion = LiveRegionMode.Polite },
-                style = Typography.sm.copy(color = colors.labelSecondary),
+                style = Typography.sm.copy(color = colors.mutedForeground),
             )
         }
     }
@@ -170,7 +171,7 @@ private fun TipNoteRow(note: TipNote, onClick: () -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
-            .background(if (pressed) colors.itemPressed else Color.Transparent)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
@@ -182,7 +183,7 @@ private fun TipNoteRow(note: TipNote, onClick: () -> Unit) {
         )
         Text(
             note.preview,
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

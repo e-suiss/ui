@@ -18,6 +18,7 @@ import com.esuiss.ui.components.ChartTooltipIndicator
 import com.esuiss.ui.components.PolarGridType
 import com.esuiss.ui.components.RadarChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 
 private class RadarGridFilledRow(val skill: String, val thisMonth: Double, val lastMonth: Double)
 
@@ -31,8 +32,8 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "thisMonth" to ChartConfigItem("This month") { green },
-    "lastMonth" to ChartConfigItem("Last month") { gray },
+    "thisMonth" to ChartConfigItem("This month") { Palette.green500 },
+    "lastMonth" to ChartConfigItem("Last month") { chart5 },
 )
 
 @Composable
@@ -51,9 +52,9 @@ fun RadarChartGridFilled(modifier: Modifier = Modifier) {
                     ChartTooltip { ChartTooltipContent(indicator = ChartTooltipIndicator.Line) }
                     PolarGrid(
                         gridType = PolarGridType.Circle,
-                        stroke = colors.surfaceSecondary,
+                        stroke = colors.muted,
                         strokeWidth = 2.dp,
-                        fill = colors.control,
+                        fill = colors.secondary,
                         fillOpacity = 0.5f,
                     )
                     PolarAngleAxis(label = { it.skill })

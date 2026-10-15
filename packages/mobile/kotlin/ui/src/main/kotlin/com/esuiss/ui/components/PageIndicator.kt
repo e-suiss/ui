@@ -56,7 +56,7 @@ fun PageIndicator(
     val visible = maxVisible.coerceAtLeast(5)
     val start = if (count <= visible) 0 else (current - visible / 2).coerceIn(0, count - visible)
     val end = if (count <= visible) count else start + visible
-    val activeColor = if (variant == PageIndicatorVariant.Accent) colors.accent else colors.label
+    val activeColor = if (variant == PageIndicatorVariant.Accent) colors.primary else colors.foreground
     val summary = "Page ${current + 1} of $count"
     Row(
         modifier = modifier
@@ -89,7 +89,7 @@ fun PageIndicator(
                 val active = page == current
                 val scale by animateFloatAsState(edge, tween(250), label = "scale")
                 val width by animateDpAsState(if (active) size.active else size.dot, tween(300, easing = CarouselEasing), label = "width")
-                val color by animateColorAsState(if (active) activeColor else colors.labelQuaternary, tween(300), label = "color")
+                val color by animateColorAsState(if (active) activeColor else colors.border, tween(300), label = "color")
                 Box(
                     modifier = Modifier
                         .height(24.dp)

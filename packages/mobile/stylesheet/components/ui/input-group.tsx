@@ -139,15 +139,15 @@ function InputGroup({
         role="group"
         style={[
           styles.root,
-          { backgroundColor: colors.control },
+          { backgroundColor: colors.secondary },
           (block || multiline) && styles.auto,
           block && styles.block,
-          focused && { borderColor: colors.focus },
+          focused && { borderColor: colors.ring },
           isInvalid && {
-            borderColor: colors.danger,
-            backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+            borderColor: colors.destructive,
+            backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
           },
-          isDisabled && { backgroundColor: colors.controlDisabled },
+          isDisabled && { opacity: 0.5 },
           style,
         ]}
         {...props}
@@ -165,8 +165,8 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<typeof Pressable> & { align?: InputGroupAlign }) {
   const { colors } = useTheme()
-  const { disabled, inputRef } = useInputGroup()
-  const color = disabled ? colors.labelQuaternary : colors.labelSecondary
+  const { inputRef } = useInputGroup()
+  const color = colors.mutedForeground
   return (
     <TextStyleContext.Provider value={{ ...fontSize.base, color }}>
       <IconSizeContext.Provider value={16}>

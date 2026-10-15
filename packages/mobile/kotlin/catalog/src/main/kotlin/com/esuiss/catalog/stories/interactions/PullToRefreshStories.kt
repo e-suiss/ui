@@ -59,7 +59,7 @@ private fun PullToRefreshFeed() {
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text("Pull down to refresh", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+            Text("Pull down to refresh", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
             ItemGroup(variant = ItemGroupVariant.Inset) {
                 (count downTo 1).forEachIndexed { index, update ->
                     key(update) {

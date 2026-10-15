@@ -64,9 +64,9 @@ public struct AlertDialogMedia<Content: View>: View {
   public var body: some View {
     content
       .frame(width: 32, height: 32)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(width: 64, height: 64)
-      .background(Color.surfaceSecondary, in: Circle())
+      .background(EsuissColor.muted, in: Circle())
       .padding(.bottom, 8)
       .accessibilityHidden(true)
   }
@@ -86,7 +86,7 @@ public struct AlertDialogTitle: View {
   public var body: some View {
     text
       .textStyle(.lg, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
@@ -107,7 +107,7 @@ public struct AlertDialogDescription: View {
   public var body: some View {
     text
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)
   }

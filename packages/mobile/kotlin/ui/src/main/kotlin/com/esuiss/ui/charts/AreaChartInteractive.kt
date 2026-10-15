@@ -40,6 +40,7 @@ import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -203,7 +204,7 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
     val low = animated.min()
     val high = animated.max()
     val padding = (high - low) * 0.12
-    val trend by animateColorAsState(if (rising) colors.success else colors.danger, tween(500), label = "trend")
+    val trend by animateColorAsState(if (rising) (if (colors.isDark) Palette.green400 else Palette.green600) else colors.destructive, tween(500), label = "trend")
     val chartConfig = ChartConfig("price" to ChartConfigItem("Price") { trend })
     val stats = listOf(
         "Open" to priceFormat.format(first),
@@ -216,20 +217,20 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        BasicText("ACME", Modifier.alignByBaseline(), style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                        BasicText("Acme Corp.", Modifier.alignByBaseline(), style = Typography.base.copy(color = colors.labelSecondary))
+                        BasicText("ACME", Modifier.alignByBaseline(), style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                        BasicText("Acme Corp.", Modifier.alignByBaseline(), style = Typography.base.copy(color = colors.mutedForeground))
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         BasicText(
                             "$${priceFormat.format(current.price)}",
                             Modifier.alignByBaseline(),
-                            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                         BasicText(
                             "${if (rising) "+" else "-"}${priceFormat.format(abs(change))} (${priceFormat.format(abs(change / first * 100))}%)",
                             Modifier.alignByBaseline(),
                             style = Typography.base.copy(
-                                color = if (rising) colors.success else colors.danger,
+                                color = if (rising) (if (colors.isDark) Palette.green400 else Palette.green600) else colors.destructive,
                                 fontWeight = FontWeight.SemiBold,
                                 fontFeatureSettings = "tnum",
                             ),
@@ -238,7 +239,7 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                     BasicText(
                         if (active == null) ranges.getValue(range).caption else current.label,
                         Modifier.heightIn(min = 20.dp),
-                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        style = Typography.sm.copy(color = colors.mutedForeground),
                     )
                 }
                 ToggleGroup(
@@ -281,14 +282,14 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                             domain = (low - padding)..(high + padding),
                             tickFormatter = { it.roundToInt().toString() },
                         )
-                        ReferenceLine(first, stroke = colors.labelTertiary, strokeDasharray = listOf(2f, 3f))
-                        ChartTooltip(cursor = ChartCursor(colors.labelTertiary)) { }
+                        ReferenceLine(first, stroke = colors.mutedForeground, strokeDasharray = listOf(2f, 3f))
+                        ChartTooltip(cursor = ChartCursor(colors.mutedForeground)) { }
                         Area(
                             "price",
                             value = { it.price },
                             strokeWidth = 2.dp,
                             fill = ChartFill.VerticalGradient(topAlpha = 0.3f, bottomAlpha = 0.02f),
-                            activeDot = ChartDot(5.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
+                            activeDot = ChartDot(5.dp, strokeColor = colors.muted, strokeWidth = 2.dp),
                             isAnimationActive = false,
                         )
                     }
@@ -299,10 +300,10 @@ fun AreaChartInteractive(modifier: Modifier = Modifier) {
                             for ((term, value) in pair) {
                                 Column(Modifier.weight(1f)) {
                                     Row(Modifier.padding(vertical = 7.dp)) {
-                                        BasicText(term, Modifier.weight(1f), style = Typography.sm.copy(color = colors.labelSecondary))
+                                        BasicText(term, Modifier.weight(1f), style = Typography.sm.copy(color = colors.mutedForeground))
                                         BasicText(
                                             value,
-                                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                     Separator()

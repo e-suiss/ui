@@ -50,12 +50,12 @@ fun Card(
             .fillMaxWidth()
             .then(if (filled) Modifier else Modifier.shadow(Shadows.md, shape))
             .clip(shape)
-            .background(if (filled) colors.surfaceSecondary else colors.surfaceRaised, shape)
+            .background(if (filled) colors.muted else colors.card, shape)
             .then(
                 if (filled) {
                     Modifier
                 } else {
-                    Modifier.border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+                    Modifier.border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
                 },
             )
             .padding(vertical = size.spacing),
@@ -63,8 +63,8 @@ fun Card(
     ) {
         CompositionLocalProvider(
             LocalCardSpacing provides size.spacing,
-            LocalContentStyle provides Typography.base.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
         ) {
             content()
         }
@@ -100,7 +100,7 @@ fun CardTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = Typography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
+        style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -109,7 +109,7 @@ fun CardDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
     )
 }
 

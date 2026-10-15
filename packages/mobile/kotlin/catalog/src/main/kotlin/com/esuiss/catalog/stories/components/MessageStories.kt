@@ -104,7 +104,7 @@ private fun MessageConversation() {
                         BubbleContent("All green. Merging it now.")
                     }
                     MessageFooter {
-                        Icon(PhosphorIcons.Regular.Checks, contentDescription = null, tint = EsuissTheme.colors.accent)
+                        Icon(PhosphorIcons.Regular.Checks, contentDescription = null, tint = EsuissTheme.colors.primary)
                         Text("Read 10:02 AM")
                     }
                 }

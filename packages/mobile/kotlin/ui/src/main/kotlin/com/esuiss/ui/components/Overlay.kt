@@ -43,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.CompositingStrategy
@@ -78,6 +79,7 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.X
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadow
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -336,7 +338,7 @@ internal fun Scrim(
     exitMillis: Int,
     onClick: (() -> Unit)?,
 ) {
-    val color = EsuissTheme.colors.scrim
+    val color = Palette.black.copy(alpha = 0.5f)
     val click by rememberUpdatedState(onClick)
     AnimatedVisibility(
         visibleState = transition,
@@ -369,19 +371,19 @@ internal fun Modifier.raisedSurface(colors: Colors, shape: Shape, shadow: Shadow
     this
         .shadow(shadow, shape)
         .clip(shape)
-        .background(colors.surfaceRaised, shape)
-        .border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+        .background(colors.card, shape)
+        .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
 
 internal fun titleStyle(colors: Colors, style: TextStyle = Typography.base, centered: Boolean = false): TextStyle =
     style.copy(
-        color = colors.label,
+        color = colors.foreground,
         fontWeight = FontWeight.SemiBold,
         textAlign = if (centered) TextAlign.Center else TextAlign.Unspecified,
     )
 
 internal fun descriptionStyle(colors: Colors, centered: Boolean = false): TextStyle =
     Typography.sm.copy(
-        color = colors.labelSecondary,
+        color = colors.mutedForeground,
         textAlign = if (centered) TextAlign.Center else TextAlign.Unspecified,
     )
 
@@ -417,10 +419,11 @@ internal fun OverlayCloseButton(
         Box(
             modifier = Modifier
                 .size(32.dp)
-                .background(if (pressed) colors.separator else colors.surfaceTertiary, CircleShape),
+                .alpha(if (pressed) 0.8f else 1f)
+                .background(colors.secondary, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Regular.X, contentDescription = null, size = 16.dp, tint = colors.label)
+            Icon(PhosphorIcons.Regular.X, contentDescription = null, size = 16.dp, tint = colors.foreground)
         }
     }
 }

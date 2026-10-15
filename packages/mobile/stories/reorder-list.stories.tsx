@@ -30,7 +30,7 @@ function renderRows(value: string[]) {
         <View className="min-w-0 flex-1 py-3">
           <Text numberOfLines={1}>{task.title}</Text>
           {task.detail ? (
-            <Text className="text-sm text-label-secondary">{task.detail}</Text>
+            <Text className="text-sm text-muted-foreground">{task.detail}</Text>
           ) : null}
         </View>
         <ReorderListHandle accessibilityLabel={`Reorder ${task.title}`} />
@@ -54,7 +54,7 @@ function ReorderDemo({ inset = false }: { inset?: boolean }) {
           {renderRows(value)}
         </ReorderList>
       )}
-      <Text role="status" className="text-sm text-label-secondary">
+      <Text role="status" className="text-sm text-muted-foreground">
         {value.map((key) => tasks[key].title).join(", ")}
       </Text>
     </View>

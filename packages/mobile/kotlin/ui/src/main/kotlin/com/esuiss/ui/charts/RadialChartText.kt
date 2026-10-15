@@ -29,7 +29,7 @@ private class RadialTextReading(val value: Double)
 private val chartData = listOf(RadialTextReading(72.0))
 
 private val chartConfig = ChartConfig(
-    "value" to ChartConfigItem("Used") { blue },
+    "value" to ChartConfigItem("Used") { chart1 },
 )
 
 @Composable
@@ -66,9 +66,9 @@ fun RadialChartText(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         "72%",
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("cloud storage used", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("cloud storage used", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

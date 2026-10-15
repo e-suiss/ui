@@ -244,7 +244,7 @@ export function AreaChartInteractive() {
   const min = Math.min(...prices)
   const max = Math.max(...prices)
   const padding = (max - min) * 0.12
-  const color = rising ? "success" : "danger"
+  const color = rising ? "green-500" : "destructive"
   const chartConfig = {
     price: { label: "Price", color },
   } satisfies ChartConfig
@@ -262,7 +262,7 @@ export function AreaChartInteractive() {
         <View className="min-w-56 grow gap-0.5">
           <View className="flex-row items-baseline gap-2">
             <Text className="text-2xl font-semibold tracking-tight">ACME</Text>
-            <Text className="text-base text-label-secondary">Acme Corp.</Text>
+            <Text className="text-base text-muted-foreground">Acme Corp.</Text>
           </View>
           <View className="flex-row flex-wrap items-baseline gap-2.5">
             <Text className="text-3xl font-semibold tracking-tight tabular-nums">
@@ -271,14 +271,16 @@ export function AreaChartInteractive() {
             <Text
               className={cn(
                 "text-base font-semibold tabular-nums",
-                rising ? "text-success" : "text-danger"
+                rising
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-destructive"
               )}
             >
               {formatPrice(change, true)} (
               {formatPrice(Math.abs((change / first) * 100))}%)
             </Text>
           </View>
-          <Text className="min-h-5 text-sm text-label-secondary">
+          <Text className="min-h-5 text-sm text-muted-foreground">
             {active === null ? RANGES[range].caption : current.label}
           </Text>
         </View>
@@ -328,12 +330,12 @@ export function AreaChartInteractive() {
             />
             <ReferenceLine
               y={first}
-              stroke="label-tertiary"
+              stroke="muted-foreground"
               strokeDasharray="2 3"
             />
             <ChartTooltip
               content={() => null}
-              cursor={{ stroke: "label-tertiary", strokeWidth: 1 }}
+              cursor={{ stroke: "muted-foreground", strokeWidth: 1 }}
             />
             <Area
               isAnimationActive={false}
@@ -349,7 +351,7 @@ export function AreaChartInteractive() {
               activeDot={{
                 r: 5,
                 fill: color,
-                stroke: "surface-secondary",
+                stroke: "muted",
                 strokeWidth: 2,
               }}
             />
@@ -359,9 +361,9 @@ export function AreaChartInteractive() {
           {stats.map(([term, value]) => (
             <View
               key={term}
-              className="min-w-36 grow basis-0 flex-row items-center gap-2 border-b border-separator py-1.75"
+              className="min-w-36 grow basis-0 flex-row items-center gap-2 border-b border-border py-1.75"
             >
-              <Text className="grow text-sm text-label-secondary">{term}</Text>
+              <Text className="grow text-sm text-muted-foreground">{term}</Text>
               <Text className="text-sm font-semibold tabular-nums">
                 {value}
               </Text>

@@ -33,7 +33,7 @@ function PickerDemo() {
           </PickerItem>
         </PickerGroup>
       </Picker>
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         Selected: {value ?? "none"}
       </Text>
     </View>

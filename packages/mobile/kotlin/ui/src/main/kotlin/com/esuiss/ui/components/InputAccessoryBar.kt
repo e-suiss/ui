@@ -173,8 +173,8 @@ fun InputAccessoryBar(
                     state.barHeight = it.height
                     inset?.height = it.height
                 }
-                .background(colors.surfaceSecondary)
-                .drawBehind { drawRect(colors.separator, Offset.Zero, Size(size.width, 1.dp.toPx())) }
+                .background(colors.muted)
+                .drawBehind { drawRect(colors.border, Offset.Zero, Size(size.width, 1.dp.toPx())) }
                 .padding(horizontal = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(0.dp),
@@ -205,7 +205,7 @@ fun InputAccessoryBar(
             ) {
                 BasicText(
                     doneLabel,
-                    style = Typography.base.copy(color = colors.link, fontWeight = FontWeight.SemiBold),
+                    style = Typography.base.copy(color = colors.primary, fontWeight = FontWeight.SemiBold),
                     maxLines = 1,
                 )
             }

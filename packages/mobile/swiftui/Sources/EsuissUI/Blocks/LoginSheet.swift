@@ -22,7 +22,7 @@ public struct LoginSheet: View {
   public var body: some View {
     Screen {
       VStack(spacing: 0) {
-        Color.green
+        Palette.green500
           .frame(width: 84, height: 84)
           .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
           .padding(.bottom, 20)
@@ -31,7 +31,7 @@ public struct LoginSheet: View {
           .scaledTextStyle(.xl2, weight: .bold)
         Text(done ? "Your account was created with suiss." : "Save your routes and share them with friends.")
           .scaledTextStyle(.base)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.top, 8)
       }
       .multilineTextAlignment(.center)
@@ -86,7 +86,7 @@ struct LoginSheetPanel: View {
           Ph.x.bold.frame(width: 14, height: 14)
         }
         .buttonStyle(.variant(.secondary, size: .iconSm))
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityLabel(Text("Close"))
       }
       Text("Use your suiss Account with Trail Routes")
@@ -98,11 +98,11 @@ struct LoginSheetPanel: View {
         HStack(spacing: 12) {
           Ph.user.regular
             .frame(width: 20, height: 20)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           VStack(alignment: .leading, spacing: 0) {
             Text("Name")
               .scaledFont(.xs2)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: "Jamie Rivera")
               .scaledFont(.base)
           }
@@ -111,16 +111,16 @@ struct LoginSheetPanel: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .accessibilityElement(children: .combine)
-        Color.separator.frame(height: 1).padding(.leading, 46)
+        EsuissColor.border.frame(height: 1).padding(.leading, 46)
         RadioGroup(selection: $email) {
           VStack(spacing: 0) {
             option("share", label: "Share My Email", hint: Text(verbatim: "jamie@suiss.com"), icon: true)
-            Color.separator.frame(height: 1).padding(.leading, 46)
+            EsuissColor.border.frame(height: 1).padding(.leading, 46)
             option("hide", label: "Hide My Email", hint: Text("A unique address that forwards to you"), icon: false)
           }
         }
       }
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       Button {
         onContinue?(email == "share")
         busy = true
@@ -139,11 +139,11 @@ struct LoginSheetPanel: View {
       .buttonStyle(.variant(.default, size: .xl, block: true))
       .disabled(busy)
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 20)
     .padding(.top, 14)
     .padding(.bottom, 16)
-    .background(Color.surfaceRaised)
+    .background(EsuissColor.popover)
   }
 
   private func option(_ value: String, label: LocalizedStringKey, hint: Text, icon: Bool) -> some View {
@@ -151,14 +151,14 @@ struct LoginSheetPanel: View {
       if icon {
         Ph.envelopeSimple.regular
           .frame(width: 20, height: 20)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       VStack(alignment: .leading, spacing: 0) {
         Text(label)
           .scaledFont(.base)
         hint
           .scaledFont(.xs2)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       RadioGroupItem(value: value)
@@ -177,9 +177,9 @@ private struct LoginSheetLabelStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.lg, weight: .semibold)
-      .foregroundStyle(Color.onControlSelected)
+      .foregroundStyle(EsuissColor.background)
       .frame(maxWidth: .infinity, minHeight: 56)
-      .background(Color.controlSelected, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      .background(EsuissColor.foreground, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .opacity(configuration.isPressed ? 0.8 : 1)
       .contentShape(Rectangle())
   }
@@ -189,8 +189,8 @@ private struct LoginSheetLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.base)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 44)
       .contentShape(Rectangle())
   }

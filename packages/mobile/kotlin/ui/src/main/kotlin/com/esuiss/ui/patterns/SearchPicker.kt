@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
@@ -145,7 +146,7 @@ private fun SearchPickerContent(
     val visible = if (query.isBlank()) items else items.filter { it.label.contains(query.trim(), ignoreCase = true) }
     val groups = visible.groupBy { it.group.orEmpty() }.entries.toList()
     val windowHeight = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.height.toDp() }
-    val inputStyle = Typography.xl.copy(color = colors.label)
+    val inputStyle = Typography.xl.copy(color = colors.foreground)
 
     Column(modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, top = 5.dp, bottom = 12.dp)) {
         Row(
@@ -155,15 +156,15 @@ private fun SearchPickerContent(
                 .height(56.dp)
                 .drawBehind {
                     val stroke = 1.dp.toPx()
-                    drawRect(colors.separator, Offset(0f, size.height - stroke), Size(size.width, stroke))
+                    drawRect(colors.border, Offset(0f, size.height - stroke), Size(size.width, stroke))
                 }
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 22.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.MagnifyingGlass, contentDescription = null, size = 22.dp, tint = colors.mutedForeground)
             CompositionLocalProvider(
-                LocalTextSelectionColors provides TextSelectionColors(colors.accent, colors.accent.copy(alpha = 0.3f)),
+                LocalTextSelectionColors provides TextSelectionColors(colors.primary, colors.primary.copy(alpha = 0.3f)),
             ) {
                 BasicTextField(
                     value = query,
@@ -171,13 +172,13 @@ private fun SearchPickerContent(
                     modifier = Modifier.weight(1f).focusRequester(focus),
                     singleLine = true,
                     textStyle = inputStyle,
-                    cursorBrush = SolidColor(colors.accent),
+                    cursorBrush = SolidColor(colors.primary),
                     decorationBox = { inner ->
                         Box(contentAlignment = Alignment.CenterStart) {
                             if (query.isEmpty()) {
                                 BasicText(
                                     searchPlaceholder,
-                                    style = inputStyle.copy(color = colors.labelTertiary),
+                                    style = inputStyle.copy(color = colors.mutedForeground),
                                     maxLines = 1,
                                 )
                             }
@@ -198,7 +199,7 @@ private fun SearchPickerContent(
                     BasicText(
                         emptyText,
                         modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
-                        style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
             }
@@ -211,7 +212,7 @@ private fun SearchPickerContent(
                                 .fillMaxWidth()
                                 .semantics { heading() }
                                 .padding(start = 12.dp, end = 12.dp, top = if (index > 0) 12.dp else 4.dp, bottom = 6.dp),
-                            style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                            style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                         )
                     }
                 } else if (index > 0) {
@@ -236,7 +237,13 @@ private fun SearchPickerOption(item: SearchPickerItem, checked: Boolean, onClick
             .fillMaxWidth()
             .height(40.dp)
             .clip(shape)
-            .background(if (pressed && item.enabled) colors.itemPressed else Color.Transparent, shape)
+            .alpha(
+                when {
+                    !item.enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clickable(
                 interactionSource = interaction,
                 indication = null,
@@ -252,12 +259,12 @@ private fun SearchPickerOption(item: SearchPickerItem, checked: Boolean, onClick
         BasicText(
             item.label,
             modifier = Modifier.weight(1f),
-            style = Typography.base.copy(color = if (item.enabled) colors.label else colors.labelQuaternary),
+            style = Typography.base.copy(color = colors.foreground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         if (checked) {
-            Icon(PhosphorIcons.Regular.Check, contentDescription = null, size = 20.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.Check, contentDescription = null, size = 20.dp, tint = colors.mutedForeground)
         }
     }
 }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -106,16 +107,16 @@ fun PinPad(
 private fun PinPadDot(filled: Boolean, error: Boolean, enabled: Boolean) {
     val colors = EsuissTheme.colors
     val target = when {
-        !enabled -> colors.labelQuaternary
-        error -> colors.danger
-        filled -> colors.label
-        else -> colors.labelTertiary
+        error -> colors.destructive
+        filled -> colors.foreground
+        else -> colors.mutedForeground
     }
     val color by animateColorAsState(target, tween(150, easing = FormEasing), label = "dot")
     val fill by animateColorAsState(if (filled) target else Color.Transparent, tween(150, easing = FormEasing), label = "fill")
     Box(
         modifier = Modifier
             .size(14.dp)
+            .alpha(if (enabled) 1f else 0.5f)
             .background(fill, CircleShape)
             .border(1.5.dp, color, CircleShape),
     )

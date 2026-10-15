@@ -45,10 +45,17 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -61,7 +68,7 @@ const DURATIONS = ["24 hours", "7 days", "Permanent"]
 
 type Decision = "approved" | "denied" | null
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type Request = {
   name: string
@@ -78,7 +85,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Change prices",
     reason: "I need to update the campaign prices.",
     time: "10 min ago",
-    tint: "orange",
+    tint: "orange500",
     decision: null,
   },
   {
@@ -86,7 +93,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Export customers",
     reason: "I need the customer list for the monthly report.",
     time: "1 hr ago",
-    tint: "green",
+    tint: "green500",
     decision: null,
   },
   {
@@ -94,7 +101,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Issue refunds",
     reason: "So I can refund support tickets myself.",
     time: "Yesterday",
-    tint: "mint",
+    tint: "teal400",
     decision: null,
   },
   {
@@ -102,7 +109,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Publish",
     reason: "I'd like to publish blog posts.",
     time: "2 days ago",
-    tint: "cyan",
+    tint: "cyan500",
     decision: null,
   },
 ]
@@ -180,7 +187,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -196,42 +203,42 @@ function RequestRow({
   first: boolean
   onDecide: (decision: "approved" | "denied") => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
+  const success = isDark ? palette.green400 : palette.green600
   return (
     <AnimatedView
       layout={EASING_LAYOUT}
       exiting={FadeOut.duration(400).reduceMotion(ReduceMotion.System)}
     >
       <SwipeActions>
-        <SwipeActionsContent
-          style={{ backgroundColor: colors.surfaceSecondary }}
-        >
+        <SwipeActionsContent style={{ backgroundColor: colors.muted }}>
           <View style={styles.row}>
             <Avatar style={styles.avatar}>
-              <AvatarFallback style={{ backgroundColor: colors[request.tint] }}>
+              <AvatarFallback
+                style={{ backgroundColor: tone(colors, request.tint) }}
+              >
                 {initials(request.name)}
               </AvatarFallback>
             </Avatar>
             <View
               style={[
                 styles.content,
-                !first && [
-                  styles.divider,
-                  { borderTopColor: colors.separator },
-                ],
+                !first && [styles.divider, { borderTopColor: colors.border }],
               ]}
             >
               <View style={styles.lines}>
                 <View style={styles.top}>
                   <Text style={styles.strong}>{request.name}</Text>
-                  <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.xs, { color: colors.mutedForeground }]}
+                  >
                     {request.time}
                   </Text>
                 </View>
                 <Text style={fontSize.sm}>
                   {`Requests ${request.permission}`}
                 </Text>
-                <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
                   {request.reason}
                 </Text>
               </View>
@@ -243,8 +250,8 @@ function RequestRow({
                     {
                       color:
                         request.decision === "approved"
-                          ? colors.success
-                          : colors.danger,
+                          ? success
+                          : colors.destructive,
                     },
                   ]}
                 >
@@ -303,7 +310,7 @@ function RolesRequests({
   onDurationChange?: (duration: string) => void
   onNavigate?: (section: string) => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const [section, setSection] = React.useState("roles")
   const [requests, setRequests] = React.useState(INITIAL_REQUESTS)
   const [duration, setDuration] = React.useState("Permanent")
@@ -349,7 +356,7 @@ function RolesRequests({
               subtitle={
                 <Text
                   accessibilityLiveRegion="polite"
-                  style={[fontSize.sm, { color: colors.labelSecondary }]}
+                  style={[fontSize.sm, { color: colors.mutedForeground }]}
                 >
                   {`${open} pending ${open === 1 ? "request" : "requests"}`}
                 </Text>
@@ -363,7 +370,7 @@ function RolesRequests({
                   nativeID="roles-requests-duration"
                   style={[
                     styles.durationLabel,
-                    { color: colors.labelSecondary },
+                    { color: colors.mutedForeground },
                   ]}
                 >
                   Approval length
@@ -385,12 +392,7 @@ function RolesRequests({
                 </Picker>
               </View>
               {requests.length > 0 ? (
-                <View
-                  style={[
-                    styles.group,
-                    { backgroundColor: colors.surfaceSecondary },
-                  ]}
-                >
+                <View style={[styles.group, { backgroundColor: colors.muted }]}>
                   {requests.map((request, index) => (
                     <RequestRow
                       key={request.name}
@@ -413,7 +415,7 @@ function RolesRequests({
                           as={CheckIcon}
                           weight="bold"
                           size={40}
-                          color={colors.success}
+                          color={isDark ? palette.green400 : palette.green600}
                         />
                       </EmptyMedia>
                       <EmptyTitle style={fontSize.xl}>
@@ -427,7 +429,7 @@ function RolesRequests({
                         onPress={() => setRequests(INITIAL_REQUESTS)}
                         style={({ pressed }) => pressed && { opacity: 0.6 }}
                       >
-                        <Text style={[fontSize.sm, { color: colors.link }]}>
+                        <Text style={[fontSize.sm, { color: colors.primary }]}>
                           Reset the sample ›
                         </Text>
                       </Pressable>

@@ -14,7 +14,7 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, useTheme } from "@/components/ui/theme"
 
 const stocks = [
   { symbol: "ACME", name: "Acme Corp.", price: 254.32, change: 1.28, seed: 41 },
@@ -24,8 +24,8 @@ const stocks = [
 ]
 
 const chartConfig = {
-  up: { label: "Rising", color: "success" },
-  down: { label: "Falling", color: "danger" },
+  up: { label: "Rising", color: "green-500" },
+  down: { label: "Falling", color: "destructive" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -131,7 +131,7 @@ export function AreaChartSparkline() {
                   styles.row,
                   index > 0 && {
                     borderTopWidth: 1,
-                    borderColor: colors.separator,
+                    borderColor: colors.border,
                   },
                 ]}
               >
@@ -139,7 +139,7 @@ export function AreaChartSparkline() {
                   <Text style={styles.symbol}>{stock.symbol}</Text>
                   <Text
                     numberOfLines={1}
-                    style={[styles.company, { color: colors.labelSecondary }]}
+                    style={[styles.company, { color: colors.mutedForeground }]}
                   >
                     {stock.name}
                   </Text>
@@ -152,15 +152,19 @@ export function AreaChartSparkline() {
                       styles.badge,
                       {
                         backgroundColor: rising
-                          ? colors.success
-                          : colors.danger,
+                          ? palette.green500
+                          : colors.destructive,
                       },
                     ]}
                   >
                     <Text
                       style={[
                         styles.change,
-                        { color: isDark ? colors.surface : colors.onAccent },
+                        {
+                          color: isDark
+                            ? colors.background
+                            : colors.primaryForeground,
+                        },
                       ]}
                     >
                       {formatPrice(stock.change, true)}%

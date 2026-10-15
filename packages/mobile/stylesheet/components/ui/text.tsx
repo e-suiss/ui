@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
 function variantColors(variant: TextVariant, colors: ThemeColors): TextStyle {
   switch (variant) {
     case "blockquote":
-      return { color: colors.label, borderColor: colors.separator }
+      return { color: colors.foreground, borderColor: colors.border }
     case "code":
-      return { color: colors.label, backgroundColor: colors.surfaceSecondary }
+      return { color: colors.foreground, backgroundColor: colors.muted }
     case "lead":
     case "muted":
-      return { color: colors.labelSecondary }
+      return { color: colors.mutedForeground }
     default:
-      return { color: colors.label }
+      return { color: colors.foreground }
   }
 }
 

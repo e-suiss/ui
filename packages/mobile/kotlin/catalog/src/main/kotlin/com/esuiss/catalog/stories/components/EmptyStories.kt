@@ -51,7 +51,7 @@ private fun EmptyDefault() {
 
 @Composable
 private fun EmptyMuted() {
-    Empty(Modifier.background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))) {
+    Empty(Modifier.background(EsuissTheme.colors.muted, RoundedCornerShape(Radius.xl2))) {
         EmptyHeader {
             EmptyTitle("No results")
             EmptyDescription("Try a different search.")

@@ -19,13 +19,13 @@ function Stepper({
       {...props}
     >
       {label ? <Text className="text-sm font-medium">{label}</Text> : null}
-      <NumberField.Group className="h-11 flex-row items-center overflow-hidden rounded-lg bg-control">
+      <NumberField.Group className="h-11 flex-row items-center overflow-hidden rounded-lg bg-secondary">
         <NumberField.Decrement className="h-full w-12 items-center justify-center">
           <Icon as={MinusIcon} className="size-4" />
         </NumberField.Decrement>
         <NumberField.Input
           accessibilityLabel={label}
-          className="h-full flex-1 text-center text-base text-label"
+          className="h-full flex-1 text-center text-base text-foreground"
         />
         <NumberField.Increment className="h-full w-12 items-center justify-center">
           <Icon as={PlusIcon} className="size-4" />

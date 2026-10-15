@@ -44,10 +44,10 @@ private struct DisclosureGallery: View {
             .font(TextStyle.sm.font())
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .overlay(RoundedRectangle(cornerRadius: Radius.md).strokeBorder(Color.separator))
+            .overlay(RoundedRectangle(cornerRadius: Radius.md).strokeBorder(EsuissColor.border))
         }
       }
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       Tabs(selection: $tab) {
         TabsList {
           TabsTrigger("Account", value: "account")
@@ -55,7 +55,7 @@ private struct DisclosureGallery: View {
           TabsTrigger("Disabled", value: "disabled").disabled(true)
         }
         TabsContent(value: "account") {
-          Text("Make changes to your account here.").font(TextStyle.sm.font()).foregroundStyle(Color.labelSecondary)
+          Text("Make changes to your account here.").font(TextStyle.sm.font()).foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       Tabs(selection: $line) {
@@ -71,13 +71,13 @@ private struct DisclosureGallery: View {
           TabsTrigger("Security", value: "security")
         }
         TabsContent(value: "general") {
-          Text("General settings").font(TextStyle.sm.font()).foregroundStyle(Color.labelSecondary)
+          Text("General settings").font(TextStyle.sm.font()).foregroundStyle(EsuissColor.mutedForeground)
         }
       }
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -85,12 +85,12 @@ private struct BackdropPage: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 12) {
       ForEach(0..<8) { _ in
-        RoundedRectangle(cornerRadius: Radius.md).fill(Color.surfaceSecondary).frame(height: 40)
+        RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.muted).frame(height: 40)
       }
     }
     .padding(16)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    .background(Color.surface)
+    .background(EsuissColor.background)
     .clipped()
   }
 }
@@ -104,7 +104,7 @@ private struct DialogGallery: View {
             DialogTitle("Edit profile")
             DialogDescription("Make changes to your profile here. Click save when you're done.")
           }
-          Text("Name: Pedro Duarte").font(TextStyle.sm.font()).foregroundStyle(Color.label)
+          Text("Name: Pedro Duarte").font(TextStyle.sm.font()).foregroundStyle(EsuissColor.foreground)
           DialogFooter(showCloseButton: true) {
             Button {} label: { Text("Save changes").frame(maxWidth: .infinity) }
               .buttonStyle(.variant())
@@ -170,7 +170,7 @@ private struct SheetGallery: View {
             SheetTitle("Edit profile")
             SheetDescription("Make changes to your profile here.")
           }
-          Text("Content").font(TextStyle.sm.font()).foregroundStyle(Color.label).padding(.horizontal, 24)
+          Text("Content").font(TextStyle.sm.font()).foregroundStyle(EsuissColor.foreground).padding(.horizontal, 24)
           SheetFooter {
             Button {} label: { Text("Save changes").frame(maxWidth: .infinity) }.buttonStyle(.variant())
             SheetClose { Text("Close").frame(maxWidth: .infinity) }.buttonStyle(.variant(.outline))
@@ -193,7 +193,7 @@ private struct SheetGallery: View {
       .clipped()
       ZStack(alignment: .bottom) {
         BackdropPage()
-        Color.scrim
+        Palette.black.opacity(0.5)
         DrawerContent(showCloseButton: true) {
           DrawerHeader {
             DrawerTitle("Move goal")
@@ -201,7 +201,7 @@ private struct SheetGallery: View {
           }
           Text("350 calories / day")
             .font(TextStyle.xl2.font(weight: .bold))
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
             .frame(maxWidth: .infinity)
             .padding(24)
           DrawerFooter {
@@ -211,7 +211,7 @@ private struct SheetGallery: View {
         }
         .environment(\.drawerFitsContent, true)
         .overlay(alignment: .top) {
-          Capsule().fill(Color.labelQuaternary).frame(width: 36, height: 5).padding(.top, 5)
+          Capsule().fill(EsuissColor.border).frame(width: 36, height: 5).padding(.top, 5)
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: Radius.xl3, topTrailingRadius: Radius.xl3, style: .continuous))
       }
@@ -236,7 +236,7 @@ private struct PopoverGallery: View {
     }
     .padding(24)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -252,7 +252,7 @@ private struct ToastGallery: View {
     }
     .padding(16)
     .frame(width: 402)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 
   private func item(
@@ -353,7 +353,7 @@ private struct MenusGallery: View {
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 
   private func fruitSelect(selection: Binding<String?>, size: SelectSize = .default) -> some View {

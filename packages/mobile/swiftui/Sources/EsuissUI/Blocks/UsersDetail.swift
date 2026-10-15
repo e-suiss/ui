@@ -26,12 +26,12 @@ public struct UsersDetail: View {
 
   static var users: [User] {
     [
-      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", tint: .indigo),
-      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", tint: .orange),
-      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", tint: .green),
-      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", tint: .blue),
-      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", tint: .pink),
-      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", tint: .mint),
+      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", tint: Palette.indigo500),
+      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", tint: Palette.orange500),
+      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", tint: Palette.green500),
+      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", tint: Palette.blue500),
+      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", tint: Palette.pink500),
+      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", tint: Palette.teal400),
     ]
   }
 
@@ -120,7 +120,7 @@ public struct UsersDetail: View {
                       .scaledFont(.sm)
                     Text(LocalizedStringKey(role(index)))
                       .scaledFont(.xs)
-                      .foregroundStyle(Color.labelSecondary)
+                      .foregroundStyle(EsuissColor.mutedForeground)
                   }
                 }
                 .accessibilityElement(children: .combine)
@@ -148,7 +148,7 @@ public struct UsersDetail: View {
             .accessibilityAddTraits(.isHeader)
           Text(verbatim: "\(user.email) · \(role(selected))")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .padding(.top, 8)
@@ -179,7 +179,7 @@ public struct UsersDetail: View {
       .id(current)
       .transition(.opacity.combined(with: .offset(y: 6)))
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 
   private func profileTab(_ user: User) -> some View {
@@ -206,7 +206,7 @@ public struct UsersDetail: View {
           }
           ItemActions {
             Text(verbatim: row.1)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .lineLimit(1)
           }
         }
@@ -234,7 +234,7 @@ public struct UsersDetail: View {
         }
         ItemActions {
           Text(LocalizedStringKey(user.status))
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .accessibilityElement(children: .combine)
@@ -252,9 +252,9 @@ public struct UsersDetail: View {
             ItemMedia {
               session.icon
                 .frame(width: 16, height: 16)
-                .foregroundStyle(Color.onAccent)
+                .foregroundStyle(EsuissColor.primaryForeground)
                 .frame(width: 30, height: 30)
-                .background(Color.gray, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+                .background(Palette.zinc500, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
             }
             ItemContent {
               ItemTitle { Text(verbatim: session.device).fontWeight(.regular) }
@@ -330,7 +330,7 @@ private struct UsersDetailAvatar: View {
   var body: some View {
     Text(verbatim: user.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
       .font(.system(size: size * 0.38, weight: .semibold))
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(user.tint, in: Circle())
       .accessibilityHidden(true)
@@ -344,7 +344,7 @@ private struct UsersDetailHeading: View {
     if splitView?.wide ?? false {
       Text("Users")
         .scaledFont(.sm, weight: .semibold)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.horizontal, 4)
         .padding(.vertical, 8)
         .accessibilityAddTraits(.isHeader)
@@ -396,7 +396,7 @@ private struct UsersDetailShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

@@ -30,8 +30,8 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
-    "mobile" to ChartConfigItem("Mobile") { teal },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
 )
 
 @Composable

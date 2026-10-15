@@ -78,7 +78,7 @@ function TableListTitle({
   return (
     <Text
       role="heading"
-      style={[styles.title, { color: colors.label }, style]}
+      style={[styles.title, { color: colors.foreground }, style]}
       {...props}
     />
   )
@@ -92,7 +92,7 @@ function TableListHeader({
   return (
     <Text
       role="heading"
-      style={[styles.header, { color: colors.labelSecondary }, style]}
+      style={[styles.header, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -105,7 +105,7 @@ function TableListFooter({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.footer, { color: colors.labelSecondary }, style]}
+      style={[styles.footer, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -117,10 +117,10 @@ function TableListSeparator({ style, ...props }: ViewProps) {
     <View
       accessible={false}
       importantForAccessibility="no"
-      style={[{ backgroundColor: colors.surfaceSecondary }, style]}
+      style={[{ backgroundColor: colors.muted }, style]}
       {...props}
     >
-      <View style={[styles.separator, { backgroundColor: colors.separator }]} />
+      <View style={[styles.separator, { backgroundColor: colors.border }]} />
     </View>
   )
 }
@@ -148,11 +148,7 @@ function TableListRow({
       size="sm"
       style={(state) => [
         styles.row,
-        {
-          backgroundColor: state.pressed
-            ? colors.surfaceTertiary
-            : colors.surfaceSecondary,
-        },
+        { backgroundColor: colors.muted },
         first && styles.first,
         last && styles.last,
         typeof style === "function" ? style(state) : style,
@@ -173,7 +169,7 @@ function TableListRow({
             <ItemActions>
               {isText(trailing) ? (
                 <Text
-                  style={[styles.trailing, { color: colors.labelSecondary }]}
+                  style={[styles.trailing, { color: colors.mutedForeground }]}
                 >
                   {trailing}
                 </Text>
@@ -216,11 +212,9 @@ function TableList<T>({
     <View style={[styles.root, style]} {...props}>
       {title != null ? <TableListTitle>{title}</TableListTitle> : null}
       {rows.length === 0 ? (
-        <View
-          style={[styles.empty, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.empty, { backgroundColor: colors.muted }]}>
           {isText(emptyText) ? (
-            <Text style={{ ...fontSize.base, color: colors.labelSecondary }}>
+            <Text style={{ ...fontSize.base, color: colors.mutedForeground }}>
               {emptyText}
             </Text>
           ) : (
@@ -255,7 +249,7 @@ function TableList<T>({
                             key={column.key}
                             style={[
                               styles.trailing,
-                              { color: colors.labelSecondary },
+                              { color: colors.mutedForeground },
                             ]}
                           >
                             {cell}

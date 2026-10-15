@@ -52,6 +52,7 @@ import com.esuiss.ui.interactions.OtpAutofillInput
 import com.esuiss.ui.interactions.OtpAutofillState
 import com.esuiss.ui.interactions.OtpAutofillSuggestion
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.io.File
 import java.util.Locale
@@ -96,16 +97,16 @@ private class KeypadHaptics : HapticFeedback {
 private fun Heading(title: String, description: String? = null) {
     val colors = EsuissTheme.colors
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        BasicText(title, style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.Bold))
+        BasicText(title, style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.Bold))
         if (description != null) {
-            BasicText(description, style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center))
+            BasicText(description, style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center))
         }
     }
 }
 
 @Composable
 private fun Caption(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
@@ -213,10 +214,10 @@ private fun OtpScene(incoming: String) {
                 }
             }
             val (text, color) = when (state) {
-                OtpAutofillState.Verifying -> "Verifying…" to colors.labelSecondary
-                OtpAutofillState.Verified -> "Verified" to colors.success
-                OtpAutofillState.Invalid -> "That code didn't work. Try again." to colors.danger
-                else -> "" to colors.labelSecondary
+                OtpAutofillState.Verifying -> "Verifying…" to colors.mutedForeground
+                OtpAutofillState.Verified -> "Verified" to if (colors.isDark) Palette.green400 else Palette.green600
+                OtpAutofillState.Invalid -> "That code didn't work. Try again." to colors.destructive
+                else -> "" to colors.mutedForeground
             }
             BasicText(text, style = Typography.sm.copy(color = color))
             OtpAutofillSuggestion(code = incoming)
@@ -292,7 +293,7 @@ class InputGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .safeDrawingPadding()
                         .padding(16.dp),
                     contentAlignment = Alignment.TopCenter,

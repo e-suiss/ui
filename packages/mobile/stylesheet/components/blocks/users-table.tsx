@@ -38,10 +38,17 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "users", label: "Users", icon: UsersIcon },
@@ -54,7 +61,7 @@ const ROLES = ["Admin", "Editor", "Support", "Viewer"]
 
 type Status = "Active" | "Suspended" | "Invited"
 
-type Tint = keyof ThemeColors
+type Tint = Tone
 
 type User = {
   name: string
@@ -72,7 +79,7 @@ const INITIAL_USERS: User[] = [
     role: "Admin",
     status: "Active",
     seen: "2 min ago",
-    tint: "indigo",
+    tint: "indigo500",
   },
   {
     name: "Morgan Lee",
@@ -80,7 +87,7 @@ const INITIAL_USERS: User[] = [
     role: "Editor",
     status: "Active",
     seen: "1 hr ago",
-    tint: "orange",
+    tint: "orange500",
   },
   {
     name: "Riley Chen",
@@ -88,7 +95,7 @@ const INITIAL_USERS: User[] = [
     role: "Support",
     status: "Active",
     seen: "Yesterday",
-    tint: "green",
+    tint: "green500",
   },
   {
     name: "Taylor Kim",
@@ -96,7 +103,7 @@ const INITIAL_USERS: User[] = [
     role: "Viewer",
     status: "Suspended",
     seen: "3 days ago",
-    tint: "cyan",
+    tint: "cyan500",
   },
   {
     name: "Avery Brooks",
@@ -104,7 +111,7 @@ const INITIAL_USERS: User[] = [
     role: "Editor",
     status: "Invited",
     seen: "—",
-    tint: "pink",
+    tint: "pink500",
   },
   {
     name: "Jordan Park",
@@ -112,14 +119,14 @@ const INITIAL_USERS: User[] = [
     role: "Support",
     status: "Active",
     seen: "5 hr ago",
-    tint: "mint",
+    tint: "teal400",
   },
 ]
 
-const STATUS_COLOR: Record<Status, keyof ThemeColors> = {
-  Active: "label",
-  Suspended: "danger",
-  Invited: "labelSecondary",
+const STATUS_COLOR: Record<Status, Tone> = {
+  Active: "foreground",
+  Suspended: "destructive",
+  Invited: "mutedForeground",
 }
 
 const styles = StyleSheet.create({
@@ -186,7 +193,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -200,12 +207,12 @@ function UserRow({ user, first }: { user: User; first: boolean }) {
       value={user.email}
       accessibilityLabel={`${user.name}, ${user.role}, ${user.status}`}
       style={
-        first ? undefined : { borderTopWidth: 1, borderColor: colors.separator }
+        first ? undefined : { borderTopWidth: 1, borderColor: colors.border }
       }
     >
       <View style={styles.row}>
         <Avatar size="sm" style={styles.avatar}>
-          <AvatarFallback style={{ backgroundColor: colors[user.tint] }}>
+          <AvatarFallback style={{ backgroundColor: tone(colors, user.tint) }}>
             {initials(user.name)}
           </AvatarFallback>
         </Avatar>
@@ -215,7 +222,7 @@ function UserRow({ user, first }: { user: User; first: boolean }) {
           </Text>
           <Text
             numberOfLines={1}
-            style={[fontSize.xs, { color: colors.labelSecondary }]}
+            style={[fontSize.xs, { color: colors.mutedForeground }]}
           >
             {user.email}
           </Text>
@@ -223,12 +230,15 @@ function UserRow({ user, first }: { user: User; first: boolean }) {
         <View style={styles.meta}>
           <Badge
             variant="secondary"
-            style={[styles.badge, { backgroundColor: colors.control }]}
+            style={[styles.badge, { backgroundColor: colors.secondary }]}
           >
             <Text>{user.role}</Text>
           </Badge>
           <Text
-            style={[fontSize.xs, { color: colors[STATUS_COLOR[user.status]] }]}
+            style={[
+              fontSize.xs,
+              { color: tone(colors, STATUS_COLOR[user.status]) },
+            ]}
           >
             {user.status === "Active" ? user.seen : user.status}
           </Text>
@@ -326,7 +336,7 @@ function UsersTable({
                   as={PlusIcon}
                   weight="bold"
                   size={20}
-                  color={colors.accent}
+                  color={colors.primary}
                 />
               </Button>
             )}
@@ -341,7 +351,7 @@ function UsersTable({
             subtitle={
               <Text
                 accessibilityLiveRegion="polite"
-                style={[fontSize.sm, { color: colors.labelSecondary }]}
+                style={[fontSize.sm, { color: colors.mutedForeground }]}
               >
                 {summary}
               </Text>
@@ -357,7 +367,7 @@ function UsersTable({
                     as={MagnifyingGlassIcon}
                     weight="bold"
                     size={16}
-                    color={colors.labelSecondary}
+                    color={colors.mutedForeground}
                   />
                 </InputGroupAddon>
                 <InputGroupInput
@@ -390,17 +400,12 @@ function UsersTable({
                 </Chip>
               ))}
             </ChipGroup>
-            <View
-              style={[
-                styles.list,
-                { backgroundColor: colors.surfaceSecondary },
-              ]}
-            >
+            <View style={[styles.list, { backgroundColor: colors.muted }]}>
               {list.map((user, index) => (
                 <UserRow key={user.email} user={user} first={index === 0} />
               ))}
               {list.length === 0 ? (
-                <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+                <Text style={[styles.empty, { color: colors.mutedForeground }]}>
                   No matching users.
                 </Text>
               ) : null}
@@ -430,16 +435,7 @@ function UsersTable({
             disabled={selected.length === 0}
             onPress={() => bulk({ status: "Suspended" })}
           >
-            <Text
-              style={{
-                color:
-                  selected.length === 0
-                    ? colors.labelQuaternary
-                    : colors.danger,
-              }}
-            >
-              Suspend
-            </Text>
+            <Text style={{ color: colors.destructive }}>Suspend</Text>
           </Button>
         </SelectionListBar>
       </SelectionList>

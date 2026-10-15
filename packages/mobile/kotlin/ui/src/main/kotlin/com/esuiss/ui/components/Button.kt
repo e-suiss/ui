@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
@@ -76,7 +77,7 @@ fun Button(
     val colors = EsuissTheme.colors
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val foreground = buttonForeground(variant, colors, enabled)
+    val foreground = buttonForeground(variant, colors)
     val group = LocalButtonGroup.current?.takeIf { variant != ButtonVariant.Ghost && variant != ButtonVariant.Plain }
     RegisterButtonGroupOutline(group, variant == ButtonVariant.Outline)
     val shape = group.itemShape(if (block) RoundedCornerShape(size.blockRadius) else CircleShape)
@@ -89,13 +90,20 @@ fun Button(
     Row(
         modifier = modifier
             .then(sizing)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(shape)
-            .background(buttonBackground(variant, colors, pressed && enabled, enabled), shape)
+            .background(buttonBackground(variant, colors), shape)
             .then(
                 when {
                     variant != ButtonVariant.Outline -> Modifier
-                    group != null -> Modifier.buttonGroupEdge(group, colors.separator)
-                    else -> Modifier.border(1.dp, colors.separator, shape)
+                    group != null -> Modifier.buttonGroupEdge(group, colors.border)
+                    else -> Modifier.border(1.dp, colors.border, shape)
                 },
             )
             .clickable(
@@ -142,38 +150,24 @@ fun Button(
     }
 }
 
-private fun buttonForeground(variant: ButtonVariant, colors: Colors, enabled: Boolean): Color =
+private fun buttonForeground(variant: ButtonVariant, colors: Colors): Color =
     when (variant) {
-        ButtonVariant.Default -> colors.onAccent
+        ButtonVariant.Default -> colors.primaryForeground
         ButtonVariant.Outline, ButtonVariant.Secondary, ButtonVariant.Ghost ->
-            if (enabled) colors.label else colors.labelQuaternary
+            colors.foreground
         ButtonVariant.Tinted, ButtonVariant.Plain ->
-            if (enabled) colors.link else colors.link.copy(alpha = 0.4f)
+            colors.primary
         ButtonVariant.Destructive ->
-            if (enabled) colors.danger else colors.danger.copy(alpha = 0.4f)
-        ButtonVariant.Link -> if (enabled) colors.link else colors.labelQuaternary
+            colors.destructive
+        ButtonVariant.Link -> colors.primary
     }
 
-private fun buttonBackground(variant: ButtonVariant, colors: Colors, pressed: Boolean, enabled: Boolean): Color =
+private fun buttonBackground(variant: ButtonVariant, colors: Colors): Color =
     when (variant) {
-        ButtonVariant.Default -> when {
-            !enabled -> colors.accentDisabled
-            pressed -> colors.accentPressed
-            else -> colors.accent
-        }
-        ButtonVariant.Outline -> when {
-            pressed -> colors.itemPressed
-            colors.isDark -> Color.Transparent
-            else -> colors.surface
-        }
-        ButtonVariant.Secondary -> when {
-            !enabled -> colors.controlDisabled
-            pressed -> colors.controlPressed
-            else -> colors.control
-        }
-        ButtonVariant.Tinted -> if (pressed) colors.accentSurfacePressed else colors.accentSurface
-        ButtonVariant.Ghost -> if (pressed) colors.itemPressed else Color.Transparent
-        ButtonVariant.Plain -> if (pressed) colors.itemPressed else Color.Transparent
-        ButtonVariant.Destructive -> if (pressed) colors.dangerSurfacePressed else colors.dangerSurface
-        ButtonVariant.Link -> Color.Transparent
+        ButtonVariant.Default -> colors.primary
+        ButtonVariant.Outline -> if (colors.isDark) Color.Transparent else colors.background
+        ButtonVariant.Secondary -> colors.secondary
+        ButtonVariant.Tinted -> colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
+        ButtonVariant.Ghost, ButtonVariant.Plain, ButtonVariant.Link -> Color.Transparent
+        ButtonVariant.Destructive -> colors.destructive.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
     }

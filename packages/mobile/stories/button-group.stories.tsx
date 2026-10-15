@@ -311,7 +311,7 @@ export const SplitButton: Story = {
       <Button>
         <Text>Publish</Text>
       </Button>
-      <ButtonGroupSeparator className="bg-on-accent/30" />
+      <ButtonGroupSeparator className="bg-primary-foreground/30" />
       <Button size="icon" accessibilityLabel="More options">
         <Icon as={CaretDownIcon} />
       </Button>

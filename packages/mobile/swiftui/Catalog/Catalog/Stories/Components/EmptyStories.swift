@@ -26,7 +26,7 @@ enum EmptyStories {
           EmptyDescription("Try a different search.")
         }
       }
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     },
   ])
 }

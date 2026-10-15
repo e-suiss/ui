@@ -31,9 +31,9 @@ private struct WheelPickerFrame<Content: View>: View {
     content()
       .padding(16)
       .frame(width: 320)
-      .background(Color.surfaceRaised, in: shape)
+      .background(EsuissColor.card, in: shape)
       .overlay {
-        shape.strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+        shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
       }
       .shadow(Shadow.md)
   }
@@ -136,7 +136,7 @@ private struct DateTimeDemo: View {
       Text(verbatim: "\(day) \(hour):\(minute)")
         .textStyle(.sm)
         .monospacedDigit()
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
     }

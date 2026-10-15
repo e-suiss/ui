@@ -19,7 +19,7 @@ public struct BottomBar<Content: View>: View {
     .background(background.ignoresSafeArea(.container, edges: .bottom))
     .overlay(alignment: .top) {
       if separator {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
     }
     .accessibilityElement(children: .contain)

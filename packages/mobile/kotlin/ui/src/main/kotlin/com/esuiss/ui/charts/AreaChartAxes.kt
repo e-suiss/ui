@@ -33,7 +33,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
 )
 
 @Composable

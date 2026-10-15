@@ -52,6 +52,7 @@ import com.esuiss.ui.components.WidgetSize
 import com.esuiss.ui.components.WidgetTitle
 import com.esuiss.ui.components.WidgetValue
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -121,7 +122,7 @@ private fun WidgetHint(text: String) {
         text,
         Modifier.padding(top = 24.dp),
         style = Typography.xs,
-        color = EsuissTheme.colors.labelSecondary,
+        color = EsuissTheme.colors.mutedForeground,
     )
 }
 
@@ -140,7 +141,7 @@ private fun WidgetWeather() {
 
 @Composable
 private fun WidgetSalesHeader() {
-    val warning = EsuissTheme.colors.warning
+    val warning = if (EsuissTheme.colors.isDark) Palette.amber400 else Palette.amber600
     WidgetHeader {
         WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CashRegister, contentDescription = null, tint = warning) }
         WidgetTintedTitle("Hestia", warning)
@@ -157,7 +158,7 @@ private fun WidgetRevenue() {
 
 @Composable
 private fun WidgetBars(modifier: Modifier) {
-    val warning = EsuissTheme.colors.warning
+    val warning = if (EsuissTheme.colors.isDark) Palette.amber400 else Palette.amber600
     Row(modifier, horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Bottom) {
         widgetHourly.forEach { value ->
             Box(
@@ -201,7 +202,7 @@ private fun WidgetSalesBody(size: WidgetSize) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(name, style = Typography.sm)
-                    Text(count.toString(), style = Typography.sm, color = EsuissTheme.colors.labelSecondary)
+                    Text(count.toString(), style = Typography.sm, color = EsuissTheme.colors.mutedForeground)
                 }
                 Separator()
             }
@@ -214,8 +215,8 @@ private fun WidgetSalesBody(size: WidgetSize) {
 private fun WidgetReservationsBody(size: WidgetSize) {
     val colors = EsuissTheme.colors
     WidgetHeader {
-        WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CalendarBlank, contentDescription = null, tint = colors.link) }
-        WidgetTintedTitle("Reservations", colors.link)
+        WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CalendarBlank, contentDescription = null, tint = colors.primary) }
+        WidgetTintedTitle("Reservations", colors.primary)
     }
     WidgetContent {
         Row(
@@ -231,7 +232,7 @@ private fun WidgetReservationsBody(size: WidgetSize) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     widgetReservations.take(3).forEach { (time, place) ->
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Text(time, Modifier.width(44.dp), style = Typography.sm, color = colors.labelSecondary)
+                            Text(time, Modifier.width(44.dp), style = Typography.sm, color = colors.mutedForeground)
                             Text(place, Modifier.weight(1f), style = Typography.sm, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
@@ -311,7 +312,7 @@ private fun WidgetCentered() {
 
 @Composable
 private fun WidgetDashboard() {
-    val warning = EsuissTheme.colors.warning
+    val warning = if (EsuissTheme.colors.isDark) Palette.amber400 else Palette.amber600
     val tall = Modifier.height(168.dp)
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {

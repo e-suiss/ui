@@ -194,7 +194,7 @@ export const WithLabel: Story = {
     <View className="gap-2">
       <Label nativeID="combobox-framework">Framework</Label>
       <ComboboxDemo labelledBy="combobox-framework" />
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         Search and pick the framework you use.
       </Text>
     </View>
@@ -209,7 +209,9 @@ export const Invalid: Story = {
   render: () => (
     <View className="gap-2">
       <ComboboxDemo invalid />
-      <Text className="text-sm text-danger">Please select a framework.</Text>
+      <Text className="text-sm text-destructive">
+        Please select a framework.
+      </Text>
     </View>
   ),
 }

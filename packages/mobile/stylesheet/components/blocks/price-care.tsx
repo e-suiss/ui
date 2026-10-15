@@ -14,7 +14,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const photo = (id: string) =>
@@ -169,7 +169,7 @@ function PriceCare({
   return (
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.hero, { backgroundColor: colors.media }]}>
+        <View style={[styles.hero, { backgroundColor: palette.black }]}>
           {DEVICES.map((item) => (
             <HeroImage
               key={item.name}
@@ -177,13 +177,15 @@ function PriceCare({
               active={item.name === device}
             />
           ))}
-          <View style={[styles.band, { backgroundColor: colors.scrim }]}>
-            <Text style={[styles.kicker, { color: colors.onMedia }]}>
+          <View
+            style={[styles.band, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+          >
+            <Text style={[styles.kicker, { color: palette.white }]}>
               suiss Care+
             </Text>
             <Text
               role="heading"
-              style={[styles.heading, { color: colors.onMedia }]}
+              style={[styles.heading, { color: palette.white }]}
             >
               Protection against accidents.
             </Text>
@@ -216,14 +218,18 @@ function PriceCare({
                   style={[
                     styles.device,
                     {
-                      backgroundColor: selected ? colors.label : colors.control,
+                      backgroundColor: selected
+                        ? colors.foreground
+                        : colors.secondary,
                     },
                   ]}
                 >
                   <Text
                     style={[
                       fontSize.sm,
-                      { color: selected ? colors.surface : colors.label },
+                      {
+                        color: selected ? colors.background : colors.foreground,
+                      },
                     ]}
                   >
                     {item.name}
@@ -247,11 +253,8 @@ function PriceCare({
                   onPress={() => setOption(item.label)}
                   style={({ pressed }) => [
                     styles.option,
-                    {
-                      borderColor: checked ? colors.accent : colors.separator,
-                      backgroundColor:
-                        pressed && !checked ? colors.itemPressed : undefined,
-                    },
+                    { borderColor: checked ? colors.primary : colors.border },
+                    pressed && !checked && { opacity: 0.8 },
                   ]}
                 >
                   <RadioGroupItem
@@ -262,7 +265,7 @@ function PriceCare({
                   <View style={styles.optionText}>
                     <Text style={styles.strong}>{item.label} payment</Text>
                     <Text
-                      style={[fontSize.sm, { color: colors.labelSecondary }]}
+                      style={[fontSize.sm, { color: colors.mutedForeground }]}
                     >
                       Unlimited accidental damage repairs
                     </Text>
@@ -296,7 +299,7 @@ function PriceCare({
       <BottomBar separator>
         <BottomBarContent style={styles.bar}>
           <View accessibilityLiveRegion="polite" style={{ flex: 1 }}>
-            <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
               Total
             </Text>
             <Text style={styles.total}>{money(total)}</Text>

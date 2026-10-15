@@ -92,6 +92,7 @@ import com.esuiss.ui.components.rememberToastState
 import com.esuiss.ui.patterns.Picker
 import com.esuiss.ui.patterns.PickerItemData
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val InviteRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
@@ -168,7 +169,7 @@ fun UsersInvite(
                                     modifier = Modifier
                                         .width(90.dp)
                                         .padding(top = 5.dp),
-                                    style = Typography.base.copy(color = colors.label),
+                                    style = Typography.base.copy(color = colors.foreground),
                                 )
                                 FlowRow(
                                     modifier = Modifier
@@ -233,7 +234,7 @@ fun UsersInvite(
                                 modifier = Modifier
                                     .weight(1f)
                                     .semantics { liveRegion = LiveRegionMode.Polite },
-                                style = Typography.sm.copy(color = colors.labelSecondary),
+                                style = Typography.sm.copy(color = colors.mutedForeground),
                             )
                             Button(text = "Send Invites", onClick = ::send, size = ButtonSize.Sm, enabled = emails.isNotEmpty())
                         }
@@ -243,13 +244,13 @@ fun UsersInvite(
                                 modifier = Modifier
                                     .padding(horizontal = 4.dp)
                                     .semantics { heading() },
-                                style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                             if (pending.isEmpty()) {
                                 BasicText(
                                     "No pending invitations.",
                                     modifier = Modifier.padding(horizontal = 4.dp),
-                                    style = Typography.sm.copy(color = colors.labelSecondary),
+                                    style = Typography.sm.copy(color = colors.mutedForeground),
                                 )
                             } else {
                                 ItemGroup(variant = ItemGroupVariant.Inset) {
@@ -287,7 +288,7 @@ private fun InviteField(
     onCommit: () -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val style = Typography.sm.copy(color = colors.label)
+    val style = Typography.sm.copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -298,12 +299,12 @@ private fun InviteField(
             .semantics { contentDescription = "Email" },
         textStyle = style,
         singleLine = true,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { onCommit() }),
         decorationBox = { inner ->
             Box {
-                if (value.isEmpty()) BasicText(placeholder, style = style.copy(color = colors.labelSecondary), maxLines = 1)
+                if (value.isEmpty()) BasicText(placeholder, style = style.copy(color = colors.mutedForeground), maxLines = 1)
                 inner()
             }
         },
@@ -317,7 +318,7 @@ private fun InviteRow(title: String, action: @Composable () -> Unit) {
             ItemTitle {
                 BasicText(
                     title,
-                    style = Typography.base.copy(color = EsuissTheme.colors.label),
+                    style = Typography.base.copy(color = EsuissTheme.colors.foreground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -344,20 +345,20 @@ private fun PendingRow(invite: PendingInvite, onResend: () -> Unit, onCancel: ()
             Box(
                 Modifier
                     .size(28.dp)
-                    .background(colors.gray, RoundedCornerShape(7.dp)),
+                    .background(Palette.zinc500, RoundedCornerShape(7.dp)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(PhosphorIcons.Bold.EnvelopeSimple, contentDescription = null, size = 16.dp, tint = colors.onMedia)
+                Icon(PhosphorIcons.Bold.EnvelopeSimple, contentDescription = null, size = 16.dp, tint = Palette.white)
             }
         }
         ItemContent {
             BasicText(
                 invite.email,
-                style = Typography.sm.copy(color = colors.label),
+                style = Typography.sm.copy(color = colors.foreground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            BasicText("${invite.role} · ${invite.sent}", style = Typography.xs.copy(color = colors.labelSecondary))
+            BasicText("${invite.role} · ${invite.sent}", style = Typography.xs.copy(color = colors.mutedForeground))
         }
         ItemActions {
             Button(text = "Resend", onClick = onResend, size = ButtonSize.Xs, variant = ButtonVariant.Secondary)
@@ -386,7 +387,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

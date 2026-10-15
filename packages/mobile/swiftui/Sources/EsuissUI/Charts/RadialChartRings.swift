@@ -1,9 +1,9 @@
 import SwiftUI
 
 private let rings: [(key: String, label: String, value: Double, goal: Double, color: Color)] = [
-  ("move", "Move", 720, 600, .red),
-  ("exercise", "Exercise", 62, 30, .green),
-  ("stand", "Stand", 12, 12, .cyan),
+  ("move", "Move", 720, 600, Palette.red500),
+  ("exercise", "Exercise", 62, 30, Palette.green500),
+  ("stand", "Stand", 12, 12, Palette.cyan500),
 ]
 
 private let size: CGFloat = 200

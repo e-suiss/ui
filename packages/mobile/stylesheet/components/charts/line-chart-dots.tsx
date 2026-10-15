@@ -12,7 +12,7 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, useTheme } from "@/components/ui/theme"
 
 const MONTHS = [
   "Jan",
@@ -32,7 +32,7 @@ const chartData = [
 ].map((weight, index) => ({ month: MONTHS[index] ?? "", weight }))
 
 const chartConfig = {
-  weight: { label: "Weight", color: "purple" },
+  weight: { label: "Weight", color: "purple-500" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -56,14 +56,16 @@ export function LineChartDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
-        <Text style={[styles.eyebrow, { color: colors.purple }]}>Weight</Text>
+        <Text style={[styles.eyebrow, { color: palette.purple500 }]}>
+          Weight
+        </Text>
         <View style={styles.reading}>
           <Text style={styles.value}>77.9</Text>
-          <Text style={[styles.unit, { color: colors.labelSecondary }]}>
+          <Text style={[styles.unit, { color: colors.mutedForeground }]}>
             kg
           </Text>
         </View>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           Down 4.5 kg since January
         </Text>
       </CardHeader>

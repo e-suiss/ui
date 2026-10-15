@@ -57,6 +57,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -163,7 +164,7 @@ fun Drawer(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { alpha = scrimAlpha }
-                    .background(colors.scrim)
+                    .background(Palette.black.copy(alpha = 0.5f))
                     .pointerInput(Unit) { detectTapGestures { close() } },
             )
 
@@ -221,7 +222,7 @@ fun Drawer(
                     .then(modifier)
                     .shadow(Shadows.lg, shape)
                     .clip(shape)
-                    .background(colors.surfaceRaised, shape)
+                    .background(colors.popover, shape)
                     .pointerInput(Unit) {}
                     .semantics { paneTitle.value?.let { this.paneTitle = it } },
             ) {
@@ -235,8 +236,8 @@ fun Drawer(
                         LocalDrawerSquareTop provides false,
                         LocalPaneTitle provides paneTitle,
                         LocalDrawerInfo provides DrawerInfo(showCloseButton, showCloseButton && closeLabel != null, fixedHeight != null),
-                        LocalContentStyle provides Typography.base.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth().then(if (fixedHeight != null) Modifier.weight(1f) else Modifier),
@@ -273,7 +274,7 @@ private fun DrawerHandle() {
         Box(
             modifier = Modifier
                 .size(width = 36.dp, height = 5.dp)
-                .background(EsuissTheme.colors.labelQuaternary, CircleShape),
+                .background(EsuissTheme.colors.border, CircleShape),
         )
     }
 }

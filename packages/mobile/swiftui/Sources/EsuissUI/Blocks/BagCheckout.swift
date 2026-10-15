@@ -104,7 +104,7 @@ public struct BagCheckout: View {
             } content: {
               Text("By placing your order, you agree to the Sales Policy.")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .fixedSize(horizontal: false, vertical: true)
             }
             summary
@@ -123,7 +123,7 @@ public struct BagCheckout: View {
               VStack(alignment: .leading, spacing: 0) {
                 Text("Total")
                   .scaledFont(.xs)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 Text(verbatim: money(total))
                   .scaledFont(.lg, weight: .semibold)
                   .monospacedDigit()
@@ -166,7 +166,7 @@ public struct BagCheckout: View {
         .accessibilityAddTraits(.isHeader)
       ForEach(Self.items) { item in
         HStack(spacing: 10) {
-          Color.control
+          EsuissColor.secondary
             .overlay {
               AsyncImage(url: item.image) { phase in
                 if let image = phase.image {
@@ -182,7 +182,7 @@ public struct BagCheckout: View {
               .scaledFont(.sm, weight: .semibold)
             Text(verbatim: item.variant)
               .scaledFont(.xs)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
           Text(verbatim: money(item.price))
@@ -201,28 +201,28 @@ public struct BagCheckout: View {
       }
       .padding(.top, 12)
       .overlay(alignment: .top) {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
       .accessibilityElement(children: .combine)
     }
     .padding(20)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
   }
 
   private var thanks: some View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Thank you. Your order is in.")
         .scaledTextStyle(.xl3, weight: .semibold)
         .accessibilityAddTraits(.isHeader)
       Text("Your order number is W1049. We sent a confirmation email.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") {
         onStartOver?()
         placed = false
@@ -273,13 +273,13 @@ private struct BagCheckoutStep<Content: View>: View {
             Text(verbatim: "\(index + 1)").scaledFont(.sm, weight: .semibold)
           }
         }
-        .foregroundStyle(done ? Color.onAccent : open ? .surface : .labelSecondary)
+        .foregroundStyle(done ? EsuissColor.primaryForeground : open ? EsuissColor.background : EsuissColor.mutedForeground)
         .frame(width: 26, height: 26)
-        .background(done ? Color.success : open ? .label : .control, in: Circle())
+        .background(done ? Palette.green500 : open ? EsuissColor.foreground : EsuissColor.secondary, in: Circle())
         .accessibilityHidden(true)
         Text(title)
           .scaledFont(.xl, weight: .semibold)
-          .foregroundStyle(!open && !done ? Color.labelSecondary : .label)
+          .foregroundStyle(!open && !done ? EsuissColor.mutedForeground : EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
           .accessibilityAddTraits(.isHeader)
           .accessibilityValue(done ? Text("Completed") : open ? Text("Current step") : Text(verbatim: ""))
@@ -293,7 +293,7 @@ private struct BagCheckoutStep<Content: View>: View {
       if done, let summary {
         Text(summary)
           .scaledFont(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.leading, 36)
           .padding(.top, 2)
       }
@@ -311,7 +311,7 @@ private struct BagCheckoutStep<Content: View>: View {
     .frame(maxWidth: .infinity, alignment: .leading)
     .clipped()
     .overlay(alignment: .bottom) {
-      Color.separator.frame(height: 1)
+      EsuissColor.border.frame(height: 1)
     }
   }
 }
@@ -335,13 +335,13 @@ private struct BagCheckoutChoice<Content: View>: View {
         content
       }
       .scaledFont(.base)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(maxWidth: .infinity, alignment: .leading)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 14)
     .overlay {
-      shape.strokeBorder(checked ? Color.accent : .separatorStrong, lineWidth: checked ? 2 : 1)
+      shape.strokeBorder(checked ? EsuissColor.primary : EsuissColor.input, lineWidth: checked ? 2 : 1)
     }
     .contentShape(shape)
     .onTapGesture { selection = value }

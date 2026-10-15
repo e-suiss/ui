@@ -17,10 +17,17 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const EMAIL = /.+@.+\..+/
 const UPPERCASE = /[A-Z]/
@@ -31,12 +38,12 @@ const SYMBOL = /[^A-Za-z0-9]/
 const IMAGE =
   "https://images.unsplash.com/photo-1599669454699-248893623440?w=1200&q=80&auto=format&fit=crop"
 
-const LEVELS: (keyof ThemeColors)[] = [
-  "red",
-  "red",
-  "orange",
-  "yellow",
-  "green",
+const LEVELS: Tone[] = [
+  "red500",
+  "red500",
+  "orange500",
+  "yellow500",
+  "green500",
 ]
 
 const STRENGTH_LABEL = ["Weak", "Weak", "Fair", "Good", "Strong"]
@@ -114,7 +121,7 @@ function SignupTrial({
   const [done, setDone] = React.useState(false)
   const score = strength(password)
   const valid = EMAIL.test(email) && score >= 3 && terms
-  const onMedia = { color: colors.onMedia }
+  const onMedia = { color: palette.white }
 
   if (done) {
     return (
@@ -126,12 +133,12 @@ function SignupTrial({
             )}
             style={styles.done}
           >
-            <View style={[styles.badge, { backgroundColor: colors.success }]}>
+            <View style={[styles.badge, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text
@@ -144,7 +151,7 @@ function SignupTrial({
               style={{
                 ...fontSize.lg,
                 textAlign: "center",
-                color: colors.labelSecondary,
+                color: colors.mutedForeground,
               }}
             >
               Your one-month free trial has started.
@@ -155,7 +162,7 @@ function SignupTrial({
               onPress={() => setDone(false)}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={{ ...fontSize.lg, color: colors.link }}>
+              <Text style={{ ...fontSize.lg, color: colors.primary }}>
                 Start over ›
               </Text>
             </Pressable>
@@ -169,20 +176,25 @@ function SignupTrial({
     <Screen>
       <InputAccessoryBar>
         <KeyboardScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-          <View style={[styles.hero, { backgroundColor: colors.media }]}>
+          <View style={[styles.hero, { backgroundColor: palette.black }]}>
             <Image
               source={{ uri: IMAGE }}
               resizeMode="cover"
               accessibilityIgnoresInvertColors
               style={styles.image}
             />
-            <View style={[styles.heroText, { backgroundColor: colors.scrim }]}>
+            <View
+              style={[
+                styles.heroText,
+                { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+              ]}
+            >
               <View style={styles.brand}>
                 <Icon
                   as={MusicNotesIcon}
                   weight="fill"
                   size={26}
-                  color={colors.onMedia}
+                  color={palette.white}
                 />
                 <Text style={[fontSize["2xl"], { fontWeight: "600" }, onMedia]}>
                   suiss Music
@@ -206,8 +218,8 @@ function SignupTrial({
               style={[
                 styles.stack,
                 {
-                  borderColor: colors.separatorStrong,
-                  backgroundColor: colors.surface,
+                  borderColor: colors.input,
+                  backgroundColor: colors.background,
                 },
               ]}
             >
@@ -223,9 +235,7 @@ function SignupTrial({
                 autoCorrect={false}
                 style={styles.input}
               />
-              <View
-                style={{ height: 1, backgroundColor: colors.separatorStrong }}
-              />
+              <View style={{ height: 1, backgroundColor: colors.input }} />
               <InputAccessoryBarInput
                 value={password}
                 onChangeText={setPassword}
@@ -261,8 +271,8 @@ function SignupTrial({
                       {
                         backgroundColor:
                           bar < Math.max(1, score)
-                            ? colors[LEVELS[score] ?? "red"]
-                            : colors.control,
+                            ? tone(colors, LEVELS[score] ?? "red500")
+                            : colors.secondary,
                       },
                     ]}
                   />
@@ -284,7 +294,7 @@ function SignupTrial({
                     ...fontSize.sm,
                     flexShrink: 1,
                     fontWeight: "400",
-                    color: colors.labelSecondary,
+                    color: colors.mutedForeground,
                   }}
                 >
                   I have read and agree to the suiss Media Services Terms and
@@ -310,7 +320,7 @@ function SignupTrial({
             <Text>Start free trial</Text>
           </Button>
           <View style={styles.signIn}>
-            <Text style={{ ...fontSize.sm, color: colors.labelSecondary }}>
+            <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>
               Already have an account?
             </Text>
             <Pressable
@@ -319,7 +329,7 @@ function SignupTrial({
               onPress={onSignIn}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={{ ...fontSize.sm, color: colors.link }}>
+              <Text style={{ ...fontSize.sm, color: colors.primary }}>
                 Sign in ›
               </Text>
             </Pressable>

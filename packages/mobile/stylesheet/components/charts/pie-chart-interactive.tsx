@@ -8,8 +8,20 @@ import {
   PieChart,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Device = "phone" | "cloud"
 
@@ -59,27 +71,27 @@ const STORAGE: Record<
 }
 
 const chartConfig = {
-  apps: { label: "Apps", color: "red" },
-  photos: { label: "Photos", color: "orange" },
-  system: { label: "System", color: "gray" },
-  backups: { label: "Backups", color: "purple" },
-  drive: { label: "Drive", color: "blue" },
-  messages: { label: "Messages", color: "green" },
-  mail: { label: "Mail", color: "cyan" },
-  other: { label: "Other", color: "yellow" },
-  free: { label: "Free", color: "control" },
+  apps: { label: "Apps", color: "red-500" },
+  photos: { label: "Photos", color: "chart-4" },
+  system: { label: "System", color: "chart-5" },
+  backups: { label: "Backups", color: "purple-500" },
+  drive: { label: "Drive", color: "chart-1" },
+  messages: { label: "Messages", color: "green-500" },
+  mail: { label: "Mail", color: "cyan-500" },
+  other: { label: "Other", color: "yellow-500" },
+  free: { label: "Free", color: "secondary" },
 } satisfies ChartConfig
 
-const SWATCH: Record<Kind, keyof ThemeColors> = {
-  apps: "red",
-  photos: "orange",
-  system: "gray",
-  backups: "purple",
-  drive: "blue",
-  messages: "green",
-  mail: "cyan",
-  other: "yellow",
-  free: "control",
+const SWATCH: Record<Kind, Tone> = {
+  apps: "red500",
+  photos: "chart4",
+  system: "chart5",
+  backups: "purple500",
+  drive: "chart1",
+  messages: "green500",
+  mail: "cyan500",
+  other: "yellow500",
+  free: "secondary",
 }
 
 const styles = StyleSheet.create({
@@ -177,7 +189,7 @@ export function PieChartInteractive() {
       <CardHeader style={styles.header}>
         <View style={styles.heading}>
           <Text style={styles.title}>{`${STORAGE[device].label} storage`}</Text>
-          <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+          <Text style={[styles.caption, { color: colors.mutedForeground }]}>
             {`${formatSize(used)} GB of ${STORAGE[device].total} GB used`}
           </Text>
         </View>
@@ -207,7 +219,7 @@ export function PieChartInteractive() {
         <View
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
-          style={[styles.bar, { backgroundColor: colors.control }]}
+          style={[styles.bar, { backgroundColor: colors.secondary }]}
         >
           {KINDS.filter((kind) => kind !== "free").map((kind) => {
             const share = (Math.max(0, sizeOf(kind)) / total) * 100
@@ -219,7 +231,7 @@ export function PieChartInteractive() {
                   {
                     width: `${share}%`,
                     marginEnd: Math.min(2, share * 4),
-                    backgroundColor: colors[SWATCH[kind]],
+                    backgroundColor: tone(colors, SWATCH[kind]),
                   },
                   active && active !== kind && styles.dimmed,
                 ]}
@@ -234,13 +246,13 @@ export function PieChartInteractive() {
               accessibilityLiveRegion="polite"
               style={styles.center}
             >
-              <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+              <Text style={[styles.caption, { color: colors.mutedForeground }]}>
                 {active ? chartConfig[active].label : "Used"}
               </Text>
               <Text style={styles.value}>
                 {`${formatSize(activeValue)} GB`}
               </Text>
-              <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+              <Text style={[styles.caption, { color: colors.mutedForeground }]}>
                 {`${Math.round((activeValue / total) * 100)}%`}
               </Text>
             </View>
@@ -264,7 +276,7 @@ export function PieChartInteractive() {
                   outerRadius="88%"
                   startAngle={90}
                   endAngle={-270}
-                  stroke="surface-secondary"
+                  stroke="muted"
                   strokeWidth={3}
                   cornerRadius={4}
                   shape={(sector, index) => ({
@@ -287,21 +299,21 @@ export function PieChartInteractive() {
                 }
                 style={[
                   styles.row,
-                  active === kind && { backgroundColor: colors.control },
+                  active === kind && { backgroundColor: colors.secondary },
                 ]}
               >
                 <View
                   style={[
                     styles.dot,
-                    { backgroundColor: colors[SWATCH[kind]] },
+                    { backgroundColor: tone(colors, SWATCH[kind]) },
                     kind === "free" && {
                       borderWidth: 1,
-                      borderColor: colors.separatorStrong,
+                      borderColor: colors.input,
                     },
                   ]}
                 />
                 <Text style={styles.name}>{chartConfig[kind].label}</Text>
-                <Text style={[styles.size, { color: colors.labelSecondary }]}>
+                <Text style={[styles.size, { color: colors.mutedForeground }]}>
                   {`${formatSize(Math.max(0, sizeOf(kind)))} GB`}
                 </Text>
               </Pressable>

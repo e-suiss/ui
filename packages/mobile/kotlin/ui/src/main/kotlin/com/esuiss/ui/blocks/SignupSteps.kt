@@ -75,6 +75,7 @@ import com.esuiss.ui.components.PageIndicator
 import com.esuiss.ui.components.PageIndicatorVariant
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -242,16 +243,16 @@ private fun StepPage(
     ) {
         BasicText(
             "Step ${position + 1} of ${Steps.size}",
-            style = Typography.sm.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+            style = Typography.sm.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
         )
         BasicText(
             step.title,
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
-        BasicText(step.description, style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center))
+        BasicText(step.description, style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center))
         val shape = RoundedCornerShape(Radius.xl)
-        val style = Typography.lg.copy(color = colors.label)
+        val style = Typography.lg.copy(color = colors.foreground)
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
@@ -260,13 +261,13 @@ private fun StepPage(
                 .fillMaxWidth()
                 .height(52.dp)
                 .clip(shape)
-                .background(colors.surface, shape)
-                .border(1.dp, colors.separatorStrong, shape)
+                .background(colors.background, shape)
+                .border(1.dp, colors.input, shape)
                 .focusRequester(focus)
                 .semantics { contentDescription = step.placeholder },
             textStyle = style,
             singleLine = true,
-            cursorBrush = SolidColor(colors.accent),
+            cursorBrush = SolidColor(colors.primary),
             visualTransformation = if (step.secret) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(
                 keyboardType = step.keyboardType,
@@ -275,7 +276,7 @@ private fun StepPage(
             keyboardActions = KeyboardActions(onNext = { onSubmit() }, onDone = { onSubmit() }),
             decorationBox = { inner ->
                 Box(Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
-                    if (value.isEmpty()) BasicText(step.placeholder, style = style.copy(color = colors.labelSecondary), maxLines = 1)
+                    if (value.isEmpty()) BasicText(step.placeholder, style = style.copy(color = colors.mutedForeground), maxLines = 1)
                     inner()
                 }
             },
@@ -291,8 +292,8 @@ private fun StepPage(
 @Composable
 private fun RuleRow(label: String, met: Boolean) {
     val colors = EsuissTheme.colors
-    val fill by animateColorAsState(if (met) colors.success else Color.Transparent, tween(250), label = "fill")
-    val edge by animateColorAsState(if (met) Color.Transparent else colors.labelQuaternary, tween(250), label = "edge")
+    val fill by animateColorAsState(if (met) Palette.green500 else Color.Transparent, tween(250), label = "fill")
+    val edge by animateColorAsState(if (met) Color.Transparent else colors.border, tween(250), label = "edge")
     val scale by animateFloatAsState(if (met) 1f else 0f, tween(250, easing = PopEasing), label = "scale")
     Row(
         modifier = Modifier.semantics(mergeDescendants = true) { stateDescription = if (met) "Met" else "Not met" },
@@ -314,10 +315,10 @@ private fun RuleRow(label: String, met: Boolean) {
                     scaleY = scale
                 },
                 size = 10.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
         }
-        BasicText(label, style = Typography.sm.copy(color = if (met) colors.label else colors.labelSecondary))
+        BasicText(label, style = Typography.sm.copy(color = if (met) colors.foreground else colors.mutedForeground))
     }
 }
 
@@ -342,23 +343,23 @@ private fun Success(title: String, description: String, onStartOver: () -> Unit)
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             title,
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
-        BasicText(description, style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center))
+        BasicText(description, style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center))
         BasicText(
             "Start over ›",
             modifier = Modifier
-                .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onStartOver),
-            style = Typography.lg.copy(color = colors.link),
+            style = Typography.lg.copy(color = colors.primary),
         )
     }
 }

@@ -45,6 +45,7 @@ import com.esuiss.ui.components.AttachmentTitle
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Spinner
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 
 val attachmentStories = StoryGroup(
     section = Section.Components,
@@ -64,7 +65,7 @@ val attachmentStories = StoryGroup(
 @Composable
 private fun attachmentPhoto(): Painter {
     val colors = EsuissTheme.colors
-    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }
+    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(Palette.teal500, Palette.blue500, Palette.indigo500))) }
 }
 
 @Composable
@@ -85,7 +86,7 @@ private fun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphi
 private fun AttachmentDefault() {
     Row {
         Attachment {
-            AttachmentDocument("pdf", EsuissTheme.colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Quarterly report.pdf")
                 AttachmentDescription("2.4 MB")
@@ -125,7 +126,7 @@ private fun AttachmentStates() {
             AttachmentActions { AttachmentAction("Choose File", onClick = {}) }
         }
         Attachment(fill, state = AttachmentState.Uploading) {
-            AttachmentDocument("pdf", colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Invoice March.pdf")
                 AttachmentProgress(64f, contentDescription = "Uploading")
@@ -133,7 +134,7 @@ private fun AttachmentStates() {
             AttachmentActions { AttachmentIconAction("Cancel upload") }
         }
         Attachment(fill, state = AttachmentState.Processing) {
-            AttachmentDocument("pdf", colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Invoice March.pdf")
                 AttachmentDescription("Processing…")
@@ -141,7 +142,7 @@ private fun AttachmentStates() {
             AttachmentActions { Spinner(size = 20.dp) }
         }
         Attachment(fill, state = AttachmentState.Error) {
-            AttachmentDocument("key", colors.orange)
+            AttachmentDocument("key", Palette.orange500)
             AttachmentContent {
                 AttachmentTitle("Presentation.key")
                 AttachmentDescription("File type not supported")
@@ -149,7 +150,7 @@ private fun AttachmentStates() {
             AttachmentActions { AttachmentIconAction("Remove") }
         }
         Attachment(fill, state = AttachmentState.Done) {
-            AttachmentDocument("pdf", colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Invoice March.pdf")
                 AttachmentDescription("1.1 MB")
@@ -195,7 +196,7 @@ private fun AttachmentVertical() {
 private fun AttachmentPressable() {
     Row {
         Attachment(onClick = {}, onClickLabel = "Open Brand guidelines.pdf") {
-            AttachmentDocument("pdf", EsuissTheme.colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Brand guidelines.pdf")
                 AttachmentDescription("5.8 MB")
@@ -211,7 +212,7 @@ private fun AttachmentGroupStory() {
     val photo = attachmentPhoto()
     AttachmentGroup {
         Attachment(state = AttachmentState.Uploading) {
-            AttachmentDocument("pdf", colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Invoice_1042.pdf")
                 AttachmentProgress(64f, contentDescription = "Uploading")
@@ -219,7 +220,7 @@ private fun AttachmentGroupStory() {
             AttachmentActions { AttachmentIconAction("Cancel upload") }
         }
         Attachment(state = AttachmentState.Processing) {
-            AttachmentDocument("docx", colors.blue)
+            AttachmentDocument("docx", Palette.blue500)
             AttachmentContent {
                 AttachmentTitle("Contract.docx")
                 AttachmentDescription("Processing…")
@@ -227,14 +228,14 @@ private fun AttachmentGroupStory() {
             AttachmentActions { Spinner(size = 20.dp) }
         }
         Attachment {
-            AttachmentDocument("xlsx", colors.green)
+            AttachmentDocument("xlsx", Palette.green500)
             AttachmentContent {
                 AttachmentTitle("Menu_October.xlsx")
                 AttachmentDescription("2.4 MB")
             }
             AttachmentActions {
                 Box(Modifier.clearAndSetSemantics { contentDescription = "Uploaded" }) {
-                    Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, size = 24.dp, tint = colors.success)
+                    Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, size = 24.dp, tint = if (colors.isDark) Palette.green400 else Palette.green600)
                 }
             }
         }
@@ -247,7 +248,7 @@ private fun AttachmentGroupStory() {
             AttachmentActions { AttachmentIconAction("Remove") }
         }
         Attachment(state = AttachmentState.Error) {
-            AttachmentDocument("pdf", colors.red)
+            AttachmentDocument("pdf", Palette.red500)
             AttachmentContent {
                 AttachmentTitle("Z-Report_30-09.pdf")
                 AttachmentDescription("Upload failed")
@@ -260,11 +261,11 @@ private fun AttachmentGroupStory() {
 private class AttachmentFile(val name: String, val meta: String, val extension: String, val tone: @Composable () -> Color)
 
 private val attachmentFiles = listOf(
-    AttachmentFile("Invoice.pdf", "128 KB", "pdf") { EsuissTheme.colors.red },
-    AttachmentFile("Menu.xlsx", "2.4 MB", "xlsx") { EsuissTheme.colors.green },
-    AttachmentFile("Contract.docx", "84 KB", "docx") { EsuissTheme.colors.blue },
-    AttachmentFile("Pitch.key", "12 MB", "key") { EsuissTheme.colors.orange },
-    AttachmentFile("Archive.zip", "48 MB", "zip") { EsuissTheme.colors.accent },
+    AttachmentFile("Invoice.pdf", "128 KB", "pdf") { Palette.red500 },
+    AttachmentFile("Menu.xlsx", "2.4 MB", "xlsx") { Palette.green500 },
+    AttachmentFile("Contract.docx", "84 KB", "docx") { Palette.blue500 },
+    AttachmentFile("Pitch.key", "12 MB", "key") { Palette.orange500 },
+    AttachmentFile("Archive.zip", "48 MB", "zip") { EsuissTheme.colors.primary },
 )
 
 @Composable

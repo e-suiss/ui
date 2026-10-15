@@ -168,8 +168,7 @@ function SearchPicker({
     onValueChange?.(next)
   }
 
-  let triggerColor = selected ? colors.label : colors.labelSecondary
-  if (disabled) triggerColor = colors.labelQuaternary
+  const triggerColor = selected ? colors.foreground : colors.mutedForeground
 
   return (
     <Drawer
@@ -187,12 +186,12 @@ function SearchPicker({
         accessibilityLabelledBy={accessibilityLabelledBy}
         style={[
           styles.trigger,
-          { backgroundColor: colors.control },
+          { backgroundColor: colors.secondary },
           invalid && {
-            borderColor: colors.danger,
-            backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+            borderColor: colors.destructive,
+            backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
           },
-          disabled && { backgroundColor: colors.controlDisabled },
+          disabled && { opacity: 0.5 },
           style,
         ]}
       >
@@ -210,7 +209,7 @@ function SearchPicker({
         <Icon
           as={CaretUpDownIcon}
           size={16}
-          color={disabled ? colors.labelQuaternary : colors.labelSecondary}
+          color={colors.mutedForeground}
           style={styles.icon}
         />
       </DrawerTrigger>
@@ -230,14 +229,14 @@ function SearchPicker({
           <View
             style={[
               styles.search,
-              { borderBottomColor: colors.separator },
+              { borderBottomColor: colors.border },
               showCloseButton && { paddingRight: closeLabel ? 84 : 44 },
             ]}
           >
             <Icon
               as={MagnifyingGlassIcon}
               size={22}
-              color={colors.labelSecondary}
+              color={colors.mutedForeground}
               style={styles.icon}
             />
             <TextInput
@@ -248,10 +247,10 @@ function SearchPicker({
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
-              style={[styles.input, { color: colors.label }]}
-              placeholderTextColor={colors.labelTertiary}
-              cursorColor={colors.accent}
-              selectionColor={colors.accent}
+              style={[styles.input, { color: colors.foreground }]}
+              placeholderTextColor={colors.mutedForeground}
+              cursorColor={colors.primary}
+              selectionColor={colors.primary}
             />
           </View>
           <ScrollView
@@ -261,7 +260,7 @@ function SearchPicker({
             contentContainerStyle={styles.list}
           >
             {groups.length === 0 ? (
-              <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+              <Text style={[styles.empty, { color: colors.mutedForeground }]}>
                 {emptyText}
               </Text>
             ) : (
@@ -274,7 +273,10 @@ function SearchPicker({
                 >
                   {group.value ? (
                     <Text
-                      style={[styles.heading, { color: colors.labelSecondary }]}
+                      style={[
+                        styles.heading,
+                        { color: colors.mutedForeground },
+                      ]}
                     >
                       {group.value}
                     </Text>
@@ -297,7 +299,8 @@ function SearchPicker({
                         }}
                         style={({ pressed }) => [
                           styles.item,
-                          pressed && { backgroundColor: colors.itemPressed },
+                          pressed && { opacity: 0.8 },
+                          item.disabled && { opacity: 0.5 },
                         ]}
                       >
                         <Text
@@ -305,9 +308,7 @@ function SearchPicker({
                           style={[
                             styles.itemText,
                             {
-                              color: item.disabled
-                                ? colors.labelQuaternary
-                                : colors.label,
+                              color: colors.foreground,
                             },
                           ]}
                         >
@@ -317,7 +318,7 @@ function SearchPicker({
                           <Icon
                             as={CheckIcon}
                             size={20}
-                            color={colors.labelSecondary}
+                            color={colors.mutedForeground}
                             style={styles.icon}
                           />
                         ) : null}

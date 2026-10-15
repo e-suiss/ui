@@ -8,7 +8,7 @@ private let chartData: [(day: String, hours: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "hours": .init("Sleep", color: .indigo),
+  "hours": .init("Sleep", color: EsuissColor.chart3),
 ]
 
 private func formatHours(_ hours: Double) -> String {
@@ -32,7 +32,7 @@ public struct LineChartGoalDots: View {
           .monospacedDigit()
         Text("Goal 7 hours · green nights met it")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -41,7 +41,7 @@ public struct LineChartGoalDots: View {
             Chart {
               RuleMark(y: .value("Goal", goal))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-                .foregroundStyle(Color.green)
+                .foregroundStyle(Palette.green500)
               ForEach(chartData.indices, id: \.self) { index in
                 LineMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
                   .interpolationMethod(.monotone)
@@ -53,8 +53,8 @@ public struct LineChartGoalDots: View {
                 PointMark(x: .value("Day", index), y: .value("Hours", chartData[index].hours))
                   .symbol {
                     Circle()
-                      .fill(chartData[index].hours >= goal ? Color.green : .orange)
-                      .stroke(Color.surfaceSecondary, lineWidth: 2)
+                      .fill(chartData[index].hours >= goal ? Palette.green500 : Palette.orange500)
+                      .stroke(EsuissColor.muted, lineWidth: 2)
                       .frame(width: selection == index ? 13 : 11, height: selection == index ? 13 : 11)
                   }
               }

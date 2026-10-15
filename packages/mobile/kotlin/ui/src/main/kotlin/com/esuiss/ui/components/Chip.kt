@@ -194,19 +194,11 @@ fun Chip(
     )
 }
 
-private fun chipBackground(colors: Colors, selected: Boolean, enabled: Boolean, pressed: Boolean): Color = when {
-    !enabled -> if (selected) colors.controlSelected.copy(alpha = 0.4f) else colors.controlDisabled
-    selected -> colors.controlSelected
-    pressed -> colors.controlPressed
-    else -> colors.control
-}
+private fun chipBackground(colors: Colors, selected: Boolean): Color =
+    if (selected) colors.foreground else colors.secondary
 
-private fun chipForeground(colors: Colors, selected: Boolean, enabled: Boolean): Color = when {
-    selected && enabled -> colors.onControlSelected
-    selected -> colors.onControlSelected.copy(alpha = 0.7f)
-    !enabled -> colors.labelQuaternary
-    else -> colors.label
-}
+private fun chipForeground(colors: Colors, selected: Boolean): Color =
+    if (selected) colors.background else colors.foreground
 
 @Composable
 private fun ChipSurface(
@@ -230,7 +222,7 @@ private fun ChipSurface(
         onClick()
     }
     val scale by animateFloatAsState(if (pressed && enabled) 0.96f else 1f, tween(150), label = "chip")
-    val foreground = chipForeground(colors, selected, enabled)
+    val foreground = chipForeground(colors, selected)
     val semantics = if (multiple) {
         Modifier.toggleable(
             value = selected,
@@ -255,10 +247,15 @@ private fun ChipSurface(
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
+                alpha = when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                }
             }
             .height(size.height)
             .clip(CircleShape)
-            .background(chipBackground(colors, selected, enabled, pressed), CircleShape)
+            .background(chipBackground(colors, selected), CircleShape)
             .then(semantics)
             .padding(start = if (icon != null) size.horizontalPadding - 4.dp else size.horizontalPadding)
             .padding(end = if (onRemove != null) 4.dp else size.horizontalPadding),

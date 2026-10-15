@@ -60,10 +60,13 @@ function buttonStyle(
   disabled: boolean,
   pressed: boolean
 ): StyleProp<ViewStyle> {
-  if (disabled) return { backgroundColor: colors.controlDisabled }
-  if (pressed) return { backgroundColor: colors.controlPressed }
-  if (isDark) return { backgroundColor: colors.labelQuaternary }
-  return [{ backgroundColor: colors.surfaceRaised }, shadow.sm]
+  return [
+    isDark
+      ? { backgroundColor: colors.border }
+      : [{ backgroundColor: colors.card }, shadow.sm],
+    pressed && { opacity: 0.8 },
+    disabled && { opacity: 0.5 },
+  ]
 }
 
 function Stepper({
@@ -112,11 +115,12 @@ function StepperInput({
     <NumberFieldPrimitive.Input
       style={(state) => [
         styles.input,
-        { color: state.disabled ? colors.labelQuaternary : colors.label },
+        { color: colors.foreground },
+        state.disabled && { opacity: 0.5 },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
-      cursorColor={colors.accent}
-      selectionColor={colors.accent}
+      cursorColor={colors.primary}
+      selectionColor={colors.primary}
       {...props}
     />
   )
@@ -131,7 +135,7 @@ function StepperGroup({
     <NumberFieldPrimitive.Group
       style={(state) => [
         styles.group,
-        { backgroundColor: colors.control },
+        { backgroundColor: colors.secondary },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
@@ -171,7 +175,7 @@ function StepperDecrement({
           as={MinusIcon}
           weight="bold"
           size={16}
-          color={canDecrement ? colors.label : colors.labelQuaternary}
+          color={colors.foreground}
         />
       )}
     </NumberFieldPrimitive.Decrement>
@@ -206,12 +210,7 @@ function StepperIncrement({
       {...props}
     >
       {children ?? (
-        <Icon
-          as={PlusIcon}
-          weight="bold"
-          size={16}
-          color={canIncrement ? colors.label : colors.labelQuaternary}
-        />
+        <Icon as={PlusIcon} weight="bold" size={16} color={colors.foreground} />
       )}
     </NumberFieldPrimitive.Increment>
   )
@@ -223,7 +222,7 @@ function StepperSeparator({ style, ...props }: ViewProps) {
     <View
       accessible={false}
       importantForAccessibility="no"
-      style={[styles.separator, { backgroundColor: colors.separator }, style]}
+      style={[styles.separator, { backgroundColor: colors.border }, style]}
       {...props}
     />
   )

@@ -295,11 +295,11 @@ struct PopupSurface: ViewModifier {
       .clipShape(shape)
       .background {
         shape
-          .fill(Color.surfaceRaised)
+          .fill(EsuissColor.card)
           .shadow(shadow)
       }
       .overlay {
-        shape.strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+        shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
       }
   }
 }
@@ -323,7 +323,7 @@ struct OverlayCloseButton: View {
       } label: {
         Ph.x.regular
           .frame(width: 16, height: 16)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
       .buttonStyle(CloseIconButtonStyle())
       .accessibilityLabel(Text("Close"))
@@ -335,7 +335,8 @@ private struct CloseIconButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .frame(width: 32, height: 32)
-      .background(configuration.isPressed ? Color.separator : .surfaceTertiary, in: Circle())
+      .background(EsuissColor.secondary, in: Circle())
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .contentShape(Circle().inset(by: -8))
   }
 }
@@ -377,7 +378,7 @@ struct ScrimLayer: View {
   @Environment(\.overlayDismiss) private var dismiss
 
   var body: some View {
-    Color.scrim
+    Palette.black.opacity(0.5)
       .ignoresSafeArea()
       .opacity(visible ? 1 : 0)
       .contentShape(Rectangle())

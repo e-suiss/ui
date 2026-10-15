@@ -94,16 +94,16 @@ public struct GridAccessories: View {
           } label: {
             Ph.handbag.regular
               .frame(width: 22, height: 22)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
               .overlay(alignment: .bottomTrailing) {
                 if !bag.isEmpty {
                   Text(verbatim: "\(bag.count)")
                     .font(.system(size: TextStyle.xs3.size, weight: .semibold))
                     .monospacedDigit()
-                    .foregroundStyle(Color.surface)
+                    .foregroundStyle(EsuissColor.background)
                     .padding(.horizontal, 4)
                     .frame(minWidth: 16, minHeight: 16)
-                    .background(Color.label, in: Capsule())
+                    .background(EsuissColor.foreground, in: Capsule())
                     .offset(x: 8, y: 4)
                     .transition(.scale)
                 }
@@ -150,7 +150,7 @@ private struct GridAccessoriesCell: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
-      Color.surfaceSecondary
+      EsuissColor.muted
         .overlay {
           AsyncImage(url: item.image) { phase in
             if let image = phase.image {
@@ -181,10 +181,10 @@ private struct GridAccessoriesCell: View {
                 .accessibilityHidden(true)
             }
           }
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, inBag ? 12 : 0)
           .frame(minWidth: 30, minHeight: 30)
-          .background(inBag ? Color.success : .accent, in: Capsule())
+          .background(inBag ? Palette.green500 : EsuissColor.primary, in: Capsule())
           .frame(minHeight: 44)
           .contentShape(Rectangle())
         }

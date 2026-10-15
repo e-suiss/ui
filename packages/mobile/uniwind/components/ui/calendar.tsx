@@ -131,7 +131,7 @@ function CalendarCaption({
 
   if (captionLayout === "label") {
     return (
-      <Text className={cn("font-semibold text-label", CAPTION_TEXT[size])}>
+      <Text className={cn("font-semibold text-foreground", CAPTION_TEXT[size])}>
         {calendar.formatCaption(month)}
       </Text>
     )
@@ -160,7 +160,7 @@ function CalendarCaption({
       label: String(firstYear + index),
     })
   )
-  const captionText = cn("font-semibold text-label", CAPTION_TEXT[size])
+  const captionText = cn("font-semibold text-foreground", CAPTION_TEXT[size])
 
   return (
     <View className="flex-row items-center gap-1.5">
@@ -221,10 +221,7 @@ function CalendarNav({
       >
         <Icon
           as={rtl ? CaretRightIcon : CaretLeftIcon}
-          className={cn(
-            "size-4",
-            !calendar.previousMonth && "text-label-quaternary"
-          )}
+          className={cn("size-4", !calendar.previousMonth && "opacity-50")}
         />
       </CalendarPrimitive.Previous>
       <CalendarPrimitive.Next
@@ -238,10 +235,7 @@ function CalendarNav({
       >
         <Icon
           as={rtl ? CaretLeftIcon : CaretRightIcon}
-          className={cn(
-            "size-4",
-            !calendar.nextMonth && "text-label-quaternary"
-          )}
+          className={cn("size-4", !calendar.nextMonth && "opacity-50")}
         />
       </CalendarPrimitive.Next>
     </View>
@@ -266,23 +260,23 @@ function CalendarDayButton({
   return (
     <TextClassContext.Provider
       value={cn(
-        "text-label",
+        "text-foreground",
         DAY_TEXT[size],
-        modifiers.outside && "text-label-secondary",
-        (modifiers.today || single) && "font-semibold text-link",
-        modifiers.rangeMiddle && "text-label",
-        filled && "text-on-accent",
-        modifiers.disabled && "text-label-quaternary"
+        modifiers.outside && "text-muted-foreground",
+        (modifiers.today || single) && "font-semibold text-primary",
+        modifiers.rangeMiddle && "text-foreground",
+        filled && "text-primary-foreground",
+        modifiers.disabled && "opacity-50"
       )}
     >
       <CalendarPrimitive.DayButton
         day={day}
         className={(state) =>
           cn(
-            "items-center justify-center rounded-full active:bg-item-pressed",
+            "items-center justify-center rounded-full active:opacity-80",
             CELL[size],
-            single && "bg-accent-surface active:bg-accent-surface-pressed",
-            filled && "bg-accent active:bg-accent-pressed",
+            single && "bg-primary/10 dark:bg-primary/20 active:opacity-80",
+            filled && "bg-primary active:opacity-80",
             modifiers.rangeMiddle && "rounded-none",
             resolveClassName(className, state)
           )
@@ -329,7 +323,7 @@ function CalendarMonth({
             >
               <Text
                 className={cn(
-                  "font-semibold text-label-secondary",
+                  "font-semibold text-muted-foreground",
                   WEEKDAY_TEXT[size]
                 )}
               >
@@ -342,7 +336,7 @@ function CalendarMonth({
           <View key={week.days[0]?.date.getTime()} className="mt-2 flex-row">
             {showWeekNumber ? (
               <View className={cn("items-center justify-center", CELL[size])}>
-                <Text className="text-xs text-label-secondary">
+                <Text className="text-xs text-muted-foreground">
                   {week.number}
                 </Text>
               </View>
@@ -357,7 +351,7 @@ function CalendarMonth({
                   key={day.date.getTime()}
                   className={cn(
                     CELL[size],
-                    !day.hidden && shaded && "bg-surface-secondary",
+                    !day.hidden && shaded && "bg-muted",
                     modifiers.rangeStart && "rounded-l-full",
                     modifiers.rangeEnd && "rounded-r-full",
                     modifiers.rangeMiddle && dayIndex === 0 && "rounded-l-full",
@@ -431,7 +425,7 @@ function Calendar({
         }
         className={(state) =>
           cn(
-            "self-start bg-surface",
+            "self-start bg-background",
             PADDING[size],
             resolveClassName(className, state)
           )

@@ -101,12 +101,12 @@ private fun SplitViewMail(withSidebar: Boolean = true, defaultColumn: SplitViewC
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
-                        Text(item.time, style = Typography.sm.copy(color = colors.labelSecondary), maxLines = 1)
+                        Text(item.time, style = Typography.sm.copy(color = colors.mutedForeground), maxLines = 1)
                     }
                     Text(item.subject, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(
                         item.body,
-                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        style = Typography.sm.copy(color = colors.mutedForeground),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -114,7 +114,7 @@ private fun SplitViewMail(withSidebar: Boolean = true, defaultColumn: SplitViewC
             }
         }
         SplitViewDetail(title = message.subject) {
-            Text("${message.from} · ${message.time}", style = Typography.sm.copy(color = colors.labelSecondary))
+            Text("${message.from} · ${message.time}", style = Typography.sm.copy(color = colors.mutedForeground))
             Text(message.body, modifier = Modifier.padding(top = 24.dp))
         }
     }

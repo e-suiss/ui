@@ -18,7 +18,7 @@ function ControlledDemo() {
           setAmount(nextAmount)
         }}
       />
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         {`value "${value}" · amount ${amount}`}
       </Text>
     </View>

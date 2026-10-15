@@ -11,7 +11,7 @@ private struct Battery: View {
   let level: Double
 
   var body: some View {
-    let chartConfig: ChartConfig = ["level": .init(name, color: level <= low ? .red : .green)]
+    let chartConfig: ChartConfig = ["level": .init(name, color: level <= low ? Palette.red500 : Palette.green500)]
     VStack(spacing: 8) {
       ChartContainer(config: chartConfig) {
         RadialBarChart(
@@ -29,7 +29,7 @@ private struct Battery: View {
         .overlay {
           Text(verbatim: String(name.prefix(1)))
             .textStyle(.xs, weight: .semibold)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .frame(width: 64, height: 64)
@@ -38,7 +38,7 @@ private struct Battery: View {
         .monospacedDigit()
       Text(LocalizedStringKey(name))
         .textStyle(.xs)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     .frame(maxWidth: .infinity)
     .accessibilityElement(children: .ignore)

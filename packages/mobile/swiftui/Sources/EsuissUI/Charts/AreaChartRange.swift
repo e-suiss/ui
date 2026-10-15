@@ -11,8 +11,8 @@ private let readings: [(low: Double, high: Double, average: Double)] = [
 private let hours = readings.indices.map { "\($0):00" }
 
 private let chartConfig: ChartConfig = [
-  "range": .init("Range", color: .red),
-  "average": .init("Average", color: .red),
+  "range": .init("Range", color: Palette.red500),
+  "average": .init("Average", color: Palette.red500),
 ]
 
 private let low = Int(readings.map(\.low).min() ?? 0)
@@ -28,18 +28,18 @@ public struct AreaChartRange: View {
       VStack(alignment: .leading, spacing: 2) {
         Text("Heart rate")
           .textStyle(.sm, weight: .semibold)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
         HStack(alignment: .firstTextBaseline, spacing: 4) {
           Text(verbatim: "\(low)–\(high)")
             .textStyle(.xl3, weight: .semibold)
             .monospacedDigit()
           Text("BPM")
             .textStyle(.base, weight: .semibold)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Text("Today")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -80,7 +80,7 @@ public struct AreaChartRange: View {
             ) { payload in
               ChartTooltipContent(payload, indicator: .line) { item in
                 Text(LocalizedStringKey(chartConfig.label(item.key)))
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 Spacer(minLength: 12)
                 Text(verbatim: item.key == "range"
                   ? "\(Int(readings[payload.index].low))–\(Int(readings[payload.index].high)) BPM"

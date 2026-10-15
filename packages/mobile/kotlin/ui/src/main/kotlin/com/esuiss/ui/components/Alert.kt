@@ -38,7 +38,7 @@ fun Alert(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.surfaceSecondary, shape)
+            .background(colors.muted, shape)
             .semantics { liveRegion = LiveRegionMode.Polite },
     ) {
         Row(
@@ -48,8 +48,8 @@ fun Alert(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             CompositionLocalProvider(
-                LocalContentStyle provides Typography.base.copy(color = colors.label),
-                LocalContentColor provides colors.label,
+                LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                LocalContentColor provides colors.foreground,
             ) {
                 if (icon != null) {
                     Icon(
@@ -57,7 +57,7 @@ fun Alert(
                         contentDescription = null,
                         modifier = Modifier.padding(top = 1.dp),
                         size = 20.dp,
-                        tint = if (variant == AlertVariant.Destructive) colors.danger else colors.accent,
+                        tint = if (variant == AlertVariant.Destructive) colors.destructive else colors.primary,
                     )
                 }
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp), content = content)
@@ -73,10 +73,10 @@ fun Alert(
 
 @Composable
 fun AlertTitle(text: String, modifier: Modifier = Modifier) {
-    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold))
+    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold))
 }
 
 @Composable
 fun AlertDescription(text: String, modifier: Modifier = Modifier) {
-    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.labelSecondary))
+    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.mutedForeground))
 }

@@ -100,7 +100,7 @@ public struct DatePickerField: View {
         .environment(\.calendarTransparent, true)
         .environment(\.locale, locale)
         .presentationCompactAdaptation(.popover)
-        .presentationBackground(Color.surfaceRaised)
+        .presentationBackground(EsuissColor.card)
       }
   }
 
@@ -118,31 +118,31 @@ public struct DatePickerField: View {
       HStack(spacing: 8) {
         Ph.calendarBlank.regular
           .frame(width: 16, height: 16)
-          .foregroundStyle(isEnabled ? Color.labelSecondary : .labelQuaternary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityHidden(true)
         label
           .font(TextStyle.base.font())
           .tracking(TextStyle.base.letterSpacing)
           .lineLimit(1)
-          .foregroundStyle(!isEnabled ? Color.labelQuaternary : empty ? .labelSecondary : .label)
+          .foregroundStyle(empty ? EsuissColor.mutedForeground : EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
       }
       .padding(.horizontal, 12)
       .frame(height: 44)
       .background(background, in: shape)
       .overlay {
-        if invalid { shape.strokeBorder(Color.danger) }
+        if invalid { shape.strokeBorder(EsuissColor.destructive) }
       }
       .contentShape(shape)
+      .opacity(isEnabled ? 1 : 0.5)
     }
     .buttonStyle(.plain)
     .accessibilityHint(Text("Shows date picker"))
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 }
 

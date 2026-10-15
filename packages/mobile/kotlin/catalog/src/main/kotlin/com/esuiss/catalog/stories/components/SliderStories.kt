@@ -58,7 +58,7 @@ private fun SliderUncontrolled(
 private fun SliderHeader(title: String, detail: String) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Text(title, style = Typography.sm.copy(fontWeight = FontWeight.Medium))
-        Text(detail, style = Typography.sm, color = EsuissTheme.colors.labelSecondary)
+        Text(detail, style = Typography.sm, color = EsuissTheme.colors.mutedForeground)
     }
 }
 

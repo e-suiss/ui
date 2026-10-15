@@ -142,7 +142,11 @@ function PreviewMenuPreviewBody({
     PreviewMenuPrimitive.useRootContext("PreviewMenuContent")
   return (
     <View
-      style={[styles.previewBody, { backgroundColor: colors.surface }, style]}
+      style={[
+        styles.previewBody,
+        { backgroundColor: colors.background },
+        style,
+      ]}
     >
       {children ? (
         <>
@@ -157,7 +161,6 @@ function PreviewMenuPreviewBody({
 }
 
 function PreviewMenuBackdrop() {
-  const { colors } = useTheme()
   const { ready } = PreviewMenuPrimitive.useRootContext("PreviewMenuContent")
   if (!ready) return null
   return (
@@ -167,7 +170,7 @@ function PreviewMenuBackdrop() {
       style={styles.backdropFrame}
     >
       <PreviewMenuPrimitive.Backdrop
-        style={{ backgroundColor: colors.scrim }}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       />
     </AnimatedView>
   )
@@ -201,8 +204,11 @@ function PreviewMenuContent({
               style={(state) => [
                 styles.popup,
                 {
-                  backgroundColor: colors.surfaceRaised,
-                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
+                  backgroundColor: colors.popover,
+                  borderColor: withAlpha(
+                    colors.foreground,
+                    isDark ? 0.1 : 0.05
+                  ),
                 },
                 resolveStyle(style, state) as ViewStyle,
               ]}
@@ -227,16 +233,17 @@ function PreviewMenuItem({
   children?: React.ReactNode
 }) {
   const { colors } = useTheme()
-  let color = variant === "destructive" ? colors.danger : colors.label
-  if (props.disabled) color = colors.labelQuaternary
+  const color =
+    variant === "destructive" ? colors.destructive : colors.foreground
   return (
     <TextStyleContext.Provider value={{ ...fontSize.base, color }}>
       <IconSizeContext.Provider value={20}>
         <PreviewMenuPrimitive.Item
           style={(state) => [
             styles.item,
-            { borderColor: colors.separator },
-            state.highlighted && { backgroundColor: colors.itemPressed },
+            { borderColor: colors.border },
+            state.highlighted && { opacity: 0.8 },
+            props.disabled && { opacity: 0.5 },
             resolveStyle(style, state) as ViewStyle,
           ]}
           {...props}
@@ -263,7 +270,7 @@ function PreviewMenuSeparator({
     <PreviewMenuPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: withAlpha(colors.separator, 0.4) },
+        { backgroundColor: withAlpha(colors.border, 0.4) },
         resolveStyle(style, state) as ViewStyle,
       ]}
       {...props}

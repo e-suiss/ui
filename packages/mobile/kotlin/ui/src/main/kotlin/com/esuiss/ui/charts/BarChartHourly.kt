@@ -22,6 +22,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartRadius
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class HourMinutes(val hour: Int, val minutes: Int)
@@ -31,7 +32,7 @@ private val chartData = listOf(
 ).mapIndexed { hour, minutes -> HourMinutes(hour, minutes) }
 
 private val chartConfig = ChartConfig(
-    "minutes" to ChartConfigItem("Screen time") { blue },
+    "minutes" to ChartConfigItem("Screen time") { chart1 },
 )
 
 private val total = chartData.sumOf { it.minutes }
@@ -44,12 +45,12 @@ fun BarChartHourly(modifier: Modifier = Modifier) {
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Screen time", style = Typography.sm.copy(color = colors.link, fontWeight = FontWeight.SemiBold))
+                BasicText("Screen time", style = Typography.sm.copy(color = colors.primary, fontWeight = FontWeight.SemiBold))
                 BasicText(
                     "${total / 60}h ${total % 60}m",
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                 )
-                BasicText("Today · hour by hour", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Today · hour by hour", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent {
@@ -72,17 +73,17 @@ fun BarChartHourly(modifier: Modifier = Modifier) {
                         tickCount = 3,
                         tickFormatter = { "${it.toInt()} min" },
                     )
-                    ReferenceLine(average, stroke = colors.green, strokeDasharray = listOf(3f, 3f))
+                    ReferenceLine(average, stroke = Palette.green500, strokeDasharray = listOf(3f, 3f))
                     ChartTooltip(cursor = null) {
                         ChartTooltipContent(
                             hideIndicator = true,
                             labelFormatter = { label, _ ->
-                                BasicText("$label:00", style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                                BasicText("$label:00", style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                             },
                             formatter = { item ->
                                 BasicText(
                                     "${item.value.toInt()} min",
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             },
                         )

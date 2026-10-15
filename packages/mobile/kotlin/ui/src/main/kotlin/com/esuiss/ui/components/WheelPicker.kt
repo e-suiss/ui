@@ -102,7 +102,7 @@ fun WheelPicker(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(WheelItemHeight)
-                .background(EsuissTheme.colors.control, RoundedCornerShape(Radius.lg)),
+                .background(EsuissTheme.colors.secondary, RoundedCornerShape(Radius.lg)),
         )
         Row(
             horizontalArrangement = horizontalArrangement,
@@ -245,9 +245,9 @@ fun WheelPickerColumn(
                     ) {
                         CompositionLocalProvider(
                             LocalContentStyle provides itemStyle.copy(
-                                color = if (entry.enabled) colors.label else colors.labelTertiary,
+                                color = if (entry.enabled) colors.foreground else colors.mutedForeground,
                             ),
-                            LocalContentColor provides if (entry.enabled) colors.label else colors.labelTertiary,
+                            LocalContentColor provides if (entry.enabled) colors.foreground else colors.mutedForeground,
                         ) {
                             entry.content()
                         }

@@ -67,7 +67,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Tomorrow's meeting",
     body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.",
     time: "8:40 AM",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
     category: "Primary",
     unread: true,
     starred: false,
@@ -78,7 +78,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Your storage is almost full",
     body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.",
     time: "Yesterday",
-    tint: "bg-blue dark:bg-blue",
+    tint: "bg-blue-500",
     category: "Updates",
     unread: true,
     starred: false,
@@ -89,7 +89,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Coast trip photos",
     body: "I added the photos to the shared album. The ones from the boat tour came out great.",
     time: "Yesterday",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
     category: "Primary",
     unread: false,
     starred: true,
@@ -119,10 +119,10 @@ const INITIAL_MAIL: Mail[] = [
 ]
 
 const CATEGORIES: { value: Category; icon: PhosphorIcon; tint: string }[] = [
-  { value: "Primary", icon: UsersIcon, tint: "bg-accent" },
-  { value: "Transactions", icon: CreditCardIcon, tint: "bg-green" },
-  { value: "Updates", icon: BellIcon, tint: "bg-purple" },
-  { value: "Promotions", icon: TagIcon, tint: "bg-pink" },
+  { value: "Primary", icon: UsersIcon, tint: "bg-primary" },
+  { value: "Transactions", icon: CreditCardIcon, tint: "bg-green-500" },
+  { value: "Updates", icon: BellIcon, tint: "bg-purple-500" },
+  { value: "Promotions", icon: TagIcon, tint: "bg-pink-500" },
 ]
 
 const ENTERING = FadeInDown.duration(800).reduceMotion(ReduceMotion.System)
@@ -131,10 +131,10 @@ function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
   return (
     <Avatar size="lg" className={className}>
       <AvatarFallback
-        className={mail.tint ?? "bg-label dark:bg-label"}
+        className={mail.tint ?? "bg-foreground dark:bg-foreground"}
         accessibilityLabel={mail.from}
       >
-        <Text className={mail.tint ? undefined : "text-surface normal-case"}>
+        <Text className={mail.tint ? undefined : "text-background normal-case"}>
           {mail.tint
             ? mail.from
                 .split(" ")
@@ -186,7 +186,7 @@ function Reader({
 
   return (
     <View className="flex-1">
-      <View className="h-12.5 flex-row items-center justify-end gap-0.5 border-b border-separator">
+      <View className="h-12.5 flex-row items-center justify-end gap-0.5 border-b border-border">
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -205,7 +205,7 @@ function Reader({
               weight={action.active ? "fill" : "regular"}
               className={cn(
                 "size-5",
-                action.active ? "text-orange" : "text-label-secondary"
+                action.active ? "text-orange-500" : "text-muted-foreground"
               )}
             />
           </Button>
@@ -216,11 +216,11 @@ function Reader({
           <SenderAvatar mail={mail} />
           <View className="flex-1">
             <Text className="text-base font-semibold">{mail.from}</Text>
-            <Text className="text-xs text-label-secondary">
+            <Text className="text-xs text-muted-foreground">
               To: Jamie Rivera
             </Text>
           </View>
-          <Text className="text-xs text-label-secondary">{mail.time}</Text>
+          <Text className="text-xs text-muted-foreground">{mail.time}</Text>
         </View>
         <Text role="heading" className="text-2xl font-semibold">
           {mail.subject}
@@ -230,7 +230,7 @@ function Reader({
       {replying ? (
         <AnimatedView
           entering={ENTERING}
-          className="mt-5.5 gap-2.5 border-t border-separator pt-4.5"
+          className="mt-5.5 gap-2.5 border-t border-border pt-4.5"
         >
           <Textarea
             autoFocus
@@ -282,7 +282,7 @@ function MailRow({
   onArchive: () => void
   onDelete: () => void
 }) {
-  const muted = active ? "text-on-accent" : "text-label-secondary"
+  const muted = active ? "text-primary-foreground" : "text-muted-foreground"
   return (
     <AnimatedView
       entering={FadeInDown.delay(index * 40)
@@ -299,13 +299,13 @@ function MailRow({
                 .filter(Boolean)
                 .join(", ") || undefined
             }
-            className={cn("relative py-2.5 ps-6", active && "bg-accent")}
+            className={cn("relative py-2.5 ps-6", active && "bg-primary")}
           >
             {mail.unread ? (
               <View
                 className={cn(
                   "absolute -start-3.5 top-1.5 size-2 rounded-full",
-                  active ? "bg-on-accent" : "bg-accent"
+                  active ? "bg-primary-foreground" : "bg-primary"
                 )}
               />
             ) : null}
@@ -314,7 +314,7 @@ function MailRow({
                 numberOfLines={1}
                 className={cn(
                   "flex-1 text-sm font-semibold",
-                  active && "text-on-accent"
+                  active && "text-primary-foreground"
                 )}
               >
                 {mail.from}
@@ -325,7 +325,7 @@ function MailRow({
                   weight="fill"
                   className={cn(
                     "size-3",
-                    active ? "text-on-accent" : "text-orange"
+                    active ? "text-primary-foreground" : "text-orange-500"
                   )}
                 />
               ) : null}
@@ -333,7 +333,7 @@ function MailRow({
             </View>
             <Text
               numberOfLines={1}
-              className={cn("text-sm", active && "text-on-accent")}
+              className={cn("text-sm", active && "text-primary-foreground")}
             >
               {mail.subject}
             </Text>
@@ -437,7 +437,7 @@ function InboxCategories({
                   accessibilityHint={!pressed && unread ? "Unread" : undefined}
                   className={cn(
                     "relative h-8.5 gap-1.5 px-2.75",
-                    pressed ? cn("px-3.5", item.tint) : "bg-control"
+                    pressed ? cn("px-3.5", item.tint) : "bg-secondary"
                   )}
                 >
                   <Icon
@@ -445,16 +445,18 @@ function InboxCategories({
                     weight="bold"
                     className={cn(
                       "size-4",
-                      pressed ? "text-on-accent" : "text-label-secondary"
+                      pressed
+                        ? "text-primary-foreground"
+                        : "text-muted-foreground"
                     )}
                   />
                   {pressed ? (
-                    <Text className="font-semibold text-on-accent">
+                    <Text className="font-semibold text-primary-foreground">
                       {item.value}
                     </Text>
                   ) : null}
                   {!pressed && unread ? (
-                    <View className="absolute end-0 top-0 size-3 rounded-full border-2 border-surface bg-accent" />
+                    <View className="absolute end-0 top-0 size-3 rounded-full border-2 border-background bg-primary" />
                   ) : null}
                 </ToggleGroupItem>
               )
@@ -483,7 +485,7 @@ function InboxCategories({
                 />
               ))
             ) : (
-              <Text className="p-7.5 text-center text-sm text-label-secondary">
+              <Text className="p-7.5 text-center text-sm text-muted-foreground">
                 {`No messages in ${category}.`}
               </Text>
             )}
@@ -509,7 +511,7 @@ function InboxCategories({
             />
           ) : (
             <View className="flex-1 items-center justify-center py-20">
-              <Text className="text-label-secondary">No Message Selected</Text>
+              <Text className="text-muted-foreground">No Message Selected</Text>
             </View>
           )}
         </SplitViewDetail>

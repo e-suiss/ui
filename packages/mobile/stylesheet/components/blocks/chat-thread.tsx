@@ -51,7 +51,7 @@ import {
 } from "@/components/ui/message-scroller"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 type Photo = { name: string; size: string; image: string }
 
@@ -158,7 +158,7 @@ function TypingDot({ index }: { index: number }) {
     <AnimatedView
       style={[
         styles.dot,
-        { backgroundColor: colors.labelTertiary },
+        { backgroundColor: colors.mutedForeground },
         animatedStyle,
       ]}
     />
@@ -277,7 +277,7 @@ function Composer({
               as={PlusIcon}
               weight="bold"
               size={18}
-              color={colors.labelSecondary}
+              color={colors.mutedForeground}
             />
           </Button>
           <InputGroup style={styles.group}>
@@ -359,7 +359,7 @@ function LineRow({
                 <BubbleReactions
                   side="top"
                   align={mine ? "start" : "end"}
-                  style={[styles.reaction, { backgroundColor: colors.accent }]}
+                  style={[styles.reaction, { backgroundColor: colors.primary }]}
                 >
                   <AnimatedView
                     entering={ZoomIn.duration(300).reduceMotion(
@@ -370,7 +370,7 @@ function LineRow({
                       as={HeartIcon}
                       weight="fill"
                       size={13}
-                      color={colors.onAccent}
+                      color={colors.primaryForeground}
                     />
                   </AnimatedView>
                 </BubbleReactions>
@@ -476,13 +476,14 @@ function ChatThread({
           style={({ pressed }) => [
             styles.contact,
             {
-              borderBottomColor: colors.separator,
-              backgroundColor: pressed ? colors.itemPressed : colors.surface,
+              borderBottomColor: colors.border,
+              backgroundColor: colors.background,
             },
+            pressed && { opacity: 0.8 },
           ]}
         >
           <Avatar size="lg" style={styles.avatar}>
-            <AvatarFallback style={{ backgroundColor: colors.green }}>
+            <AvatarFallback style={{ backgroundColor: palette.green500 }}>
               <Text style={fontSize.lg}>RC</Text>
             </AvatarFallback>
           </Avatar>
@@ -493,7 +494,7 @@ function ChatThread({
               weight="bold"
               mirrored={I18nManager.isRTL}
               size={10}
-              color={colors.label}
+              color={colors.foreground}
             />
           </View>
         </Pressable>
@@ -510,7 +511,7 @@ function ChatThread({
                     <Text
                       style={[
                         styles.stampText,
-                        { color: colors.labelSecondary },
+                        { color: colors.mutedForeground },
                       ]}
                     >
                       Today 9:30 AM
@@ -518,7 +519,7 @@ function ChatThread({
                     <Text
                       style={[
                         styles.stampText,
-                        { color: colors.labelSecondary },
+                        { color: colors.mutedForeground },
                       ]}
                     >
                       Double-tap a bubble to add a heart. Send a message and

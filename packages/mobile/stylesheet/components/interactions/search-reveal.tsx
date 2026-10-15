@@ -169,11 +169,11 @@ function SearchRevealField({
       style={[styles.field, revealStyle]}
       onLayout={(event) => setFieldHeight(event.nativeEvent.layout.height)}
     >
-      <View style={[styles.box, { backgroundColor: colors.control }]}>
+      <View style={[styles.box, { backgroundColor: colors.secondary }]}>
         <Icon
           as={MagnifyingGlassIcon}
           size={18}
-          color={colors.labelSecondary}
+          color={colors.mutedForeground}
           style={styles.icon}
         />
         <TextInput
@@ -190,10 +190,10 @@ function SearchRevealField({
           autoCorrect={false}
           autoCapitalize="none"
           returnKeyType="search"
-          style={[styles.input, { color: colors.label }, style]}
-          placeholderTextColor={colors.labelSecondary}
-          cursorColor={colors.accent}
-          selectionColor={colors.accent}
+          style={[styles.input, { color: colors.foreground }, style]}
+          placeholderTextColor={colors.mutedForeground}
+          cursorColor={colors.primary}
+          selectionColor={colors.primary}
           {...props}
         />
         {value ? (
@@ -211,7 +211,7 @@ function SearchRevealField({
               as={XCircleIcon}
               weight="fill"
               size={18}
-              color={colors.labelSecondary}
+              color={colors.mutedForeground}
             />
           </Pressable>
         ) : null}

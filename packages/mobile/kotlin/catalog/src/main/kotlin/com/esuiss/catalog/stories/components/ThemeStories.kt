@@ -73,27 +73,27 @@ private fun ThemePreview() {
     val state = useTheme()
     val colors = EsuissTheme.colors
     Column(
-        modifier = Modifier.fillMaxWidth().background(colors.surface),
+        modifier = Modifier.fillMaxWidth().background(colors.background),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("Light and dark.", variant = TextVariant.H2)
             Text(
                 "Every surface, label and accent follows the theme tokens, so the whole app changes at once.",
-                color = colors.labelSecondary,
+                color = colors.mutedForeground,
             )
         }
         ThemeToggle()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))
+                .background(colors.muted, RoundedCornerShape(Radius.xl2))
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Text("Selected", style = Typography.sm, color = colors.labelSecondary)
+            Text("Selected", style = Typography.sm, color = colors.mutedForeground)
             Text(state.theme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold))
-            Text("Showing", Modifier.padding(top = 8.dp), style = Typography.sm, color = colors.labelSecondary)
+            Text("Showing", Modifier.padding(top = 8.dp), style = Typography.sm, color = colors.mutedForeground)
             Text(state.resolvedTheme.name.lowercase(), style = Typography.base.copy(fontWeight = FontWeight.SemiBold))
         }
     }
@@ -123,7 +123,7 @@ private fun ThemeTransitionDemo(effect: ThemeEffect, origin: ThemeOrigin, blur: 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.surface)
+                    .background(colors.background)
                     .padding(horizontal = 24.dp, vertical = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -136,14 +136,14 @@ private fun ThemeTransitionDemo(effect: ThemeEffect, origin: ThemeOrigin, blur: 
                     Text("Light and dark.", variant = TextVariant.H2, textAlign = TextAlign.Center)
                     Text(
                         "Every surface, label and accent follows the theme tokens, so the whole app changes at once.",
-                        color = colors.labelSecondary,
+                        color = colors.mutedForeground,
                         textAlign = TextAlign.Center,
                     )
                 }
                 Card(Modifier.widthIn(max = 448.dp).fillMaxWidth()) {
                     CardHeader(title = "Appearance", description = "Pick a theme and watch it spread across the screen.")
                     CardContent {
-                        Text("Cards, buttons and text all switch together.", color = colors.labelSecondary)
+                        Text("Cards, buttons and text all switch together.", color = colors.mutedForeground)
                     }
                     CardFooter {
                         Button("Continue", onClick = {}, variant = ButtonVariant.Secondary, block = true)

@@ -118,7 +118,7 @@ function ButtonGroupText({
     props: [
       {
         className: cn(
-          "flex-row items-center gap-2 rounded-full bg-control px-2.5",
+          "flex-row items-center gap-2 rounded-full bg-secondary px-2.5",
           className
         ),
       },
@@ -126,8 +126,8 @@ function ButtonGroupText({
     ],
   })
   return (
-    <TextClassContext.Provider value="text-sm text-label">
-      <IconClassContext.Provider value="size-4 text-label">
+    <TextClassContext.Provider value="text-sm text-foreground">
+      <IconClassContext.Provider value="size-4 text-foreground">
         {element}
       </IconClassContext.Provider>
     </TextClassContext.Provider>
@@ -144,7 +144,7 @@ function ButtonGroupSeparator({
       orientation={orientation}
       className={(state) =>
         cn(
-          "relative z-10 bg-label/20",
+          "relative z-10 bg-foreground/20",
           state.orientation === "horizontal"
             ? "-mb-px mx-2.25 w-auto"
             : "-mr-px my-2.25",

@@ -160,7 +160,7 @@ private struct WidgetHint: View {
   var body: some View {
     Text(verbatim: text)
       .textStyle(.xs)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .padding(.top, 24)
   }
 }
@@ -227,10 +227,10 @@ private struct WidgetSalesHeader: View {
   var body: some View {
     WidgetHeader {
       WidgetIcon(size: .sm) {
-        Ph.cashRegister.fill.foregroundStyle(Color.warning)
+        Ph.cashRegister.fill.foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
       }
       WidgetTitle("Hestia")
-        .foregroundStyle(Color.warning)
+        .foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
     }
   }
 }
@@ -241,7 +241,7 @@ private struct WidgetBars: View {
       HStack(alignment: .bottom, spacing: 4) {
         ForEach(Array(widgetHourly.enumerated()), id: \.offset) { _, value in
           RoundedRectangle(cornerRadius: Radius.sm, style: .continuous)
-            .fill(value == 100 ? Color.warning : Color.warning.opacity(0.4))
+            .fill(value == 100 ? Palette.amber500 : Palette.amber500.opacity(0.4))
             .frame(height: proxy.size.height * value / 100)
             .frame(maxWidth: .infinity)
         }
@@ -280,11 +280,11 @@ private struct WidgetSales: View {
             Spacer(minLength: 8)
             Text(verbatim: "\(item.count)")
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .padding(.vertical, 6)
           .overlay(alignment: .bottom) {
-            Color.separator.frame(height: 1)
+            EsuissColor.border.frame(height: 1)
           }
         }
       }
@@ -308,10 +308,10 @@ private struct WidgetReservations: View {
   var body: some View {
     WidgetHeader {
       WidgetIcon(size: .sm) {
-        Ph.calendarBlank.fill.foregroundStyle(Color.link)
+        Ph.calendarBlank.fill.foregroundStyle(EsuissColor.primary)
       }
       WidgetTitle("Reservations")
-        .foregroundStyle(Color.link)
+        .foregroundStyle(EsuissColor.primary)
     }
     HStack(alignment: .bottom, spacing: 16) {
       WidgetContent {
@@ -325,7 +325,7 @@ private struct WidgetReservations: View {
             HStack(spacing: 12) {
               Text(verbatim: item.time)
                 .textStyle(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .frame(width: 44, alignment: .leading)
               Text(verbatim: item.place)
                 .textStyle(.sm)

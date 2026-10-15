@@ -212,14 +212,14 @@ private struct FieldToppingsDemo: View {
         Toggle(sources: Self.toppings.map(binding), isOn: \.self) {
           Text("All toppings")
             .textStyle(.base)
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
         }
         .toggleStyle(.checkbox)
         ForEach(Self.toppings, id: \.self) { topping in
           Toggle(isOn: binding(topping)) {
             Text(verbatim: topping.capitalized)
               .textStyle(.base)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
           }
           .toggleStyle(.checkbox)
           .padding(.leading, 24)
@@ -266,7 +266,7 @@ private struct FieldInsetRow: View {
         .textFieldStyle(.plain)
         .multilineTextAlignment(.trailing)
         .textStyle(.base)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .frame(maxWidth: .infinity, minHeight: 32)
         .accessibilityLabel(Text(title))
     }

@@ -57,16 +57,16 @@ public struct LoginPasskey: View {
         VStack(spacing: 0) {
           Ph.key.bold
             .frame(width: 34, height: 34)
-            .foregroundStyle(Color.accent)
+            .foregroundStyle(EsuissColor.primary)
             .frame(width: 72, height: 72)
-            .background(Color.surfaceSecondary, in: Circle())
+            .background(EsuissColor.muted, in: Circle())
             .accessibilityHidden(true)
           Text("Sign in without a password.")
             .scaledTextStyle(.xl2, weight: .bold)
             .padding(.top, 22)
           Text("With a passkey, your face or fingerprint is all it takes. Nothing to remember, nothing to type.")
             .scaledTextStyle(.lg)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .padding(.top, 12)
           account
             .padding(.top, 28)
@@ -84,7 +84,7 @@ public struct LoginPasskey: View {
             .padding(.top, 10)
           Text("Passkeys are end-to-end encrypted and sync across all your devices with suiss Keychain.")
             .scaledTextStyle(.xs2)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .padding(.top, 40)
         }
         .multilineTextAlignment(.center)
@@ -105,7 +105,7 @@ public struct LoginPasskey: View {
       .frame(width: 28, height: 28)
       Text(verbatim: "jamie@suiss.com")
         .scaledFont(.base)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
       Button("Change ›") { onChangeAccount?() }
         .buttonStyle(LoginPasskeyLinkStyle())
@@ -113,7 +113,7 @@ public struct LoginPasskey: View {
     .padding(.leading, 8)
     .padding(.trailing, 16)
     .padding(.vertical, 2)
-    .background(Color.surfaceSecondary, in: Capsule())
+    .background(EsuissColor.muted, in: Capsule())
   }
 
   private var welcome: some View {
@@ -125,7 +125,7 @@ public struct LoginPasskey: View {
         .scaledTextStyle(.xl3, weight: .bold)
       Text("You signed in with a passkey. No password needed.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Sign out ›") { status = .idle }
         .buttonStyle(LoginPasskeyLinkStyle(style: .lg))
     }
@@ -190,14 +190,14 @@ private struct LoginPasskeyGlyph: View {
   var body: some View {
     ZStack {
       Ph.scanSmiley.light
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .opacity(verified ? 0 : pulse ? 0.5 : 1)
         .scaleEffect(verified ? 0.6 : 1)
       Ph.check.bold
         .frame(width: 32, height: 32)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 60, height: 60)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .scaleEffect(verified ? 1 : 0.4)
         .opacity(verified ? 1 : 0)
     }
@@ -217,10 +217,10 @@ private struct LoginPasskeyInitials: View {
   var body: some View {
     Text(verbatim: "JR")
       .scaledFont(style, weight: .semibold)
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(
-        Color.indigo,
+        Palette.indigo500,
         in: Circle()
       )
   }
@@ -232,8 +232,8 @@ private struct LoginPasskeyLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

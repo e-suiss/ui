@@ -43,6 +43,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
@@ -125,7 +126,7 @@ fun TabBar(
                         val current = layout.items[value]
                         if (placed && current != null) {
                             drawRoundRect(
-                                color = colors.control,
+                                color = colors.secondary,
                                 topLeft = Offset(x.value, current.y),
                                 size = Size(width.value, current.height),
                                 cornerRadius = CornerRadius(current.height / 2f),
@@ -156,11 +157,7 @@ fun RowScope.TabBarItem(
     val selected = context.value == value
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val foreground = when {
-        !enabled -> colors.labelQuaternary
-        selected -> colors.accent
-        else -> colors.labelSecondary
-    }
+    val foreground = if (selected) colors.primary else colors.mutedForeground
     DisposableEffect(context.layout, value) {
         onDispose { context.layout.items.remove(value) }
     }
@@ -175,8 +172,14 @@ fun RowScope.TabBarItem(
                     context.layout.items[value] = next
                 }
             }
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(CircleShape)
-            .then(if (pressed) Modifier.background(colors.itemPressed, CircleShape) else Modifier)
             .selectable(
                 selected = selected,
                 interactionSource = interaction,
@@ -212,8 +215,8 @@ private fun TabBarBadge(text: String, modifier: Modifier) {
             modifier = modifier
                 .size(10.dp)
                 .clip(CircleShape)
-                .background(colors.danger, CircleShape)
-                .border(2.dp, colors.surfaceRaised, CircleShape),
+                .background(colors.destructive, CircleShape)
+                .border(2.dp, colors.card, CircleShape),
         )
         return
     }
@@ -222,14 +225,14 @@ private fun TabBarBadge(text: String, modifier: Modifier) {
             .heightIn(min = 18.dp)
             .widthIn(min = 18.dp)
             .clip(CircleShape)
-            .background(colors.danger, CircleShape)
-            .border(2.dp, colors.surfaceRaised, CircleShape)
+            .background(colors.destructive, CircleShape)
+            .border(2.dp, colors.card, CircleShape)
             .padding(horizontal = 5.dp),
         contentAlignment = Alignment.Center,
     ) {
         BasicText(
             text,
-            style = Typography.xs3.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xs3.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
             maxLines = 1,
         )
     }

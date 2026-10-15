@@ -74,9 +74,9 @@ public struct AlertSheetGroup<Content: View>: View {
       content
     }
     .frame(maxWidth: .infinity)
-    .background(Color.separator)
+    .background(EsuissColor.border)
     .clipShape(shape)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 }
 
@@ -93,7 +93,7 @@ public struct AlertSheetHeader<Content: View>: View {
     }
     .padding(16)
     .frame(maxWidth: .infinity)
-    .background(Color.surfaceRaised)
+    .background(EsuissColor.popover)
   }
 }
 
@@ -111,7 +111,7 @@ public struct AlertSheetTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm, weight: .semibold)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
   }
@@ -131,7 +131,7 @@ public struct AlertSheetDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
   }
 }
@@ -150,15 +150,16 @@ struct AlertSheetActionStyle: ButtonStyle {
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: 12, iconSize: 20))
       .scaledFont(.lg, weight: cancel ? .semibold : .regular)
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : variant == .destructive ? .danger : .link)
+      .foregroundStyle(variant == .destructive ? EsuissColor.destructive : EsuissColor.primary)
+      .opacity(isEnabled ? 1 : 0.5)
       .lineLimit(2)
       .padding(.horizontal, 16)
       .padding(.vertical, 8)
       .frame(maxWidth: .infinity, minHeight: 56)
-      .background(Color.surfaceRaised)
+      .background(EsuissColor.popover)
       .overlay {
         if configuration.isPressed && isEnabled {
-          Color.label.opacity(0.1)
+          EsuissColor.foreground.opacity(0.1)
         }
       }
       .contentShape(Rectangle())

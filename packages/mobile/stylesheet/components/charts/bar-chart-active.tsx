@@ -24,7 +24,7 @@ const chartData = [
 ].map((item, index) => ({ ...item, index }))
 
 const chartConfig = {
-  steps: { label: "Steps", color: "orange" },
+  steps: { label: "Steps", color: "chart-4" },
 } satisfies ChartConfig
 
 function formatSteps(value: number) {
@@ -59,14 +59,14 @@ export function BarChartActive() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
-        <Text style={[styles.eyebrow, { color: colors.orange }]}>Steps</Text>
+        <Text style={[styles.eyebrow, { color: colors.chart4 }]}>Steps</Text>
         <View style={styles.reading} accessibilityLiveRegion="polite">
           <Text style={styles.value}>{formatSteps(day.steps)}</Text>
-          <Text style={[styles.unit, { color: colors.labelSecondary }]}>
+          <Text style={[styles.unit, { color: colors.mutedForeground }]}>
             steps
           </Text>
         </View>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           {`${day.day} · select a bar`}
         </Text>
       </CardHeader>

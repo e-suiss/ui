@@ -28,7 +28,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  hours: { label: "Sleep", color: "indigo" },
+  hours: { label: "Sleep", color: "chart-3" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -56,11 +56,11 @@ export function LineChartGoalDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
-        <Text style={[styles.eyebrow, { color: colors.indigo }]}>Sleep</Text>
+        <Text style={[styles.eyebrow, { color: colors.chart3 }]}>Sleep</Text>
         <View style={styles.reading}>
           <Text style={styles.value}>7h 9m</Text>
         </View>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           Goal 7 hours · green nights met it
         </Text>
       </CardHeader>
@@ -84,7 +84,7 @@ export function LineChartGoalDots() {
               ticks={[5, 7, 9]}
               tickFormatter={(value: number) => `${value}h`}
             />
-            <ReferenceLine y={GOAL} stroke="green" strokeDasharray="3 3" />
+            <ReferenceLine y={GOAL} stroke="green-500" strokeDasharray="3 3" />
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -104,8 +104,10 @@ export function LineChartGoalDots() {
               dot={({ index }) => ({
                 r: 4.5,
                 fill:
-                  (chartData[index]?.hours ?? 0) >= GOAL ? "green" : "orange",
-                stroke: "surface-secondary",
+                  (chartData[index]?.hours ?? 0) >= GOAL
+                    ? "green-500"
+                    : "chart-4",
+                stroke: "muted",
                 strokeWidth: 2,
               })}
             />

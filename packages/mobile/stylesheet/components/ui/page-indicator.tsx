@@ -106,7 +106,7 @@ function PageIndicatorDot({
     transform: [{ scale: dotScaleValue.value }],
   }))
 
-  const activeColor = variant === "accent" ? colors.accent : colors.label
+  const activeColor = variant === "accent" ? colors.primary : colors.foreground
 
   return (
     <Pressable
@@ -125,7 +125,7 @@ function PageIndicatorDot({
           styles.dot,
           {
             height: metrics.dot,
-            backgroundColor: active ? activeColor : colors.labelQuaternary,
+            backgroundColor: active ? activeColor : colors.border,
           },
           animatedStyle,
         ]}

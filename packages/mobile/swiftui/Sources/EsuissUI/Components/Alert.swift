@@ -31,7 +31,7 @@ public struct InlineAlert<Content: View, Action: View>: View {
           .resizable()
           .scaledToFit()
           .frame(width: iconSize, height: iconSize)
-          .foregroundStyle(variant == .destructive ? Color.danger : .accent)
+          .foregroundStyle(variant == .destructive ? EsuissColor.destructive : EsuissColor.primary)
           .padding(.top, 1)
           .accessibilityHidden(true)
       }
@@ -47,10 +47,10 @@ public struct InlineAlert<Content: View, Action: View>: View {
       }
     }
     .scaledTextStyle(.base)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(20)
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     .accessibilityElement(children: .contain)
   }
 }
@@ -75,7 +75,7 @@ public struct AlertTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.base, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
   }
 }
 
@@ -93,6 +93,6 @@ public struct AlertDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.base)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 function Battery({ name, level }: { name: string; level: number }) {
   const { colors } = useTheme()
   const chartConfig = {
-    level: { label: name, color: level <= LOW ? "red" : "green" },
+    level: { label: name, color: level <= LOW ? "red-500" : "green-500" },
   } satisfies ChartConfig
 
   return (
@@ -55,7 +55,7 @@ function Battery({ name, level }: { name: string; level: number }) {
     >
       <View style={styles.ring}>
         <View pointerEvents="none" style={styles.overlay}>
-          <Text style={[styles.initial, { color: colors.labelSecondary }]}>
+          <Text style={[styles.initial, { color: colors.mutedForeground }]}>
             {name[0]}
           </Text>
         </View>
@@ -79,7 +79,7 @@ function Battery({ name, level }: { name: string; level: number }) {
         </ChartContainer>
       </View>
       <Text style={styles.level}>{`${level}%`}</Text>
-      <Text style={[styles.name, { color: colors.labelSecondary }]}>
+      <Text style={[styles.name, { color: colors.mutedForeground }]}>
         {name}
       </Text>
     </View>

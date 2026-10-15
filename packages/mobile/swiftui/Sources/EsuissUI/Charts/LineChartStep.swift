@@ -11,7 +11,7 @@ private let chartData: [(month: String, desktop: Double, mobile: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
+  "desktop": .init("Desktop", color: EsuissColor.chart1),
 ]
 
 public struct LineChartStep: View {

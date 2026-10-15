@@ -46,33 +46,33 @@ const BubbleContext = React.createContext<BubbleContextValue>({
 const TAIL_PATH = "M7 0H20V4A16 16 0 0 1 4 20H0V19.54A10 10 0 0 0 7 10Z"
 
 const CONTENT_TEXT: Record<BubbleVariant, string> = {
-  default: "text-on-accent",
-  secondary: "text-label",
-  muted: "text-label",
-  tinted: "text-label",
-  outline: "text-label",
-  ghost: "text-label",
-  destructive: "text-danger",
+  default: "text-primary-foreground",
+  secondary: "text-secondary-foreground",
+  muted: "text-foreground",
+  tinted: "text-foreground",
+  outline: "text-foreground",
+  ghost: "text-foreground",
+  destructive: "text-destructive",
 }
 
-const CONTENT_BACKGROUND: Record<BubbleVariant, [string, string]> = {
-  default: ["bg-accent", "bg-accent-pressed"],
-  secondary: ["bg-control", "bg-control-pressed"],
-  muted: ["bg-surface-secondary", "bg-surface-tertiary"],
-  tinted: ["bg-accent/12", "bg-accent/20"],
-  outline: ["border-separator bg-surface", "border-separator bg-control"],
-  ghost: ["bg-transparent", "bg-item-pressed"],
-  destructive: ["bg-danger-surface", "bg-danger-surface-pressed"],
+const CONTENT_BACKGROUND: Record<BubbleVariant, string> = {
+  default: "bg-primary",
+  secondary: "bg-secondary",
+  muted: "bg-muted",
+  tinted: "bg-primary/12",
+  outline: "border-border bg-background",
+  ghost: "bg-transparent",
+  destructive: "bg-destructive/10 dark:bg-destructive/20",
 }
 
-const TAIL_COLOR: Record<BubbleVariant, [string, string]> = {
-  default: ["text-accent", "text-accent-pressed"],
-  secondary: ["text-control", "text-control-pressed"],
-  muted: ["text-surface-secondary", "text-surface-tertiary"],
-  tinted: ["text-accent/12", "text-accent/20"],
-  outline: ["text-surface", "text-control"],
-  ghost: ["text-transparent", "text-item-pressed"],
-  destructive: ["text-danger-surface", "text-danger-surface-pressed"],
+const TAIL_COLOR: Record<BubbleVariant, string> = {
+  default: "text-primary",
+  secondary: "text-secondary",
+  muted: "text-muted",
+  tinted: "text-primary/12",
+  outline: "text-background",
+  ghost: "text-transparent",
+  destructive: "text-destructive/10 dark:text-destructive/20",
 }
 
 function wrapText(children: React.ReactNode) {
@@ -179,11 +179,9 @@ function BubbleTailShape({ color, size, style }: PhosphorIconProps) {
 function BubbleTail({
   variant,
   align,
-  pressed,
 }: {
   variant: BubbleVariant
   align: BubbleAlign
-  pressed: boolean
 }) {
   const mirrored = (align === "end") !== I18nManager.isRTL
   return (
@@ -200,12 +198,12 @@ function BubbleTail({
           ]}
         >
           <View className="absolute inset-0">
-            <Icon as={BubbleTailShape} className="size-5 text-surface" />
+            <Icon as={BubbleTailShape} className="size-5 text-background" />
           </View>
           <View className="absolute inset-0">
             <Icon
               as={BubbleTailShape}
-              className={cn("size-5", TAIL_COLOR[variant][pressed ? 1 : 0])}
+              className={cn("size-5", TAIL_COLOR[variant])}
             />
           </View>
         </View>
@@ -238,7 +236,8 @@ function BubbleContent({
         className: cn(
           "relative min-w-0 max-w-full rounded-2xl border border-transparent px-3.5 py-1.5",
           align === "end" ? "self-end" : "self-start",
-          CONTENT_BACKGROUND[variant][pressed ? 1 : 0],
+          CONTENT_BACKGROUND[variant],
+          pressed && "opacity-80",
           variant === "ghost" && "rounded-none border-0 p-0",
           className
         ),
@@ -255,9 +254,7 @@ function BubbleContent({
         },
         children: (
           <>
-            {tail ? (
-              <BubbleTail variant={variant} align={align} pressed={pressed} />
-            ) : null}
+            {tail ? <BubbleTail variant={variant} align={align} /> : null}
             {wrapText(children as React.ReactNode)}
           </>
         ),
@@ -283,10 +280,10 @@ function BubbleReactions({
   side?: "top" | "bottom"
 }) {
   return (
-    <TextClassContext.Provider value="text-sm text-label">
+    <TextClassContext.Provider value="text-sm text-foreground">
       <View
         className={cn(
-          "absolute z-10 flex-row items-center justify-center gap-1 rounded-full border-[3px] border-surface bg-surface-secondary px-1.5 py-0.5",
+          "absolute z-10 flex-row items-center justify-center gap-1 rounded-full border-[3px] border-background bg-muted px-1.5 py-0.5",
           side === "top" ? "-top-5" : "-bottom-5",
           align === "start" ? "start-3" : "end-3",
           className

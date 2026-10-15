@@ -126,7 +126,7 @@ function PriceCare({
   return (
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerClassName="pb-6">
-        <View className="min-h-80 justify-end overflow-hidden bg-media">
+        <View className="min-h-80 justify-end overflow-hidden bg-black">
           {DEVICES.map((item) => (
             <HeroImage
               key={item.name}
@@ -134,14 +134,11 @@ function PriceCare({
               active={item.name === device}
             />
           ))}
-          <View className="gap-1.5 bg-scrim px-7 pt-5 pb-7">
-            <Text className="text-base font-semibold text-on-media">
+          <View className="gap-1.5 bg-black/50 px-7 pt-5 pb-7">
+            <Text className="text-base font-semibold text-white">
               suiss Care+
             </Text>
-            <Text
-              role="heading"
-              className="text-3xl font-semibold text-on-media"
-            >
+            <Text role="heading" className="text-3xl font-semibold text-white">
               Protection against accidents.
             </Text>
           </View>
@@ -173,11 +170,13 @@ function PriceCare({
                   className={cn(
                     "px-3.5",
                     selected
-                      ? "bg-label active:bg-label"
-                      : "bg-control active:bg-control-pressed"
+                      ? "bg-foreground active:opacity-80"
+                      : "bg-secondary active:opacity-80"
                   )}
                 >
-                  <Text className={selected ? "text-surface" : "text-label"}>
+                  <Text
+                    className={selected ? "text-background" : "text-foreground"}
+                  >
                     {item.name}
                   </Text>
                 </ToggleGroupItem>
@@ -200,8 +199,8 @@ function PriceCare({
                   className={cn(
                     "flex-row items-center gap-3 rounded-xl border-2 px-4 py-3.5",
                     checked
-                      ? "border-accent"
-                      : "border-separator active:bg-item-pressed"
+                      ? "border-primary"
+                      : "border-border active:opacity-80"
                   )}
                 >
                   <RadioGroupItem
@@ -213,7 +212,7 @@ function PriceCare({
                     <Text className="text-base font-semibold">
                       {item.label} payment
                     </Text>
-                    <Text className="text-sm text-label-secondary">
+                    <Text className="text-sm text-muted-foreground">
                       Unlimited accidental damage repairs
                     </Text>
                   </View>
@@ -245,7 +244,7 @@ function PriceCare({
       <BottomBar separator>
         <BottomBarContent className="flex-row items-center gap-3">
           <View accessibilityLiveRegion="polite" className="flex-1">
-            <Text className="text-sm text-label-secondary">Total</Text>
+            <Text className="text-sm text-muted-foreground">Total</Text>
             <Text className="text-2xl font-semibold tabular-nums">
               {money(total)}
             </Text>

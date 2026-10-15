@@ -29,11 +29,11 @@ private val chartData = listOf(
 
 private val chartConfig = ChartConfig(
     "users" to ChartConfigItem("Users"),
-    "phone" to ChartConfigItem("Phone") { blue },
-    "laptop" to ChartConfigItem("Laptop") { teal },
-    "tablet" to ChartConfigItem("Tablet") { indigo },
-    "watch" to ChartConfigItem("Watch") { orange },
-    "other" to ChartConfigItem("Other") { gray },
+    "phone" to ChartConfigItem("Phone") { chart1 },
+    "laptop" to ChartConfigItem("Laptop") { chart2 },
+    "tablet" to ChartConfigItem("Tablet") { chart3 },
+    "watch" to ChartConfigItem("Watch") { chart4 },
+    "other" to ChartConfigItem("Other") { chart5 },
 )
 
 @Composable
@@ -55,10 +55,10 @@ fun PieChartLabel(modifier: Modifier = Modifier) {
                         value = { it.users },
                         nameKey = { it.device },
                         outerRadius = 0.68f,
-                        stroke = colors.surfaceSecondary,
+                        stroke = colors.muted,
                         strokeWidth = 2.dp,
                         label = { index -> chartConfig[chartData[index].device]?.label ?: "" },
-                        labelLine = colors.separatorStrong,
+                        labelLine = colors.input,
                     )
                 }
             }

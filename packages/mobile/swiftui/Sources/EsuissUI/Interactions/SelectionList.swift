@@ -213,7 +213,7 @@ public struct SelectionListItem<Value: Hashable, Content: View>: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .allowsHitTesting(!editing)
     }
-    .background(checked ? Color.itemSelected : .clear)
+    .background(checked ? EsuissColor.accent : .clear)
     .contentShape(Rectangle())
     .onTapGesture {
       guard editing else { return }
@@ -251,12 +251,12 @@ struct SelectionListIndicator: View {
   var body: some View {
     ZStack {
       Circle()
-        .strokeBorder(checked ? Color.accent : .labelTertiary, lineWidth: 1.5)
+        .strokeBorder(checked ? EsuissColor.primary : EsuissColor.mutedForeground, lineWidth: 1.5)
       if checked {
-        Circle().fill(Color.accent)
+        Circle().fill(EsuissColor.primary)
         Ph.check.bold
           .frame(width: 14, height: 14)
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .transition(.scale)
       }
     }
@@ -325,7 +325,7 @@ public struct SelectionListCount: View {
     .monospacedDigit()
     .lineLimit(1)
     .multilineTextAlignment(.center)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .frame(maxWidth: .infinity)
     .contentTransition(.numericText())
     .accessibilityAddTraits(.updatesFrequently)
@@ -345,17 +345,17 @@ struct FloatingBar<Content: View>: View {
     let dark = colorScheme == .dark
     content()
       .frame(maxWidth: .infinity, minHeight: 52, maxHeight: 52)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .background {
         Capsule()
           .fill(.ultraThinMaterial)
           .overlay {
-            Capsule().fill(dark ? Color.surfaceSecondary.opacity(0.75) : Color.surfaceRaised.opacity(0.8))
+            Capsule().fill(dark ? EsuissColor.muted.opacity(0.75) : EsuissColor.card.opacity(0.8))
           }
           .shadow(Shadow(color: .black.opacity(dark ? 0.3 : 0.12), radius: 14, y: 10))
       }
       .overlay {
-        Capsule().strokeBorder(Color.separator)
+        Capsule().strokeBorder(EsuissColor.border)
       }
       .frame(maxWidth: maxWidth)
       .padding(.horizontal, 16)

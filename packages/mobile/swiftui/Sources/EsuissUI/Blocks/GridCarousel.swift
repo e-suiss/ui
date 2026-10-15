@@ -41,10 +41,10 @@ public struct GridCarousel: View {
   }
 
   public var body: some View {
-    Screen(background: .surfaceSecondary) {
+    Screen(background: .muted) {
       KeyboardScrollView {
         VStack(alignment: .leading, spacing: 22) {
-          Text("\(Text("The latest.")) \(Text("Fresh favorites of the season.").foregroundStyle(Color.labelSecondary))")
+          Text("\(Text("The latest.")) \(Text("Fresh favorites of the season.").foregroundStyle(EsuissColor.mutedForeground))")
             .scaledTextStyle(.xl2, weight: .semibold)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 24)
@@ -93,7 +93,7 @@ private struct GridCarouselCard: View {
               .textCase(.uppercase)
               .scaledFont(.xs, weight: .semibold)
               .tracking(0.6)
-              .foregroundStyle(Color.warning)
+              .foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
           }
           Text(verbatim: product.name)
             .scaledTextStyle(.xl2, weight: .semibold)
@@ -101,15 +101,15 @@ private struct GridCarouselCard: View {
             .scaledFont(.lg)
           Text("From \(product.price)")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .padding(.top, 6)
         }
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .multilineTextAlignment(.leading)
         .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 28)
         .padding(.top, 28)
-        Color.control
+        EsuissColor.secondary
           .overlay {
             AsyncImage(url: product.image) { phase in
               if let image = phase.image {
@@ -123,7 +123,7 @@ private struct GridCarouselCard: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .frame(height: 440)
-      .background(Color.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+      .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
       .shadow(Shadow.md)
       .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
     }

@@ -29,9 +29,9 @@ export const Sizes: Story = {
 export const Colors: Story = {
   render: () => (
     <View className="flex-row items-center gap-6">
-      <Spinner size={24} colorClassName="accent-label" />
-      <Spinner size={24} colorClassName="accent-accent" />
-      <Spinner size={24} colorClassName="accent-danger" />
+      <Spinner size={24} colorClassName="accent-foreground" />
+      <Spinner size={24} colorClassName="accent-primary" />
+      <Spinner size={24} colorClassName="accent-destructive" />
     </View>
   ),
 }
@@ -40,7 +40,7 @@ export const InButton: Story = {
   render: () => (
     <View className="items-start gap-3">
       <Button disabled>
-        <Spinner colorClassName="accent-on-accent" />
+        <Spinner colorClassName="accent-primary-foreground" />
         <Text>Saving</Text>
       </Button>
       <Button variant="secondary" disabled>

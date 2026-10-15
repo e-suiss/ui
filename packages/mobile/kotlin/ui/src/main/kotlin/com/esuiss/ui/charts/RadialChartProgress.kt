@@ -29,7 +29,7 @@ private class RadialProgressReading(val value: Double)
 private val chartData = listOf(RadialProgressReading(64.0))
 
 private val chartConfig = ChartConfig(
-    "value" to ChartConfigItem("Reading") { orange },
+    "value" to ChartConfigItem("Reading") { chart4 },
 )
 
 @Composable
@@ -66,9 +66,9 @@ fun RadialChartProgress(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         "16 / 25",
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("books · 2026", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("books · 2026", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

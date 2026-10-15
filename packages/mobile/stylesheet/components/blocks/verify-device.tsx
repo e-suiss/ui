@@ -19,6 +19,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   shadow,
   type ThemeColors,
@@ -47,7 +48,7 @@ const COPY = {
 const ENTERING = FadeIn.duration(500).reduceMotion(ReduceMotion.System)
 
 function slotBorder(active: boolean, colors: ThemeColors) {
-  return active ? colors.accent : colors.separatorStrong
+  return active ? colors.primary : colors.input
 }
 
 function withAlpha(color: string, alpha: number) {
@@ -158,14 +159,14 @@ function AlertAction({
       onPress={onPress}
       style={({ pressed }) => [
         styles.action,
-        { borderColor: colors.separatorStrong },
-        pressed && { backgroundColor: colors.itemPressed },
+        { borderColor: colors.input },
+        pressed && { opacity: 0.8 },
       ]}
     >
       <Text
         style={[
           fontSize.lg,
-          { color: colors.link },
+          { color: colors.primary },
           primary && { fontWeight: "600" },
         ]}
       >
@@ -180,7 +181,7 @@ function VerifyDevice({
 }: {
   onVerify?: (code: string) => boolean | Promise<boolean>
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const [phase, setPhase] = React.useState<Phase>("ask")
   const [code, setCode] = React.useState("")
   const [error, setError] = React.useState(false)
@@ -201,12 +202,12 @@ function VerifyDevice({
             )}
             style={styles.stack}
           >
-            <View style={[styles.check, { backgroundColor: colors.success }]}>
+            <View style={[styles.check, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text
@@ -218,7 +219,7 @@ function VerifyDevice({
             <Text
               style={[
                 styles.lead,
-                { textAlign: "center", color: colors.labelSecondary },
+                { textAlign: "center", color: colors.mutedForeground },
               ]}
             >
               This device was added to your suiss Account.
@@ -233,7 +234,7 @@ function VerifyDevice({
               }}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[fontSize.lg, { color: colors.link }]}>
+              <Text style={[fontSize.lg, { color: colors.primary }]}>
                 Start over ›
               </Text>
             </Pressable>
@@ -246,20 +247,18 @@ function VerifyDevice({
   return (
     <Screen>
       <KeyboardScrollView contentContainerStyle={styles.content}>
-        <View
-          style={[styles.badge, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.badge, { backgroundColor: colors.muted }]}>
           <Icon
             as={phase === "code" ? LockSimpleIcon : DeviceMobileIcon}
             weight="bold"
             size={26}
-            color={colors.accent}
+            color={colors.primary}
           />
         </View>
         <Text role="heading" style={styles.title}>
           {COPY[phase].title}
         </Text>
-        <Text style={[styles.lead, { color: colors.labelSecondary }]}>
+        <Text style={[styles.lead, { color: colors.mutedForeground }]}>
           {COPY[phase].body}
         </Text>
         <View accessibilityLiveRegion="polite" style={styles.status}>
@@ -288,7 +287,7 @@ function VerifyDevice({
                         styles.slot,
                         {
                           borderColor: error
-                            ? colors.danger
+                            ? colors.destructive
                             : slotBorder(state.active, colors),
                         },
                       ]}
@@ -298,7 +297,10 @@ function VerifyDevice({
               </InputOTP>
               {error ? (
                 <Text
-                  style={[fontSize.sm, { marginTop: 10, color: colors.danger }]}
+                  style={[
+                    fontSize.sm,
+                    { marginTop: 10, color: colors.destructive },
+                  ]}
                 >
                   Incorrect code.
                 </Text>
@@ -308,7 +310,7 @@ function VerifyDevice({
           {phase === "ask" ? (
             <View style={styles.waiting}>
               <Spinner />
-              <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+              <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
                 Waiting for approval…
               </Text>
             </View>
@@ -323,15 +325,13 @@ function VerifyDevice({
                 pressed && { opacity: 0.6 },
               ]}
             >
-              <Text style={[fontSize.base, { color: colors.link }]}>
+              <Text style={[fontSize.base, { color: colors.primary }]}>
                 Try again ›
               </Text>
             </Pressable>
           ) : null}
         </View>
-        <View
-          style={[styles.panel, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.panel, { backgroundColor: colors.muted }]}>
           <AnimatedView
             key={phase}
             entering={ENTERING}
@@ -340,7 +340,7 @@ function VerifyDevice({
             style={[
               styles.card,
               shadow.lg,
-              { backgroundColor: colors.surfaceRaised },
+              { backgroundColor: colors.popover },
             ]}
           >
             {phase === "code" ? (
@@ -364,7 +364,7 @@ function VerifyDevice({
                     482 913
                   </Text>
                   <Text
-                    style={[styles.cardText, { color: colors.labelSecondary }]}
+                    style={[styles.cardText, { color: colors.mutedForeground }]}
                   >
                     Enter this code on the device you're signing in to.
                   </Text>
@@ -379,7 +379,7 @@ function VerifyDevice({
                   <Text
                     style={[
                       styles.cardText,
-                      { marginTop: 4, color: colors.labelSecondary },
+                      { marginTop: 4, color: colors.mutedForeground },
                     ]}
                   >
                     If this wasn't you, change your password.
@@ -405,7 +405,7 @@ function VerifyDevice({
                   <Text
                     style={[
                       styles.cardText,
-                      { marginTop: 4, color: colors.labelSecondary },
+                      { marginTop: 4, color: colors.mutedForeground },
                     ]}
                   >
                     Your suiss Account is being used to sign in to a device near
@@ -414,17 +414,25 @@ function VerifyDevice({
                   <View
                     style={[
                       styles.map,
-                      { backgroundColor: colors.accentSurface },
+                      {
+                        backgroundColor: withAlpha(
+                          colors.primary,
+                          isDark ? 0.2 : 0.1
+                        ),
+                      },
                     ]}
                   >
                     <View
                       style={[
                         styles.ring,
-                        { backgroundColor: withAlpha(colors.accent, 0.25) },
+                        { backgroundColor: withAlpha(colors.primary, 0.25) },
                       ]}
                     >
                       <View
-                        style={[styles.dot, { backgroundColor: colors.accent }]}
+                        style={[
+                          styles.dot,
+                          { backgroundColor: colors.primary },
+                        ]}
                       />
                     </View>
                   </View>

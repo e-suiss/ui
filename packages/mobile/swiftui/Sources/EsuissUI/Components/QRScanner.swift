@@ -93,7 +93,7 @@ public struct QRScanner<Preview: View>: View {
         let frame = QRScannerMath.frame(in: size, frameSize: frameSize)
         ZStack(alignment: .topLeading) {
           QRScannerMath.cutout(in: size, frame: frame)
-            .fill(Color.scrim, style: FillStyle(eoFill: true))
+            .fill(Palette.black.opacity(0.5), style: FillStyle(eoFill: true))
           ZStack {
             QRScannerMath.brackets(side: frame.width)
               .stroke(color, style: StrokeStyle(lineWidth: 6, lineCap: .round, lineJoin: .round))
@@ -110,7 +110,7 @@ public struct QRScanner<Preview: View>: View {
           if let title {
             title
               .scaledTextStyle(.lg, weight: .semibold)
-              .foregroundStyle(Color.onMedia)
+              .foregroundStyle(Palette.white)
               .multilineTextAlignment(.center)
               .frame(width: max(size.width - 48, 0))
               .frame(height: max(frame.minY - 32, 0), alignment: .bottom)
@@ -119,7 +119,7 @@ public struct QRScanner<Preview: View>: View {
           if let hint {
             hint
               .scaledTextStyle(.sm)
-              .foregroundStyle(Color.onMedia)
+              .foregroundStyle(Palette.white)
               .multilineTextAlignment(.center)
               .fixedSize(horizontal: false, vertical: true)
               .frame(maxWidth: min(280, size.width))
@@ -130,9 +130,9 @@ public struct QRScanner<Preview: View>: View {
             Button(action: onTorchToggle) {
               (isTorchOn ? Ph.flashlight.fill : Ph.flashlight.regular)
                 .frame(width: 24, height: 24)
-                .foregroundStyle(isTorchOn ? Color.media : Color.onMedia)
+                .foregroundStyle(isTorchOn ? Palette.black : Palette.white)
                 .frame(width: 56, height: 56)
-                .background(isTorchOn ? Color.onMedia : Color.scrim, in: Circle())
+                .background(isTorchOn ? Palette.white : Palette.black.opacity(0.5), in: Circle())
                 .contentShape(Circle())
             }
             .buttonStyle(QRScannerTorchStyle())
@@ -155,9 +155,9 @@ public struct QRScanner<Preview: View>: View {
 
   private var color: Color {
     switch state {
-    case .idle: .onMedia
-    case .success: .success
-    case .error: .danger
+    case .idle: Palette.white
+    case .success: Color.adaptive(light: Palette.green600, dark: Palette.green400)
+    case .error: EsuissColor.destructive
     }
   }
 }
@@ -195,7 +195,7 @@ private struct QRScannerLine: View {
   var body: some View {
     let travel = side / 2 - 24
     Capsule()
-      .fill(Color.accent)
+      .fill(EsuissColor.primary)
       .frame(height: 2)
       .padding(.horizontal, 24)
       .offset(y: reduceMotion ? 0 : (down ? travel : -travel))
@@ -210,7 +210,7 @@ private struct QRScannerLine: View {
 private struct QRScannerTorchStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.7 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
   }
 }

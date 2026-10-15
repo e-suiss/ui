@@ -117,7 +117,7 @@ private fun ComboboxWithLabel() {
         ComboboxDemo(label = "Framework")
         Text(
             "Search and pick the framework you use.",
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
         )
     }
 }
@@ -126,6 +126,6 @@ private fun ComboboxWithLabel() {
 private fun ComboboxInvalid() {
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         ComboboxDemo(invalid = true)
-        Text("Please select a framework.", style = Typography.sm.copy(color = EsuissTheme.colors.danger))
+        Text("Please select a framework.", style = Typography.sm.copy(color = EsuissTheme.colors.destructive))
     }
 }

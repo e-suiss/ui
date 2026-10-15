@@ -96,6 +96,7 @@ import com.esuiss.ui.components.TabBarItem
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -126,10 +127,10 @@ private val LiveFeed = listOf(
 private class LiveEntry(val id: Int, val time: String, val event: LiveFeedEvent)
 
 private fun liveTint(colors: Colors, hue: Int): Color = when (hue) {
-    250 -> colors.indigo
-    30 -> colors.orange
-    150 -> colors.green
-    else -> colors.teal
+    250 -> Palette.indigo500
+    30 -> Palette.orange500
+    150 -> Palette.green500
+    else -> Palette.teal500
 }
 
 @Composable
@@ -206,7 +207,7 @@ fun LogLive(
                             .fillMaxWidth()
                             .height(IntrinsicSize.Min)
                             .clip(RoundedCornerShape(Radius.xl))
-                            .background(colors.surfaceSecondary),
+                            .background(colors.muted),
                     ) {
                         stats.forEachIndexed { index, (label, value) ->
                             if (index > 0) {
@@ -214,7 +215,7 @@ fun LogLive(
                                     Modifier
                                         .width(1.dp)
                                         .fillMaxHeight()
-                                        .background(colors.separator),
+                                        .background(colors.border),
                                 )
                             }
                             Column(
@@ -222,10 +223,10 @@ fun LogLive(
                                     .weight(1f)
                                     .padding(horizontal = 14.dp, vertical = 12.dp),
                             ) {
-                                BasicText(label, style = Typography.xs.copy(color = colors.labelSecondary), maxLines = 1)
+                                BasicText(label, style = Typography.xs.copy(color = colors.mutedForeground), maxLines = 1)
                                 BasicText(
                                     value,
-                                    style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                     maxLines = 1,
                                 )
                             }
@@ -238,7 +239,7 @@ fun LogLive(
                                 modifier = Modifier
                                     .weight(1f)
                                     .semantics { heading() },
-                                style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                             if (running) LivePulse()
                         }
@@ -275,9 +276,9 @@ private fun LivePulse() {
             Modifier
                 .size(7.dp)
                 .graphicsLayer { this.alpha = alpha }
-                .background(colors.green, CircleShape),
+                .background(Palette.green500, CircleShape),
         )
-        BasicText("Live", style = Typography.xs.copy(color = colors.labelSecondary))
+        BasicText("Live", style = Typography.xs.copy(color = colors.mutedForeground))
     }
 }
 
@@ -305,17 +306,17 @@ private fun LiveRow(entry: LiveEntry) {
                 ) {
                     BasicText(
                         event.actor.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-                        style = Typography.xs3.copy(color = colors.onMedia, fontWeight = FontWeight.Medium),
+                        style = Typography.xs3.copy(color = Palette.white, fontWeight = FontWeight.Medium),
                     )
                 }
             } else {
                 Box(
                     Modifier
                         .size(28.dp)
-                        .background(if (event.warning) colors.orange else colors.gray, RoundedCornerShape(7.dp)),
+                        .background(if (event.warning) Palette.orange500 else Palette.zinc500, RoundedCornerShape(7.dp)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    event.icon?.let { Icon(it, contentDescription = null, size = 16.dp, tint = colors.onMedia) }
+                    event.icon?.let { Icon(it, contentDescription = null, size = 16.dp, tint = Palette.white) }
                 }
             }
         }
@@ -325,19 +326,19 @@ private fun LiveRow(entry: LiveEntry) {
                     withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) { append(event.actor) }
                     append(" ${event.action}")
                 },
-                style = Typography.sm.copy(color = colors.label),
+                style = Typography.sm.copy(color = colors.foreground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             BasicText(
                 event.detail,
-                style = Typography.xs.copy(color = colors.labelSecondary),
+                style = Typography.xs.copy(color = colors.mutedForeground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
         }
         ItemActions {
-            BasicText(entry.time, style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"))
+            BasicText(entry.time, style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"))
         }
     }
 }
@@ -362,7 +363,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

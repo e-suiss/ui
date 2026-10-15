@@ -11,7 +11,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
@@ -37,12 +37,12 @@ private struct GallerySection<Content: View>: View {
 private func landscape() -> Image {
   let size = CGSize(width: 240, height: 240)
   let image = UIGraphicsImageRenderer(size: size).image { context in
-    let colors = [UIColor(Color.accent).cgColor, UIColor(Color.success).cgColor] as CFArray
+    let colors = [UIColor(EsuissColor.primary).cgColor, UIColor(Palette.green500).cgColor] as CFArray
     let space = CGColorSpaceCreateDeviceRGB()
     if let gradient = CGGradient(colorsSpace: space, colors: colors, locations: [0, 1]) {
       context.cgContext.drawLinearGradient(gradient, start: .zero, end: CGPoint(x: size.width, y: size.height), options: [])
     }
-    UIColor(Color.onAccent).withAlphaComponent(0.85).setFill()
+    UIColor(EsuissColor.primaryForeground).withAlphaComponent(0.85).setFill()
     let mountain = UIBezierPath()
     mountain.move(to: CGPoint(x: 0, y: 240))
     mountain.addLine(to: CGPoint(x: 90, y: 110))
@@ -209,7 +209,7 @@ private struct AttachmentStatesGallery: View {
             }
           }
           Attachment(state: .uploading, block: true) {
-            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
             AttachmentContent {
               AttachmentTitle("Invoice March.pdf")
               AttachmentProgress(value: 64)
@@ -219,18 +219,18 @@ private struct AttachmentStatesGallery: View {
             }
           }
           Attachment(state: .processing, block: true) {
-            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
             AttachmentContent {
               AttachmentTitle("Invoice March.pdf")
               AttachmentDescription("Processing…")
             }
             AttachmentActions {
               SpinnerSpokes(dimension: 20, progress: nil)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
           }
           Attachment(state: .error, block: true) {
-            AttachmentMedia(.document) { AttachmentLabel("key", tint: .warning) }
+            AttachmentMedia(.document) { AttachmentLabel("key", tint: Palette.amber500) }
             AttachmentContent {
               AttachmentTitle("Presentation.key")
               AttachmentDescription("File type not supported")
@@ -240,7 +240,7 @@ private struct AttachmentStatesGallery: View {
             }
           }
           Attachment(state: .done, block: true) {
-            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
             AttachmentContent {
               AttachmentTitle("Invoice March.pdf")
               AttachmentDescription("1.1 MB")
@@ -305,7 +305,7 @@ private struct AttachmentLayoutGallery: View {
       GallerySection("Group") {
         AttachmentGroup {
           Attachment(state: .uploading) {
-            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
             AttachmentContent {
               AttachmentTitle("Invoice March.pdf")
               AttachmentProgress(value: 32)
@@ -323,7 +323,7 @@ private struct AttachmentLayoutGallery: View {
             }
           }
           Attachment(state: .error) {
-            AttachmentMedia(.document) { AttachmentLabel("key", tint: .warning) }
+            AttachmentMedia(.document) { AttachmentLabel("key", tint: Palette.amber500) }
             AttachmentContent {
               AttachmentTitle("Presentation.key")
               AttachmentDescription("File type not supported")
@@ -336,11 +336,11 @@ private struct AttachmentLayoutGallery: View {
       }
       GallerySection("File types") {
         VStack(alignment: .leading, spacing: 12) {
-          FileRow(name: "Invoice.pdf", meta: "128 KB", label: "pdf", tint: .danger)
-          FileRow(name: "Menu.xlsx", meta: "2.4 MB", label: "xlsx", tint: .success)
-          FileRow(name: "Contract.docx", meta: "84 KB", label: "docx", tint: .accent)
-          FileRow(name: "Pitch.key", meta: "12 MB", label: "key", tint: .warning)
-          FileRow(name: "Archive.zip", meta: "48 MB", label: "zip", tint: .labelSecondary)
+          FileRow(name: "Invoice.pdf", meta: "128 KB", label: "pdf", tint: EsuissColor.destructive)
+          FileRow(name: "Menu.xlsx", meta: "2.4 MB", label: "xlsx", tint: Palette.green500)
+          FileRow(name: "Contract.docx", meta: "84 KB", label: "docx", tint: EsuissColor.primary)
+          FileRow(name: "Pitch.key", meta: "12 MB", label: "key", tint: Palette.amber500)
+          FileRow(name: "Archive.zip", meta: "48 MB", label: "zip", tint: EsuissColor.mutedForeground)
         }
       }
     }
@@ -370,7 +370,7 @@ private struct ChatRow: View {
     case .day(let label):
       Text(verbatim: label)
         .font(TextStyle.xs.font(weight: .semibold))
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .frame(maxWidth: .infinity)
     case .received(let texts, let header, let footer, let reaction):
       Message {
@@ -401,7 +401,7 @@ private struct ChatRow: View {
           }
           if let footer {
             MessageFooter {
-              Ph.checks.bold.frame(width: 14, height: 14).foregroundStyle(Color.link)
+              Ph.checks.bold.frame(width: 14, height: 14).foregroundStyle(EsuissColor.primary)
               Text(verbatim: footer)
             }
           }
@@ -413,7 +413,7 @@ private struct ChatRow: View {
         MessageContent {
           Attachment {
             AttachmentTrigger("Open Launch plan.pdf") {}
-            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+            AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
             AttachmentContent {
               AttachmentTitle("Launch plan.pdf")
               AttachmentDescription("1.1 MB")
@@ -426,7 +426,7 @@ private struct ChatRow: View {
       Message(align: .end) {
         MessageContent {
           Attachment(state: .uploading) {
-            AttachmentMedia(.document) { AttachmentLabel("zip", tint: .accent) }
+            AttachmentMedia(.document) { AttachmentLabel("zip", tint: EsuissColor.primary) }
             AttachmentContent {
               AttachmentTitle("Screens.zip")
               AttachmentProgress(value: 64)
@@ -534,14 +534,14 @@ private struct ChatHeader: View {
     HStack(spacing: 10) {
       Avatar(url: nil, initials: "JL")
       VStack(alignment: .leading, spacing: 0) {
-        Text(verbatim: title).font(TextStyle.md.font(weight: .semibold)).foregroundStyle(Color.label)
-        Text(verbatim: "Online").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
+        Text(verbatim: title).font(TextStyle.md.font(weight: .semibold)).foregroundStyle(EsuissColor.foreground)
+        Text(verbatim: "Online").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
       }
       Spacer(minLength: 0)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
-    .overlay(alignment: .bottom) { Color.separator.frame(height: 1) }
+    .overlay(alignment: .bottom) { EsuissColor.border.frame(height: 1) }
   }
 }
 
@@ -610,7 +610,7 @@ final class ChatGalleryTests: XCTestCase {
       let renderer = ImageRenderer(content: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US")))
       renderer.scale = 3
@@ -625,7 +625,7 @@ final class ChatGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

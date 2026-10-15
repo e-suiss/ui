@@ -355,7 +355,7 @@ function SwipeActionsContent({
         context.onAccessibilityAction(event)
         onAccessibilityAction?.(event)
       }}
-      className={cn("relative z-10 bg-surface", className)}
+      className={cn("relative z-10 bg-background", className)}
       style={[animatedStyle, style]}
       {...props}
     />
@@ -373,10 +373,10 @@ const swipeActionVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-accent",
-        destructive: "bg-danger",
-        archive: "bg-purple",
-        neutral: "bg-gray",
+        default: "bg-primary",
+        destructive: "bg-destructive",
+        archive: "bg-purple-500",
+        neutral: "bg-zinc-500",
       },
     },
     defaultVariants: {
@@ -405,8 +405,8 @@ function SwipeAction({
   const side = React.useContext(SwipeActionsSideContext)
   const expanding = full === side
   return (
-    <TextClassContext.Provider value="text-center text-xs font-medium text-on-accent">
-      <IconClassContext.Provider value="size-5 text-on-accent">
+    <TextClassContext.Provider value="text-center text-xs font-medium text-primary-foreground">
+      <IconClassContext.Provider value="size-5 text-primary-foreground">
         <Pressable
           role="button"
           className={cn(

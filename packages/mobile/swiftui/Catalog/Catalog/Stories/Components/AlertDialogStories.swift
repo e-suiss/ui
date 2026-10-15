@@ -34,7 +34,7 @@ enum AlertDialogStories {
           AlertDialogHeader {
             AlertDialogMedia {
               Ph.trash.regular
-                .foregroundStyle(Color.danger)
+                .foregroundStyle(EsuissColor.destructive)
             }
             AlertDialogTitle("Delete this project?")
             AlertDialogDescription(

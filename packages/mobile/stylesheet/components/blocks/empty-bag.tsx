@@ -15,7 +15,7 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=500&q=80&auto=format&fit=crop`
@@ -96,9 +96,11 @@ function EmptyBag() {
                   entering={ZoomIn.duration(300).reduceMotion(
                     ReduceMotion.System
                   )}
-                  style={[styles.badge, { backgroundColor: colors.label }]}
+                  style={[styles.badge, { backgroundColor: colors.foreground }]}
                 >
-                  <Text style={[styles.badgeText, { color: colors.surface }]}>
+                  <Text
+                    style={[styles.badgeText, { color: colors.background }]}
+                  >
                     {count}
                   </Text>
                 </AnimatedView>
@@ -141,13 +143,19 @@ function EmptyBag() {
                     source={{ uri: item.image }}
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
-                    style={[styles.image, { backgroundColor: colors.control }]}
+                    style={[
+                      styles.image,
+                      { backgroundColor: colors.secondary },
+                    ]}
                   />
                   <View style={styles.row}>
                     <View style={styles.info}>
                       <Text style={styles.name}>{item.name}</Text>
                       <Text
-                        style={[styles.price, { color: colors.labelSecondary }]}
+                        style={[
+                          styles.price,
+                          { color: colors.mutedForeground },
+                        ]}
                       >
                         {item.price}
                       </Text>
@@ -170,7 +178,7 @@ function EmptyBag() {
                       }
                       style={[
                         styles.add,
-                        inBag && { backgroundColor: colors.success },
+                        inBag && { backgroundColor: palette.green500 },
                       ]}
                     >
                       <Icon

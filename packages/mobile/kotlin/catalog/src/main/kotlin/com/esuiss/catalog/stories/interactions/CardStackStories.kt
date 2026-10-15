@@ -86,11 +86,11 @@ private fun CardStackPlaceCard(place: CardStackPlace, modifier: Modifier = Modif
             Box(
                 Modifier
                     .fillMaxSize()
-                    .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl)),
+                    .background(colors.muted, RoundedCornerShape(Radius.xl)),
             )
         }
         CardContent {
-            Text(place.detail, style = Typography.sm.copy(color = colors.labelSecondary))
+            Text(place.detail, style = Typography.sm.copy(color = colors.mutedForeground))
         }
     }
 }
@@ -106,7 +106,7 @@ private fun CardStackEmptyBox() {
                 val stroke = 1.dp.toPx()
                 val radius = Radius.xl2.toPx()
                 drawRoundRect(
-                    color = colors.separator,
+                    color = colors.border,
                     topLeft = Offset(stroke / 2, stroke / 2),
                     size = Size(size.width - stroke, size.height - stroke),
                     cornerRadius = CornerRadius(radius, radius),
@@ -118,7 +118,7 @@ private fun CardStackEmptyBox() {
     ) {
         Text(
             "You have seen every place.",
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             textAlign = TextAlign.Center,
         )
     }
@@ -140,7 +140,7 @@ private fun CardStackActions(state: CardStackState, enabled: Boolean) {
             size = ButtonSize.IconLg,
             enabled = canSwipe,
         ) {
-            Icon(PhosphorIcons.Regular.X, contentDescription = "Swipe left", size = 24.dp, tint = colors.danger)
+            Icon(PhosphorIcons.Regular.X, contentDescription = "Swipe left", size = 24.dp, tint = colors.destructive)
         }
         Button(
             onClick = { state.undo() },
@@ -157,7 +157,7 @@ private fun CardStackActions(state: CardStackState, enabled: Boolean) {
             size = ButtonSize.IconLg,
             enabled = canSwipe,
         ) {
-            Icon(PhosphorIcons.Regular.Heart, contentDescription = "Swipe right", size = 24.dp, tint = colors.accent)
+            Icon(PhosphorIcons.Regular.Heart, contentDescription = "Swipe right", size = 24.dp, tint = colors.primary)
         }
     }
 }
@@ -186,7 +186,7 @@ private fun CardStackDemo(enabled: Boolean) {
         Text(
             log,
             modifier = Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
             textAlign = TextAlign.Center,
         )
     }

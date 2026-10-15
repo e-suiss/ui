@@ -9,7 +9,7 @@ public struct Separator: View {
 
   public var body: some View {
     Rectangle()
-      .fill(Color.separator)
+      .fill(EsuissColor.border)
       .frame(width: orientation == .vertical ? 1 : nil, height: orientation == .horizontal ? 1 : nil)
       .frame(maxWidth: orientation == .horizontal ? .infinity : nil, maxHeight: orientation == .vertical ? .infinity : nil)
       .accessibilityHidden(true)

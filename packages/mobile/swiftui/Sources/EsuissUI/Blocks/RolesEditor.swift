@@ -93,7 +93,7 @@ public struct RolesEditor: View {
                   .scaledFont(.base)
                 Text("\(state[name, default: []].filter { $0 }.count) permissions")
                   .scaledFont(.xs)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
             }
             Button {
@@ -140,7 +140,7 @@ public struct RolesEditor: View {
             .accessibilityAddTraits(.isHeader)
           Text(members == 1 ? "\(members) user has this role" : "\(members) users have this role")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         if state != base {
@@ -178,7 +178,7 @@ public struct RolesEditor: View {
         }
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
   }
 
   private func permissionRow(_ permission: Permission, slot: Int) -> some View {
@@ -212,7 +212,7 @@ private struct RolesEditorHeading: View {
     if splitView?.wide ?? false {
       Text("Roles")
         .scaledFont(.sm, weight: .semibold)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.horizontal, 4)
         .padding(.vertical, 8)
         .accessibilityAddTraits(.isHeader)
@@ -264,7 +264,7 @@ private struct RolesEditorShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

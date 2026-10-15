@@ -44,6 +44,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -75,6 +76,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private val AccessoryPopEasing = CubicBezierEasing(0.3f, 1.25f, 0.5f, 1f)
@@ -124,9 +126,9 @@ fun GridAccessories(
                     BasicText(
                         "Accessories",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
-                    BasicText("Designed for every suiss device.", style = Typography.base.copy(color = colors.labelSecondary))
+                    BasicText("Designed for every suiss device.", style = Typography.base.copy(color = colors.mutedForeground))
                 }
                 AccessoryBag(bag.size)
             }
@@ -191,7 +193,7 @@ private fun AccessoryBag(count: Int) {
                 liveRegion = LiveRegionMode.Polite
             },
     ) {
-        Icon(PhosphorIcons.Regular.Handbag, contentDescription = null, size = 22.dp, tint = colors.label)
+        Icon(PhosphorIcons.Regular.Handbag, contentDescription = null, size = 22.dp, tint = colors.foreground)
         AnimatedVisibility(
             visible = count > 0,
             modifier = Modifier
@@ -203,13 +205,13 @@ private fun AccessoryBag(count: Int) {
             Box(
                 Modifier
                     .heightIn(min = 16.dp)
-                    .background(colors.label, CircleShape)
+                    .background(colors.foreground, CircleShape)
                     .padding(horizontal = 5.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 BasicText(
                     count.toString(),
-                    style = Typography.xs3.copy(color = colors.surface, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    style = Typography.xs3.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                 )
             }
         }
@@ -231,16 +233,16 @@ private fun AccessoryTile(item: Accessory, inBag: Boolean, modifier: Modifier, o
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .background(colors.surfaceSecondary, RoundedCornerShape(16.dp))
+                .background(colors.muted, RoundedCornerShape(16.dp))
                 .clearAndSetSemantics {},
             contentAlignment = Alignment.Center,
         ) {
-            Icon(item.icon, contentDescription = null, size = 64.dp, tint = colors.labelTertiary)
+            Icon(item.icon, contentDescription = null, size = 64.dp, tint = colors.mutedForeground)
         }
         BasicText(
             item.name,
             modifier = Modifier.padding(top = 12.dp),
-            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             minLines = 2,
             maxLines = 2,
         )
@@ -249,7 +251,7 @@ private fun AccessoryTile(item: Accessory, inBag: Boolean, modifier: Modifier, o
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            BasicText(item.price, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
+            BasicText(item.price, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
             AccessoryAddButton(item.name, inBag, onToggle)
         }
     }
@@ -262,17 +264,14 @@ private fun AccessoryAddButton(name: String, inBag: Boolean, onToggle: () -> Uni
     val pressed by interaction.collectIsPressedAsState()
     val width by animateDpAsState(if (inBag) 84.dp else 30.dp, tween(300, easing = AccessoryPopEasing), label = "width")
     val fill by animateColorAsState(
-        when {
-            inBag -> colors.success
-            pressed -> colors.accentPressed
-            else -> colors.accent
-        },
+        if (inBag) Palette.green500 else colors.primary,
         tween(300),
         label = "fill",
     )
     Box(
         Modifier
             .height(44.dp)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onToggle)
             .semantics {
                 contentDescription = if (inBag) "Remove $name from bag" else "Add $name to bag"
@@ -293,10 +292,10 @@ private fun AccessoryAddButton(name: String, inBag: Boolean, onToggle: () -> Uni
                 if (inBag) PhosphorIcons.Bold.Check else PhosphorIcons.Bold.Plus,
                 contentDescription = null,
                 size = 15.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
             AnimatedVisibility(visible = inBag, enter = fadeIn(tween(300))) {
-                BasicText("In bag", style = Typography.xs.copy(color = colors.onAccent, fontWeight = FontWeight.Medium), maxLines = 1, softWrap = false)
+                BasicText("In bag", style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.Medium), maxLines = 1, softWrap = false)
             }
         }
     }

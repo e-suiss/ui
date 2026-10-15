@@ -75,7 +75,7 @@ private fun TabsField(label: String, initial: String, password: Boolean = false,
 
 @Composable
 private fun TabsSecondaryText(text: String) {
-    Text(text, style = Typography.sm, color = EsuissTheme.colors.labelSecondary)
+    Text(text, style = Typography.sm, color = EsuissTheme.colors.mutedForeground)
 }
 
 @Composable

@@ -1,7 +1,7 @@
 import SwiftUI
 
 private let chartConfig: ChartConfig = [
-  "value": .init("Used", color: .blue),
+  "value": .init("Used", color: EsuissColor.chart1),
 ]
 
 public struct RadialChartText: View {
@@ -30,7 +30,7 @@ public struct RadialChartText: View {
                 .monospacedDigit()
               Text("cloud storage used")
                 .textStyle(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .multilineTextAlignment(.center)
           }

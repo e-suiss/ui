@@ -111,7 +111,7 @@ private fun SelectWithLabel() {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Label("Favorite fruit")
         SelectDemo(label = "Favorite fruit")
-        Text("Used to personalize your recommendations.", style = Typography.sm, color = EsuissTheme.colors.labelSecondary)
+        Text("Used to personalize your recommendations.", style = Typography.sm, color = EsuissTheme.colors.mutedForeground)
     }
 }
 
@@ -119,6 +119,6 @@ private fun SelectWithLabel() {
 private fun SelectInvalid() {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         SelectDemo(invalid = true)
-        Text("Please select a fruit.", style = Typography.sm, color = EsuissTheme.colors.danger)
+        Text("Please select a fruit.", style = Typography.sm, color = EsuissTheme.colors.destructive)
     }
 }

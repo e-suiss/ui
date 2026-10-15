@@ -116,7 +116,7 @@ private val Cities = listOf(
 
 @Composable
 private fun Caption(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
@@ -124,8 +124,8 @@ private fun Framed(content: @Composable () -> Unit) {
     val colors = EsuissTheme.colors
     Box(
         modifier = Modifier
-            .border(1.dp, colors.separator, RoundedCornerShape(Radius.xl2))
-            .background(colors.surfaceRaised, RoundedCornerShape(Radius.xl2))
+            .border(1.dp, colors.border, RoundedCornerShape(Radius.xl2))
+            .background(colors.card, RoundedCornerShape(Radius.xl2))
             .padding(16.dp),
     ) {
         content()
@@ -136,7 +136,7 @@ private fun Framed(content: @Composable () -> Unit) {
 private fun CalendarFrame(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier
-            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))
+            .border(1.dp, EsuissTheme.colors.border, RoundedCornerShape(Radius.xl2))
             .padding(1.dp),
     ) {
         content()
@@ -173,7 +173,7 @@ private fun StepperRow(label: String, value: Double, onValueChange: (Double) -> 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        BasicText(label, style = Typography.base.copy(color = EsuissTheme.colors.label))
+        BasicText(label, style = Typography.base.copy(color = EsuissTheme.colors.foreground))
         Stepper(value = value, onValueChange = onValueChange, min = min, max = max, step = step, enabled = enabled, format = format) {
             StepperInput(contentDescription = label)
             StepperGroup {
@@ -319,7 +319,7 @@ private fun Scene(scene: PickerScene) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2)),
+                    .border(1.dp, EsuissTheme.colors.border, RoundedCornerShape(Radius.xl2)),
             ) {
                 StepperRow("Copies", copies, { copies = it }, 1.0, 999.0)
                 Separator()
@@ -383,7 +383,7 @@ class PickersGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .safeDrawingPadding()
                         .padding(16.dp),
                 ) {

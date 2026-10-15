@@ -76,6 +76,7 @@ import com.esuiss.ui.components.RadioGroupItem
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Currency
@@ -141,12 +142,12 @@ fun BagCheckout(
                     ) {
                         RadioGroup(value = shipping, onValueChange = { shipping = it }, modifier = Modifier.semantics { contentDescription = "Delivery" }) {
                             CheckoutChoice("Standard", shipping == "Standard") {
-                                BasicText("Standard · 3–5 business days", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
-                                BasicText("Free", style = Typography.base.copy(color = colors.label))
+                                BasicText("Standard · 3–5 business days", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
+                                BasicText("Free", style = Typography.base.copy(color = colors.foreground))
                             }
                             CheckoutChoice("Express", shipping == "Express") {
-                                BasicText("Express · Tomorrow", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
-                                BasicText("$19", style = Typography.base.copy(color = colors.label))
+                                BasicText("Express · Tomorrow", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
+                                BasicText("$19", style = Typography.base.copy(color = colors.foreground))
                             }
                         }
                     }
@@ -159,19 +160,19 @@ fun BagCheckout(
                     ) {
                         RadioGroup(value = payment, onValueChange = { payment = it }, modifier = Modifier.semantics { contentDescription = "Payment" }) {
                             CheckoutChoice("Card", payment == "Card") {
-                                Icon(PhosphorIcons.Regular.CreditCard, contentDescription = null, size = 18.dp, tint = colors.label)
-                                BasicText("Credit card · •••• 4242", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
+                                Icon(PhosphorIcons.Regular.CreditCard, contentDescription = null, size = 18.dp, tint = colors.foreground)
+                                BasicText("Credit card · •••• 4242", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
                             }
                             CheckoutChoice("Pay", payment == "Pay") {
-                                Icon(PhosphorIcons.Regular.Wallet, contentDescription = null, size = 18.dp, tint = colors.label)
-                                BasicText("suiss Pay", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
+                                Icon(PhosphorIcons.Regular.Wallet, contentDescription = null, size = 18.dp, tint = colors.foreground)
+                                BasicText("suiss Pay", modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
                             }
                         }
                     }
                     CheckoutStep(index = 2, current = step, title = "Review", summary = null, onEdit = { step = 2 }) {
                         BasicText(
                             "By placing your order, you agree to the Sales Policy.",
-                            style = Typography.sm.copy(color = colors.labelSecondary),
+                            style = Typography.sm.copy(color = colors.mutedForeground),
                         )
                     }
                 }
@@ -190,10 +191,10 @@ fun BagCheckout(
                             .weight(1f)
                             .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
                     ) {
-                        BasicText("Total", style = Typography.xs.copy(color = colors.labelSecondary))
+                        BasicText("Total", style = Typography.xs.copy(color = colors.mutedForeground))
                         BasicText(
                             checkoutMoney(total),
-                            style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                     }
                     when (step) {
@@ -228,9 +229,9 @@ private fun CheckoutStep(
     val done = current > index
     val badge by animateColorAsState(
         when {
-            done -> colors.success
-            open -> colors.label
-            else -> colors.control
+            done -> Palette.green500
+            open -> colors.foreground
+            else -> colors.secondary
         },
         tween(250),
         label = "badge",
@@ -253,12 +254,12 @@ private fun CheckoutStep(
                     contentAlignment = Alignment.Center,
                 ) {
                     if (done) {
-                        Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 13.dp, tint = colors.onAccent)
+                        Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 13.dp, tint = colors.primaryForeground)
                     } else {
                         BasicText(
                             (index + 1).toString(),
                             style = Typography.sm.copy(
-                                color = if (open) colors.surface else colors.labelSecondary,
+                                color = if (open) colors.background else colors.mutedForeground,
                                 fontWeight = FontWeight.SemiBold,
                             ),
                         )
@@ -277,7 +278,7 @@ private fun CheckoutStep(
                             }
                         },
                     style = Typography.xl.copy(
-                        color = if (open || done) colors.label else colors.labelSecondary,
+                        color = if (open || done) colors.foreground else colors.mutedForeground,
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
@@ -287,7 +288,7 @@ private fun CheckoutStep(
                 BasicText(
                     summary,
                     modifier = Modifier.padding(start = 36.dp, top = 6.dp),
-                    style = Typography.sm.copy(color = colors.labelSecondary),
+                    style = Typography.sm.copy(color = colors.mutedForeground),
                 )
             }
             AnimatedVisibility(
@@ -306,7 +307,7 @@ private fun CheckoutStep(
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
     }
 }
@@ -315,7 +316,7 @@ private fun CheckoutStep(
 private fun CheckoutChoice(value: String, selected: Boolean, content: @Composable RowScope.() -> Unit) {
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(14.dp)
-    val border by animateColorAsState(if (selected) colors.accent else colors.separatorStrong, tween(200), label = "border")
+    val border by animateColorAsState(if (selected) colors.primary else colors.input, tween(200), label = "border")
     RadioGroupItem(
         value = value,
         modifier = Modifier
@@ -342,7 +343,7 @@ private fun CheckoutSummary(total: Double) {
         Modifier
             .padding(top = 24.dp)
             .fillMaxWidth()
-            .background(colors.surfaceSecondary)
+            .background(colors.muted)
             .padding(horizontal = 24.dp, vertical = 28.dp)
             .semantics { contentDescription = "Order summary" },
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -350,40 +351,40 @@ private fun CheckoutSummary(total: Double) {
         BasicText(
             "Order summary",
             modifier = Modifier.semantics { heading() },
-            style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
         )
         CheckoutItems.forEach { item ->
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     Modifier
                         .size(48.dp)
-                        .background(colors.surfaceTertiary, RoundedCornerShape(10.dp)),
+                        .background(colors.secondary, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(item.icon, contentDescription = null, size = 26.dp, tint = colors.labelSecondary)
+                    Icon(item.icon, contentDescription = null, size = 26.dp, tint = colors.mutedForeground)
                 }
                 Column(Modifier.weight(1f)) {
-                    BasicText(item.name, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                    BasicText(item.variant, style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(item.name, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                    BasicText(item.variant, style = Typography.xs.copy(color = colors.mutedForeground))
                 }
-                BasicText(checkoutMoney(item.price), style = Typography.sm.copy(color = colors.label, fontFeatureSettings = "tnum"))
+                BasicText(checkoutMoney(item.price), style = Typography.sm.copy(color = colors.foreground, fontFeatureSettings = "tnum"))
             }
         }
         Box(
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             BasicText(
                 "Total",
                 modifier = Modifier.weight(1f),
-                style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
             BasicText(
                 checkoutMoney(total),
-                style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
             )
         }
     }
@@ -396,11 +397,11 @@ private fun CheckoutLink(text: String, description: String, onClick: () -> Unit)
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .semantics { contentDescription = description }
             .padding(vertical = 8.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary),
     )
 }
 
@@ -425,26 +426,26 @@ private fun CheckoutPlaced(onStartOver: () -> Unit) {
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             "Thank you. Your order is in.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
         BasicText(
             "Your order number is W1049. We sent a confirmation email.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         BasicText(
             "Start over ›",
             modifier = Modifier
-                .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onStartOver),
-            style = Typography.lg.copy(color = colors.link),
+            style = Typography.lg.copy(color = colors.primary),
         )
     }
 }

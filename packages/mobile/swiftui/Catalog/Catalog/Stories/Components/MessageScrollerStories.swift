@@ -129,7 +129,7 @@ private struct MessageScrollerRow: View {
           MessageFooter {
             Ph.checks.regular
               .frame(width: 16, height: 16)
-              .foregroundStyle(Color.accent)
+              .foregroundStyle(EsuissColor.primary)
             Text(verbatim: status)
           }
         }
@@ -144,7 +144,7 @@ private struct MessageScrollerAttachmentView: View {
   var body: some View {
     Attachment(state: attachment.progress == nil ? .done : .uploading) {
       AttachmentMedia(.document) {
-        AttachmentLabel("pdf", tint: .red)
+        AttachmentLabel("pdf", tint: Palette.red500)
       }
       AttachmentContent {
         AttachmentTitle(verbatim: attachment.name)

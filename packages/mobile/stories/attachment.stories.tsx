@@ -70,7 +70,7 @@ export const Default: Story = {
   render: (args) => (
     <Attachment {...args}>
       <AttachmentMedia variant="document">
-        <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+        <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
       </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
@@ -127,7 +127,7 @@ export const States: Story = {
       </Attachment>
       <Attachment {...args} state="uploading" className="w-full">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+          <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
@@ -141,7 +141,7 @@ export const States: Story = {
       </Attachment>
       <Attachment {...args} state="processing" className="w-full">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+          <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
@@ -153,7 +153,7 @@ export const States: Story = {
       </Attachment>
       <Attachment {...args} state="error" className="w-full">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-orange">key</AttachmentLabel>
+          <AttachmentLabel className="bg-orange-500">key</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Presentation.key</AttachmentTitle>
@@ -167,7 +167,7 @@ export const States: Story = {
       </Attachment>
       <Attachment {...args} state="done" className="w-full">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+          <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
@@ -232,7 +232,7 @@ export const Pressable: Story = {
         onPress={() => undefined}
       />
       <AttachmentMedia variant="document">
-        <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+        <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
       </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>
@@ -252,7 +252,7 @@ export const Group: Story = {
     <AttachmentGroup>
       <Attachment {...args} state="uploading">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+          <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
@@ -266,7 +266,7 @@ export const Group: Story = {
       </Attachment>
       <Attachment {...args} state="processing">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-blue">docx</AttachmentLabel>
+          <AttachmentLabel className="bg-blue-500">docx</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Contract.docx</AttachmentTitle>
@@ -278,7 +278,7 @@ export const Group: Story = {
       </Attachment>
       <Attachment {...args}>
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-green">xlsx</AttachmentLabel>
+          <AttachmentLabel className="bg-green-500">xlsx</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
@@ -289,7 +289,7 @@ export const Group: Story = {
             <Icon
               as={CheckCircleIcon}
               weight="fill"
-              className="size-6 text-success"
+              className="size-6 text-green-600 dark:text-green-400"
             />
           </View>
         </AttachmentActions>
@@ -310,7 +310,7 @@ export const Group: Story = {
       </Attachment>
       <Attachment {...args} state="error">
         <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+          <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
@@ -332,25 +332,25 @@ export const FileTypes: Story = {
           name: "Invoice.pdf",
           meta: "128 KB",
           extension: "pdf",
-          tone: "bg-red",
+          tone: "bg-red-500",
         },
         {
           name: "Menu.xlsx",
           meta: "2.4 MB",
           extension: "xlsx",
-          tone: "bg-green",
+          tone: "bg-green-500",
         },
         {
           name: "Contract.docx",
           meta: "84 KB",
           extension: "docx",
-          tone: "bg-blue",
+          tone: "bg-blue-500",
         },
         {
           name: "Pitch.key",
           meta: "12 MB",
           extension: "key",
-          tone: "bg-orange",
+          tone: "bg-orange-500",
         },
         { name: "Archive.zip", meta: "48 MB", extension: "zip", tone: "" },
       ].map((file) => (

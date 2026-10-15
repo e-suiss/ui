@@ -62,7 +62,7 @@ fun Spinner(
     color: Color = Color.Unspecified,
     contentDescription: String = "Loading",
 ) {
-    val tint = color.takeOrElse { LocalContentColor.current.takeOrElse { EsuissTheme.colors.label } }
+    val tint = color.takeOrElse { LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground } }
     val reduced = formReducedMotion()
     val step: State<Float> = if (reduced) {
         remember { mutableFloatStateOf(0f) }

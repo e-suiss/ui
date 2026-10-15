@@ -54,7 +54,7 @@ function NoteText({ note }: { note: Note }) {
       <Text numberOfLines={1} className="font-semibold">
         {note.title}
       </Text>
-      <Text numberOfLines={1} className="text-sm text-label-secondary">
+      <Text numberOfLines={1} className="text-sm text-muted-foreground">
         {note.preview}
       </Text>
     </View>
@@ -75,13 +75,13 @@ function NotesList({ deleteFirst = false }: { deleteFirst?: boolean }) {
 
   return (
     <View className="w-full gap-3">
-      <View className="overflow-hidden rounded-2xl border border-separator">
+      <View className="overflow-hidden rounded-2xl border border-border">
         {notes.map((note, index) => (
           <View
             key={note.id}
             className={
               index > 0
-                ? "flex-row items-center gap-3 border-t border-separator py-1 ps-4 pe-1"
+                ? "flex-row items-center gap-3 border-t border-border py-1 ps-4 pe-1"
                 : "flex-row items-center gap-3 py-1 ps-4 pe-1"
             }
           >
@@ -97,7 +97,7 @@ function NotesList({ deleteFirst = false }: { deleteFirst?: boolean }) {
           </View>
         ))}
       </View>
-      <Text role="status" className="text-sm text-label-secondary">
+      <Text role="status" className="text-sm text-muted-foreground">
         {log}
       </Text>
     </View>
@@ -108,14 +108,14 @@ function SwipeNotesList() {
   const { notes, remove, log } = useNotes()
   return (
     <View className="w-full gap-3">
-      <View className="overflow-hidden rounded-2xl border border-separator">
+      <View className="overflow-hidden rounded-2xl border border-border">
         {notes.map((note, index) => (
           <View
             key={note.id}
-            className={index > 0 ? "border-t border-separator" : undefined}
+            className={index > 0 ? "border-t border-border" : undefined}
           >
             <SwipeActions>
-              <SwipeActionsContent className="bg-surface px-4 py-1">
+              <SwipeActionsContent className="bg-background px-4 py-1">
                 <NoteText note={note} />
               </SwipeActionsContent>
               <SwipeActionsActions side="trailing">
@@ -132,7 +132,7 @@ function SwipeNotesList() {
           </View>
         ))}
       </View>
-      <Text role="status" className="text-sm text-label-secondary">
+      <Text role="status" className="text-sm text-muted-foreground">
         {log}
       </Text>
     </View>

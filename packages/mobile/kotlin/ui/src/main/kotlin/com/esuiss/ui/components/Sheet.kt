@@ -162,15 +162,15 @@ fun Sheet(
                         )
                         .shadow(Shadows.lg, shape)
                         .clip(shape)
-                        .background(colors.surfaceRaised, shape)
+                        .background(colors.popover, shape)
                         .pointerInput(Unit) {}
                         .semantics { paneTitle.value?.let { this.paneTitle = it } },
                 ) {
                     CompositionLocalProvider(
                         LocalPaneTitle provides paneTitle,
                         LocalSheetInfo provides SheetInfo(showCloseButton, showCloseButton && closeLabel != null, horizontal),
-                        LocalContentStyle provides Typography.base.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                     ) {
                         Column(
                             modifier = if (horizontal) Modifier.fillMaxSize() else Modifier.fillMaxWidth(),

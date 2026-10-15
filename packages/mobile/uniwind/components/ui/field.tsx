@@ -64,10 +64,10 @@ function FieldLegend({
       role={variant === "legend" ? "heading" : undefined}
       className={(state) =>
         cn(
-          "mb-3 text-base font-semibold text-label",
+          "mb-3 text-base font-semibold text-foreground",
           inset &&
-            "mb-0 ps-4 text-xs font-normal uppercase text-label-secondary",
-          state.disabled && "text-label-quaternary",
+            "mb-0 ps-4 text-xs font-normal uppercase text-muted-foreground",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
@@ -98,8 +98,7 @@ function FieldGroup({
       <View
         className={cn(
           "w-full flex-col gap-7",
-          variant === "inset" &&
-            "gap-0 overflow-hidden rounded-2xl bg-surface-secondary",
+          variant === "inset" && "gap-0 overflow-hidden rounded-2xl bg-muted",
           className
         )}
         {...props}
@@ -141,7 +140,7 @@ function Field({
           {...props}
         >
           {inset && item.index > 0 ? (
-            <View className="absolute end-0 start-4 top-0 h-px bg-separator" />
+            <View className="absolute end-0 start-4 top-0 h-px bg-border" />
           ) : null}
           {children}
         </FieldPrimitive.Root>
@@ -166,9 +165,9 @@ function FieldLabel({
     <FieldPrimitive.Label
       className={(state) =>
         cn(
-          "text-base font-semibold text-label",
+          "text-base font-semibold text-foreground",
           inset && "font-normal",
-          state.disabled && "text-label-quaternary",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
@@ -185,8 +184,8 @@ function FieldTitle({
   return (
     <RNText
       className={cn(
-        "text-base font-semibold text-label",
-        field.state.disabled && "text-label-quaternary",
+        "text-base font-semibold text-foreground",
+        field.state.disabled && "opacity-50",
         className
       )}
       {...props}
@@ -203,7 +202,7 @@ function FieldDescription({
     <FieldPrimitive.Description
       className={(state) =>
         cn(
-          "text-start text-sm font-normal text-label-secondary",
+          "text-start text-sm font-normal text-muted-foreground",
           inset && "ps-4 text-xs",
           resolveClassName(className, state)
         )
@@ -225,7 +224,7 @@ function FieldSeparator({
     >
       <Separator className="absolute start-0 top-1/2" />
       {children ? (
-        <RNText className="self-center bg-surface px-2 text-sm text-label-secondary">
+        <RNText className="self-center bg-background px-2 text-sm text-muted-foreground">
           {children}
         </RNText>
       ) : null}
@@ -268,7 +267,7 @@ function FieldError({
       match={match ?? (content !== undefined ? true : undefined)}
       className={(state) =>
         cn(
-          "text-sm font-normal text-danger",
+          "text-sm font-normal text-destructive",
           resolveClassName(className, state)
         )
       }

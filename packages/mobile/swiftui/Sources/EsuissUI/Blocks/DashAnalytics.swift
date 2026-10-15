@@ -19,9 +19,9 @@ public struct DashAnalytics: View {
 
   static var apps: [App] {
     [
-      App(value: "route", label: "Route", icon: Ph.chartBar.bold, tint: .green),
-      App(value: "notebook", label: "Notebook", icon: Ph.notePencil.bold, tint: .orange),
-      App(value: "fitness", label: "Fitness+", icon: Ph.flame.bold, tint: .red),
+      App(value: "route", label: "Route", icon: Ph.chartBar.bold, tint: Palette.green500),
+      App(value: "notebook", label: "Notebook", icon: Ph.notePencil.bold, tint: Palette.orange500),
+      App(value: "fitness", label: "Fitness+", icon: Ph.flame.bold, tint: Palette.red500),
     ]
   }
 
@@ -43,7 +43,7 @@ public struct DashAnalytics: View {
   }
 
   private let chartConfig: ChartConfig = [
-    "value": .init("Value", color: .accent),
+    "value": .init("Value", color: EsuissColor.primary),
   ]
 
   private var onAppChange: ((String) -> Void)?
@@ -137,7 +137,7 @@ public struct DashAnalytics: View {
               VStack(alignment: .leading, spacing: 0) {
                 Text("\(index == last ? String(localized: "This week") : "Week \(index + 1)") · \(Text(LocalizedStringKey(current.label)))")
                   .textStyle(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 Text(verbatim: format(data[index]))
                   .textStyle(.xl3, weight: .bold)
                   .monospacedDigit()
@@ -147,14 +147,14 @@ public struct DashAnalytics: View {
               .accessibilityElement(children: .combine)
               Text(verbatim: "+\(12 + (Self.metrics.firstIndex { $0.value == current.value } ?? 0) * 3)%")
                 .textStyle(.sm, weight: .semibold)
-                .foregroundStyle(Color.success)
+                .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
             }
             chart(data)
           }
           .padding(.horizontal, 16)
           .padding(.top, 14)
           .padding(.bottom, 10)
-          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+          .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
           Text("By region")
             .textStyle(.sm, weight: .semibold)
             .padding(.horizontal, 4)
@@ -205,7 +205,7 @@ public struct DashAnalytics: View {
               }
               Ph.caretDown.bold
                 .frame(width: 12, height: 12)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .padding(.horizontal, 8)
             .frame(height: 44)
@@ -240,7 +240,7 @@ public struct DashAnalytics: View {
             .symbol {
               Circle()
                 .fill(color)
-                .stroke(Color.surfaceSecondary, lineWidth: 2)
+                .stroke(EsuissColor.muted, lineWidth: 2)
                 .frame(width: 12, height: 12)
             }
             .chartReveal(progress, x: 0...(data.count - 1))
@@ -269,7 +269,7 @@ private struct DashAnalyticsTile: View {
   var body: some View {
     app.icon
       .frame(width: 14, height: 14)
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: 24, height: 24)
       .background(app.tint, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
       .accessibilityHidden(true)
@@ -316,7 +316,7 @@ private struct DashAnalyticsShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text("Analytics")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

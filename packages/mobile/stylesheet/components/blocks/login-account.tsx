@@ -137,7 +137,7 @@ function LinkText({
       onPress={onPress}
       style={({ pressed }) => pressed && { opacity: 0.6 }}
     >
-      <Text style={[{ color: colors.link }, style]}>{children}</Text>
+      <Text style={[{ color: colors.primary }, style]}>{children}</Text>
     </Pressable>
   )
 }
@@ -162,8 +162,7 @@ function SubmitArrow({
       style={[
         styles.arrow,
         {
-          borderColor:
-            ready && !busy ? colors.labelSecondary : colors.labelQuaternary,
+          borderColor: colors.mutedForeground,
         },
       ]}
     >
@@ -174,7 +173,7 @@ function SubmitArrow({
           as={ArrowRightIcon}
           weight="bold"
           size={14}
-          color={ready ? colors.labelSecondary : colors.labelQuaternary}
+          color={colors.mutedForeground}
           style={
             I18nManager.isRTL ? { transform: [{ rotate: "180deg" }] } : null
           }
@@ -249,10 +248,8 @@ function LoginAccount({
             style={styles.done}
           >
             <Avatar size="xl" style={{ width: 80, height: 80 }}>
-              <AvatarFallback
-                style={{ backgroundColor: colors.surfaceSecondary }}
-              >
-                <Text style={{ ...fontSize["3xl"], color: colors.label }}>
+              <AvatarFallback style={{ backgroundColor: colors.muted }}>
+                <Text style={{ ...fontSize["3xl"], color: colors.foreground }}>
                   {email[0]}
                 </Text>
               </AvatarFallback>
@@ -263,7 +260,7 @@ function LoginAccount({
             >
               Hello.
             </Text>
-            <Text style={{ ...fontSize.lg, color: colors.labelSecondary }}>
+            <Text style={{ ...fontSize.lg, color: colors.mutedForeground }}>
               {email}
             </Text>
             <LinkText
@@ -294,15 +291,15 @@ function LoginAccount({
               styles.fields,
               error
                 ? {
-                    borderColor: colors.danger,
+                    borderColor: colors.destructive,
                     backgroundColor: withAlpha(
-                      colors.danger,
+                      colors.destructive,
                       isDark ? 0.1 : 0.05
                     ),
                   }
                 : {
-                    borderColor: colors.separatorStrong,
-                    backgroundColor: colors.surface,
+                    borderColor: colors.input,
+                    backgroundColor: colors.background,
                   },
               shakeStyle,
             ]}
@@ -340,7 +337,7 @@ function LoginAccount({
                   styles.row,
                   {
                     borderTopWidth: 1,
-                    borderTopColor: colors.separatorStrong,
+                    borderTopColor: colors.input,
                   },
                 ]}
               >
@@ -367,7 +364,7 @@ function LoginAccount({
           </AnimatedView>
           <Text
             accessibilityLiveRegion="polite"
-            style={[styles.error, { color: colors.danger }]}
+            style={[styles.error, { color: colors.destructive }]}
           >
             {error}
           </Text>
@@ -390,7 +387,7 @@ function LoginAccount({
               Forgot password? ›
             </LinkText>
             <View style={styles.wrap}>
-              <Text style={{ ...fontSize.sm, color: colors.labelSecondary }}>
+              <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>
                 Don't have a suiss Account?
               </Text>
               <LinkText style={fontSize.sm} onPress={onCreateAccount}>

@@ -61,6 +61,7 @@ import com.esuiss.ui.components.chartColor
 import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.launch
@@ -81,10 +82,10 @@ private val models = scores.keys.toList()
 private const val MAX_SELECTED = 3
 
 private val chartConfig = ChartConfig(
-    "pro" to ChartConfigItem("Phone Pro") { orange },
-    "standard" to ChartConfigItem("Phone") { blue },
-    "air" to ChartConfigItem("Phone Air") { cyan },
-    "lite" to ChartConfigItem("Phone Lite") { purple },
+    "pro" to ChartConfigItem("Phone Pro") { chart4 },
+    "standard" to ChartConfigItem("Phone") { chart1 },
+    "air" to ChartConfigItem("Phone Air") { Palette.cyan500 },
+    "lite" to ChartConfigItem("Phone Lite") { Palette.purple500 },
 )
 
 private val MorphEasing = CubicBezierEasing(0.65f, 0f, 0.35f, 1f)
@@ -99,8 +100,8 @@ private fun average(model: String): Int = (scores.getValue(model).sum().toDouble
 private fun ModelToggle(label: String, color: Color, pressed: Boolean, onPressedChange: (Boolean) -> Unit) {
     val colors = EsuissTheme.colors
     val haptics = rememberHaptics()
-    val background by animateColorAsState(if (pressed) color.copy(alpha = 0.16f) else colors.control, label = "background")
-    val dot by animateColorAsState(if (pressed) color else colors.labelQuaternary, label = "dot")
+    val background by animateColorAsState(if (pressed) color.copy(alpha = 0.16f) else colors.secondary, label = "background")
+    val dot by animateColorAsState(if (pressed) color else colors.border, label = "dot")
     Row(
         modifier = Modifier
             .height(32.dp)
@@ -118,7 +119,7 @@ private fun ModelToggle(label: String, color: Color, pressed: Boolean, onPressed
                 .size(8.dp)
                 .background(dot, CircleShape),
         )
-        BasicText(label, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+        BasicText(label, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -155,10 +156,10 @@ fun RadarChartInteractive(modifier: Modifier = Modifier) {
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Compare phone models", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText("Compare phone models", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 BasicText(
                     "Up to three models · scores out of 100, sample data",
-                    style = Typography.sm.copy(color = colors.labelSecondary),
+                    style = Typography.sm.copy(color = colors.mutedForeground),
                 )
             }
         }
@@ -187,11 +188,11 @@ fun RadarChartInteractive(modifier: Modifier = Modifier) {
                                 selectedIndex = axis,
                                 onSelectedIndexChange = { axis = it },
                             ) {
-                                PolarGrid(stroke = colors.separator)
+                                PolarGrid(stroke = colors.border)
                                 PolarAngleAxis(
                                     label = { it.axis },
-                                    tickStyle = Typography.sm.copy(color = colors.labelSecondary),
-                                    activeTickStyle = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                    tickStyle = Typography.sm.copy(color = colors.mutedForeground),
+                                    activeTickStyle = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                 )
                                 PolarRadiusAxis(domain = 0.0..100.0, tick = false)
                                 ChartTooltip {
@@ -214,11 +215,11 @@ fun RadarChartInteractive(modifier: Modifier = Modifier) {
                                                 BasicText(
                                                     chartConfig[item.key]?.label ?: item.key,
                                                     Modifier.weight(1f),
-                                                    style = Typography.xs.copy(color = colors.labelSecondary),
+                                                    style = Typography.xs.copy(color = colors.mutedForeground),
                                                 )
                                                 BasicText(
                                                     row.scores.getValue(item.key).toString(),
-                                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                                 )
                                             }
                                         },
@@ -273,7 +274,7 @@ private fun ScoreList(selected: List<String>, axis: Int?, reduced: Boolean, modi
                         Modifier
                             .padding(bottom = 10.dp)
                             .fillMaxWidth()
-                            .background(colors.surface, RoundedCornerShape(Radius.xl))
+                            .background(colors.background, RoundedCornerShape(Radius.xl))
                             .semantics(mergeDescendants = true) {}
                             .padding(horizontal = 14.dp, vertical = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -287,16 +288,16 @@ private fun ScoreList(selected: List<String>, axis: Int?, reduced: Boolean, modi
                         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                             BasicText(
                                 chartConfig[model]?.label ?: model,
-                                style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                             BasicText(
                                 if (axis != null) axes[axis] else "Overall score",
-                                style = Typography.xs.copy(color = colors.labelSecondary),
+                                style = Typography.xs.copy(color = colors.mutedForeground),
                             )
                         }
                         BasicText(
                             (if (axis != null) scores.getValue(model)[axis] else average(model)).toString(),
-                            style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                     }
                 }

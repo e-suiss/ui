@@ -133,7 +133,7 @@ export const Filled: Story = {
         <CardDescription>42 GB of 128 GB used</CardDescription>
       </CardHeader>
       <CardContent>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Photos and backups take up most of your space.
         </Text>
       </CardContent>

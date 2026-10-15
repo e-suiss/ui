@@ -19,7 +19,7 @@ function WheelPicker({
       }
       {...props}
     >
-      <WheelPickerPrimitive.Indicator className="rounded-lg bg-control" />
+      <WheelPickerPrimitive.Indicator className="rounded-lg bg-secondary" />
       {children}
     </WheelPickerPrimitive.Root>
   )
@@ -48,8 +48,8 @@ function WheelPickerItem({
   return (
     <TextClassContext.Provider
       value={cn(
-        "text-xl text-label tabular-nums",
-        disabled && "text-label-tertiary"
+        "text-xl text-foreground tabular-nums",
+        disabled && "text-muted-foreground"
       )}
     >
       <WheelPickerPrimitive.Item

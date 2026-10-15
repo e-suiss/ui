@@ -56,6 +56,7 @@ import com.esuiss.ui.components.Switch
 import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Currency
@@ -118,7 +119,7 @@ fun PriceCare(
                     BasicText(
                         "Choose your device.",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                     ToggleGroup(
                         value = device,
@@ -141,16 +142,16 @@ fun PriceCare(
                                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(1.dp)) {
                                     BasicText(
                                         "${item.label} payment",
-                                        style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                        style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                     )
                                     BasicText(
                                         "Unlimited accidental damage repairs",
-                                        style = Typography.sm.copy(color = colors.labelSecondary),
+                                        style = Typography.sm.copy(color = colors.mutedForeground),
                                     )
                                 }
                                 BasicText(
                                     careMoney(item.price),
-                                    style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             }
                         }
@@ -167,7 +168,7 @@ fun PriceCare(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Switch(checked = theft, onCheckedChange = null)
-                            BasicText("Add theft and loss protection", style = Typography.sm.copy(color = colors.label))
+                            BasicText("Add theft and loss protection", style = Typography.sm.copy(color = colors.foreground))
                         }
                     }
                 }
@@ -185,10 +186,10 @@ fun PriceCare(
                             .weight(1f)
                             .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
                     ) {
-                        BasicText("Total", style = Typography.sm.copy(color = colors.labelSecondary))
+                        BasicText("Total", style = Typography.sm.copy(color = colors.mutedForeground))
                         BasicText(
                             careMoney(total),
-                            style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                     }
                     Button("Add to Bag", { onAddToBag(device, plan.label, withTheft, total) }, size = ButtonSize.Lg)
@@ -205,7 +206,7 @@ private fun CareHero(device: CareDevice) {
         Modifier
             .fillMaxWidth()
             .height(320.dp)
-            .background(colors.surfaceSecondary),
+            .background(colors.muted),
     ) {
         Crossfade(device, animationSpec = tween(600), label = "device") { shown ->
             Box(
@@ -215,13 +216,13 @@ private fun CareHero(device: CareDevice) {
                     .clearAndSetSemantics { contentDescription = shown.alt },
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(shown.icon, contentDescription = null, size = 150.dp, tint = colors.labelTertiary)
+                Icon(shown.icon, contentDescription = null, size = 150.dp, tint = colors.mutedForeground)
             }
         }
         Box(
             Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(0.45f to Color.Transparent, 1f to colors.media.copy(alpha = 0.7f))),
+                .background(Brush.verticalGradient(0.45f to Color.Transparent, 1f to Palette.black.copy(alpha = 0.7f))),
         )
         Column(
             Modifier
@@ -229,11 +230,11 @@ private fun CareHero(device: CareDevice) {
                 .padding(28.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            BasicText("suiss Care+", style = Typography.base.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold))
+            BasicText("suiss Care+", style = Typography.base.copy(color = Palette.white, fontWeight = FontWeight.SemiBold))
             BasicText(
                 "Protection against accidents.",
                 modifier = Modifier.semantics { heading() },
-                style = Typography.xl3.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl3.copy(color = Palette.white, fontWeight = FontWeight.SemiBold),
             )
         }
     }
@@ -243,7 +244,7 @@ private fun CareHero(device: CareDevice) {
 private fun CareChoice(value: String, selected: Boolean, content: @Composable RowScope.() -> Unit) {
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(12.dp)
-    val border by animateColorAsState(if (selected) colors.accent else colors.separatorStrong, tween(200), label = "border")
+    val border by animateColorAsState(if (selected) colors.primary else colors.input, tween(200), label = "border")
     RadioGroupItem(
         value = value,
         modifier = Modifier

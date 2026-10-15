@@ -35,6 +35,7 @@ import com.esuiss.ui.interactions.OtpAutofillScope
 import com.esuiss.ui.interactions.OtpAutofillState
 import com.esuiss.ui.interactions.OtpAutofillSuggestion
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -54,10 +55,10 @@ private const val OtpAutofillCode = "482913"
 private fun OtpAutofillScope.OtpAutofillStatus() {
     val colors = EsuissTheme.colors
     val (text, color) = when (state) {
-        OtpAutofillState.Verifying -> "Verifying…" to colors.labelSecondary
-        OtpAutofillState.Verified -> "Verified" to colors.success
-        OtpAutofillState.Invalid -> "That code didn't work. Try again." to colors.danger
-        else -> "" to colors.labelSecondary
+        OtpAutofillState.Verifying -> "Verifying…" to colors.mutedForeground
+        OtpAutofillState.Verified -> "Verified" to if (colors.isDark) Palette.green400 else Palette.green600
+        OtpAutofillState.Invalid -> "That code didn't work. Try again." to colors.destructive
+        else -> "" to colors.mutedForeground
     }
     Text(
         text,
@@ -87,7 +88,7 @@ private fun OtpAutofillVerification(incoming: String) {
         Text("Enter the code", style = Typography.xl2.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center)
         Text(
             "We sent a 6-digit code to +1 555 0100.",
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             textAlign = TextAlign.Center,
         )
         OtpAutofill(

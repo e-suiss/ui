@@ -7,10 +7,10 @@ private let chartData: [(device: String, share: Double)] = [
 
 private let chartConfig: ChartConfig = [
   "share": .init("Share"),
-  "phone": .init("Phone", color: .blue),
-  "laptop": .init("Laptop", color: .teal),
-  "tablet": .init("Tablet", color: .indigo),
-  "watch": .init("Watch", color: .orange),
+  "phone": .init("Phone", color: EsuissColor.chart1),
+  "laptop": .init("Laptop", color: EsuissColor.chart2),
+  "tablet": .init("Tablet", color: EsuissColor.chart3),
+  "watch": .init("Watch", color: EsuissColor.chart4),
 ]
 
 private let total = chartData.reduce(0) { $0 + $1.share }
@@ -68,7 +68,7 @@ public struct PieChartHalf: View {
                   .monospacedDigit()
                 Text("last 24 hours")
                   .textStyle(.xs)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
               .padding(.bottom, 21)
               .allowsHitTesting(false)

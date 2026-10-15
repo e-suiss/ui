@@ -265,7 +265,7 @@ function CarouselDotProgress({
     <AnimatedView
       style={[
         styles.progress,
-        { backgroundColor: colors.label },
+        { backgroundColor: colors.foreground },
         animatedStyle,
       ]}
     />
@@ -295,7 +295,9 @@ function CarouselDot({ index }: { index: number }) {
           styles.dot,
           {
             backgroundColor:
-              active && !autoplay.enabled ? colors.label : colors.labelTertiary,
+              active && !autoplay.enabled
+                ? colors.foreground
+                : colors.mutedForeground,
           },
           animatedStyle,
         ]}
@@ -325,7 +327,7 @@ function CarouselDots({
         styles.dots,
         variant === "plain"
           ? undefined
-          : [styles.dotsDefault, { backgroundColor: colors.control }],
+          : [styles.dotsDefault, { backgroundColor: colors.secondary }],
         style,
       ]}
       {...props}

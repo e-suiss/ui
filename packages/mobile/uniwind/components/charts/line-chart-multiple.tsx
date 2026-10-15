@@ -28,8 +28,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
-  mobile: { label: "Mobile", color: "teal" },
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
 export function LineChartMultiple() {

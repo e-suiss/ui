@@ -61,6 +61,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Currency
@@ -83,12 +84,12 @@ private class BundlePlan(
 )
 
 private val BundleServices = listOf(
-    BundleService("suiss Music", PhosphorIcons.Fill.MusicNote, { it.red }, { it.onMedia }),
-    BundleService("suiss TV", PhosphorIcons.Fill.Television, { it.label }, { it.surface }),
-    BundleService("suiss Arcade", PhosphorIcons.Fill.GameController, { it.red }, { it.onMedia }),
-    BundleService("suiss Cloud+", PhosphorIcons.Fill.Cloud, { it.blue }, { it.onMedia }),
-    BundleService("Fitness+", PhosphorIcons.Fill.Flame, { it.green }, { it.onMedia }),
-    BundleService("News+", PhosphorIcons.Fill.Newspaper, { it.pink }, { it.onMedia }),
+    BundleService("suiss Music", PhosphorIcons.Fill.MusicNote, { Palette.red500 }, { Palette.white }),
+    BundleService("suiss TV", PhosphorIcons.Fill.Television, { it.foreground }, { it.background }),
+    BundleService("suiss Arcade", PhosphorIcons.Fill.GameController, { Palette.red500 }, { Palette.white }),
+    BundleService("suiss Cloud+", PhosphorIcons.Fill.Cloud, { Palette.blue500 }, { Palette.white }),
+    BundleService("Fitness+", PhosphorIcons.Fill.Flame, { Palette.green500 }, { Palette.white }),
+    BundleService("News+", PhosphorIcons.Fill.Newspaper, { Palette.pink500 }, { Palette.white }),
 )
 
 private val BundlePlans = listOf(
@@ -130,11 +131,11 @@ fun PriceBundle(
                             append(" One")
                         },
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                     BasicText(
                         "Bundle it all in one subscription.",
-                        style = Typography.xl.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.xl.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
                 Column(
@@ -164,11 +165,11 @@ private fun BundleCard(plan: BundlePlan, selected: Boolean, onSelect: () -> Unit
     val haptics = rememberHaptics()
     val shape = RoundedCornerShape(20.dp)
     val fill by animateColorAsState(
-        if (selected) colors.surfaceSecondary else colors.surfaceSecondary.copy(alpha = 0.6f),
+        if (selected) colors.muted else colors.muted.copy(alpha = 0.6f),
         tween(300),
         label = "fill",
     )
-    val border by animateColorAsState(if (selected) colors.accent else colors.separatorStrong, tween(300), label = "border")
+    val border by animateColorAsState(if (selected) colors.primary else colors.input, tween(300), label = "border")
     Column(
         Modifier
             .fillMaxWidth()
@@ -191,16 +192,16 @@ private fun BundleCard(plan: BundlePlan, selected: Boolean, onSelect: () -> Unit
             BasicText(
                 plan.name,
                 modifier = Modifier.weight(1f),
-                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
-            BasicText(plan.people, style = Typography.xs.copy(color = colors.labelSecondary))
+            BasicText(plan.people, style = Typography.xs.copy(color = colors.mutedForeground))
         }
         BasicText(
             buildAnnotatedString {
                 withStyle(SpanStyle(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")) { append(bundleMoney(plan.price)) }
-                withStyle(Typography.sm.toSpanStyle().copy(color = colors.labelSecondary)) { append(" /mo") }
+                withStyle(Typography.sm.toSpanStyle().copy(color = colors.mutedForeground)) { append(" /mo") }
             },
-            style = Typography.xl2.copy(color = colors.label),
+            style = Typography.xl2.copy(color = colors.foreground),
         )
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             BundleServices.forEachIndexed { index, service ->
@@ -216,7 +217,7 @@ private fun BundleCard(plan: BundlePlan, selected: Boolean, onSelect: () -> Unit
                     Box(
                         Modifier
                             .size(22.dp)
-                            .background(if (included) service.background(colors) else colors.surfaceTertiary, RoundedCornerShape(6.dp))
+                            .background(if (included) service.background(colors) else colors.secondary, RoundedCornerShape(6.dp))
                             .clearAndSetSemantics {},
                         contentAlignment = Alignment.Center,
                     ) {
@@ -224,13 +225,13 @@ private fun BundleCard(plan: BundlePlan, selected: Boolean, onSelect: () -> Unit
                             service.icon,
                             contentDescription = null,
                             size = 13.dp,
-                            tint = if (included) service.foreground(colors) else colors.labelTertiary,
+                            tint = if (included) service.foreground(colors) else colors.mutedForeground,
                         )
                     }
                     BasicText(
                         text,
                         style = Typography.sm.copy(
-                            color = if (included) colors.label else colors.labelTertiary,
+                            color = if (included) colors.foreground else colors.mutedForeground,
                             textDecoration = if (included) null else TextDecoration.LineThrough,
                         ),
                     )
@@ -247,9 +248,9 @@ private fun BundleLink(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 6.dp),
-        style = Typography.base.copy(color = EsuissTheme.colors.link, textAlign = TextAlign.Center),
+        style = Typography.base.copy(color = EsuissTheme.colors.primary, textAlign = TextAlign.Center),
     )
 }

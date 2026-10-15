@@ -33,7 +33,7 @@ private struct CollapsibleDemo: View {
       HStack(spacing: 16) {
         Text("@ademceper starred 3 repositories")
           .textStyle(.sm, weight: .medium)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
         CollapsibleTrigger {
           Ph.caretUpDown.regular
@@ -62,10 +62,10 @@ private struct CollapsibleRepository: View {
   var body: some View {
     Text(verbatim: name)
       .textStyle(.sm)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .padding(.horizontal, 16)
       .padding(.vertical, 8)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
   }
 }

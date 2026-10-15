@@ -107,7 +107,7 @@ private struct TabsPanelText: View {
   var body: some View {
     Text(text)
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 

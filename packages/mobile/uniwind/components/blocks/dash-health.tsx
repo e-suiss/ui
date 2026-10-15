@@ -54,22 +54,27 @@ const CATEGORIES: [CategoryStyle, ...CategoryStyle[]] = [
   {
     value: "Activity",
     icon: FlameIcon,
-    tint: "bg-orange",
-    text: "text-orange",
+    tint: "bg-orange-500",
+    text: "text-orange-500",
   },
-  { value: "Heart", icon: HeartIcon, tint: "bg-red", text: "text-red" },
-  { value: "Sleep", icon: MoonIcon, tint: "bg-cyan", text: "text-cyan" },
+  { value: "Heart", icon: HeartIcon, tint: "bg-red-500", text: "text-red-500" },
+  {
+    value: "Sleep",
+    icon: MoonIcon,
+    tint: "bg-cyan-500",
+    text: "text-cyan-500",
+  },
   {
     value: "Mobility",
     icon: ChartBarIcon,
-    tint: "bg-green",
-    text: "text-green",
+    tint: "bg-green-500",
+    text: "text-green-500",
   },
 ]
 
 const SECTIONS: { value: Section; icon: PhosphorIcon; tint: string }[] = [
-  { value: "Summary", icon: HeartIcon, tint: "bg-pink" },
-  { value: "Sharing", icon: UsersIcon, tint: "bg-blue" },
+  { value: "Summary", icon: HeartIcon, tint: "bg-pink-500" },
+  { value: "Sharing", icon: UsersIcon, tint: "bg-blue-500" },
 ]
 
 type Metric = {
@@ -89,8 +94,8 @@ const METRICS: Metric[] = [
     label: "Move",
     value: "486",
     unit: "kcal",
-    bar: "bg-red",
-    line: "text-red",
+    bar: "bg-red-500",
+    line: "text-red-500",
     data: [40, 62, 38, 70, 55, 81, 65],
     bars: true,
   },
@@ -99,8 +104,8 @@ const METRICS: Metric[] = [
     label: "Steps",
     value: "8,412",
     unit: "steps",
-    bar: "bg-orange",
-    line: "text-orange",
+    bar: "bg-orange-500",
+    line: "text-orange-500",
     data: [60, 80, 45, 90, 70, 95, 52],
     bars: true,
   },
@@ -109,16 +114,16 @@ const METRICS: Metric[] = [
     label: "Resting Heart Rate",
     value: "58",
     unit: "bpm",
-    bar: "bg-red",
-    line: "text-red",
+    bar: "bg-red-500",
+    line: "text-red-500",
     data: [61, 60, 59, 58, 60, 57, 58],
   },
   {
     category: "Sleep",
     label: "Sleep",
     value: "7 hr 12 min",
-    bar: "bg-cyan",
-    line: "text-cyan",
+    bar: "bg-cyan-500",
+    line: "text-cyan-500",
     data: [68, 74, 59, 79, 64, 86, 72],
     bars: true,
   },
@@ -127,8 +132,8 @@ const METRICS: Metric[] = [
     label: "Cardio Fitness",
     value: "42.1",
     unit: "VO₂ max",
-    bar: "bg-red",
-    line: "text-red",
+    bar: "bg-red-500",
+    line: "text-red-500",
     data: [40, 40, 41, 41, 42, 42, 42],
   },
   {
@@ -136,8 +141,8 @@ const METRICS: Metric[] = [
     label: "Walking Speed",
     value: "5.1",
     unit: "km/h",
-    bar: "bg-green",
-    line: "text-green",
+    bar: "bg-green-500",
+    line: "text-green-500",
     data: [48, 50, 49, 51, 50, 52, 51],
   },
 ]
@@ -210,7 +215,11 @@ function Spark({ metric }: { metric: Metric }) {
 function Tile({ icon, tint }: { icon: PhosphorIcon; tint: string }) {
   return (
     <ItemMedia className={cn("size-7.25 rounded-[7px]", tint)}>
-      <Icon as={icon} weight="fill" className="size-4 text-on-accent" />
+      <Icon
+        as={icon}
+        weight="fill"
+        className="size-4 text-primary-foreground"
+      />
     </ItemMedia>
   )
 }
@@ -221,7 +230,7 @@ function Chevron({ className }: { className?: string }) {
       as={CaretRightIcon}
       weight="bold"
       className={cn(
-        "size-3.5 text-label-tertiary",
+        "size-3.5 text-muted-foreground",
         I18nManager.isRTL && "rotate-180",
         className
       )}
@@ -259,12 +268,12 @@ function MetricCard({
           accessibilityLabel={`${pinned ? "Unpin" : "Pin"} ${metric.label}`}
           hitSlop={10}
           onPress={onTogglePin}
-          className={pinned ? "bg-danger" : "bg-green"}
+          className={pinned ? "bg-destructive" : "bg-green-500"}
         >
           <Icon
             as={pinned ? MinusIcon : PlusIcon}
             weight="bold"
-            className="size-3.5 text-on-accent"
+            className="size-3.5 text-primary-foreground"
           />
         </Button>
       ) : null}
@@ -272,7 +281,7 @@ function MetricCard({
         role="button"
         onPress={onPress}
         className={cn(
-          "min-w-0 flex-1 gap-2.5 rounded-xl bg-surface px-4 py-3 active:opacity-80 dark:bg-surface-secondary",
+          "min-w-0 flex-1 gap-2.5 rounded-xl bg-background px-4 py-3 active:opacity-80 dark:bg-muted",
           editing && !pinned && "opacity-55"
         )}
       >
@@ -288,7 +297,7 @@ function MetricCard({
           >
             {metric.label}
           </Text>
-          <Text className="text-sm text-label-secondary">9:41</Text>
+          <Text className="text-sm text-muted-foreground">9:41</Text>
           <Chevron className="size-3" />
         </View>
         <View className="flex-row items-end gap-4">
@@ -297,7 +306,7 @@ function MetricCard({
               {metric.value}
             </Text>
             {metric.unit ? (
-              <Text className="text-base font-semibold text-label-secondary">
+              <Text className="text-base font-semibold text-muted-foreground">
                 {` ${metric.unit}`}
               </Text>
             ) : null}
@@ -374,7 +383,7 @@ function SectionView({
           ))}
         </View>
       ) : (
-        <Text className="py-7.5 text-center text-base text-label-secondary">
+        <Text className="py-7.5 text-center text-base text-muted-foreground">
           No pinned items. Use Edit to add some.
         </Text>
       )}
@@ -385,7 +394,7 @@ function SectionView({
 function ProfileAvatar() {
   return (
     <Avatar className="size-8.5">
-      <AvatarFallback className="bg-indigo dark:bg-indigo">JR</AvatarFallback>
+      <AvatarFallback className="bg-indigo-500">JR</AvatarFallback>
     </Avatar>
   )
 }
@@ -428,7 +437,7 @@ function DashHealth({
     <Screen
       variant="secondary"
       edges={["top", "right", "left"]}
-      className="dark:bg-surface"
+      className="dark:bg-background"
     >
       <Header scroll={scroll}>
         {section ? (
@@ -451,10 +460,7 @@ function DashHealth({
           />
         ) : (
           <View className="gap-2 px-4">
-            <ItemGroup
-              variant="inset"
-              className="bg-surface dark:bg-surface-secondary"
-            >
+            <ItemGroup variant="inset" className="bg-background dark:bg-muted">
               {SECTIONS.map((item, index) => (
                 <React.Fragment key={item.value}>
                   {index > 0 ? <ItemSeparator className="ms-14.25" /> : null}
@@ -469,14 +475,11 @@ function DashHealth({
             </ItemGroup>
             <Text
               role="heading"
-              className="mt-4 px-1 text-xl font-bold text-label"
+              className="mt-4 px-1 text-xl font-bold text-foreground"
             >
               Categories
             </Text>
-            <ItemGroup
-              variant="inset"
-              className="bg-surface dark:bg-surface-secondary"
-            >
+            <ItemGroup variant="inset" className="bg-background dark:bg-muted">
               {CATEGORIES.map((item, index) => (
                 <React.Fragment key={item.value}>
                   {index > 0 ? <ItemSeparator className="ms-14.25" /> : null}

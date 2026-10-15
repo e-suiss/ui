@@ -32,7 +32,6 @@ function KeypadKey({
   className?: string
   children?: React.ReactNode
 }) {
-  const contentClassName = disabled ? "text-label-quaternary" : "text-label"
   return (
     <Pressable
       role="button"
@@ -40,17 +39,14 @@ function KeypadKey({
       accessibilityState={{ disabled: !!disabled }}
       className={cn(
         "size-18 items-center justify-center rounded-full",
-        variant === "default" &&
-          (disabled ? "bg-control-disabled" : "bg-control"),
-        !disabled && "active:bg-control-pressed",
+        variant === "default" && "bg-secondary",
+        disabled ? "opacity-50" : "active:opacity-80",
         className
       )}
       {...props}
     >
-      <TextClassContext.Provider
-        value={cn("text-2xl tabular-nums", contentClassName)}
-      >
-        <IconClassContext.Provider value={cn("size-7", contentClassName)}>
+      <TextClassContext.Provider value="text-2xl tabular-nums text-foreground">
+        <IconClassContext.Provider value="size-7 text-foreground">
           {children}
         </IconClassContext.Provider>
       </TextClassContext.Provider>

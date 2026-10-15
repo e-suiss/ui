@@ -111,9 +111,9 @@ struct ActionBarRows<Content: View>: View {
     SeparatedStack {
       content()
     }
-    .background(Color.separator)
+    .background(EsuissColor.border)
     .overlay(alignment: .leading) {
-      Color.surfaceSecondary.frame(width: 16)
+      EsuissColor.muted.frame(width: 16)
     }
     .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     .padding(16)
@@ -177,11 +177,12 @@ public struct ActionBarMenu<Label: View, Content: View>: View {
           .frame(maxWidth: .infinity, alignment: .leading)
         Ph.caretRight.regular
           .frame(width: 16, height: 16)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .flipsForRightToLeftLayoutDirection(true)
       }
       .scaledFont(.base)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
+      .opacity(isEnabled ? 1 : 0.5)
       .padding(.vertical, 11)
       .padding(.trailing, 16)
       .frame(minHeight: 44)
@@ -189,7 +190,7 @@ public struct ActionBarMenu<Label: View, Content: View>: View {
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .background(Color.surfaceSecondary)
+    .background(EsuissColor.muted)
     .accessibilityHint(Text("Shows actions"))
   }
 }

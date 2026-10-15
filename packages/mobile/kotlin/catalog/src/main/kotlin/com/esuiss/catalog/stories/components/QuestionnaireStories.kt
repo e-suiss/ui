@@ -73,7 +73,7 @@ private fun QuestionnaireResult(values: String?) {
         "Submitted: $values",
         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
         style = Typography.sm,
-        color = EsuissTheme.colors.labelSecondary,
+        color = EsuissTheme.colors.mutedForeground,
     )
 }
 

@@ -29,6 +29,7 @@ import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
@@ -91,9 +92,9 @@ function bracketPath(size: number, radius: number, arm: number, pad: number) {
 }
 
 function bracketColor(state: QRScannerState, colors: ThemeColors) {
-  if (state === "success") return colors.success
-  if (state === "error") return colors.danger
-  return colors.onMedia
+  if (state === "success") return palette.green500
+  if (state === "error") return colors.destructive
+  return palette.white
 }
 
 const styles = StyleSheet.create({
@@ -274,7 +275,7 @@ function QRScanner({
       }
       style={[
         styles.root,
-        children == null && { backgroundColor: colors.media },
+        children == null && { backgroundColor: palette.black },
         style,
       ]}
       {...props}
@@ -303,7 +304,7 @@ function QRScanner({
                 frameSize,
                 FRAME_RADIUS
               )}
-              fill={colors.scrim}
+              fill={"rgba(0, 0, 0, 0.5)"}
               fillRule="evenodd"
             />
           </Svg>
@@ -332,7 +333,7 @@ function QRScanner({
               <AnimatedView
                 style={[
                   styles.line,
-                  { backgroundColor: colors.accent },
+                  { backgroundColor: colors.primary },
                   lineStyle,
                 ]}
               />
@@ -343,7 +344,7 @@ function QRScanner({
               pointerEvents="none"
               style={[styles.title, { bottom: layout.height - frameTop + 32 }]}
             >
-              {wrapText(title, [styles.titleText, { color: colors.onMedia }])}
+              {wrapText(title, [styles.titleText, { color: palette.white }])}
             </View>
           ) : null}
           {description !== undefined ? (
@@ -354,7 +355,7 @@ function QRScanner({
               <View pointerEvents="box-none" style={styles.descriptionBox}>
                 {wrapText(description, [
                   styles.description,
-                  { color: colors.onMedia },
+                  { color: palette.white },
                 ])}
               </View>
             </View>
@@ -370,7 +371,9 @@ function QRScanner({
                 style={({ pressed }) => [
                   styles.torch,
                   {
-                    backgroundColor: torch ? colors.onMedia : colors.scrim,
+                    backgroundColor: torch
+                      ? palette.white
+                      : "rgba(0, 0, 0, 0.5)",
                     opacity: pressed ? 0.7 : 1,
                   },
                 ]}
@@ -379,7 +382,7 @@ function QRScanner({
                   as={FlashlightIcon}
                   weight={torch ? "fill" : "regular"}
                   size={24}
-                  color={torch ? colors.media : colors.onMedia}
+                  color={torch ? palette.black : palette.white}
                 />
               </Pressable>
             </View>

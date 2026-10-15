@@ -67,7 +67,7 @@ public struct SignupTrial: View {
             HStack(spacing: 4) {
               Text("Already have an account?")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               Button("Sign in ›") { onSignIn?() }
                 .buttonStyle(SignupTrialLinkStyle())
             }
@@ -95,20 +95,20 @@ public struct SignupTrial: View {
         .opacity(0.8)
         .padding(.top, 8)
     }
-    .foregroundStyle(Color.onMedia)
+    .foregroundStyle(Palette.white)
     .fixedSize(horizontal: false, vertical: true)
     .padding(24)
     .padding(.top, 112)
     .frame(maxWidth: .infinity, minHeight: 340, alignment: .bottomLeading)
     .background {
       ZStack {
-        Color.media
+        Palette.black
         AsyncImage(url: Self.image) { phase in
           if let image = phase.image {
             image.resizable().scaledToFill()
           }
         }
-        LinearGradient(colors: [.clear, Color.media.opacity(0.8)], startPoint: .top, endPoint: .bottom)
+        LinearGradient(colors: [.clear, Palette.black.opacity(0.8)], startPoint: .top, endPoint: .bottom)
       }
       .clipped()
       .accessibilityHidden(true)
@@ -130,16 +130,16 @@ public struct SignupTrial: View {
           .submitLabel(.next)
           .focused($focus, equals: .email)
           .modifier(SignupTrialFieldText())
-        Color.separatorStrong.frame(height: 1)
+        EsuissColor.input.frame(height: 1)
         SecureField("Create a password", text: $password)
           .textContentType(.newPassword)
           .submitLabel(.done)
           .focused($focus, equals: .password)
           .modifier(SignupTrialFieldText())
       }
-      .background(Color.surface, in: shape)
+      .background(EsuissColor.background, in: shape)
       .overlay {
-        shape.strokeBorder(focus != nil ? Color.focus : .separatorStrong, lineWidth: 1)
+        shape.strokeBorder(focus != nil ? EsuissColor.ring : EsuissColor.input, lineWidth: 1)
       }
       if !password.isEmpty {
         meter
@@ -148,7 +148,7 @@ public struct SignupTrial: View {
       Toggle(isOn: $terms) {
         Text("I have read and agree to the suiss Media Services Terms and Conditions.")
           .scaledTextStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .fixedSize(horizontal: false, vertical: true)
       }
       .toggleStyle(.checkbox)
@@ -159,12 +159,12 @@ public struct SignupTrial: View {
   }
 
   private var meter: some View {
-    let levels: [Color] = [.red, .red, .orange, .yellow, .green]
+    let levels: [Color] = [Palette.red500, Palette.red500, Palette.orange500, Palette.yellow500, Palette.green500]
     let labels: [LocalizedStringKey] = ["Weak", "Weak", "Fair", "Good", "Strong"]
     return HStack(spacing: 4) {
       ForEach(0..<4, id: \.self) { bar in
         Capsule()
-          .fill(bar < max(1, score) ? levels[score] : Color.control)
+          .fill(bar < max(1, score) ? levels[score] : EsuissColor.secondary)
           .frame(height: 4)
       }
     }
@@ -178,15 +178,15 @@ public struct SignupTrial: View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Welcome to suiss Music.")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("Your one-month free trial has started.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") { done = false }
         .buttonStyle(SignupTrialLinkStyle(style: .lg))
     }
@@ -201,8 +201,8 @@ private struct SignupTrialFieldText: ViewModifier {
   func body(content: Content) -> some View {
     content
       .scaledFont(.lg)
-      .foregroundStyle(Color.label)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
       .padding(.horizontal, 16)
       .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
   }
@@ -223,8 +223,8 @@ private struct SignupTrialLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

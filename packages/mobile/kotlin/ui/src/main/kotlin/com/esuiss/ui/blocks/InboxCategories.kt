@@ -79,6 +79,7 @@ import com.esuiss.ui.patterns.SplitViewColumn
 import com.esuiss.ui.patterns.SplitViewItem
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -113,26 +114,26 @@ private fun categoryMail() = listOf(
 private class MailCategory(val value: String, val icon: ImageVector, val tint: (Colors) -> Color)
 
 private val MailCategories = listOf(
-    MailCategory("Primary", PhosphorIcons.Bold.Users) { it.accent },
+    MailCategory("Primary", PhosphorIcons.Bold.Users) { it.primary },
     MailCategory("Transactions", PhosphorIcons.Bold.CreditCard) {
-        if (it.isDark) lerp(it.green, it.media, 0.4f) else lerp(it.green, it.label, 0.4f)
+        if (it.isDark) lerp(Palette.green500, Palette.black, 0.4f) else lerp(Palette.green500, it.foreground, 0.4f)
     },
     MailCategory("Updates", PhosphorIcons.Bold.Bell) {
-        if (it.isDark) lerp(it.purple, it.media, 0.3f) else lerp(it.purple, it.label, 0.2f)
+        if (it.isDark) lerp(Palette.purple500, Palette.black, 0.3f) else lerp(Palette.purple500, it.foreground, 0.2f)
     },
     MailCategory("Promotions", PhosphorIcons.Bold.Tag) {
-        if (it.isDark) lerp(it.pink, it.media, 0.25f) else lerp(it.pink, it.label, 0.2f)
+        if (it.isDark) lerp(Palette.pink500, Palette.black, 0.25f) else lerp(Palette.pink500, it.foreground, 0.2f)
     },
 )
 
 private fun senderTint(colors: Colors, hue: Int): Color = when (hue) {
-    30 -> colors.orange
-    150 -> colors.green
-    210 -> colors.blue
-    else -> colors.label
+    30 -> Palette.orange500
+    150 -> Palette.green500
+    210 -> Palette.blue500
+    else -> colors.foreground
 }
 
-private fun starTint(colors: Colors): Color = if (colors.isDark) colors.orange else lerp(colors.orange, colors.label, 0.45f)
+private fun starTint(colors: Colors): Color = if (colors.isDark) Palette.orange500 else lerp(Palette.orange500, colors.foreground, 0.45f)
 
 @Composable
 fun InboxCategories(
@@ -201,7 +202,7 @@ fun InboxCategories(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(30.dp),
-                                    style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                                    style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                                 )
                             }
                             list.forEachIndexed { index, item ->
@@ -260,7 +261,7 @@ fun InboxCategories(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 48.dp),
-                        style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
             }
@@ -272,8 +273,8 @@ fun InboxCategories(
 private fun CategoryToggle(category: MailCategory, pressed: Boolean, unread: Boolean, onClick: () -> Unit) {
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(Radius.lg)
-    val fill by animateColorAsState(if (pressed) category.tint(colors) else colors.control, tween(350), label = "fill")
-    val ink by animateColorAsState(if (pressed) colors.onMedia else colors.labelSecondary, tween(350), label = "ink")
+    val fill by animateColorAsState(if (pressed) category.tint(colors) else colors.secondary, tween(350), label = "fill")
+    val ink by animateColorAsState(if (pressed) Palette.white else colors.mutedForeground, tween(350), label = "ink")
     Box {
         Row(
             modifier = Modifier
@@ -304,9 +305,9 @@ private fun CategoryToggle(category: MailCategory, pressed: Boolean, unread: Boo
                     .align(Alignment.TopEnd)
                     .offset(x = (-2).dp, y = 2.dp)
                     .size(10.dp)
-                    .border(2.dp, colors.surface, CircleShape)
+                    .border(2.dp, colors.background, CircleShape)
                     .padding(2.dp)
-                    .background(colors.accent, CircleShape)
+                    .background(colors.primary, CircleShape)
                     .semantics { stateDescription = "Unread" },
             )
         }
@@ -336,7 +337,7 @@ private fun CategoryRow(mail: CategoryMail, active: Boolean, onClick: () -> Unit
                 Modifier
                     .padding(top = 6.dp)
                     .size(8.dp)
-                    .background(if (mail.unread) colors.accent else Color.Transparent, CircleShape)
+                    .background(if (mail.unread) colors.primary else Color.Transparent, CircleShape)
                     .semantics { if (mail.unread) stateDescription = "Unread" },
             )
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(1.dp)) {
@@ -344,24 +345,24 @@ private fun CategoryRow(mail: CategoryMail, active: Boolean, onClick: () -> Unit
                     BasicText(
                         mail.from,
                         modifier = Modifier.weight(1f),
-                        style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     if (mail.starred) {
                         Icon(PhosphorIcons.Fill.FillStar, contentDescription = "Starred", size = 12.dp, tint = starTint(colors))
                     }
-                    BasicText(mail.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(mail.time, style = Typography.xs.copy(color = colors.mutedForeground))
                 }
                 BasicText(
                     mail.subject,
-                    style = Typography.sm.copy(color = colors.label),
+                    style = Typography.sm.copy(color = colors.foreground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 BasicText(
                     mail.body,
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -382,7 +383,7 @@ private fun CategorySender(mail: CategoryMail, size: Dp) {
         BasicText(
             if (mail.hue != 0) mail.from.split(" ").mapNotNull { it.firstOrNull() }.joinToString("") else "s",
             style = Typography.base.copy(
-                color = if (mail.hue != 0) colors.onMedia else colors.surface,
+                color = if (mail.hue != 0) Palette.white else colors.background,
                 fontWeight = FontWeight.Medium,
                 fontSize = (size.value * 0.4f).sp,
             ),
@@ -415,7 +416,7 @@ private fun CategoryReader(
             CategoryAction(
                 if (mail.starred) PhosphorIcons.Fill.FillStar else PhosphorIcons.Regular.Star,
                 if (mail.starred) "Unstar" else "Star",
-                tint = if (mail.starred) starTint(colors) else colors.labelSecondary,
+                tint = if (mail.starred) starTint(colors) else colors.mutedForeground,
                 onClick = onStar,
             )
             CategoryAction(PhosphorIcons.Regular.Archive, "Archive", onClick = onArchive)
@@ -425,7 +426,7 @@ private fun CategoryReader(
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
         Column(
             modifier = Modifier
@@ -439,17 +440,17 @@ private fun CategoryReader(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 CategorySender(mail, 40.dp)
                 Column(Modifier.weight(1f)) {
-                    BasicText(mail.from, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                    BasicText("To: Jamie Rivera", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(mail.from, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                    BasicText("To: Jamie Rivera", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
-                BasicText(mail.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                BasicText(mail.time, style = Typography.xs.copy(color = colors.mutedForeground))
             }
             BasicText(
                 mail.subject,
                 modifier = Modifier.semantics { heading() },
-                style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
-            BasicText(mail.body, style = Typography.base.copy(color = colors.label, lineHeight = 26.sp))
+            BasicText(mail.body, style = Typography.base.copy(color = colors.foreground, lineHeight = 26.sp))
         }
         if (replying) {
             Column(
@@ -460,7 +461,7 @@ private fun CategoryReader(
                     Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(colors.separator),
+                        .background(colors.border),
                 )
                 Textarea(
                     value = reply,
@@ -494,7 +495,7 @@ private fun CategoryReader(
 private fun CategoryAction(
     icon: ImageVector,
     label: String,
-    tint: Color = EsuissTheme.colors.labelSecondary,
+    tint: Color = EsuissTheme.colors.mutedForeground,
     onClick: () -> Unit,
 ) {
     Button(onClick = onClick, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {

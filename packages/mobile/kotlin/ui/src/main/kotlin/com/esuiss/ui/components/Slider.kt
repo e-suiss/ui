@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -197,7 +198,7 @@ private fun SliderLayout(
                     .fillMaxWidth()
                     .height(4.dp)
                     .clip(CircleShape)
-                    .background(if (enabled) colors.labelQuaternary else colors.controlDisabled)
+                    .background(colors.border)
                     .drawBehind {
                         val thumb = thumbWidth.toPx()
                         val usable = size.width - thumb
@@ -207,7 +208,7 @@ private fun SliderLayout(
                         val left = if (rtl) size.width - to else from
                         val right = if (rtl) size.width - from else to
                         drawRect(
-                            if (enabled) colors.accent else colors.accentDisabled,
+                            colors.primary,
                             Offset(left, 0f),
                             Size((right - left).coerceAtLeast(0f), size.height),
                         )
@@ -232,7 +233,8 @@ private fun SliderLayout(
             .then(gesture)
             .formTouchTarget()
             .fillMaxWidth()
-            .height(32.dp),
+            .height(32.dp)
+            .alpha(if (enabled) 1f else 0.5f),
     ) { measurables, constraints ->
         val width = if (constraints.hasBoundedWidth) constraints.maxWidth else 200.dp.roundToPx()
         val height = constraints.constrainHeight(32.dp.roundToPx())
@@ -282,7 +284,7 @@ private fun SliderThumb(
             }
             .size(width, 20.dp)
             .then(if (enabled) Modifier.shadow(Shadows.md, CircleShape) else Modifier)
-            .background(if (colors.isDark) colors.label else colors.surface, CircleShape)
-            .border(1.dp, colors.label.copy(alpha = 0.1f), CircleShape),
+            .background(if (colors.isDark) colors.foreground else colors.background, CircleShape)
+            .border(1.dp, colors.foreground.copy(alpha = 0.1f), CircleShape),
     )
 }

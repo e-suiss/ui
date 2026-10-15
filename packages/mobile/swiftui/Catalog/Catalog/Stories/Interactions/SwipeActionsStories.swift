@@ -31,7 +31,7 @@ private struct SwipeActionsInbox: View {
         if index > 0 {
           ItemSeparator()
         }
-        SwipeActions(background: .surfaceSecondary) {
+        SwipeActions(background: EsuissColor.muted) {
           Item(action: {}) {
             ItemContent {
               ItemTitle(verbatim: message.from)

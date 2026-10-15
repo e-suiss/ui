@@ -324,7 +324,7 @@ public struct DateCalendar: View {
     }
     .padding(size.padding)
     .fixedSize()
-    .background(transparent ? Color.clear : Color.surface)
+    .background(transparent ? Color.clear : EsuissColor.background)
     .contentShape(Rectangle())
     .gesture(
       DragGesture(minimumDistance: 24)
@@ -375,7 +375,7 @@ public struct DateCalendar: View {
       Text(verbatim: captionText(month))
         .font(size.caption.font(weight: .semibold))
         .tracking(size.caption.letterSpacing)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
     case .dropdown:
       HStack(spacing: 6) {
@@ -387,13 +387,13 @@ public struct DateCalendar: View {
         monthMenu(month)
         Text(verbatim: String(calendar.component(.year, from: month)))
           .font(size.caption.font(weight: .semibold))
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
       }
     case .dropdownYears:
       HStack(spacing: 6) {
         Text(verbatim: monthSymbol(month, short: false))
           .font(size.caption.font(weight: .semibold))
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         yearMenu(month)
       }
     }
@@ -462,10 +462,10 @@ public struct DateCalendar: View {
       Text(verbatim: text)
         .font(size.caption.font(weight: .semibold))
         .tracking(size.caption.letterSpacing)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       Ph.caretDown.regular
         .frame(width: 14, height: 14)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
   }
 
@@ -488,7 +488,7 @@ public struct DateCalendar: View {
         Text(verbatim: size == .sm ? symbol : symbol.uppercased(with: locale))
           .font(size.weekday.font(weight: .semibold))
           .tracking(size.weekday.letterSpacing)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
           .frame(maxWidth: .infinity)
       }
@@ -502,7 +502,7 @@ public struct DateCalendar: View {
         Text(verbatim: String(calendar.component(.weekOfYear, from: first)))
           .font(TextStyle.xs.font())
           .tracking(TextStyle.xs.letterSpacing)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .frame(width: size.cell, height: size.cell)
       }
       ForEach(Array(week.enumerated()), id: \.offset) { position, day in
@@ -534,7 +534,7 @@ public struct DateCalendar: View {
         topTrailingRadius: trailing,
         style: .continuous
       )
-      .fill(Color.surfaceSecondary)
+      .fill(EsuissColor.muted)
     }
   }
 
@@ -597,28 +597,28 @@ struct CalendarNavButtonStyle: ButtonStyle {
     configuration.label
       .foregroundStyle(foreground)
       .frame(width: size, height: size)
-      .background(background(pressed: pressed), in: Circle())
+      .background(background, in: Circle())
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .contentShape(Circle())
   }
 
   private var foreground: Color {
-    guard isEnabled else { return .labelQuaternary }
     switch variant {
-    case .plain, .tinted, .link: return .link
-    case .default: return .onAccent
-    case .destructive: return .danger
-    case .outline, .secondary, .ghost: return .label
+    case .plain, .tinted, .link: return EsuissColor.primary
+    case .default: return EsuissColor.primaryForeground
+    case .destructive: return EsuissColor.destructive
+    case .secondary: return EsuissColor.secondaryForeground
+    case .outline, .ghost: return EsuissColor.foreground
     }
   }
 
-  private func background(pressed: Bool) -> Color {
+  private var background: Color {
     switch variant {
-    case .default: return pressed ? .accentPressed : .accent
-    case .secondary: return pressed ? .controlPressed : .control
-    case .tinted: return pressed ? .accentSurfacePressed : .accentSurface
-    case .destructive: return pressed ? .dangerSurfacePressed : .dangerSurface
-    case .outline, .ghost, .plain: return pressed ? .itemPressed : .clear
-    case .link: return .clear
+    case .default: return EsuissColor.primary
+    case .secondary: return EsuissColor.secondary
+    case .tinted: return Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))
+    case .destructive: return Color.adaptive(light: EsuissColor.destructive.opacity(0.1), dark: EsuissColor.destructive.opacity(0.2))
+    case .outline, .ghost, .plain, .link: return .clear
     }
   }
 }
@@ -678,23 +678,23 @@ public struct CalendarDayButton: View {
       .monospacedDigit()
       .foregroundStyle(foreground)
       .frame(width: cell, height: cell)
-      .background(background(pressed: pressed && !modifiers.disabled), in: Circle())
+      .background(background, in: Circle())
+      .opacity(modifiers.disabled ? 0.5 : (pressed ? 0.8 : 1))
       .contentShape(Circle())
   }
 
   private var foreground: Color {
-    if accent { return .onAccent }
-    if modifiers.disabled { return .labelQuaternary }
-    if modifiers.rangeMiddle { return .label }
-    if modifiers.selectedSingle || modifiers.today { return .link }
-    if modifiers.outside { return .labelSecondary }
-    return .label
+    if accent { return EsuissColor.primaryForeground }
+    if modifiers.disabled { return EsuissColor.mutedForeground }
+    if modifiers.rangeMiddle { return EsuissColor.accentForeground }
+    if modifiers.selectedSingle || modifiers.today { return EsuissColor.primary }
+    if modifiers.outside { return EsuissColor.mutedForeground }
+    return EsuissColor.foreground
   }
 
-  private func background(pressed: Bool) -> Color {
-    if accent { return pressed ? .accentPressed : .accent }
-    if modifiers.rangeMiddle { return pressed ? .itemPressed : .clear }
-    if modifiers.selectedSingle { return pressed ? .accentSurfacePressed : .accentSurface }
-    return pressed ? .itemPressed : .clear
+  private var background: Color {
+    if accent { return EsuissColor.primary }
+    if modifiers.selectedSingle { return Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2)) }
+    return .clear
   }
 }

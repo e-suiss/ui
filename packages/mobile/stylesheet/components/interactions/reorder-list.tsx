@@ -335,7 +335,7 @@ function ReorderListItem({
             pointerEvents="none"
             style={[
               styles.raised,
-              { backgroundColor: colors.surfaceRaised },
+              { backgroundColor: colors.card },
               inset && styles.raisedInset,
               raisedStyle,
             ]}
@@ -459,7 +459,7 @@ function ReorderListHandle({
           as={DotsSixVerticalIcon}
           weight="bold"
           size={20}
-          color={colors.labelTertiary}
+          color={colors.mutedForeground}
         />
       </View>
     </GestureDetector>

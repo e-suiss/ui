@@ -45,11 +45,11 @@ function SectionIndexHeader({
   return (
     <View
       role="heading"
-      className={cn("bg-surface px-4 py-1.5", className)}
+      className={cn("bg-background px-4 py-1.5", className)}
       {...props}
     >
       {typeof children === "string" || typeof children === "number" ? (
-        <Text className="text-sm font-semibold text-label-secondary">
+        <Text className="text-sm font-semibold text-muted-foreground">
           {children}
         </Text>
       ) : (
@@ -85,7 +85,7 @@ function SectionIndexBar({
                 className="h-4 min-w-3 items-center justify-center"
                 style={{ pointerEvents: "none" }}
               >
-                <Text className="text-2xs font-semibold text-link">
+                <Text className="text-2xs font-semibold text-primary">
                   {item.label}
                 </Text>
               </View>
@@ -98,10 +98,10 @@ function SectionIndexBar({
                 exiting={FadeOut.duration(150).reduceMotion(
                   ReduceMotion.System
                 )}
-                className="absolute end-full me-4 size-14 items-center justify-center rounded-full border border-separator bg-surface-raised shadow-xl"
+                className="absolute end-full me-4 size-14 items-center justify-center rounded-full border border-border bg-popover shadow-xl"
                 style={{ top: state.dragY - 28, pointerEvents: "none" }}
               >
-                <Text className="text-3xl font-semibold text-label">
+                <Text className="text-3xl font-semibold text-foreground">
                   {state.letter}
                 </Text>
               </AnimatedView>

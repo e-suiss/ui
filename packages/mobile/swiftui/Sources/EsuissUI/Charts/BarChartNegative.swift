@@ -24,11 +24,11 @@ public struct BarChartNegative: View {
             Chart {
               RuleMark(y: .value("Zero", 0))
                 .lineStyle(StrokeStyle(lineWidth: 1))
-                .foregroundStyle(Color.separatorStrong)
+                .foregroundStyle(EsuissColor.input)
               ForEach(chartData.indices, id: \.self) { index in
                 BarMark(x: .value("Month", chartData[index].month), y: .value("Flow", chartData[index].flow * progress), width: .fixed(18))
                   .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                  .foregroundStyle(chartData[index].flow >= 0 ? Color.green : .red)
+                  .foregroundStyle(chartData[index].flow >= 0 ? Palette.green500 : Palette.red500)
                 ChartAnchorMark(x: .value("Month", chartData[index].month), y: .value("Flow", chartData[index].flow))
               }
             }

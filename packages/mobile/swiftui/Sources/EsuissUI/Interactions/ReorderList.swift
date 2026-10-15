@@ -108,7 +108,7 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
         .frame(maxWidth: .infinity, alignment: .leading)
       Ph.dotsSixVertical.bold
         .frame(width: 20, height: 20)
-        .foregroundStyle(raised ? Color.labelSecondary : .labelTertiary)
+        .foregroundStyle(raised ? EsuissColor.mutedForeground : EsuissColor.mutedForeground)
         .frame(width: 44, height: 44)
         .contentShape(Rectangle())
         .gesture(
@@ -146,13 +146,13 @@ public struct ReorderList<Value: Hashable, Row: View>: View {
     .frame(minHeight: 44)
     .background {
       shape
-        .fill(Color.surfaceRaised)
+        .fill(EsuissColor.card)
         .shadow(.lg)
         .opacity(raised ? 1 : 0)
     }
     .overlay(alignment: .bottom) {
       if index < items.count - 1 && !active {
-        Color.separator.frame(height: 1).padding(.leading, 16)
+        EsuissColor.border.frame(height: 1).padding(.leading, 16)
       }
     }
     .scaleEffect(raised && !reduceMotion && !inset ? 1.02 : 1)

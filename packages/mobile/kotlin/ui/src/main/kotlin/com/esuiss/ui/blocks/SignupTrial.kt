@@ -81,6 +81,7 @@ import com.esuiss.ui.components.ScreenEdge
 import com.esuiss.ui.components.inputAccessory
 import com.esuiss.ui.components.rememberInputAccessoryState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -133,22 +134,22 @@ fun SignupTrial(
                     BasicText(
                         "Start your free trial.",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                     val shape = RoundedCornerShape(Radius.xl)
                     Column(
                         Modifier
                             .fillMaxWidth()
                             .clip(shape)
-                            .background(colors.surface, shape)
-                            .border(1.dp, colors.separatorStrong, shape),
+                            .background(colors.background, shape)
+                            .border(1.dp, colors.input, shape),
                     ) {
                         StackInput(email, { email = it }, "suiss Account email", accessory, 0, KeyboardType.Email)
                         Box(
                             Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(colors.separatorStrong),
+                                .background(colors.input),
                         )
                         StackInput(password, { password = it }, "Create a password", accessory, 1, KeyboardType.Password, secret = true)
                     }
@@ -171,14 +172,14 @@ fun SignupTrial(
                         BasicText(
                             "I have read and agree to the suiss Media Services Terms and Conditions.",
                             modifier = Modifier.weight(1f),
-                            style = Typography.sm.copy(color = colors.labelSecondary),
+                            style = Typography.sm.copy(color = colors.mutedForeground),
                         )
                     }
                     FlowRow(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                     ) {
-                        BasicText("Already have an account?", style = Typography.sm.copy(color = colors.labelSecondary))
+                        BasicText("Already have an account?", style = Typography.sm.copy(color = colors.mutedForeground))
                         LinkText("Sign in ›", onSignIn)
                     }
                 }
@@ -199,7 +200,7 @@ private fun Hero() {
     Box(
         Modifier
             .fillMaxWidth()
-            .background(colors.indigo),
+            .background(Palette.indigo500),
     ) {
         Column(
             Modifier
@@ -207,18 +208,18 @@ private fun Hero() {
                 .padding(start = 24.dp, end = 24.dp, top = 112.dp, bottom = 24.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                Icon(PhosphorIcons.Fill.MusicNotes, contentDescription = null, size = 26.dp, tint = colors.onMedia)
-                BasicText("suiss Music", style = Typography.xl2.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold))
+                Icon(PhosphorIcons.Fill.MusicNotes, contentDescription = null, size = 26.dp, tint = Palette.white)
+                BasicText("suiss Music", style = Typography.xl2.copy(color = Palette.white, fontWeight = FontWeight.SemiBold))
             }
             Spacer(Modifier.height(10.dp))
             BasicText(
                 "Over 100 million songs. Ad-free.",
-                style = Typography.xl3.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl3.copy(color = Palette.white, fontWeight = FontWeight.SemiBold),
             )
             Spacer(Modifier.height(8.dp))
             BasicText(
                 "1 month free, then \$10.99/month.",
-                style = Typography.base.copy(color = colors.onMedia.copy(alpha = 0.8f)),
+                style = Typography.base.copy(color = Palette.white.copy(alpha = 0.8f)),
             )
         }
     }
@@ -228,10 +229,10 @@ private fun Hero() {
 private fun StrengthMeter(score: Int) {
     val colors = EsuissTheme.colors
     val level = when (score) {
-        0 -> colors.red
-        1 -> colors.orange
-        2 -> colors.yellow
-        else -> colors.green
+        0 -> Palette.red500
+        1 -> Palette.orange500
+        2 -> Palette.yellow500
+        else -> Palette.green500
     }
     Row(
         modifier = Modifier
@@ -244,7 +245,7 @@ private fun StrengthMeter(score: Int) {
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         repeat(4) { bar ->
-            val fill by animateColorAsState(if (bar < maxOf(1, score)) level else colors.control, tween(300), label = "bar")
+            val fill by animateColorAsState(if (bar < maxOf(1, score)) level else colors.secondary, tween(300), label = "bar")
             Box(
                 Modifier
                     .weight(1f)
@@ -267,7 +268,7 @@ private fun StackInput(
 ) {
     val colors = EsuissTheme.colors
     val focus = LocalFocusManager.current
-    val style = Typography.lg.copy(color = colors.label)
+    val style = Typography.lg.copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -278,7 +279,7 @@ private fun StackInput(
             .semantics { contentDescription = placeholder },
         textStyle = style,
         singleLine = true,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         visualTransformation = if (secret) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = if (secret) ImeAction.Done else ImeAction.Next),
         keyboardActions = KeyboardActions(
@@ -287,7 +288,7 @@ private fun StackInput(
         ),
         decorationBox = { inner ->
             Box(Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
-                if (value.isEmpty()) BasicText(placeholder, style = style.copy(color = colors.labelSecondary), maxLines = 1)
+                if (value.isEmpty()) BasicText(placeholder, style = style.copy(color = colors.mutedForeground), maxLines = 1)
                 inner()
             }
         },
@@ -301,9 +302,9 @@ private fun LinkText(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary),
     )
 }
 
@@ -329,26 +330,26 @@ private fun Success(onStartOver: () -> Unit) {
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             "Welcome to suiss Music.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
         BasicText(
             "Your one-month free trial has started.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         BasicText(
             "Start over ›",
             modifier = Modifier
-                .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onStartOver),
-            style = Typography.lg.copy(color = colors.link),
+            style = Typography.lg.copy(color = colors.primary),
         )
     }
 }

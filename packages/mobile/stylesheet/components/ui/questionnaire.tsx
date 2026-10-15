@@ -608,7 +608,7 @@ function QuestionnaireProgress({
     typeof children === "function"
       ? children({ current, first, last, total })
       : children
-  const textStyle = [styles.progressText, { color: colors.labelSecondary }]
+  const textStyle = [styles.progressText, { color: colors.mutedForeground }]
   return (
     <View
       role="progressbar"
@@ -749,7 +749,7 @@ function QuestionnaireDescription({
   useQuestionnaireItemContext("QuestionnaireDescription")
   return (
     <Text
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )
@@ -818,13 +818,18 @@ function QuestionnaireChoice({
   }
 
   const mark = multiple ? (
-    <Icon as={CheckIcon} weight="bold" size={14} color={colors.onAccent} />
+    <Icon
+      as={CheckIcon}
+      weight="bold"
+      size={14}
+      color={colors.primaryForeground}
+    />
   ) : (
     <View
       style={[
         styles.dot,
         isDark && styles.dotDark,
-        { backgroundColor: colors.onAccent },
+        { backgroundColor: colors.primaryForeground },
       ]}
     />
   )
@@ -836,13 +841,14 @@ function QuestionnaireChoice({
       onPress={handlePress}
       style={(state) => [
         styles.choice,
-        { borderColor: colors.separator },
-        state.pressed && { backgroundColor: colors.itemPressed },
+        { borderColor: colors.border },
+        state.pressed && { opacity: 0.8 },
+        disabled && { opacity: 0.5 },
         item.invalid && {
-          borderColor: colors.danger,
-          backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+          borderColor: colors.destructive,
+          backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
         },
-        isChecked && [styles.choiceChecked, { borderColor: colors.accent }],
+        isChecked && [styles.choiceChecked, { borderColor: colors.primary }],
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -852,7 +858,7 @@ function QuestionnaireChoice({
           styles.indicator,
           {
             borderRadius: multiple ? radius.xs : radius.full,
-            backgroundColor: isChecked ? colors.accent : colors.labelQuaternary,
+            backgroundColor: isChecked ? colors.primary : colors.border,
           },
         ]}
       >
@@ -861,7 +867,7 @@ function QuestionnaireChoice({
       <TextStyleContext.Provider
         value={{
           ...fontSize.base,
-          color: disabled ? colors.labelQuaternary : colors.label,
+          color: colors.foreground,
         }}
       >
         <View style={styles.label}>
@@ -877,7 +883,7 @@ function QuestionnaireChoiceDescription({
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
   const { colors } = useTheme()
-  return <Text style={[{ color: colors.labelSecondary }, style]} {...props} />
+  return <Text style={[{ color: colors.mutedForeground }, style]} {...props} />
 }
 
 function inputTypeProps(
@@ -961,8 +967,8 @@ function QuestionnaireInput({
       }
       style={(state) => [
         item.invalid && {
-          borderColor: colors.danger,
-          backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+          borderColor: colors.destructive,
+          backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
         },
         typeof style === "function" ? style(state) : style,
       ]}
@@ -984,7 +990,7 @@ function QuestionnaireError({
     <Text
       role="alert"
       accessibilityLiveRegion="polite"
-      style={[styles.error, { color: colors.danger }, style]}
+      style={[styles.error, { color: colors.destructive }, style]}
       {...props}
     >
       {children ??

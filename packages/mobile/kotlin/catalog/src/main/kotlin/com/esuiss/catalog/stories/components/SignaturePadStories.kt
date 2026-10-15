@@ -86,7 +86,7 @@ private fun SignaturePadControlled() {
             "${strokes.size} strokes" + if (exported.isNotEmpty()) " · $exported" else "",
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             style = Typography.sm,
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
         )
     }
 }

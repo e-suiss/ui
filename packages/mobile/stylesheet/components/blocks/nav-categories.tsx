@@ -66,12 +66,12 @@ function NavCategories({
             <Text role="heading" style={styles.title}>
               Store.
             </Text>
-            <Text style={[styles.subtitle, { color: colors.labelSecondary }]}>
+            <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
               The best way to buy the suiss products you love.
             </Text>
           </View>
           <View style={styles.help}>
-            <Text style={[styles.helpTitle, { color: colors.labelSecondary }]}>
+            <Text style={[styles.helpTitle, { color: colors.mutedForeground }]}>
               Need shopping help?
             </Text>
             <Pressable
@@ -80,7 +80,7 @@ function NavCategories({
               onPress={onAskSpecialist}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[styles.link, { color: colors.link }]}>
+              <Text style={[styles.link, { color: colors.primary }]}>
                 Ask a Specialist ›
               </Text>
             </Pressable>
@@ -90,7 +90,7 @@ function NavCategories({
               onPress={onFindStore}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[styles.link, { color: colors.link }]}>
+              <Text style={[styles.link, { color: colors.primary }]}>
                 Visit a suiss Store near you ›
               </Text>
             </Pressable>
@@ -118,16 +118,13 @@ function NavCategories({
                 source={{ uri: category.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                style={[
-                  styles.image,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
+                style={[styles.image, { backgroundColor: colors.muted }]}
               />
               <Text numberOfLines={1}>{category.label}</Text>
             </Chip>
           ))}
         </ChipGroup>
-        <View style={[styles.latest, { borderTopColor: colors.separator }]}>
+        <View style={[styles.latest, { borderTopColor: colors.border }]}>
           <AnimatedView
             key={selected}
             entering={FadeIn.duration(400).reduceMotion(ReduceMotion.System)}
@@ -136,7 +133,7 @@ function NavCategories({
             <Text style={styles.latestText}>
               The latest.{" "}
               <Text
-                style={[styles.latestText, { color: colors.labelSecondary }]}
+                style={[styles.latestText, { color: colors.mutedForeground }]}
               >
                 Take a look at what's new in {selected}.
               </Text>

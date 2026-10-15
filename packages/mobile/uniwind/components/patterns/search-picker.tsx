@@ -118,28 +118,25 @@ function SearchPicker({
         accessibilityLabel={accessibilityLabel}
         accessibilityLabelledBy={accessibilityLabelledBy}
         className={cn(
-          "h-11 w-full flex-row items-center justify-between gap-1.5 rounded-lg border border-transparent bg-control px-3",
-          invalid && "border-danger bg-danger/5 dark:bg-danger/10",
-          disabled && "bg-control-disabled",
+          "h-11 w-full flex-row items-center justify-between gap-1.5 rounded-lg border border-transparent bg-secondary px-3",
+          invalid &&
+            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+          disabled && "opacity-50",
           className
         )}
       >
         <Text
           numberOfLines={1}
           className={cn(
-            "flex-1 text-base text-label",
-            !selected && "text-label-secondary",
-            disabled && "text-label-quaternary"
+            "flex-1 text-base text-foreground",
+            !selected && "text-muted-foreground"
           )}
         >
           {selected?.label ?? placeholder}
         </Text>
         <Icon
           as={CaretUpDownIcon}
-          className={cn(
-            "size-4 shrink-0 text-label-secondary",
-            disabled && "text-label-quaternary"
-          )}
+          className="size-4 shrink-0 text-muted-foreground"
         />
       </DrawerTrigger>
       <DrawerContent
@@ -157,14 +154,14 @@ function SearchPicker({
         <View className="px-3 pt-1.25 pb-3">
           <View
             className={cn(
-              "h-14 shrink-0 flex-row items-center gap-3 border-b border-separator px-4",
+              "h-14 shrink-0 flex-row items-center gap-3 border-b border-border px-4",
               showCloseButton && "pr-11",
               showCloseButton && closeLabel && "pr-21"
             )}
           >
             <Icon
               as={MagnifyingGlassIcon}
-              className="size-5.5 shrink-0 text-label-secondary"
+              className="size-5.5 shrink-0 text-muted-foreground"
             />
             <TextInput
               value={query}
@@ -174,10 +171,10 @@ function SearchPicker({
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
-              className="h-full min-w-0 flex-1 py-0 text-xl text-label"
-              placeholderTextColorClassName="accent-label-tertiary"
-              cursorColorClassName="accent-accent"
-              selectionColorClassName="accent-accent"
+              className="h-full min-w-0 flex-1 py-0 text-xl text-foreground"
+              placeholderTextColorClassName="accent-muted-foreground"
+              cursorColorClassName="accent-primary"
+              selectionColorClassName="accent-primary"
             />
           </View>
           <ScrollView
@@ -187,7 +184,7 @@ function SearchPicker({
             contentContainerClassName="p-1.5"
           >
             {groups.length === 0 ? (
-              <Text className="py-10 text-center text-base text-label-secondary">
+              <Text className="py-10 text-center text-base text-muted-foreground">
                 {emptyText}
               </Text>
             ) : (
@@ -199,7 +196,7 @@ function SearchPicker({
                   className={cn(index > 0 && "pt-2")}
                 >
                   {group.value ? (
-                    <Text className="px-3 pt-1 pb-1.5 text-xs font-semibold text-label-secondary">
+                    <Text className="px-3 pt-1 pb-1.5 text-xs font-semibold text-muted-foreground">
                       {group.value}
                     </Text>
                   ) : null}
@@ -219,13 +216,13 @@ function SearchPicker({
                           setOpen(false)
                           setQuery("")
                         }}
-                        className="h-10 flex-row items-center gap-3 rounded-lg px-3 active:bg-item-pressed"
+                        className="h-10 flex-row items-center gap-3 rounded-lg px-3 active:opacity-80"
                       >
                         <Text
                           numberOfLines={1}
                           className={cn(
-                            "flex-1 text-base text-label",
-                            item.disabled && "text-label-quaternary"
+                            "flex-1 text-base text-foreground",
+                            item.disabled && "opacity-50"
                           )}
                         >
                           {item.label}
@@ -233,7 +230,7 @@ function SearchPicker({
                         {checked ? (
                           <Icon
                             as={CheckIcon}
-                            className="size-5 shrink-0 text-label-secondary"
+                            className="size-5 shrink-0 text-muted-foreground"
                           />
                         ) : null}
                       </Pressable>

@@ -11,8 +11,8 @@ private let chartData: [(month: String, desktop: Double, mobile: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
-  "mobile": .init("Mobile", color: .teal),
+  "desktop": .init("Desktop", color: EsuissColor.chart1),
+  "mobile": .init("Mobile", color: EsuissColor.chart2),
 ]
 
 public struct BarChartStacked: View {

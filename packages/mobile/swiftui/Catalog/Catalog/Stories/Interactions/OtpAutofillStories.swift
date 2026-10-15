@@ -52,9 +52,9 @@ private struct OtpAutofillStatus: View {
 
   private var color: Color {
     switch state {
-    case .verified: .success
-    case .invalid: .danger
-    default: .labelSecondary
+    case .verified: Color.adaptive(light: Palette.green600, dark: Palette.green400)
+    case .invalid: EsuissColor.destructive
+    default: EsuissColor.mutedForeground
     }
   }
 }
@@ -69,11 +69,11 @@ private struct OtpAutofillVerification: View {
     VStack(spacing: 8) {
       Text("Enter the code")
         .textStyle(.xl2, weight: .bold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .multilineTextAlignment(.center)
       Text("We sent a 6-digit code to +1 555 0100.")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .multilineTextAlignment(.center)
       OtpAutofill(length: 6, onVerify: { code in
         try? await Task.sleep(for: .milliseconds(700))

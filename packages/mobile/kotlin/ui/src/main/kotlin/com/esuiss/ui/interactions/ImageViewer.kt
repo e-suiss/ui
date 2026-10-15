@@ -161,7 +161,7 @@ fun ImageViewer(
                 modifier = modifier
                     .fillMaxSize()
                     .graphicsLayer { alpha = appear.value }
-                    .background(colors.surface.copy(alpha = 1f - (abs(dismiss.value) / 600f).coerceIn(0f, 0.8f))),
+                    .background(colors.background.copy(alpha = 1f - (abs(dismiss.value) / 600f).coerceIn(0f, 0.8f))),
             ) {
                 HorizontalPager(
                     state = pager,
@@ -286,7 +286,7 @@ fun ImageViewer(
                     Box(modifier = Modifier.weight(1f))
                     BasicText(
                         indexLabel(pager.currentPage, images.size),
-                        style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                     )
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
                         Button(onClick = { change(false) }, variant = ButtonVariant.Secondary, size = ButtonSize.Icon) {

@@ -132,7 +132,7 @@ public struct DialogTitle: View {
   public var body: some View {
     text
       .textStyle(.base, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
   }
@@ -152,7 +152,7 @@ public struct DialogDescription: View {
   public var body: some View {
     text
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
   }
 }

@@ -22,11 +22,11 @@ public struct LogActivity: View {
 
   static var kinds: [Kind] {
     [
-      Kind(value: "Price", icon: Ph.tag.bold, tint: .orange),
-      Kind(value: "Content", icon: Ph.notePencil.bold, tint: .blue),
-      Kind(value: "Security", icon: Ph.shield.bold, tint: .red),
-      Kind(value: "Order", icon: Ph.handbag.bold, tint: .green),
-      Kind(value: "User", icon: Ph.user.bold, tint: .purple),
+      Kind(value: "Price", icon: Ph.tag.bold, tint: Palette.orange500),
+      Kind(value: "Content", icon: Ph.notePencil.bold, tint: Palette.blue500),
+      Kind(value: "Security", icon: Ph.shield.bold, tint: Palette.red500),
+      Kind(value: "Order", icon: Ph.handbag.bold, tint: Palette.green500),
+      Kind(value: "User", icon: Ph.user.bold, tint: Palette.purple500),
     ]
   }
 
@@ -119,12 +119,12 @@ public struct LogActivity: View {
                     LogActivityRow(event: event, expanded: expanded.contains(event.id))
                       .overlay(alignment: .top) {
                         if index > 0 {
-                          Color.separator.frame(height: 1).padding(.leading, 56)
+                          EsuissColor.border.frame(height: 1).padding(.leading, 56)
                         }
                       }
                   }
                 }
-                .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+                .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
                 .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
               }
             }
@@ -172,16 +172,16 @@ private struct LogActivityRow: View {
             HStack(spacing: 8) {
               Text("Before")
                 .scaledFont(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               Text(verbatim: diff.0)
                 .scaledFont(.sm)
                 .strikethrough()
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             HStack(spacing: 8) {
               Text("After")
                 .scaledFont(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               Text(verbatim: diff.1)
                 .scaledFont(.sm, weight: .semibold)
             }
@@ -203,7 +203,7 @@ private struct LogActivityRow: View {
     return HStack(spacing: 12) {
       kind.icon
         .frame(width: 16, height: 16)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 28, height: 28)
         .background(kind.tint, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
         .accessibilityHidden(true)
@@ -213,24 +213,24 @@ private struct LogActivityRow: View {
           .lineLimit(1)
         Text(verbatim: event.target)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       Text(LocalizedStringKey(event.time))
         .scaledFont(.sm)
         .monospacedDigit()
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       if caret {
         Ph.caretRight.bold
           .frame(width: 12, height: 12)
-          .foregroundStyle(Color.labelTertiary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .flipsForRightToLeftLayoutDirection(true)
           .rotationEffect(.degrees(open ? 90 : 0))
           .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.3), value: open)
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.leading, 16)
     .padding(.trailing, caret ? 16 : 36)
     .padding(.vertical, 8)
@@ -243,7 +243,7 @@ private struct LogActivityRow: View {
 private struct LogActivityRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -291,7 +291,7 @@ private struct LogActivityShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

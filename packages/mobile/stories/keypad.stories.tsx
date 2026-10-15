@@ -21,7 +21,7 @@ function KeyLog({
       <Text
         role="status"
         accessibilityLiveRegion="polite"
-        className="text-sm text-label-secondary"
+        className="text-sm text-muted-foreground"
       >
         {last ? `Last key: ${last}` : "Press a key"}
       </Text>

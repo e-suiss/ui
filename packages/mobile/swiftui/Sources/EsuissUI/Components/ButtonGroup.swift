@@ -79,7 +79,7 @@ public struct ButtonGroup<Content: View>: View {
     if frames.contains(where: \.1) {
       ZStack(alignment: .topLeading) {
         shape
-          .stroke(Color.separator, lineWidth: 1)
+          .stroke(EsuissColor.border, lineWidth: 1)
           .padding(0.5)
           .mask {
             Path { path in
@@ -102,7 +102,7 @@ public struct ButtonGroup<Content: View>: View {
   private func divider(_ rect: CGRect) -> some View {
     let horizontal = orientation == .horizontal
     return Rectangle()
-      .fill(Color.separator)
+      .fill(EsuissColor.border)
       .frame(width: horizontal ? 1 : rect.width, height: horizontal ? rect.height : 1)
       .position(
         x: horizontal ? rect.maxX - 0.5 : rect.midX,
@@ -183,11 +183,11 @@ public struct ButtonGroupText<Content: View>: View {
     .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
     .scaledFont(.sm)
     .lineLimit(1)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 10)
     .frame(minHeight: 36)
     .frame(maxWidth: group == .vertical ? .infinity : nil, maxHeight: group == .horizontal ? .infinity : nil)
-    .background(Color.control, in: shape)
+    .background(EsuissColor.secondary, in: shape)
     .anchorPreference(key: ButtonGroupFramesKey.self, value: .bounds) { anchor in
       group == nil ? [] : [ButtonGroupFrame(bounds: anchor, outlined: false)]
     }
@@ -214,7 +214,7 @@ public struct ButtonGroupSeparator: View {
   public var body: some View {
     let vertical = orientation == .vertical
     Rectangle()
-      .fill(Color.label.opacity(0.2))
+      .fill(EsuissColor.foreground.opacity(0.2))
       .frame(width: vertical ? 1 : nil, height: vertical ? nil : 1)
       .padding(vertical ? .vertical : .horizontal, 9)
       .frame(maxWidth: vertical ? nil : .infinity, maxHeight: vertical ? .infinity : nil)

@@ -34,7 +34,8 @@ function Label({
       <LabelPrimitive.Text
         style={(state) => [
           styles.text,
-          { color: state.disabled ? colors.labelQuaternary : colors.label },
+          { color: colors.foreground },
+          state.disabled && { opacity: 0.5 },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}

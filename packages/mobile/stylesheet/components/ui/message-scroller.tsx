@@ -478,10 +478,8 @@ function MessageScrollerButton({
   else if (count > 0) {
     label = `Scroll to end, ${count} new ${count === 1 ? "message" : "messages"}`
   }
-  const pressedBackground = isDark
-    ? colors.surfaceTertiary
-    : colors.surfaceSecondary
-  const idleBackground = isDark ? colors.surfaceSecondary : colors.surfaceRaised
+  const pressedBackground = isDark ? colors.secondary : colors.muted
+  const idleBackground = isDark ? colors.muted : colors.card
 
   return (
     <AnimatedView
@@ -500,7 +498,7 @@ function MessageScrollerButton({
         accessibilityLabel={accessibilityLabel ?? label}
         style={(state) => [
           {
-            borderColor: colors.separator,
+            borderColor: colors.border,
             backgroundColor: state.pressed ? pressedBackground : idleBackground,
           },
           typeof style === "function" ? style(state) : style,
@@ -516,8 +514,10 @@ function MessageScrollerButton({
           <Icon as={direction === "start" ? ArrowUpIcon : ArrowDownIcon} />
         )}
         {count > 0 ? (
-          <View style={[styles.badge, { backgroundColor: colors.accent }]}>
-            <Text style={[styles.badgeText, { color: colors.onAccent }]}>
+          <View style={[styles.badge, { backgroundColor: colors.primary }]}>
+            <Text
+              style={[styles.badgeText, { color: colors.primaryForeground }]}
+            >
               {count > 99 ? "99+" : count}
             </Text>
           </View>

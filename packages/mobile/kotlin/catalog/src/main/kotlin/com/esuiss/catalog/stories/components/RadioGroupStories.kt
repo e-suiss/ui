@@ -89,7 +89,7 @@ private fun RadioGroupWithDescriptions() {
                     RadioGroupItem(plan.value, Modifier.semantics { contentDescription = plan.label })
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Label(plan.label, Modifier.radioGroupTap(true) { value = plan.value })
-                        Text(plan.description, style = Typography.sm, color = colors.labelSecondary)
+                        Text(plan.description, style = Typography.sm, color = colors.mutedForeground)
                     }
                 }
             }

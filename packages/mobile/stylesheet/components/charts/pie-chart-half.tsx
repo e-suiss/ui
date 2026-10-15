@@ -26,10 +26,10 @@ const chartData = [
 
 const chartConfig = {
   share: { label: "Share" },
-  phone: { label: "Phone", color: "blue" },
-  laptop: { label: "Laptop", color: "teal" },
-  tablet: { label: "Tablet", color: "indigo" },
-  watch: { label: "Watch", color: "orange" },
+  phone: { label: "Phone", color: "chart-1" },
+  laptop: { label: "Laptop", color: "chart-2" },
+  tablet: { label: "Tablet", color: "chart-3" },
+  watch: { label: "Watch", color: "chart-4" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -63,7 +63,7 @@ export function PieChartHalf() {
         <View>
           <View pointerEvents="none" style={styles.overlay}>
             <Text style={styles.value}>100%</Text>
-            <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+            <Text style={[styles.caption, { color: colors.mutedForeground }]}>
               last 24 hours
             </Text>
           </View>

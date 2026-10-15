@@ -46,13 +46,13 @@ private struct Gallery: View {
           Text("Type \(Int(style.size))").textStyle(style)
         }
       }
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       Card {
         CardHeader("Login to your account", description: "Enter your email below.") {
           Button("Sign Up") {}.buttonStyle(.variant(.link, size: .sm))
         }
         CardContent {
-          Text("Card content").foregroundStyle(Color.labelSecondary)
+          Text("Card content").foregroundStyle(EsuissColor.mutedForeground)
         }
         CardFooter {
           Button("Login") {}.buttonStyle(.variant(block: true))
@@ -64,7 +64,7 @@ private struct Gallery: View {
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 

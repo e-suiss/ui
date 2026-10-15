@@ -44,7 +44,7 @@ function Actions() {
 function Result({ values }: { values: QuestionnaireValues | null }) {
   if (!values) return null
   return (
-    <Text role="status" className="text-sm text-label-secondary">
+    <Text role="status" className="text-sm text-muted-foreground">
       {`Submitted: ${JSON.stringify(values)}`}
     </Text>
   )

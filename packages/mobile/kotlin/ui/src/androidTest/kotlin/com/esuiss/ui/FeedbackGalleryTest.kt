@@ -179,12 +179,12 @@ private val Topics = List(57) { index ->
 
 @Composable
 private fun Heading(text: String) {
-    BasicText(text, style = Typography.xl3.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.Bold))
+    BasicText(text, style = Typography.xl3.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.Bold))
 }
 
 @Composable
 private fun Caption(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
@@ -193,13 +193,13 @@ private fun NoteText(note: Note, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         BasicText(
             note.title,
-            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         BasicText(
             note.preview,
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -213,7 +213,7 @@ private fun Bordered(content: @Composable () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
-            .border(1.dp, EsuissTheme.colors.separator, shape),
+            .border(1.dp, EsuissTheme.colors.border, shape),
     ) {
         content()
     }
@@ -240,7 +240,7 @@ private fun SelectionListScope.NoteRows(notes: List<Note>, onOpen: (Note) -> Uni
                         contentDescription = null,
                         modifier = Modifier.graphicsLayer { alpha = caretAlpha },
                         size = 16.dp,
-                        tint = EsuissTheme.colors.labelTertiary,
+                        tint = EsuissTheme.colors.mutedForeground,
                     )
                 }
             }
@@ -295,9 +295,7 @@ private fun NotesSelection(initialEditing: Boolean, initialSelected: List<String
                 ) {
                     BasicText(
                         "Delete",
-                        style = LocalContentStyle.current.copy(
-                            color = if (empty) EsuissTheme.colors.labelQuaternary else EsuissTheme.colors.danger,
-                        ),
+                        style = LocalContentStyle.current.copy(color = EsuissTheme.colors.destructive),
                     )
                 }
             }
@@ -325,11 +323,7 @@ private fun BarIcon(
             icon,
             contentDescription = null,
             size = 22.dp,
-            tint = when {
-                empty -> colors.labelQuaternary
-                destructive -> colors.danger
-                else -> LocalContentColor.current
-            },
+            tint = if (destructive) colors.destructive else LocalContentColor.current,
         )
     }
 }
@@ -510,7 +504,7 @@ private fun SearchNotes(initialQuery: String) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape)
-            .border(1.dp, colors.separator, shape),
+            .border(1.dp, colors.border, shape),
     ) {
         Box(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)) { Heading("Notes") }
         SearchReveal(modifier = Modifier.testTag("reveal").weight(1f)) {
@@ -520,7 +514,7 @@ private fun SearchNotes(initialQuery: String) {
                     BasicText(
                         "No results for “$query”",
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 64.dp),
-                        style = Typography.sm.copy(color = colors.labelSecondary, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
+                        style = Typography.sm.copy(color = colors.mutedForeground, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
                     )
                 } else {
                     Column(
@@ -528,7 +522,7 @@ private fun SearchNotes(initialQuery: String) {
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(Radius.xl))
-                            .background(colors.surfaceSecondary),
+                            .background(colors.muted),
                     ) {
                         notes.forEachIndexed { index, note ->
                             if (index > 0) Separator()
@@ -539,7 +533,7 @@ private fun SearchNotes(initialQuery: String) {
                 BasicText(
                     "${notes.size} ${if (notes.size == 1) "note" else "notes"}",
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
-                    style = Typography.xs.copy(color = colors.labelSecondary, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
+                    style = Typography.xs.copy(color = colors.mutedForeground, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
                 )
             }
         }
@@ -628,7 +622,7 @@ private fun ButtonGroups() {
                 }
                 ButtonGroup {
                     Button("Publish", {})
-                    ButtonGroupSeparator(color = EsuissTheme.colors.onAccent.copy(alpha = 0.3f))
+                    ButtonGroupSeparator(color = EsuissTheme.colors.primaryForeground.copy(alpha = 0.3f))
                     Button(onClick = {}, size = ButtonSize.Icon) {
                         Icon(PhosphorIcons.Regular.CaretDown, contentDescription = "More options")
                     }
@@ -747,7 +741,7 @@ class FeedbackGalleryTest {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .safeDrawingPadding()
                         .padding(16.dp),
                 ) {

@@ -159,7 +159,7 @@ public struct AreaChartInteractive: View {
     let low = prices.min() ?? 0
     let high = prices.max() ?? 1
     let padding = (high - low) * 0.12
-    let chartConfig: ChartConfig = ["price": .init("Price", color: rising ? .success : .danger)]
+    let chartConfig: ChartConfig = ["price": .init("Price", color: rising ? Palette.green500 : EsuissColor.destructive)]
     let color = chartConfig.color("price")
     let price = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(2)).locale(locale)
     let stats: [(String, String)] = [
@@ -176,7 +176,7 @@ public struct AreaChartInteractive: View {
               .textStyle(.xl2, weight: .semibold)
             Text(verbatim: "Acme Corp.")
               .textStyle(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(verbatim: "$\(current.price.formatted(price))")
@@ -185,11 +185,11 @@ public struct AreaChartInteractive: View {
             Text(verbatim: "\(change.formatted(price.sign(strategy: .always()))) (\(abs(change / first * 100).formatted(price))%)")
               .textStyle(.base, weight: .semibold)
               .monospacedDigit()
-              .foregroundStyle(rising ? Color.success : .danger)
+              .foregroundStyle(rising ? Color.adaptive(light: Palette.green600, dark: Palette.green400) : EsuissColor.destructive)
           }
           Text(LocalizedStringKey(selection == nil ? range.caption : current.label))
             .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .frame(minHeight: 20)
         }
         ToggleGroup(selection: rangeBinding, size: .sm, spacing: 0) {
@@ -206,7 +206,7 @@ public struct AreaChartInteractive: View {
             Chart {
               RuleMark(y: .value("Open", first))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 3]))
-                .foregroundStyle(Color.labelTertiary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               ForEach(points, id: \.index) { point in
                 AreaMark(x: .value("Time", point.index), yStart: .value("Base", low - padding), yEnd: .value("Price", point.price))
                   .interpolationMethod(.linear)
@@ -221,7 +221,7 @@ public struct AreaChartInteractive: View {
                   .symbol {
                     Circle()
                       .fill(color)
-                      .stroke(Color.surfaceSecondary, lineWidth: 2)
+                      .stroke(EsuissColor.muted, lineWidth: 2)
                       .frame(width: 12, height: 12)
                   }
               }
@@ -246,7 +246,7 @@ public struct AreaChartInteractive: View {
             ForEach(stats, id: \.0) { term, value in
               HStack(spacing: 8) {
                 Text(LocalizedStringKey(term))
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .frame(maxWidth: .infinity, alignment: .leading)
                 Text(verbatim: value)
                   .fontWeight(.semibold)
@@ -255,7 +255,7 @@ public struct AreaChartInteractive: View {
               .textStyle(.sm)
               .padding(.vertical, 7)
               .overlay(alignment: .bottom) {
-                Color.separator.frame(height: 1)
+                EsuissColor.border.frame(height: 1)
               }
               .accessibilityElement(children: .combine)
             }

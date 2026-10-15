@@ -29,10 +29,10 @@ public struct BarChartRange: View {
               ForEach(chartData.indices, id: \.self) { index in
                 BarMark(xStart: .value("Low", 8), xEnd: .value("High", 27), y: .value("Day", chartData[index].day), height: .ratio(0.76))
                   .clipShape(Capsule())
-                  .foregroundStyle(Color.control)
+                  .foregroundStyle(EsuissColor.secondary)
                 BarMark(xStart: .value("Low", chartData[index].low), xEnd: .value("High", chartData[index].low + (chartData[index].high - chartData[index].low) * progress), y: .value("Day", chartData[index].day), height: .ratio(0.76))
                   .clipShape(Capsule())
-                  .foregroundStyle(LinearGradient(colors: [.teal, .yellow, .orange], startPoint: .leading, endPoint: .trailing))
+                  .foregroundStyle(LinearGradient(colors: [Palette.teal500, Palette.yellow500, Palette.orange500], startPoint: .leading, endPoint: .trailing))
               }
             }
             .chartXScale(domain: 8...27)

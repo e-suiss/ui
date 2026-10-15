@@ -54,9 +54,9 @@ public struct EmptyMedia<Content: View>: View {
       case .icon:
         content
           .frame(width: 20, height: 20)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(width: 40, height: 40)
-          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+          .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
       }
     }
     .padding(.bottom, 8)
@@ -78,7 +78,7 @@ public struct EmptyTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.lg, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
   }
@@ -98,8 +98,8 @@ public struct EmptyDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(TextStyle(size: TextStyle.sm.size, lineHeight: 24, letterSpacing: TextStyle.sm.letterSpacing))
-      .foregroundStyle(Color.labelSecondary)
-      .tint(Color.link)
+      .foregroundStyle(EsuissColor.mutedForeground)
+      .tint(EsuissColor.primary)
       .fixedSize(horizontal: false, vertical: true)
   }
 }
@@ -116,7 +116,7 @@ public struct EmptyContent<Content: View>: View {
       content
     }
     .scaledFont(.base)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .frame(maxWidth: 384)
   }
 }

@@ -54,11 +54,19 @@ import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SECTIONS: {
   value: string
@@ -91,13 +99,13 @@ const week = [
 ]
 
 const chartConfig = {
-  online: { label: "Online", color: "blue" },
-  store: { label: "In store", color: "teal" },
+  online: { label: "Online", color: "chart-1" },
+  store: { label: "In store", color: "chart-2" },
 } satisfies ChartConfig
 
 const SERIES = [
-  { key: "online", swatch: "blue" },
-  { key: "store", swatch: "teal" },
+  { key: "online", swatch: "chart1" },
+  { key: "store", swatch: "chart2" },
 ] as const
 
 const orders: {
@@ -106,7 +114,7 @@ const orders: {
   product: string
   status: string
   total: number
-  tint: keyof ThemeColors
+  tint: Tone
 }[] = [
   {
     id: "W1048",
@@ -114,7 +122,7 @@ const orders: {
     product: "Phone Pro",
     status: "Shipped",
     total: 999,
-    tint: "blue",
+    tint: "blue500",
   },
   {
     id: "W1047",
@@ -122,7 +130,7 @@ const orders: {
     product: "Book Air",
     status: "Processing",
     total: 1099,
-    tint: "orange",
+    tint: "orange500",
   },
   {
     id: "W1046",
@@ -130,7 +138,7 @@ const orders: {
     product: "Watch Series 11",
     status: "Delivered",
     total: 399,
-    tint: "green",
+    tint: "green500",
   },
   {
     id: "W1045",
@@ -138,7 +146,7 @@ const orders: {
     product: "Pods Studio",
     status: "Returned",
     total: 549,
-    tint: "pink",
+    tint: "pink500",
   },
   {
     id: "W1044",
@@ -146,7 +154,7 @@ const orders: {
     product: "Pad Air",
     status: "Delivered",
     total: 599,
-    tint: "cyan",
+    tint: "cyan500",
   },
 ]
 
@@ -270,7 +278,7 @@ function OtherSection({ value }: { value: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         This section isn't part of the sample. Choose Overview.
       </Text>
     </View>
@@ -362,19 +370,14 @@ function DashStore({
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
-              <View
-                style={[
-                  styles.stats,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.stats, { backgroundColor: colors.muted }]}>
                 {stats.map((stat, index) => (
                   <View
                     key={stat.label}
                     accessible
                     style={[
                       styles.stat,
-                      { borderColor: colors.separator },
+                      { borderColor: colors.border },
                       index % 2 === 1 && {
                         borderStartWidth: StyleSheet.hairlineWidth,
                       },
@@ -382,7 +385,10 @@ function DashStore({
                     ]}
                   >
                     <Text
-                      style={[styles.caption, { color: colors.labelSecondary }]}
+                      style={[
+                        styles.caption,
+                        { color: colors.mutedForeground },
+                      ]}
                     >
                       {stat.label}
                     </Text>
@@ -396,7 +402,7 @@ function DashStore({
                     <Text
                       style={[
                         fontSize.xs,
-                        { color: stat.up ? colors.green : colors.red },
+                        { color: stat.up ? palette.green500 : palette.red500 },
                       ]}
                     >
                       {`${stat.change} vs. previous period`}
@@ -404,16 +410,14 @@ function DashStore({
                   </View>
                 ))}
               </View>
-              <View
-                style={[
-                  styles.card,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.card, { backgroundColor: colors.muted }]}>
                 <View style={styles.summary}>
                   <View accessibilityLiveRegion="polite" style={styles.reading}>
                     <Text
-                      style={[styles.caption, { color: colors.labelSecondary }]}
+                      style={[
+                        styles.caption,
+                        { color: colors.mutedForeground },
+                      ]}
                     >
                       {activeDay ? activeDay.day : "Weekly sales"}
                     </Text>
@@ -429,13 +433,13 @@ function DashStore({
                         <View
                           style={[
                             styles.dot,
-                            { backgroundColor: colors[series.swatch] },
+                            { backgroundColor: tone(colors, series.swatch) },
                           ]}
                         />
                         <Text
                           style={[
                             fontSize.xs,
-                            { color: colors.labelSecondary },
+                            { color: colors.mutedForeground },
                           ]}
                         >
                           {chartConfig[series.key].label}
@@ -515,7 +519,9 @@ function DashStore({
                       <Item size="sm" onPress={() => onOrderPress?.(order.id)}>
                         <Avatar>
                           <AvatarFallback
-                            style={{ backgroundColor: colors[order.tint] }}
+                            style={{
+                              backgroundColor: tone(colors, order.tint),
+                            }}
                           >
                             {initials(order.name)}
                           </AvatarFallback>
@@ -536,8 +542,8 @@ function DashStore({
                               {
                                 color:
                                   order.status === "Returned"
-                                    ? colors.danger
-                                    : colors.labelSecondary,
+                                    ? colors.destructive
+                                    : colors.mutedForeground,
                               },
                             ]}
                           >

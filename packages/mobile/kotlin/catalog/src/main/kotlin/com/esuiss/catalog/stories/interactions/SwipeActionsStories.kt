@@ -63,7 +63,7 @@ private fun SwipeActionsInbox() {
                             fullSwipe = true,
                         ),
                     ),
-                    background = EsuissTheme.colors.surfaceSecondary,
+                    background = EsuissTheme.colors.muted,
                 ) {
                     Item(onClick = {}) {
                         ItemContent {

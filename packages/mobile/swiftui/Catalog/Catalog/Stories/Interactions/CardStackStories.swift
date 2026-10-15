@@ -51,14 +51,14 @@ private struct CardStackPlaceCard: View {
       CardHeader(LocalizedStringKey(place.name), description: LocalizedStringKey(place.city))
       CardContent {
         RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
-          .fill(Color.surfaceSecondary)
+          .fill(EsuissColor.muted)
           .frame(maxHeight: .infinity)
       }
       .frame(maxHeight: .infinity)
       CardContent {
         Text(verbatim: place.detail)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
     }
     .frame(maxHeight: .infinity)
@@ -81,13 +81,13 @@ private struct CardStackDemo: View {
           if !controller.canSwipe {
             Text("You have seen every place.")
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .multilineTextAlignment(.center)
               .padding(24)
               .frame(maxWidth: .infinity, maxHeight: .infinity)
               .overlay {
                 RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
-                  .strokeBorder(Color.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                  .strokeBorder(EsuissColor.border, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
               }
           }
           CardStack(
@@ -113,7 +113,7 @@ private struct CardStackDemo: View {
       if showsLog {
         Text(verbatim: log)
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
           .accessibilityAddTraits(.updatesFrequently)

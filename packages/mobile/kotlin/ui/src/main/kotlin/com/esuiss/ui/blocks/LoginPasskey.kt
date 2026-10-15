@@ -68,6 +68,7 @@ import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.LocalContentStyle
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -125,17 +126,17 @@ fun LoginPasskey(
                         Box(
                             Modifier
                                 .size(72.dp)
-                                .background(colors.surfaceSecondary, CircleShape),
+                                .background(colors.muted, CircleShape),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(PhosphorIcons.Bold.Key, contentDescription = null, size = 34.dp, tint = colors.accent)
+                            Icon(PhosphorIcons.Bold.Key, contentDescription = null, size = 34.dp, tint = colors.primary)
                         }
                         Spacer(Modifier.height(22.dp))
                         BasicText(
                             "Sign in without a password.",
                             modifier = Modifier.semantics { heading() },
                             style = Typography.xl3.copy(
-                                color = colors.label,
+                                color = colors.foreground,
                                 fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Center,
                             ),
@@ -144,7 +145,7 @@ fun LoginPasskey(
                         BasicText(
                             "With a passkey, your face or fingerprint is all it takes. Nothing to remember, nothing to type.",
                             modifier = Modifier.widthIn(max = 480.dp),
-                            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                         Spacer(Modifier.height(28.dp))
                         AccountPill(onChangeAccount)
@@ -152,7 +153,7 @@ fun LoginPasskey(
                         BasicText(
                             "Passkeys are end-to-end encrypted and sync across all your devices with suiss Keychain.",
                             modifier = Modifier.widthIn(max = 420.dp),
-                            style = Typography.xs.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.xs.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                     }
                 }
@@ -213,19 +214,19 @@ private fun AccountPill(onChange: () -> Unit) {
     val pressed by interaction.collectIsPressedAsState()
     Row(
         modifier = Modifier
-            .background(colors.surfaceSecondary, CircleShape)
+            .background(colors.muted, CircleShape)
             .padding(start = 8.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GradientAvatar("JR", Modifier.size(28.dp), AvatarSize.Sm)
-        BasicText("jamie@suiss.com", style = Typography.base.copy(color = colors.label))
+        BasicText("jamie@suiss.com", style = Typography.base.copy(color = colors.foreground))
         BasicText(
             "Change ›",
             modifier = Modifier
-                .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onChange),
-            style = Typography.sm.copy(color = colors.link),
+            style = Typography.sm.copy(color = colors.primary),
         )
     }
 }
@@ -240,13 +241,13 @@ private fun GradientAvatar(initials: String, modifier: Modifier, size: AvatarSiz
             Box(
                 Modifier
                     .fillMaxSize()
-                    .background(colors.indigo, CircleShape),
+                    .background(Palette.indigo500, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 BasicText(
                     initials,
                     style = (if (size == AvatarSize.Sm) Typography.xs3 else Typography.xl3).copy(
-                        color = colors.onAccent,
+                        color = colors.primaryForeground,
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
@@ -278,7 +279,7 @@ private fun ScanGlyph(verified: Boolean) {
                 scaleY = scale
             },
             size = 72.dp,
-            tint = colors.label,
+            tint = colors.foreground,
         )
         Box(
             Modifier
@@ -289,10 +290,10 @@ private fun ScanGlyph(verified: Boolean) {
                     scaleX = scale
                     scaleY = scale
                 }
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 32.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 32.dp, tint = colors.primaryForeground)
         }
     }
 }
@@ -319,18 +320,18 @@ private fun Welcome(onSignOut: () -> Unit) {
         BasicText(
             "Welcome, Jamie.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
         BasicText(
             "You signed in with a passkey. No password needed.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         BasicText(
             "Sign out ›",
             modifier = Modifier
-                .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onSignOut),
-            style = Typography.lg.copy(color = colors.link),
+            style = Typography.lg.copy(color = colors.primary),
         )
     }
 }

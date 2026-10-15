@@ -92,7 +92,7 @@ enum CarouselStories {
       Carousel {
         Text("Popular")
           .textStyle(.xl, weight: .bold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(.bottom, 12)
         CarouselContent(spacing: 12) {
@@ -104,7 +104,7 @@ enum CarouselStories {
                   .aspectRatio(1, contentMode: .fit)
                 Text(verbatim: pick.title)
                   .textStyle(.sm, weight: .semibold)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
                   .lineLimit(1)
               }
             }
@@ -125,10 +125,10 @@ private enum CarouselData {
   static let slides = [1, 2, 3, 4, 5]
 
   static let picks = [
-    CarouselPick(eyebrow: "Today's pick", title: "Weekend breakfast", tint: .warning),
-    CarouselPick(eyebrow: "New", title: "Grilled meatballs", tint: .danger),
-    CarouselPick(eyebrow: "Chef's special", title: "Lentil soup", tint: .success),
-    CarouselPick(eyebrow: "Dessert", title: "Künefe", tint: .accent),
+    CarouselPick(eyebrow: "Today's pick", title: "Weekend breakfast", tint: Palette.amber500),
+    CarouselPick(eyebrow: "New", title: "Grilled meatballs", tint: EsuissColor.destructive),
+    CarouselPick(eyebrow: "Chef's special", title: "Lentil soup", tint: Palette.green500),
+    CarouselPick(eyebrow: "Dessert", title: "Künefe", tint: EsuissColor.primary),
   ]
 
   static let features = [
@@ -169,7 +169,7 @@ private struct CarouselPickCard: View {
       Text(verbatim: pick.title)
         .textStyle(.xl2, weight: .bold)
     }
-    .foregroundStyle(Color.onAccent)
+    .foregroundStyle(EsuissColor.primaryForeground)
     .padding(20)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
     .aspectRatio(4.0 / 5.0, contentMode: .fit)
@@ -185,16 +185,16 @@ private struct CarouselFeatureSlides: View {
           VStack(spacing: 12) {
             Text(verbatim: "Hestia POS")
               .textStyle(.xl2, weight: .bold)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
             Text(verbatim: feature)
               .textStyle(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .multilineTextAlignment(.center)
           }
           .padding(32)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .aspectRatio(10.0 / 7.0, contentMode: .fit)
-          .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
+          .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
         }
       }
     }

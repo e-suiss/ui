@@ -129,7 +129,7 @@ fun ActionBar(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .clip(shape)
-                    .background(colors.surfaceSecondary, shape),
+                    .background(colors.muted, shape),
             ) {
                 menus.forEachIndexed { index, menu ->
                     ActionBarRow(
@@ -176,7 +176,7 @@ private fun ActionBarRow(
             .fillMaxWidth()
             .padding(start = 16.dp)
             .drawBehind {
-                if (divided) drawRect(colors.separator, Offset.Zero, Size(size.width, 1.dp.toPx()))
+                if (divided) drawRect(colors.border, Offset.Zero, Size(size.width, 1.dp.toPx()))
             }
             .heightIn(min = 44.dp)
             .clickable(
@@ -193,7 +193,7 @@ private fun ActionBarRow(
         BasicText(
             text,
             modifier = Modifier.weight(1f),
-            style = Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary),
+            style = Typography.base.copy(color = colors.foreground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -202,7 +202,7 @@ private fun ActionBarRow(
             contentDescription = null,
             modifier = Modifier.graphicsLayer { scaleX = if (rtl) -1f else 1f },
             size = 16.dp,
-            tint = colors.labelSecondary,
+            tint = colors.mutedForeground,
         )
     }
 }

@@ -120,8 +120,7 @@ function DatePicker({
   const label = value
     ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(value)
     : placeholder
-  let labelColor = value ? colors.label : colors.labelSecondary
-  if (disabled) labelColor = colors.labelQuaternary
+  const labelColor = value ? colors.foreground : colors.mutedForeground
 
   return (
     <Drawer open={open} onOpenChange={setOpen} floating={floating}>
@@ -131,19 +130,19 @@ function DatePicker({
         accessibilityLabelledBy={accessibilityLabelledBy}
         style={[
           styles.trigger,
-          { backgroundColor: colors.control },
+          { backgroundColor: colors.secondary },
           invalid && {
-            borderColor: colors.danger,
-            backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+            borderColor: colors.destructive,
+            backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
           },
-          disabled && { backgroundColor: colors.controlDisabled },
+          disabled && { opacity: 0.5 },
           style,
         ]}
       >
         <Icon
           as={CalendarBlankIcon}
           size={16}
-          color={disabled ? colors.labelQuaternary : colors.labelSecondary}
+          color={colors.mutedForeground}
           style={styles.icon}
         />
         <Text

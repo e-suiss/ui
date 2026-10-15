@@ -1,7 +1,7 @@
 import SwiftUI
 
 private let chartConfig: ChartConfig = [
-  "value": .init("Reading", color: .orange),
+  "value": .init("Reading", color: EsuissColor.chart4),
 ]
 
 public struct RadialChartProgress: View {
@@ -30,7 +30,7 @@ public struct RadialChartProgress: View {
                 .monospacedDigit()
               Text("books · 2026")
                 .textStyle(.xs)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .multilineTextAlignment(.center)
           }

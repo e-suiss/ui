@@ -15,7 +15,7 @@ import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius } from "@/components/ui/theme"
 
 type ImageViewerImage = ImageViewerPrimitive.ImageViewerImage
 
@@ -135,7 +135,6 @@ function ImageViewerContent({
   indexLabel?: (index: number, count: number) => string
   style?: ViewStyle
 }) {
-  const { colors } = useTheme()
   const insets = useSafeAreaInsets()
   const { index, count } = useImageViewer()
   const label = indexLabel(index, count)
@@ -149,7 +148,7 @@ function ImageViewerContent({
         >
           <ImageViewerPrimitive.Popup style={style}>
             <ImageViewerPrimitive.Backdrop
-              style={{ backgroundColor: colors.media }}
+              style={{ backgroundColor: palette.black }}
             />
             <ImageViewerPrimitive.Pages accessibilityValue={{ text: label }} />
             <ImageViewerPrimitive.Controls
@@ -159,10 +158,10 @@ function ImageViewerContent({
               <View
                 style={[
                   styles.label,
-                  { backgroundColor: withAlpha(colors.onMedia, 0.15) },
+                  { backgroundColor: withAlpha(palette.white, 0.15) },
                 ]}
               >
-                <Text style={[styles.labelText, { color: colors.onMedia }]}>
+                <Text style={[styles.labelText, { color: palette.white }]}>
                   {label}
                 </Text>
               </View>
@@ -179,7 +178,7 @@ function ImageViewerContent({
                         styles.close,
                         {
                           backgroundColor: withAlpha(
-                            colors.onMedia,
+                            palette.white,
                             pressed ? 0.25 : 0.15
                           ),
                         },
@@ -192,7 +191,7 @@ function ImageViewerContent({
                   as={XIcon}
                   weight="bold"
                   size={16}
-                  color={colors.onMedia}
+                  color={palette.white}
                 />
               </ImageViewerPrimitive.Close>
             </ImageViewerPrimitive.Controls>

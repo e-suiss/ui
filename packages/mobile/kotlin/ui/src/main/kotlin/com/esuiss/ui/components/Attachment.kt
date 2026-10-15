@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
@@ -48,7 +49,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlin.math.roundToInt
@@ -141,11 +142,7 @@ fun Attachment(
         else -> RoundedCornerShape(Radius.xl2)
     }
     val idle = state == AttachmentState.Idle && !grouped
-    val background = when {
-        idle -> if (pressed) colors.itemPressed else Color.Transparent
-        pressed -> lerp(colors.surfaceSecondary, colors.label, 0.05f)
-        else -> colors.surfaceSecondary
-    }
+    val background = if (idle) Color.Transparent else colors.muted
     val padding = attachmentPadding(size, vertical, hasMedia, hasContent)
     val gap = when (size) {
         AttachmentSize.Default -> if (vertical) 8.dp else 12.dp
@@ -165,14 +162,15 @@ fun Attachment(
     CompositionLocalProvider(
         LocalAttachment provides info,
         LocalAttachmentGroup provides null,
-        LocalContentStyle provides (if (size == AttachmentSize.Default) Typography.sm else Typography.xs).copy(color = colors.label),
-        LocalContentColor provides colors.label,
+        LocalContentStyle provides (if (size == AttachmentSize.Default) Typography.sm else Typography.xs).copy(color = colors.foreground),
+        LocalContentColor provides colors.foreground,
     ) {
         Layout(
             content = content,
             modifier = modifier
                 .layoutId(info)
                 .then(sizing)
+                .alpha(if (pressed) 0.8f else 1f)
                 .clip(shape)
                 .background(background, shape)
                 .then(
@@ -182,7 +180,7 @@ fun Attachment(
                             val stroke = 1.dp.toPx()
                             val radius = if (size == AttachmentSize.Xs) Radius.lg.toPx() else Radius.xl2.toPx()
                             drawRoundRect(
-                                color = colors.separatorStrong,
+                                color = colors.input,
                                 topLeft = Offset(stroke / 2, stroke / 2),
                                 size = Size(this.size.width - stroke, this.size.height - stroke),
                                 cornerRadius = CornerRadius(radius),
@@ -201,7 +199,7 @@ fun Attachment(
                                 val inset = separatorStart.toPx()
                                 val rtl = layoutDirection == LayoutDirection.Rtl
                                 drawRect(
-                                    color = colors.separator,
+                                    color = colors.border,
                                     topLeft = Offset(if (rtl) 0f else inset, 0f),
                                     size = Size(this.size.width - inset, 1.dp.toPx()),
                                 )
@@ -329,7 +327,7 @@ fun AttachmentGroup(
             modifier = modifier
                 .fillMaxWidth()
                 .clip(shape)
-                .background(colors.surfaceSecondary, shape),
+                .background(colors.muted, shape),
         ) { measurables, constraints ->
             val width = constraints.maxWidth
             val placeables = measurables.map { it.measure(Constraints(minWidth = width, maxWidth = width)) }
@@ -382,13 +380,13 @@ fun AttachmentMedia(
         modifier = modifier
             .then(sizing)
             .clip(shape)
-            .background(if (bordered) colors.surface else colors.surfaceSecondary, shape)
-            .then(if (bordered) Modifier.border(1.dp, colors.separator, shape) else Modifier)
+            .background(if (bordered) colors.background else colors.muted, shape)
+            .then(if (bordered) Modifier.border(1.dp, colors.border, shape) else Modifier)
             .then(if (variant == AttachmentMediaVariant.Document) Modifier.padding(bottom = 6.dp) else Modifier),
         contentAlignment = if (variant == AttachmentMediaVariant.Document) Alignment.BottomCenter else Alignment.Center,
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides if (variant == AttachmentMediaVariant.Icon) colors.labelSecondary else colors.label,
+            LocalContentColor provides if (variant == AttachmentMediaVariant.Icon) colors.mutedForeground else colors.foreground,
             LocalIconSize provides iconSize,
         ) {
             content()
@@ -416,7 +414,7 @@ fun AttachmentMedia(
 fun AttachmentLabel(
     text: String,
     modifier: Modifier = Modifier,
-    background: Color = EsuissTheme.colors.accent,
+    background: Color = EsuissTheme.colors.primary,
 ) {
     val colors = EsuissTheme.colors
     BasicText(
@@ -424,7 +422,7 @@ fun AttachmentLabel(
         modifier = modifier
             .background(background, RoundedCornerShape(Radius.xs))
             .padding(horizontal = 4.dp, vertical = 2.dp),
-        style = TextStyle(fontSize = 9.sp, lineHeight = 9.sp, fontWeight = FontWeight.SemiBold, color = colors.onAccent),
+        style = TextStyle(fontSize = 9.sp, lineHeight = 9.sp, fontWeight = FontWeight.SemiBold, color = colors.primaryForeground),
         maxLines = 1,
     )
 }
@@ -456,7 +454,7 @@ fun AttachmentTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier.padding(end = if ((info?.progress ?: 0) > 0) 48.dp else 0.dp),
-        style = style.copy(color = colors.label),
+        style = style.copy(color = colors.foreground),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
@@ -470,7 +468,7 @@ fun AttachmentDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier.padding(top = 2.dp),
-        style = style.copy(color = if (info?.state == AttachmentState.Error) colors.danger else colors.labelSecondary),
+        style = style.copy(color = if (info?.state == AttachmentState.Error) colors.destructive else colors.mutedForeground),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
@@ -496,7 +494,7 @@ fun AttachmentProgress(
         content = {
             BasicText(
                 "${(fraction * 100).roundToInt()}%",
-                style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+                style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
                 maxLines = 1,
             )
             Box(
@@ -504,13 +502,13 @@ fun AttachmentProgress(
                     .fillMaxWidth()
                     .height(4.dp)
                     .clip(CircleShape)
-                    .background(colors.label.copy(alpha = 0.1f)),
+                    .background(colors.foreground.copy(alpha = 0.1f)),
             ) {
                 Box(
                     Modifier
                         .fillMaxHeight()
                         .fillMaxWidth(animated)
-                        .background(colors.accent, CircleShape),
+                        .background(colors.primary, CircleShape),
                 )
             }
         },
@@ -565,19 +563,22 @@ fun AttachmentAction(
         AttachmentSize.Sm -> 24.dp
         AttachmentSize.Xs -> 20.dp
     }
-    val background = when {
-        vertical -> if (pressed) colors.scrim.copy(alpha = 0.6f) else colors.scrim
-        else -> attachmentActionBackground(variant, colors, pressed)
-    }
+    val background = if (vertical) Palette.black.copy(alpha = 0.5f) else attachmentActionBackground(variant, colors)
     val foreground = when {
-        vertical || variant == ButtonVariant.Default -> colors.onAccent
-        variant == ButtonVariant.Destructive -> colors.danger
-        pressed -> colors.label
-        else -> colors.labelSecondary
+        vertical || variant == ButtonVariant.Default -> colors.primaryForeground
+        variant == ButtonVariant.Destructive -> colors.destructive
+        else -> colors.mutedForeground
     }
     Box(
         modifier = modifier
             .size(diameter)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(CircleShape)
             .background(background, CircleShape)
             .clickable(
@@ -611,28 +612,30 @@ fun AttachmentAction(
     val pressed by interaction.collectIsPressedAsState()
     BasicText(
         text,
-        modifier = modifier.clickable(
-            interactionSource = interaction,
-            indication = null,
-            enabled = enabled,
-            role = Role.Button,
-            onClick = onClick,
-        ),
-        style = Typography.base.copy(
-            color = when {
-                !enabled -> colors.labelQuaternary
-                pressed -> colors.link.copy(alpha = 0.7f)
-                else -> colors.link
-            },
-        ),
+        modifier = modifier
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
+            .clickable(
+                interactionSource = interaction,
+                indication = null,
+                enabled = enabled,
+                role = Role.Button,
+                onClick = onClick,
+            ),
+        style = Typography.base.copy(color = colors.primary),
         maxLines = 1,
     )
 }
 
-private fun attachmentActionBackground(variant: ButtonVariant, colors: Colors, pressed: Boolean): Color = when (variant) {
-    ButtonVariant.Default -> if (pressed) colors.accentPressed else colors.accent
-    ButtonVariant.Destructive -> if (pressed) colors.dangerSurfacePressed else colors.dangerSurface
-    ButtonVariant.Outline -> if (pressed) colors.controlPressed else colors.surface
-    ButtonVariant.Ghost, ButtonVariant.Plain, ButtonVariant.Link -> if (pressed) colors.controlPressed else Color.Transparent
-    else -> if (pressed) colors.controlPressed else colors.control
+private fun attachmentActionBackground(variant: ButtonVariant, colors: Colors): Color = when (variant) {
+    ButtonVariant.Default -> colors.primary
+    ButtonVariant.Destructive -> colors.destructive.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
+    ButtonVariant.Outline -> colors.background
+    ButtonVariant.Ghost, ButtonVariant.Plain, ButtonVariant.Link -> Color.Transparent
+    else -> colors.secondary
 }

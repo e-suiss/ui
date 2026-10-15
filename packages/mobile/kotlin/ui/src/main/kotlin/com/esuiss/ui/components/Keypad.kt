@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -149,16 +150,18 @@ private fun KeypadButton(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val haptics = rememberHaptics()
-    val background = when {
-        !enabled -> if (filled) colors.controlDisabled else Color.Transparent
-        pressed -> colors.controlPressed
-        filled -> colors.control
-        else -> Color.Transparent
-    }
-    val foreground = if (enabled) colors.label else colors.labelQuaternary
+    val background = if (filled) colors.secondary else Color.Transparent
+    val foreground = colors.foreground
     Box(
         modifier = Modifier
             .size(KeypadKeySize)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(CircleShape)
             .background(background, CircleShape)
             .clickable(

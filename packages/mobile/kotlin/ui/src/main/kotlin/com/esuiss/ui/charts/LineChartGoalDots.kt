@@ -24,6 +24,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.LineChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlin.math.roundToInt
 
@@ -42,7 +43,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "hours" to ChartConfigItem("Sleep") { indigo },
+    "hours" to ChartConfigItem("Sleep") { chart3 },
 )
 
 private fun formatHours(hours: Double): String {
@@ -59,15 +60,15 @@ fun LineChartGoalDots(modifier: Modifier = Modifier) {
                 BasicText(
                     "Sleep",
                     style = Typography.sm.copy(
-                        color = lerp(colors.indigo, colors.label, if (colors.isDark) 0.35f else 0.1f),
+                        color = lerp(colors.chart3, colors.foreground, if (colors.isDark) 0.35f else 0.1f),
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
                 BasicText(
                     "7h 9m",
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                 )
-                BasicText("Goal 7 hours · green nights met it", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Goal 7 hours · green nights met it", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent {
@@ -91,14 +92,14 @@ fun LineChartGoalDots(modifier: Modifier = Modifier) {
                         ticks = listOf(5.0, 7.0, 9.0),
                         tickFormatter = { "${it.toInt()}h" },
                     )
-                    ReferenceLine(GOAL, stroke = colors.green, strokeDasharray = listOf(3f, 3f))
+                    ReferenceLine(GOAL, stroke = Palette.green500, strokeDasharray = listOf(3f, 3f))
                     ChartTooltip {
                         ChartTooltipContent(
                             hideIndicator = true,
                             formatter = { item ->
                                 BasicText(
                                     formatHours(item.value),
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             },
                         )
@@ -108,8 +109,8 @@ fun LineChartGoalDots(modifier: Modifier = Modifier) {
                         value = { it.hours },
                         curve = ChartCurve.Monotone,
                         strokeWidth = 2.dp,
-                        dot = ChartDot(4.5.dp, strokeColor = colors.surfaceSecondary, strokeWidth = 2.dp),
-                        dotColor = { if (it.hours >= GOAL) colors.green else colors.orange },
+                        dot = ChartDot(4.5.dp, strokeColor = colors.muted, strokeWidth = 2.dp),
+                        dotColor = { if (it.hours >= GOAL) Palette.green500 else colors.chart4 },
                     )
                 }
             }

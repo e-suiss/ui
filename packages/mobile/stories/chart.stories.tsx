@@ -47,8 +47,8 @@ const monthData = [
 ]
 
 const deviceConfig = {
-  desktop: { label: "Desktop", color: "blue" },
-  mobile: { label: "Mobile", color: "teal" },
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
 const MONTHS = [
@@ -225,7 +225,7 @@ export const TooltipNoLabel: Story = {
 }
 
 const energyConfig = {
-  energy: { label: "Active energy", color: "red" },
+  energy: { label: "Active energy", color: "red-500" },
 } satisfies ChartConfig
 
 const energyValues = [
@@ -332,13 +332,13 @@ function FormatterDemo() {
                   hideLabel
                   formatter={(value) => (
                     <View className="flex-row items-baseline gap-1.5">
-                      <Text className="text-label-secondary">
+                      <Text className="text-muted-foreground">
                         Active energy
                       </Text>
-                      <Text className="font-semibold text-label tabular-nums">
+                      <Text className="font-semibold text-foreground tabular-nums">
                         {formatNumber(Number(value))}
                       </Text>
-                      <Text className="text-2xs text-label-secondary">
+                      <Text className="text-2xs text-muted-foreground">
                         kcal
                       </Text>
                     </View>
@@ -359,8 +359,8 @@ export const TooltipFormatter: Story = {
 }
 
 const iconConfig = {
-  desktop: { label: "Desktop", color: "blue", icon: DesktopIcon },
-  mobile: { label: "Mobile", color: "teal", icon: DeviceMobileIcon },
+  desktop: { label: "Desktop", color: "chart-1", icon: DesktopIcon },
+  mobile: { label: "Mobile", color: "chart-2", icon: DeviceMobileIcon },
 } satisfies ChartConfig
 
 function IconsDemo() {
@@ -425,7 +425,7 @@ const stepsData = [
 ]
 
 const stepsConfig = {
-  steps: { label: "Steps", color: "orange" },
+  steps: { label: "Steps", color: "chart-4" },
 } satisfies ChartConfig
 
 function CustomDemo() {
@@ -458,19 +458,19 @@ function CustomDemo() {
                 const entry = payload[0]
                 if (!active || !entry) return null
                 return (
-                  <View className="min-w-28 rounded-xl border border-label/5 bg-surface-raised px-3 py-2 shadow-lg dark:border-label/10">
-                    <Text className="text-2xs font-semibold tracking-wide text-label-secondary uppercase">
+                  <View className="min-w-28 rounded-xl border border-foreground/5 bg-popover px-3 py-2 shadow-lg dark:border-foreground/10">
+                    <Text className="text-2xs font-semibold tracking-wide text-muted-foreground uppercase">
                       Total
                     </Text>
                     <View className="flex-row items-baseline gap-1">
                       <Text className="text-2xl font-semibold tabular-nums">
                         {formatNumber(Number(entry.value))}
                       </Text>
-                      <Text className="text-xs font-semibold text-label-secondary">
+                      <Text className="text-xs font-semibold text-muted-foreground">
                         steps
                       </Text>
                     </View>
-                    <Text className="text-xs text-label-secondary">
+                    <Text className="text-xs text-muted-foreground">
                       {label}
                     </Text>
                   </View>
@@ -514,9 +514,9 @@ const revenueData = [
 }))
 
 const revenueConfig = {
-  phones: { label: "Phones", color: "blue" },
-  laptops: { label: "Laptops", color: "teal" },
-  services: { label: "Services", color: "purple" },
+  phones: { label: "Phones", color: "chart-1" },
+  laptops: { label: "Laptops", color: "chart-2" },
+  services: { label: "Services", color: "purple-500" },
 } satisfies ChartConfig
 
 function Setting({
@@ -555,7 +555,7 @@ function InteractiveDemo() {
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
         <Text className="text-lg font-semibold">Tooltip settings</Text>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Quarterly revenue · billions · sample data. Change the settings and
           touch the bars.
         </Text>
@@ -563,7 +563,7 @@ function InteractiveDemo() {
       <CardContent className="gap-5">
         <View className="flex-row flex-wrap items-end gap-x-6 gap-y-3">
           <View className="gap-1.5">
-            <Text className="text-xs font-semibold text-label-secondary">
+            <Text className="text-xs font-semibold text-muted-foreground">
               Indicator
             </Text>
             <ToggleGroup

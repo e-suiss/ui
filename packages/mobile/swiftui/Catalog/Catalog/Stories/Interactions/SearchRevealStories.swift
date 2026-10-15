@@ -68,7 +68,7 @@ private struct SearchRevealNotes: View {
           if notes.isEmpty {
             Text(verbatim: "No results for “\(query)”")
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .multilineTextAlignment(.center)
               .padding(.horizontal, 16)
               .padding(.vertical, 64)
@@ -80,11 +80,11 @@ private struct SearchRevealNotes: View {
                   VStack(alignment: .leading, spacing: 0) {
                     Text(verbatim: note.title)
                       .textStyle(.base, weight: .semibold)
-                      .foregroundStyle(Color.label)
+                      .foregroundStyle(EsuissColor.foreground)
                       .lineLimit(1)
                     Text(verbatim: note.preview)
                       .textStyle(.sm)
-                      .foregroundStyle(Color.labelSecondary)
+                      .foregroundStyle(EsuissColor.mutedForeground)
                       .lineLimit(1)
                   }
                   .padding(.horizontal, 16)
@@ -95,18 +95,18 @@ private struct SearchRevealNotes: View {
                 .buttonStyle(SearchRevealRowStyle())
                 .overlay(alignment: .top) {
                   if index > 0 {
-                    Color.separator.frame(height: 1)
+                    EsuissColor.border.frame(height: 1)
                   }
                 }
               }
             }
-            .background(Color.surfaceSecondary)
+            .background(EsuissColor.muted)
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
             .padding(.horizontal, 16)
           }
           Text(verbatim: "\(notes.count) \(notes.count == 1 ? "note" : "notes")")
             .textStyle(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
@@ -115,7 +115,7 @@ private struct SearchRevealNotes: View {
       }
     }
     .clipShape(shape)
-    .overlay { shape.strokeBorder(Color.separator) }
+    .overlay { shape.strokeBorder(EsuissColor.border) }
     .containerRelativeFrame(.vertical) { height, _ in height - 32 }
   }
 }
@@ -123,6 +123,6 @@ private struct SearchRevealNotes: View {
 private struct SearchRevealRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }

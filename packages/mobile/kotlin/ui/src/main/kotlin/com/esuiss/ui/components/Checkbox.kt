@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.error
@@ -84,6 +85,7 @@ fun TriStateCheckbox(
             .then(toggle)
             .then(if (invalid) Modifier.semantics { error("Invalid") } else Modifier)
             .size(16.dp)
+            .alpha(look.alpha)
             .then(if (look.shadow) Modifier.shadow(FormShadowXs, shape) else Modifier)
             .background(look.background, shape)
             .border(1.dp, look.border, shape),
@@ -94,13 +96,13 @@ fun TriStateCheckbox(
                 if (state == ToggleableState.Indeterminate) PhosphorIcons.Regular.Minus else PhosphorIcons.Regular.Check,
                 contentDescription = null,
                 size = 14.dp,
-                tint = colors.onAccent,
+                tint = colors.primaryForeground,
             )
         }
     }
 }
 
-internal class SelectionControlLook(val background: Color, val border: Color, val shadow: Boolean)
+internal class SelectionControlLook(val background: Color, val border: Color, val shadow: Boolean, val alpha: Float)
 
 internal fun selectionControlLook(
     colors: Colors,
@@ -108,25 +110,25 @@ internal fun selectionControlLook(
     enabled: Boolean,
     invalid: Boolean,
     pressed: Boolean,
-): SelectionControlLook = when {
-    on && !enabled -> SelectionControlLook(colors.accentDisabled, Color.Transparent, false)
-    on -> {
-        val color = if (pressed) colors.accentPressed else colors.accent
-        SelectionControlLook(color, color, false)
+): SelectionControlLook {
+    val alpha = when {
+        !enabled -> 0.5f
+        pressed -> 0.8f
+        else -> 1f
     }
-    !enabled -> SelectionControlLook(
-        colors.controlDisabled,
-        if (colors.isDark) Color.Transparent else colors.label.copy(alpha = 0.1f),
-        false,
-    )
-    colors.isDark -> SelectionControlLook(
-        colors.labelQuaternary,
-        if (invalid) colors.danger else Color.Transparent,
-        false,
-    )
-    else -> SelectionControlLook(
-        if (pressed) colors.control else colors.surface,
-        if (invalid) colors.danger else colors.label.copy(alpha = 0.25f),
-        true,
-    )
+    return when {
+        on -> SelectionControlLook(colors.primary, colors.primary, false, alpha)
+        colors.isDark -> SelectionControlLook(
+            colors.border,
+            if (invalid) colors.destructive else Color.Transparent,
+            false,
+            alpha,
+        )
+        else -> SelectionControlLook(
+            colors.background,
+            if (invalid) colors.destructive else colors.foreground.copy(alpha = 0.25f),
+            enabled,
+            alpha,
+        )
+    }
 }

@@ -19,12 +19,12 @@ public struct LogLive: View {
 
   static var feed: [Event] {
     [
-      Event(actor: "Jamie Rivera", action: "signed in", detail: "Book Pro · San Francisco", tint: .indigo),
+      Event(actor: "Jamie Rivera", action: "signed in", detail: "Book Pro · San Francisco", tint: Palette.indigo500),
       Event(actor: "System", action: "finished a backup", detail: "12.4 GB · 3 min", icon: Ph.cloud.bold),
-      Event(actor: "Morgan Lee", action: "updated a product", detail: "Phone Air · 240 in stock", tint: .orange, icon: Ph.tag.bold),
-      Event(actor: "Riley Chen", action: "answered a ticket", detail: "#4821 Screen flickers", tint: .green, icon: Ph.chatCircle.bold),
+      Event(actor: "Morgan Lee", action: "updated a product", detail: "Phone Air · 240 in stock", tint: Palette.orange500, icon: Ph.tag.bold),
+      Event(actor: "Riley Chen", action: "answered a ticket", detail: "#4821 Screen flickers", tint: Palette.green500, icon: Ph.chatCircle.bold),
       Event(actor: "System", action: "raised a warning", detail: "API latency 820 ms", icon: Ph.warning.bold, warning: true),
-      Event(actor: "Jordan Park", action: "approved an order", detail: "W1052 · $399", tint: .mint, icon: Ph.handbag.bold),
+      Event(actor: "Jordan Park", action: "approved an order", detail: "W1052 · $399", tint: Palette.teal400, icon: Ph.handbag.bold),
     ]
   }
 
@@ -88,12 +88,12 @@ public struct LogLive: View {
               if running {
                 HStack(spacing: 6) {
                   Circle()
-                    .fill(Color.green)
+                    .fill(Palette.green500)
                     .frame(width: 7, height: 7)
                     .opacity(pulse ? 0.35 : 1)
                   Text("Live")
                     .scaledFont(.xs)
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                 }
                 .transition(.opacity)
                 .onAppear {
@@ -109,13 +109,13 @@ public struct LogLive: View {
                 LogLiveRow(entry: entry)
                   .overlay(alignment: .top) {
                     if index > 0 {
-                      Color.separator.frame(height: 1).padding(.leading, 56)
+                      EsuissColor.border.frame(height: 1).padding(.leading, 56)
                     }
                   }
                   .transition(.asymmetric(insertion: .opacity.combined(with: .offset(y: -10)), removal: .opacity))
               }
             }
-            .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+            .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
           }
         }
@@ -163,7 +163,7 @@ public struct LogLive: View {
         VStack(alignment: .leading, spacing: 2) {
           Text(item.0)
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           item.1
             .scaledFont(.xl, weight: .semibold)
             .monospacedDigit()
@@ -176,13 +176,13 @@ public struct LogLive: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(alignment: .leading) {
           if index > 0 {
-            Color.separator.frame(width: 1)
+            EsuissColor.border.frame(width: 1)
           }
         }
         .accessibilityElement(children: .combine)
       }
     }
-    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
   }
 
   private func push() {
@@ -204,15 +204,15 @@ private struct LogLiveRow: View {
         if let tint = event.tint {
           Text(verbatim: event.actor.split(separator: " ").compactMap(\.first).map(String.init).joined())
             .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 28, height: 28)
             .background(tint, in: Circle())
         } else {
           (event.icon ?? Ph.gear.bold)
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 28, height: 28)
-            .background(event.warning ? Color.orange : .gray, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            .background(event.warning ? Palette.orange500 : Palette.zinc500, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
         }
       }
       .accessibilityHidden(true)
@@ -222,16 +222,16 @@ private struct LogLiveRow: View {
           .lineLimit(1)
         Text(verbatim: event.detail)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       Text(entry.time, format: .dateTime.hour().minute())
         .scaledFont(.sm)
         .monospacedDigit()
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 16)
     .padding(.vertical, 8)
     .frame(minHeight: 44)
@@ -283,7 +283,7 @@ private struct LogLiveShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

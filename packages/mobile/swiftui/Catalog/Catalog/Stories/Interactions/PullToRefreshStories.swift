@@ -12,7 +12,7 @@ enum PullToRefreshStories {
           ForEach(["Inbox", "Drafts", "Sent", "Archive"], id: \.self) { item in
             Text(verbatim: item)
               .textStyle(.base)
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
               .padding(.vertical, 12)
               .frame(maxWidth: .infinity, alignment: .leading)
           }
@@ -36,7 +36,7 @@ private struct PullToRefreshFeed: View {
       VStack(alignment: .leading, spacing: 12) {
         Text("Pull down to refresh")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         ItemGroup(.inset) {
           ForEach(Array((1...count).reversed()), id: \.self) { update in
             if update != count {

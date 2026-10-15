@@ -25,8 +25,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  thisMonth: { label: "This month", color: "green" },
-  lastMonth: { label: "Last month", color: "gray" },
+  thisMonth: { label: "This month", color: "green-500" },
+  lastMonth: { label: "Last month", color: "chart-5" },
 } satisfies ChartConfig
 
 export function RadarChartGridNone() {

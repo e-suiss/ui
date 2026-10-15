@@ -63,7 +63,7 @@ public struct EmptyOffline: View {
         EmptyMedia {
           Ph.wifiSlash.light
             .frame(width: 52, height: 52)
-            .foregroundStyle(Color.labelTertiary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         EmptyTitle("You're not connected to the internet.")
         EmptyDescription("Turn on Wi-Fi or cellular data. Songs you downloaded still play offline.")
@@ -104,7 +104,7 @@ public struct EmptyOffline: View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 14) {
           ForEach(Self.albums) { album in
             VStack(alignment: .leading, spacing: 6) {
-              Color.control
+              EsuissColor.secondary
                 .aspectRatio(1, contentMode: .fit)
                 .overlay {
                   AsyncImage(url: album.image) { phase in
@@ -131,8 +131,8 @@ private struct EmptyOfflineLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.sm)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 44)
       .contentShape(Rectangle())
   }

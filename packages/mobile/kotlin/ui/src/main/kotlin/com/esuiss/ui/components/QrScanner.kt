@@ -59,6 +59,7 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.fill.Flashlight
 import com.adamglin.phosphoricons.regular.Flashlight
 import com.esuiss.ui.theme.DarkColors
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlin.math.max
 import kotlin.math.min
@@ -118,9 +119,9 @@ fun QrScanner(
     }
     val bracket by animateColorAsState(
         when (state) {
-            QrScannerState.Idle -> colors.onMedia
-            QrScannerState.Success -> colors.success
-            QrScannerState.Error -> colors.danger
+            QrScannerState.Idle -> Palette.white
+            QrScannerState.Success -> if (colors.isDark) Palette.green400 else Palette.green600
+            QrScannerState.Error -> colors.destructive
         },
         tween(200),
         label = "bracket",
@@ -162,7 +163,7 @@ fun QrScanner(
                 addRect(Rect(Offset.Zero, size))
                 addRoundRect(RoundRect(frame, CornerRadius(radius)))
             }
-            drawPath(cutout, colors.scrim)
+            drawPath(cutout, Palette.black.copy(alpha = 0.5f))
             val arm = max(radius, min(QrBracketArm.toPx(), side / 2))
             val stroke = Stroke(QrBracketWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
             val corners = listOf(
@@ -193,7 +194,7 @@ fun QrScanner(
                 val height = QrLineHeight.toPx()
                 val y = frame.top + inset + (side - inset * 2) * position
                 drawRoundRect(
-                    colors.accent,
+                    colors.primary,
                     topLeft = Offset(frame.left + inset, y - height / 2),
                     size = Size(side - inset * 2, height),
                     cornerRadius = CornerRadius(height / 2),
@@ -206,7 +207,7 @@ fun QrScanner(
                 if (title != null) {
                     BasicText(
                         title,
-                        style = Typography.lg.copy(color = colors.onMedia, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.lg.copy(color = Palette.white, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                 } else {
                     Box(Modifier)
@@ -215,7 +216,7 @@ fun QrScanner(
                     BasicText(
                         hint,
                         modifier = Modifier.widthIn(max = QrDescriptionWidth),
-                        style = Typography.sm.copy(color = colors.onMedia, textAlign = TextAlign.Center),
+                        style = Typography.sm.copy(color = Palette.white, textAlign = TextAlign.Center),
                     )
                 } else {
                     Box(Modifier)
@@ -257,7 +258,7 @@ private fun QrScannerTorch(on: Boolean, onToggle: (Boolean) -> Unit) {
             .size(QrTorchSize)
             .alpha(if (pressed) 0.7f else 1f)
             .clip(CircleShape)
-            .background(if (on) colors.onMedia else colors.scrim, CircleShape)
+            .background(if (on) Palette.white else Palette.black.copy(alpha = 0.5f), CircleShape)
             .toggleable(on, source, null, true, Role.Switch) {
                 haptics.toggle(it)
                 onToggle(it)
@@ -269,7 +270,7 @@ private fun QrScannerTorch(on: Boolean, onToggle: (Boolean) -> Unit) {
             if (on) PhosphorIcons.Fill.Flashlight else PhosphorIcons.Regular.Flashlight,
             contentDescription = null,
             size = 24.dp,
-            tint = if (on) colors.media else colors.onMedia,
+            tint = if (on) Palette.black else Palette.white,
         )
     }
 }

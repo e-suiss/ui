@@ -28,7 +28,7 @@ import { Portal } from "@/components/primitives/portal"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon, IconSizeContext } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, shadow, useTheme } from "@/components/ui/theme"
 
 type IslandView = "hidden" | "compact" | "minimal" | "expanded" | "notice"
 
@@ -328,7 +328,6 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
   const lastRef = React.useRef(current)
   if (current) lastRef.current = current
   const notice = current ?? lastRef.current
-  const { colors } = useTheme()
   const stage = React.useContext(IslandStageContext)
   const width = Math.min((stage?.stageWidth ?? MAX_WIDTH) - 24, MAX_WIDTH)
 
@@ -349,7 +348,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
             <View
               style={[
                 styles.noticeIcon,
-                { backgroundColor: withAlpha(colors.onMedia, 0.15) },
+                { backgroundColor: withAlpha(palette.white, 0.15) },
               ]}
             >
               {notice.icon}
@@ -361,7 +360,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
           {notice?.description !== undefined
             ? wrapText(
                 notice.description,
-                [styles.description, { color: withAlpha(colors.onMedia, 0.7) }],
+                [styles.description, { color: withAlpha(palette.white, 0.7) }],
                 1
               )
             : null}
@@ -506,7 +505,6 @@ function Island({
   portalHost?: string
 }) {
   const context = useIsland()
-  const { colors } = useTheme()
   const setPaused = React.useContext(IslandPauseContext)
   const { notice, expand, collapse, dismiss, registerActivity } = context
   const insets = useSafeAreaInsets()
@@ -642,13 +640,13 @@ function Island({
                 }
                 style={[
                   styles.island,
-                  { backgroundColor: colors.media },
+                  { backgroundColor: palette.black },
                   style,
                   animatedStyle,
                 ]}
                 {...props}
               >
-                <TextStyleContext.Provider value={{ color: colors.onMedia }}>
+                <TextStyleContext.Provider value={{ color: palette.white }}>
                   <IconSizeContext.Provider value={20}>
                     <IslandStageContext.Provider value={stage}>
                       <IslandStage
@@ -762,7 +760,11 @@ function IslandRing({
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
       >
-        <Icon as={IslandRingShape} size={size} color={color ?? colors.accent} />
+        <Icon
+          as={IslandRingShape}
+          size={size}
+          color={color ?? colors.primary}
+        />
       </View>
     </IslandRingValueContext.Provider>
   )

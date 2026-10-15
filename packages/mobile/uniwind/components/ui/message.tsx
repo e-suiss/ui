@@ -85,7 +85,7 @@ function MessageAvatar({ className, ...props }: ViewProps) {
   return (
     <View
       className={cn(
-        "min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-surface-secondary",
+        "min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted",
         footer && "-translate-y-8",
         className
       )}
@@ -113,7 +113,7 @@ function MessageContent({
 
 function MessageHeader({ className, children, ...props }: ViewProps) {
   return (
-    <TextClassContext.Provider value="text-xs text-label-secondary">
+    <TextClassContext.Provider value="text-xs text-muted-foreground">
       <IconClassContext.Provider value="size-3.5">
         <View
           className={cn(
@@ -132,7 +132,7 @@ function MessageHeader({ className, children, ...props }: ViewProps) {
 function MessageFooter({ className, children, ...props }: ViewProps) {
   const { align } = React.useContext(MessageContext)
   return (
-    <TextClassContext.Provider value="text-xs text-label-secondary">
+    <TextClassContext.Provider value="text-xs text-muted-foreground">
       <IconClassContext.Provider value="size-3.5">
         <View
           className={cn(

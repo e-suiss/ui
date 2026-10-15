@@ -57,7 +57,7 @@ private struct SectionIndexContacts: View {
                   } label: {
                     Text(verbatim: name)
                       .textStyle(.base)
-                      .foregroundStyle(Color.label)
+                      .foregroundStyle(EsuissColor.foreground)
                       .padding(.vertical, 12)
                       .frame(maxWidth: .infinity, alignment: .leading)
                       .contentShape(Rectangle())
@@ -65,7 +65,7 @@ private struct SectionIndexContacts: View {
                   .buttonStyle(SectionIndexRowStyle())
                   .overlay(alignment: .top) {
                     if index > 0 {
-                      Color.separator.frame(height: 1)
+                      EsuissColor.border.frame(height: 1)
                     }
                   }
                   .padding(.leading, 16)
@@ -76,7 +76,7 @@ private struct SectionIndexContacts: View {
           }
         }
         .clipShape(shape)
-        .overlay { shape.strokeBorder(Color.separator) }
+        .overlay { shape.strokeBorder(EsuissColor.border) }
         SectionIndexBar { letter in
           log = "Jumped to \(letter)"
         }
@@ -91,6 +91,6 @@ private struct SectionIndexContacts: View {
 private struct SectionIndexRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.6 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }

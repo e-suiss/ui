@@ -38,7 +38,7 @@ enum CardStories {
     },
     Story("WithImage") {
       Card {
-        Color.surfaceSecondary
+        EsuissColor.muted
           .aspectRatio(16.0 / 9.0, contentMode: .fit)
           .overlay {
             AsyncImage(url: CardImage.url) { phase in
@@ -63,7 +63,7 @@ enum CardStories {
         CardContent {
           Text("Photos and backups take up most of your space.")
             .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
     },

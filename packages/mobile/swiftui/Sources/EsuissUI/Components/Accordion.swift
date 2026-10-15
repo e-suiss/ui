@@ -62,7 +62,7 @@ public struct Accordion<Content: View>: View {
     .padding(.top, -1)
     .frame(maxWidth: .infinity, alignment: .leading)
     .clipped()
-    .background(variant == .filled ? Color.surfaceSecondary : .clear, in: shape)
+    .background(variant == .filled ? EsuissColor.muted : .clear, in: shape)
     .clipShape(variant == .filled ? AnyShape(shape) : AnyShape(Rectangle()))
     .environment(\.accordion, context)
   }
@@ -128,11 +128,11 @@ public struct AccordionItem<Label: View, Content: View>: View {
           label
             .textStyle(.base)
             .multilineTextAlignment(.leading)
-            .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+            .foregroundStyle(EsuissColor.foreground)
             .frame(maxWidth: .infinity, alignment: .leading)
           Ph.caretDown.regular
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .rotationEffect(.degrees(open ? 180 : 0))
             .animation(.easeInOut(duration: open ? 0.25 : 0.2), value: open)
         }
@@ -149,7 +149,7 @@ public struct AccordionItem<Label: View, Content: View>: View {
           content
         }
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .fixedSize(horizontal: false, vertical: true)
         .padding(.trailing, 40)
         .padding(.bottom, 12)
@@ -160,7 +160,7 @@ public struct AccordionItem<Label: View, Content: View>: View {
     .padding(.leading, 16)
     .overlay(alignment: .top) {
       Rectangle()
-        .fill(Color.separator)
+        .fill(EsuissColor.border)
         .frame(height: 1)
         .padding(.leading, 16)
     }
@@ -183,5 +183,6 @@ private struct AccordionTriggerStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .underline(configuration.isPressed && isEnabled)
+      .opacity(isEnabled ? 1 : 0.5)
   }
 }

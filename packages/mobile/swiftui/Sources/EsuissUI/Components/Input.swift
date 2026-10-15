@@ -85,8 +85,8 @@ struct InputField: ViewModifier {
       content
         .focused($focused)
         .scaledFont(textStyle)
-        .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
-        .tint(Color.accent)
+        .foregroundStyle(EsuissColor.foreground)
+        .tint(EsuissColor.primary)
         .padding(.horizontal, horizontalPadding)
         .padding(.vertical, verticalPadding)
         .frame(maxWidth: .infinity, minHeight: minHeight, alignment: alignment)
@@ -95,18 +95,18 @@ struct InputField: ViewModifier {
           shape.strokeBorder(border, lineWidth: 1)
         }
         .contentShape(shape)
+        .opacity(isEnabled ? 1 : 0.5)
         .onTapGesture { focused = true }
     }
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 
   private var border: Color {
-    if invalid { return .danger }
-    return focused ? .focus : .clear
+    if invalid { return EsuissColor.destructive }
+    return focused ? EsuissColor.ring : .clear
   }
 }

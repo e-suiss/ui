@@ -39,22 +39,22 @@ function NoteRows({
 }) {
   const { editing } = useSelectionList()
   return (
-    <View className="overflow-hidden rounded-2xl border border-separator">
+    <View className="overflow-hidden rounded-2xl border border-border">
       {notes.map((note, index) => (
         <SelectionListItem
           key={note.id}
           value={note.id}
-          className={index > 0 ? "border-t border-separator" : undefined}
+          className={index > 0 ? "border-t border-border" : undefined}
         >
           <Pressable
             onPress={() => onOpen(note)}
-            className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:bg-item-pressed"
+            className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:opacity-80"
           >
             <View className="min-w-0 flex-1">
               <Text numberOfLines={1} className="font-semibold">
                 {note.title}
               </Text>
-              <Text numberOfLines={1} className="text-sm text-label-secondary">
+              <Text numberOfLines={1} className="text-sm text-muted-foreground">
                 {note.preview}
               </Text>
             </View>
@@ -62,8 +62,8 @@ function NoteRows({
               as={CaretRightIcon}
               className={
                 editing
-                  ? "size-4 shrink-0 text-label-tertiary opacity-0"
-                  : "size-4 shrink-0 text-label-tertiary"
+                  ? "size-4 shrink-0 text-muted-foreground opacity-0"
+                  : "size-4 shrink-0 text-muted-foreground"
               }
             />
           </Pressable>
@@ -102,7 +102,11 @@ function DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {
         setEditing(false)
       }}
     >
-      <Text className={disabled ? "text-label-quaternary" : "text-danger"}>
+      <Text
+        className={
+          disabled ? "text-destructive opacity-50" : "text-destructive"
+        }
+      >
         Delete
       </Text>
     </Button>
@@ -132,7 +136,7 @@ function Footer({ log, onReset }: { log: string; onReset: () => void }) {
     <View className="flex-row items-center justify-between gap-3">
       <Text
         role="status"
-        className="min-w-0 flex-1 text-sm text-label-secondary"
+        className="min-w-0 flex-1 text-sm text-muted-foreground"
       >
         {log}
       </Text>
@@ -231,8 +235,8 @@ function MailExample() {
             as={TrashIcon}
             className={
               disabled
-                ? "size-5.5 text-label-quaternary"
-                : "size-5.5 text-danger"
+                ? "size-5.5 text-destructive opacity-50"
+                : "size-5.5 text-destructive"
             }
           />
         </Button>

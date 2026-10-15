@@ -29,13 +29,29 @@ import { Text } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-type Tint = keyof ThemeColors
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith("#") || color.length !== 7) return color
+  const r = Number.parseInt(color.slice(1, 3), 16)
+  const g = Number.parseInt(color.slice(3, 5), 16)
+  const b = Number.parseInt(color.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
+
+type Tint = Tone
 
 type Status = "Open" | "Pending" | "Solved"
 
@@ -61,7 +77,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Open",
     priority: "High",
     requester: "Jamie Rivera",
-    tint: "orange",
+    tint: "orange500",
   },
   {
     id: "#4820",
@@ -70,7 +86,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Pending",
     priority: "Medium",
     requester: "Morgan Lee",
-    tint: "cyan",
+    tint: "cyan500",
   },
   {
     id: "#4819",
@@ -79,7 +95,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Open",
     priority: "Low",
     requester: "Avery Brooks",
-    tint: "pink",
+    tint: "pink500",
   },
   {
     id: "#4818",
@@ -88,7 +104,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Solved",
     priority: "Medium",
     requester: "Taylor Kim",
-    tint: "green",
+    tint: "green500",
   },
 ]
 
@@ -101,10 +117,24 @@ const VIEWS: { value: Queue; icon: PhosphorIcon }[] = [
 
 const STATUSES: Status[] = ["Open", "Pending", "Solved"]
 
-const PRIORITY_COLORS: Record<Priority, { box: Tint; text: Tint }> = {
-  High: { box: "dangerSurface", text: "danger" },
-  Medium: { box: "warningSurface", text: "warning" },
-  Low: { box: "control", text: "labelSecondary" },
+function priorityColors(
+  priority: Priority,
+  colors: ThemeColors,
+  isDark: boolean
+) {
+  if (priority === "High") {
+    return {
+      box: withAlpha(colors.destructive, isDark ? 0.2 : 0.1),
+      text: colors.destructive,
+    }
+  }
+  if (priority === "Medium") {
+    return {
+      box: withAlpha(palette.amber500, isDark ? 0.2 : 0.1),
+      text: isDark ? palette.amber400 : palette.amber600,
+    }
+  }
+  return { box: colors.secondary, text: colors.mutedForeground }
 }
 
 const styles = StyleSheet.create({
@@ -169,7 +199,7 @@ function Requester({
   const { colors } = useTheme()
   return (
     <Avatar size={size} style={style}>
-      <AvatarFallback style={{ backgroundColor: colors[ticket.tint] }}>
+      <AvatarFallback style={{ backgroundColor: tone(colors, ticket.tint) }}>
         {initials(ticket.requester)}
       </AvatarFallback>
     </Avatar>
@@ -194,7 +224,7 @@ function TicketDetail({
       entering={FadeInDown.duration(800).reduceMotion(ReduceMotion.System)}
       style={styles.detail}
     >
-      <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
         {`${ticket.id} · ${ticket.device}`}
       </Text>
       <ToggleGroup
@@ -223,14 +253,12 @@ function TicketDetail({
         />
         <View>
           <Text style={styles.semibold}>{ticket.requester}</Text>
-          <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
             Today 8:12 AM
           </Text>
         </View>
       </View>
-      <View
-        style={[styles.bubble, { backgroundColor: colors.surfaceSecondary }]}
-      >
+      <View style={[styles.bubble, { backgroundColor: colors.muted }]}>
         <Text style={fontSize.base}>
           Hi, this started right after the latest update. I tried restarting but
           it keeps happening. Can you help?
@@ -279,7 +307,7 @@ function InboxSupport({
   onStatusChange?: (id: string, status: Status) => void
   onReply?: (id: string, text: string) => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const { width } = useWindowDimensions()
   const wide = width >= 768
   const [tickets, setTickets] = React.useState(INITIAL_TICKETS)
@@ -309,7 +337,7 @@ function InboxSupport({
           title="Support"
           style={
             wide
-              ? { minHeight: "100%", backgroundColor: colors.surfaceSecondary }
+              ? { minHeight: "100%", backgroundColor: colors.muted }
               : styles.sidebar
           }
         >
@@ -323,14 +351,14 @@ function InboxSupport({
               }}
               style={
                 wide && view === item.value
-                  ? { backgroundColor: colors.control }
+                  ? { backgroundColor: colors.secondary }
                   : undefined
               }
             >
               <View style={styles.view}>
-                <Icon as={item.icon} size={20} color={colors.accent} />
+                <Icon as={item.icon} size={20} color={colors.primary} />
                 <Text style={styles.fill}>{item.value}</Text>
-                <Text style={[styles.count, { color: colors.labelSecondary }]}>
+                <Text style={[styles.count, { color: colors.mutedForeground }]}>
                   {String(
                     item.value === "All"
                       ? tickets.length
@@ -347,7 +375,7 @@ function InboxSupport({
           style={wide ? styles.listWide : styles.list}
         >
           {list.map((ticket) => {
-            const priority = PRIORITY_COLORS[ticket.priority]
+            const priority = priorityColors(ticket.priority, colors, isDark)
             return (
               <SplitViewItem
                 key={ticket.id}
@@ -357,21 +385,15 @@ function InboxSupport({
               >
                 <View style={styles.ticketTop}>
                   <Text
-                    style={[styles.ticketId, { color: colors.labelSecondary }]}
+                    style={[styles.ticketId, { color: colors.mutedForeground }]}
                   >
                     {`${ticket.id} · ${ticket.device}`}
                   </Text>
                   <View
-                    style={[
-                      styles.priority,
-                      { backgroundColor: colors[priority.box] },
-                    ]}
+                    style={[styles.priority, { backgroundColor: priority.box }]}
                   >
                     <Text
-                      style={[
-                        styles.priorityText,
-                        { color: colors[priority.text] },
-                      ]}
+                      style={[styles.priorityText, { color: priority.text }]}
                     >
                       {ticket.priority}
                     </Text>
@@ -384,7 +406,9 @@ function InboxSupport({
                     size="sm"
                     style={{ width: 20, height: 20 }}
                   />
-                  <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.xs, { color: colors.mutedForeground }]}
+                  >
                     {ticket.requester}
                   </Text>
                 </View>
@@ -392,7 +416,7 @@ function InboxSupport({
             )
           })}
           {list.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+            <Text style={[styles.empty, { color: colors.mutedForeground }]}>
               No tickets
             </Text>
           ) : null}

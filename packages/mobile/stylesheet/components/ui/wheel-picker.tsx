@@ -43,7 +43,7 @@ function WheelPicker({
       {...props}
     >
       <WheelPickerPrimitive.Indicator
-        style={[styles.indicator, { backgroundColor: colors.control }]}
+        style={[styles.indicator, { backgroundColor: colors.secondary }]}
       />
       {children}
     </WheelPickerPrimitive.Root>
@@ -74,7 +74,7 @@ function WheelPickerItem({
   const { colors } = useTheme()
   const textStyle: TextStyle = {
     ...styles.text,
-    color: disabled ? colors.labelTertiary : colors.label,
+    color: disabled ? colors.mutedForeground : colors.foreground,
   }
   return (
     <TextStyleContext.Provider value={textStyle}>

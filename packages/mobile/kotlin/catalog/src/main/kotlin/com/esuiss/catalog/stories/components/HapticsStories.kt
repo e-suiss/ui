@@ -90,12 +90,12 @@ private fun HapticsLogRow(log: HapticsLog) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))
+            .background(colors.muted, RoundedCornerShape(Radius.xl))
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("Last haptic", style = Typography.sm.copy(color = colors.labelSecondary))
+        Text("Last haptic", style = Typography.sm.copy(color = colors.mutedForeground))
         Text(
             if (log.count > 0) "${log.last} (${log.count})" else log.last,
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
@@ -176,7 +176,7 @@ private fun HapticsReorderDemo() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape)
-                    .border(1.dp, EsuissTheme.colors.separator, shape),
+                    .border(1.dp, EsuissTheme.colors.border, shape),
             ) { task ->
                 ReorderListItem {
                     Text(

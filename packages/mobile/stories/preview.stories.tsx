@@ -28,9 +28,9 @@ function ProfileCard() {
         <View className="mt-1 flex-row items-center gap-1.5">
           <Icon
             as={CalendarBlankIcon}
-            className="size-4 text-label-secondary"
+            className="size-4 text-muted-foreground"
           />
-          <Text className="text-xs text-label-secondary">
+          <Text className="text-xs text-muted-foreground">
             Joined December 2021
           </Text>
         </View>

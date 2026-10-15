@@ -56,7 +56,7 @@ function TabBarList({
     <TabsPrimitive.List
       className={(state) =>
         cn(
-          "flex-row rounded-full border border-label/5 bg-surface-raised p-1 shadow-lg dark:border-label/10",
+          "flex-row rounded-full border border-foreground/5 bg-card p-1 shadow-lg dark:border-foreground/10",
           resolveClassName(className, state)
         )
       }
@@ -69,13 +69,16 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
   const text = badgeText(badge)
   if (badge === true) {
     return (
-      <View className="absolute -top-0.5 -end-1 size-2.5 rounded-full border-2 border-surface-raised bg-danger" />
+      <View className="absolute -top-0.5 -end-1 size-2.5 rounded-full border-2 border-card bg-destructive" />
     )
   }
   if (text === undefined) return null
   return (
-    <View className="absolute -top-1.5 -end-3 h-4.5 min-w-4.5 items-center justify-center rounded-full border-2 border-surface-raised bg-danger px-1">
-      <Text className="text-3xs font-semibold text-on-accent" numberOfLines={1}>
+    <View className="absolute -top-1.5 -end-3 h-4.5 min-w-4.5 items-center justify-center rounded-full border-2 border-card bg-destructive px-1">
+      <Text
+        className="text-3xs font-semibold text-primary-foreground"
+        numberOfLines={1}
+      >
         {text}
       </Text>
     </View>
@@ -97,8 +100,8 @@ function TabBarItem({
     <TabsPrimitive.Tab
       className={(state) =>
         cn(
-          "flex-1 items-center justify-center gap-0.5 rounded-full py-1.5 active:bg-item-pressed",
-          state.active && "bg-control",
+          "flex-1 items-center justify-center gap-0.5 rounded-full py-1.5 active:opacity-80",
+          state.active && "bg-secondary",
           resolveClassName(className, state)
         )
       }
@@ -107,9 +110,9 @@ function TabBarItem({
         <TextClassContext.Provider
           value={cn(
             "text-3xs font-medium",
-            state.active && "text-accent",
-            !state.active && state.disabled && "text-label-quaternary",
-            !(state.active || state.disabled) && "text-label-secondary"
+            state.active && "text-primary",
+            !state.active && state.disabled && "opacity-50",
+            !(state.active || state.disabled) && "text-muted-foreground"
           )}
         >
           <Pressable {...renderProps}>

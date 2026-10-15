@@ -32,7 +32,7 @@ public struct Marker<Content: View>: View {
         row
           .padding(.bottom, 8)
           .overlay(alignment: .bottom) {
-            Rectangle().fill(Color.separator).frame(height: 1)
+            Rectangle().fill(EsuissColor.border).frame(height: 1)
           }
       }
     }
@@ -45,15 +45,15 @@ public struct Marker<Content: View>: View {
       content
     }
     .scaledTextStyle(.sm)
-    .foregroundStyle(Color.labelSecondary)
-    .tint(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
+    .tint(EsuissColor.mutedForeground)
     .multilineTextAlignment(variant == .separator ? .center : .leading)
     .accessibilityElement(children: .combine)
   }
 
   private var line: some View {
     Rectangle()
-      .fill(Color.separator)
+      .fill(EsuissColor.border)
       .frame(height: 1)
       .frame(maxWidth: .infinity)
       .accessibilityHidden(true)

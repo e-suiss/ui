@@ -15,8 +15,8 @@ struct DownloadActivityWidget: SwiftUI.Widget {
   var body: some WidgetConfiguration {
     ActivityConfiguration(for: DownloadActivityAttributes.self) { context in
       DownloadLockScreen(state: context.state)
-        .activityBackgroundTint(Color.media)
-        .activitySystemActionForegroundColor(Color.onMedia)
+        .activityBackgroundTint(Palette.black)
+        .activitySystemActionForegroundColor(Palette.white)
     } dynamicIsland: { context in
       DynamicIsland {
         DynamicIslandExpandedRegion(.leading) {
@@ -26,7 +26,7 @@ struct DownloadActivityWidget: SwiftUI.Widget {
           Text(verbatim: "\(context.state.percent)%")
             .textStyle(.xl2, weight: .semibold)
             .monospacedDigit()
-            .foregroundStyle(Color.onMedia)
+            .foregroundStyle(Palette.white)
             .frame(height: 40)
         }
         DynamicIslandExpandedRegion(.center) {
@@ -38,13 +38,13 @@ struct DownloadActivityWidget: SwiftUI.Widget {
         }
       } compactLeading: {
         ActivityIcon(image: Ph.downloadSimple.bold, size: 16)
-          .foregroundStyle(Color.accent)
+          .foregroundStyle(EsuissColor.primary)
       } compactTrailing: {
         DownloadStatus(state: context.state)
       } minimal: {
         DownloadStatus(state: context.state)
       }
-      .keylineTint(Color.accent)
+      .keylineTint(EsuissColor.primary)
     }
   }
 }
@@ -75,7 +75,7 @@ struct DownloadStatus: View {
   var body: some View {
     if state.finished {
       ActivityIcon(image: Ph.checkCircle.fill, size: 16)
-        .foregroundStyle(Color.success)
+        .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
     } else {
       IslandRing(value: state.progress)
     }
@@ -85,9 +85,9 @@ struct DownloadStatus: View {
 struct DownloadFileTile: View {
   var body: some View {
     ActivityIcon(image: Ph.fileZip.fill, size: 24)
-      .foregroundStyle(Color.accent)
+      .foregroundStyle(EsuissColor.primary)
       .frame(width: 40, height: 40)
-      .background(Color.onMedia.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      .background(Palette.white.opacity(0.15), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .accessibilityHidden(true)
   }
 }
@@ -100,10 +100,10 @@ struct DownloadTitle: View {
     VStack(alignment: alignment, spacing: 0) {
       Text(state.finished ? "Downloaded" : "Downloading")
         .textStyle(.sm, weight: .semibold)
-        .foregroundStyle(Color.onMedia)
+        .foregroundStyle(Palette.white)
       Text(verbatim: state.fileName)
         .textStyle(.sm)
-        .foregroundStyle(Color.onMedia.opacity(0.6))
+        .foregroundStyle(Palette.white.opacity(0.6))
     }
     .lineLimit(1)
   }
@@ -114,12 +114,12 @@ struct DownloadProgressBar: View {
 
   var body: some View {
     Capsule()
-      .fill(Color.onMedia.opacity(0.2))
+      .fill(Palette.white.opacity(0.2))
       .frame(height: 6)
       .overlay(alignment: .leading) {
         GeometryReader { proxy in
           Capsule()
-            .fill(Color.accent)
+            .fill(EsuissColor.primary)
             .frame(width: proxy.size.width * min(max(progress, 0), 1))
         }
       }
@@ -142,7 +142,7 @@ struct DownloadLockScreen: View {
         Text(verbatim: "\(state.percent)%")
           .textStyle(.xl2, weight: .semibold)
           .monospacedDigit()
-          .foregroundStyle(Color.onMedia)
+          .foregroundStyle(Palette.white)
       }
       DownloadProgressBar(progress: state.progress)
     }

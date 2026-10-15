@@ -42,11 +42,11 @@ private struct DrawerGoalContent: View {
         Text(verbatim: "350")
           .font(.system(size: 48, weight: .semibold))
           .tracking(-1.2)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Text("Calories/day")
           .textCase(.uppercase)
           .textStyle(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity)
       .padding(16)
@@ -81,10 +81,10 @@ private struct DrawerSnapPoints: View {
               ForEach(1...20, id: \.self) { index in
                 Text(verbatim: "Item \(index)")
                   .textStyle(.base)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
                   .padding(.horizontal, 16)
                   .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                  .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+                  .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
               }
             }
             .padding(16)

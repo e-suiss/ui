@@ -83,12 +83,13 @@ function InputGroup({
       <View
         role="group"
         className={cn(
-          "relative h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-control",
+          "relative h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary",
           (block || multiline) && "h-auto rounded-xl",
           block && "flex-col items-stretch",
-          focused && "border-focus",
-          isInvalid && "border-danger bg-danger/5 dark:bg-danger/10",
-          isDisabled && "bg-control-disabled",
+          focused && "border-ring",
+          isInvalid &&
+            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+          isDisabled && "opacity-50",
           className
         )}
         {...props}
@@ -123,11 +124,10 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<typeof Pressable> &
   VariantProps<typeof inputGroupAddonVariants>) {
-  const { disabled, inputRef } = useInputGroup()
-  const color = disabled ? "text-label-quaternary" : "text-label-secondary"
+  const { inputRef } = useInputGroup()
   return (
-    <TextClassContext.Provider value={cn("text-base", color)}>
-      <IconClassContext.Provider value={cn("size-4", color)}>
+    <TextClassContext.Provider value="text-base text-muted-foreground">
+      <IconClassContext.Provider value="size-4 text-muted-foreground">
         <Pressable
           accessible={false}
           className={cn(inputGroupAddonVariants({ align }), className)}

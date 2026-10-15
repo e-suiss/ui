@@ -109,18 +109,18 @@ private fun StepperPrint() {
             Modifier
                 .fillMaxWidth()
                 .clip(shape)
-                .border(1.dp, colors.separator, shape),
+                .border(1.dp, colors.border, shape),
         ) {
             StepperRow("Copies", copies, { copies = it }, min = 1.0, max = 999.0)
-            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
             StepperRow("Scale", scale, { scale = it }, min = 25.0, max = 400.0, step = 5.0, format = percent)
-            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
             StepperRow("Pages per sheet", pages, { pages = it }, enabled = false)
         }
         Text(
             "${copies.toInt()} ${if (copies == 1.0) "copy" else "copies"} at ${scale.toInt()}%",
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
         )
     }
 }

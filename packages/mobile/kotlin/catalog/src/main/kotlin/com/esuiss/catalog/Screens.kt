@@ -90,7 +90,7 @@ internal fun HomeScreen(state: CatalogState) {
                         Text(
                             "No results",
                             modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-                            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+                            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
                         )
                     }
                 }
@@ -115,7 +115,7 @@ private fun SectionList(title: String, rows: List<Entry>, onOpen: (Entry) -> Uni
         Text(
             title,
             modifier = Modifier.padding(horizontal = 16.dp),
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold),
         )
         ItemGroup(variant = ItemGroupVariant.Inset) {
             rows.forEachIndexed { index, row ->
@@ -138,9 +138,9 @@ private fun NavigationItem(title: String, description: String?, detail: String?,
         }
         ItemActions {
             if (detail != null) {
-                Text(detail, style = Typography.base.copy(color = EsuissTheme.colors.labelSecondary))
+                Text(detail, style = Typography.base.copy(color = EsuissTheme.colors.mutedForeground))
             }
-            Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, tint = EsuissTheme.colors.labelTertiary)
+            Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, tint = EsuissTheme.colors.mutedForeground)
         }
     }
 }
@@ -178,7 +178,7 @@ internal fun GroupScreen(state: CatalogState, id: String, onBack: () -> Unit) {
 internal fun StoryScreen(state: CatalogState, id: String, onBack: () -> Unit) {
     val (group, story) = Catalog.find(id) ?: return
     if (story.fullScreen) {
-        Column(Modifier.fillMaxSize().background(EsuissTheme.colors.surface)) {
+        Column(Modifier.fillMaxSize().background(EsuissTheme.colors.background)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

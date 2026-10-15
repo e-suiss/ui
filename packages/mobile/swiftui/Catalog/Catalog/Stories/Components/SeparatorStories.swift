@@ -8,7 +8,7 @@ enum SeparatorStories {
         VStack(alignment: .leading, spacing: 4) {
           Text("esuiss")
             .textStyle(.sm, weight: .medium)
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           Text("An open-source UI component library.")
             .textVariant(.muted)
         }
@@ -54,6 +54,6 @@ private struct SeparatorText: View {
   var body: some View {
     Text(title)
       .textStyle(.sm)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
   }
 }

@@ -154,7 +154,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -199,7 +199,7 @@ function RolesEditor({
             {wide ? (
               <Text
                 role="heading"
-                style={[styles.listHeading, { color: colors.labelSecondary }]}
+                style={[styles.listHeading, { color: colors.mutedForeground }]}
               >
                 Roles
               </Text>
@@ -212,7 +212,7 @@ function RolesEditor({
                 style={styles.listItem}
               >
                 <Text>{name}</Text>
-                <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
                   {`${state[name].filter(Boolean).length} permissions`}
                 </Text>
               </SplitViewItem>
@@ -240,7 +240,9 @@ function RolesEditor({
                   <Text role="heading" style={styles.title}>
                     {role}
                   </Text>
-                  <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.sm, { color: colors.mutedForeground }]}
+                  >
                     {`${MEMBERS[role]} ${MEMBERS[role] === 1 ? "user has" : "users have"} this role`}
                   </Text>
                 </View>

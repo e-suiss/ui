@@ -41,6 +41,7 @@ import com.esuiss.ui.interactions.PreviewMenu
 import com.esuiss.ui.interactions.PreviewMenuItem
 import com.esuiss.ui.interactions.PreviewMenuSeparator
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -60,15 +61,15 @@ val previewMenuStories = StoryGroup(
 private fun previewMenuTones(): List<Color> {
     val colors = EsuissTheme.colors
     return listOf(
-        colors.blue,
-        colors.orange,
-        colors.green,
-        colors.indigo,
-        colors.yellow,
-        colors.pink,
-        colors.teal,
-        colors.purple,
-        colors.mint,
+        Palette.blue500,
+        Palette.orange500,
+        Palette.green500,
+        Palette.indigo500,
+        Palette.yellow500,
+        Palette.pink500,
+        Palette.teal500,
+        Palette.purple500,
+        Palette.teal400,
     )
 }
 
@@ -133,12 +134,12 @@ private fun PreviewMenuAlbum(defaultOpen: Boolean) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))
+                    .background(colors.muted, RoundedCornerShape(Radius.xl))
                     .padding(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(Modifier.size(48.dp).background(colors.blue, RoundedCornerShape(Radius.lg)))
+                Box(Modifier.size(48.dp).background(Palette.blue500, RoundedCornerShape(Radius.lg)))
                 Column {
                     Text("Trip to the coast", style = Typography.base.copy(fontWeight = FontWeight.SemiBold))
                     Text("48 photos", variant = TextVariant.Muted)
@@ -149,12 +150,12 @@ private fun PreviewMenuAlbum(defaultOpen: Boolean) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.blue)
+                    .background(Palette.blue500)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.Bottom,
             ) {
-                Text("Trip to the coast", style = Typography.lg.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))
-                Text("48 photos · Updated today", style = Typography.sm.copy(color = colors.onAccent))
+                Text("Trip to the coast", style = Typography.lg.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold))
+                Text("48 photos · Updated today", style = Typography.sm.copy(color = colors.primaryForeground))
             }
         },
     ) {

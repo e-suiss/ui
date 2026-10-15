@@ -56,6 +56,7 @@ import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.Spinner
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -66,10 +67,10 @@ private enum class Connection { Offline, Loading, Online }
 private class Album(val title: String, val color: (Colors) -> Color)
 
 private val Albums = listOf(
-    Album("Orange Hour") { it.orange },
-    Album("Soft Shapes") { it.mint },
-    Album("Low Light") { it.indigo },
-    Album("Waves") { it.cyan },
+    Album("Orange Hour") { Palette.orange500 },
+    Album("Soft Shapes") { Palette.teal400 },
+    Album("Low Light") { Palette.indigo500 },
+    Album("Waves") { Palette.cyan500 },
 )
 
 @Composable
@@ -94,17 +95,17 @@ fun EmptyOffline(
             Empty {
                 EmptyHeader {
                     EmptyMedia {
-                        Icon(PhosphorIcons.Light.WifiSlash, contentDescription = null, size = 52.dp, tint = colors.labelTertiary)
+                        Icon(PhosphorIcons.Light.WifiSlash, contentDescription = null, size = 52.dp, tint = colors.mutedForeground)
                     }
                     BasicText(
                         "You're not connected to the internet.",
                         modifier = Modifier.semantics { heading() },
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                     )
                     BasicText(
                         "Turn on Wi-Fi or cellular data. Songs you downloaded still play offline.",
                         modifier = Modifier.padding(top = 6.dp),
-                        style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
                 EmptyContent {
@@ -121,7 +122,7 @@ fun EmptyOffline(
                             size = ButtonSize.Lg,
                             enabled = !loading,
                         ) {
-                            if (loading) Spinner(color = colors.onAccent)
+                            if (loading) Spinner(color = colors.primaryForeground)
                             BasicText(if (loading) "Connecting" else "Try Again", style = LocalContentStyle.current)
                         }
                         Button("Downloads", {}, variant = ButtonVariant.Outline, size = ButtonSize.Lg)
@@ -156,15 +157,15 @@ private fun Library(onDisconnect: () -> Unit) {
                 modifier = Modifier
                     .weight(1f)
                     .semantics { heading() },
-                style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
             BasicText(
                 "Disconnect ›",
                 modifier = Modifier
-                    .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+                    .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
                     .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onDisconnect)
                     .padding(vertical = 8.dp),
-                style = Typography.sm.copy(color = colors.link),
+                style = Typography.sm.copy(color = colors.primary),
             )
         }
         Albums.chunked(2).forEach { row ->
@@ -178,7 +179,7 @@ private fun Library(onDisconnect: () -> Unit) {
                                 .background(album.color(colors), RoundedCornerShape(12.dp))
                                 .clearAndSetSemantics {},
                         )
-                        BasicText(album.title, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                        BasicText(album.title, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                     }
                 }
             }

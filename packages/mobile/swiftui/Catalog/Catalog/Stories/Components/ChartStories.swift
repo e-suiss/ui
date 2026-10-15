@@ -67,19 +67,19 @@ private let chartMonthData: [(month: String, desktop: Double, mobile: Double)] =
 ]
 
 private let chartDevices: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
-  "mobile": .init("Mobile", color: .teal),
+  "desktop": .init("Desktop", color: Palette.blue500),
+  "mobile": .init("Mobile", color: Palette.teal500),
 ]
 
 private let chartDeviceIcons: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue, icon: Ph.desktop.regular),
-  "mobile": .init("Mobile", color: .teal, icon: Ph.deviceMobile.regular),
+  "desktop": .init("Desktop", color: Palette.blue500, icon: Ph.desktop.regular),
+  "mobile": .init("Mobile", color: Palette.teal500, icon: Ph.deviceMobile.regular),
 ]
 
 private let chartEnergyValues: [Double] = [512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558]
 
 private let chartEnergyConfig: ChartConfig = [
-  "energy": .init("Active energy", color: .red),
+  "energy": .init("Active energy", color: Palette.red500),
 ]
 
 private func chartDate(year: Int, month: Int, day: Int) -> Date {
@@ -239,14 +239,14 @@ private struct ChartFormatterDemo: View {
               ChartTooltipContent(payload, hideLabel: true) { item in
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                   Text("Active energy")
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                   Text(verbatim: item.value.formatted(.number.locale(chartEnglish)))
                     .font(TextStyle.xs.font(weight: .semibold))
                     .monospacedDigit()
-                    .foregroundStyle(Color.label)
+                    .foregroundStyle(EsuissColor.foreground)
                   Text("kcal")
                     .font(TextStyle.xs2.font())
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                 }
               }
             }
@@ -268,7 +268,7 @@ private struct ChartCustomDemo: View {
     ("Saturday", 14320),
     ("Sunday", 4870),
   ]
-  private let config: ChartConfig = ["steps": .init("Steps", color: .orange)]
+  private let config: ChartConfig = ["steps": .init("Steps", color: Palette.orange500)]
 
   @Environment(\.colorScheme) private var colorScheme
 
@@ -301,26 +301,26 @@ private struct ChartCustomDemo: View {
                 Text("TOTAL")
                   .font(TextStyle.xs2.font(weight: .semibold))
                   .tracking(0.5)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                   Text(verbatim: payload.total.formatted(.number.locale(chartEnglish)))
                     .font(TextStyle.xl2.font(weight: .semibold))
                     .monospacedDigit()
-                    .foregroundStyle(Color.label)
+                    .foregroundStyle(EsuissColor.foreground)
                   Text("steps")
                     .font(TextStyle.xs.font(weight: .semibold))
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                 }
                 Text(verbatim: payload.label)
                   .font(TextStyle.xs.font())
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
               .padding(.horizontal, 12)
               .padding(.vertical, 8)
               .frame(minWidth: 112, alignment: .leading)
-              .background(Color.surfaceRaised, in: shape)
+              .background(EsuissColor.card, in: shape)
               .overlay {
-                shape.strokeBorder(Color.label.opacity(colorScheme == .dark ? 0.1 : 0.05))
+                shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
               }
               .shadow(.lg)
               .fixedSize()
@@ -345,9 +345,9 @@ private struct ChartInteractiveDemo: View {
     ("Q4 26", 49, 9.3, 31.2),
   ]
   private let config: ChartConfig = [
-    "phones": .init("Phones", color: .blue),
-    "laptops": .init("Laptops", color: .teal),
-    "services": .init("Services", color: .purple),
+    "phones": .init("Phones", color: Palette.blue500),
+    "laptops": .init("Laptops", color: Palette.teal500),
+    "services": .init("Services", color: Palette.purple500),
   ]
   private let order = ["services", "laptops", "phones"]
 
@@ -380,7 +380,7 @@ private struct ChartInteractiveDemo: View {
           .textStyle(.lg, weight: .semibold)
         Text("Quarterly revenue · billions · sample data. Change the settings and touch the bars.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -389,7 +389,7 @@ private struct ChartInteractiveDemo: View {
             VStack(alignment: .leading, spacing: 6) {
               Text("Indicator")
                 .textStyle(.xs, weight: .semibold)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               ToggleGroup(selection: indicatorSelection, size: .sm, spacing: 0) {
                 ToggleGroupItem("Dot", value: ChartTooltipIndicator.dot)
                 ToggleGroupItem("Line", value: ChartTooltipIndicator.line)

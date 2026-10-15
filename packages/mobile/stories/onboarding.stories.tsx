@@ -10,8 +10,8 @@ import { Icon } from "@/components/ui/icon"
 
 function Illustration({ icon }: { icon: typeof PathIcon }) {
   return (
-    <View className="size-40 items-center justify-center rounded-3xl bg-surface-secondary">
-      <Icon as={icon} weight="duotone" className="size-20 text-green" />
+    <View className="size-40 items-center justify-center rounded-3xl bg-muted">
+      <Icon as={icon} weight="duotone" className="size-20 text-green-500" />
     </View>
   )
 }

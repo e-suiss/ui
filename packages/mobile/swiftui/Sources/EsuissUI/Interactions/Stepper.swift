@@ -150,8 +150,9 @@ public struct StepperInput: View {
       .font(TextStyle.base.font())
       .tracking(TextStyle.base.letterSpacing)
       .monospacedDigit()
-      .foregroundStyle(enabled ? Color.label : .labelQuaternary)
-      .tint(Color.accent)
+      .foregroundStyle(EsuissColor.foreground)
+      .tint(EsuissColor.primary)
+      .opacity(enabled ? 1 : 0.5)
       .padding(.horizontal, 4)
       .frame(width: 64, height: 32)
       .contentShape(RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
@@ -197,7 +198,7 @@ public struct StepperGroup<Content: View>: View {
     }
     .padding(3)
     .frame(height: 32)
-    .background(Color.control, in: shape)
+    .background(EsuissColor.secondary, in: shape)
     .fixedSize()
     .accessibilityElement(children: .contain)
   }
@@ -258,20 +259,17 @@ private struct StepperButtonBody<Label: View>: View {
     let shape = RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
     label
       .frame(width: 16, height: 16)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(width: 36)
       .frame(maxHeight: .infinity)
       .background {
-        if !isEnabled {
-          shape.fill(Color.controlDisabled)
-        } else if pressed && isEnabled {
-          shape.fill(Color.controlPressed)
-        } else if colorScheme == .dark {
-          shape.fill(Color.labelQuaternary)
+        if colorScheme == .dark {
+          shape.fill(EsuissColor.border)
         } else {
-          shape.fill(Color.surfaceRaised).shadow(.thumb)
+          shape.fill(EsuissColor.card).shadow(.thumb)
         }
       }
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .padding(.vertical, 9)
       .contentShape(Rectangle())
       .padding(.vertical, -9)
@@ -345,7 +343,7 @@ public struct StepperSeparator: View {
   public init() {}
 
   public var body: some View {
-    Color.separator
+    EsuissColor.border
       .frame(width: 1, height: 18)
       .accessibilityHidden(true)
   }

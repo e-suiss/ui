@@ -37,7 +37,7 @@ private struct ReorderListDemo: View {
       list
       Text(verbatim: value.compactMap { reorderListTasks[$0]?.title }.joined(separator: ", "))
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .accessibilityAddTraits(.updatesFrequently)
     }
   }
@@ -59,12 +59,12 @@ private struct ReorderListDemo: View {
         VStack(alignment: .leading, spacing: 0) {
           Text(verbatim: task.title)
             .textStyle(.base)
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
             .lineLimit(1)
           if let detail = task.detail {
             Text(verbatim: detail)
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
         }
         .padding(.vertical, 12)

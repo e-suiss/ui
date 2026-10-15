@@ -67,16 +67,16 @@ public struct VerifyDevice: View {
     VStack(alignment: .leading, spacing: 14) {
       (phase == .code ? Ph.lockSimple.bold : Ph.deviceMobile.bold)
         .frame(width: 26, height: 26)
-        .foregroundStyle(Color.accent)
+        .foregroundStyle(EsuissColor.primary)
         .frame(width: 56, height: 56)
-        .background(Color.surfaceSecondary, in: Circle())
+        .background(EsuissColor.muted, in: Circle())
         .accessibilityHidden(true)
       Text(title)
         .scaledTextStyle(.xl2, weight: .bold)
         .fixedSize(horizontal: false, vertical: true)
       Text(message)
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .fixedSize(horizontal: false, vertical: true)
       Group {
         switch phase {
@@ -98,7 +98,7 @@ public struct VerifyDevice: View {
             if error {
               Text("Incorrect code.")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.danger)
+                .foregroundStyle(EsuissColor.destructive)
             }
           }
         case .deny:
@@ -110,7 +110,7 @@ public struct VerifyDevice: View {
             Text("Waiting for approval…")
               .scaledFont(.sm)
           }
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       .frame(minHeight: 64, alignment: .topLeading)
@@ -120,7 +120,7 @@ public struct VerifyDevice: View {
   }
 
   private var device: some View {
-    Color.media
+    Palette.black
       .overlay {
         AsyncImage(url: Self.backdrop) { phase in
           if let image = phase.image {
@@ -128,7 +128,7 @@ public struct VerifyDevice: View {
           }
         }
       }
-      .overlay { Color.media.opacity(0.18) }
+      .overlay { Palette.black.opacity(0.18) }
       .overlay {
         alert
           .id(phase)
@@ -156,7 +156,7 @@ public struct VerifyDevice: View {
             .padding(.bottom, 4)
           Text("Enter this code on the device you're signing in to.")
             .scaledTextStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .padding(EdgeInsets(top: 20, leading: 16, bottom: 18, trailing: 16))
         VerifyDeviceAction(title: "OK", primary: true) {}
@@ -166,7 +166,7 @@ public struct VerifyDevice: View {
             .scaledTextStyle(.lg, weight: .semibold)
           Text("If this wasn't you, change your password.")
             .scaledTextStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .padding(EdgeInsets(top: 20, leading: 16, bottom: 18, trailing: 16))
         VerifyDeviceAction(title: "Show request again", primary: false) { phase = .ask }
@@ -176,7 +176,7 @@ public struct VerifyDevice: View {
             .scaledTextStyle(.lg, weight: .semibold)
           Text("Your suiss Account is being used to sign in to a device near San Francisco.")
             .scaledTextStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           VerifyDeviceMap()
             .padding(.top, 10)
         }
@@ -187,27 +187,27 @@ public struct VerifyDevice: View {
     }
     .multilineTextAlignment(.center)
     .fixedSize(horizontal: false, vertical: true)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .frame(width: 270)
     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
-    .background(Color.surfaceRaised.opacity(0.86), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.popover.opacity(0.86), in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
     .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
-    .shadow(Shadow(color: Color.media.opacity(0.3), radius: 30, y: 20))
+    .shadow(Shadow(color: Palette.black.opacity(0.3), radius: 30, y: 20))
   }
 
   private var approved: some View {
     VStack(spacing: 14) {
       Ph.check.bold
         .frame(width: 38, height: 38)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 76, height: 76)
-        .background(Color.success, in: Circle())
+        .background(Palette.green500, in: Circle())
         .accessibilityHidden(true)
       Text("Sign-in approved.")
         .scaledTextStyle(.xl2, weight: .bold)
       Text("This device was added to your suiss Account.")
         .scaledTextStyle(.lg)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       Button("Start over ›") {
         code = ""
         phase = .ask
@@ -237,12 +237,12 @@ public struct VerifyDevice: View {
 private struct VerifyDeviceMap: View {
   var body: some View {
     ZStack {
-      Color.accentSurface
+      Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))
       Circle()
-        .fill(Color.accent.opacity(0.25))
+        .fill(EsuissColor.primary.opacity(0.25))
         .frame(width: 48, height: 48)
       Circle()
-        .fill(Color.accent)
+        .fill(EsuissColor.primary)
         .frame(width: 10, height: 10)
     }
     .frame(height: 96)
@@ -260,13 +260,13 @@ private struct VerifyDeviceAction: View {
     Button(action: action) {
       Text(title)
         .scaledFont(.lg, weight: primary ? .semibold : .regular)
-        .foregroundStyle(Color.link)
+        .foregroundStyle(EsuissColor.primary)
         .frame(maxWidth: .infinity, minHeight: 44)
         .contentShape(Rectangle())
     }
     .buttonStyle(VerifyDeviceActionStyle())
     .overlay(alignment: .top) {
-      Color.separatorStrong.frame(height: 1)
+      EsuissColor.input.frame(height: 1)
     }
   }
 }
@@ -274,7 +274,7 @@ private struct VerifyDeviceAction: View {
 private struct VerifyDeviceActionStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.itemPressed : .clear)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 
@@ -284,8 +284,8 @@ private struct VerifyDeviceLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(style)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

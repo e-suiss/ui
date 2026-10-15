@@ -82,7 +82,7 @@ private fun SurfacesSection() {
     val colors = EsuissTheme.colors
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Typography.all.forEach { style ->
-            BasicText("Type ${style.fontSize.value.toInt()}", style = style.copy(color = colors.label))
+            BasicText("Type ${style.fontSize.value.toInt()}", style = style.copy(color = colors.foreground))
         }
     }
     Card {
@@ -92,7 +92,7 @@ private fun SurfacesSection() {
             action = { Button("Sign Up", onClick = {}, variant = ButtonVariant.Link, size = ButtonSize.Sm) },
         )
         CardContent {
-            BasicText("Card content", style = Typography.base.copy(color = colors.labelSecondary))
+            BasicText("Card content", style = Typography.base.copy(color = colors.mutedForeground))
         }
         CardFooter {
             Button("Login", onClick = {}, block = true)
@@ -123,7 +123,7 @@ class GalleryTest {
                     modifier = Modifier
                         .testTag("gallery")
                         .width(402.dp)
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {

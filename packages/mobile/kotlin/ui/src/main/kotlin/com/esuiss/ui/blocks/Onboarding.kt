@@ -58,10 +58,10 @@ private fun iconPage(title: String, description: String, icon: ImageVector) = On
     Box(
         Modifier
             .size(200.dp)
-            .background(colors.accentSurface, CircleShape),
+            .background(colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f), CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, contentDescription = null, size = 96.dp, tint = colors.accent)
+        Icon(icon, contentDescription = null, size = 96.dp, tint = colors.primary)
     }
 }
 
@@ -102,13 +102,13 @@ fun Onboarding(
                             BasicText(
                                 page.title,
                                 modifier = Modifier.semantics { heading() },
-                                style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
+                                style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
                             )
                             Spacer(Modifier.height(12.dp))
                             BasicText(
                                 page.description,
                                 modifier = Modifier.widthIn(max = 360.dp),
-                                style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                                style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                             )
                         }
                     }

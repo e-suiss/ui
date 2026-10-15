@@ -46,7 +46,9 @@ function PreviewTrigger({
 }: React.ComponentProps<typeof DrawerTrigger>) {
   const { colors } = useTheme()
   return (
-    <TextStyleContext.Provider value={{ ...fontSize.base, color: colors.link }}>
+    <TextStyleContext.Provider
+      value={{ ...fontSize.base, color: colors.primary }}
+    >
       <DrawerTrigger
         style={(state) => [
           styles.trigger,

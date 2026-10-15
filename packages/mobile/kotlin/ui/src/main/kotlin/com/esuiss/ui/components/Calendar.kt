@@ -39,6 +39,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -249,21 +250,19 @@ fun CalendarDayButton(
     val range = state.rangeStart || state.rangeEnd
     val single = state.selected && !range && !state.rangeMiddle
     val background = when {
-        range -> if (pressed) colors.accentPressed else colors.accent
-        single && state.today -> if (pressed) colors.accentPressed else colors.accent
-        single -> if (pressed) colors.accentSurfacePressed else colors.accentSurface
-        pressed && !state.disabled -> colors.itemPressed
+        range -> colors.primary
+        single && state.today -> colors.primary
+        single -> colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
         else -> Color.Transparent
     }
     val foreground = when {
-        range -> colors.onAccent
-        single && state.today -> colors.onAccent
-        state.disabled -> colors.labelQuaternary
-        state.rangeMiddle -> colors.label
-        single -> colors.link
-        state.outside -> colors.labelSecondary
-        state.today -> colors.link
-        else -> colors.label
+        range -> colors.primaryForeground
+        single && state.today -> colors.primaryForeground
+        state.rangeMiddle -> colors.foreground
+        single -> colors.primary
+        state.outside -> colors.mutedForeground
+        state.today -> colors.primary
+        else -> colors.foreground
     }
     val bold = state.today || single
     val style = dayTextStyle(size).copy(
@@ -279,6 +278,13 @@ fun CalendarDayButton(
     Box(
         modifier = modifier
             .fillMaxSize()
+            .alpha(
+                when {
+                    state.disabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(CircleShape)
             .background(background, CircleShape)
             .clickable(
@@ -393,7 +399,7 @@ private fun CalendarGrid(
     Column(
         modifier = modifier
             .width(IntrinsicSize.Max)
-            .background(colors.surface)
+            .background(colors.background)
             .padding(size.padding)
             .pointerInput(rtl) {
                 var total = 0f
@@ -492,7 +498,7 @@ private fun CalendarMonth(
     val weekdayStyle = when (size) {
         CalendarSize.Lg -> Typography.xs
         else -> Typography.xs3
-    }.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold)
+    }.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold)
     val cell = size.cell
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -546,7 +552,7 @@ private fun CalendarMonth(
                             time = rowStart
                         }.get(JavaCalendar.WEEK_OF_YEAR)
                         Box(Modifier.size(cell), contentAlignment = Alignment.Center) {
-                            BasicText(week.toString(), style = Typography.xs.copy(color = colors.labelSecondary))
+                            BasicText(week.toString(), style = Typography.xs.copy(color = colors.mutedForeground))
                         }
                     }
                     repeat(7) { column ->
@@ -587,7 +593,7 @@ private fun CalendarCaption(
     modifier: Modifier,
 ) {
     val colors = EsuissTheme.colors
-    val style = captionStyle(size).copy(color = colors.label, fontWeight = FontWeight.SemiBold)
+    val style = captionStyle(size).copy(color = colors.foreground, fontWeight = FontWeight.SemiBold)
     val semantics = Modifier.semantics {
         heading()
         liveRegion = LiveRegionMode.Polite
@@ -657,7 +663,7 @@ private fun CalendarDropdown(
             Row(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(if (pressed) colors.itemPressed else Color.Transparent, CircleShape)
+                    .alpha(if (pressed) 0.8f else 1f)
                     .clickable(
                         interactionSource = interaction,
                         indication = null,
@@ -670,7 +676,7 @@ private fun CalendarDropdown(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 BasicText(text, style = style, maxLines = 1, softWrap = false)
-                Icon(PhosphorIcons.Regular.CaretDown, contentDescription = null, size = 14.dp, tint = colors.labelSecondary)
+                Icon(PhosphorIcons.Regular.CaretDown, contentDescription = null, size = 14.dp, tint = colors.mutedForeground)
             }
         },
     ) {
@@ -720,7 +726,7 @@ private fun RowScope.DayCell(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                        colors.surfaceSecondary,
+                        colors.muted,
                         RoundedCornerShape(
                             topStart = if (roundStart) radius else 0.dp,
                             bottomStart = if (roundStart) radius else 0.dp,
@@ -760,21 +766,27 @@ private fun CalendarNavButton(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val background = when (variant) {
-        ButtonVariant.Secondary -> if (pressed && enabled) colors.controlPressed else colors.control
-        ButtonVariant.Tinted -> if (pressed && enabled) colors.accentSurfacePressed else colors.accentSurface
-        ButtonVariant.Default -> if (pressed && enabled) colors.accentPressed else colors.accent
-        else -> if (pressed && enabled) colors.itemPressed else Color.Transparent
+        ButtonVariant.Secondary -> colors.secondary
+        ButtonVariant.Tinted -> colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
+        ButtonVariant.Default -> colors.primary
+        else -> Color.Transparent
     }
     val foreground = when {
-        !enabled -> colors.labelQuaternary
-        variant == ButtonVariant.Default -> colors.onAccent
-        variant == ButtonVariant.Ghost || variant == ButtonVariant.Secondary || variant == ButtonVariant.Outline -> colors.label
-        else -> colors.link
+        variant == ButtonVariant.Default -> colors.primaryForeground
+        variant == ButtonVariant.Ghost || variant == ButtonVariant.Secondary || variant == ButtonVariant.Outline -> colors.foreground
+        else -> colors.primary
     }
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     Box(
         modifier = Modifier
             .size(cell)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(CircleShape)
             .background(background, CircleShape)
             .clickable(

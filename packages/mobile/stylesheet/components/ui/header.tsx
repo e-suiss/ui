@@ -163,7 +163,7 @@ function Header({
         <AnimatedView
           style={[
             styles.border,
-            { backgroundColor: colors.separator },
+            { backgroundColor: colors.border },
             borderStyle,
           ]}
         />
@@ -207,7 +207,7 @@ function HeaderTitle({
       {subtitle !== undefined
         ? wrapText(subtitle, {
             ...styles.subtitleText,
-            color: colors.labelSecondary,
+            color: colors.mutedForeground,
           })
         : null}
     </AnimatedView>
@@ -272,7 +272,7 @@ function HeaderLargeTitle({
       {subtitle !== undefined
         ? wrapText(subtitle, {
             ...styles.largeSubtitleText,
-            color: colors.labelSecondary,
+            color: colors.mutedForeground,
           })
         : null}
     </AnimatedView>
@@ -301,7 +301,7 @@ function HeaderBack({
       style={({ pressed }) => [
         styles.back,
         children === undefined && styles.backIconOnly,
-        pressed && { backgroundColor: colors.itemPressed },
+        pressed && { opacity: 0.8 },
         style,
       ]}
       {...props}
@@ -310,10 +310,10 @@ function HeaderBack({
         as={CaretLeftIcon}
         weight="bold"
         size={24}
-        color={colors.link}
+        color={colors.primary}
         style={I18nManager.isRTL ? styles.flipped : undefined}
       />
-      {wrapText(children, { ...styles.backText, color: colors.link })}
+      {wrapText(children, { ...styles.backText, color: colors.primary })}
     </Pressable>
   )
 }

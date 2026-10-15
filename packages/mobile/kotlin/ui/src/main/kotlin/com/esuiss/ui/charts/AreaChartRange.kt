@@ -25,6 +25,7 @@ import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.ChartTooltipIndicator
 import com.esuiss.ui.components.ComposedChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class HeartRateRow(val hour: String, val low: Int, val high: Int, val average: Int)
@@ -41,8 +42,8 @@ private val readings = listOf(
 private val chartData = readings.mapIndexed { hour, (low, high, average) -> HeartRateRow("$hour:00", low, high, average) }
 
 private val chartConfig = ChartConfig(
-    "range" to ChartConfigItem("Range") { red },
-    "average" to ChartConfigItem("Average") { red },
+    "range" to ChartConfigItem("Range") { Palette.red500 },
+    "average" to ChartConfigItem("Average") { Palette.red500 },
 )
 
 private val low = chartData.minOf { it.low }
@@ -52,24 +53,24 @@ private val high = chartData.maxOf { it.high }
 @Composable
 fun AreaChartRange(modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
-    val value = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
+    val value = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Heart rate", style = Typography.sm.copy(color = colors.danger, fontWeight = FontWeight.SemiBold))
+                BasicText("Heart rate", style = Typography.sm.copy(color = colors.destructive, fontWeight = FontWeight.SemiBold))
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     BasicText(
                         "$low–$high",
                         Modifier.alignByBaseline(),
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
                     BasicText(
                         "BPM",
                         Modifier.alignByBaseline(),
-                        style = Typography.base.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.base.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                 }
-                BasicText("Today", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Today", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent {
@@ -100,7 +101,7 @@ fun AreaChartRange(modifier: Modifier = Modifier) {
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                     BasicText(
                                         chartConfig[item.key]?.label ?: item.key,
-                                        style = Typography.xs.copy(color = colors.labelSecondary),
+                                        style = Typography.xs.copy(color = colors.mutedForeground),
                                     )
                                     BasicText(
                                         if (item.base != null) "${item.base.toInt()}–${item.value.toInt()} BPM" else "${item.value.toInt()} BPM",

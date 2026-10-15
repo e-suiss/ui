@@ -24,12 +24,12 @@ public struct PriceBundle: View {
 
   static var services: [Service] {
     [
-      Service(name: "suiss Music", icon: Ph.musicNote.fill, tint: .red, foreground: .onAccent),
-      Service(name: "suiss TV", icon: Ph.television.fill, tint: .label, foreground: .surface),
-      Service(name: "suiss Arcade", icon: Ph.gameController.fill, tint: .red, foreground: .onAccent),
-      Service(name: "suiss Cloud+", icon: Ph.cloud.fill, tint: .blue, foreground: .onAccent),
-      Service(name: "Fitness+", icon: Ph.flame.fill, tint: .green, foreground: .onAccent),
-      Service(name: "News+", icon: Ph.newspaper.fill, tint: .pink, foreground: .onAccent),
+      Service(name: "suiss Music", icon: Ph.musicNote.fill, tint: Palette.red500, foreground: EsuissColor.primaryForeground),
+      Service(name: "suiss TV", icon: Ph.television.fill, tint: EsuissColor.foreground, foreground: EsuissColor.background),
+      Service(name: "suiss Arcade", icon: Ph.gameController.fill, tint: Palette.red500, foreground: EsuissColor.primaryForeground),
+      Service(name: "suiss Cloud+", icon: Ph.cloud.fill, tint: Palette.blue500, foreground: EsuissColor.primaryForeground),
+      Service(name: "Fitness+", icon: Ph.flame.fill, tint: Palette.green500, foreground: EsuissColor.primaryForeground),
+      Service(name: "News+", icon: Ph.newspaper.fill, tint: Palette.pink500, foreground: EsuissColor.primaryForeground),
     ]
   }
 
@@ -75,7 +75,7 @@ public struct PriceBundle: View {
               .accessibilityAddTraits(.isHeader)
             Text("Bundle it all in one subscription.")
               .scaledTextStyle(.xl)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .multilineTextAlignment(.center)
           .fixedSize(horizontal: false, vertical: true)
@@ -129,7 +129,7 @@ private struct PriceBundleCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
           Text(LocalizedStringKey(plan.people))
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         HStack(alignment: .firstTextBaseline, spacing: 0) {
           Text(verbatim: price)
@@ -138,7 +138,7 @@ private struct PriceBundleCard: View {
           Text(verbatim: " ")
           Text("/mo")
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         VStack(alignment: .leading, spacing: 8) {
           ForEach(Array(PriceBundle.services.enumerated()), id: \.element.id) { index, service in
@@ -146,12 +146,12 @@ private struct PriceBundleCard: View {
             HStack(spacing: 8) {
               service.icon
                 .frame(width: 13, height: 13)
-                .foregroundStyle(included ? service.foreground : .labelTertiary)
+                .foregroundStyle(included ? service.foreground : EsuissColor.mutedForeground)
                 .frame(width: 22, height: 22)
-                .background(included ? service.tint : .surfaceTertiary, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+                .background(included ? service.tint : EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
               Text(verbatim: index == 3 ? "\(service.name) \(plan.storage)" : service.name)
                 .strikethrough(!included)
-                .foregroundStyle(included ? Color.label : .labelTertiary)
+                .foregroundStyle(included ? EsuissColor.foreground : EsuissColor.mutedForeground)
             }
             .scaledFont(.sm)
             .accessibilityElement(children: .combine)
@@ -160,7 +160,7 @@ private struct PriceBundleCard: View {
         }
       }
       .padding(20)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(maxWidth: .infinity, alignment: .leading)
       .contentShape(shape)
     }
@@ -176,9 +176,9 @@ private struct PriceBundleCardStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     let shape = RoundedRectangle(cornerRadius: 20, style: .continuous)
     configuration.label
-      .background((selected || configuration.isPressed) ? Color.surfaceSecondary : Color.surfaceSecondary.opacity(0.6), in: shape)
+      .background((selected || configuration.isPressed) ? EsuissColor.muted : EsuissColor.muted.opacity(0.6), in: shape)
       .overlay {
-        shape.strokeBorder(selected ? Color.accent : .separatorStrong, lineWidth: selected ? 2 : 1)
+        shape.strokeBorder(selected ? EsuissColor.primary : EsuissColor.input, lineWidth: selected ? 2 : 1)
       }
   }
 }

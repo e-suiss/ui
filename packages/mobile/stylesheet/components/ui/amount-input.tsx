@@ -272,7 +272,7 @@ function AmountInput({
     : formatParts(value, locale, currency, decimalSeparator)
   const text = parts.map((part) => part.value).join("")
   const size = amountSizeStyle(text.length)
-  const color = empty || disabled ? colors.labelTertiary : colors.label
+  const color = empty || disabled ? colors.mutedForeground : colors.foreground
 
   return (
     <View style={[styles.root, style]} {...props}>

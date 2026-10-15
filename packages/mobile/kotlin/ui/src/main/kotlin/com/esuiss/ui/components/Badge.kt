@@ -28,17 +28,17 @@ fun Badge(
 ) {
     val colors = EsuissTheme.colors
     val foreground = when (variant) {
-        BadgeVariant.Default, BadgeVariant.Link -> colors.link
-        BadgeVariant.Secondary -> colors.labelSecondary
-        BadgeVariant.Destructive -> colors.danger
-        BadgeVariant.Outline, BadgeVariant.Ghost -> colors.label
+        BadgeVariant.Default, BadgeVariant.Link -> colors.primary
+        BadgeVariant.Secondary -> colors.mutedForeground
+        BadgeVariant.Destructive -> colors.destructive
+        BadgeVariant.Outline, BadgeVariant.Ghost -> colors.foreground
     }
     val padded = variant == BadgeVariant.Outline || variant == BadgeVariant.Ghost
     Row(
         modifier = modifier
             .height(20.dp)
             .clip(CircleShape)
-            .then(if (variant == BadgeVariant.Outline) Modifier.border(1.dp, colors.separator, CircleShape) else Modifier)
+            .then(if (variant == BadgeVariant.Outline) Modifier.border(1.dp, colors.border, CircleShape) else Modifier)
             .padding(horizontal = if (padded) 8.dp else 0.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

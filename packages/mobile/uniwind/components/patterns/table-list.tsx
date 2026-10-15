@@ -30,7 +30,7 @@ function TableListTitle({
   return (
     <Text
       role="heading"
-      className={cn("text-3xl font-bold text-label", className)}
+      className={cn("text-3xl font-bold text-foreground", className)}
       {...props}
     />
   )
@@ -44,7 +44,7 @@ function TableListHeader({
     <Text
       role="heading"
       className={cn(
-        "px-4 pt-4 pb-1.5 text-sm text-label-secondary uppercase",
+        "px-4 pt-4 pb-1.5 text-sm text-muted-foreground uppercase",
         className
       )}
       {...props}
@@ -58,7 +58,10 @@ function TableListFooter({
 }: React.ComponentProps<typeof Text>) {
   return (
     <Text
-      className={cn("px-4 pt-1.5 pb-2 text-sm text-label-secondary", className)}
+      className={cn(
+        "px-4 pt-1.5 pb-2 text-sm text-muted-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -69,10 +72,10 @@ function TableListSeparator({ className, ...props }: ViewProps) {
     <View
       accessible={false}
       importantForAccessibility="no"
-      className={cn("bg-surface-secondary", className)}
+      className={cn("bg-muted", className)}
       {...props}
     >
-      <View className="ms-4 h-px bg-separator" />
+      <View className="ms-4 h-px bg-border" />
     </View>
   )
 }
@@ -98,7 +101,7 @@ function TableListRow({
     <Item
       size="sm"
       className={cn(
-        "min-h-11 flex-nowrap gap-4 rounded-none bg-surface-secondary px-4 py-2.75 active:bg-surface-tertiary",
+        "min-h-11 flex-nowrap gap-4 rounded-none bg-muted px-4 py-2.75 active:opacity-80",
         first && "rounded-t-2xl",
         last && "rounded-b-2xl",
         className
@@ -118,7 +121,7 @@ function TableListRow({
           {trailing != null ? (
             <ItemActions>
               {isText(trailing) ? (
-                <Text className="text-base text-label-secondary tabular-nums">
+                <Text className="text-base text-muted-foreground tabular-nums">
                   {trailing}
                 </Text>
               ) : (
@@ -159,9 +162,9 @@ function TableList<T>({
     <View className={cn("flex-col gap-3", className)} {...props}>
       {title != null ? <TableListTitle>{title}</TableListTitle> : null}
       {rows.length === 0 ? (
-        <View className="rounded-2xl bg-surface-secondary px-4 py-3">
+        <View className="rounded-2xl bg-muted px-4 py-3">
           {isText(emptyText) ? (
-            <Text className="text-base text-label-secondary">{emptyText}</Text>
+            <Text className="text-base text-muted-foreground">{emptyText}</Text>
           ) : (
             emptyText
           )}
@@ -192,7 +195,7 @@ function TableList<T>({
                         return isText(cell) ? (
                           <Text
                             key={column.key}
-                            className="shrink-0 text-base text-label-secondary tabular-nums"
+                            className="shrink-0 text-base text-muted-foreground tabular-nums"
                           >
                             {cell}
                           </Text>

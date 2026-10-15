@@ -120,14 +120,14 @@ public struct ToggleGroup<Value: Hashable, Content: View>: View {
       let shape = RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
       stack
         .padding(4)
-        .background(Color.control, in: shape)
+        .background(EsuissColor.secondary, in: shape)
     } else if attached {
       let shape = RoundedRectangle(cornerRadius: orientation == .vertical ? Radius.xl : Radius.lg, style: .continuous)
       stack
         .padding(1)
         .clipShape(shape)
         .overlay {
-          shape.stroke(Color.separator, lineWidth: 1).padding(0.5)
+          shape.stroke(EsuissColor.border, lineWidth: 1).padding(0.5)
         }
     } else {
       stack
@@ -169,22 +169,19 @@ public struct ToggleGroupItem<Value: Hashable, Label: View>: View {
         .labelStyle(ButtonLabelStyle(spacing: 4, iconSize: 16))
         .scaledFont(.sm)
         .lineLimit(1)
-        .foregroundStyle(!isEnabled ? Color.labelQuaternary : isOn ? .label : .labelSecondary)
+        .foregroundStyle(isOn ? EsuissColor.cardForeground : EsuissColor.mutedForeground)
         .padding(.horizontal, 12)
         .frame(minWidth: size.height, minHeight: size.height)
         .frame(maxWidth: group.orientation == .vertical ? .infinity : nil)
         .background {
           if isOn {
-            if isEnabled {
-              shape
-                .fill(colorScheme == .dark ? Color.labelQuaternary : .surfaceRaised)
-                .shadow(.thumb)
-                .matchedGeometryEffect(id: group.multiple ? AnyHashable(value) : AnyHashable("indicator"), in: group.namespace)
-            } else {
-              shape.fill(Color.controlDisabled)
-            }
+            shape
+              .fill(colorScheme == .dark ? EsuissColor.border : EsuissColor.card)
+              .shadow(.thumb)
+              .matchedGeometryEffect(id: group.multiple ? AnyHashable(value) : AnyHashable("indicator"), in: group.namespace)
           }
         }
+        .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
         .contentShape(shape)
     } else if let group, group.attached {
       ToggleSurface(
@@ -200,9 +197,9 @@ public struct ToggleGroupItem<Value: Hashable, Label: View>: View {
       .frame(maxWidth: group.orientation == .vertical ? .infinity : nil)
       .overlay(alignment: group.orientation == .vertical ? .top : .leading) {
         if group.orientation == .vertical {
-          Color.separator.frame(height: 1).offset(y: -1)
+          EsuissColor.border.frame(height: 1).offset(y: -1)
         } else {
-          Color.separator.frame(width: 1).offset(x: -1)
+          EsuissColor.border.frame(width: 1).offset(x: -1)
         }
       }
     } else {

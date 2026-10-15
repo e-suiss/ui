@@ -47,6 +47,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
@@ -381,13 +382,13 @@ fun QuestionnaireProgress(
     ) {
         if (content != null) {
             CompositionLocalProvider(
-                LocalContentStyle provides Typography.xs.copy(color = EsuissTheme.colors.labelSecondary),
-                LocalContentColor provides EsuissTheme.colors.labelSecondary,
+                LocalContentStyle provides Typography.xs.copy(color = EsuissTheme.colors.mutedForeground),
+                LocalContentColor provides EsuissTheme.colors.mutedForeground,
             ) {
                 content(current, total)
             }
         } else {
-            BasicText(text, style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
+            BasicText(text, style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
         }
     }
 }
@@ -461,7 +462,7 @@ fun QuestionnaireTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier.semantics { heading() },
-        style = Typography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold),
+        style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -470,7 +471,7 @@ fun QuestionnaireDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier.pullUp(16.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
     )
 }
 
@@ -525,14 +526,13 @@ fun QuestionnaireChoice(
     }
     val shape = RoundedCornerShape(Radius.xl)
     val background = when {
-        invalid -> colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
-        pressed && active -> colors.itemPressed
+        invalid -> colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
         else -> Color.Transparent
     }
     val border = when {
-        on -> colors.accent
-        invalid -> colors.danger
-        else -> colors.separator
+        on -> colors.primary
+        invalid -> colors.destructive
+        else -> colors.border
     }
     val interaction = if (multiple) {
         Modifier.toggleable(on, source, null, active, Role.Checkbox) { change(it) }
@@ -543,6 +543,13 @@ fun QuestionnaireChoice(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 44.dp)
+            .alpha(
+                when {
+                    !active -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .clip(shape)
             .background(background, shape)
             .border(if (on) 2.dp else 1.dp, border, shape)
@@ -555,27 +562,24 @@ fun QuestionnaireChoice(
             modifier = Modifier
                 .padding(top = 3.dp)
                 .size(16.dp)
-                .background(if (on) colors.accent else colors.labelQuaternary, if (multiple) RoundedCornerShape(Radius.xs) else CircleShape),
+                .background(if (on) colors.primary else colors.border, if (multiple) RoundedCornerShape(Radius.xs) else CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             if (on && multiple) {
-                Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 12.dp, tint = colors.onAccent)
+                Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 12.dp, tint = colors.primaryForeground)
             } else if (on) {
-                Box(Modifier.size(if (colors.isDark) 10.dp else 8.dp).background(colors.onAccent, CircleShape))
+                Box(Modifier.size(if (colors.isDark) 10.dp else 8.dp).background(colors.primaryForeground, CircleShape))
             }
         }
-        val foreground = if (active) colors.label else colors.labelQuaternary
+        val foreground = colors.foreground
         CompositionLocalProvider(
             LocalContentStyle provides Typography.base.copy(color = foreground),
             LocalContentColor provides foreground,
-            LocalQuestionnaireChoiceEnabled provides active,
         ) {
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp), content = content)
         }
     }
 }
-
-private val LocalQuestionnaireChoiceEnabled = staticCompositionLocalOf { true }
 
 @Composable
 fun QuestionnaireChoice(
@@ -599,7 +603,7 @@ fun QuestionnaireChoiceDescription(text: String, modifier: Modifier = Modifier) 
         text,
         modifier = modifier,
         style = LocalContentStyle.current.copy(
-            color = if (LocalQuestionnaireChoiceEnabled.current) colors.labelSecondary else colors.labelQuaternary,
+            color = colors.mutedForeground,
         ),
     )
 }
@@ -654,7 +658,7 @@ fun QuestionnaireError(text: String? = null, modifier: Modifier = Modifier) {
         modifier = modifier
             .pullUp(12.dp)
             .semantics { liveRegion = LiveRegionMode.Assertive },
-        style = Typography.sm.copy(color = EsuissTheme.colors.danger),
+        style = Typography.sm.copy(color = EsuissTheme.colors.destructive),
     )
 }
 

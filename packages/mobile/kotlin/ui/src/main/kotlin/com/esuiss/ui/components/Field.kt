@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
@@ -95,13 +96,14 @@ fun FieldLegend(
     val inset = LocalFieldSetInset.current
     val enabled = LocalFieldState.current.enabled
     val style = if (inset) {
-        Typography.xs.copy(color = if (enabled) colors.labelSecondary else colors.labelQuaternary)
+        Typography.xs.copy(color = colors.mutedForeground)
     } else {
-        Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary, fontWeight = FontWeight.SemiBold)
+        Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold)
     }
     BasicText(
         text = if (inset) text.uppercase() else text,
         modifier = modifier
+            .alpha(if (enabled) 1f else 0.5f)
             .then(if (variant == FieldLegendVariant.Legend) Modifier.semantics { heading() } else Modifier)
             .padding(start = if (inset) 16.dp else 0.dp, bottom = if (inset) 0.dp else 12.dp),
         style = style,
@@ -122,11 +124,11 @@ fun FieldGroup(
         if (variant == FieldGroupVariant.Inset) {
             FormDividedStack(
                 orientation = Orientation.Vertical,
-                dividerColor = colors.separator,
+                dividerColor = colors.border,
                 modifier = modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(Radius.xl2))
-                    .background(colors.surfaceSecondary),
+                    .background(colors.muted),
                 dividerInsetStart = 16.dp,
                 content = content,
             )
@@ -201,9 +203,9 @@ fun FieldLabel(text: String, modifier: Modifier = Modifier) {
     val enabled = LocalFieldState.current.enabled
     BasicText(
         text = text,
-        modifier = modifier,
+        modifier = modifier.alpha(if (enabled) 1f else 0.5f),
         style = Typography.base.copy(
-            color = if (enabled) colors.label else colors.labelQuaternary,
+            color = colors.foreground,
             fontWeight = if (LocalFieldInset.current) FontWeight.Normal else FontWeight.SemiBold,
         ),
     )
@@ -215,9 +217,9 @@ fun FieldTitle(text: String, modifier: Modifier = Modifier) {
     val enabled = LocalFieldState.current.enabled
     BasicText(
         text = text,
-        modifier = modifier,
+        modifier = modifier.alpha(if (enabled) 1f else 0.5f),
         style = Typography.base.copy(
-            color = if (enabled) colors.label else colors.labelQuaternary,
+            color = colors.foreground,
             fontWeight = FontWeight.SemiBold,
         ),
     )
@@ -230,7 +232,7 @@ fun FieldDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text = text,
         modifier = modifier.padding(start = if (inset) 16.dp else 0.dp),
-        style = (if (inset) Typography.xs else Typography.sm).copy(color = colors.labelSecondary),
+        style = (if (inset) Typography.xs else Typography.sm).copy(color = colors.mutedForeground),
     )
 }
 
@@ -256,8 +258,8 @@ fun FieldSeparator(
         if (text != null) {
             BasicText(
                 text = text,
-                modifier = Modifier.background(colors.surface).padding(horizontal = 8.dp),
-                style = Typography.sm.copy(color = colors.labelSecondary),
+                modifier = Modifier.background(colors.background).padding(horizontal = 8.dp),
+                style = Typography.sm.copy(color = colors.mutedForeground),
             )
         }
     }
@@ -269,7 +271,7 @@ fun FieldError(text: String?, modifier: Modifier = Modifier) {
     BasicText(
         text = text,
         modifier = modifier.semantics { liveRegion = LiveRegionMode.Polite },
-        style = Typography.sm.copy(color = EsuissTheme.colors.danger),
+        style = Typography.sm.copy(color = EsuissTheme.colors.destructive),
     )
 }
 

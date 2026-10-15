@@ -39,13 +39,21 @@ import { Text } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-type Tint = keyof ThemeColors
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
+
+type Tint = Tone
 
 type Category = "Primary" | "Transactions" | "Updates" | "Promotions"
 
@@ -79,7 +87,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Tomorrow's meeting",
     body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.",
     time: "8:40 AM",
-    tint: "orange",
+    tint: "orange500",
     category: "Primary",
     unread: true,
     starred: false,
@@ -90,7 +98,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Your storage is almost full",
     body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.",
     time: "Yesterday",
-    tint: "blue",
+    tint: "blue500",
     category: "Updates",
     unread: true,
     starred: false,
@@ -101,7 +109,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Coast trip photos",
     body: "I added the photos to the shared album. The ones from the boat tour came out great.",
     time: "Yesterday",
-    tint: "green",
+    tint: "green500",
     category: "Primary",
     unread: false,
     starred: true,
@@ -131,10 +139,10 @@ const INITIAL_MAIL: Mail[] = [
 ]
 
 const CATEGORIES: { value: Category; icon: PhosphorIcon; tint: Tint }[] = [
-  { value: "Primary", icon: UsersIcon, tint: "accent" },
-  { value: "Transactions", icon: CreditCardIcon, tint: "green" },
-  { value: "Updates", icon: BellIcon, tint: "purple" },
-  { value: "Promotions", icon: TagIcon, tint: "pink" },
+  { value: "Primary", icon: UsersIcon, tint: "primary" },
+  { value: "Transactions", icon: CreditCardIcon, tint: "green500" },
+  { value: "Updates", icon: BellIcon, tint: "purple500" },
+  { value: "Promotions", icon: TagIcon, tint: "pink500" },
 ]
 
 const ENTERING = FadeInDown.duration(800).reduceMotion(ReduceMotion.System)
@@ -202,14 +210,14 @@ function SenderAvatar({ mail, style }: { mail: Mail; style?: ViewStyle }) {
   return (
     <Avatar size="lg" style={style}>
       <AvatarFallback
-        style={{ backgroundColor: colors[mail.tint ?? "label"] }}
+        style={{ backgroundColor: tone(colors, mail.tint ?? "foreground") }}
         accessibilityLabel={mail.from}
       >
         <Text
           style={
             mail.tint
               ? undefined
-              : { color: colors.surface, textTransform: "none" }
+              : { color: colors.background, textTransform: "none" }
           }
         >
           {mail.tint
@@ -264,7 +272,7 @@ function Reader({
 
   return (
     <View style={styles.reader}>
-      <View style={[styles.toolbar, { borderBottomColor: colors.separator }]}>
+      <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -282,7 +290,7 @@ function Reader({
               as={action.icon}
               weight={action.active ? "fill" : "regular"}
               size={20}
-              color={action.active ? colors.orange : colors.labelSecondary}
+              color={action.active ? palette.orange500 : colors.mutedForeground}
             />
           </Button>
         ))}
@@ -292,11 +300,11 @@ function Reader({
           <SenderAvatar mail={mail} />
           <View style={styles.senderText}>
             <Text style={styles.semibold}>{mail.from}</Text>
-            <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               To: Jamie Rivera
             </Text>
           </View>
-          <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
             {mail.time}
           </Text>
         </View>
@@ -308,7 +316,7 @@ function Reader({
       {replying ? (
         <AnimatedView
           entering={ENTERING}
-          style={[styles.reply, { borderTopColor: colors.separator }]}
+          style={[styles.reply, { borderTopColor: colors.border }]}
         >
           <Textarea
             autoFocus
@@ -361,7 +369,9 @@ function MailRow({
   onDelete: () => void
 }) {
   const { colors } = useTheme()
-  const muted = { color: active ? colors.onAccent : colors.labelSecondary }
+  const muted = {
+    color: active ? colors.primaryForeground : colors.mutedForeground,
+  }
   return (
     <AnimatedView
       entering={FadeInDown.delay(index * 40)
@@ -380,7 +390,7 @@ function MailRow({
             }
             style={
               active
-                ? { ...styles.row, backgroundColor: colors.accent }
+                ? { ...styles.row, backgroundColor: colors.primary }
                 : styles.row
             }
           >
@@ -389,7 +399,9 @@ function MailRow({
                 style={[
                   styles.dot,
                   {
-                    backgroundColor: active ? colors.onAccent : colors.accent,
+                    backgroundColor: active
+                      ? colors.primaryForeground
+                      : colors.primary,
                   },
                 ]}
               />
@@ -397,7 +409,10 @@ function MailRow({
             <View style={styles.rowTop}>
               <Text
                 numberOfLines={1}
-                style={[styles.from, active && { color: colors.onAccent }]}
+                style={[
+                  styles.from,
+                  active && { color: colors.primaryForeground },
+                ]}
               >
                 {mail.from}
               </Text>
@@ -406,14 +421,17 @@ function MailRow({
                   as={StarIcon}
                   weight="fill"
                   size={12}
-                  color={active ? colors.onAccent : colors.orange}
+                  color={active ? colors.primaryForeground : palette.orange500}
                 />
               ) : null}
               <Text style={[fontSize.xs, muted]}>{mail.time}</Text>
             </View>
             <Text
               numberOfLines={1}
-              style={[fontSize.sm, active && { color: colors.onAccent }]}
+              style={[
+                fontSize.sm,
+                active && { color: colors.primaryForeground },
+              ]}
             >
               {mail.subject}
             </Text>
@@ -521,20 +539,27 @@ function InboxCategories({
                     pressed
                       ? [
                           styles.toggleOn,
-                          { backgroundColor: colors[item.tint] },
+                          { backgroundColor: tone(colors, item.tint) },
                         ]
-                      : { backgroundColor: colors.control },
+                      : { backgroundColor: colors.secondary },
                   ]}
                 >
                   <Icon
                     as={item.icon}
                     weight="bold"
                     size={16}
-                    color={pressed ? colors.onAccent : colors.labelSecondary}
+                    color={
+                      pressed
+                        ? colors.primaryForeground
+                        : colors.mutedForeground
+                    }
                   />
                   {pressed ? (
                     <Text
-                      style={[styles.toggleText, { color: colors.onAccent }]}
+                      style={[
+                        styles.toggleText,
+                        { color: colors.primaryForeground },
+                      ]}
                     >
                       {item.value}
                     </Text>
@@ -544,8 +569,8 @@ function InboxCategories({
                       style={[
                         styles.badge,
                         {
-                          borderColor: colors.surface,
-                          backgroundColor: colors.accent,
+                          borderColor: colors.background,
+                          backgroundColor: colors.primary,
                         },
                       ]}
                     />
@@ -577,7 +602,7 @@ function InboxCategories({
                 />
               ))
             ) : (
-              <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+              <Text style={[styles.empty, { color: colors.mutedForeground }]}>
                 {`No messages in ${category}.`}
               </Text>
             )}
@@ -603,7 +628,7 @@ function InboxCategories({
             />
           ) : (
             <View style={styles.none}>
-              <Text style={{ color: colors.labelSecondary }}>
+              <Text style={{ color: colors.mutedForeground }}>
                 No Message Selected
               </Text>
             </View>

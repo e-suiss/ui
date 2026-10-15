@@ -206,8 +206,8 @@ private fun TopBannerCard(
                     alpha = if (reduced) 1f - travel.value else 1f
                 }
                 .shadow(Shadows.lg, shape)
-                .background(colors.surfaceRaised, shape)
-                .border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+                .background(colors.card, shape)
+                .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
                 .draggable(
                     state = dragState,
                     orientation = Orientation.Vertical,
@@ -236,16 +236,16 @@ private fun TopBannerCard(
                 Box(
                     modifier = Modifier
                         .size(36.dp)
-                        .background(colors.accentSurface, CircleShape),
+                        .background(colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f), CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(entry.icon, contentDescription = null, size = 20.dp, tint = colors.link)
+                    Icon(entry.icon, contentDescription = null, size = 20.dp, tint = colors.primary)
                 }
             }
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText(entry.title, style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText(entry.title, style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 if (entry.description != null) {
-                    BasicText(entry.description, style = Typography.sm.copy(color = colors.labelSecondary))
+                    BasicText(entry.description, style = Typography.sm.copy(color = colors.mutedForeground))
                 }
             }
             if (entry.action != null) {

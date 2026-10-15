@@ -30,12 +30,12 @@ enum AspectRatioStories {
         VStack(spacing: 8) {
           Ph.image.regular
             .frame(width: 32, height: 32)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Text("16 / 9")
             .textVariant(.muted)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+        .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
       }
       .frame(maxWidth: .infinity)
     },
@@ -50,7 +50,7 @@ private struct AspectRatioPhoto: View {
       if let image = phase.image {
         image.resizable().scaledToFill()
       } else {
-        Color.surfaceSecondary
+        EsuissColor.muted
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

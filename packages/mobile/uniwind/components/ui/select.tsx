@@ -22,8 +22,6 @@ interface Option {
 
 const Select = SelectPrimitive.Root
 
-const SelectTriggerContext = React.createContext({ disabled: false })
-
 function SelectGroup({
   className,
   ...props
@@ -40,15 +38,13 @@ function SelectValue({
   className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  const { disabled } = React.useContext(SelectTriggerContext)
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
       className={(state) =>
         cn(
-          "flex-1 text-left text-base text-label",
-          state.placeholder && "text-label-secondary",
-          disabled && "text-label-quaternary",
+          "flex-1 text-left text-base text-foreground",
+          state.placeholder && "text-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -69,28 +65,24 @@ function SelectTrigger({
   invalid?: boolean
 }) {
   const field = useFieldRootContext()
-  const select = SelectPrimitive.useSelectRootContext("SelectTrigger")
   const isInvalid = invalid ?? field.state.invalid
-  const disabled = !!props.disabled || select.floating.disabled
-  const context = React.useMemo(() => ({ disabled }), [disabled])
   return (
     <SelectPrimitive.Trigger
       className={(state) =>
         cn(
-          "h-11 flex-row items-center justify-between gap-1.5 self-start rounded-lg border border-transparent bg-control px-3 py-2",
+          "h-11 flex-row items-center justify-between gap-1.5 self-start rounded-lg border border-transparent bg-secondary px-3 py-2",
           size === "sm" && "h-9 rounded-md",
-          isInvalid && "border-danger bg-danger/5 dark:bg-danger/10",
-          state.disabled && "bg-control-disabled",
+          isInvalid &&
+            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
-      <SelectTriggerContext.Provider value={context}>
-        {children}
-      </SelectTriggerContext.Provider>
+      {children}
       <SelectPrimitive.Icon>
-        <Icon as={CaretUpDownIcon} className="size-4 text-label-secondary" />
+        <Icon as={CaretUpDownIcon} className="size-4 text-muted-foreground" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -113,7 +105,7 @@ function ContentPopup({
     <SelectPrimitive.Popup
       className={(state) =>
         cn(
-          "relative min-w-36 overflow-hidden rounded-xl border border-label/5 bg-surface-raised shadow-lg dark:border-label/10",
+          "relative min-w-36 overflow-hidden rounded-xl border border-foreground/5 bg-popover shadow-lg dark:border-foreground/10",
           resolveClassName(className, state)
         )
       }
@@ -154,7 +146,7 @@ function SelectContent({
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
-            <TextClassContext.Provider value="text-base text-label">
+            <TextClassContext.Provider value="text-base text-foreground">
               <ContentPopup {...props} />
             </TextClassContext.Provider>
           </AnimatedView>
@@ -172,7 +164,7 @@ function SelectLabel({
     <SelectPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-label-secondary",
+          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -193,24 +185,18 @@ function SelectItem({
       className={(state) =>
         cn(
           "relative w-full flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
-          state.highlighted && "bg-item-pressed",
+          state.highlighted && "opacity-80",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
-      <SelectPrimitive.ItemText
-        className={(state) =>
-          cn(
-            "flex-1 select-none text-base text-label",
-            state.disabled && "text-label-quaternary"
-          )
-        }
-      >
+      <SelectPrimitive.ItemText className="flex-1 select-none text-base text-foreground">
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="absolute right-2 size-4 items-center justify-center">
-        <Icon as={CheckIcon} className="size-4 shrink-0 text-link" />
+        <Icon as={CheckIcon} className="size-4 shrink-0 text-primary" />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
@@ -223,7 +209,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       className={(state) =>
-        cn("my-1.5 h-px bg-separator", resolveClassName(className, state))
+        cn("my-1.5 h-px bg-border", resolveClassName(className, state))
       }
       {...props}
     />

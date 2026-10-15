@@ -129,7 +129,7 @@ fun MessageAvatar(
             .layoutId(MessageSlot.Avatar)
             .widthIn(min = 32.dp)
             .clip(CircleShape)
-            .background(EsuissTheme.colors.surfaceSecondary, CircleShape),
+            .background(EsuissTheme.colors.muted, CircleShape),
         contentAlignment = Alignment.Center,
         content = content,
     )
@@ -162,8 +162,8 @@ private fun MessageLine(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides Typography.xs.copy(color = colors.labelSecondary),
-            LocalContentColor provides colors.labelSecondary,
+            LocalContentStyle provides Typography.xs.copy(color = colors.mutedForeground),
+            LocalContentColor provides colors.mutedForeground,
             LocalIconSize provides 14.dp,
         ) {
             content()

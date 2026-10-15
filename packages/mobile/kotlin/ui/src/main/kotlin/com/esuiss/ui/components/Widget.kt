@@ -160,9 +160,9 @@ fun Widget(
             surface()
             return@BoxWithConstraints
         }
-        val accent = colors.accent
-        val idle = colors.labelQuaternary
-        val outline = colors.label.copy(alpha = 0.25f)
+        val accent = colors.primary
+        val idle = colors.border
+        val outline = colors.foreground.copy(alpha = 0.25f)
         Box(
             modifier = Modifier.drawWithContent {
                 drawContent()
@@ -257,14 +257,14 @@ private fun WidgetSurface(
     val center = align == WidgetAlign.Center
     CompositionLocalProvider(
         LocalWidgetAlign provides align,
-        LocalContentStyle provides Typography.base.copy(color = colors.label, textAlign = if (center) TextAlign.Center else TextAlign.Unspecified),
-        LocalContentColor provides colors.label,
+        LocalContentStyle provides Typography.base.copy(color = colors.foreground, textAlign = if (center) TextAlign.Center else TextAlign.Unspecified),
+        LocalContentColor provides colors.foreground,
     ) {
         Layout(
             content = { scope.content() },
             modifier = modifier
                 .clip(shape)
-                .background(colors.surfaceSecondary, shape)
+                .background(colors.muted, shape)
                 .semantics(mergeDescendants = false) { stateDescription = size.label },
         ) { measurables, constraints ->
             val padding = 16.dp.roundToPx()
@@ -368,7 +368,7 @@ fun WidgetIcon(
     Box(
         modifier = modifier
             .size(box)
-            .then(if (size == WidgetIconSize.Sm) Modifier else Modifier.background(colors.control, shape)),
+            .then(if (size == WidgetIconSize.Sm) Modifier else Modifier.background(colors.secondary, shape)),
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(LocalIconSize provides icon) {
@@ -400,7 +400,7 @@ fun WidgetDescription(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = LocalContentStyle.current.merge(Typography.sm).copy(color = EsuissTheme.colors.labelSecondary),
+        style = LocalContentStyle.current.merge(Typography.sm).copy(color = EsuissTheme.colors.mutedForeground),
     )
 }
 
@@ -434,8 +434,8 @@ fun WidgetContent(modifier: Modifier = Modifier, content: @Composable () -> Unit
 fun WidgetFooter(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val colors = EsuissTheme.colors
     CompositionLocalProvider(
-        LocalContentStyle provides LocalContentStyle.current.merge(Typography.xs).copy(color = colors.labelSecondary),
-        LocalContentColor provides colors.labelSecondary,
+        LocalContentStyle provides LocalContentStyle.current.merge(Typography.xs).copy(color = colors.mutedForeground),
+        LocalContentColor provides colors.mutedForeground,
         LocalIconSize provides 14.dp,
     ) {
         Row(

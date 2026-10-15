@@ -87,28 +87,24 @@ function ImageViewerContent({
           className="absolute top-0 right-0 bottom-0 left-0 z-50"
         >
           <ImageViewerPrimitive.Popup className={className}>
-            <ImageViewerPrimitive.Backdrop className="bg-media" />
+            <ImageViewerPrimitive.Backdrop className="bg-black" />
             <ImageViewerPrimitive.Pages accessibilityValue={{ text: label }} />
             <ImageViewerPrimitive.Controls
               className="absolute top-0 right-0 left-0 flex-row items-center justify-between px-4"
               style={{ paddingTop: insets.top + 8 }}
             >
               <View className="size-8" />
-              <View className="rounded-full bg-on-media/15 px-3 py-1">
-                <Text className="text-sm font-semibold text-on-media">
+              <View className="rounded-full bg-white/15 px-3 py-1">
+                <Text className="text-sm font-semibold text-white">
                   {label}
                 </Text>
               </View>
               <ImageViewerPrimitive.Close
                 accessibilityLabel={closeLabel}
                 hitSlop={8}
-                className="size-8 items-center justify-center rounded-full bg-on-media/15 active:bg-on-media/25"
+                className="size-8 items-center justify-center rounded-full bg-white/15 active:opacity-80"
               >
-                <Icon
-                  as={XIcon}
-                  weight="bold"
-                  className="size-4 text-on-media"
-                />
+                <Icon as={XIcon} weight="bold" className="size-4 text-white" />
               </ImageViewerPrimitive.Close>
             </ImageViewerPrimitive.Controls>
           </ImageViewerPrimitive.Popup>

@@ -226,11 +226,11 @@ fun PullToRefresh(
                         alpha = settleScale
                     },
                     size = 24.dp,
-                    color = colors.labelSecondary,
+                    color = colors.mutedForeground,
                     contentDescription = "Refreshing",
                 )
             } else {
-                val tint = colors.labelSecondary
+                val tint = colors.mutedForeground
                 Canvas(modifier = Modifier.size(24.dp).clearAndSetSemantics {}) {
                     val progress = (pull / thresholdPx).coerceIn(0f, 1f)
                     drawSpinnerSpokes(tint) { index -> progress * SpinnerSpokes - index }

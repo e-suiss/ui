@@ -48,10 +48,10 @@ function PlaceCard({ place }: { place: Place }) {
         <CardDescription>{place.city}</CardDescription>
       </CardHeader>
       <CardContent className="grow">
-        <View className="grow rounded-xl bg-surface-secondary" />
+        <View className="grow rounded-xl bg-muted" />
       </CardContent>
       <CardContent>
-        <Text className="text-sm text-label-secondary">{place.detail}</Text>
+        <Text className="text-sm text-muted-foreground">{place.detail}</Text>
       </CardContent>
     </Card>
   )
@@ -79,7 +79,7 @@ function Demo({ disabled = false }: { disabled?: boolean }) {
           <CardStackSwipeButton direction="right" />
         </CardStackActions>
       </CardStack>
-      <Text role="status" className="text-center text-sm text-label-secondary">
+      <Text role="status" className="text-center text-sm text-muted-foreground">
         {log}
       </Text>
     </View>

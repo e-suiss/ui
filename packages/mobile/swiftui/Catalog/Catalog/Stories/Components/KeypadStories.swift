@@ -35,7 +35,7 @@ private struct KeypadLog: View {
         }
       }
       .textStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .accessibilityAddTraits(.updatesFrequently)
       Keypad(accessory: accessory) { key in
         last = key

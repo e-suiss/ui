@@ -134,6 +134,7 @@ import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -159,13 +160,13 @@ private val visitors = listOf(
 )
 
 private val visitorsConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
-    "mobile" to ChartConfigItem("Mobile") { teal },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
 )
 
 private val iconConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop", PhosphorIcons.Regular.Desktop) { blue },
-    "mobile" to ChartConfigItem("Mobile", PhosphorIcons.Regular.DeviceMobile) { teal },
+    "desktop" to ChartConfigItem("Desktop", PhosphorIcons.Regular.Desktop) { chart1 },
+    "mobile" to ChartConfigItem("Mobile", PhosphorIcons.Regular.DeviceMobile) { chart2 },
 )
 
 @Composable
@@ -204,7 +205,7 @@ private fun energy(values: List<Int>, year: Int, month: Int, day: Int) = values.
 
 private val energyValues = listOf(512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558)
 
-private val energyConfig = ChartConfig("energy" to ChartConfigItem("Active energy") { red })
+private val energyConfig = ChartConfig("energy" to ChartConfigItem("Active energy") { Palette.red500 })
 
 @Composable
 private fun TooltipFormatter() {
@@ -221,13 +222,13 @@ private fun TooltipFormatter() {
                         hideLabel = true,
                         formatter = { item ->
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                BasicText("Active energy", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.labelSecondary))
+                                BasicText("Active energy", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.mutedForeground))
                                 BasicText(
                                     number.format(item.value),
                                     Modifier.alignByBaseline(),
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
-                                BasicText("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.labelSecondary))
+                                BasicText("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.mutedForeground))
                             }
                         },
                     )
@@ -253,7 +254,7 @@ private fun TooltipLabelFormatter() {
                         labelFormatter = { _, items ->
                             BasicText(
                                 longDate.format(data[items.first().index].date.time),
-                                style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                         },
                     )
@@ -281,7 +282,7 @@ private fun TooltipCustom() {
     )
     val number = remember { NumberFormat.getNumberInstance(Locale.US) }
     TooltipCard("Custom content", "A tooltip built from scratch") {
-        ChartContainer(ChartConfig("steps" to ChartConfigItem("Steps") { orange }), Modifier.fillMaxWidth().height(208.dp)) {
+        ChartContainer(ChartConfig("steps" to ChartConfigItem("Steps") { chart4 }), Modifier.fillMaxWidth().height(208.dp)) {
             BarChart(data, margin = ChartMargin(top = 70.dp, right = 4.dp, bottom = 0.dp, left = 4.dp), accessibilityLabel = "Custom content") {
                 XAxis(label = { it.day }, tickMargin = 8.dp, interval = 0, tickFormatter = { it.take(3) })
                 ChartTooltip(defaultIndex = 5, cursor = null) {
@@ -291,19 +292,19 @@ private fun TooltipCustom() {
                         Modifier
                             .widthIn(min = 112.dp)
                             .shadow(Shadows.lg, shape)
-                            .background(colors.surfaceRaised, shape)
+                            .background(colors.card, shape)
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
-                        BasicText("TOTAL", style = Typography.xs2.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+                        BasicText("TOTAL", style = Typography.xs2.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             BasicText(
                                 number.format(entry.value),
                                 Modifier.alignByBaseline(),
-                                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                             )
-                            BasicText("steps", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+                            BasicText("steps", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
                         }
-                        BasicText(label, style = Typography.xs.copy(color = colors.labelSecondary))
+                        BasicText(label, style = Typography.xs.copy(color = colors.mutedForeground))
                     }
                 }
                 Bar("steps", value = { it.steps }, radius = ChartRadius(4.dp), maxBarSize = 26.dp)
@@ -327,24 +328,24 @@ private fun TooltipInteractive() {
         Revenue("Q3 26", 47.3, 8.9, 30.1), Revenue("Q4 26", 49.0, 9.3, 31.2),
     )
     val config = ChartConfig(
-        "phones" to ChartConfigItem("Phones") { blue },
-        "laptops" to ChartConfigItem("Laptops") { teal },
-        "services" to ChartConfigItem("Services") { purple },
+        "phones" to ChartConfigItem("Phones") { chart1 },
+        "laptops" to ChartConfigItem("Laptops") { chart2 },
+        "services" to ChartConfigItem("Services") { Palette.purple500 },
     )
     val billions = remember { NumberFormat.getNumberInstance(Locale.US).apply { minimumFractionDigits = 1; maximumFractionDigits = 1 } }
     Card(variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Tooltip settings", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText("Tooltip settings", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 BasicText(
                     "Quarterly revenue · billions · sample data. Change the settings and touch the bars.",
-                    style = Typography.sm.copy(color = colors.labelSecondary),
+                    style = Typography.sm.copy(color = colors.mutedForeground),
                 )
             }
         }
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                BasicText("Indicator", style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold))
+                BasicText("Indicator", style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
                 ToggleGroup(value = indicator, onValueChange = { if (it != null) indicator = it }, size = ToggleSize.Sm, spacing = 0) {
                     ToggleGroupItem("Dot", "dot")
                     ToggleGroupItem("Line", "line")
@@ -357,7 +358,7 @@ private fun TooltipInteractive() {
                 )) {
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                         Switch(value, change)
-                        BasicText(label, style = Typography.sm.copy(color = colors.label))
+                        BasicText(label, style = Typography.sm.copy(color = colors.foreground))
                     }
                 }
             }
@@ -380,10 +381,10 @@ private fun TooltipInteractive() {
                             labelFormatter = if (showTotal) {
                                 { label, items ->
                                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                        BasicText(label, Modifier.weight(1f), style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                                        BasicText(label, Modifier.weight(1f), style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                                         BasicText(
                                             "${billions.format(items.sumOf { it.value })}B",
-                                            style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 }
@@ -415,14 +416,14 @@ private val devices = listOf(
 
 private val deviceConfig = ChartConfig(
     "users" to ChartConfigItem("Users"),
-    "phone" to ChartConfigItem("Phone") { blue },
-    "laptop" to ChartConfigItem("Laptop") { teal },
-    "tablet" to ChartConfigItem("Tablet") { indigo },
-    "watch" to ChartConfigItem("Watch") { orange },
-    "other" to ChartConfigItem("Other") { gray },
-    "desktop" to ChartConfigItem("Desktop") { blue },
-    "mobile" to ChartConfigItem("Mobile") { teal },
-    "value" to ChartConfigItem("Air quality") { green },
+    "phone" to ChartConfigItem("Phone") { chart1 },
+    "laptop" to ChartConfigItem("Laptop") { chart2 },
+    "tablet" to ChartConfigItem("Tablet") { chart3 },
+    "watch" to ChartConfigItem("Watch") { chart4 },
+    "other" to ChartConfigItem("Other") { chart5 },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
+    "value" to ChartConfigItem("Air quality") { Palette.green500 },
 )
 
 @Composable
@@ -444,7 +445,7 @@ private fun PolarPies() {
                     {
                         PieChart(accessibilityLabel = "Pie default") {
                             ChartTooltip(defaultIndex = 0) { ChartTooltipContent(hideLabel = true) }
-                            Pie(devices, value = { it.users }, nameKey = { it.device }, outerRadius = 0.85f, stroke = colors.surfaceSecondary, strokeWidth = 2.dp)
+                            Pie(devices, value = { it.users }, nameKey = { it.device }, outerRadius = 0.85f, stroke = colors.muted, strokeWidth = 2.dp)
                         }
                     },
                     {
@@ -493,18 +494,18 @@ private fun PolarPies() {
                                 value = { it.users },
                                 nameKey = { it.device },
                                 outerRadius = 0.55f,
-                                stroke = colors.surfaceSecondary,
+                                stroke = colors.muted,
                                 strokeWidth = 2.dp,
                                 label = { index -> deviceConfig[devices[index].device]?.label ?: "" },
-                                labelLine = colors.separatorStrong,
+                                labelLine = colors.input,
                             )
                         }
                     },
                     {
                         PieChart(accessibilityLabel = "Pie nested") {
                             ChartTooltip(defaultIndex = 3) { ChartTooltipContent(hideLabel = true) }
-                            Pie(devices.take(2), value = { it.users }, nameKey = { it.device }, outerRadius = 0.52f, stroke = colors.surfaceSecondary, strokeWidth = 2.dp, fillOpacity = 0.55f)
-                            Pie(devices, value = { it.users }, nameKey = { it.device }, innerRadius = 0.6f, outerRadius = 0.86f, stroke = colors.surfaceSecondary, strokeWidth = 2.dp)
+                            Pie(devices.take(2), value = { it.users }, nameKey = { it.device }, outerRadius = 0.52f, stroke = colors.muted, strokeWidth = 2.dp, fillOpacity = 0.55f)
+                            Pie(devices, value = { it.users }, nameKey = { it.device }, innerRadius = 0.6f, outerRadius = 0.86f, stroke = colors.muted, strokeWidth = 2.dp)
                         }
                     },
                 )
@@ -526,7 +527,7 @@ private fun PolarRadial() {
                     {
                         RadialBarChart(devices.take(4), innerRadius = 0.25f, outerRadius = 1f, barSize = 12.dp, accessibilityLabel = "Radial default") {
                             ChartTooltip(defaultIndex = 1) { ChartTooltipContent(hideLabel = true) }
-                            RadialBar("users", value = { it.users }, nameKey = { it.device }, background = colors.control, cornerRadius = 10.dp)
+                            RadialBar("users", value = { it.users }, nameKey = { it.device }, background = colors.secondary, cornerRadius = 10.dp)
                         }
                     },
                     {
@@ -540,7 +541,7 @@ private fun PolarRadial() {
                             accessibilityLabel = "Gauge",
                         ) {
                             PolarAngleAxis(0.0..100.0)
-                            RadialBar("value", value = { it.value }, cornerRadius = 20.dp, background = colors.green.copy(alpha = 0.22f))
+                            RadialBar("value", value = { it.value }, cornerRadius = 20.dp, background = Palette.green500.copy(alpha = 0.22f))
                         }
                     },
                 )
@@ -557,8 +558,8 @@ private fun PolarRadial() {
                         ) {
                             PolarAngleAxis(0.0..1830.0)
                             ChartTooltip(defaultIndex = 0) { ChartTooltipContent(hideLabel = true) }
-                            RadialBar("desktop", value = { it.desktop }, stackId = "a", cornerRadius = 6.dp, stroke = colors.surfaceSecondary, strokeWidth = 3.dp)
-                            RadialBar("mobile", value = { it.mobile }, stackId = "a", cornerRadius = 6.dp, stroke = colors.surfaceSecondary, strokeWidth = 3.dp)
+                            RadialBar("desktop", value = { it.desktop }, stackId = "a", cornerRadius = 6.dp, stroke = colors.muted, strokeWidth = 3.dp)
+                            RadialBar("mobile", value = { it.mobile }, stackId = "a", cornerRadius = 6.dp, stroke = colors.muted, strokeWidth = 3.dp)
                         }
                     },
                     {
@@ -576,7 +577,7 @@ private fun PolarRadial() {
                                 value = { it.users },
                                 nameKey = { it.device },
                                 cornerRadius = 10.dp,
-                                background = colors.control,
+                                background = colors.secondary,
                                 labelList = ChartLabelList(
                                     ChartLabelPosition.InsideStart,
                                     fontSize = 11.sp,
@@ -603,8 +604,8 @@ private val skills = listOf(
 )
 
 private val skillsConfig = ChartConfig(
-    "thisMonth" to ChartConfigItem("This month") { green },
-    "lastMonth" to ChartConfigItem("Last month") { gray },
+    "thisMonth" to ChartConfigItem("This month") { Palette.green500 },
+    "lastMonth" to ChartConfigItem("Last month") { chart5 },
 )
 
 @Composable
@@ -614,7 +615,7 @@ private fun RadarSelected(indicator: ChartTooltipIndicator, defaultIndex: Int) {
         ChartContainer(skillsConfig, Modifier.fillMaxWidth().height(224.dp)) {
             RadarChart(skills, outerRadius = 0.7f, accessibilityLabel = "Default selection") {
                 ChartTooltip(defaultIndex = defaultIndex) { ChartTooltipContent(indicator = indicator) }
-                PolarGrid(stroke = colors.separator)
+                PolarGrid(stroke = colors.border)
                 PolarAngleAxis(label = { it.skill })
                 Radar("lastMonth", value = { it.lastMonth }, fillOpacity = 0.18f, strokeWidth = 2.dp)
                 Radar("thisMonth", value = { it.thisMonth }, fillOpacity = 0.18f, strokeWidth = 2.dp)
@@ -792,7 +793,7 @@ class ChartsGalleryTest {
                     modifier = Modifier
                         .testTag("charts")
                         .width(402.dp)
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
@@ -828,7 +829,7 @@ class ChartsGalleryTest {
                     modifier = Modifier
                         .testTag("charts")
                         .width(402.dp)
-                        .background(EsuissTheme.colors.surface)
+                        .background(EsuissTheme.colors.background)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {

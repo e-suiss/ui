@@ -18,15 +18,15 @@ import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
 const photos = [
-  "bg-blue",
-  "bg-orange",
-  "bg-green",
-  "bg-indigo",
-  "bg-yellow",
-  "bg-pink",
-  "bg-teal",
-  "bg-purple",
-  "bg-mint",
+  "bg-blue-500",
+  "bg-orange-500",
+  "bg-green-500",
+  "bg-indigo-500",
+  "bg-yellow-500",
+  "bg-pink-500",
+  "bg-teal-500",
+  "bg-purple-500",
+  "bg-teal-400",
 ]
 
 function PhotoGrid({
@@ -87,8 +87,8 @@ function PhotoGrid({
 function AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {
   return (
     <PreviewMenu aspectRatio={4 / 3} defaultOpen={defaultOpen}>
-      <PreviewMenuTrigger className="flex-row items-center gap-3 rounded-xl bg-surface-secondary p-3">
-        <View className="size-12 rounded-lg bg-blue" />
+      <PreviewMenuTrigger className="flex-row items-center gap-3 rounded-xl bg-muted p-3">
+        <View className="size-12 rounded-lg bg-blue-500" />
         <View>
           <Text className="font-semibold">Trip to the coast</Text>
           <Text variant="muted">48 photos</Text>
@@ -96,11 +96,11 @@ function AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {
       </PreviewMenuTrigger>
       <PreviewMenuContent
         preview={
-          <View className="h-full w-full justify-end bg-blue p-4">
-            <Text className="text-lg font-semibold text-on-accent">
+          <View className="h-full w-full justify-end bg-blue-500 p-4">
+            <Text className="text-lg font-semibold text-primary-foreground">
               Trip to the coast
             </Text>
-            <Text className="text-sm text-on-accent">
+            <Text className="text-sm text-primary-foreground">
               48 photos · Updated today
             </Text>
           </View>

@@ -15,11 +15,19 @@ import {
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
+
 import { Toggle } from "@/components/ui/toggle"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Model = "pro" | "standard" | "air" | "lite"
 
@@ -37,17 +45,17 @@ const MODELS = Object.keys(SCORES) as Model[]
 const MAX_SELECTED = 3
 
 const chartConfig = {
-  pro: { label: "Phone Pro", color: "orange" },
-  standard: { label: "Phone", color: "blue" },
-  air: { label: "Phone Air", color: "cyan" },
-  lite: { label: "Phone Lite", color: "purple" },
+  pro: { label: "Phone Pro", color: "chart-4" },
+  standard: { label: "Phone", color: "chart-1" },
+  air: { label: "Phone Air", color: "cyan-500" },
+  lite: { label: "Phone Lite", color: "purple-500" },
 } satisfies ChartConfig
 
-const SWATCH: Record<Model, keyof ThemeColors> = {
-  pro: "orange",
-  standard: "blue",
-  air: "cyan",
-  lite: "purple",
+const SWATCH: Record<Model, Tone> = {
+  pro: "chart4",
+  standard: "chart1",
+  air: "cyan500",
+  lite: "purple500",
 }
 
 function withAlpha(color: string, alpha: number) {
@@ -125,7 +133,7 @@ export function RadarChartInteractive() {
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
         <Text style={styles.title}>Compare phone models</Text>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           Up to three models · scores out of 100, sample data
         </Text>
       </CardHeader>
@@ -141,8 +149,8 @@ export function RadarChartInteractive() {
                 styles.model,
                 {
                   backgroundColor: state.pressed
-                    ? withAlpha(colors[SWATCH[model]], 0.15)
-                    : colors.control,
+                    ? withAlpha(tone(colors, SWATCH[model]), 0.15)
+                    : colors.secondary,
                 },
               ]}
             >
@@ -151,12 +159,12 @@ export function RadarChartInteractive() {
                   styles.dot,
                   {
                     backgroundColor: selected.includes(model)
-                      ? colors[SWATCH[model]]
-                      : colors.labelQuaternary,
+                      ? tone(colors, SWATCH[model])
+                      : colors.border,
                   },
                 ]}
               />
-              <Text style={[styles.modelLabel, { color: colors.label }]}>
+              <Text style={[styles.modelLabel, { color: colors.foreground }]}>
                 {chartConfig[model].label}
               </Text>
             </Toggle>
@@ -178,7 +186,7 @@ export function RadarChartInteractive() {
               dataKey="axis"
               tickStyle={(_, index) =>
                 index === axisIndex
-                  ? [styles.activeTick, { color: colors.label }]
+                  ? [styles.activeTick, { color: colors.foreground }]
                   : styles.tick
               }
             />
@@ -192,11 +200,16 @@ export function RadarChartInteractive() {
                       <View
                         style={[
                           styles.bar,
-                          { backgroundColor: colors[SWATCH[name as Model]] },
+                          {
+                            backgroundColor: tone(
+                              colors,
+                              SWATCH[name as Model]
+                            ),
+                          },
                         ]}
                       />
                       <Text
-                        style={[styles.grow, { color: colors.labelSecondary }]}
+                        style={[styles.grow, { color: colors.mutedForeground }]}
                       >
                         {chartConfig[name as Model].label}
                       </Text>
@@ -222,12 +235,12 @@ export function RadarChartInteractive() {
           {MODELS.filter((model) => selected.includes(model)).map((model) => (
             <View
               key={model}
-              style={[styles.score, { backgroundColor: colors.surface }]}
+              style={[styles.score, { backgroundColor: colors.background }]}
             >
               <View
                 style={[
                   styles.swatch,
-                  { backgroundColor: colors[SWATCH[model]] },
+                  { backgroundColor: tone(colors, SWATCH[model]) },
                 ]}
               />
               <View style={styles.scoreText}>
@@ -237,7 +250,7 @@ export function RadarChartInteractive() {
                 <Text
                   style={[
                     styles.scoreCaption,
-                    { color: colors.labelSecondary },
+                    { color: colors.mutedForeground },
                   ]}
                 >
                   {axis ?? "Overall score"}

@@ -95,7 +95,7 @@ function PreviewMenuPreviewBody({
   return (
     <View
       className={cn(
-        "h-full w-full overflow-hidden rounded-2xl bg-surface",
+        "h-full w-full overflow-hidden rounded-2xl bg-background",
         className
       )}
     >
@@ -121,7 +121,7 @@ function PreviewMenuBackdrop() {
       className="absolute top-0 right-0 bottom-0 left-0"
       style={{ pointerEvents: "none" }}
     >
-      <PreviewMenuPrimitive.Backdrop className="bg-scrim" />
+      <PreviewMenuPrimitive.Backdrop className="bg-black/50" />
     </AnimatedView>
   )
 }
@@ -152,7 +152,7 @@ function PreviewMenuContent({
             <PreviewMenuPrimitive.Popup
               className={(state) =>
                 cn(
-                  "min-w-60 overflow-hidden rounded-2xl border border-label/5 bg-surface-raised dark:border-label/10",
+                  "min-w-60 overflow-hidden rounded-2xl border border-foreground/5 bg-popover dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -179,17 +179,17 @@ function PreviewMenuItem({
   return (
     <TextClassContext.Provider
       value={cn(
-        "text-base text-label",
-        variant === "destructive" && "text-danger",
-        props.disabled && "text-label-quaternary"
+        "text-base text-foreground",
+        variant === "destructive" && "text-destructive",
+        props.disabled && "opacity-50"
       )}
     >
       <IconClassContext.Provider value="size-5">
         <PreviewMenuPrimitive.Item
           className={(state) =>
             cn(
-              "min-h-11 flex-row items-center justify-between gap-6 border-t border-separator px-4 py-2.75",
-              state.highlighted && "bg-item-pressed",
+              "min-h-11 flex-row items-center justify-between gap-6 border-t border-border px-4 py-2.75",
+              state.highlighted && "opacity-80",
               resolveClassName(className, state)
             )
           }
@@ -215,7 +215,7 @@ function PreviewMenuSeparator({
   return (
     <PreviewMenuPrimitive.Separator
       className={(state) =>
-        cn("h-2 bg-separator/40", resolveClassName(className, state))
+        cn("h-2 bg-border/40", resolveClassName(className, state))
       }
       {...props}
     />

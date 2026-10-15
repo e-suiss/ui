@@ -362,7 +362,7 @@ public struct QuestionnaireProgress<Label: View>: View {
     label(current, total)
       .scaledFont(.xs)
       .monospacedDigit()
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(minHeight: TextStyle.xs.lineHeight, alignment: .leading)
       .accessibilityElement(children: .ignore)
       .accessibilityLabel(Text("Questionnaire progress"))
@@ -445,7 +445,7 @@ public struct QuestionnaireTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.base, weight: .semibold)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)
   }
@@ -465,7 +465,7 @@ public struct QuestionnaireDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
       .padding(.top, -16)
   }
@@ -520,7 +520,7 @@ public struct QuestionnaireChoice<Label: View>: View {
           label
         }
         .scaledFont(.base)
-        .foregroundStyle(enabled ? Color.label : .labelQuaternary)
+        .foregroundStyle(EsuissColor.foreground)
         .frame(maxWidth: .infinity, alignment: .leading)
         .fixedSize(horizontal: false, vertical: true)
       }
@@ -539,15 +539,15 @@ public struct QuestionnaireChoice<Label: View>: View {
   private func indicator(checked: Bool, multiple: Bool, enabled: Bool) -> some View {
     let shape = RoundedRectangle(cornerRadius: multiple ? Radius.xs : 8, style: .continuous)
     ZStack {
-      shape.fill(checked ? (enabled ? Color.accent : .accentDisabled) : .labelQuaternary)
+      shape.fill(checked ? EsuissColor.primary : EsuissColor.border)
       if checked {
         if multiple {
           Ph.check.bold
             .frame(width: 12, height: 12)
-            .foregroundStyle(Color.onAccent)
+            .foregroundStyle(EsuissColor.primaryForeground)
         } else {
           Circle()
-            .fill(Color.onAccent)
+            .fill(EsuissColor.primaryForeground)
             .frame(width: colorScheme == .dark ? 10 : 8, height: colorScheme == .dark ? 10 : 8)
         }
       }
@@ -572,26 +572,24 @@ private struct QuestionnaireChoiceStyle: ButtonStyle {
   let invalid: Bool
   let dark: Bool
 
+  @Environment(\.isEnabled) private var isEnabled
+
   func makeBody(configuration: Configuration) -> some View {
     let shape = RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
     configuration.label
       .background {
-        shape.fill(fill(pressed: configuration.isPressed))
+        shape.fill(invalid ? EsuissColor.destructive.opacity(dark ? 0.1 : 0.05) : .clear)
       }
       .overlay {
         shape.strokeBorder(border, lineWidth: checked && !invalid ? 2 : 1)
       }
+      .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
       .animation(.easeOut(duration: 0.15), value: checked)
   }
 
-  private func fill(pressed: Bool) -> Color {
-    if invalid { return Color.danger.opacity(dark ? 0.1 : 0.05) }
-    return pressed ? .itemPressed : .clear
-  }
-
   private var border: Color {
-    if invalid { return .danger }
-    return checked ? .accent : .separator
+    if invalid { return EsuissColor.destructive }
+    return checked ? EsuissColor.primary : EsuissColor.border
   }
 }
 
@@ -608,7 +606,7 @@ public struct QuestionnaireChoiceDescription: View {
 
   public var body: some View {
     text
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .fixedSize(horizontal: false, vertical: true)
   }
 }
@@ -647,7 +645,7 @@ public struct QuestionnaireInput: View {
         get: { controller?.text(for: name) ?? "" },
         set: { controller?.setText($0, for: name) }
       ),
-      prompt: placeholder.foregroundStyle(Color.labelSecondary)
+      prompt: placeholder.foregroundStyle(EsuissColor.mutedForeground)
     ) {
       placeholder
     }
@@ -658,12 +656,13 @@ public struct QuestionnaireInput: View {
     .submitLabel(controller?.isLast == true ? .done : .next)
     .onSubmit { controller?.advance() }
     .scaledFont(.base)
-    .foregroundStyle(enabled ? Color.label : .labelQuaternary)
-    .tint(Color.accent)
+    .foregroundStyle(EsuissColor.foreground)
+    .tint(EsuissColor.primary)
     .padding(.horizontal, 12)
     .frame(height: 44)
-    .background(invalid ? Color.danger.opacity(colorScheme == .dark ? 0.1 : 0.05) : .control, in: shape)
-    .overlay { shape.strokeBorder(invalid ? Color.danger : .clear, lineWidth: 1) }
+    .background(invalid ? EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) : EsuissColor.secondary, in: shape)
+    .overlay { shape.strokeBorder(invalid ? EsuissColor.destructive : .clear, lineWidth: 1) }
+    .opacity(enabled ? 1 : 0.5)
     .disabled(!enabled)
   }
 }
@@ -693,7 +692,7 @@ public struct QuestionnaireError: View {
     if invalid {
       (text ?? (required ? Text("Choose an answer to continue.") : Text("Choose an answer or skip this question.")))
         .scaledTextStyle(.sm)
-        .foregroundStyle(Color.danger)
+        .foregroundStyle(EsuissColor.destructive)
         .fixedSize(horizontal: false, vertical: true)
         .transition(.opacity)
         .onAppear {

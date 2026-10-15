@@ -107,7 +107,7 @@ public struct UsersInvite: View {
           HStack(spacing: 10) {
             Text(emails.isEmpty ? "Type an email and press Return." : emails.count == 1 ? "1 person will be invited as \(current)." : "\(emails.count) people will be invited as \(current).")
               .scaledFont(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .fixedSize(horizontal: false, vertical: true)
               .frame(maxWidth: .infinity, alignment: .leading)
               .contentTransition(.opacity)
@@ -126,7 +126,7 @@ public struct UsersInvite: View {
             if pending.isEmpty {
               Text("No pending invitations.")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .padding(.horizontal, 4)
             } else {
               ItemGroup(.inset) {
@@ -172,7 +172,7 @@ public struct UsersInvite: View {
         TextField(
           "Email",
           text: $draft,
-          prompt: (emails.isEmpty ? Text(verbatim: "name@company.com") : Text("Add another")).foregroundStyle(Color.labelSecondary)
+          prompt: (emails.isEmpty ? Text(verbatim: "name@company.com") : Text("Add another")).foregroundStyle(EsuissColor.mutedForeground)
         )
           .scaledFont(.sm)
           .keyboardType(.emailAddress)
@@ -196,7 +196,7 @@ public struct UsersInvite: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 16)
     .padding(.vertical, 8)
     .frame(minHeight: 44)
@@ -206,9 +206,9 @@ public struct UsersInvite: View {
     HStack(spacing: 12) {
       Ph.envelopeSimple.bold
         .frame(width: 16, height: 16)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 28, height: 28)
-        .background(Color.gray, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+        .background(Palette.zinc500, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
         .accessibilityHidden(true)
       VStack(alignment: .leading, spacing: 1) {
         Text(verbatim: invite.email)
@@ -217,7 +217,7 @@ public struct UsersInvite: View {
           .truncationMode(.middle)
         Text(verbatim: "\(invite.role) · \(invite.sent)")
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .accessibilityElement(children: .combine)
@@ -233,7 +233,7 @@ public struct UsersInvite: View {
       .buttonStyle(.variant(.destructive, size: .xs))
       .accessibilityLabel(Text("Cancel invitation to \(invite.email)"))
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .frame(minHeight: 44)
@@ -304,7 +304,7 @@ private struct UsersInviteShell<Content: View>: View {
               EmptyDescription("This section isn't part of the sample. Choose \(Text(Self.sections.first { $0.value == home }?.label ?? "")).")
             }
           }
-          .background(Color.surface)
+          .background(EsuissColor.background)
         }
       }
       .frame(maxHeight: .infinity)

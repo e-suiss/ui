@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 function badgeStyle(variant: BadgeVariant, colors: ThemeColors): ViewStyle {
   switch (variant) {
     case "outline":
-      return { ...styles.padded, borderColor: colors.separator }
+      return { ...styles.padded, borderColor: colors.border }
     case "ghost":
       return styles.padded
     default:
@@ -47,10 +47,11 @@ function badgeStyle(variant: BadgeVariant, colors: ThemeColors): ViewStyle {
 }
 
 function badgeTextStyle(variant: BadgeVariant, colors: ThemeColors): TextStyle {
-  let color = colors.link
-  if (variant === "secondary") color = colors.labelSecondary
-  else if (variant === "destructive") color = colors.danger
-  else if (variant === "outline" || variant === "ghost") color = colors.label
+  let color = colors.primary
+  if (variant === "secondary") color = colors.mutedForeground
+  else if (variant === "destructive") color = colors.destructive
+  else if (variant === "outline" || variant === "ghost")
+    color = colors.foreground
   return { ...fontSize.xs, fontWeight: "600", color }
 }
 

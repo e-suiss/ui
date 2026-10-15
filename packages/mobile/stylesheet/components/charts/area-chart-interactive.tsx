@@ -13,7 +13,7 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, useTheme } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 type Range = "1D" | "1W" | "1M" | "3M" | "1Y" | "5Y"
@@ -276,7 +276,8 @@ function tickIndexes(points: Point[], max: number) {
 }
 
 export function AreaChartInteractive() {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
+  const success = isDark ? palette.green400 : palette.green600
   const [range, setRange] = React.useState<Range>("1M")
   const [active, setActive] = React.useState<number | null>(null)
   const points = React.useMemo(() => resample(generate(range)), [range])
@@ -292,7 +293,7 @@ export function AreaChartInteractive() {
   const min = Math.min(...prices)
   const max = Math.max(...prices)
   const padding = (max - min) * 0.12
-  const color = rising ? "success" : "danger"
+  const color = rising ? "green-500" : "destructive"
   const chartConfig = {
     price: { label: "Price", color },
   } satisfies ChartConfig
@@ -310,7 +311,7 @@ export function AreaChartInteractive() {
         <View style={styles.heading}>
           <View style={styles.ticker}>
             <Text style={styles.symbol}>ACME</Text>
-            <Text style={[styles.company, { color: colors.labelSecondary }]}>
+            <Text style={[styles.company, { color: colors.mutedForeground }]}>
               Acme Corp.
             </Text>
           </View>
@@ -319,14 +320,16 @@ export function AreaChartInteractive() {
             <Text
               style={[
                 styles.change,
-                { color: rising ? colors.success : colors.danger },
+                {
+                  color: rising ? success : colors.destructive,
+                },
               ]}
             >
               {formatPrice(change, true)} (
               {formatPrice(Math.abs((change / first) * 100))}%)
             </Text>
           </View>
-          <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+          <Text style={[styles.caption, { color: colors.mutedForeground }]}>
             {active === null ? RANGES[range].caption : current.label}
           </Text>
         </View>
@@ -376,12 +379,12 @@ export function AreaChartInteractive() {
             />
             <ReferenceLine
               y={first}
-              stroke="label-tertiary"
+              stroke="muted-foreground"
               strokeDasharray="2 3"
             />
             <ChartTooltip
               content={() => null}
-              cursor={{ stroke: "label-tertiary", strokeWidth: 1 }}
+              cursor={{ stroke: "muted-foreground", strokeWidth: 1 }}
             />
             <Area
               isAnimationActive={false}
@@ -397,7 +400,7 @@ export function AreaChartInteractive() {
               activeDot={{
                 r: 5,
                 fill: color,
-                stroke: "surface-secondary",
+                stroke: "muted",
                 strokeWidth: 2,
               }}
             />
@@ -407,9 +410,9 @@ export function AreaChartInteractive() {
           {stats.map(([term, value]) => (
             <View
               key={term}
-              style={[styles.stat, { borderColor: colors.separator }]}
+              style={[styles.stat, { borderColor: colors.border }]}
             >
-              <Text style={[styles.term, { color: colors.labelSecondary }]}>
+              <Text style={[styles.term, { color: colors.mutedForeground }]}>
                 {term}
               </Text>
               <Text style={styles.amount}>{value}</Text>

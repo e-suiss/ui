@@ -141,15 +141,15 @@ private fun ToggleGroupLayout(
             val shape = RoundedCornerShape(if (vertical) Radius.xl else Radius.lg)
             FormDividedStack(
                 orientation = state.orientation,
-                dividerColor = colors.separator,
-                modifier = base.clip(shape).border(1.dp, colors.separator, shape),
+                dividerColor = colors.border,
+                modifier = base.clip(shape).border(1.dp, colors.border, shape),
                 content = content,
             )
         } else {
             val gap = if (state.segmented) 4.dp else (state.spacing * 4).dp
             val container = if (state.segmented) {
                 val shape = RoundedCornerShape(Radius.xl)
-                base.clip(shape).background(colors.control, shape).padding(4.dp)
+                base.clip(shape).background(colors.secondary, shape).padding(4.dp)
             } else {
                 base
             }
@@ -221,7 +221,7 @@ private fun ToggleGroupIndicatorLayer(indicator: ToggleGroupIndicator, selected:
             .offset { IntOffset(left.value.roundToInt(), top.value.roundToInt()) }
             .size(with(density) { width.value.toDp() }, with(density) { height.value.toDp() })
             .shadow(FormShadowSm, shape)
-            .background(if (colors.isDark) colors.labelQuaternary else colors.surfaceRaised, shape),
+            .background(if (colors.isDark) colors.border else colors.card, shape),
     )
 }
 
@@ -263,15 +263,10 @@ fun ToggleGroupItem(
             val shape = RoundedCornerShape(Radius.md)
             val background = when {
                 !on || sliding -> Color.Transparent
-                !active -> colors.controlDisabled
-                colors.isDark -> colors.labelQuaternary
-                else -> colors.surfaceRaised
+                colors.isDark -> colors.border
+                else -> colors.card
             }
-            val foreground = when {
-                !active -> colors.labelQuaternary
-                on -> colors.label
-                else -> colors.labelSecondary
-            }
+            val foreground = if (on) colors.cardForeground else colors.mutedForeground
             val placed = if (indicator != null) {
                 semantics.onPlaced { indicator.bounds[value] = it.boundsInParent() }
             } else {
@@ -285,6 +280,7 @@ fun ToggleGroupItem(
                 background = background,
                 foreground = foreground,
                 scaled = false,
+                alpha = if (active) 1f else 0.5f,
                 horizontalPadding = 12.dp,
                 content = content,
             )
@@ -294,9 +290,10 @@ fun ToggleGroupItem(
             size = group.size,
             shape = if (group.attached) RectangleShape else RoundedCornerShape(Radius.lg),
             outlined = !group.attached && group.variant == ToggleVariant.Outline,
-            background = toggleBackground(colors, on, active, touching),
-            foreground = toggleForeground(colors, on, active),
+            background = toggleBackground(colors, on),
+            foreground = toggleForeground(colors, on),
             scaled = touching && active,
+            alpha = toggleAlpha(active, touching),
             content = content,
         )
     }

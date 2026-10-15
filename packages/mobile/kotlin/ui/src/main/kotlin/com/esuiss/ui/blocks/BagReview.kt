@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -119,14 +120,14 @@ fun BagReview(
                             heading()
                             liveRegion = LiveRegionMode.Polite
                         },
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                 )
                 BasicText(
                     "Free delivery and free returns on every order.",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 8.dp, bottom = 20.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
                 if (bag.isEmpty()) {
                     Button(
@@ -154,7 +155,7 @@ fun BagReview(
                         Modifier
                             .fillMaxWidth()
                             .height(1.dp)
-                            .background(colors.separator),
+                            .background(colors.border),
                     )
                     Column(
                         Modifier.padding(top = 20.dp),
@@ -166,17 +167,17 @@ fun BagReview(
                             Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(colors.separator),
+                                .background(colors.border),
                         )
                         Row(Modifier.padding(top = 2.dp)) {
                             BasicText(
                                 "Total",
                                 modifier = Modifier.weight(1f),
-                                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                             BasicText(
                                 reviewMoney(subtotal),
-                                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                             )
                         }
                     }
@@ -209,7 +210,7 @@ private fun ReviewRow(item: ReviewItem, onQuantity: (Int) -> Unit, onShowDetails
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separator),
+                .background(colors.border),
         )
         Row(
             modifier = Modifier.padding(vertical = 16.dp),
@@ -219,10 +220,10 @@ private fun ReviewRow(item: ReviewItem, onQuantity: (Int) -> Unit, onShowDetails
                 Modifier
                     .size(64.dp)
                     .reviewDetailsLink(item.name, onShowDetails)
-                    .background(colors.control, RoundedCornerShape(Radius.lg)),
+                    .background(colors.secondary, RoundedCornerShape(Radius.lg)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(item.icon, contentDescription = null, size = 36.dp, tint = colors.labelSecondary)
+                Icon(item.icon, contentDescription = null, size = 36.dp, tint = colors.mutedForeground)
             }
             Column(Modifier.weight(1f)) {
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -231,19 +232,19 @@ private fun ReviewRow(item: ReviewItem, onQuantity: (Int) -> Unit, onShowDetails
                             BasicText(
                                 item.name,
                                 modifier = Modifier.reviewDetailsLink(item.name, onShowDetails),
-                                style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
                         }
                         BasicText(
                             reviewMoney(item.price * item.quantity),
-                            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                         )
                     }
                     BasicText(
                         item.variant,
-                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        style = Typography.sm.copy(color = colors.mutedForeground),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -280,7 +281,7 @@ private fun Modifier.reviewDetailsLink(name: String, onClick: () -> Unit): Modif
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     return this
-        .graphicsLayer { alpha = if (pressed) 0.6f else 1f }
+        .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
         .clickable(interactionSource = interaction, indication = null, onClick = onClick)
         .clearAndSetSemantics {
             role = Role.Button
@@ -292,8 +293,8 @@ private fun Modifier.reviewDetailsLink(name: String, onClick: () -> Unit): Modif
 private fun ReviewTotalRow(label: String, value: String) {
     val colors = EsuissTheme.colors
     Row {
-        BasicText(label, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.label))
-        BasicText(value, style = Typography.base.copy(color = colors.label, fontFeatureSettings = "tnum"))
+        BasicText(label, modifier = Modifier.weight(1f), style = Typography.base.copy(color = colors.foreground))
+        BasicText(value, style = Typography.base.copy(color = colors.foreground, fontFeatureSettings = "tnum"))
     }
 }
 
@@ -304,10 +305,10 @@ private fun ReviewLink(text: String, modifier: Modifier = Modifier, onClick: () 
     BasicText(
         text,
         modifier = modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary),
     )
 }
 
@@ -326,7 +327,8 @@ private fun ReviewPayButton(onClick: () -> Unit) {
                 scaleX = scale
                 scaleY = scale
             }
-            .background(colors.label.copy(alpha = if (pressed) 0.8f else 1f), shape)
+            .alpha(if (pressed) 0.8f else 1f)
+            .background(colors.foreground, shape)
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .semantics(mergeDescendants = true) { role = Role.Button },
         contentAlignment = Alignment.Center,
@@ -337,7 +339,7 @@ private fun ReviewPayButton(onClick: () -> Unit) {
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append("suiss") }
                 append(" Pay")
             },
-            style = Typography.base.copy(color = colors.surface, fontWeight = FontWeight.Medium),
+            style = Typography.base.copy(color = colors.background, fontWeight = FontWeight.Medium),
         )
     }
 }

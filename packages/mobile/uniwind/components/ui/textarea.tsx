@@ -12,21 +12,20 @@ function Textarea({
     <InputPrimitive.Root
       className={(state) =>
         cn(
-          "min-h-16 w-full flex-row rounded-xl border border-transparent bg-control px-3 py-3 text-base text-label",
-          state.focused && "border-focus",
-          state.invalid && "border-danger bg-danger/5 dark:bg-danger/10",
-          state.disabled && "bg-control-disabled text-label-quaternary",
+          "min-h-16 w-full flex-row rounded-xl border border-transparent bg-secondary px-3 py-3 text-base text-secondary-foreground",
+          state.focused && "border-ring",
+          state.invalid &&
+            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
       multiline={multiline}
       numberOfLines={numberOfLines}
       textAlignVertical="top"
-      placeholderTextColorClassName={
-        props.disabled ? "accent-label-quaternary" : "accent-label-secondary"
-      }
-      cursorColorClassName="accent-accent"
-      selectionColorClassName="accent-accent"
+      placeholderTextColorClassName="accent-muted-foreground"
+      cursorColorClassName="accent-primary"
+      selectionColorClassName="accent-primary"
       {...props}
     />
   )

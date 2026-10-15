@@ -108,17 +108,18 @@ private struct PinPadDots: View {
     .animation(.easeOut(duration: 0.15), value: count)
     .animation(.easeOut(duration: 0.2), value: error)
     .frame(minHeight: 24)
+    .opacity(isEnabled ? 1 : 0.5)
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(Text("\(count) of \(length) entered"))
   }
 
   private var tint: Color {
-    if error { return .danger }
-    return isEnabled ? .label : .labelQuaternary
+    if error { return EsuissColor.destructive }
+    return EsuissColor.foreground
   }
 
   private var border: Color {
-    if error { return .danger }
-    return isEnabled ? .separatorStrong : .labelQuaternary
+    if error { return EsuissColor.destructive }
+    return EsuissColor.input
   }
 }

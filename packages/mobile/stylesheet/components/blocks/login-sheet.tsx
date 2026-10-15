@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Screen } from "@/components/ui/screen"
 import { Spinner } from "@/components/ui/spinner"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const EMAIL_OPTIONS: {
   value: "share" | "hide"
@@ -109,12 +109,12 @@ function LoginSheet({
     return () => clearTimeout(timer)
   }, [busy])
 
-  const secondary = { color: colors.labelSecondary }
+  const secondary = { color: colors.mutedForeground }
 
   return (
     <Screen>
       <View style={styles.body}>
-        <View style={[styles.appIcon, { backgroundColor: colors.green }]} />
+        <View style={[styles.appIcon, { backgroundColor: palette.green500 }]} />
         <Text role="heading" style={styles.title}>
           {done ? "Welcome, Jamie" : "Trail Routes"}
         </Text>
@@ -137,7 +137,7 @@ function LoginSheet({
             onPress={() => setDone(false)}
             style={({ pressed }) => pressed && { opacity: 0.6 }}
           >
-            <Text style={[fontSize.base, { color: colors.link }]}>
+            <Text style={[fontSize.base, { color: colors.primary }]}>
               Sign out ›
             </Text>
           </Pressable>
@@ -151,12 +151,12 @@ function LoginSheet({
                 styles.button,
                 {
                   backgroundColor: pressed
-                    ? withAlpha(colors.label, 0.8)
-                    : colors.label,
+                    ? withAlpha(colors.foreground, 0.8)
+                    : colors.foreground,
                 },
               ]}
             >
-              <Text style={[styles.buttonText, { color: colors.surface }]}>
+              <Text style={[styles.buttonText, { color: colors.background }]}>
                 Sign in with suiss
               </Text>
             </Button>
@@ -191,18 +191,16 @@ function LoginSheet({
                 as={XIcon}
                 weight="bold"
                 size={14}
-                color={colors.labelSecondary}
+                color={colors.mutedForeground}
               />
             </DrawerClose>
           </View>
           <DrawerTitle style={{ ...fontSize["2xl"], fontWeight: "600" }}>
             Use your suiss Account with Trail Routes
           </DrawerTitle>
-          <View
-            style={[styles.card, { backgroundColor: colors.surfaceSecondary }]}
-          >
+          <View style={[styles.card, { backgroundColor: colors.muted }]}>
             <View style={styles.nameRow}>
-              <Icon as={UserIcon} size={20} color={colors.labelSecondary} />
+              <Icon as={UserIcon} size={20} color={colors.mutedForeground} />
               <View>
                 <Text style={[fontSize.xs, secondary]}>Name</Text>
                 <Text style={fontSize.base}>Jamie Rivera</Text>
@@ -212,7 +210,7 @@ function LoginSheet({
               style={{
                 marginStart: 46,
                 height: 1,
-                backgroundColor: colors.separator,
+                backgroundColor: colors.border,
               }}
             />
             <RadioGroup
@@ -232,7 +230,7 @@ function LoginSheet({
                       : {
                           marginStart: 46,
                           borderTopWidth: 1,
-                          borderTopColor: colors.separator,
+                          borderTopColor: colors.border,
                         },
                   ]}
                 >
@@ -240,7 +238,7 @@ function LoginSheet({
                     <Icon
                       as={EnvelopeSimpleIcon}
                       size={20}
-                      color={colors.labelSecondary}
+                      color={colors.mutedForeground}
                     />
                   ) : null}
                   <View style={{ flex: 1 }}>
@@ -267,7 +265,7 @@ function LoginSheet({
             style={styles.button}
           >
             {busy ? (
-              <Spinner size={20} color={colors.onAccent} />
+              <Spinner size={20} color={colors.primaryForeground} />
             ) : (
               <Text style={styles.buttonText}>Continue with face scan</Text>
             )}

@@ -6,11 +6,11 @@ import XCTest
 
 private struct ListsBackdrop: View {
   var body: some View {
-    Color.surface
+    EsuissColor.background
       .overlay(alignment: .top) {
         VStack(alignment: .leading, spacing: 12) {
           ForEach(0..<14) { _ in
-            RoundedRectangle(cornerRadius: Radius.md).fill(Color.surfaceSecondary).frame(height: 40)
+            RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.muted).frame(height: 40)
           }
         }
         .padding(16)
@@ -38,12 +38,12 @@ private struct ItemsGallery: View {
             ItemTitle("Your profile has been verified.")
           }
           ItemActions {
-            Ph.caretRight.regular.frame(width: 16, height: 16).foregroundStyle(Color.labelSecondary)
+            Ph.caretRight.regular.frame(width: 16, height: 16).foregroundStyle(EsuissColor.mutedForeground)
           }
         }
         Item(.muted) {
           ItemMedia(.image) {
-            LinearGradient(colors: [.accent, .danger], startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: [EsuissColor.primary, EsuissColor.destructive], startPoint: .topLeading, endPoint: .bottomTrailing)
           }
           ItemContent {
             ItemTitle {
@@ -66,8 +66,8 @@ private struct ItemsGallery: View {
             ItemTitle("Extra small item")
           }
           ItemFooter {
-            Text("Footer").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
-            Text("2m ago").font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
+            Text("Footer").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
+            Text("2m ago").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
           }
         }
       }
@@ -75,25 +75,25 @@ private struct ItemsGallery: View {
         Item(action: {}) {
           ItemMedia(.icon) { Ph.wifiHigh.regular }
           ItemContent { ItemTitle("Wi-Fi") }
-          ItemActions { Text("Home").foregroundStyle(Color.labelSecondary) }
+          ItemActions { Text("Home").foregroundStyle(EsuissColor.mutedForeground) }
         }
         ItemSeparator()
         Item {
           ItemMedia(.icon) { Ph.bluetooth.regular }
           ItemContent { ItemTitle("Bluetooth") }
-          ItemActions { Text("On").foregroundStyle(Color.labelSecondary) }
+          ItemActions { Text("On").foregroundStyle(EsuissColor.mutedForeground) }
         }
       }
       HStack(spacing: 16) {
         ForEach(Spinner.Size.allCases, id: \.self) { size in
-          Spinner(size).foregroundStyle(Color.labelSecondary)
+          Spinner(size).foregroundStyle(EsuissColor.mutedForeground)
         }
         Button {} label: {
           Label { Text("Loading") } icon: { Spinner() }
         }
         .buttonStyle(.variant(size: .sm))
         .disabled(true)
-        SpinnerSpokes(dimension: 24, progress: 0.5).foregroundStyle(Color.labelSecondary)
+        SpinnerSpokes(dimension: 24, progress: 0.5).foregroundStyle(EsuissColor.mutedForeground)
       }
       Marker("Today", icon: Ph.calendar.regular)
       Marker("New messages", variant: .separator)
@@ -104,7 +104,7 @@ private struct ItemsGallery: View {
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -130,7 +130,7 @@ private struct InputsGallery: View {
         }
       }
       .fixedSize(horizontal: false, vertical: true)
-      .background(Color.surfaceSecondary.opacity(0.5), in: RoundedRectangle(cornerRadius: Radius.xl2))
+      .background(EsuissColor.muted.opacity(0.5), in: RoundedRectangle(cornerRadius: Radius.xl2))
       InputGroup {
         InputGroupInput("Search...", text: $query)
         InputGroupAddon { Ph.magnifyingGlass.regular.frame(width: 16, height: 16) }
@@ -170,7 +170,7 @@ private struct InputsGallery: View {
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -264,14 +264,14 @@ private struct ListsGallery: View {
         }
         ItemSeparator()
         TableListRow {
-          Text("Personal Hotspot").foregroundStyle(Color.label)
+          Text("Personal Hotspot").foregroundStyle(EsuissColor.foreground)
           Spacer()
-          Text("Off").foregroundStyle(Color.labelSecondary)
+          Text("Off").foregroundStyle(EsuissColor.mutedForeground)
         }
         TableListRow {
-          Text("VPN").foregroundStyle(Color.label)
+          Text("VPN").foregroundStyle(EsuissColor.foreground)
           Spacer()
-          Text("Connected").foregroundStyle(Color.labelSecondary)
+          Text("Connected").foregroundStyle(EsuissColor.mutedForeground)
         }
       }
       HStack(spacing: 8) {
@@ -312,16 +312,16 @@ private struct ListsGallery: View {
     }
     .padding(16)
     .frame(width: 402, alignment: .leading)
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 
   private func row(_ title: LocalizedStringKey) -> some View {
     Text(title)
       .font(TextStyle.base.font())
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .padding(.horizontal, 16)
       .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
-      .overlay(alignment: .bottom) { Rectangle().fill(Color.separator).frame(height: 1) }
+      .overlay(alignment: .bottom) { Rectangle().fill(EsuissColor.border).frame(height: 1) }
   }
 
   private func picker(selection: Binding<String?>) -> some View {

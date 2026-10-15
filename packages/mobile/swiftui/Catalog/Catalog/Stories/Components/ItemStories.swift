@@ -38,7 +38,7 @@ enum ItemStories {
           ItemFooter {
             Text("Footer")
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
         }
       }
@@ -47,7 +47,7 @@ enum ItemStories {
       ItemGroup(.inset) {
         Item(action: {}) {
           ItemMedia(.image) {
-            ItemTile(icon: Ph.wifiHigh.regular, color: .accent)
+            ItemTile(icon: Ph.wifiHigh.regular, color: EsuissColor.primary)
           }
           ItemContent {
             ItemTitle("Wi-Fi")
@@ -60,7 +60,7 @@ enum ItemStories {
         ItemSeparator()
         Item(action: {}) {
           ItemMedia(.image) {
-            ItemTile(icon: Ph.bell.regular, color: .danger)
+            ItemTile(icon: Ph.bell.regular, color: EsuissColor.destructive)
           }
           ItemContent {
             ItemTitle("Notifications")
@@ -79,7 +79,7 @@ private struct ItemChevron: View {
   var body: some View {
     Ph.caretRight.regular
       .frame(width: 16, height: 16)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -92,7 +92,7 @@ private struct ItemTile: View {
       color
       icon
         .frame(width: 20, height: 20)
-        .foregroundStyle(Color.onAccent)
+        .foregroundStyle(EsuissColor.primaryForeground)
     }
   }
 }

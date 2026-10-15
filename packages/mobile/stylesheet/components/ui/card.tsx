@@ -46,18 +46,18 @@ function Card({
   return (
     <CardSizeContext.Provider value={size}>
       <TextStyleContext.Provider
-        value={{ ...fontSize.base, color: colors.label }}
+        value={{ ...fontSize.base, color: colors.foreground }}
       >
         <View
           style={[
             styles.card,
             { gap: spacing, paddingVertical: spacing },
             variant === "filled"
-              ? { backgroundColor: colors.surfaceSecondary }
+              ? { backgroundColor: colors.muted }
               : [
                   styles.raised,
                   {
-                    backgroundColor: colors.surfaceRaised,
+                    backgroundColor: colors.card,
                     borderColor: isDark
                       ? "rgba(245, 245, 247, 0.1)"
                       : "rgba(29, 29, 31, 0.05)",
@@ -117,7 +117,7 @@ function CardDescription({
   const { colors } = useTheme()
   return (
     <Text
-      style={[styles.description, { color: colors.labelSecondary }, style]}
+      style={[styles.description, { color: colors.mutedForeground }, style]}
       {...props}
     />
   )

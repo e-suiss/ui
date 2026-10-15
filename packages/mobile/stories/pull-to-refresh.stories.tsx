@@ -27,7 +27,9 @@ function Feed() {
       }}
       contentContainerClassName="gap-3"
     >
-      <Text className="text-sm text-label-secondary">Pull down to refresh</Text>
+      <Text className="text-sm text-muted-foreground">
+        Pull down to refresh
+      </Text>
       <ItemGroup variant="inset">
         {Array.from({ length: count }, (_, index) => count - index).map(
           (update, index) => (

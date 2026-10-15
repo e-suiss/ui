@@ -34,8 +34,8 @@ private val visitors = RadialStackedVisitors(1260.0, 570.0)
 private val chartData = listOf(visitors)
 
 private val chartConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
-    "mobile" to ChartConfigItem("Mobile") { teal },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
 )
 
 private val total = visitors.desktop + visitors.mobile
@@ -64,8 +64,8 @@ fun RadialChartStacked(modifier: Modifier = Modifier) {
                     ) {
                         PolarAngleAxis(0.0..total)
                         ChartTooltip { ChartTooltipContent(hideLabel = true) }
-                        RadialBar("desktop", value = { it.desktop }, stackId = "a", cornerRadius = 6.dp, stroke = colors.surfaceSecondary, strokeWidth = 3.dp)
-                        RadialBar("mobile", value = { it.mobile }, stackId = "a", cornerRadius = 6.dp, stroke = colors.surfaceSecondary, strokeWidth = 3.dp)
+                        RadialBar("desktop", value = { it.desktop }, stackId = "a", cornerRadius = 6.dp, stroke = colors.muted, strokeWidth = 3.dp)
+                        RadialBar("mobile", value = { it.mobile }, stackId = "a", cornerRadius = 6.dp, stroke = colors.muted, strokeWidth = 3.dp)
                     }
                 }
                 Column(
@@ -77,9 +77,9 @@ fun RadialChartStacked(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         number.format(total),
-                        style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText("visitors", style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText("visitors", style = Typography.xs.copy(color = colors.mutedForeground))
                 }
             }
         }

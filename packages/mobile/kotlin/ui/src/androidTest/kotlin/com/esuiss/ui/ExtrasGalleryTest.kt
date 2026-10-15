@@ -117,6 +117,7 @@ import com.esuiss.ui.interactions.IslandRing
 import com.esuiss.ui.interactions.rememberCardStackState
 import com.esuiss.ui.interactions.useIsland
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.io.File
@@ -146,12 +147,12 @@ private enum class ExtrasScene {
 
 @Composable
 private fun Caption(text: String, modifier: Modifier = Modifier) {
-    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
 private fun SectionTitle(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.Medium))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.Medium))
 }
 
 @Composable
@@ -227,7 +228,7 @@ private fun QuestionnairePage() {
 private fun ThemeContent() {
     val theme = useTheme()
     Page {
-        BasicText("Appearance", style = Typography.xl3.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.Bold))
+        BasicText("Appearance", style = Typography.xl3.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.Bold))
         ThemeToggle()
         Caption("Theme: ${theme.theme.name.lowercase()} · Resolved: ${theme.resolvedTheme.name.lowercase()}")
         Card {
@@ -253,7 +254,7 @@ private fun WeatherWidget(size: WidgetSize? = null, resizable: Boolean = false, 
         modifier = Modifier.testTag("widget"),
     ) {
         WidgetHeader {
-            WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.Footprints, null, tint = colors.orange) }
+            WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.Footprints, null, tint = Palette.orange500) }
             WidgetTitle("Activity")
             if (this@Widget.size != WidgetSize.Small) {
                 WidgetAction { Caption("Today") }
@@ -274,7 +275,7 @@ private fun WeatherWidget(size: WidgetSize? = null, resizable: Boolean = false, 
                                 .weight(1f)
                                 .fillMaxHeight(it)
                                 .clip(RoundedCornerShape(Radius.xs))
-                                .background(colors.orange),
+                                .background(Palette.orange500),
                         )
                     }
                 }
@@ -322,7 +323,7 @@ private fun IslandControls() {
     val island = useIsland()
     val colors = EsuissTheme.colors
     Page {
-        BasicText("Island", style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold))
+        BasicText("Island", style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold))
         Caption("View: ${island.view.name.lowercase()}")
         Button(
             "New message",
@@ -330,7 +331,7 @@ private fun IslandControls() {
                 island.notify(
                     title = "Jordan Lee",
                     description = "Are we still on for Saturday?",
-                    icon = { Icon(PhosphorIcons.Fill.ChatCircle, null, tint = colors.green) },
+                    icon = { Icon(PhosphorIcons.Fill.ChatCircle, null, tint = Palette.green500) },
                 )
             },
             variant = ButtonVariant.Secondary,
@@ -341,7 +342,7 @@ private fun IslandControls() {
                 island.notify(
                     title = "Design review",
                     description = "Starts in 10 minutes",
-                    icon = { Icon(PhosphorIcons.Fill.Bell, null, tint = colors.orange) },
+                    icon = { Icon(PhosphorIcons.Fill.Bell, null, tint = Palette.orange500) },
                 )
             },
             variant = ButtonVariant.Secondary,
@@ -357,18 +358,18 @@ private fun IslandPage() {
         IslandControls()
         Island(
             compactLeading = {
-                Icon(PhosphorIcons.Fill.Timer, null, tint = EsuissTheme.colors.orange)
-                BasicText("12:48", style = Typography.sm.copy(color = EsuissTheme.colors.orange, fontWeight = FontWeight.SemiBold))
+                Icon(PhosphorIcons.Fill.Timer, null, tint = Palette.orange500)
+                BasicText("12:48", style = Typography.sm.copy(color = Palette.orange500, fontWeight = FontWeight.SemiBold))
             },
-            compactTrailing = { IslandRing(progress, color = EsuissTheme.colors.orange) },
-            minimal = { IslandRing(progress, color = EsuissTheme.colors.orange) },
+            compactTrailing = { IslandRing(progress, color = Palette.orange500) },
+            minimal = { IslandRing(progress, color = Palette.orange500) },
             modifier = Modifier.testTag("island"),
         ) {
             IslandExpandedRegion(IslandRegion.Leading) {
-                Icon(PhosphorIcons.Fill.Timer, null, size = 28.dp, tint = EsuissTheme.colors.orange)
+                Icon(PhosphorIcons.Fill.Timer, null, size = 28.dp, tint = Palette.orange500)
             }
             IslandExpandedRegion(IslandRegion.Trailing) {
-                IslandRing(progress, modifier = Modifier.size(40.dp), color = EsuissTheme.colors.orange)
+                IslandRing(progress, modifier = Modifier.size(40.dp), color = Palette.orange500)
             }
             IslandExpandedRegion(IslandRegion.Center) {
                 val foreground = LocalContentColor.current
@@ -433,7 +434,7 @@ private fun QrPage(state: QrScannerState) {
                 .align(Alignment.TopStart)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(16.dp),
-            style = Typography.xs.copy(color = EsuissTheme.colors.onMedia.copy(alpha = 0.7f)),
+            style = Typography.xs.copy(color = Palette.white.copy(alpha = 0.7f)),
         )
     }
 }
@@ -442,7 +443,7 @@ private fun QrPage(state: QrScannerState) {
 private fun SignaturePage(onSvg: (String) -> Unit) {
     var strokes by remember { mutableStateOf<List<SignatureStroke>>(emptyList()) }
     Page {
-        BasicText("Sign to confirm", style = Typography.lg.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold))
+        BasicText("Sign to confirm", style = Typography.lg.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold))
         SignaturePad(
             value = strokes,
             onValueChange = {
@@ -469,11 +470,11 @@ private val Places = listOf(
 @Composable
 private fun CardStackPage() {
     val colors = EsuissTheme.colors
-    val tones = listOf(colors.blue to colors.purple, colors.orange to colors.pink, colors.green to colors.teal, colors.indigo to colors.blue, colors.yellow to colors.orange)
+    val tones = listOf(Palette.blue500 to Palette.purple500, Palette.orange500 to Palette.pink500, Palette.green500 to Palette.teal500, Palette.indigo500 to Palette.blue500, Palette.yellow500 to Palette.orange500)
     val state = rememberCardStackState()
     var last by remember { mutableStateOf("None") }
     Page {
-        BasicText("Discover", style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold))
+        BasicText("Discover", style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold))
         CardStack(
             items = Places,
             key = { it.name },

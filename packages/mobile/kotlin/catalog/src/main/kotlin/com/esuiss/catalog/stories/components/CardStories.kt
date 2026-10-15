@@ -41,6 +41,7 @@ import com.esuiss.ui.components.Input
 import com.esuiss.ui.components.Label
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 val cardStories = StoryGroup(
@@ -143,7 +144,7 @@ private fun CardWithImage() {
                 }
                 .fillMaxWidth()
                 .aspectRatio(16f / 9f)
-                .background(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))),
+                .background(Brush.linearGradient(listOf(Palette.teal500, Palette.blue500, Palette.indigo500))),
         )
         CardHeader("Mountain retreat", description = "A quiet cabin with a view.")
         CardFooter {
@@ -159,7 +160,7 @@ private fun CardFilled() {
         CardContent {
             Text(
                 "Photos and backups take up most of your space.",
-                style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+                style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
             )
         }
     }

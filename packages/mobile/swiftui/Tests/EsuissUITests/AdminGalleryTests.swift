@@ -29,19 +29,19 @@ private struct Board: View {
         VStack(alignment: .leading, spacing: 10) {
           Text(verbatim: shot.caption)
             .font(TextStyle.xs.font(weight: .semibold))
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           shot.view
             .frame(width: shot.width, height: shot.height)
             .clipShape(RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
             .overlay {
-              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(Color.separator)
+              RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(EsuissColor.border)
             }
         }
       }
     }
     .padding(24)
     .fixedSize()
-    .background(Color.surface)
+    .background(EsuissColor.background)
   }
 }
 
@@ -55,7 +55,7 @@ final class AdminGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let host = UIHostingController(rootView: Board(shots: shots)
         .frame(width: size.width, height: size.height, alignment: .topLeading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US"))
         .environment(\.chartAnimationActive, false))
       host.safeAreaRegions = []
@@ -223,7 +223,7 @@ final class AdminGalleryTests: XCTestCase {
     XCTAssertEqual(entries.first?.event.actor, LogLive.feed[3].actor)
 
     XCTAssertEqual(LogSecurity.score(LogSecurity.initialAlerts), 63)
-    XCTAssertEqual(LogSecurity.tone(63), .red)
+    XCTAssertEqual(LogSecurity.tone(63), Palette.red500)
     XCTAssertEqual(LogSecurity.score(LogSecurity.initialAlerts.map { var alert = $0; alert.resolved = true; return alert }), 100)
 
     XCTAssertEqual(UsersInvite.email(" sam@company.com,"), "sam@company.com")

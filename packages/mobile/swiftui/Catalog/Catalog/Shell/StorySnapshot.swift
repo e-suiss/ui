@@ -29,7 +29,7 @@ enum StorySnapshot {
     let host = UIHostingController(
       rootView: content
         .frame(maxHeight: .infinity, alignment: .top)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
     )
     host.safeAreaRegions = []

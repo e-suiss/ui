@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
@@ -20,9 +21,9 @@ fun Label(
     content: @Composable RowScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val color = if (enabled) colors.label else colors.labelQuaternary
+    val color = colors.foreground
     Row(
-        modifier = modifier,
+        modifier = modifier.alpha(if (enabled) 1f else 0.5f),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

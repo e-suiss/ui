@@ -57,6 +57,7 @@ import com.esuiss.ui.interactions.IslandRegion
 import com.esuiss.ui.interactions.IslandRing
 import com.esuiss.ui.interactions.useIsland
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -93,7 +94,7 @@ private fun IslandNotifyButtons(extra: @Composable () -> Unit = {}) {
                 island.notify(
                     title = "Jordan Lee",
                     description = "Are we still on for Saturday?",
-                    icon = { Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, tint = colors.green) },
+                    icon = { Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, tint = Palette.green500) },
                 )
             },
             variant = ButtonVariant.Secondary,
@@ -104,7 +105,7 @@ private fun IslandNotifyButtons(extra: @Composable () -> Unit = {}) {
                 island.notify(
                     title = "Design review",
                     description = "Starts in 10 minutes",
-                    icon = { Icon(PhosphorIcons.Fill.Bell, contentDescription = null, tint = colors.orange) },
+                    icon = { Icon(PhosphorIcons.Fill.Bell, contentDescription = null, tint = Palette.orange500) },
                 )
             },
             variant = ButtonVariant.Secondary,
@@ -117,7 +118,7 @@ private fun IslandNotifyButtons(extra: @Composable () -> Unit = {}) {
 private fun IslandProgress(progress: Float) {
     val colors = EsuissTheme.colors
     if (progress >= 1f) {
-        Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = colors.green)
+        Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = Palette.green500)
     } else {
         IslandRing(progress)
     }
@@ -131,7 +132,7 @@ private fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
     val percent = (current * 100).roundToInt()
     Island(
         compactLeading = progress?.let {
-            { Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, tint = colors.accent) }
+            { Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, tint = colors.primary) }
         },
         compactTrailing = progress?.let { value -> { IslandProgress(value) } },
         minimal = progress?.let { value -> { IslandProgress(value) } },
@@ -145,7 +146,7 @@ private fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
                     .background(foreground.copy(alpha = 0.15f), RoundedCornerShape(Radius.xl)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, size = 24.dp, tint = colors.accent)
+                Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, size = 24.dp, tint = colors.primary)
             }
         }
         IslandExpandedRegion(IslandRegion.Trailing) {
@@ -183,7 +184,7 @@ private fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
                     Modifier
                         .fillMaxWidth(current.coerceIn(0f, 1f))
                         .fillMaxHeight()
-                        .background(colors.accent, CircleShape),
+                        .background(colors.primary, CircleShape),
                 )
             }
             Spacer(Modifier.height(12.dp))
@@ -195,7 +196,8 @@ private fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
                     .height(44.dp)
                     .alpha(if (done) 0.5f else 1f)
                     .clip(CircleShape)
-                    .background(foreground.copy(alpha = if (pressed) 0.25f else 0.15f))
+                    .alpha(if (pressed) 0.8f else 1f)
+                    .background(foreground.copy(alpha = 0.15f))
                     .clickable(interactionSource = interaction, indication = null, enabled = !done, role = Role.Button, onClick = onCancel),
                 contentAlignment = Alignment.Center,
             ) {
@@ -222,7 +224,7 @@ private fun IslandDownloads(initial: Float? = null, start: IslandStart = IslandS
             island.notify(
                 title = "Download complete",
                 description = "Design-Kit.zip",
-                icon = { Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = colors.green) },
+                icon = { Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = Palette.green500) },
             )
         }
     }
@@ -242,7 +244,7 @@ private fun IslandDownloads(initial: Float? = null, start: IslandStart = IslandS
         Text(
             "Start a download, then tap the pill at the top to see the details. Swipe up on it to close.",
             modifier = Modifier.widthIn(max = 320.dp),
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             textAlign = TextAlign.Center,
         )
         if (initial == null) {
@@ -277,7 +279,7 @@ private fun IslandNoticeOnMount() {
             title = "Jordan Lee",
             description = "Are we still on for Saturday?",
             duration = 600000L,
-            icon = { Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, tint = colors.green) },
+            icon = { Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, tint = Palette.green500) },
         )
     }
     Column(
@@ -289,7 +291,7 @@ private fun IslandNoticeOnMount() {
         Text(
             "The pill grows to show the notification and shrinks back on its own.",
             modifier = Modifier.widthIn(max = 320.dp),
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             textAlign = TextAlign.Center,
         )
         IslandNotifyButtons()

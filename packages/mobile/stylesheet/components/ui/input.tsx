@@ -49,23 +49,18 @@ function Input({
         styles.root,
         size === "md" && styles.md,
         size === "sm" && styles.sm,
-        { backgroundColor: colors.control, color: colors.label },
-        state.focused && { borderColor: colors.focus },
+        { backgroundColor: colors.secondary, color: colors.foreground },
+        state.focused && { borderColor: colors.ring },
         state.invalid && {
-          borderColor: colors.danger,
-          backgroundColor: withAlpha(colors.danger, isDark ? 0.1 : 0.05),
+          borderColor: colors.destructive,
+          backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
         },
-        state.disabled && {
-          backgroundColor: colors.controlDisabled,
-          color: colors.labelQuaternary,
-        },
+        state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}
-      placeholderTextColor={
-        props.disabled ? colors.labelQuaternary : colors.labelSecondary
-      }
-      cursorColor={colors.accent}
-      selectionColor={colors.accent}
+      placeholderTextColor={colors.mutedForeground}
+      cursorColor={colors.primary}
+      selectionColor={colors.primary}
       {...props}
     />
   )

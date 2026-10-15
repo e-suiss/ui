@@ -67,7 +67,7 @@ function WithDescriptionDemo() {
         >
           Enable notifications
         </Label>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           You can enable or disable notifications at any time.
         </Text>
       </View>

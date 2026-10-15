@@ -34,15 +34,15 @@ private enum Device: String, CaseIterable {
 private let kinds = ["apps", "photos", "system", "backups", "drive", "messages", "mail", "other", "free"]
 
 private let chartConfig: ChartConfig = [
-  "apps": .init("Apps", color: .red),
-  "photos": .init("Photos", color: .orange),
-  "system": .init("System", color: .gray),
-  "backups": .init("Backups", color: .purple),
-  "drive": .init("Drive", color: .blue),
-  "messages": .init("Messages", color: .green),
-  "mail": .init("Mail", color: .cyan),
-  "other": .init("Other", color: .yellow),
-  "free": .init("Free", color: .control),
+  "apps": .init("Apps", color: Palette.red500),
+  "photos": .init("Photos", color: EsuissColor.chart4),
+  "system": .init("System", color: EsuissColor.chart5),
+  "backups": .init("Backups", color: Palette.purple500),
+  "drive": .init("Drive", color: EsuissColor.chart1),
+  "messages": .init("Messages", color: Palette.green500),
+  "mail": .init("Mail", color: Palette.cyan500),
+  "other": .init("Other", color: Palette.yellow500),
+  "free": .init("Free", color: EsuissColor.secondary),
 ]
 
 public struct PieChartInteractive: View {
@@ -96,7 +96,7 @@ public struct PieChartInteractive: View {
           Text("\(size(used)) GB of \(Int(device.total)) GB used")
             .textStyle(.sm)
             .monospacedDigit()
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         ToggleGroup(selection: deviceBinding, size: .sm, spacing: 0) {
@@ -127,7 +127,7 @@ public struct PieChartInteractive: View {
               VStack(spacing: 0) {
                 Text(LocalizedStringKey(active.map { chartConfig.label(kinds[$0]) } ?? "Used"))
                   .textStyle(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 Text(verbatim: gigabytes(value))
                   .textStyle(.xl3, weight: .semibold)
                   .monospacedDigit()
@@ -138,7 +138,7 @@ public struct PieChartInteractive: View {
                 Text(verbatim: "\(Int((value / max(total, 1) * 100).rounded()))%")
                   .textStyle(.sm)
                   .monospacedDigit()
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
               .multilineTextAlignment(.center)
             }
@@ -183,7 +183,7 @@ public struct PieChartInteractive: View {
       }
     }
     .frame(height: 10)
-    .background(Color.control)
+    .background(EsuissColor.secondary)
     .clipShape(Capsule())
     .accessibilityHidden(true)
   }
@@ -198,22 +198,22 @@ public struct PieChartInteractive: View {
           .fill(chartConfig.color(kind))
           .overlay {
             if kind == "free" {
-              Circle().strokeBorder(Color.separatorStrong, lineWidth: 1)
+              Circle().strokeBorder(EsuissColor.input, lineWidth: 1)
             }
           }
           .frame(width: 10, height: 10)
         Text(LocalizedStringKey(chartConfig.label(kind)))
           .textStyle(.base)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
         Text(verbatim: gigabytes(value))
           .textStyle(.base)
           .monospacedDigit()
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 8)
       .padding(.vertical, 9)
-      .background(active == index ? Color.control : .clear, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+      .background(active == index ? EsuissColor.secondary : .clear, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)

@@ -53,7 +53,7 @@ function AlertSheetOverlay({
       }
       className={(state) =>
         cn(
-          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-scrim",
+          "absolute top-0 right-0 bottom-0 left-0 z-50 bg-black/50",
           resolveClassName(className, state)
         )
       }
@@ -118,7 +118,7 @@ function AlertSheetGroup({ className, children, ...props }: ViewProps) {
   return (
     <View
       className={cn(
-        "flex-col overflow-hidden rounded-2xl bg-surface-raised",
+        "flex-col overflow-hidden rounded-2xl bg-popover",
         className
       )}
       {...props}
@@ -128,7 +128,7 @@ function AlertSheetGroup({ className, children, ...props }: ViewProps) {
           key={React.isValidElement(child) ? (child.key ?? index) : index}
         >
           {index > 0 ? (
-            <View accessible={false} className="h-px bg-separator" />
+            <View accessible={false} className="h-px bg-border" />
           ) : null}
           {child}
         </React.Fragment>
@@ -156,7 +156,7 @@ function AlertSheetTitle({
     <AlertSheetPrimitive.Title
       className={(state) =>
         cn(
-          "text-center text-sm font-semibold text-label-secondary",
+          "text-center text-sm font-semibold text-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -173,7 +173,7 @@ function AlertSheetDescription({
     <AlertSheetPrimitive.Description
       className={(state) =>
         cn(
-          "text-center text-sm text-label-secondary",
+          "text-center text-sm text-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -183,17 +183,17 @@ function AlertSheetDescription({
 }
 
 const alertSheetActionVariants = cva(
-  "min-h-14 w-full flex-row items-center justify-center gap-3 px-4 active:bg-item-pressed"
+  "min-h-14 w-full flex-row items-center justify-center gap-3 px-4 active:opacity-80"
 )
 
 const alertSheetActionTextVariants = cva("text-center text-lg", {
   variants: {
     variant: {
-      default: "text-link",
-      destructive: "text-danger",
+      default: "text-primary",
+      destructive: "text-destructive",
     },
     disabled: {
-      true: "text-label-quaternary",
+      true: "opacity-50",
     },
   },
   defaultVariants: {
@@ -262,7 +262,7 @@ function AlertSheetCancel({
           className={(state) =>
             cn(
               alertSheetActionVariants(),
-              "rounded-2xl bg-surface-raised active:bg-surface-tertiary",
+              "rounded-2xl bg-popover active:opacity-80",
               resolveClassName(className, state)
             )
           }

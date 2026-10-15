@@ -92,10 +92,10 @@ private fun AlertDialogWithMedia() {
                     Box(
                         Modifier
                             .matchParentSize()
-                            .background(colors.surfaceRaised, CircleShape)
-                            .background(colors.danger.copy(alpha = 0.1f), CircleShape),
+                            .background(colors.popover, CircleShape)
+                            .background(colors.destructive.copy(alpha = 0.1f), CircleShape),
                     )
-                    Icon(PhosphorIcons.Regular.Trash, contentDescription = null, tint = colors.danger)
+                    Icon(PhosphorIcons.Regular.Trash, contentDescription = null, tint = colors.destructive)
                 }
                 AlertDialogTitle("Delete this project?")
                 AlertDialogDescription(

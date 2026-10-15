@@ -91,7 +91,7 @@ public struct TabsList<Content: View>: View {
     .padding(variant == .line && vertical ? .trailing : [], 5)
     .background {
       if variant == .default {
-        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).fill(Color.control)
+        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).fill(EsuissColor.secondary)
       }
     }
     .environment(\.tabsListVariant, variant)
@@ -126,7 +126,8 @@ public struct TabsTrigger<Label: View>: View {
         .font(TextStyle.sm.font())
         .tracking(TextStyle.sm.letterSpacing)
         .lineLimit(1)
-        .foregroundStyle(!isEnabled ? Color.labelQuaternary : active ? .label : .labelSecondary)
+        .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
+        .opacity(isEnabled ? 1 : 0.5)
         .padding(.horizontal, 12)
         .padding(.vertical, 4)
         .frame(maxWidth: vertical ? .infinity : nil, alignment: vertical ? .leading : .center)
@@ -148,12 +149,12 @@ public struct TabsTrigger<Label: View>: View {
     let vertical = tabs.orientation == .vertical
     if variant == .line {
       Rectangle()
-        .fill(Color.label)
+        .fill(EsuissColor.foreground)
         .frame(width: vertical ? 2 : nil, height: vertical ? nil : 2)
         .offset(x: vertical ? 4 : 0, y: vertical ? 0 : 5)
     } else {
       RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
-        .fill(colorScheme == .dark ? Color.labelQuaternary : .surfaceRaised)
+        .fill(colorScheme == .dark ? EsuissColor.border : EsuissColor.card)
         .shadow(color: .black.opacity(colorScheme == .dark ? 0 : 0.08), radius: 1.5, y: 1)
     }
   }
@@ -168,7 +169,7 @@ extension TabsTrigger where Label == Text {
 private struct TabsTriggerStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.7 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }
 

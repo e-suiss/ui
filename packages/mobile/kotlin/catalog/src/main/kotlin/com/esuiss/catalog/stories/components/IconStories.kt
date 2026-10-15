@@ -69,9 +69,9 @@ private fun IconColors() {
     val colors = EsuissTheme.colors
     IconRow {
         Icon(PhosphorIcons.Regular.Info, contentDescription = null)
-        Icon(PhosphorIcons.Regular.Gear, contentDescription = null, tint = colors.labelSecondary)
-        Icon(PhosphorIcons.Fill.FillHeart, contentDescription = null, tint = colors.accent)
-        Icon(PhosphorIcons.Regular.Warning, contentDescription = null, tint = colors.danger)
+        Icon(PhosphorIcons.Regular.Gear, contentDescription = null, tint = colors.mutedForeground)
+        Icon(PhosphorIcons.Fill.FillHeart, contentDescription = null, tint = colors.primary)
+        Icon(PhosphorIcons.Regular.Warning, contentDescription = null, tint = colors.destructive)
     }
 }
 

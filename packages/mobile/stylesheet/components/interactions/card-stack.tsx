@@ -439,12 +439,12 @@ function CardStackEmpty({
   const { colors } = useTheme()
   return (
     <View
-      style={[styles.empty, { borderColor: colors.separator }, style]}
+      style={[styles.empty, { borderColor: colors.border }, style]}
       {...props}
     >
       {wrapText(children, {
         ...styles.emptyText,
-        color: colors.labelSecondary,
+        color: colors.mutedForeground,
       })}
     </View>
   )
@@ -490,7 +490,7 @@ function CardStackSwipeButton({
         <Icon
           as={direction === "left" ? XIcon : HeartIcon}
           size={24}
-          color={direction === "left" ? colors.danger : colors.accent}
+          color={direction === "left" ? colors.destructive : colors.primary}
         />
       )}
     </Button>

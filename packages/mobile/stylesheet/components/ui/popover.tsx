@@ -104,7 +104,7 @@ function PopoverContent({
           style={styles.positioner}
         >
           <TextStyleContext.Provider
-            value={{ ...fontSize.base, color: colors.label }}
+            value={{ ...fontSize.base, color: colors.foreground }}
           >
             <PopoverPrimitive.Popup
               render={
@@ -113,8 +113,11 @@ function PopoverContent({
               style={(state) => [
                 styles.content,
                 {
-                  borderColor: withAlpha(colors.label, isDark ? 0.1 : 0.05),
-                  backgroundColor: colors.surfaceRaised,
+                  borderColor: withAlpha(
+                    colors.foreground,
+                    isDark ? 0.1 : 0.05
+                  ),
+                  backgroundColor: colors.popover,
                 },
                 typeof style === "function" ? style(state) : style,
               ]}
@@ -130,7 +133,9 @@ function PopoverContent({
 function PopoverHeader({ style, ...props }: ViewProps) {
   const { colors } = useTheme()
   return (
-    <TextStyleContext.Provider value={{ ...fontSize.sm, color: colors.label }}>
+    <TextStyleContext.Provider
+      value={{ ...fontSize.sm, color: colors.foreground }}
+    >
       <View style={[styles.header, style]} {...props} />
     </TextStyleContext.Provider>
   )
@@ -145,7 +150,7 @@ function PopoverTitle({
     <PopoverPrimitive.Title
       style={(state) => [
         styles.title,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -162,7 +167,7 @@ function PopoverDescription({
     <PopoverPrimitive.Description
       style={(state) => [
         styles.description,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

@@ -138,19 +138,19 @@ struct TopBannerCard: View {
       if let icon = item.icon {
         icon
           .frame(width: 20, height: 20)
-          .foregroundStyle(Color.link)
+          .foregroundStyle(EsuissColor.primary)
           .frame(width: 36, height: 36)
-          .background(Color.accentSurface, in: Circle())
+          .background(Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2)), in: Circle())
           .accessibilityHidden(true)
       }
       VStack(alignment: .leading, spacing: 2) {
         Text(item.title)
           .scaledFont(.sm, weight: .semibold)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         if let description = item.description {
           Text(description)
             .scaledFont(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .lineLimit(3)
         }
       }
@@ -172,11 +172,11 @@ struct TopBannerCard: View {
     .frame(maxWidth: 512)
     .background {
       shape
-        .fill(Color.surfaceRaised)
+        .fill(EsuissColor.card)
         .shadow(dark ? .lg : Shadow(color: .black.opacity(0.14), radius: 16, y: 8))
     }
     .overlay {
-      if !dark { shape.strokeBorder(Color.label.opacity(0.05)) }
+      if !dark { shape.strokeBorder(EsuissColor.foreground.opacity(0.05)) }
     }
     .padding(.horizontal, 12)
     .padding(.top, 4)

@@ -28,24 +28,24 @@ public struct GridLineup: View {
   static var models: [Model] {
     [
       Model(name: "Phone Pro", tagline: "Pro at its very core.", price: "$1,099", kicker: "New", image: photo("1714972384975-fbd4f19b1bb3"), alt: "An orange phone on a warm gradient", finishes: [
-        Finish(label: "Cosmic Orange", color: .orange),
-        Finish(label: "Deep Blue", color: .indigo),
-        Finish(label: "Silver", color: .gray),
+        Finish(label: "Cosmic Orange", color: Palette.orange500),
+        Finish(label: "Deep Blue", color: Palette.indigo500),
+        Finish(label: "Silver", color: Palette.zinc500),
       ]),
       Model(name: "Phone Air", tagline: "The thinnest phone ever.", price: "$999", kicker: "New", image: photo("1664883410931-2edffc8be5e6"), alt: "A silver phone on a light grey background", finishes: [
-        Finish(label: "Sky Blue", color: .cyan),
-        Finish(label: "Light Gold", color: .yellow),
-        Finish(label: "Space Black", color: .media),
+        Finish(label: "Sky Blue", color: Palette.cyan500),
+        Finish(label: "Light Gold", color: Palette.yellow500),
+        Finish(label: "Space Black", color: Palette.black),
       ]),
       Model(name: "Phone", tagline: "Better in every way.", price: "$799", image: photo("1714578187196-29775454aa39"), alt: "A phone floating among blue spheres", finishes: [
-        Finish(label: "Lavender", color: .purple),
-        Finish(label: "Sage", color: .mint),
-        Finish(label: "Mist Blue", color: .teal),
-        Finish(label: "Black", color: .media),
+        Finish(label: "Lavender", color: Palette.purple500),
+        Finish(label: "Sage", color: Palette.teal400),
+        Finish(label: "Mist Blue", color: Palette.teal500),
+        Finish(label: "Black", color: Palette.black),
       ]),
       Model(name: "Phone e", tagline: "Speed. Battery. Value.", price: "$599", image: photo("1703676311066-34caf2cbee33"), alt: "A phone on a pink and purple backdrop", finishes: [
-        Finish(label: "Black", color: .media),
-        Finish(label: "White", color: .onMedia),
+        Finish(label: "Black", color: Palette.black),
+        Finish(label: "White", color: Palette.white),
       ]),
     ]
   }
@@ -96,7 +96,7 @@ private struct GridLineupModel: View {
 
   var body: some View {
     VStack(spacing: 0) {
-      Color.control
+      EsuissColor.secondary
         .overlay {
           AsyncImage(url: model.image) { phase in
             if let image = phase.image {
@@ -125,7 +125,7 @@ private struct GridLineupModel: View {
         }
       }
       .scaledFont(.xs, weight: .semibold)
-      .foregroundStyle(Color.warning)
+      .foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
       .padding(.top, 8)
       Text(verbatim: model.name)
         .scaledFont(.xl, weight: .semibold)
@@ -136,7 +136,7 @@ private struct GridLineupModel: View {
         .padding(.top, 6)
       Text("From \(model.price)")
         .scaledFont(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.top, 6)
       VStack(spacing: 4) {
         Button("Buy") {
@@ -167,13 +167,13 @@ private struct GridLineupSwatch: View {
       Circle()
         .fill(finish.color)
         .overlay {
-          Circle().strokeBorder(Color.label.opacity(0.15), lineWidth: 1)
+          Circle().strokeBorder(EsuissColor.foreground.opacity(0.15), lineWidth: 1)
         }
         .frame(width: 12, height: 12)
         .padding(3)
         .overlay {
           if selected {
-            Circle().strokeBorder(Color.labelSecondary, lineWidth: 1.5)
+            Circle().strokeBorder(EsuissColor.mutedForeground, lineWidth: 1.5)
           }
         }
         .frame(width: 30, height: 44)

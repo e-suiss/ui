@@ -278,7 +278,7 @@ fun CarouselDots(
         modifier = modifier
             .height(36.dp)
             .clip(CircleShape)
-            .background(if (plain) Color.Transparent else colors.control, CircleShape)
+            .background(if (plain) Color.Transparent else colors.secondary, CircleShape)
             .padding(horizontal = if (plain) 0.dp else 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -288,12 +288,12 @@ fun CarouselDots(
             val pressed by interaction.collectIsPressedAsState()
             val width by animateDpAsState(if (active) 24.dp else 8.dp, tween(500, easing = CarouselEasing), label = "dot")
             val target = when {
-                active && !state.autoplayEnabled -> colors.label
-                pressed -> colors.labelSecondary
-                else -> colors.labelTertiary
+                active && !state.autoplayEnabled -> colors.foreground
+                pressed -> colors.mutedForeground
+                else -> colors.mutedForeground
             }
             val color by animateColorAsState(target, tween(500, easing = CarouselEasing), label = "dotColor")
-            val fill = colors.label
+            val fill = colors.foreground
             Box(
                 modifier = Modifier
                     .fillMaxHeight()

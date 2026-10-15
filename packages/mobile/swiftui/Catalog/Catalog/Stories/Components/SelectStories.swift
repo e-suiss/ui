@@ -23,7 +23,7 @@ enum SelectStories {
           .accessibilityLabel(Text("Favorite fruit"))
         Text("Used to personalize your recommendations.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     },
@@ -37,7 +37,7 @@ enum SelectStories {
           .invalid()
         Text("Please select a fruit.")
           .textStyle(.sm)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     },

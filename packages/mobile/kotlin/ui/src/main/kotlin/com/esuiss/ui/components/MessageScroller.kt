@@ -41,10 +41,10 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -254,8 +254,9 @@ fun BoxScope.MessageScrollerButton(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
-                .background(if (pressed) lerp(colors.surface, colors.label, 0.1f) else colors.surface, CircleShape)
-                .border(1.dp, colors.separator, CircleShape)
+                .alpha(if (pressed) 0.8f else 1f)
+                .background(colors.background, CircleShape)
+                .border(1.dp, colors.border, CircleShape)
                 .clickable(
                     interactionSource = interaction,
                     indication = null,
@@ -269,7 +270,7 @@ fun BoxScope.MessageScrollerButton(
                 contentDescription = null,
                 modifier = if (end) Modifier else Modifier.rotate(180f),
                 size = 16.dp,
-                tint = colors.label,
+                tint = colors.foreground,
             )
         }
         if (unread > 0) {
@@ -277,16 +278,16 @@ fun BoxScope.MessageScrollerButton(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .offset(x = 8.dp, y = (-6).dp)
-                    .background(colors.surface, CircleShape)
+                    .background(colors.background, CircleShape)
                     .padding(2.dp)
                     .defaultMinSize(minWidth = 18.dp, minHeight = 18.dp)
-                    .background(colors.accent, CircleShape)
+                    .background(colors.primary, CircleShape)
                     .padding(horizontal = 5.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 BasicText(
                     if (unread > 99) "99+" else unread.toString(),
-                    style = Typography.xs2.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xs2.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
                     maxLines = 1,
                 )
             }

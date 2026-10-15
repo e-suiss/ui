@@ -25,6 +25,7 @@ import com.esuiss.ui.components.ChartContainer
 import com.esuiss.ui.components.RadialBarChart
 import com.esuiss.ui.components.chartColor
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 private class RadialBatteriesDevice(val name: String, val level: Double)
@@ -42,7 +43,7 @@ private const val LOW = 20.0
 private fun Battery(device: RadialBatteriesDevice, modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
     val low = device.level <= LOW
-    val chartConfig = ChartConfig("level" to ChartConfigItem(device.name) { if (low) red else green })
+    val chartConfig = ChartConfig("level" to ChartConfigItem(device.name) { if (low) Palette.red500 else Palette.green500 })
     Column(
         modifier.clearAndSetSemantics { contentDescription = "${device.name}, ${device.level.toInt()}%" },
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,14 +66,14 @@ private fun Battery(device: RadialBatteriesDevice, modifier: Modifier = Modifier
             }
             BasicText(
                 device.name.take(1),
-                style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
             )
         }
         BasicText(
             "${device.level.toInt()}%",
-            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
         )
-        BasicText(device.name, style = Typography.xs.copy(color = colors.labelSecondary))
+        BasicText(device.name, style = Typography.xs.copy(color = colors.mutedForeground))
     }
 }
 

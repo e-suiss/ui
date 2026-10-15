@@ -10,8 +10,8 @@ private let chartData: [(skill: String, thisMonth: Double, lastMonth: Double)] =
 ]
 
 private let chartConfig: ChartConfig = [
-  "thisMonth": .init("This month", color: .green),
-  "lastMonth": .init("Last month", color: .gray),
+  "thisMonth": .init("This month", color: Palette.green500),
+  "lastMonth": .init("Last month", color: EsuissColor.chart5),
 ]
 
 public struct RadarChartGridFilled: View {
@@ -28,7 +28,7 @@ public struct RadarChartGridFilled: View {
             [Radar("thisMonth", values: chartData.map(\.thisMonth), fillOpacity: 0.45, strokeWidth: 0)],
             labels: chartData.map(\.skill),
             outerRadius: 0.7,
-            grid: PolarGrid(gridType: .circle, stroke: .surfaceSecondary, strokeWidth: 2, fill: .control, fillOpacity: 0.5),
+            grid: PolarGrid(gridType: .circle, stroke: EsuissColor.muted, strokeWidth: 2, fill: EsuissColor.secondary, fillOpacity: 0.5),
             selection: $selection,
             accessibilityLabel: "Filled grid"
           ) { payload in

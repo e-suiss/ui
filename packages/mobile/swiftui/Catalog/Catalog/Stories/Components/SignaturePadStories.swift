@@ -79,7 +79,7 @@ private struct SignaturePadExportDemo: View {
       .buttonStyle(.variant(.outline))
       Text(verbatim: exported.isEmpty ? "\(strokes.count) strokes" : "\(strokes.count) strokes · \(exported)")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }

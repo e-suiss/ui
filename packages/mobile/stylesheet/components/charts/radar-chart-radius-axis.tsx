@@ -28,13 +28,13 @@ const chartData = [
 ]
 
 const chartConfig = {
-  thisMonth: { label: "This month", color: "green" },
-  lastMonth: { label: "Last month", color: "gray" },
+  thisMonth: { label: "This month", color: "green-500" },
+  lastMonth: { label: "Last month", color: "chart-5" },
 } satisfies ChartConfig
 
 export function RadarChartRadiusAxis() {
   const { colors } = useTheme()
-  const tickStyle = { ...fontSize["2xs"], color: colors.labelTertiary }
+  const tickStyle = { ...fontSize["2xs"], color: colors.mutedForeground }
   return (
     <Card variant="filled" size="sm">
       <CardHeader>

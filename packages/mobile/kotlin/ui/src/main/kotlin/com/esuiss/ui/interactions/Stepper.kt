@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -165,7 +166,7 @@ fun StepperInput(
         if (!focused && text != formatted) commit()
     }
     CompositionLocalProvider(
-        LocalTextSelectionColors provides TextSelectionColors(colors.accent, colors.accent.copy(alpha = 0.3f)),
+        LocalTextSelectionColors provides TextSelectionColors(colors.primary, colors.primary.copy(alpha = 0.3f)),
     ) {
         BasicTextField(
             value = text,
@@ -173,6 +174,7 @@ fun StepperInput(
             modifier = modifier
                 .height(32.dp)
                 .width(64.dp)
+                .alpha(if (stepper.enabled) 1f else 0.5f)
                 .padding(horizontal = 4.dp)
                 .then(
                     if (contentDescription != null) {
@@ -184,14 +186,14 @@ fun StepperInput(
             enabled = stepper.enabled,
             singleLine = true,
             textStyle = Typography.base.copy(
-                color = if (stepper.enabled) colors.label else colors.labelQuaternary,
+                color = colors.foreground,
                 textAlign = TextAlign.End,
                 fontFeatureSettings = "tnum",
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocusAndCommit(commit) }),
             interactionSource = interaction,
-            cursorBrush = SolidColor(colors.accent),
+            cursorBrush = SolidColor(colors.primary),
             decorationBox = { inner ->
                 Box(contentAlignment = Alignment.CenterEnd) { inner() }
             },
@@ -212,7 +214,7 @@ fun StepperGroup(
     Row(
         modifier = modifier
             .height(32.dp)
-            .background(EsuissTheme.colors.control, RoundedCornerShape(Radius.lg))
+            .background(EsuissTheme.colors.secondary, RoundedCornerShape(Radius.lg))
             .padding(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -244,7 +246,7 @@ fun StepperSeparator(modifier: Modifier = Modifier) {
         modifier = modifier
             .width(1.dp)
             .height(18.dp)
-            .background(EsuissTheme.colors.separator),
+            .background(EsuissTheme.colors.border),
     )
 }
 
@@ -264,15 +266,20 @@ private fun StepperButton(
     var pressed by remember { mutableStateOf(false) }
     val shape = RoundedCornerShape(Radius.md)
     val surface = when {
-        !enabled -> Modifier.background(colors.controlDisabled, shape)
-        pressed && enabled -> Modifier.background(colors.controlPressed, shape)
-        colors.isDark -> Modifier.background(colors.labelQuaternary, shape)
-        else -> Modifier.shadow(FormShadowSm, shape).background(colors.surfaceRaised, shape)
+        colors.isDark -> Modifier.background(colors.border, shape)
+        else -> Modifier.shadow(FormShadowSm, shape).background(colors.card, shape)
     }
     Box(
         modifier = modifier
             .fillMaxHeight()
             .width(36.dp)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .then(surface)
             .semantics {
                 this.contentDescription = contentDescription
@@ -308,7 +315,7 @@ private fun StepperButton(
             },
         contentAlignment = Alignment.Center,
     ) {
-        val tint = if (enabled) colors.label else colors.labelQuaternary
+        val tint = colors.foreground
         CompositionLocalProvider(LocalContentColor provides tint, LocalIconSize provides 16.dp) {
             if (content != null) content() else Icon(icon, contentDescription = null, size = 16.dp, tint = tint)
         }

@@ -88,10 +88,10 @@ private fun SelectionListRows(notes: List<SelectionListNote>, editing: Boolean, 
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .border(1.dp, colors.separator, shape),
+            .border(1.dp, colors.border, shape),
     ) {
         notes.forEachIndexed { index, note ->
-            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
             SelectionListItem(value = note.id, contentDescription = note.title) {
                 SelectionListRowContent(note, editing) { onOpen(note) }
             }
@@ -107,7 +107,7 @@ private fun RowScope.SelectionListRowContent(note: SelectionListNote, editing: B
     Row(
         modifier = Modifier
             .weight(1f)
-            .background(if (pressed) colors.itemPressed else Color.Transparent)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -122,7 +122,7 @@ private fun RowScope.SelectionListRowContent(note: SelectionListNote, editing: B
             )
             Text(
                 note.preview,
-                style = Typography.sm.copy(color = colors.labelSecondary),
+                style = Typography.sm.copy(color = colors.mutedForeground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -132,7 +132,7 @@ private fun RowScope.SelectionListRowContent(note: SelectionListNote, editing: B
             contentDescription = null,
             modifier = Modifier.alpha(if (editing) 0f else 1f),
             size = 16.dp,
-            tint = colors.labelTertiary,
+            tint = colors.mutedForeground,
         )
     }
 }
@@ -147,7 +147,7 @@ private fun SelectionListFooter(log: String, onReset: () -> Unit) {
         Text(
             log,
             modifier = Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
         )
         Button("Reset", onClick = onReset, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
     }
@@ -211,7 +211,7 @@ private fun SelectionListNotes(defaultEditing: Boolean = false, defaultValue: Li
                 size = ButtonSize.Lg,
                 enabled = any,
             ) {
-                Text("Delete", style = Typography.base.copy(color = if (any) colors.danger else colors.labelQuaternary))
+                Text("Delete", style = Typography.base.copy(color = colors.destructive))
             }
         }
     }
@@ -259,7 +259,7 @@ private fun SelectionListMail() {
                 PhosphorIcons.Regular.Trash,
                 "Delete",
                 enabled,
-                tint = if (enabled) colors.danger else colors.labelQuaternary,
+                tint = colors.destructive,
             ) {
                 val ids = selected
                 notes = notes.filterNot { it.id in ids }

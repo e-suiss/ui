@@ -19,7 +19,7 @@ private struct IslandLiveActivity: View {
     VStack(alignment: .leading, spacing: 16) {
       Text("Start a download, then leave the app. The activity shows in the Dynamic Island and on the Lock Screen.")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
       FlowRow(spacing: 12) {
         Button("Start") { start() }
           .buttonStyle(.variant())
@@ -40,7 +40,7 @@ private struct IslandLiveActivity: View {
       if let failure {
         Text(verbatim: failure)
           .textStyle(.sm)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)

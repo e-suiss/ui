@@ -58,12 +58,12 @@ public struct NavCategories: View {
           VStack(alignment: .leading, spacing: 20) {
             Text("The best way to buy the suiss products you love.")
               .scaledTextStyle(.xl)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .fixedSize(horizontal: false, vertical: true)
             VStack(alignment: .leading, spacing: 0) {
               Text("Need shopping help?")
                 .scaledFont(.xs, weight: .semibold)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               Button("Ask a Specialist ›") { onAskSpecialist?() }
                 .buttonStyle(NavCategoriesLinkStyle())
               Button("Visit a suiss Store near you ›") { onFindStore?() }
@@ -79,11 +79,11 @@ public struct NavCategories: View {
           .contentMargins(.horizontal, 16, for: .scrollContent)
           .accessibilityLabel(Text("Categories"))
           VStack(alignment: .leading, spacing: 18) {
-            Text("\(Text("The latest.")) \(Text("Take a look at what's new in \(Text(LocalizedStringKey(current.label))).").foregroundStyle(Color.labelSecondary))")
+            Text("\(Text("The latest.")) \(Text("Take a look at what's new in \(Text(LocalizedStringKey(current.label))).").foregroundStyle(EsuissColor.mutedForeground))")
               .scaledTextStyle(.xl, weight: .semibold)
               .fixedSize(horizontal: false, vertical: true)
               .contentTransition(.opacity)
-            Color.control
+            EsuissColor.secondary
               .overlay {
                 ForEach(Self.categories) { category in
                   Color.clear.overlay {
@@ -102,7 +102,7 @@ public struct NavCategories: View {
           }
           .padding(.top, 22)
           .overlay(alignment: .top) {
-            Color.separator.frame(height: 1)
+            EsuissColor.border.frame(height: 1)
           }
           .padding(.horizontal, 16)
         }
@@ -133,8 +133,8 @@ private struct NavCategoriesLinkStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
       .scaledFont(.sm)
-      .foregroundStyle(Color.link)
-      .opacity(configuration.isPressed ? 0.5 : 1)
+      .foregroundStyle(EsuissColor.primary)
+      .opacity(configuration.isPressed ? 0.8 : 1)
       .frame(minHeight: 32)
       .contentShape(Rectangle())
   }

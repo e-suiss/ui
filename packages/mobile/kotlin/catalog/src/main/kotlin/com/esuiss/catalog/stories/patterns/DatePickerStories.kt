@@ -104,7 +104,7 @@ private fun DatePickerControlled() {
         )
         Text(
             "Selected: ${value?.let { format.format(Date(it)) } ?: "none"}",
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
         )
     }
 }

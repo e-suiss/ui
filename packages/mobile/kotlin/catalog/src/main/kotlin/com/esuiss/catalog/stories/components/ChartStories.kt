@@ -57,6 +57,7 @@ import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -107,16 +108,16 @@ private val chartMonthData = listOf(
 )
 
 private val chartDeviceConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
-    "mobile" to ChartConfigItem("Mobile") { teal },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
 )
 
 private val chartIconConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop", PhosphorIcons.Regular.Desktop) { blue },
-    "mobile" to ChartConfigItem("Mobile", PhosphorIcons.Regular.DeviceMobile) { teal },
+    "desktop" to ChartConfigItem("Desktop", PhosphorIcons.Regular.Desktop) { chart1 },
+    "mobile" to ChartConfigItem("Mobile", PhosphorIcons.Regular.DeviceMobile) { chart2 },
 )
 
-private val chartEnergyConfig = ChartConfig("energy" to ChartConfigItem("Active energy") { red })
+private val chartEnergyConfig = ChartConfig("energy" to ChartConfigItem("Active energy") { Palette.red500 })
 
 private val chartEnergyValues = listOf(512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558)
 
@@ -182,7 +183,7 @@ private fun ChartLabelFormatter() {
                         labelFormatter = { _, items ->
                             Text(
                                 longDate.format(data[items.first().index].date.time),
-                                style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                         },
                     )
@@ -220,14 +221,14 @@ private fun ChartFormatter() {
                                 Text(
                                     "Active energy",
                                     Modifier.alignByBaseline(),
-                                    style = Typography.xs.copy(color = colors.labelSecondary),
+                                    style = Typography.xs.copy(color = colors.mutedForeground),
                                 )
                                 Text(
                                     chartNumber(item.value),
                                     Modifier.alignByBaseline(),
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
-                                Text("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.labelSecondary))
+                                Text("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.mutedForeground))
                             }
                         },
                     )
@@ -250,7 +251,7 @@ private val chartStepsData = listOf(
     ChartSteps("Sunday", 4870.0),
 )
 
-private val chartStepsConfig = ChartConfig("steps" to ChartConfigItem("Steps") { orange })
+private val chartStepsConfig = ChartConfig("steps" to ChartConfigItem("Steps") { chart4 })
 
 @Composable
 private fun ChartCustom() {
@@ -270,27 +271,27 @@ private fun ChartCustom() {
                         Modifier
                             .widthIn(min = 112.dp)
                             .shadow(Shadows.lg, shape)
-                            .background(colors.surfaceRaised, shape)
-                            .border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+                            .background(colors.popover, shape)
+                            .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
                         Text(
                             "TOTAL",
-                            style = Typography.xs2.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                            style = Typography.xs2.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                         )
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 chartNumber(entry.value),
                                 Modifier.alignByBaseline(),
-                                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                             )
                             Text(
                                 "steps",
                                 Modifier.alignByBaseline(),
-                                style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                             )
                         }
-                        Text(label, style = Typography.xs.copy(color = colors.labelSecondary))
+                        Text(label, style = Typography.xs.copy(color = colors.mutedForeground))
                     }
                 }
                 Bar("steps", value = { it.steps }, radius = ChartRadius(4.dp), maxBarSize = 26.dp)
@@ -313,9 +314,9 @@ private val chartRevenueData = listOf(
 )
 
 private val chartRevenueConfig = ChartConfig(
-    "phones" to ChartConfigItem("Phones") { blue },
-    "laptops" to ChartConfigItem("Laptops") { teal },
-    "services" to ChartConfigItem("Services") { purple },
+    "phones" to ChartConfigItem("Phones") { chart1 },
+    "laptops" to ChartConfigItem("Laptops") { chart2 },
+    "services" to ChartConfigItem("Services") { Palette.purple500 },
 )
 
 private fun chartTotal(value: Double): String = NumberFormat.getNumberInstance().apply {
@@ -348,7 +349,7 @@ private fun ChartInteractive() {
                 Text("Tooltip settings", style = Typography.lg.copy(fontWeight = FontWeight.SemiBold))
                 Text(
                     "Quarterly revenue · billions · sample data. Change the settings and touch the bars.",
-                    style = Typography.sm.copy(color = colors.labelSecondary),
+                    style = Typography.sm.copy(color = colors.mutedForeground),
                 )
             }
         }
@@ -362,7 +363,7 @@ private fun ChartInteractive() {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text(
                             "Indicator",
-                            style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                            style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                         )
                         ToggleGroup(
                             value = indicator,
@@ -410,11 +411,11 @@ private fun ChartInteractive() {
                                             Text(
                                                 label,
                                                 Modifier.weight(1f),
-                                                style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                                style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                             )
                                             Text(
                                                 "${chartTotal(items.sumOf { it.value })}B",
-                                                style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                                style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                             )
                                         }
                                     }

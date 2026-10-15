@@ -15,8 +15,20 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Category = "social" | "productivity" | "entertainment"
 
@@ -67,15 +79,15 @@ const APPS: { name: string; category: Category; share: number }[] = [
 ]
 
 const chartConfig = {
-  social: { label: "Social", color: "blue" },
-  productivity: { label: "Productivity", color: "cyan" },
-  entertainment: { label: "Entertainment", color: "orange" },
+  social: { label: "Social", color: "chart-1" },
+  productivity: { label: "Productivity", color: "cyan-500" },
+  entertainment: { label: "Entertainment", color: "chart-4" },
 } satisfies ChartConfig
 
-const SWATCH: Record<Category, keyof ThemeColors> = {
-  social: "blue",
-  productivity: "cyan",
-  entertainment: "orange",
+const SWATCH: Record<Category, Tone> = {
+  social: "chart1",
+  productivity: "cyan500",
+  entertainment: "chart4",
 }
 
 const styles = StyleSheet.create({
@@ -222,11 +234,11 @@ export function BarChartInteractive() {
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
         <View style={styles.heading} accessibilityLiveRegion="polite">
-          <Text style={[styles.eyebrow, { color: colors.labelSecondary }]}>
+          <Text style={[styles.eyebrow, { color: colors.mutedForeground }]}>
             {selected === null ? "Daily average" : DAYS[selected]}
           </Text>
           <Text style={styles.value}>{formatMinutes(headline)}</Text>
-          <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+          <Text style={[styles.caption, { color: colors.mutedForeground }]}>
             {comparison}
           </Text>
         </View>
@@ -294,11 +306,16 @@ export function BarChartInteractive() {
                       <View
                         style={[
                           styles.square,
-                          { backgroundColor: colors[SWATCH[name as Category]] },
+                          {
+                            backgroundColor: tone(
+                              colors,
+                              SWATCH[name as Category]
+                            ),
+                          },
                         ]}
                       />
                       <Text
-                        style={[styles.grow, { color: colors.labelSecondary }]}
+                        style={[styles.grow, { color: colors.mutedForeground }]}
                       >
                         {chartConfig[name as Category].label}
                       </Text>
@@ -311,7 +328,11 @@ export function BarChartInteractive() {
               }
             />
             {isWeek ? (
-              <ReferenceLine y={AVERAGE} stroke="green" strokeDasharray="3 3" />
+              <ReferenceLine
+                y={AVERAGE}
+                stroke="green-500"
+                strokeDasharray="3 3"
+              />
             ) : null}
             {CATEGORIES.map((category, position) => (
               <Bar
@@ -344,12 +365,12 @@ export function BarChartInteractive() {
                 <View
                   style={[
                     styles.dot,
-                    { backgroundColor: colors[SWATCH[category]] },
+                    { backgroundColor: tone(colors, SWATCH[category]) },
                   ]}
                 />
                 <Text
                   numberOfLines={1}
-                  style={[styles.shrink, { color: colors.labelSecondary }]}
+                  style={[styles.shrink, { color: colors.mutedForeground }]}
                 >
                   {chartConfig[category].label}
                 </Text>
@@ -361,30 +382,32 @@ export function BarChartInteractive() {
           ))}
         </View>
         <View>
-          <Text style={[styles.section, { color: colors.labelSecondary }]}>
+          <Text style={[styles.section, { color: colors.mutedForeground }]}>
             Most used
           </Text>
           {apps.map((app) => (
             <View
               key={app.name}
               accessible
-              style={[styles.app, { borderTopColor: colors.separator }]}
+              style={[styles.app, { borderTopColor: colors.border }]}
             >
               <Text numberOfLines={1} style={styles.appName}>
                 {app.name}
               </Text>
-              <View style={[styles.track, { backgroundColor: colors.control }]}>
+              <View
+                style={[styles.track, { backgroundColor: colors.secondary }]}
+              >
                 <View
                   style={[
                     styles.fill,
                     {
                       width: `${(app.minutes / longest) * 100}%`,
-                      backgroundColor: colors[SWATCH[app.category]],
+                      backgroundColor: tone(colors, SWATCH[app.category]),
                     },
                   ]}
                 />
               </View>
-              <Text style={[styles.time, { color: colors.labelSecondary }]}>
+              <Text style={[styles.time, { color: colors.mutedForeground }]}>
                 {formatMinutes(app.minutes)}
               </Text>
             </View>

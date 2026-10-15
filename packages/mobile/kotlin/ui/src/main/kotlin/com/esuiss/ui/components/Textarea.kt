@@ -45,7 +45,7 @@ fun Textarea(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val focused by source.collectIsFocusedAsState()
     val shape = RoundedCornerShape(Radius.xl)
-    val textStyle = Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary)
+    val textStyle = Typography.base.copy(color = colors.foreground)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
         BasicTextField(
             value = value,
@@ -64,7 +64,7 @@ fun Textarea(
             minLines = minLines,
             maxLines = maxLines,
             interactionSource = source,
-            cursorBrush = SolidColor(colors.accent),
+            cursorBrush = SolidColor(colors.primary),
             decorationBox = { inner ->
                 Box(
                     modifier = Modifier.padding(12.dp),
@@ -73,7 +73,7 @@ fun Textarea(
                     if (value.isEmpty() && placeholder != null) {
                         BasicText(
                             placeholder,
-                            style = textStyle.copy(color = if (enabled) colors.labelSecondary else colors.labelQuaternary),
+                            style = textStyle.copy(color = colors.mutedForeground),
                         )
                     }
                     inner()

@@ -43,6 +43,7 @@ import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlin.math.roundToInt
@@ -51,9 +52,9 @@ import kotlinx.coroutines.launch
 private class RadialInteractiveActivityRing(val label: String, val unit: String, val goal: Double, val color: Colors.() -> Color)
 
 private val activityRings = listOf(
-    RadialInteractiveActivityRing("Move", "kcal", 600.0) { red },
-    RadialInteractiveActivityRing("Exercise", "min", 30.0) { green },
-    RadialInteractiveActivityRing("Stand", "hr", 12.0) { cyan },
+    RadialInteractiveActivityRing("Move", "kcal", 600.0) { Palette.red500 },
+    RadialInteractiveActivityRing("Exercise", "min", 30.0) { Palette.green500 },
+    RadialInteractiveActivityRing("Stand", "hr", 12.0) { Palette.cyan500 },
 )
 
 private class RadialInteractiveActivityDay(val day: String, val values: List<Double>)
@@ -102,8 +103,8 @@ fun RadialChartInteractive(modifier: Modifier = Modifier) {
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText("Activity", style = Typography.lg.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-                BasicText("This week · pick a day", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("Activity", style = Typography.lg.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+                BasicText("This week · pick a day", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent(Modifier.padding(top = 20.dp)) {
@@ -122,7 +123,7 @@ fun RadialChartInteractive(modifier: Modifier = Modifier) {
                             Modifier
                                 .weight(1f)
                                 .clip(shape)
-                                .background(if (active) colors.surface else Color.Transparent, shape)
+                                .background(if (active) colors.background else Color.Transparent, shape)
                                 .selectable(
                                     selected = active,
                                     interactionSource = remember { MutableInteractionSource() },
@@ -141,7 +142,7 @@ fun RadialChartInteractive(modifier: Modifier = Modifier) {
                                 day.day.take(3),
                                 Modifier.clearAndSetSemantics {},
                                 style = Typography.xs.copy(
-                                    color = if (active) colors.label else colors.labelSecondary,
+                                    color = if (active) colors.foreground else colors.mutedForeground,
                                     fontWeight = FontWeight.SemiBold,
                                 ),
                             )
@@ -187,9 +188,9 @@ private fun RingStats(values: List<Double>, target: List<Double>) {
         activityRings.forEachIndexed { index, ring ->
             val percent = (target[index] / ring.goal * 100).roundToInt()
             val color = ring.color(colors)
-            val tint = if (colors.isDark) color else lerp(color, colors.label, 0.45f)
+            val tint = if (colors.isDark) color else lerp(color, colors.foreground, 0.45f)
             Column(Modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                BasicText(ring.label, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                BasicText(ring.label, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                 Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                     BasicText(
                         "${values[index].roundToInt()}/${ring.goal.roundToInt()}",
@@ -204,7 +205,7 @@ private fun RingStats(values: List<Double>, target: List<Double>) {
                 }
                 BasicText(
                     "$percent%${if (percent >= 100) " · goal met" else ""}",
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                 )
             }
         }

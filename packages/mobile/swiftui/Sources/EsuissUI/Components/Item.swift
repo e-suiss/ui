@@ -100,7 +100,7 @@ public struct ItemGroup<Content: View>: View {
     .environment(\.itemGroupInset, inset)
     .onPreferenceChange(ItemGapKey.self) { gap = $0 }
     .transformPreference(ItemGapKey.self) { $0 = nil }
-    .background(inset ? Color.surfaceSecondary : .clear, in: shape)
+    .background(inset ? EsuissColor.muted : .clear, in: shape)
     .clipShape(inset ? AnyShape(shape) : AnyShape(Rectangle()))
     .accessibilityElement(children: .contain)
   }
@@ -147,7 +147,7 @@ public struct Item<Content: View>: View {
         }
         .buttonStyle(ItemButtonStyle(variant: variant, inset: inset))
       } else {
-        surface.background(ItemBackground(variant: variant, inset: inset, pressed: false))
+        surface.background(ItemBackground(variant: variant, inset: inset))
       }
     }
     .preference(key: ItemGapKey.self, value: size.groupGap)
@@ -158,7 +158,7 @@ public struct Item<Content: View>: View {
       content
     }
     .scaledFont(.base)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, size.horizontalPadding)
     .padding(.vertical, size.verticalPadding)
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -172,17 +172,13 @@ public struct Item<Content: View>: View {
 private struct ItemBackground: View {
   let variant: ItemVariant
   let inset: Bool
-  let pressed: Bool
 
   var body: some View {
     let shape = RoundedRectangle(cornerRadius: inset ? 0 : Radius.xl, style: .continuous)
     ZStack {
-      shape.fill(variant == .muted ? Color.surfaceSecondary.opacity(0.5) : .clear)
-      if pressed {
-        shape.fill(Color.itemPressed)
-      }
+      shape.fill(variant == .muted ? EsuissColor.muted.opacity(0.5) : .clear)
       if variant == .outline {
-        shape.strokeBorder(Color.separator)
+        shape.strokeBorder(EsuissColor.border)
       }
     }
   }
@@ -196,8 +192,8 @@ private struct ItemButtonStyle: ButtonStyle {
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(ItemBackground(variant: variant, inset: inset, pressed: configuration.isPressed && isEnabled))
-      .opacity(isEnabled ? 1 : 0.5)
+      .background(ItemBackground(variant: variant, inset: inset))
+      .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
   }
 }
 
@@ -354,7 +350,7 @@ public struct ItemTitle<Content: View>: View {
       content
     }
     .scaledTextStyle(.base, weight: .semibold)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .lineLimit(1)
     .accessibilityElement(children: .combine)
   }
@@ -384,7 +380,7 @@ public struct ItemDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(.sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .multilineTextAlignment(.leading)
       .lineLimit(2)
       .fixedSize(horizontal: false, vertical: true)

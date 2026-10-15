@@ -33,7 +33,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "desktop" to ChartConfigItem("Desktop") { blue },
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
 )
 
 @Composable
@@ -61,7 +61,7 @@ fun LineChartLabeled(modifier: Modifier = Modifier) {
                         curve = ChartCurve.Natural,
                         strokeWidth = 2.5.dp,
                         dot = ChartDot(4.dp),
-                        labelList = ChartLabelList(offset = 10.dp, color = colors.label),
+                        labelList = ChartLabelList(offset = 10.dp, color = colors.foreground),
                     )
                 }
             }

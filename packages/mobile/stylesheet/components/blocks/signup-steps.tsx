@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const EMAIL = /.+@.+\..+/
 const UPPERCASE = /[A-Z]/
@@ -195,18 +195,18 @@ function SignupSteps({
             )}
             style={styles.done}
           >
-            <View style={[styles.badge, { backgroundColor: colors.success }]}>
+            <View style={[styles.badge, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text role="heading" style={styles.heading}>
               Welcome, {values.name.split(" ")[0]}.
             </Text>
-            <Text style={[secondary, { color: colors.labelSecondary }]}>
+            <Text style={[secondary, { color: colors.mutedForeground }]}>
               Your account is ready. Verify {values.email} to finish.
             </Text>
             <Pressable
@@ -218,7 +218,7 @@ function SignupSteps({
               }}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={{ ...fontSize.lg, color: colors.link }}>
+              <Text style={{ ...fontSize.lg, color: colors.primary }}>
                 Start over ›
               </Text>
             </Pressable>
@@ -244,7 +244,7 @@ function SignupSteps({
               {
                 width: position === index ? 28 : 6,
                 backgroundColor:
-                  position <= index ? colors.accent : colors.control,
+                  position <= index ? colors.primary : colors.secondary,
               },
             ]}
           />
@@ -261,7 +261,7 @@ function SignupSteps({
               ...fontSize.sm,
               textAlign: "center",
               fontWeight: "600",
-              color: colors.labelSecondary,
+              color: colors.mutedForeground,
             }}
           >
             Step {index + 1} of {STEPS.length}
@@ -269,15 +269,15 @@ function SignupSteps({
           <Text role="heading" style={styles.heading}>
             {step.title}
           </Text>
-          <Text style={[secondary, { color: colors.labelSecondary }]}>
+          <Text style={[secondary, { color: colors.mutedForeground }]}>
             {step.description}
           </Text>
           <View
             style={[
               styles.field,
               {
-                borderColor: colors.separatorStrong,
-                backgroundColor: colors.surface,
+                borderColor: colors.input,
+                backgroundColor: colors.background,
               },
             ]}
           >
@@ -315,9 +315,9 @@ function SignupSteps({
                         met
                           ? {
                               borderColor: "transparent",
-                              backgroundColor: colors.success,
+                              backgroundColor: palette.green500,
                             }
-                          : { borderColor: colors.labelQuaternary },
+                          : { borderColor: colors.border },
                       ]}
                     >
                       {met ? (
@@ -330,7 +330,7 @@ function SignupSteps({
                             as={CheckIcon}
                             weight="bold"
                             size={10}
-                            color={colors.onAccent}
+                            color={colors.primaryForeground}
                           />
                         </AnimatedView>
                       ) : null}
@@ -338,7 +338,7 @@ function SignupSteps({
                     <Text
                       style={{
                         ...fontSize.sm,
-                        color: met ? colors.label : colors.labelSecondary,
+                        color: met ? colors.foreground : colors.mutedForeground,
                       }}
                     >
                       {rule.label}

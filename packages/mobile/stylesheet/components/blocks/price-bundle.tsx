@@ -16,40 +16,61 @@ import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 const SERVICES: {
   name: string
   icon: PhosphorIcon
-  tint: keyof ThemeColors
-  iconColor: keyof ThemeColors
+  tint: Tone
+  iconColor: Tone
 }[] = [
   {
     name: "suiss Music",
     icon: MusicNoteIcon,
-    tint: "red",
-    iconColor: "onAccent",
+    tint: "red500",
+    iconColor: "primaryForeground",
   },
   {
     name: "suiss TV",
     icon: TelevisionIcon,
-    tint: "label",
-    iconColor: "surface",
+    tint: "foreground",
+    iconColor: "background",
   },
   {
     name: "suiss Arcade",
     icon: GameControllerIcon,
-    tint: "red",
-    iconColor: "onAccent",
+    tint: "red500",
+    iconColor: "primaryForeground",
   },
   {
     name: "suiss Cloud+",
     icon: CloudIcon,
-    tint: "blue",
-    iconColor: "onAccent",
+    tint: "blue500",
+    iconColor: "primaryForeground",
   },
-  { name: "Fitness+", icon: FlameIcon, tint: "green", iconColor: "onAccent" },
-  { name: "News+", icon: NewspaperIcon, tint: "pink", iconColor: "onAccent" },
+  {
+    name: "Fitness+",
+    icon: FlameIcon,
+    tint: "green500",
+    iconColor: "primaryForeground",
+  },
+  {
+    name: "News+",
+    icon: NewspaperIcon,
+    tint: "pink500",
+    iconColor: "primaryForeground",
+  },
 ]
 
 const PLANS = [
@@ -147,7 +168,7 @@ function PriceBundle({
           <Text role="heading" style={styles.title}>
             <Text style={styles.brand}>suiss</Text> One
           </Text>
-          <Text style={[styles.subtitle, { color: colors.labelSecondary }]}>
+          <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
             Bundle it all in one subscription.
           </Text>
         </AnimatedView>
@@ -168,23 +189,27 @@ function PriceBundle({
                 style={({ pressed }) => [
                   styles.card,
                   {
-                    borderColor: checked ? colors.accent : colors.separator,
-                    backgroundColor:
-                      checked || pressed
-                        ? colors.surfaceSecondary
-                        : `${colors.surfaceSecondary}99`,
+                    borderColor: checked ? colors.primary : colors.border,
+                    backgroundColor: checked
+                      ? colors.muted
+                      : `${colors.muted}99`,
                   },
+                  pressed && { opacity: 0.8 },
                 ]}
               >
                 <View style={styles.cardHead}>
                   <Text style={styles.name}>{item.name}</Text>
-                  <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.xs, { color: colors.mutedForeground }]}
+                  >
                     {item.people}
                   </Text>
                 </View>
                 <Text>
                   <Text style={styles.price}>{money(item.price)}</Text>
-                  <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+                  <Text
+                    style={[fontSize.sm, { color: colors.mutedForeground }]}
+                  >
                     {" "}
                     /mo
                   </Text>
@@ -207,8 +232,8 @@ function PriceBundle({
                             styles.serviceIcon,
                             {
                               backgroundColor: included
-                                ? colors[service.tint]
-                                : colors.surfaceTertiary,
+                                ? tone(colors, service.tint)
+                                : colors.secondary,
                             },
                           ]}
                         >
@@ -218,8 +243,8 @@ function PriceBundle({
                             size={13}
                             color={
                               included
-                                ? colors[service.iconColor]
-                                : colors.labelTertiary
+                                ? tone(colors, service.iconColor)
+                                : colors.mutedForeground
                             }
                           />
                         </View>
@@ -227,9 +252,9 @@ function PriceBundle({
                           style={[
                             fontSize.sm,
                             included
-                              ? { color: colors.label }
+                              ? { color: colors.foreground }
                               : {
-                                  color: colors.labelTertiary,
+                                  color: colors.mutedForeground,
                                   textDecorationLine: "line-through",
                                 },
                           ]}
@@ -260,7 +285,7 @@ function PriceBundle({
               accessibilityLiveRegion="polite"
               style={[
                 fontSize.base,
-                { color: colors.link, textAlign: "center" },
+                { color: colors.primary, textAlign: "center" },
               ]}
             >
               Save {money(plan.saving, 0)} compared to buying separately ›

@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
@@ -76,7 +77,7 @@ private fun SearchRevealNotes(count: Int, defaultQuery: String = "") {
             .fillMaxWidth()
             .height(600.dp)
             .clip(shape)
-            .border(1.dp, colors.separator, shape),
+            .border(1.dp, colors.border, shape),
     ) {
         Text("Notes", modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp), variant = TextVariant.H1)
         SearchReveal(Modifier.weight(1f)) {
@@ -86,7 +87,7 @@ private fun SearchRevealNotes(count: Int, defaultQuery: String = "") {
                     Text(
                         "No results for “$query”",
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 64.dp),
-                        style = Typography.sm.copy(color = colors.labelSecondary),
+                        style = Typography.sm.copy(color = colors.mutedForeground),
                         textAlign = TextAlign.Center,
                     )
                 } else {
@@ -95,10 +96,10 @@ private fun SearchRevealNotes(count: Int, defaultQuery: String = "") {
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(Radius.xl))
-                            .background(colors.surfaceSecondary),
+                            .background(colors.muted),
                     ) {
                         notes.forEachIndexed { index, note ->
-                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
                             SearchRevealRow(note)
                         }
                     }
@@ -106,7 +107,7 @@ private fun SearchRevealNotes(count: Int, defaultQuery: String = "") {
                 Text(
                     "${notes.size} ${if (notes.size == 1) "note" else "notes"}",
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
-                    style = Typography.xs.copy(color = colors.labelSecondary),
+                    style = Typography.xs.copy(color = colors.mutedForeground),
                     textAlign = TextAlign.Center,
                 )
             }
@@ -122,7 +123,7 @@ private fun SearchRevealRow(note: SearchRevealNote) {
     Column(
         Modifier
             .fillMaxWidth()
-            .background(if (pressed) colors.itemPressed else Color.Transparent)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button) {}
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
@@ -134,7 +135,7 @@ private fun SearchRevealRow(note: SearchRevealNote) {
         )
         Text(
             note.preview,
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

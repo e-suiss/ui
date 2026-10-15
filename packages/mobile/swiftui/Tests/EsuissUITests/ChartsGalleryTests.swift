@@ -15,13 +15,13 @@ private let monthly: [(month: String, desktop: Double, mobile: Double)] = [
 ]
 
 private let devices: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
-  "mobile": .init("Mobile", color: .teal),
+  "desktop": .init("Desktop", color: Palette.blue500),
+  "mobile": .init("Mobile", color: Palette.teal500),
 ]
 
 private let deviceIcons: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue, icon: Ph.desktop.regular),
-  "mobile": .init("Mobile", color: .teal, icon: Ph.deviceMobile.regular),
+  "desktop": .init("Desktop", color: Palette.blue500, icon: Ph.desktop.regular),
+  "mobile": .init("Mobile", color: Palette.teal500, icon: Ph.deviceMobile.regular),
 ]
 
 private struct StackedTooltipCase<Tooltip: View>: View {
@@ -72,7 +72,7 @@ private struct StackedTooltipCase<Tooltip: View>: View {
 private let energy: [Double] = [512, 604, 455, 389, 662, 598, 431, 520, 690, 447, 575, 402, 633, 558]
 
 private let energyConfig: ChartConfig = [
-  "energy": .init("Active energy", color: .red),
+  "energy": .init("Active energy", color: Palette.red500),
 ]
 
 private func energyDate(_ index: Int, from start: DateComponents) -> Date {
@@ -109,13 +109,13 @@ private struct TooltipFormatterCase: View {
             ChartTooltipContent(payload, hideLabel: true) { item in
               HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text("Active energy")
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                 Text(item.value, format: .number)
                   .font(TextStyle.xs.font(weight: .semibold))
                   .monospacedDigit()
                 Text("kcal")
                   .font(TextStyle.xs2.font())
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
             }
           }
@@ -177,7 +177,7 @@ private struct TooltipCustomCase: View {
     ("Monday", 8412), ("Tuesday", 10230), ("Wednesday", 6120), ("Thursday", 12480),
     ("Friday", 9050), ("Saturday", 14320), ("Sunday", 4870),
   ]
-  private let config: ChartConfig = ["steps": .init("Steps", color: .orange)]
+  private let config: ChartConfig = ["steps": .init("Steps", color: Palette.orange500)]
 
   var body: some View {
     Card(.filled, size: .sm) {
@@ -203,25 +203,25 @@ private struct TooltipCustomCase: View {
             VStack(alignment: .leading, spacing: 0) {
               Text("TOTAL")
                 .font(TextStyle.xs2.font(weight: .semibold))
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text(payload.total, format: .number)
                   .font(TextStyle.xl2.font(weight: .semibold))
                   .monospacedDigit()
                 Text("steps")
                   .font(TextStyle.xs.font(weight: .semibold))
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
               Text(verbatim: payload.label)
                 .font(TextStyle.xs.font())
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .frame(minWidth: 112, alignment: .leading)
-            .background(Color.surfaceRaised, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+            .background(EsuissColor.card, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
             .overlay {
-              RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).strokeBorder(Color.label.opacity(0.08))
+              RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).strokeBorder(EsuissColor.foreground.opacity(0.08))
             }
             .shadow(.lg)
             .fixedSize()
@@ -239,9 +239,9 @@ private struct TooltipInteractiveCase: View {
     ("Q1 26", 71, 9.5, 29.1), ("Q2 26", 49.4, 8.6, 29.4), ("Q3 26", 47.3, 8.9, 30.1), ("Q4 26", 49, 9.3, 31.2),
   ]
   private let config: ChartConfig = [
-    "phones": .init("Phones", color: .blue),
-    "laptops": .init("Laptops", color: .teal),
-    "services": .init("Services", color: .purple),
+    "phones": .init("Phones", color: Palette.blue500),
+    "laptops": .init("Laptops", color: Palette.teal500),
+    "services": .init("Services", color: Palette.purple500),
   ]
   @State private var indicator: ChartTooltipIndicator? = .dot
   @State private var showTotal = true
@@ -264,7 +264,7 @@ private struct TooltipInteractiveCase: View {
           .textStyle(.lg, weight: .semibold)
         Text("Quarterly revenue · billions · sample data. Change the settings and touch the bars.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -272,7 +272,7 @@ private struct TooltipInteractiveCase: View {
           VStack(alignment: .leading, spacing: 6) {
             Text("Indicator")
               .textStyle(.xs, weight: .semibold)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             ToggleGroup(selection: $indicator, size: .sm, spacing: 0) {
               ToggleGroupItem("Dot", value: ChartTooltipIndicator.dot)
               ToggleGroupItem("Line", value: ChartTooltipIndicator.line)
@@ -369,11 +369,11 @@ private let pieDevices: [(device: String, users: Double)] = [
 ]
 
 private let pieConfig: ChartConfig = [
-  "phone": .init("Phone", color: .blue),
-  "laptop": .init("Laptop", color: .teal),
-  "tablet": .init("Tablet", color: .indigo),
-  "watch": .init("Watch", color: .orange),
-  "other": .init("Other", color: .gray),
+  "phone": .init("Phone", color: Palette.blue500),
+  "laptop": .init("Laptop", color: Palette.teal500),
+  "tablet": .init("Tablet", color: Palette.indigo500),
+  "watch": .init("Watch", color: Palette.orange500),
+  "other": .init("Other", color: Palette.zinc500),
 ]
 
 private struct PieTooltipCase: View {
@@ -420,10 +420,10 @@ private struct PieTooltipCase: View {
 private struct RadialTooltipCase: View {
   var body: some View {
     let config: ChartConfig = [
-      "phone": .init("Phone", color: .blue),
-      "laptop": .init("Laptop", color: .teal),
-      "tablet": .init("Tablet", color: .indigo),
-      "watch": .init("Watch", color: .orange),
+      "phone": .init("Phone", color: Palette.blue500),
+      "laptop": .init("Laptop", color: Palette.teal500),
+      "tablet": .init("Tablet", color: Palette.indigo500),
+      "watch": .init("Watch", color: Palette.orange500),
     ]
     Card(.filled, size: .sm) {
       CardHeader("Radial tooltip", description: "defaultIndex 2")
@@ -463,8 +463,8 @@ private struct RadarTooltipCase: View {
 
   var body: some View {
     let config: ChartConfig = [
-      "thisMonth": .init("This month", color: .green),
-      "lastMonth": .init("Last month", color: .gray),
+      "thisMonth": .init("This month", color: Palette.green500),
+      "lastMonth": .init("Last month", color: Palette.zinc500),
     ]
     Card(.filled, size: .sm) {
       CardHeader(title, description: "defaultIndex \(defaultIndex)")
@@ -498,7 +498,7 @@ final class ChartsGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let renderer = ImageRenderer(content: view
         .padding(16)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US"))
         .environment(\.chartAnimationActive, false))

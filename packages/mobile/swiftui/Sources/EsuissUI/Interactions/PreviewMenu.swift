@@ -167,7 +167,7 @@ struct PreviewMenuCanvas<Trigger: View, Items: View, Preview: View>: View {
       ZStack(alignment: .topLeading) {
         Rectangle()
           .fill(.ultraThinMaterial)
-          .overlay(Color.scrim.opacity(0.4))
+          .overlay(Palette.black.opacity(0.5).opacity(0.4))
           .ignoresSafeArea()
           .opacity(visible ? 1 : 0)
           .contentShape(Rectangle())
@@ -221,7 +221,7 @@ struct PreviewMenuPanel<Content: View>: View {
       ScrollView { stack }
     }
     .frame(width: PreviewMenuMath.menuWidth)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .popupSurface(radius: Radius.xl2)
     .accessibilityElement(children: .contain)
   }
@@ -299,13 +299,13 @@ private struct PreviewMenuItemStyle: ButtonStyle {
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : destructive ? .danger : .label)
+      .foregroundStyle(destructive ? EsuissColor.destructive : EsuissColor.popoverForeground)
       .padding(.horizontal, 16)
       .padding(.vertical, 11)
       .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-      .background(configuration.isPressed && isEnabled ? Color.itemPressed : .clear)
+      .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
       .overlay(alignment: .top) {
-        Color.separator.frame(height: 1)
+        EsuissColor.border.frame(height: 1)
       }
       .contentShape(Rectangle())
   }
@@ -315,7 +315,7 @@ public struct PreviewMenuSeparator: View {
   public init() {}
 
   public var body: some View {
-    Color.separator
+    EsuissColor.border
       .opacity(0.4)
       .frame(height: 8)
       .frame(maxWidth: .infinity)

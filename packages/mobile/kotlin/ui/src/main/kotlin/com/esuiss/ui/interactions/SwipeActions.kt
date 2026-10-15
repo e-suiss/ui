@@ -40,9 +40,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -68,6 +68,7 @@ import com.esuiss.ui.components.formReducedMotion
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -148,7 +149,7 @@ fun SwipeActions(
     trailing: List<SwipeAction> = emptyList(),
     state: SwipeActionsState = rememberSwipeActionsState(),
     enabled: Boolean = true,
-    background: Color = EsuissTheme.colors.surface,
+    background: Color = EsuissTheme.colors.background,
     content: @Composable () -> Unit,
 ) {
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
@@ -342,10 +343,10 @@ fun SwipeActions(
 }
 
 internal fun swipeActionColor(variant: SwipeActionVariant, colors: Colors): Color = when (variant) {
-    SwipeActionVariant.Default -> colors.accent
-    SwipeActionVariant.Destructive -> if (colors.isDark) lerp(colors.danger, colors.surface, 0.3f) else colors.danger
-    SwipeActionVariant.Archive -> if (colors.isDark) lerp(colors.purple, colors.surface, 0.3f) else lerp(colors.purple, colors.label, 0.15f)
-    SwipeActionVariant.Neutral -> if (colors.isDark) lerp(colors.gray, colors.surface, 0.4f) else lerp(colors.gray, colors.label, 0.35f)
+    SwipeActionVariant.Default -> colors.primary
+    SwipeActionVariant.Destructive -> if (colors.isDark) lerp(colors.destructive, colors.background, 0.3f) else colors.destructive
+    SwipeActionVariant.Archive -> if (colors.isDark) lerp(Palette.purple500, colors.background, 0.3f) else lerp(Palette.purple500, colors.foreground, 0.15f)
+    SwipeActionVariant.Neutral -> if (colors.isDark) lerp(Palette.zinc500, colors.background, 0.4f) else lerp(Palette.zinc500, colors.foreground, 0.35f)
 }
 
 @Composable
@@ -416,10 +417,10 @@ private fun SwipeActionButton(action: SwipeAction, hidden: Boolean, onAction: ()
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val base = swipeActionColor(action.variant, colors)
-    val fill = if (pressed) Color.Black.copy(alpha = 0.12f).compositeOver(base) else base
     Column(
         modifier = Modifier
-            .background(fill)
+            .alpha(if (pressed) 0.8f else 1f)
+            .background(base)
             .then(if (hidden) Modifier.clearAndSetSemantics {} else Modifier)
             .clickable(
                 interactionSource = interaction,
@@ -434,10 +435,10 @@ private fun SwipeActionButton(action: SwipeAction, hidden: Boolean, onAction: ()
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
     ) {
-        if (action.icon != null) Icon(action.icon, contentDescription = null, size = 20.dp, tint = colors.onAccent)
+        if (action.icon != null) Icon(action.icon, contentDescription = null, size = 20.dp, tint = colors.primaryForeground)
         BasicText(
             action.label,
-            style = Typography.xs.copy(color = colors.onAccent, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center),
+            style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center),
             maxLines = 2,
         )
     }

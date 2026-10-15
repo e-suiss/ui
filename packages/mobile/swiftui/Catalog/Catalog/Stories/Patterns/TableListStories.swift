@@ -16,18 +16,18 @@ enum TableListStories {
             VStack(alignment: .leading, spacing: 2) {
               Text(verbatim: invoice.customer)
                 .textStyle(.base)
-                .foregroundStyle(Color.label)
+                .foregroundStyle(EsuissColor.foreground)
                 .lineLimit(1)
               Text(verbatim: invoice.status)
                 .textStyle(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             Text(verbatim: invoice.amount)
               .textStyle(.base)
               .monospacedDigit()
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .lineLimit(1)
               .fixedSize()
           }

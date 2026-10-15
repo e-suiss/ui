@@ -23,8 +23,8 @@ function Label({
       <LabelPrimitive.Text
         className={(state) =>
           cn(
-            "text-base font-semibold text-label",
-            state.disabled && "text-label-quaternary",
+            "text-base font-semibold text-foreground",
+            state.disabled && "opacity-50",
             resolveClassName(className, state)
           )
         }

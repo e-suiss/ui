@@ -49,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -105,6 +106,7 @@ import com.esuiss.ui.interactions.SwipeActionVariant
 import com.esuiss.ui.interactions.SwipeActions
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -137,7 +139,7 @@ private fun conversation(name: String, tint: (Colors) -> Color, time: String, va
 private fun conversations() = listOf(
     conversation(
         "Riley Chen",
-        { it.green },
+        { Palette.green500 },
         "9:41 AM",
         "them:Is the weekend trip to the coast still on?",
         "me:Yes! We leave Friday evening",
@@ -146,20 +148,20 @@ private fun conversations() = listOf(
     ),
     conversation(
         "Morgan Lee",
-        { it.orange },
+        { Palette.orange500 },
         "8:12 AM",
         "them:I sent the deck, can you take a look?",
         "me:On it, back to you in 10 minutes",
     ),
     conversation(
         "Family",
-        { it.purple },
+        { Palette.purple500 },
         "Yesterday",
         "them:Is everyone coming for Sunday brunch?",
         "me:We'll be there",
         "them:I'll bring pastries",
     ),
-    conversation("Taylor Kim", { it.teal }, "Monday", "them:What time does the game start?"),
+    conversation("Taylor Kim", { Palette.teal500 }, "Monday", "them:What time does the game start?"),
 )
 
 private val ConversationReplies = listOf(
@@ -256,7 +258,7 @@ private fun ConversationList(
             HeaderLargeTitle("Messages")
             HeaderActions {
                 Button(onClick = onNewMessage, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {
-                    Icon(PhosphorIcons.Regular.NotePencil, contentDescription = "New message", size = 20.dp, tint = colors.link)
+                    Icon(PhosphorIcons.Regular.NotePencil, contentDescription = "New message", size = 20.dp, tint = colors.primary)
                 }
             }
         }
@@ -296,7 +298,7 @@ private fun ConversationRow(thread: Conversation, divided: Boolean, onClick: () 
     Box(
         Modifier
             .fillMaxWidth()
-            .background(if (pressed) colors.itemPressed else Color.Transparent)
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
     ) {
         if (divided) {
@@ -305,7 +307,7 @@ private fun ConversationRow(thread: Conversation, divided: Boolean, onClick: () 
                     .padding(start = 70.dp)
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(colors.separator),
+                    .background(colors.border),
             )
         }
         Row(
@@ -319,15 +321,15 @@ private fun ConversationRow(thread: Conversation, divided: Boolean, onClick: () 
                     BasicText(
                         thread.name,
                         modifier = Modifier.weight(1f),
-                        style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                        style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    BasicText(thread.time, style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(thread.time, style = Typography.xs.copy(color = colors.mutedForeground))
                 }
                 BasicText(
                     last,
-                    style = Typography.sm.copy(color = colors.labelSecondary),
+                    style = Typography.sm.copy(color = colors.mutedForeground),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -347,7 +349,7 @@ private fun ConversationInitials(thread: Conversation, size: Dp) {
     ) {
         BasicText(
             thread.name.split(" ").mapNotNull { it.firstOrNull() }.joinToString("").take(2),
-            style = (if (size > 36.dp) Typography.base else Typography.xs2).copy(color = colors.onMedia, fontWeight = FontWeight.Medium),
+            style = (if (size > 36.dp) Typography.base else Typography.xs2).copy(color = Palette.white, fontWeight = FontWeight.Medium),
         )
     }
 }
@@ -378,10 +380,10 @@ private fun ConversationDetail(
             )
             HeaderActions {
                 Button(onClick = onVideoCall, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {
-                    Icon(PhosphorIcons.Regular.VideoCamera, contentDescription = "Video call", size = 20.dp, tint = colors.accent)
+                    Icon(PhosphorIcons.Regular.VideoCamera, contentDescription = "Video call", size = 20.dp, tint = colors.primary)
                 }
                 Button(onClick = onDetails, variant = ButtonVariant.Ghost, size = ButtonSize.Icon) {
-                    Icon(PhosphorIcons.Regular.Info, contentDescription = "Details", size = 20.dp, tint = colors.accent)
+                    Icon(PhosphorIcons.Regular.Info, contentDescription = "Details", size = 20.dp, tint = colors.primary)
                 }
             }
         }
@@ -401,7 +403,7 @@ private fun ConversationDetail(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 4.dp, bottom = 10.dp),
-                    style = Typography.xs2.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
                 ConversationTyping -> ConversationTypingBubble()
                 else -> thread.lines.firstOrNull { it.id == id }?.let { ConversationBubble(it) }
@@ -462,7 +464,7 @@ private fun ConversationTypingBubble() {
                                 Modifier
                                     .size(8.dp)
                                     .graphicsLayer { this.alpha = alpha }
-                                    .background(colors.labelTertiary, CircleShape),
+                                    .background(colors.mutedForeground, CircleShape),
                             )
                         }
                     }
@@ -494,7 +496,7 @@ private fun ConversationComposer(onSend: (String) -> Unit, onAttach: () -> Unit)
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Button(onClick = onAttach, variant = ButtonVariant.Secondary, size = ButtonSize.IconSm) {
-                Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.labelSecondary)
+                Icon(PhosphorIcons.Bold.Plus, contentDescription = "Add attachment", size = 18.dp, tint = colors.mutedForeground)
             }
             InputGroup(Modifier.weight(1f)) {
                 InputGroupInput(

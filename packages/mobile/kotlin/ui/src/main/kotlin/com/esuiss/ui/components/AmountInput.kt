@@ -125,12 +125,8 @@ fun AmountInput(
     }
     val empty = current.isEmpty()
     val number = if (empty) placeholder else format.number(current)
-    val foreground = when {
-        !enabled -> colors.labelQuaternary
-        empty -> colors.labelTertiary
-        else -> colors.label
-    }
-    val symbol = if (enabled && !empty) colors.labelSecondary else foreground
+    val foreground = if (empty) colors.mutedForeground else colors.foreground
+    val symbol = colors.mutedForeground
     val text: AnnotatedString = buildAnnotatedString {
         if (format.prefix.isNotEmpty()) withStyle(SpanStyle(fontSize = 0.5.em, color = symbol)) { append(format.prefix) }
         append(number)
@@ -155,7 +151,10 @@ fun AmountInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(72.dp)
-                .graphicsLayer { translationX = offset.value.dp.toPx() }
+                .graphicsLayer {
+                    translationX = offset.value.dp.toPx()
+                    alpha = if (enabled) 1f else 0.5f
+                }
                 .clearAndSetSemantics {
                     contentDescription = text.text
                     liveRegion = LiveRegionMode.Polite

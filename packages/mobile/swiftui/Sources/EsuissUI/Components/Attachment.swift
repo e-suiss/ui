@@ -102,16 +102,16 @@ public struct Attachment<Content: View>: View {
     .frame(minWidth: vertical ? nil : 160, alignment: .leading)
     .background {
       if !grouped && state != .idle {
-        shape.fill(Color.surfaceSecondary)
+        shape.fill(EsuissColor.muted)
       }
     }
     .overlay {
       if state == .idle && !grouped {
-        shape.strokeBorder(Color.separatorStrong, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+        shape.strokeBorder(EsuissColor.input, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
       }
     }
     .scaledFont(size == .default ? .sm : .xs)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .environment(
       \.attachment,
       AttachmentContext(state: state, size: size, orientation: orientation, radius: radius)
@@ -307,16 +307,16 @@ public struct AttachmentMedia<Content: View>: View {
           .frame(maxWidth: .infinity, maxHeight: .infinity)
       }
     }
-    .foregroundStyle(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
     .environment(\.attachmentIconSize, iconSize)
     .frame(width: vertical ? nil : width, height: square ? nil : height)
     .frame(maxWidth: vertical ? .infinity : nil)
     .aspectRatio(square ? 1 : nil, contentMode: .fit)
-    .background(variant == .image ? Color.surfaceSecondary : Color.surface)
+    .background(variant == .image ? EsuissColor.muted : EsuissColor.background)
     .clipShape(shape)
     .overlay {
       if variant != .image {
-        shape.strokeBorder(Color.separator, lineWidth: 1)
+        shape.strokeBorder(EsuissColor.border, lineWidth: 1)
       }
     }
     .layoutValue(key: AttachmentRoleKey.self, value: .media)
@@ -416,12 +416,12 @@ public struct AttachmentLabel: View {
 
   @ScaledMetric(relativeTo: .caption2) private var fontSize: CGFloat = 9
 
-  public init(_ text: LocalizedStringKey, tint: Color = .accent) {
+  public init(_ text: LocalizedStringKey, tint: Color = EsuissColor.primary) {
     self.text = Text(text)
     self.tint = tint
   }
 
-  public init(verbatim text: String, tint: Color = .accent) {
+  public init(verbatim text: String, tint: Color = EsuissColor.primary) {
     self.text = Text(verbatim: text)
     self.tint = tint
   }
@@ -432,7 +432,7 @@ public struct AttachmentLabel: View {
       .font(.system(size: fontSize, weight: .semibold))
       .lineLimit(1)
       .fixedSize()
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .padding(.horizontal, 4)
       .padding(.vertical, 2)
       .background(tint, in: RoundedRectangle(cornerRadius: Radius.xs, style: .continuous))
@@ -481,7 +481,7 @@ public struct AttachmentTitle: View {
       .scaledFont(attachment.size == .default ? .base : .xs, weight: attachment.size == .default ? .regular : .semibold)
       .lineLimit(1)
       .truncationMode(.middle)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .padding(.trailing, progress ? 48 : 0)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -504,7 +504,7 @@ public struct AttachmentDescription: View {
     text
       .scaledFont(attachment.size == .default ? .sm : .xs)
       .lineLimit(1)
-      .foregroundStyle(attachment.state == .error ? Color.danger : .labelSecondary)
+      .foregroundStyle(attachment.state == .error ? EsuissColor.destructive : EsuissColor.mutedForeground)
       .padding(.top, 2)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -545,12 +545,12 @@ private struct AttachmentProgressBar: View {
   var body: some View {
     let fraction = min(max(fraction, 0), 1)
     Capsule()
-      .fill(Color.label.opacity(0.1))
+      .fill(EsuissColor.foreground.opacity(0.1))
       .frame(height: 4)
       .overlay(alignment: .leading) {
         GeometryReader { proxy in
           Capsule()
-            .fill(Color.accent)
+            .fill(EsuissColor.primary)
             .frame(width: proxy.size.width * fraction)
             .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 1), value: fraction)
         }
@@ -559,7 +559,7 @@ private struct AttachmentProgressBar: View {
         Text(fraction, format: .percent.precision(.fractionLength(0)))
           .scaledFont(.sm)
           .monospacedDigit()
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .fixedSize()
           .alignmentGuide(.top) { $0[.bottom] + 8 }
           .accessibilityHidden(true)
@@ -707,34 +707,34 @@ private struct AttachmentActionBody: View {
       .background(background, in: Circle())
       .overlay {
         if variant == .outline && !overlay {
-          Circle().strokeBorder(Color.separator)
+          Circle().strokeBorder(EsuissColor.border)
         }
       }
       .contentShape(Circle())
-      .opacity(isEnabled ? 1 : 0.5)
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
   }
 
   private var pressed: Bool { configuration.isPressed }
 
   private var foreground: Color {
-    if overlay { return .onAccent }
+    if overlay { return EsuissColor.primaryForeground }
     switch variant {
-    case .default: return .onAccent
-    case .destructive: return .danger
-    case .tinted, .plain: return .link
-    case .secondary, .outline, .ghost, .link: return pressed ? .label : .labelSecondary
+    case .default: return EsuissColor.primaryForeground
+    case .destructive: return EsuissColor.destructive
+    case .tinted, .plain: return EsuissColor.primary
+    case .secondary, .outline, .ghost, .link: return pressed ? EsuissColor.foreground : EsuissColor.mutedForeground
     }
   }
 
   private var background: Color {
-    if overlay { return .scrim }
+    if overlay { return Palette.black.opacity(0.5) }
     switch variant {
-    case .default: return pressed ? .accentPressed : .accent
-    case .secondary: return pressed ? .controlPressed : .control
-    case .tinted: return pressed ? .accentSurfacePressed : .accentSurface
-    case .destructive: return pressed ? .dangerSurfacePressed : .dangerSurface
-    case .outline: return pressed ? .itemPressed : .surface
-    case .ghost, .plain, .link: return pressed ? .itemPressed : .clear
+    case .default: return EsuissColor.primary
+    case .secondary: return EsuissColor.secondary
+    case .tinted: return Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))
+    case .destructive: return Color.adaptive(light: EsuissColor.destructive.opacity(0.1), dark: EsuissColor.destructive.opacity(0.2))
+    case .outline: return EsuissColor.background
+    case .ghost, .plain, .link: return .clear
     }
   }
 }
@@ -767,7 +767,7 @@ private struct AttachmentTriggerStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     let shape = RoundedRectangle(cornerRadius: radius, style: .continuous)
     shape
-      .fill(configuration.isPressed ? Color.itemPressed : .clear)
+      .fill(EsuissColor.background.opacity(configuration.isPressed ? 0.2 : 0))
       .contentShape(shape)
   }
 }
@@ -791,7 +791,7 @@ public struct AttachmentGroup<Content: View>: View {
         let rects = rows.map { (proxy[$0.bounds], $0.inset) }.sorted { $0.0.minY < $1.0.minY }
         ForEach(Array(rects.dropFirst().enumerated()), id: \.offset) { _, row in
           Rectangle()
-            .fill(Color.separator)
+            .fill(EsuissColor.border)
             .frame(width: max(row.0.width - row.1, 0), height: 1)
             .offset(x: row.0.minX + row.1, y: row.0.minY)
         }
@@ -800,7 +800,7 @@ public struct AttachmentGroup<Content: View>: View {
       .accessibilityHidden(true)
     }
     .transformPreference(AttachmentGroupRowKey.self) { $0 = [] }
-    .background(Color.surfaceSecondary, in: shape)
+    .background(EsuissColor.muted, in: shape)
     .clipShape(shape)
     .accessibilityElement(children: .contain)
   }

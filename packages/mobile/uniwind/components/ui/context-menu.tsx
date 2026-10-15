@@ -49,11 +49,11 @@ function ContextMenuContent({
           sideOffset={sideOffset}
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-            <TextClassContext.Provider value="text-base text-label">
+            <TextClassContext.Provider value="text-base text-foreground">
               <ContextMenuPrimitive.Popup
                 className={(state) =>
                   cn(
-                    "min-w-48 rounded-xl border border-label/5 bg-surface-raised p-1.5 shadow-lg dark:border-label/10",
+                    "min-w-48 rounded-xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
                     resolveClassName(className, state)
                   )
                 }
@@ -81,17 +81,15 @@ function ContextMenuSubTrigger({
   const { open } = ContextMenuPrimitive.useMenuRootContext().floating
   return (
     <TextClassContext.Provider
-      value={cn(
-        "select-none text-base text-label",
-        props.disabled && "text-label-quaternary"
-      )}
+      value={cn("select-none text-base text-foreground")}
     >
       <ContextMenuPrimitive.SubmenuTrigger
         className={(state) =>
           cn(
             "group flex-row items-center gap-2 rounded-md px-3 py-2",
-            state.highlighted && "bg-item-pressed",
-            state.open && !state.highlighted && "bg-item-selected",
+            props.disabled && "opacity-50",
+            state.highlighted && "opacity-80",
+            state.open && !state.highlighted && "bg-accent",
             state.open && "mb-1",
             inset && "pl-9.5",
             resolveClassName(className, state)
@@ -117,7 +115,7 @@ function ContextMenuSubContent({
       <ContextMenuPrimitive.Popup
         className={(state) =>
           cn(
-            "min-w-36 rounded-xl border border-label/5 bg-surface-raised p-1.5 shadow-lg dark:border-label/10",
+            "min-w-36 rounded-xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
             resolveClassName(className, state)
           )
         }
@@ -140,17 +138,16 @@ function ContextMenuItem({
   return (
     <TextClassContext.Provider
       value={cn(
-        "select-none text-base text-label",
-        destructive && "text-danger",
-        props.disabled && "text-label-quaternary"
+        "select-none text-base text-foreground",
+        destructive && "text-destructive"
       )}
     >
       <ContextMenuPrimitive.Item
         className={(state) =>
           cn(
             "group relative flex-row items-center gap-2.5 rounded-md px-3 py-2",
-            state.highlighted &&
-              (destructive ? "bg-danger-surface-pressed" : "bg-item-pressed"),
+            props.disabled && "opacity-50",
+            state.highlighted && "opacity-80",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -172,16 +169,14 @@ function ContextMenuCheckboxItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn(
-        "select-none text-base text-label",
-        props.disabled && "text-label-quaternary"
-      )}
+      value={cn("select-none text-base text-foreground")}
     >
       <ContextMenuPrimitive.CheckboxItem
         className={(state) =>
           cn(
             "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
-            state.highlighted && "bg-item-pressed",
+            props.disabled && "opacity-50",
+            state.highlighted && "opacity-80",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -210,16 +205,14 @@ function ContextMenuRadioItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn(
-        "select-none text-base text-label",
-        props.disabled && "text-label-quaternary"
-      )}
+      value={cn("select-none text-base text-foreground")}
     >
       <ContextMenuPrimitive.RadioItem
         className={(state) =>
           cn(
             "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
-            state.highlighted && "bg-item-pressed",
+            props.disabled && "opacity-50",
+            state.highlighted && "opacity-80",
             inset && "pl-9.5",
             resolveClassName(className, state)
           )
@@ -248,7 +241,7 @@ function ContextMenuLabel({
     <ContextMenuPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-label-secondary",
+          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
           inset && "pl-9.5",
           resolveClassName(className, state)
         )
@@ -266,7 +259,7 @@ function ContextMenuSeparator({
     <ContextMenuPrimitive.Separator
       className={(state) =>
         cn(
-          "-mx-1.5 my-1.5 h-px bg-separator/50",
+          "-mx-1.5 my-1.5 h-px bg-border/50",
           resolveClassName(className, state)
         )
       }

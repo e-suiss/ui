@@ -14,10 +14,10 @@ private let scores: [String: [Double]] = [
 private let maxSelected = 3
 
 private let chartConfig: ChartConfig = [
-  "pro": .init("Phone Pro", color: .orange),
-  "standard": .init("Phone", color: .blue),
-  "air": .init("Phone Air", color: .cyan),
-  "lite": .init("Phone Lite", color: .purple),
+  "pro": .init("Phone Pro", color: EsuissColor.chart4),
+  "standard": .init("Phone", color: EsuissColor.chart1),
+  "air": .init("Phone Air", color: Palette.cyan500),
+  "lite": .init("Phone Lite", color: Palette.purple500),
 ]
 
 private func average(_ model: String) -> Double {
@@ -33,27 +33,23 @@ private struct ModelChipStyle: ToggleStyle {
       let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
       HStack(spacing: 6) {
         Circle()
-          .fill(configuration.isOn ? color : .labelQuaternary)
+          .fill(configuration.isOn ? color : EsuissColor.border)
           .frame(width: 8, height: 8)
         configuration.label
       }
       .scaledFont(.sm, weight: .semibold)
       .lineLimit(1)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .padding(.horizontal, 12)
       .frame(minHeight: 32)
-      .background(background(configuration.isOn, pressed: pressed), in: shape)
+      .background(configuration.isOn ? color.opacity(0.16) : EsuissColor.secondary, in: shape)
+      .opacity(pressed ? 0.8 : 1)
       .contentShape(shape)
     }) {
       configuration.isOn.toggle()
       return true
     }
     .accessibilityAddTraits(configuration.isOn ? .isSelected : [])
-  }
-
-  private func background(_ isOn: Bool, pressed: Bool) -> Color {
-    if isOn { return color.opacity(pressed ? 0.28 : 0.16) }
-    return pressed ? .controlPressed : .control
   }
 }
 
@@ -81,7 +77,7 @@ public struct RadarChartInteractive: View {
           .textStyle(.lg, weight: .semibold)
         Text("Up to three models · scores out of 100, sample data")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -128,7 +124,7 @@ public struct RadarChartInteractive: View {
                   .fill(chartConfig.color(item.key))
                   .frame(width: 3, height: 12)
                 Text(LocalizedStringKey(chartConfig.label(item.key)))
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .frame(maxWidth: .infinity, alignment: .leading)
                 Text(item.value, format: .number)
                   .font(TextStyle.xs.font(weight: .semibold))
@@ -179,7 +175,7 @@ public struct RadarChartInteractive: View {
           .textStyle(.base, weight: .semibold)
         Text(LocalizedStringKey(index.map { axes[$0] } ?? "Overall score"))
           .textStyle(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       Text(value, format: .number)
@@ -188,7 +184,7 @@ public struct RadarChartInteractive: View {
     }
     .padding(.horizontal, 14)
     .padding(.vertical, 12)
-    .background(Color.surface, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
     .accessibilityElement(children: .combine)
   }
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.error
@@ -65,15 +66,10 @@ fun Switch(
         spec,
         label = "travel",
     )
-    val track = when {
-        checked && !enabled -> colors.accentDisabled
-        checked -> colors.accent
-        !enabled -> colors.controlDisabled
-        else -> colors.labelQuaternary
-    }
+    val track = if (checked) colors.primary else colors.input
     val border = when {
-        invalid && enabled -> colors.danger
-        checked && enabled -> colors.accent
+        invalid -> colors.destructive
+        checked -> colors.primary
         else -> Color.Transparent
     }
     val toggle = if (onCheckedChange != null) {
@@ -98,6 +94,7 @@ fun Switch(
             .then(toggle)
             .then(if (invalid) Modifier.semantics { error("Invalid") } else Modifier)
             .size(size.width, size.height)
+            .alpha(if (enabled) 1f else 0.5f)
             .background(track, CircleShape)
             .border(2.dp, border, CircleShape)
             .padding(2.dp),
@@ -108,7 +105,7 @@ fun Switch(
                 .offset(x = travel)
                 .size(thumbWidth, size.thumbHeight)
                 .shadow(FormShadowSm, CircleShape)
-                .background(if (colors.isDark) colors.label else colors.surface, CircleShape),
+                .background(if (colors.isDark) colors.foreground else colors.background, CircleShape),
         )
     }
 }

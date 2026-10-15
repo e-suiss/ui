@@ -14,10 +14,10 @@ enum ScreenStories {
       }
     },
     Story("Secondary", fullScreen: true) {
-      Screen(background: .surfaceSecondary) {
+      Screen(background: .muted) {
         ScreenContent(scroll: false) {
           Text("Settings").textVariant(.h2)
-          ScreenRows(labels: ["General", "Privacy", "Notifications"], background: .surface)
+          ScreenRows(labels: ["General", "Privacy", "Notifications"], background: EsuissColor.background)
         }
       }
     },
@@ -36,7 +36,7 @@ enum ScreenStories {
           Text("The bottom, left and right edges are not padded.")
             .textVariant(.muted)
         }
-        .background(Color.surfaceSecondary)
+        .background(EsuissColor.muted)
       }
     },
     Story("WithBottomBar", fullScreen: true) {
@@ -47,7 +47,7 @@ enum ScreenStories {
 
 private struct ScreenRows: View {
   var labels: [String] = (1...4).map { "Row \($0)" }
-  var background: Color = .surfaceSecondary
+  var background: Color = EsuissColor.muted
 
   var body: some View {
     VStack(spacing: 0) {
@@ -59,7 +59,7 @@ private struct ScreenRows: View {
           .padding(.vertical, 12)
           .overlay(alignment: .top) {
             if index > 0 {
-              Color.separator.frame(height: 1)
+              EsuissColor.border.frame(height: 1)
             }
           }
       }

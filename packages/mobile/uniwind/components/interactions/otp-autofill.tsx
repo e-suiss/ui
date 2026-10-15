@@ -73,12 +73,12 @@ const SLOT_CLASS_NAMES: Partial<
   Record<OtpAutofillState, { className: string; textClassName?: string }>
 > = {
   invalid: {
-    className: "border-danger bg-danger/5 dark:bg-danger/10",
-    textClassName: "text-danger",
+    className: "border-destructive bg-destructive/5 dark:bg-destructive/10",
+    textClassName: "text-destructive",
   },
   verified: {
-    className: "border-success bg-success-surface",
-    textClassName: "text-success",
+    className: "border-green-500 bg-green-500/10 dark:bg-green-500/20",
+    textClassName: "text-green-600 dark:text-green-400",
   },
   verifying: { className: "opacity-60" },
 }
@@ -277,7 +277,7 @@ function OtpAutofillSuggestion({
           <AnimatedView
             entering={ENTERING}
             exiting={EXITING}
-            className="absolute inset-x-0 z-50 border-t border-separator bg-surface-raised dark:bg-surface-secondary"
+            className="absolute inset-x-0 z-50 border-t border-border bg-popover dark:bg-muted"
             style={{ bottom: keyboard.height }}
           >
             <Pressable
@@ -286,7 +286,7 @@ function OtpAutofillSuggestion({
                 if (code) fill(code)
               }}
               className={cn(
-                "min-h-11 items-center justify-center pt-1.5 active:bg-item-pressed",
+                "min-h-11 items-center justify-center pt-1.5 active:opacity-80",
                 className
               )}
               style={{
@@ -296,7 +296,7 @@ function OtpAutofillSuggestion({
               {...props}
             >
               {typeof source === "string" || typeof source === "number" ? (
-                <Text className="text-xs text-label-secondary">{source}</Text>
+                <Text className="text-xs text-muted-foreground">{source}</Text>
               ) : (
                 source
               )}

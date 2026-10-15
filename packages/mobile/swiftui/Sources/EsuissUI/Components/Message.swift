@@ -78,7 +78,7 @@ public struct MessageAvatar<Content: View>: View {
   public var body: some View {
     content
       .frame(minWidth: 32, minHeight: 32)
-      .background(Color.surfaceSecondary, in: Circle())
+      .background(EsuissColor.muted, in: Circle())
       .clipShape(Circle())
       .fixedSize()
       .layoutValue(key: MessageAvatarKey.self, value: true)
@@ -120,7 +120,7 @@ public struct MessageHeader<Content: View>: View {
     }
     .scaledFont(.xs)
     .lineLimit(1)
-    .foregroundStyle(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
     .padding(.horizontal, ghost ? 0 : 14)
     .accessibilityElement(children: .combine)
   }
@@ -152,7 +152,7 @@ public struct MessageFooter<Content: View>: View {
     }
     .scaledFont(.xs)
     .lineLimit(1)
-    .foregroundStyle(Color.labelSecondary)
+    .foregroundStyle(EsuissColor.mutedForeground)
     .padding(.horizontal, ghost ? 0 : 14)
     .background {
       GeometryReader { proxy in

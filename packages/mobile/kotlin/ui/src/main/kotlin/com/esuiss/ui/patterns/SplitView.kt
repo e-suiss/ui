@@ -42,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -180,8 +181,8 @@ private fun CompactPane(
     val colors = EsuissTheme.colors
     CompositionLocalProvider(
         LocalSplitView provides SplitViewContext(compact = true, kind = pane.kind, setColumn = setColumn, items = remember { SplitViewItemEdges() }),
-        LocalContentStyle provides Typography.base.copy(color = colors.label),
-        LocalContentColor provides colors.label,
+        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+        LocalContentColor provides colors.foreground,
     ) {
         Column(
             modifier = pane.modifier
@@ -192,10 +193,11 @@ private fun CompactPane(
             if (back != null) {
                 val interaction = remember { MutableInteractionSource() }
                 val pressed by interaction.collectIsPressedAsState()
-                val tint = if (pressed) colors.link.copy(alpha = 0.6f) else colors.link
+                val tint = colors.primary
                 Row(
                     modifier = Modifier
                         .heightIn(min = 44.dp)
+                        .alpha(if (pressed) 0.8f else 1f)
                         .clickable(interactionSource = interaction, indication = null, role = Role.Button) { setColumn(back) },
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(2.dp),
@@ -208,7 +210,7 @@ private fun CompactPane(
                 BasicText(
                     pane.title,
                     modifier = Modifier.padding(bottom = 8.dp).semantics { heading() },
-                    style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.Bold),
+                    style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
                 )
             }
             pane.content(this)
@@ -228,11 +230,11 @@ private fun WideSplitView(panes: List<SplitViewPane>, setColumn: (SplitViewColum
     }
     Row(modifier = Modifier.fillMaxSize()) {
         panes.forEachIndexed { index, pane ->
-            if (index > 0) Box(modifier = Modifier.width(1.dp).fillMaxHeight().background(colors.separator))
+            if (index > 0) Box(modifier = Modifier.width(1.dp).fillMaxHeight().background(colors.border))
             CompositionLocalProvider(
                 LocalSplitView provides SplitViewContext(compact = false, kind = pane.kind, setColumn = setColumn),
-                LocalContentStyle provides Typography.base.copy(color = colors.label),
-                LocalContentColor provides colors.label,
+                LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                LocalContentColor provides colors.foreground,
             ) {
                 Column(
                     modifier = Modifier
@@ -253,7 +255,7 @@ private fun WideSplitView(panes: List<SplitViewPane>, setColumn: (SplitViewColum
                             SplitViewColumn.Sidebar -> BasicText(
                                 pane.title,
                                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 8.dp).semantics { heading() },
-                                style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                             )
                             SplitViewColumn.List -> Box(
                                 modifier = Modifier.semantics {
@@ -264,7 +266,7 @@ private fun WideSplitView(panes: List<SplitViewPane>, setColumn: (SplitViewColum
                             SplitViewColumn.Detail -> BasicText(
                                 pane.title,
                                 modifier = Modifier.padding(bottom = 4.dp).semantics { heading() },
-                                style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                             )
                         }
                     }
@@ -293,7 +295,7 @@ fun SplitViewItem(
         context.setColumn(next(context.kind))
     }
     if (context.compact) {
-        val separator = colors.separator
+        val separator = colors.border
         val edges = context.items.edges
         DisposableEffect(edges) { onDispose { edges.remove(id) } }
         val divided = edges.any { (key, edge) -> key !== id && abs(edge.second - top) < 1f }
@@ -306,7 +308,7 @@ fun SplitViewItem(
                     top = y
                     edges[id] = y to y + it.size.height
                 }
-                .background(if (pressed) colors.itemPressed else Color.Transparent)
+                .alpha(if (pressed) 0.8f else 1f)
                 .drawBehind { if (divided) drawRect(separator, Offset.Zero, Size(size.width, 1.dp.toPx())) }
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = click)
                 .semantics { selected = isActive }
@@ -316,7 +318,7 @@ fun SplitViewItem(
         ) {
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp), content = content)
             if (context.kind != SplitViewColumn.Detail) {
-                Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = colors.labelTertiary)
+                Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = colors.mutedForeground)
             }
         }
     } else {
@@ -325,15 +327,9 @@ fun SplitViewItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
+                .alpha(if (pressed) 0.8f else 1f)
                 .clip(shape)
-                .background(
-                    when {
-                        pressed -> colors.itemPressed
-                        isActive -> colors.surfaceSecondary
-                        else -> Color.Transparent
-                    },
-                    shape,
-                )
+                .background(if (isActive) colors.muted else Color.Transparent, shape)
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = click)
                 .semantics { selected = isActive }
                 .padding(horizontal = 12.dp, vertical = if (list) 12.dp else 8.dp),

@@ -85,8 +85,8 @@ internal fun CenteredModal(
                 ) {
                     CompositionLocalProvider(
                         LocalPaneTitle provides paneTitle,
-                        LocalContentStyle provides Typography.base.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                     ) {
                         Column(
                             modifier = Modifier

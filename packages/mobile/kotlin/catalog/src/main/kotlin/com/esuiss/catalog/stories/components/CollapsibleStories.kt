@@ -51,7 +51,7 @@ private fun CollapsibleRepository(name: String) {
         name,
         modifier = Modifier
             .fillMaxWidth()
-            .background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))
+            .background(EsuissTheme.colors.muted, RoundedCornerShape(Radius.xl2))
             .padding(horizontal = 16.dp, vertical = 8.dp),
         style = Typography.sm,
     )

@@ -189,10 +189,8 @@ function TopBannerView({
           style={[
             styles.banner,
             {
-              borderColor: colors.separator,
-              backgroundColor: isDark
-                ? colors.surfaceSecondary
-                : colors.surfaceRaised,
+              borderColor: colors.border,
+              backgroundColor: isDark ? colors.muted : colors.card,
             },
             style,
             animatedStyle,
@@ -202,7 +200,7 @@ function TopBannerView({
             <Icon
               as={entry.icon}
               size={24}
-              color={colors.link}
+              color={colors.primary}
               style={styles.icon}
             />
           ) : null}
@@ -211,7 +209,7 @@ function TopBannerView({
             {entry.description !== undefined
               ? wrapText(entry.description, {
                   ...styles.description,
-                  color: colors.labelSecondary,
+                  color: colors.mutedForeground,
                 })
               : null}
           </View>

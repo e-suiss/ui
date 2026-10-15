@@ -27,7 +27,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  hours: { label: "Sleep", color: "indigo" },
+  hours: { label: "Sleep", color: "chart-3" },
 } satisfies ChartConfig
 
 function formatHours(hours: number) {
@@ -39,13 +39,13 @@ export function LineChartGoalDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <Text className="text-sm font-semibold text-indigo">Sleep</Text>
+        <Text className="text-sm font-semibold text-indigo-500">Sleep</Text>
         <View className="flex-row items-baseline gap-1">
           <Text className="text-3xl font-semibold tracking-tight tabular-nums">
             7h 9m
           </Text>
         </View>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Goal 7 hours · green nights met it
         </Text>
       </CardHeader>
@@ -69,7 +69,7 @@ export function LineChartGoalDots() {
               ticks={[5, 7, 9]}
               tickFormatter={(value: number) => `${value}h`}
             />
-            <ReferenceLine y={GOAL} stroke="green" strokeDasharray="3 3" />
+            <ReferenceLine y={GOAL} stroke="green-500" strokeDasharray="3 3" />
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -89,8 +89,10 @@ export function LineChartGoalDots() {
               dot={({ index }) => ({
                 r: 4.5,
                 fill:
-                  (chartData[index]?.hours ?? 0) >= GOAL ? "green" : "orange",
-                stroke: "surface-secondary",
+                  (chartData[index]?.hours ?? 0) >= GOAL
+                    ? "green-500"
+                    : "chart-4",
+                stroke: "muted",
                 strokeWidth: 2,
               })}
             />

@@ -70,7 +70,7 @@ private fun PinPadVerify() {
             status,
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             style = Typography.sm,
-            color = if (error) colors.danger else colors.labelSecondary,
+            color = if (error) colors.destructive else colors.mutedForeground,
         )
         PinPad(
             value = value,
@@ -102,7 +102,7 @@ private fun PinPadBiometric(faceId: Boolean) {
         Text(
             if (log > 0) "Biometric requested ($log)" else "Biometric key",
             style = Typography.sm,
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
         )
         PinPad(
             biometricIcon = if (faceId) PhosphorIcons.Regular.ScanSmiley else PhosphorIcons.Regular.Fingerprint,

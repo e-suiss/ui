@@ -32,17 +32,17 @@ const MODELS = Object.keys(SCORES) as Model[]
 const MAX_SELECTED = 3
 
 const chartConfig = {
-  pro: { label: "Phone Pro", color: "orange" },
-  standard: { label: "Phone", color: "blue" },
-  air: { label: "Phone Air", color: "cyan" },
-  lite: { label: "Phone Lite", color: "purple" },
+  pro: { label: "Phone Pro", color: "chart-4" },
+  standard: { label: "Phone", color: "chart-1" },
+  air: { label: "Phone Air", color: "cyan-500" },
+  lite: { label: "Phone Lite", color: "purple-500" },
 } satisfies ChartConfig
 
 const SWATCH: Record<Model, { dot: string; chip: string }> = {
-  pro: { dot: "bg-orange", chip: "bg-orange/15 active:bg-orange/25" },
-  standard: { dot: "bg-blue", chip: "bg-blue/15 active:bg-blue/25" },
-  air: { dot: "bg-cyan", chip: "bg-cyan/15 active:bg-cyan/25" },
-  lite: { dot: "bg-purple", chip: "bg-purple/15 active:bg-purple/25" },
+  pro: { dot: "bg-orange-500", chip: "bg-orange-500/15 active:opacity-80" },
+  standard: { dot: "bg-blue-500", chip: "bg-blue-500/15 active:opacity-80" },
+  air: { dot: "bg-cyan-500", chip: "bg-cyan-500/15 active:opacity-80" },
+  lite: { dot: "bg-purple-500", chip: "bg-purple-500/15 active:opacity-80" },
 }
 
 const average = (model: Model) =>
@@ -75,7 +75,7 @@ export function RadarChartInteractive() {
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
         <Text className="text-lg font-semibold">Compare phone models</Text>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           Up to three models · scores out of 100, sample data
         </Text>
       </CardHeader>
@@ -96,19 +96,17 @@ export function RadarChartInteractive() {
                   "gap-1.5",
                   state.pressed
                     ? SWATCH[model].chip
-                    : "bg-control active:bg-control-pressed"
+                    : "bg-secondary active:opacity-80"
                 )
               }
             >
               <View
                 className={cn(
                   "size-2 rounded-full",
-                  selected.includes(model)
-                    ? SWATCH[model].dot
-                    : "bg-label-quaternary"
+                  selected.includes(model) ? SWATCH[model].dot : "bg-border"
                 )}
               />
-              <Text className="text-sm font-semibold text-label">
+              <Text className="text-sm font-semibold text-foreground">
                 {chartConfig[model].label}
               </Text>
             </Toggle>
@@ -129,7 +127,10 @@ export function RadarChartInteractive() {
             <PolarAngleAxis
               dataKey="axis"
               tickClassName={(_, index) =>
-                cn("text-sm", index === axisIndex && "font-semibold text-label")
+                cn(
+                  "text-sm",
+                  index === axisIndex && "font-semibold text-foreground"
+                )
               }
             />
             <PolarRadiusAxis domain={[0, 100]} tick={false} />
@@ -145,7 +146,7 @@ export function RadarChartInteractive() {
                           SWATCH[name as Model].dot
                         )}
                       />
-                      <Text className="grow text-label-secondary">
+                      <Text className="grow text-muted-foreground">
                         {chartConfig[name as Model].label}
                       </Text>
                       <Text className="font-semibold tabular-nums">
@@ -172,7 +173,7 @@ export function RadarChartInteractive() {
           {MODELS.filter((model) => selected.includes(model)).map((model) => (
             <View
               key={model}
-              className="flex-row items-center gap-3 rounded-xl bg-surface px-3.5 py-3"
+              className="flex-row items-center gap-3 rounded-xl bg-background px-3.5 py-3"
             >
               <View
                 className={cn(
@@ -184,7 +185,7 @@ export function RadarChartInteractive() {
                 <Text className="text-base font-semibold">
                   {chartConfig[model].label}
                 </Text>
-                <Text className="text-xs text-label-secondary">
+                <Text className="text-xs text-muted-foreground">
                   {axis ?? "Overall score"}
                 </Text>
               </View>

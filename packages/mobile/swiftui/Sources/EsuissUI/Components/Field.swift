@@ -50,7 +50,7 @@ public struct Field<Content: View>: View {
     .frame(minHeight: inset ? 44 : nil)
     .overlay(alignment: .top) {
       if inset {
-        Color.separator
+        EsuissColor.border
           .frame(height: 1)
           .padding(.leading, 16)
           .offset(y: -1)
@@ -93,7 +93,8 @@ public struct FieldTitle: View {
   public var body: some View {
     text
       .scaledTextStyle(.base, weight: .semibold)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
+      .opacity(isEnabled ? 1 : 0.5)
   }
 }
 
@@ -113,7 +114,7 @@ public struct FieldDescription: View {
   public var body: some View {
     text
       .scaledTextStyle(inset ? .xs : .sm)
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .multilineTextAlignment(.leading)
       .fixedSize(horizontal: false, vertical: true)
       .padding(.leading, inset ? 16 : 0)
@@ -139,7 +140,7 @@ public struct FieldError: View {
     if let content {
       content
         .scaledTextStyle(.sm)
-        .foregroundStyle(Color.danger)
+        .foregroundStyle(EsuissColor.destructive)
         .multilineTextAlignment(.leading)
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -183,7 +184,7 @@ public struct FieldGroup<Content: View>: View {
     if variant == .inset {
       let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
       stack
-        .background(Color.surfaceSecondary, in: shape)
+        .background(EsuissColor.muted, in: shape)
         .clipShape(shape)
     } else {
       stack
@@ -247,15 +248,16 @@ public struct FieldLegend: View {
         text
           .textCase(.uppercase)
           .scaledTextStyle(.xs)
-          .foregroundStyle(isEnabled ? Color.labelSecondary : .labelQuaternary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .padding(.leading, 16)
       } else {
         text
           .scaledTextStyle(.base, weight: .semibold)
-          .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+          .foregroundStyle(EsuissColor.foreground)
           .padding(.bottom, 12)
       }
     }
+    .opacity(isEnabled ? 1 : 0.5)
     .accessibilityAddTraits(variant == .legend ? .isHeader : [])
   }
 }
@@ -272,9 +274,9 @@ public struct FieldSeparator<Content: View>: View {
       Separator()
       content
         .scaledTextStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.horizontal, 8)
-        .background(Color.surface)
+        .background(EsuissColor.background)
     }
     .frame(minHeight: 20)
     .padding(.vertical, -8)

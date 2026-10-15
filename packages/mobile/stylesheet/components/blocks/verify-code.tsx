@@ -21,6 +21,7 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import {
   fontSize,
+  palette,
   radius,
   type ThemeColors,
   useTheme,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
 })
 
 function slotBorder(active: boolean, colors: ThemeColors) {
-  return active ? colors.accent : colors.separatorStrong
+  return active ? colors.primary : colors.input
 }
 
 function LinkText({
@@ -95,7 +96,7 @@ function LinkText({
       onPress={onPress}
       style={({ pressed }) => pressed && { opacity: 0.6 }}
     >
-      <Text style={[fontSize.sm, { color: colors.link }]}>{children}</Text>
+      <Text style={[fontSize.sm, { color: colors.primary }]}>{children}</Text>
     </Pressable>
   )
 }
@@ -162,18 +163,18 @@ function VerifyCode({
             )}
             style={styles.stack}
           >
-            <View style={[styles.check, { backgroundColor: colors.success }]}>
+            <View style={[styles.check, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text role="heading" style={styles.title}>
               Verified.
             </Text>
-            <Text style={[styles.lead, { color: colors.labelSecondary }]}>
+            <Text style={[styles.lead, { color: colors.mutedForeground }]}>
               This device is now trusted. You won't be asked for a code next
               time.
             </Text>
@@ -186,7 +187,7 @@ function VerifyCode({
               }}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[fontSize.lg, { color: colors.link }]}>
+              <Text style={[fontSize.lg, { color: colors.primary }]}>
                 Start over ›
               </Text>
             </Pressable>
@@ -199,14 +200,12 @@ function VerifyCode({
   return (
     <Screen>
       <KeyboardScrollView contentContainerStyle={styles.content}>
-        <View
-          style={[styles.lock, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.lock, { backgroundColor: colors.muted }]}>
           <Icon
             as={LockSimpleIcon}
             weight="bold"
             size={30}
-            color={colors.accent}
+            color={colors.primary}
           />
         </View>
         <Text role="heading" style={[styles.title, { marginTop: 20 }]}>
@@ -215,7 +214,7 @@ function VerifyCode({
         <Text
           style={[
             styles.lead,
-            { marginTop: 12, marginBottom: 30, color: colors.labelSecondary },
+            { marginTop: 12, marginBottom: 30, color: colors.mutedForeground },
           ]}
         >
           Enter the 6-digit code sent to your trusted devices.
@@ -247,7 +246,7 @@ function VerifyCode({
                       {
                         borderColor:
                           status === "error"
-                            ? colors.danger
+                            ? colors.destructive
                             : slotBorder(state.active, colors),
                       },
                     ]}
@@ -262,7 +261,10 @@ function VerifyCode({
           style={[
             styles.hint,
             {
-              color: status === "error" ? colors.danger : colors.labelSecondary,
+              color:
+                status === "error"
+                  ? colors.destructive
+                  : colors.mutedForeground,
             },
           ]}
         >
@@ -274,7 +276,7 @@ function VerifyCode({
               style={[
                 fontSize.sm,
                 {
-                  color: colors.labelSecondary,
+                  color: colors.mutedForeground,
                   fontVariant: ["tabular-nums"],
                 },
               ]}

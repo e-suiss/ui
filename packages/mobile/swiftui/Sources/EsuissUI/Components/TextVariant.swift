@@ -25,8 +25,8 @@ public enum TextVariant: CaseIterable, Sendable {
 
   var color: Color {
     switch self {
-    case .lead, .muted: .labelSecondary
-    default: .label
+    case .lead, .muted: EsuissColor.mutedForeground
+    default: EsuissColor.foreground
     }
   }
 
@@ -48,7 +48,7 @@ private struct TextVariantModifier: ViewModifier {
         .italic()
         .padding(.leading, 12)
         .overlay(alignment: .leading) {
-          Rectangle().fill(Color.separator).frame(width: 2)
+          Rectangle().fill(EsuissColor.border).frame(width: 2)
         }
         .padding(.top, 16)
     case .code:
@@ -56,7 +56,7 @@ private struct TextVariantModifier: ViewModifier {
         .monospaced()
         .padding(.horizontal, 4)
         .padding(.vertical, 2)
-        .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.sm, style: .continuous))
+        .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.sm, style: .continuous))
     case .p:
       styled(content).padding(.top, 12)
     default:

@@ -10,7 +10,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
 
@@ -24,7 +24,7 @@ private struct Frame<Content: View>: View {
       .frame(maxWidth: .infinity)
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .overlay {
-        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).strokeBorder(Color.separator)
+        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).strokeBorder(EsuissColor.border)
       }
   }
 }
@@ -35,7 +35,7 @@ private struct Placeholder: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 12) {
       ForEach(0..<count, id: \.self) { _ in
-        RoundedRectangle(cornerRadius: Radius.md).fill(Color.surfaceTertiary).frame(height: 36)
+        RoundedRectangle(cornerRadius: Radius.md).fill(EsuissColor.secondary).frame(height: 36)
       }
     }
   }
@@ -49,15 +49,15 @@ private struct SettingRow: View {
     HStack {
       Text(verbatim: title)
         .font(TextStyle.base.font())
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
       Spacer()
       Text(verbatim: detail)
         .font(TextStyle.base.font())
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     .padding(.horizontal, 16)
     .frame(height: 44)
-    .overlay(alignment: .bottom) { Color.separator.frame(height: 1).padding(.leading, 16) }
+    .overlay(alignment: .bottom) { EsuissColor.border.frame(height: 1).padding(.leading, 16) }
   }
 }
 
@@ -90,7 +90,7 @@ private struct ScreenGallery: View {
       }
       Caption(text: "Secondary background, no scroll, no separator")
       Frame(height: 300) {
-        Screen(background: .surfaceSecondary) {
+        Screen(background: .muted) {
           Header {
             HeaderTitle(verbatim: "Payment", subtitle: "Step 2 of 3")
           } leading: {
@@ -286,10 +286,10 @@ private struct ReorderGallery: View {
           HStack(spacing: 12) {
             Ph.tray.regular
               .frame(width: 20, height: 20)
-              .foregroundStyle(Color.link)
+              .foregroundStyle(EsuissColor.primary)
             Text(verbatim: item)
               .font(TextStyle.base.font())
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
           }
           .padding(.vertical, 10)
         }
@@ -391,7 +391,7 @@ final class FoundationGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(padding)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

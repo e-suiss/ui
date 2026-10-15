@@ -34,7 +34,7 @@ private struct PickerDemo: View {
       .accessibilityLabel(Text("Fruit"))
       Text(verbatim: "Selected: \(value ?? "none")")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
   }
 }

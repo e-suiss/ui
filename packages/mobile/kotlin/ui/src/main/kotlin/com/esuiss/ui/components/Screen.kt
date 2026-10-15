@@ -103,8 +103,8 @@ fun Screen(
     val sides = edges.sides()
     val accessory = remember { KeyboardAccessoryInset() }
     val fill = when (variant) {
-        ScreenVariant.Default -> colors.surface
-        ScreenVariant.Secondary -> colors.surfaceSecondary
+        ScreenVariant.Default -> colors.background
+        ScreenVariant.Secondary -> colors.muted
     }
     Box(
         modifier = modifier
@@ -120,8 +120,8 @@ fun Screen(
     ) {
         CompositionLocalProvider(
             LocalKeyboardAccessory provides accessory,
-            LocalContentStyle provides Typography.base.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
         ) {
             content()
         }

@@ -512,7 +512,7 @@ public struct ThemeToggle: View {
     }
     .padding(4)
     .frame(height: 44)
-    .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+    .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
     .hapticFeedback(.selection, trigger: context.theme)
     .accessibilityElement(children: .contain)
     .accessibilityLabel(Text("Theme"))
@@ -535,7 +535,8 @@ public struct ThemeToggle: View {
             .lineLimit(1)
         }
       }
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : active ? .label : .labelSecondary)
+      .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
+      .opacity(isEnabled ? 1 : 0.5)
       .padding(.horizontal, showsLabels ? 12 : 10)
       .frame(maxWidth: showsLabels ? .infinity : nil, maxHeight: .infinity)
       .contentShape(Rectangle())
@@ -544,7 +545,7 @@ public struct ThemeToggle: View {
     .background {
       if active {
         RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
-          .fill(colorScheme == .dark ? Color.labelQuaternary : .surfaceRaised)
+          .fill(colorScheme == .dark ? EsuissColor.border : EsuissColor.card)
           .shadow(color: .black.opacity(colorScheme == .dark ? 0 : 0.08), radius: 1.5, y: 1)
           .matchedGeometryEffect(id: "indicator", in: namespace)
       }
@@ -574,6 +575,6 @@ public struct ThemeToggle: View {
 private struct ThemeSegmentStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .opacity(configuration.isPressed ? 0.7 : 1)
+      .opacity(configuration.isPressed ? 0.8 : 1)
   }
 }

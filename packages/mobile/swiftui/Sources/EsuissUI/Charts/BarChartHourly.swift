@@ -8,7 +8,7 @@ private let minutes: [Double] = [
 private let hours = minutes.indices.map { "\($0)" }
 
 private let chartConfig: ChartConfig = [
-  "minutes": .init("Screen time", color: .blue),
+  "minutes": .init("Screen time", color: EsuissColor.chart1),
 ]
 
 private let total = Int(minutes.reduce(0, +))
@@ -24,13 +24,13 @@ public struct BarChartHourly: View {
       VStack(alignment: .leading, spacing: 2) {
         Text("Screen time")
           .textStyle(.sm, weight: .semibold)
-          .foregroundStyle(Color.link)
+          .foregroundStyle(EsuissColor.primary)
         Text(verbatim: "\(total / 60)h \(total % 60)m")
           .textStyle(.xl3, weight: .semibold)
           .monospacedDigit()
         Text("Today · hour by hour")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -45,7 +45,7 @@ public struct BarChartHourly: View {
               }
               RuleMark(y: .value("Average", average))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-                .foregroundStyle(Color.green)
+                .foregroundStyle(Palette.green500)
             }
             .chartXAxis { ChartAxis.x(values: ["0", "6", "12", "18"]) { "\($0):00" } }
             .chartYAxis { ChartAxis.y(count: 3) { "\(Int($0)) min" } }

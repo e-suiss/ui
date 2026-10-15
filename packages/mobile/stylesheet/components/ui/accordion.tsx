@@ -58,7 +58,7 @@ function Accordion({
           styles.root,
           variant === "filled" && [
             styles.filled,
-            { backgroundColor: colors.surfaceSecondary },
+            { backgroundColor: colors.muted },
           ],
           typeof style === "function" ? style(state) : style,
         ]}
@@ -80,7 +80,7 @@ function AccordionItem({
         styles.item,
         state.index > 0 && [
           styles.itemSeparated,
-          { borderColor: colors.separator },
+          { borderColor: colors.border },
         ],
         typeof style === "function" ? style(state) : style,
       ]}
@@ -114,7 +114,7 @@ function AccordionTrigger({
         ...fontSize.base,
         flexShrink: 1,
         textAlign: "left",
-        color: disabled ? colors.labelQuaternary : colors.label,
+        color: colors.foreground,
         textDecorationLine: pressed && !disabled ? "underline" : "none",
       }}
     >
@@ -122,6 +122,7 @@ function AccordionTrigger({
         <AccordionPrimitive.Trigger
           style={(state) => [
             styles.trigger,
+            disabled && { opacity: 0.5 },
             typeof style === "function" ? style(state) : style,
           ]}
           onPressIn={(event: GestureResponderEvent) => {
@@ -139,7 +140,7 @@ function AccordionTrigger({
             <Icon
               as={CaretDownIcon}
               size={16}
-              color={colors.labelSecondary}
+              color={colors.mutedForeground}
               style={styles.icon}
             />
           </Animated.View>
@@ -159,7 +160,7 @@ function AccordionContent({
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...fontSize.sm, color: colors.labelSecondary }}
+      value={{ ...fontSize.sm, color: colors.mutedForeground }}
     >
       <AccordionPrimitive.Panel style={styles.content} {...props}>
         <Animated.View

@@ -76,7 +76,7 @@ function InputOTPCaret() {
     >
       <Animated.View
         style={caretStyle}
-        className="h-6 w-0.5 rounded-full bg-accent"
+        className="h-6 w-0.5 rounded-full bg-primary"
       />
     </View>
   )
@@ -87,16 +87,15 @@ function InputOTPSlot({
   className,
   ...props
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
-  const { disabled } = OTPFieldPrimitive.useRootContext().state
   const slotClassNames = React.useContext(InputOTPSlotClassContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
       className={(state) =>
         cn(
-          "relative h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control",
-          state.disabled && "bg-control-disabled",
-          state.active && "z-10 border-accent",
+          "relative h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary",
+          state.disabled && "opacity-50",
+          state.active && "z-10 border-primary",
           slotClassNames?.className,
           resolveClassName(className, state)
         )
@@ -107,8 +106,7 @@ function InputOTPSlot({
         <>
           <Text
             className={cn(
-              "text-xl font-semibold tabular-nums",
-              disabled ? "text-label-quaternary" : "text-label",
+              "text-xl font-semibold tabular-nums text-foreground",
               slotClassNames?.textClassName
             )}
           >
@@ -142,10 +140,7 @@ function OTPSeparatorIcon() {
   return (
     <Icon
       as={MinusIcon}
-      className={cn(
-        "size-4",
-        disabled ? "text-label-quaternary" : "text-label"
-      )}
+      className={cn("size-4 text-foreground", disabled && "opacity-50")}
     />
   )
 }

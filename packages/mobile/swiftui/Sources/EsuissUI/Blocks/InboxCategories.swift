@@ -23,9 +23,9 @@ public struct InboxCategories: View {
   static var initialMail: [Mail] {
     [
       Mail(id: 0, from: "suiss", subject: "Your order has shipped", body: "Order #W1048 is on its way and arrives tomorrow. A signature is required on delivery.", time: "9:12 AM", tint: nil, category: "Transactions", unread: true, starred: false),
-      Mail(id: 1, from: "Morgan Lee", subject: "Tomorrow's meeting", body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.", time: "8:40 AM", tint: .orange, category: "Primary", unread: true, starred: false),
-      Mail(id: 2, from: "suiss Cloud", subject: "Your storage is almost full", body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.", time: "Yesterday", tint: .blue, category: "Updates", unread: true, starred: false),
-      Mail(id: 3, from: "Riley Chen", subject: "Coast trip photos", body: "I added the photos to the shared album. The ones from the boat tour came out great.", time: "Yesterday", tint: .green, category: "Primary", unread: false, starred: true),
+      Mail(id: 1, from: "Morgan Lee", subject: "Tomorrow's meeting", body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.", time: "8:40 AM", tint: Palette.orange500, category: "Primary", unread: true, starred: false),
+      Mail(id: 2, from: "suiss Cloud", subject: "Your storage is almost full", body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.", time: "Yesterday", tint: Palette.blue500, category: "Updates", unread: true, starred: false),
+      Mail(id: 3, from: "Riley Chen", subject: "Coast trip photos", body: "I added the photos to the shared album. The ones from the boat tour came out great.", time: "Yesterday", tint: Palette.green500, category: "Primary", unread: false, starred: true),
       Mail(id: 4, from: "suiss Store", subject: "Just for you: a Trade In offer", body: "Bring in your old phone and get up to $650 off a new one.", time: "Monday", tint: nil, category: "Promotions", unread: false, starred: false),
       Mail(id: 5, from: "App Store", subject: "Your receipt", body: "Your Studio Pro subscription renewed. Total: $4.99.", time: "Monday", tint: nil, category: "Transactions", unread: false, starred: false),
     ]
@@ -33,10 +33,10 @@ public struct InboxCategories: View {
 
   static var categories: [Category] {
     [
-      Category(value: "Primary", icon: Ph.users.bold, tint: .accent),
-      Category(value: "Transactions", icon: Ph.creditCard.bold, tint: .green),
-      Category(value: "Updates", icon: Ph.bell.bold, tint: .purple),
-      Category(value: "Promotions", icon: Ph.tag.bold, tint: .pink),
+      Category(value: "Primary", icon: Ph.users.bold, tint: EsuissColor.primary),
+      Category(value: "Transactions", icon: Ph.creditCard.bold, tint: Palette.green500),
+      Category(value: "Updates", icon: Ph.bell.bold, tint: Palette.purple500),
+      Category(value: "Promotions", icon: Ph.tag.bold, tint: Palette.pink500),
     ]
   }
 
@@ -100,7 +100,7 @@ public struct InboxCategories: View {
               if list.isEmpty {
                 Text("No messages in \(category).")
                   .scaledFont(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .frame(maxWidth: .infinity)
                   .padding(30)
               }
@@ -154,7 +154,7 @@ public struct InboxCategories: View {
           } else {
             Text("No Message Selected")
               .scaledFont(.base)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .frame(maxWidth: .infinity)
               .padding(.top, 120)
           }
@@ -181,17 +181,17 @@ public struct InboxCategories: View {
                 .transition(.opacity)
             }
           }
-          .foregroundStyle(pressed ? Color.onAccent : .labelSecondary)
+          .foregroundStyle(pressed ? EsuissColor.primaryForeground : EsuissColor.mutedForeground)
           .padding(.horizontal, pressed ? 14 : 11)
           .frame(height: 34)
-          .background(pressed ? item.tint : Color.control, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+          .background(pressed ? item.tint : EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
           .overlay(alignment: .topTrailing) {
             if !pressed && unread {
               Circle()
-                .fill(Color.accent)
+                .fill(EsuissColor.primary)
                 .frame(width: 8, height: 8)
                 .padding(2)
-                .background(Color.surface, in: Circle())
+                .background(EsuissColor.background, in: Circle())
                 .offset(x: 1, y: -1)
                 .accessibilityHidden(true)
             }
@@ -239,7 +239,7 @@ private struct InboxCategoriesHeading: View {
     if splitView?.wide ?? false {
       Text("Inbox")
         .scaledFont(.xl3, weight: .bold)
-        .foregroundStyle(Color.label)
+        .foregroundStyle(EsuissColor.foreground)
         .padding(.horizontal, 6)
         .accessibilityHidden(true)
     }
@@ -254,9 +254,9 @@ private struct InboxCategoriesAvatar: View {
     let initials = mail.from.split(separator: " ").compactMap(\.first).map(String.init).joined()
     Text(verbatim: mail.tint == nil ? "s" : initials)
       .font(.system(size: size * 0.4, weight: .semibold))
-      .foregroundStyle(mail.tint == nil ? Color.surface : .onAccent)
+      .foregroundStyle(mail.tint == nil ? EsuissColor.background : EsuissColor.primaryForeground)
       .frame(width: size, height: size)
-      .background(mail.tint ?? .label, in: Circle())
+      .background(mail.tint ?? EsuissColor.foreground, in: Circle())
       .accessibilityHidden(true)
   }
 }
@@ -267,7 +267,7 @@ private struct InboxCategoriesRow: View {
   var body: some View {
     HStack(alignment: .top, spacing: 8) {
       Circle()
-        .fill(mail.unread ? Color.accent : .clear)
+        .fill(mail.unread ? EsuissColor.primary : .clear)
         .frame(width: 8, height: 8)
         .padding(.top, 6)
         .accessibilityHidden(true)
@@ -280,19 +280,19 @@ private struct InboxCategoriesRow: View {
           if mail.starred {
             Ph.star.fill
               .frame(width: 12, height: 12)
-              .foregroundStyle(Color.orange)
+              .foregroundStyle(Palette.orange500)
               .accessibilityLabel(Text("Starred"))
           }
           Text(LocalizedStringKey(mail.time))
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Text(verbatim: mail.subject)
           .scaledFont(.sm)
           .lineLimit(1)
         Text(verbatim: mail.body)
           .scaledFont(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(2)
           .multilineTextAlignment(.leading)
       }
@@ -344,7 +344,7 @@ private struct InboxCategoriesReader: View {
       }
       .frame(height: 50)
       .overlay(alignment: .bottom) {
-        Color.separator.frame(height: 1).padding(.horizontal, -16)
+        EsuissColor.border.frame(height: 1).padding(.horizontal, -16)
       }
       VStack(alignment: .leading, spacing: 16) {
         HStack(spacing: 12) {
@@ -354,12 +354,12 @@ private struct InboxCategoriesReader: View {
               .scaledFont(.base, weight: .semibold)
             Text("To: Jamie Rivera")
               .scaledFont(.xs)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
           Text(LocalizedStringKey(mail.time))
             .scaledFont(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .accessibilityElement(children: .combine)
         Text(verbatim: mail.subject)
@@ -395,13 +395,13 @@ private struct InboxCategoriesReader: View {
         }
         .padding(.top, 18)
         .overlay(alignment: .top) {
-          Color.separator.frame(height: 1)
+          EsuissColor.border.frame(height: 1)
         }
         .padding(.top, 22)
         .transition(.opacity.combined(with: .offset(y: 8)))
       }
     }
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .animation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.5), value: replying)
   }
 
@@ -409,7 +409,7 @@ private struct InboxCategoriesReader: View {
     Button(action: perform) {
       icon
         .frame(width: 20, height: 20)
-        .foregroundStyle(active ? Color.orange : .labelSecondary)
+        .foregroundStyle(active ? Palette.orange500 : EsuissColor.mutedForeground)
     }
     .buttonStyle(.variant(.ghost, size: .icon))
     .accessibilityLabel(Text(title))

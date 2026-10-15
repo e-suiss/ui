@@ -80,6 +80,7 @@ import com.esuiss.ui.components.ModalWindow
 import com.esuiss.ui.components.rememberHaptics
 import com.esuiss.ui.components.rememberLongPressModifier
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -249,8 +250,8 @@ fun PreviewMenu(
                 {
                     CompositionLocalProvider(
                         LocalPreviewMenuClose provides { change(false) },
-                        LocalContentStyle provides Typography.base.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                         LocalIconSize provides 20.dp,
                     ) {
                         Column(
@@ -259,7 +260,7 @@ fun PreviewMenu(
                                 .width(IntrinsicSize.Max)
                                 .shadow(Shadows.lg, shape)
                                 .clip(shape)
-                                .background(colors.surfaceRaised)
+                                .background(colors.popover)
                                 .pointerInput(Unit) { detectTapGestures { } }
                                 .verticalScroll(rememberScrollState()),
                             content = content,
@@ -270,7 +271,7 @@ fun PreviewMenu(
             modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(Unit) { detectTapGestures { change(false) } }
-                .drawBehind { drawRect(colors.scrim.copy(alpha = 0.4f * progress.value)) },
+                .drawBehind { drawRect(Palette.black.copy(alpha = 0.4f * progress.value)) },
         ) { (previewMeasurables, menuMeasurables), constraints ->
             val width = constraints.maxWidth.toFloat()
             val height = constraints.maxHeight.toFloat()
@@ -337,12 +338,8 @@ fun PreviewMenuItem(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     var first by remember { mutableStateOf(false) }
-    val foreground = when {
-        !enabled -> colors.labelQuaternary
-        variant == MenuItemVariant.Destructive -> colors.danger
-        else -> colors.label
-    }
-    val separator = colors.separator
+    val foreground = if (variant == MenuItemVariant.Destructive) colors.destructive else colors.foreground
+    val separator = colors.border
     CompositionLocalProvider(
         LocalContentStyle provides Typography.base.copy(color = foreground),
         LocalContentColor provides foreground,
@@ -353,7 +350,13 @@ fun PreviewMenuItem(
                 .fillMaxWidth()
                 .heightIn(min = 44.dp)
                 .onPlaced { first = it.positionInParent().y == 0f }
-                .background(if (pressed && enabled) colors.itemPressed else Color.Transparent)
+                .alpha(
+                    when {
+                        !enabled -> 0.5f
+                        pressed -> 0.8f
+                        else -> 1f
+                    },
+                )
                 .drawBehind {
                     if (!first) drawRect(separator, Offset.Zero, Size(size.width, 1.dp.toPx()))
                 }
@@ -390,6 +393,6 @@ fun PreviewMenuSeparator(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(8.dp)
-            .background(EsuissTheme.colors.separator.copy(alpha = EsuissTheme.colors.separator.alpha * 0.4f)),
+            .background(EsuissTheme.colors.border.copy(alpha = EsuissTheme.colors.border.alpha * 0.4f)),
     )
 }

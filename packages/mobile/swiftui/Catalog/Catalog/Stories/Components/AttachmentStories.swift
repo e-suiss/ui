@@ -6,7 +6,7 @@ enum AttachmentStories {
   static let group = StoryGroup(.components, "Attachment", stories: [
     Story("Default") {
       Attachment {
-        AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+        AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
         AttachmentContent {
           AttachmentTitle("Quarterly report.pdf")
           AttachmentDescription("2.4 MB")
@@ -45,7 +45,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .uploading, block: true) {
-          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
           AttachmentContent {
             AttachmentTitle("Invoice March.pdf")
             AttachmentProgress(value: 64, label: "Uploading")
@@ -55,7 +55,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .processing, block: true) {
-          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
           AttachmentContent {
             AttachmentTitle("Invoice March.pdf")
             AttachmentDescription("Processing…")
@@ -65,7 +65,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .error, block: true) {
-          AttachmentMedia(.document) { AttachmentLabel("key", tint: .warning) }
+          AttachmentMedia(.document) { AttachmentLabel("key", tint: Palette.amber500) }
           AttachmentContent {
             AttachmentTitle("Presentation.key")
             AttachmentDescription("File type not supported")
@@ -75,7 +75,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .done, block: true) {
-          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
           AttachmentContent {
             AttachmentTitle("Invoice March.pdf")
             AttachmentDescription("1.1 MB")
@@ -115,7 +115,7 @@ enum AttachmentStories {
     Story("Pressable") {
       Attachment {
         AttachmentTrigger("Open Brand guidelines.pdf") {}
-        AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+        AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
         AttachmentContent {
           AttachmentTitle("Brand guidelines.pdf")
           AttachmentDescription("5.8 MB")
@@ -128,7 +128,7 @@ enum AttachmentStories {
     Story("Group") {
       AttachmentGroup {
         Attachment(state: .uploading) {
-          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
           AttachmentContent {
             AttachmentTitle("Invoice_1042.pdf")
             AttachmentProgress(value: 64, label: "Uploading")
@@ -138,7 +138,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .processing) {
-          AttachmentMedia(.document) { AttachmentLabel("docx", tint: .accent) }
+          AttachmentMedia(.document) { AttachmentLabel("docx", tint: EsuissColor.primary) }
           AttachmentContent {
             AttachmentTitle("Contract.docx")
             AttachmentDescription("Processing…")
@@ -148,7 +148,7 @@ enum AttachmentStories {
           }
         }
         Attachment {
-          AttachmentMedia(.document) { AttachmentLabel("xlsx", tint: .success) }
+          AttachmentMedia(.document) { AttachmentLabel("xlsx", tint: Palette.green500) }
           AttachmentContent {
             AttachmentTitle("Menu_October.xlsx")
             AttachmentDescription("2.4 MB")
@@ -156,7 +156,7 @@ enum AttachmentStories {
           AttachmentActions {
             Ph.checkCircle.fill
               .frame(width: 24, height: 24)
-              .foregroundStyle(Color.success)
+              .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
               .accessibilityElement()
               .accessibilityLabel(Text("Uploaded"))
           }
@@ -172,7 +172,7 @@ enum AttachmentStories {
           }
         }
         Attachment(state: .error) {
-          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: .danger) }
+          AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
           AttachmentContent {
             AttachmentTitle("Z-Report_30-09.pdf")
             AttachmentDescription("Upload failed")
@@ -213,10 +213,10 @@ private struct AttachmentFile {
   let tint: Color
 
   static let all: [AttachmentFile] = [
-    AttachmentFile(name: "Invoice.pdf", meta: "128 KB", ext: "pdf", tint: .danger),
-    AttachmentFile(name: "Menu.xlsx", meta: "2.4 MB", ext: "xlsx", tint: .success),
-    AttachmentFile(name: "Contract.docx", meta: "84 KB", ext: "docx", tint: .accent),
-    AttachmentFile(name: "Pitch.key", meta: "12 MB", ext: "key", tint: .warning),
-    AttachmentFile(name: "Archive.zip", meta: "48 MB", ext: "zip", tint: .accent),
+    AttachmentFile(name: "Invoice.pdf", meta: "128 KB", ext: "pdf", tint: EsuissColor.destructive),
+    AttachmentFile(name: "Menu.xlsx", meta: "2.4 MB", ext: "xlsx", tint: Palette.green500),
+    AttachmentFile(name: "Contract.docx", meta: "84 KB", ext: "docx", tint: EsuissColor.primary),
+    AttachmentFile(name: "Pitch.key", meta: "12 MB", ext: "key", tint: Palette.amber500),
+    AttachmentFile(name: "Archive.zip", meta: "48 MB", ext: "zip", tint: EsuissColor.primary),
   ]
 }

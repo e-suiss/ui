@@ -4,8 +4,8 @@ import SwiftUI
 private let visitors: [(key: String, value: Double)] = [("desktop", 1260), ("mobile", 570)]
 
 private let chartConfig: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
-  "mobile": .init("Mobile", color: .teal),
+  "desktop": .init("Desktop", color: EsuissColor.chart1),
+  "mobile": .init("Mobile", color: EsuissColor.chart2),
 ]
 
 private let total = visitors.reduce(0) { $0 + $1.value }
@@ -56,7 +56,7 @@ public struct RadialChartStacked: View {
                   .monospacedDigit()
                 Text("visitors")
                   .textStyle(.xs)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
               }
               .padding(.bottom, 176 * 0.14)
               .allowsHitTesting(false)

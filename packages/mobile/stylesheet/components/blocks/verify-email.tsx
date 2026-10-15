@@ -8,7 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  radius,
+  shadow,
+  useTheme,
+} from "@/components/ui/theme"
 
 const EMAIL = "jamie@suiss.com"
 
@@ -94,18 +100,18 @@ function VerifyEmail({
             )}
             style={styles.stack}
           >
-            <View style={[styles.check, { backgroundColor: colors.success }]}>
+            <View style={[styles.check, { backgroundColor: palette.green500 }]}>
               <Icon
                 as={CheckIcon}
                 weight="bold"
                 size={38}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </View>
             <Text role="heading" style={styles.title}>
               Your email is verified.
             </Text>
-            <Text style={[styles.lead, { color: colors.labelSecondary }]}>
+            <Text style={[styles.lead, { color: colors.mutedForeground }]}>
               {EMAIL} is now your suiss Account.
             </Text>
             <Pressable
@@ -114,7 +120,7 @@ function VerifyEmail({
               onPress={() => setVerified(false)}
               style={({ pressed }) => pressed && { opacity: 0.6 }}
             >
-              <Text style={[fontSize.lg, { color: colors.link }]}>
+              <Text style={[fontSize.lg, { color: colors.primary }]}>
                 Start over ›
               </Text>
             </Pressable>
@@ -129,22 +135,33 @@ function VerifyEmail({
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.envelope}>
           <View
-            style={[styles.tile, shadow.lg, { backgroundColor: colors.accent }]}
+            style={[
+              styles.tile,
+              shadow.lg,
+              { backgroundColor: colors.primary },
+            ]}
           >
-            <Icon as={EnvelopeSimpleIcon} size={40} color={colors.onAccent} />
+            <Icon
+              as={EnvelopeSimpleIcon}
+              size={40}
+              color={colors.primaryForeground}
+            />
           </View>
           <View
             accessible
             accessibilityLabel="1 new message"
             style={[
               styles.badge,
-              { borderColor: colors.surface, backgroundColor: colors.red },
+              {
+                borderColor: colors.background,
+                backgroundColor: palette.red500,
+              },
             ]}
           >
             <Text
               style={[
                 fontSize.sm,
-                { fontWeight: "600", color: colors.onAccent },
+                { fontWeight: "600", color: colors.primaryForeground },
               ]}
             >
               1
@@ -155,18 +172,24 @@ function VerifyEmail({
           Check your inbox.
         </Text>
         <Text
-          style={[styles.lead, { marginTop: 12, color: colors.labelSecondary }]}
+          style={[
+            styles.lead,
+            { marginTop: 12, color: colors.mutedForeground },
+          ]}
         >
           We sent a verification link to{" "}
           <Text
-            style={[fontSize.lg, { fontWeight: "600", color: colors.label }]}
+            style={[
+              fontSize.lg,
+              { fontWeight: "600", color: colors.foreground },
+            ]}
           >
             {EMAIL}
           </Text>
           . Tap the link to activate your account.
         </Text>
         <View style={styles.footer}>
-          <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
             Didn't get it? Check your junk folder or
           </Text>
           <Pressable
@@ -175,7 +198,7 @@ function VerifyEmail({
             onPress={onChangeAddress}
             style={({ pressed }) => pressed && { opacity: 0.6 }}
           >
-            <Text style={[fontSize.sm, { color: colors.link }]}>
+            <Text style={[fontSize.sm, { color: colors.primary }]}>
               change the address ›
             </Text>
           </Pressable>

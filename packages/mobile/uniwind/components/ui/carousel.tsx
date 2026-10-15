@@ -209,7 +209,7 @@ function CarouselDotProgress({
 
   return (
     <AnimatedView
-      className="absolute top-0 bottom-0 start-0 rounded-full bg-label"
+      className="absolute top-0 bottom-0 start-0 rounded-full bg-foreground"
       style={animatedStyle}
     />
   )
@@ -235,7 +235,7 @@ function CarouselDot({ index }: { index: number }) {
       <AnimatedView
         className={cn(
           "h-2 overflow-hidden rounded-full",
-          active && !autoplay.enabled ? "bg-label" : "bg-label-tertiary"
+          active && !autoplay.enabled ? "bg-foreground" : "bg-muted-foreground"
         )}
         style={animatedStyle}
       >
@@ -261,7 +261,7 @@ function CarouselDots({
     <View
       className={cn(
         "h-9 flex-row items-center gap-4 rounded-full",
-        variant === "plain" ? "px-0" : "bg-control px-4",
+        variant === "plain" ? "px-0" : "bg-secondary px-4",
         className
       )}
       {...props}

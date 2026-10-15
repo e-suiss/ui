@@ -19,6 +19,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartRadius
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 
 private class CashFlow(val month: String, val flow: Double)
 
@@ -60,14 +61,14 @@ fun BarChartNegative(modifier: Modifier = Modifier) {
                 ) {
                     CartesianGrid(strokeDasharray = listOf(2f, 4f))
                     XAxis(label = { it.month }, tickMargin = 8.dp, interval = 1, tickFormatter = { it.take(3) })
-                    ReferenceLine(0.0, stroke = colors.separatorStrong)
+                    ReferenceLine(0.0, stroke = colors.input)
                     ChartTooltip(cursor = null) { ChartTooltipContent(hideIndicator = true) }
                     Bar(
                         "flow",
                         value = { it.flow },
                         radius = ChartRadius(4.dp),
                         maxBarSize = 18.dp,
-                        cells = { index -> ChartCell(if (chartData[index].flow >= 0) colors.green else colors.red) },
+                        cells = { index -> ChartCell(if (chartData[index].flow >= 0) Palette.green500 else Palette.red500) },
                     )
                 }
             }

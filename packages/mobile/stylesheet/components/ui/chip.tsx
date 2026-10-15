@@ -57,14 +57,6 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 0 },
 })
 
-function withAlpha(color: string, alpha: number) {
-  if (!color.startsWith("#") || color.length !== 7) return color
-  const r = Number.parseInt(color.slice(1, 3), 16)
-  const g = Number.parseInt(color.slice(3, 5), 16)
-  const b = Number.parseInt(color.slice(5, 7), 16)
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`
-}
-
 function chipStyle(
   size: ChipSize,
   colors: ThemeColors,
@@ -72,25 +64,13 @@ function chipStyle(
   pressing: boolean,
   removable: boolean
 ): StyleProp<ViewStyle> {
-  const idleBackground = pressing ? colors.controlPressed : colors.control
   return [
     styles.root,
     sizes[size],
     removable && (size === "sm" ? styles.removableSm : styles.removable),
-    state.disabled
-      ? {
-          backgroundColor: state.pressed
-            ? withAlpha(colors.controlSelected, 0.4)
-            : colors.controlDisabled,
-        }
-      : [
-          pressing && styles.scaled,
-          {
-            backgroundColor: state.pressed
-              ? colors.controlSelected
-              : idleBackground,
-          },
-        ],
+    { backgroundColor: state.pressed ? colors.foreground : colors.secondary },
+    pressing && !state.disabled && [styles.scaled, { opacity: 0.8 }],
+    state.disabled && { opacity: 0.5 },
   ]
 }
 
@@ -99,8 +79,8 @@ function chipTextStyle(
   colors: ThemeColors,
   state: ToggleState
 ): TextStyle {
-  let color = state.disabled ? colors.labelQuaternary : colors.label
-  if (state.pressed) color = colors.onControlSelected
+  let color = colors.foreground
+  if (state.pressed) color = colors.background
   return {
     ...(size === "sm" ? fontSize.xs : fontSize.sm),
     fontWeight: "500",
@@ -180,10 +160,7 @@ function Chip({
           disabled={disabled}
           hitSlop={8}
           onPress={onRemove}
-          style={({ pressed }) => [
-            styles.remove,
-            pressed && { backgroundColor: colors.itemPressed },
-          ]}
+          style={({ pressed }) => [styles.remove, pressed && { opacity: 0.8 }]}
         >
           <Icon as={XIcon} weight="bold" size={12} />
         </Pressable>

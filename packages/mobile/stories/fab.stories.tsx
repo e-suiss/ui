@@ -19,7 +19,7 @@ function Page({ log }: { log?: string }) {
         The button floats at the bottom end of the screen.
       </Text>
       {log ? (
-        <Text role="status" className="text-sm text-label-secondary">
+        <Text role="status" className="text-sm text-muted-foreground">
           {log}
         </Text>
       ) : null}

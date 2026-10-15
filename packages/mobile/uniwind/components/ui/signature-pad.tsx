@@ -211,7 +211,7 @@ function SignaturePad({
         }
       }}
       className={cn(
-        "relative h-48 w-full overflow-hidden rounded-2xl border border-separator bg-surface-raised dark:bg-surface-secondary",
+        "relative h-48 w-full overflow-hidden rounded-2xl border border-border bg-card dark:bg-muted",
         disabled && "opacity-50",
         className
       )}
@@ -219,13 +219,13 @@ function SignaturePad({
     >
       <View
         pointerEvents="none"
-        className="absolute inset-x-6 bottom-12 flex-row items-end gap-2 border-b border-separator-strong pb-1.5"
+        className="absolute inset-x-6 bottom-12 flex-row items-end gap-2 border-b border-input pb-1.5"
       >
-        <Text className="text-lg text-label-tertiary">×</Text>
+        <Text className="text-lg text-muted-foreground">×</Text>
         {empty &&
           (typeof placeholder === "string" ||
           typeof placeholder === "number" ? (
-            <Text className="text-sm text-label-tertiary">{placeholder}</Text>
+            <Text className="text-sm text-muted-foreground">{placeholder}</Text>
           ) : (
             placeholder
           ))}
@@ -235,7 +235,7 @@ function SignaturePad({
           <SignaturePadContext.Provider value={context}>
             <TextClassContext.Provider value={undefined}>
               <View pointerEvents="none" className="absolute inset-0">
-                <Icon as={SignaturePadStrokes} className="text-label" />
+                <Icon as={SignaturePadStrokes} className="text-foreground" />
               </View>
             </TextClassContext.Provider>
           </SignaturePadContext.Provider>

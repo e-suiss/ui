@@ -74,10 +74,7 @@ function segmentedSelectedStyle(
   colors: ThemeColors,
   isDark: boolean
 ): StyleProp<ViewStyle> {
-  return [
-    { backgroundColor: isDark ? colors.labelQuaternary : colors.surfaceRaised },
-    shadow.sm,
-  ]
+  return [{ backgroundColor: isDark ? colors.border : colors.card }, shadow.sm]
 }
 
 function ToggleGroupIndicator() {
@@ -121,7 +118,7 @@ function ToggleGroup({
         spacing === 0 && variant === "outline" && styles.attached,
         segmented && {
           borderRadius: radius.xl,
-          backgroundColor: colors.control,
+          backgroundColor: colors.secondary,
           padding: 4,
         },
         typeof style === "function" ? style(state) : style,
@@ -189,10 +186,7 @@ function itemStyle(
     return [
       toggleStyle(context, colors, { ...state, pressed: false }, false),
       styles.segmentedItem,
-      state.pressed &&
-        (state.disabled
-          ? { backgroundColor: colors.controlDisabled }
-          : multiple && segmentedSelectedStyle(colors, isDark)),
+      state.pressed && multiple && segmentedSelectedStyle(colors, isDark),
     ]
   }
   return [
@@ -207,8 +201,7 @@ function itemTextStyle(
   state: ToggleState
 ): TextStyle {
   if (context.spacing === 0 && context.variant === "default") {
-    let color = state.pressed ? colors.label : colors.labelSecondary
-    if (state.disabled) color = colors.labelQuaternary
+    const color = state.pressed ? colors.foreground : colors.mutedForeground
     return { ...fontSize.sm, color }
   }
   return toggleTextStyle(colors, state)

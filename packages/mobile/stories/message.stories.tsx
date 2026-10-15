@@ -106,7 +106,7 @@ export const Conversation: Story = {
             <BubbleContent>All green. Merging it now.</BubbleContent>
           </Bubble>
           <MessageFooter className="gap-1">
-            <Icon as={ChecksIcon} className="text-accent" />
+            <Icon as={ChecksIcon} className="text-primary" />
             <Text>Read 10:02 AM</Text>
           </MessageFooter>
         </MessageContent>

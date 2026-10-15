@@ -28,7 +28,7 @@ function SingleCalendar(
       mode="single"
       selected={date}
       onSelect={setDate}
-      className="rounded-2xl border border-separator"
+      className="rounded-2xl border border-border"
     />
   )
 }
@@ -46,7 +46,7 @@ function RangeCalendar() {
         selected={range}
         onSelect={setRange}
         numberOfMonths={2}
-        className="rounded-2xl border border-separator"
+        className="rounded-2xl border border-border"
       />
     </ScrollView>
   )
@@ -64,7 +64,7 @@ function MultipleCalendar() {
       mode="multiple"
       selected={dates}
       onSelect={setDates}
-      className="rounded-2xl border border-separator"
+      className="rounded-2xl border border-border"
     />
   )
 }

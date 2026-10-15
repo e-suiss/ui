@@ -82,7 +82,7 @@ public struct Avatar<Content: View>: View {
     .padding(grouped ? 2 : 0)
     .background {
       if grouped {
-        Circle().fill(Color.surface)
+        Circle().fill(EsuissColor.background)
       }
     }
     .frame(width: size.dimension, height: size.dimension)
@@ -171,10 +171,10 @@ public struct AvatarFallback<Content: View>: View {
       .scaledFont(size.textStyle, weight: .semibold)
       .lineLimit(1)
       .minimumScaleFactor(0.5)
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .environment(\.avatarIconSize, size.fallbackIcon)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      .background(Color.labelSecondary.opacity(colorScheme == .dark ? 0.6 : 1), in: Circle())
+      .background(EsuissColor.mutedForeground.opacity(colorScheme == .dark ? 0.6 : 1), in: Circle())
   }
 }
 
@@ -218,11 +218,11 @@ public struct AvatarBadge<Content: View>: View {
 
   public var body: some View {
     ZStack {
-      Circle().fill(Color.surface)
-      Circle().fill(Color.accent).padding(2)
+      Circle().fill(EsuissColor.background)
+      Circle().fill(EsuissColor.primary).padding(2)
       if size != .sm {
         content
-          .foregroundStyle(Color.onAccent)
+          .foregroundStyle(EsuissColor.primaryForeground)
           .environment(\.avatarIconSize, size.badgeIcon)
       }
     }
@@ -274,12 +274,12 @@ public struct AvatarGroupCount<Content: View>: View {
       .scaledFont(size.textStyle, weight: .semibold)
       .lineLimit(1)
       .minimumScaleFactor(0.5)
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .environment(\.avatarIconSize, size.countIcon)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      .background(Color.surfaceSecondary, in: Circle())
+      .background(EsuissColor.muted, in: Circle())
       .padding(2)
-      .background(Color.surface, in: Circle())
+      .background(EsuissColor.background, in: Circle())
       .frame(width: size.dimension, height: size.dimension)
       .environment(\.avatarGrouped, false)
       .layoutValue(key: AvatarOverlapKey.self, value: size.overlap)

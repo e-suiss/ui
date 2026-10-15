@@ -69,7 +69,7 @@ function ProgressTrack({
     <ProgressPrimitive.Track
       style={(state) => [
         styles.track,
-        { backgroundColor: colors.surfaceSecondary },
+        { backgroundColor: colors.muted },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -98,7 +98,7 @@ function ProgressIndicator({
     <ProgressPrimitive.Indicator
       style={(state) => [
         styles.indicator,
-        { backgroundColor: colors.accent },
+        { backgroundColor: colors.primary },
         typeof style === "function" ? style(state) : style,
       ]}
       render={<Animated.View style={indicator} />}
@@ -116,7 +116,7 @@ function ProgressLabel({
     <ProgressPrimitive.Label
       style={(state) => [
         styles.label,
-        { color: colors.label },
+        { color: colors.foreground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -133,7 +133,7 @@ function ProgressValue({
     <ProgressPrimitive.Value
       style={(state) => [
         styles.value,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}

@@ -107,7 +107,7 @@ function Fab({
             importantForAccessibility="no"
             entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.duration(200).reduceMotion(ReduceMotion.System)}
-            className="absolute inset-0 z-40 bg-scrim"
+            className="absolute inset-0 z-40 bg-black/50"
             onPress={close}
           />
         ) : null}
@@ -154,7 +154,7 @@ function Fab({
               onPress?.(event)
             }}
             className={cn(
-              "flex-row items-center justify-center rounded-full bg-accent shadow-lg active:bg-accent-pressed",
+              "flex-row items-center justify-center rounded-full bg-primary shadow-lg active:opacity-80",
               FAB_SIZE[size === "lg" ? "lg" : "default"][
                 extended ? "extended" : "compact"
               ],
@@ -167,14 +167,14 @@ function Fab({
                 as={open && icon !== PlusIcon ? XIcon : icon}
                 weight="bold"
                 className={cn(
-                  "text-on-accent",
+                  "text-primary-foreground",
                   size === "lg" ? "size-7" : "size-6"
                 )}
               />
             </AnimatedView>
             {extended &&
               (typeof label === "string" || typeof label === "number" ? (
-                <Text className="text-base font-semibold text-on-accent">
+                <Text className="text-base font-semibold text-primary-foreground">
                   {label}
                 </Text>
               ) : (
@@ -201,37 +201,27 @@ function FabAction({
   return (
     <Pressable
       role="button"
-      className={cn("flex-row items-center gap-3", className)}
+      className={cn("flex-row items-center gap-3 active:opacity-80", className)}
       onPress={(event) => {
         onPress?.(event)
         fab?.close()
       }}
       {...props}
     >
-      {({ pressed }) => (
-        <>
-          {children !== undefined ? (
-            <View className="rounded-full bg-surface-raised px-3 py-1.5 shadow-md dark:bg-surface-secondary">
-              {pressed ? (
-                <View className="absolute inset-0 rounded-full bg-item-pressed" />
-              ) : null}
-              {typeof children === "string" || typeof children === "number" ? (
-                <Text numberOfLines={1} className="text-sm font-medium">
-                  {children}
-                </Text>
-              ) : (
-                children
-              )}
-            </View>
-          ) : null}
-          <View className="size-11 items-center justify-center rounded-full bg-surface-raised shadow-md dark:bg-surface-secondary">
-            {pressed ? (
-              <View className="absolute inset-0 rounded-full bg-item-pressed" />
-            ) : null}
-            <Icon as={icon} className="size-5" />
-          </View>
-        </>
-      )}
+      {children !== undefined ? (
+        <View className="rounded-full bg-card px-3 py-1.5 shadow-md dark:bg-muted">
+          {typeof children === "string" || typeof children === "number" ? (
+            <Text numberOfLines={1} className="text-sm font-medium">
+              {children}
+            </Text>
+          ) : (
+            children
+          )}
+        </View>
+      ) : null}
+      <View className="size-11 items-center justify-center rounded-full bg-card shadow-md dark:bg-muted">
+        <Icon as={icon} className="size-5" />
+      </View>
     </Pressable>
   )
 }

@@ -19,10 +19,10 @@ public struct PullToRefresh<Content: View>: View {
     ScrollView {
       content
         .frame(maxWidth: .infinity, alignment: .top)
-        .tint(Color.accent)
+        .tint(EsuissColor.primary)
     }
     .pullToRefresh(onRefresh)
-    .tint(Color.labelSecondary)
+    .tint(EsuissColor.mutedForeground)
     .accessibilityAction(named: Text("Refresh")) {
       guard !refreshing else { return }
       refreshing = true

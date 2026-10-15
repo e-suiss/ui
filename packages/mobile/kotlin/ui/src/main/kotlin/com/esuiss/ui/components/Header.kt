@@ -113,7 +113,7 @@ fun Header(
                 .drawWithContent {
                     drawContent()
                     val stroke = 1.dp.toPx()
-                    drawRect(colors.separator.copy(alpha = colors.separator.alpha * separator), Offset(0f, size.height - stroke), Size(size.width, stroke))
+                    drawRect(colors.border.copy(alpha = colors.border.alpha * separator), Offset(0f, size.height - stroke), Size(size.width, stroke))
                 },
         ) { measurables, constraints ->
             val width = constraints.maxWidth
@@ -169,14 +169,14 @@ fun HeaderTitle(
     ) {
         BasicText(
             text,
-            style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         if (subtitle != null) {
             BasicText(
                 subtitle,
-                style = Typography.xs2.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -205,12 +205,12 @@ fun HeaderLargeTitle(
         BasicText(
             text,
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )
         if (subtitle != null) {
-            BasicText(subtitle, style = Typography.sm.copy(color = colors.labelSecondary))
+            BasicText(subtitle, style = Typography.sm.copy(color = colors.mutedForeground))
         }
     }
 }
@@ -241,9 +241,9 @@ fun HeaderBack(
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(PhosphorIcons.Regular.CaretLeft, contentDescription = if (text == null) contentDescription else null, size = 24.dp, tint = colors.link)
+        Icon(PhosphorIcons.Regular.CaretLeft, contentDescription = if (text == null) contentDescription else null, size = 24.dp, tint = colors.primary)
         if (text != null) {
-            BasicText(text, style = Typography.base.copy(color = colors.link), maxLines = 1)
+            BasicText(text, style = Typography.base.copy(color = colors.primary), maxLines = 1)
         }
     }
 }

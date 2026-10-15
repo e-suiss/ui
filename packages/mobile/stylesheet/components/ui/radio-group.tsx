@@ -39,31 +39,27 @@ function radioStyle(
   pressed: boolean,
   invalid: boolean | undefined
 ): ViewStyle {
+  let opacity = 1
+  if (pressed) opacity = 0.8
+  if (state.disabled) opacity = 0.5
   if (state.checked) {
-    if (state.disabled) {
-      return {
-        borderColor: "transparent",
-        backgroundColor: colors.accentDisabled,
-      }
-    }
-    const color = pressed ? colors.accentPressed : colors.accent
-    return { borderColor: color, backgroundColor: color }
-  }
-  if (state.disabled) {
     return {
-      borderColor: isDark ? "transparent" : `${colors.label}1a`,
-      backgroundColor: colors.controlDisabled,
+      borderColor: colors.primary,
+      backgroundColor: colors.primary,
+      opacity,
     }
   }
   if (isDark) {
     return {
-      borderColor: invalid ? colors.danger : "transparent",
-      backgroundColor: colors.labelQuaternary,
+      borderColor: invalid ? colors.destructive : "transparent",
+      backgroundColor: colors.border,
+      opacity,
     }
   }
   return {
-    borderColor: invalid ? colors.danger : `${colors.label}40`,
-    backgroundColor: pressed ? colors.control : colors.surface,
+    borderColor: invalid ? colors.destructive : `${colors.foreground}40`,
+    backgroundColor: colors.background,
+    opacity,
     ...shadow.xs,
   }
 }
@@ -109,7 +105,7 @@ function RadioGroupItem<Value = string>({
           style={[
             styles.dot,
             isDark && styles.dotDark,
-            { backgroundColor: colors.onAccent },
+            { backgroundColor: colors.primaryForeground },
           ]}
         />
       </RadioPrimitive.Indicator>

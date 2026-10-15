@@ -88,8 +88,8 @@ private fun WheelPickerFrame(content: @Composable () -> Unit) {
         Modifier
             .width(320.dp)
             .shadow(Shadows.md, shape)
-            .background(colors.surfaceRaised, shape)
-            .border(1.dp, colors.label.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+            .background(colors.card, shape)
+            .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
             .padding(16.dp),
     ) {
         content()
@@ -149,7 +149,7 @@ private fun WheelPickerDateTime() {
             "$day $hour:$minute",
             modifier = Modifier.fillMaxWidth(),
             style = Typography.sm.copy(fontFeatureSettings = "tnum"),
-            color = EsuissTheme.colors.labelSecondary,
+            color = EsuissTheme.colors.mutedForeground,
             textAlign = TextAlign.Center,
         )
     }

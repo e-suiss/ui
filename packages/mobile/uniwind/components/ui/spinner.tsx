@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from "react-native"
 const NATIVE_SIZE = 20
 
 function Spinner({
-  colorClassName = "accent-label-secondary",
+  colorClassName = "accent-muted-foreground",
   className,
   size = 16,
   accessibilityLabel = "Loading",

@@ -49,7 +49,7 @@ function ComboboxTrigger({
       accessibilityLabel="Show options"
       className={(state) =>
         cn(
-          "size-6 items-center justify-center rounded-full active:bg-item-pressed",
+          "size-6 items-center justify-center rounded-full active:opacity-80",
           resolveClassName(className, state)
         )
       }
@@ -59,8 +59,8 @@ function ComboboxTrigger({
       <Icon
         as={CaretDownIcon}
         className={cn(
-          "size-4 text-label-secondary",
-          props.disabled && "text-label-quaternary"
+          "size-4 text-muted-foreground",
+          props.disabled && "opacity-50"
         )}
       />
     </ComboboxPrimitive.Trigger>
@@ -76,7 +76,7 @@ function ComboboxClear({
       accessibilityLabel="Clear"
       className={(state) =>
         cn(
-          "size-6 items-center justify-center rounded-full active:bg-item-pressed",
+          "size-6 items-center justify-center rounded-full active:opacity-80",
           resolveClassName(className, state)
         )
       }
@@ -84,10 +84,7 @@ function ComboboxClear({
     >
       <Icon
         as={XIcon}
-        className={cn(
-          "size-4 text-label",
-          props.disabled && "text-label-quaternary"
-        )}
+        className={cn("size-4 text-foreground", props.disabled && "opacity-50")}
       />
     </ComboboxPrimitive.Clear>
   )
@@ -121,25 +118,23 @@ function ComboboxInput({
   return (
     <ComboboxPrimitive.InputGroup
       className={cn(
-        "h-11 w-full min-w-0 flex-row items-center gap-1 rounded-lg border border-transparent bg-control pr-2",
-        isInvalid && "border-danger bg-danger/5 dark:bg-danger/10",
-        focused && !inPopup && "border-focus",
-        inPopup && "m-1.5 mb-0 h-8 w-auto border-separator/30",
-        isDisabled && "bg-control-disabled",
+        "h-11 w-full min-w-0 flex-row items-center gap-1 rounded-lg border border-transparent bg-secondary pr-2",
+        isInvalid &&
+          "border-destructive bg-destructive/5 dark:bg-destructive/10",
+        focused && !inPopup && "border-ring",
+        inPopup && "m-1.5 mb-0 h-8 w-auto border-border/30",
+        isDisabled && "opacity-50",
         className
       )}
     >
       <ComboboxPrimitive.Input
         disabled={disabled}
         className={cn(
-          "h-full min-w-0 flex-1 py-1 pr-1.5 pl-3 text-base text-label",
-          isDisabled && "text-label-quaternary"
+          "h-full min-w-0 flex-1 py-1 pr-1.5 pl-3 text-base text-foreground"
         )}
-        placeholderTextColorClassName={
-          isDisabled ? "accent-label-quaternary" : "accent-label-secondary"
-        }
-        cursorColorClassName="accent-accent"
-        selectionColorClassName="accent-accent"
+        placeholderTextColorClassName="accent-muted-foreground"
+        cursorColorClassName="accent-primary"
+        selectionColorClassName="accent-primary"
         onFocus={(event) => {
           setFocused(true)
           onFocus?.(event)
@@ -179,7 +174,7 @@ function ContentPopup({
     <ComboboxPrimitive.Popup
       className={(state) =>
         cn(
-          "relative overflow-hidden rounded-xl border border-label/5 bg-surface-raised shadow-lg dark:border-label/10",
+          "relative overflow-hidden rounded-xl border border-foreground/5 bg-popover shadow-lg dark:border-foreground/10",
           resolveClassName(className, state)
         )
       }
@@ -222,7 +217,7 @@ function ComboboxContent({
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
-            <TextClassContext.Provider value="text-base text-label">
+            <TextClassContext.Provider value="text-base text-foreground">
               <ContentPopup className={className} chips={!!anchor} {...props} />
             </TextClassContext.Provider>
           </AnimatedView>
@@ -255,16 +250,14 @@ function ComboboxItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn(
-        "select-none text-base text-label",
-        props.disabled && "text-label-quaternary"
-      )}
+      value={cn("select-none text-base text-foreground")}
     >
       <ComboboxPrimitive.Item
         className={(state) =>
           cn(
             "relative w-full flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
-            state.highlighted && "bg-item-pressed",
+            props.disabled && "opacity-50",
+            state.highlighted && "opacity-80",
             resolveClassName(className, state)
           )
         }
@@ -272,7 +265,7 @@ function ComboboxItem({
       >
         {wrapText(children, "flex-1")}
         <ComboboxPrimitive.ItemIndicator className="absolute right-2 size-4 items-center justify-center">
-          <Icon as={CheckIcon} className="size-4 shrink-0 text-link" />
+          <Icon as={CheckIcon} className="size-4 shrink-0 text-primary" />
         </ComboboxPrimitive.ItemIndicator>
       </ComboboxPrimitive.Item>
     </TextClassContext.Provider>
@@ -294,7 +287,7 @@ function ComboboxLabel({
     <ComboboxPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-label-secondary",
+          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -318,7 +311,7 @@ function ComboboxEmpty({
       }
       {...props}
     >
-      {wrapText(children, "text-center text-sm text-label-secondary")}
+      {wrapText(children, "text-center text-sm text-muted-foreground")}
     </ComboboxPrimitive.Empty>
   )
 }
@@ -330,10 +323,7 @@ function ComboboxSeparator({
   return (
     <ComboboxPrimitive.Separator
       className={(state) =>
-        cn(
-          "-mx-1.5 my-1.5 h-px bg-separator",
-          resolveClassName(className, state)
-        )
+        cn("-mx-1.5 my-1.5 h-px bg-border", resolveClassName(className, state))
       }
       {...props}
     />
@@ -355,10 +345,11 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       className={(state) =>
         cn(
-          "min-h-11 w-full flex-row flex-wrap items-center gap-1.5 rounded-lg border border-transparent bg-control px-3 py-1.5",
+          "min-h-11 w-full flex-row flex-wrap items-center gap-1.5 rounded-lg border border-transparent bg-secondary px-3 py-1.5",
           hasValue && "px-1.5",
-          isInvalid && "border-danger bg-danger/5 dark:bg-danger/10",
-          disabled && "bg-control-disabled",
+          isInvalid &&
+            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+          disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
@@ -375,24 +366,19 @@ function ComboboxChip({
 }: React.ComponentProps<typeof ComboboxPrimitive.Chip> & {
   showRemove?: boolean
 }) {
-  const combobox = ComboboxPrimitive.useComboboxRootContext("ComboboxChip")
-  const disabled = !!props.disabled || combobox.disabled
   return (
     <ComboboxPrimitive.Chip
       className={(state) =>
         cn(
-          "h-5.5 flex-row items-center justify-center gap-1 rounded-full bg-accent-surface px-2.5",
+          "h-5.5 flex-row items-center justify-center gap-1 rounded-full bg-primary/10 dark:bg-primary/20 px-2.5",
           showRemove && "pr-0.5",
-          state.disabled && "bg-control-disabled",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
       {...props}
     >
-      {wrapText(
-        children,
-        cn("text-xs text-link", disabled && "text-label-quaternary")
-      )}
+      {wrapText(children, "text-xs text-primary")}
       {showRemove ? (
         <ComboboxPrimitive.ChipRemove
           accessibilityLabel="Remove"
@@ -404,13 +390,7 @@ function ComboboxChip({
             />
           }
         >
-          <Icon
-            as={XIcon}
-            className={cn(
-              "size-3 text-link",
-              disabled && "text-label-quaternary"
-            )}
-          />
+          <Icon as={XIcon} className="size-3 text-primary" />
         </ComboboxPrimitive.ChipRemove>
       ) : null}
     </ComboboxPrimitive.Chip>
@@ -425,14 +405,13 @@ function ComboboxChipsInput({
     <ComboboxPrimitive.Input
       className={(state) =>
         cn(
-          "h-6 min-w-16 flex-1 px-1 py-0 text-base text-label",
-          state.disabled && "text-label-quaternary",
+          "h-6 min-w-16 flex-1 px-1 py-0 text-base text-foreground",
           resolveClassName(className, state)
         )
       }
-      placeholderTextColorClassName="accent-label-secondary"
-      cursorColorClassName="accent-accent"
-      selectionColorClassName="accent-accent"
+      placeholderTextColorClassName="accent-muted-foreground"
+      cursorColorClassName="accent-primary"
+      selectionColorClassName="accent-primary"
       {...props}
     />
   )

@@ -24,7 +24,7 @@ public struct Badge<Label: View>: View {
       .frame(height: 20)
       .overlay {
         if variant == .outline {
-          Capsule().strokeBorder(Color.separator)
+          Capsule().strokeBorder(EsuissColor.border)
         }
       }
       .clipShape(Capsule())
@@ -36,10 +36,10 @@ public struct Badge<Label: View>: View {
 
   private var foreground: Color {
     switch variant {
-    case .default, .link: .link
-    case .secondary: .labelSecondary
-    case .destructive: .danger
-    case .outline, .ghost: .label
+    case .default, .link: EsuissColor.primary
+    case .secondary: EsuissColor.mutedForeground
+    case .destructive: EsuissColor.destructive
+    case .outline, .ghost: EsuissColor.foreground
     }
   }
 }

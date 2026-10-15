@@ -66,6 +66,7 @@ import com.esuiss.ui.components.Switch
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
 @Immutable
@@ -88,20 +89,20 @@ private class DeviceRow(
 
 private val DeviceGroups = listOf(
     listOf(
-        DeviceRow("Airplane Mode", PhosphorIcons.Bold.Airplane, { it.orange }, toggle = ToggleKey.Airplane),
-        DeviceRow("Wi-Fi", PhosphorIcons.Bold.WifiHigh, { it.blue }, detail = { if (it.wifi) "Home" else "Off" }),
-        DeviceRow("Bluetooth", PhosphorIcons.Bold.Bluetooth, { it.blue }, detail = { if (it.bluetooth) "On" else "Off" }),
-        DeviceRow("Cellular", PhosphorIcons.Bold.CellSignalFull, { it.green }, detail = { if (it.airplane) "Off" else "" }),
+        DeviceRow("Airplane Mode", PhosphorIcons.Bold.Airplane, { Palette.orange500 }, toggle = ToggleKey.Airplane),
+        DeviceRow("Wi-Fi", PhosphorIcons.Bold.WifiHigh, { Palette.blue500 }, detail = { if (it.wifi) "Home" else "Off" }),
+        DeviceRow("Bluetooth", PhosphorIcons.Bold.Bluetooth, { Palette.blue500 }, detail = { if (it.bluetooth) "On" else "Off" }),
+        DeviceRow("Cellular", PhosphorIcons.Bold.CellSignalFull, { Palette.green500 }, detail = { if (it.airplane) "Off" else "" }),
     ),
     listOf(
-        DeviceRow("Notifications", PhosphorIcons.Bold.Bell, { it.red }),
-        DeviceRow("Sounds & Haptics", PhosphorIcons.Bold.SpeakerHigh, { it.pink }),
-        DeviceRow("Focus", PhosphorIcons.Bold.Moon, { it.indigo }, toggle = ToggleKey.Focus),
-        DeviceRow("Screen Time", PhosphorIcons.Bold.Hourglass, { it.indigo }),
+        DeviceRow("Notifications", PhosphorIcons.Bold.Bell, { Palette.red500 }),
+        DeviceRow("Sounds & Haptics", PhosphorIcons.Bold.SpeakerHigh, { Palette.pink500 }),
+        DeviceRow("Focus", PhosphorIcons.Bold.Moon, { Palette.indigo500 }, toggle = ToggleKey.Focus),
+        DeviceRow("Screen Time", PhosphorIcons.Bold.Hourglass, { Palette.indigo500 }),
     ),
     listOf(
-        DeviceRow("General", PhosphorIcons.Bold.Gear, { it.gray }),
-        DeviceRow("Display & Brightness", PhosphorIcons.Bold.Sun, { it.blue }),
+        DeviceRow("General", PhosphorIcons.Bold.Gear, { Palette.zinc500 }),
+        DeviceRow("Display & Brightness", PhosphorIcons.Bold.Sun, { Palette.blue500 }),
     ),
 )
 
@@ -165,19 +166,19 @@ fun SettingsDevice(
                                     Box(
                                         Modifier
                                             .fillMaxSize()
-                                            .background(colors.indigo, CircleShape),
+                                            .background(Palette.indigo500, CircleShape),
                                         contentAlignment = Alignment.Center,
                                     ) {
-                                        BasicText("JR", style = Typography.xl.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))
+                                        BasicText("JR", style = Typography.xl.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold))
                                     }
                                 },
                             )
                             ItemContent {
-                                BasicText("Jamie Rivera", style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
+                                BasicText("Jamie Rivera", style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
                                 ItemDescription("suiss Account, Cloud and more")
                             }
                             ItemActions {
-                                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.labelTertiary)
+                                Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.mutedForeground)
                             }
                         }
                     }
@@ -196,11 +197,11 @@ fun SettingsDevice(
                                         .size(29.dp)
                                         .background(row.tint(colors), RoundedCornerShape(7.dp)),
                                 ) {
-                                    Icon(row.icon, contentDescription = null, size = 17.dp, tint = colors.onAccent)
+                                    Icon(row.icon, contentDescription = null, size = 17.dp, tint = colors.primaryForeground)
                                 }
                                 ItemContent {
                                     ItemTitle {
-                                        BasicText(row.label, style = Typography.base.copy(color = colors.label), maxLines = 1)
+                                        BasicText(row.label, style = Typography.base.copy(color = colors.foreground), maxLines = 1)
                                     }
                                 }
                                 ItemActions {
@@ -209,9 +210,9 @@ fun SettingsDevice(
                                     } else {
                                         val detail = row.detail?.invoke(toggles).orEmpty()
                                         if (detail.isNotEmpty()) {
-                                            BasicText(detail, style = Typography.base.copy(color = colors.labelSecondary))
+                                            BasicText(detail, style = Typography.base.copy(color = colors.mutedForeground))
                                         }
-                                        Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.labelTertiary)
+                                        Icon(PhosphorIcons.Bold.CaretRight, contentDescription = null, size = 14.dp, tint = colors.mutedForeground)
                                     }
                                 }
                             }
@@ -224,7 +225,7 @@ fun SettingsDevice(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(30.dp),
-                        style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                        style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                 }
             }

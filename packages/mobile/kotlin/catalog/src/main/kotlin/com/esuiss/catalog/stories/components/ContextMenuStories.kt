@@ -48,7 +48,7 @@ val contextMenuStories = StoryGroup(
 
 @Composable
 private fun ContextMenuTriggerArea() {
-    val color = EsuissTheme.colors.separator
+    val color = EsuissTheme.colors.border
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +65,7 @@ private fun ContextMenuTriggerArea() {
             },
         contentAlignment = Alignment.Center,
     ) {
-        Text("Long press here", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+        Text("Long press here", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
     }
 }
 

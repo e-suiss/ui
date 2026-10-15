@@ -42,7 +42,18 @@ import {
 import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
-import { fontSize, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
+
+type Tone = keyof ThemeColors | keyof typeof palette
+
+function tone(colors: ThemeColors, key: Tone) {
+  return { ...colors, ...palette }[key]
+}
 
 type Toggles = {
   airplane: boolean
@@ -54,7 +65,7 @@ type Toggles = {
 type Row = {
   label: string
   icon: PhosphorIcon
-  tint: keyof ThemeColors
+  tint: Tone
   toggle?: keyof Toggles
   detail?: (toggles: Toggles) => string
 }
@@ -64,37 +75,37 @@ const GROUPS: Row[][] = [
     {
       label: "Airplane Mode",
       icon: AirplaneIcon,
-      tint: "orange",
+      tint: "orange500",
       toggle: "airplane",
     },
     {
       label: "Wi-Fi",
       icon: WifiHighIcon,
-      tint: "blue",
+      tint: "blue500",
       detail: (toggles) => (toggles.wifi ? "Home" : "Off"),
     },
     {
       label: "Bluetooth",
       icon: BluetoothIcon,
-      tint: "blue",
+      tint: "blue500",
       detail: (toggles) => (toggles.bluetooth ? "On" : "Off"),
     },
     {
       label: "Cellular",
       icon: CellSignalFullIcon,
-      tint: "green",
+      tint: "green500",
       detail: (toggles) => (toggles.airplane ? "Off" : ""),
     },
   ],
   [
-    { label: "Notifications", icon: BellIcon, tint: "red" },
-    { label: "Sounds & Haptics", icon: SpeakerHighIcon, tint: "pink" },
-    { label: "Focus", icon: MoonIcon, tint: "indigo", toggle: "focus" },
-    { label: "Screen Time", icon: HourglassIcon, tint: "indigo" },
+    { label: "Notifications", icon: BellIcon, tint: "red500" },
+    { label: "Sounds & Haptics", icon: SpeakerHighIcon, tint: "pink500" },
+    { label: "Focus", icon: MoonIcon, tint: "indigo500", toggle: "focus" },
+    { label: "Screen Time", icon: HourglassIcon, tint: "indigo500" },
   ],
   [
-    { label: "General", icon: GearIcon, tint: "gray" },
-    { label: "Display & Brightness", icon: SunIcon, tint: "blue" },
+    { label: "General", icon: GearIcon, tint: "zinc500" },
+    { label: "Display & Brightness", icon: SunIcon, tint: "blue500" },
   ],
 ]
 
@@ -114,7 +125,7 @@ function Chevron() {
       as={CaretRightIcon}
       weight="bold"
       size={14}
-      color={colors.labelTertiary}
+      color={colors.mutedForeground}
       style={
         I18nManager.isRTL ? { transform: [{ rotate: "180deg" }] } : undefined
       }
@@ -153,14 +164,14 @@ function SettingsDevice({
   ).filter((rows): rows is [Row, ...Row[]] => rows.length > 0)
 
   const group = {
-    backgroundColor: isDark ? colors.surfaceSecondary : colors.surface,
+    backgroundColor: isDark ? colors.muted : colors.background,
   }
 
   return (
     <Screen
       variant="secondary"
       edges={["top", "right", "left"]}
-      style={isDark ? { backgroundColor: colors.surface } : undefined}
+      style={isDark ? { backgroundColor: colors.background } : undefined}
     >
       <Header scroll={scroll}>
         <HeaderTitle>Settings</HeaderTitle>
@@ -173,17 +184,14 @@ function SettingsDevice({
         <HeaderLargeTitle>Settings</HeaderLargeTitle>
         <View style={styles.body}>
           <InputGroup
-            style={[
-              styles.search,
-              isDark && { backgroundColor: colors.surfaceSecondary },
-            ]}
+            style={[styles.search, isDark && { backgroundColor: colors.muted }]}
           >
             <InputGroupAddon>
               <Icon
                 as={MagnifyingGlassIcon}
                 weight="bold"
                 size={16}
-                color={colors.labelSecondary}
+                color={colors.mutedForeground}
               />
             </InputGroupAddon>
             <InputGroupInput
@@ -201,7 +209,9 @@ function SettingsDevice({
             <ItemGroup variant="inset" style={group}>
               <Item size="sm" onPress={onAccountPress} style={styles.account}>
                 <Avatar size="xl" style={{ width: 58, height: 58 }}>
-                  <AvatarFallback style={{ backgroundColor: colors.indigo }}>
+                  <AvatarFallback
+                    style={{ backgroundColor: palette.indigo500 }}
+                  >
                     <Text style={fontSize.xl}>JR</Text>
                   </AvatarFallback>
                 </Avatar>
@@ -237,14 +247,14 @@ function SettingsDevice({
                       <ItemMedia
                         style={[
                           styles.tile,
-                          { backgroundColor: colors[row.tint] },
+                          { backgroundColor: tone(colors, row.tint) },
                         ]}
                       >
                         <Icon
                           as={row.icon}
                           weight="bold"
                           size={17}
-                          color={colors.onAccent}
+                          color={colors.primaryForeground}
                         />
                       </ItemMedia>
                       <ItemContent>
@@ -280,7 +290,7 @@ function SettingsDevice({
             </ItemGroup>
           ))}
           {visible.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+            <Text style={[styles.empty, { color: colors.mutedForeground }]}>
               No Results
             </Text>
           ) : null}

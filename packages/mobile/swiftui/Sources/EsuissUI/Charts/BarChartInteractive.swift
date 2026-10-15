@@ -28,9 +28,9 @@ private let apps: [(name: String, category: Category, share: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "social": .init("Social", color: .blue),
-  "productivity": .init("Productivity", color: .cyan),
-  "entertainment": .init("Entertainment", color: .orange),
+  "social": .init("Social", color: EsuissColor.chart1),
+  "productivity": .init("Productivity", color: Palette.cyan500),
+  "entertainment": .init("Entertainment", color: EsuissColor.chart4),
 ]
 
 private func week(_ day: Int, _ category: Category) -> Double {
@@ -115,13 +115,13 @@ public struct BarChartInteractive: View {
         VStack(alignment: .leading, spacing: 2) {
           Text(LocalizedStringKey(selected.map { days[$0] } ?? "Daily average"))
             .textStyle(.sm, weight: .semibold)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
           Text(verbatim: formatMinutes(headline))
             .textStyle(.xl3, weight: .semibold)
             .monospacedDigit()
           Text(LocalizedStringKey(comparison))
             .textStyle(.sm)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .accessibilityElement(children: .combine)
         ToggleGroup(selection: viewBinding, size: .sm, spacing: 0) {
@@ -143,7 +143,7 @@ public struct BarChartInteractive: View {
                     .frame(width: 8, height: 8)
                   Text(LocalizedStringKey(chartConfig.label(category.rawValue)))
                     .textStyle(.sm)
-                    .foregroundStyle(Color.labelSecondary)
+                    .foregroundStyle(EsuissColor.mutedForeground)
                     .lineLimit(1)
                 }
                 Text(verbatim: formatMinutes(categories(category)))
@@ -156,7 +156,7 @@ public struct BarChartInteractive: View {
           VStack(alignment: .leading, spacing: 0) {
             Text("MOST USED")
               .textStyle(.xs, weight: .semibold)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
               .padding(.bottom, 4)
             ForEach(Array(ranked), id: \.app.name) { entry in
               HStack(spacing: 12) {
@@ -166,7 +166,7 @@ public struct BarChartInteractive: View {
                   .frame(width: 96, alignment: .leading)
                 GeometryReader { geometry in
                   Capsule()
-                    .fill(Color.control)
+                    .fill(EsuissColor.secondary)
                     .overlay(alignment: .leading) {
                       Capsule()
                         .fill(chartConfig.color(entry.app.category.rawValue))
@@ -176,13 +176,13 @@ public struct BarChartInteractive: View {
                 .frame(height: 6)
                 Text(verbatim: formatMinutes(entry.minutes))
                   .textStyle(.sm)
-                  .foregroundStyle(Color.labelSecondary)
+                  .foregroundStyle(EsuissColor.mutedForeground)
                   .monospacedDigit()
                   .frame(width: 72, alignment: .trailing)
               }
               .padding(.vertical, 8)
               .overlay(alignment: .top) {
-                Color.separator.frame(height: 1)
+                EsuissColor.border.frame(height: 1)
               }
               .accessibilityElement(children: .combine)
             }
@@ -218,7 +218,7 @@ public struct BarChartInteractive: View {
         if isWeek {
           RuleMark(y: .value("Average", averageTotal))
             .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-            .foregroundStyle(Color.green)
+            .foregroundStyle(Palette.green500)
         }
       }
       .chartXAxis {
@@ -245,7 +245,7 @@ public struct BarChartInteractive: View {
             .fill(chartConfig.color(item.key))
             .frame(width: 8, height: 8)
           Text(LocalizedStringKey(chartConfig.label(item.key)))
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity, alignment: .leading)
           Text(verbatim: formatMinutes(item.value))
             .font(TextStyle.xs.font(weight: .semibold))

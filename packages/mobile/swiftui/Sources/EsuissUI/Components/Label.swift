@@ -13,7 +13,8 @@ public struct FieldLabel<Content: View>: View {
   public var body: some View {
     content
       .scaledTextStyle(.base, weight: inset ? .regular : .semibold)
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
+      .opacity(isEnabled ? 1 : 0.5)
   }
 }
 

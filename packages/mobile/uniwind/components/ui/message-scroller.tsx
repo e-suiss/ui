@@ -475,7 +475,7 @@ function MessageScrollerButton({
         size={size}
         accessibilityLabel={accessibilityLabel ?? label}
         className={cn(
-          "border-separator bg-surface-raised active:bg-surface-secondary dark:bg-surface-secondary dark:active:bg-surface-tertiary",
+          "border-border bg-card active:opacity-80 dark:bg-muted",
           className
         )}
         onPress={(event) => {
@@ -489,8 +489,8 @@ function MessageScrollerButton({
           <Icon as={direction === "start" ? ArrowUpIcon : ArrowDownIcon} />
         )}
         {count > 0 ? (
-          <View className="absolute -end-1.5 -top-1.5 h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5">
-            <Text className="text-2xs font-semibold text-on-accent">
+          <View className="absolute -end-1.5 -top-1.5 h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5">
+            <Text className="text-2xs font-semibold text-primary-foreground">
               {count > 99 ? "99+" : count}
             </Text>
           </View>

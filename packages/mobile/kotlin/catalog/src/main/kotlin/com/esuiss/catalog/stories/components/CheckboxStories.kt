@@ -68,7 +68,7 @@ private fun CheckboxWithDescription() {
             Label("Enable notifications", Modifier.checkboxLabelToggle { checked = !checked })
             Text(
                 "You can enable or disable notifications at any time.",
-                style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+                style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
             )
         }
     }

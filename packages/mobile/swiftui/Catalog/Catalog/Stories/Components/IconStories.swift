@@ -18,9 +18,9 @@ enum IconStories {
     Story("Colors") {
       HStack(spacing: 16) {
         IconGlyph(image: Ph.info.regular)
-        IconGlyph(image: Ph.gear.regular, color: .labelSecondary)
-        IconGlyph(image: Ph.heart.fill, color: .accent)
-        IconGlyph(image: Ph.warning.regular, color: .danger)
+        IconGlyph(image: Ph.gear.regular, color: EsuissColor.mutedForeground)
+        IconGlyph(image: Ph.heart.fill, color: EsuissColor.primary)
+        IconGlyph(image: Ph.warning.regular, color: EsuissColor.destructive)
       }
     },
     Story("Weights") {
@@ -39,7 +39,7 @@ enum IconStories {
 private struct IconGlyph: View {
   let image: Image
   var size: CGFloat = 20
-  var color: Color = .label
+  var color: Color = EsuissColor.foreground
 
   var body: some View {
     image

@@ -97,7 +97,7 @@ public struct PageIndicator: View {
       ForEach(dots, id: \.page) { dot in
         let active = dot.page == current
         Capsule()
-          .fill(active ? activeColor : Color.labelQuaternary)
+          .fill(active ? activeColor : EsuissColor.border)
           .frame(width: active ? size.activeWidth : size.dot, height: size.dot)
           .scaleEffect(dot.scale)
           .padding(.vertical, size.dot)
@@ -128,8 +128,8 @@ public struct PageIndicator: View {
 
   private var activeColor: Color {
     switch variant {
-    case .default: .label
-    case .accent: .accent
+    case .default: EsuissColor.foreground
+    case .accent: EsuissColor.primary
     }
   }
 }

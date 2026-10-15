@@ -70,7 +70,7 @@ const gridSpans: Record<WidgetSize, string> = {
 }
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <Text className="mt-6 text-xs text-label-secondary">{children}</Text>
+  return <Text className="mt-6 text-xs text-muted-foreground">{children}</Text>
 }
 
 function Weather() {
@@ -96,10 +96,15 @@ function SalesBody() {
   return (
     <>
       <WidgetHeader className="gap-1.5">
-        <WidgetIcon size="sm" iconClassName="text-warning">
+        <WidgetIcon
+          size="sm"
+          iconClassName="text-amber-600 dark:text-amber-400"
+        >
           <Icon as={CashRegisterIcon} weight="fill" />
         </WidgetIcon>
-        <WidgetTitle className="text-warning">Hestia</WidgetTitle>
+        <WidgetTitle className="text-amber-600 dark:text-amber-400">
+          Hestia
+        </WidgetTitle>
       </WidgetHeader>
       <View
         className={
@@ -125,8 +130,8 @@ function SalesBody() {
                 key={hour}
                 className={
                   value === 100
-                    ? "flex-1 rounded-sm bg-warning"
-                    : "flex-1 rounded-sm bg-warning/40"
+                    ? "flex-1 rounded-sm bg-amber-500"
+                    : "flex-1 rounded-sm bg-amber-500/40"
                 }
                 style={{ height: `${value}%` }}
               />
@@ -139,10 +144,12 @@ function SalesBody() {
           {topItems.map((item) => (
             <View
               key={item.name}
-              className="flex-row items-center justify-between border-b border-separator py-1.5"
+              className="flex-row items-center justify-between border-b border-border py-1.5"
             >
               <Text className="text-sm">{item.name}</Text>
-              <Text className="text-sm text-label-secondary">{item.count}</Text>
+              <Text className="text-sm text-muted-foreground">
+                {item.count}
+              </Text>
             </View>
           ))}
         </View>
@@ -157,10 +164,10 @@ function ReservationsBody() {
   return (
     <>
       <WidgetHeader className="gap-1.5">
-        <WidgetIcon size="sm" iconClassName="text-link">
+        <WidgetIcon size="sm" iconClassName="text-primary">
           <Icon as={CalendarBlankIcon} weight="fill" />
         </WidgetIcon>
-        <WidgetTitle className="text-link">Reservations</WidgetTitle>
+        <WidgetTitle className="text-primary">Reservations</WidgetTitle>
       </WidgetHeader>
       <View className="min-h-0 grow flex-row items-end gap-4">
         <WidgetContent className="grow-0">
@@ -171,7 +178,7 @@ function ReservationsBody() {
           <View className="flex-1 gap-1">
             {reservations.slice(0, 3).map((item) => (
               <View key={item.time} className="flex-row gap-3">
-                <Text className="w-11 text-sm text-label-secondary">
+                <Text className="w-11 text-sm text-muted-foreground">
                   {item.time}
                 </Text>
                 <Text className="flex-1 text-sm" numberOfLines={1}>
@@ -322,10 +329,15 @@ export const Dashboard: Story = {
       <View className="h-42">
         <Widget>
           <WidgetHeader className="gap-1.5">
-            <WidgetIcon size="sm" iconClassName="text-warning">
+            <WidgetIcon
+              size="sm"
+              iconClassName="text-amber-600 dark:text-amber-400"
+            >
               <Icon as={CashRegisterIcon} weight="fill" />
             </WidgetIcon>
-            <WidgetTitle className="text-warning">Hestia</WidgetTitle>
+            <WidgetTitle className="text-amber-600 dark:text-amber-400">
+              Hestia
+            </WidgetTitle>
           </WidgetHeader>
           <WidgetValue>₺18,240</WidgetValue>
           <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>

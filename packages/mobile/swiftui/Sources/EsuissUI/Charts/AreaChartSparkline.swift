@@ -9,8 +9,8 @@ private let stocks: [(symbol: String, name: String, price: Double, change: Doubl
 ]
 
 private let chartConfig: ChartConfig = [
-  "up": .init("Rising", color: .success),
-  "down": .init("Falling", color: .danger),
+  "up": .init("Rising", color: Palette.green500),
+  "down": .init("Falling", color: EsuissColor.destructive),
 ]
 
 private func series(_ seed: Int, rising: Bool) -> [Double] {
@@ -66,7 +66,7 @@ public struct AreaChartSparkline: View {
         VStack(spacing: 0) {
           ForEach(stocks.indices, id: \.self) { index in
             if index > 0 {
-              Color.separator.frame(height: 1)
+              EsuissColor.border.frame(height: 1)
             }
             row(stocks[index])
           }
@@ -83,7 +83,7 @@ public struct AreaChartSparkline: View {
           .textStyle(.base, weight: .semibold)
         Text(verbatim: stock.name)
           .textStyle(.xs)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -95,11 +95,11 @@ public struct AreaChartSparkline: View {
         Text("\(stock.change, format: .number.precision(.fractionLength(2)).sign(strategy: .always()).locale(locale))%")
           .textStyle(.xs, weight: .semibold)
           .monospacedDigit()
-          .foregroundStyle(colorScheme == .dark ? Color.surface : .onAccent)
+          .foregroundStyle(colorScheme == .dark ? EsuissColor.background : EsuissColor.primaryForeground)
           .padding(.horizontal, 6)
           .padding(.vertical, 2)
           .frame(minWidth: 52, alignment: .trailing)
-          .background(rising ? Color.success : .danger, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+          .background(rising ? Palette.green500 : EsuissColor.destructive, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
       }
     }
     .padding(.vertical, 9)

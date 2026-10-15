@@ -89,22 +89,20 @@ struct ToggleSurface<Content: View>: View {
       .background(background, in: shape)
       .overlay {
         if variant == .outline && bordered {
-          shape.stroke(Color.separator, lineWidth: 1).padding(0.5)
+          shape.stroke(EsuissColor.border, lineWidth: 1).padding(0.5)
         }
       }
       .contentShape(shape)
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .scaleEffect(pressed && isEnabled && !reduceMotion ? 0.96 : 1)
       .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: pressed)
   }
 
   private var foreground: Color {
-    if !isEnabled { return .labelQuaternary }
-    return isOn ? .link : .label
+    isOn ? EsuissColor.primary : EsuissColor.foreground
   }
 
   private var background: Color {
-    if !isEnabled { return isOn ? .controlDisabled : .clear }
-    if isOn { return pressed ? .itemPressed : .itemSelected }
-    return pressed ? .itemPressed : .clear
+    isOn ? EsuissColor.accent : .clear
   }
 }

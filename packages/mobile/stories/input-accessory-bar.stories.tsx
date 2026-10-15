@@ -93,7 +93,7 @@ function DoneLogDemo() {
       >
         <Field label="Subject" autoFocus />
         <MessageField />
-        <Text role="status" className="text-sm text-label-secondary">
+        <Text role="status" className="text-sm text-muted-foreground">
           {log}
         </Text>
       </KeyboardScrollView>

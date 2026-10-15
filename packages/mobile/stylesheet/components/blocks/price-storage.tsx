@@ -16,7 +16,7 @@ import { Icon } from "@/components/ui/icon"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, useTheme } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 type Period = "monthly" | "yearly"
@@ -117,7 +117,7 @@ function PlanCard({
   yearly: boolean
   onPress: () => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const lift = useSharedValue(checked ? -3 : 0)
 
   React.useEffect(() => {
@@ -139,8 +139,8 @@ function PlanCard({
         style={({ pressed }) => [
           styles.card,
           {
-            backgroundColor: colors.surfaceSecondary,
-            borderColor: checked ? colors.accent : "transparent",
+            backgroundColor: colors.muted,
+            borderColor: checked ? colors.primary : "transparent",
             opacity: pressed && !checked ? 0.8 : 1,
           },
         ]}
@@ -157,7 +157,7 @@ function PlanCard({
           <Text style={styles.price}>
             {money(yearly ? plan.price * 10 : plan.price)}
           </Text>
-          <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
             {yearly ? " /yr" : " /mo"}
           </Text>
         </Text>
@@ -168,7 +168,7 @@ function PlanCard({
                 as={CheckIcon}
                 weight="bold"
                 size={13}
-                color={colors.success}
+                color={isDark ? palette.green400 : palette.green600}
                 style={styles.check}
               />
               <Text style={[fontSize.sm, { flex: 1 }]}>{feature}</Text>
@@ -179,9 +179,9 @@ function PlanCard({
       {plan.popular ? (
         <View
           pointerEvents="none"
-          style={[styles.badge, { backgroundColor: colors.accent }]}
+          style={[styles.badge, { backgroundColor: colors.primary }]}
         >
-          <Text style={[styles.badgeText, { color: colors.onAccent }]}>
+          <Text style={[styles.badgeText, { color: colors.primaryForeground }]}>
             Most popular
           </Text>
         </View>
@@ -197,7 +197,6 @@ function PriceStorage({
   onSelectPlan?: (size: string, period: Period) => void
   onPeriodChange?: (period: Period) => void
 }) {
-  const { colors } = useTheme()
   const [period, setPeriod] = React.useState<Period>("monthly")
   const [selected, setSelected] = React.useState("200 GB")
   const [updated, setUpdated] = React.useState(false)
@@ -215,7 +214,7 @@ function PriceStorage({
           entering={FadeInDown.duration(600).reduceMotion(ReduceMotion.System)}
           style={styles.intro}
         >
-          <Icon as={CloudIcon} size={40} color={colors.blue} />
+          <Icon as={CloudIcon} size={40} color={palette.blue500} />
           <Text role="heading" style={styles.title}>
             More space with suiss Cloud+.
           </Text>

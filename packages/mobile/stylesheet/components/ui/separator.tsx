@@ -17,7 +17,7 @@ function Separator({
     <SeparatorPrimitive
       style={(state) => [
         styles.root,
-        { backgroundColor: colors.separator },
+        { backgroundColor: colors.border },
         state.orientation === "horizontal"
           ? styles.horizontal
           : styles.vertical,

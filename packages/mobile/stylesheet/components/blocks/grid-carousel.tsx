@@ -10,7 +10,13 @@ import {
 import { PageIndicator } from "@/components/ui/page-indicator"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  palette,
+  radius,
+  shadow,
+  useTheme,
+} from "@/components/ui/theme"
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=800&q=80&auto=format&fit=crop`
@@ -121,7 +127,7 @@ function GridCarousel({
         >
           <Text role="heading" style={styles.heading}>
             The latest.{" "}
-            <Text style={[styles.heading, { color: colors.labelSecondary }]}>
+            <Text style={[styles.heading, { color: colors.mutedForeground }]}>
               Fresh favorites of the season.
             </Text>
           </Text>
@@ -144,20 +150,22 @@ function GridCarousel({
                   style={({ pressed }) => [
                     styles.card,
                     shadow.md,
-                    { backgroundColor: colors.surface },
+                    { backgroundColor: colors.background },
                     pressed && { opacity: 0.8 },
                   ]}
                 >
                   <View style={styles.text}>
                     {product.kicker ? (
-                      <Text style={[styles.kicker, { color: colors.orange }]}>
+                      <Text
+                        style={[styles.kicker, { color: palette.orange500 }]}
+                      >
                         {product.kicker}
                       </Text>
                     ) : null}
                     <Text style={styles.name}>{product.name}</Text>
                     <Text style={styles.tagline}>{product.tagline}</Text>
                     <Text
-                      style={[styles.price, { color: colors.labelSecondary }]}
+                      style={[styles.price, { color: colors.mutedForeground }]}
                     >
                       From {product.price}
                     </Text>
@@ -167,7 +175,10 @@ function GridCarousel({
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
                     accessibilityLabel={product.alt}
-                    style={[styles.image, { backgroundColor: colors.control }]}
+                    style={[
+                      styles.image,
+                      { backgroundColor: colors.secondary },
+                    ]}
                   />
                 </Pressable>
               </CarouselItem>

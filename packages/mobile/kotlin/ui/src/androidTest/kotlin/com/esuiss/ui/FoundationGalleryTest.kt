@@ -131,12 +131,12 @@ private val Mailboxes = listOf(
 
 @Composable
 private fun Caption(text: String, modifier: Modifier = Modifier) {
-    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
 private fun SectionTitle(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.Medium))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.Medium))
 }
 
 @Composable
@@ -318,10 +318,10 @@ private fun GroceryReorder() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape)
-                    .border(1.dp, EsuissTheme.colors.separator, shape),
+                    .border(1.dp, EsuissTheme.colors.border, shape),
             ) { item ->
                 ReorderListItem {
-                    BasicText(item, modifier = Modifier.weight(1f), style = Typography.base.copy(color = EsuissTheme.colors.label))
+                    BasicText(item, modifier = Modifier.weight(1f), style = Typography.base.copy(color = EsuissTheme.colors.foreground))
                     ReorderListHandle(contentDescription = "Reorder $item")
                 }
             }

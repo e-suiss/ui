@@ -257,7 +257,7 @@ fun ReorderList(
                                 val stroke = 1.dp.toPx()
                                 val inset = 16.dp.toPx()
                                 val start = if (layoutDirection == LayoutDirection.Rtl) 0f else inset
-                                drawRect(colors.separator, Offset(start, 0f), Size(size.width - inset, stroke))
+                                drawRect(colors.border, Offset(start, 0f), Size(size.width - inset, stroke))
                             }
                         }
                         .semantics { customActions = actions },
@@ -290,7 +290,7 @@ fun ReorderListItem(
                 if (lift > 0f) {
                     Modifier
                         .shadow(shadow.copy(color = shadow.color.copy(alpha = shadow.color.alpha * lift)), shape)
-                        .background(colors.surfaceRaised.copy(alpha = lift), shape)
+                        .background(colors.card.copy(alpha = lift), shape)
                 } else {
                     Modifier
                 },
@@ -301,8 +301,8 @@ fun ReorderListItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
-            LocalContentStyle provides Typography.base.copy(color = colors.label),
-            LocalContentColor provides colors.label,
+            LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+            LocalContentColor provides colors.foreground,
         ) {
             content()
         }
@@ -332,6 +332,6 @@ fun ReorderListHandle(
             .semantics { this.contentDescription = contentDescription },
         contentAlignment = Alignment.Center,
     ) {
-        Icon(PhosphorIcons.Regular.DotsSixVertical, contentDescription = null, size = 20.dp, tint = colors.labelTertiary)
+        Icon(PhosphorIcons.Regular.DotsSixVertical, contentDescription = null, size = 20.dp, tint = colors.mutedForeground)
     }
 }

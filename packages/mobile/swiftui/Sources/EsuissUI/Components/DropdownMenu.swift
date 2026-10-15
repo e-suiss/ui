@@ -91,7 +91,7 @@ struct MenuPanel<Content: View>: View {
     }
     .font(TextStyle.base.font())
     .tracking(TextStyle.base.letterSpacing)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .environment(\.menuPresentation, .popup)
     .popupSurface(radius: Radius.xl)
     .accessibilityElement(children: .contain)
@@ -110,20 +110,14 @@ struct MenuRowStyle: ButtonStyle {
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: 10, iconSize: 16))
       .lineLimit(1)
-      .foregroundStyle(!isEnabled ? Color.labelQuaternary : destructive ? .danger : .label)
+      .foregroundStyle(destructive ? EsuissColor.destructive : EsuissColor.foreground)
       .padding(.leading, inset ? 38 : 12)
       .padding(.trailing, trailing)
       .padding(.vertical, 8)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(background(pressed: configuration.isPressed), in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+      .background(selected ? EsuissColor.accent : .clear, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+      .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
       .contentShape(Rectangle())
-  }
-
-  private func background(pressed: Bool) -> Color {
-    if pressed && isEnabled {
-      return destructive ? .dangerSurfacePressed : .itemPressed
-    }
-    return selected ? .itemSelected : .clear
   }
 }
 
@@ -323,7 +317,7 @@ public struct DropdownMenuLabel: View {
       Text(title)
         .font(TextStyle.xs.font(weight: .semibold))
         .tracking(TextStyle.xs.letterSpacing)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.leading, inset ? 38 : 12)
         .padding(.trailing, 12)
         .padding(.vertical, 10)
@@ -361,7 +355,7 @@ public struct DropdownMenuSeparator: View {
       Divider()
     } else {
       Rectangle()
-        .fill(Color.separator.opacity(0.5))
+        .fill(EsuissColor.border.opacity(0.5))
         .frame(height: 1)
         .padding(.vertical, 6)
         .padding(.horizontal, -6)

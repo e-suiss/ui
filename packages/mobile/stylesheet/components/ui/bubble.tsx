@@ -100,46 +100,32 @@ function withAlpha(color: string, alpha: number) {
 function bubbleColors(
   variant: BubbleVariant,
   colors: ThemeColors,
-  pressed: boolean
+  isDark: boolean
 ) {
   switch (variant) {
     case "default":
-      return {
-        background: pressed ? colors.accentPressed : colors.accent,
-        text: colors.onAccent,
-      }
+      return { background: colors.primary, text: colors.primaryForeground }
     case "secondary":
-      return {
-        background: pressed ? colors.controlPressed : colors.control,
-        text: colors.label,
-      }
+      return { background: colors.secondary, text: colors.secondaryForeground }
     case "muted":
-      return {
-        background: pressed ? colors.surfaceTertiary : colors.surfaceSecondary,
-        text: colors.label,
-      }
+      return { background: colors.muted, text: colors.foreground }
     case "tinted":
       return {
-        background: withAlpha(colors.accent, pressed ? 0.2 : 0.12),
-        text: colors.label,
+        background: withAlpha(colors.primary, 0.12),
+        text: colors.foreground,
       }
     case "outline":
       return {
-        background: pressed ? colors.control : colors.surface,
-        text: colors.label,
-        border: colors.separator,
+        background: colors.background,
+        text: colors.foreground,
+        border: colors.border,
       }
     case "ghost":
-      return {
-        background: pressed ? colors.itemPressed : "transparent",
-        text: colors.label,
-      }
+      return { background: "transparent", text: colors.foreground }
     default:
       return {
-        background: pressed
-          ? colors.dangerSurfacePressed
-          : colors.dangerSurface,
-        text: colors.danger,
+        background: withAlpha(colors.destructive, isDark ? 0.2 : 0.1),
+        text: colors.destructive,
       }
   }
 }
@@ -293,11 +279,11 @@ function BubbleContent({
     style?: StyleProp<ViewStyle>
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const { variant, align, tail } = React.useContext(BubbleContext)
   const [pressed, setPressed] = React.useState(false)
   const interactive = Boolean(onPress || onLongPress || render)
-  const palette = bubbleColors(variant, colors, pressed)
+  const palette = bubbleColors(variant, colors, isDark)
   const element = useRender({
     defaultComponent: interactive ? Pressable : View,
     render,
@@ -309,6 +295,7 @@ function BubbleContent({
           { backgroundColor: palette.background },
           palette.border ? { borderColor: palette.border } : null,
           variant === "ghost" && styles.ghost,
+          pressed && { opacity: 0.8 },
           style,
         ],
         role: onPress || onLongPress ? "button" : undefined,
@@ -327,7 +314,7 @@ function BubbleContent({
             {tail ? (
               <BubbleTail
                 color={palette.background}
-                surface={colors.surface}
+                surface={colors.background}
                 align={align}
               />
             ) : null}
@@ -359,13 +346,15 @@ function BubbleReactions({
 }) {
   const { colors } = useTheme()
   return (
-    <TextStyleContext.Provider value={{ ...fontSize.sm, color: colors.label }}>
+    <TextStyleContext.Provider
+      value={{ ...fontSize.sm, color: colors.foreground }}
+    >
       <View
         style={[
           styles.reactions,
           {
-            borderColor: colors.surface,
-            backgroundColor: colors.surfaceSecondary,
+            borderColor: colors.background,
+            backgroundColor: colors.muted,
           },
           side === "top" ? { top: -20 } : { bottom: -20 },
           align === "start" ? { start: 12 } : { end: 12 },

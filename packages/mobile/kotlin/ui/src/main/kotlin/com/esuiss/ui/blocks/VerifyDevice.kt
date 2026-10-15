@@ -37,6 +37,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -68,6 +69,7 @@ import com.esuiss.ui.interactions.OtpAutofill
 import com.esuiss.ui.interactions.OtpAutofillInput
 import com.esuiss.ui.interactions.OtpAutofillState
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -108,23 +110,23 @@ fun VerifyDevice(
                 Box(
                     Modifier
                         .size(56.dp)
-                        .background(colors.surfaceSecondary, CircleShape),
+                        .background(colors.muted, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         if (phase == DevicePhase.Code) PhosphorIcons.Bold.LockSimple else PhosphorIcons.Bold.DeviceMobile,
                         contentDescription = null,
                         size = 26.dp,
-                        tint = colors.accent,
+                        tint = colors.primary,
                     )
                 }
                 val (title, body) = Copy.getValue(phase)
                 BasicText(
                     title,
                     modifier = Modifier.semantics { heading() },
-                    style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 )
-                BasicText(body, style = Typography.lg.copy(color = colors.labelSecondary))
+                BasicText(body, style = Typography.lg.copy(color = colors.mutedForeground))
                 Box(
                     Modifier
                         .padding(top = 10.dp)
@@ -136,8 +138,8 @@ fun VerifyDevice(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Spinner(color = colors.labelSecondary)
-                            BasicText("Waiting for approval…", style = Typography.sm.copy(color = colors.labelSecondary))
+                            Spinner(color = colors.mutedForeground)
+                            BasicText("Waiting for approval…", style = Typography.sm.copy(color = colors.mutedForeground))
                         }
                         DevicePhase.Code -> OtpAutofill(
                             maxLength = 6,
@@ -156,7 +158,7 @@ fun VerifyDevice(
                                 }
                             }
                             if (state == OtpAutofillState.Invalid) {
-                                BasicText("Incorrect code.", style = Typography.sm.copy(color = colors.danger))
+                                BasicText("Incorrect code.", style = Typography.sm.copy(color = colors.destructive))
                             }
                         }
                         else -> LinkText("Try again ›") { phase = DevicePhase.Ask }
@@ -189,8 +191,8 @@ private fun TrustedDevice(
             .fillMaxWidth()
             .height(440.dp)
             .clip(shape)
-            .background(colors.indigo, shape)
-            .background(colors.media.copy(alpha = 0.18f)),
+            .background(Palette.indigo500, shape)
+            .background(Palette.black.copy(alpha = 0.18f)),
         contentAlignment = Alignment.Center,
     ) {
         AnimatedContent(
@@ -206,7 +208,7 @@ private fun TrustedDevice(
                     .width(270.dp)
                     .shadow(Shadows.lg, alertShape)
                     .clip(alertShape)
-                    .background(colors.surfaceRaised.copy(alpha = 0.92f), alertShape)
+                    .background(colors.popover.copy(alpha = 0.92f), alertShape)
                     .semantics { contentDescription = "Trusted device" },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -218,7 +220,7 @@ private fun TrustedDevice(
                                 "482 913",
                                 modifier = Modifier.padding(top = 10.dp, bottom = 4.dp),
                                 style = Typography.xl3.copy(
-                                    color = colors.label,
+                                    color = colors.foreground,
                                     fontWeight = FontWeight.SemiBold,
                                     letterSpacing = 0.1.em,
                                     fontFeatureSettings = "tnum",
@@ -261,13 +263,13 @@ private fun TrustedDevice(
 
 @Composable
 private fun alertTitle() = Typography.lg.copy(
-    color = EsuissTheme.colors.label,
+    color = EsuissTheme.colors.foreground,
     fontWeight = FontWeight.SemiBold,
     textAlign = TextAlign.Center,
 )
 
 @Composable
-private fun alertMessage() = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, textAlign = TextAlign.Center)
+private fun alertMessage() = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, textAlign = TextAlign.Center)
 
 @Composable
 private fun AlertBody(content: @Composable ColumnScope.() -> Unit) {
@@ -290,12 +292,12 @@ private fun MapPreview() {
             .fillMaxWidth()
             .height(96.dp)
             .clip(shape)
-            .background(colors.accentSurface, shape)
+            .background(colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f), shape)
             .clearAndSetSemantics {}
             .drawBehind {
                 val center = Offset(size.width / 2f, size.height * 0.52f)
-                drawCircle(colors.accent.copy(alpha = 0.25f), radius = 24.dp.toPx(), center = center)
-                drawCircle(colors.accent, radius = 5.dp.toPx(), center = center)
+                drawCircle(colors.primary.copy(alpha = 0.25f), radius = 24.dp.toPx(), center = center)
+                drawCircle(colors.primary, radius = 5.dp.toPx(), center = center)
             },
     )
 }
@@ -310,20 +312,20 @@ private fun AlertAction(text: String, primary: Boolean = false, onClick: () -> U
             Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(colors.separatorStrong.copy(alpha = 0.5f)),
+                .background(colors.input.copy(alpha = 0.5f)),
         )
         Box(
             Modifier
                 .fillMaxWidth()
                 .height(44.dp)
-                .background(if (pressed) colors.itemPressed else Color.Transparent)
+                .alpha(if (pressed) 0.8f else 1f)
                 .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
             contentAlignment = Alignment.Center,
         ) {
             BasicText(
                 text,
                 style = Typography.lg.copy(
-                    color = colors.link,
+                    color = colors.primary,
                     fontWeight = if (primary) FontWeight.SemiBold else FontWeight.Normal,
                 ),
             )
@@ -338,10 +340,10 @@ private fun LinkText(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.base.copy(color = EsuissTheme.colors.link),
+        style = Typography.base.copy(color = EsuissTheme.colors.primary),
     )
 }
 
@@ -364,19 +366,19 @@ private fun Success(onStartOver: () -> Unit) {
         Box(
             Modifier
                 .size(76.dp)
-                .background(colors.success, CircleShape),
+                .background(Palette.green500, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.onAccent)
+            Icon(PhosphorIcons.Bold.Check, contentDescription = null, size = 38.dp, tint = colors.primaryForeground)
         }
         BasicText(
             "Sign-in approved.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
         )
         BasicText(
             "This device was added to your suiss Account.",
-            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
         )
         LinkText("Start over ›", onStartOver)
     }

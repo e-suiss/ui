@@ -62,7 +62,7 @@ const FEED: FeedEvent[] = [
     actor: "Jamie Rivera",
     action: "signed in",
     detail: "Book Pro · San Francisco",
-    tint: "bg-indigo dark:bg-indigo",
+    tint: "bg-indigo-500",
   },
   {
     actor: "System",
@@ -74,14 +74,14 @@ const FEED: FeedEvent[] = [
     actor: "Morgan Lee",
     action: "updated a product",
     detail: "Phone Air · 240 in stock",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
     icon: TagIcon,
   },
   {
     actor: "Riley Chen",
     action: "answered a ticket",
     detail: "#4821 Screen flickers",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
     icon: ChatCircleIcon,
   },
   {
@@ -95,7 +95,7 @@ const FEED: FeedEvent[] = [
     actor: "Jordan Park",
     action: "approved an order",
     detail: "W1052 · $399",
-    tint: "bg-mint dark:bg-mint",
+    tint: "bg-teal-400",
     icon: HandbagIcon,
   },
 ]
@@ -145,7 +145,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -173,7 +173,7 @@ function LiveDot() {
 
   return (
     <AnimatedView
-      className="size-1.75 rounded-full bg-green"
+      className="size-1.75 rounded-full bg-green-500"
       style={animatedStyle}
     />
   )
@@ -187,7 +187,7 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
         .easing(Easing.bezier(0.32, 0.72, 0, 1))
         .reduceMotion(ReduceMotion.System)}
     >
-      {first ? null : <View className="ms-14 h-px bg-separator" />}
+      {first ? null : <View className="ms-14 h-px bg-border" />}
       <View className="min-h-11 flex-row items-center gap-3 px-4 py-2">
         {event.tint ? (
           <Avatar size="sm" className="size-7">
@@ -199,14 +199,14 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
           <View
             className={cn(
               "size-7 shrink-0 items-center justify-center rounded-[7px]",
-              event.warning ? "bg-orange" : "bg-gray"
+              event.warning ? "bg-orange-500" : "bg-zinc-500"
             )}
           >
             {event.icon ? (
               <Icon
                 as={event.icon}
                 weight="bold"
-                className="size-4 text-on-accent"
+                className="size-4 text-primary-foreground"
               />
             ) : null}
           </View>
@@ -216,11 +216,11 @@ function EntryRow({ entry, first }: { entry: Entry; first: boolean }) {
             <Text className="text-sm font-semibold">{event.actor}</Text>
             {` ${event.action}`}
           </Text>
-          <Text numberOfLines={1} className="text-xs text-label-secondary">
+          <Text numberOfLines={1} className="text-xs text-muted-foreground">
             {event.detail}
           </Text>
         </View>
-        <Text className="text-sm text-label-secondary tabular-nums">
+        <Text className="text-sm text-muted-foreground tabular-nums">
           {entry.time}
         </Text>
       </View>
@@ -296,19 +296,19 @@ function LogLive({
               Live activity
             </HeaderLargeTitle>
             <View className="gap-5 px-4 pt-3 pb-8">
-              <View className="flex-row overflow-hidden rounded-xl bg-surface-secondary">
+              <View className="flex-row overflow-hidden rounded-xl bg-muted">
                 {stats.map((stat, index) => (
                   <View
                     key={stat.label}
                     accessible
                     className={cn(
                       "flex-1 px-3 py-3",
-                      index > 0 && "border-s border-separator"
+                      index > 0 && "border-s border-border"
                     )}
                   >
                     <Text
                       numberOfLines={1}
-                      className="text-xs text-label-secondary"
+                      className="text-xs text-muted-foreground"
                     >
                       {stat.label}
                     </Text>
@@ -329,13 +329,13 @@ function LogLive({
                 {running ? (
                   <View className="flex-row items-center gap-1.5">
                     <LiveDot />
-                    <Text className="text-xs text-label-secondary">Live</Text>
+                    <Text className="text-xs text-muted-foreground">Live</Text>
                   </View>
                 ) : null}
               </View>
               <View
                 accessibilityLiveRegion="polite"
-                className="overflow-hidden rounded-2xl bg-surface-secondary"
+                className="overflow-hidden rounded-2xl bg-muted"
               >
                 {entries.map((entry, index) => (
                   <EntryRow key={entry.id} entry={entry} first={index === 0} />

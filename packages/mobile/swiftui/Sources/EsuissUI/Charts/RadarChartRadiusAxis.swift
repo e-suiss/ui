@@ -10,8 +10,8 @@ private let chartData: [(skill: String, thisMonth: Double, lastMonth: Double)] =
 ]
 
 private let chartConfig: ChartConfig = [
-  "thisMonth": .init("This month", color: .green),
-  "lastMonth": .init("Last month", color: .gray),
+  "thisMonth": .init("This month", color: Palette.green500),
+  "lastMonth": .init("Last month", color: EsuissColor.chart5),
 ]
 
 public struct RadarChartRadiusAxis: View {

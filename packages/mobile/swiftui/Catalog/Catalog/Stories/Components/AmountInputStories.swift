@@ -66,7 +66,7 @@ private struct AmountInputControlledDemo: View {
       .environment(\.locale, Locale(identifier: "en-US"))
       Text(verbatim: "value \"\(value)\" · amount \(amountText)")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     .frame(maxWidth: .infinity)
   }

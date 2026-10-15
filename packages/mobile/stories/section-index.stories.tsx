@@ -78,7 +78,7 @@ function ContactsExample({ className }: { className: string }) {
   return (
     <View className="gap-3">
       <SectionIndex className={className}>
-        <SectionIndexScrollView className="rounded-2xl border border-separator">
+        <SectionIndexScrollView className="rounded-2xl border border-border">
           {groupByLetter().map(([letter, group]) => (
             <SectionIndexSection key={letter} value={letter}>
               <SectionIndexHeader>{letter}</SectionIndexHeader>
@@ -86,7 +86,7 @@ function ContactsExample({ className }: { className: string }) {
                 <Pressable
                   key={name}
                   onPress={() => setLog(`Opened ${name}`)}
-                  className={`ms-4 me-10 py-3 active:opacity-60 ${index > 0 ? "border-t border-separator" : ""}`}
+                  className={`ms-4 me-10 py-3 active:opacity-60 ${index > 0 ? "border-t border-border" : ""}`}
                 >
                   <Text>{name}</Text>
                 </Pressable>

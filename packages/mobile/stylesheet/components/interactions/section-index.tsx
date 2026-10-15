@@ -88,11 +88,11 @@ function SectionIndexHeader({
   return (
     <View
       role="heading"
-      style={[styles.header, { backgroundColor: colors.surface }, style]}
+      style={[styles.header, { backgroundColor: colors.background }, style]}
       {...props}
     >
       {typeof children === "string" || typeof children === "number" ? (
-        <Text style={[styles.headerText, { color: colors.labelSecondary }]}>
+        <Text style={[styles.headerText, { color: colors.mutedForeground }]}>
           {children}
         </Text>
       ) : (
@@ -117,7 +117,7 @@ function SectionIndexBar({
           <>
             {state.items.map((item) => (
               <View key={item.key} style={styles.letter}>
-                <Text style={[styles.letterText, { color: colors.link }]}>
+                <Text style={[styles.letterText, { color: colors.primary }]}>
                   {item.label}
                 </Text>
               </View>
@@ -134,12 +134,12 @@ function SectionIndexBar({
                   styles.bubble,
                   {
                     top: state.dragY - 28,
-                    backgroundColor: colors.surfaceRaised,
-                    borderColor: colors.separator,
+                    backgroundColor: colors.popover,
+                    borderColor: colors.border,
                   },
                 ]}
               >
-                <Text style={[styles.bubbleText, { color: colors.label }]}>
+                <Text style={[styles.bubbleText, { color: colors.foreground }]}>
                   {state.letter}
                 </Text>
               </AnimatedView>

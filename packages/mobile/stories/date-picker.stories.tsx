@@ -65,7 +65,7 @@ function ControlledExample(args: React.ComponentProps<typeof DatePicker>) {
   return (
     <View className="items-start gap-2">
       <DatePicker {...args} value={value} onValueChange={setValue} />
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         Selected: {value ? value.toDateString() : "none"}
       </Text>
     </View>

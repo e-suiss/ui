@@ -68,7 +68,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Tomorrow's meeting",
     body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.",
     time: "8:40 AM",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
     unread: true,
     starred: false,
   },
@@ -78,7 +78,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Your storage is almost full",
     body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.",
     time: "Yesterday",
-    tint: "bg-blue dark:bg-blue",
+    tint: "bg-blue-500",
     unread: true,
     starred: false,
   },
@@ -88,7 +88,7 @@ const INITIAL_MAIL: Mail[] = [
     subject: "Coast trip photos",
     body: "I added the photos to the shared album. The ones from the boat tour came out great.",
     time: "Yesterday",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
     unread: false,
     starred: true,
   },
@@ -128,10 +128,10 @@ function SenderAvatar({ mail }: { mail: Mail }) {
   return (
     <Avatar size="lg">
       <AvatarFallback
-        className={mail.tint ?? "bg-label dark:bg-label"}
+        className={mail.tint ?? "bg-foreground dark:bg-foreground"}
         accessibilityLabel={mail.from}
       >
-        <Text className={mail.tint ? undefined : "text-surface normal-case"}>
+        <Text className={mail.tint ? undefined : "text-background normal-case"}>
           {mail.tint
             ? mail.from
                 .split(" ")
@@ -183,7 +183,7 @@ function Reader({
 
   return (
     <View className="flex-1">
-      <View className="h-12.5 flex-row items-center justify-end gap-0.5 border-b border-separator">
+      <View className="h-12.5 flex-row items-center justify-end gap-0.5 border-b border-border">
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -202,7 +202,7 @@ function Reader({
               weight={action.active ? "fill" : "regular"}
               className={cn(
                 "size-5",
-                action.active ? "text-orange" : "text-label-secondary"
+                action.active ? "text-orange-500" : "text-muted-foreground"
               )}
             />
           </Button>
@@ -213,11 +213,11 @@ function Reader({
           <SenderAvatar mail={mail} />
           <View className="flex-1">
             <Text className="text-base font-semibold">{mail.from}</Text>
-            <Text className="text-xs text-label-secondary">
+            <Text className="text-xs text-muted-foreground">
               To: Jamie Rivera
             </Text>
           </View>
-          <Text className="text-xs text-label-secondary">{mail.time}</Text>
+          <Text className="text-xs text-muted-foreground">{mail.time}</Text>
         </View>
         <Text role="heading" className="text-2xl font-semibold">
           {mail.subject}
@@ -227,7 +227,7 @@ function Reader({
       {replying ? (
         <AnimatedView
           entering={ENTERING}
-          className="mt-5.5 gap-2.5 border-t border-separator pt-4.5"
+          className="mt-5.5 gap-2.5 border-t border-border pt-4.5"
         >
           <Textarea
             autoFocus
@@ -279,7 +279,7 @@ function MailRow({
   onArchive: () => void
   onDelete: () => void
 }) {
-  const muted = active ? "text-on-accent" : "text-label-secondary"
+  const muted = active ? "text-primary-foreground" : "text-muted-foreground"
   return (
     <AnimatedView
       entering={FadeInDown.delay(index * 40)
@@ -296,13 +296,13 @@ function MailRow({
                 .filter(Boolean)
                 .join(", ") || undefined
             }
-            className={cn("relative py-2.5 ps-6", active && "bg-accent")}
+            className={cn("relative py-2.5 ps-6", active && "bg-primary")}
           >
             {mail.unread ? (
               <View
                 className={cn(
                   "absolute -start-3.5 top-1.5 size-2 rounded-full",
-                  active ? "bg-on-accent" : "bg-accent"
+                  active ? "bg-primary-foreground" : "bg-primary"
                 )}
               />
             ) : null}
@@ -311,7 +311,7 @@ function MailRow({
                 numberOfLines={1}
                 className={cn(
                   "flex-1 text-sm font-semibold",
-                  active && "text-on-accent"
+                  active && "text-primary-foreground"
                 )}
               >
                 {mail.from}
@@ -322,7 +322,7 @@ function MailRow({
                   weight="fill"
                   className={cn(
                     "size-3",
-                    active ? "text-on-accent" : "text-orange"
+                    active ? "text-primary-foreground" : "text-orange-500"
                   )}
                 />
               ) : null}
@@ -330,7 +330,7 @@ function MailRow({
             </View>
             <Text
               numberOfLines={1}
-              className={cn("text-sm", active && "text-on-accent")}
+              className={cn("text-sm", active && "text-primary-foreground")}
             >
               {mail.subject}
             </Text>
@@ -412,7 +412,7 @@ function InboxMail({
       >
         <SplitViewSidebar
           title="Mailboxes"
-          className={wide ? "min-h-full bg-surface-secondary" : "px-4 pb-8"}
+          className={wide ? "min-h-full bg-muted" : "px-4 pb-8"}
         >
           {MAILBOXES.map((box) => (
             <SplitViewItem
@@ -423,13 +423,13 @@ function InboxMail({
                 onMailboxChange?.(box.value)
               }}
               className={
-                wide && mailbox === box.value ? "bg-control" : undefined
+                wide && mailbox === box.value ? "bg-secondary" : undefined
               }
             >
               <View className="flex-row items-center gap-2.5">
-                <Icon as={box.icon} className="size-5 text-accent" />
+                <Icon as={box.icon} className="size-5 text-primary" />
                 <Text className="flex-1">{box.value}</Text>
-                <Text className="text-xs text-label-secondary tabular-nums">
+                <Text className="text-xs text-muted-foreground tabular-nums">
                   {counts[box.value] ? String(counts[box.value]) : ""}
                 </Text>
               </View>
@@ -449,7 +449,7 @@ function InboxMail({
             {wide ? (
               <View className="flex-1">
                 <Text className="text-lg font-semibold">{mailbox}</Text>
-                <Text className="text-2xs text-label-secondary">
+                <Text className="text-2xs text-muted-foreground">
                   {unread ? `${unread} unread` : "All read"}
                 </Text>
               </View>
@@ -460,7 +460,7 @@ function InboxMail({
               accessibilityLabel="New message"
               onPress={onNewMessage}
             >
-              <Icon as={NotePencilIcon} className="size-5 text-accent" />
+              <Icon as={NotePencilIcon} className="size-5 text-primary" />
             </Button>
           </View>
           <InputGroup className={cn("h-9 rounded-[0.625rem]", wide && "mx-1")}>
@@ -468,7 +468,7 @@ function InboxMail({
               <Icon
                 as={MagnifyingGlassIcon}
                 weight="bold"
-                className="size-4 text-label-secondary"
+                className="size-4 text-muted-foreground"
               />
             </InputGroupAddon>
             <InputGroupInput
@@ -504,7 +504,7 @@ function InboxMail({
                 />
               ))
             ) : (
-              <Text className="p-6 text-center text-sm text-label-secondary">
+              <Text className="p-6 text-center text-sm text-muted-foreground">
                 No Results
               </Text>
             )}
@@ -530,7 +530,7 @@ function InboxMail({
             />
           ) : (
             <View className="flex-1 items-center justify-center py-20">
-              <Text className="text-label-secondary">No Message Selected</Text>
+              <Text className="text-muted-foreground">No Message Selected</Text>
             </View>
           )}
         </SplitViewDetail>

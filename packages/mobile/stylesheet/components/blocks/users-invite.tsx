@@ -31,7 +31,7 @@ import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
 import { Text } from "@/components/ui/text"
-import { fontSize, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, useTheme } from "@/components/ui/theme"
 import { createToastManager, Toaster } from "@/components/ui/toast"
 
 const EMAIL = /.+@.+\..+/
@@ -125,7 +125,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" style={styles.otherTitle}>
         {label}
       </Text>
-      <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+      <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -265,7 +265,7 @@ function InviteForm({
         <View style={styles.footer}>
           <Text
             accessibilityLiveRegion="polite"
-            style={[styles.summary, { color: colors.labelSecondary }]}
+            style={[styles.summary, { color: colors.mutedForeground }]}
           >
             {emails.length
               ? `${emails.length} ${emails.length === 1 ? "person" : "people"} will be invited as ${role}.`
@@ -290,13 +290,13 @@ function InviteForm({
                 {index > 0 ? <ItemSeparator style={styles.separator} /> : null}
                 <Item size="sm">
                   <ItemMedia
-                    style={[styles.media, { backgroundColor: colors.gray }]}
+                    style={[styles.media, { backgroundColor: palette.zinc500 }]}
                   >
                     <Icon
                       as={EnvelopeSimpleIcon}
                       weight="bold"
                       size={16}
-                      color={colors.onAccent}
+                      color={colors.primaryForeground}
                     />
                   </ItemMedia>
                   <ItemContent style={styles.tight}>
@@ -337,7 +337,7 @@ function InviteForm({
             ))}
           </ItemGroup>
         ) : (
-          <Text style={[styles.empty, { color: colors.labelSecondary }]}>
+          <Text style={[styles.empty, { color: colors.mutedForeground }]}>
             No pending invitations.
           </Text>
         )}

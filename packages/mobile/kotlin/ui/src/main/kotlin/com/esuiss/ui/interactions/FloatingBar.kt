@@ -113,7 +113,7 @@ internal fun FloatingBar(
                         slideOutVertically(tween(300, easing = FormEasing)) { it + slide }
                 },
             ) {
-                val background = if (colors.isDark) colors.surfaceSecondary.copy(alpha = 0.75f) else colors.surfaceRaised.copy(alpha = 0.8f)
+                val background = if (colors.isDark) colors.muted.copy(alpha = 0.75f) else colors.card.copy(alpha = 0.8f)
                 Row(
                     modifier = modifier
                         .width(width)
@@ -121,14 +121,14 @@ internal fun FloatingBar(
                         .shadow(Shadows.lg, CircleShape)
                         .clip(CircleShape)
                         .background(background, CircleShape)
-                        .border(1.dp, colors.separator, CircleShape)
+                        .border(1.dp, colors.border, CircleShape)
                         .padding(contentPadding),
                     horizontalArrangement = horizontalArrangement,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CompositionLocalProvider(
-                        LocalContentStyle provides Typography.sm.copy(color = colors.label),
-                        LocalContentColor provides colors.label,
+                        LocalContentStyle provides Typography.sm.copy(color = colors.foreground),
+                        LocalContentColor provides colors.foreground,
                     ) {
                         content()
                     }

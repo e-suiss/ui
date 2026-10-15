@@ -32,6 +32,7 @@ function Slider<
       className={(state) =>
         cn(
           state.orientation === "vertical" ? "h-full" : "w-full",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
@@ -55,17 +56,12 @@ function Slider<
         <SliderPrimitive.Track
           className={(state) =>
             cn(
-              "relative grow overflow-hidden rounded-full",
-              state.disabled ? "bg-control-disabled" : "bg-label-quaternary",
+              "relative grow overflow-hidden rounded-full bg-border",
               state.orientation === "vertical" ? "h-full w-1" : "h-1 w-full"
             )
           }
         >
-          <SliderPrimitive.Indicator
-            className={(state) =>
-              state.disabled ? "bg-accent-disabled" : "bg-accent"
-            }
-          />
+          <SliderPrimitive.Indicator className="bg-primary" />
         </SliderPrimitive.Track>
         {thumbIndexes(value, defaultValue).map((index) => (
           <SliderPrimitive.Thumb
@@ -76,7 +72,7 @@ function Slider<
             }
             className={(state) =>
               cn(
-                "rounded-full border border-label/10 bg-surface shadow-md dark:bg-label",
+                "rounded-full border border-foreground/10 bg-background shadow-md dark:bg-foreground",
                 THUMB_SIZE[
                   state.orientation === "vertical" ? "vertical" : "horizontal"
                 ][state.dragging && state.active ? "active" : "idle"],

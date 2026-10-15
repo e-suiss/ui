@@ -101,7 +101,7 @@ public struct PriceCare: View {
                       .scaledFont(.base, weight: .semibold)
                     Text("Unlimited accidental damage repairs")
                       .scaledFont(.sm)
-                      .foregroundStyle(Color.labelSecondary)
+                      .foregroundStyle(EsuissColor.mutedForeground)
                   }
                   .frame(maxWidth: .infinity, alignment: .leading)
                   Text(verbatim: money(item.price))
@@ -116,7 +116,7 @@ public struct PriceCare: View {
               Toggle(isOn: $theft) {
                 Text("Add theft and loss protection")
                   .scaledFont(.sm)
-                  .foregroundStyle(Color.label)
+                  .foregroundStyle(EsuissColor.foreground)
               }
               .toggleStyle(SwitchStyle())
             }
@@ -131,7 +131,7 @@ public struct PriceCare: View {
             VStack(alignment: .leading, spacing: 0) {
               Text("Total")
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelSecondary)
+                .foregroundStyle(EsuissColor.mutedForeground)
               Text(verbatim: money(total))
                 .scaledFont(.xl, weight: .semibold)
                 .monospacedDigit()
@@ -173,12 +173,12 @@ public struct PriceCare: View {
       Text("Protection against accidents.")
         .scaledTextStyle(.xl2, weight: .semibold)
     }
-    .foregroundStyle(Color.onMedia)
+    .foregroundStyle(Palette.white)
     .fixedSize(horizontal: false, vertical: true)
     .padding(28)
     .frame(maxWidth: .infinity, minHeight: 320, alignment: .bottomLeading)
     .background {
-      Color.media.overlay {
+      Palette.black.overlay {
         ForEach(Self.devices) { item in
           Color.clear.overlay {
             AsyncImage(url: item.image) { phase in
@@ -195,7 +195,7 @@ public struct PriceCare: View {
       }
       .overlay {
         LinearGradient(
-          stops: [.init(color: .clear, location: 0.45), .init(color: Color.media.opacity(0.7), location: 1)],
+          stops: [.init(color: .clear, location: 0.45), .init(color: Palette.black.opacity(0.7), location: 1)],
           startPoint: .top,
           endPoint: .bottom
         )
@@ -224,13 +224,13 @@ private struct PriceCareChoice<Content: View>: View {
       HStack(spacing: 12) {
         content
       }
-      .foregroundStyle(Color.label)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(maxWidth: .infinity, alignment: .leading)
     }
     .padding(.horizontal, 16)
     .padding(.vertical, 14)
     .overlay {
-      shape.strokeBorder(checked ? Color.accent : .separatorStrong, lineWidth: checked ? 2 : 1)
+      shape.strokeBorder(checked ? EsuissColor.primary : EsuissColor.input, lineWidth: checked ? 2 : 1)
     }
     .contentShape(shape)
     .onTapGesture { selection = value }

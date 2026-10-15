@@ -33,20 +33,13 @@ function RadioGroupItem<Value = string>({
       className={(state) =>
         cn(
           "aspect-square size-4 shrink-0 items-center justify-center rounded-full border",
-          state.checked &&
-            state.disabled &&
-            "border-transparent bg-accent-disabled",
-          state.checked &&
-            !state.disabled &&
-            "border-accent bg-accent active:border-accent-pressed active:bg-accent-pressed",
-          !state.checked &&
-            state.disabled &&
-            "border-label/10 bg-control-disabled dark:border-transparent",
-          !(state.checked || state.disabled) &&
-            cn(
-              "border-label/25 bg-surface shadow-xs active:bg-control dark:border-transparent dark:bg-label-quaternary dark:shadow-none",
-              invalid && "border-danger dark:border-danger"
-            ),
+          state.checked
+            ? "border-primary bg-primary"
+            : cn(
+                "border-foreground/25 bg-background shadow-xs dark:border-transparent dark:bg-border dark:shadow-none",
+                invalid && "border-destructive dark:border-destructive"
+              ),
+          state.disabled ? "opacity-50" : "active:opacity-80",
           resolveClassName(className, state)
         )
       }
@@ -54,7 +47,7 @@ function RadioGroupItem<Value = string>({
       {...props}
     >
       <RadioPrimitive.Indicator className="items-center justify-center">
-        <View className="size-2 rounded-full bg-on-accent dark:size-2.5" />
+        <View className="size-2 rounded-full bg-primary-foreground dark:size-2.5" />
       </RadioPrimitive.Indicator>
     </RadioPrimitive.Root>
   )

@@ -127,7 +127,7 @@ private struct SearchPickerControlled: View {
       .accessibilityLabel(Text("Framework"))
       Text(verbatim: "Selected: \(value ?? "none")")
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
   }
 }

@@ -109,7 +109,7 @@ function MessageAvatar({ style, ...props }: ViewProps) {
     <View
       style={[
         styles.avatar,
-        { backgroundColor: colors.surfaceSecondary },
+        { backgroundColor: colors.muted },
         footer && { transform: [{ translateY: -32 }] },
         style,
       ]}
@@ -144,7 +144,7 @@ function MessageMeta({
   const { colors } = useTheme()
   return (
     <TextStyleContext.Provider
-      value={{ ...fontSize.xs, color: colors.labelSecondary }}
+      value={{ ...fontSize.xs, color: colors.mutedForeground }}
     >
       <IconSizeContext.Provider value={14}>
         <View

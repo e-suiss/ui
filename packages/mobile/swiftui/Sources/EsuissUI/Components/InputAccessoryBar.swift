@@ -48,7 +48,7 @@ public struct InputAccessoryBar: View {
       Button(action: onDone) {
         Text(doneLabel)
           .scaledFont(.base, weight: .semibold)
-          .foregroundStyle(Color.link)
+          .foregroundStyle(EsuissColor.primary)
           .padding(.horizontal, 16)
           .frame(minHeight: 44)
           .contentShape(Rectangle())
@@ -58,9 +58,9 @@ public struct InputAccessoryBar: View {
     .padding(.horizontal, 4)
     .frame(height: 44)
     .frame(maxWidth: .infinity)
-    .background(Color.surfaceSecondary)
+    .background(EsuissColor.muted)
     .overlay(alignment: .top) {
-      Color.separator.frame(height: 1)
+      EsuissColor.border.frame(height: 1)
     }
     .accessibilityElement(children: .contain)
   }
@@ -74,7 +74,8 @@ public struct InputAccessoryBar: View {
     .buttonStyle(PressReader { pressed in
       icon
         .frame(width: 18, height: 18)
-        .foregroundStyle(action == nil ? Color.labelQuaternary : pressed ? .labelSecondary : .link)
+        .foregroundStyle(EsuissColor.primary)
+        .opacity(action == nil ? 0.5 : (pressed ? 0.8 : 1))
         .frame(width: 44, height: 44)
         .contentShape(Rectangle())
     })

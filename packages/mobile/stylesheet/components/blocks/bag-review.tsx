@@ -163,7 +163,7 @@ function BagReview({
             ? `Your bag total is ${money(subtotal)}.`
             : "Your bag is empty."}
         </Text>
-        <Text style={[styles.subtitle, { color: colors.labelSecondary }]}>
+        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
           Free delivery and free returns on every order.
         </Text>
         {bag.length === 0 ? (
@@ -188,7 +188,7 @@ function BagReview({
             entering={FadeInDown.duration(700).reduceMotion(
               ReduceMotion.System
             )}
-            style={[styles.row, { borderColor: colors.separator }]}
+            style={[styles.row, { borderColor: colors.border }]}
           >
             <Pressable
               role="link"
@@ -200,7 +200,7 @@ function BagReview({
                 source={{ uri: item.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                style={[styles.image, { backgroundColor: colors.control }]}
+                style={[styles.image, { backgroundColor: colors.secondary }]}
               />
             </Pressable>
             <View style={styles.details}>
@@ -225,7 +225,7 @@ function BagReview({
                 </View>
                 <Text
                   numberOfLines={1}
-                  style={[fontSize.sm, { color: colors.labelSecondary }]}
+                  style={[fontSize.sm, { color: colors.mutedForeground }]}
                 >
                   {item.variant}
                 </Text>
@@ -261,7 +261,7 @@ function BagReview({
                   }}
                   style={styles.remove}
                 >
-                  <Text style={[fontSize.sm, { color: colors.link }]}>
+                  <Text style={[fontSize.sm, { color: colors.primary }]}>
                     Remove
                   </Text>
                 </Button>
@@ -270,7 +270,7 @@ function BagReview({
           </AnimatedView>
         ))}
         {bag.length > 0 ? (
-          <View style={[styles.summary, { borderColor: colors.separator }]}>
+          <View style={[styles.summary, { borderColor: colors.border }]}>
             <View style={styles.line}>
               <Text style={fontSize.base}>Subtotal</Text>
               <Text style={[fontSize.base, styles.tabular]}>
@@ -281,7 +281,7 @@ function BagReview({
               <Text style={fontSize.base}>Shipping</Text>
               <Text style={fontSize.base}>FREE</Text>
             </View>
-            <View style={[styles.totalLine, { borderColor: colors.separator }]}>
+            <View style={[styles.totalLine, { borderColor: colors.border }]}>
               <Text style={styles.total}>Total</Text>
               <Text style={[styles.total, styles.tabular]}>
                 {money(subtotal)}
@@ -299,13 +299,13 @@ function BagReview({
               onPress={() => onCheckout?.("suiss-pay")}
               style={({ pressed }) => ({
                 backgroundColor: pressed
-                  ? withAlpha(colors.label, 0.8)
-                  : colors.label,
+                  ? withAlpha(colors.foreground, 0.8)
+                  : colors.foreground,
               })}
             >
-              <Text style={{ color: colors.surface }}>
+              <Text style={{ color: colors.background }}>
                 Check Out with{" "}
-                <Text style={{ color: colors.surface, fontWeight: "700" }}>
+                <Text style={{ color: colors.background, fontWeight: "700" }}>
                   suiss
                 </Text>{" "}
                 Pay

@@ -74,10 +74,10 @@ fun AlertDialogMedia(
         modifier = modifier
             .padding(bottom = 8.dp)
             .size(64.dp)
-            .background(colors.surfaceSecondary, CircleShape),
+            .background(colors.muted, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        CompositionLocalProvider(LocalIconSize provides 32.dp, LocalContentColor provides colors.label) {
+        CompositionLocalProvider(LocalIconSize provides 32.dp, LocalContentColor provides colors.foreground) {
             content()
         }
     }

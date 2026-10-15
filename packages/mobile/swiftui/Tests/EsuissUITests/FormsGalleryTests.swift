@@ -27,7 +27,7 @@ private struct TypographyGallery: View {
         }
       }
       AspectRatio(ratio: 16 / 9) {
-        LinearGradient(colors: [.accent, .accentSurface], startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(colors: [EsuissColor.primary, Color.adaptive(light: EsuissColor.primary.opacity(0.1), dark: EsuissColor.primary.opacity(0.2))], startPoint: .topLeading, endPoint: .bottomTrailing)
       }
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       HStack(alignment: .center, spacing: 12) {
@@ -202,7 +202,7 @@ final class FormsGalleryTests: XCTestCase {
       let content = view
         .padding(16)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US"))
         .environment(\.colorScheme, scheme)
       let renderer = ImageRenderer(content: content)
@@ -228,7 +228,7 @@ final class FormsGalleryTests: XCTestCase {
       let host = UIHostingController(rootView: view
         .padding(16)
         .frame(width: 402, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let size = host.sizeThatFits(in: CGSize(width: 402, height: CGFloat.greatestFiniteMagnitude))

@@ -19,7 +19,7 @@ import { fontSize, useTheme } from "@/components/ui/theme"
 const chartData = [{ name: "value", value: 64 }]
 
 const chartConfig = {
-  value: { label: "Reading", color: "orange" },
+  value: { label: "Reading", color: "chart-4" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -50,7 +50,7 @@ export function RadialChartProgress() {
         <View>
           <View pointerEvents="none" style={styles.overlay}>
             <Text style={styles.value}>16 / 25</Text>
-            <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+            <Text style={[styles.caption, { color: colors.mutedForeground }]}>
               books · 2026
             </Text>
           </View>

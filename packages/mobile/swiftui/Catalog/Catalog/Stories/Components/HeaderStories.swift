@@ -108,13 +108,13 @@ private struct HeaderMessageRows: View {
       ForEach(Array(headerMessages.enumerated()), id: \.offset) { index, message in
         Text(LocalizedStringKey(message))
           .textStyle(.base)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .lineLimit(1)
           .padding(.vertical, 12)
           .frame(maxWidth: .infinity, alignment: .leading)
           .overlay(alignment: .top) {
             if index > 0 {
-              Color.separator.frame(height: 1)
+              EsuissColor.border.frame(height: 1)
             }
           }
       }

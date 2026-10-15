@@ -76,7 +76,7 @@ private struct RadioGroupDescriptionsDemo: View {
             FieldLabel(plan.label)
             Text(plan.description)
               .textStyle(.sm)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
         }

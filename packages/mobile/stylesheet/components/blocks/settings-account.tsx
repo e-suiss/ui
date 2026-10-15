@@ -38,7 +38,7 @@ import {
 import { Screen } from "@/components/ui/screen"
 import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 const ITEMS: { value: string; label: string; icon: PhosphorIcon }[] = [
   { value: "personal", label: "Personal Information", icon: UserIcon },
@@ -88,14 +88,14 @@ function EditableCard({
   }, [editing, value])
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.surfaceSecondary }]}>
+    <View style={[styles.card, { backgroundColor: colors.muted }]}>
       <View style={styles.cardRow}>
         <View style={styles.cardText}>
           <Text role="heading" style={styles.cardTitle}>
             {title}
           </Text>
           {editing ? null : (
-            <Text style={[fontSize.base, { color: colors.labelSecondary }]}>
+            <Text style={[fontSize.base, { color: colors.mutedForeground }]}>
               {value}
             </Text>
           )}
@@ -108,7 +108,9 @@ function EditableCard({
             accessibilityLabel={`Edit ${title.toLowerCase()}`}
             style={({ pressed }) => pressed && { opacity: 0.6 }}
           >
-            <Text style={[fontSize.base, { color: colors.link }]}>Edit ›</Text>
+            <Text style={[fontSize.base, { color: colors.primary }]}>
+              Edit ›
+            </Text>
           </Pressable>
         )}
       </View>
@@ -127,10 +129,8 @@ function EditableCard({
             style={(state) => [
               styles.input,
               {
-                backgroundColor: colors.surface,
-                borderColor: state.focused
-                  ? colors.focus
-                  : colors.separatorStrong,
+                backgroundColor: colors.background,
+                borderColor: state.focused ? colors.ring : colors.input,
               },
             ]}
           />
@@ -153,7 +153,7 @@ function Security({
 }: {
   onSave?: (field: Editable, value: string) => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const [values, setValues] = React.useState<Record<Editable, string>>({
     email: "jamie@suiss.com",
     phone: "+1 (415) 555-0142",
@@ -173,11 +173,7 @@ function Security({
     { field: "phone", title: "Trusted phone number" },
   ]
 
-  const card = [
-    styles.card,
-    styles.cardRow,
-    { backgroundColor: colors.surfaceSecondary },
-  ]
+  const card = [styles.card, styles.cardRow, { backgroundColor: colors.muted }]
 
   return (
     <View style={{ gap: 14 }}>
@@ -202,7 +198,7 @@ function Security({
           <Text nativeID="settings-account-passkeys" style={styles.cardTitle}>
             Passkeys
           </Text>
-          <Text style={[fontSize.base, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.base, { color: colors.mutedForeground }]}>
             {passkeys ? "On for 3 devices" : "Off"}
           </Text>
         </View>
@@ -217,12 +213,18 @@ function Security({
           <Text role="heading" style={styles.cardTitle}>
             Two-factor authentication
           </Text>
-          <Text style={[fontSize.base, { color: colors.labelSecondary }]}>
+          <Text style={[fontSize.base, { color: colors.mutedForeground }]}>
             Codes are sent to your trusted devices.
           </Text>
         </View>
         <Text
-          style={[fontSize.sm, { fontWeight: "600", color: colors.success }]}
+          style={[
+            fontSize.sm,
+            {
+              fontWeight: "600",
+              color: isDark ? palette.green400 : palette.green600,
+            },
+          ]}
         >
           On
         </Text>
@@ -239,7 +241,7 @@ function Security({
               as={CheckIcon}
               weight="bold"
               size={16}
-              color={colors.success}
+              color={isDark ? palette.green400 : palette.green600}
             />
             <Text style={fontSize.sm}>{saved} saved.</Text>
           </AnimatedView>
@@ -280,7 +282,7 @@ function SettingsAccount({
               {current.value === "security" ? (
                 <Security onSave={onSave} />
               ) : (
-                <Text style={[fontSize.lg, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.lg, { color: colors.mutedForeground }]}>
                   This section isn't part of the sample. Choose Sign-In &
                   Security.
                 </Text>
@@ -291,7 +293,7 @@ function SettingsAccount({
           <>
             <HeaderLargeTitle style={{ gap: 8, paddingBottom: 16 }}>
               <Avatar size="xl" style={{ width: 72, height: 72 }}>
-                <AvatarFallback style={{ backgroundColor: colors.indigo }}>
+                <AvatarFallback style={{ backgroundColor: palette.indigo500 }}>
                   JR
                 </AvatarFallback>
               </Avatar>
@@ -301,7 +303,7 @@ function SettingsAccount({
               >
                 Jamie Rivera
               </Text>
-              <Text style={[fontSize.sm, { color: colors.labelSecondary }]}>
+              <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
                 jamie@suiss.com
               </Text>
             </HeaderLargeTitle>
@@ -318,7 +320,7 @@ function SettingsAccount({
                       style={styles.row}
                     >
                       <ItemMedia>
-                        <Icon as={item.icon} size={20} color={colors.accent} />
+                        <Icon as={item.icon} size={20} color={colors.primary} />
                       </ItemMedia>
                       <ItemContent>
                         <ItemTitle style={{ fontWeight: "400" }}>
@@ -330,7 +332,7 @@ function SettingsAccount({
                           as={CaretRightIcon}
                           weight="bold"
                           size={14}
-                          color={colors.labelTertiary}
+                          color={colors.mutedForeground}
                           style={
                             I18nManager.isRTL
                               ? { transform: [{ rotate: "180deg" }] }

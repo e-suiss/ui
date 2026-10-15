@@ -129,17 +129,12 @@ private struct KeypadFace<Label: View>: View {
 
   var body: some View {
     label()
-      .foregroundStyle(isEnabled ? Color.label : .labelQuaternary)
+      .foregroundStyle(EsuissColor.foreground)
       .frame(width: size, height: size)
-      .background(fill, in: Circle())
+      .background(filled ? EsuissColor.secondary : .clear, in: Circle())
+      .opacity(isEnabled ? (pressed ? 0.8 : 1) : 0.5)
       .contentShape(Circle())
       .animation(.easeOut(duration: 0.12), value: pressed)
-  }
-
-  private var fill: Color {
-    if pressed { return .controlPressed }
-    if !filled { return .clear }
-    return isEnabled ? .control : .controlDisabled
   }
 }
 

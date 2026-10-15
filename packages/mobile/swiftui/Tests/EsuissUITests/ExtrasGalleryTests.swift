@@ -11,7 +11,7 @@ private struct Caption: View {
   var body: some View {
     Text(verbatim: text)
       .font(TextStyle.xs.font(weight: .semibold))
-      .foregroundStyle(Color.labelSecondary)
+      .foregroundStyle(EsuissColor.mutedForeground)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
@@ -220,19 +220,19 @@ private struct ThemeSample: View {
         VStack(alignment: .leading, spacing: 2) {
           Text(verbatim: "theme: \(theme.theme.rawValue)")
             .font(TextStyle.sm.font(weight: .semibold))
-            .foregroundStyle(Color.label)
+            .foregroundStyle(EsuissColor.foreground)
           Text(verbatim: "resolvedTheme: \(theme.resolvedTheme == .dark ? "dark" : "light")")
             .font(TextStyle.sm.font())
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         Spacer(minLength: 0)
         ThemeToggle(showsLabels: false)
       }
     }
     .padding(16)
-    .background(Color.surface, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+    .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     .overlay {
-      RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)
+      RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(EsuissColor.border)
     }
   }
 }
@@ -268,11 +268,11 @@ private struct WeatherContent: View {
   var body: some View {
     WidgetHeader {
       WidgetIcon {
-        Ph.sun.fill.foregroundStyle(Color.warning)
+        Ph.sun.fill.foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
       }
       WidgetTitle(verbatim: "Istanbul")
       WidgetAction {
-        Ph.dotsThree.bold.frame(width: 18, height: 18).foregroundStyle(Color.labelSecondary)
+        Ph.dotsThree.bold.frame(width: 18, height: 18).foregroundStyle(EsuissColor.mutedForeground)
       }
     }
     WidgetContent {
@@ -283,10 +283,10 @@ private struct WeatherContent: View {
       HStack(spacing: 0) {
         ForEach(Array(["Now", "13", "14", "15", "16"].enumerated()), id: \.offset) { index, hour in
           VStack(spacing: 6) {
-            Text(verbatim: hour).font(TextStyle.xs.font()).foregroundStyle(Color.labelSecondary)
+            Text(verbatim: hour).font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
             (index % 2 == 0 ? Ph.sun.fill : Ph.cloudSun.fill)
               .frame(width: 18, height: 18)
-              .foregroundStyle(index % 2 == 0 ? Color.warning : .labelSecondary)
+              .foregroundStyle(index % 2 == 0 ? Color.adaptive(light: Palette.amber600, dark: Palette.amber400) : EsuissColor.mutedForeground)
             Text(verbatim: "\(24 + index % 3)°").font(TextStyle.sm.font(weight: .semibold))
           }
           .frame(maxWidth: .infinity)
@@ -305,21 +305,21 @@ private struct SalesContent: View {
   var body: some View {
     WidgetHeader {
       WidgetIcon(size: .sm) {
-        Ph.cashRegister.fill.foregroundStyle(Color.warning)
+        Ph.cashRegister.fill.foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
       }
-      WidgetTitle(verbatim: "Hestia").foregroundStyle(Color.warning)
+      WidgetTitle(verbatim: "Hestia").foregroundStyle(Color.adaptive(light: Palette.amber600, dark: Palette.amber400))
     }
     WidgetContent {
       WidgetValue(verbatim: "₺18,240")
       Text(verbatim: "Today's revenue · 42 orders")
         .font(TextStyle.xs.font())
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
     }
     if size != .small {
       HStack(alignment: .bottom, spacing: 4) {
         ForEach(Array(hourly.enumerated()), id: \.offset) { _, value in
           RoundedRectangle(cornerRadius: Radius.sm)
-            .fill(value == 100 ? Color.warning : .control)
+            .fill(value == 100 ? Palette.amber500 : EsuissColor.secondary)
             .frame(height: (size == .medium ? 32 : 56) * value / 100)
         }
       }
@@ -383,22 +383,22 @@ private struct IslandRingGallery: View {
       IslandRing(value: 0)
       IslandRing(value: 0.42)
       IslandRing(value: 1)
-      IslandRing(value: 0.62, color: .success)
+      IslandRing(value: 0.62, color: Palette.green500)
     }
     .padding(12)
-    .background(Color.media, in: Capsule())
+    .background(Palette.black, in: Capsule())
   }
 }
 
 private struct CameraPlaceholder: View {
   var body: some View {
     ZStack {
-      LinearGradient(colors: [Color.labelTertiary, Color.labelSecondary], startPoint: .topLeading, endPoint: .bottomTrailing)
+      LinearGradient(colors: [EsuissColor.mutedForeground, EsuissColor.mutedForeground], startPoint: .topLeading, endPoint: .bottomTrailing)
       RoundedRectangle(cornerRadius: Radius.lg)
-        .fill(Color.surfaceTertiary)
+        .fill(EsuissColor.secondary)
         .frame(width: 150, height: 150)
         .overlay {
-          Ph.qrCode.regular.frame(width: 120, height: 120).foregroundStyle(Color.labelSecondary)
+          Ph.qrCode.regular.frame(width: 120, height: 120).foregroundStyle(EsuissColor.mutedForeground)
         }
         .rotationEffect(.degrees(-6))
     }
@@ -489,7 +489,7 @@ private struct SignatureGallery: View {
             .scaledToFit()
             .frame(height: 100)
             .padding(8)
-            .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.lg))
+            .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.lg))
         }
       }
     }
@@ -513,7 +513,7 @@ private struct ProfileCard: View {
   let profile: Profile
 
   var body: some View {
-    let palettes: [(Color, Color)] = [(.accent, .success), (.warning, .danger), (.success, .accent), (.danger, .warning)]
+    let palettes: [(Color, Color)] = [(EsuissColor.primary, Palette.green500), (Palette.amber500, EsuissColor.destructive), (Palette.green500, EsuissColor.primary), (EsuissColor.destructive, Palette.amber500)]
     let pair = palettes[profile.id % palettes.count]
     ZStack(alignment: .bottomLeading) {
       LinearGradient(colors: [pair.0, pair.1], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -524,12 +524,12 @@ private struct ProfileCard: View {
           .font(TextStyle.sm.font())
           .opacity(0.85)
       }
-      .foregroundStyle(Color.onAccent)
+      .foregroundStyle(EsuissColor.primaryForeground)
       .padding(20)
     }
     .clipShape(RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
     .overlay {
-      RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(Color.label.opacity(0.08))
+      RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous).strokeBorder(EsuissColor.foreground.opacity(0.08))
     }
     .shadow(.md)
   }
@@ -581,7 +581,7 @@ final class ExtrasGalleryTests: XCTestCase {
       let renderer = ImageRenderer(content: view
         .padding(padding)
         .frame(width: width, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.colorScheme, scheme)
         .environment(\.locale, Locale(identifier: "en_US")))
       renderer.scale = 3
@@ -600,7 +600,7 @@ final class ExtrasGalleryTests: XCTestCase {
     for scheme in [ColorScheme.light, .dark] {
       let host = UIHostingController(rootView: view()
         .frame(width: width, alignment: .leading)
-        .background(Color.surface)
+        .background(EsuissColor.background)
         .environment(\.locale, Locale(identifier: "en_US")))
       host.safeAreaRegions = []
       let initial = host.sizeThatFits(in: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))

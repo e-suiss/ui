@@ -12,7 +12,7 @@ public struct Skeleton: View {
 
   public var body: some View {
     RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-      .fill(Color.surfaceSecondary)
+      .fill(EsuissColor.muted)
       .opacity(dimmed ? 0.5 : 1)
       .onAppear {
         guard !reduceMotion else { return }

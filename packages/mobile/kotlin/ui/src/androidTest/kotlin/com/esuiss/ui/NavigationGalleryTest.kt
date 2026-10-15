@@ -110,6 +110,7 @@ import com.esuiss.ui.patterns.SplitView
 import com.esuiss.ui.patterns.SplitViewColumn
 import com.esuiss.ui.patterns.SplitViewItem
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import java.io.File
@@ -147,26 +148,26 @@ private class GradientPainter(private val from: Color, private val to: Color, pr
 private fun tones(): List<Pair<Color, Color>> {
     val colors = EsuissTheme.colors
     return listOf(
-        colors.blue to colors.purple,
-        colors.orange to colors.pink,
-        colors.green to colors.teal,
-        colors.indigo to colors.blue,
-        colors.yellow to colors.orange,
-        colors.pink to colors.red,
-        colors.teal to colors.cyan,
-        colors.purple to colors.indigo,
-        colors.mint to colors.green,
+        Palette.blue500 to Palette.purple500,
+        Palette.orange500 to Palette.pink500,
+        Palette.green500 to Palette.teal500,
+        Palette.indigo500 to Palette.blue500,
+        Palette.yellow500 to Palette.orange500,
+        Palette.pink500 to Palette.red500,
+        Palette.teal500 to Palette.cyan500,
+        Palette.purple500 to Palette.indigo500,
+        Palette.teal400 to Palette.green500,
     )
 }
 
 @Composable
 private fun Caption(text: String, modifier: Modifier = Modifier) {
-    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+    BasicText(text, modifier = modifier, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
 }
 
 @Composable
 private fun SectionTitle(text: String) {
-    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.Medium))
+    BasicText(text, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.Medium))
 }
 
 @Composable
@@ -177,7 +178,7 @@ private fun Swatch(tone: Pair<Color, Color>, label: String, modifier: Modifier =
             .background(Brush.linearGradient(listOf(tone.first, tone.second))),
         contentAlignment = Alignment.BottomStart,
     ) {
-        BasicText(label, modifier = Modifier.padding(16.dp), style = Typography.lg.copy(color = EsuissTheme.colors.onAccent, fontWeight = FontWeight.SemiBold))
+        BasicText(label, modifier = Modifier.padding(16.dp), style = Typography.lg.copy(color = EsuissTheme.colors.primaryForeground, fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -273,7 +274,7 @@ private fun TabBarPage() {
             ) {
                 BasicText(
                     mapOf("home" to "Today", "search" to "Discover", "messages" to "Chats", "profile" to "Account").getValue(tab),
-                    style = Typography.xl3.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.Bold),
+                    style = Typography.xl3.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.Bold),
                 )
                 Caption("${tab.replaceFirstChar { it.uppercase() }} tab")
             }
@@ -304,7 +305,7 @@ private fun SectionIndexPage() {
     Screen {
         Column(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
             Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                BasicText("Contacts", modifier = Modifier.weight(1f), style = Typography.xl3.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.Bold))
+                BasicText("Contacts", modifier = Modifier.weight(1f), style = Typography.xl3.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.Bold))
                 Caption(log)
             }
             SectionIndex(
@@ -320,7 +321,7 @@ private fun SectionIndexPage() {
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Avatar(size = AvatarSize.Sm, fallback = { AvatarFallback(names[index].split(" ").joinToString("") { it.take(1) }) })
-                                BasicText(names[index], style = Typography.base.copy(color = EsuissTheme.colors.label))
+                                BasicText(names[index], style = Typography.base.copy(color = EsuissTheme.colors.foreground))
                             }
                         }
                     }
@@ -369,18 +370,18 @@ private fun PreviewPage() {
     Page {
         SectionTitle("Preview")
         Row {
-            BasicText("Made by ", style = Typography.base.copy(color = EsuissTheme.colors.label))
+            BasicText("Made by ", style = Typography.base.copy(color = EsuissTheme.colors.foreground))
             Preview(open = open, onOpenChange = { open = it }) {
                 PreviewTrigger("@esuiss")
                 PreviewContent(modifier = Modifier.testTag("overlay")) {
                     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                         Avatar(size = AvatarSize.Lg, fallback = { AvatarFallback("ES") })
                         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            BasicText("@esuiss", style = Typography.sm.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold))
-                            BasicText("Clean, minimal components for mobile apps.", style = Typography.sm.copy(color = EsuissTheme.colors.label))
+                            BasicText("@esuiss", style = Typography.sm.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold))
+                            BasicText("Clean, minimal components for mobile apps.", style = Typography.sm.copy(color = EsuissTheme.colors.foreground))
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                                Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null, size = 14.dp, tint = EsuissTheme.colors.labelSecondary)
-                                BasicText("Joined October 2026", style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary))
+                                Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null, size = 14.dp, tint = EsuissTheme.colors.mutedForeground)
+                                BasicText("Joined October 2026", style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground))
                             }
                         }
                     }
@@ -416,21 +417,21 @@ private fun MailSplitView(wide: Boolean) {
                     SplitViewSidebar(title = "Mailboxes") {
                         Mailboxes.forEach { name ->
                             SplitViewItem(isActive = mailbox == name, onClick = { mailbox = name }) {
-                                BasicText(name, style = Typography.base.copy(color = EsuissTheme.colors.label))
+                                BasicText(name, style = Typography.base.copy(color = EsuissTheme.colors.foreground))
                             }
                         }
                     }
                     SplitViewList(title = mailbox) {
                         Messages.forEachIndexed { index, (from, subject, _) ->
                             SplitViewItem(isActive = message == index, onClick = { message = index }) {
-                                BasicText(from, style = Typography.base.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.SemiBold))
-                                BasicText(subject, style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
+                                BasicText(from, style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold))
+                                BasicText(subject, style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
                             }
                         }
                     }
                     SplitViewDetail(title = Messages[message].second) {
-                        BasicText("From ${Messages[message].first}", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))
-                        BasicText(Messages[message].third, modifier = Modifier.padding(top = 12.dp), style = Typography.base.copy(color = EsuissTheme.colors.label))
+                        BasicText("From ${Messages[message].first}", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
+                        BasicText(Messages[message].third, modifier = Modifier.padding(top = 12.dp), style = Typography.base.copy(color = EsuissTheme.colors.foreground))
                     }
                 }
                 Caption("Column: ${column.name.lowercase()} · Mailbox: $mailbox", Modifier.padding(16.dp))

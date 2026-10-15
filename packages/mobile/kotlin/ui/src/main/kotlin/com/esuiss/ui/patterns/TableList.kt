@@ -75,9 +75,9 @@ fun <T> TableList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape)
-                    .background(colors.surfaceSecondary, shape)
+                    .background(colors.muted, shape)
                     .padding(horizontal = 16.dp, vertical = 12.dp),
-                style = Typography.base.copy(color = colors.labelSecondary),
+                style = Typography.base.copy(color = colors.mutedForeground),
             )
         } else {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -108,14 +108,14 @@ private fun <T> TableListCells(
     val cell: (TableListColumn<T>) -> @Composable (T) -> Unit = { it.mobileCell ?: it.cell }
     ItemContent {
         if (titleColumn != null) {
-            CompositionLocalProvider(LocalContentStyle provides Typography.base.copy(color = colors.label)) {
+            CompositionLocalProvider(LocalContentStyle provides Typography.base.copy(color = colors.foreground)) {
                 cell(titleColumn)(row)
             }
         }
         if (description.isNotEmpty()) {
             CompositionLocalProvider(
-                LocalContentStyle provides Typography.sm.copy(color = colors.labelSecondary),
-                LocalContentColor provides colors.labelSecondary,
+                LocalContentStyle provides Typography.sm.copy(color = colors.mutedForeground),
+                LocalContentColor provides colors.mutedForeground,
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     description.forEachIndexed { position, column ->
@@ -128,8 +128,8 @@ private fun <T> TableListCells(
     }
     trailing.forEach { column ->
         CompositionLocalProvider(
-            LocalContentStyle provides Typography.base.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
-            LocalContentColor provides colors.labelSecondary,
+            LocalContentStyle provides Typography.base.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
+            LocalContentColor provides colors.mutedForeground,
         ) {
             cell(column)(row)
         }
@@ -141,7 +141,7 @@ fun TableListTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier.semantics { heading() },
-        style = Typography.xl3.copy(color = EsuissTheme.colors.label, fontWeight = FontWeight.Bold),
+        style = Typography.xl3.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.Bold),
     )
 }
 
@@ -153,7 +153,7 @@ fun TableListHeader(text: String, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .semantics { heading() }
             .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground),
     )
 }
 
@@ -164,7 +164,7 @@ fun TableListFooter(text: String, modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary),
+        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground),
     )
 }
 
@@ -187,11 +187,11 @@ fun TableListRow(
         last -> RoundedCornerShape(bottomStart = radius, bottomEnd = radius)
         else -> RectangleShape
     }
-    val separator = colors.separator
+    val separator = colors.border
     ItemFrame(
         modifier = modifier
             .clip(shape)
-            .background(colors.surfaceSecondary, shape)
+            .background(colors.muted, shape)
             .drawWithContent {
                 drawContent()
                 if (!first) {
@@ -233,7 +233,7 @@ fun TableListRowText(
         if (description != null) {
             BasicText(
                 description,
-                style = Typography.sm.copy(color = colors.labelSecondary),
+                style = Typography.sm.copy(color = colors.mutedForeground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -242,7 +242,7 @@ fun TableListRowText(
     if (trailing != null) {
         BasicText(
             trailing,
-            style = Typography.base.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum"),
+            style = Typography.base.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum"),
             maxLines = 1,
         )
     }
@@ -337,7 +337,7 @@ class TableListScope internal constructor() {
                         lazy.item(key = "$prefix:empty:$section", contentType = "table-list-row") {
                             TableListRow(first = true, last = true) {
                                 ItemContent {
-                                    BasicText(block.emptyText, style = Typography.base.copy(color = EsuissTheme.colors.labelSecondary))
+                                    BasicText(block.emptyText, style = Typography.base.copy(color = EsuissTheme.colors.mutedForeground))
                                 }
                             }
                         }

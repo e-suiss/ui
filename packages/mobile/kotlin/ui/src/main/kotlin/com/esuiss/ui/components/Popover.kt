@@ -47,8 +47,8 @@ fun Popover(
         ) {
             CompositionLocalProvider(
                 LocalPaneTitle provides paneTitle,
-                LocalContentStyle provides Typography.base.copy(color = colors.label),
-                LocalContentColor provides colors.label,
+                LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                LocalContentColor provides colors.foreground,
             ) {
                 Column(
                     modifier = modifier
@@ -70,7 +70,7 @@ fun PopoverHeader(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    CompositionLocalProvider(LocalContentStyle provides Typography.sm.copy(color = colors.label)) {
+    CompositionLocalProvider(LocalContentStyle provides Typography.sm.copy(color = colors.foreground)) {
         Column(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(4.dp),

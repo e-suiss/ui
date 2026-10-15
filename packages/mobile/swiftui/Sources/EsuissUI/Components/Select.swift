@@ -68,11 +68,11 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
             .font(TextStyle.base.font())
             .tracking(TextStyle.base.letterSpacing)
             .lineLimit(1)
-            .foregroundStyle(!isEnabled ? Color.labelQuaternary : valueText == nil ? .labelSecondary : .label)
+            .foregroundStyle(valueText == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
             .frame(maxWidth: .infinity, alignment: .leading)
           Ph.caretUpDown.regular
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
             .accessibilityHidden(true)
         }
         .padding(.horizontal, 12)
@@ -80,10 +80,11 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
         .background(background, in: shape)
         .overlay {
           if invalid {
-            shape.strokeBorder(Color.danger)
+            shape.strokeBorder(EsuissColor.destructive)
           }
         }
         .contentShape(shape)
+        .opacity(isEnabled ? 1 : 0.5)
       }
       .buttonStyle(SelectTriggerStyle())
     }
@@ -113,9 +114,8 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
   }
 
   private var background: Color {
-    if !isEnabled { return .controlDisabled }
-    if invalid { return .danger.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return .control
+    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
+    return EsuissColor.secondary
   }
 }
 
@@ -139,7 +139,7 @@ struct SelectPanel<Content: View>: View {
     }
     .font(TextStyle.base.font())
     .tracking(TextStyle.base.letterSpacing)
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .popupSurface(radius: Radius.xl)
     .accessibilityElement(children: .contain)
   }
@@ -180,7 +180,7 @@ public struct SelectItem: View {
         if selected {
           Ph.check.regular
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color.link)
+            .foregroundStyle(EsuissColor.primary)
             .padding(.trailing, 8)
             .accessibilityHidden(true)
         }
@@ -218,7 +218,7 @@ public struct SelectLabel: View {
       Text(title)
         .font(TextStyle.xs.font(weight: .semibold))
         .tracking(TextStyle.xs.letterSpacing)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -235,7 +235,7 @@ public struct SelectSeparator: View {
   public var body: some View {
     if !select.registering {
       Rectangle()
-        .fill(Color.separator)
+        .fill(EsuissColor.border)
         .frame(height: 1)
         .padding(.vertical, 6)
         .padding(.horizontal, -6)

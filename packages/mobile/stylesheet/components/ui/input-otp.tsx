@@ -96,7 +96,7 @@ function InputOTPCaret() {
   return (
     <View pointerEvents="none" style={styles.caretContainer}>
       <Animated.View
-        style={[styles.caret, { backgroundColor: colors.accent }, caretStyle]}
+        style={[styles.caret, { backgroundColor: colors.primary }, caretStyle]}
       />
     </View>
   )
@@ -108,19 +108,15 @@ function InputOTPSlot({
   ...props
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
   const { colors } = useTheme()
-  const { disabled } = OTPFieldPrimitive.useRootContext().state
   const slotStyles = React.useContext(InputOTPSlotStyleContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
       style={(state) => [
         styles.slot,
-        {
-          backgroundColor: state.disabled
-            ? colors.controlDisabled
-            : colors.control,
-        },
-        state.active && [styles.slotActive, { borderColor: colors.accent }],
+        { backgroundColor: colors.secondary },
+        state.disabled && { opacity: 0.5 },
+        state.active && [styles.slotActive, { borderColor: colors.primary }],
         slotStyles?.style,
         typeof style === "function" ? style(state) : style,
       ]}
@@ -132,7 +128,7 @@ function InputOTPSlot({
             style={[
               styles.char,
               {
-                color: disabled ? colors.labelQuaternary : colors.label,
+                color: colors.foreground,
               },
               slotStyles?.textStyle,
             ]}
@@ -170,7 +166,8 @@ function OTPSeparatorIcon() {
     <Icon
       as={MinusIcon}
       size={16}
-      color={disabled ? colors.labelQuaternary : colors.label}
+      color={colors.foreground}
+      style={disabled && { opacity: 0.5 }}
     />
   )
 }

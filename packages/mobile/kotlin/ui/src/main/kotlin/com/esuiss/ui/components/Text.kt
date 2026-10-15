@@ -60,7 +60,7 @@ fun Text(
 ) {
     val colors = EsuissTheme.colors
     val inherited = if (variant == TextVariant.Default) LocalContentStyle.current else TextStyle.Default
-    val resolved = Typography.base.copy(color = colors.label)
+    val resolved = Typography.base.copy(color = colors.foreground)
         .merge(textVariantStyle(variant, colors))
         .merge(inherited)
         .merge(style)
@@ -84,10 +84,10 @@ private fun textVariantStyle(variant: TextVariant, colors: Colors): TextStyle = 
     TextVariant.H4 -> Typography.lg.copy(fontWeight = FontWeight.SemiBold)
     TextVariant.Blockquote -> TextStyle(fontStyle = FontStyle.Italic)
     TextVariant.Code -> Typography.sm.copy(fontFamily = FontFamily.Monospace, fontWeight = FontWeight.SemiBold)
-    TextVariant.Lead -> Typography.lg.copy(color = colors.labelSecondary)
+    TextVariant.Lead -> Typography.lg.copy(color = colors.mutedForeground)
     TextVariant.Large -> Typography.lg.copy(fontWeight = FontWeight.SemiBold)
     TextVariant.Small -> Typography.sm.copy(fontWeight = FontWeight.Medium)
-    TextVariant.Muted -> Typography.sm.copy(color = colors.labelSecondary)
+    TextVariant.Muted -> Typography.sm.copy(color = colors.mutedForeground)
 }
 
 private fun textVariantModifier(variant: TextVariant, colors: Colors): Modifier = when (variant) {
@@ -98,12 +98,12 @@ private fun textVariantModifier(variant: TextVariant, colors: Colors): Modifier 
         .drawBehind {
             val stroke = 2.dp.toPx()
             val x = if (layoutDirection == LayoutDirection.Rtl) size.width - stroke else 0f
-            drawRect(colors.separator, Offset(x, 0f), Size(stroke, size.height))
+            drawRect(colors.border, Offset(x, 0f), Size(stroke, size.height))
         }
         .padding(start = 14.dp)
     TextVariant.Code -> Modifier
         .clip(RoundedCornerShape(Radius.sm))
-        .background(colors.surfaceSecondary)
+        .background(colors.muted)
         .padding(horizontal = 4.dp, vertical = 2.dp)
     else -> Modifier
 }

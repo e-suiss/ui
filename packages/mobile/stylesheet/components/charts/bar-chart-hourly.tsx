@@ -21,7 +21,7 @@ const chartData = [
 ].map((minutes, hour) => ({ hour, minutes }))
 
 const chartConfig = {
-  minutes: { label: "Screen time", color: "blue" },
+  minutes: { label: "Screen time", color: "chart-1" },
 } satisfies ChartConfig
 
 const total = chartData.reduce((sum, item) => sum + item.minutes, 0)
@@ -46,13 +46,13 @@ export function BarChartHourly() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader style={styles.header}>
-        <Text style={[styles.eyebrow, { color: colors.link }]}>
+        <Text style={[styles.eyebrow, { color: colors.primary }]}>
           Screen time
         </Text>
         <Text style={styles.value}>
           {`${Math.floor(total / 60)}h ${total % 60}m`}
         </Text>
-        <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+        <Text style={[styles.caption, { color: colors.mutedForeground }]}>
           Today · hour by hour
         </Text>
       </CardHeader>
@@ -81,7 +81,11 @@ export function BarChartHourly() {
               tickCount={3}
               tickFormatter={(value) => `${value} min`}
             />
-            <ReferenceLine y={average} stroke="green" strokeDasharray="3 3" />
+            <ReferenceLine
+              y={average}
+              stroke="green-500"
+              strokeDasharray="3 3"
+            />
             <ChartTooltip
               cursor={false}
               content={
@@ -98,7 +102,7 @@ export function BarChartHourly() {
             />
             <Bar
               dataKey="minutes"
-              fill="blue"
+              fill="chart-1"
               radius={[3, 3, 0, 0]}
               maxBarSize={8}
             />

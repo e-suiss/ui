@@ -61,7 +61,7 @@ private fun calendarIsWeekend(date: Date): Boolean {
 private fun CalendarFrame(content: @Composable () -> Unit) {
     Box(
         Modifier
-            .border(1.dp, EsuissTheme.colors.separator, RoundedCornerShape(Radius.xl2))
+            .border(1.dp, EsuissTheme.colors.border, RoundedCornerShape(Radius.xl2))
             .padding(1.dp),
     ) {
         content()

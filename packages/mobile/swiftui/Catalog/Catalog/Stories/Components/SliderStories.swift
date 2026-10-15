@@ -50,11 +50,11 @@ private struct SliderControlledDemo: View {
       HStack {
         Text("Brightness")
           .textStyle(.sm, weight: .medium)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Spacer()
         Text(verbatim: "\(Int(value)) / committed \(Int(committed))")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       ValueSlider(value: $value, in: 0...100, step: 1) { editing in
         if !editing { committed = value }
@@ -73,11 +73,11 @@ private struct SliderRangeDemo: View {
       HStack {
         Text("Price")
           .textStyle(.sm, weight: .medium)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
         Spacer()
         Text(verbatim: "$\(Int(value.lowerBound)) – $\(Int(value.upperBound))")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       RangeSlider(value: $value, in: 0...100, step: 5)
         .accessibilityLabel(Text("Price"))

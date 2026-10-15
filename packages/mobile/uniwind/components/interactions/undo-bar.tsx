@@ -94,7 +94,7 @@ function CountdownRing({ progress }: { progress: SharedValue<number> }) {
       style={I18nManager.isRTL ? { transform: [{ scaleX: -1 }] } : undefined}
     >
       <View style={{ width: RING_SIZE, height: RING_SIZE }}>
-        <View className="absolute top-0 left-0 size-full rounded-full border-2 border-separator" />
+        <View className="absolute top-0 left-0 size-full rounded-full border-2 border-border" />
         <View
           className="absolute top-0 overflow-hidden"
           style={{ left: half, width: half, height: RING_SIZE }}
@@ -111,7 +111,7 @@ function CountdownRing({ progress }: { progress: SharedValue<number> }) {
               style={{ width: half, height: RING_SIZE }}
             >
               <View
-                className="rounded-full border-2 border-label-secondary"
+                className="rounded-full border-2 border-muted-foreground"
                 style={{ width: RING_SIZE, height: RING_SIZE }}
               />
             </View>
@@ -130,7 +130,7 @@ function CountdownRing({ progress }: { progress: SharedValue<number> }) {
               style={{ left: half, width: half, height: RING_SIZE }}
             >
               <View
-                className="absolute top-0 rounded-full border-2 border-label-secondary"
+                className="absolute top-0 rounded-full border-2 border-muted-foreground"
                 style={{ left: -half, width: RING_SIZE, height: RING_SIZE }}
               />
             </View>
@@ -250,7 +250,7 @@ function UndoBarProvider({
               role="group"
               accessibilityLiveRegion="polite"
               className={cn(
-                "h-13 w-full flex-row items-center gap-3 rounded-full border border-separator bg-surface-raised ps-4 pe-1 shadow-xl dark:bg-surface-secondary",
+                "h-13 w-full flex-row items-center gap-3 rounded-full border border-border bg-popover ps-4 pe-1 shadow-xl dark:bg-muted",
                 className
               )}
             >

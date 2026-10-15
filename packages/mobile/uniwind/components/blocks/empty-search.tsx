@@ -39,12 +39,12 @@ function EmptySearch() {
         <View
           className={cn(
             "h-13 flex-row items-center gap-2.5 border-b",
-            focused ? "border-accent" : "border-separator-strong"
+            focused ? "border-primary" : "border-input"
           )}
         >
           <Icon
             as={MagnifyingGlassIcon}
-            className="size-5 shrink-0 text-label-secondary"
+            className="size-5 shrink-0 text-muted-foreground"
           />
           <Input
             ref={inputRef}
@@ -67,19 +67,19 @@ function EmptySearch() {
                 setQuery("")
                 inputRef.current?.focus()
               }}
-              className="size-5.5 bg-label-tertiary active:bg-label-secondary"
+              className="size-5.5 bg-muted-foreground active:opacity-80"
             >
               <Icon
                 as={XIcon}
                 weight="bold"
-                className="size-2.75 text-surface"
+                className="size-2.75 text-background"
               />
             </Button>
           ) : null}
         </View>
         {matches.length > 0 ? (
           <View accessibilityLabel="Suggested" className="gap-1">
-            <Text className="mb-1.5 text-xs text-label-secondary">
+            <Text className="mb-1.5 text-xs text-muted-foreground">
               Suggested
             </Text>
             {matches.map((item) => (
@@ -91,7 +91,7 @@ function EmptySearch() {
               >
                 <Icon
                   as={MagnifyingGlassIcon}
-                  className="size-3.5 text-label-tertiary"
+                  className="size-3.5 text-muted-foreground"
                 />
                 <Text className="text-lg">{item}</Text>
               </Pressable>

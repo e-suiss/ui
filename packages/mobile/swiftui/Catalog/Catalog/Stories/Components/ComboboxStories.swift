@@ -23,7 +23,7 @@ enum ComboboxStories {
           .accessibilityLabel(Text("Framework"))
         Text("Search and pick the framework you use.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
     },
     Story("Disabled") {
@@ -36,7 +36,7 @@ enum ComboboxStories {
           .invalid()
         Text("Please select a framework.")
           .textStyle(.sm)
-          .foregroundStyle(Color.danger)
+          .foregroundStyle(EsuissColor.destructive)
       }
     },
   ])

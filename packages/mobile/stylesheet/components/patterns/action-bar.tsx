@@ -142,12 +142,7 @@ function ActionBar({
             style={floating ? undefined : styles.docked}
           >
             <ActionBarContext.Provider value={contextValue}>
-              <View
-                style={[
-                  styles.rows,
-                  { backgroundColor: colors.surfaceSecondary },
-                ]}
-              >
+              <View style={[styles.rows, { backgroundColor: colors.muted }]}>
                 {menus("row")}
               </View>
             </ActionBarContext.Provider>
@@ -194,7 +189,7 @@ function ActionBarMenu({
             styles.row,
             menu.index > 0 && {
               borderTopWidth: 1,
-              borderTopColor: colors.separator,
+              borderTopColor: colors.border,
             },
           ]}
         >
@@ -237,7 +232,7 @@ function ActionBarTrigger({
     <TextStyleContext.Provider
       value={{
         ...fontSize.base,
-        color: disabled ? colors.labelQuaternary : colors.label,
+        color: colors.foreground,
       }}
     >
       <Pressable
@@ -251,6 +246,7 @@ function ActionBarTrigger({
         }}
         style={(state): StyleProp<ViewStyle> => [
           styles.trigger,
+          disabled && { opacity: 0.5 },
           typeof style === "function" ? style(state) : style,
         ]}
         {...props}
@@ -263,7 +259,7 @@ function ActionBarTrigger({
         <Icon
           as={CaretRightIcon}
           size={16}
-          color={colors.labelSecondary}
+          color={colors.mutedForeground}
           style={
             I18nManager.isRTL
               ? { transform: [{ rotate: "180deg" }] }

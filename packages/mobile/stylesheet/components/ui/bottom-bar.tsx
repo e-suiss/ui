@@ -53,8 +53,8 @@ function BottomBar({
   return (
     <AnimatedView
       style={[
-        { backgroundColor: colors.surface },
-        separator && [styles.separator, { borderColor: colors.separator }],
+        { backgroundColor: colors.background },
+        separator && [styles.separator, { borderColor: colors.border }],
         animatedStyle,
         style,
       ]}

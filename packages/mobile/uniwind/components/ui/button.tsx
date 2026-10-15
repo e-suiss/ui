@@ -10,19 +10,17 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-accent active:bg-accent-pressed disabled:bg-accent-disabled",
+        default: "bg-primary active:opacity-80 disabled:opacity-50",
         outline:
-          "border-separator bg-surface active:bg-item-pressed dark:bg-transparent",
-        secondary:
-          "bg-control active:bg-control-pressed disabled:bg-control-disabled",
+          "border-border bg-background active:opacity-80 disabled:opacity-50 dark:bg-transparent",
+        secondary: "bg-secondary active:opacity-80 disabled:opacity-50",
         tinted:
-          "bg-accent-surface active:bg-accent-surface-pressed disabled:bg-accent-surface",
-        ghost: "active:bg-item-pressed",
-        plain: "active:bg-item-pressed",
+          "bg-primary/10 active:opacity-80 disabled:opacity-50 dark:bg-primary/20",
+        ghost: "active:opacity-80 disabled:opacity-50",
+        plain: "active:opacity-80 disabled:opacity-50",
         destructive:
-          "bg-danger-surface active:bg-danger-surface-pressed disabled:bg-danger-surface",
-        link: "",
+          "bg-destructive/10 active:opacity-80 disabled:opacity-50 dark:bg-destructive/20",
+        link: "active:opacity-80 disabled:opacity-50",
       },
       size: {
         default: "h-9 gap-1.5 px-4",
@@ -53,17 +51,17 @@ const buttonVariants = cva(
   }
 )
 
-const buttonTextVariants = cva("text-sm text-label", {
+const buttonTextVariants = cva("text-sm text-foreground", {
   variants: {
     variant: {
-      default: "text-on-accent",
+      default: "text-primary-foreground",
       outline: "",
-      secondary: "",
-      tinted: "text-link",
+      secondary: "text-secondary-foreground",
+      tinted: "text-primary",
       ghost: "",
-      plain: "text-link",
-      destructive: "text-danger",
-      link: "text-link",
+      plain: "text-primary",
+      destructive: "text-destructive",
+      link: "text-primary",
     },
     size: {
       default: "",
@@ -77,27 +75,7 @@ const buttonTextVariants = cva("text-sm text-label", {
       "icon-lg": "",
       "icon-xl": "",
     },
-    disabled: {
-      true: "",
-    },
   },
-  compoundVariants: [
-    {
-      disabled: true,
-      variant: ["outline", "secondary", "ghost", "link"],
-      className: "text-label-quaternary",
-    },
-    {
-      disabled: true,
-      variant: ["tinted", "plain"],
-      className: "text-link/40",
-    },
-    {
-      disabled: true,
-      variant: "destructive",
-      className: "text-danger/40",
-    },
-  ],
   defaultVariants: {
     variant: "default",
     size: "default",
@@ -115,13 +93,10 @@ type ButtonProps = React.ComponentProps<typeof Pressable> &
   VariantProps<typeof buttonVariants>
 
 function Button({ className, variant, size, block, ...props }: ButtonProps) {
-  const disabled = Boolean(props.disabled)
   const groupClassName = React.useContext(ButtonClassContext)
   return (
     <ButtonClassContext.Provider value={undefined}>
-      <TextClassContext.Provider
-        value={buttonTextVariants({ variant, size, disabled })}
-      >
+      <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
         <IconClassContext.Provider
           value={size === "xs" || size === "icon-xs" ? "size-3" : "size-4"}
         >

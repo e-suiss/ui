@@ -1,17 +1,17 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  @Entry var screenBackground: Color = .surface
+  @Entry var screenBackground: Color = EsuissColor.background
 }
 
 public struct Screen<Content: View>: View {
   public enum Background: CaseIterable, Sendable {
-    case surface, surfaceSecondary
+    case background, muted
 
     var color: Color {
       switch self {
-      case .surface: .surface
-      case .surfaceSecondary: .surfaceSecondary
+      case .background: EsuissColor.background
+      case .muted: EsuissColor.muted
       }
     }
   }
@@ -22,7 +22,7 @@ public struct Screen<Content: View>: View {
 
   public init(
     edges: Edge.Set = .all,
-    background: Background = .surface,
+    background: Background = .background,
     @ViewBuilder content: () -> Content
   ) {
     self.edges = edges
@@ -36,7 +36,7 @@ public struct Screen<Content: View>: View {
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     .ignoresSafeArea(.container, edges: Edge.Set.all.subtracting(edges))
-    .foregroundStyle(Color.label)
+    .foregroundStyle(EsuissColor.foreground)
     .background(background.color.ignoresSafeArea())
     .environment(\.screenBackground, background.color)
   }

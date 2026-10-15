@@ -161,7 +161,7 @@ fun LoginAccount(
                 "Sign in with your suiss Account",
                 modifier = Modifier.semantics { heading() },
                 style = Typography.xl3.copy(
-                    color = EsuissTheme.colors.label,
+                    color = EsuissTheme.colors.foreground,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
                 ),
@@ -200,7 +200,7 @@ fun LoginAccount(
                             Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(EsuissTheme.colors.separatorStrong),
+                                .background(EsuissTheme.colors.input),
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             StackInput(
@@ -230,7 +230,7 @@ fun LoginAccount(
                     .padding(top = 10.dp)
                     .heightIn(min = 22.dp)
                     .semantics { liveRegion = LiveRegionMode.Polite },
-                style = Typography.sm.copy(color = EsuissTheme.colors.danger, textAlign = TextAlign.Center),
+                style = Typography.sm.copy(color = EsuissTheme.colors.destructive, textAlign = TextAlign.Center),
             )
             RememberMe(rememberMe) { rememberMe = it }
             Spacer(Modifier.height(40.dp))
@@ -241,7 +241,7 @@ fun LoginAccount(
                 LinkText("Forgot password? ›", onForgotPassword)
                 BasicText(
                     "Don't have a suiss Account?",
-                    style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground, textAlign = TextAlign.Center),
                 )
                 LinkText("Create yours now ›", onCreateAccount)
             }
@@ -280,13 +280,13 @@ private fun FieldStack(
 ) {
     val colors = EsuissTheme.colors
     val shape = RoundedCornerShape(Radius.xl)
-    val fill = if (invalid) colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.surface
+    val fill = if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.background
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(shape)
             .background(fill, shape)
-            .border(1.dp, if (invalid) colors.danger else colors.separatorStrong, shape),
+            .border(1.dp, if (invalid) colors.destructive else colors.input, shape),
         content = content,
     )
 }
@@ -304,7 +304,7 @@ private fun StackInput(
     password: Boolean = false,
 ) {
     val colors = EsuissTheme.colors
-    val style = Typography.lg.copy(color = colors.label)
+    val style = Typography.lg.copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -316,14 +316,14 @@ private fun StackInput(
             },
         textStyle = style,
         singleLine = true,
-        cursorBrush = SolidColor(colors.accent),
+        cursorBrush = SolidColor(colors.primary),
         visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = KeyboardActions(onNext = { onAction() }, onGo = { onAction() }),
         decorationBox = { inner ->
             Box(Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
                 if (value.isEmpty()) {
-                    BasicText(placeholder, style = style.copy(color = colors.labelSecondary), maxLines = 1)
+                    BasicText(placeholder, style = style.copy(color = colors.mutedForeground), maxLines = 1)
                 }
                 inner()
             }
@@ -341,8 +341,14 @@ private fun SubmitArrow(ready: Boolean, busy: Boolean, onClick: () -> Unit) {
         modifier = Modifier
             .padding(end = 10.dp)
             .size(30.dp)
-            .graphicsLayer { alpha = if (pressed) 0.6f else 1f }
-            .border(1.5.dp, if (enabled || busy) colors.labelSecondary else colors.labelQuaternary, CircleShape)
+            .graphicsLayer {
+                alpha = when {
+                    !(ready || busy) -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                }
+            }
+            .border(1.5.dp, colors.mutedForeground, CircleShape)
             .clickable(
                 interactionSource = interaction,
                 indication = null,
@@ -354,13 +360,13 @@ private fun SubmitArrow(ready: Boolean, busy: Boolean, onClick: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         if (busy) {
-            Spinner(size = 14.dp, color = colors.labelSecondary)
+            Spinner(size = 14.dp, color = colors.mutedForeground)
         } else {
             Icon(
                 PhosphorIcons.Bold.ArrowRight,
                 contentDescription = null,
                 size = 14.dp,
-                tint = if (enabled) colors.labelSecondary else colors.labelQuaternary,
+                tint = colors.mutedForeground,
             )
         }
     }
@@ -383,7 +389,7 @@ private fun RememberMe(checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(checked = checked, onCheckedChange = null)
-        BasicText("Remember me", style = Typography.sm.copy(color = EsuissTheme.colors.label))
+        BasicText("Remember me", style = Typography.sm.copy(color = EsuissTheme.colors.foreground))
     }
 }
 
@@ -394,10 +400,10 @@ private fun LinkText(text: String, onClick: () -> Unit, modifier: Modifier = Mod
     BasicText(
         text,
         modifier = modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 4.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link, textAlign = TextAlign.Center),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary, textAlign = TextAlign.Center),
     )
 }
 
@@ -424,12 +430,12 @@ private fun Greeting(email: String, onSignOut: () -> Unit) {
                 Box(
                     Modifier
                         .fillMaxSize()
-                        .background(colors.surfaceSecondary, CircleShape),
+                        .background(colors.muted, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     BasicText(
                         email.take(1),
-                        style = Typography.xl3.copy(color = colors.label),
+                        style = Typography.xl3.copy(color = colors.foreground),
                     )
                 }
             },
@@ -437,9 +443,9 @@ private fun Greeting(email: String, onSignOut: () -> Unit) {
         BasicText(
             "Hello.",
             modifier = Modifier.semantics { heading() },
-            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
         )
-        BasicText(email, style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center))
+        BasicText(email, style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center))
         LinkText("Sign out ›", onSignOut)
     }
 }

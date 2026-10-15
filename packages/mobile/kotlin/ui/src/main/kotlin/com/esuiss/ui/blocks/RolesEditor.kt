@@ -124,10 +124,10 @@ fun RolesEditor(
                 SplitViewList(title = "Roles") {
                     EditorRoles.forEach { name ->
                         SplitViewItem(isActive = name == role, onClick = { role = name }) {
-                            BasicText(name, style = Typography.base.copy(color = colors.label))
+                            BasicText(name, style = Typography.base.copy(color = colors.foreground))
                             BasicText(
                                 "${state.getValue(name).count { it }} permissions",
-                                style = Typography.xs.copy(color = colors.labelSecondary),
+                                style = Typography.xs.copy(color = colors.mutedForeground),
                             )
                         }
                     }
@@ -153,12 +153,12 @@ fun RolesEditor(
                                         BasicText(
                                             role,
                                             modifier = Modifier.semantics { heading() },
-                                            style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                            style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                         )
                                         val members = RoleMembers.getValue(role)
                                         BasicText(
                                             "$members ${if (members == 1) "user has" else "users have"} this role",
-                                            style = Typography.sm.copy(color = colors.labelSecondary),
+                                            style = Typography.sm.copy(color = colors.mutedForeground),
                                         )
                                     }
                                     if (dirty) {
@@ -194,7 +194,7 @@ fun RolesEditor(
                                             modifier = Modifier
                                                 .padding(horizontal = 4.dp)
                                                 .semantics { heading() },
-                                            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                         )
                                         ItemGroup(variant = ItemGroupVariant.Inset) {
                                             group.permissions.forEachIndexed { position, permission ->
@@ -241,11 +241,11 @@ private fun PermissionRow(permission: RolePermission, checked: Boolean, onChecke
         ItemContent {
             BasicText(
                 permission.name,
-                style = Typography.base.copy(color = colors.label),
+                style = Typography.base.copy(color = colors.foreground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            BasicText(permission.description, style = Typography.xs.copy(color = colors.labelSecondary))
+            BasicText(permission.description, style = Typography.xs.copy(color = colors.mutedForeground))
         }
         ItemActions {
             Switch(
@@ -277,7 +277,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

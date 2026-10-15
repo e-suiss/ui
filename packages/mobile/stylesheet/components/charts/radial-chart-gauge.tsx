@@ -19,7 +19,7 @@ import { fontSize, useTheme } from "@/components/ui/theme"
 const chartData = [{ name: "value", value: 38 }]
 
 const chartConfig = {
-  value: { label: "Air quality", color: "green" },
+  value: { label: "Air quality", color: "green-500" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -52,7 +52,7 @@ export function RadialChartGauge() {
         <View>
           <View pointerEvents="none" style={styles.overlay}>
             <Text style={styles.value}>38</Text>
-            <Text style={[styles.caption, { color: colors.labelSecondary }]}>
+            <Text style={[styles.caption, { color: colors.mutedForeground }]}>
               Good
             </Text>
           </View>

@@ -65,7 +65,7 @@ private struct CalendarBordered: ViewModifier {
     content
       .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .overlay {
-        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(Color.separator)
+        RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous).strokeBorder(EsuissColor.border)
       }
   }
 }

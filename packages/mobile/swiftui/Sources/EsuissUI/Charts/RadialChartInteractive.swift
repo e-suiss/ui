@@ -1,9 +1,9 @@
 import SwiftUI
 
 private let rings: [(key: String, label: String, unit: String, goal: Double, color: Color)] = [
-  ("move", "Move", "kcal", 600, .red),
-  ("exercise", "Exercise", "min", 30, .green),
-  ("stand", "Stand", "hr", 12, .cyan),
+  ("move", "Move", "kcal", 600, Palette.red500),
+  ("exercise", "Exercise", "min", 30, Palette.green500),
+  ("stand", "Stand", "hr", 12, Palette.cyan500),
 ]
 
 private let week: [(day: String, values: [Double])] = [
@@ -64,7 +64,7 @@ public struct RadialChartInteractive: View {
           .textStyle(.lg, weight: .semibold)
         Text("This week · pick a day")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .padding(.horizontal, 16)
       CardContent {
@@ -110,12 +110,12 @@ public struct RadialChartInteractive: View {
       VStack(spacing: 6) {
         Text(verbatim: String(week[index].day.prefix(3)))
           .textStyle(.xs, weight: .semibold)
-          .foregroundStyle(active ? Color.label : .labelSecondary)
+          .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
         Rings(values: week[index].values, size: 40, bar: 4)
       }
       .padding(.vertical, 8)
       .frame(maxWidth: .infinity)
-      .background(active ? Color.surface : .clear, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
+      .background(active ? EsuissColor.background : .clear, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
       .contentShape(RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))
     }
     .buttonStyle(.plain)
@@ -142,7 +142,7 @@ public struct RadialChartInteractive: View {
           .foregroundStyle(tint(ring.color))
           Text(verbatim: "\(percent)%\(percent >= 100 ? " · goal met" : "")")
             .textStyle(.xs)
-            .foregroundStyle(Color.labelSecondary)
+            .foregroundStyle(EsuissColor.mutedForeground)
         }
         .accessibilityElement(children: .combine)
       }
@@ -154,7 +154,7 @@ public struct RadialChartInteractive: View {
   private func tint(_ color: Color) -> Color {
     guard colorScheme != .dark else { return color }
     if #available(iOS 18, *) {
-      return color.mix(with: .label, by: 0.45)
+      return color.mix(with: EsuissColor.foreground, by: 0.45)
     }
     return color
   }

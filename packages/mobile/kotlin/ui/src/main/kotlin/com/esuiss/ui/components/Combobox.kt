@@ -68,8 +68,8 @@ import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
 private fun comboboxSelectionColors(colors: Colors) = TextSelectionColors(
-    handleColor = colors.accent,
-    backgroundColor = colors.accent.copy(alpha = 0.3f),
+    handleColor = colors.primary,
+    backgroundColor = colors.primary.copy(alpha = 0.3f),
 )
 
 @Composable
@@ -108,20 +108,21 @@ fun <T> Combobox(
     val visible = if (filtering && query.isNotEmpty()) items.filter { filter(it, query) } else items
     val clearVisible = showClear && (value != null || query.isNotEmpty())
     val shape = RoundedCornerShape(Radius.lg)
-    val foreground = if (isEnabled) colors.label else colors.labelQuaternary
+    val foreground = colors.foreground
 
     Box(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(44.dp)
+                .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid, isEnabled), shape)
+                .background(controlBackground(colors, isInvalid), shape)
                 .border(
                     1.dp,
                     when {
-                        isInvalid -> colors.danger
-                        focused -> colors.focus
+                        isInvalid -> colors.destructive
+                        focused -> colors.ring
                         else -> Color.Transparent
                     },
                     shape,
@@ -152,7 +153,7 @@ fun <T> Combobox(
                     enabled = isEnabled,
                     singleLine = true,
                     textStyle = Typography.base.copy(color = foreground),
-                    cursorBrush = SolidColor(colors.accent),
+                    cursorBrush = SolidColor(colors.primary),
                     interactionSource = interaction,
                     decorationBox = { inner ->
                         Box(contentAlignment = Alignment.CenterStart) {
@@ -160,7 +161,7 @@ fun <T> Combobox(
                                 BasicText(
                                     placeholder,
                                     style = Typography.base.copy(
-                                        color = if (isEnabled) colors.labelSecondary else colors.labelQuaternary,
+                                        color = colors.mutedForeground,
                                     ),
                                     maxLines = 1,
                                 )
@@ -171,12 +172,12 @@ fun <T> Combobox(
                 )
             }
             if (showTrigger && !clearVisible) {
-                ComboboxIconButton(PhosphorIcons.Regular.CaretDown, "Show options", isEnabled, colors.labelSecondary) {
+                ComboboxIconButton(PhosphorIcons.Regular.CaretDown, "Show options", isEnabled, colors.mutedForeground) {
                     expanded = !expanded
                 }
             }
             if (clearVisible) {
-                ComboboxIconButton(PhosphorIcons.Regular.X, "Clear", isEnabled, colors.label) {
+                ComboboxIconButton(PhosphorIcons.Regular.X, "Clear", isEnabled, colors.foreground) {
                     query = ""
                     filtering = false
                     onValueChange(null)
@@ -234,9 +235,10 @@ fun <T> MultiCombobox(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 44.dp)
+                .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid, isEnabled), shape)
-                .border(1.dp, if (isInvalid) colors.danger else Color.Transparent, shape)
+                .background(controlBackground(colors, isInvalid), shape)
+                .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
                 .padding(horizontal = if (hasValue) 6.dp else 12.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
@@ -268,13 +270,13 @@ fun <T> MultiCombobox(
                         },
                     enabled = isEnabled,
                     singleLine = true,
-                    textStyle = Typography.base.copy(color = if (isEnabled) colors.label else colors.labelQuaternary),
-                    cursorBrush = SolidColor(colors.accent),
+                    textStyle = Typography.base.copy(color = colors.foreground),
+                    cursorBrush = SolidColor(colors.primary),
                     interactionSource = interaction,
                     decorationBox = { inner ->
                         Box(contentAlignment = Alignment.CenterStart) {
                             if (query.isEmpty() && !hasValue) {
-                                BasicText(placeholder, style = Typography.base.copy(color = colors.labelSecondary), maxLines = 1)
+                                BasicText(placeholder, style = Typography.base.copy(color = colors.mutedForeground), maxLines = 1)
                             }
                             inner()
                         }
@@ -319,10 +321,10 @@ private fun ComboboxIconButton(
         Box(
             modifier = Modifier
                 .size(24.dp)
-                .background(if (pressed) colors.itemPressed else Color.Transparent, CircleShape),
+                .alpha(if (pressed) 0.8f else 1f),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(icon, contentDescription = null, size = 16.dp, tint = if (enabled) tint else colors.labelQuaternary)
+            Icon(icon, contentDescription = null, size = 16.dp, tint = tint)
         }
     }
 }
@@ -332,11 +334,11 @@ private fun ComboboxChip(text: String, enabled: Boolean, onRemove: () -> Unit) {
     val colors = EsuissTheme.colors
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val foreground = if (enabled) colors.link else colors.labelQuaternary
+    val foreground = colors.primary
     Row(
         modifier = Modifier
             .height(22.dp)
-            .background(if (enabled) colors.accentSurface else colors.controlDisabled, CircleShape)
+            .background(colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f), CircleShape)
             .padding(start = 10.dp, end = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -388,14 +390,14 @@ private fun <T> ComboboxPopup(
                 BasicText(
                     emptyText,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             } else if (groupBy == null) {
                 items.forEach { ComboboxOption(itemText(it), isSelected(it)) { onItemClick(it) } }
             } else {
                 items.groupBy(groupBy).entries.forEachIndexed { index, (label, group) ->
                     if (index > 0) {
-                        MenuSeparatorLine(Modifier, bleed = 6.dp, color = colors.separator)
+                        MenuSeparatorLine(Modifier, bleed = 6.dp, color = colors.border)
                     }
                     BasicText(
                         label,
@@ -403,7 +405,7 @@ private fun <T> ComboboxPopup(
                             .fillMaxWidth()
                             .semantics { heading() }
                             .padding(horizontal = 12.dp, vertical = 10.dp),
-                        style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                     group.forEach { ComboboxOption(itemText(it), isSelected(it)) { onItemClick(it) } }
                 }
@@ -423,7 +425,7 @@ private fun ComboboxOption(text: String, selected: Boolean, onClick: () -> Unit)
             .fillMaxWidth()
             .heightIn(min = 44.dp)
             .clip(shape)
-            .background(if (pressed) colors.itemPressed else Color.Transparent, shape)
+            .alpha(if (pressed) 0.8f else 1f)
             .toggleable(
                 value = selected,
                 interactionSource = interaction,
@@ -437,7 +439,7 @@ private fun ComboboxOption(text: String, selected: Boolean, onClick: () -> Unit)
         BasicText(
             text,
             modifier = Modifier.padding(end = 24.dp, top = 8.dp, bottom = 8.dp),
-            style = Typography.base.copy(color = colors.label),
+            style = Typography.base.copy(color = colors.foreground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -447,7 +449,7 @@ private fun ComboboxOption(text: String, selected: Boolean, onClick: () -> Unit)
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 size = 16.dp,
-                tint = colors.link,
+                tint = colors.primary,
             )
         }
     }

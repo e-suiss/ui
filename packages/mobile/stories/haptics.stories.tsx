@@ -42,8 +42,8 @@ function useLoggingAdapter() {
 
 function HapticLog({ last, count }: { last: string; count: number }) {
   return (
-    <View className="flex-row items-center justify-between rounded-xl bg-surface-secondary px-4 py-3">
-      <Text className="text-sm text-label-secondary">Last haptic</Text>
+    <View className="flex-row items-center justify-between rounded-xl bg-muted px-4 py-3">
+      <Text className="text-sm text-muted-foreground">Last haptic</Text>
       <Text
         role="status"
         accessibilityLiveRegion="polite"
@@ -198,7 +198,7 @@ function ReorderDemo() {
         <ReorderList
           value={value}
           onValueChange={setValue}
-          className="overflow-hidden rounded-2xl border border-separator"
+          className="overflow-hidden rounded-2xl border border-border"
         >
           {value.map((task) => (
             <ReorderListItem key={task} value={task} className="ps-4">

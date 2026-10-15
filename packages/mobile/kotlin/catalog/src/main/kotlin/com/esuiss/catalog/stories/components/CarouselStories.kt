@@ -46,6 +46,7 @@ import com.esuiss.ui.components.Text
 import com.esuiss.ui.components.rememberCarouselState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -70,10 +71,10 @@ private val carouselSlides = listOf(1, 2, 3, 4, 5)
 private class CarouselPick(val eyebrow: String, val title: String, val tint: (Colors) -> Color)
 
 private val carouselPicks = listOf(
-    CarouselPick("Today's pick", "Weekend breakfast") { it.orange },
-    CarouselPick("New", "Grilled meatballs") { it.red },
-    CarouselPick("Chef's special", "Lentil soup") { it.teal },
-    CarouselPick("Dessert", "Künefe") { it.purple },
+    CarouselPick("Today's pick", "Weekend breakfast") { Palette.orange500 },
+    CarouselPick("New", "Grilled meatballs") { Palette.red500 },
+    CarouselPick("Chef's special", "Lentil soup") { Palette.teal500 },
+    CarouselPick("Dessert", "Künefe") { Palette.purple500 },
 )
 
 private val carouselFeatures = listOf(
@@ -168,11 +169,11 @@ private fun CarouselPickCard(pick: CarouselPick) {
     ) {
         Text(
             pick.eyebrow.uppercase(),
-            style = Typography.xs.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+            style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
         )
         Text(
             pick.title,
-            style = Typography.xl2.copy(color = colors.onAccent, fontWeight = FontWeight.Bold),
+            style = Typography.xl2.copy(color = colors.primaryForeground, fontWeight = FontWeight.Bold),
         )
     }
 }
@@ -218,13 +219,13 @@ private fun CarouselFeatureCard(title: String) {
             .fillMaxWidth()
             .aspectRatio(10f / 7f)
             .clip(RoundedCornerShape(Radius.xl3))
-            .background(colors.surfaceSecondary)
+            .background(colors.muted)
             .padding(32.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text("Hestia POS", style = Typography.xl3.copy(fontWeight = FontWeight.Bold))
-        Text(title, style = Typography.base.copy(color = colors.labelSecondary), textAlign = TextAlign.Center)
+        Text(title, style = Typography.base.copy(color = colors.mutedForeground), textAlign = TextAlign.Center)
     }
 }
 

@@ -86,7 +86,7 @@ public struct SignaturePad: View {
     _ strokes: [SignatureStroke],
     size: CGSize,
     strokeWidth: CGFloat = 2.5,
-    color: Color = .label,
+    color: Color = EsuissColor.foreground,
     colorScheme: ColorScheme = .light,
     scale: CGFloat = 3
   ) -> UIImage? {
@@ -115,16 +115,16 @@ public struct SignaturePad: View {
           HStack(alignment: .lastTextBaseline, spacing: 8) {
             Ph.x.bold
               .frame(width: 14, height: 14)
-              .foregroundStyle(Color.labelTertiary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             if empty {
               placeholder
                 .scaledFont(.sm)
-                .foregroundStyle(Color.labelTertiary)
+                .foregroundStyle(EsuissColor.mutedForeground)
                 .transition(.opacity)
             }
           }
           Rectangle()
-            .fill(Color.separatorStrong)
+            .fill(EsuissColor.input)
             .frame(height: 1)
         }
         .padding(.horizontal, 20)
@@ -139,9 +139,9 @@ public struct SignaturePad: View {
       .gesture(drawGesture(size: size), including: isEnabled ? .all : .subviews)
     }
     .frame(minHeight: 160)
-    .background(Color.surfaceSecondary, in: shape)
+    .background(EsuissColor.muted, in: shape)
     .overlay {
-      shape.strokeBorder(invalid ? Color.danger : .separator, lineWidth: 1)
+      shape.strokeBorder(invalid ? EsuissColor.destructive : EsuissColor.border, lineWidth: 1)
     }
     .overlay(alignment: .topTrailing) {
       if clearable && !value.isEmpty && isEnabled {
@@ -171,9 +171,9 @@ public struct SignaturePad: View {
       for stroke in committed + [SignatureStroke(active)] where !stroke.points.isEmpty {
         let path = SignatureMath.path(for: stroke.points, strokeWidth: width)
         if stroke.points.count == 1 {
-          context.fill(path, with: .color(Color.label))
+          context.fill(path, with: .color(EsuissColor.foreground))
         } else {
-          context.stroke(path, with: .color(Color.label), style: style)
+          context.stroke(path, with: .color(EsuissColor.foreground), style: style)
         }
       }
     }

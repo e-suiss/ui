@@ -212,20 +212,21 @@ public struct OtpAutofillSuggestion: View {
           VStack(spacing: 0) {
             Text(source)
               .scaledFont(.xs2)
-              .foregroundStyle(Color.labelSecondary)
+              .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: code)
               .scaledFont(.base, weight: .semibold)
               .tracking(1.2)
               .monospacedDigit()
-              .foregroundStyle(Color.label)
+              .foregroundStyle(EsuissColor.foreground)
           }
           .frame(maxWidth: .infinity, minHeight: 44)
           .padding(.vertical, 6)
-          .background(pressed ? Color.itemPressed : Color.surfaceSecondary.opacity(0.85))
+          .background(EsuissColor.muted.opacity(0.85))
           .background(.ultraThinMaterial)
           .overlay(alignment: .top) {
-            Color.separator.frame(height: 1)
+            EsuissColor.border.frame(height: 1)
           }
+          .opacity(pressed ? 0.8 : 1)
           .contentShape(Rectangle())
         })
         .accessibilityLabel(Text(source))

@@ -36,6 +36,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -287,9 +288,9 @@ fun OtpAutofillScope.OtpAutofillSuggestion(
                 modifier = modifier
                     .width(with(density) { container.width.toDp() })
                     .heightIn(min = 44.dp)
-                    .background(colors.surfaceSecondary)
-                    .background(if (pressed) colors.itemPressed else Color.Transparent)
-                    .drawBehind { drawRect(colors.separator, Offset.Zero, Size(size.width, 1.dp.toPx())) }
+                    .background(colors.muted)
+                    .alpha(if (pressed) 0.8f else 1f)
+                    .drawBehind { drawRect(colors.border, Offset.Zero, Size(size.width, 1.dp.toPx())) }
                     .clickable(
                         interactionSource = interaction,
                         indication = null,
@@ -300,11 +301,11 @@ fun OtpAutofillScope.OtpAutofillSuggestion(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                BasicText(source, style = Typography.xs.copy(color = colors.labelSecondary))
+                BasicText(source, style = Typography.xs.copy(color = colors.mutedForeground))
                 BasicText(
                     shown,
                     style = Typography.base.copy(
-                        color = colors.label,
+                        color = colors.foreground,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.05.em,
                         fontFeatureSettings = "tnum",

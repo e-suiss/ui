@@ -42,8 +42,8 @@ private struct Illustration: View {
   var body: some View {
     icon
       .frame(width: 80, height: 80)
-      .foregroundStyle(Color.green)
+      .foregroundStyle(Palette.green500)
       .frame(width: 160, height: 160)
-      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
+      .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl3, style: .continuous))
   }
 }

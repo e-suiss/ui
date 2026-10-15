@@ -31,7 +31,7 @@ function Spinner({
       ]}
     >
       <ActivityIndicator
-        color={color ?? colors.labelSecondary}
+        color={color ?? colors.mutedForeground}
         size="small"
         style={{ transform: [{ scale: size / NATIVE_SIZE }] }}
         {...props}

@@ -114,7 +114,7 @@ private fun UndoBarNoteText(note: UndoBarNote, modifier: Modifier = Modifier) {
         )
         Text(
             note.preview,
-            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -130,11 +130,11 @@ private fun UndoBarFrame(notes: UndoBarNotes, row: @Composable (UndoBarNote) -> 
             Modifier
                 .fillMaxWidth()
                 .clip(shape)
-                .border(1.dp, colors.separator, shape),
+                .border(1.dp, colors.border, shape),
         ) {
             notes.notes.forEachIndexed { index, note ->
                 key(note.id) {
-                    if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))
+                    if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
                     row(note)
                 }
             }
@@ -142,7 +142,7 @@ private fun UndoBarFrame(notes: UndoBarNotes, row: @Composable (UndoBarNote) -> 
         Text(
             notes.log,
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
         )
     }
 }
@@ -184,7 +184,7 @@ private fun UndoBarSwipeNotesList(state: UndoBarState) {
                     fullSwipe = true,
                 ),
             ),
-            background = EsuissTheme.colors.surface,
+            background = EsuissTheme.colors.background,
         ) {
             UndoBarNoteText(note, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp))
         }

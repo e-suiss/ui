@@ -11,7 +11,7 @@ private let chartData: [(month: String, desktop: Double, mobile: Double)] = [
 ]
 
 private let chartConfig: ChartConfig = [
-  "desktop": .init("Desktop", color: .blue),
+  "desktop": .init("Desktop", color: EsuissColor.chart1),
 ]
 
 public struct BarChartLabeled: View {
@@ -33,7 +33,7 @@ public struct BarChartLabeled: View {
                   .annotation(position: .top, spacing: 8) {
                     Text(chartData[index].desktop, format: .number)
                       .font(TextStyle.xs2.font(weight: .semibold))
-                      .foregroundStyle(Color.label)
+                      .foregroundStyle(EsuissColor.foreground)
                       .opacity(progress < 1 ? 0 : 1)
                   }
                 ChartAnchorMark(x: .value("Month", chartData[index].month), y: .value("Desktop", chartData[index].desktop))

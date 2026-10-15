@@ -17,10 +17,10 @@ enum ContextActionsStories {
           Text("Long press")
             .textStyle(.sm)
         }
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .frame(maxWidth: .infinity)
         .frame(height: 160)
-        .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+        .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Photo"))
       }
@@ -32,10 +32,10 @@ enum ContextActionsStories {
       } label: {
         Text("Hold this message")
           .textStyle(.base)
-          .foregroundStyle(Color.label)
+          .foregroundStyle(EsuissColor.foreground)
           .padding(.horizontal, 12)
           .padding(.vertical, 8)
-          .background(Color.control, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+          .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
       }
     },
   ])

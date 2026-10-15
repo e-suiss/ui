@@ -13,6 +13,14 @@ import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 import { fontSize, radius, useTheme } from "@/components/ui/theme"
 
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith("#") || color.length !== 7) return color
+  const r = Number.parseInt(color.slice(1, 3), 16)
+  const g = Number.parseInt(color.slice(3, 5), 16)
+  const b = Number.parseInt(color.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 type PermissionPrimerBenefit = {
   icon: PhosphorIcon
   title: string
@@ -89,18 +97,23 @@ function PermissionPrimer({
   onAllow?: () => void
   onDismiss?: () => void
 }) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   return (
     <Screen>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.intro}>
-          <View style={[styles.tile, { backgroundColor: colors.accent }]}>
-            <Icon as={icon} weight="fill" size={40} color={colors.onAccent} />
+          <View style={[styles.tile, { backgroundColor: colors.primary }]}>
+            <Icon
+              as={icon}
+              weight="fill"
+              size={40}
+              color={colors.primaryForeground}
+            />
           </View>
           <Text role="heading" style={styles.title}>
             {title}
           </Text>
-          <Text style={[styles.description, { color: colors.labelSecondary }]}>
+          <Text style={[styles.description, { color: colors.mutedForeground }]}>
             {description}
           </Text>
         </View>
@@ -110,17 +123,22 @@ function PermissionPrimer({
               <View
                 style={[
                   styles.badge,
-                  { backgroundColor: colors.accentSurface },
+                  {
+                    backgroundColor: withAlpha(
+                      colors.primary,
+                      isDark ? 0.2 : 0.1
+                    ),
+                  },
                 ]}
               >
-                <Icon as={benefit.icon} size={22} color={colors.accent} />
+                <Icon as={benefit.icon} size={22} color={colors.primary} />
               </View>
               <View style={styles.text}>
                 <Text style={styles.benefitTitle}>{benefit.title}</Text>
                 <Text
                   style={[
                     styles.benefitDescription,
-                    { color: colors.labelSecondary },
+                    { color: colors.mutedForeground },
                   ]}
                 >
                   {benefit.description}

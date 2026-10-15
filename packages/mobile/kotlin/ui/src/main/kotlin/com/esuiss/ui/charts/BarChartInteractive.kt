@@ -47,6 +47,7 @@ import com.esuiss.ui.components.ToggleGroup
 import com.esuiss.ui.components.ToggleGroupItem
 import com.esuiss.ui.components.ToggleSize
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 import kotlin.math.abs
@@ -81,9 +82,9 @@ private val apps = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "social" to ChartConfigItem("Social") { blue },
-    "productivity" to ChartConfigItem("Productivity") { cyan },
-    "entertainment" to ChartConfigItem("Entertainment") { orange },
+    "social" to ChartConfigItem("Social") { chart1 },
+    "productivity" to ChartConfigItem("Productivity") { Palette.cyan500 },
+    "entertainment" to ChartConfigItem("Entertainment") { chart4 },
 )
 
 private class UsageRow(val label: String, val values: Map<String, Double>)
@@ -143,8 +144,8 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
     } else {
         "${(abs(headline / average - 1) * 100).roundToInt()}% ${if (headline > average) "above" else "below"} average"
     }
-    val swatch = { key: String -> chartConfig[key]?.color?.invoke(colors) ?: colors.labelSecondary }
-    val value = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
+    val swatch = { key: String -> chartConfig[key]?.color?.invoke(colors) ?: colors.mutedForeground }
+    val value = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum")
     Card(modifier, variant = CardVariant.Filled, size = CardSize.Sm) {
         CardContent {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -154,13 +155,13 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                 ) {
                     BasicText(
                         selected?.let { days[it] } ?: "Daily average",
-                        style = Typography.sm.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.sm.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                     BasicText(
                         formatMinutes(headline),
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
-                    BasicText(comparison, style = Typography.sm.copy(color = colors.labelSecondary))
+                    BasicText(comparison, style = Typography.sm.copy(color = colors.mutedForeground))
                 }
                 ToggleGroup(
                     value = view,
@@ -203,7 +204,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                 ticks = listOf(0.0, 120.0, 240.0, 360.0),
                                 tickFormatter = { "${(it / 60).toInt()}h" },
                             )
-                            ReferenceLine(average, stroke = colors.green, strokeDasharray = listOf(3f, 3f))
+                            ReferenceLine(average, stroke = Palette.green500, strokeDasharray = listOf(3f, 3f))
                         } else {
                             XAxis(label = { it.label }, tickMargin = 8.dp, interval = 0, ticks = listOf(0, 6, 12, 18), tickFormatter = { "$it:00" })
                             YAxis(orientation = ChartAxisOrientation.Right, tickMargin = 6.dp, tickCount = 4, tickFormatter = { "${it.toInt()}m" })
@@ -213,7 +214,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                 labelFormatter = { label, _ ->
                                     BasicText(
                                         if (isWeek) days.first { it.startsWith(label) } else "$label:00 – ${label.toInt() + 1}:00",
-                                        style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                                        style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                                     )
                                 },
                                 formatter = { item ->
@@ -230,11 +231,11 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                         BasicText(
                                             chartConfig[item.key]?.label ?: item.key,
                                             Modifier.weight(1f),
-                                            style = Typography.xs.copy(color = colors.labelSecondary),
+                                            style = Typography.xs.copy(color = colors.mutedForeground),
                                         )
                                         BasicText(
                                             formatMinutes(item.value),
-                                            style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                            style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                         )
                                     }
                                 },
@@ -268,7 +269,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                 )
                                 BasicText(
                                     chartConfig[category]?.label ?: category,
-                                    style = Typography.sm.copy(color = colors.labelSecondary),
+                                    style = Typography.sm.copy(color = colors.mutedForeground),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                 )
@@ -281,7 +282,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                     BasicText(
                         "MOST USED",
                         Modifier.padding(bottom = 4.dp),
-                        style = Typography.xs.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                     for ((app, minutes) in usage) {
                         Separator()
@@ -296,7 +297,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                             BasicText(
                                 app.name,
                                 Modifier.width(96.dp),
-                                style = Typography.base.copy(color = colors.label),
+                                style = Typography.base.copy(color = colors.foreground),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
@@ -304,7 +305,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                                 Modifier
                                     .weight(1f)
                                     .height(6.dp)
-                                    .background(colors.control, CircleShape),
+                                    .background(colors.secondary, CircleShape),
                             ) {
                                 Box(
                                     Modifier
@@ -316,7 +317,7 @@ fun BarChartInteractive(modifier: Modifier = Modifier) {
                             BasicText(
                                 formatMinutes(minutes),
                                 Modifier.width(72.dp),
-                                style = Typography.sm.copy(color = colors.labelSecondary, fontFeatureSettings = "tnum", textAlign = TextAlign.End),
+                                style = Typography.sm.copy(color = colors.mutedForeground, fontFeatureSettings = "tnum", textAlign = TextAlign.End),
                             )
                         }
                     }

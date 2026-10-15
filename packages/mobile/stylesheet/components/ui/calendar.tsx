@@ -29,6 +29,14 @@ import {
   useTheme,
 } from "@/components/ui/theme"
 
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith("#") || color.length !== 7) return color
+  const r = Number.parseInt(color.slice(1, 3), 16)
+  const g = Number.parseInt(color.slice(3, 5), 16)
+  const b = Number.parseInt(color.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 type CalendarSize = "sm" | "default" | "lg"
 
 type CaptionLayout = "label" | "dropdown" | "dropdown-months" | "dropdown-years"
@@ -161,7 +169,7 @@ function CalendarCaption({
   const captionText = [
     styles.captionText,
     CAPTION_TEXT[size],
-    { color: colors.label },
+    { color: colors.foreground },
   ]
 
   if (captionLayout === "label") {
@@ -234,8 +242,6 @@ function CalendarNav({
   buttonVariant: ButtonProps["variant"]
 }) {
   const { size } = React.useContext(CalendarContext)
-  const { colors } = useTheme()
-  const calendar = CalendarPrimitive.useRootContext()
   const rtl = I18nManager.isRTL
   const buttonStyle = [
     styles.navButton,
@@ -248,22 +254,14 @@ function CalendarNav({
           <Button variant={buttonVariant} size="icon" style={buttonStyle} />
         }
       >
-        <Icon
-          as={rtl ? CaretRightIcon : CaretLeftIcon}
-          size={16}
-          color={calendar.previousMonth ? undefined : colors.labelQuaternary}
-        />
+        <Icon as={rtl ? CaretRightIcon : CaretLeftIcon} size={16} />
       </CalendarPrimitive.Previous>
       <CalendarPrimitive.Next
         render={
           <Button variant={buttonVariant} size="icon" style={buttonStyle} />
         }
       >
-        <Icon
-          as={rtl ? CaretLeftIcon : CaretRightIcon}
-          size={16}
-          color={calendar.nextMonth ? undefined : colors.labelQuaternary}
-        />
+        <Icon as={rtl ? CaretLeftIcon : CaretRightIcon} size={16} />
       </CalendarPrimitive.Next>
     </View>
   )
@@ -272,7 +270,7 @@ function CalendarNav({
 function dayColors(
   modifiers: CalendarPrimitive.DayModifiers,
   colors: ThemeColors,
-  pressed: boolean
+  isDark: boolean
 ) {
   const single =
     modifiers.selected &&
@@ -281,17 +279,14 @@ function dayColors(
     !modifiers.rangeMiddle
   const filled =
     (single && modifiers.today) || modifiers.rangeStart || modifiers.rangeEnd
-  let text = colors.label
-  if (modifiers.outside) text = colors.labelSecondary
-  if (modifiers.today || single) text = colors.link
-  if (modifiers.rangeMiddle) text = colors.label
-  if (filled) text = colors.onAccent
-  if (modifiers.disabled) text = colors.labelQuaternary
-  let background = pressed ? colors.itemPressed : "transparent"
-  if (single) {
-    background = pressed ? colors.accentSurfacePressed : colors.accentSurface
-  }
-  if (filled) background = pressed ? colors.accentPressed : colors.accent
+  let text = colors.foreground
+  if (modifiers.outside) text = colors.mutedForeground
+  if (modifiers.today || single) text = colors.primary
+  if (modifiers.rangeMiddle) text = colors.foreground
+  if (filled) text = colors.primaryForeground
+  let background = "transparent"
+  if (single) background = withAlpha(colors.primary, isDark ? 0.2 : 0.1)
+  if (filled) background = colors.primary
   return {
     text,
     background,
@@ -306,9 +301,9 @@ function CalendarDayButton({
   ...props
 }: React.ComponentProps<typeof CalendarPrimitive.DayButton>) {
   const { size } = React.useContext(CalendarContext)
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const modifiers = day.modifiers
-  const idle = dayColors(modifiers, colors, false)
+  const idle = dayColors(modifiers, colors, isDark)
   return (
     <TextStyleContext.Provider
       value={{
@@ -325,11 +320,10 @@ function CalendarDayButton({
             style={({ pressed }) => [
               styles.day,
               { width: CELL[size], height: CELL[size] },
-              {
-                backgroundColor: dayColors(modifiers, colors, pressed)
-                  .background,
-              },
+              { backgroundColor: idle.background },
               modifiers.rangeMiddle && { borderRadius: 0 },
+              pressed && { opacity: 0.8 },
+              modifiers.disabled && { opacity: 0.5 },
               resolveStyle(style, state) as StyleProp<ViewStyle>,
             ]}
           />
@@ -380,7 +374,7 @@ function CalendarMonth({
                 style={[
                   styles.weekdayText,
                   WEEKDAY_TEXT[size],
-                  { color: colors.labelSecondary },
+                  { color: colors.mutedForeground },
                 ]}
               >
                 {calendar.formatWeekday(weekday, "short")}
@@ -392,7 +386,7 @@ function CalendarMonth({
           <View key={week.days[0]?.date.getTime()} style={styles.week}>
             {showWeekNumber ? (
               <View style={[styles.center, { width: cell, height: cell }]}>
-                <Text style={[fontSize.xs, { color: colors.labelSecondary }]}>
+                <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
                   {week.number}
                 </Text>
               </View>
@@ -408,8 +402,7 @@ function CalendarMonth({
                   key={day.date.getTime()}
                   style={[
                     { width: cell, height: cell },
-                    !day.hidden &&
-                      shaded && { backgroundColor: colors.surfaceSecondary },
+                    !day.hidden && shaded && { backgroundColor: colors.muted },
                     (modifiers.rangeStart ||
                       (modifiers.rangeMiddle && dayIndex === 0)) && {
                       borderTopLeftRadius: rounded,
@@ -490,7 +483,7 @@ function Calendar({
         }
         style={(state) => [
           styles.root,
-          { backgroundColor: colors.surface, padding: PADDING[size] },
+          { backgroundColor: colors.background, padding: PADDING[size] },
           resolveStyle(style, state) as StyleProp<ViewStyle>,
         ]}
         {...props}

@@ -34,6 +34,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
@@ -71,11 +72,8 @@ private val LocalSelect = staticCompositionLocalOf { SelectContext(null) {} }
 
 private val LocalSelectLabels = staticCompositionLocalOf<SnapshotStateMap<String, String>?> { null }
 
-internal fun controlBackground(colors: Colors, invalid: Boolean, enabled: Boolean): Color = when {
-    !enabled -> colors.controlDisabled
-    invalid -> colors.danger.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
-    else -> colors.control
-}
+internal fun controlBackground(colors: Colors, invalid: Boolean): Color =
+    if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.secondary
 
 @Composable
 fun Select(
@@ -135,9 +133,8 @@ fun Select(
     val labels = remember { mutableStateMapOf<String, String>() }
     val text = displayValue ?: value?.let { labels[it] ?: it }
     val foreground = when {
-        !isEnabled -> colors.labelQuaternary
-        text == null -> colors.labelSecondary
-        else -> colors.label
+        text == null -> colors.mutedForeground
+        else -> colors.foreground
     }
     Box(modifier = modifier.then(item.modifier), propagateMinConstraints = true) {
         if (displayValue == null) {
@@ -151,9 +148,10 @@ fun Select(
             modifier = Modifier
                 .width(IntrinsicSize.Max)
                 .height(size.height)
+                .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid, isEnabled), shape)
-                .border(1.dp, if (isInvalid) colors.danger else Color.Transparent, shape)
+                .background(controlBackground(colors, isInvalid), shape)
+                .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
                 .semantics { stateDescription = if (expanded) "Expanded" else "Collapsed" }
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
@@ -173,7 +171,7 @@ fun Select(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Icon(PhosphorIcons.Regular.CaretUpDown, contentDescription = null, size = 16.dp, tint = colors.labelSecondary)
+            Icon(PhosphorIcons.Regular.CaretUpDown, contentDescription = null, size = 16.dp, tint = colors.mutedForeground)
         }
         AnchoredPopup(
             expanded = expanded,
@@ -188,8 +186,8 @@ fun Select(
                     onValueChange(it)
                     expanded = false
                 },
-                LocalContentStyle provides Typography.base.copy(color = colors.label),
-                LocalContentColor provides colors.label,
+                LocalContentStyle provides Typography.base.copy(color = colors.foreground),
+                LocalContentColor provides colors.foreground,
             ) {
                 Column(
                     modifier = Modifier
@@ -219,7 +217,7 @@ fun SelectLabel(text: String, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .semantics { heading() }
             .padding(horizontal = 12.dp, vertical = 10.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -249,7 +247,13 @@ fun SelectItem(
             .fillMaxWidth()
             .heightIn(min = 44.dp)
             .clip(shape)
-            .background(if (pressed && enabled) colors.itemPressed else Color.Transparent, shape)
+            .alpha(
+                when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                },
+            )
             .selectable(
                 selected = selected,
                 interactionSource = interaction,
@@ -264,7 +268,7 @@ fun SelectItem(
         BasicText(
             text,
             modifier = Modifier.padding(end = 24.dp, top = 8.dp, bottom = 8.dp),
-            style = Typography.base.copy(color = if (enabled) colors.label else colors.labelQuaternary),
+            style = Typography.base.copy(color = colors.foreground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -274,7 +278,7 @@ fun SelectItem(
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 size = 16.dp,
-                tint = colors.link,
+                tint = colors.primary,
             )
         }
     }
@@ -287,6 +291,6 @@ fun SelectSeparator(modifier: Modifier = Modifier) {
             .padding(vertical = 6.dp)
             .fillMaxWidth()
             .height(1.dp)
-            .background(EsuissTheme.colors.separator),
+            .background(EsuissTheme.colors.border),
     )
 }

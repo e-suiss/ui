@@ -54,9 +54,8 @@ function KeypadKey({
   children?: React.ReactNode
 }) {
   const { colors } = useTheme()
-  const color = disabled ? colors.labelQuaternary : colors.label
-  let idleBackground = disabled ? colors.controlDisabled : colors.control
-  if (variant === "plain") idleBackground = "transparent"
+  const color = colors.foreground
+  const background = variant === "plain" ? "transparent" : colors.secondary
   return (
     <Pressable
       role="button"
@@ -64,10 +63,9 @@ function KeypadKey({
       accessibilityState={{ disabled: !!disabled }}
       style={({ pressed }) => [
         styles.key,
-        {
-          backgroundColor:
-            pressed && !disabled ? colors.controlPressed : idleBackground,
-        },
+        { backgroundColor: background },
+        pressed && !disabled && { opacity: 0.8 },
+        disabled && { opacity: 0.5 },
         style,
       ]}
       {...props}

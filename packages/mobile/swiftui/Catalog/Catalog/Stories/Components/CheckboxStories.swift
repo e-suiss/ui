@@ -73,7 +73,7 @@ private struct CheckboxWithDescriptionDemo: View {
           .onTapGesture { checked.toggle() }
         Text("You can enable or disable notifications at any time.")
           .textStyle(.sm)
-          .foregroundStyle(Color.labelSecondary)
+          .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }

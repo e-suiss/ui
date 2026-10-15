@@ -53,11 +53,11 @@ function LoginSheet({
   return (
     <Screen>
       <View className="flex-1 items-center px-7 pt-22.5 pb-8.5">
-        <View className="mb-5 size-21 rounded-[1.25rem] bg-green" />
+        <View className="mb-5 size-21 rounded-[1.25rem] bg-green-500" />
         <Text role="heading" className="text-center text-3xl font-semibold">
           {done ? "Welcome, Jamie" : "Trail Routes"}
         </Text>
-        <Text className="mt-2 text-center text-base text-label-secondary">
+        <Text className="mt-2 text-center text-base text-muted-foreground">
           {done
             ? "Your account was created with suiss."
             : "Save your routes and share them with friends."}
@@ -70,7 +70,7 @@ function LoginSheet({
             onPress={() => setDone(false)}
             className="active:opacity-60"
           >
-            <Text className="text-base text-link">Sign out ›</Text>
+            <Text className="text-base text-primary">Sign out ›</Text>
           </Pressable>
         ) : (
           <View className="w-full gap-2.5">
@@ -78,9 +78,9 @@ function LoginSheet({
               size="xl"
               block
               onPress={() => setOpen(true)}
-              className="h-12.5 bg-label active:bg-label/80"
+              className="h-12.5 bg-foreground active:opacity-80"
             >
-              <Text className="text-lg font-semibold text-surface">
+              <Text className="text-lg font-semibold text-background">
                 Sign in with suiss
               </Text>
             </Button>
@@ -114,22 +114,22 @@ function LoginSheet({
               <Icon
                 as={XIcon}
                 weight="bold"
-                className="size-3.5 text-label-secondary"
+                className="size-3.5 text-muted-foreground"
               />
             </DrawerClose>
           </View>
           <DrawerTitle className="text-2xl font-semibold">
             Use your suiss Account with Trail Routes
           </DrawerTitle>
-          <View className="rounded-xl bg-surface-secondary">
+          <View className="rounded-xl bg-muted">
             <View className="flex-row items-center gap-3 px-3.5 py-2.5">
-              <Icon as={UserIcon} className="size-5 text-label-secondary" />
+              <Icon as={UserIcon} className="size-5 text-muted-foreground" />
               <View>
-                <Text className="text-xs text-label-secondary">Name</Text>
+                <Text className="text-xs text-muted-foreground">Name</Text>
                 <Text className="text-base">Jamie Rivera</Text>
               </View>
             </View>
-            <View className="ms-11.5 h-px bg-separator" />
+            <View className="ms-11.5 h-px bg-border" />
             <RadioGroup
               value={email}
               onValueChange={setEmail}
@@ -142,18 +142,18 @@ function LoginSheet({
                   onPress={() => setEmail(option.value)}
                   className={cn(
                     "flex-row items-center gap-3 py-2.5 pe-3.5",
-                    index === 0 ? "ps-3.5" : "ms-11.5 border-t border-separator"
+                    index === 0 ? "ps-3.5" : "ms-11.5 border-t border-border"
                   )}
                 >
                   {index === 0 ? (
                     <Icon
                       as={EnvelopeSimpleIcon}
-                      className="size-5 text-label-secondary"
+                      className="size-5 text-muted-foreground"
                     />
                   ) : null}
                   <View className="flex-1">
                     <Text className="text-base">{option.label}</Text>
-                    <Text className="text-xs text-label-secondary">
+                    <Text className="text-xs text-muted-foreground">
                       {option.hint}
                     </Text>
                   </View>
@@ -177,7 +177,7 @@ function LoginSheet({
             className="h-12.5"
           >
             {busy ? (
-              <Spinner size={20} colorClassName="accent-on-accent" />
+              <Spinner size={20} colorClassName="accent-primary-foreground" />
             ) : (
               <Text className="text-lg font-semibold">
                 Continue with face scan

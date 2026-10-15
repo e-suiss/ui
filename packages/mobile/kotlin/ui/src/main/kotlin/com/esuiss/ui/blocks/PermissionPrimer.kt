@@ -92,22 +92,22 @@ fun PermissionPrimer(
                         Box(
                             Modifier
                                 .size(88.dp)
-                                .background(colors.accent, RoundedCornerShape(22.dp)),
+                                .background(colors.primary, RoundedCornerShape(22.dp)),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(icon, contentDescription = null, size = 44.dp, tint = colors.onAccent)
+                            Icon(icon, contentDescription = null, size = 44.dp, tint = colors.primaryForeground)
                         }
                         Spacer(Modifier.height(24.dp))
                         BasicText(
                             title,
                             modifier = Modifier.semantics { heading() },
-                            style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
+                            style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
                         )
                         Spacer(Modifier.height(12.dp))
                         BasicText(
                             description,
                             modifier = Modifier.widthIn(max = 420.dp),
-                            style = Typography.lg.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                            style = Typography.lg.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                         )
                         Spacer(Modifier.height(36.dp))
                         Column(
@@ -142,14 +142,14 @@ private fun BenefitRow(benefit: PermissionPrimerBenefit) {
         Box(
             Modifier
                 .size(44.dp)
-                .background(colors.accentSurface, CircleShape),
+                .background(colors.primary.copy(alpha = if (colors.isDark) 0.2f else 0.1f), CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(benefit.icon, contentDescription = null, size = 22.dp, tint = colors.accent)
+            Icon(benefit.icon, contentDescription = null, size = 22.dp, tint = colors.primary)
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            BasicText(benefit.title, style = Typography.base.copy(color = colors.label, fontWeight = FontWeight.SemiBold))
-            BasicText(benefit.description, style = Typography.sm.copy(color = colors.labelSecondary))
+            BasicText(benefit.title, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))
+            BasicText(benefit.description, style = Typography.sm.copy(color = colors.mutedForeground))
         }
     }
 }

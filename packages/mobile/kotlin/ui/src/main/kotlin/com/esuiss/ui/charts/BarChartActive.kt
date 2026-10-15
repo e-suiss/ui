@@ -47,7 +47,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "steps" to ChartConfigItem("Steps") { orange },
+    "steps" to ChartConfigItem("Steps") { chart4 },
 )
 
 @Composable
@@ -62,7 +62,7 @@ fun BarChartActive(modifier: Modifier = Modifier) {
                 BasicText(
                     "Steps",
                     style = Typography.sm.copy(
-                        color = if (colors.isDark) colors.orange else lerp(colors.orange, colors.label, 0.45f),
+                        color = if (colors.isDark) colors.chart4 else lerp(colors.chart4, colors.foreground, 0.45f),
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
@@ -73,15 +73,15 @@ fun BarChartActive(modifier: Modifier = Modifier) {
                     BasicText(
                         stepsFormat.format(day.steps),
                         Modifier.alignByBaseline(),
-                        style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                        style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                     )
                     BasicText(
                         "steps",
                         Modifier.alignByBaseline(),
-                        style = Typography.base.copy(color = colors.labelSecondary, fontWeight = FontWeight.SemiBold),
+                        style = Typography.base.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                 }
-                BasicText("${day.day} · select a bar", style = Typography.sm.copy(color = colors.labelSecondary))
+                BasicText("${day.day} · select a bar", style = Typography.sm.copy(color = colors.mutedForeground))
             }
         }
         CardContent {

@@ -76,14 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     ...shadow.md,
   },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    borderRadius: radius.full,
-  },
 })
 
 function isAction(node: React.ReactNode) {
@@ -154,7 +146,9 @@ function Fab({
   const compactKey = size === "lg" ? "lg" : "default"
   const labelNode =
     typeof label === "string" || typeof label === "number" ? (
-      <Text style={[styles.label, { color: colors.onAccent }]}>{label}</Text>
+      <Text style={[styles.label, { color: colors.primaryForeground }]}>
+        {label}
+      </Text>
     ) : (
       label
     )
@@ -169,7 +163,7 @@ function Fab({
             importantForAccessibility="no"
             entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.duration(200).reduceMotion(ReduceMotion.System)}
-            style={[styles.scrim, { backgroundColor: colors.scrim }]}
+            style={[styles.scrim, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
             onPress={close}
           />
         ) : null}
@@ -223,9 +217,8 @@ function Fab({
             style={({ pressed }) => [
               styles.button,
               styles[extended ? extendedKey : compactKey],
-              {
-                backgroundColor: pressed ? colors.accentPressed : colors.accent,
-              },
+              { backgroundColor: colors.primary },
+              pressed && { opacity: 0.8 },
               style,
             ]}
             {...props}
@@ -235,7 +228,7 @@ function Fab({
                 as={open && icon !== PlusIcon ? XIcon : icon}
                 weight="bold"
                 size={size === "lg" ? 28 : 24}
-                color={colors.onAccent}
+                color={colors.primaryForeground}
               />
             </AnimatedView>
             {extended ? labelNode : null}
@@ -259,40 +252,37 @@ function FabAction({
 }) {
   const { colors, isDark } = useTheme()
   const raised = {
-    backgroundColor: isDark ? colors.surfaceSecondary : colors.surfaceRaised,
+    backgroundColor: isDark ? colors.muted : colors.card,
   }
-  const overlay = [styles.overlay, { backgroundColor: colors.itemPressed }]
   const fab = React.useContext(FabContext)
   return (
     <Pressable
       role="button"
-      style={[styles.action, style]}
+      style={({ pressed }) => [
+        styles.action,
+        pressed && { opacity: 0.8 },
+        style,
+      ]}
       onPress={(event) => {
         onPress?.(event)
         fab?.close()
       }}
       {...props}
     >
-      {({ pressed }) => (
-        <>
-          {children !== undefined ? (
-            <View style={[styles.pill, raised]}>
-              {pressed ? <View style={overlay} /> : null}
-              {typeof children === "string" || typeof children === "number" ? (
-                <Text numberOfLines={1} style={styles.pillText}>
-                  {children}
-                </Text>
-              ) : (
-                children
-              )}
-            </View>
-          ) : null}
-          <View style={[styles.circle, raised]}>
-            {pressed ? <View style={overlay} /> : null}
-            <Icon as={icon} size={20} />
-          </View>
-        </>
-      )}
+      {children !== undefined ? (
+        <View style={[styles.pill, raised]}>
+          {typeof children === "string" || typeof children === "number" ? (
+            <Text numberOfLines={1} style={styles.pillText}>
+              {children}
+            </Text>
+          ) : (
+            children
+          )}
+        </View>
+      ) : null}
+      <View style={[styles.circle, raised]}>
+        <Icon as={icon} size={20} />
+      </View>
     </Pressable>
   )
 }

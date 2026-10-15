@@ -105,7 +105,7 @@ private struct TopBannerTriggers: View {
       .buttonStyle(.variant(.ghost))
       Text(verbatim: log)
         .textStyle(.sm)
-        .foregroundStyle(Color.labelSecondary)
+        .foregroundStyle(EsuissColor.mutedForeground)
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityAddTraits(.updatesFrequently)
     }

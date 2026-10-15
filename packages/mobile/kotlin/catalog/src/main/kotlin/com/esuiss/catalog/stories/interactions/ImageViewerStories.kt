@@ -37,6 +37,7 @@ import com.esuiss.ui.components.TextVariant
 import com.esuiss.ui.interactions.ImageViewer
 import com.esuiss.ui.interactions.ImageViewerImage
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 
 val imageViewerStories = StoryGroup(
@@ -71,11 +72,11 @@ private fun ImageViewerGallery(defaultOpen: Boolean, defaultIndex: Int) {
     var open by rememberSaveable { mutableStateOf(defaultOpen) }
     var index by rememberSaveable { mutableIntStateOf(defaultIndex) }
     val tones = listOf(
-        colors.orange to colors.pink,
-        colors.teal to colors.blue,
-        colors.indigo to colors.cyan,
-        colors.gray to colors.mint,
-        colors.green to colors.brown,
+        Palette.orange500 to Palette.pink500,
+        Palette.teal500 to Palette.blue500,
+        Palette.indigo500 to Palette.cyan500,
+        Palette.zinc500 to Palette.teal400,
+        Palette.green500 to Palette.amber500,
     )
     val images = remember(tones) {
         imageViewerLabels.mapIndexed { position, label ->
@@ -99,7 +100,7 @@ private fun ImageViewerGallery(defaultOpen: Boolean, defaultIndex: Int) {
                         .fillMaxWidth(0.31f)
                         .aspectRatio(1f)
                         .clip(shape)
-                        .background(colors.surfaceSecondary, shape)
+                        .background(colors.muted, shape)
                         .semantics { contentDescription = imageViewerLabels[position] }
                         .clickable(role = Role.Button) {
                             index = position

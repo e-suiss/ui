@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -63,6 +64,7 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.Plus
 import com.adamglin.phosphoricons.regular.X
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
@@ -147,7 +149,7 @@ private val FabActionSize = 44.dp
 
 @Composable
 private fun FabScrim(open: Boolean, onDismiss: () -> Unit) {
-    val color = EsuissTheme.colors.scrim
+    val color = Palette.black.copy(alpha = 0.5f)
     val alpha by animateFloatAsState(if (open) 1f else 0f, tween(200), label = "scrim")
     val container = LocalWindowInfo.current.containerSize
     var origin by remember { mutableStateOf(Offset.Zero) }
@@ -180,6 +182,7 @@ fun FabAction(
     val pressed by interaction.collectIsPressedAsState()
     Row(
         modifier = modifier
+            .alpha(if (pressed) 0.8f else 1f)
             .clickable(interactionSource = interaction, indication = null, role = Role.Button) {
                 onClick()
                 close()
@@ -192,19 +195,19 @@ fun FabAction(
             label,
             modifier = Modifier
                 .shadow(Shadows.md, CircleShape)
-                .background(if (pressed) colors.surfaceSecondary else colors.surfaceRaised, CircleShape)
+                .background(colors.card, CircleShape)
                 .padding(horizontal = 12.dp, vertical = 6.dp),
-            style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.Medium),
+            style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.Medium),
             maxLines = 1,
         )
         Box(
             modifier = Modifier
                 .size(FabActionSize)
                 .shadow(Shadows.md, CircleShape)
-                .background(if (pressed) colors.surfaceSecondary else colors.surfaceRaised, CircleShape),
+                .background(colors.card, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(icon, contentDescription = null, size = 20.dp, tint = colors.label)
+            Icon(icon, contentDescription = null, size = 20.dp, tint = colors.foreground)
         }
     }
 }
@@ -237,22 +240,22 @@ private fun FabButton(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val scale by animateFloatAsState(if (pressed && enabled) 0.95f else 1f, tween(150), label = "press")
-    val background = when {
-        !enabled -> colors.accentDisabled
-        pressed -> colors.accentPressed
-        else -> colors.accent
-    }
     Row(
         modifier = Modifier
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
+                alpha = when {
+                    !enabled -> 0.5f
+                    pressed -> 0.8f
+                    else -> 1f
+                }
             }
             .height(size.size)
             .then(if (label == null) Modifier.size(size.size) else Modifier)
             .then(if (enabled) Modifier.shadow(Shadows.lg, CircleShape) else Modifier)
             .clip(CircleShape)
-            .background(background, CircleShape)
+            .background(colors.primary, CircleShape)
             .clickable(
                 interactionSource = interaction,
                 indication = null,
@@ -273,12 +276,12 @@ private fun FabButton(
             contentDescription = null,
             modifier = Modifier.graphicsLayer { rotationZ = rotation },
             size = size.iconSize,
-            tint = colors.onAccent,
+            tint = colors.primaryForeground,
         )
         if (label != null) {
             BasicText(
                 label,
-                style = Typography.base.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold),
+                style = Typography.base.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
                 maxLines = 1,
             )
         }

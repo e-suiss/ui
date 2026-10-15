@@ -58,11 +58,11 @@ import com.esuiss.ui.components.ButtonSize
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Screen
 import com.esuiss.ui.components.rememberHaptics
-import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 
-private class LineupFinish(val label: String, val color: (Colors) -> Color)
+private class LineupFinish(val label: String, val color: Color)
 
 private class LineupModel(
     val name: String,
@@ -83,7 +83,7 @@ private val LineupModels = listOf(
         PhosphorIcons.Light.DeviceMobileCamera,
         PhosphorIcons.Fill.FillDeviceMobileCamera,
         "An orange phone on a warm gradient",
-        listOf(LineupFinish("Cosmic Orange") { it.orange }, LineupFinish("Deep Blue") { it.indigo }, LineupFinish("Silver") { it.gray }),
+        listOf(LineupFinish("Cosmic Orange", Palette.orange500), LineupFinish("Deep Blue", Palette.indigo500), LineupFinish("Silver", Palette.zinc500)),
         "New",
     ),
     LineupModel(
@@ -93,7 +93,7 @@ private val LineupModels = listOf(
         PhosphorIcons.Light.DeviceMobileSpeaker,
         PhosphorIcons.Fill.FillDeviceMobileSpeaker,
         "A silver phone on a light grey background",
-        listOf(LineupFinish("Sky Blue") { it.cyan }, LineupFinish("Light Gold") { it.yellow }, LineupFinish("Space Black") { it.media }),
+        listOf(LineupFinish("Sky Blue", Palette.cyan500), LineupFinish("Light Gold", Palette.yellow500), LineupFinish("Space Black", Palette.black)),
         "New",
     ),
     LineupModel(
@@ -104,10 +104,10 @@ private val LineupModels = listOf(
         PhosphorIcons.Fill.FillDeviceMobile,
         "A phone floating among blue spheres",
         listOf(
-            LineupFinish("Lavender") { it.purple },
-            LineupFinish("Sage") { it.mint },
-            LineupFinish("Mist Blue") { it.teal },
-            LineupFinish("Black") { it.media },
+            LineupFinish("Lavender", Palette.purple500),
+            LineupFinish("Sage", Palette.teal400),
+            LineupFinish("Mist Blue", Palette.teal500),
+            LineupFinish("Black", Palette.black),
         ),
     ),
     LineupModel(
@@ -117,7 +117,7 @@ private val LineupModels = listOf(
         PhosphorIcons.Light.DeviceMobile,
         PhosphorIcons.Fill.FillDeviceMobile,
         "A phone on a pink and purple backdrop",
-        listOf(LineupFinish("Black") { it.media }, LineupFinish("White") { it.onMedia }),
+        listOf(LineupFinish("Black", Palette.black), LineupFinish("White", Palette.white)),
     ),
 )
 
@@ -141,7 +141,7 @@ fun GridLineup(
                     .fillMaxWidth()
                     .padding(bottom = 36.dp)
                     .semantics { heading() },
-                style = Typography.xl3.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                style = Typography.xl3.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
             )
             Column(verticalArrangement = Arrangement.spacedBy(40.dp)) {
                 LineupModels.chunked(2).forEach { pair ->
@@ -166,18 +166,18 @@ private fun LineupTile(
     val colors = EsuissTheme.colors
     var finish by rememberSaveable(model.name) { mutableStateOf(model.finishes.first().label) }
     val current = model.finishes.firstOrNull { it.label == finish } ?: model.finishes.first()
-    val tint by animateColorAsState(current.color(colors), tween(400), label = "finish")
+    val tint by animateColorAsState(current.color, tween(400), label = "finish")
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(0.85f)
-                .background(colors.surfaceSecondary, RoundedCornerShape(16.dp))
+                .background(colors.muted, RoundedCornerShape(16.dp))
                 .clearAndSetSemantics { contentDescription = model.alt },
             contentAlignment = Alignment.Center,
         ) {
             Icon(model.fill, contentDescription = null, size = 88.dp, tint = tint)
-            Icon(model.icon, contentDescription = null, size = 88.dp, tint = colors.labelTertiary)
+            Icon(model.icon, contentDescription = null, size = 88.dp, tint = colors.mutedForeground)
         }
         Row(
             Modifier
@@ -194,25 +194,25 @@ private fun LineupTile(
             modifier = Modifier
                 .padding(top = 6.dp)
                 .heightIn(min = 18.dp),
-            style = Typography.xs.copy(color = colors.warning, fontWeight = FontWeight.SemiBold),
+            style = Typography.xs.copy(color = if (colors.isDark) Palette.amber400 else Palette.amber600, fontWeight = FontWeight.SemiBold),
         )
         BasicText(
             model.name,
             modifier = Modifier
                 .padding(top = 4.dp)
                 .semantics { heading() },
-            style = Typography.xl.copy(color = colors.label, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xl.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
         )
         BasicText(
             model.tagline,
             modifier = Modifier.padding(top = 8.dp),
-            style = Typography.base.copy(color = colors.label, textAlign = TextAlign.Center),
+            style = Typography.base.copy(color = colors.foreground, textAlign = TextAlign.Center),
             minLines = 2,
         )
         BasicText(
             "From ${model.price}",
             modifier = Modifier.padding(top = 8.dp),
-            style = Typography.sm.copy(color = colors.labelSecondary),
+            style = Typography.sm.copy(color = colors.mutedForeground),
         )
         FlowRow(
             modifier = Modifier.padding(top = 16.dp),
@@ -230,7 +230,7 @@ private fun LineupTile(
 private fun LineupSwatch(finish: LineupFinish, selected: Boolean, onSelect: () -> Unit) {
     val colors = EsuissTheme.colors
     val haptics = rememberHaptics()
-    val ring by animateColorAsState(if (selected) colors.labelSecondary else Color.Transparent, tween(200), label = "ring")
+    val ring by animateColorAsState(if (selected) colors.mutedForeground else Color.Transparent, tween(200), label = "ring")
     Box(
         Modifier
             .size(28.dp)
@@ -252,8 +252,8 @@ private fun LineupSwatch(finish: LineupFinish, selected: Boolean, onSelect: () -
                 .size(18.dp)
                 .border(1.5.dp, ring, CircleShape)
                 .padding(3.dp)
-                .background(finish.color(colors), CircleShape)
-                .border(1.dp, colors.label.copy(alpha = 0.15f), CircleShape),
+                .background(finish.color, CircleShape)
+                .border(1.dp, colors.foreground.copy(alpha = 0.15f), CircleShape),
         )
     }
 }
@@ -265,9 +265,9 @@ private fun LineupLink(text: String, onClick: () -> Unit) {
     BasicText(
         text,
         modifier = Modifier
-            .graphicsLayer { alpha = if (pressed) 0.5f else 1f }
+            .graphicsLayer { alpha = if (pressed) 0.8f else 1f }
             .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
             .padding(vertical = 6.dp),
-        style = Typography.sm.copy(color = EsuissTheme.colors.link),
+        style = Typography.sm.copy(color = EsuissTheme.colors.primary),
     )
 }

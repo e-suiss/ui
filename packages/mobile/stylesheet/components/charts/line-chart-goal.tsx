@@ -33,7 +33,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  steps: { label: "Steps", color: "orange" },
+  steps: { label: "Steps", color: "chart-4" },
 } satisfies ChartConfig
 
 const styles = StyleSheet.create({
@@ -75,7 +75,7 @@ export function LineChartGoal() {
             />
             <ReferenceLine
               y={GOAL}
-              stroke="green"
+              stroke="green-500"
               strokeDasharray="4 4"
               label="Goal"
             />

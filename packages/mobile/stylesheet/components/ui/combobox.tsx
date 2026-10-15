@@ -20,6 +20,14 @@ import { Icon } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
 import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
 
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith("#") || color.length !== 7) return color
+  const r = Number.parseInt(color.slice(1, 3), 16)
+  const g = Number.parseInt(color.slice(3, 5), 16)
+  const b = Number.parseInt(color.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 const Combobox = ComboboxPrimitive.Root
 
 const ComboboxValue = ComboboxPrimitive.Value
@@ -168,11 +176,7 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <Icon
-        as={CaretDownIcon}
-        size={16}
-        color={props.disabled ? colors.labelQuaternary : colors.labelSecondary}
-      />
+      <Icon as={CaretDownIcon} size={16} color={colors.mutedForeground} />
     </ComboboxPrimitive.Trigger>
   )
 }
@@ -191,11 +195,7 @@ function ComboboxClear({
       ]}
       {...props}
     >
-      <Icon
-        as={XIcon}
-        size={16}
-        color={props.disabled ? colors.labelQuaternary : colors.label}
-      />
+      <Icon as={XIcon} size={16} color={colors.foreground} />
     </ComboboxPrimitive.Clear>
   )
 }
@@ -230,31 +230,26 @@ function ComboboxInput({
     <ComboboxPrimitive.InputGroup
       style={[
         styles.inputGroup,
-        { backgroundColor: colors.control },
+        { backgroundColor: colors.secondary },
         isInvalid && {
-          borderColor: colors.danger,
-          backgroundColor: `${colors.danger}${isDark ? "1a" : "0d"}`,
+          borderColor: colors.destructive,
+          backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
         },
-        focused && !inPopup && { borderColor: colors.focus },
+        focused && !inPopup && { borderColor: colors.ring },
         inPopup && [
           styles.inputGroupInPopup,
-          { borderColor: `${colors.separator}4d` },
+          { borderColor: `${colors.border}4d` },
         ],
-        isDisabled && { backgroundColor: colors.controlDisabled },
+        isDisabled && { opacity: 0.5 },
         style,
       ]}
     >
       <ComboboxPrimitive.Input
         disabled={disabled}
-        style={[
-          styles.input,
-          { color: isDisabled ? colors.labelQuaternary : colors.label },
-        ]}
-        placeholderTextColor={
-          isDisabled ? colors.labelQuaternary : colors.labelSecondary
-        }
-        cursorColor={colors.accent}
-        selectionColor={colors.accent}
+        style={[styles.input, { color: colors.foreground }]}
+        placeholderTextColor={colors.mutedForeground}
+        cursorColor={colors.primary}
+        selectionColor={colors.primary}
         onFocus={(event) => {
           setFocused(true)
           onFocus?.(event)
@@ -295,8 +290,8 @@ function ContentPopup({
       style={(state) => [
         styles.content,
         {
-          borderColor: `${colors.label}${isDark ? "1a" : "0d"}`,
-          backgroundColor: colors.surfaceRaised,
+          borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
+          backgroundColor: colors.popover,
         },
         sizing,
         resolveStyle(style, state) as StyleProp<ViewStyle>,
@@ -338,7 +333,7 @@ function ComboboxContent({
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.label }}
+              value={{ ...fontSize.base, color: colors.foreground }}
             >
               <ContentPopup style={style} chips={!!anchor} {...props} />
             </TextStyleContext.Provider>
@@ -378,17 +373,15 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       style={(state) => [
         styles.item,
-        state.highlighted && { backgroundColor: colors.itemPressed },
+        state.highlighted && { opacity: 0.8 },
+        props.disabled && { opacity: 0.5 },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
     >
-      {wrapText(children, [
-        styles.itemText,
-        { color: props.disabled ? colors.labelQuaternary : colors.label },
-      ])}
+      {wrapText(children, [styles.itemText, { color: colors.foreground }])}
       <ComboboxPrimitive.ItemIndicator style={styles.indicator}>
-        <Icon as={CheckIcon} size={16} color={colors.link} />
+        <Icon as={CheckIcon} size={16} color={colors.primary} />
       </ComboboxPrimitive.ItemIndicator>
     </ComboboxPrimitive.Item>
   )
@@ -409,7 +402,7 @@ function ComboboxLabel({
     <ComboboxPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.labelSecondary },
+        { color: colors.mutedForeground },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
@@ -431,7 +424,10 @@ function ComboboxEmpty({
       ]}
       {...props}
     >
-      {wrapText(children, [styles.emptyText, { color: colors.labelSecondary }])}
+      {wrapText(children, [
+        styles.emptyText,
+        { color: colors.mutedForeground },
+      ])}
     </ComboboxPrimitive.Empty>
   )
 }
@@ -445,7 +441,7 @@ function ComboboxSeparator({
     <ComboboxPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.separator },
+        { backgroundColor: colors.border },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
@@ -469,13 +465,13 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       style={(state) => [
         styles.chips,
-        { backgroundColor: colors.control },
+        { backgroundColor: colors.secondary },
         hasValue && styles.chipsFilled,
         isInvalid && {
-          borderColor: colors.danger,
-          backgroundColor: `${colors.danger}${isDark ? "1a" : "0d"}`,
+          borderColor: colors.destructive,
+          backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
         },
-        disabled && { backgroundColor: colors.controlDisabled },
+        disabled && { opacity: 0.5 },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
@@ -491,17 +487,15 @@ function ComboboxChip({
 }: React.ComponentProps<typeof ComboboxPrimitive.Chip> & {
   showRemove?: boolean
 }) {
-  const { colors } = useTheme()
-  const combobox = ComboboxPrimitive.useComboboxRootContext("ComboboxChip")
-  const disabled = !!props.disabled || combobox.disabled
-  const color = disabled ? colors.labelQuaternary : colors.link
+  const { colors, isDark } = useTheme()
+  const color = colors.primary
   return (
     <ComboboxPrimitive.Chip
       style={(state) => [
         styles.chip,
-        { backgroundColor: colors.accentSurface },
+        { backgroundColor: withAlpha(colors.primary, isDark ? 0.2 : 0.1) },
         showRemove && styles.chipRemovable,
-        state.disabled && { backgroundColor: colors.controlDisabled },
+        state.disabled && { opacity: 0.5 },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}
@@ -530,12 +524,12 @@ function ComboboxChipsInput({
     <ComboboxPrimitive.Input
       style={(state) => [
         styles.chipsInput,
-        { color: state.disabled ? colors.labelQuaternary : colors.label },
+        { color: colors.foreground },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
-      placeholderTextColor={colors.labelSecondary}
-      cursorColor={colors.accent}
-      selectionColor={colors.accent}
+      placeholderTextColor={colors.mutedForeground}
+      cursorColor={colors.primary}
+      selectionColor={colors.primary}
       {...props}
     />
   )

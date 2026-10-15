@@ -67,15 +67,15 @@ const APPS: { name: string; category: Category; share: number }[] = [
 ]
 
 const chartConfig = {
-  social: { label: "Social", color: "blue" },
-  productivity: { label: "Productivity", color: "cyan" },
-  entertainment: { label: "Entertainment", color: "orange" },
+  social: { label: "Social", color: "chart-1" },
+  productivity: { label: "Productivity", color: "cyan-500" },
+  entertainment: { label: "Entertainment", color: "chart-4" },
 } satisfies ChartConfig
 
 const SWATCH: Record<Category, string> = {
-  social: "bg-blue",
-  productivity: "bg-cyan",
-  entertainment: "bg-orange",
+  social: "bg-blue-500",
+  productivity: "bg-cyan-500",
+  entertainment: "bg-orange-500",
 }
 
 const total = (day: Record<Category, number>) =>
@@ -156,13 +156,13 @@ export function BarChartInteractive() {
           className="min-w-52 grow gap-0.5"
           accessibilityLiveRegion="polite"
         >
-          <Text className="text-sm font-semibold text-label-secondary">
+          <Text className="text-sm font-semibold text-muted-foreground">
             {selected === null ? "Daily average" : DAYS[selected]}
           </Text>
           <Text className="text-3xl font-semibold tracking-tight tabular-nums">
             {formatMinutes(headline)}
           </Text>
-          <Text className="text-sm text-label-secondary">{comparison}</Text>
+          <Text className="text-sm text-muted-foreground">{comparison}</Text>
         </View>
         <ToggleGroup
           spacing={0}
@@ -231,7 +231,7 @@ export function BarChartInteractive() {
                           SWATCH[name as Category]
                         )}
                       />
-                      <Text className="grow text-label-secondary">
+                      <Text className="grow text-muted-foreground">
                         {chartConfig[name as Category].label}
                       </Text>
                       <Text className="font-semibold tabular-nums">
@@ -243,7 +243,11 @@ export function BarChartInteractive() {
               }
             />
             {isWeek ? (
-              <ReferenceLine y={AVERAGE} stroke="green" strokeDasharray="3 3" />
+              <ReferenceLine
+                y={AVERAGE}
+                stroke="green-500"
+                strokeDasharray="3 3"
+              />
             ) : null}
             {CATEGORIES.map((category, position) => (
               <Bar
@@ -281,7 +285,7 @@ export function BarChartInteractive() {
                 />
                 <Text
                   numberOfLines={1}
-                  className="shrink text-sm text-label-secondary"
+                  className="shrink text-sm text-muted-foreground"
                 >
                   {chartConfig[category].label}
                 </Text>
@@ -293,25 +297,25 @@ export function BarChartInteractive() {
           ))}
         </View>
         <View>
-          <Text className="mb-1 text-xs font-semibold text-label-secondary uppercase">
+          <Text className="mb-1 text-xs font-semibold text-muted-foreground uppercase">
             Most used
           </Text>
           {apps.map((app) => (
             <View
               key={app.name}
               accessible
-              className="flex-row items-center gap-3 border-t border-separator py-2"
+              className="flex-row items-center gap-3 border-t border-border py-2"
             >
               <Text numberOfLines={1} className="w-24 text-base">
                 {app.name}
               </Text>
-              <View className="h-1.5 grow overflow-hidden rounded-full bg-control">
+              <View className="h-1.5 grow overflow-hidden rounded-full bg-secondary">
                 <View
                   style={{ width: `${(app.minutes / longest) * 100}%` }}
                   className={cn("h-full rounded-full", SWATCH[app.category])}
                 />
               </View>
-              <Text className="w-18 text-right text-sm text-label-secondary tabular-nums">
+              <Text className="w-18 text-right text-sm text-muted-foreground tabular-nums">
                 {formatMinutes(app.minutes)}
               </Text>
             </View>

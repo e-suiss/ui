@@ -47,9 +47,9 @@ private fun SpinnerSizes() {
 private fun SpinnerColors() {
     val colors = EsuissTheme.colors
     SpinnerRow {
-        Spinner(size = 24.dp, color = colors.label)
-        Spinner(size = 24.dp, color = colors.accent)
-        Spinner(size = 24.dp, color = colors.danger)
+        Spinner(size = 24.dp, color = colors.foreground)
+        Spinner(size = 24.dp, color = colors.primary)
+        Spinner(size = 24.dp, color = colors.destructive)
     }
 }
 
@@ -57,7 +57,7 @@ private fun SpinnerColors() {
 private fun SpinnerInButton() {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Button(onClick = {}, enabled = false) {
-            Spinner(color = EsuissTheme.colors.onAccent)
+            Spinner(color = EsuissTheme.colors.primaryForeground)
             Text("Saving")
         }
         Button(onClick = {}, variant = ButtonVariant.Secondary, enabled = false) {

@@ -88,6 +88,7 @@ import com.esuiss.ui.components.TabBarItem
 import com.esuiss.ui.components.rememberHeaderState
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -107,17 +108,17 @@ private fun securityAlerts() = listOf(
 )
 
 private fun severityTint(colors: Colors, severity: AlertSeverity): Color = when (severity) {
-    AlertSeverity.High -> colors.danger
-    AlertSeverity.Medium -> colors.warning
-    AlertSeverity.Low -> colors.label
+    AlertSeverity.High -> colors.destructive
+    AlertSeverity.Medium -> if (colors.isDark) Palette.amber400 else Palette.amber600
+    AlertSeverity.Low -> colors.foreground
 }
 
 private fun severityText(colors: Colors, severity: AlertSeverity): Color = severityTint(colors, severity)
 
 private fun scoreTone(colors: Colors, score: Int): Color = when {
-    score > 85 -> colors.green
-    score > 65 -> colors.orange
-    else -> colors.red
+    score > 85 -> Palette.green500
+    score > 65 -> Palette.orange500
+    else -> Palette.red500
 }
 
 @Composable
@@ -183,7 +184,7 @@ fun LogSecurity(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(30.dp),
-                                style = Typography.sm.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                                style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                             )
                         } else {
                             ItemGroup(variant = ItemGroupVariant.Inset) {
@@ -215,12 +216,12 @@ private fun ScoreCard(score: Int, count: (AlertSeverity) -> Int, modifier: Modif
     val colors = EsuissTheme.colors
     val tone by animateColorAsState(scoreTone(colors, score), tween(400), label = "tone")
     val sweep by animateFloatAsState(score / 100f, tween(600, easing = SecurityEasing), label = "sweep")
-    val track = colors.control
+    val track = colors.secondary
     FlowRow(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(Radius.xl))
-            .background(colors.surfaceSecondary)
+            .background(colors.muted)
             .padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -246,8 +247,8 @@ private fun ScoreCard(score: Int, count: (AlertSeverity) -> Int, modifier: Modif
                 drawArc(tone, -90f, 360f * sweep, false, topLeft, arc, style = Stroke(stroke, cap = StrokeCap.Round))
             }
             Column(Modifier.clearAndSetSemantics {}) {
-                BasicText("Security score", style = Typography.sm.copy(color = colors.labelSecondary), maxLines = 1)
-                BasicText("$score", style = Typography.xl2.copy(color = colors.label, fontWeight = FontWeight.Bold, fontFeatureSettings = "tnum"))
+                BasicText("Security score", style = Typography.sm.copy(color = colors.mutedForeground), maxLines = 1)
+                BasicText("$score", style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.Bold, fontFeatureSettings = "tnum"))
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
@@ -257,11 +258,11 @@ private fun ScoreCard(score: Int, count: (AlertSeverity) -> Int, modifier: Modif
                     modifier = Modifier.semantics(mergeDescendants = true) {},
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    BasicText(level.name, style = Typography.xs.copy(color = colors.labelSecondary))
+                    BasicText(level.name, style = Typography.xs.copy(color = colors.mutedForeground))
                     BasicText(
                         "$value",
                         style = Typography.xl.copy(
-                            color = if (value > 0) severityText(colors, level) else colors.labelTertiary,
+                            color = if (value > 0) severityText(colors, level) else colors.mutedForeground,
                             fontWeight = FontWeight.SemiBold,
                             fontFeatureSettings = "tnum",
                         ),
@@ -275,7 +276,7 @@ private fun ScoreCard(score: Int, count: (AlertSeverity) -> Int, modifier: Modif
 @Composable
 private fun AlertRow(alert: SecurityAlert, onResolve: () -> Unit, onReopen: () -> Unit) {
     val colors = EsuissTheme.colors
-    val resolvedTint = if (colors.isDark) colors.green else lerp(colors.green, colors.label, 0.2f)
+    val resolvedTint = if (colors.isDark) Palette.green500 else lerp(Palette.green500, colors.foreground, 0.2f)
     val tint by animateColorAsState(if (alert.resolved) resolvedTint else severityTint(colors, alert.severity), tween(300), label = "tint")
     Item(size = ItemSize.Sm, role = null) {
         ItemMedia {
@@ -289,20 +290,20 @@ private fun AlertRow(alert: SecurityAlert, onResolve: () -> Unit, onReopen: () -
                     if (alert.resolved) PhosphorIcons.Bold.Check else alert.icon,
                     contentDescription = null,
                     size = 16.dp,
-                    tint = if (!alert.resolved && alert.severity == AlertSeverity.Low) colors.surface else colors.onMedia,
+                    tint = if (!alert.resolved && alert.severity == AlertSeverity.Low) colors.background else Palette.white,
                 )
             }
         }
         ItemContent {
             BasicText(
                 alert.title,
-                style = Typography.sm.copy(color = colors.label, fontWeight = FontWeight.SemiBold),
+                style = Typography.sm.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             BasicText(
                 "${if (alert.resolved) "Resolved" else "${alert.severity.name} severity"} · ${alert.detail}",
-                style = Typography.xs.copy(color = colors.labelSecondary),
+                style = Typography.xs.copy(color = colors.mutedForeground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -337,7 +338,7 @@ private fun AdminTabs(home: String, onNavigate: (String) -> Unit, content: @Comp
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(32.dp),
-                    style = Typography.base.copy(color = colors.labelSecondary, textAlign = TextAlign.Center),
+                    style = Typography.base.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
             }
         }

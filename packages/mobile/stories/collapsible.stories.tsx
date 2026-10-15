@@ -40,15 +40,12 @@ function CollapsibleDemo({
           }
         />
       </View>
-      <View className="rounded-2xl bg-surface-secondary px-4 py-2">
+      <View className="rounded-2xl bg-muted px-4 py-2">
         <Text className="text-sm">{repositories[0]}</Text>
       </View>
       <CollapsibleContent className="gap-2">
         {repositories.slice(1).map((repository) => (
-          <View
-            key={repository}
-            className="rounded-2xl bg-surface-secondary px-4 py-2"
-          >
+          <View key={repository} className="rounded-2xl bg-muted px-4 py-2">
             <Text className="text-sm">{repository}</Text>
           </View>
         ))}

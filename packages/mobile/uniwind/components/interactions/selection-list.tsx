@@ -237,11 +237,7 @@ function SelectionListItem({
         onPress?.(event)
         toggle(value)
       }}
-      className={cn(
-        "flex-row items-center",
-        checked && "bg-item-selected",
-        className
-      )}
+      className={cn("flex-row items-center", checked && "bg-accent", className)}
       {...props}
     >
       <AnimatedView
@@ -252,8 +248,8 @@ function SelectionListItem({
       >
         <AnimatedView
           className={cn(
-            "ms-4 size-5.5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-label-tertiary",
-            checked && "border-accent bg-accent"
+            "ms-4 size-5.5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-muted-foreground",
+            checked && "border-primary bg-primary"
           )}
           style={ringStyle}
         >
@@ -261,7 +257,7 @@ function SelectionListItem({
             <Icon
               as={CheckIcon}
               weight="bold"
-              className="size-3.5 text-on-accent"
+              className="size-3.5 text-primary-foreground"
             />
           </AnimatedView>
         </AnimatedView>
@@ -302,7 +298,7 @@ function SelectionListBar({
             <View
               role="toolbar"
               className={cn(
-                "h-13 w-full max-w-md flex-row items-center justify-between gap-2 rounded-full border border-separator bg-surface-raised px-1.5 shadow-xl dark:bg-surface-secondary",
+                "h-13 w-full max-w-md flex-row items-center justify-between gap-2 rounded-full border border-border bg-card px-1.5 shadow-xl dark:bg-muted",
                 className
               )}
               {...props}

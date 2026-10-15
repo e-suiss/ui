@@ -45,7 +45,7 @@ function LinkText({
       onPress={onPress}
       className="active:opacity-60"
     >
-      <Text className={cn("text-link", className)}>{children}</Text>
+      <Text className={cn("text-primary", className)}>{children}</Text>
     </Pressable>
   )
 }
@@ -101,9 +101,13 @@ function ScanGlyph({ verified }: { verified: boolean }) {
       </AnimatedView>
       <AnimatedView
         style={checkStyle}
-        className="absolute inset-1.5 items-center justify-center rounded-full bg-success"
+        className="absolute inset-1.5 items-center justify-center rounded-full bg-green-500"
       >
-        <Icon as={CheckIcon} weight="bold" className="size-8 text-on-accent" />
+        <Icon
+          as={CheckIcon}
+          weight="bold"
+          className="size-8 text-primary-foreground"
+        />
       </AnimatedView>
     </View>
   )
@@ -140,14 +144,14 @@ function LoginPasskey({
             className="items-center gap-3.5"
           >
             <Avatar size="xl" className="size-21">
-              <AvatarFallback className="bg-indigo dark:bg-indigo">
+              <AvatarFallback className="bg-indigo-500">
                 <Text className="text-3xl">JR</Text>
               </AvatarFallback>
             </Avatar>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Welcome, Jamie.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               You signed in with a passkey. No password needed.
             </Text>
             <LinkText className="text-lg" onPress={() => setStatus("idle")}>
@@ -162,8 +166,8 @@ function LoginPasskey({
   return (
     <Screen>
       <ScrollView contentContainerClassName="grow items-center justify-center px-6 py-8">
-        <View className="size-18 items-center justify-center rounded-full bg-surface-secondary">
-          <Icon as={KeyIcon} weight="bold" className="size-8.5 text-accent" />
+        <View className="size-18 items-center justify-center rounded-full bg-muted">
+          <Icon as={KeyIcon} weight="bold" className="size-8.5 text-primary" />
         </View>
         <Text
           role="heading"
@@ -171,15 +175,13 @@ function LoginPasskey({
         >
           Sign in without a password.
         </Text>
-        <Text className="mt-3 text-center text-xl text-label-secondary">
+        <Text className="mt-3 text-center text-xl text-muted-foreground">
           With a passkey, your face or fingerprint is all it takes. Nothing to
           remember, nothing to type.
         </Text>
-        <View className="mt-7 flex-row items-center gap-2.5 rounded-full bg-surface-secondary py-2 ps-2 pe-4">
+        <View className="mt-7 flex-row items-center gap-2.5 rounded-full bg-muted py-2 ps-2 pe-4">
           <Avatar size="sm" className="size-7">
-            <AvatarFallback className="bg-indigo dark:bg-indigo">
-              JR
-            </AvatarFallback>
+            <AvatarFallback className="bg-indigo-500">JR</AvatarFallback>
           </Avatar>
           <Text className="shrink text-base" numberOfLines={1}>
             jamie@suiss.com
@@ -196,7 +198,10 @@ function LoginPasskey({
           }}
           className="mt-5.5"
         >
-          <Icon as={ScanSmileyIcon} className="size-4.5 text-on-accent" />
+          <Icon
+            as={ScanSmileyIcon}
+            className="size-4.5 text-primary-foreground"
+          />
           <Text>Continue with passkey</Text>
         </Button>
         <View className="mt-4.5">
@@ -204,7 +209,7 @@ function LoginPasskey({
             Sign in with password ›
           </LinkText>
         </View>
-        <Text className="mt-10 text-center text-xs text-label-secondary">
+        <Text className="mt-10 text-center text-xs text-muted-foreground">
           Passkeys are end-to-end encrypted and sync across all your devices
           with suiss Keychain.
         </Text>
@@ -224,7 +229,7 @@ function LoginPasskey({
             <DialogTitle className="text-center text-lg font-semibold">
               {status === "ok" ? "Verified" : "Face scan"}
             </DialogTitle>
-            <DialogDescription className="text-center text-sm text-label-secondary">
+            <DialogDescription className="text-center text-sm text-muted-foreground">
               Passkey for suiss.com
             </DialogDescription>
           </View>

@@ -24,7 +24,7 @@ function GoalContent() {
       </DrawerHeader>
       <View className="items-center gap-1 p-4">
         <Text className="text-5xl font-semibold tracking-tight">350</Text>
-        <Text className="text-xs text-label-secondary uppercase">
+        <Text className="text-xs text-muted-foreground uppercase">
           Calories/day
         </Text>
       </View>
@@ -93,7 +93,7 @@ export const SnapPoints: Story = {
             {ITEMS.map((item) => (
               <View
                 key={item}
-                className="h-12 justify-center rounded-xl bg-surface-secondary px-4"
+                className="h-12 justify-center rounded-xl bg-muted px-4"
               >
                 <Text>{item}</Text>
               </View>
@@ -134,7 +134,7 @@ export const Sides: Story = {
               </DrawerDescription>
             </DrawerHeader>
             <View className="p-4">
-              <Text className="text-sm text-label-secondary">
+              <Text className="text-sm text-muted-foreground">
                 Android back and the VoiceOver escape gesture also close it.
               </Text>
             </View>

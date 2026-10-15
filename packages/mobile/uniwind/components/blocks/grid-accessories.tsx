@@ -114,7 +114,7 @@ function BagButton({
         onPress={onPress}
         className={cn(
           "h-7.5 w-full flex-row gap-1 px-0",
-          inBag && "bg-success active:bg-success active:opacity-80"
+          inBag && "bg-green-500 active:opacity-80"
         )}
       >
         <Icon
@@ -150,7 +150,7 @@ function AccessoryCard({
         source={{ uri: item.image }}
         resizeMode="cover"
         accessibilityIgnoresInvertColors
-        className="aspect-square w-full rounded-2xl bg-surface-secondary"
+        className="aspect-square w-full rounded-2xl bg-muted"
       />
       <Text numberOfLines={2} className="mt-3 min-h-11 text-base font-semibold">
         {item.name}
@@ -199,7 +199,7 @@ function GridAccessories({
             <Text role="heading" className="text-3xl font-semibold">
               Accessories
             </Text>
-            <Text className="text-base text-label-secondary">
+            <Text className="text-base text-muted-foreground">
               Designed for every suiss device.
             </Text>
           </View>
@@ -216,9 +216,9 @@ function GridAccessories({
                 entering={ZoomIn.duration(300).reduceMotion(
                   ReduceMotion.System
                 )}
-                className="absolute -end-2 -bottom-1 h-4 min-w-4 items-center justify-center rounded-full bg-label px-1"
+                className="absolute -end-2 -bottom-1 h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1"
               >
-                <Text className="text-2xs font-semibold text-surface tabular-nums">
+                <Text className="text-2xs font-semibold text-background tabular-nums">
                   {bag.length}
                 </Text>
               </AnimatedView>

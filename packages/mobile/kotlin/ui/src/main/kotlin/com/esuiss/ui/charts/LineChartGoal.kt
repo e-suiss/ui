@@ -22,6 +22,7 @@ import com.esuiss.ui.components.ChartMargin
 import com.esuiss.ui.components.ChartTooltipContent
 import com.esuiss.ui.components.LineChart
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
 import com.esuiss.ui.theme.Typography
 import java.text.NumberFormat
 import java.util.Locale
@@ -41,7 +42,7 @@ private val chartData = listOf(
 )
 
 private val chartConfig = ChartConfig(
-    "steps" to ChartConfigItem("Steps") { orange },
+    "steps" to ChartConfigItem("Steps") { chart4 },
 )
 
 private fun thousands(value: Double): String {
@@ -70,14 +71,14 @@ fun LineChartGoal(modifier: Modifier = Modifier) {
                     CartesianGrid(strokeDasharray = listOf(2f, 4f))
                     XAxis(label = { it.day }, tickMargin = 8.dp, interval = 0)
                     YAxis(orientation = ChartAxisOrientation.Right, tickMargin = 6.dp, tickFormatter = ::thousands)
-                    ReferenceLine(GOAL, stroke = colors.green, strokeDasharray = listOf(4f, 4f), label = "Goal")
+                    ReferenceLine(GOAL, stroke = Palette.green500, strokeDasharray = listOf(4f, 4f), label = "Goal")
                     ChartTooltip {
                         ChartTooltipContent(
                             hideIndicator = true,
                             formatter = { item ->
                                 BasicText(
                                     "${stepsFormat.format(item.value)} steps",
-                                    style = Typography.xs.copy(color = colors.label, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                                    style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
                             },
                         )

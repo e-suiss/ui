@@ -37,7 +37,7 @@ function MarkerLine() {
     <View
       accessible={false}
       importantForAccessibility="no"
-      style={[styles.line, { backgroundColor: colors.separator }]}
+      style={[styles.line, { backgroundColor: colors.border }]}
     />
   )
 }
@@ -63,7 +63,7 @@ function Marker({
           styles.root,
           variant === "border" && [
             styles.border,
-            { borderColor: colors.separator },
+            { borderColor: colors.border },
           ],
           style,
         ],
@@ -84,7 +84,7 @@ function Marker({
         value={{
           ...fontSize.sm,
           textAlign: "left",
-          color: colors.labelSecondary,
+          color: colors.mutedForeground,
         }}
       >
         <IconSizeContext.Provider value={16}>

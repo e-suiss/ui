@@ -288,7 +288,7 @@ function SelectionListItem({
       }}
       style={(state) => [
         styles.item,
-        checked && { backgroundColor: colors.itemSelected },
+        checked && { backgroundColor: colors.accent },
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -302,8 +302,8 @@ function SelectionListItem({
           style={[
             styles.ring,
             checked
-              ? { borderColor: colors.accent, backgroundColor: colors.accent }
-              : { borderColor: colors.labelTertiary },
+              ? { borderColor: colors.primary, backgroundColor: colors.primary }
+              : { borderColor: colors.mutedForeground },
             ringStyle,
           ]}
         >
@@ -312,7 +312,7 @@ function SelectionListItem({
               as={CheckIcon}
               weight="bold"
               size={14}
-              color={colors.onAccent}
+              color={colors.primaryForeground}
             />
           </AnimatedView>
         </AnimatedView>
@@ -357,10 +357,8 @@ function SelectionListBar({
               style={[
                 styles.bar,
                 {
-                  borderColor: colors.separator,
-                  backgroundColor: isDark
-                    ? colors.surfaceSecondary
-                    : colors.surfaceRaised,
+                  borderColor: colors.border,
+                  backgroundColor: isDark ? colors.muted : colors.card,
                 },
                 style,
               ]}

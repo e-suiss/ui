@@ -31,7 +31,7 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, palette, radius, useTheme } from "@/components/ui/theme"
 
 type Status = "idle" | "scan" | "ok" | "done"
 
@@ -117,7 +117,7 @@ function LinkText({
       onPress={onPress}
       style={({ pressed }) => pressed && { opacity: 0.6 }}
     >
-      <Text style={[{ color: colors.link }, style]}>{children}</Text>
+      <Text style={[{ color: colors.primary }, style]}>{children}</Text>
     </Pressable>
   )
 }
@@ -170,9 +170,18 @@ function ScanGlyph({ verified }: { verified: boolean }) {
         <Icon as={ScanSmileyIcon} weight="light" size={72} />
       </AnimatedView>
       <AnimatedView
-        style={[styles.check, { backgroundColor: colors.success }, checkStyle]}
+        style={[
+          styles.check,
+          { backgroundColor: palette.green500 },
+          checkStyle,
+        ]}
       >
-        <Icon as={CheckIcon} weight="bold" size={32} color={colors.onAccent} />
+        <Icon
+          as={CheckIcon}
+          weight="bold"
+          size={32}
+          color={colors.primaryForeground}
+        />
       </AnimatedView>
     </View>
   )
@@ -210,7 +219,7 @@ function LoginPasskey({
             style={styles.done}
           >
             <Avatar size="xl" style={{ width: 84, height: 84 }}>
-              <AvatarFallback style={{ backgroundColor: colors.indigo }}>
+              <AvatarFallback style={{ backgroundColor: palette.indigo500 }}>
                 <Text style={fontSize["3xl"]}>JR</Text>
               </AvatarFallback>
             </Avatar>
@@ -221,7 +230,7 @@ function LoginPasskey({
               style={{
                 ...fontSize.lg,
                 textAlign: "center",
-                color: colors.labelSecondary,
+                color: colors.mutedForeground,
               }}
             >
               You signed in with a passkey. No password needed.
@@ -238,10 +247,8 @@ function LoginPasskey({
   return (
     <Screen>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <View
-          style={[styles.key, { backgroundColor: colors.surfaceSecondary }]}
-        >
-          <Icon as={KeyIcon} weight="bold" size={34} color={colors.accent} />
+        <View style={[styles.key, { backgroundColor: colors.muted }]}>
+          <Icon as={KeyIcon} weight="bold" size={34} color={colors.primary} />
         </View>
         <Text role="heading" style={[styles.heading, { marginTop: 22 }]}>
           Sign in without a password.
@@ -251,17 +258,15 @@ function LoginPasskey({
             ...fontSize.xl,
             marginTop: 12,
             textAlign: "center",
-            color: colors.labelSecondary,
+            color: colors.mutedForeground,
           }}
         >
           With a passkey, your face or fingerprint is all it takes. Nothing to
           remember, nothing to type.
         </Text>
-        <View
-          style={[styles.account, { backgroundColor: colors.surfaceSecondary }]}
-        >
+        <View style={[styles.account, { backgroundColor: colors.muted }]}>
           <Avatar size="sm" style={{ width: 28, height: 28 }}>
-            <AvatarFallback style={{ backgroundColor: colors.indigo }}>
+            <AvatarFallback style={{ backgroundColor: palette.indigo500 }}>
               JR
             </AvatarFallback>
           </Avatar>
@@ -280,7 +285,11 @@ function LoginPasskey({
           }}
           style={{ marginTop: 22 }}
         >
-          <Icon as={ScanSmileyIcon} size={18} color={colors.onAccent} />
+          <Icon
+            as={ScanSmileyIcon}
+            size={18}
+            color={colors.primaryForeground}
+          />
           <Text>Continue with passkey</Text>
         </Button>
         <View style={{ marginTop: 18 }}>
@@ -293,7 +302,7 @@ function LoginPasskey({
             ...fontSize.xs,
             marginTop: 40,
             textAlign: "center",
-            color: colors.labelSecondary,
+            color: colors.mutedForeground,
           }}
         >
           Passkeys are end-to-end encrypted and sync across all your devices
@@ -318,7 +327,7 @@ function LoginPasskey({
               style={{
                 ...fontSize.sm,
                 textAlign: "center",
-                color: colors.labelSecondary,
+                color: colors.mutedForeground,
               }}
             >
               Passkey for suiss.com
