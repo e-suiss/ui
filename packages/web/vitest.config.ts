@@ -1,7 +1,11 @@
 import { fileURLToPath } from "node:url"
 import tailwindcss from "@tailwindcss/vite"
 import { playwright } from "@vitest/browser-playwright"
-import { defineConfig } from "vitest/config"
+import {
+  defineConfig,
+  type TestProjectInlineConfiguration,
+} from "vitest/config"
+import { resolveBase } from "./bases/resolve.ts"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
 const TEST_FILE = /\.test\.tsx$/
@@ -34,6 +38,88 @@ function browser(name: string) {
     provider: playwright({ launchOptions: { channel: "chrome" } }),
     instances: [{ browser: "chromium" as const, name }],
     viewport: { width: 1280, height: 800 },
+  }
+}
+
+function examples(
+  name: string,
+  base?: "radix"
+): TestProjectInlineConfiguration {
+  return {
+    extends: true,
+    plugins: [tailwindcss(), ...(base ? [resolveBase(root, base)] : [])],
+    optimizeDeps: {
+      entries: [
+        "examples/*.tsx",
+        "tests/examples/*.test.tsx",
+        ...(base ? [`bases/${base}/**/*.tsx`] : []),
+      ],
+    },
+    test: {
+      name,
+      include: ["tests/examples/*.test.tsx"],
+      provide: {
+        responsiveWidth: Number(process.env.WIDTH ?? 0),
+        base: base ?? "base",
+      },
+      maxWorkers: 4,
+      sequence: { groupOrder: 2 },
+      setupFiles: [
+        "tests/setup.ts",
+        "tests/examples-setup.ts",
+        ...(process.env.RTL ? ["tests/rtl-setup.ts"] : []),
+        ...(process.env.LONG_TEXT ? ["tests/long-text-setup.ts"] : []),
+        ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
+        ...(process.env.A11Y ? ["tests/a11y-setup.ts"] : []),
+        ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),
+        ...(process.env.TEXT ? ["tests/text-setup.ts"] : []),
+        ...(process.env.MOBILE ? ["tests/mobile-setup.ts"] : []),
+        ...(process.env.WIDTH ? ["tests/responsive-setup.ts"] : []),
+      ],
+      browser: {
+        ...browser(name),
+        ...(process.env.MOBILE && {
+          instances: [
+            {
+              browser: "webkit" as const,
+              name: `${name}-iphone`,
+              provider: playwright({ contextOptions: IPHONE }),
+            },
+            {
+              browser: "chromium" as const,
+              name: `${name}-pixel`,
+              provider: playwright({
+                launchOptions: { channel: "chrome" },
+                contextOptions: PIXEL,
+              }),
+            },
+          ],
+        }),
+        ...(process.env.BROWSERS && {
+          instances: [
+            { browser: "chromium" as const, name: `${name}-chromium` },
+            {
+              browser: "webkit" as const,
+              name: `${name}-webkit`,
+              provider: playwright(),
+            },
+            {
+              browser: "firefox" as const,
+              name: `${name}-firefox`,
+              provider: playwright(),
+            },
+          ],
+        }),
+        expect: {
+          toMatchScreenshot: {
+            comparatorName: "pixelmatch",
+            comparatorOptions: { allowedMismatchedPixels: 10 },
+            resolveScreenshotPath: ({ arg, ext, testFileName }) =>
+              `${root}tests/screenshots/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
+          },
+        },
+      },
+    },
   }
 }
 
@@ -87,78 +173,8 @@ export default defineConfig({
             },
           ]
         : []),
-      {
-        extends: true,
-        plugins: [tailwindcss()],
-        optimizeDeps: {
-          entries: ["examples/*.tsx", "tests/examples/*.test.tsx"],
-        },
-        test: {
-          name: "examples",
-          include: ["tests/examples/*.test.tsx"],
-          provide: {
-            responsiveWidth: Number(process.env.WIDTH ?? 0),
-            base: "base",
-          },
-          maxWorkers: 4,
-          sequence: { groupOrder: 2 },
-          setupFiles: [
-            "tests/setup.ts",
-            "tests/examples-setup.ts",
-            ...(process.env.RTL ? ["tests/rtl-setup.ts"] : []),
-            ...(process.env.LONG_TEXT ? ["tests/long-text-setup.ts"] : []),
-            ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
-            ...(process.env.A11Y ? ["tests/a11y-setup.ts"] : []),
-            ...(process.env.MOTION ? ["tests/motion-setup.ts"] : []),
-            ...(process.env.TEXT ? ["tests/text-setup.ts"] : []),
-            ...(process.env.MOBILE ? ["tests/mobile-setup.ts"] : []),
-            ...(process.env.WIDTH ? ["tests/responsive-setup.ts"] : []),
-          ],
-          browser: {
-            ...browser("examples"),
-            ...(process.env.MOBILE && {
-              instances: [
-                {
-                  browser: "webkit" as const,
-                  name: "examples-iphone",
-                  provider: playwright({ contextOptions: IPHONE }),
-                },
-                {
-                  browser: "chromium" as const,
-                  name: "examples-pixel",
-                  provider: playwright({
-                    launchOptions: { channel: "chrome" },
-                    contextOptions: PIXEL,
-                  }),
-                },
-              ],
-            }),
-            ...(process.env.BROWSERS && {
-              instances: [
-                { browser: "chromium" as const, name: "examples-chromium" },
-                {
-                  browser: "webkit" as const,
-                  name: "examples-webkit",
-                  provider: playwright(),
-                },
-                {
-                  browser: "firefox" as const,
-                  name: "examples-firefox",
-                  provider: playwright(),
-                },
-              ],
-            }),
-            expect: {
-              toMatchScreenshot: {
-                comparatorName: "pixelmatch",
-                comparatorOptions: { allowedMismatchedPixels: 10 },
-                resolveScreenshotPath: ({ arg, ext, testFileName }) =>
-                  `${root}tests/screenshots/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
-              },
-            },
-          },
-        },
-      },
+      examples("examples"),
+      examples("examples-radix", "radix"),
     ],
   },
 })
