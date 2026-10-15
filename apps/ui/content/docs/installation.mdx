@@ -162,11 +162,90 @@ Running `add` for a component you already have keeps your file and tells you whe
 
 ## Requirements
 
-An Expo or React Native project with TypeScript.
+- An Expo or React Native project with TypeScript
+- The `@/*` import alias in `tsconfig.json`, such as `"paths": { "@/*": ["./*"] }`
+- For Uniwind or NativeWind, the styling library set up as its own guide describes, with `global.css` imported in your root component
 
-## Set up your project
+## Add components
 
-Run `init` once, in the root of your project.
+The React Native components are published as a registry too, once per styling library. Add a `components.json` to the root of your project and point the `@esuiss-rn` namespace at the registry for your styling:
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "global.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "registries": {
+    "@esuiss-rn": "https://ui.suiss.app/r/rn-uniwind/{name}.json"
+  }
+}
+```
+
+| Styling | `@esuiss-rn` registry | `tailwind` in `components.json` |
+| --- | --- | --- |
+| Uniwind | `https://ui.suiss.app/r/rn-uniwind/{name}.json` | `"css": "global.css"` |
+| NativeWind v4 | `https://ui.suiss.app/r/rn-nativewind/{name}.json` | `"css": "global.css"`, `"config": "tailwind.config.js"` |
+| StyleSheet | `https://ui.suiss.app/r/rn-stylesheet/{name}.json` | `"css": ""` |
+
+Then add components with the registry CLI:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss-rn/button @esuiss-rn/dialog @esuiss-rn/select
+```
+
+Each item comes with the components, primitives and npm packages it depends on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. Components go to `components/ui/`, the primitives they build on to `components/primitives/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`. Icons use `phosphor-react-native`.
+
+### Add the theme
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss-rn/theme-suiss
+```
+
+- Uniwind: writes `theme-suiss.css` to the root of your project and imports it from `global.css`. If `global.css` lives in another folder, fix the path of that import.
+- NativeWind: adds the color variables to `global.css` and the colors, type scale, shadows and radius scale to `tailwind.config.js`.
+- StyleSheet: writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. Every component that needs it adds it on its own.
+
+### Render the portal host
+
+Dialogs, sheets, menus and toasts render into a portal host. Render it once, as the last child of your root component:
+
+```tsx title="App.tsx"
+import { View } from "react-native"
+import { PortalHost } from "@/components/primitives/portal"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+export default function App() {
+  return (
+    <View style={{ flex: 1 }}>
+      <Button>
+        <Text>Continue</Text>
+      </Button>
+      <PortalHost />
+    </View>
+  )
+}
+```
+
+The catalogs are at [ui.suiss.app/r/rn-uniwind/registry.json](https://ui.suiss.app/r/rn-uniwind/registry.json), [ui.suiss.app/r/rn-nativewind/registry.json](https://ui.suiss.app/r/rn-nativewind/registry.json) and [ui.suiss.app/r/rn-stylesheet/registry.json](https://ui.suiss.app/r/rn-stylesheet/registry.json).
+
+## Use the suiss/ui CLI
+
+The suiss/ui CLI sets up the styling library, the theme, the Metro config and the portal host for you. Run `init` once, in the root of your project.
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init
@@ -191,15 +270,7 @@ npx @esuiss/ui@latest init --styling stylesheet
 
 StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
 
-### React Native without Expo
-
-`init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `pod install` after adding components:
-
-```bash title="Terminal"
-cd ios && pod install
-```
-
-## Add components
+### Add components with the suiss/ui CLI
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest add dialog
@@ -207,7 +278,15 @@ npx @esuiss/ui@latest add dialog
 
 Run `add` without names to pick from a list instead. See [CLI](/docs/cli#pick-from-a-list).
 
-Components are copied into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK.
+Components are copied into `components/ui/` together with the components and packages they depend on.
+
+### React Native without Expo
+
+`init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `pod install` after adding components:
+
+```bash title="Terminal"
+cd ios && pod install
+```
 
 </Only>
 
