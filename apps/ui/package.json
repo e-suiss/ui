@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
-    "build": "next build",
+    "dev": "pnpm build:registry && next dev --port 3000",
+    "build": "pnpm build:registry && next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "build:registry": "shadcn build ../../packages/web/registry/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",

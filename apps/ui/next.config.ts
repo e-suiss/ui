@@ -67,6 +67,7 @@ const nextConfig: NextConfig = {
           has: markdown,
           destination: "/llms.mdx/docs/:path*",
         },
+        { source: "/r/:style/:file", destination: "/r/:file" },
       ],
       afterFiles: [],
       fallback: [],
@@ -79,6 +80,17 @@ const nextConfig: NextConfig = {
         headers: [{ key: "X-Build", value: process.env.BUILD_SHA ?? "dev" }],
       },
       { source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] },
+      {
+        source: "/r/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, s-maxage=86400",
+          },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
     ])
   },
   turbopack: {

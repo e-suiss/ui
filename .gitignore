@@ -15,3 +15,4 @@ next-env.d.ts
 .vercel
 npm-debug.log*
 .pnpm-debug.log*
+apps/ui/public/r
