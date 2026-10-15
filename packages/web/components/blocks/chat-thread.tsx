@@ -76,7 +76,7 @@ export function ChatThread() {
         />
         <a
           href="#contact"
-          className="flex shrink-0 flex-col items-center gap-1 border-b border-border bg-background/85 pt-6 pb-2.5 outline-none backdrop-blur-xl focus-visible:focus-ring sm:pt-12.5"
+          className="flex shrink-0 flex-col items-center gap-1 border-b border-border bg-background/85 pt-6 pb-2.5 outline-none backdrop-blur-xl focus-visible:ring-3 focus-visible:ring-ring/50 sm:pt-12.5"
         >
           <Avatar className="size-12">
             <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_150)] to-[oklch(0.6_0.14_180)] text-lg text-white dark:from-[oklch(0.78_0.1_150)] dark:to-[oklch(0.6_0.14_180)]">
@@ -92,7 +92,7 @@ export function ChatThread() {
           <MessageScroller className="flex-1">
             <MessageScrollerViewport aria-label="Conversation with Riley">
               <MessageScrollerContent className="gap-1 px-3 py-3">
-                <p className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
+                <p className="mt-1 mb-2.5 text-center text-xs text-muted-foreground">
                   Today 9:30 AM
                 </p>
                 {lines.map((line) => (
@@ -173,13 +173,13 @@ export function ChatThread() {
           >
             <PlusIcon weight="bold" className="size-4.5" />
           </Button>
-          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Message"
               aria-label="Message"
-              className="h-8 flex-1 rounded-none bg-transparent px-0 [--focus-ring-width:0px]"
+              className="h-8 flex-1 rounded-none bg-transparent px-0 focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
             />
             <Button
               type="submit"

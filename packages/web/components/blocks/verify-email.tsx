@@ -33,7 +33,7 @@ export function VerifyEmail() {
           <button
             type="button"
             onClick={() => setVerified(false)}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>

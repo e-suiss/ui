@@ -73,7 +73,7 @@ export default function WidgetWeeklyReport() {
                       style={{ height: `${day.value}%` }}
                     />
                   </div>
-                  <span className="text-2xs text-muted-foreground group-data-[size=medium]/widget:hidden">
+                  <span className="text-xs text-muted-foreground group-data-[size=medium]/widget:hidden">
                     {day.day}
                   </span>
                 </div>

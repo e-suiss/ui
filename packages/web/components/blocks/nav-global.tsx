@@ -120,7 +120,7 @@ export function NavGlobal() {
         brand={
           <a
             href="#home"
-            className="rounded-sm text-sm font-semibold tracking-tight outline-none focus-visible:focus-ring"
+            className="rounded-sm text-sm font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             suiss
           </a>

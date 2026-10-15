@@ -158,7 +158,7 @@ function ContextActionsTrigger({
       tabIndex={0}
       aria-haspopup="dialog"
       className={cn(
-        "touch-manipulation outline-none select-none [-webkit-touch-callout:none] focus-visible:focus-ring",
+        "touch-manipulation outline-none select-none [-webkit-touch-callout:none] focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
     />

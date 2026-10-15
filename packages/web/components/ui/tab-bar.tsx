@@ -32,7 +32,7 @@ const TabBarContext = React.createContext<TabBarContextProps | null>(null)
 const TabBarOverflowContext = React.createContext(false)
 
 const tabBarLinkClassName =
-  "relative ms-0.5 flex min-h-9 items-center border-s border-dotted border-input ps-3.25 text-sm text-foreground md:text-base outline-none transition-colors select-none hover:text-muted-foreground focus-visible:focus-ring data-active:text-primary"
+  "relative ms-0.5 flex min-h-9 items-center border-s border-dotted border-input ps-3.25 text-sm text-foreground md:text-base outline-none transition-colors select-none hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:text-primary"
 
 function useTabBar() {
   const context = React.useContext(TabBarContext)

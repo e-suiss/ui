@@ -286,7 +286,7 @@ export function Search({
         onPointerEnter={prefetch}
         onFocus={prefetch}
         className={cn(
-          "flex items-center gap-3 text-start outline-none focus-visible:focus-ring",
+          "flex items-center gap-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
           className
         )}
       >

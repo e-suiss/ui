@@ -83,7 +83,7 @@ export function LoginPasskey() {
           <button
             type="button"
             onClick={() => setStatus("idle")}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Sign out ›
           </button>
@@ -107,7 +107,7 @@ export function LoginPasskey() {
         </p>
         <div className="mt-7 flex items-center gap-2.5 rounded-full bg-muted py-2 ps-2 pe-4">
           <Avatar size="sm" className="size-7">
-            <AvatarFallback className={`${avatarClass} text-3xs`}>
+            <AvatarFallback className={`${avatarClass} text-xs`}>
               JR
             </AvatarFallback>
           </Avatar>

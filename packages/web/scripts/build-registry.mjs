@@ -13,6 +13,7 @@ const OUTPUT = path.join(ROOT, "registry.json")
 const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
 const OPT_IN = new Set(["theme"])
+const ITEM_CSS = new Map([["theme", "styles/theme.css"]])
 const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks)\/([\w-]+)$/
 
@@ -55,6 +56,7 @@ async function buildItem(dir, type, file) {
     requires: [...requires].sort(),
     files: [filePath],
     ...(OPT_IN.has(name) && { optIn: true }),
+    ...(ITEM_CSS.has(name) && { css: ITEM_CSS.get(name) }),
   }
 }
 
@@ -71,8 +73,9 @@ function validate(items) {
         .map((required) => `${item.name} requires missing item "${required}"`)
     ),
   ]
-  if (!existsSync(path.join(ROOT, STYLESHEET))) {
-    problems.push(`missing ${STYLESHEET}`)
+  const stylesheets = [STYLESHEET, ...items.flatMap((item) => item.css ?? [])]
+  for (const file of stylesheets) {
+    if (!existsSync(path.join(ROOT, file))) problems.push(`missing ${file}`)
   }
   return problems
 }

@@ -21,7 +21,7 @@ export function CodeScroll({
       <ScrollArea.Viewport
         data-slot="code-viewport"
         className={cn(
-          "overscroll-x-contain rounded-[inherit] outline-none [--fade-end:0px] [--fade-start:0px] mask-[linear-gradient(to_right,transparent,black_var(--fade-start),black_calc(100%-var(--fade-end)),transparent)] focus-visible:focus-ring data-overflow-x-end:[--fade-end:2.5rem] data-overflow-x-start:[--fade-start:1.5rem]",
+          "overscroll-x-contain rounded-[inherit] outline-none [--fade-end:0px] [--fade-start:0px] mask-[linear-gradient(to_right,transparent,black_var(--fade-start),black_calc(100%-var(--fade-end)),transparent)] focus-visible:ring-3 focus-visible:ring-ring/50 data-overflow-x-end:[--fade-end:2.5rem] data-overflow-x-start:[--fade-start:1.5rem]",
           viewportClassName
         )}
       >

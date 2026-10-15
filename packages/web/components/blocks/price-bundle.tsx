@@ -82,7 +82,7 @@ export function PriceBundle() {
         {plans.map((item) => (
           <Label
             key={item.name}
-            className="flex cursor-pointer flex-col gap-3.5 rounded-[1.25rem] bg-muted/60 p-5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-[background-color,box-shadow] duration-300 has-data-checked:bg-muted has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring font-normal items-stretch"
+            className="flex cursor-pointer flex-col gap-3.5 rounded-[1.25rem] bg-muted/60 p-5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-[background-color,box-shadow] duration-300 has-data-checked:bg-muted has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 font-normal items-stretch"
           >
             <span className="flex items-center gap-2">
               <span className="flex-1 text-2xl font-semibold">{item.name}</span>

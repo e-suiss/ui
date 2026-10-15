@@ -101,7 +101,7 @@ function SearchRevealField({
       data-slot="search-reveal-field"
       className="px-4 pb-2 opacity-(--search-reveal)"
     >
-      <div className="flex h-9 items-center gap-1.5 rounded-lg bg-secondary px-2 text-muted-foreground focus-within:focus-ring">
+      <div className="flex h-9 items-center gap-1.5 rounded-lg bg-secondary px-2 text-muted-foreground focus-within:ring-3 focus-within:ring-ring/50">
         <MagnifyingGlassIcon aria-hidden className="size-4.5 shrink-0" />
         <input
           ref={inputRef}
@@ -131,7 +131,7 @@ function SearchRevealField({
               onValueChange("")
               inputRef.current?.focus()
             }}
-            className="relative -me-1 flex size-7 shrink-0 items-center justify-center rounded-full outline-none after:absolute after:-inset-2 after:content-[''] focus-visible:focus-ring"
+            className="relative -me-1 flex size-7 shrink-0 items-center justify-center rounded-full outline-none after:absolute after:-inset-2 after:content-[''] focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <XCircleIcon weight="fill" className="size-4.5" />
           </button>

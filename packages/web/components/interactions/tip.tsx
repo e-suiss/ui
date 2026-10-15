@@ -310,7 +310,7 @@ function TipClose({
       aria-label="Dismiss tip"
       onClick={dismiss}
       className={cn(
-        "absolute inset-e-2 top-2 flex size-8 items-center justify-center rounded-full text-muted-foreground outline-none after:absolute after:-inset-1.5 after:content-[''] hover:bg-accent hover:text-accent-foreground focus-visible:focus-ring",
+        "absolute inset-e-2 top-2 flex size-8 items-center justify-center rounded-full text-muted-foreground outline-none after:absolute after:-inset-1.5 after:content-[''] hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
       {...props}

@@ -290,7 +290,7 @@ export function InboxMail() {
         <div className="flex items-center gap-2 md:px-1">
           <div className="flex flex-1 flex-col max-md:hidden">
             <span className="text-lg font-semibold">{mailbox}</span>
-            <span className="text-2xs text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {unread ? `${unread} unread` : "All read"}
             </span>
           </div>

@@ -7,7 +7,7 @@ import * as React from "react"
 const RESET_AFTER = 1500
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 const item =
-  "group flex cursor-pointer items-center gap-1 rounded-sm font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase outline-none transition-colors duration-300 hover:text-foreground focus-visible:focus-ring"
+  "group flex cursor-pointer items-center gap-1 rounded-sm font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase outline-none transition-colors duration-300 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
 
 function External({ label, onClick }: { label: string; onClick: () => void }) {
   return (

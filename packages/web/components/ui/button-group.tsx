@@ -6,7 +6,7 @@ import { cn } from "cn"
 import { Separator } from "@/components/ui/separator"
 
 const buttonGroupVariants = cva(
-  "flex w-fit items-stretch *:data-slot:bg-clip-border [&>[data-variant=ghost]]:rounded-full! [&>[data-variant=plain]]:rounded-full! *:[--focus-ring-offset:-3px] *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[>[data-variant=outline]]:*:data-[slot=input-group]:border-border has-[>[data-variant=outline]]:*:data-[slot=select-trigger]:border-border [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 has-[>[data-variant=outline]]:[&>input]:border-border",
+  "flex w-fit items-stretch *:data-slot:bg-clip-border [&>[data-variant=ghost]]:rounded-full! [&>[data-variant=plain]]:rounded-full! *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[>[data-variant=outline]]:*:data-[slot=input-group]:border-border has-[>[data-variant=outline]]:*:data-[slot=select-trigger]:border-border [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 has-[>[data-variant=outline]]:[&>input]:border-border",
   {
     variants: {
       orientation: {

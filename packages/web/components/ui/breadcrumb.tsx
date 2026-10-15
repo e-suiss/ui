@@ -50,7 +50,7 @@ function BreadcrumbLink({
     props: mergeProps<"a">(
       {
         className: cn(
-          "rounded-xs outline-none hover:underline focus-visible:focus-ring [&_svg:not([class*='size-'])]:size-4.5",
+          "rounded-xs outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg:not([class*='size-'])]:size-4.5",
           className
         ),
       },

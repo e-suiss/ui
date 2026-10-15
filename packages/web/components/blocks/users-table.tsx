@@ -324,7 +324,7 @@ export function UsersTable() {
                       key={user.email}
                       data-selected={isSelected ? "true" : undefined}
                       onClick={() => toggle(user.email)}
-                      className="group/row cursor-default border-0 select-none not-data-selected:even:bg-background/60 not-data-selected:hover:bg-foreground/5 has-focus-visible:focus-ring data-selected:bg-primary data-selected:text-primary-foreground"
+                      className="group/row cursor-default border-0 select-none not-data-selected:even:bg-background/60 not-data-selected:hover:bg-foreground/5 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-selected:bg-primary data-selected:text-primary-foreground"
                     >
                       <TableCell className="ps-4">
                         <span className="flex items-center gap-2.5">
@@ -340,7 +340,7 @@ export function UsersTable() {
                               style={{
                                 background: `linear-gradient(160deg, oklch(0.78 0.1 ${user.hue}), oklch(0.6 0.14 ${user.hue + 30}))`,
                               }}
-                              className="text-3xs text-white"
+                              className="text-xs text-white"
                             >
                               {initials(user.name)}
                             </AvatarFallback>

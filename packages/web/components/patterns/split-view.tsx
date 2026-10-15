@@ -193,7 +193,7 @@ function SplitViewPane({
           type="button"
           data-slot="split-view-back"
           onClick={() => setColumn(backColumn)}
-          className="-ms-1.5 inline-flex min-h-11 items-center gap-0.5 self-start rounded-md pe-1.5 text-base text-primary outline-none focus-visible:focus-ring"
+          className="-ms-1.5 inline-flex min-h-11 items-center gap-0.5 self-start rounded-md pe-1.5 text-base text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <CaretLeftIcon
             weight="bold"
@@ -311,7 +311,7 @@ function SplitViewItem({
         "aria-current": isActive ? "true" : undefined,
         onClick: () => setColumn(NEXT[kind]),
         className: cn(
-          "flex w-full items-center gap-3 text-start text-base outline-none select-none focus-visible:focus-ring",
+          "flex w-full items-center gap-3 text-start text-base outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50",
           isMobile
             ? "min-h-11 border-border py-3 [[data-slot=split-view-item]+&]:border-t"
             : "rounded-lg px-3 py-2 hover:bg-accent data-active:bg-muted hover:text-accent-foreground",

@@ -41,13 +41,13 @@ export function LocalNav() {
           type="button"
           aria-label={strings.menu}
           onClick={toggleSidebar}
-          className="-ms-1.5 -me-5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-foreground/6 focus-visible:focus-ring md:hidden"
+          className="-ms-1.5 -me-5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-foreground/6 focus-visible:ring-3 focus-visible:ring-ring/50 md:hidden"
         >
           <SidebarIcon className="size-4.5" />
         </button>
         <Anchor
           href="/"
-          className="flex items-center self-center rounded-sm outline-none focus-visible:focus-ring"
+          className="flex items-center self-center rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <Logo />
         </Anchor>
@@ -60,7 +60,7 @@ export function LocalNav() {
                   href={section.path}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:focus-ring",
+                    "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
                     active
                       ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-foreground"
                       : "text-foreground/55 hover:text-foreground"
@@ -76,13 +76,13 @@ export function LocalNav() {
           <Search className="size-10 rounded-full bg-foreground/5 text-foreground transition-colors duration-300 hover:bg-foreground/10" />
           <Anchor
             href={repository}
-            className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-foreground/5 focus-visible:focus-ring lg:flex"
+            className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 lg:flex"
           >
             {strings.github}
           </Anchor>
           <Anchor
             href="/docs/installation"
-            className="group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex"
+            className="group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:flex"
           >
             {strings.getStarted}
             <span

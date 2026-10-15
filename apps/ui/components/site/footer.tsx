@@ -134,7 +134,7 @@ function BottomBar() {
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="group flex h-8 items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-foreground outline-none transition-colors hover:bg-foreground/15 focus-visible:focus-ring"
+          className="group flex h-8 items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-foreground outline-none transition-colors hover:bg-foreground/15 focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {strings.backToTop}
           <span className="flex size-6 items-center justify-center rounded-full bg-foreground text-background">
@@ -181,7 +181,7 @@ export function Footer() {
             >
               <Anchor
                 href={path.href}
-                className="group flex items-center justify-between gap-6 py-4 outline-none focus-visible:focus-ring md:py-5"
+                className="group flex items-center justify-between gap-6 py-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-5"
               >
                 <span
                   className={cn(

@@ -318,7 +318,7 @@ function SwipeActionsActions({
 }
 
 const swipeActionVariants = cva(
-  "flex min-w-18 flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden px-3 text-center text-xs font-medium wrap-break-word text-primary-foreground outline-none transition-[flex-grow,opacity] duration-200 focus-visible:-outline-offset-4 focus-visible:focus-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+  "flex min-w-18 flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden px-3 text-center text-xs font-medium wrap-break-word text-primary-foreground outline-none transition-[flex-grow,opacity] duration-200 focus-visible:ring-inset focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {

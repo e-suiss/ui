@@ -99,7 +99,7 @@ function Row({ page, group }: { page: PageTree.Item; group?: string }) {
         href={page.url}
         onClick={() => setOpenMobile(false)}
         aria-current={active ? "page" : undefined}
-        className="group/row relative flex h-8 items-center rounded-md ps-5 pe-2 outline-none focus-visible:focus-ring"
+        className="group/row relative flex h-8 items-center rounded-md ps-5 pe-2 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         <span
           aria-hidden
@@ -163,7 +163,7 @@ function SectionSwitcher() {
           href={item.path}
           onClick={() => setOpenMobile(false)}
           aria-current={isActive(item.path) ? "page" : undefined}
-          className="flex h-8 items-center rounded-full bg-foreground/6 px-3.5 text-sm font-medium tracking-[-0.01em] text-foreground/70 outline-none aria-[current=page]:bg-foreground aria-[current=page]:text-background focus-visible:focus-ring"
+          className="flex h-8 items-center rounded-full bg-foreground/6 px-3.5 text-sm font-medium tracking-[-0.01em] text-foreground/70 outline-none aria-[current=page]:bg-foreground aria-[current=page]:text-background focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {item.label}
         </Anchor>

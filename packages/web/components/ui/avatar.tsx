@@ -45,7 +45,7 @@ function AvatarFallback({
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "flex size-full items-center justify-center rounded-full bg-linear-to-b from-muted-foreground/90 to-muted-foreground text-xs font-semibold text-primary-foreground uppercase group-data-[size=lg]/avatar:text-md group-data-[size=sm]/avatar:text-3xs group-data-[size=xl]/avatar:text-2xl dark:from-muted-foreground/70 dark:to-muted-foreground/50 *:[svg]:size-3/5",
+        "flex size-full items-center justify-center rounded-full bg-linear-to-b from-muted-foreground/90 to-muted-foreground text-xs font-semibold text-primary-foreground uppercase group-data-[size=lg]/avatar:text-base group-data-[size=sm]/avatar:text-xs group-data-[size=xl]/avatar:text-2xl dark:from-muted-foreground/70 dark:to-muted-foreground/50 *:[svg]:size-3/5",
         className
       )}
       {...props}
@@ -91,7 +91,7 @@ function AvatarGroupCount({
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=lg]/avatar-group:text-md group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-3xs group-has-data-[size=xl]/avatar-group:size-16 group-has-data-[size=xl]/avatar-group:text-2xl [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 group-has-data-[size=xl]/avatar-group:[&>svg]:size-7",
+        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-xs group-has-data-[size=xl]/avatar-group:size-16 group-has-data-[size=xl]/avatar-group:text-2xl [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 group-has-data-[size=xl]/avatar-group:[&>svg]:size-7",
         className
       )}
       {...props}

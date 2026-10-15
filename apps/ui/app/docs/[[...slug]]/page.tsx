@@ -43,7 +43,7 @@ function Neighbour({
     <Anchor
       href={href}
       className={cn(
-        "group flex items-center justify-between gap-6 border-t border-foreground/12 py-6 outline-none focus-visible:focus-ring md:py-8",
+        "group flex items-center justify-between gap-6 border-t border-foreground/12 py-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-8",
         !next && "flex-row-reverse"
       )}
     >

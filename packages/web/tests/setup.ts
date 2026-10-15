@@ -1,4 +1,5 @@
 import "../styles/globals.css"
+import "../styles/theme.css"
 
 import { beforeEach } from "vitest"
 import { cdp, page, server, userEvent } from "vitest/browser"

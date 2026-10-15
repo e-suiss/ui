@@ -59,7 +59,7 @@ export function EmptySearch() {
                 key={item}
                 type="button"
                 onClick={() => setQuery(item)}
-                className="flex items-center gap-2.5 rounded-md py-1.5 text-start text-lg outline-none hover:underline focus-visible:focus-ring"
+                className="flex items-center gap-2.5 rounded-md py-1.5 text-start text-lg outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <MagnifyingGlassIcon className="size-3.5 text-muted-foreground" />
                 {item}

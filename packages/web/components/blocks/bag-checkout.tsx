@@ -35,7 +35,7 @@ const money = (value: number) =>
   value.toLocaleString("en-US", { style: "currency", currency: "USD" })
 
 const choiceClass =
-  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring"
+  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
 
 function stepState(index: number, current: number) {
   if (current > index) return "done"
@@ -84,7 +84,7 @@ function Step({
             type="button"
             onClick={onEdit}
             aria-label={`Edit ${title.toLowerCase()}`}
-            className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Edit ›
           </button>
@@ -134,7 +134,7 @@ export function BagCheckout() {
               setPlaced(false)
               setStep(0)
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -167,7 +167,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="standard"
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
               <span className="flex-1">Standard · 3–5 business days</span>
               <span>Free</span>
@@ -175,7 +175,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="express"
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
               <span className="flex-1">Express · Tomorrow</span>
               <span>$19</span>
@@ -201,7 +201,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="card"
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
               <CreditCardIcon className="size-4.5" />
               <span className="flex-1">Credit card · •••• 4242</span>
@@ -209,7 +209,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="pay"
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
               <WalletIcon className="size-4.5" />
               <span className="flex-1">suiss Pay</span>

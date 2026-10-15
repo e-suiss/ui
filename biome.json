@@ -187,7 +187,10 @@
       }
     },
     {
-      "includes": ["packages/tailwind/tailwind.css"],
+      "includes": [
+        "packages/web/styles/globals.css",
+        "apps/ui/app/globals.css"
+      ],
       "linter": {
         "rules": {
           "complexity": {

@@ -182,7 +182,7 @@ function Library() {
           >
             <Anchor
               href={collection.href}
-              className="group grid items-center gap-4 py-8 outline-none focus-visible:focus-ring md:grid-cols-[1fr_3fr] md:gap-6 md:py-10"
+              className="group grid items-center gap-4 py-8 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:grid-cols-[1fr_3fr] md:gap-6 md:py-10"
             >
               <span className="font-mono text-xs text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}

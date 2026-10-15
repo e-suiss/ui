@@ -239,7 +239,7 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
 
   return (
     <Collapsible>
-      <CollapsibleTrigger className="group/event flex min-h-11 w-full items-center gap-3 py-2 ps-4 pe-4 text-start outline-none hover:bg-accent focus-visible:focus-ring hover:text-accent-foreground">
+      <CollapsibleTrigger className="group/event flex min-h-11 w-full items-center gap-3 py-2 ps-4 pe-4 text-start outline-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 hover:text-accent-foreground">
         {body}
         <CaretRightIcon
           weight="bold"

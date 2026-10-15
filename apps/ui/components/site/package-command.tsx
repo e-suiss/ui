@@ -104,7 +104,7 @@ function CopyButton({ text }: { text: string }) {
         await navigator.clipboard.writeText(text)
         setCopied(true)
       }}
-      className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foreground text-background outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] hover:scale-105 focus-visible:focus-ring [--focus-ring-offset:3px]"
+      className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foreground text-background outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50"
     >
       {copied ? (
         <CheckIcon className="size-4" />
@@ -157,7 +157,7 @@ export function PackageCommand({ command }: { command: string }) {
               aria-checked={active}
               onClick={() => choose(item)}
               className={cn(
-                "flex cursor-pointer items-center gap-2 py-0.5 font-mono text-[11px] tracking-[0.02em] uppercase outline-none transition-colors duration-300 focus-visible:focus-ring",
+                "flex cursor-pointer items-center gap-2 py-0.5 font-mono text-[11px] tracking-[0.02em] uppercase outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
                 active
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-muted-foreground"

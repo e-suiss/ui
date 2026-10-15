@@ -58,7 +58,7 @@ export function RadarChartRadiusAxis() {
               domain={[0, 100]}
               tickCount={5}
               axisLine={false}
-              tick={{ className: "fill-muted-foreground text-2xs" }}
+              tick={{ className: "fill-muted-foreground text-xs" }}
             />
             <PolarGrid stroke="var(--border)" />
             <PolarAngleAxis dataKey="skill" />

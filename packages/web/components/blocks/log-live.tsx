@@ -280,7 +280,7 @@ export function LogLive() {
                       style={{
                         background: `linear-gradient(160deg, oklch(0.78 0.1 ${event.hue}), oklch(0.6 0.14 ${event.hue + 30}))`,
                       }}
-                      className="text-3xs text-white"
+                      className="text-xs text-white"
                     >
                       {event.actor
                         .split(" ")

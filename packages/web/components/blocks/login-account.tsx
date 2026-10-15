@@ -88,7 +88,7 @@ export function LoginAccount() {
               setStep("email")
               setPassword("")
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Sign out ›
           </button>
@@ -110,7 +110,7 @@ export function LoginAccount() {
         <div
           ref={fieldsRef}
           data-invalid={error ? "" : undefined}
-          className="w-full overflow-hidden rounded-xl border border-input bg-background text-start transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10"
+          className="w-full overflow-hidden rounded-xl border border-input bg-background text-start transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10"
         >
           <div className="flex items-center">
             <Input
@@ -126,7 +126,7 @@ export function LoginAccount() {
               aria-invalid={(step === "email" && !!error) || undefined}
               aria-describedby="login-account-error"
               autoComplete="username"
-              className="h-14 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px] aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
+              className="h-14 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
             {step === "email" && <SubmitArrow ready={!!email} busy={busy} />}
           </div>
@@ -150,7 +150,7 @@ export function LoginAccount() {
                   aria-describedby="login-account-error"
                   autoComplete="current-password"
                   tabIndex={step === "password" ? 0 : -1}
-                  className="h-14 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px] aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
+                  className="h-14 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
                 />
                 <SubmitArrow ready={!!password} busy={busy} />
               </div>

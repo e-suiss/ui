@@ -31,7 +31,7 @@ export default function WidgetReservations() {
           <p className="text-sm">Ayşe Y. · 6 guests</p>
         </div>
         <div className="mt-auto flex flex-col gap-1 group-data-[size=small]/widget:hidden">
-          <div className="flex justify-between text-2xs text-muted-foreground tabular-nums">
+          <div className="flex justify-between text-xs text-muted-foreground tabular-nums">
             <span>18:00</span>
             <span>20:00</span>
             <span>22:00</span>

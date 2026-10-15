@@ -21,7 +21,7 @@ export function InstallCommand({ command }: { command: string }) {
         await navigator.clipboard.writeText(command)
         setCopied(true)
       }}
-      className="group flex w-full items-center justify-between gap-6 border-y border-foreground/15 py-8 text-start outline-none focus-visible:focus-ring md:py-12"
+      className="group flex w-full items-center justify-between gap-6 border-y border-foreground/15 py-8 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-12"
     >
       <code className="min-w-0 font-mono text-[clamp(1.25rem,4.2vw,4rem)] leading-none tracking-[-0.04em] break-all">
         <span className="text-muted-foreground">$ </span>

@@ -103,7 +103,7 @@ export function ChatSupport() {
           </span>
           <div className="flex flex-1 flex-col">
             <span className="text-sm font-semibold">suiss Support</span>
-            <span className="flex items-center gap-1 text-2xs text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500">
+            <span className="flex items-center gap-1 text-xs text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500">
               <span className="size-1.5 rounded-full bg-current" />
               Online
             </span>
@@ -198,13 +198,13 @@ export function ChatSupport() {
           >
             <PlusIcon weight="bold" className="size-4.5" />
           </Button>
-          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Type your question"
               aria-label="Type your question"
-              className="h-8 flex-1 rounded-none bg-transparent px-0 [--focus-ring-width:0px]"
+              className="h-8 flex-1 rounded-none bg-transparent px-0 focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
             />
             <Button
               type="submit"

@@ -92,7 +92,7 @@ function MessageScrollerViewport({
         aria-label={ariaLabel}
         tabIndex={tabIndex}
         className={cn(
-          "size-full min-h-0 min-w-0 overscroll-contain contain-content outline-none focus-visible:focus-ring data-scrollable:scroll-fade-b data-pending-scroll:invisible",
+          "size-full min-h-0 min-w-0 overscroll-contain contain-content outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-scrollable:scroll-fade-b data-pending-scroll:invisible",
           className
         )}
         onKeyDown={(event) => {

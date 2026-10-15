@@ -329,7 +329,7 @@ function QuestionnaireChoice({
     props: {
       "data-slot": "questionnaire-choice",
       className: cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-border px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary hover:text-accent-foreground",
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-border px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary hover:text-accent-foreground",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
       ),
@@ -364,7 +364,7 @@ function QuestionnaireChoice({
             hidden={state.shortcut === null}
             data-shortcut={state.shortcut ?? undefined}
             data-slot="questionnaire-choice-shortcut"
-            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-3xs leading-none text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex max-md:hidden!"
+            className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-xs leading-none text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex max-md:hidden!"
           >
             {state.shortcut}
           </span>
@@ -437,7 +437,7 @@ function QuestionnaireInput({
       ...questionnaireInput.inputProps,
       "data-slot": "questionnaire-input",
       className: cn(
-        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
+        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
         "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
         className
       ),

@@ -179,7 +179,7 @@ function SelectionListItem({
     "data-value": value,
     "data-checked": checked ? "" : undefined,
     className: cn(
-      "flex items-center outline-none transition-colors duration-200 focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px] data-checked:bg-accent",
+      "flex items-center outline-none transition-colors duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset data-checked:bg-accent",
       editing && "cursor-pointer select-none",
       className
     ),

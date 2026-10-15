@@ -78,7 +78,7 @@ function PreviewTrigger({
       <DrawerTrigger
         data-slot="preview-trigger"
         className={cn(
-          "cursor-pointer text-primary underline-offset-4 outline-none focus-visible:focus-ring",
+          "cursor-pointer text-primary underline-offset-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
           className
         )}
         {...props}
@@ -91,7 +91,7 @@ function PreviewTrigger({
       data-slot="preview-trigger"
       href={href}
       className={cn(
-        "text-primary underline-offset-4 outline-none hover:underline focus-visible:focus-ring",
+        "text-primary underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
       {...props}

@@ -118,7 +118,7 @@ export function CodeBlock({
           type="button"
           aria-label={copied ? strings.copied : strings.copy}
           onClick={copy}
-          className="ms-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted-foreground outline-none transition-colors hover:bg-foreground/8 hover:text-foreground focus-visible:focus-ring"
+          className="ms-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted-foreground outline-none transition-colors hover:bg-foreground/8 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {copied ? (
             <CheckIcon className="size-3.5" />

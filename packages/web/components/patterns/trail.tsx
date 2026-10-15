@@ -140,7 +140,7 @@ function Trail({
         onPointerLeave: cancelPress,
       }),
       className:
-        "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:focus-ring",
+        "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:ring-3 focus-visible:ring-ring/50",
       children: (
         <>
           <CaretLeftIcon

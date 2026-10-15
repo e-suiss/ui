@@ -182,10 +182,29 @@ import { useIsMobile } from "@/hooks/use-mobile"
     const cwd = project({
       "components/ui/theme.tsx": "export {}",
       "components/ui/button.tsx": "export {}",
+      "styles/theme.css": "",
     })
     expect(build(cwd).code).toBe(0)
     expect(item(cwd, "theme").optIn).toBe(true)
     expect(item(cwd, "button")).not.toHaveProperty("optIn")
+  })
+
+  it("ships the theme transition styles with the theme", () => {
+    const cwd = project({
+      "components/ui/theme.tsx": "export {}",
+      "components/ui/button.tsx": "export {}",
+      "styles/theme.css": "",
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(item(cwd, "theme").css).toBe("styles/theme.css")
+    expect(item(cwd, "button")).not.toHaveProperty("css")
+  })
+
+  it("requires the styles an item ships with", () => {
+    const cwd = project({ "components/ui/theme.tsx": "export {}" })
+    const result = build(cwd)
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("missing styles/theme.css")
   })
 
   it("rejects a local import outside the registry folders", () => {

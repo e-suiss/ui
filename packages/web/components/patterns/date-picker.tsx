@@ -147,7 +147,7 @@ function DatePicker({
       aria-describedby={ariaDescribedBy}
       data-placeholder={value ? undefined : ""}
       className={cn(
-        "flex h-11 w-full items-center gap-2 rounded-lg border border-transparent bg-secondary px-3 text-start text-base outline-none focus-visible:focus-ring disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 data-placeholder:text-muted-foreground dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
+        "flex h-11 w-full items-center gap-2 rounded-lg border border-transparent bg-secondary px-3 text-start text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 data-placeholder:text-muted-foreground dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
         className
       )}
     />

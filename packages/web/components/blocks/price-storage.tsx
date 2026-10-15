@@ -81,10 +81,10 @@ export function PriceStorage() {
         {plans.map((plan) => (
           <Label
             key={plan.size}
-            className="relative flex cursor-pointer flex-col gap-3 rounded-[1.125rem] bg-muted p-4.5 transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] has-data-checked:-translate-y-0.75 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring motion-reduce:transition-none font-normal items-stretch"
+            className="relative flex cursor-pointer flex-col gap-3 rounded-[1.125rem] bg-muted p-4.5 transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] has-data-checked:-translate-y-0.75 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 motion-reduce:transition-none font-normal items-stretch"
           >
             {plan.popular && (
-              <span className="absolute -top-2.25 start-4.5 rounded-full bg-primary px-2.25 py-0.5 text-2xs font-semibold text-primary-foreground">
+              <span className="absolute -top-2.25 start-4.5 rounded-full bg-primary px-2.25 py-0.5 text-xs font-semibold text-primary-foreground">
                 Most popular
               </span>
             )}
@@ -93,7 +93,7 @@ export function PriceStorage() {
               <RadioGroupItem
                 value={plan.size}
                 aria-label={plan.size}
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
             </span>
             <span>

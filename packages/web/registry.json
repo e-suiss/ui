@@ -885,7 +885,8 @@
       "files": [
         "components/ui/theme.tsx"
       ],
-      "optIn": true
+      "optIn": true,
+      "css": "styles/theme.css"
     },
     {
       "name": "toast",

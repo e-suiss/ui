@@ -14,10 +14,10 @@ const DIGIT = /\d/
 const SYMBOL = /[^A-Za-z0-9]/
 
 const stackClass =
-  "overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
+  "overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
 
 const inputClass =
-  "h-13 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px] aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
+  "h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
 
 const rules = [
   {
@@ -106,7 +106,7 @@ export function SignupForm() {
               setDone(false)
               setTried(false)
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -172,7 +172,7 @@ export function SignupForm() {
               value={form.country}
               onChange={update("country")}
               aria-label="Country or region"
-              className="w-full [&_select]:h-13 [&_select]:rounded-none [&_select]:bg-transparent [&_select]:ps-4 [&_select]:text-lg [&_select]:[--focus-ring-width:0px]"
+              className="w-full [&_select]:h-13 [&_select]:rounded-none [&_select]:bg-transparent [&_select]:ps-4 [&_select]:text-lg [&_select]:focus-visible:border-transparent [&_select]:focus-visible:ring-0 [&_select]:aria-invalid:ring-0"
             >
               {[
                 "United States",

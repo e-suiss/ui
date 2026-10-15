@@ -38,7 +38,6 @@
     "recharts": "catalog:"
   },
   "devDependencies": {
-    "@esuiss/tailwind": "workspace:*",
     "@fontsource-variable/inter": "^5.3.0",
     "@size-limit/esbuild": "^14.1.0",
     "@size-limit/file": "^14.1.0",
@@ -52,8 +51,10 @@
     "@vitest/browser-playwright": "5.0.3",
     "axe-core": "4.13.0",
     "playwright": "^1.63.0",
+    "shadcn": "catalog:",
     "size-limit": "^14.1.0",
     "tailwindcss": "catalog:",
+    "tw-animate-css": "catalog:",
     "typescript": "catalog:",
     "vite": "^8.3.1",
     "vitest": "5.0.3",

@@ -452,7 +452,7 @@ function CarouselDots({
           aria-current={index === selectedIndex ? "true" : undefined}
           data-active={index === selectedIndex ? "" : undefined}
           onClick={() => api?.scrollTo(index)}
-          className="relative h-2 w-2 shrink-0 cursor-pointer rounded-full bg-muted-foreground transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-muted-foreground focus-visible:focus-ring data-active:w-6 data-active:bg-foreground group-data-autoplay/carousel-dots:data-active:bg-muted-foreground motion-reduce:transition-none"
+          className="relative h-2 w-2 shrink-0 cursor-pointer rounded-full bg-muted-foreground transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:w-6 data-active:bg-foreground group-data-autoplay/carousel-dots:data-active:bg-muted-foreground motion-reduce:transition-none"
         >
           {index === selectedIndex && autoplay.enabled && (
             <span

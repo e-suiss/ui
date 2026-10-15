@@ -44,7 +44,6 @@ export default defineConfig({
       "**/package.json/**",
       "**/{vitest,vite}.config.*/**",
       "**/styles/**",
-      "**/packages/tailwind/**",
       "**/tests/*.ts",
     ],
     projects: [

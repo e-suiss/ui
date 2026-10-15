@@ -118,11 +118,11 @@ export function PriceCare() {
           {current.options.map((item) => (
             <Label
               key={item.label}
-              className="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3.5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring font-normal"
+              className="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3.5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 font-normal"
             >
               <RadioGroupItem
                 value={item.label}
-                className="size-5 [--focus-ring-width:0px]"
+                className="size-5 focus-visible:ring-0"
               />
               <span className="flex flex-1 flex-col gap-px">
                 <span className="text-base font-semibold">

@@ -244,7 +244,7 @@ function ActionBarTrigger({
         data-slot="action-bar-trigger"
         aria-haspopup="dialog"
         className={cn(
-          "relative flex min-h-11 w-full cursor-pointer items-center justify-between gap-6 py-2.75 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md focus-visible:after:focus-ring disabled:pointer-events-none disabled:opacity-50",
+          "relative flex min-h-11 w-full cursor-pointer items-center justify-between gap-6 py-2.75 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md focus-visible:after:ring-3 focus-visible:after:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
           className
         )}
         {...mergeProps<"button">(props, {

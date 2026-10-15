@@ -80,7 +80,7 @@ export function TooltipChartFormatter() {
                       <span className="font-semibold text-foreground tabular-nums">
                         {Number(value).toLocaleString("en-US")}
                       </span>
-                      <span className="text-2xs text-muted-foreground">
+                      <span className="text-xs text-muted-foreground">
                         kcal
                       </span>
                     </div>

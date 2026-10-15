@@ -164,7 +164,7 @@ export function InboxSupport() {
                 {ticket.id} · {ticket.device}
               </span>
               <span
-                className={`rounded-md px-2 py-0.5 text-2xs font-semibold ${priorityClass[ticket.priority]}`}
+                className={`rounded-md px-2 py-0.5 text-xs font-semibold ${priorityClass[ticket.priority]}`}
               >
                 {ticket.priority}
               </span>

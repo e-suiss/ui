@@ -43,7 +43,7 @@ function NoteRows({
           <button
             type="button"
             onClick={() => onOpen(note)}
-            className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]"
+            className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
           >
             <span className="flex min-w-0 flex-1 flex-col">
               <span className="truncate text-base font-semibold">

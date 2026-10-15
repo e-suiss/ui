@@ -61,7 +61,7 @@ export function VerifyCode() {
               setCode("")
               setStatus("idle")
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -134,7 +134,7 @@ export function VerifyCode() {
             <button
               type="button"
               onClick={() => setLeft(30)}
-              className="rounded-xs text-primary outline-none hover:underline focus-visible:focus-ring"
+              className="rounded-xs text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               Resend code ›
             </button>

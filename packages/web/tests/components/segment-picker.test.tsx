@@ -104,7 +104,7 @@ function indicatorOffset(name: string) {
     rect.top - target.top,
     rect.width - target.width,
     rect.height - target.height,
-  ].map(Math.round)
+  ].map((value) => Math.round(value) || 0)
 }
 
 const wait = (ms: number) =>

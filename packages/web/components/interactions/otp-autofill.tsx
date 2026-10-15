@@ -284,7 +284,7 @@ function OtpAutofillSuggestion({
       onPointerDown={(event) => event.preventDefault()}
       onClick={() => code && fill(code)}
       className={cn(
-        "flex items-center outline-none transition-[opacity,translate,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete select-none focus-visible:focus-ring data-closed:invisible data-closed:opacity-0",
+        "flex items-center outline-none transition-[opacity,translate,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete select-none focus-visible:ring-3 focus-visible:ring-ring/50 data-closed:invisible data-closed:opacity-0",
         "data-[placement=inline]:gap-2.5 data-[placement=inline]:rounded-full data-[placement=inline]:bg-popover data-[placement=inline]:py-2 data-[placement=inline]:ps-3 data-[placement=inline]:pe-4 data-[placement=inline]:text-sm data-[placement=inline]:shadow-lg data-[placement=inline]:ring-1 data-[placement=inline]:ring-border data-[placement=inline]:hover:bg-accent motion-safe:data-[placement=inline]:data-closed:-translate-y-1 data-[placement=inline]:hover:text-accent-foreground",
         "data-[placement=keyboard]:fixed data-[placement=keyboard]:inset-x-0 data-[placement=keyboard]:z-50 data-[placement=keyboard]:min-h-11 data-[placement=keyboard]:flex-col data-[placement=keyboard]:justify-center data-[placement=keyboard]:border-t data-[placement=keyboard]:border-border data-[placement=keyboard]:bg-muted/85 data-[placement=keyboard]:pt-1.5 data-[placement=keyboard]:pb-[max(0.375rem,env(safe-area-inset-bottom))] data-[placement=keyboard]:backdrop-blur-xl motion-safe:data-[placement=keyboard]:data-closed:translate-y-2",
         className

@@ -172,7 +172,7 @@ function EditableCard({
             type="button"
             onClick={onEdit}
             aria-label={`Edit ${title.toLowerCase()}`}
-            className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Edit ›
           </button>

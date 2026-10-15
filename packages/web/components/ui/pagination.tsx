@@ -164,7 +164,7 @@ function PaginationGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="group"
       data-slot="pagination-group"
       className={cn(
-        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-secondary *:hover:bg-secondary/80 *:[--focus-ring-offset:-3px] *:focus-visible:relative *:focus-visible:z-10",
+        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-secondary *:hover:bg-secondary/80 *:focus-visible:ring-inset *:focus-visible:relative *:focus-visible:z-10",
         className
       )}
       {...props}
@@ -182,7 +182,7 @@ function PaginationInput({
       inputMode="numeric"
       data-slot="pagination-input"
       className={cn(
-        "h-8 w-12 rounded-md bg-secondary text-center text-sm font-semibold text-secondary-foreground tabular-nums caret-primary outline-none focus-visible:focus-ring",
+        "h-8 w-12 rounded-md bg-secondary text-center text-sm font-semibold text-secondary-foreground tabular-nums caret-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
       {...props}

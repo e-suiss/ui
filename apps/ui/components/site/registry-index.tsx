@@ -51,7 +51,7 @@ export function RegistryIndex({ category }: { category: string }) {
               >
                 <Anchor
                   href={item.url}
-                  className="group flex items-center justify-between gap-4 py-3.5 text-[17px] tracking-[-0.02em] outline-none focus-visible:focus-ring"
+                  className="group flex items-center justify-between gap-4 py-3.5 text-[17px] tracking-[-0.02em] outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   <span className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:translate-x-1.5">
                     {item.title}

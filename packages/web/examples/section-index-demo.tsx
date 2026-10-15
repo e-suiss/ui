@@ -89,7 +89,7 @@ function ContactsExample({ className }: { className: string }) {
                     <button
                       type="button"
                       onClick={() => setLog(`Opened ${name}`)}
-                      className="w-full py-3 text-start text-base outline-none focus-visible:focus-ring"
+                      className="w-full py-3 text-start text-base outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                     >
                       {name}
                     </button>

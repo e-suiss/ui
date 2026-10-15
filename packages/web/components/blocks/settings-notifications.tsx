@@ -86,7 +86,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
         <div className="flex min-w-0 flex-1 flex-col gap-px">
           <div className="flex items-center gap-1.5">
             <span className="flex-1 text-xs font-semibold">Riley Morgan</span>
-            <span className="text-2xs text-black/55">now</span>
+            <span className="text-xs text-black/55">now</span>
           </div>
           <p className="text-xs leading-snug">{body}</p>
         </div>
@@ -336,7 +336,7 @@ export function SettingsNotifications() {
                 <Notification body={body} stacked={grouping !== "Off"} />
               </div>
             )}
-            <p className="absolute inset-x-0 bottom-3.5 text-center text-2xs opacity-85">
+            <p className="absolute inset-x-0 bottom-3.5 text-center text-xs opacity-85">
               {footnote}
             </p>
           </div>

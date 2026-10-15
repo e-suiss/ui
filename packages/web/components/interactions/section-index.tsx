@@ -189,7 +189,7 @@ function SectionIndexBar({
       onPointerCancel={() => setDrag(null)}
       onKeyDown={onKeyDown}
       className={cn(
-        "absolute end-3 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-2xs leading-4 font-semibold text-primary outline-none select-none before:absolute before:inset-y-0 before:-inset-s-3 before:inset-e-0 before:content-[''] focus-visible:focus-ring",
+        "absolute end-3 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-xs leading-4 font-semibold text-primary outline-none select-none before:absolute before:inset-y-0 before:-inset-s-3 before:inset-e-0 before:content-[''] focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
       {...props}

@@ -111,7 +111,7 @@ function CalendarExample() {
                     aria-label="Notes"
                     placeholder="Notes"
                     rows={6}
-                    className="resize-none rounded-xl bg-muted p-3 text-base outline-none placeholder:text-muted-foreground focus-visible:focus-ring"
+                    className="resize-none rounded-xl bg-muted p-3 text-base outline-none placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
                   />
                 </div>
               </DrawerContent>

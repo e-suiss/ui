@@ -91,7 +91,7 @@ function NotesPage() {
               <button
                 type="button"
                 onClick={() => setLog(`Opened ${note.title}`)}
-                className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]"
+                className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
               >
                 <span className="truncate font-semibold">{note.title}</span>
                 <span className="truncate text-sm text-muted-foreground">

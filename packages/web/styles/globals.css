@@ -1,6 +1,9 @@
 @import "tailwindcss";
-@import "@esuiss/tailwind";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --radius: 0.625rem;
@@ -113,4 +116,41 @@
   --radius-xl: calc(var(--radius) * 1.2);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.8);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    @apply font-sans;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot],
+    [data-slot]::before,
+    [data-slot]::after,
+    [data-slot] [class*="transition"],
+    [data-slot] [class*="transition"]::before,
+    [data-slot] [class*="transition"]::after {
+      transition-duration: 0.01ms !important;
+    }
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      ),
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      )::before,
+    :is([data-slot], [data-slot] [class*="animate-"]):not(
+        [data-slot="spinner"],
+        [data-slot="spinner"] *
+      )::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
 }

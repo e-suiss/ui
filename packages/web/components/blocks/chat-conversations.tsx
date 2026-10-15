@@ -162,13 +162,13 @@ function Composer({
       >
         <PlusIcon weight="bold" className="size-4.5" />
       </Button>
-      <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+      <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
         <Input
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder={placeholder}
           aria-label={placeholder}
-          className="h-8 flex-1 rounded-none bg-transparent px-0 [--focus-ring-width:0px]"
+          className="h-8 flex-1 rounded-none bg-transparent px-0 focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
         />
         <Button
           type="submit"
@@ -286,7 +286,7 @@ export function ChatConversations() {
           <Initials name={thread.name} hue={thread.hue} className="size-7.5" />
           <div className="flex flex-1 flex-col">
             <span className="text-sm font-semibold">{thread.name}</span>
-            <span className="text-2xs text-muted-foreground" aria-live="polite">
+            <span className="text-xs text-muted-foreground" aria-live="polite">
               {typing ? "typing…" : "Message"}
             </span>
           </div>
@@ -313,7 +313,7 @@ export function ChatConversations() {
               aria-label={`Conversation with ${thread.name}`}
             >
               <MessageScrollerContent className="gap-1 px-5 py-4">
-                <p className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
+                <p className="mt-1 mb-2.5 text-center text-xs text-muted-foreground">
                   Today 9:30 AM
                 </p>
                 {lines.map((line) => (

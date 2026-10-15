@@ -45,7 +45,7 @@ export function EmptyBag() {
           <EmptyMedia className="relative mb-1">
             <HandbagIcon weight="light" className="size-11.5" />
             {count > 0 && (
-              <span className="absolute -end-1.5 -bottom-0.5 flex size-5 items-center justify-center rounded-full bg-foreground text-2xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
+              <span className="absolute -end-1.5 -bottom-0.5 flex size-5 items-center justify-center rounded-full bg-foreground text-xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
                 {count}
               </span>
             )}

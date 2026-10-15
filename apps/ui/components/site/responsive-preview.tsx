@@ -39,7 +39,7 @@ export function ResponsiveToolbar({
   onSelect: () => void
 }) {
   const button =
-    "flex size-7 cursor-pointer items-center justify-center rounded-full text-foreground/60 outline-none transition-colors hover:text-foreground focus-visible:focus-ring"
+    "flex size-7 cursor-pointer items-center justify-center rounded-full text-foreground/60 outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
   return (
     <div className="ms-auto hidden items-center gap-0.5 self-center rounded-full bg-foreground/5 p-0.5 lg:flex">
       {devices.map(({ size, label, Icon }) => (
@@ -148,7 +148,7 @@ export function ResponsivePreview({
             aria-label="Resize preview"
             onPointerDown={startDrag}
             onDoubleClick={() => state.setSize(100)}
-            className="group/handle relative hidden w-3 shrink-0 cursor-ew-resize outline-none focus-visible:focus-ring lg:block"
+            className="group/handle relative hidden w-3 shrink-0 cursor-ew-resize outline-none focus-visible:ring-3 focus-visible:ring-ring/50 lg:block"
           >
             <span className="absolute top-1/2 right-0 h-8 w-1.5 -translate-y-1/2 rounded-full bg-foreground/20 transition-all group-hover/handle:h-10 group-hover/handle:bg-foreground/35" />
           </button>

@@ -62,7 +62,7 @@ export function TooltipChartCustom() {
                 if (!active || !entry) return null
                 return (
                   <div className="min-w-28 rounded-xl bg-popover px-3 py-2 shadow-lg ring-1 ring-foreground/5 dark:ring-foreground/10">
-                    <p className="text-2xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                       Total
                     </p>
                     <p className="flex items-baseline gap-1">

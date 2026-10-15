@@ -385,7 +385,7 @@ export function DashHealth() {
                     <a
                       href={`#${metric.label.toLowerCase().replaceAll(" ", "-")}`}
                       data-dimmed={editing && !isPinned ? "" : undefined}
-                      className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-background px-4 py-3 outline-none transition-opacity duration-200 focus-visible:focus-ring data-dimmed:opacity-55 dark:bg-muted"
+                      className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-background px-4 py-3 outline-none transition-opacity duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 data-dimmed:opacity-55 dark:bg-muted"
                     >
                       <span
                         className={`flex items-center gap-1.5 text-base font-semibold ${category.text}`}

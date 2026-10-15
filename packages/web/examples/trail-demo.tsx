@@ -79,7 +79,7 @@ function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
                 <a
                   href={`#${child}`}
                   {...navigation}
-                  className="text-primary outline-none hover:underline focus-visible:focus-ring"
+                  className="text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   {pageOf(child).label}
                 </a>

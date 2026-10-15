@@ -334,7 +334,7 @@ export function RolesRequests() {
                       }))
                     )
                   }
-                  className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:focus-ring"
+                  className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   Reset the sample ›
                 </button>

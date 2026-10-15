@@ -97,7 +97,7 @@ export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
           aria-selected={active === platform}
           onClick={() => selectPlatform(platform)}
           className={cn(
-            "relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
+            "relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
             active === platform
               ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-foreground"
               : "text-foreground/45 hover:text-foreground"

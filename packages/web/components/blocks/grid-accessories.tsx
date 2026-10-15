@@ -85,7 +85,7 @@ export function GridAccessories() {
         >
           <HandbagIcon className="size-5.5" />
           {bag.length > 0 && (
-            <span className="absolute -end-2 -bottom-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-2xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
+            <span className="absolute -end-2 -bottom-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
               {bag.length}
             </span>
           )}

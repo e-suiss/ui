@@ -63,7 +63,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-destructive in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/10 data-[active=true]:z-10 data-[active=true]:border-primary in-[.cn-input-otp:has(input:disabled)]:opacity-50",
+        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-destructive in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/10 data-[active=true]:z-10 data-[active=true]:border-primary in-[.cn-input-otp:has(input:disabled)]:opacity-50",
         className
       )}
       {...props}

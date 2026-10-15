@@ -140,7 +140,7 @@ function DownloadActivity({
           type="button"
           onClick={onCancel}
           disabled={done}
-          className="h-11 rounded-full bg-background/15 text-sm font-semibold outline-none focus-visible:focus-ring disabled:opacity-50 dark:bg-foreground/15"
+          className="h-11 rounded-full bg-background/15 text-sm font-semibold outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50 dark:bg-foreground/15"
         >
           Cancel download
         </button>

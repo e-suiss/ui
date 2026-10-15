@@ -97,7 +97,7 @@ function BackToTop() {
       aria-hidden={visible ? undefined : true}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={cn(
-        "group flex h-8 w-fit items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-sm text-foreground outline-none transition-[opacity,translate,background-color] duration-500 hover:bg-foreground/15 focus-visible:focus-ring",
+        "group flex h-8 w-fit items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-sm text-foreground outline-none transition-[opacity,translate,background-color] duration-500 hover:bg-foreground/15 focus-visible:ring-3 focus-visible:ring-ring/50",
         ease,
         visible
           ? "translate-y-0 opacity-100"

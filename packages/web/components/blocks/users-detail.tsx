@@ -305,7 +305,7 @@ export function UsersDetail() {
                 className="group/user py-1.5 md:data-active:bg-primary md:data-active:text-primary-foreground"
               >
                 <span className="flex items-center gap-2.5">
-                  <UserAvatar user={item} className="size-7 *:text-3xs" />
+                  <UserAvatar user={item} className="size-7 *:text-xs" />
                   <span className="flex flex-col">
                     <span className="text-sm">{item.name}</span>
                     <span className="text-xs text-muted-foreground md:group-data-active/user:text-primary-foreground">

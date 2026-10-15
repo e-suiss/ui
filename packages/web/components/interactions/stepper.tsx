@@ -107,7 +107,7 @@ function StepperInput({
     <NumberFieldPrimitive.Input
       data-slot="stepper-input"
       className={cn(
-        "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 text-end text-base tabular-nums outline-none focus-visible:focus-ring data-disabled:opacity-50",
+        "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 text-end text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:opacity-50",
         className
       )}
       {...props}
@@ -174,7 +174,7 @@ function StepperButton({
       }}
       onContextMenu={(event) => event.preventDefault()}
       className={cn(
-        "relative flex h-full w-9 touch-manipulation items-center justify-center rounded-md bg-card text-card-foreground shadow-sm outline-none select-none after:absolute after:inset-x-0 after:-inset-y-2.25 after:content-[''] focus-visible:focus-ring active:shadow-none disabled:shadow-none dark:bg-border dark:shadow-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",
+        "relative flex h-full w-9 touch-manipulation items-center justify-center rounded-md bg-card text-card-foreground shadow-sm outline-none select-none after:absolute after:inset-x-0 after:-inset-y-2.25 after:content-[''] focus-visible:ring-3 focus-visible:ring-ring/50 active:shadow-none disabled:shadow-none dark:bg-border dark:shadow-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",
         className
       )}
       {...props}

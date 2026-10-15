@@ -78,7 +78,7 @@ export function GridCarousel() {
             <CarouselItem key={product.name} className="basis-auto ps-0">
               <a
                 href={`#${product.name.toLowerCase().replaceAll(" ", "-")}`}
-                className="flex h-110 w-[min(22.5rem,calc(100vw-4rem))] flex-col overflow-hidden rounded-[1.125rem] bg-background shadow-[2px_4px_12px_rgb(0_0_0/0.08)] transition-[scale,box-shadow] duration-300 ease-[cubic-bezier(0,0,0.5,1)] outline-none hover:scale-101 hover:shadow-[2px_4px_16px_rgb(0_0_0/0.16)] focus-visible:focus-ring motion-reduce:transition-none"
+                className="flex h-110 w-[min(22.5rem,calc(100vw-4rem))] flex-col overflow-hidden rounded-[1.125rem] bg-background shadow-[2px_4px_12px_rgb(0_0_0/0.08)] transition-[scale,box-shadow] duration-300 ease-[cubic-bezier(0,0,0.5,1)] outline-none hover:scale-101 hover:shadow-[2px_4px_16px_rgb(0_0_0/0.16)] focus-visible:ring-3 focus-visible:ring-ring/50 motion-reduce:transition-none"
               >
                 <div className="flex flex-col gap-1 px-7 pt-7">
                   {product.kicker && (

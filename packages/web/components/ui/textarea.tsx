@@ -79,7 +79,7 @@ function Textarea({
       data-slot="textarea"
       data-resizable={resizable}
       className={cn(
-        "peer flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-transparent bg-secondary px-3 py-3 text-base transition-[color,box-shadow,background-color] caret-primary outline-none placeholder:text-muted-foreground focus-visible:focus-ring disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 data-resizable:field-sizing-fixed data-resizable:min-h-24 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
+        "peer flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-transparent bg-secondary px-3 py-3 text-base transition-[color,box-shadow,background-color] caret-primary outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 data-resizable:field-sizing-fixed data-resizable:min-h-24 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
         className
       )}
       {...props}

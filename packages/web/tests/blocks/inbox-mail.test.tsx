@@ -37,8 +37,7 @@ const subjects: Record<string, string> = {
 const row = (from: string) =>
   page.getByRole("button").filter({ hasText: subjects[from] })
 const reader = () => pane("detail")?.querySelector("h3")?.textContent
-const summary = () =>
-  pane("list")?.querySelector(".text-2xs")?.textContent ?? ""
+const summary = () => pane("list")?.querySelector(".text-xs")?.textContent ?? ""
 const action = (name: string) =>
   page.getByRole("button", { name, exact: true }).last()
 const search = () => page.getByRole("searchbox", { name: "Search mail" })

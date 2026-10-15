@@ -34,7 +34,7 @@ export function Example({
             aria-selected={tab === item}
             onClick={() => setTab(item)}
             className={cn(
-              "relative h-9 cursor-pointer text-sm font-medium capitalize tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
+              "relative h-9 cursor-pointer text-sm font-medium capitalize tracking-[-0.01em] outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
               tab === item
                 ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-foreground"
                 : "text-foreground/45 hover:text-foreground"

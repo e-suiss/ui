@@ -42,7 +42,7 @@ function tickets() {
 
 function priorities() {
   return Array.from(
-    pane("list")?.querySelectorAll<HTMLElement>(".rounded-md.text-2xs") ?? [],
+    pane("list")?.querySelectorAll<HTMLElement>(".rounded-md.text-xs") ?? [],
     (badge) => badge.textContent
   )
 }

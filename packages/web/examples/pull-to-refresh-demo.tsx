@@ -77,7 +77,7 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
                 <button
                   type="button"
                   onClick={() => setLog(`Opened ${message.subject}`)}
-                  className="flex w-full flex-col py-3 pe-4 text-start outline-none focus-visible:focus-ring"
+                  className="flex w-full flex-col py-3 pe-4 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   <span className="flex items-center gap-2 font-semibold">
                     {message.fresh && (

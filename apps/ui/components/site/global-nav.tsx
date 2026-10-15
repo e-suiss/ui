@@ -30,7 +30,7 @@ function RollLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "group relative flex h-9 items-center overflow-hidden rounded-full px-4 text-sm leading-5 font-medium tracking-[-0.01em] text-foreground outline-none transition-colors duration-300 focus-visible:focus-ring",
+        "group relative flex h-9 items-center overflow-hidden rounded-full px-4 text-sm leading-5 font-medium tracking-[-0.01em] text-foreground outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
         active ? "bg-foreground text-background" : "hover:bg-foreground/8"
       )}
     >
@@ -114,7 +114,7 @@ export function GlobalNav() {
       >
         <Anchor
           href="/"
-          className="flex h-10 items-center rounded-sm outline-none focus-visible:focus-ring"
+          className="flex h-10 items-center rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <Logo />
         </Anchor>
@@ -138,7 +138,7 @@ export function GlobalNav() {
           <Anchor
             href={repository}
             className={cn(
-              "group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex",
+              "group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:flex",
               home && "bg-[#1d1d1f] text-white"
             )}
           >
@@ -164,7 +164,7 @@ export function GlobalNav() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((value) => !value)}
             className={cn(
-              "h-10 rounded-full px-4.5 text-sm font-medium outline-none transition-colors duration-300 focus-visible:focus-ring lg:hidden",
+              "h-10 rounded-full px-4.5 text-sm font-medium outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50 lg:hidden",
               home && !menuOpen
                 ? "bg-white/35 backdrop-blur-2xl backdrop-saturate-150"
                 : "bg-foreground/5"
@@ -203,7 +203,7 @@ export function GlobalNav() {
               >
                 <Anchor
                   href={section.path}
-                  className="flex items-baseline gap-4 py-3 outline-none focus-visible:focus-ring"
+                  className="flex items-baseline gap-4 py-3 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   <span className="font-mono text-xs text-muted-foreground">
                     {String(index + 1).padStart(2, "0")}

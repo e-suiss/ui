@@ -59,7 +59,7 @@ export function SignupTrial() {
           <button
             type="button"
             onClick={() => setDone(false)}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -98,7 +98,7 @@ export function SignupTrial() {
         <h1 className="text-4xl font-semibold tracking-tight text-balance">
           Start your free trial.
         </h1>
-        <div className="overflow-hidden rounded-xl border border-input bg-background has-focus-visible:focus-ring *:not-first:border-t *:not-first:border-t-input">
+        <div className="overflow-hidden rounded-xl border border-input bg-background has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 *:not-first:border-t *:not-first:border-t-input">
           <Input
             type="email"
             value={email}
@@ -106,7 +106,7 @@ export function SignupTrial() {
             placeholder="suiss Account email"
             aria-label="suiss Account email"
             autoComplete="email"
-            className="h-13 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px]"
+            className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
           />
           <Input
             type="password"
@@ -115,7 +115,7 @@ export function SignupTrial() {
             placeholder="Create a password"
             aria-label="Create a password"
             autoComplete="new-password"
-            className="h-13 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px]"
+            className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
           />
         </div>
         {password && (

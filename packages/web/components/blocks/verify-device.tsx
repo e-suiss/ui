@@ -84,7 +84,7 @@ export function VerifyDevice() {
               setCode("")
               setPhase("ask")
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -157,7 +157,7 @@ export function VerifyDevice() {
             <button
               type="button"
               onClick={() => setPhase("ask")}
-              className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:focus-ring"
+              className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               Try again ›
             </button>

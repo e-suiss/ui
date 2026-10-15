@@ -94,7 +94,7 @@ export function SignupSteps() {
               setDone(false)
               setIndex(0)
             }}
-            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             Start over ›
           </button>
@@ -138,7 +138,7 @@ export function SignupSteps() {
             {step.title}
           </h1>
           <p className="text-lg text-muted-foreground">{step.description}</p>
-          <div className="mt-4 overflow-hidden rounded-xl border border-input bg-background has-focus-visible:focus-ring">
+          <div className="mt-4 overflow-hidden rounded-xl border border-input bg-background has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
               autoFocus={index > 0}
               type={step.type}
@@ -152,7 +152,7 @@ export function SignupSteps() {
               placeholder={step.placeholder}
               aria-label={step.placeholder}
               autoComplete={step.autoComplete}
-              className="h-13 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px]"
+              className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0"
             />
           </div>
           {step.key === "password" && value && (
