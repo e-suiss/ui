@@ -11,7 +11,7 @@ platforms: [rn, swift, kotlin]
 
 `PageIndicator` draws one dot per page and widens the active one into a pill. Width and position changes animate with Reanimated. When `count` exceeds `maxVisible`, only a window of dots is shown; the window slides to keep the active dot near the center and the dots at its edges shrink to hint that more pages exist.
 
-It comes in two sizes, `default` and `sm`, and two variants: `default` uses the label color for the active dot and `accent` uses the accent color.
+It comes in two sizes, `default` and `sm`, and two variants: `default` uses the foreground color for the active dot and `accent` uses the primary color.
 
 ## Installation
 
@@ -248,6 +248,6 @@ Also accepts the props of `ViewProps`.
 
 ## Notes
 
-- Uses `bg-label` or `bg-accent` for the active dot and `bg-label-quaternary` for the others; colors follow the system appearance.
+- Uses `bg-foreground` or `bg-primary` for the active dot and `bg-border` for the others; colors follow the system appearance.
 
 </Only>

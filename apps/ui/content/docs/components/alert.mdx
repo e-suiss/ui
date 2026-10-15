@@ -158,7 +158,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 `Alert` is a `View` on a rounded secondary surface with an optional leading icon, a title and description column, and an optional action pinned to the top-end corner. It is static and stays in the layout; it is not a toast or a modal.
 
-Use the `default` variant for neutral information, where the icon uses the accent color, and `destructive` for errors, where the icon uses the danger color.
+Use the `default` variant for neutral information, where the icon uses the primary color, and `destructive` for errors, where the icon uses the destructive color.
 
 ## Installation
 
@@ -403,7 +403,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttribu
 
 ## Notes
 
-- Uses `bg-surface-secondary`, `text-label`, `text-accent` and `text-danger` tokens; light and dark follow the system appearance.
+- Uses `bg-muted`, `text-foreground`, `text-primary` and `text-destructive` tokens; light and dark follow the system appearance.
 - The action is positioned with `end-4`, so it flips in right-to-left layouts.
 
 </Only>

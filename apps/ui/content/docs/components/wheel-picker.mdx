@@ -309,7 +309,7 @@ import { WheelPicker, WheelPickerColumn, WheelPickerItem } from "@/components/ui
 ```
 
 ```tsx
-<View className="w-80 rounded-2xl border border-label/5 bg-surface-raised p-4 shadow-md dark:border-label/10">
+<View className="w-80 rounded-2xl border border-foreground/5 bg-card p-4 shadow-md dark:border-foreground/10">
   <WheelPicker>
     <WheelPickerColumn accessibilityLabel="Fruit" defaultValue="Lemon">
       {fruits.map((fruit) => (
@@ -384,7 +384,7 @@ Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Item
 ## Notes
 
 - A selection haptic plays when the value changes, if a haptics adapter is provided through the haptics context.
-- The highlight uses `bg-control`; items use `text-xl text-label` with tabular numbers and `text-label-tertiary` when disabled.
+- The highlight uses `bg-secondary`; items use `text-xl text-foreground` with tabular numbers and `text-muted-foreground` when disabled.
 - Light and dark colors follow the system appearance.
 
 </Only>

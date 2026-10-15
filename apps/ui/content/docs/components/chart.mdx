@@ -174,7 +174,7 @@ Charts are composed declaratively: a chart root such as `LineChart`, `AreaChart`
 
 Charts animate in when they first render: bars grow from the baseline, lines draw along their path, areas reveal from left to right, pie and radial sectors sweep open and radar shapes grow from the center. When the data changes, shapes animate from their previous values to the new ones.
 
-Colors are theme tokens, not hex values. A series `color` such as `blue`, `teal` or `accent` resolves to the current token color, so charts follow light and dark mode automatically.
+Colors are theme tokens, not hex values. A series `color` such as `chart-1`, `chart-2` or `primary` resolves to the current token color, so charts follow light and dark mode automatically.
 
 ## Installation
 
@@ -544,7 +544,7 @@ Default legend with swatches or icons.
 
 ## Notes
 
-- Series colors accept named tokens such as `blue`, `green`, `teal`, `accent`, `success`, `danger` and `label`; grid and cursor lines use `separator`.
+- Series colors accept `chart-1` to `chart-5`, theme colors such as `primary`, `destructive` and `foreground`, and palette colors such as `green-500` and `red-500`; grid and cursor lines use `border`.
 - Value labels from `LabelList` and pie `label` appear once a series finishes animating.
 - Light and dark follow the system appearance.
 

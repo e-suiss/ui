@@ -206,7 +206,7 @@ Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps
 
 <NativeExample id="components-tab-bar--default" />
 
-`TabBar` is built on the tabs primitive and sits at the bottom of a screen. `TabBarList` is a rounded capsule with a shadow, inset from the screen edges, so the bar floats above the page. The root adds bottom padding for the safe area, unless an enclosing `Screen` already handles the bottom edge. `TabBarItem` stacks an icon over a short label; the active tab sits on a `bg-control` pill and uses the accent color and a filled icon weight.
+`TabBar` is built on the tabs primitive and sits at the bottom of a screen. `TabBarList` is a rounded capsule with a shadow, inset from the screen edges, so the bar floats above the page. The root adds bottom padding for the safe area, unless an enclosing `Screen` already handles the bottom edge. `TabBarItem` stacks an icon over a short label; the active tab sits on a `bg-secondary` pill and uses the accent color and a filled icon weight.
 
 Use it for switching between the top-level sections of an app. For switching views within a screen, use Tabs.
 
@@ -464,7 +464,7 @@ Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
 
 ## Notes
 
-- The capsule uses `bg-surface-raised` with a `border-label/5` border (`border-label/10` in dark mode) and a large shadow. The active tab uses `bg-control` and `text-accent`, and badges use `bg-danger`; colors follow the system appearance.
+- The capsule uses `bg-card` with a `border-foreground/5` border (`border-foreground/10` in dark mode) and a large shadow. The active tab uses `bg-secondary` and `text-primary`, and badges use `bg-destructive`; colors follow the system appearance.
 - The bottom padding is the remaining safe area inset minus 8 points, and never less than 12 points.
 
 </Only>

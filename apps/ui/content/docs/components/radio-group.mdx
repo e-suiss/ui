@@ -133,7 +133,7 @@ Also accepts the props of `RadioPrimitive.Root.Props`.
 
 <NativeExample id="components-radio-group--default" />
 
-`RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the accent color and shows a dot. Items have an enlarged hit area so they are easy to press.
+`RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the primary color and shows a dot. Items have an enlarged hit area so they are easy to press.
 
 ## Installation
 
@@ -381,7 +381,7 @@ Also accepts the props of `RadioPrimitive.RootProps<Value>`.
 ## Notes
 
 - Selecting an item triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
-- Uses the `bg-accent`, `bg-accent-disabled`, `bg-control-disabled`, `bg-on-accent` and `border-danger` tokens.
+- Uses the `bg-primary`, `bg-primary-foreground` and `border-destructive` tokens, with `opacity-50` when disabled.
 - Light and dark colors follow the system appearance; in dark mode unchecked items drop the border and shadow.
 
 </Only>

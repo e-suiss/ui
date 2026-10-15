@@ -395,12 +395,12 @@ Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Panel>
 
 - The header row has the `header` role, and the trigger has the `button` role with `expanded` and `disabled` accessibility state.
 - Closed panels are hidden from VoiceOver and TalkBack.
-- A disabled trigger uses a dimmed label color.
+- A disabled trigger is shown at 50% opacity.
 
 ## Notes
 
 - The trigger label underlines while pressed.
 - Animations respect the system Reduce Motion setting.
-- Uses `bg-surface-secondary`, `border-separator` and `text-label` tokens; light and dark follow the system appearance.
+- Uses `bg-muted`, `border-border` and `text-foreground` tokens; light and dark follow the system appearance.
 
 </Only>

@@ -179,7 +179,7 @@ Also accepts the props of `TogglePrimitive.Props`.
 
 `ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.
 
-With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-control` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.
+With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-secondary` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.
 
 ## Installation
 
@@ -478,7 +478,7 @@ Also accepts the props of `React.ComponentProps<typeof Icon>`.
 
 ## Notes
 
-- Pressed items use `bg-item-selected` and `text-link`; the segmented indicator and pressed segmented items use `bg-surface-raised` with a small shadow in light mode and `bg-label-quaternary` in dark mode.
+- Pressed items use `bg-accent` and `text-primary`; the segmented indicator and pressed segmented items use `bg-card` with a small shadow in light mode and `bg-border` in dark mode.
 - The indicator slides over 300 ms and respects the system reduce motion setting. It is hidden when the selected item is disabled.
 - Colors follow the system appearance.
 

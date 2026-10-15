@@ -114,7 +114,7 @@ Also accepts the props of `TogglePrimitive.Props`.
 
 <NativeExample id="components-toggle--default" />
 
-`Toggle` is a `Pressable` with an on and off state. When on, it shows a selected background and its text turns to the link color; it scales down slightly while pressed. It has two variants, `default` and `outline`, and three sizes.
+`Toggle` is a `Pressable` with an on and off state. When on, it shows a selected background and its text turns to the primary color; it scales down slightly while pressed. It has two variants, `default` and `outline`, and three sizes.
 
 `ToggleIcon` is an `Icon` sized for use inside a toggle.
 
@@ -369,7 +369,7 @@ Also accepts the props of `React.ComponentProps<typeof Icon>`.
 ## Notes
 
 - Changing the state triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
-- Uses the `bg-item-selected`, `bg-item-pressed`, `bg-control-disabled`, `text-link` and `border-separator` tokens.
+- Uses the `bg-accent`, `text-primary` and `border-border` tokens, with `opacity-80` while pressed and `opacity-50` when disabled.
 - Light and dark colors follow the system appearance.
 
 </Only>

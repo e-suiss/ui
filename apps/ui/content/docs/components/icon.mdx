@@ -9,7 +9,7 @@ platforms: [rn, kotlin]
 
 <NativeExample id="components-icon--default" />
 
-`Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-label`.
+`Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-foreground`.
 
 Icons inherit text and icon classes from their parent, so an `Icon` inside a `Button`, `Badge` or menu item picks up the right size and color without extra classes. Components provide these through `IconClassContext`.
 
@@ -133,7 +133,7 @@ import { Icon } from "@/components/ui/icon"
 <Icon as={StarIcon} />
 ```
 
-Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-danger`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
+Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-destructive`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
 
 Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
 
@@ -175,6 +175,6 @@ Also accepts the props of `IconProps`.
 
 ## Notes
 
-- The default color is the `text-label` token, so icons follow light and dark mode with the system appearance.
+- The default color is the `text-foreground` token, so icons follow light and dark mode with the system appearance.
 
 </Only>

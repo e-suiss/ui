@@ -353,7 +353,7 @@ import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/component
 
 Wrap each message in `Bubble` and put its text in `BubbleContent`; plain strings are wrapped in `Text`. Set `align="end"` for messages from the current user, or provide a default through `BubbleAlignContext`.
 
-`BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and its background darkens while pressed. Use `render` to attach it to a trigger such as a context menu.
+`BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and it fades to 80% opacity while pressed. Use `render` to attach it to a trigger such as a context menu.
 
 `BubbleReactions` takes `side` (`top` or `bottom`) and `align` (`start` or `end`), and the bubble adds margin so the pill does not overlap its neighbors.
 
@@ -454,6 +454,6 @@ Also accepts the props of `ViewProps`.
 ## Notes
 
 - The tail mirrors itself for `end` alignment and in right-to-left layouts.
-- Uses `bg-accent`, `bg-control`, `bg-surface-secondary` and `bg-danger-surface` tokens with pressed states; light and dark follow the system appearance.
+- Uses `bg-primary`, `bg-secondary`, `bg-muted` and `bg-destructive/10 dark:bg-destructive/20` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
 
 </Only>

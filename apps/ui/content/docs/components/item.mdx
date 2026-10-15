@@ -443,7 +443,7 @@ import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, Item
       <ItemTitle>Your profile has been verified.</ItemTitle>
     </ItemContent>
     <ItemActions>
-      <Icon as={CaretRightIcon} className="size-4 text-label-secondary" />
+      <Icon as={CaretRightIcon} className="size-4 text-muted-foreground" />
     </ItemActions>
   </Item>
   <Item variant="outline" size="xs">
@@ -459,7 +459,7 @@ import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, Item
       </ItemDescription>
     </ItemContent>
     <ItemFooter>
-      <Text className="text-sm text-label-secondary">Footer</Text>
+      <Text className="text-sm text-muted-foreground">Footer</Text>
     </ItemFooter>
   </Item>
 </View>
@@ -592,13 +592,13 @@ Also accepts the props of `ViewProps`.
 ## Accessibility
 
 - `ItemGroup` has the `list` role.
-- A static `Item` has the `listitem` role; an item with `onPress` or `onLongPress` has the `button` role and shows a pressed background.
+- A static `Item` has the `listitem` role; an item with `onPress` or `onLongPress` has the `button` role and fades to 80% opacity while pressed.
 - `disabled` dims the item and blocks presses.
 - `ItemSeparator` is hidden from VoiceOver and TalkBack.
 
 ## Notes
 
-- Uses `bg-surface-secondary` for inset groups and the `muted` variant, `border-separator` for `outline`, and `bg-item-pressed` for the pressed state.
+- Uses `bg-muted` for inset groups and the `muted` variant, `border-border` for `outline`, and `opacity-80` for the pressed state.
 - Colors follow the system appearance.
 
 </Only>

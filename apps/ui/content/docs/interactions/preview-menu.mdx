@@ -460,7 +460,7 @@ Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Sepa
 ## Notes
 
 - A medium impact haptic plays when the menu opens, if the app provides an adapter through `HapticsProvider`.
-- The menu uses `bg-surface-raised` with a border that is stronger in dark mode, and the backdrop uses `bg-scrim`.
+- The menu uses `bg-popover` with a border that is stronger in dark mode, and the backdrop uses `bg-black/50`.
 - The preview stays within the top and bottom safe areas and leaves room for the measured height of the menu.
 - Animations respect the system reduce motion setting.
 - On iOS the content renders in a full-window overlay so it appears above native screens.

@@ -303,7 +303,7 @@ import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 </View>
 ```
 
-Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the secondary label color and size through context.
+Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the `text-muted-foreground` color and size through context.
 
 Pass a `render` element to `Marker` to render it as another component instead of a `View`.
 
@@ -351,8 +351,8 @@ Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 ## Notes
 
-- Text uses `text-sm text-label-secondary` and icons `size-4`.
-- Lines and the bottom border use `bg-separator` and `border-separator`.
+- Text uses `text-sm text-muted-foreground` and icons `size-4`.
+- Lines and the bottom border use `bg-border` and `border-border`.
 - Light and dark colors follow the system appearance.
 
 </Only>

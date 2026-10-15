@@ -463,7 +463,7 @@ import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, Attach
 ```tsx
 <Attachment orientation="horizontal" state="done">
   <AttachmentMedia variant="document">
-    <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+    <AttachmentLabel className="bg-red-500">pdf</AttachmentLabel>
   </AttachmentMedia>
   <AttachmentContent>
     <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
@@ -661,7 +661,7 @@ Also accepts the props of `ViewProps`.
 
 ## Notes
 
-- Uses `bg-surface-secondary`, `border-separator`, `bg-accent` and `text-danger` tokens; light and dark follow the system appearance.
+- Uses `bg-muted`, `border-border`, `bg-primary` and `text-destructive` tokens; light and dark follow the system appearance.
 - Separators and action positions use start and end offsets, so they flip in right-to-left layouts.
 
 </Only>

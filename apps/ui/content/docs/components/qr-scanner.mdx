@@ -214,7 +214,7 @@ import { QRScanner } from "@/components/ui/qr-scanner"
 <Scanner description="Point your camera at a code to pay or connect." />
 ```
 
-Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-media`.
+Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-black`.
 
 Set `state` to `success` or `error` after you read a code. The brackets fade to a matching color, `success` springs the frame slightly smaller and `error` shakes it. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.
 
@@ -277,7 +277,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 
 ## Notes
 
-- Uses the `bg-media`, `text-scrim`, `text-on-media`, `text-success`, `text-danger` and `bg-accent` tokens; the flashlight button uses `bg-scrim` when off and `bg-on-media` with a `text-media` icon when on.
+- Uses the `bg-black`, `text-black/50`, `text-white`, `text-green-600 dark:text-green-400`, `text-destructive` and `bg-primary` tokens; the flashlight button uses `bg-black/50` when off and `bg-white` with a `text-black` icon when on.
 - The scan line restarts whenever the state returns to `idle`.
 
 </Only>

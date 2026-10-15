@@ -230,7 +230,7 @@ import { Spinner } from "@/components/ui/spinner"
 <Spinner />
 ```
 
-Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-accent` or `accent-danger`. Inside a button, use `accent-on-accent` on the `default` variant so the spinner matches the label.
+Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-primary` or `accent-destructive`. Inside a button, use `accent-primary-foreground` on the `default` variant so the spinner matches the label.
 
 ## Examples
 
@@ -261,7 +261,7 @@ Spinners inside disabled buttons next to a label.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `size` | `number` | `16` | Width and height in points. Defaults to `16`. |
-| `colorClassName` | `string` | `"accent-label-secondary"` | Class that sets the indicator color. Defaults to `accent-label-secondary`. |
+| `colorClassName` | `string` | `"accent-muted-foreground"` | Class that sets the indicator color. Defaults to `accent-muted-foreground`. |
 
 Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
 
@@ -274,7 +274,7 @@ Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
 
 ## Notes
 
-- The default color uses the `label-secondary` token.
+- The default color uses the `muted-foreground` token.
 - The look of the indicator comes from the platform's native activity indicator, so it differs between iOS and Android.
 
 </Only>

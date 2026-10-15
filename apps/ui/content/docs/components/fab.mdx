@@ -9,7 +9,7 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-fab--default" />
 
-`Fab` is a round accent `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.
+`Fab` is a round primary `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.
 
 When it has `FabAction` children, pressing it opens a speed dial: a scrim dims the screen and the actions rise above the button one after another. The plus icon rotates 45 degrees into a close mark; other icons swap to an X.
 
@@ -280,6 +280,6 @@ Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 - Position follows the safe-area insets and flips sides in right-to-left layouts.
 - Animations respect the system Reduce Motion setting.
-- Uses `bg-accent`, `bg-surface-raised` and `bg-scrim` tokens; actions use a secondary surface in dark mode.
+- Uses `bg-primary`, `bg-card` and `bg-black/50` tokens; actions use a secondary surface in dark mode.
 
 </Only>

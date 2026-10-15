@@ -9,7 +9,7 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-chip--default" />
 
-`Chip` is a toggle rendered as a rounded `Pressable`. It switches between an unselected control background and a selected fill, and shrinks slightly while pressed. It has `default` and `sm` sizes, an optional leading `icon`, and an optional trailing remove button when `onRemove` is set.
+`Chip` is a toggle rendered as a rounded `Pressable`. It switches between an unselected `bg-secondary` background and a selected `bg-foreground` fill, and shrinks slightly while pressed. It has `default` and `sm` sizes, an optional leading `icon`, and an optional trailing remove button when `onRemove` is set.
 
 `ChipGroup` manages selection for a set of chips: single selection by default, or several with `multiple`. It wraps chips onto new lines, or lays them out in a horizontal scroll view with `scrollable`.
 
@@ -311,6 +311,6 @@ Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
 
 ## Notes
 
-- Uses `bg-control`, `bg-control-selected` and `text-on-control-selected` tokens with pressed and disabled states; light and dark follow the system appearance.
+- Uses `bg-secondary`, `bg-foreground` and `text-background` tokens, with `opacity-80` while pressed and `opacity-50` when disabled; light and dark follow the system appearance.
 
 </Only>

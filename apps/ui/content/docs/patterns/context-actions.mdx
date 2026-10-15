@@ -377,10 +377,10 @@ import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextAc
 <ContextActions>
   <ContextActionsTrigger
     accessibilityLabel="Photo"
-    className="h-40 items-center justify-center gap-2 rounded-2xl bg-surface-secondary active:opacity-80"
+    className="h-40 items-center justify-center gap-2 rounded-2xl bg-muted active:opacity-80"
   >
-    <Icon as={ImageIcon} className="size-8 text-label-secondary" />
-    <Text className="text-sm text-label-secondary">Long press</Text>
+    <Icon as={ImageIcon} className="size-8 text-muted-foreground" />
+    <Text className="text-sm text-muted-foreground">Long press</Text>
   </ContextActionsTrigger>
   <ContextActionsContent>
     <ContextActionsLabel>Photo</ContextActionsLabel>
@@ -483,7 +483,7 @@ Kept for API parity; renders nothing.
 
 ## Notes
 
-- Item text uses `text-link`, or `text-danger` for the `destructive` variant.
+- Item text uses `text-primary`, or `text-destructive` for the `destructive` variant.
 - On iOS the sheet renders in a full-window overlay so it appears above native screens.
 
 </Only>

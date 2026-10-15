@@ -150,6 +150,19 @@ The `sidebar` component has its own set, so it can differ from the page.
 
 Success, warning and decorative colors use the Tailwind palette directly, with a lighter shade in dark mode for text, for example `text-green-600 dark:text-green-400` and `bg-green-500/10`. The dimmed layer behind dialogs, sheets and drawers is `bg-black/50`.
 
+## Mobile
+
+React Native, SwiftUI and Compose use the same variables with the same light and dark values, generated from one token file.
+
+| Platform | Theme color | Palette color |
+| --- | --- | --- |
+| Uniwind and NativeWind | `bg-muted`, `text-muted-foreground` | `text-green-600 dark:text-green-400` |
+| StyleSheet | `colors.muted`, `colors.mutedForeground` from `useTheme()` | `palette.green600` |
+| SwiftUI | `EsuissColor.muted`, `EsuissColor.mutedForeground` | `Palette.green600` |
+| Compose | `EsuissTheme.colors.muted`, `EsuissTheme.colors.mutedForeground` | `Palette.green600` |
+
+Pressed elements fade to 80% opacity and disabled elements to 50%, on every platform.
+
 ## Radius
 
 `--radius` is `0.625rem` by default. Every rounded component scales from it.
