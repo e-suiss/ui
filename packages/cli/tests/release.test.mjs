@@ -1,16 +1,9 @@
 import { execFileSync } from "node:child_process"
-import {
-  copyFileSync,
-  mkdirSync,
-  mkdtempSync,
-  symlinkSync,
-  writeFileSync,
-} from "node:fs"
-import { tmpdir } from "node:os"
+import { copyFileSync, mkdirSync, symlinkSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
 
-import { createProject, read } from "./helpers.mjs"
+import { createProject, read, temporaryDirectory } from "./helpers.mjs"
 
 const scripts = new URL("../../../scripts/", import.meta.url).pathname
 const registryScript = new URL(
@@ -66,7 +59,7 @@ function repository({ cli = "0.9.0" } = {}) {
     cwd: path.join(cwd, "packages/web"),
     env,
   })
-  const origin = mkdtempSync(path.join(tmpdir(), "esuiss-origin-"))
+  const origin = temporaryDirectory("esuiss-origin-")
   git(origin, "init", "--bare", "-b", "main")
   git(cwd, "init", "-b", "main")
   git(cwd, "add", ".")

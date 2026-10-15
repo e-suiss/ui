@@ -1,10 +1,36 @@
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs"
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
-import { vi } from "vitest"
+import { afterAll, onTestFinished, vi } from "vitest"
+
+const leftovers = new Set()
+
+const remove = (directory) =>
+  rmSync(directory, { recursive: true, force: true })
+
+afterAll(() => {
+  for (const directory of leftovers) remove(directory)
+  leftovers.clear()
+})
+
+export function temporaryDirectory(prefix) {
+  const directory = mkdtempSync(path.join(tmpdir(), prefix))
+  try {
+    onTestFinished(() => remove(directory))
+  } catch {
+    leftovers.add(directory)
+  }
+  return directory
+}
 
 export function createProject(files) {
-  const cwd = mkdtempSync(path.join(tmpdir(), "esuiss-cli-"))
+  const cwd = temporaryDirectory("esuiss-cli-")
   for (const [file, content] of Object.entries(files)) {
     const target = path.join(cwd, file)
     mkdirSync(path.dirname(target), { recursive: true })
