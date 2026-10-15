@@ -69,6 +69,12 @@ type BarProps = Omit<
 
 const RootContext = React.createContext<RootContextValue | null>(null)
 
+function accessibilityStep(event: AccessibilityActionEvent) {
+  if (event.nativeEvent.actionName === "increment") return 1
+  if (event.nativeEvent.actionName === "decrement") return -1
+  return 0
+}
+
 function useRootContext(componentName = "SectionIndex part") {
   const context = React.useContext(RootContext)
   if (!context) {
@@ -124,8 +130,7 @@ function Root({
         .filter((section) => section.position !== -1)
         .sort((a, b) => a.position - b.position)
       const target =
-        sections.find((section) => section.position >= index) ??
-        sections[sections.length - 1]
+        sections.find((section) => section.position >= index) ?? sections.at(-1)
       const content = contentRef.current
       if (!target || !content) return
       target.node.measureLayout(content, (_x, y) => {
@@ -288,12 +293,7 @@ function Bar({
   }
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = accessibilityStep(event)
     if (step === 0) return
     const next = Math.min(
       Math.max(currentRef.current + step, 0),

@@ -167,11 +167,10 @@ function TabBarItem({
       ]}
       accessibilityValue={text === undefined ? undefined : { text }}
       render={(renderProps, state) => {
-        const color = state.active
-          ? colors.accent
-          : state.disabled
-            ? colors.labelQuaternary
-            : colors.labelSecondary
+        let color = state.disabled
+          ? colors.labelQuaternary
+          : colors.labelSecondary
+        if (state.active) color = colors.accent
         const { style: baseStyle, ...rest } = renderProps
         return (
           <TextStyleContext.Provider value={{ ...styles.label, color }}>

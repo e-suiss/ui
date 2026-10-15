@@ -137,15 +137,13 @@ function TabsTrigger({
   const { value, orientation } = TabsPrimitive.useRootContext()
   const { colors } = useTheme()
   const active = value === props.value
+  let color = active ? colors.label : colors.labelSecondary
+  if (disabled) color = colors.labelQuaternary
   return (
     <TextStyleContext.Provider
       value={{
         ...fontSize.sm,
-        color: disabled
-          ? colors.labelQuaternary
-          : active
-            ? colors.label
-            : colors.labelSecondary,
+        color,
       }}
     >
       <TabsPrimitive.Tab

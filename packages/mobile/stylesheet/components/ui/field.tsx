@@ -312,13 +312,12 @@ function FieldError({
     ]
   }, [errors])
 
-  const content =
-    children ??
-    (messages.length === 1
-      ? messages[0]
-      : messages.length > 1
-        ? messages.map((message) => `• ${message}`).join("\n")
-        : undefined)
+  let summary: string | undefined
+  if (messages.length === 1) summary = messages[0]
+  if (messages.length > 1) {
+    summary = messages.map((message) => `• ${message}`).join("\n")
+  }
+  const content = children ?? summary
 
   return (
     <FieldPrimitive.Error

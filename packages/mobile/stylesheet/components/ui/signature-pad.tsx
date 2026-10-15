@@ -43,7 +43,7 @@ function strokePath(stroke: SignaturePadStroke) {
     if (!point || !next) continue
     path += `Q${round(point.x)} ${round(point.y)} ${round((point.x + next.x) / 2)} ${round((point.y + next.y) / 2)}`
   }
-  const last = stroke[stroke.length - 1]
+  const last = stroke.at(-1)
   if (last) path += `L${round(last.x)} ${round(last.y)}`
   return path
 }
@@ -188,7 +188,7 @@ function SignaturePad({
         .onUpdate((event) => {
           const current = activeRef.current
           if (!current) return
-          const last = current[current.length - 1]
+          const last = current.at(-1)
           if (
             last &&
             Math.abs(last.x - event.x) < 1 &&
@@ -217,6 +217,14 @@ function SignaturePad({
     [strokes, strokeWidth]
   )
 
+  const placeholderNode =
+    typeof placeholder === "string" || typeof placeholder === "number" ? (
+      <Text style={[styles.placeholder, { color: colors.labelTertiary }]}>
+        {placeholder}
+      </Text>
+    ) : (
+      placeholder
+    )
   return (
     <View
       accessible
@@ -253,15 +261,7 @@ function SignaturePad({
         style={[styles.baseline, { borderBottomColor: colors.separatorStrong }]}
       >
         <Text style={[styles.mark, { color: colors.labelTertiary }]}>×</Text>
-        {empty ? (
-          typeof placeholder === "string" || typeof placeholder === "number" ? (
-            <Text style={[styles.placeholder, { color: colors.labelTertiary }]}>
-              {placeholder}
-            </Text>
-          ) : (
-            placeholder
-          )
-        ) : null}
+        {empty ? placeholderNode : null}
       </View>
       <GestureDetector gesture={gesture}>
         <View style={StyleSheet.absoluteFill}>

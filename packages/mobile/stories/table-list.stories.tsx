@@ -94,7 +94,7 @@ export const Default: Story = {
         rows={invoices}
         columns={columns}
         getKey={(row) => row.id}
-        onRowPress={() => {}}
+        onRowPress={() => undefined}
       />
       <TableList rows={[]} columns={columns} emptyText="No invoices yet." />
     </View>
@@ -119,7 +119,7 @@ export const WithFlatList: Story = {
           title={item.customer}
           description={item.status}
           trailing={item.amount}
-          onPress={() => {}}
+          onPress={() => undefined}
         />
       )}
     />

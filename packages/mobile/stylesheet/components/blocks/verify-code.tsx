@@ -19,7 +19,12 @@ import {
 import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 const DEMO_CODE = "482913"
 
@@ -70,6 +75,10 @@ const styles = StyleSheet.create({
   hint: { ...fontSize.sm, marginTop: 14, minHeight: 20 },
   links: { marginTop: 24, alignItems: "center", gap: 10 },
 })
+
+function slotBorder(active: boolean, colors: ThemeColors) {
+  return active ? colors.accent : colors.separatorStrong
+}
 
 function LinkText({
   onPress,
@@ -239,9 +248,7 @@ function VerifyCode({
                         borderColor:
                           status === "error"
                             ? colors.danger
-                            : state.active
-                              ? colors.accent
-                              : colors.separatorStrong,
+                            : slotBorder(state.active, colors),
                       },
                     ]}
                   />

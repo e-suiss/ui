@@ -95,6 +95,36 @@ function Keypad({
     </KeypadKey>
   )
 
+  const accessory = () => {
+    if (accessoryKey === "decimal") {
+      return (
+        <KeypadKey
+          variant="plain"
+          accessibilityLabel={decimalLabel}
+          disabled={disabled}
+          className={keyClassName}
+          onPress={() => onKeyPress?.("decimal")}
+        >
+          <Text>{decimalSeparator}</Text>
+        </KeypadKey>
+      )
+    }
+    if (accessoryKey === "biometric") {
+      return (
+        <KeypadKey
+          variant="plain"
+          accessibilityLabel={biometricLabel}
+          disabled={disabled}
+          className={keyClassName}
+          onPress={() => onKeyPress?.("biometric")}
+        >
+          <Icon as={biometricIcon} />
+        </KeypadKey>
+      )
+    }
+    return <View className="size-[4.5rem]" />
+  }
+
   return (
     <View className={cn("items-center gap-4", className)} {...props}>
       {ROWS.map((row) => (
@@ -103,29 +133,7 @@ function Keypad({
         </View>
       ))}
       <View className="flex-row gap-6">
-        {accessoryKey === "decimal" ? (
-          <KeypadKey
-            variant="plain"
-            accessibilityLabel={decimalLabel}
-            disabled={disabled}
-            className={keyClassName}
-            onPress={() => onKeyPress?.("decimal")}
-          >
-            <Text>{decimalSeparator}</Text>
-          </KeypadKey>
-        ) : accessoryKey === "biometric" ? (
-          <KeypadKey
-            variant="plain"
-            accessibilityLabel={biometricLabel}
-            disabled={disabled}
-            className={keyClassName}
-            onPress={() => onKeyPress?.("biometric")}
-          >
-            <Icon as={biometricIcon} />
-          </KeypadKey>
-        ) : (
-          <View className="size-[4.5rem]" />
-        )}
+        {accessory()}
         {digit("0")}
         <KeypadKey
           variant="plain"

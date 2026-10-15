@@ -555,20 +555,22 @@ function ChartTooltipContent({
                         as={itemConfig.icon}
                         className="size-2.5 text-label-secondary"
                       />
-                    ) : hideIndicator ? null : (
-                      <View
-                        className={cn(
-                          "shrink-0 rounded-xs",
-                          indicator === "dot" && cn("size-2.5", color?.bg),
-                          indicator === "line" && cn("w-1", color?.bg),
-                          indicator === "dashed" &&
-                            cn(
-                              "w-0 border-[1.5px] border-dashed",
-                              color?.border
-                            ),
-                          nestLabel && indicator === "dashed" && "my-0.5"
-                        )}
-                      />
+                    ) : (
+                      !hideIndicator && (
+                        <View
+                          className={cn(
+                            "shrink-0 rounded-xs",
+                            indicator === "dot" && cn("size-2.5", color?.bg),
+                            indicator === "line" && cn("w-1", color?.bg),
+                            indicator === "dashed" &&
+                              cn(
+                                "w-0 border-[1.5px] border-dashed",
+                                color?.border
+                              ),
+                            nestLabel && indicator === "dashed" && "my-0.5"
+                          )}
+                        />
+                      )
                     )}
                     <View
                       className={cn(
@@ -610,12 +612,11 @@ function ChartLegendContent({
   const keys = Object.keys(config)
   const resolved = items.map((item) => {
     const key = nameKey ?? item.dataKey
+    const fallbackKey = item.value in config ? item.value : item.dataKey
     const configKey =
       typeof item.payload?.[key] === "string"
         ? String(item.payload[key])
-        : item.value in config
-          ? item.value
-          : item.dataKey
+        : fallbackKey
     return { item, configKey }
   })
   const order = (key: string) => {

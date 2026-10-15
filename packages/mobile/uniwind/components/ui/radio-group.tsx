@@ -33,16 +33,20 @@ function RadioGroupItem<Value = string>({
       className={(state) =>
         cn(
           "aspect-square size-4 shrink-0 items-center justify-center rounded-full border",
-          state.checked
-            ? state.disabled
-              ? "border-transparent bg-accent-disabled"
-              : "border-accent bg-accent active:border-accent-pressed active:bg-accent-pressed"
-            : state.disabled
-              ? "border-label/10 bg-control-disabled dark:border-transparent"
-              : cn(
-                  "border-label/25 bg-surface shadow-xs active:bg-control dark:border-transparent dark:bg-label-quaternary dark:shadow-none",
-                  invalid && "border-danger dark:border-danger"
-                ),
+          state.checked &&
+            state.disabled &&
+            "border-transparent bg-accent-disabled",
+          state.checked &&
+            !state.disabled &&
+            "border-accent bg-accent active:border-accent-pressed active:bg-accent-pressed",
+          !state.checked &&
+            state.disabled &&
+            "border-label/10 bg-control-disabled dark:border-transparent",
+          !(state.checked || state.disabled) &&
+            cn(
+              "border-label/25 bg-surface shadow-xs active:bg-control dark:border-transparent dark:bg-label-quaternary dark:shadow-none",
+              invalid && "border-danger dark:border-danger"
+            ),
           resolveClassName(className, state)
         )
       }

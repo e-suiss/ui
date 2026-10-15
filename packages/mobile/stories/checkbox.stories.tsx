@@ -10,7 +10,7 @@ const meta = {
   component: Checkbox,
   args: {
     checked: false,
-    onCheckedChange: () => {},
+    onCheckedChange: () => undefined,
   },
 } satisfies Meta<typeof Checkbox>
 
@@ -83,11 +83,11 @@ export const Disabled: Story = {
   render: () => (
     <View className="gap-4">
       <View className="flex-row items-center gap-3">
-        <Checkbox disabled checked={false} onCheckedChange={() => {}} />
+        <Checkbox disabled checked={false} onCheckedChange={() => undefined} />
         <Label disabled>Unchecked</Label>
       </View>
       <View className="flex-row items-center gap-3">
-        <Checkbox disabled checked onCheckedChange={() => {}} />
+        <Checkbox disabled checked onCheckedChange={() => undefined} />
         <Label disabled>Checked</Label>
       </View>
     </View>
@@ -100,7 +100,7 @@ export const Indeterminate: Story = {
       <Checkbox
         indeterminate
         checked={false}
-        onCheckedChange={() => {}}
+        onCheckedChange={() => undefined}
         accessibilityLabelledBy="select-all"
       />
       <Label nativeID="select-all">Select all</Label>

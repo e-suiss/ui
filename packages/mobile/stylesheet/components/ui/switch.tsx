@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated"
 import * as SwitchPrimitives from "@/components/primitives/switch"
-import { shadow, useTheme } from "@/components/ui/theme"
+import { shadow, type ThemeColors, useTheme } from "@/components/ui/theme"
 
 type SwitchSize = "default" | "sm"
 
@@ -49,6 +49,24 @@ const styles = StyleSheet.create({
   thumb: { borderRadius: 9999, ...shadow.sm },
 })
 
+function trackColors(checked: boolean, disabled: boolean, colors: ThemeColors) {
+  if (!checked) {
+    return {
+      borderColor: "transparent",
+      backgroundColor: disabled
+        ? colors.controlDisabled
+        : colors.labelQuaternary,
+    }
+  }
+  if (disabled) {
+    return {
+      borderColor: "transparent",
+      backgroundColor: colors.accentDisabled,
+    }
+  }
+  return { borderColor: colors.accent, backgroundColor: colors.accent }
+}
+
 function SwitchThumb({
   size,
   pressed,
@@ -61,11 +79,8 @@ function SwitchThumb({
   const metrics = THUMB[size]
   const squeezed = pressed && !state.disabled && !state.readOnly
   const width = squeezed ? metrics.pressedWidth : metrics.width
-  const travel = state.checked
-    ? squeezed
-      ? metrics.pressedTravel
-      : metrics.travel
-    : 0
+  let travel = 0
+  if (state.checked) travel = squeezed ? metrics.pressedTravel : metrics.travel
   const animatedStyle = useAnimatedStyle(() => ({
     width: withTiming(width, TIMING),
     transform: [{ translateX: withTiming(travel, TIMING) }],
@@ -102,19 +117,7 @@ function Switch({
       style={(state) => [
         styles.root,
         styles[size],
-        state.checked
-          ? state.disabled
-            ? {
-                borderColor: "transparent",
-                backgroundColor: colors.accentDisabled,
-              }
-            : { borderColor: colors.accent, backgroundColor: colors.accent }
-          : {
-              borderColor: "transparent",
-              backgroundColor: state.disabled
-                ? colors.controlDisabled
-                : colors.labelQuaternary,
-            },
+        trackColors(state.checked, state.disabled, colors),
         invalid && !state.disabled && { borderColor: colors.danger },
         typeof style === "function" ? style(state) : style,
       ]}

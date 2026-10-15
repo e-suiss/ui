@@ -132,7 +132,7 @@ export const WithAction: Story = {
           icon: CloudArrowUpIcon,
           title: "Upload paused",
           description: "3 photos are waiting for Wi-Fi.",
-          action: { label: "Resume", onPress: () => {} },
+          action: { label: "Resume", onPress: () => undefined },
         }}
       />
     </TopBannerProvider>

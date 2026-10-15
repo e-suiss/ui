@@ -448,29 +448,36 @@ function ChatThread({
             keyExtractor={(row) => row.id}
             accessibilityLabel="Conversation with Riley"
             contentContainerClassName="gap-1 px-0.5 py-3"
-            renderItem={({ item }) => (
-              <MessageScrollerItem>
-                {item.kind === "stamp" ? (
-                  <View className="mt-1 mb-2.5 items-center gap-1 px-6">
-                    <Text className="text-center text-2xs text-label-secondary">
-                      Today 9:30 AM
-                    </Text>
-                    <Text className="text-center text-2xs text-label-secondary">
-                      Double-tap a bubble to add a heart. Send a message and
-                      you'll get a reply.
-                    </Text>
-                  </View>
-                ) : item.kind === "typing" ? (
-                  <TypingDots />
-                ) : (
-                  <LineRow
-                    line={item}
-                    onTap={() => tap(item)}
-                    onToggle={() => toggleLike(item)}
-                  />
-                )}
-              </MessageScrollerItem>
-            )}
+            renderItem={({ item }) => {
+              if (item.kind === "stamp") {
+                return (
+                  <MessageScrollerItem>
+                    <View className="mt-1 mb-2.5 items-center gap-1 px-6">
+                      <Text className="text-center text-2xs text-label-secondary">
+                        Today 9:30 AM
+                      </Text>
+                      <Text className="text-center text-2xs text-label-secondary">
+                        Double-tap a bubble to add a heart. Send a message and
+                        you'll get a reply.
+                      </Text>
+                    </View>
+                  </MessageScrollerItem>
+                )
+              }
+              return (
+                <MessageScrollerItem>
+                  {item.kind === "typing" ? (
+                    <TypingDots />
+                  ) : (
+                    <LineRow
+                      line={item}
+                      onTap={() => tap(item)}
+                      onToggle={() => toggleLike(item)}
+                    />
+                  )}
+                </MessageScrollerItem>
+              )
+            }}
           />
         </MessageScroller>
         <Composer onSend={send} onAttach={onAttach} />

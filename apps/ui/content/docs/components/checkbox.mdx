@@ -345,7 +345,7 @@ Disabled checkboxes in both states.
 
 <NativeExample id="components-checkbox--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked={false} onCheckedChange={() => {}} />\n        <Label disabled>Unchecked</Label>\n      </View>\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked onCheckedChange={() => {}} />\n        <Label disabled>Checked</Label>\n      </View>\n    </View>\n  )\n}"} />
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked={false} onCheckedChange={() => undefined} />\n        <Label disabled>Unchecked</Label>\n      </View>\n      <View className=\"flex-row items-center gap-3\">\n        <Checkbox disabled checked onCheckedChange={() => undefined} />\n        <Label disabled>Checked</Label>\n      </View>\n    </View>\n  )\n}"} />
 
 <Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxDisabledExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Toggle(isOn: .constant(false)) { FieldLabel(\"Unchecked\") }\n      Toggle(isOn: .constant(true)) { FieldLabel(\"Checked\") }\n    }\n    .toggleStyle(.checkbox)\n    .disabled(true)\n  }\n}"} />
 
@@ -359,7 +359,7 @@ A select-all checkbox in the indeterminate state.
 
 <NativeExample id="components-checkbox--indeterminate" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxIndeterminateExample() {\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        indeterminate\n        checked={false}\n        onCheckedChange={() => {}}\n        accessibilityLabelledBy=\"select-all\"\n      />\n      <Label nativeID=\"select-all\">Select all</Label>\n    </View>\n  )\n}"} />
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxIndeterminateExample() {\n  return (\n    <View className=\"flex-row items-center gap-3\">\n      <Checkbox\n        indeterminate\n        checked={false}\n        onCheckedChange={() => undefined}\n        accessibilityLabelledBy=\"select-all\"\n      />\n      <Label nativeID=\"select-all\">Select all</Label>\n    </View>\n  )\n}"} />
 
 <Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct CheckboxIndeterminateExample: View {\n  var body: some View {\n    Toggle(sources: [Binding.constant(true), .constant(false)], isOn: \\.self) {\n      FieldLabel(\"Select all\")\n    }\n    .toggleStyle(.checkbox)\n  }\n}"} />
 

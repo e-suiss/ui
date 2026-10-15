@@ -181,6 +181,12 @@ interface RootContextValue {
 
 const RootContext = React.createContext<RootContextValue | null>(null)
 
+function accessibilityStep(event: AccessibilityActionEvent) {
+  if (event.nativeEvent.actionName === "increment") return 1
+  if (event.nativeEvent.actionName === "decrement") return -1
+  return 0
+}
+
 function useRootContext() {
   const context = React.useContext(RootContext)
   if (!context) {
@@ -698,7 +704,7 @@ function Indicator({
   const horizontal = orientation === "horizontal"
   const isRange = values.length > 1
   const startRatio = isRange ? context.getRatio(values[0] ?? context.min) : 0
-  const endRatio = context.getRatio(values[values.length - 1] ?? context.min)
+  const endRatio = context.getRatio(values.at(-1) ?? context.min)
   const startOffset = isRange
     ? getEdgeOffset(context, startRatio, horizontal)
     : 0
@@ -773,12 +779,7 @@ function Thumb({
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
     if (disabled) return
-    const direction =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const direction = accessibilityStep(event)
     if (direction === 0) return
     context.setActiveThumbIndex(index)
     const next = context.setThumbValue(

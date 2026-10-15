@@ -230,7 +230,7 @@ A disabled pin pad with a biometric key.
 
 <NativeExample id="components-pin-pad--disabled" width={880} height={859} platforms={["React Native","SwiftUI","Compose"]}>
 
-<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadDisabledExample() {\n  return (\n    <PinPad defaultValue=\"12\" disabled onBiometric={() => {}} />\n  )\n}"} />
+<Code lang="tsx" code={"import { PinPad } from \"@/components/ui/pin-pad\"\n\nexport function PinPadDisabledExample() {\n  return (\n    <PinPad defaultValue=\"12\" disabled onBiometric={() => undefined} />\n  )\n}"} />
 
 <Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PinPadDisabledExample: View {\n  var body: some View {\n    PinPadDemo(value: \"12\", biometric: true)\n      .disabled(true)\n  }\n}\n\nstruct PinPadDemo: View {\n  let length: Int\n  let error: Bool\n  let biometric: Bool\n\n  @State private var value: String\n\n  init(value: String = \"\", length: Int = 6, error: Bool = false, biometric: Bool = false) {\n    self.length = length\n    self.error = error\n    self.biometric = biometric\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
 

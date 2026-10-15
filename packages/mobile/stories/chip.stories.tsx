@@ -79,7 +79,7 @@ export const Sizes: Story = {
           <Chip icon={StarIcon} defaultSelected>
             Top rated
           </Chip>
-          <Chip onRemove={() => {}}>Nearby</Chip>
+          <Chip onRemove={() => undefined}>Nearby</Chip>
         </View>
       </Section>
       <Section label="Small">
@@ -90,7 +90,7 @@ export const Sizes: Story = {
           <Chip size="sm" icon={StarIcon} defaultSelected>
             Top rated
           </Chip>
-          <Chip size="sm" onRemove={() => {}}>
+          <Chip size="sm" onRemove={() => undefined}>
             Nearby
           </Chip>
         </View>

@@ -83,12 +83,8 @@ function Toast({
   const translateY = expanded
     ? -(position.offsetY + index * GAP)
     : -(index * PEEK) - (1 - scale) * front
-  const height =
-    !expanded && index > 0 && front > 0
-      ? front
-      : position.height > 0
-        ? position.height
-        : undefined
+  const measured = position.height > 0 ? position.height : undefined
+  const height = !expanded && index > 0 && front > 0 ? front : measured
   const hidden = position.limited
 
   const stackStyle = useAnimatedStyle(
@@ -255,6 +251,12 @@ function ToastClose({
   )
 }
 
+function toastIcon(type: string | undefined) {
+  if (type === "success") return CheckIcon
+  if (type === "error") return XIcon
+  return ExclamationMarkIcon
+}
+
 const TINT: Record<string, string> = {
   success: "bg-green",
   info: "bg-accent",
@@ -275,12 +277,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   }
   const tint = type ? TINT[type] : undefined
   if (!tint) return null
-  const IconComponent =
-    type === "success"
-      ? CheckIcon
-      : type === "error"
-        ? XIcon
-        : ExclamationMarkIcon
+  const IconComponent = toastIcon(type)
   return (
     <View
       accessible={false}

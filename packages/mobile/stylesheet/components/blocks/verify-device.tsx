@@ -17,7 +17,13 @@ import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
 import { Screen } from "@/components/ui/screen"
 import { Spinner } from "@/components/ui/spinner"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  shadow,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 const DEMO_CODE = "482913"
 
@@ -39,6 +45,10 @@ const COPY = {
 }
 
 const ENTERING = FadeIn.duration(500).reduceMotion(ReduceMotion.System)
+
+function slotBorder(active: boolean, colors: ThemeColors) {
+  return active ? colors.accent : colors.separatorStrong
+}
 
 function withAlpha(color: string, alpha: number) {
   if (!color.startsWith("#") || color.length !== 7) return color
@@ -279,9 +289,7 @@ function VerifyDevice({
                         {
                           borderColor: error
                             ? colors.danger
-                            : state.active
-                              ? colors.accent
-                              : colors.separatorStrong,
+                            : slotBorder(state.active, colors),
                         },
                       ]}
                     />

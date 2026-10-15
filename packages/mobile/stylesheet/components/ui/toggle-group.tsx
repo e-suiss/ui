@@ -207,14 +207,9 @@ function itemTextStyle(
   state: ToggleState
 ): TextStyle {
   if (context.spacing === 0 && context.variant === "default") {
-    return {
-      ...fontSize.sm,
-      color: state.disabled
-        ? colors.labelQuaternary
-        : state.pressed
-          ? colors.label
-          : colors.labelSecondary,
-    }
+    let color = state.pressed ? colors.label : colors.labelSecondary
+    if (state.disabled) color = colors.labelQuaternary
+    return { ...fontSize.sm, color }
   }
   return toggleTextStyle(colors, state)
 }

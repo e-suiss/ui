@@ -78,14 +78,9 @@ function toggleStyle(
 }
 
 function toggleTextStyle(colors: ThemeColors, state: ToggleState): TextStyle {
-  return {
-    ...fontSize.sm,
-    color: state.disabled
-      ? colors.labelQuaternary
-      : state.pressed
-        ? colors.link
-        : colors.label,
-  }
+  let color = state.pressed ? colors.link : colors.label
+  if (state.disabled) color = colors.labelQuaternary
+  return { ...fontSize.sm, color }
 }
 
 function Toggle({

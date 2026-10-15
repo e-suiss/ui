@@ -107,11 +107,9 @@ function TabBarItem({
         <TextClassContext.Provider
           value={cn(
             "text-3xs font-medium",
-            state.active
-              ? "text-accent"
-              : state.disabled
-                ? "text-label-quaternary"
-                : "text-label-secondary"
+            state.active && "text-accent",
+            !state.active && state.disabled && "text-label-quaternary",
+            !(state.active || state.disabled) && "text-label-secondary"
           )}
         >
           <Pressable {...renderProps}>

@@ -89,11 +89,11 @@ function TabsList({
         className={(state) =>
           cn(
             tabsListVariants({ variant: resolved }),
-            state.orientation === "vertical"
-              ? "flex-col items-stretch"
-              : resolved === "line"
-                ? "h-10.25 pb-1.75"
-                : "h-11",
+            state.orientation === "vertical" && "flex-col items-stretch",
+            state.orientation !== "vertical" &&
+              resolved === "line" &&
+              "h-10.25 pb-1.75",
+            state.orientation !== "vertical" && resolved !== "line" && "h-11",
             resolveClassName(className, state)
           )
         }
@@ -117,11 +117,9 @@ function TabsTrigger({
     <TextClassContext.Provider
       value={cn(
         "text-sm",
-        disabled
-          ? "text-label-quaternary"
-          : active
-            ? "text-label"
-            : "text-label-secondary"
+        disabled && "text-label-quaternary",
+        !disabled && active && "text-label",
+        !(disabled || active) && "text-label-secondary"
       )}
     >
       <TabsPrimitive.Tab

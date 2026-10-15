@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, type ViewStyle } from "react-native"
 import * as SliderPrimitive from "@/components/primitives/slider"
 import { shadow, useTheme } from "@/components/ui/theme"
 
@@ -119,14 +119,14 @@ function Slider<
             }
             style={(state) => {
               const expanded = state.dragging && state.active
-              const size =
-                state.orientation === "vertical"
-                  ? expanded
-                    ? styles.thumbVerticalActive
-                    : styles.thumbVertical
-                  : expanded
-                    ? styles.thumbHorizontalActive
-                    : styles.thumbHorizontal
+              let size: ViewStyle = expanded
+                ? styles.thumbHorizontalActive
+                : styles.thumbHorizontal
+              if (state.orientation === "vertical") {
+                size = expanded
+                  ? styles.thumbVerticalActive
+                  : styles.thumbVertical
+              }
               return [
                 styles.thumb,
                 size,

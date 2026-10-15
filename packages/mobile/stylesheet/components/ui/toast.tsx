@@ -21,7 +21,13 @@ import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  radius,
+  shadow,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -111,12 +117,8 @@ function Toast({
   const translateY = expanded
     ? -(position.offsetY + index * GAP)
     : -(index * PEEK) - (1 - scale) * front
-  const height =
-    !expanded && index > 0 && front > 0
-      ? front
-      : position.height > 0
-        ? position.height
-        : undefined
+  let height = position.height > 0 ? position.height : undefined
+  if (!expanded && index > 0 && front > 0) height = front
   const hidden = position.limited
 
   const stackStyle = useAnimatedStyle(
@@ -288,6 +290,20 @@ function ToastClose({
   )
 }
 
+function toastTint(type: string | undefined, colors: ThemeColors) {
+  if (type === "success") return colors.green
+  if (type === "info") return colors.accent
+  if (type === "warning") return colors.orange
+  if (type === "error") return colors.danger
+  return
+}
+
+function toastIcon(type: string | undefined) {
+  if (type === "success") return CheckIcon
+  if (type === "error") return XIcon
+  return ExclamationMarkIcon
+}
+
 function ToastIcon({ type }: { type: string | undefined }) {
   const { colors } = useTheme()
   if (type === "loading") {
@@ -297,23 +313,9 @@ function ToastIcon({ type }: { type: string | undefined }) {
       </View>
     )
   }
-  const tint =
-    type === "success"
-      ? colors.green
-      : type === "info"
-        ? colors.accent
-        : type === "warning"
-          ? colors.orange
-          : type === "error"
-            ? colors.danger
-            : undefined
+  const tint = toastTint(type, colors)
   if (!tint) return null
-  const IconComponent =
-    type === "success"
-      ? CheckIcon
-      : type === "error"
-        ? XIcon
-        : ExclamationMarkIcon
+  const IconComponent = toastIcon(type)
   return (
     <View
       accessible={false}

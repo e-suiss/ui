@@ -29,6 +29,11 @@ const FabContext = React.createContext<{ close: () => void } | null>(null)
 
 const EASING = Easing.bezier(0.32, 0.72, 0, 1)
 
+const FAB_SIZE = {
+  lg: { extended: "h-16 gap-2.5 px-6", compact: "size-16" },
+  default: { extended: "h-14 gap-2 px-5", compact: "size-14" },
+}
+
 function isAction(node: React.ReactNode) {
   return React.isValidElement(node) && node.type === FabAction
 }
@@ -150,13 +155,9 @@ function Fab({
             }}
             className={cn(
               "flex-row items-center justify-center rounded-full bg-accent shadow-lg active:bg-accent-pressed",
-              size === "lg"
-                ? extended
-                  ? "h-16 gap-2.5 px-6"
-                  : "size-16"
-                : extended
-                  ? "h-14 gap-2 px-5"
-                  : "size-14",
+              FAB_SIZE[size === "lg" ? "lg" : "default"][
+                extended ? "extended" : "compact"
+              ],
               className
             )}
             {...props}
@@ -171,15 +172,14 @@ function Fab({
                 )}
               />
             </AnimatedView>
-            {extended ? (
-              typeof label === "string" || typeof label === "number" ? (
+            {extended &&
+              (typeof label === "string" || typeof label === "number" ? (
                 <Text className="text-base font-semibold text-on-accent">
                   {label}
                 </Text>
               ) : (
                 label
-              )
-            ) : null}
+              ))}
           </Pressable>
         </View>
       </FabContext.Provider>

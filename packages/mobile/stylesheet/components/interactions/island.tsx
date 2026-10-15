@@ -67,7 +67,7 @@ type IslandStageContextProps = {
 const IslandContext = React.createContext<IslandContextProps | null>(null)
 
 const IslandPauseContext = React.createContext<(paused: boolean) => void>(
-  () => {}
+  () => undefined
 )
 
 const IslandStageContext = React.createContext<IslandStageContextProps | null>(
@@ -530,12 +530,9 @@ function Island({
     return registerActivity()
   }, [active, registerActivity])
 
-  const view: IslandView =
-    context.view === "minimal" && !hasMinimal
-      ? "compact"
-      : context.view === "compact" && !hasCompact
-        ? "minimal"
-        : context.view
+  let view: IslandView = context.view
+  if (context.view === "minimal" && !hasMinimal) view = "compact"
+  else if (context.view === "compact" && !hasCompact) view = "minimal"
 
   const regions = collectRegions(children)
 

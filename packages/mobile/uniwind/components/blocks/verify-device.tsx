@@ -157,11 +157,9 @@ function VerifyDevice({
                       className={(state) =>
                         cn(
                           "h-14 w-11 rounded-xl border bg-transparent",
-                          error
-                            ? "border-danger"
-                            : state.active
-                              ? "border-accent"
-                              : "border-separator-strong"
+                          error && "border-danger",
+                          !error && state.active && "border-accent",
+                          !(error || state.active) && "border-separator-strong"
                         )
                       }
                     />

@@ -88,7 +88,7 @@ const meta = {
   args: {
     multiple: true,
     value: [],
-    onValueChange: () => {},
+    onValueChange: () => undefined,
   },
 } satisfies Meta<typeof ToggleGroup>
 

@@ -21,6 +21,19 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+function statusClassName(state: string) {
+  if (state === "invalid") return "min-h-5 text-sm text-danger"
+  if (state === "verified") return "min-h-5 text-sm text-success"
+  return "min-h-5 text-sm text-label-secondary"
+}
+
+function statusText(state: string) {
+  if (state === "verifying") return "Verifying…"
+  if (state === "verified") return "Verified"
+  if (state === "invalid") return "That code didn't work. Try again."
+  return ""
+}
+
 function Status() {
   const { state } = useOtpAutofill()
 
@@ -28,21 +41,9 @@ function Status() {
     <Text
       role="status"
       accessibilityLiveRegion="polite"
-      className={
-        state === "invalid"
-          ? "min-h-5 text-sm text-danger"
-          : state === "verified"
-            ? "min-h-5 text-sm text-success"
-            : "min-h-5 text-sm text-label-secondary"
-      }
+      className={statusClassName(state)}
     >
-      {state === "verifying"
-        ? "Verifying…"
-        : state === "verified"
-          ? "Verified"
-          : state === "invalid"
-            ? "That code didn't work. Try again."
-            : ""}
+      {statusText(state)}
     </Text>
   )
 }

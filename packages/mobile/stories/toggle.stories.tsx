@@ -30,7 +30,7 @@ const meta = {
   component: Toggle,
   args: {
     pressed: false,
-    onPressedChange: () => {},
+    onPressedChange: () => undefined,
   },
 } satisfies Meta<typeof Toggle>
 

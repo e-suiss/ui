@@ -557,7 +557,8 @@ function ChartTooltipContent({
                         size={10}
                         color={colors.labelSecondary}
                       />
-                    ) : hideIndicator ? null : (
+                    ) : null}
+                    {itemConfig?.icon || hideIndicator ? null : (
                       <View
                         style={[
                           indicator === "dot" && [
@@ -622,12 +623,11 @@ function ChartLegendContent({
   const keys = Object.keys(config)
   const resolved = items.map((item) => {
     const key = nameKey ?? item.dataKey
+    const fallbackKey = item.value in config ? item.value : item.dataKey
     const configKey =
       typeof item.payload?.[key] === "string"
         ? String(item.payload[key])
-        : item.value in config
-          ? item.value
-          : item.dataKey
+        : fallbackKey
     return { item, configKey }
   })
   const order = (key: string) => {

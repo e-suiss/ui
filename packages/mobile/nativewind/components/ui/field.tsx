@@ -233,6 +233,14 @@ function FieldSeparator({
   )
 }
 
+function errorContent(messages: string[]) {
+  if (messages.length === 1) return messages[0]
+  if (messages.length > 1) {
+    return messages.map((message) => `• ${message}`).join("\n")
+  }
+  return undefined
+}
+
 function FieldError({
   className,
   children,
@@ -253,13 +261,7 @@ function FieldError({
     ]
   }, [errors])
 
-  const content =
-    children ??
-    (messages.length === 1
-      ? messages[0]
-      : messages.length > 1
-        ? messages.map((message) => `• ${message}`).join("\n")
-        : undefined)
+  const content = children ?? errorContent(messages)
 
   return (
     <FieldPrimitive.Error

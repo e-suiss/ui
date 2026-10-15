@@ -22,6 +22,8 @@ import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 
+const DIGIT = /\d/
+
 const meta = {
   title: "Components/Field",
   component: Field,
@@ -215,7 +217,7 @@ function FormDemo() {
         <Field
           name="password"
           validate={(value) =>
-            typeof value === "string" && /\d/.test(value)
+            typeof value === "string" && DIGIT.test(value)
               ? null
               : "Include at least one number."
           }

@@ -31,7 +31,7 @@ const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
 
 function TopicRow({ topic }: { topic: Topic }) {
   return (
-    <Item onPress={() => {}}>
+    <Item onPress={() => undefined}>
       <ItemMedia variant="icon">
         <Icon as={ChatCircleIcon} />
       </ItemMedia>

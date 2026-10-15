@@ -89,29 +89,23 @@ function buttonColors(
 ): ViewStyle {
   switch (variant) {
     case "default":
-      return {
-        backgroundColor: disabled
-          ? colors.accentDisabled
-          : pressed
-            ? colors.accentPressed
-            : colors.accent,
-      }
+      if (disabled) return { backgroundColor: colors.accentDisabled }
+      return { backgroundColor: pressed ? colors.accentPressed : colors.accent }
     case "outline":
+      if (pressed) {
+        return {
+          borderColor: colors.separator,
+          backgroundColor: colors.itemPressed,
+        }
+      }
       return {
         borderColor: colors.separator,
-        backgroundColor: pressed
-          ? colors.itemPressed
-          : isDark
-            ? "transparent"
-            : colors.surface,
+        backgroundColor: isDark ? "transparent" : colors.surface,
       }
     case "secondary":
+      if (disabled) return { backgroundColor: colors.controlDisabled }
       return {
-        backgroundColor: disabled
-          ? colors.controlDisabled
-          : pressed
-            ? colors.controlPressed
-            : colors.control,
+        backgroundColor: pressed ? colors.controlPressed : colors.control,
       }
     case "tinted":
       return {
@@ -130,7 +124,7 @@ function buttonColors(
             ? colors.dangerSurfacePressed
             : colors.dangerSurface,
       }
-    case "link":
+    default:
       return {}
   }
 }
@@ -161,12 +155,9 @@ function buttonTextStyle(
   colors: ThemeColors,
   disabled = false
 ): TextStyle {
-  const scale =
-    size === "xs"
-      ? fontSize["2xs"]
-      : size === "lg" || size === "xl"
-        ? fontSize.base
-        : fontSize.sm
+  let scale: TextStyle =
+    size === "lg" || size === "xl" ? fontSize.base : fontSize.sm
+  if (size === "xs") scale = fontSize["2xs"]
   return { ...scale, color: buttonTextColor(variant, colors, disabled) }
 }
 

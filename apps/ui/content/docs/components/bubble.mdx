@@ -381,7 +381,7 @@ A pressable `outline` bubble with `onPress`.
 
 <NativeExample id="components-bubble--interactive" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
-<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <Bubble variant=\"outline\" align=\"start\">\n      <BubbleContent onPress={() => {}}>\n        Show me the latest release notes\n      </BubbleContent>\n    </Bubble>\n  )\n}"} />
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <Bubble variant=\"outline\" align=\"start\">\n      <BubbleContent onPress={() => undefined}>\n        Show me the latest release notes\n      </BubbleContent>\n    </Bubble>\n  )\n}"} />
 
 <Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BubbleInteractiveExample: View {\n  var body: some View {\n    Bubble(variant: .outline) {\n      BubbleContent(action: {}) {\n        Text(\"Show me the latest release notes\")\n      }\n    }\n  }\n}"} />
 

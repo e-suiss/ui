@@ -57,7 +57,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: { onRefresh: () => {} },
+  args: { onRefresh: () => undefined },
   render: () => (
     <View className="flex-1">
       <Feed />
@@ -66,7 +66,7 @@ export const Default: Story = {
 }
 
 export const WithFlatList: Story = {
-  args: { onRefresh: () => {} },
+  args: { onRefresh: () => undefined },
   render: () => (
     <FlatList
       data={["Inbox", "Drafts", "Sent", "Archive"]}

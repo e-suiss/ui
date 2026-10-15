@@ -45,10 +45,8 @@ function readParams() {
   }
 }
 
-function StoryView({ meta, story }: { meta: Meta; story: Story }) {
-  const args: Args = { ...meta.args, ...story.args }
-  const parameters = { ...meta.parameters, ...story.parameters }
-  const context: Context = { args, parameters, globals: {}, viewMode: "story" }
+function composeStory(meta: Meta, story: Story, context: Context) {
+  const { args } = context
   const render = story.render ?? meta.render
   let Rendered: React.ComponentType = function Base() {
     if (render) return <>{render(args, context)}</>
@@ -64,6 +62,14 @@ function StoryView({ meta, story }: { meta: Meta; story: Story }) {
       return <>{decorate(Inner, context)}</>
     }
   }
+  return Rendered
+}
+
+function StoryView({ meta, story }: { meta: Meta; story: Story }) {
+  const args: Args = { ...meta.args, ...story.args }
+  const parameters = { ...meta.parameters, ...story.parameters }
+  const context: Context = { args, parameters, globals: {}, viewMode: "story" }
+  const Rendered = composeStory(meta, story, context)
   return (
     <View
       className={

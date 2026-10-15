@@ -120,6 +120,8 @@ function DatePicker({
   const label = value
     ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(value)
     : placeholder
+  let labelColor = value ? colors.label : colors.labelSecondary
+  if (disabled) labelColor = colors.labelQuaternary
 
   return (
     <Drawer open={open} onOpenChange={setOpen} floating={floating}>
@@ -149,11 +151,7 @@ function DatePicker({
           style={[
             styles.label,
             {
-              color: disabled
-                ? colors.labelQuaternary
-                : value
-                  ? colors.label
-                  : colors.labelSecondary,
+              color: labelColor,
             },
           ]}
         >

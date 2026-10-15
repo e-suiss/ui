@@ -196,7 +196,7 @@ const DEFAULT_STATE: RootState = {
   focused: false,
 }
 
-const noop = () => {}
+const noop = () => undefined
 
 const FALLBACK_CONTEXT: RootContextValue = {
   hasRoot: false,
@@ -312,12 +312,9 @@ function Root({
 
   const invalid =
     invalidProp ?? (formErrors.length > 0 || validity.state.valid === false)
-  const valid =
-    invalidProp !== undefined
-      ? !invalidProp
-      : formErrors.length > 0
-        ? false
-        : validity.state.valid
+  let valid = validity.state.valid
+  if (invalidProp !== undefined) valid = !invalidProp
+  else if (formErrors.length > 0) valid = false
 
   const runValidation = useEffectEvent((value: unknown) => {
     const control = controlRef.current?.current
@@ -634,14 +631,10 @@ function ErrorPart({
   const { setNote } = field
   const id = React.useId()
 
-  const matches =
-    match === true
-      ? true
-      : typeof match === "string"
-        ? field.validity.state[match]
-        : match === false
-          ? false
-          : field.state.invalid
+  let matches: boolean | null = field.state.invalid
+  if (match === true) matches = true
+  else if (typeof match === "string") matches = field.validity.state[match]
+  else if (match === false) matches = false
 
   const content =
     children ??

@@ -184,11 +184,11 @@ function VerifyCode({
                     className={(state) =>
                       cn(
                         "h-14 w-11 rounded-xl border bg-transparent",
-                        status === "error"
-                          ? "border-danger"
-                          : state.active
-                            ? "border-accent"
-                            : "border-separator-strong"
+                        status === "error" && "border-danger",
+                        status !== "error" && state.active && "border-accent",
+                        status !== "error" &&
+                          !state.active &&
+                          "border-separator-strong"
                       )
                     }
                   />

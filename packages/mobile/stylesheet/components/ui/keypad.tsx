@@ -55,6 +55,8 @@ function KeypadKey({
 }) {
   const { colors } = useTheme()
   const color = disabled ? colors.labelQuaternary : colors.label
+  let idleBackground = disabled ? colors.controlDisabled : colors.control
+  if (variant === "plain") idleBackground = "transparent"
   return (
     <Pressable
       role="button"
@@ -64,13 +66,7 @@ function KeypadKey({
         styles.key,
         {
           backgroundColor:
-            pressed && !disabled
-              ? colors.controlPressed
-              : variant === "plain"
-                ? "transparent"
-                : disabled
-                  ? colors.controlDisabled
-                  : colors.control,
+            pressed && !disabled ? colors.controlPressed : idleBackground,
         },
         style,
       ]}
@@ -121,6 +117,32 @@ function Keypad({
       <Text>{value}</Text>
     </KeypadKey>
   )
+  let accessory: React.ReactNode = <View style={styles.key} />
+  if (accessoryKey === "decimal") {
+    accessory = (
+      <KeypadKey
+        variant="plain"
+        accessibilityLabel={decimalLabel}
+        disabled={disabled}
+        style={keyStyle}
+        onPress={() => onKeyPress?.("decimal")}
+      >
+        <Text>{decimalSeparator}</Text>
+      </KeypadKey>
+    )
+  } else if (accessoryKey === "biometric") {
+    accessory = (
+      <KeypadKey
+        variant="plain"
+        accessibilityLabel={biometricLabel}
+        disabled={disabled}
+        style={keyStyle}
+        onPress={() => onKeyPress?.("biometric")}
+      >
+        <Icon as={biometricIcon} />
+      </KeypadKey>
+    )
+  }
 
   return (
     <View style={[styles.root, style]} {...props}>
@@ -130,29 +152,7 @@ function Keypad({
         </View>
       ))}
       <View style={styles.row}>
-        {accessoryKey === "decimal" ? (
-          <KeypadKey
-            variant="plain"
-            accessibilityLabel={decimalLabel}
-            disabled={disabled}
-            style={keyStyle}
-            onPress={() => onKeyPress?.("decimal")}
-          >
-            <Text>{decimalSeparator}</Text>
-          </KeypadKey>
-        ) : accessoryKey === "biometric" ? (
-          <KeypadKey
-            variant="plain"
-            accessibilityLabel={biometricLabel}
-            disabled={disabled}
-            style={keyStyle}
-            onPress={() => onKeyPress?.("biometric")}
-          >
-            <Icon as={biometricIcon} />
-          </KeypadKey>
-        ) : (
-          <View style={styles.key} />
-        )}
+        {accessory}
         {digit("0")}
         <KeypadKey
           variant="plain"

@@ -207,6 +207,9 @@ function Step({
   const { colors } = useTheme()
   const open = current === index
   const done = current > index
+  let badgeColor = colors.control
+  if (done) badgeColor = colors.success
+  else if (open) badgeColor = colors.label
 
   return (
     <View style={[styles.step, { borderColor: colors.separator }]}>
@@ -215,11 +218,7 @@ function Step({
           style={[
             styles.badge,
             {
-              backgroundColor: done
-                ? colors.success
-                : open
-                  ? colors.label
-                  : colors.control,
+              backgroundColor: badgeColor,
             },
           ]}
         >

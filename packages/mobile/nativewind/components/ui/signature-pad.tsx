@@ -45,7 +45,7 @@ function strokePath(stroke: SignaturePadStroke) {
     if (!point || !next) continue
     path += `Q${round(point.x)} ${round(point.y)} ${round((point.x + next.x) / 2)} ${round((point.y + next.y) / 2)}`
   }
-  const last = stroke[stroke.length - 1]
+  const last = stroke.at(-1)
   if (last) path += `L${round(last.x)} ${round(last.y)}`
   return path
 }
@@ -164,7 +164,7 @@ function SignaturePad({
         .onUpdate((event) => {
           const current = activeRef.current
           if (!current) return
-          const last = current[current.length - 1]
+          const last = current.at(-1)
           if (
             last &&
             Math.abs(last.x - event.x) < 1 &&
@@ -222,13 +222,13 @@ function SignaturePad({
         className="absolute inset-x-6 bottom-12 flex-row items-end gap-2 border-b border-separator-strong pb-1.5"
       >
         <Text className="text-lg text-label-tertiary">×</Text>
-        {empty ? (
-          typeof placeholder === "string" || typeof placeholder === "number" ? (
+        {empty &&
+          (typeof placeholder === "string" ||
+          typeof placeholder === "number" ? (
             <Text className="text-sm text-label-tertiary">{placeholder}</Text>
           ) : (
             placeholder
-          )
-        ) : null}
+          ))}
       </View>
       <GestureDetector gesture={gesture}>
         <View className="absolute inset-0">

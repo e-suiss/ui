@@ -152,6 +152,12 @@ const RootContext = React.createContext<RootContextValue | null>(null)
 
 const ViewerContext = React.createContext<ViewerContextValue | null>(null)
 
+function accessibilityStep(event: AccessibilityActionEvent) {
+  if (event.nativeEvent.actionName === "increment") return 1
+  if (event.nativeEvent.actionName === "decrement") return -1
+  return 0
+}
+
 function useRootContext(componentName = "ImageViewer part") {
   const context = React.useContext(RootContext)
   if (!context) {
@@ -709,12 +715,7 @@ function Pages({ render, className, style, ref, ...elementProps }: PagesProps) {
   }))
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = accessibilityStep(event)
     if (step === 0) return
     setIndex(index + step, IMAGE_VIEWER_REASONS.accessibilityAction, event)
   }

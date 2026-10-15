@@ -47,7 +47,7 @@ function Inbox() {
               </SwipeAction>
             </SwipeActionsActions>
             <SwipeActionsContent className="bg-surface-secondary">
-              <Item onPress={() => {}}>
+              <Item onPress={() => undefined}>
                 <ItemContent>
                   <ItemTitle>{message.from}</ItemTitle>
                   <ItemDescription>{message.subject}</ItemDescription>

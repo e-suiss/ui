@@ -157,8 +157,8 @@ class MessageScrollerController {
     const previous = this.keys
     this.keys = keys
     if (previous.length === 0 || keys.length === 0) return
-    const newest = previous[previous.length - 1]
-    if (keys[keys.length - 1] === newest) return
+    const newest = previous.at(-1)
+    if (newest === undefined || keys.at(-1) === newest) return
     const index = keys.lastIndexOf(newest)
     if (index < 0 || this.offset <= this.threshold) return
     this.unreadStore.setSnapshot(
@@ -473,12 +473,15 @@ function MessageScrollerButton({
     ],
   }))
 
-  const label =
-    direction === "start"
-      ? "Scroll to start"
-      : count > 0
-        ? `Scroll to end, ${count} new ${count === 1 ? "message" : "messages"}`
-        : "Scroll to end"
+  let label = "Scroll to end"
+  if (direction === "start") label = "Scroll to start"
+  else if (count > 0) {
+    label = `Scroll to end, ${count} new ${count === 1 ? "message" : "messages"}`
+  }
+  const pressedBackground = isDark
+    ? colors.surfaceTertiary
+    : colors.surfaceSecondary
+  const idleBackground = isDark ? colors.surfaceSecondary : colors.surfaceRaised
 
   return (
     <AnimatedView
@@ -498,13 +501,7 @@ function MessageScrollerButton({
         style={(state) => [
           {
             borderColor: colors.separator,
-            backgroundColor: state.pressed
-              ? isDark
-                ? colors.surfaceTertiary
-                : colors.surfaceSecondary
-              : isDark
-                ? colors.surfaceSecondary
-                : colors.surfaceRaised,
+            backgroundColor: state.pressed ? pressedBackground : idleBackground,
           },
           typeof style === "function" ? style(state) : style,
         ]}

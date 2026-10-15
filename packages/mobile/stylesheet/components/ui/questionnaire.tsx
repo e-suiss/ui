@@ -111,6 +111,26 @@ type UseQuestionnaireParameters = {
 
 const EMPTY: QuestionnaireAnswer = { choices: [], text: "" }
 
+function withChoice(choices: string[], value: string) {
+  return choices.includes(value) ? choices : [...choices, value]
+}
+
+function selectChoice(
+  choices: string[],
+  value: string,
+  selected: boolean,
+  multiple: boolean
+) {
+  if (!selected) return choices.filter((entry) => entry !== value)
+  if (multiple) return withChoice(choices, value)
+  return [value]
+}
+
+function toggleChoice(choices: string[], value: string, on: boolean) {
+  if (on) return withChoice(choices, value)
+  return choices.filter((entry) => entry !== value)
+}
+
 const SHIFT = I18nManager.isRTL ? -48 : 48
 
 const EASING_DURATION = 280
@@ -283,12 +303,10 @@ function useQuestionnaire({
     React.useState<QuestionnaireDirection>("forward")
   const [animated, setAnimated] = React.useState(false)
   const shownIndex = shownItemName ? sequence.indexOf(shownItemName) : -1
-  const direction: QuestionnaireDirection =
-    shownItemName !== activeItemName && shownIndex >= 0 && index >= 0
-      ? index > shownIndex
-        ? "forward"
-        : "backward"
-      : lastDirection
+  let direction = lastDirection
+  if (shownItemName !== activeItemName && shownIndex >= 0 && index >= 0) {
+    direction = index > shownIndex ? "forward" : "backward"
+  }
 
   React.useLayoutEffect(() => {
     if (shownItemName === activeItemName) return
@@ -446,13 +464,7 @@ function useQuestionnaire({
       setSkipped((state) => (state[name] ? { ...state, [name]: false } : state))
       setAnswers((state) => {
         const answer = state[name] ?? defaultsRef.current[name] ?? EMPTY
-        const choices = !selected
-          ? answer.choices.filter((entry) => entry !== value)
-          : multiple
-            ? answer.choices.includes(value)
-              ? answer.choices
-              : [...answer.choices, value]
-            : [value]
+        const choices = selectChoice(answer.choices, value, selected, multiple)
         return { ...state, [name]: { ...answer, choices } }
       })
     },
@@ -477,12 +489,9 @@ function useQuestionnaire({
         const choices =
           choice === undefined
             ? previous.choices
-            : on
-              ? previous.choices.includes(choice)
-                ? previous.choices
-                : [...previous.choices, choice]
-              : previous.choices.filter((entry) => entry !== choice)
-        const nextText = text === undefined ? previous.text : on ? text : ""
+            : toggleChoice(previous.choices, choice, on)
+        let nextText = previous.text
+        if (text !== undefined) nextText = on ? text : ""
         if (choices === previous.choices && nextText === previous.text) {
           return state
         }
@@ -808,6 +817,17 @@ function QuestionnaireChoice({
     haptics.selection()
   }
 
+  const mark = multiple ? (
+    <Icon as={CheckIcon} weight="bold" size={14} color={colors.onAccent} />
+  ) : (
+    <View
+      style={[
+        styles.dot,
+        isDark && styles.dotDark,
+        { backgroundColor: colors.onAccent },
+      ]}
+    />
+  )
   return (
     <Pressable
       role={multiple ? "checkbox" : "radio"}
@@ -836,24 +856,7 @@ function QuestionnaireChoice({
           },
         ]}
       >
-        {isChecked ? (
-          multiple ? (
-            <Icon
-              as={CheckIcon}
-              weight="bold"
-              size={14}
-              color={colors.onAccent}
-            />
-          ) : (
-            <View
-              style={[
-                styles.dot,
-                isDark && styles.dotDark,
-                { backgroundColor: colors.onAccent },
-              ]}
-            />
-          )
-        ) : null}
+        {isChecked ? mark : null}
       </View>
       <TextStyleContext.Provider
         value={{

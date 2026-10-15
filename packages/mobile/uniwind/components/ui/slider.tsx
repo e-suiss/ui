@@ -2,6 +2,11 @@ import { cn } from "cn"
 import * as SliderPrimitive from "@/components/primitives/slider"
 import { resolveClassName } from "@/components/primitives/use-render"
 
+const THUMB_SIZE = {
+  vertical: { active: "h-9 w-5", idle: "h-8 w-5" },
+  horizontal: { active: "h-5 w-9", idle: "h-5 w-8" },
+}
+
 function thumbIndexes(
   value: SliderPrimitive.SliderValue | undefined,
   defaultValue: SliderPrimitive.SliderValue | undefined
@@ -72,13 +77,9 @@ function Slider<
             className={(state) =>
               cn(
                 "rounded-full border border-label/10 bg-surface shadow-md dark:bg-label",
-                state.orientation === "vertical"
-                  ? state.dragging && state.active
-                    ? "h-9 w-5"
-                    : "h-8 w-5"
-                  : state.dragging && state.active
-                    ? "h-5 w-9"
-                    : "h-5 w-8",
+                THUMB_SIZE[
+                  state.orientation === "vertical" ? "vertical" : "horizontal"
+                ][state.dragging && state.active ? "active" : "idle"],
                 state.disabled && "shadow-none"
               )
             }

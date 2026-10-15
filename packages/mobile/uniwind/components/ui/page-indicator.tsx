@@ -36,6 +36,12 @@ const TIMING = {
 
 const ACTIONS = [{ name: "increment" }, { name: "decrement" }]
 
+function actionStep(actionName: string) {
+  if (actionName === "increment") return 1
+  if (actionName === "decrement") return -1
+  return 0
+}
+
 function windowStart(count: number, index: number, maxVisible: number) {
   if (count <= maxVisible) return 0
   return Math.min(
@@ -106,11 +112,9 @@ function PageIndicatorDot({
       <AnimatedView
         className={cn(
           "rounded-full",
-          active
-            ? variant === "accent"
-              ? "bg-accent"
-              : "bg-label"
-            : "bg-label-quaternary"
+          active && variant === "accent" && "bg-accent",
+          active && variant !== "accent" && "bg-label",
+          !active && "bg-label-quaternary"
         )}
         style={[{ height: metrics.dot }, animatedStyle]}
       />
@@ -167,12 +171,7 @@ function PageIndicator({
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
     if (!onIndexChange) return
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = actionStep(event.nativeEvent.actionName)
     const next = Math.min(Math.max(current + step, 0), count - 1)
     if (next !== current) onIndexChange(next)
   }

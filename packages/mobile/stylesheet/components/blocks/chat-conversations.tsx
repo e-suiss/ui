@@ -485,11 +485,9 @@ function ChatConversations({
                     >
                       Today 9:30 AM
                     </Text>
-                  ) : item.kind === "typing" ? (
-                    <TypingDots />
-                  ) : (
-                    <LineRow line={item} />
-                  )}
+                  ) : null}
+                  {item.kind === "typing" ? <TypingDots /> : null}
+                  {item.kind === "line" ? <LineRow line={item} /> : null}
                 </MessageScrollerItem>
               )}
             />

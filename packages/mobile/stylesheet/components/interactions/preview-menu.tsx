@@ -227,11 +227,8 @@ function PreviewMenuItem({
   children?: React.ReactNode
 }) {
   const { colors } = useTheme()
-  const color = props.disabled
-    ? colors.labelQuaternary
-    : variant === "destructive"
-      ? colors.danger
-      : colors.label
+  let color = variant === "destructive" ? colors.danger : colors.label
+  if (props.disabled) color = colors.labelQuaternary
   return (
     <TextStyleContext.Provider value={{ ...fontSize.base, color }}>
       <IconSizeContext.Provider value={20}>

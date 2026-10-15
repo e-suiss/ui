@@ -20,7 +20,7 @@ const meta = {
   title: "Blocks/Onboarding",
   component: Onboarding,
   args: {
-    onDone: () => {},
+    onDone: () => undefined,
   },
   decorators: [
     (Story) => (

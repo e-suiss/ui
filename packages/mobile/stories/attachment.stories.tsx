@@ -229,7 +229,7 @@ export const Pressable: Story = {
     <Attachment {...args}>
       <AttachmentTrigger
         accessibilityLabel="Open Brand guidelines.pdf"
-        onPress={() => {}}
+        onPress={() => undefined}
       />
       <AttachmentMedia variant="document">
         <AttachmentLabel className="bg-red">pdf</AttachmentLabel>

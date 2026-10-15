@@ -523,6 +523,8 @@ function Provider({
           store.promise(promise, options).catch(() => undefined)
           break
         }
+        default:
+          break
       }
     })
   }, [store, toastManager])

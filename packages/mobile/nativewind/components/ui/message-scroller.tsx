@@ -131,8 +131,8 @@ class MessageScrollerController {
     const previous = this.keys
     this.keys = keys
     if (previous.length === 0 || keys.length === 0) return
-    const newest = previous[previous.length - 1]
-    if (keys[keys.length - 1] === newest) return
+    const newest = previous.at(-1)
+    if (newest === undefined || keys.at(-1) === newest) return
     const index = keys.lastIndexOf(newest)
     if (index < 0 || this.offset <= this.threshold) return
     this.unreadStore.setSnapshot(
@@ -408,6 +408,11 @@ function MessageScrollerItem({ className, ...props }: ViewProps) {
   )
 }
 
+function scrollToEndLabel(count: number) {
+  if (count <= 0) return "Scroll to end"
+  return `Scroll to end, ${count} new ${count === 1 ? "message" : "messages"}`
+}
+
 const ENTER_EASING = Easing.bezier(0.23, 1, 0.32, 1)
 
 const EXIT_EASING = Easing.bezier(0.7, 0, 0.84, 0)
@@ -452,11 +457,7 @@ function MessageScrollerButton({
   }))
 
   const label =
-    direction === "start"
-      ? "Scroll to start"
-      : count > 0
-        ? `Scroll to end, ${count} new ${count === 1 ? "message" : "messages"}`
-        : "Scroll to end"
+    direction === "start" ? "Scroll to start" : scrollToEndLabel(count)
 
   return (
     <AnimatedView

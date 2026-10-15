@@ -146,13 +146,9 @@ function PinPad({
       >
         {Array.from({ length }, (_, position) => position).map((index) => {
           const filled = index < value.length
-          const color = error
-            ? colors.danger
-            : disabled
-              ? colors.labelQuaternary
-              : filled
-                ? colors.label
-                : colors.separatorStrong
+          let color = filled ? colors.label : colors.separatorStrong
+          if (disabled) color = colors.labelQuaternary
+          if (error) color = colors.danger
           return (
             <View
               key={index}

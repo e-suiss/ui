@@ -154,11 +154,9 @@ function itemTextClassName(
   if (context.spacing === 0 && context.variant === "default") {
     return cn(
       "text-sm",
-      state.disabled
-        ? "text-label-quaternary"
-        : state.pressed
-          ? "text-label"
-          : "text-label-secondary"
+      state.disabled && "text-label-quaternary",
+      !state.disabled && state.pressed && "text-label",
+      !(state.disabled || state.pressed) && "text-label-secondary"
     )
   }
   return toggleTextClassName(state)

@@ -56,6 +56,12 @@ const WidgetContext = React.createContext<{
   align: WidgetAlign
 }>({ size: "auto", align: "start" })
 
+function actionStep(actionName: string) {
+  if (actionName === "increment") return 1
+  if (actionName === "decrement") return -1
+  return 0
+}
+
 function withAlpha(color: string, alpha: number) {
   if (!color.startsWith("#") || color.length !== 7) return color
   const r = Number.parseInt(color.slice(1, 3), 16)
@@ -457,12 +463,7 @@ function Widget({
   }
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = actionStep(event.nativeEvent.actionName)
     if (!step) return
     const index = current === "auto" ? -1 : reachable.indexOf(current)
     const next =

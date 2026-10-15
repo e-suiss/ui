@@ -47,14 +47,10 @@ function badgeStyle(variant: BadgeVariant, colors: ThemeColors): ViewStyle {
 }
 
 function badgeTextStyle(variant: BadgeVariant, colors: ThemeColors): TextStyle {
-  const color =
-    variant === "secondary"
-      ? colors.labelSecondary
-      : variant === "destructive"
-        ? colors.danger
-        : variant === "outline" || variant === "ghost"
-          ? colors.label
-          : colors.link
+  let color = colors.link
+  if (variant === "secondary") color = colors.labelSecondary
+  else if (variant === "destructive") color = colors.danger
+  else if (variant === "outline" || variant === "ghost") color = colors.label
   return { ...fontSize.xs, fontWeight: "600", color }
 }
 

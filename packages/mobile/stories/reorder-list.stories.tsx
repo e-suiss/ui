@@ -89,7 +89,7 @@ const meta = {
   component: ReorderList,
   args: {
     value: initialOrder,
-    onValueChange: () => {},
+    onValueChange: () => undefined,
   },
 } satisfies Meta<typeof ReorderList>
 

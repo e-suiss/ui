@@ -55,18 +55,16 @@ function radioStyle(
       backgroundColor: colors.controlDisabled,
     }
   }
+  if (isDark) {
+    return {
+      borderColor: invalid ? colors.danger : "transparent",
+      backgroundColor: colors.labelQuaternary,
+    }
+  }
   return {
-    borderColor: invalid
-      ? colors.danger
-      : isDark
-        ? "transparent"
-        : `${colors.label}40`,
-    backgroundColor: isDark
-      ? colors.labelQuaternary
-      : pressed
-        ? colors.control
-        : colors.surface,
-    ...(isDark ? null : shadow.xs),
+    borderColor: invalid ? colors.danger : `${colors.label}40`,
+    backgroundColor: pressed ? colors.control : colors.surface,
+    ...shadow.xs,
   }
 }
 

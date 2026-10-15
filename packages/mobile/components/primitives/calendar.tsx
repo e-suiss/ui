@@ -367,16 +367,27 @@ function localeWeekStart(locale: string | undefined): WeekDay | undefined {
   }
 }
 
+function relativeToday(locale: string | undefined) {
+  if (typeof Intl.RelativeTimeFormat !== "function") return undefined
+  const text = new Intl.RelativeTimeFormat(locale, {
+    numeric: "auto",
+  }).format(0, "day")
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
 function todayLabel(locale: string | undefined) {
   try {
-    if (typeof Intl.RelativeTimeFormat === "function") {
-      const text = new Intl.RelativeTimeFormat(locale, {
-        numeric: "auto",
-      }).format(0, "day")
-      return text.charAt(0).toUpperCase() + text.slice(1)
-    }
-  } catch {}
-  return "Today"
+    return relativeToday(locale) ?? "Today"
+  } catch {
+    return "Today"
+  }
+}
+
+function selectionAnchor(selected: Selected) {
+  if (selected instanceof Date) return selected
+  if (Array.isArray(selected)) return selected[0]
+  if (isDateRange(selected)) return selected.from
+  return undefined
 }
 
 function Root({
@@ -413,16 +424,7 @@ function Root({
   const selected: Selected = onSelect ? selectedProp : internalSelected
 
   const initialMonth = () => {
-    const anchor =
-      defaultMonth ??
-      (selectedProp instanceof Date
-        ? selectedProp
-        : Array.isArray(selectedProp)
-          ? selectedProp[0]
-          : isDateRange(selectedProp)
-            ? selectedProp.from
-            : undefined) ??
-      today
+    const anchor = defaultMonth ?? selectionAnchor(selectedProp) ?? today
     return startOfMonth(anchor)
   }
   const [internalMonth, setInternalMonth] = React.useState(initialMonth)
@@ -532,12 +534,8 @@ function Root({
       const exists = list.some((item) => isSameDay(item, date))
       if (exists) {
         const remaining = list.filter((item) => !isSameDay(item, date))
-        next =
-          remaining.length === 0 && !required
-            ? undefined
-            : remaining.length === 0
-              ? list
-              : remaining
+        if (remaining.length > 0) next = remaining
+        else next = required ? list : undefined
       } else {
         next = [...list, date]
       }

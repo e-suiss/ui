@@ -355,14 +355,8 @@ function Input({
     [rootState, slot, index]
   )
 
-  const content =
-    typeof children === "function" ? (
-      children(slot)
-    ) : children === undefined ? (
-      <Text>{slot.char}</Text>
-    ) : (
-      children
-    )
+  let content = typeof children === "function" ? children(slot) : children
+  if (children === undefined) content = <Text>{slot.char}</Text>
 
   return useRender({
     defaultComponent: View,

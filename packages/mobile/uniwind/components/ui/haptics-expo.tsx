@@ -28,7 +28,7 @@ const NOTIFICATION_TYPES: Record<
   error: NotificationFeedbackType.Error,
 }
 
-function ignore() {}
+const ignore = () => undefined
 
 const expoHapticsAdapter: HapticsAdapter = {
   impact: (style) => {

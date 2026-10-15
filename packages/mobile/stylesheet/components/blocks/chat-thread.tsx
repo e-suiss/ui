@@ -525,15 +525,15 @@ function ChatThread({
                       you'll get a reply.
                     </Text>
                   </View>
-                ) : item.kind === "typing" ? (
-                  <TypingDots />
-                ) : (
+                ) : null}
+                {item.kind === "typing" ? <TypingDots /> : null}
+                {item.kind === "line" ? (
                   <LineRow
                     line={item}
                     onTap={() => tap(item)}
                     onToggle={() => toggleLike(item)}
                   />
-                )}
+                ) : null}
               </MessageScrollerItem>
             )}
           />

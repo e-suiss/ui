@@ -72,6 +72,7 @@ function chipStyle(
   pressing: boolean,
   removable: boolean
 ): StyleProp<ViewStyle> {
+  const idleBackground = pressing ? colors.controlPressed : colors.control
   return [
     styles.root,
     sizes[size],
@@ -87,9 +88,7 @@ function chipStyle(
           {
             backgroundColor: state.pressed
               ? colors.controlSelected
-              : pressing
-                ? colors.controlPressed
-                : colors.control,
+              : idleBackground,
           },
         ],
   ]
@@ -100,14 +99,12 @@ function chipTextStyle(
   colors: ThemeColors,
   state: ToggleState
 ): TextStyle {
+  let color = state.disabled ? colors.labelQuaternary : colors.label
+  if (state.pressed) color = colors.onControlSelected
   return {
     ...(size === "sm" ? fontSize.xs : fontSize.sm),
     fontWeight: "500",
-    color: state.pressed
-      ? colors.onControlSelected
-      : state.disabled
-        ? colors.labelQuaternary
-        : colors.label,
+    color,
   }
 }
 

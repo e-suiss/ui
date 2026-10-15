@@ -62,6 +62,14 @@ type ThemeContextProps = {
 
 const ThemeContext = React.createContext<ThemeContextProps | null>(null)
 
+function knownTheme(
+  next: Theme,
+  current: { theme: Theme; resolvedTheme: ResolvedTheme }
+): ResolvedTheme | null {
+  if (next !== "system") return next
+  return current.theme === "system" ? current.resolvedTheme : null
+}
+
 function useTheme() {
   const context = React.useContext(ThemeContext)
   if (!context) {
@@ -473,8 +481,8 @@ function ThemeProvider({
   const readyRef = React.useRef(0)
   const portalName = `theme-reveal-${React.useId()}`
 
-  const resolvedTheme: ResolvedTheme =
-    theme === "system" ? (scheme === "dark" ? "dark" : "light") : theme
+  const systemTheme: ResolvedTheme = scheme === "dark" ? "dark" : "light"
+  const resolvedTheme: ResolvedTheme = theme === "system" ? systemTheme : theme
 
   const currentRef = React.useRef({ theme, resolvedTheme })
 
@@ -518,12 +526,7 @@ function ThemeProvider({
       writeStoredTheme(storage, storageKey, next)
       const request = ++requestRef.current
       const current = currentRef.current
-      const known =
-        next !== "system"
-          ? next
-          : current.theme === "system"
-            ? current.resolvedTheme
-            : null
+      const known = knownTheme(next, current)
       if (!transition || !snapshot || known === current.resolvedTheme) {
         commit(request, next)
         return

@@ -25,6 +25,12 @@ const MAX_DIGITS = 15
 
 const SHAKE_STEP = 400 / 6
 
+const AMOUNT_PATTERN = /^(\D*?)(\d[\d\s.,'\u2019\u00a0\u202f]*\d|\d)(\D*)$/
+
+const DECIMAL_PATTERN = /1(\D+)5/
+
+const LEADING_ZEROS = /^0+(?=\d)/
+
 function createFormatter(
   locale: string | undefined,
   currency: string | undefined,
@@ -49,7 +55,7 @@ function toParts(formatter: Intl.NumberFormat, amount: number): AmountPart[] {
     return formatter.formatToParts(amount)
   }
   const text = formatter.format(amount)
-  const match = text.match(/^(\D*?)(\d[\d\s.,'\u2019\u00a0\u202f]*\d|\d)(\D*)$/)
+  const match = text.match(AMOUNT_PATTERN)
   if (!match) return [{ type: "integer", value: text }]
   const [, prefix = "", number = "", suffix = ""] = match
   const parts: AmountPart[] = []
@@ -83,7 +89,7 @@ function decimalSeparatorOf(locale: string | undefined) {
   const parts = toParts(formatter, 1.5)
   const decimal = parts.find((part) => part.type === "decimal")?.value
   if (decimal) return decimal
-  return formatter.format(1.5).match(/1(\D+)5/)?.[1] ?? "."
+  return formatter.format(1.5).match(DECIMAL_PATTERN)?.[1] ?? "."
 }
 
 function toAmount(value: string) {
@@ -95,7 +101,7 @@ function toAmount(value: string) {
 function sanitize(value: string, fractionDigits: number) {
   const [integer = "", ...rest] = value.replace(/[^\d.]/g, "").split(".")
   const fraction = rest.join("").slice(0, fractionDigits)
-  const trimmed = integer.replace(/^0+(?=\d)/, "")
+  const trimmed = integer.replace(LEADING_ZEROS, "")
   if (fractionDigits === 0 || rest.length === 0) return trimmed
   return `${trimmed || "0"}.${fraction}`
 }

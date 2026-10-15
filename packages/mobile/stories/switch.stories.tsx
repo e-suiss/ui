@@ -10,7 +10,7 @@ const meta = {
   component: Switch,
   args: {
     checked: false,
-    onCheckedChange: () => {},
+    onCheckedChange: () => undefined,
   },
 } satisfies Meta<typeof Switch>
 
@@ -88,8 +88,8 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   render: () => (
     <View className="gap-4">
-      <Switch disabled checked={false} onCheckedChange={() => {}} />
-      <Switch disabled checked onCheckedChange={() => {}} />
+      <Switch disabled checked={false} onCheckedChange={() => undefined} />
+      <Switch disabled checked onCheckedChange={() => undefined} />
     </View>
   ),
 }

@@ -357,14 +357,12 @@ function Root({
     !Number.isInteger(step) ||
     (format?.maximumFractionDigits ?? 0) > 0 ||
     format?.style === "percent"
-  const keyboardType: RootContextValue["keyboardType"] =
-    min === undefined || min < 0
-      ? Platform.OS === "ios"
-        ? "numbers-and-punctuation"
-        : "numeric"
-      : allowsDecimal
-        ? "decimal-pad"
-        : "number-pad"
+  let keyboardType: RootContextValue["keyboardType"] = allowsDecimal
+    ? "decimal-pad"
+    : "number-pad"
+  if (min === undefined || min < 0) {
+    keyboardType = Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"
+  }
 
   const state = React.useMemo<RootState>(
     () => ({ value, inputValue, required, disabled, readOnly, focused }),

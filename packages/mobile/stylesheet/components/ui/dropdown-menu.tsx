@@ -225,15 +225,13 @@ function DropdownMenuItem({
 }) {
   const { colors } = useTheme()
   const destructive = variant === "destructive"
+  let color = destructive ? colors.danger : colors.label
+  if (props.disabled) color = colors.labelQuaternary
   return (
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: props.disabled
-          ? colors.labelQuaternary
-          : destructive
-            ? colors.danger
-            : colors.label,
+        color,
       }}
     >
       <MenuPrimitive.Item

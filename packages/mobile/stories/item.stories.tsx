@@ -48,7 +48,7 @@ export const Default: Story = {
           </Button>
         </ItemActions>
       </Item>
-      <Item variant="muted" size="sm" onPress={() => {}}>
+      <Item variant="muted" size="sm" onPress={() => undefined}>
         <ItemMedia variant="icon">
           <Icon as={ShieldCheckIcon} />
         </ItemMedia>
@@ -82,7 +82,7 @@ export const Default: Story = {
 export const InsetGroup: Story = {
   render: () => (
     <ItemGroup variant="inset">
-      <Item onPress={() => {}}>
+      <Item onPress={() => undefined}>
         <ItemMedia
           variant="image"
           className="bg-blue items-center justify-center"
@@ -98,7 +98,7 @@ export const InsetGroup: Story = {
         </ItemActions>
       </Item>
       <ItemSeparator />
-      <Item onPress={() => {}}>
+      <Item onPress={() => undefined}>
         <ItemMedia
           variant="image"
           className="bg-red items-center justify-center"

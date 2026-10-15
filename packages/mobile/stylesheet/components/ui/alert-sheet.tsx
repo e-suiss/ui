@@ -232,14 +232,12 @@ function useActionText(
   disabled: boolean
 ): TextStyle {
   const { colors } = useTheme()
+  let color = variant === "destructive" ? colors.danger : colors.link
+  if (disabled) color = colors.labelQuaternary
   return {
     ...fontSize.lg,
     textAlign: "center",
-    color: disabled
-      ? colors.labelQuaternary
-      : variant === "destructive"
-        ? colors.danger
-        : colors.link,
+    color,
   }
 }
 

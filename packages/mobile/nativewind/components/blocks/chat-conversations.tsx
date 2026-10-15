@@ -414,19 +414,26 @@ function ChatConversations({
               keyExtractor={(row) => row.id}
               accessibilityLabel={`Conversation with ${thread.name}`}
               contentContainerClassName="gap-1 px-2.5 py-4"
-              renderItem={({ item }) => (
-                <MessageScrollerItem>
-                  {item.kind === "stamp" ? (
-                    <Text className="mt-1 mb-2.5 text-center text-2xs text-label-secondary">
-                      Today 9:30 AM
-                    </Text>
-                  ) : item.kind === "typing" ? (
-                    <TypingDots />
-                  ) : (
-                    <LineRow line={item} />
-                  )}
-                </MessageScrollerItem>
-              )}
+              renderItem={({ item }) => {
+                if (item.kind === "stamp") {
+                  return (
+                    <MessageScrollerItem>
+                      <Text className="mt-1 mb-2.5 text-center text-2xs text-label-secondary">
+                        Today 9:30 AM
+                      </Text>
+                    </MessageScrollerItem>
+                  )
+                }
+                return (
+                  <MessageScrollerItem>
+                    {item.kind === "typing" ? (
+                      <TypingDots />
+                    ) : (
+                      <LineRow line={item} />
+                    )}
+                  </MessageScrollerItem>
+                )
+              }}
             />
           </MessageScroller>
           <Composer placeholder="Message" onSend={send} onAttach={onAttach} />

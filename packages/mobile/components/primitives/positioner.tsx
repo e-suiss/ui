@@ -114,6 +114,17 @@ function isVertical(side: Side) {
   return side === "top" || side === "bottom"
 }
 
+function alignedPosition(
+  align: Align,
+  start: number,
+  end: number,
+  center: number
+) {
+  if (align === "start") return start
+  if (align === "end") return end
+  return center
+}
+
 function swapAlign(align: Align): Align {
   if (align === "start") return "end"
   if (align === "end") return "start"
@@ -167,7 +178,7 @@ function computePosition({
       const end = rtl ? anchor.pageX : anchor.pageX + anchor.width - popup.width
       const center = anchor.pageX + anchor.width / 2 - popup.width / 2
       const x =
-        (align === "start" ? start : align === "end" ? end : center) +
+        alignedPosition(align, start, end, center) +
         (rtl ? -crossOffset : crossOffset)
       const y =
         side === "top"
@@ -178,8 +189,7 @@ function computePosition({
     const start = anchor.pageY
     const end = anchor.pageY + anchor.height - popup.height
     const center = anchor.pageY + anchor.height / 2 - popup.height / 2
-    const y =
-      (align === "start" ? start : align === "end" ? end : center) + crossOffset
+    const y = alignedPosition(align, start, end, center) + crossOffset
     const x =
       side === "left"
         ? anchor.pageX - mainOffset - popup.width
@@ -221,11 +231,10 @@ function computePosition({
   if (sideMode === "flip") {
     const candidates: Side[] = [preferred, OPPOSITE_SIDE[preferred]]
     if (fallbackAxisSide !== "none") {
-      const perpendicular: Side[] = isVertical(preferred)
-        ? rtl
-          ? ["right", "left"]
-          : ["left", "right"]
-        : ["top", "bottom"]
+      let perpendicular: Side[] = ["top", "bottom"]
+      if (isVertical(preferred)) {
+        perpendicular = rtl ? ["right", "left"] : ["left", "right"]
+      }
       if (fallbackAxisSide === "end") perpendicular.reverse()
       candidates.push(...perpendicular)
     }

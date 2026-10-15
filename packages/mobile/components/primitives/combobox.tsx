@@ -175,7 +175,8 @@ function filterItems(
   limit: number | undefined
 ): readonly unknown[] {
   if (!items) return []
-  const max = limit === undefined || limit < 0 ? Infinity : limit
+  const max =
+    limit === undefined || limit < 0 ? Number.POSITIVE_INFINITY : limit
   let count = 0
   const result: unknown[] = []
   for (const entry of items as readonly unknown[]) {

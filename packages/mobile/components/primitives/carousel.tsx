@@ -156,7 +156,7 @@ function computeSnaps(
         ? layout.start + layout.size / 2 - viewportSize / 2
         : layout.start
     const offset = Math.min(Math.max(raw, 0), max)
-    const previous = snaps[snaps.length - 1]
+    const previous = snaps.at(-1)
     if (previous === undefined || Math.abs(offset - previous) > 1) {
       snaps.push(offset)
     }

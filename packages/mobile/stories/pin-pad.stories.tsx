@@ -86,7 +86,9 @@ export const Verify: Story = {
 }
 
 export const Disabled: Story = {
-  render: () => <PinPad defaultValue="12" disabled onBiometric={() => {}} />,
+  render: () => (
+    <PinPad defaultValue="12" disabled onBiometric={() => undefined} />
+  ),
 }
 
 export const Biometric: Story = {

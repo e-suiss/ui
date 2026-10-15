@@ -15,7 +15,9 @@ interface HapticsContextValue {
   enabled: boolean
 }
 
-function noop() {}
+function noop() {
+  return undefined
+}
 
 const NOOP_HAPTICS_ADAPTER: HapticsAdapter = {
   impact: noop,

@@ -409,6 +409,9 @@ const ANGLE_TICK_SIZE = 8
 const COS_45 = Math.SQRT1_2
 const TAP_SLOP = 10
 const RADIAN = Math.PI / 180
+const PATH_TOKEN = /[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/g
+const PATH_COMMAND = /[A-Za-z]/
+const DASH_SEPARATOR = /[\s,]+/
 const BAR_DURATION = 400
 const CURVE_DURATION = 1500
 const CURVE_SAMPLES = 24
@@ -680,7 +683,7 @@ function stepPath(points: Point[]) {
     const middle = round((previous.x + point.x) / 2)
     path += `L${middle},${round(previous.y)}L${middle},${round(point.y)}`
   }
-  const last = points[points.length - 1]
+  const last = points.at(-1)
   if (last && points.length > 1) path += `L${round(last.x)},${round(last.y)}`
   return path
 }
@@ -817,14 +820,14 @@ function animate(
 }
 
 function tracePath(d: string) {
-  const tokens = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/g) ?? []
+  const tokens = d.match(PATH_TOKEN) ?? []
   const points: Point[] = []
   let command = ""
   let index = 0
   const read = () => Number(tokens[index++])
   while (index < tokens.length) {
     const token = tokens[index] ?? ""
-    if (/[A-Za-z]/.test(token)) {
+    if (PATH_COMMAND.test(token)) {
       command = token
       index++
       continue
@@ -834,7 +837,7 @@ function tracePath(d: string) {
       continue
     }
     if (command === "C") {
-      const start = points[points.length - 1] ?? { x: 0, y: 0 }
+      const start = points.at(-1) ?? { x: 0, y: 0 }
       const c1 = { x: read(), y: read() }
       const c2 = { x: read(), y: read() }
       const end = { x: read(), y: read() }
@@ -878,12 +881,12 @@ function traceX(points: Point[], length: number) {
     }
     walked += step
   }
-  return points[points.length - 1]?.x ?? 0
+  return points.at(-1)?.x ?? 0
 }
 
 function revealDash(length: number, total: number, pattern?: string) {
   const parsed = (pattern ?? "")
-    .split(/[\s,]+/)
+    .split(DASH_SEPARATOR)
     .map(Number)
     .filter((value) => Number.isFinite(value) && value >= 0)
   const lines = parsed.length % 2 ? [...parsed, ...parsed] : parsed
@@ -1149,7 +1152,7 @@ function resolveDomain(
   if (auto) {
     ticks = niceTicks(low, high, tickCount)
     low = ticks[0] ?? low
-    high = ticks[ticks.length - 1] ?? high
+    high = ticks.at(-1) ?? high
     if (numericTicks?.length) {
       low = Math.min(low, ...numericTicks)
       high = Math.max(high, ...numericTicks)
@@ -1209,21 +1212,20 @@ function buildCartesian(input: BuildInput): Scene {
         element.type === Line || element.type === Area || element.type === Bar
     )
     .map((element, index) => {
-      const kind: SeriesKind =
-        element.type === Line ? "line" : element.type === Area ? "area" : "bar"
+      let kind: SeriesKind = "bar"
+      if (element.type === Line) kind = "line"
+      else if (element.type === Area) kind = "area"
       const seriesProps = element.props as LineProps & AreaProps & BarProps
       const children = childrenOf(seriesProps)
       const fallback = configColor(config, seriesProps.dataKey, colors.fallback)
-      const color =
-        kind === "line"
-          ? seriesProps.stroke && seriesProps.stroke !== "none"
-            ? seriesProps.stroke
-            : fallback
-          : kind === "area" &&
-              seriesProps.stroke &&
-              seriesProps.stroke !== "none"
-            ? seriesProps.stroke
-            : colorOf(seriesProps.fill, fallback)
+      const stroke =
+        seriesProps.stroke && seriesProps.stroke !== "none"
+          ? seriesProps.stroke
+          : undefined
+      let color: string
+      if (kind === "line") color = stroke ?? fallback
+      else if (kind === "area" && stroke) color = stroke
+      else color = colorOf(seriesProps.fill, fallback)
       return {
         id: `${kind}-${element.key ?? index}`,
         kind,
@@ -1257,7 +1259,8 @@ function buildCartesian(input: BuildInput): Scene {
       if (!stackId) return { from: null, to: value }
       const stack = running[index] ?? {}
       const total = totals[index]?.[stackId] ?? 0
-      const scaled = expand ? (total ? value / total : 0) : value
+      let scaled = value
+      if (expand) scaled = total ? value / total : 0
       const base = stack[stackId] ?? 0
       stack[stackId] = base + scaled
       return { from: base, to: base + scaled }
@@ -1386,7 +1389,7 @@ function buildCartesian(input: BuildInput): Scene {
   }
   if (grid) {
     if (!vertical) {
-      domain.ticks.forEach((tick) => {
+      for (const tick of domain.ticks) {
         const y = valuePosition(tick)
         shapes.push(
           line(
@@ -1401,7 +1404,7 @@ function buildCartesian(input: BuildInput): Scene {
             0.5
           )
         )
-      })
+      }
       if (grid.vertical !== false) {
         for (const index of tickIndexes) {
           const x = positions[index] ?? 0
@@ -1421,7 +1424,7 @@ function buildCartesian(input: BuildInput): Scene {
         }
       }
     } else {
-      domain.ticks.forEach((tick) => {
+      for (const tick of domain.ticks) {
         const x = valuePosition(tick)
         shapes.push(
           line(
@@ -1436,7 +1439,7 @@ function buildCartesian(input: BuildInput): Scene {
             0.5
           )
         )
-      })
+      }
     }
   }
   for (const [index, area] of areas.entries()) {
@@ -1871,13 +1874,13 @@ function buildCartesian(input: BuildInput): Scene {
       })
       return best
     }
-    const raw = band
-      ? Math.floor((coordinate - categoryStart) / bandSize)
-      : count === 1
-        ? 0
-        : Math.round(
-            ((coordinate - categoryStart) * (count - 1)) / categoryLength
-          )
+    let raw = 0
+    if (band) raw = Math.floor((coordinate - categoryStart) / bandSize)
+    else if (count !== 1) {
+      raw = Math.round(
+        ((coordinate - categoryStart) * (count - 1)) / categoryLength
+      )
+    }
     return Math.max(0, Math.min(count - 1, raw))
   }
   const names = series.map(
@@ -1893,9 +1896,7 @@ function buildCartesian(input: BuildInput): Scene {
     range:
       numericCategory || first === undefined || last === undefined
         ? undefined
-        : count > 1
-          ? `${String(first)} to ${String(last)}`
-          : String(first),
+        : categoryRange(first, last, count),
     legend: series.map((item) => ({
       dataKey: item.props.dataKey,
       value: item.props.dataKey,
@@ -2454,7 +2455,7 @@ function buildRadar(input: BuildInput): Scene {
     ? fixedTicks(domain[0], domain[1], tickCount)
     : niceTicks(0, Math.max(0, ...values) || 1, tickCount)
   const low = domain ? domain[0] : (ticks[0] ?? 0)
-  const high = domain ? domain[1] : (ticks[ticks.length - 1] ?? 1)
+  const high = domain ? domain[1] : (ticks.at(-1) ?? 1)
   const radiusOf = (value: number) =>
     ((value - low) / (high - low || 1)) * outer
   const pointAt = (value: number, index: number) =>
@@ -2571,9 +2572,8 @@ function buildRadar(input: BuildInput): Scene {
       x: point.x,
       y: point.y,
       value: String(value),
-      anchor: cos > 1e-5 ? "start" : cos < -1e-5 ? "end" : "middle",
-      baseline:
-        Math.abs(cos) <= COS_45 ? (sin > 0 ? "bottom" : "top") : "middle",
+      anchor: angleAnchor(cos),
+      baseline: angleBaseline(cos, sin),
       role: "tick",
       className: angleAxis.tickClassName?.(value, index),
       style: angleAxis.tickStyle?.(value, index),
@@ -2694,32 +2694,48 @@ function Container({
   )
 }
 
+function angleAnchor(cos: number): TextItem["anchor"] {
+  if (cos > 1e-5) return "start"
+  if (cos < -1e-5) return "end"
+  return "middle"
+}
+
+function angleBaseline(cos: number, sin: number): TextItem["baseline"] {
+  if (Math.abs(cos) > COS_45) return "middle"
+  return sin > 0 ? "bottom" : "top"
+}
+
+function categoryRange(first: unknown, last: unknown, count: number) {
+  return count > 1 ? `${String(first)} to ${String(last)}` : String(first)
+}
+
+function textLeft(text: TextItem) {
+  if (text.anchor === "start") return text.x
+  if (text.anchor === "end") return text.x - TEXT_BOX
+  return text.x - TEXT_BOX / 2
+}
+
+function textCenter(text: TextItem) {
+  if (text.baseline === "top") return text.y + LINE_HEIGHT / 2
+  if (text.baseline === "bottom") return text.y - LINE_HEIGHT / 2
+  return text.y
+}
+
+function textAlign(text: TextItem) {
+  if (text.anchor === "start") return "flex-start" as const
+  if (text.anchor === "end") return "flex-end" as const
+  return "center" as const
+}
+
 function textBox(text: TextItem) {
-  const left =
-    text.anchor === "start"
-      ? text.x
-      : text.anchor === "end"
-        ? text.x - TEXT_BOX
-        : text.x - TEXT_BOX / 2
-  const center =
-    text.baseline === "top"
-      ? text.y + LINE_HEIGHT / 2
-      : text.baseline === "bottom"
-        ? text.y - LINE_HEIGHT / 2
-        : text.y
   return {
     position: "absolute" as const,
-    left,
-    top: center - TEXT_BOX_HEIGHT / 2,
+    left: textLeft(text),
+    top: textCenter(text) - TEXT_BOX_HEIGHT / 2,
     width: TEXT_BOX,
     height: TEXT_BOX_HEIGHT,
     justifyContent: "center" as const,
-    alignItems:
-      text.anchor === "start"
-        ? ("flex-start" as const)
-        : text.anchor === "end"
-          ? ("flex-end" as const)
-          : ("center" as const),
+    alignItems: textAlign(text),
   }
 }
 
@@ -2895,11 +2911,11 @@ function Root({
       select(current === null ? scene.count - 1 : Math.max(0, current - 1))
     }
   }
+  const cursorStyle =
+    typeof tooltip?.cursor === "object" ? tooltip.cursor : undefined
   const cursor =
     tooltip && tooltip.cursor !== false
-      ? typeof tooltip.cursor === "object"
-        ? { key: "cursor", ...tooltip.cursor }
-        : { key: "cursor" }
+      ? { key: "cursor", ...cursorStyle }
       : null
   const shapes =
     active === null
@@ -2925,7 +2941,7 @@ function Root({
   if (active !== null && content) {
     tooltipNode = typeof content === "function" ? content(state) : content
   }
-  let tooltipStyle = null
+  let tooltipStyle: { left: number; top: number; opacity: number } | null = null
   if (anchor && tooltipSize) {
     const left = Math.max(
       0,

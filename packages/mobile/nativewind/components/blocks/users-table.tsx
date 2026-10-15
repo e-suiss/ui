@@ -234,11 +234,10 @@ function UsersTable({
     setEditing(false)
   }
 
-  const summary = editing
-    ? selected.length
-      ? `${selected.length} selected`
-      : "Tap rows to select"
-    : `${users.length} people`
+  const selection = selected.length
+    ? `${selected.length} selected`
+    : "Tap rows to select"
+  const summary = editing ? selection : `${users.length} people`
 
   if (section !== "users") {
     return (

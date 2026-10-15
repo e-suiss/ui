@@ -67,7 +67,7 @@ const meta = {
   component: RadioGroup,
   args: {
     value: "comfortable",
-    onValueChange: () => {},
+    onValueChange: () => undefined,
   },
 } satisfies Meta<typeof RadioGroup>
 

@@ -15,8 +15,8 @@ const meta = {
   title: "Blocks/Permission Primer",
   component: PermissionPrimer,
   args: {
-    onAllow: () => {},
-    onDismiss: () => {},
+    onAllow: () => undefined,
+    onDismiss: () => undefined,
   },
   decorators: [
     (Story) => (

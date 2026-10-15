@@ -168,6 +168,9 @@ function SearchPicker({
     onValueChange?.(next)
   }
 
+  let triggerColor = selected ? colors.label : colors.labelSecondary
+  if (disabled) triggerColor = colors.labelQuaternary
+
   return (
     <Drawer
       open={open}
@@ -198,11 +201,7 @@ function SearchPicker({
           style={[
             styles.triggerText,
             {
-              color: disabled
-                ? colors.labelQuaternary
-                : selected
-                  ? colors.label
-                  : colors.labelSecondary,
+              color: triggerColor,
             },
           ]}
         >

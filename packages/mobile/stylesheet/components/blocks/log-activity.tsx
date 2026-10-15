@@ -213,6 +213,12 @@ function OtherSection({ value, home }: { value: string; home: string }) {
   )
 }
 
+function caretStyle(open: boolean) {
+  if (open) return { transform: [{ rotate: "90deg" }] }
+  if (I18nManager.isRTL) return { transform: [{ rotate: "180deg" }] }
+  return
+}
+
 function EventBody({ event }: { event: Event }) {
   const { colors } = useTheme()
   const kind = KINDS[event.kind]
@@ -275,13 +281,7 @@ function EventRow({ event }: { event: Event }) {
           weight="bold"
           size={12}
           color={colors.labelTertiary}
-          style={
-            open
-              ? { transform: [{ rotate: "90deg" }] }
-              : I18nManager.isRTL
-                ? { transform: [{ rotate: "180deg" }] }
-                : undefined
-          }
+          style={caretStyle(open)}
         />
       </CollapsibleTrigger>
       <CollapsibleContent>

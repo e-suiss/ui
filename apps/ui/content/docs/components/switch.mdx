@@ -358,7 +358,7 @@ Disabled switches in the off and on states.
 
 <NativeExample id="components-switch--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
 
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <Switch disabled checked={false} onCheckedChange={() => {}} />\n      <Switch disabled checked onCheckedChange={() => {}} />\n    </View>\n  )\n}"} />
+<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function SwitchDisabledExample() {\n  return (\n    <View className=\"gap-4\">\n      <Switch disabled checked={false} onCheckedChange={() => undefined} />\n      <Switch disabled checked onCheckedChange={() => undefined} />\n    </View>\n  )\n}"} />
 
 <Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SwitchDisabledExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Toggle(isOn: .constant(false)) { EmptyView() }\n      Toggle(isOn: .constant(true)) { EmptyView() }\n    }\n    .toggleStyle(.switch(size: .default))\n    .disabled(true)\n  }\n}"} />
 

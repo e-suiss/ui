@@ -148,13 +148,14 @@ const SPRING = {
 }
 
 const REM = 16
+const SNAP_POINT = /^(\d+(?:\.\d+)?)(px|rem)$/
 
 function resolveSnapPoint(point: SnapPoint, viewport: number): number | null {
   if (typeof point === "number") {
     if (!Number.isFinite(point) || point <= 0) return null
     return point <= 1 ? point * viewport : point
   }
-  const match = /^(\d+(?:\.\d+)?)(px|rem)$/.exec(point.trim())
+  const match = SNAP_POINT.exec(point.trim())
   if (!match) return null
   const value = Number(match[1])
   return match[2] === "rem" ? value * REM : value

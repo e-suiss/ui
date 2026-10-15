@@ -36,11 +36,8 @@ function SwitchThumb({
   const metrics = THUMB[size]
   const squeezed = pressed && !state.disabled && !state.readOnly
   const width = squeezed ? metrics.pressedWidth : metrics.width
-  const travel = state.checked
-    ? squeezed
-      ? metrics.pressedTravel
-      : metrics.travel
-    : 0
+  const checkedTravel = squeezed ? metrics.pressedTravel : metrics.travel
+  const travel = state.checked ? checkedTravel : 0
   const animatedStyle = useAnimatedStyle(() => ({
     width: withTiming(width, TIMING),
     transform: [{ translateX: withTiming(travel, TIMING) }],
@@ -74,13 +71,15 @@ function Switch({
         cn(
           "shrink-0 flex-row items-center rounded-full border-2",
           size === "sm" ? "h-5 w-11" : "h-6 w-13",
-          state.checked
-            ? state.disabled
-              ? "border-transparent bg-accent-disabled"
-              : "border-accent bg-accent"
-            : state.disabled
-              ? "border-transparent bg-control-disabled"
-              : "border-transparent bg-label-quaternary",
+          state.checked &&
+            state.disabled &&
+            "border-transparent bg-accent-disabled",
+          state.checked && !state.disabled && "border-accent bg-accent",
+          !state.checked &&
+            state.disabled &&
+            "border-transparent bg-control-disabled",
+          !(state.checked || state.disabled) &&
+            "border-transparent bg-label-quaternary",
           invalid && !state.disabled && "border-danger",
           resolveClassName(className, state)
         )

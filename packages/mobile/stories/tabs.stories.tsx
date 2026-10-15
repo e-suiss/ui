@@ -194,7 +194,7 @@ const meta = {
   component: Tabs,
   args: {
     value: "account",
-    onValueChange: () => {},
+    onValueChange: () => undefined,
   },
 } satisfies Meta<typeof Tabs>
 

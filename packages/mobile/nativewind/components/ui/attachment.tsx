@@ -186,7 +186,9 @@ function AttachmentMedia({
   return (
     <IconClassContext.Provider
       value={cn(
-        vertical ? "size-6" : size === "xs" ? "size-3.5" : "size-4",
+        vertical && "size-6",
+        !vertical && size === "xs" && "size-3.5",
+        !vertical && size !== "xs" && "size-4",
         variant === "icon" && "text-label-secondary"
       )}
     >
@@ -313,6 +315,12 @@ function AttachmentActions({ className, ...props }: ViewProps) {
   )
 }
 
+function triggerIconClass(tiny: boolean, small: boolean) {
+  if (tiny) return "size-2.5"
+  if (small) return "size-3"
+  return "size-4"
+}
+
 function AttachmentAction({
   className,
   variant = "secondary",
@@ -348,13 +356,10 @@ function AttachmentAction({
         )}
       >
         <IconClassContext.Provider
-          value={
-            !isText && attachmentSize === "xs"
-              ? "size-2.5"
-              : resolvedSize === "xs" || resolvedSize === "icon-xs"
-                ? "size-3"
-                : "size-4"
-          }
+          value={triggerIconClass(
+            !isText && attachmentSize === "xs",
+            resolvedSize === "xs" || resolvedSize === "icon-xs"
+          )}
         >
           {wrapText(children as React.ReactNode)}
         </IconClassContext.Provider>
@@ -379,11 +384,9 @@ function AttachmentTrigger({
       {
         className: cn(
           "absolute inset-0 z-10 active:bg-item-pressed",
-          grouped
-            ? "rounded-none"
-            : size === "xs"
-              ? "rounded-lg"
-              : "rounded-2xl",
+          grouped && "rounded-none",
+          !grouped && size === "xs" && "rounded-lg",
+          !grouped && size !== "xs" && "rounded-2xl",
           className
         ),
         role: "button",

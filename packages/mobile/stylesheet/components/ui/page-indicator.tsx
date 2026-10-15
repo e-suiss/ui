@@ -35,6 +35,12 @@ const TIMING = {
   reduceMotion: ReduceMotion.System,
 }
 
+function actionStep(actionName: string) {
+  if (actionName === "increment") return 1
+  if (actionName === "decrement") return -1
+  return 0
+}
+
 const styles = StyleSheet.create({
   root: { alignItems: "center", justifyContent: "center", alignSelf: "center" },
   frame: { justifyContent: "center", overflow: "hidden" },
@@ -100,6 +106,8 @@ function PageIndicatorDot({
     transform: [{ scale: dotScaleValue.value }],
   }))
 
+  const activeColor = variant === "accent" ? colors.accent : colors.label
+
   return (
     <Pressable
       accessible={false}
@@ -117,11 +125,7 @@ function PageIndicatorDot({
           styles.dot,
           {
             height: metrics.dot,
-            backgroundColor: active
-              ? variant === "accent"
-                ? colors.accent
-                : colors.label
-              : colors.labelQuaternary,
+            backgroundColor: active ? activeColor : colors.labelQuaternary,
           },
           animatedStyle,
         ]}
@@ -179,12 +183,7 @@ function PageIndicator({
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
     if (!onIndexChange) return
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = actionStep(event.nativeEvent.actionName)
     const next = Math.min(Math.max(current + step, 0), count - 1)
     if (next !== current) onIndexChange(next)
   }

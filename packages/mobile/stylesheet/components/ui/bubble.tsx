@@ -134,7 +134,7 @@ function bubbleColors(
         background: pressed ? colors.itemPressed : "transparent",
         text: colors.label,
       }
-    case "destructive":
+    default:
       return {
         background: pressed
           ? colors.dangerSurfacePressed

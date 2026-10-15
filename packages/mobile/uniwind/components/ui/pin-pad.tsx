@@ -24,6 +24,20 @@ function defaultDotsLabel(entered: number, length: number) {
   return `${entered} of ${length} entered`
 }
 
+function dotClassName(
+  error: boolean | undefined,
+  filled: boolean,
+  disabled: boolean | undefined
+) {
+  if (error) return filled ? "border-danger bg-danger" : "border-danger"
+  if (filled) {
+    return disabled
+      ? "border-label-quaternary bg-label-quaternary"
+      : "border-label bg-label"
+  }
+  return disabled ? "border-label-quaternary" : "border-separator-strong"
+}
+
 function PinPad({
   length: lengthProp = 6,
   value: valueProp,
@@ -140,17 +154,7 @@ function PinPad({
               key={index}
               className={cn(
                 "size-3.5 rounded-full border-[1.5px]",
-                error
-                  ? filled
-                    ? "border-danger bg-danger"
-                    : "border-danger"
-                  : filled
-                    ? disabled
-                      ? "border-label-quaternary bg-label-quaternary"
-                      : "border-label bg-label"
-                    : disabled
-                      ? "border-label-quaternary"
-                      : "border-separator-strong"
+                dotClassName(error, filled, disabled)
               )}
             />
           )

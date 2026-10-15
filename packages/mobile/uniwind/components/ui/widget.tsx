@@ -65,6 +65,12 @@ function sizesThatFit(sizes: WidgetSize[], room: number) {
   return [narrowest]
 }
 
+function actionStep(actionName: string) {
+  if (actionName === "increment") return 1
+  if (actionName === "decrement") return -1
+  return 0
+}
+
 function wrapText(children: React.ReactNode) {
   if (typeof children === "string" || typeof children === "number") {
     return <Text>{children}</Text>
@@ -369,12 +375,7 @@ function Widget({
   }
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
-    const step =
-      event.nativeEvent.actionName === "increment"
-        ? 1
-        : event.nativeEvent.actionName === "decrement"
-          ? -1
-          : 0
+    const step = actionStep(event.nativeEvent.actionName)
     if (!step) return
     const index = current === "auto" ? -1 : reachable.indexOf(current)
     const next =

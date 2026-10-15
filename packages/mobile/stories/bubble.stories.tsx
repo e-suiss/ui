@@ -110,7 +110,7 @@ export const Interactive: Story = {
   args: { variant: "outline" },
   render: (args) => (
     <Bubble {...args}>
-      <BubbleContent onPress={() => {}}>
+      <BubbleContent onPress={() => undefined}>
         Show me the latest release notes
       </BubbleContent>
     </Bubble>

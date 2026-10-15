@@ -221,14 +221,11 @@ function Attachment({
     () => ({ state, size, orientation, grouped }),
     [state, size, orientation, grouped]
   )
-  const padding =
-    vertical || size !== "default"
-      ? hasContent
-        ? SIZE_WITH_CONTENT[size]
-        : hasMedia
-          ? SIZE_WITH_MEDIA[size]
-          : null
-      : null
+  let padding: ViewStyle | null = null
+  if (vertical || size !== "default") {
+    if (hasContent) padding = SIZE_WITH_CONTENT[size]
+    else if (hasMedia) padding = SIZE_WITH_MEDIA[size]
+  }
   return (
     <AttachmentContext.Provider value={context}>
       <TextStyleContext.Provider
@@ -287,11 +284,13 @@ function AttachmentMedia({
   const { colors } = useTheme()
   const { size, orientation } = React.useContext(AttachmentContext)
   const vertical = orientation === "vertical"
+  let iconSize = size === "xs" ? 14 : 16
+  if (vertical) iconSize = 24
   return (
     <TextStyleContext.Provider
       value={variant === "icon" ? { color: colors.labelSecondary } : undefined}
     >
-      <IconSizeContext.Provider value={vertical ? 24 : size === "xs" ? 14 : 16}>
+      <IconSizeContext.Provider value={iconSize}>
         <View
           style={[
             styles.media,
@@ -455,6 +454,8 @@ function AttachmentAction({
   const vertical = orientation === "vertical"
   const disabled = Boolean(props.disabled)
   const textStyle = buttonTextStyle(variant, resolvedSize, colors, disabled)
+  let iconSize = resolvedSize === "xs" || resolvedSize === "icon-xs" ? 12 : 16
+  if (!isText && attachmentSize === "xs") iconSize = 10
   return (
     <Button
       variant={variant}
@@ -479,15 +480,7 @@ function AttachmentAction({
               }
         }
       >
-        <IconSizeContext.Provider
-          value={
-            !isText && attachmentSize === "xs"
-              ? 10
-              : resolvedSize === "xs" || resolvedSize === "icon-xs"
-                ? 12
-                : 16
-          }
-        >
+        <IconSizeContext.Provider value={iconSize}>
           {wrapText(children as React.ReactNode)}
         </IconSizeContext.Provider>
       </TextStyleContext.Provider>
@@ -506,7 +499,8 @@ function AttachmentTrigger({
   }) {
   const { colors } = useTheme()
   const { size, grouped } = React.useContext(AttachmentContext)
-  const borderRadius = grouped ? 0 : size === "xs" ? radius.lg : radius["2xl"]
+  let borderRadius: number = size === "xs" ? radius.lg : radius["2xl"]
+  if (grouped) borderRadius = 0
   return useRender({
     defaultComponent: Pressable,
     render,

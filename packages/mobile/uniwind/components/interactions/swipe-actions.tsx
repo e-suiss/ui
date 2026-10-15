@@ -52,6 +52,7 @@ function useSwipeActions() {
 }
 
 const FULL_SWIPE_RATIO = 0.6
+const SWIPE_ACTION_PATTERN = /^swipe-action-(\d+)$/
 const EASING = Easing.bezier(0.32, 0.72, 0, 1)
 const openRows = new Set<() => void>()
 
@@ -184,11 +185,8 @@ function SwipeActions({
   const setFullSide = (side: SwipeActionsSide) => (next: boolean) => {
     if (committingRef.current) return
     if (next && fullRef.current !== side) haptics.impact("medium")
-    const value = next
-      ? side
-      : fullRef.current === side
-        ? null
-        : fullRef.current
+    const released = fullRef.current === side ? null : fullRef.current
+    const value = next ? side : released
     fullRef.current = value
     setFull(value)
   }
@@ -258,7 +256,7 @@ function SwipeActions({
   }))
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
-    const match = /^swipe-action-(\d+)$/.exec(event.nativeEvent.actionName)
+    const match = SWIPE_ACTION_PATTERN.exec(event.nativeEvent.actionName)
     if (!match) return
     allActions[Number(match[1])]?.props.onPress?.()
   }

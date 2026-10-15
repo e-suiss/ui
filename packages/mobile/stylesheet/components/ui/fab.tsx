@@ -150,6 +150,14 @@ function Fab({
   }))
 
   const context = React.useMemo(() => ({ close }), [close])
+  const extendedKey = size === "lg" ? "lgExtended" : "defaultExtended"
+  const compactKey = size === "lg" ? "lg" : "default"
+  const labelNode =
+    typeof label === "string" || typeof label === "number" ? (
+      <Text style={[styles.label, { color: colors.onAccent }]}>{label}</Text>
+    ) : (
+      label
+    )
 
   return (
     <Portal name={`fab-${id}`} hostName={portalHost}>
@@ -214,15 +222,7 @@ function Fab({
             }}
             style={({ pressed }) => [
               styles.button,
-              styles[
-                size === "lg"
-                  ? extended
-                    ? "lgExtended"
-                    : "lg"
-                  : extended
-                    ? "defaultExtended"
-                    : "default"
-              ],
+              styles[extended ? extendedKey : compactKey],
               {
                 backgroundColor: pressed ? colors.accentPressed : colors.accent,
               },
@@ -238,15 +238,7 @@ function Fab({
                 color={colors.onAccent}
               />
             </AnimatedView>
-            {extended ? (
-              typeof label === "string" || typeof label === "number" ? (
-                <Text style={[styles.label, { color: colors.onAccent }]}>
-                  {label}
-                </Text>
-              ) : (
-                label
-              )
-            ) : null}
+            {extended ? labelNode : null}
           </Pressable>
         </View>
       </FabContext.Provider>

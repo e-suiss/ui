@@ -267,7 +267,7 @@ function CardStack<T>({
 
   const undo = React.useCallback(() => {
     if (flyingRef.current) return
-    const direction = history[history.length - 1]
+    const direction = history.at(-1)
     if (!direction || index === 0) return
     const previous = index - 1
     const item = data[previous]

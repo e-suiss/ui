@@ -45,8 +45,7 @@ class FloatingHandle<Payload = unknown> {
     }
   }
 
-  getRoot = (): FloatingRootValue | null =>
-    this.slots[this.slots.length - 1]?.current ?? null
+  getRoot = (): FloatingRootValue | null => this.slots.at(-1)?.current ?? null
 
   attach(slot: FloatingHandleSlot) {
     this.slots = [...this.slots, slot]
@@ -83,7 +82,7 @@ function createFloatingHandle<Payload = unknown>() {
 }
 
 function subscribeNothing() {
-  return () => {}
+  return () => undefined
 }
 
 function getNoRoot() {

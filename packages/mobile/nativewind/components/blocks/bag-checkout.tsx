@@ -137,7 +137,9 @@ function Step({
         <View
           className={cn(
             "size-[1.625rem] items-center justify-center rounded-full",
-            done ? "bg-success" : open ? "bg-label" : "bg-control"
+            done && "bg-success",
+            !done && open && "bg-label",
+            !(done || open) && "bg-control"
           )}
         >
           {done ? (

@@ -48,11 +48,9 @@ function chipTextClassName(size: ChipSize, state: ToggleState) {
   return cn(
     "font-medium",
     size === "sm" ? "text-xs" : "text-sm",
-    state.pressed
-      ? "text-on-control-selected"
-      : state.disabled
-        ? "text-label-quaternary"
-        : "text-label"
+    state.pressed && "text-on-control-selected",
+    !state.pressed && state.disabled && "text-label-quaternary",
+    !(state.pressed || state.disabled) && "text-label"
   )
 }
 

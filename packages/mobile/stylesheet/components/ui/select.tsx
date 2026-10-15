@@ -110,17 +110,15 @@ function SelectValue({
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
-      style={(state) => [
-        styles.value,
-        {
-          color: disabled
-            ? colors.labelQuaternary
-            : state.placeholder
-              ? colors.labelSecondary
-              : colors.label,
-        },
-        resolveStyle(style, state) as StyleProp<TextStyle>,
-      ]}
+      style={(state) => {
+        let color = state.placeholder ? colors.labelSecondary : colors.label
+        if (disabled) color = colors.labelQuaternary
+        return [
+          styles.value,
+          { color },
+          resolveStyle(style, state) as StyleProp<TextStyle>,
+        ]
+      }}
       {...props}
     />
   )
