@@ -6,7 +6,7 @@ eyebrow: suiss/ui
 
 ## How the theme works
 
-Your stylesheet holds the whole theme. `init` writes it to `app/globals.css` (Next.js) or `src/index.css` (Vite). It has four parts:
+Your stylesheet holds the whole theme. `init` from the suiss/ui CLI writes it to `app/globals.css` (Next.js) or `src/index.css` (Vite), and projects that use the registry CLI already have one. It has four parts:
 
 - Color values under `:root` (light) and `.dark` (dark).
 - The base `--radius`.
@@ -48,6 +48,16 @@ The variable names are the common theme variables used across Tailwind component
   --color-primary-foreground: var(--primary-foreground);
 }
 ```
+
+## The theme item
+
+Adding components with the registry CLI keeps the colors your project already has. To use the suiss/ui values instead, add the theme item:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/theme-suiss
+```
+
+It writes every light and dark value under `:root` and `.dark`, including `--radius`, the chart colors and the sidebar colors, and adds the radius scale and the font stack to `@theme inline`. It also installs `@fontsource-variable/inter` and imports it from your stylesheet. Projects set up with `npx @esuiss/ui init` already have all of it.
 
 ## Using variables
 
@@ -197,10 +207,16 @@ Dark mode is enabled by the `dark` class on `<html>`. Every token switches with 
 For a theme switch, add the `theme` component. It is not added by `add --all`, so projects that stay in one appearance never get it.
 
 ```bash title="Terminal"
+npx shadcn@latest add @esuiss/theme
+```
+
+Or with the suiss/ui CLI:
+
+```bash title="Terminal"
 npx @esuiss/ui add theme
 ```
 
-It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. `add theme` also appends the keyframes for the animated theme switch to your stylesheet. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
+It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. Adding it also appends the keyframes for the animated theme switch to your stylesheet. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
 
 ```tsx title="app/layout.tsx"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"

@@ -9,14 +9,51 @@ platforms: [web, rn, swift, kotlin]
 
 ## Requirements
 
-- Next.js, or React with Vite
-- TypeScript
-- Tailwind CSS 4.2 or later (installed for you if missing)
+- React with TypeScript, such as Next.js or Vite
+- Tailwind CSS 4.2 or later
 - Node.js 18 or later
 
-## Set up your project
+## Add components
 
-Run `init` once, in the root of your project.
+suiss/ui is a registry under the `@esuiss` namespace. In any project with a `components.json`, add components with the registry CLI:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button @esuiss/dialog @esuiss/sidebar
+```
+
+Each item comes with the components, hooks and npm packages it depends on, and its icons are written for the icon library set in `components.json`. Patterns go to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`.
+
+The components are built on Base UI, and every style gets the same Base UI source. To start a new project for them:
+
+```bash title="Terminal"
+npx shadcn@latest init --base base
+```
+
+### Register the namespace
+
+Once `@esuiss` is listed in the public registry directory, the namespace works without any setup. Until then, add it to `components.json` once:
+
+```json title="components.json"
+{
+  "registries": {
+    "@esuiss": "https://ui.suiss.app/r/{style}/{name}.json"
+  }
+}
+```
+
+The full catalog is at [ui.suiss.app/r/registry.json](https://ui.suiss.app/r/registry.json).
+
+### Use the suiss/ui theme
+
+Adding components never changes your colors. To switch to the suiss/ui theme, add it as an item. See [Theming](/docs/theming#the-theme-item).
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/theme-suiss
+```
+
+## Use the suiss/ui CLI
+
+The suiss/ui CLI sets up a Next.js or Vite project from scratch, writes the full theme stylesheet and uses Phosphor icons. Run `init` once, in the root of your project.
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init
@@ -32,7 +69,7 @@ npx @esuiss/ui@latest init
 6. Installs `tw-animate-css` and `shadcn`, whose stylesheets provide the animations, variants and utilities the components rely on. The stylesheet imports them, as in any project set up with the registry CLI.
 7. Adds the `button` component and the [`cn` helper](#the-cn-helper) it uses.
 
-## Add components
+### Add components with the suiss/ui CLI
 
 Pass one or more component names to `add`.
 
@@ -73,6 +110,12 @@ npx @esuiss/ui@latest add button --diff
 npx @esuiss/ui@latest add button --overwrite
 ```
 
+With the registry CLI, add the item again with `--overwrite`:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button --overwrite
+```
+
 Running `add` for a component you already have keeps your file and tells you when it differs from the registry.
 
 ## Troubleshooting
@@ -81,6 +124,7 @@ Running `add` for a component you already have keeps your file and tells you whe
 | --- | --- |
 | Tailwind CSS 4.2 or later is required | Upgrade with `npm install tailwindcss@latest` and run `init` again. |
 | No `@/*` import alias found | Run `init` first, or add `"paths": { "@/*": ["./src/*"] }` to `compilerOptions` in `tsconfig.json`. |
+| `Unknown registry "@esuiss"` | Add the `registries` entry from [Register the namespace](#register-the-namespace) to `components.json`. |
 | A newly published version is not found | npm can take a few minutes to make new versions available. Run `npx --prefer-online @esuiss/ui@latest ...`. |
 
 </Only>

@@ -8,6 +8,17 @@ eyebrow: suiss/ui
 
 `@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. It detects the project in the current folder: a Next.js or Vite app gets React components, an Expo or React Native app gets React Native components, an Xcode project or Swift package gets SwiftUI views and an Android Gradle module gets Jetpack Compose composables.
 
+## Registry CLI
+
+Every React item is also published as a registry under the `@esuiss` namespace, so any project with a `components.json` can add it with the registry CLI instead. The item names are the same, without the group:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button
+npx shadcn@latest add @esuiss/date-picker @esuiss/area-chart-default
+```
+
+Files land in the same folders as below, and icons follow the icon library in `components.json`. Until the namespace is listed in the public registry directory, register it once as shown in [Installation](/docs/installation#register-the-namespace).
+
 ## init
 
 Sets up Tailwind CSS, the `@/*` import alias, the theme stylesheet, the font, the animation and variant stylesheets and the `button` component. See [Installation](/docs/installation) for every step.
