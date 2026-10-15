@@ -217,7 +217,7 @@ An action in the menu.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `danger` color. |
+| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
 
 Also accepts the props of `MenuPrimitive.Item.Props`.
 
@@ -333,7 +333,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - Styling hooks: `data-slot` values such as `dropdown-menu-content`, `dropdown-menu-item`, `dropdown-menu-checkbox-item`, `dropdown-menu-checkbox-item-indicator`, `dropdown-menu-radio-item`, `dropdown-menu-radio-item-indicator`, `dropdown-menu-sub-trigger`, `dropdown-menu-label`, `dropdown-menu-separator` and `dropdown-menu-shortcut`.
 - Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.
 - By default the menu opens below the trigger, aligned to `start`, and matches the trigger's width with a minimum of `12rem`. Override the width with `className`.
-- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger`, `danger-surface` and `separator` tokens.
+- Uses the `popover`, `accent`, `destructive` and `border` colors.
 
 </Only>
 

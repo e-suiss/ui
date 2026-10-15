@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="separator-demo" />
 
-`Separator` wraps the Base UI Separator primitive. It draws a 1px line in the `separator` color: full width when horizontal, and stretched to the container's height when vertical.
+`Separator` wraps the Base UI Separator primitive. It draws a 1px line in the `border` color: full width when horizontal, and stretched to the container's height when vertical.
 
 Use it between groups of content or between inline items. Inside menus and selects, use the dedicated separator part of that component instead.
 
@@ -45,7 +45,7 @@ import { Separator } from "@/components/ui/separator"
 <div className="w-72">
   <div className="flex flex-col gap-1">
     <h4 className="text-sm font-medium">Account settings</h4>
-    <p className="text-label-secondary text-sm">
+    <p className="text-muted-foreground text-sm">
       Manage your profile and preferences.
     </p>
   </div>
@@ -95,7 +95,7 @@ Also accepts the props of `SeparatorPrimitive.Props`.
 ## Notes
 
 - Uses `data-slot="separator"` and Base UI's `data-horizontal` and `data-vertical` attributes for sizing.
-- The color comes from the `bg-separator` token.
+- The color comes from the `bg-border` token.
 
 </Only>
 

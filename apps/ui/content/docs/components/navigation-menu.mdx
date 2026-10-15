@@ -55,7 +55,7 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuT
                   <product.icon className="mt-0.5" />
                   <div className="flex flex-col gap-1">
                     <span className="font-medium">{product.title}</span>
-                    <span className="text-label-secondary">
+                    <span className="text-muted-foreground">
                       {product.description}
                     </span>
                   </div>
@@ -250,6 +250,6 @@ Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrim
 - Styling hooks: `data-slot` values such as `navigation-menu`, `navigation-menu-trigger`, `navigation-menu-content`, `navigation-menu-popup`, `navigation-menu-panel`, `navigation-menu-backdrop` and `navigation-menu-link`. The root exposes `data-layout`; links expose `data-size` and `data-active`.
 - Triggers and links restyle themselves automatically in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.
 - `navigationMenuTriggerStyle` is exported for styling links as triggers.
-- Uses the `surface-raised`, `surface`, `item-hover`, `item-selected`, `scrim` and `link` tokens.
+- Uses the `popover`, `background`, `accent` and `primary` colors, with a `bg-black/50` backdrop.
 
 </Only>

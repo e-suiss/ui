@@ -45,7 +45,7 @@ import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent,
 
 ```tsx
 <ContextMenu>
-  <ContextMenuTrigger className="text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
+  <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
     Right click here
   </ContextMenuTrigger>
   <ContextMenuContent>
@@ -208,7 +208,7 @@ An action in the menu.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `danger` color. |
+| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
 
 Also accepts the props of `ContextMenuPrimitive.Item.Props`.
 
@@ -324,7 +324,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.
 - By default the menu opens on the `inline-end` side of the pointer, aligned to `start`.
 - The trigger sets `select-none` so long-pressing does not select its text.
-- Uses the `surface-raised`, `item-hover`, `item-selected`, `danger`, `danger-surface` and `separator` tokens.
+- Uses the `popover`, `accent`, `destructive` and `border` colors.
 
 </Only>
 

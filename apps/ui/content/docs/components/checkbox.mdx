@@ -97,13 +97,13 @@ Also accepts the props of `CheckboxPrimitive.Root.Props`.
 - Toggles on click and with Space when focused.
 - Needs an accessible name: wrap it in a `Label`, associate a `Label` through `htmlFor` and `id`, or set `aria-label`.
 - When `disabled`, it sets `aria-disabled`, ignores clicks, and is removed from the Tab order.
-- Set `aria-invalid` to communicate a validation error; the border turns to the `danger` color.
+- Set `aria-invalid` to communicate a validation error; the border turns to the `destructive` color.
 
 ## Notes
 
 - Styling hooks: `data-slot="checkbox"` on the root and `data-slot="checkbox-indicator"` on the indicator.
 - State attributes from Base UI such as `data-checked` and `data-disabled` drive the checked and disabled styles.
-- Uses the `accent`, `accent-pressed`, `on-accent`, `surface`, `control` and `control-disabled` tokens.
+- Uses the `primary`, `primary-foreground`, `background` and `border` colors, and `opacity-50` when disabled.
 - The hit area extends beyond the visible box through an `after` pseudo-element, making the small control easier to tap.
 
 </Only>

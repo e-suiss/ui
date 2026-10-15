@@ -123,36 +123,39 @@ Your stylesheet holds the whole theme:
 @import "@fontsource-variable/inter";
 
 :root {
-  --surface: oklch(1 0 0);
-  --label: oklch(0.2316 0.0038 286.09);
-  --accent: oklch(0.5629 0.1933 256.16);
   --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2316 0.0038 286.09);
+  --primary: oklch(0.5629 0.1933 256.16);
+  --primary-foreground: oklch(1 0 0);
 }
 
 .dark {
-  --surface: oklch(0 0 0);
-  --label: oklch(0.9707 0.0026 286.29);
-  --accent: oklch(0.5629 0.1933 256.16);
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.9707 0.0026 286.29);
+  --primary: oklch(0.5629 0.1933 256.16);
+  --primary-foreground: oklch(1 0 0);
 }
 
 @theme inline {
   --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
-  --color-surface: var(--surface);
-  --color-label: var(--label);
-  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
 }
 ```
 
-Colors are named by role, not by component:
+The web components use the common theme variables, so themes written with the same names drop in:
 
-- **Surfaces:** `surface`, `surface-secondary`, `surface-tertiary`, `surface-raised` (menus, dialogs, cards).
-- **Text:** `label`, `label-secondary`, `label-tertiary`, `label-quaternary`.
-- **Control fills:** `fill`, `fill-secondary`, `fill-tertiary`.
-- **Lines:** `separator`, `separator-strong`.
-- **Scrim:** `scrim`, the dimmed layer behind dialogs, sheets and drawers.
-- **Accent:** `accent`, `accent-hover`, `accent-pressed`, `on-accent` (text on the accent).
-- **Links, focus and states:** `link`, `focus`, `danger`, `success`, `warning` and their `-surface` tints.
-- **Palette:** `blue`, `green`, `orange`, `red`, `yellow`, `purple`, `pink`, `indigo`, `teal`, `mint`, `cyan`, `brown`, `gray`, used by charts.
+- **Base:** `background`, `foreground`, `card`, `popover` and their `-foreground` text colors.
+- **Actions:** `primary`, `secondary`, `accent`, `destructive`, with `primary-foreground`, `secondary-foreground` and `accent-foreground`.
+- **Quiet:** `muted` and `muted-foreground` for secondary text.
+- **Lines and focus:** `border`, `input`, `ring`.
+- **Charts:** `chart-1` to `chart-5`.
+- **Sidebar:** `sidebar`, `sidebar-foreground`, `sidebar-primary`, `sidebar-primary-foreground`, `sidebar-accent`, `sidebar-accent-foreground`, `sidebar-border`, `sidebar-ring`.
+
+States use opacity rather than extra variables (`hover:bg-primary/80`, `bg-destructive/10`), and disabled elements use `disabled:opacity-50`. Status colors come from the Tailwind palette, such as `text-green-600 dark:text-green-400`.
 
 - **Change a color:** edit its value under `:root` (light) and `.dark` (dark).
 - **Add a color:** define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
@@ -161,7 +164,7 @@ Colors are named by role, not by component:
 
 ## Dark mode
 
-Dark mode is enabled by the `dark` class on `<html>`; every token above switches with it. If you want a theme switch, add the theme component. It is not added by `add --all`, so projects that stay in one appearance never get it:
+Dark mode is enabled by the `dark` class on `<html>`; every variable above switches with it. If you want a theme switch, add the theme component. It is not added by `add --all`, so projects that stay in one appearance never get it:
 
 ```bash
 npx @esuiss/ui add theme

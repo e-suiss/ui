@@ -366,6 +366,6 @@ Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps
 - Widths come from `--sidebar-width` (`16rem`) and `--sidebar-width-icon` (`3rem`), set on `SidebarProvider`; override them through its `style`.
 - The sidebar element exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. Menu buttons set `data-active` and `data-size`.
 - `useSidebar` throws if it's used outside a `SidebarProvider`.
-- The panel uses `bg-surface-secondary`; active items use `bg-item-selected` with a `text-link` icon.
+- The panel uses `bg-sidebar`; active items use `bg-sidebar-accent` with a `text-sidebar-primary` icon. Change the `sidebar-*` variables to style it apart from the page.
 
 </Only>

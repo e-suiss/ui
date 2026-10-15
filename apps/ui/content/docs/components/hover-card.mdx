@@ -60,7 +60,7 @@ import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/h
         <p className="text-sm">
           The React framework, created and maintained by @vercel.
         </p>
-        <div className="text-label-secondary mt-1 flex items-center gap-1.5 text-xs">
+        <div className="text-muted-foreground mt-1 flex items-center gap-1.5 text-xs">
           <CalendarBlankIcon />
           Joined December 2021
         </div>
@@ -131,6 +131,6 @@ Also accepts the props of `PreviewCardPrimitive.Popup.Props`, `PreviewCardPrimit
 - Styling hooks: `data-slot` values `hover-card`, `hover-card-trigger` and `hover-card-content`.
 - `HoverCardContent` receives `data-side` from Base UI, which drives the slide-in direction, along with `data-open` and `data-closed` for the fade and zoom animation.
 - The card is `w-72` by default; override it with `className`.
-- Uses the `surface-raised` and `label` tokens.
+- Uses the `popover` and `popover-foreground` colors.
 
 </Only>

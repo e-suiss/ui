@@ -55,7 +55,7 @@ import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTri
     </DrawerHeader>
     <div className="flex flex-col items-center gap-1 p-4">
       <span className="text-5xl font-semibold tracking-tight">350</span>
-      <span className="text-label-secondary text-xs uppercase">
+      <span className="text-muted-foreground text-xs uppercase">
         Calories per day
       </span>
     </div>
@@ -298,7 +298,7 @@ Also accepts the props of `DrawerPrimitive.Description.Props`.
 - The panel sets `data-swipe-direction`, `data-swipe-axis`, and, when applicable, `data-floating` and `data-snap-points`. A drawer at its last snap point gets `data-expanded`. `DrawerIndent` gets `data-raised` while the page is scaled.
 - Side drawers are `75%` wide, and `24rem` wide from the `sm` breakpoint. Top and bottom drawers are limited to the viewport height minus `6rem`.
 - Nested drawers stack, with the drawer behind scaled down slightly.
-- Uses the `surface-raised`, `scrim`, `surface` and `label-quaternary` tokens. Animations are disabled on `DrawerIndent` when reduced motion is preferred.
+- Uses the `popover`, `background` and `border` colors, with a `bg-black/50` backdrop. Animations are disabled on `DrawerIndent` when reduced motion is preferred.
 
 </Only>
 

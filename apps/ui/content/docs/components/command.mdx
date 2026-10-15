@@ -45,7 +45,7 @@ import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, Comman
 
 ```tsx
 <div className="w-140">
-  <Command className="ring-label/5 shadow-md ring-1">
+  <Command className="ring-foreground/5 shadow-md ring-1">
     <CommandInput placeholder="Type a command or search..." />
     <CommandList>
       <CommandItems />
@@ -201,8 +201,8 @@ Also accepts the props of `React.ComponentProps<"span">`.
 ## Notes
 
 - Styling hooks: `data-slot` values `command`, `command-input-wrapper`, `command-input`, `command-list`, `command-empty`, `command-group`, `command-separator`, `command-item` and `command-shortcut`.
-- The highlighted item gets `data-selected` and is filled with the `accent` color. Disabled items get `data-disabled="true"`.
+- The highlighted item gets `data-selected` and is filled with the `primary` color. Disabled items get `data-disabled="true"`.
 - An item with `data-checked="true"` shows a check mark, unless it contains a `CommandShortcut`.
-- Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `surface-raised` background.
+- Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `popover` background.
 
 </Only>

@@ -42,7 +42,7 @@ import { WheelPicker, WheelPickerColumn, WheelPickerItem } from "@/components/ui
 ```
 
 ```tsx
-<div className="w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10">
+<div className="w-80 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
   <WheelPicker>
     <WheelPickerColumn aria-label="Fruit" defaultValue="Lemon">
       {fruits.map((fruit) => (
@@ -130,7 +130,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Row height comes from `--wheel-picker-item-height` (`--spacing(8)` by default), set on `WheelPicker`; the column shows about seven rows.
 - The curve is driven by scroll-driven animations where `ViewTimeline` is supported, and by a scroll handler elsewhere.
 - Parts carry `data-slot` attributes: `wheel-picker`, `wheel-picker-column` and `wheel-picker-item`. Items set `data-value`, `data-selected` and `data-disabled`.
-- The selection band uses `bg-control`.
+- The selection band uses `bg-secondary`.
 
 </Only>
 

@@ -97,7 +97,7 @@ The root that groups items and manages which panels are open.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container. |
+| `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
 
 Also accepts the props of `AccordionPrimitive.Root.Props`.
 
@@ -138,7 +138,7 @@ Also accepts the props of `AccordionPrimitive.Panel.Props`.
 - Each trigger is a `button` with `aria-expanded` reflecting its panel's state.
 - Triggers are wrapped in a heading element provided by Base UI.
 - Triggers are reachable with Tab; `Enter` and `Space` toggle the focused panel.
-- Disabled triggers receive `aria-disabled` and are styled with `text-label-quaternary`.
+- Disabled triggers receive `aria-disabled` and are dimmed with `opacity-50`.
 
 ## Notes
 
