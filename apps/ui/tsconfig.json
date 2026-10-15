@@ -27,9 +27,8 @@
       "@/components/charts/*": ["../../packages/web/components/charts/*"],
       "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
       "@/hooks/*": ["../../packages/web/hooks/*"],
-      "@/*": ["./*"],
-      "storybook/test": ["./lib/storybook/test.ts"],
-      "@storybook/react-vite": ["./lib/storybook/react-vite.ts"]
+      "@/tests/story-kit": ["./lib/story-kit.ts"],
+      "@/*": ["./*"]
     }
   },
   "include": [

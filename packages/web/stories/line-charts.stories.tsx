@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { LineChartDefault } from "@/components/charts/line-chart-default"
 import { LineChartDots } from "@/components/charts/line-chart-dots"
 import { LineChartForecast } from "@/components/charts/line-chart-forecast"
@@ -11,6 +8,14 @@ import { LineChartLabeled } from "@/components/charts/line-chart-labeled"
 import { LineChartLinear } from "@/components/charts/line-chart-linear"
 import { LineChartMultiple } from "@/components/charts/line-chart-multiple"
 import { LineChartStep } from "@/components/charts/line-chart-step"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Line",

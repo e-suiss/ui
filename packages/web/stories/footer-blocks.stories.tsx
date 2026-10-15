@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { FooterCompact } from "@/components/blocks/footer-compact"
 import { FooterDirectory } from "@/components/blocks/footer-directory"
 import { FooterServices } from "@/components/blocks/footer-services"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Footer",

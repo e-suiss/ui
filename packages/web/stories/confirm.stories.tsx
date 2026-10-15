@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-
 import {
   Confirm,
   ConfirmAction,
@@ -13,6 +10,15 @@ import {
   ConfirmTrigger,
 } from "@/components/patterns/confirm"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Patterns/Confirm",

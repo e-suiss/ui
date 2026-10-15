@@ -1,11 +1,13 @@
 import { fileURLToPath } from "node:url"
-import { storybookTest } from "@storybook/addon-vitest/vitest-plugin"
 import tailwindcss from "@tailwindcss/vite"
 import { playwright } from "@vitest/browser-playwright"
+import type { Plugin } from "vite"
 import { defineConfig } from "vitest/config"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
 const STORY_FILE = /\.stories\.tsx$/
+const STORY_EXPORT = /^export const (\w+)/gm
+const META_EXPORT = /^export default (\w+)$/m
 
 const IPHONE = {
   viewport: { width: 393, height: 659 },
@@ -38,6 +40,30 @@ function browser(name: string) {
   }
 }
 
+function storyTests(): Plugin {
+  return {
+    name: "story-tests",
+    enforce: "pre",
+    transform(code, id) {
+      const [file = id] = id.split("?")
+      if (!STORY_FILE.test(file)) return null
+      const meta = META_EXPORT.exec(code)?.[1]
+      if (!meta) throw new Error(`${file} has no default meta export`)
+      const stories = Array.from(
+        code.matchAll(STORY_EXPORT),
+        ([, name]) => name
+      )
+      return {
+        code: `${code}
+import { testStories } from "@/tests/story-runner"
+testStories(${meta}, { ${stories.join(", ")} })
+`,
+        map: null,
+      }
+    },
+  }
+}
+
 export default defineConfig({
   resolve: { alias: { "@": root } },
   test: {
@@ -46,7 +72,6 @@ export default defineConfig({
       "**/{vitest,vite}.config.*/**",
       "**/styles/**",
       "**/packages/tailwind/**",
-      "**/.storybook/**",
       "**/tests/*.ts",
     ],
     projects: [
@@ -92,9 +117,13 @@ export default defineConfig({
         : []),
       {
         extends: true,
-        plugins: [storybookTest({ configDir: ".storybook" })],
+        plugins: [tailwindcss(), storyTests()],
+        optimizeDeps: {
+          entries: ["stories/*.stories.tsx", "tests/story-runner.tsx"],
+        },
         test: {
           name: "stories",
+          include: ["stories/*.stories.tsx"],
           provide: { responsiveWidth: Number(process.env.WIDTH ?? 0) },
           maxWorkers: 4,
           sequence: { groupOrder: 2 },

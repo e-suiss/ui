@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { AreaChartAxes } from "@/components/charts/area-chart-axes"
 import { AreaChartDefault } from "@/components/charts/area-chart-default"
 import { AreaChartGradient } from "@/components/charts/area-chart-gradient"
@@ -11,6 +8,14 @@ import { AreaChartSparkline } from "@/components/charts/area-chart-sparkline"
 import { AreaChartStacked } from "@/components/charts/area-chart-stacked"
 import { AreaChartStackedExpand } from "@/components/charts/area-chart-stacked-expand"
 import { AreaChartStep } from "@/components/charts/area-chart-step"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Area",

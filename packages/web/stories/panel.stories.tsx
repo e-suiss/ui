@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-
 import {
   Panel,
   PanelBody,
@@ -15,6 +12,15 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 type Side = "top" | "right" | "bottom" | "left"
 

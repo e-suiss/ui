@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { TooltipChartCustom } from "@/components/charts/tooltip-chart-custom"
 import { TooltipChartDashed } from "@/components/charts/tooltip-chart-dashed"
 import { TooltipChartDot } from "@/components/charts/tooltip-chart-dot"
@@ -11,6 +8,14 @@ import { TooltipChartLabelFormatter } from "@/components/charts/tooltip-chart-la
 import { TooltipChartLine } from "@/components/charts/tooltip-chart-line"
 import { TooltipChartNoIndicator } from "@/components/charts/tooltip-chart-no-indicator"
 import { TooltipChartNoLabel } from "@/components/charts/tooltip-chart-no-label"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Tooltip",

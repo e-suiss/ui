@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
-
 import { PieChartActive } from "@/components/charts/pie-chart-active"
 import { PieChartDefault } from "@/components/charts/pie-chart-default"
 import { PieChartDonut } from "@/components/charts/pie-chart-donut"
@@ -11,6 +8,13 @@ import { PieChartLabel } from "@/components/charts/pie-chart-label"
 import { PieChartLegend } from "@/components/charts/pie-chart-legend"
 import { PieChartNested } from "@/components/charts/pie-chart-nested"
 import { PieChartSeparated } from "@/components/charts/pie-chart-separated"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Pie",

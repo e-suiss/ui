@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { RadarChartDefault } from "@/components/charts/radar-chart-default"
 import { RadarChartDots } from "@/components/charts/radar-chart-dots"
 import { RadarChartGridCircle } from "@/components/charts/radar-chart-grid-circle"
@@ -11,6 +8,14 @@ import { RadarChartLegend } from "@/components/charts/radar-chart-legend"
 import { RadarChartLinesOnly } from "@/components/charts/radar-chart-lines-only"
 import { RadarChartMultiple } from "@/components/charts/radar-chart-multiple"
 import { RadarChartRadiusAxis } from "@/components/charts/radar-chart-radius-axis"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Radar",

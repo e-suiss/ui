@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
 import type { DateRange } from "react-day-picker"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Calendar } from "@/components/ui/calendar"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const TODAY = /^Today/
 const NEXT_MONTH = /next month/i

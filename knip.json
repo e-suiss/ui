@@ -14,16 +14,16 @@
         "components/blocks/*.tsx",
         "hooks/*.ts",
         "scripts/*.mjs",
-        "tests/*-setup.ts"
+        "tests/*-setup.ts",
+        "tests/story-runner.tsx"
       ],
       "project": [
         "components/**/*.{ts,tsx}",
         "hooks/**/*.ts",
         "scripts/**/*.mjs",
-        ".storybook/**/*.{ts,tsx}",
         "styles/**/*.css",
-        ".storybook/**/*.css",
-        "stories/**/*.{tsx,mdx}"
+        "stories/**/*.{tsx,mdx}",
+        "tests/story-*.{ts,tsx}"
       ]
     },
     "packages/cli": {

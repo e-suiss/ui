@@ -75,8 +75,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(import.meta.dirname, "../.."),
     resolveAlias: {
-      "storybook/test": "./lib/storybook/test.ts",
-      "@storybook/react-vite": "./lib/storybook/react-vite.ts",
+      "@/tests/story-kit": "./lib/story-kit.ts",
     },
     rules: {
       "*.css": {

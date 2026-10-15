@@ -1,8 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import { DatePicker } from "@/components/patterns/date-picker"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Patterns/Date Picker",

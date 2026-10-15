@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { ChatConversations } from "@/components/blocks/chat-conversations"
 import { ChatSupport } from "@/components/blocks/chat-support"
 import { ChatThread } from "@/components/blocks/chat-thread"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Chat",

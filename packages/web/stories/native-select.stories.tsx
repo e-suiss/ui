@@ -1,11 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
-
 import {
   NativeSelect,
   NativeSelectOptGroup,
   NativeSelectOption,
 } from "@/components/ui/native-select"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Native Select",

@@ -1,6 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import type * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 import { Button } from "@/components/ui/button"
 import {
   type Theme,
@@ -9,6 +7,13 @@ import {
   useTheme,
 } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const STORY_KEY = "esuiss-theme-story"
 

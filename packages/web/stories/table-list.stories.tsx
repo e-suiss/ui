@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { cn } from "cn"
-import { expect, within } from "storybook/test"
 
 import {
   TableList,
   type TableListColumn,
 } from "@/components/patterns/table-list"
+import { expect, type Meta, type StoryObj, within } from "@/tests/story-kit"
 
 type Order = {
   id: number

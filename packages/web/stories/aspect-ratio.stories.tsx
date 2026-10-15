@@ -1,7 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
-
 import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Aspect Ratio",

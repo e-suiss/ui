@@ -1,7 +1,5 @@
 import { CashRegisterIcon, CookingPotIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   ResizableHandle,
@@ -9,6 +7,13 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Resizable",

@@ -1,3 +1,8 @@
+// biome-ignore lint/suspicious/noExplicitAny: mirrors the story kit's loose types
+export type Meta<_Component = unknown> = any
+// biome-ignore lint/suspicious/noExplicitAny: mirrors the story kit's loose types
+export type StoryObj<_Meta = unknown> = any
+
 const noop = () => undefined
 const chain: unknown = new Proxy(noop, { get: () => chain, apply: () => chain })
 
@@ -10,4 +15,3 @@ export const waitFor = async (callback: () => unknown) => callback
 export const within = (_element: unknown) =>
   chain as Record<string, (...args: unknown[]) => never>
 export const screen = chain as Record<string, (...args: unknown[]) => never>
-export const fn = () => noop

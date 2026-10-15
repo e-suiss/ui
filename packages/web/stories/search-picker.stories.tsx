@@ -1,11 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   SearchPicker,
   type SearchPickerItem,
 } from "@/components/patterns/search-picker"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const frameworks: SearchPickerItem[] = [
   { value: "next", label: "Next.js" },

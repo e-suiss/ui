@@ -1,9 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
-
 import { BentoCloserLook } from "@/components/blocks/bento-closer-look"
 import { BentoFeatures } from "@/components/blocks/bento-features"
 import { BentoStats } from "@/components/blocks/bento-stats"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Bento",

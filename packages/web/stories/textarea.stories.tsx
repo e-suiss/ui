@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 import { MOUSE_POINTER_ID } from "./pointer"
 
 const meta = {

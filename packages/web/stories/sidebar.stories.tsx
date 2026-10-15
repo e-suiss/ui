@@ -11,8 +11,6 @@ import {
   TrayIcon,
   UsersIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Separator } from "@/components/ui/separator"
 import {
@@ -40,6 +38,13 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const mainNav = [
   { title: "Home", icon: HouseIcon, active: true },

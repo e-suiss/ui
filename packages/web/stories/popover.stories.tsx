@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -12,6 +9,14 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const SHARED_LINKS = /^Shared links stay active for 30 days/
 

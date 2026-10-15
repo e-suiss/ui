@@ -5,8 +5,6 @@ import {
   PlusIcon,
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, within } from "storybook/test"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -22,6 +20,13 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  within,
+} from "@/tests/story-kit"
 
 const NOTIFICATION_SETTINGS = /^Notification settings/
 

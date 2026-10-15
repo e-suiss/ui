@@ -1,6 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Picker,
@@ -8,6 +6,14 @@ import {
   PickerItem,
   PickerSeparator,
 } from "@/components/patterns/picker"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const fruits = [
   { value: "apple", label: "Apple" },

@@ -1,6 +1,4 @@
 import { DotsThreeIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Card",

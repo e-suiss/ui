@@ -8,11 +8,7 @@ const TYPE_KEYWORD = /^type\s+/
 const VARIANT_PROPS = /^VariantProps<typeof (\w+)>$/
 const UPPERCASE_START = /^[A-Z]/
 
-const STORYBOOK = new Set([
-  "storybook/test",
-  "@storybook/react-vite",
-  "@storybook/react-native",
-])
+const STORY_KITS = new Set(["@/tests/story-kit", "@storybook/react-native"])
 const OPEN_ARGS = new Set(["defaultOpen", "open"])
 
 function parse(file, source) {
@@ -137,7 +133,7 @@ export function storyExamples(file, source, { itemName, overlay }) {
   for (const statement of tree.statements) {
     if (ts.isImportDeclaration(statement)) {
       const from = statement.moduleSpecifier.text
-      if (!STORYBOOK.has(from)) imports.push(statement)
+      if (!STORY_KITS.has(from)) imports.push(statement)
       continue
     }
     if (ts.isVariableStatement(statement)) {
