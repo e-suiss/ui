@@ -1,15 +1,14 @@
 "use client"
 
-import { cn } from "cn"
 import type * as PageTree from "fumadocs-core/page-tree"
 import { usePathname } from "next/navigation"
 import type * as React from "react"
-
 import { Anchor } from "@/components/site/anchor"
 import { useActiveSection } from "@/components/site/local-nav"
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { sections } from "@/lib/sections"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 type Group = { label?: string; nodes: PageTree.Node[] }
 

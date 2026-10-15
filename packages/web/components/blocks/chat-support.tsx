@@ -95,7 +95,7 @@ export function ChatSupport() {
         aria-label="suiss Support chat"
         inert={!open}
         data-open={open ? "" : undefined}
-        className="absolute inset-x-3 bottom-3 flex h-[min(32.5rem,calc(100%-1.5rem))] origin-bottom-right scale-20 flex-col overflow-hidden rounded-[1.375rem] bg-background opacity-0 shadow-[0_0_0_0.5px_var(--color-border),0_24px_60px_rgb(0_0_0/0.2)] transition-[scale,opacity] duration-[500ms,250ms] ease-[cubic-bezier(0.3,1.15,0.5,1),ease] data-open:scale-100 data-open:opacity-100 motion-reduce:transition-none sm:inset-x-auto sm:end-6 sm:bottom-6 sm:w-90"
+        className="absolute inset-x-3 bottom-3 flex h-[min(32.5rem,calc(100%-1.5rem))] origin-bottom-right scale-20 rtl:origin-bottom-left flex-col overflow-hidden rounded-[1.375rem] bg-background opacity-0 shadow-[0_0_0_0.5px_var(--color-border),0_24px_60px_rgb(0_0_0/0.2)] transition-[scale,opacity] duration-[500ms,250ms] ease-[cubic-bezier(0.3,1.15,0.5,1),ease] data-open:scale-100 data-open:opacity-100 motion-reduce:transition-none sm:inset-x-auto sm:end-6 sm:bottom-6 sm:w-90"
       >
         <div className="flex shrink-0 items-center gap-2.5 border-b border-border px-3.5 py-3">
           <span className="flex size-8.5 items-center justify-center rounded-full bg-foreground text-base font-bold text-background">

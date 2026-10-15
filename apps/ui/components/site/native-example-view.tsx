@@ -1,13 +1,12 @@
 "use client"
 
-import { cn } from "cn"
 import Image from "next/image"
 import * as React from "react"
-
 import { useActivePlatform } from "@/components/site/platform"
 import { SourceCode } from "@/components/site/source-code"
 import { useTheme } from "@/components/ui/theme"
 import type { Platform } from "@/lib/platform"
+import { cn } from "@/lib/utils"
 
 function previewAlt(id: string, scheme: string) {
   const [component = "", story = ""] = id.split("--")

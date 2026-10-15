@@ -2,8 +2,8 @@
 
 import { NumberField as NumberFieldPrimitive } from "@base-ui/react/number-field"
 import { MinusIcon, PlusIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
+import { cn } from "@/lib/utils"
 
 type StepperContextProps = {
   canChange: (direction: 1 | -1) => boolean

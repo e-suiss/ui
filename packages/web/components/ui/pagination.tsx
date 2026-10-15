@@ -8,9 +8,9 @@ import {
   DotsThreeIcon,
 } from "@phosphor-icons/react"
 import type { VariantProps } from "class-variance-authority"
-import { cn } from "cn"
 import type * as React from "react"
 import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

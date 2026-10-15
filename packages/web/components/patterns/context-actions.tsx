@@ -1,9 +1,7 @@
 "use client"
 
 import { mergeProps } from "@base-ui/react/merge-props"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   AlertSheet,
   AlertSheetAction,
@@ -23,6 +21,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 const LONG_PRESS_DELAY = 500
 const LONG_PRESS_TOLERANCE = 10

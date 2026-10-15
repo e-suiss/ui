@@ -1,11 +1,10 @@
 "use client"
 
 import { ArrowUpIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import type { TableOfContents, TOCItemType } from "fumadocs-core/toc"
 import * as React from "react"
-
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 type Section = { item: TOCItemType; children: TOCItemType[] }
 

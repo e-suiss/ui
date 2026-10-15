@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Sidebar,
   SidebarContent,
@@ -28,6 +26,7 @@ import {
   TabBarList,
   TabBarTrigger,
 } from "@/components/ui/tab-bar"
+import { cn } from "@/lib/utils"
 
 type AppShellItem = {
   value: string

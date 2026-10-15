@@ -4,7 +4,6 @@ import {
   ShareNetworkIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import {
   PreviewMenu,
@@ -13,6 +12,7 @@ import {
   PreviewMenuSeparator,
   PreviewMenuTrigger,
 } from "@/components/interactions/preview-menu"
+import { cn } from "@/lib/utils"
 
 const photos = [
   "from-blue-500 to-purple-500",

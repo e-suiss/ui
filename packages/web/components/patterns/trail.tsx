@@ -3,9 +3,7 @@
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { useRender } from "@base-ui/react/use-render"
 import { ArrowBendUpLeftIcon, CaretLeftIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -16,6 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type TrailItem = {
   label: string

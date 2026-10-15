@@ -1,13 +1,12 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
-import { cn } from "cn"
 import type { Metadata } from "next"
 import type * as React from "react"
-
 import { Anchor } from "@/components/site/anchor"
 import { Bento } from "@/components/site/bento"
 import { InstallCommand } from "@/components/site/install-command"
 import { Search } from "@/components/site/search"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

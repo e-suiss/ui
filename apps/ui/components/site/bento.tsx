@@ -1,9 +1,7 @@
 "use client"
 
-import { cn } from "cn"
 import type * as React from "react"
 import { Pie, PieChart } from "recharts"
-
 import {
   SegmentPicker,
   SegmentPickerItem,
@@ -21,6 +19,7 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { ThemeToggle } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { cn } from "@/lib/utils"
 
 function Tile({
   file,

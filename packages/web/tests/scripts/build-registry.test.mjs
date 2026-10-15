@@ -76,12 +76,13 @@ describe("build-registry", () => {
       "components/charts/bar-chart-active.tsx": "export {}",
       "components/blocks/login-account.tsx": "export {}",
       "hooks/use-mobile.ts": "export {}",
+      "lib/utils.ts": "export {}",
       "components/ui/notes.md": "",
       "components/ui/button.css": "",
     })
     const result = build(cwd)
     expect(result.code).toBe(0)
-    expect(result.stdout).toContain("registry.json: 7 items")
+    expect(result.stdout).toContain("registry.json: 8 items")
     const registry = registryOf(cwd)
     expect(registry).toMatchObject({
       name: "esuiss-ui",
@@ -127,6 +128,7 @@ describe("build-registry", () => {
         ["components/blocks/login-account.tsx"],
       ],
       ["use-mobile", "hook", "Use Mobile", ["hooks/use-mobile.ts"]],
+      ["utils", "lib", "Utils", ["lib/utils.ts"]],
     ])
   })
 
@@ -140,7 +142,7 @@ import type { Icon } from "@phosphor-icons/react"
 import {
   XIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
+import { clsx } from "clsx"
 import "input-otp/styles.css"
 export { cva } from "class-variance-authority"
 import { helper } from "./helper"
@@ -151,7 +153,7 @@ import { helper } from "./helper"
       "@base-ui/react",
       "@phosphor-icons/react",
       "class-variance-authority",
-      "cn",
+      "clsx",
       "input-otp",
     ])
   })
@@ -166,7 +168,8 @@ import { thing } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
 `,
-      "hooks/use-mobile.ts": "export {}",
+      "hooks/use-mobile.ts": `import { cn } from "@/lib/utils"`,
+      "lib/utils.ts": "export {}",
     })
     expect(build(cwd).code).toBe(0)
     expect(item(cwd, "dialog").requires).toEqual(["button"])
@@ -175,6 +178,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
       "dialog",
       "use-mobile",
     ])
+    expect(item(cwd, "use-mobile").requires).toEqual(["utils"])
     expect(item(cwd, "button").requires).toEqual([])
   })
 
@@ -209,12 +213,12 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
   it("rejects a local import outside the registry folders", () => {
     const cwd = project({
-      "components/ui/button.tsx": 'import { cn } from "@/lib/utils"',
+      "components/ui/button.tsx": 'import { site } from "@/app/site"',
     })
     const result = build(cwd)
     expect(result.code).toBe(1)
     expect(result.stderr).toContain(
-      'components/ui/button.tsx: unsupported local import "@/lib/utils"'
+      'components/ui/button.tsx: unsupported local import "@/app/site"'
     )
   })
 
@@ -256,7 +260,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
     writeFileSync(
       path.join(cwd, "components/ui/button.tsx"),
-      'import { cn } from "cn"'
+      'import { clsx } from "clsx"'
     )
     const stale = build(cwd, "--check")
     expect(stale.code).toBe(1)

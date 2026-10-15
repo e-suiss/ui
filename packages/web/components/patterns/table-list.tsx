@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Table,
   TableBody,
@@ -12,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type TableListColumn<T> = {
   key: string

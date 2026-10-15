@@ -1,7 +1,7 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
+import { cn } from "@/lib/utils"
 
 const LETTERS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"]
 const ROW_HEIGHT = 16

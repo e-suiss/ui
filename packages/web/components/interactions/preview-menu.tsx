@@ -1,8 +1,8 @@
 "use client"
 
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu"
-import { cn } from "cn"
 import * as React from "react"
+import { cn } from "@/lib/utils"
 
 type PreviewMenuFrame = {
   top: number

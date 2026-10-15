@@ -4,7 +4,6 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { SidebarIcon } from "@phosphor-icons/react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { isMacPlatform } from "@/hooks/use-platform"
+import { cn } from "@/lib/utils"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

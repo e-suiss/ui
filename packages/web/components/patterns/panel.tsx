@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Drawer,
   DrawerClose,
@@ -24,6 +22,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type PanelContextProps = {
   isMobile: boolean

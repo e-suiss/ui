@@ -1,6 +1,5 @@
-import { cn } from "cn"
-
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 const photo = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1600&q=80&auto=format&fit=crop`

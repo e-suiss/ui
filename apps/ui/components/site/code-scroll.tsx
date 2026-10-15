@@ -1,8 +1,8 @@
 "use client"
 
 import { ScrollArea } from "@base-ui/react/scroll-area"
-import { cn } from "cn"
 import type * as React from "react"
+import { cn } from "@/lib/utils"
 
 const bar =
   "pointer-events-none z-10 flex touch-none opacity-0 transition-opacity duration-300 select-none data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:opacity-100 data-scrolling:duration-75"

@@ -10,10 +10,11 @@
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/accordion.tsx"
       ]
@@ -23,12 +24,12 @@
       "type": "ui",
       "title": "Alert Dialog",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
-        "use-scrollbar-gap"
+        "use-scrollbar-gap",
+        "utils"
       ],
       "files": [
         "components/ui/alert-dialog.tsx"
@@ -40,11 +41,11 @@
       "title": "Alert Sheet",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
-        "use-scrollbar-gap"
+        "use-scrollbar-gap",
+        "utils"
       ],
       "files": [
         "components/ui/alert-sheet.tsx"
@@ -55,10 +56,11 @@
       "type": "ui",
       "title": "Alert",
       "dependencies": [
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/alert.tsx"
       ]
@@ -67,10 +69,10 @@
       "name": "aspect-ratio",
       "type": "ui",
       "title": "Aspect Ratio",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/aspect-ratio.tsx"
       ]
@@ -81,11 +83,11 @@
       "title": "Attachment",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/attachment.tsx"
@@ -96,10 +98,11 @@
       "type": "ui",
       "title": "Avatar",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/avatar.tsx"
       ]
@@ -110,10 +113,11 @@
       "title": "Badge",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/badge.tsx"
       ]
@@ -124,10 +128,11 @@
       "title": "Breadcrumb",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/breadcrumb.tsx"
       ]
@@ -138,10 +143,11 @@
       "title": "Bubble",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/bubble.tsx"
       ]
@@ -152,11 +158,11 @@
       "title": "Button Group",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
-        "separator"
+        "separator",
+        "utils"
       ],
       "files": [
         "components/ui/button-group.tsx"
@@ -168,10 +174,11 @@
       "title": "Button",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/button.tsx"
       ]
@@ -182,11 +189,11 @@
       "title": "Calendar",
       "dependencies": [
         "@phosphor-icons/react",
-        "cn",
         "react-day-picker"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/calendar.tsx"
@@ -196,10 +203,10 @@
       "name": "card",
       "type": "ui",
       "title": "Card",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/card.tsx"
       ]
@@ -210,12 +217,12 @@
       "title": "Carousel",
       "dependencies": [
         "@phosphor-icons/react",
-        "cn",
         "embla-carousel-react"
       ],
       "requires": [
         "button",
-        "direction"
+        "direction",
+        "utils"
       ],
       "files": [
         "components/ui/carousel.tsx"
@@ -226,10 +233,11 @@
       "type": "ui",
       "title": "Chart",
       "dependencies": [
-        "cn",
         "recharts"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/chart.tsx"
       ]
@@ -240,10 +248,11 @@
       "title": "Checkbox",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/checkbox.tsx"
       ]
@@ -266,12 +275,12 @@
       "title": "Combobox",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
-        "input-group"
+        "input-group",
+        "utils"
       ],
       "files": [
         "components/ui/combobox.tsx"
@@ -283,12 +292,12 @@
       "title": "Command",
       "dependencies": [
         "@phosphor-icons/react",
-        "cmdk",
-        "cn"
+        "cmdk"
       ],
       "requires": [
         "dialog",
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/ui/command.tsx"
@@ -300,11 +309,11 @@
       "title": "Context Menu",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/ui/context-menu.tsx"
@@ -316,12 +325,12 @@
       "title": "Dialog",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
-        "use-scrollbar-gap"
+        "use-scrollbar-gap",
+        "utils"
       ],
       "files": [
         "components/ui/dialog.tsx"
@@ -345,12 +354,12 @@
       "title": "Drawer",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
-        "use-scrollbar-gap"
+        "use-scrollbar-gap",
+        "utils"
       ],
       "files": [
         "components/ui/drawer.tsx"
@@ -362,11 +371,11 @@
       "title": "Dropdown Menu",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/ui/dropdown-menu.tsx"
@@ -377,10 +386,11 @@
       "type": "ui",
       "title": "Empty",
       "dependencies": [
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/empty.tsx"
       ]
@@ -390,12 +400,12 @@
       "type": "ui",
       "title": "Field",
       "dependencies": [
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
         "label",
-        "separator"
+        "separator",
+        "utils"
       ],
       "files": [
         "components/ui/field.tsx"
@@ -406,11 +416,11 @@
       "type": "ui",
       "title": "Fullscreen Menu",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/fullscreen-menu.tsx"
@@ -421,10 +431,11 @@
       "type": "ui",
       "title": "Hover Card",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/hover-card.tsx"
       ]
@@ -434,13 +445,13 @@
       "type": "ui",
       "title": "Input Group",
       "dependencies": [
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
         "button",
         "input",
-        "textarea"
+        "textarea",
+        "utils"
       ],
       "files": [
         "components/ui/input-group.tsx"
@@ -452,10 +463,11 @@
       "title": "Input Otp",
       "dependencies": [
         "@phosphor-icons/react",
-        "cn",
         "input-otp"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/input-otp.tsx"
       ]
@@ -465,10 +477,11 @@
       "type": "ui",
       "title": "Input",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/input.tsx"
       ]
@@ -479,10 +492,11 @@
       "title": "Item",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/item.tsx"
       ]
@@ -491,11 +505,10 @@
       "name": "kbd",
       "type": "ui",
       "title": "Kbd",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/ui/kbd.tsx"
@@ -505,10 +518,10 @@
       "name": "label",
       "type": "ui",
       "title": "Label",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/label.tsx"
       ]
@@ -519,10 +532,11 @@
       "title": "Marker",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/marker.tsx"
       ]
@@ -533,11 +547,11 @@
       "title": "Menubar",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "dropdown-menu"
+        "dropdown-menu",
+        "utils"
       ],
       "files": [
         "components/ui/menubar.tsx"
@@ -549,13 +563,13 @@
       "title": "Message Scroller",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
         "scroll-area",
-        "use-message-scroller"
+        "use-message-scroller",
+        "utils"
       ],
       "files": [
         "components/ui/message-scroller.tsx"
@@ -565,10 +579,10 @@
       "name": "message",
       "type": "ui",
       "title": "Message",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/message.tsx"
       ]
@@ -578,10 +592,11 @@
       "type": "ui",
       "title": "Native Select",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/native-select.tsx"
       ]
@@ -593,10 +608,11 @@
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/navigation-menu.tsx"
       ]
@@ -607,11 +623,11 @@
       "title": "Pagination",
       "dependencies": [
         "@phosphor-icons/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/pagination.tsx"
@@ -622,10 +638,11 @@
       "type": "ui",
       "title": "Popover",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/popover.tsx"
       ]
@@ -635,10 +652,11 @@
       "type": "ui",
       "title": "Progress",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/progress.tsx"
       ]
@@ -649,12 +667,12 @@
       "title": "Questionnaire",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
-        "use-questionnaire"
+        "use-questionnaire",
+        "utils"
       ],
       "files": [
         "components/ui/questionnaire.tsx"
@@ -665,10 +683,11 @@
       "type": "ui",
       "title": "Radio Group",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/radio-group.tsx"
       ]
@@ -678,10 +697,11 @@
       "type": "ui",
       "title": "Resizable",
       "dependencies": [
-        "cn",
         "react-resizable-panels"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/resizable.tsx"
       ]
@@ -691,10 +711,11 @@
       "type": "ui",
       "title": "Scroll Area",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/scroll-area.tsx"
       ]
@@ -705,10 +726,11 @@
       "title": "Select",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/select.tsx"
       ]
@@ -718,10 +740,11 @@
       "type": "ui",
       "title": "Separator",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/separator.tsx"
       ]
@@ -732,12 +755,12 @@
       "title": "Sheet",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
-        "use-scrollbar-gap"
+        "use-scrollbar-gap",
+        "utils"
       ],
       "files": [
         "components/ui/sheet.tsx"
@@ -750,8 +773,7 @@
       "dependencies": [
         "@base-ui/react",
         "@phosphor-icons/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
         "button",
@@ -762,7 +784,8 @@
         "skeleton",
         "tooltip",
         "use-mobile",
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/ui/sidebar.tsx"
@@ -772,10 +795,10 @@
       "name": "skeleton",
       "type": "ui",
       "title": "Skeleton",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/skeleton.tsx"
       ]
@@ -785,10 +808,11 @@
       "type": "ui",
       "title": "Slider",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/slider.tsx"
       ]
@@ -797,10 +821,10 @@
       "name": "spinner",
       "type": "ui",
       "title": "Spinner",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/spinner.tsx"
       ]
@@ -810,10 +834,11 @@
       "type": "ui",
       "title": "Switch",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/switch.tsx"
       ]
@@ -824,11 +849,11 @@
       "title": "Tab Bar",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/tab-bar.tsx"
@@ -838,10 +863,10 @@
       "name": "table",
       "type": "ui",
       "title": "Table",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/table.tsx"
       ]
@@ -852,10 +877,11 @@
       "title": "Tabs",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/tabs.tsx"
       ]
@@ -864,10 +890,10 @@
       "name": "textarea",
       "type": "ui",
       "title": "Textarea",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/textarea.tsx"
       ]
@@ -876,11 +902,10 @@
       "name": "theme",
       "type": "ui",
       "title": "Theme",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/theme.tsx"
@@ -894,11 +919,11 @@
       "title": "Toast",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/ui/toast.tsx"
@@ -910,11 +935,11 @@
       "title": "Toggle Group",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
       "requires": [
-        "toggle"
+        "toggle",
+        "utils"
       ],
       "files": [
         "components/ui/toggle-group.tsx"
@@ -926,10 +951,11 @@
       "title": "Toggle",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/toggle.tsx"
       ]
@@ -939,10 +965,11 @@
       "type": "ui",
       "title": "Tooltip",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/ui/tooltip.tsx"
       ]
@@ -951,10 +978,10 @@
       "name": "wheel-picker",
       "type": "ui",
       "title": "Wheel Picker",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/wheel-picker.tsx"
       ]
@@ -963,10 +990,10 @@
       "name": "widget",
       "type": "ui",
       "title": "Widget",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/ui/widget.tsx"
       ]
@@ -977,15 +1004,15 @@
       "title": "Action Bar",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "alert-sheet",
         "button",
         "drawer",
         "menubar",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/action-bar.tsx"
@@ -1009,12 +1036,11 @@
       "name": "app-shell",
       "type": "pattern",
       "title": "App Shell",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "sidebar",
-        "tab-bar"
+        "tab-bar",
+        "utils"
       ],
       "files": [
         "components/patterns/app-shell.tsx"
@@ -1024,15 +1050,14 @@
       "name": "command-palette",
       "type": "pattern",
       "title": "Command Palette",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "command",
         "dialog",
         "drawer",
         "use-mobile",
-        "use-platform"
+        "use-platform",
+        "utils"
       ],
       "files": [
         "components/patterns/command-palette.tsx"
@@ -1057,13 +1082,13 @@
       "type": "pattern",
       "title": "Context Actions",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
       "requires": [
         "alert-sheet",
         "context-menu",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/context-actions.tsx"
@@ -1074,14 +1099,14 @@
       "type": "pattern",
       "title": "Date Picker",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "calendar",
         "drawer",
         "popover",
         "use-mobile",
+        "utils",
         "wheel-picker"
       ],
       "files": [
@@ -1093,13 +1118,13 @@
       "type": "pattern",
       "title": "Flyout",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
       "requires": [
         "drawer",
         "popover",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/flyout.tsx"
@@ -1109,13 +1134,12 @@
       "name": "modal",
       "type": "pattern",
       "title": "Modal",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "dialog",
         "drawer",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/modal.tsx"
@@ -1125,13 +1149,12 @@
       "name": "navbar",
       "type": "pattern",
       "title": "Navbar",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "fullscreen-menu",
         "navigation-menu",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/navbar.tsx"
@@ -1141,13 +1164,12 @@
       "name": "paged-list",
       "type": "pattern",
       "title": "Paged List",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "pagination",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/paged-list.tsx"
@@ -1157,13 +1179,12 @@
       "name": "panel",
       "type": "pattern",
       "title": "Panel",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "drawer",
         "sheet",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/panel.tsx"
@@ -1187,13 +1208,12 @@
       "name": "preview",
       "type": "pattern",
       "title": "Preview",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "drawer",
         "hover-card",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/preview.tsx"
@@ -1204,14 +1224,14 @@
       "type": "pattern",
       "title": "Search Picker",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "combobox",
         "command",
         "drawer",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/search-picker.tsx"
@@ -1237,12 +1257,12 @@
       "title": "Split View",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "resizable",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/split-view.tsx"
@@ -1252,12 +1272,11 @@
       "name": "table-list",
       "type": "pattern",
       "title": "Table List",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
         "table",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/table-list.tsx"
@@ -1269,12 +1288,12 @@
       "title": "Trail",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "breadcrumb",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/patterns/trail.tsx"
@@ -1284,10 +1303,10 @@
       "name": "island",
       "type": "interaction",
       "title": "Island",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/interactions/island.tsx"
       ]
@@ -1297,12 +1316,12 @@
       "type": "interaction",
       "title": "Otp Autofill",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "input-otp",
-        "use-mobile"
+        "use-mobile",
+        "utils"
       ],
       "files": [
         "components/interactions/otp-autofill.tsx"
@@ -1313,10 +1332,11 @@
       "type": "interaction",
       "title": "Preview Menu",
       "dependencies": [
-        "@base-ui/react",
-        "cn"
+        "@base-ui/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/interactions/preview-menu.tsx"
       ]
@@ -1325,11 +1345,10 @@
       "name": "pull-to-refresh",
       "type": "interaction",
       "title": "Pull To Refresh",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
-        "spinner"
+        "spinner",
+        "utils"
       ],
       "files": [
         "components/interactions/pull-to-refresh.tsx"
@@ -1340,10 +1359,11 @@
       "type": "interaction",
       "title": "Search Reveal",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/interactions/search-reveal.tsx"
       ]
@@ -1352,10 +1372,10 @@
       "name": "section-index",
       "type": "interaction",
       "title": "Section Index",
-      "dependencies": [
-        "cn"
+      "dependencies": [],
+      "requires": [
+        "utils"
       ],
-      "requires": [],
       "files": [
         "components/interactions/section-index.tsx"
       ]
@@ -1365,11 +1385,11 @@
       "type": "interaction",
       "title": "Selection List",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/interactions/selection-list.tsx"
@@ -1381,10 +1401,11 @@
       "title": "Stepper",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/interactions/stepper.tsx"
       ]
@@ -1394,10 +1415,11 @@
       "type": "interaction",
       "title": "Swipe Actions",
       "dependencies": [
-        "class-variance-authority",
-        "cn"
+        "class-variance-authority"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/interactions/swipe-actions.tsx"
       ]
@@ -1408,10 +1430,11 @@
       "title": "Tip",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
-      "requires": [],
+      "requires": [
+        "utils"
+      ],
       "files": [
         "components/interactions/tip.tsx"
       ]
@@ -1420,11 +1443,10 @@
       "name": "undo-bar",
       "type": "interaction",
       "title": "Undo Bar",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/interactions/undo-bar.tsx"
@@ -2831,11 +2853,10 @@
       "name": "hero-tiles",
       "type": "block",
       "title": "Hero Tiles",
-      "dependencies": [
-        "cn"
-      ],
+      "dependencies": [],
       "requires": [
-        "button"
+        "button",
+        "utils"
       ],
       "files": [
         "components/blocks/hero-tiles.tsx"
@@ -3042,13 +3063,13 @@
       "type": "block",
       "title": "Price Bundle",
       "dependencies": [
-        "@phosphor-icons/react",
-        "cn"
+        "@phosphor-icons/react"
       ],
       "requires": [
         "button",
         "label",
-        "radio-group"
+        "radio-group",
+        "utils"
       ],
       "files": [
         "components/blocks/price-bundle.tsx"
@@ -3391,6 +3412,18 @@
       "requires": [],
       "files": [
         "hooks/use-scrollbar-gap.ts"
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "lib",
+      "title": "Utils",
+      "dependencies": [
+        "cn"
+      ],
+      "requires": [],
+      "files": [
+        "lib/utils.ts"
       ]
     }
   ]

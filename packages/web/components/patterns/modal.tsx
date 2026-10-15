@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Dialog,
   DialogClose,
@@ -24,6 +22,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type ModalContextProps = {
   isMobile: boolean

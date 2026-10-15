@@ -1,9 +1,8 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { isPlatform, KEY, PLATFORM_LABELS, type Platform } from "@/lib/platform"
+import { cn } from "@/lib/utils"
 
 const listeners = new Set<() => void>()
 let current: Platform | null = null

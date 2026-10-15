@@ -75,7 +75,12 @@ const stylings = new Set(["uniwind", "nativewind", "stylesheet"])
 function resolveSource(file: string) {
   const [head = "", ...rest] = file.split("/")
   const tail = rest.join("/")
-  if (head === "components" || head === "hooks" || head === "examples")
+  if (
+    head === "components" ||
+    head === "hooks" ||
+    head === "lib" ||
+    head === "examples"
+  )
     return { root: webRoot, resolved: path.join(webRoot, file) }
   if (nativeRoots[head])
     return {

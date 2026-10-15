@@ -1,8 +1,8 @@
-import { cn } from "cn"
 import {
   TableList,
   type TableListColumn,
 } from "@/components/patterns/table-list"
+import { cn } from "@/lib/utils"
 
 type Order = {
   id: number

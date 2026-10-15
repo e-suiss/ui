@@ -1,10 +1,9 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
 import { flushSync } from "react-dom"
-
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type Theme = "light" | "dark" | "system"
 

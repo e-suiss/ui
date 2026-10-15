@@ -1,9 +1,8 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { Spinner } from "@/components/ui/spinner"
+import { cn } from "@/lib/utils"
 
 type PullToRefreshPhase = "idle" | "pulling" | "refreshing" | "settling"
 

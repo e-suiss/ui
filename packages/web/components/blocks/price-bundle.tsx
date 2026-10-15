@@ -8,12 +8,11 @@ import {
   NewspaperIcon,
   TelevisionIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { cn } from "@/lib/utils"
 
 const services = [
   { name: "suiss Music", icon: MusicNoteIcon, tint: "bg-red-500 text-white" },

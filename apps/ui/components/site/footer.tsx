@@ -1,13 +1,12 @@
 "use client"
 
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import { usePathname } from "next/navigation"
 import * as React from "react"
-
 import { Anchor } from "@/components/site/anchor"
 import { repository, sections } from "@/lib/sections"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
