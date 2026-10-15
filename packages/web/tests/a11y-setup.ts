@@ -112,7 +112,7 @@ afterEach(async ({ task }) => {
     await commands.writeFile(
       `.vitest/a11y/${task.file.name.replace(/\W+/g, "-")}-${task.name.replace(/\W+/g, "-")}.json`,
       JSON.stringify(
-        { story: `${task.file.name} > ${task.name}`, found },
+        { example: `${task.file.name} > ${task.name}`, found },
         null,
         2
       )

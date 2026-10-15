@@ -4,7 +4,7 @@ import { commands } from "vitest/browser"
 import { findLayoutIssues } from "./layout"
 import { settle } from "./settle"
 
-Object.assign(globalThis, { storyDirection: "rtl" })
+Object.assign(globalThis, { exampleDirection: "rtl" })
 
 afterEach(async ({ task }) => {
   await settle()
@@ -13,7 +13,7 @@ afterEach(async ({ task }) => {
   await commands.writeFile(
     `.vitest/rtl/${`${task.file.name}-${task.name}`.replace(/\W+/g, "-")}.json`,
     JSON.stringify(
-      { story: `${task.file.name} > ${task.name}`, found },
+      { example: `${task.file.name} > ${task.name}`, found },
       null,
       2
     )

@@ -101,7 +101,7 @@ afterEach(async ({ task }) => {
     `.vitest/motion/${task.file.name.replace(/\W+/g, "-")}-${task.name.replace(/\W+/g, "-")}.json`,
     JSON.stringify(
       {
-        story: `${task.file.name} > ${task.name}`,
+        example: `${task.file.name} > ${task.name}`,
         state: task.result?.state,
         moved: Array.from(moved),
       },

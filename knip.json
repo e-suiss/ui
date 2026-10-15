@@ -15,15 +15,16 @@
         "hooks/*.ts",
         "scripts/*.mjs",
         "tests/*-setup.ts",
-        "tests/story-runner.tsx"
+        "examples/*.tsx"
       ],
       "project": [
         "components/**/*.{ts,tsx}",
         "hooks/**/*.ts",
         "scripts/**/*.mjs",
         "styles/**/*.css",
-        "stories/**/*.{tsx,mdx}",
-        "tests/story-*.{ts,tsx}"
+        "examples/*.tsx",
+        "tests/render-example.tsx",
+        "tests/examples/*.test.tsx"
       ]
     },
     "packages/cli": {

@@ -20,13 +20,14 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "types": ["node", "vite/client"]
   },
   "include": [
     "components/**/*.ts",
     "components/**/*.tsx",
     "hooks/**/*.ts",
-    "stories/**/*.tsx",
+    "examples/**/*.tsx",
     "vitest.config.ts",
     "tests/**/*.ts",
     "tests/**/*.tsx"

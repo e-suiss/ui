@@ -22,7 +22,7 @@ for (const dir of dirs) {
     for (const item of items) {
       total += 1
       const theme = item.theme ? ` (${item.theme})` : ""
-      console.log(`${report.story} — ${item.check}: ${item.rule}${theme}`)
+      console.log(`${report.example} — ${item.check}: ${item.rule}${theme}`)
       for (const target of item.targets) console.log(`    ${target}`)
     }
   }

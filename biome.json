@@ -11,9 +11,6 @@
       "!**/registry.json",
       "!pnpm-lock.yaml",
       "!apps/ui/public/live",
-      "!apps/ui/demos",
-      "!apps/ui/.generated",
-      "!apps/ui/content/items.json",
       "!packages/mobile/ios",
       "!packages/mobile/android",
       "!packages/mobile/uniwind-types.d.ts"
@@ -169,7 +166,7 @@
     {
       "includes": [
         "packages/web/components/ui/slider.tsx",
-        "packages/web/stories/**"
+        "packages/web/examples/**"
       ],
       "linter": {
         "rules": {
@@ -180,7 +177,7 @@
       }
     },
     {
-      "includes": ["packages/web/stories/**"],
+      "includes": ["packages/web/examples/**"],
       "linter": {
         "rules": {
           "a11y": {

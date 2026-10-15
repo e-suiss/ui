@@ -1,0 +1,28 @@
+import {
+  ContextActions,
+  ContextActionsContent,
+  ContextActionsItem,
+  ContextActionsLabel,
+  ContextActionsSeparator,
+  ContextActionsTrigger,
+} from "@/components/patterns/context-actions"
+
+export default function ContextActionsDemo() {
+  return (
+    <div className="flex min-h-svh items-center justify-center p-4">
+      <ContextActions>
+        <ContextActionsTrigger className="flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-label-secondary">
+          Right click or long press
+        </ContextActionsTrigger>
+        <ContextActionsContent>
+          <ContextActionsLabel>Photo.jpg</ContextActionsLabel>
+          <ContextActionsItem>Edit</ContextActionsItem>
+          <ContextActionsItem>Duplicate</ContextActionsItem>
+          <ContextActionsItem>Share</ContextActionsItem>
+          <ContextActionsSeparator />
+          <ContextActionsItem variant="destructive">Delete</ContextActionsItem>
+        </ContextActionsContent>
+      </ContextActions>
+    </div>
+  )
+}

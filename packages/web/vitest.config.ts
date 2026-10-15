@@ -1,13 +1,10 @@
 import { fileURLToPath } from "node:url"
 import tailwindcss from "@tailwindcss/vite"
 import { playwright } from "@vitest/browser-playwright"
-import type { Plugin } from "vite"
 import { defineConfig } from "vitest/config"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
-const STORY_FILE = /\.stories\.tsx$/
-const STORY_EXPORT = /^export const (\w+)/gm
-const META_EXPORT = /^export default (\w+)$/m
+const TEST_FILE = /\.test\.tsx$/
 
 const IPHONE = {
   viewport: { width: 393, height: 659 },
@@ -37,30 +34,6 @@ function browser(name: string) {
     provider: playwright({ launchOptions: { channel: "chrome" } }),
     instances: [{ browser: "chromium" as const, name }],
     viewport: { width: 1280, height: 800 },
-  }
-}
-
-function storyTests(): Plugin {
-  return {
-    name: "story-tests",
-    enforce: "pre",
-    transform(code, id) {
-      const [file = id] = id.split("?")
-      if (!STORY_FILE.test(file)) return null
-      const meta = META_EXPORT.exec(code)?.[1]
-      if (!meta) throw new Error(`${file} has no default meta export`)
-      const stories = Array.from(
-        code.matchAll(STORY_EXPORT),
-        ([, name]) => name
-      )
-      return {
-        code: `${code}
-import { testStories } from "@/tests/story-runner"
-testStories(${meta}, { ${stories.join(", ")} })
-`,
-        map: null,
-      }
-    },
   }
 }
 
@@ -117,19 +90,19 @@ export default defineConfig({
         : []),
       {
         extends: true,
-        plugins: [tailwindcss(), storyTests()],
+        plugins: [tailwindcss()],
         optimizeDeps: {
-          entries: ["stories/*.stories.tsx", "tests/story-runner.tsx"],
+          entries: ["examples/*.tsx", "tests/examples/*.test.tsx"],
         },
         test: {
-          name: "stories",
-          include: ["stories/*.stories.tsx"],
+          name: "examples",
+          include: ["tests/examples/*.test.tsx"],
           provide: { responsiveWidth: Number(process.env.WIDTH ?? 0) },
           maxWorkers: 4,
           sequence: { groupOrder: 2 },
           setupFiles: [
             "tests/setup.ts",
-            "tests/stories-setup.ts",
+            "tests/examples-setup.ts",
             ...(process.env.RTL ? ["tests/rtl-setup.ts"] : []),
             ...(process.env.LONG_TEXT ? ["tests/long-text-setup.ts"] : []),
             ...(process.env.VISUAL ? ["tests/visual-setup.ts"] : []),
@@ -140,17 +113,17 @@ export default defineConfig({
             ...(process.env.WIDTH ? ["tests/responsive-setup.ts"] : []),
           ],
           browser: {
-            ...browser("stories"),
+            ...browser("examples"),
             ...(process.env.MOBILE && {
               instances: [
                 {
                   browser: "webkit" as const,
-                  name: "stories-iphone",
+                  name: "examples-iphone",
                   provider: playwright({ contextOptions: IPHONE }),
                 },
                 {
                   browser: "chromium" as const,
-                  name: "stories-pixel",
+                  name: "examples-pixel",
                   provider: playwright({
                     launchOptions: { channel: "chrome" },
                     contextOptions: PIXEL,
@@ -160,15 +133,15 @@ export default defineConfig({
             }),
             ...(process.env.BROWSERS && {
               instances: [
-                { browser: "chromium" as const, name: "stories-chromium" },
+                { browser: "chromium" as const, name: "examples-chromium" },
                 {
                   browser: "webkit" as const,
-                  name: "stories-webkit",
+                  name: "examples-webkit",
                   provider: playwright(),
                 },
                 {
                   browser: "firefox" as const,
-                  name: "stories-firefox",
+                  name: "examples-firefox",
                   provider: playwright(),
                 },
               ],
@@ -178,7 +151,7 @@ export default defineConfig({
                 comparatorName: "pixelmatch",
                 comparatorOptions: { allowedMismatchedPixels: 10 },
                 resolveScreenshotPath: ({ arg, ext, testFileName }) =>
-                  `${root}tests/screenshots/${testFileName.replace(STORY_FILE, "")}/${arg}${ext}`,
+                  `${root}tests/screenshots/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
               },
             },
           },

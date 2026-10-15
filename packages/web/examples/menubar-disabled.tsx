@@ -1,0 +1,126 @@
+import {
+  ClipboardTextIcon,
+  CopyIcon,
+  ScissorsIcon,
+  TrashIcon,
+} from "@phosphor-icons/react"
+import {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarLabel,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
+
+function MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {
+  return (
+    <>
+      <MenubarMenu defaultOpen={fileOpen}>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarGroup>
+            <MenubarItem>
+              New tab
+              <MenubarShortcut mod>T</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>
+              New window
+              <MenubarShortcut mod>N</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem disabled>New private window</MenubarItem>
+          </MenubarGroup>
+          <MenubarSeparator />
+          <MenubarSub>
+            <MenubarSubTrigger>Share</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem>Email link</MenubarItem>
+              <MenubarItem>Messages</MenubarItem>
+              <MenubarItem>Notes</MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+          <MenubarSeparator />
+          <MenubarItem>
+            Print
+            <MenubarShortcut mod>P</MenubarShortcut>
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent>
+          <MenubarGroup>
+            <MenubarItem>
+              <ScissorsIcon />
+              Cut
+              <MenubarShortcut mod>X</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>
+              <CopyIcon />
+              Copy
+              <MenubarShortcut mod>C</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>
+              <ClipboardTextIcon />
+              Paste
+              <MenubarShortcut mod>V</MenubarShortcut>
+            </MenubarItem>
+          </MenubarGroup>
+          <MenubarSeparator />
+          <MenubarItem variant="destructive">
+            <TrashIcon />
+            Delete
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>View</MenubarTrigger>
+        <MenubarContent>
+          <MenubarGroup>
+            <MenubarCheckboxItem defaultChecked>
+              Show bookmarks bar
+            </MenubarCheckboxItem>
+            <MenubarCheckboxItem>Show full URLs</MenubarCheckboxItem>
+          </MenubarGroup>
+          <MenubarSeparator />
+          <MenubarItem inset>Reload</MenubarItem>
+          <MenubarItem inset>Toggle full screen</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Profiles</MenubarTrigger>
+        <MenubarContent>
+          <MenubarGroup>
+            <MenubarLabel>Switch profile</MenubarLabel>
+            <MenubarRadioGroup defaultValue="alex">
+              <MenubarRadioItem value="alex">Alex</MenubarRadioItem>
+              <MenubarRadioItem value="sam">Sam</MenubarRadioItem>
+              <MenubarRadioItem value="taylor">Taylor</MenubarRadioItem>
+            </MenubarRadioGroup>
+          </MenubarGroup>
+          <MenubarSeparator />
+          <MenubarItem inset>Manage profiles</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </>
+  )
+}
+
+export default function MenubarDisabled() {
+  return (
+    <div className="min-h-96">
+      <Menubar disabled>
+        <MenubarExample />
+      </Menubar>
+    </div>
+  )
+}
