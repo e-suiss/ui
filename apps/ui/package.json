@@ -6,13 +6,7 @@
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit",
-    "registry": "node scripts/generate-registry-docs.mjs && node scripts/generate-mobile-docs.mjs && node scripts/compose-docs.mjs",
-    "demos": "node scripts/generate-registry-docs.mjs",
-    "predev": "pnpm demos",
-    "prebuild": "pnpm demos",
-    "pretypecheck": "pnpm demos",
-    "registry:check": "node scripts/generate-registry-docs.mjs && node scripts/generate-mobile-docs.mjs && node scripts/compose-docs.mjs --check"
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",

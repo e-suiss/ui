@@ -15,5 +15,3 @@ next-env.d.ts
 .vercel
 npm-debug.log*
 .pnpm-debug.log*
-apps/ui/.generated
-apps/ui/demos
