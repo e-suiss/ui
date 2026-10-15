@@ -91,7 +91,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
         <View className="min-w-0 flex-1 gap-px">
           <View className="flex-row items-center gap-1.5">
             <Text className="flex-1 text-xs font-semibold">Riley Morgan</Text>
-            <Text className="text-2xs text-muted-foreground">now</Text>
+            <Text className="text-xs text-muted-foreground">now</Text>
           </View>
           <Text className="text-xs">{body}</Text>
         </View>
@@ -226,7 +226,7 @@ function SettingsNotifications() {
               <Notification body={body} stacked={grouping !== "Off"} />
             </View>
           ) : null}
-          <Text className="absolute inset-x-0 bottom-3.5 text-center text-2xs text-white opacity-85">
+          <Text className="absolute inset-x-0 bottom-3.5 text-center text-xs text-white opacity-85">
             {footnote}
           </Text>
         </View>

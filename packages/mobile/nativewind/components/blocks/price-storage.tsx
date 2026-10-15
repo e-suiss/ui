@@ -139,7 +139,7 @@ function PlanCard({
           pointerEvents="none"
           className="absolute -top-[0.5625rem] start-[1.125rem] rounded-full bg-primary px-[0.5625rem] py-0.5"
         >
-          <Text className="text-2xs font-semibold text-primary-foreground">
+          <Text className="text-xs font-semibold text-primary-foreground">
             Most popular
           </Text>
         </View>

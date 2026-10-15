@@ -74,38 +74,23 @@
 }
 
 @theme {
-  --text-3xs: 0.6875rem;
-  --text-3xs--line-height: 0.8125rem;
-  --text-3xs--letter-spacing: 0.006em;
-  --text-2xs: 0.75rem;
-  --text-2xs--line-height: 1rem;
-  --text-2xs--letter-spacing: 0em;
-  --text-xs: 0.8125rem;
-  --text-xs--line-height: 1.125rem;
-  --text-xs--letter-spacing: -0.006em;
-  --text-sm: 0.9375rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
   --text-sm--line-height: 1.25rem;
-  --text-sm--letter-spacing: -0.016em;
-  --text-md: 1rem;
-  --text-md--line-height: 1.3125rem;
-  --text-md--letter-spacing: -0.02em;
-  --text-base: 1.0625rem;
-  --text-base--line-height: 1.375rem;
-  --text-base--letter-spacing: -0.026em;
-  --text-lg: 1.25rem;
-  --text-lg--line-height: 1.5625rem;
-  --text-lg--letter-spacing: -0.023em;
-  --text-xl: 1.375rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
   --text-xl--line-height: 1.75rem;
-  --text-xl--letter-spacing: -0.012em;
-  --text-2xl: 1.75rem;
-  --text-2xl--line-height: 2.125rem;
-  --text-2xl--letter-spacing: 0.014em;
-  --text-3xl: 2.125rem;
-  --text-3xl--line-height: 2.5625rem;
-  --text-3xl--letter-spacing: 0.012em;
-  --shadow-md: 2px 4px 12px rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 4px 24px rgb(0 0 0 / 0.12);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   --radius-xs: 0.1875rem;
   --radius-sm: 0.3125rem;

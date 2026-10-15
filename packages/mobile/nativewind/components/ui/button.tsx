@@ -65,7 +65,7 @@ const buttonTextVariants = cva("text-sm text-foreground", {
     },
     size: {
       default: "",
-      xs: "text-2xs",
+      xs: "text-xs",
       sm: "",
       lg: "text-base",
       xl: "text-base",

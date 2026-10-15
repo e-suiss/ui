@@ -132,19 +132,13 @@ function loadTokens() {
   const tokens = JSON.parse(readFileSync(TOKENS, "utf8"))
   const colors = Object.entries(tokens.color)
   const text = Object.fromEntries(
-    Object.entries(tokens.text).map(([name, size]) => {
-      const fontSize = toPixels(size.fontSize)
-      const tracking = Number.parseFloat(size.letterSpacing)
-      return [
-        name,
-        {
-          fontSize,
-          lineHeight: toPixels(size.lineHeight),
-          letterSpacing: round(tracking * fontSize),
-          tracking,
-        },
-      ]
-    })
+    Object.entries(tokens.text).map(([name, size]) => [
+      name,
+      {
+        fontSize: toPixels(size.fontSize),
+        lineHeight: toPixels(size.lineHeight),
+      },
+    ])
   )
   const radius = Object.fromEntries(
     Object.entries(tokens.radius).map(([name, value]) => [

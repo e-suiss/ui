@@ -233,6 +233,7 @@ function toTailwindV3(code) {
     )
     .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-sm(?![\w-])/g, "$1shadow")
     .replace(/(?<![\w-])((?:[\w-]+:)*)shadow-xs(?![\w-])/g, "$1shadow-sm")
+    .replace(/(?<![\w-])((?:[\w-]+:)*)ring-3(?![\w-])/g, "$1ring")
 }
 
 function opacityPattern(colors) {
@@ -314,7 +315,7 @@ function buildConfig(theme, tokens) {
   const fontSize = Object.entries(theme.text)
     .map(
       ([name, size]) =>
-        `        "${name}": ["${size.fontSize}px", { lineHeight: "${size.lineHeight}px", letterSpacing: "${size.letterSpacing}px" }],`
+        `        "${name}": ["${size.fontSize}px", { lineHeight: "${size.lineHeight}px" }],`
     )
     .join("\n")
   const boxShadow = Object.entries(theme.shadow)

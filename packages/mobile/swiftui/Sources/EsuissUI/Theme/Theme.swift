@@ -44,12 +44,10 @@ extension Color {
 public struct TextStyle: Sendable, Hashable {
   public let size: CGFloat
   public let lineHeight: CGFloat
-  public let letterSpacing: CGFloat
 
-  public init(size: CGFloat, lineHeight: CGFloat, letterSpacing: CGFloat) {
+  public init(size: CGFloat, lineHeight: CGFloat) {
     self.size = size
     self.lineHeight = lineHeight
-    self.letterSpacing = letterSpacing
   }
 
   public func font(weight: Font.Weight = .regular) -> Font {
@@ -74,7 +72,6 @@ private struct TextStyleModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .font(style.font(weight: weight))
-      .tracking(style.letterSpacing)
       .lineSpacing(style.lineSpacing)
       .padding(.vertical, style.lineSpacing / 2)
   }
@@ -87,21 +84,39 @@ extension View {
 }
 
 public struct Shadow: Sendable, Hashable {
-  public let color: Color
-  public let radius: CGFloat
-  public let x: CGFloat
-  public let y: CGFloat
+  public struct Layer: Sendable, Hashable {
+    public let color: Color
+    public let radius: CGFloat
+    public let x: CGFloat
+    public let y: CGFloat
+
+    public init(color: Color, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) {
+      self.color = color
+      self.radius = radius
+      self.x = x
+      self.y = y
+    }
+
+    static let none = Layer(color: .clear, radius: 0)
+  }
+
+  public let layers: [Layer]
+
+  public init(_ layers: Layer...) {
+    self.layers = layers
+  }
 
   public init(color: Color, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) {
-    self.color = color
-    self.radius = radius
-    self.x = x
-    self.y = y
+    layers = [Layer(color: color, radius: radius, x: x, y: y)]
   }
 }
 
 extension View {
   public func shadow(_ shadow: Shadow) -> some View {
-    self.shadow(color: shadow.color, radius: shadow.radius, x: shadow.x, y: shadow.y)
+    let first = shadow.layers.first ?? .none
+    let second = shadow.layers.dropFirst().first ?? .none
+    return self
+      .shadow(color: first.color, radius: first.radius, x: first.x, y: first.y)
+      .shadow(color: second.color, radius: second.radius, x: second.x, y: second.y)
   }
 }

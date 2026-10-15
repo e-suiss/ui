@@ -76,7 +76,7 @@ function TabBarBadge({ badge }: { badge: TabBarBadgeValue }) {
   return (
     <View className="absolute -top-1.5 -end-3 h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full border-2 border-card bg-destructive px-1">
       <Text
-        className="text-3xs font-semibold text-primary-foreground"
+        className="text-xs font-semibold text-primary-foreground"
         numberOfLines={1}
       >
         {text}
@@ -109,7 +109,7 @@ function TabBarItem({
       render={(renderProps, state) => (
         <TextClassContext.Provider
           value={cn(
-            "text-3xs font-medium",
+            "text-xs font-medium",
             state.active && "text-primary",
             !state.active && state.disabled && "opacity-50",
             !(state.active || state.disabled) && "text-muted-foreground"

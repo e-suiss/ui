@@ -85,7 +85,7 @@ function SectionIndexBar({
                 className="h-4 min-w-3 items-center justify-center"
                 style={{ pointerEvents: "none" }}
               >
-                <Text className="text-2xs font-semibold text-primary">
+                <Text className="text-xs font-semibold text-primary">
                   {item.label}
                 </Text>
               </View>

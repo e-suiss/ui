@@ -14,13 +14,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-internal fun textStyle(size: Double, lineHeight: Double, letterSpacing: Double) = TextStyle(
+internal fun textStyle(size: Double, lineHeight: Double) = TextStyle(
     fontSize = size.sp,
     lineHeight = lineHeight.sp,
-    letterSpacing = letterSpacing.em,
     lineHeightStyle = LineHeightStyle(
         alignment = LineHeightStyle.Alignment.Center,
         trim = LineHeightStyle.Trim.None,
@@ -28,21 +27,34 @@ internal fun textStyle(size: Double, lineHeight: Double, letterSpacing: Double) 
 )
 
 @Immutable
-data class Shadow(
+data class ShadowLayer(
     val offsetX: Dp,
     val offsetY: Dp,
     val blur: Dp,
+    val spread: Dp,
     val color: Color,
 )
 
-fun Modifier.shadow(shadow: Shadow, shape: Shape): Modifier = dropShadow(
-    shape,
-    DropShadow(
-        radius = shadow.blur,
-        color = shadow.color,
-        offset = DpOffset(shadow.offsetX, shadow.offsetY),
-    ),
-)
+@Immutable
+data class Shadow(val layers: List<ShadowLayer>) {
+    constructor(vararg layers: ShadowLayer) : this(layers.toList())
+
+    constructor(offsetX: Dp, offsetY: Dp, blur: Dp, color: Color) : this(ShadowLayer(offsetX, offsetY, blur, 0.dp, color))
+
+    fun alpha(fraction: Float) = Shadow(layers.map { it.copy(color = it.color.copy(alpha = it.color.alpha * fraction)) })
+}
+
+fun Modifier.shadow(shadow: Shadow, shape: Shape): Modifier = shadow.layers.fold(this) { modifier, layer ->
+    modifier.dropShadow(
+        shape,
+        DropShadow(
+            radius = layer.blur,
+            spread = layer.spread,
+            color = layer.color,
+            offset = DpOffset(layer.offsetX, layer.offsetY),
+        ),
+    )
+}
 
 val LocalColors = staticCompositionLocalOf { LightColors }
 
