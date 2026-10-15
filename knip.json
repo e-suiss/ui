@@ -16,7 +16,9 @@
         "lib/*.ts",
         "scripts/*.mjs",
         "tests/*-setup.ts",
-        "examples/*.tsx"
+        "examples/*.tsx",
+        "bases/*/components/**/*.tsx",
+        "bases/*/examples/*.tsx"
       ],
       "project": [
         "components/**/*.{ts,tsx}",
@@ -27,7 +29,9 @@
         "examples/*.tsx",
         "app/**/*.tsx",
         "tests/render-example.tsx",
-        "tests/examples/*.test.tsx"
+        "tests/base.ts",
+        "tests/examples/*.test.tsx",
+        "bases/**/*.{ts,tsx}"
       ]
     },
     "packages/cli": {

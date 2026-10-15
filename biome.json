@@ -143,7 +143,11 @@
       }
     },
     {
-      "includes": ["packages/web/components/ui/message-scroller.tsx"],
+      "includes": [
+        "packages/web/components/ui/message-scroller.tsx",
+        "packages/web/bases/*/components/ui/message-scroller.tsx",
+        "packages/web/bases/*/components/interactions/preview-menu.tsx"
+      ],
       "linter": {
         "rules": {
           "a11y": {
@@ -154,7 +158,10 @@
       }
     },
     {
-      "includes": ["packages/web/components/ui/sidebar.tsx"],
+      "includes": [
+        "packages/web/components/ui/sidebar.tsx",
+        "packages/web/bases/*/components/ui/sidebar.tsx"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
@@ -166,6 +173,8 @@
     {
       "includes": [
         "packages/web/components/ui/slider.tsx",
+        "packages/web/bases/*/components/ui/slider.tsx",
+        "packages/web/bases/*/examples/**",
         "packages/web/examples/**"
       ],
       "linter": {
@@ -177,7 +186,10 @@
       }
     },
     {
-      "includes": ["packages/web/examples/**"],
+      "includes": [
+        "packages/web/examples/**",
+        "packages/web/bases/*/examples/**"
+      ],
       "linter": {
         "rules": {
           "a11y": {
